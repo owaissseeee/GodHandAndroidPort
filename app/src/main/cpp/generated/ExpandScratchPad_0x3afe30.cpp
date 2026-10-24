@@ -1,0 +1,52 @@
+#include <stdexcept>
+#include "ps2_runtime_macros.h"
+#include "ps2_runtime.h"
+#include <ps2_recompiled_functions.h>
+#include <ps2_recompiled_stubs.h>
+
+#include "ps2_syscalls.h"
+#include "ps2_stubs.h"
+
+#ifdef PS2_FUNCTION_LOG_TRACKER
+#include "ps2_log.h"
+#endif
+
+// Function: ExpandScratchPad
+// Address: 0x3afe30 - 0x3afe40
+void ExpandScratchPad_0x3afe30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+#ifdef PS2_FUNCTION_LOG_TRACKER
+    PS_LOG_ENTRY("ExpandScratchPad_0x3afe30");
+#endif
+
+    switch (ctx->pc) {
+        case 0x3afe38u: goto label_3afe38;
+        default: break;
+    }
+
+    ctx->pc = 0x3afe30u;
+
+    // 0x3afe30: 0x24030059  addiu       $v1, $zero, 0x59
+    ctx->pc = 0x3afe30u;
+    SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 89));
+    // 0x3afe34: 0xc  syscall     0
+    ctx->pc = 0x3afe34u;
+    ctx->pc = 0x3AFE38u;
+if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
+    return;
+}
+label_3afe38:
+    // 0x3afe38: 0x3e00008  jr          $ra
+    ctx->pc = 0x3AFE38u;
+    {
+        const uint32_t jumpTarget = GPR_U32(ctx, 31);
+        ctx->pc = jumpTarget;
+        #if defined(PS2X_STRICT_RETURN_DIAGNOSTICS) && PS2X_STRICT_RETURN_DIAGNOSTICS
+        (void)runtime->dispatchGuestBranch(rdram, ctx, jumpTarget, 0x3AFE38u, 0u, PS2Runtime::GuestBranchKind::Return, "JR $ra");
+        return;
+        #else
+        ctx->pc = jumpTarget;
+        return;
+        #endif
+    }
+    ctx->pc = 0x3AFE40u;
+}

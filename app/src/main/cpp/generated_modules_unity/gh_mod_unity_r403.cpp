@@ -1,0 +1,13 @@
+// Auto-generated Unity Batch for SNR2 module: r403
+#include "simd_arm64_compat.h"
+#include "../generated_modules/r403/checkBattle__5cR403_0x7992b0.cpp"
+#include "../generated_modules/r403/ps2___builtin_delete_0x7991d0.cpp"
+#include "../generated_modules/r403/ps2___builtin_new_0x799180.cpp"
+#include "../generated_modules/r403/ps2___builtin_vec_delete_0x7991f8.cpp"
+#include "../generated_modules/r403/ps2___builtin_vec_new_0x7991a8.cpp"
+#include "../generated_modules/r403/ps2___do_global_ctors_0x799770.cpp"
+#include "../generated_modules/r403/ps2___do_global_dtors_0x799718.cpp"
+#include "../generated_modules/r403/ps2___main_0x799820.cpp"
+#include "../generated_modules/r403/r403_pack.cpp"
+#include "../generated_modules/r403/R403Init__Fv_0x799220.cpp"
+#include "../generated_modules/r403/R403Move__Fv_0x7992a8.cpp"

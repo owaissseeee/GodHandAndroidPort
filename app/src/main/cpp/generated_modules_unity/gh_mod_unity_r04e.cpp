@@ -1,0 +1,13 @@
+// Auto-generated Unity Batch for SNR2 module: r04e
+#include "simd_arm64_compat.h"
+#include "../generated_modules/r04e/ps2___builtin_delete_0x7991d0.cpp"
+#include "../generated_modules/r04e/ps2___builtin_new_0x799180.cpp"
+#include "../generated_modules/r04e/ps2___builtin_vec_delete_0x7991f8.cpp"
+#include "../generated_modules/r04e/ps2___builtin_vec_new_0x7991a8.cpp"
+#include "../generated_modules/r04e/ps2___do_global_ctors_0x799380.cpp"
+#include "../generated_modules/r04e/ps2___do_global_dtors_0x799328.cpp"
+#include "../generated_modules/r04e/ps2___main_0x799430.cpp"
+#include "../generated_modules/r04e/R04e_ExecColiseum__Fv_0x7992c0.cpp"
+#include "../generated_modules/r04e/r04e_pack.cpp"
+#include "../generated_modules/r04e/R04eInit__Fv_0x799220.cpp"
+#include "../generated_modules/r04e/R04eMove__Fv_0x7992b8.cpp"

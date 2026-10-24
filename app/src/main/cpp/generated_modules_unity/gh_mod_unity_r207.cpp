@@ -1,0 +1,12 @@
+// Auto-generated Unity Batch for SNR2 module: r207
+#include "simd_arm64_compat.h"
+#include "../generated_modules/r207/ps2___builtin_delete_0x7991d0.cpp"
+#include "../generated_modules/r207/ps2___builtin_new_0x799180.cpp"
+#include "../generated_modules/r207/ps2___builtin_vec_delete_0x7991f8.cpp"
+#include "../generated_modules/r207/ps2___builtin_vec_new_0x7991a8.cpp"
+#include "../generated_modules/r207/ps2___do_global_ctors_0x7992b0.cpp"
+#include "../generated_modules/r207/ps2___do_global_dtors_0x799258.cpp"
+#include "../generated_modules/r207/ps2___main_0x799360.cpp"
+#include "../generated_modules/r207/r207_pack.cpp"
+#include "../generated_modules/r207/R207Init__Fv_0x799220.cpp"
+#include "../generated_modules/r207/R207Move__Fv_0x799250.cpp"
