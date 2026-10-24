@@ -22,8 +22,8 @@
   * Diagnosed black screen root causes: `pcsx2_flags` in `pcsx2-gs-android/CMakeLists.txt` lacked `ENABLE_VULKAN=1`, `ENABLE_OPENGL=1`, and `VK_USE_PLATFORM_ANDROID_KHR=1`, causing `GSopen` to fail.
   * Added missing symbols in `HostStubs.cpp` (`BuildVersion::GitTag*`, `TriStateToOptionalBoolean`, `ReportFormattedErrorAsync`, `GetBoolSettingValue`, `AddOSDMessage`).
   * Eliminated 320,000 log lines/sec performance bottleneck by stubbing `PS_LOG_ENTRY` on Android.
-  * Built and deployed Release APK to device `CII7PJEUJBVKBQ55`.
-  * VERIFIED: Game boots into title screen ("GOD HAND - PRESS START BUTTON"), Vulkan GS rendering rock-solid at 60 FPS, SPU2 audio playing clearly, and touch controls responsive with haptics.
+  * VERIFIED: Game boots into title screen ("GOD HAND - PRESS START BUTTON"), Vulkan GS rendering rock-solid at 60 FPS, SPU2 audio playing clearly.
+  * Resolved touch input routing: PS2 IOP SIO2 controller bus (`ps2_host_input::padState`) was previously defaulting to disconnected with zero buttons because no physical USB gamepad was detected. Added Android Player 1 touch controller routing (`touchBtns`, analog stick clamped axes, and `applyPressure`) in [ps2_host_input.cpp](file:///c:/GodHandPort/app/src/main/cpp/runtime/ps2xRuntime/src/lib/ps2_host_input.cpp). Verified START and face buttons navigate into the main menu!
 
 ## Project Metadata
 - Game Title: God Hand (USA, NTSC-U, SLUS-21503, v1.00)
