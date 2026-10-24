@@ -32,6 +32,18 @@
 #include <unistd.h>
 #endif
 
+#if defined(__ANDROID__)
+#include <android/log.h>
+#endif
+
+namespace ps2_pad {
+    uint32_t getButtons();
+    float getLx();
+    float getLy();
+    float getRx();
+    float getRy();
+}
+
 // raylib reports Caps Lock and Num Lock as held for as long as the lock light is on (GLFW_LOCK_KEY_MODS,
 // rcore_desktop_glfw.c KeyCallback), so a button bound to them stayed held. Sweep 2026-10-17 CR-1: read the physical
 // key instead. (The first version passed raylib's GetWindowHandle() - an HWND on Windows - to glfwGetKey, which expects a
@@ -1642,7 +1654,11 @@ namespace ps2_host_input
             // PS2X_FAKE_PADS=<n> (tests): players 1..n count as connected, idle, without a controller behind them.
             static const uint32_t fakePads = []
             { const char *v = std::getenv("PS2X_FAKE_PADS"); return v ? static_cast<uint32_t>(std::max(std::atoi(v), 0)) : 0u; }();
+#if defined(__ANDROID__) || defined(PLATFORM_ANDROID)
+            state.connected = (player == 0) || padPresent(config) || player < fakePads;
+#else
             state.connected = padPresent(config) || player < fakePads;
+#endif
             if (!state.connected)
                 return state;
 
@@ -2571,6 +2587,46 @@ namespace ps2_host_input
             std::lock_guard<std::mutex> lock(g_mutex);
             state = g_state[static_cast<size_t>(player)];
         }
+#if defined(__ANDROID__) || defined(PLATFORM_ANDROID)
+        if (player == 0)
+        {
+            state.connected = true;
+            const uint32_t touchBtns = ps2_pad::getButtons();
+            state.buttons |= static_cast<uint16_t>(touchBtns);
+
+            const float flx = ps2_pad::getLx();
+            const float fly = ps2_pad::getLy();
+            const float frx = ps2_pad::getRx();
+            const float fry = ps2_pad::getRy();
+
+            if (flx != 0.0f || fly != 0.0f) {
+                state.leftX = axisToByte(flx);
+                state.leftY = axisToByte(fly);
+            } else if (state.leftX == 0 && state.leftY == 0) {
+                state.leftX = 0x80u;
+                state.leftY = 0x80u;
+            }
+
+            if (frx != 0.0f || fry != 0.0f) {
+                state.rightX = axisToByte(frx);
+                state.rightY = axisToByte(fry);
+            } else if (state.rightX == 0 && state.rightY == 0) {
+                state.rightX = 0x80u;
+                state.rightY = 0x80u;
+            }
+
+            applyPressure(state);
+
+            static uint16_t s_lastIopBtns = 0;
+            if (state.buttons != s_lastIopBtns) {
+                if (state.buttons != 0) {
+                    __android_log_print(ANDROID_LOG_INFO, "GodHandInput", "IOP padState: buttons=0x%04x (START=%d)",
+                                        state.buttons, (state.buttons & ps2x::iop::PadButton::Start) ? 1 : 0);
+                }
+                s_lastIopBtns = state.buttons;
+            }
+        }
+#endif
         {
             const std::atomic<uint64_t> *counter = g_fieldCounter.load();
             const uint64_t tick = counter ? counter->load() : 0u;

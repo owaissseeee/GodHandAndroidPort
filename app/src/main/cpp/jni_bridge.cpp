@@ -264,6 +264,15 @@ Java_com_lasvola_godhand_NativeBridge_updatePadState(
     ps2_pad::setHostTouchInputState(
         static_cast<uint32_t>(buttonMask), lx, ly, rx, ry
     );
+
+    static uint32_t s_lastLogMask = 0;
+    if (static_cast<uint32_t>(buttonMask) != s_lastLogMask) {
+        if (buttonMask != 0) {
+            __android_log_print(ANDROID_LOG_INFO, "GodHandInput", "TouchPad buttons pressed: 0x%04x (START=%d, CROSS=%d)",
+                                buttonMask, (buttonMask & (1 << 3)) ? 1 : 0, (buttonMask & (1 << 14)) ? 1 : 0);
+        }
+        s_lastLogMask = static_cast<uint32_t>(buttonMask);
+    }
 }
 
 static void startStdoutStderrRedirect() {
