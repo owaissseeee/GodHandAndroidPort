@@ -124,17 +124,10 @@ backups/
 !app/src/main/res/**/*.webp
 !app/src/main/res/**/*.xml
 
-# ------------------------------------------------------------------------------
-# 6. INTERNAL AI WORKFLOWS, PROMPTS & AGENT SKILLS (NEVER COMMIT)
-# ------------------------------------------------------------------------------
 AGENTS.md
 GEMINI.md
 PS2_PROJECT_STATE.md
 *PROJECT_STATE*
 ps2-recomp-Agent-SKILL/
 ps2-recomp-Agent-SKILL
-*playbook*.txt
-*master_prompt*.txt
-*agent*.txt
-godhand_ultimate_60fps_optimization_playbook.txt
-godhand_android_recomp_agent_master_prompt.txt
+

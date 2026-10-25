@@ -227,13 +227,18 @@ class MainActivity : ComponentActivity() {
                         settings.resolutionIdx = it
                         appendLog("[CFG] Resolution scale updated to index $it")
                     }
-                    addSpinnerRow("Aspect Ratio", listOf("16:9 Widescreen (Native FOV)", "4:3 Original (Pillarboxed)"), settings.aspectIdx) {
+                    addSpinnerRow("Aspect Ratio", listOf("16:9 Widescreen (Native FOV)", "4:3 Original (Pillarboxed)", "Full Screen (Device Aspect - No Stretch)"), settings.aspectIdx) {
                         settings.aspectIdx = it
-                        appendLog("[CFG] Aspect ratio updated to: " + (if (it == 0) "16:9 Widescreen" else "4:3 Original"))
+                        appendLog("[CFG] Aspect ratio updated to: " + when(it) {
+                            0 -> "16:9 Widescreen"
+                            1 -> "4:3 Original"
+                            2 -> "Full Screen (Device Aspect)"
+                            else -> "Unknown"
+                        })
                     }
-                    addSpinnerRow("Target Frame Rate", listOf("60 FPS (Dynamic Delta-Time Sync)", "30 FPS (Console Native Lock - Recommended)"), settings.fpsIdx, enabled = true) {
+                    addSpinnerRow("Target Frame Rate", listOf("60 FPS {Buggy - Not Recommended}", "30 FPS (Console Native Lock - Recommended)"), settings.fpsIdx, enabled = true) {
                         settings.fpsIdx = it
-                        appendLog("[CFG] Target Frame Rate set to: " + (if (it == 0) "60 FPS (Dynamic Delta-Time Sync)" else "30 FPS (Console Native Lock - Recommended)"))
+                        appendLog("[CFG] Target Frame Rate set to: " + (if (it == 0) "60 FPS {Buggy - Not Recommended}" else "30 FPS (Console Native Lock - Recommended)"))
                     }
                     addSpinnerRow("Frameskip", listOf(
                         "Off (Render Every Frame)",

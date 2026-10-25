@@ -442,7 +442,7 @@ bool GSPcsx2Backend::EnsureOpen()
     params.resources = resources.c_str();
     params.cache = cache.c_str();
     params.vsync = static_cast<uint32_t>(std::clamp(envInt("PS2X_PCSX2_VSYNC", 2), 0, 2)); // mailbox: no tearing, no wait
-    params.stretch = envInt("PS2X_PCSX2_STRETCH", 0) != 0 ? 1u : 0u;
+    params.stretch = static_cast<uint32_t>(std::clamp(envInt("PS2X_PCSX2_STRETCH", 1), 0, 2));
     // Image options (pcsx2gs_api.h): PS2X_PCSX2_<KEY> -> key=value.
     static constexpr struct
     {
@@ -680,7 +680,8 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
     const int pendingAspect = g_pendingAspect.exchange(-1, std::memory_order_acq_rel);
     if (pendingAspect >= 0 && g_setAspect)
     {
-        g_setAspect(pendingAspect == 1 ? 0u : 1u);
+        const uint32_t mode = (pendingAspect == 1) ? 0u : (pendingAspect == 2) ? 2u : 1u;
+        g_setAspect(mode);
     }
 
     const uint32_t width = g_clientWidth.load(std::memory_order_relaxed);

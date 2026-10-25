@@ -824,11 +824,18 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     }
     setEnv("PS2X_GS_SCALE", std::to_string(scale));
     setEnv("GODHAND_TARGET_FPS_IDX", std::to_string(fpsIdx));
+    float screenAspect = 16.0f / 9.0f;
+    if (width > 0 && height > 0) {
+        screenAspect = static_cast<float>(width) / static_cast<float>(height);
+    }
+    setEnv("GODHAND_SCREEN_ASPECT", std::to_string(screenAspect));
     setEnv("GODHAND_ASPECT_RATIO_IDX", std::to_string(aspectIdx));
     // Never use VSYNC="2" (double-VBlank FIFO block) on Android: it drops 58 FPS straight to 30 FPS!
     setEnv("PS2X_PCSX2_VSYNC", "0");
     setEnv("PS2X_VSYNC", "0");
-    setEnv("PS2X_PCSX2_STRETCH", (aspectIdx == 1) ? "0" : "1");
+    // aspectIdx: 0 = 16:9, 1 = 4:3, 2 = Full Screen (fill device display)
+    const char* stretchVal = (aspectIdx == 1) ? "0" : (aspectIdx == 2) ? "2" : "1";
+    setEnv("PS2X_PCSX2_STRETCH", stretchVal);
     setEnv("GODHAND_RENDERER", (rendererIdx == 1) ? "gles" : "vulkan");
     setEnv("PS2X_GS_RENDERER", "pcsx2");
     setEnv("GODHAND_HEADLESS", "0");

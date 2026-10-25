@@ -1,6 +1,7 @@
 #include "godhand_patches_mobile.h"
 #include <cstring>
 #include <cmath>
+#include <cstdlib>
 
 namespace godhand {
 namespace mobile {
@@ -18,7 +19,22 @@ static constexpr float kAspect4x3  = 0.93333334f;
 
 void applyWidescreenPatch(uint8_t* rdram, int aspectIdx) {
     if (!rdram) return;
-    const float fovScale = (aspectIdx == 0) ? kAspect16x9 : kAspect4x3;
+    float fovScale = kAspect16x9;
+    if (aspectIdx == 1) {
+        fovScale = kAspect4x3;
+    } else if (aspectIdx == 2) {
+        // Full screen: compute horizontal FOV multiplier matching physical screen aspect ratio
+        float screenAspect = 16.0f / 9.0f;
+        const char* aspectEnv = std::getenv("GODHAND_SCREEN_ASPECT");
+        if (aspectEnv && *aspectEnv) {
+            float val = std::strtof(aspectEnv, nullptr);
+            if (val > 1.0f && val < 4.0f) {
+                screenAspect = val;
+            }
+        }
+        // 0.700000005f * screenAspect ensures 3D geometry is undistorted when stretched full screen
+        fovScale = 0.700000005f * screenAspect;
+    }
     std::memcpy(rdram + kCameraAspectAddr, &fovScale, sizeof(fovScale));
 }
 
@@ -45,7 +61,14 @@ void updateFrameTiming(uint8_t* rdram, int fpsIdx) {
     std::memcpy(rdram + 0x00747A14u, &normalRate, sizeof(normalRate));
 }
 
-void updateProjectionMatrix(uint8_t* rdram, int aspectIdx, float /*viewportW*/, float /*viewportH*/) {
+void updateProjectionMatrix(uint8_t* rdram, int aspectIdx, float viewportW, float viewportH) {
+    if (!rdram) return;
+    if (aspectIdx == 2 && viewportW > 0.0f && viewportH > 0.0f) {
+        const float screenAspect = viewportW / viewportH;
+        const float fovScale = 0.700000005f * screenAspect;
+        std::memcpy(rdram + kCameraAspectAddr, &fovScale, sizeof(fovScale));
+        return;
+    }
     applyWidescreenPatch(rdram, aspectIdx);
 }
 

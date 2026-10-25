@@ -166,9 +166,10 @@ class SettingsDialog(
         }
 
         addSpinnerRow(
-            "Aspect Ratio",
-            listOf("16:9 Widescreen (Native FOV)", "4:3 Original (Pillarboxed)"),
-            settings.aspectIdx
+            if (isMidGame) "Aspect Ratio (Set in Main Menu)" else "Aspect Ratio",
+            listOf("16:9 Widescreen (Native FOV)", "4:3 Original (Pillarboxed)", "Full Screen (Device Aspect - No Stretch)"),
+            settings.aspectIdx,
+            enabled = !isMidGame
         ) { pos ->
             settings.aspectIdx = pos
             if (isMidGame) {
@@ -177,9 +178,10 @@ class SettingsDialog(
         }
 
         addSpinnerRow(
-            "Target Frame Rate",
-            listOf("60 FPS (Dynamic Delta-Time Sync)", "30 FPS (Console Native Lock - Recommended)"),
-            settings.fpsIdx
+            if (isMidGame) "Target Frame Rate (Set in Main Menu)" else "Target Frame Rate",
+            listOf("60 FPS {Buggy - Not Recommended}", "30 FPS (Console Native Lock - Recommended)"),
+            settings.fpsIdx,
+            enabled = !isMidGame
         ) { pos ->
             settings.fpsIdx = pos
         }
@@ -397,8 +399,11 @@ class SettingsDialog(
             adapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, options)
             setSelection(currentIdx.coerceIn(0, options.size - 1))
             isEnabled = enabled
+            alpha = if (enabled) 1.0f else 0.45f
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(p: AdapterView<*>?, v: View?, pos: Int, id: Long) = onSelect(pos)
+                override fun onItemSelected(p: AdapterView<*>?, v: View?, pos: Int, id: Long) {
+                    if (enabled) onSelect(pos)
+                }
                 override fun onNothingSelected(p: AdapterView<*>?) {}
             }
         }

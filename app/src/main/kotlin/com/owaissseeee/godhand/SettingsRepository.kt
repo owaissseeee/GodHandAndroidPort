@@ -16,11 +16,11 @@ class SettingsRepository(context: Context) {
         set(value) = prefs.edit().putInt("res_idx", value.coerceIn(0, 7)).apply()
 
     var aspectIdx: Int
-        get() = prefs.getInt("aspect_idx", 0).coerceIn(0, 1) // 0: 16:9 Widescreen, 1: 4:3 Original
-        set(value) = prefs.edit().putInt("aspect_idx", value.coerceIn(0, 1)).apply()
+        get() = prefs.getInt("aspect_idx", 0).coerceIn(0, 2) // 0: 16:9 Widescreen, 1: 4:3 Original, 2: Full Screen
+        set(value) = prefs.edit().putInt("aspect_idx", value.coerceIn(0, 2)).apply()
 
     var fpsIdx: Int
-        get() = prefs.getInt("fps_idx", 1).coerceIn(0, 1) // 0: 60 FPS (Dynamic Delta-Time Sync), 1: 30 FPS (Console Native Lock - Recommended)
+        get() = prefs.getInt("fps_idx", 1).coerceIn(0, 1) // 0: 60 FPS {Buggy - Not Recommended}, 1: 30 FPS (Console Native Lock - Recommended)
         set(value) = prefs.edit().putInt("fps_idx", value.coerceIn(0, 1)).apply()
 
     var frameskipIdx: Int
