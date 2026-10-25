@@ -550,8 +550,10 @@ target_include_directories(ps2_runtime PUBLIC
 )
 
 # FFmpeg is used only inside the runtime (Kernel/Stubs/MPEG.cpp). Linking it PRIVATE keeps its include directories
-# out of the generated game code's compile lines, so toggling PS2X_ENABLE_FFMPEG does not rebuild ~8,000 files.
-target_link_libraries(ps2_runtime PUBLIC ps2_host_backend ps2_iop pcsx2gs)
+target_link_libraries(ps2_runtime PUBLIC ps2_host_backend ps2_iop)
+if(TARGET pcsx2gs)
+    target_link_libraries(ps2_runtime PUBLIC pcsx2gs)
+endif()
 target_link_libraries(ps2_runtime PRIVATE ffmpeg)
 if(TARGET SDL3::SDL3-shared)
     target_link_libraries(ps2_runtime PRIVATE SDL3::SDL3-shared)

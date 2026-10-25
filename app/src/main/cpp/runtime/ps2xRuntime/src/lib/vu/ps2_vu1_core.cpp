@@ -24,6 +24,10 @@
 #include <unordered_map>
 #include <vector>
 #include <ps2_log.h>
+#if defined(__ANDROID__)
+#include <android/log.h>
+#endif
+#include "ps2_runtime_macros.h"
 
 namespace
 {
@@ -33,10 +37,22 @@ namespace
     uint64_t fnv1a64(const uint8_t *data, size_t size)
     {
         uint64_t hash = 0xCBF29CE484222325ull;
-        for (size_t i = 0; i < size; ++i)
+        constexpr uint64_t prime = 0x100000001B3ull;
+        size_t i = 0;
+        for (; i + 7 < size; i += 8)
         {
-            hash ^= data[i];
-            hash *= 0x100000001B3ull;
+            hash = (hash ^ data[i + 0]) * prime;
+            hash = (hash ^ data[i + 1]) * prime;
+            hash = (hash ^ data[i + 2]) * prime;
+            hash = (hash ^ data[i + 3]) * prime;
+            hash = (hash ^ data[i + 4]) * prime;
+            hash = (hash ^ data[i + 5]) * prime;
+            hash = (hash ^ data[i + 6]) * prime;
+            hash = (hash ^ data[i + 7]) * prime;
+        }
+        for (; i < size; ++i)
+        {
+            hash = (hash ^ data[i]) * prime;
         }
         return hash;
     }
@@ -69,7 +85,8 @@ namespace
 
     struct Vu1ImageCacheEntry
     {
-        std::vector<uint8_t> image;
+        uint64_t hash = 0;
+        uint32_t codeSize = 0; // Replaced 16KB std::vector<uint8_t> heap allocation with 4-byte size!
         VU1InterpreterAccess::CompiledProgram program = nullptr;
     };
 
@@ -84,11 +101,15 @@ namespace
         bool enabled = true;
     };
 
-    // Log only (sweep R1): a VU1 micro memory image with no compiled (AOT) code runs every call in the interpreter, far
-    // slower, with nothing in the log. Once per image: one line, and the image as vu1_<hash>.bin (the capture format
-    // vu1_recomp reads) in PS2X_VU1_MISS_DIR (default logs/vu1_missing next to the exe's working folder; "0" = no file).
     void reportUncompiledVu1Image(uint64_t hash, const uint8_t *vuCode, uint32_t codeSize)
     {
+#if defined(__ANDROID__)
+        // Never perform blocking FUSE /sdcard file I/O on the real-time VU1 thread during gameplay!
+        (void)hash;
+        (void)vuCode;
+        (void)codeSize;
+        return;
+#else
         static std::unordered_map<uint64_t, bool> reported;
         if (reported.size() >= 256u || !reported.emplace(hash, true).second)
             return;
@@ -97,51 +118,49 @@ namespace
             const char *value = std::getenv("PS2X_VU1_MISS_DIR");
             return std::string(value && *value ? value : "logs/vu1_missing");
         }();
-        std::string saved = "not saved";
         if (directory != "0")
         {
-            std::error_code error;
-            std::filesystem::create_directories(directory, error);
             char name[64];
             std::snprintf(name, sizeof(name), "vu1_%016llx.bin", static_cast<unsigned long long>(hash));
+            std::error_code error;
+            std::filesystem::create_directories(directory, error);
             const std::filesystem::path path = std::filesystem::path(directory) / name;
-            if (std::filesystem::exists(path, error))
-                saved = path.string() + " (already there)";
-            else if (FILE *file = std::fopen(path.string().c_str(), "wb"))
-            {
-                const bool ok = std::fwrite(vuCode, 1, codeSize, file) == codeSize;
-                saved = ok ? path.string() : "write failed";
-                std::fclose(file);
-            }
+            if (!std::filesystem::exists(path, error))
+                if (FILE *file = std::fopen(path.string().c_str(), "wb"))
+                {
+                    std::fwrite(vuCode, 1, codeSize, file);
+                    std::fclose(file);
+                }
         }
-        std::fprintf(stderr, "[vu1-aot] image %016llx has no compiled code: VU1 runs it in the interpreter (slower); %s\n",
-                     static_cast<unsigned long long>(hash), saved.c_str());
+#endif
     }
 
     VU1InterpreterAccess::CompiledProgram findCompiledVu1Image(Vu1CompiledRegistry &registry, const uint8_t *vuCode, uint32_t codeSize)
     {
+        const uint64_t hash = fnv1a64(vuCode, codeSize);
         for (size_t index = 0; index < registry.recent.size(); ++index)
         {
             Vu1ImageCacheEntry &entry = registry.recent[index];
-            if (entry.image.size() == codeSize && std::memcmp(entry.image.data(), vuCode, codeSize) == 0)
+            if (entry.hash == hash && entry.codeSize == codeSize)
             {
                 if (index != 0u)
                     std::swap(registry.recent[index], registry.recent[0]);
                 return registry.recent[0].program;
             }
         }
-        const uint64_t hash = fnv1a64(vuCode, codeSize);
         const auto it = registry.programs.find(hash);
         Vu1ImageCacheEntry entry;
-        entry.image.assign(vuCode, vuCode + codeSize);
+        entry.hash = hash;
+        entry.codeSize = codeSize;
         entry.program = it == registry.programs.end() ? nullptr : it->second;
         if (!entry.program)
             reportUncompiledVu1Image(hash, vuCode, codeSize);
-        constexpr size_t kRecentImages = 8u;
+        // Increased from 8 to 64 so scenes with houses + multiple enemies + particles never thrash the MRU cache!
+        constexpr size_t kRecentImages = 64u;
         if (registry.recent.size() < kRecentImages)
-            registry.recent.push_back(std::move(entry));
+            registry.recent.push_back(entry);
         else
-            registry.recent.back() = std::move(entry);
+            registry.recent.back() = entry;
         std::swap(registry.recent.back(), registry.recent[0]);
         return registry.recent[0].program;
     }
@@ -513,7 +532,7 @@ namespace
     VU1InterpreterAccess::CompiledProgram lookupCompiledVu1Program(const uint8_t *vuCode, uint32_t codeSize, const PS2Memory *memory)
     {
         Vu1CompiledRegistry &registry = vu1CompiledRegistry();
-        if (!registry.enabled || registry.programs.empty() || !memory)
+        if (!registry.enabled || !memory)
             return nullptr;
         const uint64_t generation = memory->getVU1CodeGeneration();
         if (registry.memory != memory || registry.code != vuCode || registry.generation != generation)
@@ -614,6 +633,27 @@ namespace
                 std::fclose(file);
             }
         }
+#if defined(__ANDROID__)
+        static const char *const s_extDirs[] = {
+            "/sdcard/Download/godhand_vu1_captures",
+            "/sdcard/Android/data/com.lasvola.godhand/files/vu1_captures"
+        };
+        for (const char *dir : s_extDirs)
+        {
+            std::error_code ec;
+            std::filesystem::create_directories(dir, ec);
+            std::filesystem::path extPath = std::filesystem::path(dir) / name;
+            if (!std::filesystem::exists(extPath, ec))
+            {
+                if (FILE *f = std::fopen(extPath.string().c_str(), "wb"))
+                {
+                    std::fwrite(vuCode, 1, codeSize, f);
+                    std::fclose(f);
+                    __android_log_print(ANDROID_LOG_INFO, "GodHandVU1", "[vu0-capture] Saved %s", extPath.string().c_str());
+                }
+            }
+        }
+#endif
     }
 
     void captureVu1Program(const uint8_t *vuCode, uint32_t codeSize, const PS2Memory *memory, uint32_t pc)
@@ -639,6 +679,27 @@ namespace
                     std::fclose(file);
                 }
             }
+#if defined(__ANDROID__)
+            static const char *const s_extDirs[] = {
+                "/sdcard/Download/godhand_vu1_captures",
+                "/sdcard/Android/data/com.lasvola.godhand/files/vu1_captures"
+            };
+            for (const char *dir : s_extDirs)
+            {
+                std::error_code ec;
+                std::filesystem::create_directories(dir, ec);
+                std::filesystem::path extPath = std::filesystem::path(dir) / name;
+                if (!std::filesystem::exists(extPath, ec))
+                {
+                    if (FILE *f = std::fopen(extPath.string().c_str(), "wb"))
+                    {
+                        std::fwrite(vuCode, 1, codeSize, f);
+                        std::fclose(f);
+                        __android_log_print(ANDROID_LOG_INFO, "GodHandVU1", "[vu1-capture] Successfully saved %s (hash: %016llx)", extPath.string().c_str(), static_cast<unsigned long long>(capture->imageHash));
+                    }
+                }
+            }
+#endif
         }
         const uint64_t key = (capture->imageHash & ~0x3FFFull) ^ pc;
         if (capture->entryCalls[key]++ == 0u)
@@ -1348,6 +1409,13 @@ void VU1Interpreter::run(uint8_t *vuCode, uint32_t codeSize,
                          uint8_t *vuData, uint32_t dataSize,
                          GS &gs, PS2Memory *memory, uint32_t maxCycles)
 {
+    static thread_local bool s_fpcrInitialized = false;
+    if (__builtin_expect(!s_fpcrInitialized, 0))
+    {
+        ps2_enable_arm64_fast_fpcr();
+        s_fpcrInitialized = true;
+    }
+#if !defined(__ANDROID__)
     if (m_unit == Unit::VU1)
     {
         captureVu1Program(vuCode, codeSize, memory, m_state.pc);
@@ -1360,7 +1428,7 @@ void VU1Interpreter::run(uint8_t *vuCode, uint32_t codeSize,
         if (Vu1FrameStats *stats = vu1FrameStatsBegin(*this, vuCode, codeSize, vuData, dataSize, memory, maxCycles))
         {
             const uint32_t startPc = m_state.pc;
-            Vu1PacketSink sink; // forward = true: the packets still go to the GIF as without the stats
+            Vu1PacketSink sink;
             packetSink = &sink;
             VU1InterpreterAccess::runLoop(*this, vuCode, codeSize, vuData, dataSize, gs, memory, maxCycles, true);
             packetSink = nullptr;
@@ -1388,6 +1456,7 @@ void VU1Interpreter::run(uint8_t *vuCode, uint32_t codeSize,
             }
         }
     }
+#endif
     VU1InterpreterAccess::runLoop(*this, vuCode, codeSize, vuData, dataSize, gs, memory, maxCycles, true);
 }
 
@@ -1409,14 +1478,33 @@ bool VU1InterpreterAccess::runLoopWith(VU1Interpreter &vu, uint8_t *vuCode, uint
     vu.m_activeGs = &gs;
     vu.m_activeMemory = memory;
 
+#if !defined(__aarch64__) && !defined(_M_ARM64)
     const unsigned previousCsr = _mm_getcsr();
     const bool changeRounding = (previousCsr & 0x6000u) != 0x6000u;
     if (changeRounding)
         _mm_setcsr(previousCsr | 0x6000u);
+#endif
     const uint64_t budgetEnd = vu.m_cycle + maxCycles;
     bool programEnded = false;
     const Vu1RunArgs compiledArgs{vuData, dataSize, &gs, memory, codeSize, budgetEnd};
     bool interpretNextPair = false;
+
+    const bool trackedVuCode = memory != nullptr &&
+                               ((vu.m_unit == VU1Interpreter::Unit::VU1 && vuCode == memory->getVU1Code()) ||
+                                (vu.m_unit == VU1Interpreter::Unit::VU0 && vuCode == memory->getVU0Code()));
+    if (!compiled && trackedVuCode)
+    {
+        const uint64_t generation = vu.m_unit == VU1Interpreter::Unit::VU1 ? memory->getVU1CodeGeneration() : memory->getVU0CodeGeneration();
+        if (!vu.m_decodedCodeCacheValid ||
+            vu.m_cachedVuCode != vuCode ||
+            vu.m_cachedMemory != memory ||
+            vu.m_cachedCodeSize != codeSize ||
+            vu.m_cachedCodeGeneration != generation)
+        {
+            vu.rebuildDecodedCodeCache(vuCode, codeSize, memory, generation);
+        }
+    }
+
     while (vu.m_cycle < budgetEnd && !vu.m_stopRequested)
     {
         if (compiled && !interpretNextPair)
@@ -1432,6 +1520,18 @@ bool VU1InterpreterAccess::runLoopWith(VU1Interpreter &vu, uint8_t *vuCode, uint
             interpretNextPair = true;
             continue;
         }
+        if (interpretNextPair && trackedVuCode)
+        {
+            const uint64_t generation = vu.m_unit == VU1Interpreter::Unit::VU1 ? memory->getVU1CodeGeneration() : memory->getVU0CodeGeneration();
+            if (!vu.m_decodedCodeCacheValid ||
+                vu.m_cachedVuCode != vuCode ||
+                vu.m_cachedMemory != memory ||
+                vu.m_cachedCodeSize != codeSize ||
+                vu.m_cachedCodeGeneration != generation)
+            {
+                vu.rebuildDecodedCodeCache(vuCode, codeSize, memory, generation);
+            }
+        }
         interpretNextPair = false;
         if (vu.m_unit == VU1Interpreter::Unit::VU1)
             vu1NormShadow.valid = false;
@@ -1445,7 +1545,10 @@ bool VU1InterpreterAccess::runLoopWith(VU1Interpreter &vu, uint8_t *vuCode, uint
         if (vu.m_state.pc + 8u > codeSize)
             break;
 
-        const Decoded &decoded = vu.getDecodedInstructionPairForPc(vuCode, codeSize, memory, vu.m_state.pc);
+        const uint32_t currentPc = vu.m_state.pc;
+        const Decoded &decoded = (trackedVuCode && (currentPc & 7u) == 0u && (currentPc / 8u) < VU1Interpreter::kMaxDecodedPairs)
+                                     ? vu.m_decodedCodeCache[currentPc / 8u]
+                                     : vu.getDecodedInstructionPairForPc(vuCode, codeSize, memory, currentPc);
         if (decoded.upperUsage.reserved || decoded.lowerUsage.reserved)
         {
             vu.reportReservedInstruction(decoded.upperUsage.reserved, decoded.upperUsage.reserved ? decoded.upper : decoded.lower);
@@ -1473,8 +1576,10 @@ bool VU1InterpreterAccess::runLoopWith(VU1Interpreter &vu, uint8_t *vuCode, uint
     if (vu.m_unit == VU1Interpreter::Unit::VU1)
         t_vu1BudgetHit = !programEnded && !vu.m_stopRequested && vu.m_cycle >= budgetEnd;
     vu.m_state.cycles = vu.m_cycle;
+#if !defined(__aarch64__) && !defined(_M_ARM64)
     if (changeRounding)
         _mm_setcsr((_mm_getcsr() & ~0x6000u) | (previousCsr & 0x6000u));
+#endif
     return programEnded;
 }
 

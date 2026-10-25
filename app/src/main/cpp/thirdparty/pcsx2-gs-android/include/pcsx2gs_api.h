@@ -143,12 +143,15 @@ typedef struct Pcsx2GsApi
     // In-game menu: draw = NULL hides it. Any thread.
     void (*set_menu)(Pcsx2GsMenuFn draw, void *user);
     void (*menu_input)(const Pcsx2GsMenuInput *input);
+    // Dynamic window handle update & swapchain recreation (Android lifecycle resume)
+    void (*update_window)(void *hwnd, uint32_t width, uint32_t height);
 } Pcsx2GsApi;
 
 typedef const Pcsx2GsApi *(*Pcsx2GsGetApiFn)(uint32_t version);
 
 const Pcsx2GsApi *pcsx2gs_get_api(uint32_t version);
 void pcsx2gs_set_aspect(uint32_t mode);
+void pcsx2gs_update_window(void *hwnd, uint32_t width, uint32_t height);
 
 #ifdef __cplusplus
 }

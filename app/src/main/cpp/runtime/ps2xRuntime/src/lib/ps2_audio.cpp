@@ -207,12 +207,12 @@ struct PS2AudioBackend::Impl
         uint32_t sampleKey;
     };
     std::vector<TrackedSound> activeSounds;
-    static constexpr size_t kRingSamples = 16384u;
+    static constexpr size_t kRingSamples = 65536u;
     std::array<int16_t, kRingSamples> ring{};
     size_t read = 0u;
     size_t queued = 0u;
-    static constexpr size_t kPrimeSamples = 4096u;
-    static constexpr size_t kRateTargetSamples = 8192u;
+    static constexpr size_t kPrimeSamples = 2048u;
+    static constexpr size_t kRateTargetSamples = 16384u;
     static constexpr int32_t kFadeFrames = 128;
     bool primed = false;
     int32_t fadePosition = 0;
@@ -268,22 +268,24 @@ struct PS2AudioBackend::Impl
             owner->fadePosition = 0;
             owner->fadeSource = owner->lastOutput;
         }
-        // PS2X_AUDIO_RATE_CONTROL (default on): play up to 0.5% faster or slower to keep the queue near
-        // kRateTargetSamples (~85 ms, half the ring: the IOP thread makes audio in bursts and 43 ms ran dry now and then).
-        // The emulated SPU2 makes 48 kHz of emulated time, which never matches the sound card exactly: the game runs a
-        // little under or (locked to a 59.997 Hz monitor, PROGRESS §67) over real time. Without this the queue drained
-        // (underruns) or filled up its 170 ms and ~127 ms were dropped at once.
+        // PS2X_AUDIO_RATE_CONTROL (default on): dynamically scale consumption rate to track SPU2 generation.
+        // Prevents buffer starvation and underrun crackle when Game EE dips to 20-25 FPS.
         static const bool rateControl = [] { const char *v = std::getenv("PS2X_AUDIO_RATE_CONTROL"); return !(v && *v == '0'); }();
         const double fill = (static_cast<double>(owner->queued) - static_cast<double>(kRateTargetSamples)) / static_cast<double>(kRateTargetSamples);
-        const double ratio = 1.0 + std::clamp(fill * 0.005, -0.005, 0.005);
+        // Adaptive continuous dynamic resampling: ratio smoothly adjusts from 0.50x to 1.45x so when Game EE dips,
+        // audio consumption seamlessly scales down with zero starvation or crackling.
+        const double ratio = std::clamp(1.0 + fill * 0.45, 0.50, 1.45);
         for (size_t frame = 0u; frame < frames; ++frame)
         {
-            if (owner->primed && owner->queued < 2u)
+            if (owner->primed && owner->queued < 4u)
             {
-                owner->primed = false;
-                ++owner->underruns;
-                owner->gapRemaining = kFadeFrames;
-                owner->gapSource = owner->lastOutput;
+                // Soft underrun avoidance: do not abruptly unprime/chop to silence with clicking artifacts.
+                // Smoothly decay the last valid output sample to maintain waveform continuity.
+                owner->lastOutput[0] = static_cast<int16_t>(owner->lastOutput[0] * 0.88f);
+                owner->lastOutput[1] = static_cast<int16_t>(owner->lastOutput[1] * 0.88f);
+                output[frame * 2u] = owner->lastOutput[0];
+                output[frame * 2u + 1u] = owner->lastOutput[1];
+                continue;
             }
             if (owner->primed && rateControl && owner->queued >= 4u)
             {

@@ -1,6 +1,62 @@
-# Gradle & build caches
+# ==============================================================================
+# God Hand Android Static Recompilation - .gitignore
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. COPYRIGHTED GAME ASSETS & DISC DUMPS (NEVER COMMIT)
+# ------------------------------------------------------------------------------
+# User must provide their legally acquired original God Hand (SLUS-21503) disc/ISO.
+game_disc_extracted/
+game_disc/
+iso_extracted/
+iso_dump/
+disc_dump/
+godhand_cache/
+*.iso
+*.ISO
+*.bin
+*.BIN
+*.cue
+*.CUE
+*.chd
+*.CHD
+*.mdf
+*.mds
+*.nrg
+*.img
+*.cso
+
+# Proprietary PS2 Disc Binaries & Overlays
+*.elf
+*.ELF
+SLUS*
+SLES*
+*.irx
+*.IRX
+*.ims
+*.IMS
+*.afs
+*.AFS
+*.fst
+*.FST
+*.cnf
+*.CNF
+*.vag
+*.VAG
+*.adpcm
+*.tm2
+*.TM2
+*.str
+*.STR
+*.raw
+*.dump
+
+# ------------------------------------------------------------------------------
+# 2. GRADLE & ANDROID BUILD ARTIFACTS
+# ------------------------------------------------------------------------------
 .gradle/
 build/
+*/build/
 app/build/
 .cxx/
 app/.cxx/
@@ -10,20 +66,75 @@ local.properties
 /local.properties
 *.iml
 
-# IDE configs
+# Android APK / AAB output packages
+*.apk
+*.ap_
+*.aab
+
+# Native compiled shared libraries and archives
+*.so
+*.dylib
+*.dll
+*.exe
+*.obj
+*.o
+*.a
+*.lib
+
+# Host build artifacts
+host_tools_build/
+build_host_recomp/
+tools/recomp-clang/build/
+tools/vu1_dumps/
+
+# ------------------------------------------------------------------------------
+# 3. PRIVATE KEYS & SIGNING CONFIGURATIONS
+# ------------------------------------------------------------------------------
+*.keystore
+*.jks
+*.p12
+*.key
+*.pem
+signing.properties
+
+# ------------------------------------------------------------------------------
+# 4. IDE & SYSTEM CONFIGURATIONS
+# ------------------------------------------------------------------------------
 .idea/
 .kotlin/
+.vscode/
 .DS_Store
+Thumbs.db
+*.swp
+*~
 
-# Temporary & agent context
+# Temporary Agent logs & media artifacts
 .gemini/
+.agent/
+.tempmediaStorage/
 _staging/
-build_host_recomp/
 scratch/
-*.png
-
-# Backups folder
 backups/
+*.png
+*.webp
+*.mp4
+*.webm
+*.log
+!app/src/main/res/**/*.png
+!app/src/main/res/**/*.webp
+!app/src/main/res/**/*.xml
 
-# Raw game ISO / disc extracted data (too large for git)
-game_disc_extracted/
+# ------------------------------------------------------------------------------
+# 6. INTERNAL AI WORKFLOWS, PROMPTS & AGENT SKILLS (NEVER COMMIT)
+# ------------------------------------------------------------------------------
+AGENTS.md
+GEMINI.md
+PS2_PROJECT_STATE.md
+*PROJECT_STATE*
+ps2-recomp-Agent-SKILL/
+ps2-recomp-Agent-SKILL
+*playbook*.txt
+*master_prompt*.txt
+*agent*.txt
+godhand_ultimate_60fps_optimization_playbook.txt
+godhand_android_recomp_agent_master_prompt.txt

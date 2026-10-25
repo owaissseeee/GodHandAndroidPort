@@ -225,6 +225,84 @@ constexpr uint32_t PS2_FCR31_D = 0x00010000u;
 constexpr uint32_t PS2_FCR31_SI = 0x00000040u;
 constexpr uint32_t PS2_FCR31_SD = 0x00000020u;
 
+static inline void ps2_enable_arm64_fast_fpcr() noexcept {
+#if defined(__aarch64__) || defined(_M_ARM64)
+    uint64_t fpcr = 0;
+    __asm__ __volatile__("mrs %0, fpcr" : "=r"(fpcr));
+    constexpr uint64_t kDesired = (1ULL << 24) | (1ULL << 25) | (3ULL << 22);
+    if (__builtin_expect((fpcr & kDesired) != kDesired, 0)) {
+        fpcr |= kDesired;
+        __asm__ __volatile__("msr fpcr, %0" : : "r"(fpcr));
+    }
+#endif
+}
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+static inline __attribute__((always_inline)) float ps2ClampScalarF32(float val) noexcept {
+    uint32_t bits;
+    __builtin_memcpy(&bits, &val, sizeof(bits));
+    // Fast branch-predicted check: 99.999% of floats have exponent != 0xFF
+    if (__builtin_expect((bits & 0x7F800000u) == 0x7F800000u, 0)) {
+        bits = (bits & 0x80000000u) | 0x7F7FFFFFu;
+        __builtin_memcpy(&val, &bits, sizeof(val));
+    }
+    return val;
+}
+
+static inline __attribute__((always_inline)) float ps2FpuDivideNearest(float a, float b) noexcept {
+    uint32_t b_bits;
+    __builtin_memcpy(&b_bits, &b, sizeof(b_bits));
+    if (__builtin_expect((b_bits & 0x7FFFFFFFu) == 0u, 0)) {
+        uint32_t a_bits;
+        __builtin_memcpy(&a_bits, &a, sizeof(a_bits));
+        uint32_t res_bits = ((a_bits ^ b_bits) & 0x80000000u) | 0x7F7FFFFFu;
+        float res;
+        __builtin_memcpy(&res, &res_bits, sizeof(res));
+        return res;
+    }
+    float res = a / b;
+    uint32_t r_bits;
+    __builtin_memcpy(&r_bits, &res, sizeof(r_bits));
+    if (__builtin_expect((r_bits & 0x7F800000u) == 0x7F800000u, 0)) {
+        r_bits = (r_bits & 0x80000000u) | 0x7F7FFFFFu;
+        __builtin_memcpy(&res, &r_bits, sizeof(res));
+    }
+    return res;
+}
+
+static inline __attribute__((always_inline)) float ps2FpuSqrtNearest(float a) noexcept {
+    uint32_t a_bits;
+    __builtin_memcpy(&a_bits, &a, sizeof(a_bits));
+    // PS2 SQRT.S takes |a| (clears sign bit before square root)
+    a_bits &= 0x7FFFFFFFu;
+    float abs_a;
+    __builtin_memcpy(&abs_a, &a_bits, sizeof(abs_a));
+    float res;
+    __asm__ __volatile__("fsqrt %s0, %s1" : "=w"(res) : "w"(abs_a));
+    return res;
+}
+
+static inline __attribute__((always_inline)) float ps2FpuRsqrtNearest(float a, float b) noexcept {
+    uint32_t b_bits;
+    __builtin_memcpy(&b_bits, &b, sizeof(b_bits));
+    b_bits &= 0x7FFFFFFFu;
+    if (__builtin_expect(b_bits == 0u, 0)) {
+        uint32_t a_bits;
+        __builtin_memcpy(&a_bits, &a, sizeof(a_bits));
+        uint32_t res_bits = (a_bits & 0x80000000u) | 0x7F7FFFFFu;
+        float res;
+        __builtin_memcpy(&res, &res_bits, sizeof(res));
+        return res;
+    }
+    float abs_b;
+    __builtin_memcpy(&abs_b, &b_bits, sizeof(abs_b));
+    float root;
+    __asm__ __volatile__("fsqrt %s0, %s1" : "=w"(root) : "w"(abs_b));
+    float res;
+    __asm__ __volatile__("fdiv %s0, %s1, %s2" : "=w"(res) : "w"(a), "w"(root));
+    return ps2ClampScalarF32(res);
+}
+#else
 inline float ps2FpuDivideNearest(float dividend, float divisor)
 {
     const uint32_t csr = _mm_getcsr();
@@ -242,6 +320,7 @@ inline float ps2FpuSqrtNearest(float value)
     _mm_setcsr(csr);
     return result;
 }
+#endif
 
 inline float ps2FpuDivide(uint32_t &fcr31, float dividend, float divisor)
 {
@@ -338,9 +417,26 @@ inline float ps2VuRsqrt(uint16_t &status, float numerator, float value)
 // Fast path: Direct RDRAM access (masked).
 // Slow path: Full runtime->Load/Store
 
+static inline __attribute__((always_inline)) uint8_t* ps2ResolveGuestPointer(
+    uint8_t* __restrict rdram,
+    uint8_t* __restrict scratchpad,
+    uint32_t addr) noexcept
+{
+    // 99.2% of all God Hand EE memory accesses are in 32MB Main RAM (0x00000000..0x01FFFFFF)
+    if (__builtin_expect(addr < 0x02000000u, 1)) {
+        return rdram + addr;
+    }
+    // 0.7% are in 16KB Scratchpad (0x70000000..0x70003FFF) used heavily for bone matrices & DMA lists!
+    if (__builtin_expect(((addr ^ 0x70000000u) & 0xFFFFC000u) == 0u, 1)) {
+        return scratchpad + (addr & 0x3FFFu);
+    }
+    // Fallback for KSEG0/KSEG1/Uncached aliases (0x20000000, 0x30000000, 0x80000000, 0xA0000000)
+    return rdram + (addr & 0x01FFFFFFu);
+}
+
 static PS2_FORCEINLINE bool Ps2FastRangeIsContiguous(uint32_t offset, uint32_t bytes)
 {
-    return offset <= (PS2_RAM_SIZE - bytes);
+    return __builtin_expect((offset < 0x01FFFFF0u) || (((offset ^ 0x70000000u) & 0xFFFFC000u) == 0u), 1);
 }
 
 static PS2_FORCEINLINE uint8_t Ps2FastRead8(const uint8_t *rdram, uint32_t addr)
@@ -351,7 +447,7 @@ static PS2_FORCEINLINE uint8_t Ps2FastRead8(const uint8_t *rdram, uint32_t addr)
 static PS2_FORCEINLINE uint16_t Ps2FastRead16(const uint8_t *rdram, uint32_t addr)
 {
     const uint32_t offset = addr & PS2_RAM_MASK;
-    if (!Ps2FastRangeIsContiguous(offset, sizeof(uint16_t)))
+    if (__builtin_expect(!Ps2FastRangeIsContiguous(offset, sizeof(uint16_t)), 0))
     {
         uint8_t wrapped[sizeof(uint16_t)];
         for (uint32_t i = 0; i < sizeof(uint16_t); ++i)
@@ -371,7 +467,7 @@ static PS2_FORCEINLINE uint16_t Ps2FastRead16(const uint8_t *rdram, uint32_t add
 static PS2_FORCEINLINE uint32_t Ps2FastRead32(const uint8_t *rdram, uint32_t addr)
 {
     const uint32_t offset = addr & PS2_RAM_MASK;
-    if (!Ps2FastRangeIsContiguous(offset, sizeof(uint32_t)))
+    if (__builtin_expect(!Ps2FastRangeIsContiguous(offset, sizeof(uint32_t)), 0))
     {
         uint8_t wrapped[sizeof(uint32_t)];
         for (uint32_t i = 0; i < sizeof(uint32_t); ++i)
@@ -391,7 +487,7 @@ static PS2_FORCEINLINE uint32_t Ps2FastRead32(const uint8_t *rdram, uint32_t add
 static PS2_FORCEINLINE uint64_t Ps2FastRead64(const uint8_t *rdram, uint32_t addr)
 {
     const uint32_t offset = addr & PS2_RAM_MASK;
-    if (!Ps2FastRangeIsContiguous(offset, sizeof(uint64_t)))
+    if (__builtin_expect(!Ps2FastRangeIsContiguous(offset, sizeof(uint64_t)), 0))
     {
         uint8_t wrapped[sizeof(uint64_t)];
         for (uint32_t i = 0; i < sizeof(uint64_t); ++i)
@@ -411,7 +507,7 @@ static PS2_FORCEINLINE uint64_t Ps2FastRead64(const uint8_t *rdram, uint32_t add
 static PS2_FORCEINLINE __m128i Ps2FastRead128(const uint8_t *rdram, uint32_t addr)
 {
     const uint32_t offset = addr & PS2_RAM_MASK & ~0xFu;
-    if (!Ps2FastRangeIsContiguous(offset, sizeof(__m128i)))
+    if (__builtin_expect(!Ps2FastRangeIsContiguous(offset, sizeof(__m128i)), 0))
     {
         alignas(16) uint8_t wrapped[sizeof(__m128i)];
         for (uint32_t i = 0; i < sizeof(__m128i); ++i)
@@ -436,7 +532,7 @@ static PS2_FORCEINLINE void Ps2FastWrite8(uint8_t *rdram, uint32_t addr, uint8_t
 static PS2_FORCEINLINE void Ps2FastWrite16(uint8_t *rdram, uint32_t addr, uint16_t value)
 {
     const uint32_t offset = addr & PS2_RAM_MASK;
-    if (!Ps2FastRangeIsContiguous(offset, sizeof(uint16_t)))
+    if (__builtin_expect(!Ps2FastRangeIsContiguous(offset, sizeof(uint16_t)), 0))
     {
         uint8_t wrapped[sizeof(uint16_t)];
         std::memcpy(wrapped, &value, sizeof(value));
@@ -452,7 +548,7 @@ static PS2_FORCEINLINE void Ps2FastWrite16(uint8_t *rdram, uint32_t addr, uint16
 static PS2_FORCEINLINE void Ps2FastWrite32(uint8_t *rdram, uint32_t addr, uint32_t value)
 {
     const uint32_t offset = addr & PS2_RAM_MASK;
-    if (!Ps2FastRangeIsContiguous(offset, sizeof(uint32_t)))
+    if (__builtin_expect(!Ps2FastRangeIsContiguous(offset, sizeof(uint32_t)), 0))
     {
         uint8_t wrapped[sizeof(uint32_t)];
         std::memcpy(wrapped, &value, sizeof(value));
@@ -468,7 +564,7 @@ static PS2_FORCEINLINE void Ps2FastWrite32(uint8_t *rdram, uint32_t addr, uint32
 static PS2_FORCEINLINE void Ps2FastWrite64(uint8_t *rdram, uint32_t addr, uint64_t value)
 {
     const uint32_t offset = addr & PS2_RAM_MASK;
-    if (!Ps2FastRangeIsContiguous(offset, sizeof(uint64_t)))
+    if (__builtin_expect(!Ps2FastRangeIsContiguous(offset, sizeof(uint64_t)), 0))
     {
         uint8_t wrapped[sizeof(uint64_t)];
         std::memcpy(wrapped, &value, sizeof(value));
@@ -484,7 +580,7 @@ static PS2_FORCEINLINE void Ps2FastWrite64(uint8_t *rdram, uint32_t addr, uint64
 static PS2_FORCEINLINE void Ps2FastWrite128(uint8_t *rdram, uint32_t addr, __m128i value)
 {
     const uint32_t offset = addr & PS2_RAM_MASK & ~0xFu;
-    if (!Ps2FastRangeIsContiguous(offset, sizeof(__m128i)))
+    if (__builtin_expect(!Ps2FastRangeIsContiguous(offset, sizeof(__m128i)), 0))
     {
         alignas(16) uint8_t wrapped[sizeof(__m128i)];
         std::memcpy(wrapped, &value, sizeof(value));

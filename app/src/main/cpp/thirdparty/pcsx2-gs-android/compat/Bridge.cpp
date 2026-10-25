@@ -30,16 +30,37 @@ namespace
     bool g_open = false;
     WindowInfo g_window;
 
-    // Urban Reign's entry in PCSX2's GameIndex.yaml (SLUS-21209): alignSprite 1, textureInsideRT 1,
-    // halfPixelOffset 4, nativeScaling 2, getSkipCount GSC_UrbanReign. PCSX2 applies them through its game database;
-    // here they are fixed.
+    // God Hand (SLUS-21503) official PCSX2 GameIndex.yaml configuration:
+    // halfPixelOffset: 2 (Special: Depth of field effect aligned properly + Shifts buildings correctly)
+    // nativeScaling: 2 (Aggressive: Fixes post effects)
     void ApplyGameFixes(Pcsx2Config::GSOptions &options)
     {
-        options.UserHacks_AlignSpriteX = true;
-        options.UserHacks_TextureInsideRt = GSTextureInRtMode::InsideTargets;
-        options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Native;
+        // Mobile TBDR (Mali / Adreno / Xclipse) Zero-Barrier Configuration for God Hand:
+        options.PreloadFrameWithGSData = false;            // WAS true -> caused stalls on particle/debris buffer init!
+        options.GPUPaletteConversion = false;              // WAS true -> caused 60+ separate Vulkan RenderPasses/frame on houses & enemies!
+        options.UserHacks_DisablePartialInvalidation = true;
+        options.UserHacks_DisableSafeFeatures = true;
+        options.UserHacks_AutoFlush = GSHWAutoFlushLevel::Disabled;
+        options.HWAccurateAlphaTest = false;               // AccurateDATE = Off: Eliminates per-particle framebuffer barrier stalls!
+        options.AccurateBlendingUnit = AccBlendLevel::Minimum; // BlendingAccuracy = Minimum: Single-pass hardware blending for heavy smoke/fire/spark particles!
+        options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
+        options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special;
         options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
-        options.GetSkipCountFunctionId = GSLookupGetSkipCountFunctionId("GSC_UrbanReign");
+        options.UserHacks_AlignSpriteX = false;
+        options.GetSkipCountFunctionId = -1;
+        options.SkipDuplicateFrames = false;
+
+#if defined(__ANDROID__)
+        // Mobile Mali GPU optimizations:
+        // Use Unsynchronized download mode to prevent blocking GPU readbacks that crush FPS
+        options.HWDownloadMode = GSHardwareDownloadMode::Unsynchronized;
+        options.HWSpinGPUForReadbacks = false;
+        options.HWSpinCPUForReadbacks = false;
+        options.DumpDirectTextures = false;
+        options.DumpPaletteTextures = false;
+        options.EnableVideoCapture = false;
+        options.EnableAudioCapture = false;
+#endif
     }
 
     // Pcsx2GsOpenParams::options: "key=value;key=value".
@@ -100,6 +121,16 @@ namespace
                 options.PrecacheTextureReplacements = value != 0;
             else if (key == "blending")
                 options.AccurateBlendingUnit = static_cast<AccBlendLevel>(std::clamp(value, 0, 5));
+            else if (key == "half_pixel_offset")
+                options.UserHacks_HalfPixelOffset = static_cast<GSHalfPixelOffset>(std::clamp(value, 0, 5));
+            else if (key == "hw_download")
+                options.HWDownloadMode = static_cast<GSHardwareDownloadMode>(std::clamp(value, 0, 4));
+            else if (key == "preload_frame")
+                options.PreloadFrameWithGSData = value != 0;
+            else if (key == "depth_support")
+                options.UserHacks_DisableDepthSupport = (value == 0);
+            else if (key == "auto_flush")
+                options.UserHacks_AutoFlush = static_cast<GSHWAutoFlushLevel>(std::clamp(value, 0, 2));
         }
     }
 
@@ -135,8 +166,10 @@ namespace
 #else
         options.Renderer = GSRendererType::DX11;
 #endif
-        options.UpscaleMultiplier = std::max(1.0f, params->scale);
-        options.AspectRatio = params->stretch ? AspectRatioType::Stretch : AspectRatioType::R4_3;
+        options.UpscaleMultiplier = std::max(0.25f, params->scale);
+        options.AspectRatio = (params->stretch == 1u) ? AspectRatioType::R16_9
+                            : (params->stretch == 2u) ? AspectRatioType::Stretch
+                                                      : AspectRatioType::R4_3;
         ApplyGameFixes(options);
         ApplyOptions(options, params->options);
         EmuConfig.GS = options;
@@ -274,7 +307,7 @@ gs_open_success:
         if (!g_open)
             return;
         Pcsx2Config::GSOptions options = GSConfig;
-        options.UpscaleMultiplier = std::max(1.0f, scale);
+        options.UpscaleMultiplier = std::max(0.25f, scale);
         EmuConfig.GS = options;
         GSUpdateConfig(options);
     }
@@ -353,7 +386,27 @@ gs_open_success:
         return 1;
     }
 
-    const Pcsx2GsApi g_api = {PCSX2GS_API_VERSION, Open, Close, Gif, Vsync, Reset, ReadFifo, Resize, SetScale, LoadVram, SaveVram, ReadLocal, pcsx2gs::SetOsd, Snapshot, pcsx2gs::SetMenu, pcsx2gs::MenuInput};
+    void UpdateWindow(void *hwnd, uint32_t width, uint32_t height)
+    {
+        if (!g_open || !hwnd)
+            return;
+#if defined(__ANDROID__)
+        __android_log_print(ANDROID_LOG_INFO, "pcsx2-gs", "Bridge::UpdateWindow: updating window handle=%p (%ux%u)", hwnd, width, height);
+#endif
+        g_window.window_handle = hwnd;
+        if (width > 0 && height > 0)
+        {
+            g_window.surface_width = width;
+            g_window.surface_height = height;
+        }
+        pcsx2gs::SetRenderWindow(g_window);
+        GSUpdateDisplayWindow();
+#if defined(__ANDROID__)
+        __android_log_print(ANDROID_LOG_INFO, "pcsx2-gs", "Bridge::UpdateWindow: GSUpdateDisplayWindow completed successfully");
+#endif
+    }
+
+    const Pcsx2GsApi g_api = {PCSX2GS_API_VERSION, Open, Close, Gif, Vsync, Reset, ReadFifo, Resize, SetScale, LoadVram, SaveVram, ReadLocal, pcsx2gs::SetOsd, Snapshot, pcsx2gs::SetMenu, pcsx2gs::MenuInput, UpdateWindow};
 }
 
 #if defined(_WIN32)
@@ -372,4 +425,9 @@ extern "C" PCSX2GS_EXPORT const Pcsx2GsApi *pcsx2gs_get_api(uint32_t version)
 extern "C" PCSX2GS_EXPORT void pcsx2gs_set_aspect(uint32_t mode)
 {
     EmuConfig.CurrentAspectRatio = mode == 2u ? AspectRatioType::Stretch : mode == 1u ? AspectRatioType::R16_9 : AspectRatioType::R4_3;
+}
+
+extern "C" PCSX2GS_EXPORT void pcsx2gs_update_window(void *hwnd, uint32_t width, uint32_t height)
+{
+    UpdateWindow(hwnd, width, height);
 }

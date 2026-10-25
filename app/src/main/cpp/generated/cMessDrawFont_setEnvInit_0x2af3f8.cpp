@@ -343,12 +343,19 @@ label_2af4f0:
     }
     ctx->pc = 0x2AF4F8u;
 label_2af4f8:
-    // 0x2af4f8: 0x3c013f66  lui         $at, 0x3F66
+    // 0x2af4f8 / 0x2af4fc: font width fix (0.675f in 16:9, 0.9f in 4:3)
     ctx->pc = 0x2af4f8u;
-    SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16230 << 16));
-    // 0x2af4fc: 0x34216666  ori         $at, $at, 0x6666
+    {
+        static const bool s_isWidescreen = []() {
+            const char* env = std::getenv("GODHAND_ASPECT_RATIO_IDX");
+            return !env || std::strcmp(env, "0") == 0;
+        }();
+        // 0x3F2CCCCD = 0.675f (16:9 font fix: 0.9f * 3/4)
+        // 0x3F666666 = 0.9f (4:3 Original)
+        const uint32_t atVal = s_isWidescreen ? 0x3F2CCCCDu : 0x3F666666u;
+        SET_GPR_S32(ctx, 1, static_cast<int32_t>(atVal));
+    }
     ctx->pc = 0x2af4fcu;
-    SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)26214);
     // 0x2af500: 0x4481a000  mtc1        $at, $f20
     ctx->pc = 0x2af500u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[20], &bits, sizeof(bits)); }

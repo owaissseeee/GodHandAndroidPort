@@ -20,6 +20,8 @@
 #include <vector>
 #include <xmmintrin.h>
 
+extern "C" void godhand_set_thread_affinity_and_priority(const char* name, int primaryCore, int fallbackCore, int niceVal);
+
 namespace
 {
     // Asynchronous readback of tiny local->host transfers (docs/PROGRESS.md §50). Urban Reign reads an 8x8 block of the
@@ -333,6 +335,7 @@ void GSThreadedBackend::WorkerLoop()
 {
     ThreadNaming::SetCurrentThreadName("GSThread");
     ThreadPriority::RaiseCurrentThread(ThreadPriority::Level::AboveNormal);
+    godhand_set_thread_affinity_and_priority("GSThread", 6, 7, -20);
     GSPrimitiveBatch draw;
     for (;;)
     {

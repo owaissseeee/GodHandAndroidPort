@@ -70,4 +70,8 @@ namespace godhand
     // each run of the flip-chain builder 0x30B870, so the FBP 0x70 -> FBP 0 copy is 1:1 instead of blending the lines
     // above and below (which at high resolution are whole native rows away: a triple image). 1x is unchanged.
     void installHiresFlipCopy(PS2Runtime &runtime);
+
+    // Observes God Hand's flip-chain builder 0x30B870 to track accurate EE game logic ticks for the performance HUD.
+    void installGameFrameCounter(PS2Runtime &runtime);
 }
+

@@ -10,21 +10,26 @@
         android:allowBackup="true"
         android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="God Hand"
+        android:label="GodHandAndroid"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:appCategory="game"
+        android:isGame="true"
+        android:hardwareAccelerated="true"
         android:theme="@style/Theme.GodHandAndroid">
         <activity
-            android:name="com.lasvola.godhand.MainActivity"
+            android:name="com.owaissseeee.godhand.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.GAME" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.lasvola.godhand.GameActivity"
+            android:name="com.owaissseeee.godhand.GameActivity"
+            android:process=":game"
             android:exported="true"
             android:screenOrientation="sensorLandscape"
             android:configChanges="orientation|screenSize|screenLayout|keyboard|keyboardHidden" />

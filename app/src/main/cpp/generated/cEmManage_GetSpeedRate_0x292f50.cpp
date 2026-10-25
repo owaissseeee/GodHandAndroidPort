@@ -38,6 +38,9 @@ void cEmManage_GetSpeedRate_0x292f50(uint8_t* rdram, R5900Context* ctx, PS2Runti
         ctx->branch_pc = 0x292F5Cu;
         // 0x292f60: 0x46000802  mul.s       $f0, $f1, $f0 (Delay Slot)
         ctx->f[0] = FPU_MUL_S(ctx->f[1], ctx->f[0]);
+        if (rdram && rdram[0x00747A09u] == 0x01u) {
+            ctx->f[0] *= 0.5f;
+        }
         ctx->in_delay_slot = false;
         ctx->pc = jumpTarget;
         #if defined(PS2X_STRICT_RETURN_DIAGNOSTICS) && PS2X_STRICT_RETURN_DIAGNOSTICS

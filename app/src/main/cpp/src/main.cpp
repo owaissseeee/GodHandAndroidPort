@@ -73,6 +73,8 @@ void registerGeneratedVu1Programs(); // generated/vu1/vu1_programs.cpp (VU1 micr
 #define GODHAND_ARCH_NAME "SSE41"
 #endif
 
+extern "C" void godhand_set_thread_affinity_and_priority(const char* name, int primaryCore, int fallbackCore, int niceVal);
+
 namespace
 {
     namespace fs = std::filesystem;
@@ -243,9 +245,13 @@ namespace
 #if defined(__aarch64__) || defined(_M_ARM64)
         uint64_t fpcr = 0;
         __asm__ __volatile__("mrs %0, fpcr" : "=r"(fpcr));
-        fpcr |= (1ULL << 24); // FZ: Flush-to-zero mode
-        fpcr |= (1ULL << 22); // RMode: Round towards zero (chop)
-        __asm__ __volatile__("msr fpcr, %0" : : "r"(fpcr));
+        // Bits [23:22] = 0b11 (3ULL << 22) is Round Towards Zero (RZ).
+        // Bit 24 = FZ (Flush-to-zero), Bit 25 = DN (Default NaN).
+        constexpr uint64_t kDesiredFpcr = (1ULL << 24) | (1ULL << 25) | (3ULL << 22);
+        if ((fpcr & kDesiredFpcr) != kDesiredFpcr) {
+            fpcr |= kDesiredFpcr;
+            __asm__ __volatile__("msr fpcr, %0" : : "r"(fpcr));
+        }
 #elif defined(_MM_SET_ROUNDING_MODE)
         _MM_SET_ROUNDING_MODE(_MM_ROUND_TOWARD_ZERO);
         _MM_SET_FLUSH_ZERO_MODE(_MM_FLUSH_ZERO_ON);
@@ -663,7 +669,6 @@ int main(int argc, char *argv[])
     setDefaultEnv("PS2X_AUDIO_STRETCH", "0");
     GSThreadedBackend::SetEnabledByDefault(true);
     GSThreadedBackend::SetGpuByDefault(true);
-    GSGpuBackend::SetAsyncPresentDefault(true);
     ps2x::asyncvif::setHostPacingDefault(true); // only matters with PS2X_MTVU=1 (MTVU itself stays off by default)
     EeScheduler::setHostPacingDefault(true);
 
@@ -780,27 +785,58 @@ int main(int argc, char *argv[])
 #include "godhand_patches_mobile.h"
 #include "snr2_unified_registry.h"
 
+extern "C" void GSPcsx2Backend_DetachHostWindow();
+
 namespace godhand {
 
-void notifySurfaceChanged(ANativeWindow* win, int /*width*/, int /*height*/) {
+void notifySurfaceChanged(ANativeWindow* win, int width, int height) {
     if (win) {
+        if (width > 0 && height > 0) {
+            ANativeWindow_setBuffersGeometry(win, width, height, WINDOW_FORMAT_RGBA_8888);
+        }
         GSPcsx2Backend::AttachHostWindow(static_cast<void*>(win));
     }
 }
 
-void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererIdx, int resScaleIdx, int aspectIdx, int fpsIdx) {
-    __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "bootAndroidRuntime: initializing EE runtime...");
+void notifySurfaceDestroyed() {
+    GSPcsx2Backend_DetachHostWindow();
+}
 
-    int scale = std::clamp(resScaleIdx + 1, 1, 8);
+extern "C" void godhand_set_frameskip_mode(int mode);
+
+void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererIdx, int resScaleIdx, int aspectIdx, int fpsIdx, int frameskipIdx) {
+    __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "bootAndroidRuntime: initializing EE runtime (frameskip=%d)...", frameskipIdx);
+    godhand_set_frameskip_mode(frameskipIdx);
+
+    // Internal resolution scale mapping from UI spinner index:
+    // 0: "0.5x (Super Ultra Low Potato)" -> 0.5f
+    // 1: "0.75x (Performance Boost)" -> 0.75f
+    // 2: "1x (512x448 Native)" -> 1.0f
+    // 3: "2x (1024x896 HD)" -> 2.0f
+    // 4: "3x (1536x1344 FHD+)" -> 3.0f
+    // 5: "4x (2048x1792 QHD)" -> 4.0f
+    // 6: "6x" -> 6.0f
+    // 7: "8x (4K)" -> 8.0f
+    static const float s_scales[] = { 0.5f, 0.75f, 1.0f, 2.0f, 3.0f, 4.0f, 6.0f, 8.0f };
+    float scale = 1.0f;
+    if (resScaleIdx >= 0 && resScaleIdx < static_cast<int>(sizeof(s_scales) / sizeof(s_scales[0]))) {
+        scale = s_scales[resScaleIdx];
+    }
     setEnv("PS2X_GS_SCALE", std::to_string(scale));
-    setEnv("PS2X_PCSX2_VSYNC", (fpsIdx == 1) ? "0" : "2");
-    setEnv("PS2X_PCSX2_STRETCH", (aspectIdx == 3) ? "0" : "1");
+    setEnv("GODHAND_TARGET_FPS_IDX", std::to_string(fpsIdx));
+    setEnv("GODHAND_ASPECT_RATIO_IDX", std::to_string(aspectIdx));
+    // Never use VSYNC="2" (double-VBlank FIFO block) on Android: it drops 58 FPS straight to 30 FPS!
+    setEnv("PS2X_PCSX2_VSYNC", "0");
+    setEnv("PS2X_VSYNC", "0");
+    setEnv("PS2X_PCSX2_STRETCH", (aspectIdx == 1) ? "0" : "1");
     setEnv("GODHAND_RENDERER", (rendererIdx == 1) ? "gles" : "vulkan");
     setEnv("PS2X_GS_RENDERER", "pcsx2");
     setEnv("GODHAND_HEADLESS", "0");
 
     fs::path cacheDir;
     static const char* const s_cacheCandidates[] = {
+        "/data/data/com.owaissseeee.godhand/files/godhand_cache",
+        "/data/user/0/com.owaissseeee.godhand/files/godhand_cache",
         "/data/data/com.lasvola.godhand/files/godhand_cache",
         "/data/user/0/com.lasvola.godhand/files/godhand_cache",
         "/sdcard/Download/God Hand (USA)",
@@ -817,10 +853,19 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
         }
     }
     if (cacheDir.empty()) {
-        cacheDir = "/data/data/com.lasvola.godhand/files/godhand_cache";
+        cacheDir = "/data/data/com.owaissseeee.godhand/files/godhand_cache";
     }
     fs::path bootElf = cacheDir / "SLUS_215.03";
     __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "Target cacheDir: %s, bootElf: %s", cacheDir.string().c_str(), bootElf.string().c_str());
+
+    // Auto-unpack MODULES/IRX.IMS if present and IRX modules are missing
+    fs::path imsPath = cacheDir / "MODULES" / "IRX.IMS";
+    fs::path sdrdrvPath = cacheDir / "MODULES" / "SDRDRV.IRX";
+    std::error_code imsEc;
+    if (fs::exists(imsPath, imsEc) && !fs::exists(sdrdrvPath, imsEc)) {
+        __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "Auto-unpacking missing IRX modules from %s...", imsPath.string().c_str());
+        godhand::unpackImsArchive(imsPath, cacheDir / "MODULES");
+    }
 
     PS2Runtime::IoPaths paths{};
     paths.hostRoot = cacheDir;
@@ -829,9 +874,21 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     paths.elfPath = bootElf;
     paths.elfDirectory = cacheDir;
 
+    // Disable writing missing VU1 .bin files to Android /sdcard FUSE storage during gameplay!
+    setEnv("PS2X_VU1_MISS_DIR", "0");
+
     setDefaultEnv("PS2X_GS_SHADER_CACHE_DIR", (cacheDir / "gs_shaders").string());
     setDefaultEnv("PS2X_SIO2_RECV1", "2");
     setDefaultEnv("PS2X_AUDIO_STRETCH", "0");
+    setDefaultEnv("PS2X_MTVU", "1");
+    setDefaultEnv("PS2X_MTVU_VBLANK_WAIT", "0");
+    setDefaultEnv("PS2X_GS_ASYNC_PRESENT", "1");
+    setDefaultEnv("PS2X_PGS_COALESCE", "1");
+    setDefaultEnv("PS2X_VU0_LEAN", "1");
+    ps2x::asyncvif::setDefaultEnabled(true);
+    // Disable artificial host pacing sleep on asyncvif so VUThread processes enemy/house geometry at 100% speed!
+    ps2x::asyncvif::setHostPacingDefault(false);
+    EeScheduler::setHostPacingDefault(true);
     GSThreadedBackend::SetEnabledByDefault(true);
     GSThreadedBackend::SetGpuByDefault(true);
 
@@ -865,10 +922,18 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
 
     godhand::installHleBindings(runtime);
     godhand::initModuleRegistry();
+#if GODHAND_HAS_VU1_PROGRAMS
+    registerGeneratedVu1Programs();
+    __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "registerGeneratedVu1Programs: AOT VU1 microprograms registered successfully!");
+#endif
     godhand::installDllLoadLogger(runtime);
     godhand::installMovieWatchdog(runtime);
+    godhand::installHiresFlipCopy(runtime);
+    godhand::installGameFrameCounter(runtime);
 
     godhand::mobile::applyPatches(runtime.memory().getRDRAM(), fpsIdx, aspectIdx, static_cast<float>(scale));
+
+    godhand_set_thread_affinity_and_priority("HostPump", 0, 1, 0);
 
     __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "Starting God Hand main loop on ARM64...");
     runtime.run();

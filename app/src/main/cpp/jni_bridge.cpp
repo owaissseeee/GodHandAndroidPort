@@ -10,10 +10,14 @@
 #include <filesystem>
 #include <fstream>
 #include <cstring>
+#include <cctype>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <dlfcn.h>
+#include "ps2_host_backend.h"
+#include "godhand/game_disc.h"
+#include "godhand/godhand_perf.h"
 
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, "GodHandRecomp", __VA_ARGS__)
@@ -47,8 +51,99 @@ namespace ps2_pad {
 namespace godhand {
 
 // Declarations of engine boot / notify functions implemented in main.cpp
-void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererIdx, int resScaleIdx, int aspectIdx, int fpsIdx);
+void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererIdx, int resScaleIdx, int aspectIdx, int fpsIdx, int frameskipIdx);
 void notifySurfaceChanged(ANativeWindow* win, int width, int height);
+void notifySurfaceDestroyed();
+
+bool unpackImsArchive(const std::filesystem::path& imsPath, const std::filesystem::path& outDir) {
+    namespace fs = std::filesystem;
+    std::error_code ec;
+    if (!fs::exists(imsPath, ec)) {
+        LOGW("unpackImsArchive: %s does not exist", imsPath.string().c_str());
+        return false;
+    }
+    std::ifstream file(imsPath, std::ios::binary);
+    if (!file.is_open()) {
+        LOGE("unpackImsArchive: failed to open %s", imsPath.string().c_str());
+        return false;
+    }
+
+    char magic[4]{};
+    file.read(magic, 4);
+    if (std::memcmp(magic, "IMS", 3) != 0) {
+        LOGE("unpackImsArchive: invalid magic '%.4s' in %s", magic, imsPath.string().c_str());
+        return false;
+    }
+
+    uint32_t pad1 = 0, numFiles = 0, pad2 = 0;
+    file.read(reinterpret_cast<char*>(&pad1), 4);
+    file.read(reinterpret_cast<char*>(&numFiles), 4);
+    file.read(reinterpret_cast<char*>(&pad2), 4);
+
+    LOGI("unpackImsArchive: %s contains %u files", imsPath.string().c_str(), numFiles);
+    if (numFiles == 0 || numFiles > 256) {
+        LOGE("unpackImsArchive: unexpected entry count %u", numFiles);
+        return false;
+    }
+
+    struct ImsEntry {
+        char name[16];
+        uint32_t offset;
+        uint32_t size;
+        uint32_t pad[2];
+    };
+
+    std::vector<ImsEntry> entries(numFiles);
+    for (uint32_t i = 0; i < numFiles; ++i) {
+        file.seekg(16 + i * 32, std::ios::beg);
+        file.read(reinterpret_cast<char*>(&entries[i]), sizeof(ImsEntry));
+    }
+
+    fs::create_directories(outDir, ec);
+
+    for (const auto& entry : entries) {
+        std::string name(entry.name, strnlen(entry.name, 16));
+        if (name.empty()) continue;
+
+        LOGI("unpackImsArchive: extracting %s (%u bytes at 0x%X)", name.c_str(), entry.size, entry.offset);
+        file.seekg(entry.offset, std::ios::beg);
+        std::vector<uint8_t> data(entry.size);
+        file.read(reinterpret_cast<char*>(data.data()), entry.size);
+
+        // Write original file
+        fs::path dest = outDir / name;
+        std::ofstream out(dest, std::ios::binary);
+        if (out.is_open()) {
+            out.write(reinterpret_cast<const char*>(data.data()), data.size());
+            out.close();
+        }
+
+        // Write uppercase and lowercase copies to ensure case-insensitive filesystem lookup succeeds
+        std::string upperName = name;
+        std::string lowerName = name;
+        for (char& c : upperName) c = static_cast<char>(std::toupper(static_cast<unsigned char>(c)));
+        for (char& c : lowerName) c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+
+        if (upperName != name) {
+            fs::path uDest = outDir / upperName;
+            std::ofstream uOut(uDest, std::ios::binary);
+            if (uOut.is_open()) {
+                uOut.write(reinterpret_cast<const char*>(data.data()), data.size());
+                uOut.close();
+            }
+        }
+        if (lowerName != name && lowerName != upperName) {
+            fs::path lDest = outDir / lowerName;
+            std::ofstream lOut(lDest, std::ios::binary);
+            if (lOut.is_open()) {
+                lOut.write(reinterpret_cast<const char*>(data.data()), data.size());
+                lOut.close();
+            }
+        }
+    }
+    LOGI("unpackImsArchive: successfully unpacked %u modules into %s", numFiles, outDir.string().c_str());
+    return true;
+}
 
 bool extractIsoFdToCache(int fd, const std::string& cache_dir, std::function<void(int, const std::string&)> progress) {
     if (fd < 0) return false;
@@ -83,58 +178,83 @@ bool extractIsoFdToCache(int fd, const std::string& cache_dir, std::function<voi
     uint32_t rootLba = *reinterpret_cast<const uint32_t*>(rootRecord + 2);
     uint32_t rootLen = *reinterpret_cast<const uint32_t*>(rootRecord + 10);
 
-    std::vector<uint8_t> dirBuf(rootLen);
-    if (lseek(fd, static_cast<off_t>(rootLba) * kSectorSize, SEEK_SET) == (off_t)-1) {
-        LOGE("Failed to seek to root directory table");
-        return false;
-    }
-    if (read(fd, dirBuf.data(), rootLen) != static_cast<ssize_t>(rootLen)) {
-        LOGE("Failed to read root directory records");
-        return false;
-    }
-
-    struct Entry {
-        std::string name;
+    struct FileEntry {
+        std::string relPath;
         uint32_t lba;
         uint32_t size;
-        bool isDir;
     };
-    std::vector<Entry> entries;
+    std::vector<FileEntry> filesToExtract;
 
-    size_t offset = 0;
-    while (offset < rootLen) {
-        uint8_t recLen = dirBuf[offset];
-        if (recLen == 0) {
-            // Sector boundary padding: round up to next 2048
-            offset = ((offset / kSectorSize) + 1) * kSectorSize;
+    struct DirTask {
+        uint32_t lba;
+        uint32_t len;
+        std::string prefix;
+        int depth;
+    };
+    std::vector<DirTask> dirQueue;
+    dirQueue.push_back({ rootLba, rootLen, "", 0 });
+
+    while (!dirQueue.empty()) {
+        DirTask task = dirQueue.back();
+        dirQueue.pop_back();
+
+        if (task.depth > 8 || task.len > (64u << 20) || task.len == 0) continue;
+
+        std::vector<uint8_t> dirBuf(task.len);
+        if (lseek(fd, static_cast<off_t>(task.lba) * kSectorSize, SEEK_SET) == (off_t)-1) {
+            LOGW("Failed to seek to directory at LBA %u", task.lba);
             continue;
         }
-        if (offset + recLen > rootLen) break;
-
-        uint32_t lba = *reinterpret_cast<const uint32_t*>(&dirBuf[offset + 2]);
-        uint32_t dataLen = *reinterpret_cast<const uint32_t*>(&dirBuf[offset + 10]);
-        uint8_t flags = dirBuf[offset + 25];
-        uint8_t nameLen = dirBuf[offset + 32];
-        std::string name(reinterpret_cast<const char*>(&dirBuf[offset + 33]), nameLen);
-
-        // Strip version suffix ";1" if present
-        size_t semi = name.find(';');
-        if (semi != std::string::npos) name = name.substr(0, semi);
-
-        if (!name.empty() && name[0] != 0 && name[0] != 1) {
-            entries.push_back({name, lba, dataLen, (flags & 0x02) != 0});
+        if (read(fd, dirBuf.data(), task.len) != static_cast<ssize_t>(task.len)) {
+            LOGW("Failed to read directory at LBA %u", task.lba);
+            continue;
         }
-        offset += recLen;
+
+        size_t offset = 0;
+        while (offset < task.len) {
+            uint8_t recLen = dirBuf[offset];
+            if (recLen == 0) {
+                // Sector boundary padding: round up to next 2048
+                offset = ((offset / kSectorSize) + 1) * kSectorSize;
+                continue;
+            }
+            if (offset + recLen > task.len || recLen < 34) break;
+
+            uint32_t entryLba = *reinterpret_cast<const uint32_t*>(&dirBuf[offset + 2]);
+            uint32_t entryDataLen = *reinterpret_cast<const uint32_t*>(&dirBuf[offset + 10]);
+            uint8_t entryFlags = dirBuf[offset + 25];
+            uint8_t entryNameLen = dirBuf[offset + 32];
+
+            offset += recLen;
+
+            if (entryNameLen == 1 && (dirBuf[offset - recLen + 33] == 0 || dirBuf[offset - recLen + 33] == 1)) {
+                continue; // Current or parent directory (".", "..")
+            }
+
+            std::string name(reinterpret_cast<const char*>(&dirBuf[offset - recLen + 33]), entryNameLen);
+            size_t semi = name.find(';');
+            if (semi != std::string::npos) name = name.substr(0, semi);
+            if (name.empty()) continue;
+
+            std::string fullRel = task.prefix.empty() ? name : (task.prefix + "/" + name);
+            bool isDir = (entryFlags & 0x02) != 0;
+
+            if (isDir) {
+                dirQueue.push_back({ entryLba, entryDataLen, fullRel, task.depth + 1 });
+            } else {
+                filesToExtract.push_back({ fullRel, entryLba, entryDataLen });
+            }
+        }
     }
 
     progress(30, "Extracting God Hand game files from ISO...");
-    for (size_t i = 0; i < entries.size(); ++i) {
-        const auto& e = entries[i];
-        if (e.isDir) continue;
+    for (size_t i = 0; i < filesToExtract.size(); ++i) {
+        const auto& e = filesToExtract[i];
+        fs::path dest = outDir / e.relPath;
+        fs::create_directories(dest.parent_path(), ec);
 
-        fs::path dest = outDir / e.name;
-        int pct = 30 + static_cast<int>((i + 1) * 45 / entries.size());
-        progress(pct, "Extracting " + e.name);
+        int pct = 30 + static_cast<int>((i + 1) * 45 / filesToExtract.size());
+        progress(pct, "Extracting " + e.relPath);
 
         int outFd = open(dest.string().c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0666);
         if (outFd < 0) {
@@ -156,6 +276,13 @@ bool extractIsoFdToCache(int fd, const std::string& cache_dir, std::function<voi
         close(outFd);
     }
 
+    // Unpack MODULES/IRX.IMS if present
+    fs::path imsPath = outDir / "MODULES" / "IRX.IMS";
+    if (fs::exists(imsPath, ec)) {
+        progress(78, "Unpacking IRX.IMS driver modules (sdrdrv.irx, sio2man.irx, padman.irx)...");
+        unpackImsArchive(imsPath, outDir / "MODULES");
+    }
+
     progress(80, "Disc extraction complete");
     return true;
 }
@@ -163,6 +290,13 @@ bool extractIsoFdToCache(int fd, const std::string& cache_dir, std::function<voi
 void buildAfsSectorLookupIndex(const std::string& cache_dir) {
     namespace fs = std::filesystem;
     fs::path dir(cache_dir);
+
+    // Auto-unpack IRX.IMS if present
+    fs::path imsPath = dir / "MODULES" / "IRX.IMS";
+    if (fs::exists(imsPath)) {
+        unpackImsArchive(imsPath, dir / "MODULES");
+    }
+
     fs::path afsPath = dir / "_DATA.AFS";
     if (!fs::exists(afsPath)) afsPath = dir / "GODHAND.AFS";
 
@@ -195,7 +329,7 @@ static std::thread g_ee_thread;
 extern "C" {
 
 JNIEXPORT jboolean JNICALL
-Java_com_lasvola_godhand_NativeBridge_extractAndCacheIsoFromFd(
+Java_com_owaissseeee_godhand_NativeBridge_extractAndCacheIsoFromFd(
     JNIEnv* env, jobject /*thiz*/, jint fd, jstring outCacheDir, jobject progressListener)
 {
     const char* cache_cstr = env->GetStringUTFChars(outCacheDir, nullptr);
@@ -213,7 +347,7 @@ Java_com_lasvola_godhand_NativeBridge_extractAndCacheIsoFromFd(
         env->DeleteLocalRef(jLog);
     };
 
-    report(15, "[ISO] Extracting SLUS_215.03, SYSTEM.CNF, GODHAND.FST, _DATA.AFS...");
+    report(15, "[ISO] Extracting SLUS_215.03, SYSTEM.CNF, GODHAND.FST, MODULES, _DATA.AFS...");
     bool ok = godhand::extractIsoFdToCache(fd, cache_dir, [&](int p, const std::string& msg) {
         report(p, msg);
     });
@@ -222,7 +356,7 @@ Java_com_lasvola_godhand_NativeBridge_extractAndCacheIsoFromFd(
 }
 
 JNIEXPORT void JNICALL
-Java_com_lasvola_godhand_NativeBridge_buildAfsFastIndex(
+Java_com_owaissseeee_godhand_NativeBridge_buildAfsFastIndex(
     JNIEnv* env, jobject /*thiz*/, jstring cacheDir)
 {
     const char* cstr = env->GetStringUTFChars(cacheDir, nullptr);
@@ -230,15 +364,76 @@ Java_com_lasvola_godhand_NativeBridge_buildAfsFastIndex(
     env->ReleaseStringUTFChars(cacheDir, cstr);
 }
 
+JNIEXPORT jboolean JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_unpackImsArchive(
+    JNIEnv* env, jobject /*thiz*/, jstring cacheDir)
+{
+    namespace fs = std::filesystem;
+    const char* cstr = env->GetStringUTFChars(cacheDir, nullptr);
+    fs::path dir(cstr);
+    env->ReleaseStringUTFChars(cacheDir, cstr);
+
+    fs::path imsPath = dir / "MODULES" / "IRX.IMS";
+    if (!fs::exists(imsPath)) {
+        imsPath = dir / "IRX.IMS";
+    }
+    if (fs::exists(imsPath)) {
+        return godhand::unpackImsArchive(imsPath, dir / "MODULES") ? JNI_TRUE : JNI_FALSE;
+    }
+    return JNI_FALSE;
+}
+
 JNIEXPORT void JNICALL
-Java_com_lasvola_godhand_NativeBridge_onSurfaceCreated(
+Java_com_owaissseeee_godhand_NativeBridge_setAudioMuted(
+    JNIEnv* /*env*/, jobject /*thiz*/, jboolean muted)
+{
+    if (muted) {
+        SetMasterVolume(0.0f);
+        LOGI("NativeBridge: audio muted (master volume 0.0)");
+    } else {
+        SetMasterVolume(1.0f);
+        LOGI("NativeBridge: audio unmuted (master volume 1.0)");
+    }
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setAudioVolume(
+    JNIEnv* /*env*/, jobject /*thiz*/, jfloat volume)
+{
+    SetMasterVolume(volume);
+    LOGI("NativeBridge: audio master volume set to %.2f", volume);
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setAudioConfig(
+    JNIEnv* /*env*/, jobject /*thiz*/, jint schedulingIdx, jint bufferSizeIdx)
+{
+    static const int s_bufSizes[] = { 128, 256, 512 };
+    int bufSize = 256;
+    if (bufferSizeIdx >= 0 && bufferSizeIdx < 3) {
+        bufSize = s_bufSizes[bufferSizeIdx];
+    }
+    SetAudioStreamBufferSizeDefault(bufSize);
+    LOGI("NativeBridge: audio buffer size set to %d frames, scheduling=%d", bufSize, schedulingIdx);
+}
+
+
+extern "C" void godhand_set_frameskip_mode(int mode);
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_onSurfaceCreated(
     JNIEnv* env, jobject /*thiz*/, jobject surface, jint width, jint height,
-    jint rendererIdx, jint resScaleIdx, jint aspectIdx, jint fpsIdx)
+    jint rendererIdx, jint resScaleIdx, jint aspectIdx, jint fpsIdx, jint frameskipIdx)
 {
     ANativeWindow* win = ANativeWindow_fromSurface(env, surface);
-    g_native_window.store(win);
+    ANativeWindow* old_win = g_native_window.exchange(win);
+    if (old_win && old_win != win) {
+        ANativeWindow_release(old_win);
+    }
 
-    float target_hz = (fpsIdx == 1) ? 120.0f : ((fpsIdx == 2) ? 30.0f : 60.0f);
+    godhand_set_frameskip_mode(frameskipIdx);
+
+    float target_hz = (fpsIdx == 0) ? 60.0f : 30.0f;
     using PFN_setFrameRate = int (*)(ANativeWindow*, float, int8_t);
     static auto pfn_setFrameRate = reinterpret_cast<PFN_setFrameRate>(dlsym(RTLD_DEFAULT, "ANativeWindow_setFrameRate"));
     if (pfn_setFrameRate && win) {
@@ -246,18 +441,31 @@ Java_com_lasvola_godhand_NativeBridge_onSurfaceCreated(
     }
 
     if (!g_game_running.exchange(true)) {
-        g_ee_thread = std::thread([win, width, height, rendererIdx, resScaleIdx, aspectIdx, fpsIdx]() {
+        g_ee_thread = std::thread([win, width, height, rendererIdx, resScaleIdx, aspectIdx, fpsIdx, frameskipIdx]() {
             LOGI("Booting God Hand EE Static Recompiled Runtime on ARM64...");
-            godhand::bootAndroidRuntime(win, width, height, rendererIdx, resScaleIdx, aspectIdx, fpsIdx);
+            godhand::bootAndroidRuntime(win, width, height, rendererIdx, resScaleIdx, aspectIdx, fpsIdx, frameskipIdx);
         });
         g_ee_thread.detach();
     } else {
+        LOGI("NativeBridge: Surface recreated on resume win=%p (%dx%d)", win, width, height);
         godhand::notifySurfaceChanged(win, width, height);
     }
 }
 
 JNIEXPORT void JNICALL
-Java_com_lasvola_godhand_NativeBridge_updatePadState(
+Java_com_owaissseeee_godhand_NativeBridge_onSurfaceDestroyed(
+    JNIEnv* /*env*/, jobject /*thiz*/)
+{
+    LOGI("NativeBridge: onSurfaceDestroyed called");
+    ANativeWindow* old_win = g_native_window.exchange(nullptr);
+    if (old_win) {
+        ANativeWindow_release(old_win);
+    }
+    godhand::notifySurfaceDestroyed();
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_updatePadState(
     JNIEnv* /*env*/, jobject /*thiz*/, jint buttonMask,
     jfloat lx, jfloat ly, jfloat rx, jfloat ry)
 {
@@ -273,6 +481,63 @@ Java_com_lasvola_godhand_NativeBridge_updatePadState(
         }
         s_lastLogMask = static_cast<uint32_t>(buttonMask);
     }
+}
+
+JNIEXPORT jboolean JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_getPerformanceStats(
+    JNIEnv* env, jobject /*thiz*/, jfloatArray outStats, jfloatArray outHistory)
+{
+    float statsBuf[6]{};
+    float historyBuf[64]{};
+    jsize historyLen = outHistory ? env->GetArrayLength(outHistory) : 0;
+    if (historyLen > 64) historyLen = 64;
+
+    bool ok = godhand_perf_get_stats(
+        statsBuf, 6,
+        historyLen > 0 ? historyBuf : nullptr, historyLen
+    );
+    if (!ok) return JNI_FALSE;
+
+    if (outStats) {
+        jsize statsLen = env->GetArrayLength(outStats);
+        if (statsLen > 6) statsLen = 6;
+        env->SetFloatArrayRegion(outStats, 0, statsLen, statsBuf);
+    }
+    if (outHistory && historyLen > 0) {
+        env->SetFloatArrayRegion(outHistory, 0, historyLen, historyBuf);
+    }
+    return JNI_TRUE;
+}
+
+extern "C" {
+void godhand_set_resolution_scale(float scale);
+void godhand_set_aspect_ratio(int aspectIdx);
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setFrameskipMode(
+    JNIEnv* /*env*/, jobject /*thiz*/, jint mode)
+{
+    godhand_set_frameskip_mode(mode);
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setResolutionScale(
+    JNIEnv* /*env*/, jobject /*thiz*/, jint resScaleIdx)
+{
+    static const float s_scales[] = { 0.5f, 0.75f, 1.0f, 2.0f, 3.0f, 4.0f, 6.0f, 8.0f };
+    float scale = 1.0f;
+    if (resScaleIdx >= 0 && resScaleIdx < static_cast<int>(sizeof(s_scales) / sizeof(s_scales[0]))) {
+        scale = s_scales[resScaleIdx];
+    }
+    godhand_set_resolution_scale(scale);
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setAspectRatio(
+    JNIEnv* /*env*/, jobject /*thiz*/, jint aspectIdx)
+{
+    godhand_set_aspect_ratio(aspectIdx);
 }
 
 static void startStdoutStderrRedirect() {

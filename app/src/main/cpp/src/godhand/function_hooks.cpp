@@ -1,4 +1,5 @@
 #include "godhand/function_hooks.h"
+#include "godhand/godhand_perf.h"
 #include "godhand/log.h"
 #include "godhand/module_registry.h"
 #include "godhand/sha256.h"
@@ -9,6 +10,7 @@
 
 #include <algorithm>
 #include <atomic>
+#include <chrono>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -21,6 +23,7 @@
 #include <set>
 #include <sstream>
 #include <string_view>
+#include <thread>
 #include <unordered_map>
 #include <vector>
 
@@ -1018,4 +1021,28 @@ namespace godhand
         }
         GH_INFO(Gs, "internal resolution " << scale << "x: flicker filter of the flip copy off (0x3c3ccc = 0x80 before 0x30b870)");
     }
+
+    void installGameFrameCounter(PS2Runtime &runtime)
+    {
+        constexpr uint32_t kFlipChainBuilder = 0x30B870u;
+        if (!runtime.hasFunction(kFlipChainBuilder) ||
+            !FunctionHooks::instance().observeEntry(kFlipChainBuilder, "game_frame_counter", [](uint8_t *rdram, R5900Context *, PS2Runtime *) {
+                godhand_perf_record_game_frame();
+                if (rdram) {
+                    const char *targetFpsEnv = std::getenv("GODHAND_TARGET_FPS_IDX");
+                    const int fpsIdx = targetFpsEnv ? std::atoi(targetFpsEnv) : 0;
+                    const uint8_t vblanks = (fpsIdx == 0) ? 0x01 : 0x02;
+                    rdram[0x00747A09u] = vblanks;
+
+                    const float normalRate = 1.0f;
+                    std::memcpy(rdram + 0x00747A14u, &normalRate, sizeof(normalRate));
+                }
+            }))
+        {
+            GH_WARN(Gs, "game_frame_counter: flip chain builder 0x30b870 has no recompiled entry");
+            return;
+        }
+        GH_INFO(Gs, "game_frame_counter observed on flip chain builder 0x30b870");
+    }
 }
+

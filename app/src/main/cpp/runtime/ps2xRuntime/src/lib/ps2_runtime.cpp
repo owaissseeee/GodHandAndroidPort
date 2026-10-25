@@ -45,6 +45,9 @@ bool ps2xVu1LastRunHitBudget(); // vu/ps2_vu1_core.cpp: sweep R2
 #include <rlgl.h>
 #if defined(__ANDROID__)
 #include <android/log.h>
+extern "C" void godhand_set_thread_affinity_and_priority(const char* name, int primaryCore, int fallbackCore, int niceVal);
+#else
+inline void godhand_set_thread_affinity_and_priority(const char*, int, int, int) {}
 #endif
 
 namespace ps2_stubs
@@ -1480,9 +1483,37 @@ namespace
         return page ? &page[(address >> 2) & (kModulePageSlots - 1u)] : nullptr;
     }
 
+    alignas(64) PS2Runtime::RecompiledFunction g_fastJumpTable[2097152] = {};
+    std::atomic<bool> g_fastJumpTableInitialized{false};
+
+    void initFastJumpTable() {
+        bool expected = false;
+        if (!g_fastJumpTableInitialized.compare_exchange_strong(expected, true)) return;
+        if (g_ps2RecompiledFunctionTableBase == 0x100000u && g_ps2RecompiledFunctionTableSlotCount <= 2097152) {
+            const uint32_t baseSlot = g_ps2RecompiledFunctionTableBase >> 2;
+            for (uint32_t i = 0; i < g_ps2RecompiledFunctionTableSlotCount; ++i) {
+                if (g_ps2RecompiledFunctionTable[i]) {
+                    g_fastJumpTable[baseSlot + i] = g_ps2RecompiledFunctionTable[i];
+                }
+            }
+        }
+    }
+
     // The one lookup every dispatch path uses: generated table for its own range, module table everywhere else.
     PS2Runtime::RecompiledFunction anyFunction(uint32_t address)
     {
+        const uint32_t phys = address & 0x01FFFFFFu;
+        if (__builtin_expect(phys < 0x00800000u, 1))
+        {
+            if (__builtin_expect(!g_fastJumpTableInitialized.load(std::memory_order_relaxed), 0)) {
+                initFastJumpTable();
+            }
+            PS2Runtime::RecompiledFunction fn = g_fastJumpTable[phys >> 2];
+            if (__builtin_expect(fn != nullptr, 1))
+            {
+                return fn;
+            }
+        }
         uint32_t slot = 0u;
         if (generatedFunctionTableSlot(address, slot))
         {
@@ -1495,6 +1526,10 @@ namespace
 
 bool ps2x::setModuleFunction(uint32_t address, ps2x::ModuleFunction func)
 {
+    const uint32_t phys = address & 0x01FFFFFFu;
+    if (phys < 0x00800000u) {
+        g_fastJumpTable[phys >> 2] = func;
+    }
     uint32_t slot = 0u;
     if ((address & 3u) != 0u || address >= PS2_RAM_SIZE || generatedFunctionTableSlot(address, slot))
     {
@@ -1526,6 +1561,10 @@ void ps2x::clearModuleFunctions(uint32_t begin, uint32_t end)
     end = std::min(end, PS2_RAM_SIZE);
     for (uint32_t address = begin & ~3u; address < end; address += 4u)
     {
+        const uint32_t phys = address & 0x01FFFFFFu;
+        if (phys < 0x00800000u) {
+            g_fastJumpTable[phys >> 2] = nullptr;
+        }
         if (ModuleSlot *moduleSlot = moduleFunctionSlot(address))
         {
             moduleSlot->store(nullptr, std::memory_order_relaxed);
@@ -1535,6 +1574,10 @@ void ps2x::clearModuleFunctions(uint32_t begin, uint32_t end)
 
 bool PS2Runtime::replaceFunction(uint32_t address, RecompiledFunction func)
 {
+    const uint32_t phys = address & 0x01FFFFFFu;
+    if (phys < 0x00800000u) {
+        g_fastJumpTable[phys >> 2] = func;
+    }
     uint32_t slot = 0u;
     if (!generatedFunctionTableSlot(address, slot))
     {
@@ -2981,8 +3024,9 @@ void PS2Runtime::run()
 
     std::thread gameThread([&]()
                            {
-        ThreadNaming::SetCurrentThreadName("GameThread");
+        ThreadNaming::SetCurrentThreadName("EEThread");
         ThreadPriority::RaiseCurrentThread(ThreadPriority::Level::Highest);
+        godhand_set_thread_affinity_and_priority("EEThread", 4, 5, -20);
         try
         {
             m_eeScheduler->reset(m_memory.getRDRAM(), m_cpuContext);

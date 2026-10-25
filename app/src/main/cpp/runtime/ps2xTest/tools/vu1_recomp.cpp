@@ -8,6 +8,15 @@ const uint32_t g_ps2RecompiledFunctionTableEnd = 0u;
 const uint32_t g_ps2RecompiledFunctionTableSlotCount = 0u;
 PS2Runtime::RecompiledFunction g_ps2RecompiledFunctionTable[1] = {};
 
+extern "C" void godhand_set_thread_affinity_and_priority(const char*, int, int, int) {}
+namespace ps2_pad {
+    unsigned int getButtons() { return 0; }
+    float getLx() { return 0.0f; }
+    float getLy() { return 0.0f; }
+    float getRx() { return 0.0f; }
+    float getRy() { return 0.0f; }
+}
+
 #include <cstdlib>
 #include <algorithm>
 #include <cinttypes>

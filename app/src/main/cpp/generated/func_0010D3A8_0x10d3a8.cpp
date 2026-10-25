@@ -2152,9 +2152,7 @@ label_10d69c:
     ctx->pc = 0x10d69cu;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 17), 940)));
 label_10d6a0:
-    // 0x10d6a0: 0xe62005dc  swc1        $f0, 0x5DC($s1)
-    ctx->pc = 0x10d6a0u;
-    { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 17), 1500), bits); }
+    { float f = (rdram && rdram[0x00747A09u] == 0x01u) ? (ctx->f[0] * 0.5f) : ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 17), 1500), bits); }
 label_10d6a4:
     // 0x10d6a4: 0x30420080  andi        $v0, $v0, 0x80
     ctx->pc = 0x10d6a4u;

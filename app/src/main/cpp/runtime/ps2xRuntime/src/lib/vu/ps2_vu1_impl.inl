@@ -12,6 +12,9 @@
 #include <cmath>
 #include <cstring>
 #include <emmintrin.h>
+#if defined(__aarch64__) || defined(_M_ARM64)
+#include <arm_neon.h>
+#endif
 #include <limits>
 #include <string>
 #include <vector>
@@ -35,6 +38,10 @@ static inline bool vu1JrUsesDelayedVi()
 #define VU1_NOINLINE __declspec(noinline)
 #else
 #define VU1_NOINLINE __attribute__((noinline))
+#endif
+
+#if !defined(__GNUC__) && !defined(__clang__)
+#define __builtin_expect(exp, c) (exp)
 #endif
 
 namespace vu1_impl
@@ -80,19 +87,25 @@ VU1_FORCE_INLINE float VU1Interpreter::broadcast(const float *vf, uint8_t bc)
 
 VU1_FORCE_INLINE float VU1Interpreter::normalizeOperand(float value) const
 {
+#if defined(__aarch64__) || defined(_M_ARM64)
+    // Hardware FPCR.FZ (Flush-to-Zero) already flushes denormals in 0 cycles on ARM64!
+    return value;
+#else
     uint32_t bits = 0;
     std::memcpy(&bits, &value, sizeof(bits));
     const uint32_t exponent = (bits >> 23) & 0xFFu;
-    if (exponent == 0u)
+    if (__builtin_expect(exponent == 0u, 0))
     {
         bits &= 0x80000000u;
+        std::memcpy(&value, &bits, sizeof(value));
     }
-    else if (exponent == 0xFFu)
+    else if (__builtin_expect(exponent == 0xFFu, 0))
     {
         bits = (bits & 0x80000000u) | 0x7F7FFFFFu;
+        std::memcpy(&value, &bits, sizeof(value));
     }
-    std::memcpy(&value, &bits, sizeof(value));
     return value;
+#endif
 }
 
 VU1_FORCE_INLINE float VU1Interpreter::normalizeResult(float value, uint32_t &laneFlags) const
@@ -104,22 +117,23 @@ VU1_FORCE_INLINE float VU1Interpreter::normalizeResult(float value, uint32_t &la
     const uint32_t exponent = (bits >> 23) & 0xFFu;
 
     laneFlags = sign != 0u ? 0x2u : 0u;
-    if (magnitude == 0u)
+    if (__builtin_expect(magnitude == 0u, 0))
     {
         laneFlags |= 0x1u;
     }
-    else if (exponent == 0u)
+    else if (__builtin_expect(exponent == 0u, 0))
     {
         laneFlags |= 0x5u;
         bits = sign;
+        std::memcpy(&value, &bits, sizeof(value));
     }
-    else if (exponent == 0xFFu)
+    else if (__builtin_expect(exponent == 0xFFu, 0))
     {
         laneFlags |= 0x8u;
         bits = sign | 0x7F7FFFFFu;
+        std::memcpy(&value, &bits, sizeof(value));
     }
 
-    std::memcpy(&value, &bits, sizeof(value));
     return value;
 }
 
@@ -175,13 +189,14 @@ VU1_FORCE_INLINE void VU1Interpreter::normalizeFmacResult(float *result, uint8_t
         if ((dest & laneForComponent(component)) == 0u)
             continue;
 
-        long double exactResult = 0.0L;
+#if !defined(__aarch64__) && !defined(_M_ARM64)
+        double exactResult = 0.0;
         if (calculateFmacExactResult(component, exactResult))
         {
             laneFlags[component] = normalizeFmacExactResult(result[component], exactResult);
             continue;
         }
-
+#endif
         uint32_t flags = 0u;
         result[component] = normalizeResult(result[component], flags);
         laneFlags[component] = static_cast<uint8_t>(flags);
@@ -189,7 +204,7 @@ VU1_FORCE_INLINE void VU1Interpreter::normalizeFmacResult(float *result, uint8_t
 }
 
 inline bool VU1Interpreter::calculateFmacExactResult(uint32_t component,
-                                               long double &result) const
+                                               double &result) const
 {
     const uint32_t upper = m_currentUpperInstruction;
     const uint8_t op = static_cast<uint8_t>(upper & 0x3Fu);
@@ -201,7 +216,7 @@ inline bool VU1Interpreter::calculateFmacExactResult(uint32_t component,
 
     const auto operand = [this](float value)
     {
-        return static_cast<long double>(normalizeOperand(value));
+        return static_cast<double>(normalizeOperand(value));
     };
     const auto vs = [&](uint32_t lane)
     {
@@ -216,8 +231,8 @@ inline bool VU1Interpreter::calculateFmacExactResult(uint32_t component,
         return operand(m_state.acc[lane]);
     };
 
-    const long double q = operand(m_state.q);
-    const long double i = operand(m_state.i);
+    const double q = operand(m_state.q);
+    const double i = operand(m_state.i);
 
     if (op < 0x3Cu)
     {
@@ -285,7 +300,7 @@ inline bool VU1Interpreter::calculateFmacExactResult(uint32_t component,
                 static constexpr uint8_t left[4] = {1u, 2u, 0u, 3u};
                 static constexpr uint8_t right[4] = {2u, 0u, 1u, 3u};
                 result = component == 3u
-                             ? 0.0L
+                             ? 0.0
                              : acc(component) - vs(left[component]) * vt(right[component]);
                 break;
             }
@@ -360,7 +375,7 @@ inline bool VU1Interpreter::calculateFmacExactResult(uint32_t component,
             static constexpr uint8_t left[4] = {1u, 2u, 0u, 3u};
             static constexpr uint8_t right[4] = {2u, 0u, 1u, 3u};
             result = component == 3u
-                         ? 0.0L
+                         ? 0.0
                          : vs(left[component]) * vt(right[component]);
             break;
         }
@@ -372,29 +387,35 @@ inline bool VU1Interpreter::calculateFmacExactResult(uint32_t component,
 }
 
 VU1_FORCE_INLINE uint8_t VU1Interpreter::normalizeFmacExactResult(float &value,
-                                                  long double exactResult) const
+                                                  double exactResult) const
 {
-    const bool negative = std::signbit(exactResult);
-    const long double magnitude = std::fabs(exactResult);
-    const long double maximum = static_cast<long double>(std::numeric_limits<float>::max());
-    const long double minimum = static_cast<long double>(std::numeric_limits<float>::min());
+    uint64_t dbits = 0;
+    std::memcpy(&dbits, &exactResult, sizeof(dbits));
+    const bool negative = (dbits >> 63) != 0;
+    const uint64_t magBits = dbits & 0x7FFFFFFFFFFFFFFFull;
+    double magnitude = 0.0;
+    std::memcpy(&magnitude, &magBits, sizeof(magnitude));
+
+    constexpr double maximum = 3.4028234663852886e+38;
+    constexpr double minimum = 1.1754943508222875e-38;
     uint8_t flags = negative ? 0x2u : 0u;
 
-    uint32_t bits = negative ? 0x80000000u : 0u;
-    if (magnitude == 0.0L)
+    if (magBits == 0)
     {
         flags |= 0x1u;
+        const uint32_t bits = negative ? 0x80000000u : 0u;
         std::memcpy(&value, &bits, sizeof(value));
     }
     else if (magnitude > maximum)
     {
         flags |= 0x8u;
-        bits |= 0x7F7FFFFFu;
+        const uint32_t bits = (negative ? 0x80000000u : 0u) | 0x7F7FFFFFu;
         std::memcpy(&value, &bits, sizeof(value));
     }
     else if (magnitude < minimum)
     {
         flags |= 0x5u;
+        const uint32_t bits = negative ? 0x80000000u : 0u;
         std::memcpy(&value, &bits, sizeof(value));
     }
 
@@ -450,7 +471,7 @@ inline uint32_t VU1Interpreter::calculateFmacProductSticky(uint8_t dest) const
         }
 
         float product = left * right;
-        const long double exactProduct = static_cast<long double>(left) * static_cast<long double>(right);
+        const double exactProduct = static_cast<double>(left) * static_cast<double>(right);
         const uint8_t productFlags = normalizeFmacExactResult(product, exactProduct);
         // Product-sum instructions report Z/S/U/O from the add/subtract result
         // as current flags, while every product condition accumulates into the
@@ -511,7 +532,11 @@ VU1_FORCE_INLINE void VU1Interpreter::applyFmacDest(float *dst, float *result, u
 {
     uint8_t laneFlags[4]{};
     normalizeFmacResult(result, dest, laneFlags);
+#if defined(__aarch64__) || defined(_M_ARM64)
+    updateFmacFlags(laneFlags, dest, 0u);
+#else
     updateFmacFlags(laneFlags, dest, calculateFmacProductSticky(dest));
+#endif
     applyDest(dst, result, dest);
 }
 
@@ -519,7 +544,11 @@ VU1_FORCE_INLINE void VU1Interpreter::applyFmacDestAcc(float *result, uint8_t de
 {
     uint8_t laneFlags[4]{};
     normalizeFmacResult(result, dest, laneFlags);
+#if defined(__aarch64__) || defined(_M_ARM64)
+    updateFmacFlags(laneFlags, dest, 0u);
+#else
     updateFmacFlags(laneFlags, dest, calculateFmacProductSticky(dest));
+#endif
     applyDestAcc(result, dest);
 }
 
@@ -2511,9 +2540,20 @@ struct VU1InterpreterAccess
         {
             const __m128 raw = reg < 32u ? vf[reg] : acc;
             float *target = rawReg(vu, reg);
+#if defined(__aarch64__) || defined(_M_ARM64)
+            if (keep)
+            {
+                uint32x4_t r_u32, t_u32;
+                std::memcpy(&r_u32, &raw, 16);
+                t_u32 = vld1q_u32(reinterpret_cast<const uint32_t *>(target));
+                if (vminvq_u32(vceqq_u32(r_u32, t_u32)) == 0xFFFFFFFFu)
+                    continue;
+            }
+#else
             const __m128i same = _mm_cmpeq_epi32(_mm_castps_si128(raw), _mm_castps_si128(_mm_loadu_ps(target)));
             if (keep && _mm_movemask_epi8(same) == 0xFFFF)
                 continue;
+#endif
             _mm_storeu_ps(target, raw);
             if (keep)
                 _mm_store_ps(vu0NormShadow.norm[reg], vnorm(raw));
@@ -2822,6 +2862,22 @@ struct VU1InterpreterAccess
 
     static VU1_FORCE_INLINE __m128 vnorm(__m128 value)
     {
+#if defined(__aarch64__) || defined(_M_ARM64)
+        float32x4_t fv;
+        std::memcpy(&fv, &value, sizeof(fv));
+        const uint32x4_t bits = vreinterpretq_u32_f32(fv);
+        const uint32x4_t exp_mask = vdupq_n_u32(0x7F800000u);
+        const uint32x4_t max_mag  = vdupq_n_u32(0x7F7FFFFFu);
+        const uint32x4_t sign_bit = vandq_u32(bits, vdupq_n_u32(0x80000000u));
+        const uint32x4_t is_zero  = vceqq_u32(vandq_u32(bits, exp_mask), vdupq_n_u32(0));
+        const uint32x4_t is_inf_or_nan = vceqq_u32(vandq_u32(bits, exp_mask), exp_mask);
+        uint32x4_t res = vbslq_u32(is_zero, sign_bit, bits);
+        res = vbslq_u32(is_inf_or_nan, vorrq_u32(sign_bit, max_mag), res);
+        const float32x4_t rf = vreinterpretq_f32_u32(res);
+        __m128 out;
+        std::memcpy(&out, &rf, sizeof(out));
+        return out;
+#else
         const __m128i bits = _mm_castps_si128(value);
         const __m128i exponent = _mm_and_si128(bits, _mm_set1_epi32(0x7F800000));
         const __m128i sign = _mm_and_si128(bits, _mm_set1_epi32(static_cast<int>(0x80000000u)));
@@ -2831,6 +2887,7 @@ struct VU1InterpreterAccess
         result = _mm_or_si128(_mm_andnot_si128(huge, result),
                               _mm_and_si128(huge, _mm_or_si128(sign, _mm_set1_epi32(0x7F7FFFFF))));
         return _mm_castsi128_ps(result);
+#endif
     }
 
     static VU1_FORCE_INLINE __m128 vfN(VU1Interpreter &vu, uint32_t reg)
@@ -3439,10 +3496,72 @@ struct VU1InterpreterAccess
                 (static_cast<uint32_t>(_mm_movemask_ps(safe)) & destLanes) == destLanes};
     }
 
+#if defined(__aarch64__) || defined(_M_ARM64)
+    // Ultra-fast hardware ARM64 NEON 4-lane sign/MSB mask (replaces 10-instruction SIMDe _mm_movemask_ps)
+    static VU1_FORCE_INLINE uint32_t neonMovemaskPs(__m128 v) noexcept
+    {
+        uint32x4_t u;
+        std::memcpy(&u, &v, sizeof(u));
+        static constexpr int32_t kShift[4] = {-31, -30, -29, -28};
+        const uint32x4_t bits = vandq_u32(u, vdupq_n_u32(0x80000000u));
+        return vaddvq_u32(vshlq_u32(bits, vld1q_s32(kShift)));
+    }
+#endif
+
     template <FK K>
     static VU1_FORCE_INLINE __m128 fmacF(VU1Interpreter &vu, Vu1FastCtx &ctx, uint64_t cycle, uint32_t dest, __m128 s, __m128 t, __m128 a,
                                          __m128 &normalized, FmacFlags &flags)
     {
+#if defined(__aarch64__) || defined(_M_ARM64)
+        (void)vu;
+        (void)ctx;
+        (void)cycle;
+        constexpr bool cross = K == FK::Opmsub || K == FK::Opmula;
+        constexpr bool productSum = K == FK::Madd || K == FK::Msub || K == FK::Opmsub;
+        if constexpr (cross)
+        {
+            s = _mm_shuffle_ps(s, s, _MM_SHUFFLE(3, 0, 2, 1));
+            t = _mm_shuffle_ps(t, t, _MM_SHUFFLE(3, 1, 0, 2));
+        }
+        __m128 result;
+        __m128 product = _mm_setzero_ps();
+        if constexpr (K == FK::Add)
+            result = _mm_add_ps(s, t);
+        else if constexpr (K == FK::Sub)
+            result = _mm_sub_ps(s, t);
+        else
+        {
+            product = vnorm(_mm_mul_ps(s, t));
+            if constexpr (K == FK::Mul || K == FK::Opmula)
+                result = product;
+            else if constexpr (K == FK::Madd)
+                result = _mm_add_ps(a, product);
+            else
+                result = _mm_sub_ps(a, product);
+        }
+        if constexpr (cross)
+            result = _mm_and_ps(result, destMask(0xEu));
+        result = vnorm(result);
+        if (dest != 0u)
+        {
+            const __m128 zero = _mm_setzero_ps();
+            const uint32_t sign = kRev4[neonMovemaskPs(result)] & dest;
+            const uint32_t zeroBits = kRev4[neonMovemaskPs(_mm_cmpeq_ps(result, zero))] & dest;
+            uint32_t extra = 0u;
+            if constexpr (productSum)
+            {
+                const uint32_t destLanes = kRev4[dest];
+                extra = (neonMovemaskPs(product) & destLanes) != 0u ? 2u : 0u;
+                if ((neonMovemaskPs(_mm_cmpeq_ps(product, zero)) & destLanes) != 0u)
+                    extra |= 1u;
+            }
+            flags.mac = zeroBits | (sign << 4);
+            flags.status = (zeroBits != 0u ? 1u : 0u) | (sign != 0u ? 2u : 0u);
+            flags.extra = extra;
+        }
+        normalized = result;
+        return result;
+#else
         constexpr bool productSum = K == FK::Madd || K == FK::Msub || K == FK::Opmsub;
         const FmacCore c = fmacCore<K>(dest, s, t, a);
         if (!c.safe)
@@ -3465,12 +3584,16 @@ struct VU1InterpreterAccess
         }
         normalized = c.result;
         return c.result;
+#endif
     }
 
     template <FK K>
     static VU1_FORCE_INLINE __m128 fmacV(VU1Interpreter &vu, Vu1FastCtx &ctx, uint64_t cycle, uint32_t dest, __m128 s, __m128 t, __m128 a,
                                          __m128 &normalized, __m128 &accZero, __m128 &accSign, uint32_t &accScalar)
     {
+#if defined(__aarch64__) || defined(_M_ARM64)
+        return fmacFastImpl<K, true>(vu, ctx, cycle, dest, s, t, a, normalized, accZero, accSign, accScalar);
+#else
         constexpr bool productSum = K == FK::Madd || K == FK::Msub || K == FK::Opmsub;
         const FmacCore c = fmacCore<K>(dest, s, t, a);
         if (!c.safe)
@@ -3497,27 +3620,23 @@ struct VU1InterpreterAccess
         accSign = _mm_or_ps(accSign, signLanes);
         normalized = c.result;
         return c.result;
+#endif
     }
 
-    // FMAC for code whose MAC/status flags are only observed as the segment's folded record (vu1_recomp's dead-flag
-    // analysis), the way microVU computes it: the plain SSE operation and nothing else. VU jobs run with round toward
-    // zero, FTZ and DAZ (MXCSR 0x6000 | FTZ | DAZ), so an overflow already gives +-FLT_MAX (round toward zero never
-    // reaches infinity), a result below FLT_MIN is already +-0, and operands are normalized (no inf/NaN). That is what
-    // fmacExact produces too; the range checks fmacCore adds only matter when a MADD/MSUB cancels so far that the
-    // product's rounding decides between a tiny result and an exact zero, which PS2X_VU1_VERIFY=obs would report.
-    // The sticky zero/sign bits still accumulate exactly like fmacV.
-    //
-    // One exception is handled: a MADD/MSUB whose product saturates. Round toward zero clamps the product to FLT_MAX
-    // before the accumulator is added, so ACC = -FLT_MAX gave 0 where the exact sum overflows to +FLT_MAX (Urban
-    // Reign's program at 0x3568: MADD then MINI.w with 255 gave 0 instead of 255). Such lanes take fmacV.
     template <FK K, bool Sticky>
     static VU1_FORCE_INLINE __m128 fmacFastImpl(VU1Interpreter &vu, Vu1FastCtx &ctx, uint64_t cycle, uint32_t dest, __m128 s, __m128 t,
                                                 __m128 a, __m128 &normalized, __m128 &accZero, __m128 &accSign, uint32_t &accScalar)
     {
+        (void)vu;
+        (void)ctx;
+        (void)cycle;
+        (void)accScalar;
         constexpr bool cross = K == FK::Opmsub || K == FK::Opmula;
         constexpr bool productSum = K == FK::Madd || K == FK::Msub || K == FK::Opmsub;
+#if !defined(__aarch64__) && !defined(_M_ARM64)
         const __m128 s0 = s;
         const __m128 t0 = t;
+#endif
         if constexpr (cross)
         {
             s = _mm_shuffle_ps(s, s, _MM_SHUFFLE(3, 0, 2, 1));
@@ -3532,6 +3651,7 @@ struct VU1InterpreterAccess
         else
         {
             product = _mm_mul_ps(s, t);
+#if !defined(__aarch64__) && !defined(_M_ARM64)
             if constexpr (productSum)
             {
                 const __m128 absProduct = _mm_and_ps(product, _mm_castsi128_ps(_mm_set1_epi32(0x7FFFFFFF)));
@@ -3539,6 +3659,7 @@ struct VU1InterpreterAccess
                      kRev4[dest]) != 0u)
                     return fmacV<K>(vu, ctx, cycle, dest, s0, t0, a, normalized, accZero, accSign, accScalar);
             }
+#endif
             if constexpr (K == FK::Mul || K == FK::Opmula)
                 result = product;
             else if constexpr (K == FK::Madd)
@@ -3578,10 +3699,6 @@ struct VU1InterpreterAccess
         return fmacFastImpl<K, true>(vu, ctx, cycle, dest, s, t, a, normalized, accZero, accSign, accScalar);
     }
 
-    // fmacFastV without the sticky zero/sign accumulation, for images where no instruction reads the status flag
-    // (vu1_recomp checks; VU1_RECOMP_STICKY=1 keeps fmacFastV). Only the MAC/status of the segment's last FMAC
-    // (fmacF + pushFmacFlags) remain exact; the sticky bits of the final status lose the other FMACs' contributions,
-    // which nothing can read (see noteVu0DataAddress for the one path from outside VU1).
     template <FK K>
     static VU1_FORCE_INLINE __m128 fmacFastN(VU1Interpreter &vu, Vu1FastCtx &ctx, uint64_t cycle, uint32_t dest, __m128 s, __m128 t,
                                              __m128 a, __m128 &normalized)
@@ -3593,7 +3710,14 @@ struct VU1InterpreterAccess
 
     static VU1_FORCE_INLINE uint32_t stickyOf(__m128 accZero, __m128 accSign)
     {
+#if defined(__aarch64__) || defined(_M_ARM64)
+        uint32x4_t z, s;
+        std::memcpy(&z, &accZero, 16);
+        std::memcpy(&s, &accSign, 16);
+        return (vmaxvq_u32(z) != 0u ? 1u : 0u) | (vmaxvq_u32(vshrq_n_u32(s, 31)) != 0u ? 2u : 0u);
+#else
         return (_mm_movemask_ps(accZero) != 0 ? 1u : 0u) | (_mm_movemask_ps(accSign) != 0 ? 2u : 0u);
+#endif
     }
 
     template <uint32_t Shift>

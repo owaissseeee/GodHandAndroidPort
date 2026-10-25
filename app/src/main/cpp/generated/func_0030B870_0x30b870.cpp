@@ -145,12 +145,19 @@ void func_0030B870_0x30b870(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x30b8ec: 0x3c18003c  lui         $t8, 0x3C
     ctx->pc = 0x30b8ecu;
     SET_GPR_S32(ctx, 24, (int32_t)((uint32_t)60 << 16));
-    // 0x30b8f0: 0x3c013f6e  lui         $at, 0x3F6E
+    // 0x30b8f0 / 0x30b8f4: widescreen 16:9 patch (Arapapa / nemesis2000 SLUS-21503)
     ctx->pc = 0x30b8f0u;
-    SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16238 << 16));
-    // 0x30b8f4: 0x3421eeef  ori         $at, $at, 0xEEEF
+    {
+        static const bool s_isWidescreen = []() {
+            const char* env = std::getenv("GODHAND_ASPECT_RATIO_IDX");
+            return !env || std::strcmp(env, "0") == 0;
+        }();
+        // 0x3F9F49F1 = 1.2444438f (16:9 Hor+ scale: 0.93333334f * 16/9 / (4/3))
+        // 0x3F6EEEEF = 0.93333334f (4:3 Original)
+        const uint32_t atVal = s_isWidescreen ? 0x3F9F49F1u : 0x3F6EEEEFu;
+        SET_GPR_S32(ctx, 1, static_cast<int32_t>(atVal));
+    }
     ctx->pc = 0x30b8f4u;
-    SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)61167);
     // 0x30b8f8: 0x44812000  mtc1        $at, $f4
     ctx->pc = 0x30b8f8u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[4], &bits, sizeof(bits)); }
@@ -2442,12 +2449,19 @@ label_30c344:
     // 0x30c380: 0x241500e0  addiu       $s5, $zero, 0xE0
     ctx->pc = 0x30c380u;
     SET_GPR_S32(ctx, 21, (int32_t)ADD32(GPR_U32(ctx, 0), 224));
-    // 0x30c384: 0x3c013eee  lui         $at, 0x3EEE
+    // 0x30c384 / 0x30c388: widescreen 16:9 patch (half-height mode)
     ctx->pc = 0x30c384u;
-    SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16110 << 16));
-    // 0x30c388: 0x3421eeef  ori         $at, $at, 0xEEEF
+    {
+        static const bool s_isWidescreen = []() {
+            const char* env = std::getenv("GODHAND_ASPECT_RATIO_IDX");
+            return !env || std::strcmp(env, "0") == 0;
+        }();
+        // 0x3F1F49F1 = 0.6222219f (0.46666667f * 1.33333333f)
+        // 0x3EEEEEEF = 0.46666667f (4:3 Original half-height)
+        const uint32_t atVal = s_isWidescreen ? 0x3F1F49F1u : 0x3EEEEEEFu;
+        SET_GPR_S32(ctx, 1, static_cast<int32_t>(atVal));
+    }
     ctx->pc = 0x30c388u;
-    SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)61167);
     // 0x30c38c: 0x44812000  mtc1        $at, $f4
     ctx->pc = 0x30c38cu;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[4], &bits, sizeof(bits)); }

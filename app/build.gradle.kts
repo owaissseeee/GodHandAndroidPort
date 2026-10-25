@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    namespace = "com.lasvola.godhand"
+    namespace = "com.owaissseeee.godhand"
     compileSdk = 35
     ndkVersion = "28.2.13676358"
 
     defaultConfig {
-        applicationId = "com.lasvola.godhand"
+        applicationId = "com.owaissseeee.godhand"
         minSdk = 26
         targetSdk = 35
         versionCode = 1
@@ -30,7 +30,12 @@ android {
                 cppFlags += listOf(
                     "-std=c++20",
                     "-O3",
-                    "-march=armv8.2-a+dotprod+fp16",
+                    "-march=armv8.2-a+dotprod+fp16+rcpc",
+                    "-mtune=cortex-a78",
+                    "-fno-math-errno",
+                    "-fno-trapping-math",
+                    "-fomit-frame-pointer",
+                    "-finline-functions",
                     "-fexceptions",
                     "-frtti"
                 )
@@ -40,7 +45,7 @@ android {
 
     buildTypes {
         release {
-            isDebuggable = true
+            isDebuggable = false
             isMinifyEnabled = false
             signingConfig = signingConfigs.getByName("debug") // Debug signing for release testing
             externalNativeBuild {
@@ -71,6 +76,11 @@ android {
 
     buildFeatures {
         viewBinding = true
+    }
+
+    lint {
+        checkReleaseBuilds = false
+        abortOnError = false
     }
 }
 

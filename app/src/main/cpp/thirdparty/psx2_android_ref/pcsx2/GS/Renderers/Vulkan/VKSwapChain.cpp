@@ -588,8 +588,10 @@ bool VKSwapChain::CreateSwapChain()
 	// present mode regardless of WSI.
 	const bool use_triple =
 		(m_window_info.type == WindowInfo::Type::VulkanDirect) ||
+		(m_window_info.type == WindowInfo::Type::Android) ||
 		(m_present_mode == VK_PRESENT_MODE_MAILBOX_KHR);
-	const u32 desired_image_count = use_triple ? 3 : 2;
+	const u32 desired_image_count = (m_window_info.type == WindowInfo::Type::Android) ?
+		std::max(4u, surface_capabilities.minImageCount + 2) : (use_triple ? 3 : 2);
 	u32 image_count = std::clamp<u32>(
 		desired_image_count, surface_capabilities.minImageCount,
 		(surface_capabilities.maxImageCount == 0) ? std::numeric_limits<u32>::max() : surface_capabilities.maxImageCount);

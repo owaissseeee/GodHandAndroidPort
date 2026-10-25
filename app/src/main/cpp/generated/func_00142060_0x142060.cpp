@@ -4442,9 +4442,18 @@ label_142fdc:
     // 0x143008: 0x46000841  sub.s       $f1, $f1, $f0
     ctx->pc = 0x143008u;
     ctx->f[1] = FPU_SUB_S(ctx->f[1], ctx->f[0]);
-    // 0x14300c: 0x3c013f80  lui         $at, 0x3F80
+    // 0x14300c: gauge width fix (0.75f in 16:9, 1.0f in 4:3)
     ctx->pc = 0x14300cu;
-    SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
+    {
+        static const bool s_isWidescreen = []() {
+            const char* env = std::getenv("GODHAND_ASPECT_RATIO_IDX");
+            return !env || std::strcmp(env, "0") == 0;
+        }();
+        // 0x3F400000 = 0.75f (16:9 Gauge fix: 1.0f * 3/4)
+        // 0x3F800000 = 1.0f (4:3 Original)
+        const uint32_t atVal = s_isWidescreen ? 0x3F400000u : 0x3F800000u;
+        SET_GPR_S32(ctx, 1, static_cast<int32_t>(atVal));
+    }
     // 0x143010: 0x44813000  mtc1        $at, $f6
     ctx->pc = 0x143010u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[6], &bits, sizeof(bits)); }

@@ -7,10 +7,24 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Force-include ARM64 NEON / SIMDe compatibility header across all recompiled & runtime sources
 add_compile_options(
     -include ${CMAKE_CURRENT_SOURCE_DIR}/simd_arm64_compat.h
+    -march=armv8.2-a+dotprod+fp16+rcpc
+    -mtune=cortex-a78
+    -fno-math-errno
+    -fno-trapping-math
+    -fomit-frame-pointer
+    -finline-functions
+    -fvisibility-inlines-hidden
+    -fno-semantic-interposition
     -Wno-unused-variable
     -Wno-unused-but-set-variable
     -Wno-sign-compare
     -Wno-unused-command-line-argument
+)
+
+add_link_options(
+    -flto=thin
+    -Wl,--gc-sections
+    -Wl,-O3
 )
 
 # 1. Third-Party Libraries (adrenotools, oboe, pcsx2-gs-android)
@@ -67,3 +81,19 @@ target_link_libraries(godhand_android PRIVATE
     dl
     z
 )
+
+# 4. Ahead-Of-Time (AOT) Recompiled VU1 Microprograms
+file(GLOB GODHAND_VU1_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/generated/vu1/*.cpp")
+if(GODHAND_VU1_SOURCES)
+    add_library(godhand_vu1_code STATIC ${GODHAND_VU1_SOURCES})
+    target_include_directories(godhand_vu1_code PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/runtime/ps2xRuntime/src/lib/vu
+        ${CMAKE_CURRENT_SOURCE_DIR}/runtime/ps2xRuntime/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/runtime/ps2xRuntime/src/lib
+        ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/simde
+    )
+    target_link_libraries(godhand_vu1_code PUBLIC ps2_runtime)
+    target_link_libraries(godhand_android PRIVATE godhand_vu1_code)
+    target_compile_definitions(godhand_android PRIVATE GODHAND_HAS_VU1_PROGRAMS=1)
+endif()

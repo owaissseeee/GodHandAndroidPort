@@ -1,3 +1,6 @@
+cmake_minimum_required(VERSION 3.22)
+project(ps2x LANGUAGES C CXX)
+
 # The PS2Recomp parts the port uses (runtime/README.md). Replaces upstream's top-level CMakeLists.txt, which also
 # builds the analyzer, the studio, the unit tests and the Android/Vita targets.
 

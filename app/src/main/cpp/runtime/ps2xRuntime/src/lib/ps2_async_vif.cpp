@@ -19,6 +19,7 @@
 void ps2xGsReleaseStall();
 bool ps2xGsStallNeedsRelease();
 extern thread_local int g_gsTracePath; // gs_frontend.cpp
+extern "C" void godhand_set_thread_affinity_and_priority(const char* name, int primaryCore, int fallbackCore, int niceVal);
 
 namespace ps2x::asyncvif
 {
@@ -132,6 +133,7 @@ namespace ps2x::asyncvif
         {
             ThreadNaming::SetCurrentThreadName("GIFThread");
             ThreadPriority::RaiseCurrentThread(ThreadPriority::Level::AboveNormal);
+            godhand_set_thread_affinity_and_priority("GIFThread", 7, 6, -15);
             t_onGifStage = true;
             for (;;)
             {
@@ -204,6 +206,7 @@ namespace ps2x::asyncvif
         {
             ThreadNaming::SetCurrentThreadName("VUThread");
             ThreadPriority::RaiseCurrentThread(ThreadPriority::Level::Highest);
+            godhand_set_thread_affinity_and_priority("VUThread", 5, 4, -20);
             t_onWorker = true;
             const char *statsValue = std::getenv("PS2X_MTVU_STATS");
             const bool stats = statsValue && *statsValue && *statsValue != '0';

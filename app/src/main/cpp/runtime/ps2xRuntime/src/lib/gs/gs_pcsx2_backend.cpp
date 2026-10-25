@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <atomic>
 #include <chrono>
+#include <thread>
 #include <cctype>
 #include <cstdio>
 #include <cstdlib>
@@ -25,6 +26,7 @@
 #include <Windows.h>
 #elif defined(__ANDROID__)
 #include <dlfcn.h>
+#include <unistd.h>
 #include <android/native_window.h>
 #include <android/log.h>
 typedef void* HWND;
@@ -39,12 +41,40 @@ namespace
 {
     const Pcsx2GsApi *g_api = nullptr;
     void(__cdecl *g_setAspect)(uint32_t) = nullptr; // pcsx2gs_set_aspect, when the DLL has it
+    void(*g_updateWindow)(void *, uint32_t, uint32_t) = nullptr;
     const std::chrono::steady_clock::time_point g_processStart = std::chrono::steady_clock::now();
     HWND g_parent = nullptr;
     HWND g_child = nullptr;
     std::atomic<uint64_t> g_presents{0u};
     std::atomic<uint32_t> g_clientWidth{0u};
     std::atomic<uint32_t> g_clientHeight{0u};
+    std::atomic<void*> g_currentWindow{nullptr};
+    std::atomic<bool> g_windowChanged{false};
+    std::atomic<bool> g_surfaceValid{true};
+
+    std::atomic<int> g_frameskipMode{1}; // 0=Off, 1=Auto (Skip on hitch), 2=Skip 1, 3=Skip 2
+    std::atomic<bool> g_needSkipNextFrame{false};
+    uint32_t g_frameskipCounter = 0;
+    std::atomic<float> g_pendingScale{0.0f};
+    std::atomic<int> g_pendingAspect{-1};
+
+    constexpr size_t K_PERF_RING_SIZE = 128;
+    std::atomic<uint32_t> g_perfRingHead{0};
+    float g_perfRingMs[K_PERF_RING_SIZE]{};
+
+    std::atomic<uint64_t> g_perfGameFrames{0};
+
+    std::atomic<float> g_statScreenFps{60.0f};
+    std::atomic<float> g_statAvgFrametimeMs{16.67f};
+    std::atomic<float> g_statWorstFrametimeMs{16.67f};
+    std::atomic<float> g_statGameFps{60.0f};
+    std::atomic<float> g_statGameSpeed{100.0f};
+
+    std::chrono::steady_clock::time_point g_perfLastPresent{};
+    std::chrono::steady_clock::time_point g_perfWindowStart{};
+    uint32_t g_perfWindowPresents = 0;
+    uint64_t g_perfWindowStartGameFrames = 0;
+    float g_perfWindowWorstMs = 0.0f;
 
     std::filesystem::path exeDirectory()
     {
@@ -53,10 +83,13 @@ namespace
         const DWORD length = GetModuleFileNameW(nullptr, path, MAX_PATH);
         return length ? std::filesystem::path(path).parent_path() : std::filesystem::current_path();
 #else
-        std::filesystem::path cacheDir = "/data/data/com.lasvola.godhand/files/godhand_cache";
+        std::filesystem::path cacheDir = "/data/data/com.owaissseeee.godhand/files/godhand_cache";
         std::error_code ec;
         if (!std::filesystem::exists(cacheDir, ec)) {
-            cacheDir = "/data/user/0/com.lasvola.godhand/files/godhand_cache";
+            cacheDir = "/data/user/0/com.owaissseeee.godhand/files/godhand_cache";
+        }
+        if (!std::filesystem::exists(cacheDir, ec)) {
+            cacheDir = "/data/data/com.lasvola.godhand/files/godhand_cache";
         }
         return cacheDir;
 #endif
@@ -205,6 +238,7 @@ bool GSPcsx2Backend::Requested()
 #if defined(__ANDROID__)
         g_api = pcsx2gs_get_api(PCSX2GS_API_VERSION);
         g_setAspect = pcsx2gs_set_aspect;
+        g_updateWindow = pcsx2gs_update_window;
         if (!g_api)
         {
             void *module = dlopen("libpcsx2gs.so", RTLD_NOW | RTLD_GLOBAL);
@@ -216,10 +250,15 @@ bool GSPcsx2Backend::Requested()
                 const auto setAspect = reinterpret_cast<void(*)(uint32_t)>(dlsym(module, "pcsx2gs_set_aspect"));
                 if (setAspect)
                     g_setAspect = setAspect;
+                const auto updateWindow = reinterpret_cast<void(*)(void*, uint32_t, uint32_t)>(dlsym(module, "pcsx2gs_update_window"));
+                if (updateWindow)
+                    g_updateWindow = updateWindow;
             }
         }
         if (g_api)
         {
+            if (!g_updateWindow && g_api->update_window)
+                g_updateWindow = g_api->update_window;
             __android_log_print(ANDROID_LOG_INFO, "GodHandNative", "[gs] renderer: PCSX2 GS bound successfully on Android!");
             return true;
         }
@@ -252,6 +291,14 @@ bool GSPcsx2Backend::Requested()
     return requested;
 }
 
+extern "C" void GSPcsx2Backend_DetachHostWindow()
+{
+#if defined(__ANDROID__)
+    g_surfaceValid.store(false, std::memory_order_release);
+    __android_log_print(ANDROID_LOG_INFO, "GodHandNative", "GSPcsx2Backend::DetachHostWindow: surface marked invalid (backgrounded)");
+#endif
+}
+
 void GSPcsx2Backend::AttachHostWindow(void *parentHwnd)
 {
     if (!Requested() || !parentHwnd)
@@ -266,7 +313,10 @@ void GSPcsx2Backend::AttachHostWindow(void *parentHwnd)
     if (height <= 0) height = 1080;
     g_clientWidth.store(static_cast<uint32_t>(width));
     g_clientHeight.store(static_cast<uint32_t>(height));
-    __android_log_print(ANDROID_LOG_INFO, "GodHandNative", "GSPcsx2Backend::AttachHostWindow: win=%p (%dx%d)", parentHwnd, width, height);
+    g_currentWindow.store(parentHwnd, std::memory_order_release);
+    g_windowChanged.store(true, std::memory_order_release);
+    g_surfaceValid.store(true, std::memory_order_release);
+    __android_log_print(ANDROID_LOG_INFO, "GodHandNative", "GSPcsx2Backend::AttachHostWindow: win=%p (%dx%d), windowChanged flagged", parentHwnd, width, height);
 #elif defined(_WIN32)
     if (g_child)
         return;
@@ -387,19 +437,20 @@ bool GSPcsx2Backend::EnsureOpen()
     params.hwnd = g_child;
     params.width = m_width;
     params.height = m_height;
-    params.scale = static_cast<float>(std::clamp(envInt("PS2X_GS_SCALE", 1), 1, 8));
+    const char *scaleEnv = std::getenv("PS2X_GS_SCALE");
+    params.scale = scaleEnv ? std::clamp(static_cast<float>(std::atof(scaleEnv)), 0.25f, 8.0f) : 1.0f;
     params.resources = resources.c_str();
     params.cache = cache.c_str();
     params.vsync = static_cast<uint32_t>(std::clamp(envInt("PS2X_PCSX2_VSYNC", 2), 0, 2)); // mailbox: no tearing, no wait
     params.stretch = envInt("PS2X_PCSX2_STRETCH", 0) != 0 ? 1u : 0u;
-    // Image options (pcsx2gs_api.h): PS2X_PCSX2_<KEY> -> key=value. FXAA is on unless PS2X_PCSX2_FXAA=0.
+    // Image options (pcsx2gs_api.h): PS2X_PCSX2_<KEY> -> key=value.
     static constexpr struct
     {
         const char *variable;
         const char *key;
         const char *fallback;
     } kOptions[] = {
-        {"PS2X_PCSX2_FXAA", "fxaa", "1"},
+        {"PS2X_PCSX2_FXAA", "fxaa", nullptr},
         {"PS2X_PCSX2_TEXTURE_FILTERING", "texture_filtering", nullptr},
         {"PS2X_PCSX2_TRILINEAR", "trilinear", nullptr},
         {"PS2X_PCSX2_ANISOTROPY", "anisotropy", nullptr},
@@ -519,6 +570,7 @@ uint32_t GSPcsx2Backend::ConsumeLocalToHostBytes(uint8_t *dst, uint32_t maxBytes
     const uint32_t count = std::min(maxBytes, m_downloadLeft);
     if (count == 0u || !EnsureOpen())
         return 0u;
+
     const uint32_t qwc = (count + 15u) / 16u;
     if (dst && qwc * 16u <= maxBytes)
         g_api->read_fifo(dst, qwc);
@@ -551,6 +603,7 @@ bool GSPcsx2Backend::ReadTransfer(const GSTransferCommand &command, std::vector<
 {
     if (!EnsureOpen())
         return false;
+
     const GSBitBltBuf &b = command.bitbltbuf;
     const GSTrxPos &p = command.trxpos;
     const uint64_t bitbltbuf = static_cast<uint64_t>(b.sbp & 0x3FFFu) | (static_cast<uint64_t>(b.sbw & 0x3Fu) << 16) |
@@ -591,6 +644,45 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
 {
     if (!EnsureOpen())
         return;
+
+#if defined(__ANDROID__)
+    if (!g_surfaceValid.load(std::memory_order_acquire))
+    {
+        // Surface is detached in background; sleep ~16ms and skip presenting to prevent errors
+        std::this_thread::sleep_for(std::chrono::milliseconds(16));
+        return;
+    }
+
+    if (g_windowChanged.exchange(false, std::memory_order_acq_rel))
+    {
+        void* newHwnd = g_currentWindow.load(std::memory_order_acquire);
+        const uint32_t curWidth = g_clientWidth.load(std::memory_order_relaxed);
+        const uint32_t curHeight = g_clientHeight.load(std::memory_order_relaxed);
+        if (newHwnd)
+        {
+            __android_log_print(ANDROID_LOG_INFO, "GodHandNative", "GSPcsx2Backend::VSync: Updating PCSX2 GS window to %p (%ux%u)...", newHwnd, curWidth, curHeight);
+            if (g_updateWindow)
+            {
+                g_updateWindow(newHwnd, curWidth, curHeight);
+            }
+            else if (g_api && g_api->update_window)
+            {
+                g_api->update_window(newHwnd, curWidth, curHeight);
+            }
+        }
+    }
+    const float pendingScale = g_pendingScale.exchange(0.0f, std::memory_order_acq_rel);
+    if (pendingScale > 0.0f && g_api && g_api->set_scale)
+    {
+        g_api->set_scale(pendingScale);
+    }
+
+    const int pendingAspect = g_pendingAspect.exchange(-1, std::memory_order_acq_rel);
+    if (pendingAspect >= 0 && g_setAspect)
+    {
+        g_setAspect(pendingAspect == 1 ? 0u : 1u);
+    }
+
     const uint32_t width = g_clientWidth.load(std::memory_order_relaxed);
     const uint32_t height = g_clientHeight.load(std::memory_order_relaxed);
     if (width != m_width || height != m_height)
@@ -599,10 +691,101 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
         m_height = height;
         g_api->resize(width, height);
     }
+
+    const int skipMode = g_frameskipMode.load(std::memory_order_relaxed);
+    bool shouldSkip = false;
+
+    if (skipMode == 1) // Auto: skip next present if previous frame exceeded target budget
+    {
+        if (g_needSkipNextFrame.exchange(false, std::memory_order_acq_rel))
+        {
+            shouldSkip = true;
+        }
+    }
+    else if (skipMode == 2) // Skip 1: 1 present, 1 skip (50% present rate)
+    {
+        g_frameskipCounter++;
+        if ((g_frameskipCounter & 1u) == 1u)
+        {
+            shouldSkip = true;
+        }
+    }
+    else if (skipMode == 3) // Skip 2: 1 present, 2 skip (33% present rate)
+    {
+        g_frameskipCounter++;
+        if ((g_frameskipCounter % 3u) != 0u)
+        {
+            shouldSkip = true;
+        }
+    }
+    else if (skipMode == 4) // Skip 3: 1 present, 3 skip (25% present rate - Potato Mode)
+    {
+        g_frameskipCounter++;
+        if ((g_frameskipCounter % 4u) != 0u)
+        {
+            shouldSkip = true;
+        }
+    }
+
     const auto presentStart = std::chrono::steady_clock::now();
-    g_api->vsync(reinterpret_cast<const Pcsx2GsPrivRegs *>(&regs));
-    WriteFrameTime(presentStart);
-    g_presents.fetch_add(1u, std::memory_order_relaxed);
+    if (!shouldSkip)
+    {
+        g_api->vsync(reinterpret_cast<const Pcsx2GsPrivRegs *>(&regs));
+        WriteFrameTime(presentStart);
+        g_presents.fetch_add(1u, std::memory_order_relaxed);
+    }
+
+    // Accurate, zero-overhead frametime & FPS recording at physical present boundary
+    const auto presentEnd = std::chrono::steady_clock::now();
+    if (g_perfLastPresent.time_since_epoch().count() != 0) {
+        const double deltaUs = std::chrono::duration<double, std::micro>(presentEnd - g_perfLastPresent).count();
+        const float deltaMs = static_cast<float>(deltaUs / 1000.0);
+        // Exclude pauses/resumes (> 250ms or < 0.1ms) from skewing hitch metrics
+        if (deltaMs >= 0.1f && deltaMs <= 250.0f) {
+            const uint32_t head = g_perfRingHead.load(std::memory_order_relaxed);
+            g_perfRingMs[head % K_PERF_RING_SIZE] = deltaMs;
+            g_perfRingHead.store(head + 1, std::memory_order_release);
+
+            g_perfWindowPresents++;
+            if (deltaMs > g_perfWindowWorstMs) {
+                g_perfWindowWorstMs = deltaMs;
+            }
+
+            // In Auto frameskip mode: if frame exceeded budget (e.g. > 34ms in 30fps or > 18ms in 60fps),
+            // flag the NEXT frame to skip presenting so GPU catches up immediately!
+            const float targetBudget = (g_statGameFps.load(std::memory_order_relaxed) > 45.0f) ? 18.0f : 34.0f;
+            if (deltaMs > targetBudget && skipMode == 1) {
+                g_needSkipNextFrame.store(true, std::memory_order_release);
+            }
+        }
+    }
+    g_perfLastPresent = presentEnd;
+
+    if (g_perfWindowStart.time_since_epoch().count() == 0) {
+        g_perfWindowStart = presentEnd;
+        g_perfWindowStartGameFrames = g_perfGameFrames.load(std::memory_order_relaxed);
+    } else {
+        const double windowSec = std::chrono::duration<double>(presentEnd - g_perfWindowStart).count();
+        if (windowSec >= 0.25) { // Refresh metrics 4 times per second
+            const float screenFps = (windowSec > 0.0) ? static_cast<float>(g_perfWindowPresents / windowSec) : 0.0f;
+            const float avgMs = (g_perfWindowPresents > 0) ? (static_cast<float>(windowSec * 1000.0) / g_perfWindowPresents) : 16.67f;
+            const uint64_t curGameFrames = g_perfGameFrames.load(std::memory_order_relaxed);
+            const float gameFps = (windowSec > 0.0) ? static_cast<float>((curGameFrames - g_perfWindowStartGameFrames) / windowSec) : 0.0f;
+            const float gameSpeed = (gameFps / 60.0f) * 100.0f;
+
+            g_statScreenFps.store(screenFps, std::memory_order_relaxed);
+            g_statAvgFrametimeMs.store(avgMs, std::memory_order_relaxed);
+            g_statWorstFrametimeMs.store(g_perfWindowWorstMs, std::memory_order_relaxed);
+            g_statGameFps.store(gameFps, std::memory_order_relaxed);
+            g_statGameSpeed.store(gameSpeed, std::memory_order_relaxed);
+
+            g_perfWindowStart = presentEnd;
+            g_perfWindowPresents = 0;
+            g_perfWindowStartGameFrames = curGameFrames;
+            g_perfWindowWorstMs = 0.0f;
+        }
+    }
+
     if (GifDump &dump = gifDump(); !dump.done)
     {
         if (dump.active)
@@ -675,3 +858,47 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &) {}
 void GSPcsx2Backend::WriteFrameTime(std::chrono::steady_clock::time_point) {}
 
 #endif
+
+extern "C" {
+
+void godhand_perf_record_game_frame() {
+    g_perfGameFrames.fetch_add(1u, std::memory_order_relaxed);
+}
+
+bool godhand_perf_get_stats(float* outStats, int statsCount, float* outHistory, int historyCount) {
+    if (outStats && statsCount >= 5) {
+        outStats[0] = g_statScreenFps.load(std::memory_order_relaxed);
+        outStats[1] = g_statAvgFrametimeMs.load(std::memory_order_relaxed);
+        outStats[2] = g_statWorstFrametimeMs.load(std::memory_order_relaxed);
+        outStats[3] = g_statGameFps.load(std::memory_order_relaxed);
+        outStats[4] = g_statGameSpeed.load(std::memory_order_relaxed);
+        if (statsCount >= 6) {
+            outStats[5] = static_cast<float>(GSPcsx2Backend::Presents());
+        }
+    }
+    if (outHistory && historyCount > 0) {
+        const uint32_t head = g_perfRingHead.load(std::memory_order_acquire);
+        const int count = (historyCount < static_cast<int>(K_PERF_RING_SIZE)) ? historyCount : static_cast<int>(K_PERF_RING_SIZE);
+        for (int i = 0; i < count; ++i) {
+            uint32_t idx = head - count + i;
+            outHistory[i] = g_perfRingMs[idx % K_PERF_RING_SIZE];
+        }
+    }
+    return true;
+}
+
+void godhand_set_frameskip_mode(int mode) {
+    g_frameskipMode.store(mode, std::memory_order_release);
+}
+
+void godhand_set_resolution_scale(float scale) {
+    g_pendingScale.store(scale, std::memory_order_release);
+}
+
+void godhand_set_aspect_ratio(int aspectIdx) {
+    g_pendingAspect.store(aspectIdx, std::memory_order_release);
+}
+
+} // extern "C"
+
+#endif // PS2X_HAS_PCSX2_GS
