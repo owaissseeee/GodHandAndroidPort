@@ -63,7 +63,7 @@ namespace ps2x::asyncvif
             std::thread thread;
         };
 
-        constexpr size_t kGifChunkBytes = 256u * 1024u;
+        constexpr size_t kGifChunkBytes = 1024u * 1024u;
 
         void publishGif(GifStage &stage)
         {
@@ -194,7 +194,7 @@ namespace ps2x::asyncvif
                 traceEvent('G');
                 {
                     std::lock_guard<std::mutex> lock(stage.mutex);
-                    if (stage.spare.size() < 8u)
+                    if (stage.spare.size() < 16u)
                         stage.spare.push_back(std::move(chunk));
                     stage.busy = false;
                 }

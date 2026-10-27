@@ -227,6 +227,38 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
 
 } // namespace godhand::affinity
 
+#include <atomic>
+
+static std::atomic<int32_t> g_tidEE{0};
+static std::atomic<int32_t> g_tidVU{0};
+static std::atomic<int32_t> g_tidGS{0};
+static std::atomic<int32_t> g_tidGIF{0};
+static std::atomic<int64_t> g_lastFrameWorkNanos{16000000LL};
+
+extern "C" void godhand_perf_record_work_duration(int64_t ns) {
+    if (ns > 0) {
+        g_lastFrameWorkNanos.store(ns, std::memory_order_relaxed);
+    }
+}
+
+extern "C" int64_t godhand_perf_get_last_work_duration() {
+    return g_lastFrameWorkNanos.load(std::memory_order_relaxed);
+}
+
+extern "C" void godhand_perf_get_tids(int32_t* out, int* count) {
+    if (!out || !count) return;
+    int c = 0;
+    int32_t ee = g_tidEE.load(std::memory_order_relaxed);
+    int32_t vu = g_tidVU.load(std::memory_order_relaxed);
+    int32_t gs = g_tidGS.load(std::memory_order_relaxed);
+    int32_t gif = g_tidGIF.load(std::memory_order_relaxed);
+    if (ee > 0) out[c++] = ee;
+    if (vu > 0) out[c++] = vu;
+    if (gs > 0) out[c++] = gs;
+    if (gif > 0) out[c++] = gif;
+    *count = c;
+}
+
 extern "C" void godhand_set_thread_affinity_and_priority(const char* name, int primaryCore, int fallbackCore, int niceVal) {
     if (name && *name) {
         char thread_name[16];
@@ -234,8 +266,17 @@ extern "C" void godhand_set_thread_affinity_and_priority(const char* name, int p
         pthread_setname_np(pthread_self(), thread_name);
     }
     godhand::affinity::ThreadRole role = godhand::affinity::classifyThread(name, primaryCore, fallbackCore);
+    pid_t tid = gettid();
+    if (role == godhand::affinity::ThreadRole::EE_MAIN) g_tidEE.store(tid, std::memory_order_relaxed);
+    else if (role == godhand::affinity::ThreadRole::VU1_WORKER) g_tidVU.store(tid, std::memory_order_relaxed);
+    else if (role == godhand::affinity::ThreadRole::GS_RENDERER) g_tidGS.store(tid, std::memory_order_relaxed);
+    else if (role == godhand::affinity::ThreadRole::GIF_WORKER) g_tidGIF.store(tid, std::memory_order_relaxed);
+
     godhand::affinity::applyAffinity(role, name, niceVal);
 }
 #else
 extern "C" void godhand_set_thread_affinity_and_priority(const char*, int, int, int) {}
+extern "C" void godhand_perf_record_work_duration(int64_t) {}
+extern "C" int64_t godhand_perf_get_last_work_duration() { return 16000000LL; }
+extern "C" void godhand_perf_get_tids(int32_t*, int* count) { if (count) *count = 0; }
 #endif

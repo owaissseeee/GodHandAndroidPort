@@ -5,6 +5,9 @@
 #include <vector>
 #include <cstdlib>
 #include <smmintrin.h>
+#if defined(__aarch64__) || defined(_M_ARM64)
+#include <arm_neon.h>
+#endif
 
 enum VIFCmd : uint8_t
 {
@@ -167,6 +170,53 @@ namespace
         {
             const uint8_t *source = src + index * bytes;
             __m128i value;
+#if defined(__aarch64__) || defined(_M_ARM64)
+            if constexpr (Vl == 0u)
+            {
+                if constexpr (Components == 4u)
+                {
+                    uint32x4_t raw = vld1q_u32(reinterpret_cast<const uint32_t *>(source));
+                    std::memcpy(&value, &raw, 16);
+                }
+                else
+                {
+                    alignas(16) uint32_t lanes[4]{};
+                    std::memcpy(lanes, source, bytes);
+                    uint32x4_t raw = vld1q_u32(lanes);
+                    std::memcpy(&value, &raw, 16);
+                }
+            }
+            else if constexpr (Vl == 1u)
+            {
+                if constexpr (ZeroExtend)
+                {
+                    uint16x4_t in16 = vld1_u16(reinterpret_cast<const uint16_t *>(source));
+                    uint32x4_t out32 = vmovl_u16(in16);
+                    std::memcpy(&value, &out32, 16);
+                }
+                else
+                {
+                    int16x4_t in16 = vld1_s16(reinterpret_cast<const int16_t *>(source));
+                    int32x4_t out32 = vmovl_s16(in16);
+                    std::memcpy(&value, &out32, 16);
+                }
+            }
+            else
+            {
+                if constexpr (ZeroExtend)
+                {
+                    uint8x8_t in8 = vld1_u8(source);
+                    uint32x4_t out32 = vmovl_u16(vget_low_u16(vmovl_u8(in8)));
+                    std::memcpy(&value, &out32, 16);
+                }
+                else
+                {
+                    int8x8_t in8 = vld1_s8(reinterpret_cast<const int8_t *>(source));
+                    int32x4_t out32 = vmovl_s16(vget_low_s16(vmovl_s8(in8)));
+                    std::memcpy(&value, &out32, 16);
+                }
+            }
+#else
             if constexpr (Vl == 0u)
             {
                 if constexpr (Components == 4u)
@@ -188,6 +238,7 @@ namespace
                 else
                     value = ZeroExtend ? _mm_cvtepu8_epi32(raw) : _mm_cvtepi8_epi32(raw);
             }
+#endif
             auto *destination = reinterpret_cast<__m128i *>(vuData + (destVec & 0x3FFu) * 16u);
             if constexpr (Components == 1u)
                 value = _mm_shuffle_epi32(value, 0u);

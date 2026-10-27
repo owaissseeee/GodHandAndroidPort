@@ -535,16 +535,13 @@ namespace
     {
         std::memset(&state, 0, sizeof(state));
 
-        for (uint32_t i = 0; i < 32u; ++i)
-        {
-            _mm_storeu_ps(state.vf[i], ctx->vu0_vf[i]);
-        }
+        std::memcpy(state.vf, ctx->vu0_vf, sizeof(state.vf));
         for (uint32_t i = 0; i < 16u; ++i)
         {
             state.vi[i] = static_cast<int16_t>(ctx->vi[i]);
         }
 
-        _mm_storeu_ps(state.acc, ctx->vu0_acc);
+        std::memcpy(state.acc, &ctx->vu0_acc, sizeof(state.acc));
         state.q = ctx->vu0_q;
         state.p = ctx->vu0_p;
         state.i = ctx->vu0_i;
@@ -568,16 +565,13 @@ namespace
 
     void copyVu0StateToContext(const VU1State &state, R5900Context *ctx)
     {
-        for (uint32_t i = 0; i < 32u; ++i)
-        {
-            ctx->vu0_vf[i] = _mm_loadu_ps(state.vf[i]);
-        }
+        std::memcpy(ctx->vu0_vf, state.vf, sizeof(ctx->vu0_vf));
         for (uint32_t i = 0; i < 16u; ++i)
         {
             ctx->vi[i] = static_cast<uint16_t>(state.vi[i]);
         }
 
-        ctx->vu0_acc = _mm_loadu_ps(state.acc);
+        std::memcpy(&ctx->vu0_acc, state.acc, sizeof(ctx->vu0_acc));
         ctx->vu0_q = state.q;
         ctx->vu0_p = state.p;
         ctx->vu0_i = state.i;

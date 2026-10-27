@@ -35,6 +35,7 @@ typedef void* HMODULE;
 #endif
 
 #if PS2X_HAS_PCSX2_GS
+extern "C" void godhand_perf_record_work_duration(int64_t ns);
 static_assert(sizeof(GSVSyncRegs) == sizeof(Pcsx2GsPrivRegs), "GSVSyncRegs must match Pcsx2GsPrivRegs");
 
 namespace
@@ -740,6 +741,7 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
     const auto presentEnd = std::chrono::steady_clock::now();
     if (g_perfLastPresent.time_since_epoch().count() != 0) {
         const double deltaUs = std::chrono::duration<double, std::micro>(presentEnd - g_perfLastPresent).count();
+        godhand_perf_record_work_duration(static_cast<int64_t>(deltaUs * 1000.0));
         const float deltaMs = static_cast<float>(deltaUs / 1000.0);
         // Exclude pauses/resumes (> 250ms or < 0.1ms) from skewing hitch metrics
         if (deltaMs >= 0.1f && deltaMs <= 250.0f) {

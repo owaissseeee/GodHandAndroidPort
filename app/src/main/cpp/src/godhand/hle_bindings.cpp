@@ -12,6 +12,7 @@
 #include "ps2_stubs.h"
 #include "ps2_syscalls.h"
 
+#include <cmath>
 #include <cstdlib>
 #include <cstring>
 #include <iomanip>
@@ -161,6 +162,52 @@ namespace godhand
             }
             return skipped;
         }
+
+        static void hle_native_memcpy(uint8_t *rdram, R5900Context *ctx, PS2Runtime *)
+        {
+            const uint32_t dst = getRegU32(ctx, 4);
+            const uint32_t src = getRegU32(ctx, 5);
+            const uint32_t len = getRegU32(ctx, 6);
+            if (len > 0)
+                std::memcpy(rdram + (dst & 0x01FFFFFFu), rdram + (src & 0x01FFFFFFu), len);
+            setReturnU32(ctx, dst);
+            ctx->pc = getRegU32(ctx, 31);
+        }
+
+        static void hle_native_memset(uint8_t *rdram, R5900Context *ctx, PS2Runtime *)
+        {
+            const uint32_t dst = getRegU32(ctx, 4);
+            const uint32_t val = getRegU32(ctx, 5);
+            const uint32_t len = getRegU32(ctx, 6);
+            if (len > 0)
+                std::memset(rdram + (dst & 0x01FFFFFFu), static_cast<int>(val & 0xFFu), len);
+            setReturnU32(ctx, dst);
+            ctx->pc = getRegU32(ctx, 31);
+        }
+
+        static void hle_native_sinf(uint8_t *, R5900Context *ctx, PS2Runtime *)
+        {
+            ctx->f[0] = std::sin(ctx->f[12]);
+            ctx->pc = getRegU32(ctx, 31);
+        }
+
+        static void hle_native_cosf(uint8_t *, R5900Context *ctx, PS2Runtime *)
+        {
+            ctx->f[0] = std::cos(ctx->f[12]);
+            ctx->pc = getRegU32(ctx, 31);
+        }
+
+        static void hle_native_sqrtf(uint8_t *, R5900Context *ctx, PS2Runtime *)
+        {
+            ctx->f[0] = std::sqrt(ctx->f[12]);
+            ctx->pc = getRegU32(ctx, 31);
+        }
+
+        static void hle_native_atanf(uint8_t *, R5900Context *ctx, PS2Runtime *)
+        {
+            ctx->f[0] = std::atan(ctx->f[12]);
+            ctx->pc = getRegU32(ctx, 31);
+        }
     }
 
     const SdkFunction *findSdkFunction(std::string_view name)
@@ -233,6 +280,14 @@ namespace godhand
                                                              resolvedName + ": " + std::string(alias.why)))
                 ++bound;
         }
+        // Native Host/ARM64 hardware replacements for hot guest libc / libm routines
+        FunctionHooks::instance().replace(0x003A5148u, "memcpy", &hle_native_memcpy, ReplacementStatus::Native, "host std::memcpy");
+        FunctionHooks::instance().replace(0x003A52F0u, "memset", &hle_native_memset, ReplacementStatus::Native, "host std::memset");
+        FunctionHooks::instance().replace(0x003A19F8u, "sinf", &hle_native_sinf, ReplacementStatus::Native, "host std::sinf");
+        FunctionHooks::instance().replace(0x003A18F0u, "cosf", &hle_native_cosf, ReplacementStatus::Native, "host std::cosf");
+        FunctionHooks::instance().replace(0x003A2440u, "sqrtf", &hle_native_sqrtf, ReplacementStatus::Native, "host std::sqrtf");
+        FunctionHooks::instance().replace(0x003A1648u, "atanf", &hle_native_atanf, ReplacementStatus::Native, "host std::atanf");
+
         GH_INFO(Hook, "HLE: bound " << bound << " SDK functions; not located in this ELF:" << missing.str());
     }
 }

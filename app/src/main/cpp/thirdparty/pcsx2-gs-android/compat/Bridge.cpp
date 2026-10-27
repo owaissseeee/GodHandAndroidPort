@@ -14,6 +14,7 @@
 #endif
 
 #include <algorithm>
+#include <chrono>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -49,6 +50,11 @@ namespace
         options.UserHacks_AlignSpriteX = false;
         options.GetSkipCountFunctionId = -1;
         options.SkipDuplicateFrames = false;
+        options.TriFilter = TriFiltering::Off;
+        options.TexturePreloading = TexturePreloadingLevel::Full;
+        options.SkipDrawStart = 0;
+        options.SkipDrawEnd = 0;
+        options.VsyncQueueSize = 2;
 
 #if defined(__ANDROID__)
         // Mobile Mali GPU optimizations:
@@ -270,6 +276,17 @@ gs_open_success:
         std::memcpy(g_regs + 0x1040, &regs->busdir, 8);
         std::memcpy(g_regs + 0x1080, &regs->siglblid, 8);
         // As PCSX2's MTGS: CSR.FIELD (bit 13) picks the field.
+#if defined(__ANDROID__)
+        // Rate-limit physical display presentation to 60Hz max on Android.
+        // Prevents duplicate interlaced field presentations (<14ms) from exhausting BLASTBufferQueue.
+        static auto s_lastPresentTime = std::chrono::steady_clock::now();
+        const auto now = std::chrono::steady_clock::now();
+        const auto elapsedUs = std::chrono::duration_cast<std::chrono::microseconds>(now - s_lastPresentTime).count();
+        if (elapsedUs < 14000) {
+            return;
+        }
+        s_lastPresentTime = now;
+#endif
         GSvsync((regs->csr & 0x2000u) ? 0u : 1u, true);
         WritePresentStats();
 #if defined(__ANDROID__)

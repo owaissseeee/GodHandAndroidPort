@@ -38,7 +38,7 @@ namespace
 
     // accountCycles (PS2X_EE_FAST_ACCOUNT, PS2X_EE_GS_POLL_CYCLES): game thread only.
     int g_fastAccount = -1;
-    uint64_t g_gsPollCycles = 256u;
+    uint64_t g_gsPollCycles = 1024u;
     uint64_t g_gsPollStash = 0u;
     uint64_t g_iopStash = 0u;
     const std::atomic<uint32_t> *g_signalSerial = nullptr;
