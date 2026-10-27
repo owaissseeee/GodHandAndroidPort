@@ -36,19 +36,20 @@ namespace
     // nativeScaling: 2 (Aggressive: Fixes post effects)
     void ApplyGameFixes(Pcsx2Config::GSOptions &options)
     {
-        // Mobile TBDR (Mali / Adreno / Xclipse) Clean Visuals Configuration for God Hand:
+        // Mobile TBDR (Mali / Adreno / Xclipse) High-Performance Zero-Barrier Configuration:
         options.PreloadFrameWithGSData = false;
         options.GPUPaletteConversion = false;
-        options.UserHacks_DisablePartialInvalidation = false; // Allow partial invalidations so depth of field/bloom buffers refresh properly
-        options.UserHacks_DisableSafeFeatures = false;        // Allow mem clears to clear blur buffers between scene transitions
+        options.UserHacks_DisablePartialInvalidation = true; // Prevent TBDR tile splits
+        options.UserHacks_DisableSafeFeatures = true;        // Skip redundant slow clears
         options.UserHacks_AutoFlush = GSHWAutoFlushLevel::Disabled;
-        options.HWAccurateAlphaTest = true;                   // Prevent blur quads from bleeding across transparent sky and cutscenes
-        options.AccurateBlendingUnit = AccBlendLevel::Medium; // Accurate multi-pass blending for depth of field and bloom
+        options.HWAccurateAlphaTest = false;                   // AccurateDATE = Off: Restores 60 FPS on Mali TBDR
+        options.AccurateBlendingUnit = AccBlendLevel::Minimum; // BlendingAccuracy = Minimum: Single-pass hardware blending
+        options.UserHacks_DisableDepthSupport = true;          // COMPLETELY ELIMINATES DEPTH OF FIELD BLUR
         options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
-        options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special;
-        options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
-        options.UserHacks_MergePPSprite = true;               // Merge split post-processing sprites to eliminate sky/background seams
-        options.UserHacks_AlignSpriteX = true;                // Correctly align post-processing sprites
+        options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Off; // Eliminates misaligned bloom halo rings (over SALOON and characters)
+        options.UserHacks_NativeScaling = GSNativeScaling::Off;     // Disables downscale targets and post-processing downscaling
+        options.UserHacks_MergePPSprite = false;               // RESTORES CHARACTER FACES & REMOVES LINE POPPING
+        options.UserHacks_AlignSpriteX = false;
         options.GetSkipCountFunctionId = -1;
         options.SkipDuplicateFrames = false;
         options.TriFilter = TriFiltering::Off;
