@@ -85,7 +85,7 @@ namespace
     };
     AsyncReadback g_readback;
 
-    constexpr size_t kPublishBytes = 512u * 1024u;
+    constexpr size_t kPublishBytes = 64u * 1024u;
     constexpr size_t kMaxPendingChunks = 256u;
     std::atomic<bool> s_enabledByDefault{false};
     std::atomic<bool> s_gpuByDefault{false};
@@ -201,23 +201,6 @@ void GSThreadedBackend::Enqueue(Op op, const void *payload, uint32_t size)
         if (length)
             m_open.insert(m_open.end(), static_cast<const uint8_t *>(bytes), static_cast<const uint8_t *>(bytes) + length);
     };
-    static size_t s_lastRawGifOffset = SIZE_MAX;
-    if (op == Op::RawGif && s_lastRawGifOffset != SIZE_MAX && s_lastRawGifOffset + 5u <= m_open.size())
-    {
-        uint32_t prevLength = 0;
-        std::memcpy(&prevLength, m_open.data() + s_lastRawGifOffset + 1u, 4);
-        if (prevLength + size < 8u * 1024u * 1024u)
-        {
-            prevLength += size;
-            std::memcpy(m_open.data() + s_lastRawGifOffset + 1u, &prevLength, 4);
-            if (size)
-                m_open.insert(m_open.end(), static_cast<const uint8_t *>(payload), static_cast<const uint8_t *>(payload) + size);
-            if (m_open.size() >= kPublishBytes)
-                PublishLocked();
-            return;
-        }
-    }
-    s_lastRawGifOffset = (op == Op::RawGif) ? m_open.size() : SIZE_MAX;
 
     if (op == Op::Submit && m_compactQueue)
     {
@@ -446,19 +429,10 @@ void GSThreadedBackend::Execute(const std::vector<uint8_t> &chunk, GSPrimitiveBa
             // PCSX2's GIF parser loads whole qwords with aligned vector loads; the queue packs records at any byte.
             if ((reinterpret_cast<uintptr_t>(payload) & 15u) != 0u)
             {
-                alignas(64) static uint8_t s_alignedBuf[4 * 1024 * 1024];
-                if (length <= sizeof(s_alignedBuf))
-                {
-                    std::memcpy(s_alignedBuf, payload, length);
-                    m_inner->RawGif(s_alignedBuf, length);
-                }
-                else
-                {
-                    static thread_local std::vector<__m128> aligned;
-                    aligned.resize((length + 15u) / 16u);
-                    std::memcpy(aligned.data(), payload, length);
-                    m_inner->RawGif(reinterpret_cast<const uint8_t *>(aligned.data()), length);
-                }
+                static thread_local std::vector<__m128> aligned;
+                aligned.resize((length + 15u) / 16u);
+                std::memcpy(aligned.data(), payload, length);
+                m_inner->RawGif(reinterpret_cast<const uint8_t *>(aligned.data()), length);
             }
             else
                 m_inner->RawGif(payload, length);
