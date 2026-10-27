@@ -834,7 +834,6 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     setDefaultEnv("PS2X_PCSX2_VSYNC", "1");
     setDefaultEnv("PS2X_VSYNC", "1");
     setDefaultEnv("PS2X_GS_POLL_CYCLES", "1024");
-    setDefaultEnv("PS2X_VU1_FAST_NOFLAGS", "1");
     // aspectIdx: 0 = 16:9, 1 = 4:3, 2 = Full Screen (fill device display)
     const char* stretchVal = (aspectIdx == 1) ? "0" : (aspectIdx == 2) ? "2" : "1";
     setEnv("PS2X_PCSX2_STRETCH", stretchVal);

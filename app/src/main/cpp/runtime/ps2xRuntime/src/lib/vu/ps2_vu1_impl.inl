@@ -2896,8 +2896,7 @@ struct VU1InterpreterAccess
 #if defined(__aarch64__) || defined(_M_ARM64)
         static const bool s_skipNorm = [] {
             const char *c = std::getenv("PS2X_VU1_SKIP_CLAMP");
-            const char *f = std::getenv("PS2X_VU1_FAST_NOFLAGS");
-            return (!c || *c != '0') || (!f || *f != '0');
+            return c && *c == '1';
         }();
         if (s_skipNorm)
             return value;
@@ -3556,7 +3555,7 @@ struct VU1InterpreterAccess
         (void)cycle;
         static const bool s_fastNoFlags = [] {
             const char *v = std::getenv("PS2X_VU1_FAST_NOFLAGS");
-            return !v || *v != '0';
+            return v && *v == '1';
         }();
         constexpr bool cross = K == FK::Opmsub || K == FK::Opmula;
         constexpr bool productSum = K == FK::Madd || K == FK::Msub || K == FK::Opmsub;
@@ -3717,7 +3716,7 @@ struct VU1InterpreterAccess
 #if defined(__aarch64__) || defined(_M_ARM64)
             static const bool s_fastNoFlags = [] {
                 const char *v = std::getenv("PS2X_VU1_FAST_NOFLAGS");
-                return !v || *v != '0';
+                return v && *v == '1';
             }();
             if (!s_fastNoFlags)
 #endif

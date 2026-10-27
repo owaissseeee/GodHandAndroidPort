@@ -36,18 +36,19 @@ namespace
     // nativeScaling: 2 (Aggressive: Fixes post effects)
     void ApplyGameFixes(Pcsx2Config::GSOptions &options)
     {
-        // Mobile TBDR (Mali / Adreno / Xclipse) Zero-Barrier Configuration for God Hand:
-        options.PreloadFrameWithGSData = false;            // WAS true -> caused stalls on particle/debris buffer init!
-        options.GPUPaletteConversion = false;              // WAS true -> caused 60+ separate Vulkan RenderPasses/frame on houses & enemies!
-        options.UserHacks_DisablePartialInvalidation = true;
-        options.UserHacks_DisableSafeFeatures = true;
+        // Mobile TBDR (Mali / Adreno / Xclipse) Clean Visuals Configuration for God Hand:
+        options.PreloadFrameWithGSData = false;
+        options.GPUPaletteConversion = false;
+        options.UserHacks_DisablePartialInvalidation = false; // Allow partial invalidations so depth of field/bloom buffers refresh properly
+        options.UserHacks_DisableSafeFeatures = false;        // Allow mem clears to clear blur buffers between scene transitions
         options.UserHacks_AutoFlush = GSHWAutoFlushLevel::Disabled;
-        options.HWAccurateAlphaTest = false;               // AccurateDATE = Off: Eliminates per-particle framebuffer barrier stalls!
-        options.AccurateBlendingUnit = AccBlendLevel::Minimum; // BlendingAccuracy = Minimum: Single-pass hardware blending for heavy smoke/fire/spark particles!
+        options.HWAccurateAlphaTest = true;                   // Prevent blur quads from bleeding across transparent sky and cutscenes
+        options.AccurateBlendingUnit = AccBlendLevel::Medium; // Accurate multi-pass blending for depth of field and bloom
         options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
         options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special;
         options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
-        options.UserHacks_AlignSpriteX = false;
+        options.UserHacks_MergePPSprite = true;               // Merge split post-processing sprites to eliminate sky/background seams
+        options.UserHacks_AlignSpriteX = true;                // Correctly align post-processing sprites
         options.GetSkipCountFunctionId = -1;
         options.SkipDuplicateFrames = false;
         options.TriFilter = TriFiltering::Off;

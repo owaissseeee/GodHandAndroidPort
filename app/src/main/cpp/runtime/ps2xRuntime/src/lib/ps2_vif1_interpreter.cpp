@@ -188,30 +188,34 @@ namespace
             }
             else if constexpr (Vl == 1u)
             {
+                uint64_t packed = 0u;
+                std::memcpy(&packed, source, bytes);
                 if constexpr (ZeroExtend)
                 {
-                    uint16x4_t in16 = vld1_u16(reinterpret_cast<const uint16_t *>(source));
+                    uint16x4_t in16 = vld1_u16(reinterpret_cast<const uint16_t *>(&packed));
                     uint32x4_t out32 = vmovl_u16(in16);
                     std::memcpy(&value, &out32, 16);
                 }
                 else
                 {
-                    int16x4_t in16 = vld1_s16(reinterpret_cast<const int16_t *>(source));
+                    int16x4_t in16 = vld1_s16(reinterpret_cast<const int16_t *>(&packed));
                     int32x4_t out32 = vmovl_s16(in16);
                     std::memcpy(&value, &out32, 16);
                 }
             }
             else
             {
+                uint64_t packed = 0u;
+                std::memcpy(&packed, source, bytes);
                 if constexpr (ZeroExtend)
                 {
-                    uint8x8_t in8 = vld1_u8(source);
+                    uint8x8_t in8 = vld1_u8(reinterpret_cast<const uint8_t *>(&packed));
                     uint32x4_t out32 = vmovl_u16(vget_low_u16(vmovl_u8(in8)));
                     std::memcpy(&value, &out32, 16);
                 }
                 else
                 {
-                    int8x8_t in8 = vld1_s8(reinterpret_cast<const int8_t *>(source));
+                    int8x8_t in8 = vld1_s8(reinterpret_cast<const int8_t *>(&packed));
                     int32x4_t out32 = vmovl_s16(vget_low_s16(vmovl_s8(in8)));
                     std::memcpy(&value, &out32, 16);
                 }
