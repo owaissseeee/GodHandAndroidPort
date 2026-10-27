@@ -395,9 +395,8 @@ label_30cb8c:
     ctx->pc = 0x30cd0cu;
     WRITE64(ADD32(GPR_U32(ctx, 30), 8), GPR_U64(ctx, 16));
     // 0x30cd10: 0xe73f8  dsll        $t6, $t6, 15
-    // PATCH (PCSX2 Anti-Blur 240E0070): addiu $t6, $zero, 0x70
     ctx->pc = 0x30cd10u;
-    SET_GPR_U64(ctx, 14, 0x70u);
+    SET_GPR_U64(ctx, 14, GPR_U64(ctx, 14) << 15);
     // 0x30cd14: 0xffd10030  sd          $s1, 0x30($fp)
     ctx->pc = 0x30cd14u;
     WRITE64(ADD32(GPR_U32(ctx, 30), 48), GPR_U64(ctx, 17));
@@ -489,9 +488,8 @@ label_30cb8c:
     ctx->pc = 0x30cd88u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) | GPR_U64(ctx, 2));
     // 0x30cd8c: 0xffc60038  sd          $a2, 0x38($fp)
-    // PATCH (PCSX2 Anti-Blur 00000000): nop
     ctx->pc = 0x30cd8cu;
-    // WRITE64(ADD32(GPR_U32(ctx, 30), 56), GPR_U64(ctx, 6));
+    WRITE64(ADD32(GPR_U32(ctx, 30), 56), GPR_U64(ctx, 6));
     // 0x30cd90: 0x254a74a0  addiu       $t2, $t2, 0x74A0
     ctx->pc = 0x30cd90u;
     SET_GPR_S32(ctx, 10, (int32_t)ADD32(GPR_U32(ctx, 10), 29856));

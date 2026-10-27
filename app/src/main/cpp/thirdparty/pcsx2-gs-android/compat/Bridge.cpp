@@ -43,8 +43,7 @@ namespace
         options.UserHacks_DisableSafeFeatures = true;        // Skip redundant slow clears
         options.UserHacks_AutoFlush = GSHWAutoFlushLevel::Disabled;
         options.HWAccurateAlphaTest = false;                   // AccurateDATE = Off: Restores 60 FPS on Mali TBDR
-        options.AccurateBlendingUnit = AccBlendLevel::Minimum; // BlendingAccuracy = Minimum: Single-pass hardware blending
-        options.UserHacks_DisableDepthSupport = true;          // COMPLETELY ELIMINATES DEPTH OF FIELD BLUR
+        options.UserHacks_DisableDepthSupport = false;         // Keep depth buffer emulation intact to prevent fullscreen blur smearing
         options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
         options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Off; // Eliminates misaligned bloom halo rings (over SALOON and characters)
         options.UserHacks_NativeScaling = GSNativeScaling::Off;     // Disables downscale targets and post-processing downscaling
@@ -54,8 +53,11 @@ namespace
         options.SkipDuplicateFrames = false;
         options.TriFilter = TriFiltering::Off;
         options.TexturePreloading = TexturePreloadingLevel::Full;
-        options.SkipDrawStart = 0;
-        options.SkipDrawEnd = 0;
+        // SkipDraw: Cleanly strips the depth-of-field blur quad without corrupting framebuffers
+        const char *skipDrawEnv = std::getenv("PS2X_SKIPDRAW");
+        const int skipDrawVal = skipDrawEnv ? std::atoi(skipDrawEnv) : 1;
+        options.SkipDrawStart = 1;
+        options.SkipDrawEnd = skipDrawVal;
         options.VsyncQueueSize = 2;
 
 #if defined(__ANDROID__)
@@ -139,6 +141,11 @@ namespace
                 options.UserHacks_DisableDepthSupport = (value == 0);
             else if (key == "auto_flush")
                 options.UserHacks_AutoFlush = static_cast<GSHWAutoFlushLevel>(std::clamp(value, 0, 2));
+            else if (key == "skipdraw")
+            {
+                options.SkipDrawStart = 1;
+                options.SkipDrawEnd = std::max(0, value);
+            }
         }
     }
 
