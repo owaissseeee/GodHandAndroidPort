@@ -1,0 +1,1225 @@
+--------- beginning of main
+10-27 18:45:39.110 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:39.165 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:39.224 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:39.232 I/adbd    ( 1725): adbd service requested 'shell,v2:export ANDROID_LOG_TAGS=''; exec logcat '-v' 'time''
+10-27 18:45:39.274 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:39.333 I/GodHandNative(18258): [spu2-silence] output dropped to exact 0 after loud sound (t=219.047 s): ATTR c080/c001 MMIX 0fc0/0fcc MVOL 3fff,3fff/3fff,3fff EVOL 1400,1400/0000,0000 AVOL1 7fff,7fff BVOL1 7fff,7fff core0 out 0,0 voices 0/0 ADMA 0/1
+10-27 18:45:39.336 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:39.350 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=22.71 dur=1012.91 max=67.07 min=15.87
+10-27 18:45:39.366 D/OplusTelephonyController( 2876): onSignalStrengthChanged: SignalStrength=SignalStrength:{mCdma=CellSignalStrengthCdma: cdmaDbm=2147483647 cdmaEcio=2147483647 evdoDbm=2147483647 evdoEcio=2147483647 evdoSnr=2147483647 level=0,mGsm=CellSignalStrengthGsm: rssi=2147483647 ber=2147483647 mTa=2147483647 mLevel=0,mWcdma=CellSignalStrengthWcdma: ss=2147483647 ber=2147483647 rscp=2147483647 ecno=2147483647 level=0,mTdscdma=CellSignalStrengthTdscdma: rssi=2147483647 ber=2147483647 rscp=2147483647 level=0,mLte=CellSignalStrengthLte: rssi=-73 rsrp=-82 rsrq=-9 rssnr=4 cqiTableIndex=2147483647 cqi=0 ta=0 level=4 parametersUseForLevel=0,mNr=CellSignalStrengthNr:{ csiRsrp = 2147483647 csiRsrq = 2147483647 csiCqiTableIndex = 2147483647 csiCqiReport = [] ssRsrp = 2147483647 ssRsrq = 2147483647 ssSinr = 2147483647 level = 0 parametersUseForLevel = 0 timingAdvance = 2147483647 },primary=CellSignalStrengthLte}
+10-27 18:45:39.377 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:39.379 D/SubsysEventListenerManager-SubsysTelephonyCallback[0]( 2912): onSignalStrengthsChanged
+10-27 18:45:39.385 I/SystemUi--Statusbar( 2542): MobileConnectionRepositoryImpl-->subId:1 isSoftSimCard:false slotId:0
+10-27 18:45:39.386 D/Tile.OplusCellularTile( 2542): refreshState: tile not listening, ignore
+10-27 18:45:39.393 D/PerformanceService( 1198): open /proc/task_cpustats failed! err:Operation not permitted, Linux version 6.1.157
+10-27 18:45:39.419 W/OPLUS_LOG_LOAD( 2005): ==LOGS PROG INFO, prog(system_server) ==
+10-27 18:45:39.419 W/Settings( 2005): Setting notification_bubbles has moved from android.provider.Settings.Global to android.provider.Settings.Secure, returning read-only value.
+10-27 18:45:39.419 W/Settings( 2005): Setting apply_ramping_ringer has moved from android.provider.Settings.Global to android.provider.Settings.System, returning read-only value.
+--------- beginning of system
+10-27 18:45:39.430 W/SettingsStatsUtil( 2005): Can not parse value to float: +network
+10-27 18:45:39.483 I/BufferQueueProducer( 1259): [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#88264](this:0xb400007085fe6af8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=4.02 dur=1243.14 max=267.91 min=230.31
+10-27 18:45:39.534 I/pcsx2-gs(18258): Rendered Vulkan frame #13080 successfully
+10-27 18:45:39.717 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:39.724 I/OplusPerfCollect( 1259): The layer number in last 60013ms is: 3 layer, 3412 time, 
+10-27 18:45:39.917 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:39.921 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:39.921 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:39.921 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:40.291 I/GodHandNative(18258): [spu2-silence] output dropped to exact 0 after loud sound (t=219.618 s): ATTR c080/c001 MMIX 0fc0/0fcc MVOL 3fff,3fff/3fff,3fff EVOL 1400,1400/0000,0000 AVOL1 7fff,7fff BVOL1 7fff,7fff core0 out 0,0 voices 0/0 ADMA 0/1
+10-27 18:45:40.415 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=18.80 dur=1064.01 max=67.93 min=17.74
+10-27 18:45:40.430 D/OplusNetKit( 2005): in getLpByInterface name from LP: [ccmni1]
+10-27 18:45:40.430 D/OplusNetKit( 2005): in getLpByInterface name from LP: [wlan0]
+10-27 18:45:40.443 D/vendor.oplus.hardware.wifi-aidl-service-nl( 1218): Ignore invalid attribute type = 9
+10-27 18:45:40.443 D/vendor.oplus.hardware.wifi-aidl-service-nl( 1218): STATS_TX_TAG_QUEUE:Len = [16], Msdu = [0/4096] PLE HIF = [0x000/0x3e8]
+10-27 18:45:40.443 D/vendor.oplus.hardware.wifi-aidl-service-nl( 1218): STATS_TX_TAG_BSS0:Len = [24], retry = [2142], rtsfail = [14], ackfail = [1786]
+10-27 18:45:40.443 D/vendor.oplus.hardware.wifi-aidl-service-nl( 1218): STATS_TX_TAG_TIME:Len = [40], success = [1269130/2114/764/182/50], fail = [0/0/0/0/0]
+10-27 18:45:40.443 D/vendor.oplus.hardware.wifi-aidl-service-nl( 1218): STATS_TX_TAG_LAT:Len = [40], driver = [1175452/63902/26593/3294/2999], mac = [1265585/4268/1667/571/149]
+10-27 18:45:40.443 D/vendor.oplus.hardware.wifi-aidl-service-nl( 1218): STATS_RX_TAG_REORDER_DROP:Len = [8] reorder = [10524]
+10-27 18:45:40.444 D/vendor.oplus.hardware.wifi-aidl-service-nl( 1218): STATS_RX_TAG_AVG_RSSI:Len = [8] rssi0 = [-19], rssi1 = [-56]
+10-27 18:45:40.444 D/vendor.oplus.hardware.wifi-aidl-service-nl( 1218): STATS_CGS_TAG_B0_IDLE_SLOT:Len = [8] idleslot = [2796290166]
+10-27 18:45:40.444 D/vendor.oplus.hardware.wifi-aidl-service-nl( 1218): STATS_CGS_TAG_AIR_LAT:Len = [36], level = [3/5/10/20], lat = [1163671/2221/3051/1516/2217]
+10-27 18:45:40.444 D/vendor.oplus.hardware.wifi-aidl-service-nl( 1218): ConsysTRxStatsCommand 0x7fe8be84c0 destroyed
+10-27 18:45:40.466 D/OplusNetRttKit( 2005): getIcmpEchoRtt addr:192.168.31.*** avgRtt: 7
+10-27 18:45:40.498 I/BufferQueueProducer( 1259): [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#88264](this:0xb400007085fe6af8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=3.94 dur=1015.42 max=267.18 min=248.63
+10-27 18:45:40.617 E/WifiDataStall( 2005): Ignore this poll. newStats: null txLinkSpeedMbps: 480 rxLinkSpeedMbps: 480 rssi: -41 connectionCapabilities: com.android.server.wifi.WifiNative$ConnectionCapabilities@eda5aed
+10-27 18:45:40.630 D/VendorWifiService( 2912): onEvent event:9,action:1
+10-27 18:45:40.632 D/ScorerUtils( 2005): isLowTraffic: txTputKBps=0, rxTputKBps=3
+10-27 18:45:40.633 D/OplusWifiPower_TriggerCenter( 2005): mComponentCallback: wifistat
+10-27 18:45:40.720 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:40.813 W/OPLUS_LOG_LOAD( 9517): ==LOGS PROG INFO, prog(com.oplus.camera) ==
+10-27 18:45:40.813 I/APS_ALOG( 9517): flushRoutine g_immediateFlush=0 g_pendingCount=0 g_oobCount=0
+10-27 18:45:40.941 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:40.943 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:40.944 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:40.944 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:41.145 D/VRR [OTI]( 1259): handleIdle from 1 to 0
+10-27 18:45:41.146 I/VRR [MVT]( 1259): request is same as current request, ignore it.
+10-27 18:45:41.145 I/touch_boost( 1341): enable=0, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:41.146 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:41.148 D/GestureLog_OplusMultiPointerDetector( 2005): onTouchEvent------>start, mCurNumPointers=1, mCurrStatus=0 mIsDownIntervalTimeout=true, action=0 downTime=208826181 deviceId=4
+10-27 18:45:41.149 I/touch_boost( 1341): enable=1, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:41.152 E/IJankManager(18258): slideSceneEnd unknown scene 1000 mScene:-1
+10-27 18:45:41.152 I/[UAH_CLIENT]( 1189): UahPlatformResAcquire
+10-27 18:45:41.152 I/[UAH_CLIENT]( 1189): UahEventAcquire, cmdid:-3, pkg:1341 1341 -1 3, identity:mtk-powerd
+10-27 18:45:41.153 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208826181, event=touch, flags=0x0, uid=1000
+10-27 18:45:41.153 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:41.158 I/VibratorManagerServiceExtImpl( 2005): vibrate is uid=10447, pid=18258, opPkg=com.owaissseeee.godhand, effect=Mono{mEffect=Composed{segments=[Step{amplitude=-1.0, frequencyHz=0.0, duration=12}], repeat=-1}}, attributes=VibrationAttributes{mUsage=TOUCH, mAudioUsage= USAGE_UNKNOWN, mFlags=0}, reason=null, token=105008847
+10-27 18:45:41.158 D/SurfaceFlinger( 1259): calculateTimeoutTime, triggerInterval = 2 sec + 999999923 nsec
+10-27 18:45:41.161 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208826181, event=touch, flags=0x0, uid=1000
+10-27 18:45:41.162 D/aidl_vibrator( 1723): Vibrator on for timeoutMs: 12
+10-27 18:45:41.162 I/GodHandInput(18258): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+10-27 18:45:41.163 E/aidl_vibrator( 1723): open /sys/class/leds/vibrator/oplus_state failed, errno = 2
+10-27 18:45:41.163 E/aidl_vibrator( 1723): open /sys/class/leds/vibrator/oplus_duration failed, errno = 2
+10-27 18:45:41.163 E/aidl_vibrator( 1723): Vibration duration will be modified to 35
+10-27 18:45:41.164 E/aidl_vibrator( 1723): open /sys/class/leds/vibrator/oplus_activate failed, errno = 2
+10-27 18:45:41.166 D/aidl_vibrator( 1723): Starting on on another thread
+10-27 18:45:41.170 D/vendor.oplus.hardware.charger-V11-service( 1202): ret_value:127, read content:,352,366,3721,3721,-93,13,13,1,1,0,402,5081,13,1,4470,600,500,0,2,-22,2,0,1,0,2,0,0,0,1,67289,100,-5459,812,6728,0,0,0,0,0,101
+10-27 18:45:41.171 D/vendor.oplus.hardware.charger-V11-service( 1202): gmtime: 2026-10-27-18-45-41
+10-27 18:45:41.171 D/vendor.oplus.hardware.charger-V11-service( 1202): usb_online:1, ac_online:-2147483648, wireless_online:-2147483648
+10-27 18:45:41.175 I/GodHandInput(18258): IOP padState: buttons=0x0008 (START=1)
+10-27 18:45:41.183 D/aidl_vibrator( 1723): Notifying on complete
+10-27 18:45:41.185 D/aidl_vibrator( 1723): Vibrator off
+10-27 18:45:41.185 E/aidl_vibrator( 1723): HoldFlag is true, vibration off will be intercepted
+10-27 18:45:41.244 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208826282, event=touch, flags=0x0, uid=1000
+10-27 18:45:41.246 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208826282, event=touch, flags=0x0, uid=1000
+10-27 18:45:41.252 D/OneHandedTouchHandler( 2542): onMotionEvent: mIsInOutsideRegion = false, mIsOnStopTransitioning = false, rawY = 984.9375
+10-27 18:45:41.256 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:41.256 D/OplusViewDragTouchViewHelper(18258): dispatchTouchView action = 1
+10-27 18:45:41.257 D/ViewRootImplExtImpl(18258): the up motion event handled by client, just return
+10-27 18:45:41.262 D/ShellSubscriberWorkerThread( 7077): the first 8 bytes empty, and RestData length > 8 
+10-27 18:45:41.264 I/touch_boost( 1341): enable=0, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:41.265 I/[UAH_CLIENT]( 1189): UahRelease, handle:322000
+10-27 18:45:41.265 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:41.325 I/touch_boost( 1341): enable=0, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:41.325 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:41.327 I/touch_boost( 1341): enable=1, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:41.328 D/GestureLog_OplusMultiPointerDetector( 2005): onTouchEvent------>start, mCurNumPointers=1, mCurrStatus=0 mIsDownIntervalTimeout=false, action=0 downTime=208826365 deviceId=4
+10-27 18:45:41.328 E/IJankManager(18258): slideSceneEnd unknown scene 1000 mScene:-1
+10-27 18:45:41.329 I/VibratorManagerServiceExtImpl( 2005): vibrate is uid=10447, pid=18258, opPkg=com.owaissseeee.godhand, effect=Mono{mEffect=Composed{segments=[Step{amplitude=-1.0, frequencyHz=0.0, duration=12}], repeat=-1}}, attributes=VibrationAttributes{mUsage=TOUCH, mAudioUsage= USAGE_UNKNOWN, mFlags=0}, reason=null, token=105008847
+10-27 18:45:41.329 I/GodHandInput(18258): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+10-27 18:45:41.331 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:41.331 I/[UAH_CLIENT]( 1189): UahPlatformResAcquire
+10-27 18:45:41.331 I/[UAH_CLIENT]( 1189): UahEventAcquire, cmdid:-3, pkg:1341 1341 -1 3, identity:mtk-powerd
+10-27 18:45:41.334 D/LibMBrainProxy( 1189): Init MBrainSDK
+10-27 18:45:41.334 D/aidl_vibrator( 1723): Vibrator on for timeoutMs: 12
+10-27 18:45:41.334 E/aidl_vibrator( 1723): open /sys/class/leds/vibrator/oplus_state failed, errno = 2
+10-27 18:45:41.334 E/aidl_vibrator( 1723): open /sys/class/leds/vibrator/oplus_duration failed, errno = 2
+10-27 18:45:41.334 E/aidl_vibrator( 1723): Vibration duration will be modified to 35
+10-27 18:45:41.335 E/aidl_vibrator( 1723): open /sys/class/leds/vibrator/oplus_activate failed, errno = 2
+10-27 18:45:41.335 D/aidl_vibrator( 1723): Starting on on another thread
+10-27 18:45:41.337 W/LibMBrainProxy( 1189): MBrain offline
+10-27 18:45:41.338 I/GodHandInput(18258): IOP padState: buttons=0x0008 (START=1)
+10-27 18:45:41.350 D/aidl_vibrator( 1723): Notifying on complete
+10-27 18:45:41.353 D/aidl_vibrator( 1723): Vibrator off
+10-27 18:45:41.353 E/aidl_vibrator( 1723): HoldFlag is true, vibration off will be intercepted
+10-27 18:45:41.364 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208826400, event=touch, flags=0x0, uid=1000
+10-27 18:45:41.364 D/MtkRadioService( 2912): getRRCStatus
+10-27 18:45:41.365 D/RadioProxyJ[0]( 2912): [80488]> getRRCStatus
+10-27 18:45:41.367 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208826400, event=touch, flags=0x0, uid=1000
+10-27 18:45:41.368 W/OPLUS_LOG_LOAD( 1562): ==LOGS PROG INFO, prog(camerahalserver) ==
+10-27 18:45:41.368 D/ULogGuard( 1562): Monitoring: 21 threads, 0 requests, 0 time-bombs; 19 guards. ResetFlags = 0x7
+10-27 18:45:41.376 D/MipcProxy( 1464): handleMessage msg is 4001, instance 0
+10-27 18:45:41.376 D/RadioProxy( 1464): getRRCStatus : response cb for instance 0
+10-27 18:45:41.379 D/RadioProxyJ[0]( 2912): [80488]< getRRCStatusResponse 0
+10-27 18:45:41.379 D/CoexRfService( 2912): report RRC state:false
+10-27 18:45:41.385 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:41.419 D/OneHandedTouchHandler( 2542): onMotionEvent: mIsInOutsideRegion = false, mIsOnStopTransitioning = false, rawY = 974.8125
+10-27 18:45:41.422 D/OplusViewDragTouchViewHelper(18258): dispatchTouchView action = 1
+10-27 18:45:41.422 I/sensors-hal-HfLooper( 1172): pedo minute, step_count = 1983, report_count = 4067 move_statust = 0 ,time_gap = 0 , step_run_count = 3 , step_walk_count = 1980
+10-27 18:45:41.423 D/ViewRootImplExtImpl(18258): the up motion event handled by client, just return
+10-27 18:45:41.424 W/SensorService( 2005): Failed to write wake lock handled
+10-27 18:45:41.429 I/StepApp_StepDataPreHandler( 2476): (main)onSensorChanged raw data: step=1983.0 state=0.0 minuteDelta=0.0 timestamp=244114815061279 steprun=3.0 stepwalk=1980.0 formatted data: step=1983 state=0 timestamp=244114815061279 time=1793106941421 steprun=3 stepwalk=1980
+10-27 18:45:41.431 I/StepApp_StepDataSaver( 2476): (O_dfd_153)getNewFixedOffsetStep type is STEP
+10-27 18:45:41.432 I/StepApp_StepDataSaver( 2476): (O_dfd_153)isRebootCountStep:false	 lastRealTimeStamp = 1793106840000	 bootTimestamp = 1792862826607	 mLastModifiedMinuteTime = 2026-10-27-18-44
+10-27 18:45:41.432 I/StepApp_StepDataSaver( 2476): (O_dfd_153)calOffSet:sensorStep = 1983	 lastModifiedStep = 1983	 offSet = 0
+10-27 18:45:41.432 I/StepApp_StepDataSaver( 2476): (O_dfd_153)getNewFixedOffsetStep type is RUN
+10-27 18:45:41.432 I/StepApp_StepDataSaver( 2476): (O_dfd_153)isRebootCountStep:false	 lastRealTimeStamp = 1793106840000	 bootTimestamp = 1792862826607	 mLastModifiedMinuteTime = 2026-10-27-18-44
+10-27 18:45:41.432 I/StepApp_StepDataSaver( 2476): (O_dfd_153)calOffSet:sensorStep = 3	 lastModifiedStep = 3	 offSet = 0
+10-27 18:45:41.432 I/StepApp_StepDataSaver( 2476): (O_dfd_153)getNewFixedOffsetStep type is WALK
+10-27 18:45:41.432 I/StepApp_StepDataSaver( 2476): (O_dfd_153)isRebootCountStep:false	 lastRealTimeStamp = 1793106840000	 bootTimestamp = 1792862826607	 mLastModifiedMinuteTime = 2026-10-27-18-44
+10-27 18:45:41.432 I/StepApp_StepDataSaver( 2476): (O_dfd_153)calOffSet:sensorStep = 1980	 lastModifiedStep = 1980	 offSet = 0
+10-27 18:45:41.436 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:41.442 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=20.43 dur=1027.73 max=67.09 min=15.55
+10-27 18:45:41.445 I/touch_boost( 1341): enable=0, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:41.447 I/[UAH_CLIENT]( 1189): UahRelease, handle:322001
+10-27 18:45:41.447 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:41.479 I/touch_boost( 1341): enable=0, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:41.479 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:41.482 D/GestureLog_OplusMultiPointerDetector( 2005): onTouchEvent------>start, mCurNumPointers=1, mCurrStatus=0 mIsDownIntervalTimeout=false, action=0 downTime=208826519 deviceId=4
+10-27 18:45:41.482 E/IJankManager(18258): slideSceneEnd unknown scene 1000 mScene:-1
+10-27 18:45:41.482 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208826519, event=touch, flags=0x0, uid=1000
+10-27 18:45:41.484 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208826519, event=touch, flags=0x0, uid=1000
+10-27 18:45:41.485 I/touch_boost( 1341): enable=1, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:41.485 I/VibratorManagerServiceExtImpl( 2005): vibrate is uid=10447, pid=18258, opPkg=com.owaissseeee.godhand, effect=Mono{mEffect=Composed{segments=[Step{amplitude=-1.0, frequencyHz=0.0, duration=12}], repeat=-1}}, attributes=VibrationAttributes{mUsage=TOUCH, mAudioUsage= USAGE_UNKNOWN, mFlags=0}, reason=null, token=105008847
+10-27 18:45:41.486 I/GodHandInput(18258): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+10-27 18:45:41.487 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:41.487 I/[UAH_CLIENT]( 1189): UahPlatformResAcquire
+10-27 18:45:41.487 I/[UAH_CLIENT]( 1189): UahEventAcquire, cmdid:-3, pkg:1341 1341 -1 3, identity:mtk-powerd
+10-27 18:45:41.491 I/GodHandInput(18258): IOP padState: buttons=0x0008 (START=1)
+10-27 18:45:41.495 D/aidl_vibrator( 1723): Vibrator on for timeoutMs: 12
+10-27 18:45:41.495 E/aidl_vibrator( 1723): open /sys/class/leds/vibrator/oplus_state failed, errno = 2
+10-27 18:45:41.495 E/aidl_vibrator( 1723): open /sys/class/leds/vibrator/oplus_duration failed, errno = 2
+10-27 18:45:41.495 E/aidl_vibrator( 1723): Vibration duration will be modified to 35
+10-27 18:45:41.496 E/aidl_vibrator( 1723): open /sys/class/leds/vibrator/oplus_activate failed, errno = 2
+10-27 18:45:41.496 D/aidl_vibrator( 1723): Starting on on another thread
+10-27 18:45:41.509 D/aidl_vibrator( 1723): Notifying on complete
+10-27 18:45:41.509 I/BufferQueueProducer( 1259): [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#88264](this:0xb400007085fe6af8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=12.86 dur=1010.62 max=265.81 min=16.35
+10-27 18:45:41.509 D/aidl_vibrator( 1723): Vibrator off
+10-27 18:45:41.509 E/aidl_vibrator( 1723): HoldFlag is true, vibration off will be intercepted
+10-27 18:45:41.534 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:41.562 D/OneHandedTouchHandler( 2542): onMotionEvent: mIsInOutsideRegion = false, mIsOnStopTransitioning = false, rawY = 982.1875
+10-27 18:45:41.566 D/OplusViewDragTouchViewHelper(18258): dispatchTouchView action = 1
+10-27 18:45:41.567 D/ViewRootImplExtImpl(18258): the up motion event handled by client, just return
+10-27 18:45:41.579 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:41.589 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:41.599 I/touch_boost( 1341): enable=0, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:41.600 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:41.600 I/[UAH_CLIENT]( 1189): UahRelease, handle:322002
+10-27 18:45:41.634 I/touch_boost( 1341): enable=0, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:41.635 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:41.636 I/touch_boost( 1341): enable=1, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:41.637 D/GestureLog_OplusMultiPointerDetector( 2005): onTouchEvent------>start, mCurNumPointers=1, mCurrStatus=0 mIsDownIntervalTimeout=false, action=0 downTime=208826674 deviceId=4
+10-27 18:45:41.640 E/IJankManager(18258): slideSceneEnd unknown scene 1000 mScene:-1
+10-27 18:45:41.640 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:41.640 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208826674, event=touch, flags=0x0, uid=1000
+10-27 18:45:41.641 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:41.642 I/[UAH_CLIENT]( 1189): UahPlatformResAcquire
+10-27 18:45:41.642 I/[UAH_CLIENT]( 1189): UahEventAcquire, cmdid:-3, pkg:1341 1341 -1 3, identity:mtk-powerd
+10-27 18:45:41.642 I/VibratorManagerServiceExtImpl( 2005): vibrate is uid=10447, pid=18258, opPkg=com.owaissseeee.godhand, effect=Mono{mEffect=Composed{segments=[Step{amplitude=-1.0, frequencyHz=0.0, duration=12}], repeat=-1}}, attributes=VibrationAttributes{mUsage=TOUCH, mAudioUsage= USAGE_UNKNOWN, mFlags=0}, reason=null, token=105008847
+10-27 18:45:41.644 I/GodHandInput(18258): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+10-27 18:45:41.649 I/GodHandInput(18258): IOP padState: buttons=0x0008 (START=1)
+10-27 18:45:41.654 D/aidl_vibrator( 1723): Vibrator on for timeoutMs: 12
+10-27 18:45:41.654 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208826674, event=touch, flags=0x0, uid=1000
+10-27 18:45:41.654 E/aidl_vibrator( 1723): open /sys/class/leds/vibrator/oplus_state failed, errno = 2
+10-27 18:45:41.654 E/aidl_vibrator( 1723): open /sys/class/leds/vibrator/oplus_duration failed, errno = 2
+10-27 18:45:41.654 E/aidl_vibrator( 1723): Vibration duration will be modified to 35
+10-27 18:45:41.655 E/aidl_vibrator( 1723): open /sys/class/leds/vibrator/oplus_activate failed, errno = 2
+10-27 18:45:41.655 D/aidl_vibrator( 1723): Starting on on another thread
+10-27 18:45:41.673 D/aidl_vibrator( 1723): Notifying on complete
+10-27 18:45:41.677 D/aidl_vibrator( 1723): Vibrator off
+10-27 18:45:41.677 E/aidl_vibrator( 1723): HoldFlag is true, vibration off will be intercepted
+10-27 18:45:41.677 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:41.708 D/OneHandedTouchHandler( 2542): onMotionEvent: mIsInOutsideRegion = false, mIsOnStopTransitioning = false, rawY = 978.3125
+10-27 18:45:41.708 D/OplusViewDragTouchViewHelper(18258): dispatchTouchView action = 1
+10-27 18:45:41.708 D/ViewRootImplExtImpl(18258): the up motion event handled by client, just return
+10-27 18:45:41.718 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:41.755 I/touch_boost( 1341): enable=0, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:41.755 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:41.756 I/[UAH_CLIENT]( 1189): UahRelease, handle:322003
+10-27 18:45:41.782 I/touch_boost( 1341): enable=0, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:41.782 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:41.784 I/touch_boost( 1341): enable=1, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:41.784 E/IJankManager(18258): slideSceneEnd unknown scene 1000 mScene:-1
+10-27 18:45:41.785 I/VibratorManagerServiceExtImpl( 2005): vibrate is uid=10447, pid=18258, opPkg=com.owaissseeee.godhand, effect=Mono{mEffect=Composed{segments=[Step{amplitude=-1.0, frequencyHz=0.0, duration=12}], repeat=-1}}, attributes=VibrationAttributes{mUsage=TOUCH, mAudioUsage= USAGE_UNKNOWN, mFlags=0}, reason=null, token=105008847
+10-27 18:45:41.785 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:41.786 I/GodHandInput(18258): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+10-27 18:45:41.788 D/GestureLog_OplusMultiPointerDetector( 2005): onTouchEvent------>start, mCurNumPointers=1, mCurrStatus=0 mIsDownIntervalTimeout=false, action=0 downTime=208826821 deviceId=4
+10-27 18:45:41.790 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208826821, event=touch, flags=0x0, uid=1000
+10-27 18:45:41.791 I/[UAH_CLIENT]( 1189): UahPlatformResAcquire
+10-27 18:45:41.791 I/[UAH_CLIENT]( 1189): UahEventAcquire, cmdid:-3, pkg:1341 1341 -1 3, identity:mtk-powerd
+10-27 18:45:41.791 D/aidl_vibrator( 1723): Vibrator on for timeoutMs: 12
+10-27 18:45:41.791 E/aidl_vibrator( 1723): open /sys/class/leds/vibrator/oplus_state failed, errno = 2
+10-27 18:45:41.792 E/aidl_vibrator( 1723): open /sys/class/leds/vibrator/oplus_duration failed, errno = 2
+10-27 18:45:41.792 E/aidl_vibrator( 1723): Vibration duration will be modified to 35
+10-27 18:45:41.792 E/aidl_vibrator( 1723): open /sys/class/leds/vibrator/oplus_activate failed, errno = 2
+10-27 18:45:41.792 D/aidl_vibrator( 1723): Starting on on another thread
+10-27 18:45:41.794 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208826821, event=touch, flags=0x0, uid=1000
+10-27 18:45:41.805 D/aidl_vibrator( 1723): Notifying on complete
+10-27 18:45:41.808 D/aidl_vibrator( 1723): Vibrator off
+10-27 18:45:41.808 E/aidl_vibrator( 1723): HoldFlag is true, vibration off will be intercepted
+10-27 18:45:41.812 I/GodHandInput(18258): IOP padState: buttons=0x0008 (START=1)
+10-27 18:45:41.848 D/OneHandedTouchHandler( 2542): onMotionEvent: mIsInOutsideRegion = false, mIsOnStopTransitioning = false, rawY = 975.9375
+10-27 18:45:41.852 D/OplusViewDragTouchViewHelper(18258): dispatchTouchView action = 1
+10-27 18:45:41.853 D/ViewRootImplExtImpl(18258): the up motion event handled by client, just return
+10-27 18:45:41.859 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:41.902 I/touch_boost( 1341): enable=0, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:41.903 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:41.903 I/[UAH_CLIENT]( 1189): UahRelease, handle:322004
+10-27 18:45:41.905 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:41.965 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:41.967 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:41.967 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:41.967 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:42.037 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.053 D/gaia-GaiaConnectChecker( 5755): start connect check++
+10-27 18:45:42.081 D/RadioProxyJ[0]( 2912): startChannelMonitoring update mLatestRequestId:-1
+10-27 18:45:42.087 D/RadioProxyJ[1]( 2912): startChannelMonitoring update mLatestRequestId:-1
+10-27 18:45:42.089 I/pcsx2-gs(18258): Rendered Vulkan frame #13140 successfully
+10-27 18:45:42.144 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.197 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.250 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.302 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.360 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.416 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.420 I/GodHandNative(18258): [ 226.4075][DLL] module code removed (unregistered): ..\PS2_EE_Release\Event.elf base 0x007a8080
+10-27 18:45:42.420 I/GodHandNative(18258): [ 226.4078][DLL] unregister ..\PS2_EE_Release\Event.elf base 0x007a8080 ra 0x00394f98
+10-27 18:45:42.439 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.456 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=37.50 dur=1013.36 max=51.07 min=15.46
+10-27 18:45:42.466 W/HapContentObserver( 2542): uri: content://com.oplus.healthservice.stepprovider/day_statistic
+10-27 18:45:42.466 D/HapContentObserver( 2542): key: 145198431 , task: 212916128
+10-27 18:45:42.466 D/ContentResolverTask( 2542): uri: content://com.oplus.healthservice.stepprovider/day_statistic contains: false task: 212916128
+10-27 18:45:42.466 D/HapContentObserver( 2542): key: 239029141 , task: 253368740
+10-27 18:45:42.466 D/ContentResolverTask( 2542): uri: content://com.oplus.healthservice.stepprovider/day_statistic contains: false task: 253368740
+10-27 18:45:42.467 I/5718UMSHealthDataProvider_Travel( 5718): sportObserver onChange
+10-27 18:45:42.474 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.489 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.508 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.524 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.540 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.557 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.573 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.590 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.609 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.623 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.640 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.656 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.674 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.691 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.707 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.718 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:42.724 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.737 I/BufferQueueProducer( 1259): [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#88264](this:0xb400007085fe6af8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=11.40 dur=1228.48 max=249.10 min=16.41
+10-27 18:45:42.740 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.757 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.774 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.790 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.808 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.824 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.842 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.858 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.891 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.907 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.924 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.940 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.957 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.961 D/AES     ( 2005): AEEIOCTL_GET/SET_SF_STATE IOCTL,cmd= 1074294797, lParam=0. 
+10-27 18:45:42.962 D/AES     ( 2005): AEEIOCTL_RT_MON_Kick IOCTL,cmd= 2147774474, lParam=300. 
+10-27 18:45:42.974 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.991 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:42.992 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:42.994 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:42.994 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:42.994 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:43.024 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.040 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.057 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.074 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.090 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.108 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.123 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.140 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.157 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.174 I/pcsx2-gs(18258): Rendered Vulkan frame #13200 successfully
+10-27 18:45:43.190 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.207 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.225 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.241 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.258 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.274 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.291 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.324 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.340 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.358 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.374 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.391 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.424 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.441 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.459 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.469 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=60.22 dur=1012.96 max=18.25 min=14.80
+10-27 18:45:43.474 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.507 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.525 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.558 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.608 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.635 E/WifiDataStall( 2005): Ignore this poll. newStats: null txLinkSpeedMbps: 480 rxLinkSpeedMbps: 480 rssi: -41 connectionCapabilities: com.android.server.wifi.WifiNative$ConnectionCapabilities@eda5aed
+10-27 18:45:43.641 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.653 D/VendorWifiService( 2912): onEvent event:9,action:1
+10-27 18:45:43.657 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.667 D/ScorerUtils( 2005): isLowTraffic: txTputKBps=0, rxTputKBps=0
+10-27 18:45:43.670 D/OplusWifiPower_TriggerCenter( 2005): mComponentCallback: wifistat
+10-27 18:45:43.708 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.725 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.741 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.749 I/BufferQueueProducer( 1259): [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#88264](this:0xb400007085fe6af8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=3.95 dur=1012.12 max=264.89 min=231.64
+10-27 18:45:43.775 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.792 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.825 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.874 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.877 I/frs     ( 3946): read temp 36825 from shell_front
+10-27 18:45:43.891 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.914 I/mtkpower@impl( 1189): [powerd_req] TIMER_MSG_PERF_LOCK_TIMEOUT hdl:188623
+10-27 18:45:43.958 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.974 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:43.978 V/BinderSender(32409): Uid 10393 already starts
+10-27 18:45:44.008 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:44.025 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:44.028 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:44.029 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:44.030 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:44.030 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:44.035 D/IpClient/wlan0( 2807): addressUpdated: 2409:4090:f02b:400f:18a1:c6ff:fe6e:a984/64 on ifindex 40 flags 0x00000100 scope 0 deprecationTime 298520425 expirationTime 298520425
+10-27 18:45:44.037 D/IpClient/wlan0( 2807): addressUpdated: 2409:4090:f02b:400f:cf0c:c47d:d4db:8430/64 on ifindex 40 flags 0x00000001 scope 0 deprecationTime 298520430 expirationTime 298520430
+10-27 18:45:44.037 W/AlarmManager( 2807): Unrecognized alarm listener com.android.networkstack.android.net.ip.IpClientLinkObserver$Dhcp6PdPreferredPrefixAlarmListener@e7f790b
+10-27 18:45:44.039 D/ApfFilter( 2807): (wlan0): Adding RA fe80::2aa9:15ff:fe20:15f3 -> ff02::1 180s 2409:4090:f02b:400f::/64 54403s/54403s DNS 180s 2409:4090:f02b:400f:2aa9:15ff:fe20:15f3 
+10-27 18:45:44.044 I/WifiHAL (26167): createRequest: APF set program request
+10-27 18:45:44.044 D/WifiHAL (26167): WifiRequest::create vendor command to iface 40, vendor_id=0xce7, subcmd=0x000f, res=0
+10-27 18:45:44.045 D/WifiHAL (26167): WifiCommand::requestResponse: receive
+10-27 18:45:44.045 I/WifiHAL (26167): Done!
+10-27 18:45:44.070 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:44.081 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:44.092 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:44.110 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:44.175 I/pcsx2-gs(18258): Rendered Vulkan frame #13260 successfully
+10-27 18:45:44.241 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:44.348 D/VRR [OTI]( 1259): handleIdle from 0 to 1
+10-27 18:45:44.348 I/VRR [MVT]( 1259): request is same as current request, ignore it.
+10-27 18:45:44.370 D/ULogGuard( 1562): Monitoring: 21 threads, 0 requests, 0 time-bombs; 19 guards. ResetFlags = 0x7
+10-27 18:45:44.376 D/MtkRadioService( 2912): getRRCStatus
+10-27 18:45:44.376 D/RadioProxyJ[0]( 2912): [80489]> getRRCStatus
+10-27 18:45:44.384 D/MipcProxy( 1464): handleMessage msg is 4001, instance 0
+10-27 18:45:44.384 D/RadioProxy( 1464): getRRCStatus : response cb for instance 0
+10-27 18:45:44.385 D/RadioProxyJ[0]( 2912): [80489]< getRRCStatusResponse 0
+10-27 18:45:44.386 D/CoexRfService( 2912): report RRC state:false
+10-27 18:45:44.487 W/OPLUS_LOG_LOAD( 2542): ==LOGS PROG INFO, prog(com.android.systemui) ==
+10-27 18:45:44.487 D/Tile.OplusCellularTile( 2542): refreshState: tile not listening, ignore
+10-27 18:45:44.491 D/OplusTelephonyController( 2876): onSignalStrengthChanged: SignalStrength=SignalStrength:{mCdma=CellSignalStrengthCdma: cdmaDbm=2147483647 cdmaEcio=2147483647 evdoDbm=2147483647 evdoEcio=2147483647 evdoSnr=2147483647 level=0,mGsm=CellSignalStrengthGsm: rssi=2147483647 ber=2147483647 mTa=2147483647 mLevel=0,mWcdma=CellSignalStrengthWcdma: ss=2147483647 ber=2147483647 rscp=2147483647 ecno=2147483647 level=0,mTdscdma=CellSignalStrengthTdscdma: rssi=2147483647 ber=2147483647 rscp=2147483647 level=0,mLte=CellSignalStrengthLte: rssi=-75 rsrp=-84 rsrq=-10 rssnr=3 cqiTableIndex=2147483647 cqi=0 ta=0 level=4 parametersUseForLevel=0,mNr=CellSignalStrengthNr:{ csiRsrp = 2147483647 csiRsrq = 2147483647 csiCqiTableIndex = 2147483647 csiCqiReport = [] ssRsrp = 2147483647 ssRsrq = 2147483647 ssSinr = 2147483647 level = 0 parametersUseForLevel = 0 timingAdvance = 2147483647 },primary=CellSignalStrengthLte}
+10-27 18:45:44.497 D/SubsysEventListenerManager-SubsysTelephonyCallback[0]( 2912): onSignalStrengthsChanged
+10-27 18:45:44.504 I/SystemUi--Statusbar( 2542): MobileConnectionRepositoryImpl-->subId:1 isSoftSimCard:false slotId:0
+10-27 18:45:44.516 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=48.71 dur=1047.06 max=101.56 min=15.34
+10-27 18:45:44.665 D/gaia-GaiaConnectChecker( 5755): start connect check++
+10-27 18:45:44.716 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:44.997 I/BufferQueueProducer( 1259): [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#88264](this:0xb400007085fe6af8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=4.01 dur=1248.07 max=267.41 min=230.69
+10-27 18:45:45.037 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:45.037 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:45.037 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:45.037 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:45.159 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:45.527 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=20.76 dur=1011.52 max=66.40 min=32.85
+10-27 18:45:45.546 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:45.576 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:45.582 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:45.609 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:45.645 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:45.678 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:45.710 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:45.717 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:45.744 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:45.777 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:45.807 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:45.814 I/APS_ALOG( 9517): flushRoutine g_immediateFlush=0 g_pendingCount=0 g_oobCount=0
+10-27 18:45:45.848 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:45.876 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:45.914 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:45.951 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:45.982 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.005 D/healthd ( 1163): system healthd: battery l=13 v=3 t=35.2 h=2 st=2 c=669 fc=6830000 cc=313 chg=u
+10-27 18:45:46.007 I/BufferQueueProducer( 1259): [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#88264](this:0xb400007085fe6af8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=3.96 dur=1009.79 max=265.52 min=246.87
+10-27 18:45:46.017 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.020 D/ChargerInfo( 1202): getInfo: type: 0x1, update: 1
+10-27 18:45:46.020 D/ChargerInfo( 1202): chargerInfoUpdateThread: update start
+10-27 18:45:46.021 D/ChargerInfo( 1202): enableTx: path(/proc/wireless/enable_tx): not exist
+10-27 18:45:46.021 D/ChargerInfo( 1202): wlsAdapterPower: path(/sys/class/oplus_chg/wireless/max_w_power): not exist
+10-27 18:45:46.021 D/ChargerInfo( 1202): unknown: path(/sys/class/oplus_chg/ac/online) and backupPath(/sys/class/power_supply/ac/online) not exist
+10-27 18:45:46.025 D/ChargerInfo( 1202): unknown: path(/sys/class/oplus_chg/ac/online) and backupPath(/sys/class/power_supply/ac/online) not exist
+10-27 18:45:46.026 D/ChargerInfo( 1202): get_ui_charge_icon_type: [0 0] [0 0] 1
+10-27 18:45:46.026 D/ChargerInfo( 1202): unknown: path(/sys/class/oplus_chg/ac/online) and backupPath(/sys/class/power_supply/ac/online) not exist
+10-27 18:45:46.027 D/ChargerInfo( 1202): unknown: path(/sys/class/oplus_chg/ac/online) and backupPath(/sys/class/power_supply/ac/online) not exist
+10-27 18:45:46.028 D/vendor.oplus.hardware.charger-V11-service( 1202): get_config_path : [graphite, single_, ]
+10-27 18:45:46.028 D/vendor.oplus.hardware.charger-V11-service( 1202): get_config_path : /odm/firmware/fastchg/24345/graphite_single_charging_hyper_mode_config.txt
+10-27 18:45:46.028 E/ChargerInfo( 1202): SingleHyperPath not found
+10-27 18:45:46.029 D/ChargerInfo( 1202): chargerInfoUpdateThread: update end
+10-27 18:45:46.029 D/ChargerInfo( 1202): chargerInfoUpdateThread: update wait
+10-27 18:45:46.029 D/ChargerInfo( 1202): enableTx: path(/proc/wireless/enable_tx): not exist
+10-27 18:45:46.029 D/ChargerInfo( 1202): wlsAdapterPower: path(/sys/class/oplus_chg/wireless/max_w_power): not exist
+10-27 18:45:46.029 D/ChargerInfo( 1202): getInfo: {"Update":{"batteryFcc":6728,"batteryRm":812,"bddLeakCurr":0,"bmsStatus":0,"bypassChgStatus":2,"chargeTimeRemaining":0,"cpaPower":2,"enableTx":true,"fastCharge":0,"isSupportSpeedCharge":0,"notifyCode":0,"otgOnline":1,"ppsChargePower":0,"ppsCharging":0,"shortCHwStatus":0,"shortIcOtpStatus":0,"uiIconType":0,"uiPower":0,"usbStatus":0,"wlsAdapterPower":0}}
+10-27 18:45:46.031 D/OplusWifiService( 2005): notifyBatteryInfoChanged: feature not supported
+10-27 18:45:46.039 I/pcsx2-gs(18258): Rendered Vulkan frame #13320 successfully
+10-27 18:45:46.047 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.060 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:46.062 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:46.062 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:46.062 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:46.086 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.122 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.159 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.172 D/vendor.oplus.hardware.charger-V11-service( 1202): ret_value:128, read content:,352,366,3722,3728,-252,13,13,1,1,0,402,5081,13,1,4470,600,500,0,2,-22,2,0,1,0,2,0,0,0,1,67289,100,-5459,812,6728,0,0,0,0,0,101
+10-27 18:45:46.173 D/vendor.oplus.hardware.charger-V11-service( 1202): gmtime: 2026-10-27-18-45-46
+10-27 18:45:46.173 D/vendor.oplus.hardware.charger-V11-service( 1202): usb_online:1, ac_online:-2147483648, wireless_online:-2147483648
+10-27 18:45:46.198 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.238 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.274 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.306 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.340 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.379 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.409 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.453 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.490 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.523 E/NhsModemCrashUploader( 2889): loadModemCrashInfoPbFile No ModemCrashInfo.pb
+10-27 18:45:46.524 D/ShellSubscriberWorkerThread( 7077): the first 8 bytes empty, and RestData length > 8 
+10-27 18:45:46.525 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.540 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=51.34 dur=1012.80 max=34.38 min=14.71
+10-27 18:45:46.560 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.589 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.632 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.653 E/WifiDataStall( 2005): Ignore this poll. newStats: null txLinkSpeedMbps: 480 rxLinkSpeedMbps: 480 rssi: -45 connectionCapabilities: com.android.server.wifi.WifiNative$ConnectionCapabilities@eda5aed
+10-27 18:45:46.667 D/ScorerUtils( 2005): isLowTraffic: txTputKBps=0, rxTputKBps=0
+10-27 18:45:46.668 D/VendorWifiService( 2912): onEvent event:9,action:1
+10-27 18:45:46.669 D/OplusWifiPower_TriggerCenter( 2005): mComponentCallback: wifistat
+10-27 18:45:46.676 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.711 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.717 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:46.717 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.793 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.823 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.828 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.856 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.861 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.877 I/perfetto( 1388): ory_arbiter_impl.cc:193 Shared memory buffer overrun! Stalling
+10-27 18:45:46.884 I/perfetto( 1388): ory_arbiter_impl.cc:167 Recovered from stall after 9 iterations
+10-27 18:45:46.891 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.929 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.957 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:46.976 I/perfetto( 1388): ory_arbiter_impl.cc:193 Shared memory buffer overrun! Stalling
+10-27 18:45:46.995 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.022 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.022 I/perfetto( 1388): ory_arbiter_impl.cc:167 Recovered from stall after 11 iterations
+10-27 18:45:47.061 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.088 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:47.089 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:47.089 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:47.089 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:47.090 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.095 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.123 I/pcsx2-gs(18258): Rendered Vulkan frame #13380 successfully
+10-27 18:45:47.132 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.167 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.201 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.235 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.255 I/BufferQueueProducer( 1259): [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#88264](this:0xb400007085fe6af8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=4.01 dur=1247.75 max=250.38 min=247.46
+10-27 18:45:47.264 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.270 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.300 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.322 D/[ANTI_EXPANSION]( 1202): mKeyAntiExpansionData :1793101512,1793094082,0,0,0,3,0,41,1,23,30,22,0,0,12,40,37,25,16,25,21,25,20,24,32,29,0,28911,0.C=ò.L=110!!!
+10-27 18:45:47.322 D/[ANTI_EXPANSION]( 1202): chg_update_anti_expansion_check_thread In progress: [13,false] [1793106947,208832] [18,5],[0,0,20] 116
+10-27 18:45:47.337 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.370 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.373 D/ULogGuard( 1562): Monitoring: 21 threads, 0 requests, 0 time-bombs; 19 guards. ResetFlags = 0x7
+10-27 18:45:47.380 D/MtkRadioService( 2912): getRRCStatus
+10-27 18:45:47.381 D/RadioProxyJ[0]( 2912): [80490]> getRRCStatus
+10-27 18:45:47.390 D/MipcProxy( 1464): handleMessage msg is 4001, instance 0
+10-27 18:45:47.390 D/RadioProxy( 1464): getRRCStatus : response cb for instance 0
+10-27 18:45:47.391 D/RadioProxyJ[0]( 2912): [80490]< getRRCStatusResponse 0
+10-27 18:45:47.392 W/android.hardware.thermal-service.mediatek( 1188): parseMsg: Get from client TYPE=thermal_hal_notify NAME=SKIN
+10-27 18:45:47.392 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:name.c_str():SKIN
+10-27 18:45:47.392 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:tz notify:SKIN
+10-27 18:45:47.392 D/CoexRfService( 2912): report RRC state:false
+10-27 18:45:47.392 I/android.hardware.thermal-service.mediatek( 1188): Wait to accept a connection
+10-27 18:45:47.393 I/android.hardware.thermal-service.mediatek( 1188): Sending notification:  Type: SKIN Name: SKIN CurrentValue: 42.444 ThrottlingStatus: NONE
+10-27 18:45:47.394 I/android.hardware.thermal-service.mediatek( 1188): sendThermalChangedCallback
+10-27 18:45:47.403 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.435 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.467 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.540 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.552 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=51.37 dur=1012.23 max=34.24 min=14.85
+10-27 18:45:47.567 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.605 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.632 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.676 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.705 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.709 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.716 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:47.716 I/UsageStatsService( 2005): User[0] Flushing usage stats to disk
+10-27 18:45:47.737 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.741 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.777 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.805 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.809 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.836 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.842 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.893 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.910 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.953 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:47.990 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.026 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.059 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.087 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.092 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.114 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:48.115 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:48.115 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:48.115 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:48.120 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.125 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.142 I/pcsx2-gs(18258): Rendered Vulkan frame #13440 successfully
+10-27 18:45:48.151 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.189 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.217 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.253 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.283 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.283 I/BufferQueueProducer( 1259): [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#88264](this:0xb400007085fe6af8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=3.89 dur=1028.22 max=267.17 min=248.35
+10-27 18:45:48.317 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.348 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.391 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.393 W/android.hardware.thermal-service.mediatek( 1188): parseMsg: Get from client TYPE=thermal_hal_notify NAME=SKIN
+10-27 18:45:48.393 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:name.c_str():SKIN
+10-27 18:45:48.393 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:tz notify:SKIN
+10-27 18:45:48.393 I/android.hardware.thermal-service.mediatek( 1188): Wait to accept a connection
+10-27 18:45:48.394 I/android.hardware.thermal-service.mediatek( 1188): Sending notification:  Type: SKIN Name: SKIN CurrentValue: 42.745 ThrottlingStatus: NONE
+10-27 18:45:48.394 I/android.hardware.thermal-service.mediatek( 1188): sendThermalChangedCallback
+10-27 18:45:48.426 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.454 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.459 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.496 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.526 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.534 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.567 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.581 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=51.50 dur=1029.22 max=34.28 min=15.19
+10-27 18:45:48.607 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.636 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.640 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.669 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.675 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.704 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.709 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.716 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:48.737 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.742 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.771 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.809 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.843 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.877 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.911 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.945 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:48.982 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.015 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.048 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.080 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.113 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.132 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:49.132 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:49.132 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:49.132 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:49.146 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.166 I/pcsx2-gs(18258): Rendered Vulkan frame #13500 successfully
+10-27 18:45:49.184 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.216 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.222 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.251 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.257 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.287 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.291 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.319 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.323 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.355 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.388 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.396 W/android.hardware.thermal-service.mediatek( 1188): parseMsg: Get from client TYPE=thermal_hal_notify NAME=SKIN
+10-27 18:45:49.396 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:name.c_str():SKIN
+10-27 18:45:49.396 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:tz notify:SKIN
+10-27 18:45:49.396 I/android.hardware.thermal-service.mediatek( 1188): Wait to accept a connection
+10-27 18:45:49.397 I/android.hardware.thermal-service.mediatek( 1188): Sending notification:  Type: SKIN Name: SKIN CurrentValue: 43.087 ThrottlingStatus: NONE
+10-27 18:45:49.397 I/android.hardware.thermal-service.mediatek( 1188): sendThermalChangedCallback
+10-27 18:45:49.425 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.459 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.493 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.528 I/BufferQueueProducer( 1259): [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#88264](this:0xb400007085fe6af8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=4.02 dur=1245.18 max=265.34 min=232.77
+10-27 18:45:49.528 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.561 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.594 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=58.26 dur=1012.72 max=33.22 min=14.97
+10-27 18:45:49.594 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.600 D/OplusTelephonyController( 2876): onSignalStrengthChanged: SignalStrength=SignalStrength:{mCdma=CellSignalStrengthCdma: cdmaDbm=2147483647 cdmaEcio=2147483647 evdoDbm=2147483647 evdoEcio=2147483647 evdoSnr=2147483647 level=0,mGsm=CellSignalStrengthGsm: rssi=2147483647 ber=2147483647 mTa=2147483647 mLevel=0,mWcdma=CellSignalStrengthWcdma: ss=2147483647 ber=2147483647 rscp=2147483647 ecno=2147483647 level=0,mTdscdma=CellSignalStrengthTdscdma: rssi=2147483647 ber=2147483647 rscp=2147483647 level=0,mLte=CellSignalStrengthLte: rssi=-73 rsrp=-83 rsrq=-11 rssnr=2 cqiTableIndex=2147483647 cqi=0 ta=0 level=4 parametersUseForLevel=0,mNr=CellSignalStrengthNr:{ csiRsrp = 2147483647 csiRsrq = 2147483647 csiCqiTableIndex = 2147483647 csiCqiReport = [] ssRsrp = 2147483647 ssRsrq = 2147483647 ssSinr = 2147483647 level = 0 parametersUseForLevel = 0 timingAdvance = 2147483647 },primary=CellSignalStrengthLte}
+10-27 18:45:49.606 D/SubsysEventListenerManager-SubsysTelephonyCallback[0]( 2912): onSignalStrengthsChanged
+10-27 18:45:49.611 D/Tile.OplusCellularTile( 2542): refreshState: tile not listening, ignore
+10-27 18:45:49.620 I/SystemUi--Statusbar( 2542): MobileConnectionRepositoryImpl-->subId:1 isSoftSimCard:false slotId:0
+10-27 18:45:49.636 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.666 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.669 W/OPLUS_LOG_LOAD( 2005): ==LOGS PROG INFO, prog(system_server) ==
+10-27 18:45:49.669 E/WifiDataStall( 2005): Ignore this poll. newStats: null txLinkSpeedMbps: 480 rxLinkSpeedMbps: 480 rssi: -45 connectionCapabilities: com.android.server.wifi.WifiNative$ConnectionCapabilities@eda5aed
+10-27 18:45:49.671 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.694 D/VendorWifiService( 2912): onEvent event:9,action:1
+10-27 18:45:49.700 D/ScorerUtils( 2005): isLowTraffic: txTputKBps=5, rxTputKBps=11
+10-27 18:45:49.701 D/OplusWifiPower_TriggerCenter( 2005): mComponentCallback: wifistat
+10-27 18:45:49.706 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.716 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:49.734 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.738 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.767 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.773 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.806 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.840 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.873 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.907 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.944 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:49.980 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.014 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.042 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.080 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.110 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.152 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.160 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:50.161 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:50.161 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:50.161 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:50.183 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.188 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.207 I/pcsx2-gs(18258): Rendered Vulkan frame #13560 successfully
+10-27 18:45:50.221 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.256 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.292 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.324 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.357 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.375 D/ULogGuard( 1562): Monitoring: 21 threads, 0 requests, 0 time-bombs; 19 guards. ResetFlags = 0x7
+10-27 18:45:50.385 D/MtkRadioService( 2912): getRRCStatus
+10-27 18:45:50.385 D/RadioProxyJ[0]( 2912): [80491]> getRRCStatus
+10-27 18:45:50.392 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.393 D/MipcProxy( 1464): handleMessage msg is 4001, instance 0
+10-27 18:45:50.393 D/RadioProxy( 1464): getRRCStatus : response cb for instance 0
+10-27 18:45:50.394 D/RadioProxyJ[0]( 2912): [80491]< getRRCStatusResponse 0
+10-27 18:45:50.394 D/CoexRfService( 2912): report RRC state:false
+10-27 18:45:50.400 I/thermal_core( 1456): "temp=43441, trigger MBrain\n"
+10-27 18:45:50.401 D/LibMBrainProxy( 1456): Init MBrainSDK
+10-27 18:45:50.407 W/LibMBrainProxy( 1456): MBrain offline
+10-27 18:45:50.407 W/LibMBrainProxy( 1456): can't do ipc
+10-27 18:45:50.408 W/android.hardware.thermal-service.mediatek( 1188): parseMsg: Get from client TYPE=thermal_hal_notify NAME=SKIN
+10-27 18:45:50.408 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:name.c_str():SKIN
+10-27 18:45:50.408 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:tz notify:SKIN
+10-27 18:45:50.408 I/android.hardware.thermal-service.mediatek( 1188): Wait to accept a connection
+10-27 18:45:50.409 I/android.hardware.thermal-service.mediatek( 1188): Sending notification:  Type: SKIN Name: SKIN CurrentValue: 43.445 ThrottlingStatus: NONE
+10-27 18:45:50.409 I/android.hardware.thermal-service.mediatek( 1188): sendThermalChangedCallback
+10-27 18:45:50.426 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.462 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.491 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.496 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.532 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.541 I/BufferQueueProducer( 1259): [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#88264](this:0xb400007085fe6af8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=3.95 dur=1012.94 max=266.57 min=232.92
+10-27 18:45:50.562 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.568 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.590 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:50.605 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.607 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=55.29 dur=1012.86 max=33.65 min=14.46
+10-27 18:45:50.645 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.673 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.716 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:50.718 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.756 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.793 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.818 W/OPLUS_LOG_LOAD( 9517): ==LOGS PROG INFO, prog(com.oplus.camera) ==
+10-27 18:45:50.818 I/APS_ALOG( 9517): flushRoutine g_immediateFlush=0 g_pendingCount=0 g_oobCount=0
+10-27 18:45:50.826 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.855 I/touch_boost( 1341): enable=0, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:50.855 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:50.857 D/VRR [OTI]( 1259): handleIdle from 1 to 0
+10-27 18:45:50.857 I/VRR [MVT]( 1259): request is same as current request, ignore it.
+10-27 18:45:50.859 I/touch_boost( 1341): enable=1, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:50.859 D/GestureLog_OplusMultiPointerDetector( 2005): onTouchEvent------>start, mCurNumPointers=1, mCurrStatus=0 mIsDownIntervalTimeout=true, action=0 downTime=208835895 deviceId=4
+10-27 18:45:50.859 E/IJankManager(18258): slideSceneEnd unknown scene 1000 mScene:-1
+10-27 18:45:50.861 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208835895, event=touch, flags=0x0, uid=1000
+10-27 18:45:50.862 D/SurfaceFlinger( 1259): calculateTimeoutTime, triggerInterval = 2 sec + 999999384 nsec
+10-27 18:45:50.863 I/[UAH_CLIENT]( 1189): UahPlatformResAcquire
+10-27 18:45:50.863 I/[UAH_CLIENT]( 1189): UahEventAcquire, cmdid:-3, pkg:1341 1341 -1 3, identity:mtk-powerd
+10-27 18:45:50.865 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208835895, event=touch, flags=0x0, uid=1000
+10-27 18:45:50.868 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:50.899 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.920 W/QosScheduler( 2005): executeSceneQosStrategy failed! qos feature no enable
+10-27 18:45:50.926 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.931 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.959 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208835997, event=touch, flags=0x0, uid=1000
+10-27 18:45:50.964 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208835997, event=touch, flags=0x0, uid=1000
+10-27 18:45:50.966 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:50.975 I/touch_boost( 1341): enable=0, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:50.976 I/[UAH_CLIENT]( 1189): UahRelease, handle:322005
+10-27 18:45:50.976 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:51.001 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.036 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.062 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208836099, event=touch, flags=0x0, uid=1000
+10-27 18:45:51.062 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208836099, event=touch, flags=0x0, uid=1000
+10-27 18:45:51.072 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.081 D/OneHandedTouchHandler( 2542): onMotionEvent: mIsInOutsideRegion = false, mIsOnStopTransitioning = false, rawY = 854.9375
+10-27 18:45:51.082 I/VelocityTracker(18258): LSQ2 speed rezero
+10-27 18:45:51.082 D/OplusViewDragTouchViewHelper(18258): dispatchTouchView action = 1
+10-27 18:45:51.082 I/VelocityTracker( 2005): LSQ2 speed rezero
+10-27 18:45:51.082 I/VelocityTracker(18258): LSQ2 speed rezero
+10-27 18:45:51.082 D/ViewRootImplExtImpl(18258): the up motion event handled by client, just return
+10-27 18:45:51.083 D/ShellSubscriberWorkerThread( 7077): the first 8 bytes empty, and RestData length > 8 
+10-27 18:45:51.106 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.140 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.175 D/vendor.oplus.hardware.charger-V11-service( 1202): ret_value:127, read content:,352,366,3697,3697,586,13,13,1,1,0,402,5081,13,1,4470,600,500,0,2,-22,2,0,1,0,2,0,0,0,1,67289,100,-5459,812,6728,0,0,0,0,0,101
+10-27 18:45:51.175 D/vendor.oplus.hardware.charger-V11-service( 1202): gmtime: 2026-10-27-18-45-51
+10-27 18:45:51.176 D/vendor.oplus.hardware.charger-V11-service( 1202): usb_online:1, ac_online:-2147483648, wireless_online:-2147483648
+10-27 18:45:51.179 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.182 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:51.182 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:51.183 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:51.183 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:51.184 W/QosScheduler( 2005): executeSceneQosStrategy failed! qos feature no enable
+10-27 18:45:51.214 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.226 W/AString ( 1172): ctor got NULL, using empty string instead
+10-27 18:45:51.226 I/sensors-hal-SensorSavedChannel( 1172): [830,-3661,-159]==>gyro_bias.json
+10-27 18:45:51.245 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.250 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.284 I/pcsx2-gs(18258): Rendered Vulkan frame #13620 successfully
+10-27 18:45:51.288 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.331 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.369 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.408 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.408 W/android.hardware.thermal-service.mediatek( 1188): parseMsg: Get from client TYPE=thermal_hal_notify NAME=SKIN
+10-27 18:45:51.409 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:name.c_str():SKIN
+10-27 18:45:51.409 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:tz notify:SKIN
+10-27 18:45:51.409 I/android.hardware.thermal-service.mediatek( 1188): Wait to accept a connection
+10-27 18:45:51.409 I/android.hardware.thermal-service.mediatek( 1188): Sending notification:  Type: SKIN Name: SKIN CurrentValue: 43.756 ThrottlingStatus: NONE
+10-27 18:45:51.410 I/android.hardware.thermal-service.mediatek( 1188): sendThermalChangedCallback
+10-27 18:45:51.442 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.486 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.557 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.592 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.595 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.621 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=51.28 dur=1014.05 max=33.85 min=15.35
+10-27 18:45:51.628 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.631 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.666 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.705 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.716 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:51.739 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.770 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.786 I/BufferQueueProducer( 1259): [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#88264](this:0xb400007085fe6af8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=12.85 dur=1244.84 max=249.32 min=15.63
+10-27 18:45:51.810 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.845 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.878 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.884 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.921 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.958 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.992 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:51.996 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.031 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.053 D/gaia-GaiaConnectChecker( 5755): start connect check++
+10-27 18:45:52.061 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.140 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.172 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.204 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:52.205 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:52.205 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:52.205 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:52.213 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.250 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.286 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.322 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.352 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.390 I/pcsx2-gs(18258): Rendered Vulkan frame #13680 successfully
+10-27 18:45:52.396 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.411 I/thermal_core( 1456): "temp=44039, trigger MBrain\n"
+10-27 18:45:52.411 D/LibMBrainProxy( 1456): Init MBrainSDK
+10-27 18:45:52.417 W/LibMBrainProxy( 1456): MBrain offline
+10-27 18:45:52.417 W/LibMBrainProxy( 1456): can't do ipc
+10-27 18:45:52.417 W/android.hardware.thermal-service.mediatek( 1188): parseMsg: Get from client TYPE=thermal_hal_notify NAME=SKIN
+10-27 18:45:52.417 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:name.c_str():SKIN
+10-27 18:45:52.417 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:tz notify:SKIN
+10-27 18:45:52.418 I/android.hardware.thermal-service.mediatek( 1188): Wait to accept a connection
+10-27 18:45:52.418 I/android.hardware.thermal-service.mediatek( 1188): Sending notification:  Type: SKIN Name: SKIN CurrentValue: 44.039 ThrottlingStatus: NONE
+10-27 18:45:52.419 I/android.hardware.thermal-service.mediatek( 1188): sendThermalChangedCallback
+10-27 18:45:52.430 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.465 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.489 D/healthd ( 1163): system healthd: battery l=13 v=3 t=35.2 h=2 st=2 c=715 fc=6830000 cc=313 chg=u
+10-27 18:45:52.498 D/ChargerInfo( 1202): getInfo: type: 0x1, update: 1
+10-27 18:45:52.500 D/ChargerInfo( 1202): chargerInfoUpdateThread: update start
+10-27 18:45:52.502 D/ChargerInfo( 1202): enableTx: path(/proc/wireless/enable_tx): not exist
+10-27 18:45:52.502 D/ChargerInfo( 1202): wlsAdapterPower: path(/sys/class/oplus_chg/wireless/max_w_power): not exist
+10-27 18:45:52.502 D/ChargerInfo( 1202): unknown: path(/sys/class/oplus_chg/ac/online) and backupPath(/sys/class/power_supply/ac/online) not exist
+10-27 18:45:52.503 D/ChargerInfo( 1202): unknown: path(/sys/class/oplus_chg/ac/online) and backupPath(/sys/class/power_supply/ac/online) not exist
+10-27 18:45:52.503 D/ChargerInfo( 1202): get_ui_charge_icon_type: [0 0] [0 0] 1
+10-27 18:45:52.503 D/ChargerInfo( 1202): unknown: path(/sys/class/oplus_chg/ac/online) and backupPath(/sys/class/power_supply/ac/online) not exist
+10-27 18:45:52.504 D/ChargerInfo( 1202): unknown: path(/sys/class/oplus_chg/ac/online) and backupPath(/sys/class/power_supply/ac/online) not exist
+10-27 18:45:52.505 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.505 D/vendor.oplus.hardware.charger-V11-service( 1202): get_config_path : [graphite, single_, ]
+10-27 18:45:52.505 D/vendor.oplus.hardware.charger-V11-service( 1202): get_config_path : /odm/firmware/fastchg/24345/graphite_single_charging_hyper_mode_config.txt
+10-27 18:45:52.506 E/ChargerInfo( 1202): SingleHyperPath not found
+10-27 18:45:52.506 D/ChargerInfo( 1202): chargerInfoUpdateThread: update end
+10-27 18:45:52.507 D/ChargerInfo( 1202): chargerInfoUpdateThread: update wait
+10-27 18:45:52.507 D/ChargerInfo( 1202): enableTx: path(/proc/wireless/enable_tx): not exist
+10-27 18:45:52.507 D/ChargerInfo( 1202): wlsAdapterPower: path(/sys/class/oplus_chg/wireless/max_w_power): not exist
+10-27 18:45:52.507 D/ChargerInfo( 1202): getInfo: {"Update":{"batteryFcc":6728,"batteryRm":812,"bddLeakCurr":0,"bmsStatus":0,"bypassChgStatus":2,"chargeTimeRemaining":0,"cpaPower":2,"enableTx":true,"fastCharge":0,"isSupportSpeedCharge":0,"notifyCode":0,"otgOnline":1,"ppsChargePower":0,"ppsCharging":0,"shortCHwStatus":0,"shortIcOtpStatus":0,"uiIconType":0,"uiPower":0,"usbStatus":0,"wlsAdapterPower":0}}
+10-27 18:45:52.510 D/OplusWifiService( 2005): notifyBatteryInfoChanged: feature not supported
+10-27 18:45:52.536 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.576 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.614 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.633 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=50.38 dur=1012.25 max=33.73 min=15.30
+10-27 18:45:52.650 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.687 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.690 E/WifiDataStall( 2005): Ignore this poll. newStats: null txLinkSpeedMbps: 480 rxLinkSpeedMbps: 480 rssi: -45 connectionCapabilities: com.android.server.wifi.WifiNative$ConnectionCapabilities@eda5aed
+10-27 18:45:52.711 D/VendorWifiService( 2912): onEvent event:9,action:1
+10-27 18:45:52.715 D/ScorerUtils( 2005): isLowTraffic: txTputKBps=0, rxTputKBps=0
+10-27 18:45:52.717 D/OplusWifiPower_TriggerCenter( 2005): mComponentCallback: wifistat
+10-27 18:45:52.718 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:52.718 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:52.728 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.771 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.802 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.807 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.838 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.843 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.875 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.879 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.915 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:52.982 I/mtkpower@impl( 1189): [powerd_req] TIMER_MSG_PERF_LOCK_TIMEOUT hdl:188629
+10-27 18:45:52.988 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.024 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.031 I/BufferQueueProducer( 1259): [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#88264](this:0xb400007085fe6af8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=4.02 dur=1244.72 max=267.34 min=231.23
+10-27 18:45:53.054 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.060 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.098 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.135 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.170 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.176 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.216 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.228 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:53.232 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:53.232 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:53.232 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:53.256 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.296 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.337 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.370 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.374 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.378 W/OPLUS_LOG_LOAD( 1562): ==LOGS PROG INFO, prog(camerahalserver) ==
+10-27 18:45:53.378 D/ULogGuard( 1562): Monitoring: 21 threads, 0 requests, 0 time-bombs; 19 guards. ResetFlags = 0x7
+10-27 18:45:53.388 D/MtkRadioService( 2912): getRRCStatus
+10-27 18:45:53.388 D/RadioProxyJ[0]( 2912): [80492]> getRRCStatus
+10-27 18:45:53.396 D/MipcProxy( 1464): handleMessage msg is 4001, instance 0
+10-27 18:45:53.396 D/RadioProxy( 1464): getRRCStatus : response cb for instance 0
+10-27 18:45:53.398 D/RadioProxyJ[0]( 2912): [80492]< getRRCStatusResponse 0
+10-27 18:45:53.400 D/CoexRfService( 2912): report RRC state:false
+10-27 18:45:53.415 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.424 W/android.hardware.thermal-service.mediatek( 1188): parseMsg: Get from client TYPE=thermal_hal_notify NAME=SKIN
+10-27 18:45:53.424 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:name.c_str():SKIN
+10-27 18:45:53.424 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:tz notify:SKIN
+10-27 18:45:53.424 I/android.hardware.thermal-service.mediatek( 1188): Wait to accept a connection
+10-27 18:45:53.425 I/android.hardware.thermal-service.mediatek( 1188): Sending notification:  Type: SKIN Name: SKIN CurrentValue: 44.287 ThrottlingStatus: NONE
+10-27 18:45:53.425 I/android.hardware.thermal-service.mediatek( 1188): sendThermalChangedCallback
+10-27 18:45:53.457 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.499 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.533 I/pcsx2-gs(18258): Rendered Vulkan frame #13740 successfully
+10-27 18:45:53.539 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.579 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.580 D/VRR [OTI]( 1259): handleIdle from 0 to 1
+10-27 18:45:53.580 I/VRR [MVT]( 1259): request is same as current request, ignore it.
+10-27 18:45:53.617 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.656 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.662 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=51.50 dur=1029.13 max=33.99 min=15.43
+10-27 18:45:53.695 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.708 I/touch_boost( 1341): enable=0, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:53.709 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:53.709 D/GestureLog_OplusMultiPointerDetector( 2005): onTouchEvent------>start, mCurNumPointers=1, mCurrStatus=0 mIsDownIntervalTimeout=true, action=0 downTime=208838747 deviceId=4
+10-27 18:45:53.710 D/VRR [OTI]( 1259): handleIdle from 1 to 0
+10-27 18:45:53.711 E/IJankManager(18258): slideSceneEnd unknown scene 1000 mScene:-1
+10-27 18:45:53.711 I/VRR [MVT]( 1259): request is same as current request, ignore it.
+10-27 18:45:53.711 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208838747, event=touch, flags=0x0, uid=1000
+10-27 18:45:53.715 I/touch_boost( 1341): enable=1, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:53.716 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:53.716 I/[UAH_CLIENT]( 1189): UahPlatformResAcquire
+10-27 18:45:53.716 I/[UAH_CLIENT]( 1189): UahEventAcquire, cmdid:-3, pkg:1341 1341 -1 3, identity:mtk-powerd
+10-27 18:45:53.716 I/gameoptHal->GameThermalControl( 1205): max shell temp is 36.941002
+10-27 18:45:53.717 I/gameoptHal( 1205): shelltemp updated to 36.941002
+10-27 18:45:53.718 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208838747, event=touch, flags=0x0, uid=1000
+10-27 18:45:53.723 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:53.735 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.747 W/QosScheduler( 2005): executeSceneQosStrategy failed! qos feature no enable
+10-27 18:45:53.773 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.812 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208838848, event=touch, flags=0x0, uid=1000
+10-27 18:45:53.814 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.817 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208838848, event=touch, flags=0x0, uid=1000
+10-27 18:45:53.827 I/touch_boost( 1341): enable=0, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:53.829 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:53.830 I/[UAH_CLIENT]( 1189): UahRelease, handle:322006
+10-27 18:45:53.854 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.863 D/SurfaceFlinger( 1259): calculateTimeoutTime, triggerInterval = 2 sec + 951003077 nsec
+10-27 18:45:53.886 I/frs     ( 3946): read temp 36941 from shell_front
+10-27 18:45:53.890 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.915 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208838950, event=touch, flags=0x0, uid=1000
+10-27 18:45:53.919 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208838950, event=touch, flags=0x0, uid=1000
+10-27 18:45:53.928 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:53.963 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.000 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.014 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208839052, event=touch, flags=0x0, uid=1000
+10-27 18:45:54.015 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208839052, event=touch, flags=0x0, uid=1000
+10-27 18:45:54.031 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.036 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.044 I/BufferQueueProducer( 1259): [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#88264](this:0xb400007085fe6af8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=19.74 dur=1013.23 max=265.96 min=15.73
+10-27 18:45:54.072 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.112 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.117 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208839155, event=touch, flags=0x0, uid=1000
+10-27 18:45:54.117 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208839155, event=touch, flags=0x0, uid=1000
+10-27 18:45:54.145 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.151 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.185 D/OneHandedTouchHandler( 2542): onMotionEvent: mIsInOutsideRegion = false, mIsOnStopTransitioning = false, rawY = 906.4375
+10-27 18:45:54.187 D/OplusViewDragTouchViewHelper(18258): dispatchTouchView action = 1
+10-27 18:45:54.187 D/ViewRootImplExtImpl(18258): the up motion event handled by client, just return
+10-27 18:45:54.188 D/ShellSubscriberWorkerThread( 7077): the first 8 bytes empty, and RestData length > 8 
+10-27 18:45:54.190 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.234 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.253 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:54.255 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:54.255 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:54.255 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:54.274 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.287 W/QosScheduler( 2005): executeSceneQosStrategy failed! qos feature no enable
+10-27 18:45:54.303 E/midasd  ( 3841): getTotalFlipsFromSf mCurFrameCount: 8179445
+10-27 18:45:54.304 I/midasd  ( 3841): DisplayAgent updateDisplayDevInfo getRenderFps mFps:60 mRenderFps:42 mWidth:1080 mHeight:2372
+10-27 18:45:54.313 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.353 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.396 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.426 W/android.hardware.thermal-service.mediatek( 1188): parseMsg: Get from client TYPE=thermal_hal_notify NAME=SKIN
+10-27 18:45:54.426 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:name.c_str():SKIN
+10-27 18:45:54.426 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:tz notify:SKIN
+10-27 18:45:54.426 I/android.hardware.thermal-service.mediatek( 1188): Wait to accept a connection
+10-27 18:45:54.427 I/android.hardware.thermal-service.mediatek( 1188): Sending notification:  Type: SKIN Name: SKIN CurrentValue: 44.481 ThrottlingStatus: NONE
+10-27 18:45:54.427 I/android.hardware.thermal-service.mediatek( 1188): sendThermalChangedCallback
+10-27 18:45:54.429 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.479 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.520 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.564 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.612 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.659 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.666 D/gaia-GaiaConnectChecker( 5755): start connect check++
+10-27 18:45:54.675 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=49.36 dur=1013.05 max=34.15 min=15.51
+10-27 18:45:54.703 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.708 D/power@timer( 1189): [mtkPowerTimer] visRead:0
+10-27 18:45:54.737 D/SubsysEventListenerManager-SubsysTelephonyCallback[0]( 2912): onSignalStrengthsChanged
+10-27 18:45:54.739 W/OPLUS_LOG_LOAD( 2542): ==LOGS PROG INFO, prog(com.android.systemui) ==
+10-27 18:45:54.739 D/Tile.OplusCellularTile( 2542): refreshState: tile not listening, ignore
+10-27 18:45:54.741 D/OplusTelephonyController( 2876): onSignalStrengthChanged: SignalStrength=SignalStrength:{mCdma=CellSignalStrengthCdma: cdmaDbm=2147483647 cdmaEcio=2147483647 evdoDbm=2147483647 evdoEcio=2147483647 evdoSnr=2147483647 level=0,mGsm=CellSignalStrengthGsm: rssi=2147483647 ber=2147483647 mTa=2147483647 mLevel=0,mWcdma=CellSignalStrengthWcdma: ss=2147483647 ber=2147483647 rscp=2147483647 ecno=2147483647 level=0,mTdscdma=CellSignalStrengthTdscdma: rssi=2147483647 ber=2147483647 rscp=2147483647 level=0,mLte=CellSignalStrengthLte: rssi=-73 rsrp=-83 rsrq=-12 rssnr=1 cqiTableIndex=2147483647 cqi=0 ta=0 level=4 parametersUseForLevel=0,mNr=CellSignalStrengthNr:{ csiRsrp = 2147483647 csiRsrq = 2147483647 csiCqiTableIndex = 2147483647 csiCqiReport = [] ssRsrp = 2147483647 ssRsrq = 2147483647 ssSinr = 2147483647 level = 0 parametersUseForLevel = 0 timingAdvance = 2147483647 },primary=CellSignalStrengthLte}
+10-27 18:45:54.741 I/pcsx2-gs(18258): Rendered Vulkan frame #13800 successfully
+10-27 18:45:54.746 I/SystemUi--Statusbar( 2542): MobileConnectionRepositoryImpl-->subId:1 isSoftSimCard:false slotId:0
+10-27 18:45:54.748 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.794 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.892 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.940 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:54.991 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.041 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.057 I/BufferQueueProducer( 1259): [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#88264](this:0xb400007085fe6af8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=14.81 dur=1012.58 max=266.70 min=15.63
+10-27 18:45:55.089 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.138 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.189 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.238 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.276 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:55.277 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:55.277 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:55.277 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:55.290 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.333 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.377 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.417 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.427 I/thermal_core( 1456): "temp=44623, trigger MBrain\n"
+10-27 18:45:55.427 D/LibMBrainProxy( 1456): Init MBrainSDK
+10-27 18:45:55.432 W/LibMBrainProxy( 1456): MBrain offline
+10-27 18:45:55.432 W/LibMBrainProxy( 1456): can't do ipc
+10-27 18:45:55.432 W/android.hardware.thermal-service.mediatek( 1188): parseMsg: Get from client TYPE=thermal_hal_notify NAME=SKIN
+10-27 18:45:55.432 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:name.c_str():SKIN
+10-27 18:45:55.432 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:tz notify:SKIN
+10-27 18:45:55.433 I/android.hardware.thermal-service.mediatek( 1188): Wait to accept a connection
+10-27 18:45:55.433 I/android.hardware.thermal-service.mediatek( 1188): Sending notification:  Type: SKIN Name: SKIN CurrentValue: 44.623 ThrottlingStatus: NONE
+10-27 18:45:55.434 I/android.hardware.thermal-service.mediatek( 1188): sendThermalChangedCallback
+10-27 18:45:55.461 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.509 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.561 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.596 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.601 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.647 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.688 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=42.45 dur=1012.84 max=50.06 min=15.62
+10-27 18:45:55.690 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.710 E/WifiDataStall( 2005): Ignore this poll. newStats: null txLinkSpeedMbps: 480 rxLinkSpeedMbps: 480 rssi: -48 connectionCapabilities: com.android.server.wifi.WifiNative$ConnectionCapabilities@eda5aed
+10-27 18:45:55.717 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:55.727 D/VendorWifiService( 2912): onEvent event:9,action:1
+10-27 18:45:55.731 D/ScorerUtils( 2005): isLowTraffic: txTputKBps=0, rxTputKBps=0
+10-27 18:45:55.732 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.733 D/OplusWifiPower_TriggerCenter( 2005): mComponentCallback: wifistat
+10-27 18:45:55.819 I/APS_ALOG( 9517): flushRoutine g_immediateFlush=0 g_pendingCount=0 g_oobCount=0
+10-27 18:45:55.822 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.837 I/mtkpower@impl( 1189): [powerd_req] TIMER_MSG_PERF_LOCK_TIMEOUT hdl:188631
+10-27 18:45:55.869 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.914 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:55.960 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.009 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.042 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.050 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.094 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.131 I/pcsx2-gs(18258): Rendered Vulkan frame #13860 successfully
+10-27 18:45:56.137 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.177 D/vendor.oplus.hardware.charger-V11-service( 1202): ret_value:127, read content:,352,368,3687,3670,927,13,13,1,1,0,402,5081,13,1,4470,600,500,0,2,-22,2,0,1,0,2,0,0,0,1,67289,100,-5459,812,6728,0,0,0,0,0,101
+10-27 18:45:56.177 D/vendor.oplus.hardware.charger-V11-service( 1202): gmtime: 2026-10-27-18-45-56
+10-27 18:45:56.177 D/vendor.oplus.hardware.charger-V11-service( 1202): usb_online:1, ac_online:-2147483648, wireless_online:-2147483648
+10-27 18:45:56.181 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.226 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.302 I/BufferQueueProducer( 1259): [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#88264](this:0xb400007085fe6af8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=4.01 dur=1245.46 max=250.04 min=247.95
+10-27 18:45:56.304 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:56.305 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:56.305 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:56.305 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:56.315 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.352 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.381 D/ULogGuard( 1562): Monitoring: 21 threads, 0 requests, 0 time-bombs; 19 guards. ResetFlags = 0x7
+10-27 18:45:56.392 D/MtkRadioService( 2912): getRRCStatus
+10-27 18:45:56.392 D/RadioProxyJ[0]( 2912): [80493]> getRRCStatus
+10-27 18:45:56.398 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.400 D/MipcProxy( 1464): handleMessage msg is 4001, instance 0
+10-27 18:45:56.400 D/RadioProxy( 1464): getRRCStatus : response cb for instance 0
+10-27 18:45:56.402 D/RadioProxyJ[0]( 2912): [80493]< getRRCStatusResponse 0
+10-27 18:45:56.403 D/CoexRfService( 2912): report RRC state:false
+10-27 18:45:56.434 W/android.hardware.thermal-service.mediatek( 1188): parseMsg: Get from client TYPE=thermal_hal_notify NAME=SKIN
+10-27 18:45:56.434 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:name.c_str():SKIN
+10-27 18:45:56.434 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:tz notify:SKIN
+10-27 18:45:56.434 I/android.hardware.thermal-service.mediatek( 1188): Wait to accept a connection
+10-27 18:45:56.435 I/android.hardware.thermal-service.mediatek( 1188): Sending notification:  Type: SKIN Name: SKIN CurrentValue: 44.623 ThrottlingStatus: NONE
+10-27 18:45:56.435 I/android.hardware.thermal-service.mediatek( 1188): sendThermalChangedCallback
+10-27 18:45:56.441 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.485 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.526 E/horae   ( 3825): 0: back:36948,back_1:35847,back_2:38146,frame:36566,frame_1:36166,front:37134,front_1:36908, 5, +(187), 1 ,43783,38222,38897,42000,35200,35105,44623,38333,38963,42700,35200,35210, target_temp:38146, algo:0
+10-27 18:45:56.528 D/ShellSubscriberWorkerThread( 7077): the first 8 bytes empty, and RestData length > 8 
+10-27 18:45:56.529 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.538 D/RFPowerBoostManager( 2912): my thermal listener proxy invoke method:notifyThermalBroadCast args len:2
+10-27 18:45:56.538 D/RFPowerBoostManager( 2912): current temp is 38, mInCalling is false, mIsGameMode is false, current threshold is 41
+10-27 18:45:56.540 D/NirvanaManager( 2005): enable_bg_limit_level_thermal feature is not supported
+10-27 18:45:56.568 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.601 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.624 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:56.646 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.685 D/VRR [OTI]( 1259): handleIdle from 0 to 1
+10-27 18:45:56.686 I/VRR [MVT]( 1259): request is same as current request, ignore it.
+10-27 18:45:56.701 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=43.44 dur=1012.86 max=34.19 min=15.74
+10-27 18:45:56.886 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.924 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.961 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:56.996 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.034 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.072 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.106 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.111 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.152 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.312 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.318 I/BufferQueueProducer( 1259): [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#88264](this:0xb400007085fe6af8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=3.94 dur=1015.83 max=265.56 min=248.90
+10-27 18:45:57.325 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:57.331 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:57.331 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:57.331 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:57.351 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.391 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.433 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.437 W/android.hardware.thermal-service.mediatek( 1188): parseMsg: Get from client TYPE=thermal_hal_notify NAME=SKIN
+10-27 18:45:57.437 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:name.c_str():SKIN
+10-27 18:45:57.437 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:tz notify:SKIN
+10-27 18:45:57.437 I/android.hardware.thermal-service.mediatek( 1188): Wait to accept a connection
+10-27 18:45:57.437 I/android.hardware.thermal-service.mediatek( 1188): Sending notification:  Type: SKIN Name: SKIN CurrentValue: 44.596 ThrottlingStatus: NONE
+10-27 18:45:57.437 I/android.hardware.thermal-service.mediatek( 1188): sendThermalChangedCallback
+10-27 18:45:57.472 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.511 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.531 I/pcsx2-gs(18258): Rendered Vulkan frame #13920 successfully
+10-27 18:45:57.551 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.590 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.631 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.671 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.711 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.714 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=43.44 dur=1012.88 max=50.56 min=13.71
+10-27 18:45:57.716 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:57.750 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.788 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.821 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.826 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.885 I/perfetto( 1388): ory_arbiter_impl.cc:193 Shared memory buffer overrun! Stalling
+10-27 18:45:57.892 I/perfetto( 1388): ory_arbiter_impl.cc:167 Recovered from stall after 9 iterations
+10-27 18:45:57.907 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.946 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:57.965 D/AES     ( 2005): AEEIOCTL_GET/SET_SF_STATE IOCTL,cmd= 1074294797, lParam=0. 
+10-27 18:45:57.966 D/AES     ( 2005): AEEIOCTL_RT_MON_Kick IOCTL,cmd= 2147774474, lParam=300. 
+10-27 18:45:58.020 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.057 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.095 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.136 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.174 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.210 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.250 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.278 W/AString ( 1172): ctor got NULL, using empty string instead
+10-27 18:45:58.279 I/sensors-hal-SensorSavedChannel( 1172): [1256,-3852,-606]==>gyro_bias.json
+10-27 18:45:58.283 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.288 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.294 D/VRR [OTI]( 1259): handleIdle from 1 to 0
+10-27 18:45:58.294 I/VRR [MVT]( 1259): request is same as current request, ignore it.
+10-27 18:45:58.295 E/IJankManager(18258): slideSceneEnd unknown scene 1000 mScene:-1
+10-27 18:45:58.297 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208843333, event=touch, flags=0x0, uid=1000
+10-27 18:45:58.298 D/GestureLog_OplusMultiPointerDetector( 2005): onTouchEvent------>start, mCurNumPointers=1, mCurrStatus=0 mIsDownIntervalTimeout=true, action=0 downTime=208843333 deviceId=4
+10-27 18:45:58.300 D/SurfaceFlinger( 1259): calculateTimeoutTime, triggerInterval = 2 sec + 999999692 nsec
+10-27 18:45:58.301 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208843333, event=touch, flags=0x0, uid=1000
+10-27 18:45:58.293 I/touch_boost( 1341): enable=0, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:58.304 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:58.308 I/touch_boost( 1341): enable=1, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:58.310 I/[UAH_CLIENT]( 1189): UahPlatformResAcquire
+10-27 18:45:58.310 I/[UAH_CLIENT]( 1189): UahEventAcquire, cmdid:-3, pkg:1341 1341 -1 3, identity:mtk-powerd
+10-27 18:45:58.312 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:58.325 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.328 I/BufferQueueProducer( 1259): [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#88264](this:0xb400007085fe6af8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=3.96 dur=1010.31 max=265.95 min=246.63
+10-27 18:45:58.351 D/CommonApp-205-10447( 2912): transport layer data is invalid
+10-27 18:45:58.352 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:58.352 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:58.352 D/ScorePolicy( 2912): handleScoreChanged: []
+10-27 18:45:58.359 W/QosScheduler( 2005): executeSceneQosStrategy failed! qos feature no enable
+10-27 18:45:58.362 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.395 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208843434, event=touch, flags=0x0, uid=1000
+10-27 18:45:58.396 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208843434, event=touch, flags=0x0, uid=1000
+10-27 18:45:58.406 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.413 I/touch_boost( 1341): enable=0, boost_up=0, boost_down=1, render_deboost=0, active_time=100, duration=120, idleprefer(TA,FG)=(0,0), util(TA,FG)=(0,0), freq(c0,c1,c2)=(1300000,1600000,0)
+10-27 18:45:58.414 I/touch_boost( 1341): set_top_grp_aware
+10-27 18:45:58.414 I/[UAH_CLIENT]( 1189): UahRelease, handle:322007
+10-27 18:45:58.417 D/LibMBrainProxy( 1189): Init MBrainSDK
+10-27 18:45:58.419 W/LibMBrainProxy( 1189): MBrain offline
+10-27 18:45:58.437 W/android.hardware.thermal-service.mediatek( 1188): parseMsg: Get from client TYPE=thermal_hal_notify NAME=SKIN
+10-27 18:45:58.437 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:name.c_str():SKIN
+10-27 18:45:58.437 W/android.hardware.thermal-service.mediatek( 1188): parseMsg:tz notify:SKIN
+10-27 18:45:58.437 I/android.hardware.thermal-service.mediatek( 1188): Wait to accept a connection
+10-27 18:45:58.437 I/android.hardware.thermal-service.mediatek( 1188): Sending notification:  Type: SKIN Name: SKIN CurrentValue: 44.62 ThrottlingStatus: NONE
+10-27 18:45:58.437 I/android.hardware.thermal-service.mediatek( 1188): sendThermalChangedCallback
+10-27 18:45:58.446 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.499 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208843536, event=touch, flags=0x0, uid=1000
+10-27 18:45:58.504 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208843536, event=touch, flags=0x0, uid=1000
+10-27 18:45:58.522 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.558 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.598 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.599 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208843638, event=touch, flags=0x0, uid=1000
+10-27 18:45:58.600 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208843638, event=touch, flags=0x0, uid=1000
+10-27 18:45:58.635 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.673 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.702 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208843740, event=touch, flags=0x0, uid=1000
+10-27 18:45:58.703 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208843740, event=touch, flags=0x0, uid=1000
+10-27 18:45:58.709 I/pcsx2-gs(18258): Rendered Vulkan frame #13980 successfully
+10-27 18:45:58.716 E/oiface  ( 3845): sched_setaffinity failed
+10-27 18:45:58.717 I/gameoptHal->GameThermalControl( 1205): max shell temp is 38.146000
+10-27 18:45:58.717 I/gameoptHal( 1205): shelltemp updated to 38.146000
+10-27 18:45:58.726 I/BufferQueueProducer( 1259): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity](BLAST)#88269](this:0xb4000070870bbaf8,id:-1,api:0,p:-1,c:1259) queueBuffer: fps=51.37 dur=1012.18 max=34.35 min=14.71
+10-27 18:45:58.729 E/WifiDataStall( 2005): Ignore this poll. newStats: null txLinkSpeedMbps: 480 rxLinkSpeedMbps: 480 rssi: -48 connectionCapabilities: com.android.server.wifi.WifiNative$ConnectionCapabilities@eda5aed
+10-27 18:45:58.735 D/VendorWifiService( 2912): onEvent event:9,action:1
+10-27 18:45:58.736 D/ScorerUtils( 2005): isLowTraffic: txTputKBps=0, rxTputKBps=0
+10-27 18:45:58.737 D/OplusWifiPower_TriggerCenter( 2005): mComponentCallback: wifistat
+10-27 18:45:58.755 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.796 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.805 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208843843, event=touch, flags=0x0, uid=1000
+10-27 18:45:58.808 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208843843, event=touch, flags=0x0, uid=1000
+10-27 18:45:58.828 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.831 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.870 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.906 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208843945, event=touch, flags=0x0, uid=1000
+10-27 18:45:58.907 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208843945, event=touch, flags=0x0, uid=1000
+10-27 18:45:58.907 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.947 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.978 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:58.983 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:59.008 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208844048, event=touch, flags=0x0, uid=1000
+10-27 18:45:59.009 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208844048, event=touch, flags=0x0, uid=1000
+10-27 18:45:59.022 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:59.057 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:59.098 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:59.112 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208844151, event=touch, flags=0x0, uid=1000
+10-27 18:45:59.113 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208844151, event=touch, flags=0x0, uid=1000
+10-27 18:45:59.135 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:59.175 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:59.209 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:59.215 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208844253, event=touch, flags=0x0, uid=1000
+10-27 18:45:59.216 D/PowerManagerService( 2005): userActivityNoUpdateLocked: groupId=0, eventTime=208844253, event=touch, flags=0x0, uid=1000
+10-27 18:45:59.245 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:59.278 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
+10-27 18:45:59.284 E/BLASTBufferQueue(18258): [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE
