@@ -1516,24 +1516,6 @@ inline void VU1Interpreter::execUpper(uint32_t instr)
             return;
         case 0x1F: // CLIP
         {
-#if defined(__aarch64__) || defined(_M_ARM64)
-            const float *fsVec = m_state.vf[fs];
-            float w = std::fabs(m_state.vf[ft][3]);
-            float32x4_t vfs = vld1q_f32(fsVec);
-            float32x4_t vw  = vdupq_n_f32(w);
-            float32x4_t vnw = vdupq_n_f32(-w);
-            uint32x4_t gt = vcgtq_f32(vfs, vw);  // x > +w, y > +w, z > +w
-            uint32x4_t lt = vcltq_f32(vfs, vnw); // x < -w, y < -w, z < -w
-            uint32_t flags = 0u;
-            if (vgetq_lane_u32(gt, 0)) flags |= 0x01u;
-            if (vgetq_lane_u32(lt, 0)) flags |= 0x02u;
-            if (vgetq_lane_u32(gt, 1)) flags |= 0x04u;
-            if (vgetq_lane_u32(lt, 1)) flags |= 0x08u;
-            if (vgetq_lane_u32(gt, 2)) flags |= 0x10u;
-            if (vgetq_lane_u32(lt, 2)) flags |= 0x20u;
-            queueClip(flags);
-            return;
-#else
             uint32_t wBits = 0u;
             std::memcpy(&wBits, &m_state.vf[ft][3], sizeof(wBits));
             const int32_t limit = (wBits & 0x7F800000u) != 0u ? static_cast<int32_t>(wBits & 0x7FFFFFFFu) : 0x007FFFFF;
@@ -1563,7 +1545,6 @@ inline void VU1Interpreter::execUpper(uint32_t instr)
                 flags |= 0x20u;
             queueClip(flags);
             return;
-#endif
         }
         case 0x20: // ADDAq
             for (int c = 0; c < 4; c++)

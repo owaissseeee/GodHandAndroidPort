@@ -24,9 +24,6 @@ extern "C" void godhand_set_thread_affinity_and_priority(const char* name, int p
 
 namespace
 {
-    // Coalesce back-to-back RawGif packets in m_open to eliminate micro-packet JNI/backend transitions
-    thread_local size_t t_lastRawGifLengthOffset = 0;
-    thread_local bool t_canCoalesceGif = false;
 
     // Asynchronous readback of tiny local->host transfers (docs/PROGRESS.md §50). Urban Reign reads an 8x8 block of the
     // depth buffer about once a frame (its light-flare visibility test, sub_003155F8). Synchronously, each one waits for
@@ -206,32 +203,8 @@ void GSThreadedBackend::Enqueue(Op op, const void *payload, uint32_t size)
             m_open.insert(m_open.end(), static_cast<const uint8_t *>(bytes), static_cast<const uint8_t *>(bytes) + length);
     };
 
-    if (op == Op::RawGif)
+    if (op == Op::Submit && m_compactQueue)
     {
-        if (t_canCoalesceGif && t_lastRawGifLengthOffset + 4 <= m_open.size())
-        {
-            uint32_t prevLength = 0;
-            std::memcpy(&prevLength, m_open.data() + t_lastRawGifLengthOffset, 4);
-            prevLength += size;
-            std::memcpy(m_open.data() + t_lastRawGifLengthOffset, &prevLength, 4);
-            if (size)
-                m_open.insert(m_open.end(), static_cast<const uint8_t *>(payload), static_cast<const uint8_t *>(payload) + size);
-        }
-        else
-        {
-            uint8_t header[5];
-            header[0] = static_cast<uint8_t>(Op::RawGif);
-            std::memcpy(header + 1u, &size, sizeof(size));
-            t_lastRawGifLengthOffset = m_open.size() + 1u;
-            t_canCoalesceGif = true;
-            m_open.insert(m_open.end(), header, header + sizeof(header));
-            if (size)
-                m_open.insert(m_open.end(), static_cast<const uint8_t *>(payload), static_cast<const uint8_t *>(payload) + size);
-        }
-    }
-    else if (op == Op::Submit && m_compactQueue)
-    {
-        t_canCoalesceGif = false;
         // One primitive per vertex kick, so this runs ~a million times a second on the GIF thread. The records are
         // built in a fixed-size local buffer (copies of known size, inlined) and appended with one insert, instead of
         // 2-3 vector inserts of variable size, each an out-of-line memmove of a few dozen bytes (PROGRESS §70).
@@ -256,10 +229,7 @@ void GSThreadedBackend::Enqueue(Op op, const void *payload, uint32_t size)
         m_open.insert(m_open.end(), record, record + used);
     }
     else
-    {
-        t_canCoalesceGif = false;
         append(op, payload, size);
-    }
     if (m_open.size() >= kPublishBytes)
         PublishLocked();
 }
@@ -301,7 +271,6 @@ namespace
 
 void GSThreadedBackend::PublishLocked()
 {
-    t_canCoalesceGif = false;
     if (m_open.empty())
         return;
     std::vector<uint8_t> next;
