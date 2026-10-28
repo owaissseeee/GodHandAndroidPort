@@ -272,9 +272,10 @@ struct PS2AudioBackend::Impl
         // Prevents buffer starvation and underrun crackle when Game EE dips to 20-25 FPS.
         static const bool rateControl = [] { const char *v = std::getenv("PS2X_AUDIO_RATE_CONTROL"); return !(v && *v == '0'); }();
         const double fill = (static_cast<double>(owner->queued) - static_cast<double>(kRateTargetSamples)) / static_cast<double>(kRateTargetSamples);
-        // Adaptive continuous dynamic resampling: ratio smoothly adjusts from 0.50x to 1.45x so when Game EE dips,
-        // audio consumption seamlessly scales down with zero starvation or crackling.
-        const double ratio = std::clamp(1.0 + fill * 0.45, 0.50, 1.45);
+        // Transparent micro-rate control: clamped strictly to [0.990, 1.010] (+/-1.0%).
+        // Preserves crystal-clear authentic musical pitch and tempo during any frame pacing dips,
+        // while the 65,536-sample (~682 ms) ring buffer absorbs transient frame stalls.
+        const double ratio = std::clamp(1.0 + fill * 0.015, 0.990, 1.010);
         for (size_t frame = 0u; frame < frames; ++frame)
         {
             if (owner->primed && owner->queued < 4u)

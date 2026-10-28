@@ -892,6 +892,7 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     setDefaultEnv("PS2X_MTVU", "1");
     setDefaultEnv("PS2X_MTVU_VBLANK_WAIT", "0");
     setDefaultEnv("PS2X_GS_ASYNC_PRESENT", "1");
+    setDefaultEnv("PS2X_GS_ASYNC_READBACK", "all");
     setDefaultEnv("PS2X_PGS_COALESCE", "1");
     setDefaultEnv("PS2X_VU0_LEAN", "1");
     ps2x::asyncvif::setDefaultEnabled(true);

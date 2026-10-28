@@ -769,17 +769,26 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
         g_perfWindowStartGameFrames = g_perfGameFrames.load(std::memory_order_relaxed);
     } else {
         const double windowSec = std::chrono::duration<double>(presentEnd - g_perfWindowStart).count();
-        if (windowSec >= 0.25) { // Refresh metrics 4 times per second
-            const float screenFps = (windowSec > 0.0) ? static_cast<float>(g_perfWindowPresents / windowSec) : 0.0f;
+        if (windowSec >= 0.5) { // Refresh metrics every 0.5s with EMA smoothing
+            const float rawScreenFps = (windowSec > 0.0) ? static_cast<float>(g_perfWindowPresents / windowSec) : 0.0f;
             const float avgMs = (g_perfWindowPresents > 0) ? (static_cast<float>(windowSec * 1000.0) / g_perfWindowPresents) : 16.67f;
             const uint64_t curGameFrames = g_perfGameFrames.load(std::memory_order_relaxed);
-            const float gameFps = (windowSec > 0.0) ? static_cast<float>((curGameFrames - g_perfWindowStartGameFrames) / windowSec) : 0.0f;
-            const float gameSpeed = (gameFps / 60.0f) * 100.0f;
+            const float rawGameFps = (windowSec > 0.0) ? static_cast<float>((curGameFrames - g_perfWindowStartGameFrames) / windowSec) : 0.0f;
 
-            g_statScreenFps.store(screenFps, std::memory_order_relaxed);
+            // Exponential moving average (EMA) filter (70% history + 30% sample):
+            // Eliminates discrete frame integer quantization (28/32 jumping) while tracking real frame shifts cleanly
+            const float prevGameFps = g_statGameFps.load(std::memory_order_relaxed);
+            const float smoothGameFps = (prevGameFps > 0.0f) ? (prevGameFps * 0.7f + rawGameFps * 0.3f) : rawGameFps;
+
+            const float prevScreenFps = g_statScreenFps.load(std::memory_order_relaxed);
+            const float smoothScreenFps = (prevScreenFps > 0.0f) ? (prevScreenFps * 0.7f + rawScreenFps * 0.3f) : rawScreenFps;
+
+            const float gameSpeed = (smoothGameFps / 60.0f) * 100.0f;
+
+            g_statScreenFps.store(smoothScreenFps, std::memory_order_relaxed);
             g_statAvgFrametimeMs.store(avgMs, std::memory_order_relaxed);
             g_statWorstFrametimeMs.store(g_perfWindowWorstMs, std::memory_order_relaxed);
-            g_statGameFps.store(gameFps, std::memory_order_relaxed);
+            g_statGameFps.store(smoothGameFps, std::memory_order_relaxed);
             g_statGameSpeed.store(gameSpeed, std::memory_order_relaxed);
 
             g_perfWindowStart = presentEnd;
