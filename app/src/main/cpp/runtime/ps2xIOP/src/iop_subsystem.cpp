@@ -34,8 +34,6 @@
 #if defined(_M_X64) || defined(__x86_64__)
 #include <immintrin.h>
 #define PS2X_IOP_SPIN_PAUSE() _mm_pause()
-#elif defined(__aarch64__) || defined(_M_ARM64)
-#define PS2X_IOP_SPIN_PAUSE() __asm__ __volatile__("yield")
 #else
 #define PS2X_IOP_SPIN_PAUSE() std::this_thread::yield()
 #endif
@@ -409,7 +407,7 @@ namespace ps2x::iop
         {
             t_onIopWorker = true;
 #if defined(__ANDROID__)
-            godhand_set_thread_affinity_and_priority("IOPThread", 0, 1, -14);
+            godhand_set_thread_affinity_and_priority("IOPThread", 3, 3, -18);
 #elif defined(_WIN32)
             SetThreadDescription(GetCurrentThread(), L"IOPThread"); // shows up in profilers (URBAN_NATIVE_PROFILE, F6)
 #endif

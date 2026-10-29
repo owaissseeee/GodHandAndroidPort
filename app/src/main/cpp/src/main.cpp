@@ -888,7 +888,8 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
 
     setDefaultEnv("PS2X_GS_SHADER_CACHE_DIR", (cacheDir / "gs_shaders").string());
     setDefaultEnv("PS2X_SIO2_RECV1", "2");
-    setDefaultEnv("PS2X_AUDIO_STRETCH", "0");
+    setDefaultEnv("PS2X_AUDIO_STRETCH", "1");
+    setDefaultEnv("PS2X_IOP_THREAD", "1");
     setDefaultEnv("PS2X_MTVU", "1");
     setDefaultEnv("PS2X_MTVU_VBLANK_WAIT", "0");
     setDefaultEnv("PS2X_GS_ASYNC_PRESENT", "1");

@@ -19,6 +19,7 @@ enum class ThreadRole {
     VU1_WORKER,
     GS_RENDERER,
     GIF_WORKER,
+    IOP_WORKER,
     HOST_PUMP,
     AUDIO_SPU2,
     DEFAULT
@@ -60,7 +61,7 @@ static ThreadRole classifyThread(const char* name, int primaryCore, int fallback
         if (std::strstr(name, "VU") != nullptr) return ThreadRole::VU1_WORKER;
         if (std::strstr(name, "GS") != nullptr) return ThreadRole::GS_RENDERER;
         if (std::strstr(name, "GIF") != nullptr) return ThreadRole::GIF_WORKER;
-        if (std::strstr(name, "IOP") != nullptr) return ThreadRole::AUDIO_SPU2;
+        if (std::strstr(name, "IOP") != nullptr) return ThreadRole::IOP_WORKER;
         if (std::strstr(name, "Host") != nullptr) return ThreadRole::HOST_PUMP;
         if (std::strstr(name, "Audio") != nullptr || std::strstr(name, "SPU") != nullptr) return ThreadRole::AUDIO_SPU2;
     }
@@ -134,16 +135,17 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
             case ThreadRole::GS_RENDERER: targetNice = -19; break;
             case ThreadRole::VU1_WORKER:  targetNice = -18; break;
             case ThreadRole::GIF_WORKER:  targetNice = -15; break;
+            case ThreadRole::IOP_WORKER:  targetNice = -15; break;
             case ThreadRole::AUDIO_SPU2:  targetNice = -14; break;
             default:                      targetNice = -2;  break;
         }
     } else if (big_cores.size() >= 4) {
-        // 4+ Big cores (Flagships: Snapdragon 8 Gen 1/2/3, 870, 888, Dimensity 8200/9300):
-        // 1-to-1 Dedicated Partitioning (Zero Thread Migration, Zero L1 Cache Thrashing):
-        // Big Core 0: 100% Dedicated to EE_MAIN (Emotion Engine game logic)
+        // 4+ Big cores (Dimensity 7050, Snapdragon 8 Gen 1/2/3, 870, 888, Dimensity 8200/9300):
+        // 1-to-1 Dedicated Partitioning for Primary Tasks + Shared Big Core 3 for I/O Coprocessors:
+        // Big Core 0: 100% Dedicated to EE_MAIN (Emotion Engine game logic - ZERO PREEMPTION!)
         // Big Core 1: 100% Dedicated to VU1_WORKER (Vector Unit 1 3D vertex transforms & skinning)
         // Big Core 2: 100% Dedicated to GS_RENDERER (PCSX2 Vulkan Graphics Synthesizer)
-        // Big Core 3: 100% Dedicated to GIF_WORKER (Graphics Interface DMA transfers)
+        // Big Core 3: Shared by GIF_WORKER (9% CPU) + IOP_WORKER (20% CPU) -> Total ~29% on a 2.5 GHz Big Core!
         // Little Cores: Audio SPU2, Host window pump, touch input, OS background threads
         switch (role) {
             case ThreadRole::EE_MAIN:
@@ -159,6 +161,7 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
                 targetNice = -20;
                 break;
             case ThreadRole::GIF_WORKER:
+            case ThreadRole::IOP_WORKER:
                 CPU_SET(big_cores[3], &mask);
                 targetNice = -18;
                 break;
@@ -176,7 +179,7 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
         // 3 Big cores (Tensor G1/G2, Snapdragon 855/865 1+3+4):
         // Big Core 0: EE_MAIN (Nice -20)
         // Big Core 1: VU1_WORKER (Nice -19)
-        // Big Core 2: GS_RENDERER (Nice -20)
+        // Big Core 2: GS_RENDERER (Nice -20) + IOP_WORKER (Nice -18)
         // Little Cores: GIF_WORKER, AUDIO_SPU2, HOST_PUMP
         switch (role) {
             case ThreadRole::EE_MAIN:
@@ -188,8 +191,9 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
                 targetNice = -19;
                 break;
             case ThreadRole::GS_RENDERER:
+            case ThreadRole::IOP_WORKER:
                 CPU_SET(big_cores[2], &mask);
-                targetNice = -20;
+                targetNice = -18;
                 break;
             case ThreadRole::GIF_WORKER:
                 for (int lc : little_cores) CPU_SET(lc, &mask);
@@ -201,16 +205,10 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
                 break;
         }
     } else {
-        // 2 Big cores + 4/6 Little cores (Dimensity 7050, Dimensity 1080/920/700, Snapdragon 778G, 7s Gen 2, 695, 480):
-        // BALANCED HYBRID MULTI-CORE ARCHITECTURE:
-        // Big Core 0: 100% EXCLUSIVELY DEDICATED TO EE_MAIN.
-        //   EE game logic, MIPS recompilation, character AI, and physics have 100% of this Cortex-A78 core to themselves!
-        //   Zero thread preemption -> Guarantees locked 29.8 - 30.0 Game EE FPS!
-        // Big Core 1: SHARED BY GS_RENDERER + VU1_WORKER.
-        //   GS renderer on Vulkan uses ~15% CPU. VU1 worker uses ~30% CPU.
-        //   Together they use only ~45-50% of Big Core 1, leaving 50% idle headroom!
-        // Little Cores (CPU 0-5): GIF_WORKER, AUDIO_SPU2, and HOST_PUMP.
-        //   DMA memory copying and audio decoding easily run on Cortex-A55 cores without stealing any Big core cycles.
+        // 2 Big cores + 4/6 Little cores (Dimensity 1080/920/700, Snapdragon 778G, 7s Gen 2, 695, 480):
+        // Big Core 0: 100% EXCLUSIVELY DEDICATED TO EE_MAIN (Zero thread preemption -> locked 30 EE FPS!)
+        // Big Core 1: SHARED BY GS_RENDERER + VU1_WORKER + IOP_WORKER (~65% combined load on Big Core 1)
+        // Little Cores (CPU 0-5): GIF_WORKER, AUDIO_SPU2, and HOST_PUMP
         switch (role) {
             case ThreadRole::EE_MAIN:
                 CPU_SET(big_cores[0], &mask);
@@ -221,8 +219,9 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
                 targetNice = -18;
                 break;
             case ThreadRole::GS_RENDERER:
+            case ThreadRole::IOP_WORKER:
                 CPU_SET(big_cores[1], &mask);
-                targetNice = -20;
+                targetNice = -18;
                 break;
             case ThreadRole::GIF_WORKER:
                 for (int lc : little_cores) CPU_SET(lc, &mask);
