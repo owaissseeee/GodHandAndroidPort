@@ -53,8 +53,7 @@ namespace
     std::atomic<bool> g_windowChanged{false};
     std::atomic<bool> g_surfaceValid{true};
 
-    std::atomic<int> g_frameskipMode{1}; // 0=Off, 1=Auto (Skip on hitch), 2=Skip 1, 3=Skip 2
-    std::atomic<bool> g_needSkipNextFrame{false};
+    std::atomic<int> g_frameskipMode{0}; // 0=Off (Guarantees uninterrupted 60Hz/30Hz VSync signaling)
     uint32_t g_frameskipCounter = 0;
     std::atomic<float> g_pendingScale{0.0f};
     std::atomic<int> g_pendingAspect{-1};
@@ -694,48 +693,10 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
         g_api->resize(width, height);
     }
 
-    const int skipMode = g_frameskipMode.load(std::memory_order_relaxed);
-    bool shouldSkip = false;
-
-    if (skipMode == 1) // Auto: skip next present if previous frame exceeded target budget
-    {
-        if (g_needSkipNextFrame.exchange(false, std::memory_order_acq_rel))
-        {
-            shouldSkip = true;
-        }
-    }
-    else if (skipMode == 2) // Skip 1: 1 present, 1 skip (50% present rate)
-    {
-        g_frameskipCounter++;
-        if ((g_frameskipCounter & 1u) == 1u)
-        {
-            shouldSkip = true;
-        }
-    }
-    else if (skipMode == 3) // Skip 2: 1 present, 2 skip (33% present rate)
-    {
-        g_frameskipCounter++;
-        if ((g_frameskipCounter % 3u) != 0u)
-        {
-            shouldSkip = true;
-        }
-    }
-    else if (skipMode == 4) // Skip 3: 1 present, 3 skip (25% present rate - Potato Mode)
-    {
-        g_frameskipCounter++;
-        if ((g_frameskipCounter % 4u) != 0u)
-        {
-            shouldSkip = true;
-        }
-    }
-
     const auto presentStart = std::chrono::steady_clock::now();
-    if (!shouldSkip)
-    {
-        g_api->vsync(reinterpret_cast<const Pcsx2GsPrivRegs *>(&regs));
-        WriteFrameTime(presentStart);
-        g_presents.fetch_add(1u, std::memory_order_relaxed);
-    }
+    g_api->vsync(reinterpret_cast<const Pcsx2GsPrivRegs *>(&regs));
+    WriteFrameTime(presentStart);
+    g_presents.fetch_add(1u, std::memory_order_relaxed);
 
     // Accurate, zero-overhead frametime & FPS recording at physical present boundary
     const auto presentEnd = std::chrono::steady_clock::now();
@@ -752,13 +713,6 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
             g_perfWindowPresents++;
             if (deltaMs > g_perfWindowWorstMs) {
                 g_perfWindowWorstMs = deltaMs;
-            }
-
-            // In Auto frameskip mode: if frame exceeded budget (e.g. > 34ms in 30fps or > 18ms in 60fps),
-            // flag the NEXT frame to skip presenting so GPU catches up immediately!
-            const float targetBudget = (g_statGameFps.load(std::memory_order_relaxed) > 45.0f) ? 18.0f : 34.0f;
-            if (deltaMs > targetBudget && skipMode == 1) {
-                g_needSkipNextFrame.store(true, std::memory_order_release);
             }
         }
     }
