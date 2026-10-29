@@ -60,6 +60,7 @@ static ThreadRole classifyThread(const char* name, int primaryCore, int fallback
         if (std::strstr(name, "VU") != nullptr) return ThreadRole::VU1_WORKER;
         if (std::strstr(name, "GS") != nullptr) return ThreadRole::GS_RENDERER;
         if (std::strstr(name, "GIF") != nullptr) return ThreadRole::GIF_WORKER;
+        if (std::strstr(name, "IOP") != nullptr) return ThreadRole::AUDIO_SPU2;
         if (std::strstr(name, "Host") != nullptr) return ThreadRole::HOST_PUMP;
         if (std::strstr(name, "Audio") != nullptr || std::strstr(name, "SPU") != nullptr) return ThreadRole::AUDIO_SPU2;
     }
