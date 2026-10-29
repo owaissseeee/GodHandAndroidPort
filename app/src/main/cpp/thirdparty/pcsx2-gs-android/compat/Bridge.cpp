@@ -36,9 +36,9 @@ namespace
     // nativeScaling: 2 (Aggressive: Fixes post effects)
     void ApplyGameFixes(Pcsx2Config::GSOptions &options)
     {
-        // Mobile TBDR (Mali / Adreno / Xclipse / PowerVR) High-Performance Zero-Barrier Configuration:
+        // Mobile TBDR (Mali / Adreno / Xclipse / PowerVR) High-Performance Configuration:
         options.AccurateBlendingUnit = AccBlendLevel::Minimum; // Maximum hardware TBDR fillrate: disables slow shader sw_blending & pipeline barriers
-        options.OverrideTextureBarriers = 0;                  // 0 = Force Disabled: prevents Adreno GMEM feedback barrier stalls and primitive splitting!
+        options.OverrideTextureBarriers = 1;                  // 1 = Enabled: keeps texture_barrier true, preventing expensive RT clone allocations & render pass breaks
         options.DisableFramebufferFetch = false;
         options.EnableAdrenoFramebufferFetch = true;
         options.PreloadFrameWithGSData = false;

@@ -28,6 +28,9 @@
 #include <bit>
 #include <limits>
 #include <mutex>
+#if defined(__ANDROID__)
+#include <android/log.h>
+#endif
 #include <sstream>
 
 // Tweakables
@@ -2506,6 +2509,76 @@ bool GSDeviceVK::Create(GSVSyncMode vsync_mode, bool allow_present_throttle)
 		return false;
 
 	InitializeState();
+
+#if defined(__ANDROID__)
+	__android_log_print(ANDROID_LOG_INFO, "GodHandGS", "[ShaderPrewarm] Prewarming God Hand TFX pipelines & shaders...");
+	uint32_t compiled = 0;
+
+	// Common God Hand topologies:
+	// 0 = Triangle (geometry & characters), 1 = Sprite (HUD, 2D overlays, explosions, particles)
+	for (u8 topo = 0; topo <= 1; ++topo)
+	{
+		// Common TFX modes: 0 = Modulate, 1 = Decal, 2 = Highlight, 3 = Highlight2
+		for (u8 tfx = 0; tfx <= 3; ++tfx)
+		{
+			for (u8 fog = 0; fog <= 1; ++fog)
+			{
+				PipelineSelector p;
+				p.topology = topo;
+				p.rt = true;
+				p.ds = true;
+				p.vs.expand = GSHWDrawConfig::VSExpand::None;
+				p.vs.point_size = false;
+
+				p.ps.tfx = tfx;
+				p.ps.tcc = 1;
+				p.ps.fog = fog;
+				p.ps.blend_hw = 1;
+				p.ps.fst = 0;
+				p.ps.date = 0;
+				p.ps.colclip_hw = 0;
+
+				// Standard alpha blend
+				p.bs.enable = 1;
+				p.bs.src_factor = 6; // SRC_ALPHA
+				p.bs.dst_factor = 7; // ONE_MINUS_SRC_ALPHA
+				p.bs.op = 0;         // ADD
+				p.cms.wrgba = 0x0F;
+
+				p.dss.zwe = true;
+				p.dss.ztst = 2; // GEQUAL
+
+				// Prewarm standard draw
+				if (GetTFXPipeline(p))
+					compiled++;
+
+				// Prewarm particle / explosion ROAA feedback loop
+				if (m_features.framebuffer_fetch)
+				{
+					p.feedback_loop_flags = FeedbackLoopFlag_ReadAndWriteRT;
+					if (GetTFXPipeline(p))
+						compiled++;
+				}
+
+				// Prewarm additive particle explosion blend (One, One)
+				p.bs.src_factor = 14; // ONE
+				p.bs.dst_factor = 14; // ONE
+				p.feedback_loop_flags = FeedbackLoopFlag_None;
+				if (GetTFXPipeline(p))
+					compiled++;
+			}
+		}
+	}
+
+	if (g_vulkan_shader_cache)
+	{
+		g_vulkan_shader_cache->FlushPipelineCache();
+	}
+
+	__android_log_print(ANDROID_LOG_INFO, "GodHandGS",
+		"[ShaderPrewarm] Complete: Prewarmed %u pipelines, flushed to vulkan_pipelines.bin", compiled);
+#endif
+
 	return true;
 }
 
@@ -2795,8 +2868,15 @@ void GSDeviceVK::EndPresent()
 
 	SubmitCommandBuffer(m_swap_chain.get());
 	MoveToNextCommandBuffer();
-
 	InvalidateCachedState();
+
+#if defined(__ANDROID__)
+	static uint32_t s_flushFrameCounter = 0;
+	if ((++s_flushFrameCounter % 300) == 0 && g_vulkan_shader_cache)
+	{
+		g_vulkan_shader_cache->FlushPipelineCache();
+	}
+#endif
 }
 
 bool GSDeviceVK::IsPresenting() const
@@ -3082,7 +3162,7 @@ bool GSDeviceVK::CheckFeatures()
 		m_optional_extensions.vk_ext_attachment_feedback_loop_layout = false;
 		m_features.framebuffer_fetch = m_optional_extensions.vk_ext_rasterization_order_attachment_access &&
 			GSConfig.EnableAdrenoFramebufferFetch && !GSConfig.DisableFramebufferFetch;
-		m_features.texture_barrier = (GSConfig.OverrideTextureBarriers != 0);
+		m_features.texture_barrier = true;
 	}
 	m_features.multidraw_fb_copy = false;
 	m_features.broken_point_sampler = false;
@@ -3105,8 +3185,11 @@ bool GSDeviceVK::CheckFeatures()
 			((props.optimalTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT) != 0);
 	}
 
-	// Fbfetch is useless if we don't have barriers enabled.
-	m_features.framebuffer_fetch &= m_features.texture_barrier;
+	// On desktop GPUs, fbfetch is tied to barriers. On mobile TBDR (Mali, Adreno, PowerVR),
+	// rasterization order attachment access (ROAA) operates entirely on-chip within tile memory (subpassLoad)
+	// without requiring external texture barriers.
+	if (!is_mali && !is_adreno)
+		m_features.framebuffer_fetch &= m_features.texture_barrier;
 
 	// Buggy drivers with broken barriers probably have no chance using GENERAL layout for depth either...
 	// Adreno/turnip: sampling the live depth buffer while it is also the depth attachment (tex == ds)
@@ -7215,6 +7298,11 @@ void GSDeviceVK::SendHWDraw(const GSHWDrawConfig& config, GSTextureVK* draw_rt, 
 
 	if (full_barrier)
 	{
+#if defined(__ANDROID__)
+		// On mobile TBDR (Mali, Adreno, PowerVR), per-primitive barriers and draw splitting
+		// thrashes tile memory / GMEM. Emit a single barrier instead of splitting into hundreds of draws.
+		one_barrier = true;
+#else
 		pxAssert(config.drawlist && !config.drawlist->empty());
 
 		const u32 indices_per_prim = config.indices_per_prim;
@@ -7233,6 +7321,7 @@ void GSDeviceVK::SendHWDraw(const GSHWDrawConfig& config, GSTextureVK* draw_rt, 
 		}
 
 		return;
+#endif
 	}
 
 	if (one_barrier)
