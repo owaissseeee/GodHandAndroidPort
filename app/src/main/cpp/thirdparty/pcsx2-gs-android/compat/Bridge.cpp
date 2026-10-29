@@ -36,14 +36,17 @@ namespace
     // nativeScaling: 2 (Aggressive: Fixes post effects)
     void ApplyGameFixes(Pcsx2Config::GSOptions &options)
     {
-        // Mobile TBDR (Mali / Adreno / Xclipse) High-Performance Zero-Barrier Configuration:
+        // Mobile TBDR (Mali / Adreno / Xclipse / PowerVR) High-Performance Zero-Barrier Configuration:
         options.AccurateBlendingUnit = AccBlendLevel::Minimum; // Maximum hardware TBDR fillrate: disables slow shader sw_blending & pipeline barriers
+        options.OverrideTextureBarriers = 0;                  // 0 = Force Disabled: prevents Adreno GMEM feedback barrier stalls and primitive splitting!
+        options.DisableFramebufferFetch = false;
+        options.EnableAdrenoFramebufferFetch = true;
         options.PreloadFrameWithGSData = false;
         options.GPUPaletteConversion = false;
         options.UserHacks_DisablePartialInvalidation = true; // Prevent TBDR tile splits
         options.UserHacks_DisableSafeFeatures = true;        // Skip redundant slow clears
         options.UserHacks_AutoFlush = GSHWAutoFlushLevel::Disabled;
-        options.HWAccurateAlphaTest = false;                   // AccurateDATE = Off: Restores 60 FPS on Mali TBDR
+        options.HWAccurateAlphaTest = false;                   // AccurateDATE = Off: Restores 60 FPS on Mali/Adreno TBDR
         options.UserHacks_DisableDepthSupport = false;         // Keep depth buffer emulation intact to prevent fullscreen blur smearing
         options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
         options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Off; // Eliminates misaligned bloom halo rings (over SALOON and characters)

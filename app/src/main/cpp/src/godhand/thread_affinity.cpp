@@ -28,30 +28,197 @@ enum class ThreadRole {
 struct CpuCoreInfo {
     int id;
     long max_freq_khz;
+    int tier; // 3 = Prime (Cortex-X / Mongoose), 2 = Big (Cortex-A7x / Kryo Gold), 1 = Little (Cortex-A5x / Kryo Silver)
+    int part;
+    int implementer;
 };
 
-static std::vector<CpuCoreInfo> detectSortedCores() {
-    std::vector<CpuCoreInfo> cores;
-    for (int i = 0; i < 16; ++i) {
-        std::string p = "/sys/devices/system/cpu/cpu" + std::to_string(i) + "/cpufreq/cpuinfo_max_freq";
+static int classifyCoreTier(int implementer, int part) {
+    if (implementer == 0x41 || implementer == 0) { // ARM Holdings
+        switch (part) {
+            // Tier 3: Prime Cores (Cortex-X, Neoverse V)
+            case 0xd4c: // Cortex-X1 (Tensor G1, SD 888, Exynos 2100)
+            case 0xd43: // Cortex-X2 (Tensor G2, SD 8 Gen 1, Dimensity 9000)
+            case 0xd4e: // Cortex-X3 (Tensor G3, SD 8 Gen 2, Dimensity 9200)
+            case 0xd4f: // Cortex-X4 (Tensor G4, SD 8 Gen 3, Dimensity 9300)
+            case 0xd80: // Cortex-X925 (Dimensity 9400)
+            case 0xd40: // Neoverse V1
+                return 3;
+
+            // Tier 2: Big Performance Cores (Cortex-A7x, Neoverse N)
+            case 0xd07: // Cortex-A57
+            case 0xd08: // Cortex-A72
+            case 0xd09: // Cortex-A73
+            case 0xd0a: // Cortex-A75
+            case 0xd0b: // Cortex-A76 (Tensor G1)
+            case 0xd0d: // Cortex-A77
+            case 0xd41: // Cortex-A78 (Dimensity 7050, Snapdragon 7s Gen 2, Exynos 1380, Tensor G2)
+            case 0xd42: // Cortex-A78AE
+            case 0xd44: // Cortex-A710 (SD 8 Gen 1, Tensor G3)
+            case 0xd48: // Cortex-A715 (SD 8 Gen 2, Tensor G3/G4)
+            case 0xd4d: // Cortex-A720 (SD 8 Gen 3, Tensor G4)
+            case 0xd81: // Cortex-A725 (Dimensity 9400)
+            case 0xd49: // Neoverse N2
+                return 2;
+
+            // Tier 1: Little Efficiency Cores (Cortex-A5x, A35, A510, A520)
+            case 0xd03: // Cortex-A53 (Helio G35/P35)
+            case 0xd04: // Cortex-A35
+            case 0xd05: // Cortex-A55 (Dimensity 7050, SD 7s Gen 2, Tensor G1/G2)
+            case 0xd46: // Cortex-A510 (SD 8 Gen 1, Tensor G3)
+            case 0xd47: // Cortex-A520 (SD 8 Gen 3, Tensor G4)
+                return 1;
+
+            default:
+                break;
+        }
+    } else if (implementer == 0x51) { // Qualcomm Kryo
+        // Kryo Silver (Little): 0x801, 0x803, 0x805
+        if (part == 0x801 || part == 0x803 || part == 0x805) {
+            return 1;
+        }
+        // Kryo Gold / Prime (Big): 0x800, 0x802, 0x804, 0xc00
+        return 2;
+    } else if (implementer == 0x53) { // Samsung Exynos Mongoose
+        // M1 (0x001), M2 (0x002), M3 (0x003), M4 (0x004) are Prime/Big
+        return 3;
+    }
+    return 0; // Unknown
+}
+
+static long readSysfsFreq(int coreId) {
+    const std::string paths[] = {
+        "/sys/devices/system/cpu/cpu" + std::to_string(coreId) + "/cpufreq/cpuinfo_max_freq",
+        "/sys/devices/system/cpu/cpu" + std::to_string(coreId) + "/cpufreq/scaling_max_freq",
+        "/sys/devices/system/cpu/cpu" + std::to_string(coreId) + "/cpufreq/cpuinfo_cur_freq"
+    };
+    for (const auto& p : paths) {
         std::ifstream f(p);
         long freq = 0;
         if (f >> freq && freq > 0) {
-            cores.push_back({i, freq});
+            return freq;
         }
     }
-    if (cores.empty()) {
-        // Fallback if sysfs is unreadable: assume cpu6, cpu7 are highest, then cpu4, cpu5
-        for (int i = 0; i < 8; ++i) {
-            long synthetic = (i >= 6) ? 2600000 : ((i >= 4) ? 2000001 : 2000000);
-            cores.push_back({i, synthetic});
+    return 0;
+}
+
+struct CpuInfoParseResult {
+    int id = -1;
+    int implementer = 0;
+    int part = 0;
+};
+
+static std::vector<CpuInfoParseResult> parseCpuInfoFile() {
+    std::vector<CpuInfoParseResult> list;
+    std::ifstream f("/proc/cpuinfo");
+    if (!f.is_open()) return list;
+
+    std::string line;
+    CpuInfoParseResult current;
+
+    auto commit = [&]() {
+        if (current.id >= 0) {
+            list.push_back(current);
+            current = CpuInfoParseResult();
+        }
+    };
+
+    while (std::getline(f, line)) {
+        if (line.empty()) continue;
+        size_t colon = line.find(':');
+        if (colon == std::string::npos) continue;
+
+        std::string key = line.substr(0, colon);
+        std::string val = line.substr(colon + 1);
+
+        while (!key.empty() && (key.back() == ' ' || key.back() == '\t')) key.pop_back();
+        while (!val.empty() && (val.front() == ' ' || val.front() == '\t')) val.erase(val.begin());
+
+        if (key == "processor") {
+            commit();
+            try { current.id = std::stoi(val); } catch (...) { current.id = -1; }
+        } else if (key == "CPU part") {
+            try { current.part = std::stoi(val, nullptr, 0); } catch (...) {}
+        } else if (key == "CPU implementer") {
+            try { current.implementer = std::stoi(val, nullptr, 0); } catch (...) {}
         }
     }
-    // Sort descending by max_freq_khz (and by core ID descending on ties, since Big cores are highest IDs)
+    commit();
+    return list;
+}
+
+static std::vector<CpuCoreInfo> detectSortedCores() {
+    std::vector<CpuCoreInfo> cores;
+
+    long conf_cpus = sysconf(_SC_NPROCESSORS_CONF);
+    int total_cpus = (conf_cpus > 0 && conf_cpus <= 64) ? static_cast<int>(conf_cpus) : 8;
+
+    auto cpuinfoList = parseCpuInfoFile();
+
+    for (int i = 0; i < total_cpus; ++i) {
+        CpuCoreInfo info{};
+        info.id = i;
+        info.max_freq_khz = readSysfsFreq(i);
+
+        // Find match in /proc/cpuinfo
+        for (const auto& item : cpuinfoList) {
+            if (item.id == i) {
+                info.implementer = item.implementer;
+                info.part = item.part;
+                info.tier = classifyCoreTier(item.implementer, item.part);
+                break;
+            }
+        }
+
+        // If sysfs was unreadable (Motorola, Samsung, Pixel SELinux policies):
+        if (info.max_freq_khz <= 0) {
+            if (info.tier == 3) {
+                info.max_freq_khz = 3000000; // Prime core ~3.0 GHz
+            } else if (info.tier == 2) {
+                info.max_freq_khz = 2500000; // Big core ~2.5 GHz
+            } else if (info.tier == 1) {
+                info.max_freq_khz = 1800000; // Little core ~1.8 GHz
+            } else {
+                // Topological fallback if /proc/cpuinfo lacked part info
+                if (total_cpus >= 8) {
+                    info.max_freq_khz = (i >= 6) ? 2800000 : ((i >= 4) ? 2500000 : 1800000);
+                    info.tier = (i >= 4) ? 2 : 1;
+                } else if (total_cpus >= 6) {
+                    info.max_freq_khz = (i >= 4) ? 2500000 : 1800000;
+                    info.tier = (i >= 4) ? 2 : 1;
+                } else {
+                    info.max_freq_khz = 2000000;
+                    info.tier = 1;
+                }
+            }
+        } else {
+            // Sysfs frequency was available: if tier not derived from /proc/cpuinfo, derive from freq
+            if (info.tier == 0) {
+                if (info.max_freq_khz >= 2650000) info.tier = 3;
+                else if (info.max_freq_khz >= 2100000) info.tier = 2;
+                else info.tier = 1;
+            }
+        }
+
+        cores.push_back(info);
+    }
+
+    // Sort descending:
+    // 1. Core Tier (Prime = 3, Big = 2, Little = 1)
+    // 2. Frequency (highest clock first)
+    // 3. Core ID (higher IDs are performance cluster in ARM big.LITTLE)
     std::sort(cores.begin(), cores.end(), [](const CpuCoreInfo& a, const CpuCoreInfo& b) {
+        if (a.tier != b.tier) return a.tier > b.tier;
         if (a.max_freq_khz != b.max_freq_khz) return a.max_freq_khz > b.max_freq_khz;
         return a.id > b.id;
     });
+
+    for (const auto& c : cores) {
+        __android_log_print(ANDROID_LOG_INFO, "GodHandPerf",
+            "[Affinity] Detected Core %d: Tier=%d, Freq=%ld kHz, Part=0x%x, Impl=0x%x",
+            c.id, c.tier, c.max_freq_khz, c.part, c.implementer);
+    }
+
     return cores;
 }
 
@@ -71,40 +238,42 @@ static ThreadRole classifyThread(const char* name, int primaryCore, int fallback
 
 static void applyAffinity(ThreadRole role, const char* name, int requestedNice) {
     static const std::vector<CpuCoreInfo> sorted = detectSortedCores();
-    if (sorted.size() < 2) return;
+    if (sorted.empty()) return;
 
     const long top_freq = sorted[0].max_freq_khz;
     const long min_freq = sorted.back().max_freq_khz;
-    const bool is_uniform_cluster = ((top_freq - min_freq) < 100000); // Frequency delta < 100MHz (e.g. Helio G35 8x A53)
+    const int top_tier = sorted[0].tier;
+    const int min_tier = sorted.back().tier;
+    const bool is_uniform_cluster = (top_tier == min_tier) && ((top_freq - min_freq) < 100000);
 
     std::vector<int> big_cores;
     std::vector<int> little_cores;
 
     if (is_uniform_cluster) {
-        // Uniform cluster (Helio G35, Helio P35, Unisoc T606, Snapdragon 400/600 series)
-        // Partition cores evenly: first half little, second half compute
+        // Uniform cluster (Helio G35, Helio P35, Unisoc SC9863A/T606, budget 4-core A53/A55)
         const size_t half = sorted.size() / 2;
         for (size_t i = 0; i < sorted.size(); ++i) {
-            if (i >= half) {
-                big_cores.push_back(sorted[i].id);
-            } else {
-                little_cores.push_back(sorted[i].id);
-            }
+            if (i >= half) big_cores.push_back(sorted[i].id);
+            else little_cores.push_back(sorted[i].id);
         }
     } else {
-        const long big_threshold = min_freq + ((top_freq - min_freq) * 40 / 100);
+        const long big_threshold = min_freq + ((top_freq - min_freq) * 35 / 100);
         for (const auto& c : sorted) {
-            if (c.max_freq_khz >= big_threshold) {
+            if (c.tier >= 2 || c.max_freq_khz >= big_threshold) {
                 big_cores.push_back(c.id);
             } else {
                 little_cores.push_back(c.id);
             }
         }
-        // Guarantee at least 2 big cores
-        if (big_cores.size() < 2) {
+        // Guarantee at least 2 big cores if system has 4+ cores
+        if (big_cores.size() < 2 && sorted.size() >= 4) {
             big_cores.clear();
             big_cores.push_back(sorted[0].id);
             big_cores.push_back(sorted[1].id);
+            little_cores.clear();
+            for (size_t i = 2; i < sorted.size(); ++i) {
+                little_cores.push_back(sorted[i].id);
+            }
         }
         // Guarantee at least 1 little core
         if (little_cores.empty()) {
@@ -123,29 +292,79 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
     CPU_ZERO(&mask);
     int targetNice = requestedNice;
 
-    if (is_uniform_cluster) {
-        // Low-end uniform cluster (Helio G35, Helio P35, Unisoc T606, Snapdragon 400/600 series)
-        // All 8 cores are low-power in-order cores (e.g. 8x Cortex-A53 / A55).
-        // Restricting threads to 1 single in-order core creates severe bottlenecks.
-        // Allow primary compute threads (EE, VU, GS) to float across all compute cores,
-        // using Linux thread priority (nice) to ensure EE gets scheduled first.
-        for (const auto& c : sorted) CPU_SET(c.id, &mask);
-        switch (role) {
-            case ThreadRole::EE_MAIN:     targetNice = -20; break;
-            case ThreadRole::GS_RENDERER: targetNice = -19; break;
-            case ThreadRole::VU1_WORKER:  targetNice = -18; break;
-            case ThreadRole::GIF_WORKER:  targetNice = -15; break;
-            case ThreadRole::IOP_WORKER:  targetNice = -15; break;
-            case ThreadRole::AUDIO_SPU2:  targetNice = -14; break;
-            default:                      targetNice = -2;  break;
+    if (sorted.size() <= 4 || is_uniform_cluster) {
+        // Low-end / Uniform devices (4 cores total, or 8x A53/A55 like Helio G35/P35):
+        // Allow compute threads to float across compute cores with strict Linux scheduler priorities
+        if (sorted.size() <= 4) {
+            switch (role) {
+                case ThreadRole::EE_MAIN:
+                    CPU_SET(sorted[0].id, &mask);
+                    if (sorted.size() > 1) CPU_SET(sorted[1].id, &mask);
+                    targetNice = -20;
+                    break;
+                case ThreadRole::GS_RENDERER:
+                    for (const auto& c : sorted) CPU_SET(c.id, &mask);
+                    targetNice = -19;
+                    break;
+                case ThreadRole::VU1_WORKER:
+                    for (const auto& c : sorted) CPU_SET(c.id, &mask);
+                    targetNice = -18;
+                    break;
+                case ThreadRole::IOP_WORKER:
+                case ThreadRole::GIF_WORKER:
+                    CPU_SET(sorted.back().id, &mask);
+                    if (sorted.size() > 1) CPU_SET(sorted[sorted.size() - 2].id, &mask);
+                    targetNice = -16;
+                    break;
+                case ThreadRole::AUDIO_SPU2:
+                    for (const auto& c : sorted) CPU_SET(c.id, &mask);
+                    targetNice = -14;
+                    break;
+                default:
+                    CPU_SET(sorted.back().id, &mask);
+                    targetNice = -2;
+                    break;
+            }
+        } else {
+            // 8-core uniform cluster (Helio G35, P35, Unisoc T606):
+            switch (role) {
+                case ThreadRole::EE_MAIN:
+                    for (int bc : big_cores) CPU_SET(bc, &mask);
+                    targetNice = -20;
+                    break;
+                case ThreadRole::GS_RENDERER:
+                    for (int bc : big_cores) CPU_SET(bc, &mask);
+                    targetNice = -19;
+                    break;
+                case ThreadRole::VU1_WORKER:
+                    for (int bc : big_cores) CPU_SET(bc, &mask);
+                    targetNice = -18;
+                    break;
+                case ThreadRole::IOP_WORKER:
+                    for (int lc : little_cores) CPU_SET(lc, &mask);
+                    targetNice = -16;
+                    break;
+                case ThreadRole::GIF_WORKER:
+                    for (int lc : little_cores) CPU_SET(lc, &mask);
+                    targetNice = -15;
+                    break;
+                case ThreadRole::AUDIO_SPU2:
+                    for (int lc : little_cores) CPU_SET(lc, &mask);
+                    targetNice = -14;
+                    break;
+                default:
+                    for (int lc : little_cores) CPU_SET(lc, &mask);
+                    targetNice = -2;
+                    break;
+            }
         }
     } else if (big_cores.size() >= 4) {
-        // 4+ Big cores (Dimensity 7050, Snapdragon 8 Gen 1/2/3, 870, 888, Dimensity 8200/9300):
+        // 4+ Big/Prime cores (Dimensity 7050 with 4 Big cores, Snapdragon 7s Gen 2, SD 8 Gen 1/2/3, 870, 888, Tensor G1-G4, Exynos 1380/1480):
         // 1-to-1 Dedicated Partitioning for Primary Tasks + Shared Big Core 3 for I/O Coprocessors:
-        // Big Core 0: 100% Dedicated to EE_MAIN (Emotion Engine game logic - ZERO PREEMPTION!)
-        // Big Core 1: 100% Dedicated to VU1_WORKER (Vector Unit 1 3D vertex transforms & skinning)
-        // Big Core 2: 100% Dedicated to GS_RENDERER (PCSX2 Vulkan Graphics Synthesizer)
-        // Big Core 3: Shared by GIF_WORKER (9% CPU) + IOP_WORKER (20% CPU) -> Total ~29% on a 2.5 GHz Big Core!
+        // Big Core 0: 100% EXCLUSIVELY DEDICATED TO EE_MAIN (Emotion Engine game logic - ZERO PREEMPTION!)
+        // Big Core 1: 100% EXCLUSIVELY DEDICATED TO VU1_WORKER (Vector Unit 1 3D vertex transforms & skinning)
+        // Big Core 2: 100% EXCLUSIVELY DEDICATED TO GS_RENDERER (PCSX2 Vulkan Graphics Synthesizer)
+        // Big Core 3: Shared by GIF_WORKER (9% CPU) + IOP_WORKER (20% CPU) -> Total ~29% on an out-of-order Big Core!
         // Little Cores: Audio SPU2, Host window pump, touch input, OS background threads
         switch (role) {
             case ThreadRole::EE_MAIN:
@@ -176,7 +395,7 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
                 break;
         }
     } else if (big_cores.size() == 3) {
-        // 3 Big cores (Tensor G1/G2, Snapdragon 855/865 1+3+4):
+        // 3 Big cores (1 Prime + 2 Big, e.g. Snapdragon 855/865 1+3+4, or tri-cluster variants):
         // Big Core 0: EE_MAIN (Nice -20)
         // Big Core 1: VU1_WORKER (Nice -19)
         // Big Core 2: GS_RENDERER (Nice -20) + IOP_WORKER (Nice -18)
@@ -196,8 +415,9 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
                 targetNice = -18;
                 break;
             case ThreadRole::GIF_WORKER:
+            case ThreadRole::AUDIO_SPU2:
                 for (int lc : little_cores) CPU_SET(lc, &mask);
-                targetNice = -15;
+                targetNice = -16;
                 break;
             default:
                 for (int lc : little_cores) CPU_SET(lc, &mask);
@@ -205,10 +425,10 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
                 break;
         }
     } else {
-        // 2 Big cores + 4/6 Little cores (Dimensity 1080/920/700, Snapdragon 778G, 7s Gen 2, 695, 480):
+        // 2 Big cores + 4/6 Little cores (Dimensity 1080/920/700, Snapdragon 695, 480, Dimensity 7050 dual-A78):
         // Big Core 0: 100% EXCLUSIVELY DEDICATED TO EE_MAIN (Zero thread preemption -> locked 30 EE FPS!)
         // Big Core 1: SHARED BY GS_RENDERER + VU1_WORKER + IOP_WORKER (~65% combined load on Big Core 1)
-        // Little Cores (CPU 0-5): GIF_WORKER, AUDIO_SPU2, and HOST_PUMP
+        // Little Cores: GIF_WORKER, AUDIO_SPU2, and HOST_PUMP
         switch (role) {
             case ThreadRole::EE_MAIN:
                 CPU_SET(big_cores[0], &mask);

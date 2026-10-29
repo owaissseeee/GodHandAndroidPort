@@ -210,7 +210,7 @@ class MainActivity : ComponentActivity() {
 
             when (idx) {
                 0 -> {
-                    addSpinnerRow("Graphics Renderer", listOf("Vulkan (PCSX2-GS - Recommended)", "OpenGL ES 3.2 (Slow CPU Readback)", "Native GLES"), settings.rendererIdx) {
+                    addSpinnerRow("Graphics Renderer", listOf("Vulkan (PCSX2-GS - Best for Mali / Adreno / Pixel)", "OpenGL ES 3.2 (Alternate for Adreno / PowerVR)", "Native GLES"), settings.rendererIdx) {
                         settings.rendererIdx = it
                         appendLog("[CFG] Renderer set to index $it")
                     }

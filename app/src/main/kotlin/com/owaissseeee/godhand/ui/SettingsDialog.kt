@@ -138,7 +138,7 @@ class SettingsDialog(
 
         addSpinnerRow(
             "Graphics Renderer",
-            listOf("Vulkan (PCSX2-GS - Recommended)", "OpenGL ES 3.2 (Slow CPU Readback)", "Native GLES"),
+            listOf("Vulkan (PCSX2-GS - Best for Mali / Adreno / Pixel)", "OpenGL ES 3.2 (Alternate for Adreno / PowerVR)", "Native GLES"),
             settings.rendererIdx,
             enabled = !isMidGame // Renderer driver switch requires clean surface boot
         ) { pos ->

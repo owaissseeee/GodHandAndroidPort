@@ -3082,7 +3082,7 @@ bool GSDeviceVK::CheckFeatures()
 		m_optional_extensions.vk_ext_attachment_feedback_loop_layout = false;
 		m_features.framebuffer_fetch = m_optional_extensions.vk_ext_rasterization_order_attachment_access &&
 			GSConfig.EnableAdrenoFramebufferFetch && !GSConfig.DisableFramebufferFetch;
-		m_features.texture_barrier = true;
+		m_features.texture_barrier = (GSConfig.OverrideTextureBarriers != 0);
 	}
 	m_features.multidraw_fb_copy = false;
 	m_features.broken_point_sampler = false;
