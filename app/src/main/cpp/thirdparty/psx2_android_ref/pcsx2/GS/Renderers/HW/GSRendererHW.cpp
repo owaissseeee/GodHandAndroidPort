@@ -8837,12 +8837,14 @@ __ri void GSRendererHW::HandleTextureHazards(const GSTextureCache::Target* rt, c
 bool GSRendererHW::CanUseTexIsFB(const GSTextureCache::Target* rt, const GSTextureCache::Source* tex,
 	const TextureMinMaxResult& tmm)
 {
+#if !defined(__ANDROID__)
 	// Minimum blending -> we can't use tex-is-fb.
 	if (GSConfig.AccurateBlendingUnit == AccBlendLevel::Minimum)
 	{
 		GL_CACHE("HW: Disabling tex-is-fb due to minimum blending.");
 		return false;
 	}
+#endif
 
 	// the texture is offset, and the frame isn't also offset, we can't do this.
 	if (tex->GetRegion().HasX() || tex->GetRegion().HasY())

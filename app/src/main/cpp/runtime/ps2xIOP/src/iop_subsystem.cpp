@@ -38,6 +38,11 @@
 #define PS2X_IOP_SPIN_PAUSE() std::this_thread::yield()
 #endif
 
+extern "C" void godhand_set_thread_affinity_and_priority(const char* name, int primaryCore, int fallbackCore, int niceVal);
+#if !defined(__ANDROID__)
+inline void godhand_set_thread_affinity_and_priority(const char*, int, int, int) {}
+#endif
+
 namespace ps2x::iop
 {
     namespace
@@ -401,7 +406,9 @@ namespace ps2x::iop
         void workerLoop()
         {
             t_onIopWorker = true;
-#if defined(_WIN32)
+#if defined(__ANDROID__)
+            godhand_set_thread_affinity_and_priority("IOPThread", 3, 3, -18);
+#elif defined(_WIN32)
             SetThreadDescription(GetCurrentThread(), L"IOPThread"); // shows up in profilers (URBAN_NATIVE_PROFILE, F6)
 #endif
 #if defined(_WIN32)

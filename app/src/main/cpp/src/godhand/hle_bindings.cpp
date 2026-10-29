@@ -12,6 +12,7 @@
 #include "ps2_stubs.h"
 #include "ps2_syscalls.h"
 
+#include <cmath>
 #include <cstdlib>
 #include <cstring>
 #include <iomanip>
@@ -233,6 +234,7 @@ namespace godhand
                                                              resolvedName + ": " + std::string(alias.why)))
                 ++bound;
         }
+
         GH_INFO(Hook, "HLE: bound " << bound << " SDK functions; not located in this ELF:" << missing.str());
     }
 }

@@ -3,15 +3,20 @@ package com.owaissseeee.godhand
 import android.app.AlertDialog
 import android.content.Context
 import android.hardware.input.InputManager
+import android.os.Build
 import android.os.Bundle
+import android.os.PerformanceHintManager
 import android.os.Process
+import android.view.Choreographer
 import android.view.InputDevice
 import android.view.KeyEvent
 import android.view.MotionEvent
+import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import android.view.WindowManager
 import android.widget.FrameLayout
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
@@ -25,6 +30,39 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
     private lateinit var surfaceView: SurfaceView
     private lateinit var touchOverlay: TouchControllerOverlay
     private var inputManager: InputManager? = null
+
+    private var adpfSession: PerformanceHintManager.Session? = null
+    private var adpfInitialized = false
+
+    private fun ensureAdpfSession() {
+        if (adpfInitialized || Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return
+        val tids = NativeBridge.getPerformanceThreadIds()
+        if (tids.isNotEmpty()) {
+            try {
+                val phm = getSystemService(PerformanceHintManager::class.java)
+                // 16,666,666 ns = 60.0 FPS target budget
+                adpfSession = phm?.createHintSession(tids, 16_666_666L)
+                adpfInitialized = true
+            } catch (_: Throwable) {}
+        }
+    }
+
+    private val adpfFrameCallback = object : Choreographer.FrameCallback {
+        override fun doFrame(frameTimeNanos: Long) {
+            if (!isFinishing && !isDestroyed) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    ensureAdpfSession()
+                    val duration = NativeBridge.getLastFrameWorkDurationNanos()
+                    if (duration > 0L) {
+                        // Report at least 15.5ms so the kernel governor never downclocks Big cores when idle!
+                        val reported = maxOf(duration, 15_500_000L)
+                        adpfSession?.reportActualWorkDuration(reported)
+                    }
+                }
+                Choreographer.getInstance().postFrameCallback(this)
+            }
+        }
+    }
 
     private var physicalPadMask = 0
     private var physicalLx = 0f
@@ -44,7 +82,15 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             setShowWhenLocked(true)
             setTurnScreenOn(true)
         }
-        window.addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val params = window.attributes
+            params.preferredRefreshRate = 60.0f
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                params.setFrameRateBoostOnTouchEnabled(false)
+            }
+            window.attributes = params
+        }
         IsoCacheProcessor(this).ensureResourcesCopied()
         settings = SettingsRepository(this)
 
@@ -272,10 +318,12 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         touchOverlay.applySettings(settings)
         checkConnectedControllers()
         NativeBridge.setAudioMuted(false)
+        Choreographer.getInstance().postFrameCallback(adpfFrameCallback)
     }
 
     override fun onPause() {
         super.onPause()
+        Choreographer.getInstance().removeFrameCallback(adpfFrameCallback)
         NativeBridge.setAudioMuted(true)
     }
 
@@ -286,6 +334,13 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
 
     override fun onDestroy() {
         super.onDestroy()
+        Choreographer.getInstance().removeFrameCallback(adpfFrameCallback)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            try {
+                adpfSession?.close()
+            } catch (_: Throwable) {}
+            adpfSession = null
+        }
         inputManager?.unregisterInputDeviceListener(inputDeviceListener)
         NativeBridge.setAudioMuted(true)
         Process.killProcess(Process.myPid())
@@ -301,9 +356,27 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            try {
+                holder.surface.setFrameRate(
+                    60.0f,
+                    Surface.FRAME_RATE_COMPATIBILITY_FIXED_SOURCE,
+                    Surface.CHANGE_FRAME_RATE_ALWAYS
+                )
+            } catch (_: Throwable) {}
+        }
     }
 
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            try {
+                holder.surface.setFrameRate(
+                    60.0f,
+                    Surface.FRAME_RATE_COMPATIBILITY_FIXED_SOURCE,
+                    Surface.CHANGE_FRAME_RATE_ALWAYS
+                )
+            } catch (_: Throwable) {}
+        }
         val rendererIdx = intent.getIntExtra("rendererIdx", settings.rendererIdx)
         val resolutionIdx = intent.getIntExtra("resolutionIdx", settings.resolutionIdx)
         val aspectIdx = intent.getIntExtra("aspectIdx", settings.aspectIdx)

@@ -24,6 +24,7 @@ extern "C" void godhand_set_thread_affinity_and_priority(const char* name, int p
 
 namespace
 {
+
     // Asynchronous readback of tiny local->host transfers (docs/PROGRESS.md §50). Urban Reign reads an 8x8 block of the
     // depth buffer about once a frame (its light-flare visibility test, sub_003155F8). Synchronously, each one waits for
     // the GS thread to finish everything queued and for the GPU (~9.5% of the game thread in the heaviest map). For such
@@ -201,6 +202,7 @@ void GSThreadedBackend::Enqueue(Op op, const void *payload, uint32_t size)
         if (length)
             m_open.insert(m_open.end(), static_cast<const uint8_t *>(bytes), static_cast<const uint8_t *>(bytes) + length);
     };
+
     if (op == Op::Submit && m_compactQueue)
     {
         // One primitive per vertex kick, so this runs ~a million times a second on the GIF thread. The records are

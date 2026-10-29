@@ -486,6 +486,12 @@ static const char* PresentModeToString(VkPresentModeKHR mode)
 
 bool VKSwapChain::SelectPresentMode(VkSurfaceKHR surface, GSVSyncMode* vsync_mode, VkPresentModeKHR* present_mode)
 {
+#if defined(__ANDROID__)
+	// Android SurfaceFlinger and BLASTBufferQueue require FIFO presentation to prevent buffer starvation and NO_BUFFER_AVAILABLE thrashing.
+	*present_mode = VK_PRESENT_MODE_FIFO_KHR;
+	*vsync_mode = GSVSyncMode::FIFO;
+	return true;
+#endif
 	VkResult res;
 	u32 mode_count;
 	res = vkGetPhysicalDeviceSurfacePresentModesKHR(
@@ -854,7 +860,12 @@ VkResult VKSwapChain::AcquireNextImage()
 
 	const bool stats = s_stats_enabled.load(std::memory_order_relaxed);
 	const Common::Timer::Value t_start = stats ? Common::Timer::GetCurrentValue() : 0;
-	const VkResult res = vkAcquireNextImageKHR(GSDeviceVK::GetInstance()->GetDevice(), m_swap_chain, UINT64_MAX,
+#if defined(__ANDROID__)
+	const uint64_t acquire_timeout = 100000000ULL; // 100ms timeout on Android prevents BLASTBufferQueue starvation
+#else
+	const uint64_t acquire_timeout = UINT64_MAX;
+#endif
+	const VkResult res = vkAcquireNextImageKHR(GSDeviceVK::GetInstance()->GetDevice(), m_swap_chain, acquire_timeout,
 		m_semaphores[m_current_semaphore].available_semaphore, VK_NULL_HANDLE, &m_current_image);
 	if (stats)
 	{

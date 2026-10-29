@@ -28,5 +28,7 @@ object NativeBridge {
     external fun setResolutionScale(resScaleIdx: Int)
     external fun setAspectRatio(aspectIdx: Int)
     external fun getPerformanceStats(outStats: FloatArray, outHistory: FloatArray?): Boolean
+    external fun getPerformanceThreadIds(): IntArray
+    external fun getLastFrameWorkDurationNanos(): Long
 }
 

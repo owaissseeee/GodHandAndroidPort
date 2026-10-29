@@ -325,6 +325,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
         invalidate()
     }
 
+    private var lastDrawnFps = 0
+
     private val fpsUpdateRunnable = object : Runnable {
         override fun run() {
             val hasHistory = (fpsMode == FpsOverlayMode.DETAILED_DEBUG)
@@ -337,14 +339,18 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 totalPresents = perfStats[5].toLong()
             }
             if (fpsMode != FpsOverlayMode.HIDDEN) {
-                invalidate(
-                    fpsBounds.left.toInt().coerceAtLeast(0),
-                    fpsBounds.top.toInt().coerceAtLeast(0),
-                    (fpsBounds.right + 4f * density).toInt().coerceAtMost(width),
-                    (fpsBounds.bottom + 4f * density).toInt().coerceAtMost(height)
-                )
+                val curFpsInt = screenFps.toInt()
+                if (fpsMode == FpsOverlayMode.DETAILED_DEBUG || kotlin.math.abs(curFpsInt - lastDrawnFps) >= 2 || lastDrawnFps == 0) {
+                    lastDrawnFps = curFpsInt
+                    invalidate(
+                        fpsBounds.left.toInt().coerceAtLeast(0),
+                        fpsBounds.top.toInt().coerceAtLeast(0),
+                        (fpsBounds.right + 4f * density).toInt().coerceAtMost(width),
+                        (fpsBounds.bottom + 4f * density).toInt().coerceAtMost(height)
+                    )
+                }
             }
-            val interval = if (fpsMode == FpsOverlayMode.DETAILED_DEBUG) 33L else 250L
+            val interval = if (fpsMode == FpsOverlayMode.DETAILED_DEBUG) 33L else 1000L
             postDelayed(this, interval)
         }
     }
@@ -770,6 +776,12 @@ class TouchControllerOverlay(context: Context) : View(context) {
         }
 
         // Recompute combined button mask & dispatch
+        val prevMask = buttonMask
+        val prevLx = leftStickX
+        val prevLy = leftStickY
+        val prevRx = rightStickX
+        val prevRy = rightStickY
+
         var mask = 0
         for (btn in buttons) {
             if (btn.activePointerId != -1 && !btn.isDodgeButton) {
@@ -778,7 +790,13 @@ class TouchControllerOverlay(context: Context) : View(context) {
         }
         buttonMask = mask
         NativeBridge.updatePadState(buttonMask, leftStickX, leftStickY, rightStickX, rightStickY)
-        invalidate()
+
+        if (prevMask != mask ||
+            abs(prevLx - leftStickX) > 0.02f || abs(prevLy - leftStickY) > 0.02f ||
+            abs(prevRx - rightStickX) > 0.02f || abs(prevRy - rightStickY) > 0.02f ||
+            action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
+            invalidate()
+        }
         return true
     }
 
@@ -948,10 +966,20 @@ class TouchControllerOverlay(context: Context) : View(context) {
         invalidate()
     }
 
+    private var lastHapticTimeMs = 0L
     private fun hapticTick() {
+        val now = android.os.SystemClock.uptimeMillis()
+        if (now - lastHapticTimeMs < 50L) return
+        lastHapticTimeMs = now
         try {
-            vibrator?.vibrate(VibrationEffect.createOneShot(12, VibrationEffect.DEFAULT_AMPLITUDE))
+            performHapticFeedback(
+                android.view.HapticFeedbackConstants.KEYBOARD_TAP,
+                android.view.HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING
+            )
         } catch (_: Throwable) {
+            try {
+                vibrator?.vibrate(VibrationEffect.createOneShot(12, VibrationEffect.DEFAULT_AMPLITUDE))
+            } catch (_: Throwable) {}
         }
     }
 }

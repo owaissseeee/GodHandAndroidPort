@@ -14,6 +14,7 @@
 #endif
 
 #include <algorithm>
+#include <chrono>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -35,20 +36,30 @@ namespace
     // nativeScaling: 2 (Aggressive: Fixes post effects)
     void ApplyGameFixes(Pcsx2Config::GSOptions &options)
     {
-        // Mobile TBDR (Mali / Adreno / Xclipse) Zero-Barrier Configuration for God Hand:
-        options.PreloadFrameWithGSData = false;            // WAS true -> caused stalls on particle/debris buffer init!
-        options.GPUPaletteConversion = false;              // WAS true -> caused 60+ separate Vulkan RenderPasses/frame on houses & enemies!
-        options.UserHacks_DisablePartialInvalidation = true;
-        options.UserHacks_DisableSafeFeatures = true;
+        // Mobile TBDR (Mali / Adreno / Xclipse) High-Performance Zero-Barrier Configuration:
+        options.AccurateBlendingUnit = AccBlendLevel::Minimum; // Maximum hardware TBDR fillrate: disables slow shader sw_blending & pipeline barriers
+        options.PreloadFrameWithGSData = false;
+        options.GPUPaletteConversion = false;
+        options.UserHacks_DisablePartialInvalidation = true; // Prevent TBDR tile splits
+        options.UserHacks_DisableSafeFeatures = true;        // Skip redundant slow clears
         options.UserHacks_AutoFlush = GSHWAutoFlushLevel::Disabled;
-        options.HWAccurateAlphaTest = false;               // AccurateDATE = Off: Eliminates per-particle framebuffer barrier stalls!
-        options.AccurateBlendingUnit = AccBlendLevel::Minimum; // BlendingAccuracy = Minimum: Single-pass hardware blending for heavy smoke/fire/spark particles!
+        options.HWAccurateAlphaTest = false;                   // AccurateDATE = Off: Restores 60 FPS on Mali TBDR
+        options.UserHacks_DisableDepthSupport = false;         // Keep depth buffer emulation intact to prevent fullscreen blur smearing
         options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
-        options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special;
-        options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
+        options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Off; // Eliminates misaligned bloom halo rings (over SALOON and characters)
+        options.UserHacks_NativeScaling = GSNativeScaling::Off;     // Disables downscale targets and post-processing downscaling
+        options.UserHacks_MergePPSprite = false;               // RESTORES CHARACTER FACES & REMOVES LINE POPPING
         options.UserHacks_AlignSpriteX = false;
         options.GetSkipCountFunctionId = -1;
         options.SkipDuplicateFrames = false;
+        options.TriFilter = TriFiltering::Off;
+        options.TexturePreloading = TexturePreloadingLevel::Full;
+        // SkipDraw: Cleanly strips the depth-of-field blur quad without corrupting framebuffers
+        const char *skipDrawEnv = std::getenv("PS2X_SKIPDRAW");
+        const int skipDrawVal = skipDrawEnv ? std::atoi(skipDrawEnv) : 1;
+        options.SkipDrawStart = 1;
+        options.SkipDrawEnd = skipDrawVal;
+        options.VsyncQueueSize = 2;
 
 #if defined(__ANDROID__)
         // Mobile Mali GPU optimizations:
@@ -131,6 +142,11 @@ namespace
                 options.UserHacks_DisableDepthSupport = (value == 0);
             else if (key == "auto_flush")
                 options.UserHacks_AutoFlush = static_cast<GSHWAutoFlushLevel>(std::clamp(value, 0, 2));
+            else if (key == "skipdraw")
+            {
+                options.SkipDrawStart = 1;
+                options.SkipDrawEnd = std::max(0, value);
+            }
         }
     }
 

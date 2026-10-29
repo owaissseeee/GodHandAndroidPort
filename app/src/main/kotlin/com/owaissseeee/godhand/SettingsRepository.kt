@@ -16,16 +16,22 @@ class SettingsRepository(context: Context) {
         set(value) = prefs.edit().putInt("res_idx", value.coerceIn(0, 7)).apply()
 
     var aspectIdx: Int
-        get() = prefs.getInt("aspect_idx", 0).coerceIn(0, 2) // 0: 16:9 Widescreen, 1: 4:3 Original, 2: Full Screen
-        set(value) = prefs.edit().putInt("aspect_idx", value.coerceIn(0, 2)).apply()
+        get() {
+            if (!prefs.contains("aspect_idx_v2")) {
+                prefs.edit().putInt("aspect_idx_v2", 2).apply()
+                return 2 // 2: Full Screen (Device Aspect - No Stretch)
+            }
+            return prefs.getInt("aspect_idx_v2", 2).coerceIn(0, 2)
+        }
+        set(value) = prefs.edit().putInt("aspect_idx_v2", value.coerceIn(0, 2)).apply()
 
     var fpsIdx: Int
         get() = prefs.getInt("fps_idx", 1).coerceIn(0, 1) // 0: 60 FPS {Buggy - Not Recommended}, 1: 30 FPS (Console Native Lock - Recommended)
         set(value) = prefs.edit().putInt("fps_idx", value.coerceIn(0, 1)).apply()
 
     var frameskipIdx: Int
-        get() = prefs.getInt("frameskip_idx", 1).coerceIn(0, 4) // 0: Off, 1: Auto (Skip on Lag), 2: Skip 1 Frame, 3: Skip 2 Frames, 4: Skip 3 Frames (Potato Mode)
-        set(value) = prefs.edit().putInt("frameskip_idx", value.coerceIn(0, 4)).apply()
+        get() = prefs.getInt("frameskip_idx_v2", 0).coerceIn(0, 4) // 0: Off (Recommended), 1: Auto (Skip on Lag), 2: Skip 1 Frame, 3: Skip 2 Frames, 4: Skip 3 Frames (Potato Mode)
+        set(value) = prefs.edit().putInt("frameskip_idx_v2", value.coerceIn(0, 4)).apply()
 
     // --- Audio Settings ---
     var audioSchedulingIdx: Int

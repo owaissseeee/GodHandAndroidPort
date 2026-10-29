@@ -104,10 +104,11 @@ namespace
     void reportUncompiledVu1Image(uint64_t hash, const uint8_t *vuCode, uint32_t codeSize)
     {
 #if defined(__ANDROID__)
-        // Never perform blocking FUSE /sdcard file I/O on the real-time VU1 thread during gameplay!
-        (void)hash;
-        (void)vuCode;
-        (void)codeSize;
+        static std::unordered_map<uint64_t, bool> s_reported;
+        if (s_reported.size() < 64u && s_reported.emplace(hash, true).second)
+        {
+            __android_log_print(ANDROID_LOG_WARN, "GodHandVU1", "UNCOMPILED_VU1: hash=0x%016llx (size=%u, interpreter fallback)", static_cast<unsigned long long>(hash), codeSize);
+        }
         return;
 #else
         static std::unordered_map<uint64_t, bool> reported;

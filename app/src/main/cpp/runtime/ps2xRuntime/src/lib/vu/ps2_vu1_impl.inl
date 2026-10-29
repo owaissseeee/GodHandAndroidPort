@@ -2848,8 +2848,39 @@ struct VU1InterpreterAccess
     {
         if (dest == 0xFu)
             return value;
+        if (dest == 0u)
+            return old;
+#if defined(__aarch64__) || defined(_M_ARM64)
+        alignas(16) static const uint32_t s_blendMasks[16][4] = {
+            {0, 0, 0, 0},
+            {0, 0, 0, 0xFFFFFFFFu},
+            {0, 0, 0xFFFFFFFFu, 0},
+            {0, 0, 0xFFFFFFFFu, 0xFFFFFFFFu},
+            {0, 0xFFFFFFFFu, 0, 0},
+            {0, 0xFFFFFFFFu, 0, 0xFFFFFFFFu},
+            {0, 0xFFFFFFFFu, 0xFFFFFFFFu, 0},
+            {0, 0xFFFFFFFFu, 0xFFFFFFFFu, 0xFFFFFFFFu},
+            {0xFFFFFFFFu, 0, 0, 0},
+            {0xFFFFFFFFu, 0, 0, 0xFFFFFFFFu},
+            {0xFFFFFFFFu, 0, 0xFFFFFFFFu, 0},
+            {0xFFFFFFFFu, 0, 0xFFFFFFFFu, 0xFFFFFFFFu},
+            {0xFFFFFFFFu, 0xFFFFFFFFu, 0, 0},
+            {0xFFFFFFFFu, 0xFFFFFFFFu, 0, 0xFFFFFFFFu},
+            {0xFFFFFFFFu, 0xFFFFFFFFu, 0xFFFFFFFFu, 0},
+            {0xFFFFFFFFu, 0xFFFFFFFFu, 0xFFFFFFFFu, 0xFFFFFFFFu}
+        };
+        const uint32x4_t sel = vld1q_u32(s_blendMasks[dest & 0xFu]);
+        float32x4_t vVal, vOld;
+        std::memcpy(&vVal, &value, 16);
+        std::memcpy(&vOld, &old, 16);
+        float32x4_t res = vbslq_f32(sel, vVal, vOld);
+        __m128 out;
+        std::memcpy(&out, &res, 16);
+        return out;
+#else
         const __m128 mask = destMask(dest);
         return _mm_or_ps(_mm_and_ps(mask, value), _mm_andnot_ps(mask, old));
+#endif
     }
 
     static VU1_FORCE_INLINE void storeDest(float *target, __m128 value, uint32_t dest)
@@ -2863,6 +2894,12 @@ struct VU1InterpreterAccess
     static VU1_FORCE_INLINE __m128 vnorm(__m128 value)
     {
 #if defined(__aarch64__) || defined(_M_ARM64)
+        static const bool s_skipNorm = [] {
+            const char *c = std::getenv("PS2X_VU1_SKIP_CLAMP");
+            return c && *c == '1';
+        }();
+        if (s_skipNorm)
+            return value;
         float32x4_t fv;
         std::memcpy(&fv, &value, sizeof(fv));
         const uint32x4_t bits = vreinterpretq_u32_f32(fv);
@@ -3516,6 +3553,10 @@ struct VU1InterpreterAccess
         (void)vu;
         (void)ctx;
         (void)cycle;
+        static const bool s_fastNoFlags = [] {
+            const char *v = std::getenv("PS2X_VU1_FAST_NOFLAGS");
+            return v && *v == '1';
+        }();
         constexpr bool cross = K == FK::Opmsub || K == FK::Opmula;
         constexpr bool productSum = K == FK::Madd || K == FK::Msub || K == FK::Opmsub;
         if constexpr (cross)
@@ -3531,7 +3572,7 @@ struct VU1InterpreterAccess
             result = _mm_sub_ps(s, t);
         else
         {
-            product = vnorm(_mm_mul_ps(s, t));
+            product = s_fastNoFlags ? _mm_mul_ps(s, t) : vnorm(_mm_mul_ps(s, t));
             if constexpr (K == FK::Mul || K == FK::Opmula)
                 result = product;
             else if constexpr (K == FK::Madd)
@@ -3541,8 +3582,9 @@ struct VU1InterpreterAccess
         }
         if constexpr (cross)
             result = _mm_and_ps(result, destMask(0xEu));
-        result = vnorm(result);
-        if (dest != 0u)
+        if (!s_fastNoFlags)
+            result = vnorm(result);
+        if (dest != 0u && !s_fastNoFlags)
         {
             const __m128 zero = _mm_setzero_ps();
             const uint32_t sign = kRev4[neonMovemaskPs(result)] & dest;
@@ -3671,22 +3713,31 @@ struct VU1InterpreterAccess
             result = _mm_and_ps(result, destMask(0xEu));
         if constexpr (Sticky)
         {
-            const __m128 zero = _mm_setzero_ps();
-            __m128 zeroLanes = _mm_cmpeq_ps(result, zero);
-            __m128 signLanes = result;
-            if constexpr (productSum)
+#if defined(__aarch64__) || defined(_M_ARM64)
+            static const bool s_fastNoFlags = [] {
+                const char *v = std::getenv("PS2X_VU1_FAST_NOFLAGS");
+                return v && *v == '1';
+            }();
+            if (!s_fastNoFlags)
+#endif
             {
-                zeroLanes = _mm_or_ps(zeroLanes, _mm_or_ps(_mm_cmpeq_ps(s, zero), _mm_cmpeq_ps(t, zero)));
-                signLanes = _mm_or_ps(signLanes, product);
+                const __m128 zero = _mm_setzero_ps();
+                __m128 zeroLanes = _mm_cmpeq_ps(result, zero);
+                __m128 signLanes = result;
+                if constexpr (productSum)
+                {
+                    zeroLanes = _mm_or_ps(zeroLanes, _mm_or_ps(_mm_cmpeq_ps(s, zero), _mm_cmpeq_ps(t, zero)));
+                    signLanes = _mm_or_ps(signLanes, product);
+                }
+                if (dest != 0xFu)
+                {
+                    const __m128 mask = destMask(dest);
+                    zeroLanes = _mm_and_ps(zeroLanes, mask);
+                    signLanes = _mm_and_ps(signLanes, mask);
+                }
+                accZero = _mm_or_ps(accZero, zeroLanes);
+                accSign = _mm_or_ps(accSign, signLanes);
             }
-            if (dest != 0xFu)
-            {
-                const __m128 mask = destMask(dest);
-                zeroLanes = _mm_and_ps(zeroLanes, mask);
-                signLanes = _mm_and_ps(signLanes, mask);
-            }
-            accZero = _mm_or_ps(accZero, zeroLanes);
-            accSign = _mm_or_ps(accSign, signLanes);
         }
         normalized = result;
         return result;
@@ -3758,6 +3809,27 @@ struct VU1InterpreterAccess
 
     static VU1_FORCE_INLINE void clipOp(VU1Interpreter &vu, Vu1FastCtx &ctx, uint64_t cycle, __m128 fsRaw, __m128 ftRaw)
     {
+#if defined(__aarch64__) || defined(_M_ARM64)
+        uint32x4_t vfs, vft;
+        std::memcpy(&vfs, &fsRaw, 16);
+        std::memcpy(&vft, &ftRaw, 16);
+        const uint32_t wBits = vgetq_lane_u32(vft, 3);
+        const int32_t limit = (wBits & 0x7F800000u) != 0u ? static_cast<int32_t>(wBits & 0x7FFFFFFFu) : 0x007FFFFF;
+        const int32x4_t bounds = vdupq_n_s32(limit);
+        const int32x4_t s_signed = vreinterpretq_s32_u32(vfs);
+        const int32x4_t s_neg = vreinterpretq_s32_u32(veorq_u32(vfs, vdupq_n_u32(0x80000000u)));
+        const uint32x4_t gt_pos = vcgtq_s32(s_signed, bounds);
+        const uint32x4_t gt_neg = vcgtq_s32(s_neg, bounds);
+        uint32_t flags = 0u;
+        if (vgetq_lane_u32(gt_pos, 0)) flags |= (1u << 0);
+        if (vgetq_lane_u32(gt_neg, 0)) flags |= (2u << 0);
+        if (vgetq_lane_u32(gt_pos, 1)) flags |= (1u << 2);
+        if (vgetq_lane_u32(gt_neg, 1)) flags |= (2u << 2);
+        if (vgetq_lane_u32(gt_pos, 2)) flags |= (1u << 4);
+        if (vgetq_lane_u32(gt_neg, 2)) flags |= (2u << 4);
+        queueClipAt(vu, ctx, cycle, flags);
+        return;
+#else
         const uint32_t wBits = static_cast<uint32_t>(_mm_extract_ps(ftRaw, 3));
         const int32_t limit = (wBits & 0x7F800000u) != 0u ? static_cast<int32_t>(wBits & 0x7FFFFFFFu) : 0x007FFFFF;
         if (simdClipEnabled())
@@ -3784,6 +3856,7 @@ struct VU1InterpreterAccess
                 flags |= 2u << (component * 2u);
         }
         queueClipAt(vu, ctx, cycle, flags);
+#endif
     }
 
     static VU1_FORCE_INLINE uint32_t qaddr(int32_t base, int32_t imm)

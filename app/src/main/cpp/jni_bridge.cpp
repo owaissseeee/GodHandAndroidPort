@@ -540,6 +540,30 @@ Java_com_owaissseeee_godhand_NativeBridge_setAspectRatio(
     godhand_set_aspect_ratio(aspectIdx);
 }
 
+extern "C" void godhand_perf_get_tids(int32_t* out, int* count);
+extern "C" int64_t godhand_perf_get_last_work_duration();
+
+JNIEXPORT jintArray JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_getPerformanceThreadIds(
+    JNIEnv* env, jobject /*thiz*/)
+{
+    int32_t tids[8];
+    int count = 0;
+    godhand_perf_get_tids(tids, &count);
+    jintArray arr = env->NewIntArray(count);
+    if (count > 0) {
+        env->SetIntArrayRegion(arr, 0, count, tids);
+    }
+    return arr;
+}
+
+JNIEXPORT jlong JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_getLastFrameWorkDurationNanos(
+    JNIEnv* /*env*/, jobject /*thiz*/)
+{
+    return static_cast<jlong>(godhand_perf_get_last_work_duration());
+}
+
 static void startStdoutStderrRedirect() {
     static std::atomic<bool> s_started{false};
     if (s_started.exchange(true)) return;

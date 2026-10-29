@@ -830,9 +830,11 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     }
     setEnv("GODHAND_SCREEN_ASPECT", std::to_string(screenAspect));
     setEnv("GODHAND_ASPECT_RATIO_IDX", std::to_string(aspectIdx));
-    // Never use VSYNC="2" (double-VBlank FIFO block) on Android: it drops 58 FPS straight to 30 FPS!
-    setEnv("PS2X_PCSX2_VSYNC", "0");
-    setEnv("PS2X_VSYNC", "0");
+    // Standard VSYNC="1" (FIFO present mode) on Android: matches display refresh rate without starving BLASTBufferQueue
+    setDefaultEnv("PS2X_PCSX2_VSYNC", "1");
+    setDefaultEnv("PS2X_VSYNC", "1");
+    setDefaultEnv("PS2X_GS_POLL_CYCLES", "1024");
+    setDefaultEnv("PS2X_VU1_FAST_NOFLAGS", "1");
     // aspectIdx: 0 = 16:9, 1 = 4:3, 2 = Full Screen (fill device display)
     const char* stretchVal = (aspectIdx == 1) ? "0" : (aspectIdx == 2) ? "2" : "1";
     setEnv("PS2X_PCSX2_STRETCH", stretchVal);
@@ -886,10 +888,12 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
 
     setDefaultEnv("PS2X_GS_SHADER_CACHE_DIR", (cacheDir / "gs_shaders").string());
     setDefaultEnv("PS2X_SIO2_RECV1", "2");
-    setDefaultEnv("PS2X_AUDIO_STRETCH", "0");
+    setDefaultEnv("PS2X_AUDIO_STRETCH", "1");
+    setDefaultEnv("PS2X_IOP_THREAD", "1");
     setDefaultEnv("PS2X_MTVU", "1");
     setDefaultEnv("PS2X_MTVU_VBLANK_WAIT", "0");
     setDefaultEnv("PS2X_GS_ASYNC_PRESENT", "1");
+    setDefaultEnv("PS2X_GS_ASYNC_READBACK", "all");
     setDefaultEnv("PS2X_PGS_COALESCE", "1");
     setDefaultEnv("PS2X_VU0_LEAN", "1");
     ps2x::asyncvif::setDefaultEnabled(true);

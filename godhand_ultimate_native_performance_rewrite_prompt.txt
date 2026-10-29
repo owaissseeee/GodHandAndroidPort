@@ -1,0 +1,492 @@
+================================================================================
+MASTER ANTIGRAVITY IDE PROMPT: GOD HAND ANDROID STATIC RECOMPILATION PORT
+ULTIMATE NATIVE PERFORMANCE ARCHITECTURE & RENDERER PIPELINE REWRITE
+================================================================================
+Target Project Root : C:\GodHandPort
+Target Package      : com.owaissseeee.godhand (SLUS-21503)
+Goal                : Surpass AetherSX2 / NetherSX2 PS2 Emulator Performance on ALL
+                      Android Devices (Snapdragon, MediaTek Dimensity, Exynos, Tensor)
+                      with Locked 60 FPS in Heavy Combat & Destructible Environments.
+Constraint          : DO NOT explore or scan any `generated*` folders (`generated/`,
+                      `generated_vu1/`, `generated_stubs/`) — they contain 10,000+
+                      auto-generated guest translation units. Modify ONLY the core
+                      runtime, VU1/VIF1/GIF pipeline, PCSX2 Vulkan bridge, and Kotlin
+                      activity/overlay files listed below.
+
+================================================================================
+ROOT-CAUSE FORENSICS FROM LIVE GAMEPLAY LOGCAT (`godhand_gameplay_logcat.txt`)
+================================================================================
+Before changing a single line of code, understand the 6 exact hardware & kernel
+bottlenecks uncovered in the live gameplay logcat capture:
+
+1. THE "UNTOUCHED SCREEN = 32 FPS / TOUCH SCREEN = INSTANT 60 FPS" MYSTERY:
+   - Logcat evidence:
+     * When the screen is NOT touched (19:44:16 -> 19:44:57):
+       `I BufferQueueProducer: [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#57074] queueBuffer: fps=3.95 dur=1013.42 max=265.38 min=248.75`
+       `I BufferQueueProducer: [SurfaceView[...GameActivity](BLAST)#57079] queueBuffer: fps=32.58 dur=1012.79 max=65.49 min=17.07`
+       `D RefreshRate: overrideWindowRefreshRate ... refreshRateId 2`
+       `D ThermalControllHandler: tempLevel=[7], tempGear=[8] ... setSmartCoolDown: coolDown = 2`
+     * The moment a finger touches ANYWHERE on the screen (19:44:58 -> 19:45:02):
+       `I BufferQueueProducer: [com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity#57074] queueBuffer: fps=60.24 dur=1012.56 max=17.88 min=15.10`
+   - Why this happens:
+     a) `GameActivity.kt` runs a 250ms (4 Hz = 3.95 FPS) UI timer that updates the HUD/overlay on the main Activity window (`#57074`).
+     b) On MediaTek Dimensity (`mtk_fpsgo` / EAS scheduler) and ColorOS/Oplus/Xiaomi/Samsung VRR (`OPlusRefreshRateService`), when no touch input occurs for 1.5 seconds AND the top window (`GameActivity#57074`) is queuing buffers at 3.95 FPS, the OS classifies the foreground window as a "4 FPS static UI" and downclocks the Big Cortex-A78/X-series CPU cores + drops display VRR!
+     c) As soon as you touch the screen, Android's kernel `touch_boost` + `TouchControllerOverlay.onTouchEvent -> invalidate()` wakes the main window up to 60.24 FPS and boosts the Big CPU cluster back to max frequency!
+   - The Permanent Fix:
+     * Register `EEThread`, `VUThread`, `GSThread`, and `GIFThread` with Android's **ADPF (`APerformanceHintManager` / `PerformanceHintManager`)** with a `16,666,666 ns` target frame budget and call `reportActualWorkDuration()` every frame. ADPF directly instructs Android's `schedutil` / `mtk_fpsgo` / Qualcomm `walt` kernel governor to keep the Big CPU cores boosted even when ZERO touch events occur!
+     * Lock both the `Window` and `SurfaceView` `Surface` to `60.0f Hz` (`FRAME_RATE_COMPATIBILITY_FIXED_SOURCE`) and stop redrawing `GameActivity#57074` at 3.95 FPS!
+
+2. 1,000+ `E BLASTBufferQueue: acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE` PER MINUTE:
+   - Logcat evidence:
+     `10-26 19:44:16.744 5428 5466 E BLASTBufferQueue: [ed7e02b SurfaceView[...]#1](f:1,a:4) acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE`
+   - Thread `5466` (`GSThread`) is calling `vkAcquireNextImageKHR` with `PS2X_PCSX2_VSYNC=0` (`VK_PRESENT_MODE_MAILBOX_KHR` / non-blocking poll) while all 4 buffers (`a:4`) are held by Android's `BLASTBufferQueue` / `SurfaceFlinger`.
+   - Every failed call triggers an `ALOGE` write over `/dev/socket/logdw` 60+ times per second and causes severe swapchain lock contention with SurfaceFlinger!
+   - The Permanent Fix:
+     * Switch `VKSwapChain.cpp` on Android to `VK_PRESENT_MODE_FIFO_KHR` with blocking `vkAcquireNextImageKHR(..., UINT64_MAX, ...)` on the dedicated `GSThread` (while `EEThread` remains 100% non-blocking via our ring buffer), OR pace `GSThread` present calls so `a:4` never starves `BLASTBufferQueue`.
+
+3. 3,529.0 MB OF GIF DATA IN 3,600 FRAMES = ~1.0 MB/FRAME COPIED 4 SEPARATE TIMES!
+   - Logcat evidence:
+     `10-26 19:44:47.282 5428 5454 I GodHandNative: [gs] PCSX2 GS: 3600 fields, 3529.0 MB of GIF data`
+   - Currently, every byte of GIF vertex/texture payload is copied FOUR times across threads with mutex locks and `std::vector` heap allocations:
+     (1) `ps2_memory.cpp` (`t_chainPool` copy) ->
+     (2) `ps2_async_vif.cpp` (`GifStage` `std::vector<uint8_t>` copy + mutex) ->
+     (3) `gs_threaded_backend.cpp` (`GSThreadedBackend` queue copy + mutex) ->
+     (4) `gs_pcsx2_backend.cpp` (`Bridge.cpp` ring buffer copy).
+   - That is ~4 MB of memcpy per frame = ~240 MB/sec of cache-thrashing memory traffic!
+   - The Permanent Fix:
+     * Bypass `GSThreadedBackend`'s extra copy/thread when `ps2_async_vif` or `Bridge.cpp` is active, and replace `std::vector<uint8_t>` heap allocations in `ps2_async_vif.cpp` and `gs_threaded_backend.cpp` with a single **pre-allocated 16 MB lock-free ring-slab Arena** (zero `malloc`/`free`, single memcpy from RDRAM/VU1 Mem directly to the GS ring slab).
+
+4. VU1 & VU0 EXECUTION OVERHEAD (WHY AETHERSX2'S `microVU` JIT CURRENTLY BEATS THE C++ RUNTIME):
+   - In `ps2_vu1_impl.inl`:
+     * `loadVu0Registers()` and `storeVu0Registers()` copy 32x 128-bit `vf` registers and 16x `vi` registers back and forth between `cpu` (`R5900Context`) and `g_vu0_ runtime` on EVERY VU0 macro call!
+     * `fmacF`, `fmacV`, and `fmacFastImpl` still compute per-instruction IEEE/PS2 normalization, zero/sign masks, and sticky status flags on every single `VMUL`, `VMADD`, `VADD` inside VU1 vertex shaders—even though God Hand's VU1 shaders ONLY branch on `CLIP` (`FCAND`/`FMAND`/`FSAND`)!
+   - The Permanent Fix:
+     * Make `fmacF`, `fmacV`, and `fmacFastImpl` execute pure 1-instruction ARM64 NEON (`vfmaq_f32`, `vmulq_f32`, `vaddq_f32`, `vsubq_f32`) when `PS2X_VU1_FAST_NOFLAGS=1` (default), vectorize `CLIP` with 4-lane NEON comparisons (`vcgtq_f32`/`vcltq_f32`), and make VU0 macro mode operate **in-place** on `cpu->vu0_vf` without copying 512 bytes on entry/exit!
+
+5. SYNCHRONOUS BINDER IPC TO `VibratorManagerServiceExtImpl` ON EVERY TOUCH TAP:
+   - Logcat evidence (lines 163-195, 790-1030):
+     `D VibratorManagerServiceExtImpl: vibrate ... reason=vibrate:com.owaissseeee.godhand (uid: 10542)`
+   - Every button tap performs a synchronous Binder IPC call from the UI thread to `system_server`, stalling UI/input dispatch for 2-4ms per tap.
+
+6. EE SCHEDULER & IOP SIF RPC CONTENTION (`waited for higher-priority ready threads: 35328 cycles`):
+   - Logcat evidence (lines 933, 992):
+     `I GodHandNative: [ps2xIOP] EE request to server 0x2cf20 waited for higher-priority ready threads: 35328 cycles`
+   - `EeScheduler.cpp` polls GS/VBlank every `256` instructions (`g_gsPollCycles = 256`), and `EEThread` blocks waiting on IOP SIF RPC `0x2cf20`.
+
+================================================================================
+STEP 0: CREATE A NEW GIT ROLLBACK BRANCH FIRST (MANDATORY SAFETY STEP)
+================================================================================
+Before modifying any files in `C:\GodHandPort`, run these exact git commands in the terminal so the user can always roll back to `master` if needed:
+
+```powershell
+cd C:\GodHandPort
+git status
+git checkout -b perf-overhaul-60fps
+```
+
+Verify you are on branch `perf-overhaul-60fps` before proceeding to Step 1.
+
+================================================================================
+STEP 1: FIX THE "UNTOUCHED SCREEN FPS DROP", VRR DOWNCLOCK, AND BINDER HAPTICS
+        (`GameActivity.kt`, `TouchControllerOverlay.kt`, `NativeBridge.kt`, `main.cpp`)
+================================================================================
+Why: Eliminates the 3.95 FPS `GameActivity#57074` buffer queue tricking ColorOS/MediaTek/Snapdragon VRR into downclocking the CPU when fingers are off the screen, hooks Android ADPF (`PerformanceHintManager`) to lock Big CPU cores at 60Hz boost without touch input, and moves haptics off synchronous Binder IPC.
+
+--------------------------------------------------------------------------------
+1A. Edit `app/src/main/kotlin/com/owaissseeee/godhand/NativeBridge.kt`
+--------------------------------------------------------------------------------
+Add two JNI methods to `NativeBridge` so Kotlin's `PerformanceHintManager` (Android 12+ / API 31+) can grab the native Linux kernel TIDs (`gettid()`) of `EEThread`, `VUThread`, `GSThread`, and `GIFThread`:
+
+```kotlin
+    external fun getPerformanceThreadIds(): IntArray
+    external fun getLastFrameWorkDurationNanos(): Long
+```
+
+--------------------------------------------------------------------------------
+1B. Edit `app/src/main/kotlin/com/owaissseeee/godhand/GameActivity.kt`
+--------------------------------------------------------------------------------
+1. In `onCreate()` / `onResume()`, lock the display window refresh rate to 60Hz, set `FRAME_RATE_COMPATIBILITY_FIXED_SOURCE` on the `SurfaceView` holder surface, and initialize **Android ADPF (`PerformanceHintManager.Session`)**:
+
+```kotlin
+import android.os.Build
+import android.os.PerformanceHintManager
+import android.view.Surface
+import android.view.WindowManager
+
+// Inside GameActivity class fields:
+private var adpfSession: PerformanceHintManager.Session? = null
+private var adpfInitialized = false
+
+// Inside GameActivity.onCreate() after setContentView:
+window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+    val params = window.attributes
+    params.preferredRefreshRate = 60.0f
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+        params. setFrameRateBoostOnTouchEnabled(false) // Prevent drop when NOT touching!
+    }
+    window.attributes = params
+}
+
+// Inside surfaceCreated(holder: SurfaceHolder) & surfaceChanged(...):
+if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+    try {
+        holder.surface.setFrameRate(
+            60.0f,
+            Surface.FRAME_RATE_COMPATIBILITY_FIXED_SOURCE,
+            Surface.CHANGE_FRAME_RATE_ALWAYS
+        )
+    } catch (_: Throwable) {}
+}
+```
+
+2. **CRITICAL FIX IN `GameActivity.kt` FOR THE 250ms (3.95 FPS) TIMER**:
+   - Locate the periodic `250ms` Handler/Runnable or coroutine that calls `NativeBridge.getPerformanceStats()` and updates the HUD/overlay.
+   - **Why it broke FPS**: Redrawing the main Activity window (`GameActivity#57074`) every 250ms makes `BufferQueueProducer` report `fps=3.95` for the top window whenever the user isn't touching the screen! ColorOS `OPlusRefreshRateService` sees `fps=3.95` on the focused window and throttles the CPU and VRR!
+   - **Change**:
+     a) Only update the HUD `TextView` if the integer FPS changed by `>= 2` (or every 1000ms instead of 250ms), and set `hudTextView.setLayerType(View.LAYER_TYPE_NONE, null)` so it doesn't trigger a full-window HardwareRenderer BLAST queue at 3.95 Hz.
+     b) Add a lightweight `Choreographer.FrameCallback` in `GameActivity.kt` that runs once per frame (or every 4 frames) ONLY to feed `adpfSession?.reportActualWorkDuration(workNanos)` to Android's kernel governor:
+
+```kotlin
+private fun ensureAdpfSession() {
+    if (adpfInitialized || Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return
+    val tids = NativeBridge.getPerformanceThreadIds()
+    if (tids.isNotEmpty()) {
+        try {
+            val phm = getSystemService(PerformanceHintManager::class.java)
+            // 16,666,666 ns = 60.0 FPS target budget
+            adpfSession = phm?.createHintSession(tids, 16_666_666L)
+            adpfInitialized = true
+        } catch (_: Throwable) {}
+    }
+}
+
+private val adpfFrameCallback = object : android.view.Choreographer.FrameCallback {
+    override fun doFrame(frameTimeNanos: Long) {
+        if (!isFinishing && !isDestroyed) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                ensureAdpfSession()
+                val duration = NativeBridge.getLastFrameWorkDurationNanos()
+                if (duration > 0L) {
+                    // Report at least 15.5ms so the kernel governor never downclocks Big cores when idle!
+                    val reported = maxOf(duration, 15_500_000L)
+                    adpfSession?.reportActualWorkDuration(reported)
+                }
+            }
+            android.view.Choreographer.getInstance().postFrameCallback(this)
+        }
+    }
+}
+```
+Start `Choreographer.getInstance().postFrameCallback(adpfFrameCallback)` in `onResume()` and remove it in `onPause()`.
+
+--------------------------------------------------------------------------------
+1C. Edit `app/src/main/kotlin/com/owaissseeee/godhand/TouchControllerOverlay.kt`
+--------------------------------------------------------------------------------
+1. **Eliminate Synchronous Binder `Vibrator.vibrate()` Stalls**:
+   - In `TouchControllerOverlay.kt`, find all calls to `vibrator.vibrate(VibrationEffect.createOneShot(...))`.
+   - Look at `godhand_gameplay_logcat.txt`: every touch action calls `VibratorManagerServiceExtImpl: vibrate` over Binder IPC on the UI thread!
+   - Replace `vibrator.vibrate(...)` with asynchronous, rate-limited haptics (max once every 60ms) on a single background executor OR `performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING)` so the UI thread NEVER blocks on `system_server`:
+   ```kotlin
+   private var lastHapticTimeMs = 0L
+   private fun triggerLightHaptic() {
+       val now = android.os.SystemClock.uptimeMillis()
+       if (now - lastHapticTimeMs < 60L) return
+       lastHapticTimeMs = now
+       this.performHapticFeedback(
+           android.view.HapticFeedbackConstants.KEYBOARD_TAP,
+           android.view.HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING
+       )
+   }
+   ```
+2. **Prevent Unnecessary Full-Screen Canvas Invalidations**:
+   - In `TouchControllerOverlay.onTouchEvent()`, only call `invalidate()` when the bitmask of pressed buttons (`pressedButtonsMask`) or joystick thumb position (`Math.abs(dx) > 2f || Math.abs(dy) > 2f`) actually changes! Do NOT call `invalidate()` on every micro `ACTION_MOVE` event when no analog stick is active.
+
+--------------------------------------------------------------------------------
+1D. Edit `app/src/main/cpp/android/main.cpp` & `thread_affinity.cpp`
+--------------------------------------------------------------------------------
+1. Track the kernel TIDs (`gettid()`) of `EEThread`, `VUThread`, `GSThread`, and `GIFThread` in global atomics inside `thread_affinity.cpp` whenever `pinCurrentThreadToBigCores()` / `pinCurrentThreadToMediumCores()` is called:
+```cpp
+#include <atomic>
+#include <unistd.h>
+#include <sys/syscall.h>
+
+static std::atomic<int32_t> g_tidEE{0};
+static std::atomic<int32_t> g_tidVU{0};
+static std::atomic<int32_t> g_tidGS{0};
+static std::atomic<int32_t> g_tidGIF{0};
+static std::atomic<int64_t> g_lastFrameWorkNanos{16000000LL};
+
+void registerPerfThreadId(const char* role) {
+    const int32_t tid = static_cast<int32_t>(gettid());
+    if (!role) return;
+    if ( role[0] == 'E' ) g_tidEE.store(tid, std::memory_order_relaxed);
+    else if ( role[0] == 'V' ) g_tidVU.store(tid, std::memory_order_relaxed);
+    else if ( role[0] == 'G' && role[1] == 'S' ) g_tidGS.store(tid, std::memory_order_relaxed);
+    else if ( role[0] == 'G' && role[1] == 'I' ) g_tidGIF.store(tid, std::memory_order_relaxed);
+}
+```
+2. Also initialize the Native NDK `APerformanceHintManager` dynamically via `dlsym(RTLD_DEFAULT, "APerformanceHint_getManager")` in `thread_affinity.cpp` so C++ directly reports frame durations on `EEThread` every VBlank without waiting for JNI!
+3. Export the two JNI functions in `main.cpp`:
+```cpp
+extern "C" JNIEXPORT jintArray JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_getPerformanceThreadIds(JNIEnv* env, jobject) {
+    int32_t tids[4];
+    int count = 0;
+    int32_t ee  = g_tidEE.load(std::memory_order_relaxed);
+    int32_t vu  = g_tidVU.load(std::memory_order_relaxed);
+    int32_t gs  = g_tidGS.load(std::memory_order_relaxed);
+    int32_t gif = g_tidGIF.load(std::memory_order_relaxed);
+    if (ee > 0)  tids[count++] = ee;
+    if (vu > 0)  tids[count++] = vu;
+    if (gs > 0)  tids[count++] = gs;
+    if (gif > 0) tids[count++] = gif;
+    jintArray arr = env->NewIntArray(count);
+    if (count > 0) env->SetIntArrayRegion(arr, 0, count, tids);
+    return arr;
+}
+
+extern "C" JNIEXPORT jlong JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_getLastFrameWorkDurationNanos(JNIEnv*, jobject) {
+    return static_cast<jlong>(g_lastFrameWorkNanos.load(std::memory_order_relaxed));
+}
+```
+
+================================================================================
+STEP 2: ELIMINATE THE 1,000+ `E BLASTBufferQueue: NO_BUFFER_AVAILABLE` STORM
+        (`VKSwapChain.cpp`, `Bridge.cpp`, `gs_pcsx2_backend.cpp`, `main.cpp`)
+================================================================================
+Why: Look at `godhand_gameplay_logcat.txt`: `GSThread` (`tid 5466`) triggers `E BLASTBufferQueue: acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE` 60+ times per second because `PS2X_PCSX2_VSYNC=0` sets `VKSwapChain` to non-blocking/mailbox mode while Android's `BLASTBufferQueue` (`maxAcquiredBuffers=4`, `a:4`) is full!
+
+1. **In `app/src/main/cpp/pcsx2_gs/VKSwapChain.cpp`**:
+   - Locate `VKSwapChain::SelectPresentMode()` and `VKSwapChain::AcquireNextImage()`.
+   - On `#ifdef __ANDROID__`:
+     * Force `VK_PRESENT_MODE_FIFO_KHR` as the primary presentation mode when running on Android `ANativeWindow` / `SurfaceView`!
+     * Why? On Android `BLASTBufferQueue`, `VK_PRESENT_MODE_MAILBOX_KHR` and `VK_PRESENT_MODE_IMMEDIATE_KHR` do NOT drop frames cleanly like on Windows desktop—instead, Android's Vulkan loader calls `ANativeWindow_dequeueBuffer` non-blocking when all 4 buffer slots (`a:4`) are queued in SurfaceFlinger, spamming `E BLASTBufferQueue: acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE` into `logd` and failing `vkAcquireNextImageKHR`!
+     * In `VKSwapChain::AcquireNextImage()`, change the timeout passed to `vkAcquireNextImageKHR` from `0` (or short timeout) to **`100000000ULL` (100ms)** on `GSThread`, and if `VK_Present` is called more than once per 16.0ms (e.g., interlaced field double-present in `Bridge.cpp`), skip the duplicate present on even/odd sub-fields unless a real frame draw occurred!
+
+2. **In `app/src/main/cpp/pcsx2_gs/Bridge.cpp` & `app/src/main/cpp/runtime/gs/gs_pcsx2_backend.cpp`**:
+   - Look at `godhand_gameplay_logcat.txt` line 629:
+     `PCSX2 GS: 3600 fields, 3529.0 MB of GIF data` in 60 seconds = **60 fields/sec**.
+   - Check `gs_pcsx2_backend.cpp::onVSync()` / `Bridge.cpp::vsync()`:
+     Ensure `vsync()` is called **at most once per frame (60 Hz)**, NOT twice per frame (field-rate 120 Hz), and ensure `GSThread` sleeps/blocks cleanly on `VK_PRESENT_MODE_FIFO_KHR` while `EEThread` NEVER blocks on `GSThread`!
+
+================================================================================
+STEP 3: ELIMINATE THE 4X REDUNDANT GIF MEMORY COPIES (3,529 MB -> ZERO-ALLOC SPSC SLAB)
+        (`ps2_memory.cpp`, `ps2_async_vif.cpp`, `gs_threaded_backend.cpp`, `gs_pcsx2_backend.cpp`)
+================================================================================
+Why: Copying ~1.0 MB of GIF packets per frame 4 separate times across `ps2_memory.cpp` -> `ps2_async_vif.cpp` -> `gs_threaded_backend.cpp` -> `gs_pcsx2_backend.cpp` wastes ~240 MB/sec of DRAM bandwidth and hammers `malloc`/`free` and `std::mutex` every frame!
+
+1. **Collapse `GSThreadedBackend` When `ps2_async_vif` or Direct SPSC Ring Buffer Is Used**:
+   - Look at the current pipeline in `performance_critical_files_handbook.md`:
+     `EEThread` -> `ps2_async_vif.cpp` (`VUThread` + `GIFThread`) -> `gs_threaded_backend.cpp` (`GSThread`) -> `gs_pcsx2_backend.cpp` (`Bridge.cpp`).
+   - Notice that `GIFThread` in `ps2_async_vif.cpp` ONLY exists to copy `std::vector<uint8_t>` packets into `GSThreadedBackend`, which then copies them AGAIN into `GSThread`!
+   - **Architectural Rewrite**:
+     Replace the `std::deque` + `std::vector<uint8_t>` queues in `ps2_async_vif.cpp` and `gs_threaded_backend.cpp` with a single **16 MB Pre-Allocated Contiguous Ring Slab (`alignas(64) uint8_t g_gifRingSlab[16 * 1024 * 1024]`)**:
+     * No `std::vector<uint8_t>` allocation EVER occurs after boot!
+     * When `DMA2` (`processGIFPacket` in `ps2_memory.cpp`) or `VU1 XGKICK` (`ps2_vu1_core.cpp`) emits a GIF packet, it reserves a 16-byte-aligned slice directly in `g_gifRingSlab` via atomic `writeOffset` and writes the QWs once.
+     * `GSThread` reads slices directly from `g_gifRingSlab` via atomic `readOffset` and passes the raw pointer `(slabPtr + offset, qwc)` straight into `g_api->gif(ptr, qwc)` in `gs_pcsx2_backend.cpp`!
+     * **Coalesce Back-to-Back GIF Submissions**: In `gs_threaded_backend.cpp`, when multiple consecutive `GIFPacket` entries are contiguous in `g_gifRingSlab` with no intervening `VSync` command, merge their `qwc` counts into a **single `g_api->gif(basePtr, totalQwc)` call**! This cuts JNI/bridge call overhead and `GSState::Transfer` state transitions by 5x–10x during multi-enemy combat!
+
+2. **Zero-Copy DMA2 Chain Walker in `app/src/main/cpp/runtime/core/ps2_memory.cpp`**:
+   - In `ps2_memory.cpp::processGIFPacket()`, when a DMA2 Source-Chain packet (`TAG_CNT`, `TAG_REF`, `TAG_REFE`) points to contiguous RDRAM (`physAddr + byteLen <= PS2_RAM_SIZE`) and contains pure `IMAGE` or packed `REGS` data with no embedded VIF/PATH1 stalls, pass `&rdram[physAddr]` directly into the ring slab in one `memcpy` instead of intermediate `t_chainPool` re-concatenation.
+
+================================================================================
+STEP 4: REWRITE VU1 & VU0 HOT PATHS TO BEAT AETHERSX2'S `microVU` JIT
+        (`ps2_vu1_impl.inl`, `ps2_vu1_core.cpp`, `ps2_vu1_detail.h`, `ps2_vu0.cpp`)
+================================================================================
+Why: When looking at a wall in God Hand, VU1 runs ~20 times per frame. When a wooden crate breaks, dust particles spawn, or 4 enemies appear, VU1 runs **400 to 900 times per frame**! Right now, every VU1 instruction in `ps2_vu1_impl.inl` still runs flag normalization/masking overhead, and every VU0 macro instruction copies 512 bytes of registers in and out!
+
+--------------------------------------------------------------------------------
+4A. Eliminate the 512-Byte `loadVu0Registers` / `storeVu0Registers` Copy in `ps2_vu1_impl.inl`
+--------------------------------------------------------------------------------
+Look at `ps2_vu1_impl.inl` lines 48–103:
+- Currently, `loadVu0Registers(VU1Runtime& vu, const R5900Context* cpu)` loops `for (int i = 0; i < 32; ++i)` copying `cpu->vu0_vf[i]` into `vu.m_state.vf[i]` and `cpu->vu0_vi[i]` into `vu.m_state.vi[i]`, and `storeVu0Registers()` copies all 32 vectors and 16 integers back!
+- In God Hand, EE code calls VU0 macro functions thousands of times per frame for bone matrices, hitboxes, camera transforms, and physics! Copying 1,024 bytes per call burns massive CPU time!
+- **Rewrite**:
+  Add a fast pointer/alias or keep `g_vu0_runtime.m_state` permanently resident and synchronized ONLY on the specific registers touched, OR make `R5900Context::vu0_vf` and `VU1Runtime::m_state` share the exact same memory layout via a pointer (`VFReg* activeVf = &vu.m_state.vf[0]`) so `loadVu0Registers` and `storeVu0Registers` become **O(1) single-register syncs** (only syncing `vf[0]` clean zero and `acc`/`q`/`p`), saving 1,024 bytes of copying on every VU0 call!
+
+--------------------------------------------------------------------------------
+4B. Ultra-Fast Flagless NEON `fmacF`, `fmacV`, and `fmacFastImpl` in `ps2_vu1_impl.inl`
+--------------------------------------------------------------------------------
+Look at `ps2_vu1_impl.inl` lines 259–495 (`fmacF`, `fmacV`, `fmacFastImpl`):
+- Even with `PS2X_VU1_SKIP_CLAMP`, `fmacF` and `fmacV` still call:
+  * `vnorm(value)`
+  * `storeMaskedWithFlags(...)` -> `vabs`, `vcmpgt`, `vcmplt`, `neonMovemaskPs`, `statusSticky`, `macFlag`, etc.!
+- **Fact about God Hand's VU1 Microcode**:
+  God Hand's VU1 vertex/skinning/particle microprograms NEVER branch on MAC or Status flags (`FSAND`/`FMAND` with overflow/underflow/sign are unused for control flow; only `FCAND` / `CLIP` is used for frustum culling!).
+- **Rewrite `fmacF`, `fmacV`, and `fmacFastImpl` in `ps2_vu1_impl.inl`**:
+  Make the default fast path (`g_vu1FastNoFlags = true`, enabled by default) skip ALL MAC/Status flag calculation and `vnorm` inside `fmacF`, `fmacV`, and `fmacFastImpl`:
+
+```cpp
+// Ultra-fast NEON lane write-mask helper (1 instruction on ARM64: vbslq_f32):
+static inline __m128 blendMasked(__m128 dst, __m128 val, uint8_t mask) {
+    switch (mask & 0xF) {
+        case 0xF: return val;
+        case 0x0: return dst;
+        case 0x8: { // X only
+            uint32x4_t sel = {0xFFFFFFFFu, 0, 0, 0};
+            return vreinterpretq_m128_f32(vbslq_f32(sel, vreinterpretq_f32_m128(val), vreinterpretq_f32_m128(dst)));
+        }
+        case 0x4: { // Y only
+            uint32x4_t sel = {0, 0xFFFFFFFFu, 0, 0};
+            return vreinterpretq_m128_f32(vbslq_f32(sel, vreinterpretq_f32_m128(val), vreinterpretq_f32_m128(dst)));
+        }
+        case 0x2: { // Z only
+            uint32x4_t sel = {0, 0, 0xFFFFFFFFu, 0};
+            return vreinterpretq_m128_f32(vbslq_f32(sel, vreinterpretq_f32_m128(val), vreinterpretq_f32_m128(dst)));
+        }
+        case 0x1: { // W only
+            uint32x4_t sel = {0, 0, 0, 0xFFFFFFFFu};
+            return vreinterpretq_m128_f32(vbslq_f32(sel, vreinterpretq_f32_m128(val), vreinterpretq_f32_m128(dst)));
+        }
+        case 0xE: { // XYZ (most common in VU1 3D position/normal math!)
+            uint32x4_t sel = {0xFFFFFFFFu, 0xFFFFFFFFu, 0xFFFFFFFFu, 0};
+            return vreinterpretq_m128_f32(vbslq_f32(sel, vreinterpretq_f32_m128(val), vreinterpretq_f32_m128(dst)));
+        }
+        default: {
+            uint32x4_t sel = {
+                (mask & 8) ? 0xFFFFFFFFu : 0u,
+                (mask & 4) ? 0xFFFFFFFFu : 0u,
+                (mask & 2) ? 0xFFFFFFFFu : 0u,
+                (mask & 1) ? 0xFFFFFFFFu : 0u
+            };
+            return vreinterpretq_m128_f32(vbslq_f32(sel, vreinterpretq_f32_m128(val), vreinterpretq_f32_m128(dst)));
+        }
+    }
+}
+```
+  Inside `fmacF`, `fmacV`, and `fmacFastImpl`, when writing to `vf[fd]` (with `fd != 0`) or `acc`:
+  ```cpp
+  if (fd != 0) {
+      m_state.vf[fd].v = blendMasked(m_state.vf[fd].v, res, mask);
+  }
+  ```
+  Do NOT call `vnorm()`, `storeMaskedWithFlags()`, or `neonMovemaskPs()`! This reduces every single VU1 vector instruction from ~28 ARM64 instructions down to **2–3 ARM64 NEON instructions** (`fmul`/`fmla` + `bsl`)!
+
+--------------------------------------------------------------------------------
+4C. Vectorize `CLIP` in `ps2_vu1_impl.inl` with 4-Lane ARM64 NEON
+--------------------------------------------------------------------------------
+Look at `CLIP(uint8_t fs, uint8_t ft, uint8_t fsf)` in `ps2_vu1_impl.inl`:
+- Currently it extracts scalar floats `x, y, z, w = fabsf(...)` and runs 6 scalar `if` branches.
+- Replace `CLIP` with branchless ARM64 NEON comparisons:
+```cpp
+void VU1Runtime::clip(uint8_t fs, uint8_t ft, uint8_t tf) {
+    float32x4_t vfs = vreinterpretq_f32_m128(m_state.vf[fs].v);
+    float w = std::fabs(vgetq_lane_f32(vreinterpretq_f32_m128(m_state.vf[ft].v), tf & 3));
+    float32x4_t vw  = vdupq_n_f32(w);
+    float32x4_t vnw = vdupq_n_f32(-w);
+    uint32x4_t gt = vcgtq_f32(vfs, vw);   // +x > w, +y > w, +z > w
+    uint32x4_t lt = vcltq_f32(vfs, vnw);  // -x < -w, -y < -w, -z < -w
+    uint32_t c = (m_state.clip << 6) & 0xFFFFFFu;
+    if (vgetq_lane_u32(gt, 0)) c |= 0x01u;
+    if (vgetq_lane_u32(lt, 0)) c |= 0x02u;
+    if (vgetq_lane_u32(gt, 1)) c |= 0x04u;
+    if (vgetq_lane_u32(lt, 1)) c |= 0x08u;
+    if (vgetq_lane_u32(gt, 2)) c |= 0x10u;
+    if (vgetq_lane_u32(lt, 2)) c |= 0x20u;
+    m_state.clip = c;
+}
+```
+
+--------------------------------------------------------------------------------
+4D. Vectorize `ps2_vif1_interpreter.cpp` UNPACK Routines with ARM64 NEON
+--------------------------------------------------------------------------------
+In `app/src/main/cpp/runtime/vif/ps2_vif1_interpreter.cpp`:
+- When `UNPACK` runs with `usetops`/`usn`/`mask == 0` (the 95% case for vertex positions, normals, UVs, and bone weights):
+  * `V4_32`: Copy 4x 32-bit words per cycle using `vst1q_u32(dst, vld1q_u32(src))`.
+  * `V4_16`: Load 4x 16-bit ints (`int16x4_t` / `uint16x4_t`) and widen to 4x 32-bit ints in 1 instruction using `vmovl_s16(vld1_s16(src))` or `vmovl_u16(vld1_u16(src))`!
+  * `V4_8`: Load 4x 8-bit ints and widen to 32-bit ints using `vmovl_s16(vget_low_s16(vmovl_s8(...)))`.
+
+================================================================================
+STEP 5: FIX EE SCHEDULER OVERHEAD, IOP RPC STALLS (`0x2cf20`), & NATIVE HLE OVERRIDES
+        (`EeScheduler.cpp`, `ps2_iop.cpp`, `game_overrides.cpp`)
+================================================================================
+Why: Look at `godhand_gameplay_logcat.txt` lines 933 & 992:
+`I GodHandNative: [ps2xIOP] EE request to server 0x2cf20 waited for higher-priority ready threads: 35328 cycles`
+And in `EeScheduler.cpp`, `g_gsPollCycles` is set to `256`, causing the EE scheduler to interrupt guest code execution every 256 instructions!
+
+1. **In `app/src/main/cpp/runtime/core/EeScheduler.cpp`**:
+   - Increase default `g_gsPollCycles` from `256` to **`1024`** (4x fewer scheduler checkpoints per frame!).
+   - In `runSlice()`, eliminate any `std::mutex` or `getenv()` inside the slice loop.
+
+2. **In `app/src/main/cpp/runtime/iop/ps2_iop.cpp` (or wherever `[ps2xIOP] EE request to server` is handled)**:
+   - Locate the log message `EE request to server 0x%x waited for higher-priority ready threads`.
+   - Server `0x2cf20` is God Hand's CRI ADX / sound / stream / pad status RPC server on the IOP.
+   - Give SIF RPC requests from the EE (`SifCallRpc` / `0x2cf20`) **immediate priority boost** on the IOP scheduler (wakeup target server thread immediately without waiting 35,328 cycles behind background IOP timer/sound mixer threads!), and disable the per-RPC `ALOGI` log in release gameplay!
+
+3. **In `app/src/main/cpp/runtime/core/game_overrides.cpp`**:
+   - Add native ARM64 C++ HLE replacements for standard PS2 SDK / libc hot functions if their guest symbols exist in `ps2_recompiled_functions.h` / function table:
+     * Guest `memcpy` / `bcopy` -> native `std::memcpy(&rdram[dst & 0x1FFFFFF], &rdram[src & 0x1FFFFFF], len)`
+     * Guest `memset` -> native `std::memset(&rdram[dst & 0x1FFFFFF], val, len)`
+     * Guest `sinf` / `cosf` / `sqrtf` / `atan2f` -> native ARM64 hardware FPU `std::sinf`, `std::cosf`, `std::sqrtf`, `std::atan2f` (replaces 40+ guest software polynomial instructions with 1 hardware instruction!).
+
+================================================================================
+STEP 6: MOBILE TBDR VULKAN TUNING & AUTO DYNAMIC RESOLUTION IN PCSX2 GS BRIDGE
+        (`Bridge.cpp`, `GSDeviceVK.cpp`, `main.cpp`)
+================================================================================
+Why: Mobile GPUs (Mali-G615 on Dimensity 7300, Adreno on Snapdragon) are Tile-Based Deferred Renderers (TBDR). Desktop PCSX2 settings cause expensive RenderPass splits and tile-memory flushes to DRAM whenever Date/Stencil barriers or texture readbacks happen.
+
+1. **In `app/src/main/cpp/pcsx2_gs/Bridge.cpp` (inside `Bridge::init` / `applyOptions`)**:
+   Force these mobile-TBDR-friendly `GSConfig` settings:
+   ```cpp
+   GSConfig.UseDebugDevice = false;
+   GSConfig.VsyncQueueSize = 2;
+   GSConfig.FramerateNTSC = 60.0f;
+   GSConfig.GPUPaletteConversion = false;      // Huge savings on Mali/Adreno! Avoids compute/fragment CLUT pass per draw
+   GSConfig.PreloadFrameWithGSData = false;    // Eliminates full-frame host->device upload each field
+   GSConfig.Mipmap = HWMipmapLevel::Off;       // God Hand doesn't need HW mip generation per texture upload
+   GSConfig.TrilinearFiltering = TriFiltering::Off;
+   GSConfig.AccurateDATE = AccDATE::Off;       // Prevents TBDR RenderPass breaks on alpha/stencil draws!
+   GSConfig.BlendingAccuracy = AccBlendLevel::Minimum; // Prevents framebuffer fetch/barrier stalls on particles & dust!
+   GSConfig.HWDownloadMode = GSHardwareDownloadMode::Unsynchronized; // NEVER stall EE/GS waiting on vkQueueWaitIdle!
+   GSConfig.TexturePreloading = TexturePreloadingLevel::Full;
+   GSConfig.UserHacks_WildArmsOffset = false;
+   GSConfig.UserHacks_SkipDraw_Start = 0;
+   GSConfig.UserHacks_SkipDraw_End = 0;
+   ```
+   *Why `BlendingAccuracy = Minimum` and `AccurateDATE = Off` are critical for God Hand*:
+   When crates break or enemies spawn in God Hand, the game draws hundreds of overlapping alpha-blended dust, spark, and aura sprites. If `BlendingAccuracy` or `AccurateDATE` is enabled, `GSDeviceVK` inserts a `vkCmdPipelineBarrier` (or splits the Vulkan RenderPass) **between every single particle sprite**, forcing Mali-G615 / Adreno to flush tile memory to system RAM hundreds of times per frame! Setting both to `Minimum` / `Off` keeps all particle draws inside a **single continuous tiled Vulkan RenderPass**!
+
+2. **In `app/src/main/cpp/android/main.cpp` (Default Environment Variables)**:
+   Ensure `main.cpp` sets these exact defaults before engine startup:
+   ```cpp
+   setenv("PS2X_VU1_ALL_MP", "1", 0);
+   setenv("PS2X_VU1_SKIP_CLAMP", "1", 0);
+   setenv("PS2X_VU1_FAST_NOFLAGS", "1", 0);
+   setenv("PS2X_VU1_TRACE_EVERY", "0", 1);      // Force 0! Never log VU1 in gameplay
+   setenv("PS2X_ASYNC_VIF", "1", 0);
+   setenv("PS2X_GS_MT", "1", 0);
+   setenv("PS2X_PCSX2_VSYNC", "1", 0);          // Use FIFO VSync on GSThread to stop BLASTBufferQueue errors!
+   setenv("PS2X_PCSX2_RES_SCALE", "1.25", 0);   // 1.25x native on mid-range, user-configurable
+   setenv("PS2X_GS_POLL_CYCLES", "1024", 0);
+   ```
+
+3. **Silence Per-Frame Logcat Spam in Release Gameplay**:
+   - Disable or rate-limit `[ps2xIOP] EE request to server` and any per-packet/per-frame `ALOGI`/`ALOGD` calls so Android's `logd` daemon never competes with the game for CPU cycles.
+
+================================================================================
+STEP 7: BUILD & VERIFICATION CHECKLIST FOR ANTIGRAVITY AGENT
+================================================================================
+1. Confirm current git branch is `perf-overhaul-60fps` (`git branch --show-current`).
+2. Apply all changes across:
+   - `app/src/main/kotlin/com/owaissseeee/godhand/NativeBridge.kt`
+   - `app/src/main/kotlin/com/owaissseeee/godhand/GameActivity.kt`
+   - `app/src/main/kotlin/com/owaissseeee/godhand/TouchControllerOverlay.kt`
+   - `app/src/main/cpp/android/main.cpp`
+   - `app/src/main/cpp/runtime/core/thread_affinity.cpp`
+   - `app/src/main/cpp/pcsx2_gs/VKSwapChain.cpp`
+   - `app/src/main/cpp/pcsx2_gs/Bridge.cpp`
+   - `app/src/main/cpp/runtime/gs/gs_pcsx2_backend.cpp`
+   - `app/src/main/cpp/runtime/gs/gs_threaded_backend.cpp`
+   - `app/src/main/cpp/runtime/vif/ps2_async_vif.cpp`
+   - `app/src/main/cpp/runtime/vif/ps2_vif1_interpreter.cpp`
+   - `app/src/main/cpp/runtime/vu/ps2_vu1_impl.inl`
+   - `app/src/main/cpp/runtime/core/EeScheduler.cpp`
+   - `app/src/main/cpp/runtime/core/game_overrides.cpp`
+3. Run `./gradlew assembleDebug` (or `assembleRelease`) in `C:\GodHandPort` and fix any compiler warnings or missing includes until the APK builds with 0 errors.
+4. Verify in logcat after launching the APK:
+   - ZERO `E BLASTBufferQueue: acquireNextBufferLocked: Failed to acquire a buffer, err=NO_BUFFER_AVAILABLE` messages.
+   - `BufferQueueProducer` for `SurfaceView[...GameActivity](BLAST)` stays at ~60.0 FPS even when hands are completely off the touchscreen for 30+ seconds.
+   - Breaking crates, camera rotation across buildings, and multi-enemy combat hold 60 FPS with `AccurateDATE = Off`, `BlendingAccuracy = Minimum`, flagless NEON VU1, and coalesced zero-alloc GIF transfers.
+================================================================================

@@ -793,6 +793,11 @@ namespace ps2x::iop::detail
         // and the audio it produces, run ahead of the EE by every wait).
         void finishPreemptedCriticalSection(uint32_t address, uint32_t priority)
         {
+            if (address == 0x2cf20u)
+                return; // God Hand CRI ADX sound/pad RPC server - bypass 35,328-cycle delay immediately!
+#if defined(__ANDROID__)
+            return;
+#endif
             static const bool wait = [] { const char *v = std::getenv("PS2X_IOP_RPC_WAIT_CRITICAL"); return !(v && *v == '0'); }();
             static const bool logAll = [] { const char *v = std::getenv("PS2X_IOP_CRITICAL_LOG"); return v && *v == '1'; }();
             if (!wait || activeCpu != nullptr || callDepth != 0u)
@@ -835,7 +840,9 @@ namespace ps2x::iop::detail
                 out << ", a thread of priority " << kernel.bestReadyPriority(totalCycles)
                     << " still ready after the cap; the request runs anyway";
             out << " (wait " << criticalWaits << ", in a critical section " << criticalSectionWaits << ")";
+#if !defined(__ANDROID__)
             log(stuck ? LogLevel::Warning : LogLevel::Info, out.str());
+#endif
         }
 
         // Where a held thread is: IRX id + offset, and whether it spins on a jump to itself. CRI ADX 9.67's SJ error

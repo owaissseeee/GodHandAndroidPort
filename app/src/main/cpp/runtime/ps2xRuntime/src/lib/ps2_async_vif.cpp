@@ -194,7 +194,7 @@ namespace ps2x::asyncvif
                 traceEvent('G');
                 {
                     std::lock_guard<std::mutex> lock(stage.mutex);
-                    if (stage.spare.size() < 8u)
+                    if (stage.spare.size() < 16u)
                         stage.spare.push_back(std::move(chunk));
                     stage.busy = false;
                 }

@@ -1006,20 +1006,16 @@ namespace godhand
     {
         constexpr uint32_t kFlipChainBuilder = 0x30B870u;
         constexpr uint32_t kFlickerWeight = 0x3C3CCCu;
-        const char *scaleValue = std::getenv("PS2X_GS_SCALE");
-        const int scale = scaleValue ? std::atoi(scaleValue) : 1;
-        if (scale <= 1)
-            return;
         if (!runtime.hasFunction(kFlipChainBuilder) ||
             !FunctionHooks::instance().observeEntry(kFlipChainBuilder, "hires_flip_copy", [](uint8_t *rdram, R5900Context *, PS2Runtime *) {
                 const uint32_t full = 0x80u;
                 std::memcpy(rdram + kFlickerWeight, &full, sizeof(full));
             }))
         {
-            GH_WARN(Gs, "flip chain builder 0x30b870 has no recompiled entry; the flicker filter stays on at " << scale << "x");
+            GH_WARN(Gs, "flip chain builder 0x30b870 has no recompiled entry; the flicker filter stays on");
             return;
         }
-        GH_INFO(Gs, "internal resolution " << scale << "x: flicker filter of the flip copy off (0x3c3ccc = 0x80 before 0x30b870)");
+        GH_INFO(Gs, "flicker filter of the flip copy off (0x3c3ccc = 0x80 before 0x30b870)");
     }
 
     void installGameFrameCounter(PS2Runtime &runtime)

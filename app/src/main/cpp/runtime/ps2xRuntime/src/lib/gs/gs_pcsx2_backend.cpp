@@ -35,6 +35,7 @@ typedef void* HMODULE;
 #endif
 
 #if PS2X_HAS_PCSX2_GS
+extern "C" void godhand_perf_record_work_duration(int64_t ns);
 static_assert(sizeof(GSVSyncRegs) == sizeof(Pcsx2GsPrivRegs), "GSVSyncRegs must match Pcsx2GsPrivRegs");
 
 namespace
@@ -52,8 +53,7 @@ namespace
     std::atomic<bool> g_windowChanged{false};
     std::atomic<bool> g_surfaceValid{true};
 
-    std::atomic<int> g_frameskipMode{1}; // 0=Off, 1=Auto (Skip on hitch), 2=Skip 1, 3=Skip 2
-    std::atomic<bool> g_needSkipNextFrame{false};
+    std::atomic<int> g_frameskipMode{0}; // 0=Off (Guarantees uninterrupted 60Hz/30Hz VSync signaling)
     uint32_t g_frameskipCounter = 0;
     std::atomic<float> g_pendingScale{0.0f};
     std::atomic<int> g_pendingAspect{-1};
@@ -693,53 +693,16 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
         g_api->resize(width, height);
     }
 
-    const int skipMode = g_frameskipMode.load(std::memory_order_relaxed);
-    bool shouldSkip = false;
-
-    if (skipMode == 1) // Auto: skip next present if previous frame exceeded target budget
-    {
-        if (g_needSkipNextFrame.exchange(false, std::memory_order_acq_rel))
-        {
-            shouldSkip = true;
-        }
-    }
-    else if (skipMode == 2) // Skip 1: 1 present, 1 skip (50% present rate)
-    {
-        g_frameskipCounter++;
-        if ((g_frameskipCounter & 1u) == 1u)
-        {
-            shouldSkip = true;
-        }
-    }
-    else if (skipMode == 3) // Skip 2: 1 present, 2 skip (33% present rate)
-    {
-        g_frameskipCounter++;
-        if ((g_frameskipCounter % 3u) != 0u)
-        {
-            shouldSkip = true;
-        }
-    }
-    else if (skipMode == 4) // Skip 3: 1 present, 3 skip (25% present rate - Potato Mode)
-    {
-        g_frameskipCounter++;
-        if ((g_frameskipCounter % 4u) != 0u)
-        {
-            shouldSkip = true;
-        }
-    }
-
     const auto presentStart = std::chrono::steady_clock::now();
-    if (!shouldSkip)
-    {
-        g_api->vsync(reinterpret_cast<const Pcsx2GsPrivRegs *>(&regs));
-        WriteFrameTime(presentStart);
-        g_presents.fetch_add(1u, std::memory_order_relaxed);
-    }
+    g_api->vsync(reinterpret_cast<const Pcsx2GsPrivRegs *>(&regs));
+    WriteFrameTime(presentStart);
+    g_presents.fetch_add(1u, std::memory_order_relaxed);
 
     // Accurate, zero-overhead frametime & FPS recording at physical present boundary
     const auto presentEnd = std::chrono::steady_clock::now();
     if (g_perfLastPresent.time_since_epoch().count() != 0) {
         const double deltaUs = std::chrono::duration<double, std::micro>(presentEnd - g_perfLastPresent).count();
+        godhand_perf_record_work_duration(static_cast<int64_t>(deltaUs * 1000.0));
         const float deltaMs = static_cast<float>(deltaUs / 1000.0);
         // Exclude pauses/resumes (> 250ms or < 0.1ms) from skewing hitch metrics
         if (deltaMs >= 0.1f && deltaMs <= 250.0f) {
@@ -751,13 +714,6 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
             if (deltaMs > g_perfWindowWorstMs) {
                 g_perfWindowWorstMs = deltaMs;
             }
-
-            // In Auto frameskip mode: if frame exceeded budget (e.g. > 34ms in 30fps or > 18ms in 60fps),
-            // flag the NEXT frame to skip presenting so GPU catches up immediately!
-            const float targetBudget = (g_statGameFps.load(std::memory_order_relaxed) > 45.0f) ? 18.0f : 34.0f;
-            if (deltaMs > targetBudget && skipMode == 1) {
-                g_needSkipNextFrame.store(true, std::memory_order_release);
-            }
         }
     }
     g_perfLastPresent = presentEnd;
@@ -767,17 +723,26 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
         g_perfWindowStartGameFrames = g_perfGameFrames.load(std::memory_order_relaxed);
     } else {
         const double windowSec = std::chrono::duration<double>(presentEnd - g_perfWindowStart).count();
-        if (windowSec >= 0.25) { // Refresh metrics 4 times per second
-            const float screenFps = (windowSec > 0.0) ? static_cast<float>(g_perfWindowPresents / windowSec) : 0.0f;
+        if (windowSec >= 0.5) { // Refresh metrics every 0.5s with EMA smoothing
+            const float rawScreenFps = (windowSec > 0.0) ? static_cast<float>(g_perfWindowPresents / windowSec) : 0.0f;
             const float avgMs = (g_perfWindowPresents > 0) ? (static_cast<float>(windowSec * 1000.0) / g_perfWindowPresents) : 16.67f;
             const uint64_t curGameFrames = g_perfGameFrames.load(std::memory_order_relaxed);
-            const float gameFps = (windowSec > 0.0) ? static_cast<float>((curGameFrames - g_perfWindowStartGameFrames) / windowSec) : 0.0f;
-            const float gameSpeed = (gameFps / 60.0f) * 100.0f;
+            const float rawGameFps = (windowSec > 0.0) ? static_cast<float>((curGameFrames - g_perfWindowStartGameFrames) / windowSec) : 0.0f;
 
-            g_statScreenFps.store(screenFps, std::memory_order_relaxed);
+            // Exponential moving average (EMA) filter (70% history + 30% sample):
+            // Eliminates discrete frame integer quantization (28/32 jumping) while tracking real frame shifts cleanly
+            const float prevGameFps = g_statGameFps.load(std::memory_order_relaxed);
+            const float smoothGameFps = (prevGameFps > 0.0f) ? (prevGameFps * 0.7f + rawGameFps * 0.3f) : rawGameFps;
+
+            const float prevScreenFps = g_statScreenFps.load(std::memory_order_relaxed);
+            const float smoothScreenFps = (prevScreenFps > 0.0f) ? (prevScreenFps * 0.7f + rawScreenFps * 0.3f) : rawScreenFps;
+
+            const float gameSpeed = (smoothGameFps / 60.0f) * 100.0f;
+
+            g_statScreenFps.store(smoothScreenFps, std::memory_order_relaxed);
             g_statAvgFrametimeMs.store(avgMs, std::memory_order_relaxed);
             g_statWorstFrametimeMs.store(g_perfWindowWorstMs, std::memory_order_relaxed);
-            g_statGameFps.store(gameFps, std::memory_order_relaxed);
+            g_statGameFps.store(smoothGameFps, std::memory_order_relaxed);
             g_statGameSpeed.store(gameSpeed, std::memory_order_relaxed);
 
             g_perfWindowStart = presentEnd;
