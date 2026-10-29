@@ -37,7 +37,7 @@ namespace
     void ApplyGameFixes(Pcsx2Config::GSOptions &options)
     {
         // Mobile TBDR (Mali / Adreno / Xclipse) High-Performance Zero-Barrier Configuration:
-        options.AccurateBlendingUnit = AccBlendLevel::Minimum; // Prevents renderpass breaks on overlapping particle/dust sprites
+        options.AccurateBlendingUnit = AccBlendLevel::Basic; // Enables tex-is-fb for zero-copy dash blur & explosion heat shimmer
         options.PreloadFrameWithGSData = false;
         options.GPUPaletteConversion = false;
         options.UserHacks_DisablePartialInvalidation = true; // Prevent TBDR tile splits

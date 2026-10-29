@@ -122,30 +122,29 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
     int targetNice = requestedNice;
 
     if (big_cores.size() >= 4) {
-        // 4+4 (Dimensity 7300/8100/8300/9300, Snapdragon 778G/865/870) or 1+3+4 (Snapdragon 8 Gen 1/2/3)
-        // CRITICAL: NEVER include a Little core in EE_MAIN, VU1_WORKER, or GS_RENDERER!
-        // Partition the 4 Big cores so EE, VU1, and GS never preempt each other and never touch Little cores:
+        // 4 Big cores (Cortex-A78 @ 2.5/2.6 GHz):
+        // Hardware 1-to-1 Partitioning (Zero Thread Migration, Zero L1 Cache Thrashing):
+        // Big Core 0 (cpu7): 100% Dedicated to EE_MAIN (Emotion Engine game logic)
+        // Big Core 1 (cpu6): 100% Dedicated to VU1_WORKER (Vector Unit 1 3D vertex transforms & skinning)
+        // Big Core 2 (cpu5): 100% Dedicated to GS_RENDERER (PCSX2 Vulkan Graphics Synthesizer)
+        // Big Core 3 (cpu4): 100% Dedicated to GIF_WORKER (Graphics Interface DMA transfers)
+        // Little Cores (cpu0-3): Audio SPU2, Host window pump, touch input, OS background threads
         switch (role) {
             case ThreadRole::EE_MAIN:
-                // Prefer Big Core 0 & 1, allow all Big cores
-                for (int bc : big_cores) CPU_SET(bc, &mask);
+                CPU_SET(big_cores[0], &mask);
                 targetNice = -20;
                 break;
             case ThreadRole::VU1_WORKER:
-                // All Big cores (EAS places VU1 on a free Big core separate from EE_MAIN)
-                for (int bc : big_cores) CPU_SET(bc, &mask);
+                CPU_SET(big_cores[1], &mask);
                 targetNice = -20;
                 break;
             case ThreadRole::GS_RENDERER:
-                // Strictly Big cores ONLY! Removing little_cores prevents GS_RENDERER from
-                // ever migrating to a slow Cortex-A55 core during heavy house/enemy/particle draws!
-                for (int bc : big_cores) CPU_SET(bc, &mask);
+                CPU_SET(big_cores[2], &mask);
                 targetNice = -20;
                 break;
             case ThreadRole::GIF_WORKER:
-                for (int bc : big_cores) CPU_SET(bc, &mask);
-                if (!little_cores.empty()) CPU_SET(little_cores[0], &mask);
-                targetNice = -16;
+                CPU_SET(big_cores[3], &mask);
+                targetNice = -18;
                 break;
             case ThreadRole::AUDIO_SPU2:
                 for (int lc : little_cores) CPU_SET(lc, &mask);
@@ -177,31 +176,36 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
                 break;
         }
     } else {
-        // 2+6 SoC (e.g. 2 Big cores + 6 Little cores)
+        // 2+6 SoC (Dimensity 7050 / Snapdragon 7s Gen 2: 2 Big Cortex-A78 + 6 Little Cortex-A55)
+        // EMULATOR CONSOLIDATION ARCHITECTURE:
+        // Big Core 0 (e.g. CPU 7): Dedicated to EE_MAIN + VU1_WORKER (Total workload ~4-5 ms per frame)
+        // Big Core 1 (e.g. CPU 6): Dedicated EXCLUSIVELY to GS_RENDERER (Vulkan graphics, 100% core budget, Nice -20)
+        // Little Cores (CPU 0-5): GIF worker, Audio SPU2, and Host tasks
         switch (role) {
             case ThreadRole::EE_MAIN:
                 CPU_SET(big_cores[0], &mask);
-                CPU_SET(big_cores[1], &mask);
                 targetNice = -20;
                 break;
             case ThreadRole::VU1_WORKER:
-                CPU_SET(big_cores[1], &mask);
                 CPU_SET(big_cores[0], &mask);
                 targetNice = -19;
                 break;
             case ThreadRole::GS_RENDERER:
+                // Dedicated 100% exclusively to Big Core 1.
+                // Little cores are STRICTLY FORBIDDEN to prevent GS from being preempted during particle draws!
                 CPU_SET(big_cores[1], &mask);
-                if (little_cores.size() >= 2) {
-                    CPU_SET(little_cores[0], &mask);
-                    CPU_SET(little_cores[1], &mask);
-                }
-                targetNice = -18;
+                targetNice = -20;
                 break;
             case ThreadRole::GIF_WORKER:
                 for (size_t i = 0; i < std::min<size_t>(3, little_cores.size()); ++i) {
                     CPU_SET(little_cores[i], &mask);
                 }
+                CPU_SET(big_cores[0], &mask);
                 targetNice = -15;
+                break;
+            case ThreadRole::AUDIO_SPU2:
+                for (int lc : little_cores) CPU_SET(lc, &mask);
+                targetNice = -16;
                 break;
             default:
                 for (int lc : little_cores) CPU_SET(lc, &mask);
