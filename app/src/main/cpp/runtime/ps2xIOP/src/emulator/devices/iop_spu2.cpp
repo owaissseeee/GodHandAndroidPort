@@ -582,6 +582,7 @@ namespace ps2x::iop::detail
                     ++sounding[core];
         const uint32_t s0 = kSharedBase;
         const uint32_t s1 = kSharedBase + 0x28u;
+#if !defined(__ANDROID__)
         std::fprintf(stderr,
                      "[spu2-silence] output dropped to exact 0 after loud sound (t=%.3f s): ATTR %04x/%04x MMIX %04x/%04x "
                      "MVOL %04x,%04x/%04x,%04x EVOL %04x,%04x/%04x,%04x AVOL1 %04x,%04x BVOL1 %04x,%04x core0 out %d,%d voices %u/%u ADMA %u/%u\n",
@@ -589,6 +590,7 @@ namespace ps2x::iop::detail
                      reg(kCoreStride + 0x198u), reg(s0), reg(s0 + 2u), reg(s1), reg(s1 + 2u), reg(s0 + 4u), reg(s0 + 6u),
                      reg(s1 + 4u), reg(s1 + 6u), reg(s1 + 8u), reg(s1 + 10u), reg(s1 + 12u), reg(s1 + 14u), core0[0], core0[1],
                      sounding[0], sounding[1], autoDma(0u) ? 1u : 0u, autoDma(1u) ? 1u : 0u);
+#endif
     }
 
     // God Hand 2026-10-19: the mix dropped to exact 0 after loud sound with only the core 1 stream (ADMA) playing and

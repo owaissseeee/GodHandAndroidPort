@@ -190,7 +190,7 @@ class SettingsDialog(
 
         addSpinnerRow(
             if (isMidGame) "Target Frame Rate (Set in Main Menu)" else "Target Frame Rate",
-            listOf("60 FPS {Buggy - Not Recommended}", "30 FPS (Console Native Lock - Recommended)"),
+            listOf("60 FPS (Mid-Range / Flagship)", "120 FPS (Flagship High-Refresh)", "30 FPS (Potato / Cortex-A53 Boost)"),
             settings.fpsIdx,
             enabled = !isMidGame
         ) { pos ->

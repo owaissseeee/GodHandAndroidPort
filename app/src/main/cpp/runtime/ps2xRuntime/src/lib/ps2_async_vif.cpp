@@ -63,7 +63,7 @@ namespace ps2x::asyncvif
             std::thread thread;
         };
 
-        constexpr size_t kGifChunkBytes = 256u * 1024u;
+        constexpr size_t kGifChunkBytes = 512u * 1024u;
 
         void publishGif(GifStage &stage)
         {

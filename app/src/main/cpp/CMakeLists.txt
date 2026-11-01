@@ -41,6 +41,10 @@ file(GLOB GODHAND_UNITY_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/generated_unity/gh_
 file(GLOB GODHAND_MODULE_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/generated_modules_unity/gh_mod_unity_*.cpp")
 file(GLOB GODHAND_HOST_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/godhand/*.cpp")
 
+set_source_files_properties(${GODHAND_UNITY_SOURCES} ${GODHAND_MODULE_SOURCES} PROPERTIES
+    COMPILE_FLAGS "-O3 -fno-unroll-loops -falign-functions=16"
+)
+
 add_library(godhand_android SHARED
     jni_bridge.cpp
     godhand_patches_mobile.cpp

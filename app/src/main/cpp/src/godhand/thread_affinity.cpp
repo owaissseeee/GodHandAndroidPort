@@ -525,8 +525,28 @@ extern "C" void godhand_set_thread_affinity_and_priority(const char* name, int p
 
     godhand::affinity::applyAffinity(role, name, niceVal);
 }
+
+extern "C" int godhand_get_device_tier() {
+    static const int s_tier = [] {
+        const auto sorted = godhand::affinity::detectSortedCores();
+        if (sorted.empty()) return 1;
+        bool has_x_or_prime = false;
+        bool has_big_a7x = false;
+        long max_freq = 0;
+        for (const auto& c : sorted) {
+            if (c.tier == 3) has_x_or_prime = true;
+            if (c.tier == 2) has_big_a7x = true;
+            if (c.max_freq_khz > max_freq) max_freq = c.max_freq_khz;
+        }
+        if (has_x_or_prime || max_freq >= 2850000) return 3;
+        if (has_big_a7x || max_freq >= 2300000) return 2;
+        return 1;
+    }();
+    return s_tier;
+}
 #else
 extern "C" void godhand_set_thread_affinity_and_priority(const char*, int, int, int) {}
+extern "C" int godhand_get_device_tier() { return 1; }
 extern "C" void godhand_perf_record_work_duration(int64_t) {}
 extern "C" int64_t godhand_perf_get_last_work_duration() { return 16000000LL; }
 extern "C" void godhand_perf_get_tids(int32_t*, int* count) { if (count) *count = 0; }

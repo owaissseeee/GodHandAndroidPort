@@ -7,28 +7,59 @@ import org.json.JSONObject
 class SettingsRepository(context: Context) {
     private val prefs: SharedPreferences = context.getSharedPreferences("godhand_settings", Context.MODE_PRIVATE)
 
+    companion object {
+        val isCortexA53OrPotato: Boolean by lazy {
+            try {
+                val text = java.io.File("/proc/cpuinfo").readText()
+                text.contains("0xd03") || text.contains("0xd04") || text.contains("0xd05") ||
+                android.os.Build.HARDWARE.contains("mt6765", ignoreCase = true) ||
+                android.os.Build.BOARD.contains("mt6765", ignoreCase = true)
+            } catch (_: Throwable) { false }
+        }
+    }
+
     var rendererIdx: Int
-        get() = prefs.getInt("renderer_idx", 0)
-        set(value) = prefs.edit().putInt("renderer_idx", value).apply()
+        get() {
+            if (!prefs.contains("renderer_idx_v3")) {
+                val def = if (isCortexA53OrPotato) 1 else 0
+                prefs.edit().putInt("renderer_idx_v3", def).apply()
+                return def
+            }
+            return prefs.getInt("renderer_idx_v3", 0).coerceIn(0, 2)
+        }
+        set(value) = prefs.edit().putInt("renderer_idx_v3", value.coerceIn(0, 2)).apply()
 
     var resolutionIdx: Int
-        get() = prefs.getInt("res_idx", 2) // default 2: 1.0x (512x448 Native PS2) - prevents GPU fillrate stall
-        set(value) = prefs.edit().putInt("res_idx", value.coerceIn(0, 7)).apply()
+        get() {
+            if (!prefs.contains("res_idx_v3")) {
+                val def = if (isCortexA53OrPotato) 1 else 2
+                prefs.edit().putInt("res_idx_v3", def).apply()
+                return def
+            }
+            return prefs.getInt("res_idx_v3", 2).coerceIn(0, 7)
+        }
+        set(value) = prefs.edit().putInt("res_idx_v3", value.coerceIn(0, 7)).apply()
 
     var aspectIdx: Int
         get() {
             if (!prefs.contains("aspect_idx_v2")) {
                 prefs.edit().putInt("aspect_idx_v2", 2).apply()
-                return 2 // 2: Full Screen (Device Aspect - No Stretch)
+                return 2
             }
             return prefs.getInt("aspect_idx_v2", 2).coerceIn(0, 2)
         }
         set(value) = prefs.edit().putInt("aspect_idx_v2", value.coerceIn(0, 2)).apply()
 
     var fpsIdx: Int
-        get() = prefs.getInt("fps_idx", 1).coerceIn(0, 1) // 0: 60 FPS {Buggy - Not Recommended}, 1: 30 FPS (Console Native Lock - Recommended)
-        set(value) = prefs.edit().putInt("fps_idx", value.coerceIn(0, 1)).apply()
-
+        get() {
+            if (!prefs.contains("fps_idx_v4")) {
+                val def = if (isCortexA53OrPotato) 2 else 0
+                prefs.edit().putInt("fps_idx_v4", def).apply()
+                return def
+            }
+            return prefs.getInt("fps_idx_v4", 2).coerceIn(0, 2)
+        }
+        set(value) = prefs.edit().putInt("fps_idx_v4", value.coerceIn(0, 2)).apply()
     var frameskipIdx: Int
         get() = prefs.getInt("frameskip_idx_v2", 1).coerceIn(0, 4) // 0: Off, 1: Auto (Skip on Lag - Recommended), 2: Skip 1 Frame, 3: Skip 2 Frames, 4: Skip 3 Frames (Potato Mode)
         set(value) = prefs.edit().putInt("frameskip_idx_v2", value.coerceIn(0, 4)).apply()

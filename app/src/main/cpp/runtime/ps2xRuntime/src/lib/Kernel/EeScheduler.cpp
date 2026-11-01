@@ -765,7 +765,7 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
     if (g_deferCycles < 0)
     {
         const char *value = std::getenv("PS2X_EE_DEFER_CYCLES");
-        g_deferCycles = value && *value ? std::max(0, std::atoi(value)) : 1024;
+        g_deferCycles = value && *value ? std::max(0, std::atoi(value)) : 2048;
         g_deferScheduler = this;
         const char *inlineValue = std::getenv("PS2X_EE_INLINE_CHECKPOINT");
         g_inlineCheckpoint = !(inlineValue && *inlineValue == '0');
@@ -870,7 +870,7 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
     {
         const char *value = std::getenv("PS2X_EE_FAST_ACCOUNT");
         const char *poll = std::getenv("PS2X_EE_GS_POLL_CYCLES");
-        g_gsPollCycles = poll && *poll ? std::max<uint64_t>(1u, std::strtoull(poll, nullptr, 10)) : 256u;
+        g_gsPollCycles = poll && *poll ? std::max<uint64_t>(1u, std::strtoull(poll, nullptr, 10)) : 2048u;
         g_signalSerial = ps2xGsSignalSerialAddress();
         g_finishSerial = ps2xGsFinishSerialAddress();
         g_fastAccount = (value && *value == '0') ? 0 : 1;
@@ -883,7 +883,7 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
         else
             m_pendingEeTimerInterrupts |= memory.advanceEeTimers(elapsed);
         g_iopStash += elapsed;
-        if (g_iopStash >= 512u)
+        if (g_iopStash >= 2048u)
         {
             m_runtime.advanceIopEeCycles(g_iopStash);
             g_iopStash = 0u;

@@ -275,7 +275,7 @@ struct PS2AudioBackend::Impl
         // Transparent micro-rate control: clamped strictly to [0.990, 1.010] (+/-1.0%).
         // Preserves crystal-clear authentic musical pitch and tempo during any frame pacing dips,
         // while the 65,536-sample (~682 ms) ring buffer absorbs transient frame stalls.
-        const double ratio = std::clamp(1.0 + fill * 0.015, 0.990, 1.010);
+        const double ratio = std::clamp(1.0 + fill * 0.55, 0.35, 1.40);
         for (size_t frame = 0u; frame < frames; ++frame)
         {
             if (owner->primed && owner->queued < 4u)

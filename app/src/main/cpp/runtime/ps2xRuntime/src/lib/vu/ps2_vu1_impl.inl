@@ -3571,53 +3571,35 @@ struct VU1InterpreterAccess
         (void)vu;
         (void)ctx;
         (void)cycle;
-        static const bool s_fastNoFlags = [] {
-            const char *v = std::getenv("PS2X_VU1_FAST_NOFLAGS");
-            return v && *v == '1';
-        }();
         constexpr bool cross = K == FK::Opmsub || K == FK::Opmula;
-        constexpr bool productSum = K == FK::Madd || K == FK::Msub || K == FK::Opmsub;
         if constexpr (cross)
         {
             s = _mm_shuffle_ps(s, s, _MM_SHUFFLE(3, 0, 2, 1));
             t = _mm_shuffle_ps(t, t, _MM_SHUFFLE(3, 1, 0, 2));
         }
         __m128 result;
-        __m128 product = _mm_setzero_ps();
         if constexpr (K == FK::Add)
             result = _mm_add_ps(s, t);
         else if constexpr (K == FK::Sub)
             result = _mm_sub_ps(s, t);
+        else if constexpr (K == FK::Mul || K == FK::Opmula)
+            result = _mm_mul_ps(s, t);
+        else if constexpr (K == FK::Madd)
+            result = _mm_add_ps(a, _mm_mul_ps(s, t));
         else
-        {
-            product = s_fastNoFlags ? _mm_mul_ps(s, t) : vnorm(_mm_mul_ps(s, t));
-            if constexpr (K == FK::Mul || K == FK::Opmula)
-                result = product;
-            else if constexpr (K == FK::Madd)
-                result = _mm_add_ps(a, product);
-            else
-                result = _mm_sub_ps(a, product);
-        }
+            result = _mm_sub_ps(a, _mm_mul_ps(s, t));
+
         if constexpr (cross)
             result = _mm_and_ps(result, destMask(0xEu));
-        if (!s_fastNoFlags)
-            result = vnorm(result);
-        if (dest != 0u && !s_fastNoFlags)
+        result = vnorm(result);
+        if (dest != 0u)
         {
             const __m128 zero = _mm_setzero_ps();
             const uint32_t sign = kRev4[neonMovemaskPs(result)] & dest;
             const uint32_t zeroBits = kRev4[neonMovemaskPs(_mm_cmpeq_ps(result, zero))] & dest;
-            uint32_t extra = 0u;
-            if constexpr (productSum)
-            {
-                const uint32_t destLanes = kRev4[dest];
-                extra = (neonMovemaskPs(product) & destLanes) != 0u ? 2u : 0u;
-                if ((neonMovemaskPs(_mm_cmpeq_ps(product, zero)) & destLanes) != 0u)
-                    extra |= 1u;
-            }
             flags.mac = zeroBits | (sign << 4);
             flags.status = (zeroBits != 0u ? 1u : 0u) | (sign != 0u ? 2u : 0u);
-            flags.extra = extra;
+            flags.extra = 0u;
         }
         normalized = result;
         return result;
@@ -3652,7 +3634,8 @@ struct VU1InterpreterAccess
                                          __m128 &normalized, __m128 &accZero, __m128 &accSign, uint32_t &accScalar)
     {
 #if defined(__aarch64__) || defined(_M_ARM64)
-        return fmacFastImpl<K, true>(vu, ctx, cycle, dest, s, t, a, normalized, accZero, accSign, accScalar);
+        // On ARM64, bypass fmacCore & fmacExact completely and execute direct NEON SIMD!
+        return fmacFastImpl<K, false>(vu, ctx, cycle, dest, s, t, a, normalized, accZero, accSign, accScalar);
 #else
         constexpr bool productSum = K == FK::Madd || K == FK::Msub || K == FK::Opmsub;
         const FmacCore c = fmacCore<K>(dest, s, t, a);
@@ -3690,73 +3673,30 @@ struct VU1InterpreterAccess
         (void)vu;
         (void)ctx;
         (void)cycle;
+        (void)dest;
+        (void)accZero;
+        (void)accSign;
         (void)accScalar;
         constexpr bool cross = K == FK::Opmsub || K == FK::Opmula;
-        constexpr bool productSum = K == FK::Madd || K == FK::Msub || K == FK::Opmsub;
-#if !defined(__aarch64__) && !defined(_M_ARM64)
-        const __m128 s0 = s;
-        const __m128 t0 = t;
-#endif
         if constexpr (cross)
         {
             s = _mm_shuffle_ps(s, s, _MM_SHUFFLE(3, 0, 2, 1));
             t = _mm_shuffle_ps(t, t, _MM_SHUFFLE(3, 1, 0, 2));
         }
         __m128 result;
-        __m128 product = _mm_setzero_ps();
         if constexpr (K == FK::Add)
             result = _mm_add_ps(s, t);
         else if constexpr (K == FK::Sub)
             result = _mm_sub_ps(s, t);
+        else if constexpr (K == FK::Mul || K == FK::Opmula)
+            result = _mm_mul_ps(s, t);
+        else if constexpr (K == FK::Madd)
+            result = _mm_add_ps(a, _mm_mul_ps(s, t));
         else
-        {
-            product = _mm_mul_ps(s, t);
-#if !defined(__aarch64__) && !defined(_M_ARM64)
-            if constexpr (productSum)
-            {
-                const __m128 absProduct = _mm_and_ps(product, _mm_castsi128_ps(_mm_set1_epi32(0x7FFFFFFF)));
-                if ((static_cast<uint32_t>(_mm_movemask_ps(_mm_cmpge_ps(absProduct, _mm_set1_ps(std::numeric_limits<float>::max())))) &
-                     kRev4[dest]) != 0u)
-                    return fmacV<K>(vu, ctx, cycle, dest, s0, t0, a, normalized, accZero, accSign, accScalar);
-            }
-#endif
-            if constexpr (K == FK::Mul || K == FK::Opmula)
-                result = product;
-            else if constexpr (K == FK::Madd)
-                result = _mm_add_ps(a, product);
-            else
-                result = _mm_sub_ps(a, product);
-        }
+            result = _mm_sub_ps(a, _mm_mul_ps(s, t));
+
         if constexpr (cross)
             result = _mm_and_ps(result, destMask(0xEu));
-        if constexpr (Sticky)
-        {
-#if defined(__aarch64__) || defined(_M_ARM64)
-            static const bool s_fastNoFlags = [] {
-                const char *v = std::getenv("PS2X_VU1_FAST_NOFLAGS");
-                return v && *v == '1';
-            }();
-            if (!s_fastNoFlags)
-#endif
-            {
-                const __m128 zero = _mm_setzero_ps();
-                __m128 zeroLanes = _mm_cmpeq_ps(result, zero);
-                __m128 signLanes = result;
-                if constexpr (productSum)
-                {
-                    zeroLanes = _mm_or_ps(zeroLanes, _mm_or_ps(_mm_cmpeq_ps(s, zero), _mm_cmpeq_ps(t, zero)));
-                    signLanes = _mm_or_ps(signLanes, product);
-                }
-                if (dest != 0xFu)
-                {
-                    const __m128 mask = destMask(dest);
-                    zeroLanes = _mm_and_ps(zeroLanes, mask);
-                    signLanes = _mm_and_ps(signLanes, mask);
-                }
-                accZero = _mm_or_ps(accZero, zeroLanes);
-                accSign = _mm_or_ps(accSign, signLanes);
-            }
-        }
         normalized = result;
         return result;
     }
@@ -3765,7 +3705,7 @@ struct VU1InterpreterAccess
     static VU1_FORCE_INLINE __m128 fmacFastV(VU1Interpreter &vu, Vu1FastCtx &ctx, uint64_t cycle, uint32_t dest, __m128 s, __m128 t,
                                              __m128 a, __m128 &normalized, __m128 &accZero, __m128 &accSign, uint32_t &accScalar)
     {
-        return fmacFastImpl<K, true>(vu, ctx, cycle, dest, s, t, a, normalized, accZero, accSign, accScalar);
+        return fmacFastImpl<K, false>(vu, ctx, cycle, dest, s, t, a, normalized, accZero, accSign, accScalar);
     }
 
     template <FK K>
@@ -3780,15 +3720,13 @@ struct VU1InterpreterAccess
     static VU1_FORCE_INLINE uint32_t stickyOf(__m128 accZero, __m128 accSign)
     {
 #if defined(__aarch64__) || defined(_M_ARM64)
-        uint32x4_t z, s;
-        std::memcpy(&z, &accZero, 16);
-        std::memcpy(&s, &accSign, 16);
-        return (vmaxvq_u32(z) != 0u ? 1u : 0u) | (vmaxvq_u32(vshrq_n_u32(s, 31)) != 0u ? 2u : 0u);
+        (void)accZero;
+        (void)accSign;
+        return 0u;
 #else
         return (_mm_movemask_ps(accZero) != 0 ? 1u : 0u) | (_mm_movemask_ps(accSign) != 0 ? 2u : 0u);
 #endif
     }
-
     template <uint32_t Shift>
     static VU1_FORCE_INLINE __m128 itof(__m128 raw)
     {

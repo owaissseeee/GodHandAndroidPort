@@ -50,12 +50,15 @@ namespace
         options.HWAccurateAlphaTest = false;                   // AccurateDATE = Off: Restores 60 FPS on Mali/Adreno TBDR
         options.UserHacks_DisableDepthSupport = false;         // Keep depth buffer emulation intact to prevent fullscreen blur smearing
         options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
-        options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special; // Shifts and aligns distant building geometry correctly (Official GameIndex.yaml)
-        options.UserHacks_NativeScaling = GSNativeScaling::Off;     // Disables downscale targets and post-processing downscaling
+        options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Normal; // Normal (1) is faster on mobile/potato GPUs
+        options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
+        options.Mipmap = false;
+        options.HWMipmap = false;
+        options.UseDebugDevice = false;
         options.UserHacks_MergePPSprite = false;               // RESTORES CHARACTER FACES & REMOVES LINE POPPING
         options.UserHacks_AlignSpriteX = false;
         options.GetSkipCountFunctionId = -1;
-        options.SkipDuplicateFrames = false;
+        options.SkipDuplicateFrames = true;
         options.TriFilter = TriFiltering::Off;
         options.TexturePreloading = TexturePreloadingLevel::Full;
         // SkipDraw: Cleanly strips the depth-of-field blur quad without corrupting framebuffers
@@ -68,7 +71,7 @@ namespace
 #if defined(__ANDROID__)
         // Mobile Mali GPU optimizations:
         // Use Unsynchronized download mode to prevent blocking GPU readbacks that crush FPS
-        options.HWDownloadMode = GSHardwareDownloadMode::Unsynchronized;
+        options.HWDownloadMode = GSHardwareDownloadMode::Disabled;
         options.HWSpinGPUForReadbacks = false;
         options.HWSpinCPUForReadbacks = false;
         options.DumpDirectTextures = false;
@@ -344,10 +347,14 @@ gs_open_success:
 
     void ReadFifo(uint8_t *dst, uint32_t qwc)
     {
+#if !defined(__ANDROID__)
         if (g_open && dst && qwc)
             GSInitAndReadFIFO(dst, qwc);
+#else
+        (void)dst;
+        (void)qwc;
+#endif
     }
-
     void Resize(uint32_t width, uint32_t height)
     {
         if (!g_open || width == 0u || height == 0u)
@@ -391,17 +398,18 @@ gs_open_success:
     // As GSState::InitReadFIFO, for an arbitrary transfer and leaving m_env/m_tr alone.
     uint32_t ReadLocal(uint8_t *dst, uint32_t size, uint64_t bitbltbuf, uint64_t trxpos, uint64_t trxreg)
     {
+#if defined(__ANDROID__)
+        (void)dst;
+        (void)size;
+        (void)bitbltbuf;
+        (void)trxpos;
+        (void)trxreg;
+        return 0;
+#else
         if (!g_open || !dst || !size || !g_gs_renderer)
             return 0;
-        GIFRegBITBLTBUF blit{bitbltbuf};
-        GIFRegTRXPOS pos{trxpos};
-        GIFRegTRXREG reg{trxreg};
-        g_gs_renderer->Flush(GSState::DOWNLOADFIFO);
-        const GSVector4i rect(pos.SSAX, pos.SSAY, pos.SSAX + reg.RRW, pos.SSAY + reg.RRH);
-        g_gs_renderer->InvalidateLocalMem(blit, rect);
-        int x = pos.SSAX, y = pos.SSAY;
-        g_gs_renderer->m_mem.ReadImageX(x, y, dst, static_cast<int>(size), blit, pos, reg);
         return size;
+#endif
     }
 
     int Snapshot(const char *path)

@@ -453,20 +453,43 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         kotlin.concurrent.thread(name = "RootAffinityOptimizer", isDaemon = true) {
             try {
                 Thread.sleep(1500)
+                val suCandidates = arrayOf(
+                    "/system/bin/su",
+                    "/system/xbin/su",
+                    "/sbin/su",
+                    "/debug_ramdisk/su",
+                    "/data/adb/magisk/su",
+                    "/data/adb/ksu/bin/su",
+                    "/data/adb/ap/bin/su",
+                    "su"
+                )
+                val suPath = suCandidates.firstOrNull { p ->
+                    try {
+                        if (p == "su") true else java.io.File(p).exists()
+                    } catch (_: Throwable) { false }
+                } ?: return@thread
+
                 val tids = NativeBridge.getPerformanceThreadIds()
+                val cmdBuilder = StringBuilder()
+                cmdBuilder.append("for c in /sys/devices/system/cpu/cpu[0-9]*; do ")
+                cmdBuilder.append("echo performance > " + '$' + "c/cpufreq/scaling_governor 2>/dev/null; ")
+                cmdBuilder.append("cat " + '$' + "c/cpufreq/cpuinfo_max_freq > " + '$' + "c/cpufreq/scaling_min_freq 2>/dev/null; ")
+                cmdBuilder.append("done; ")
+                cmdBuilder.append("echo 0 > /proc/ppm/enabled 2>/dev/null; ")
+                cmdBuilder.append("echo 0 > /proc/gpufreq/gpufreq_opp_freq 2>/dev/null; ")
+                cmdBuilder.append("echo " + android.os.Process.myPid() + " > /dev/cpuset/top-app/tasks 2>/dev/null; ")
+
                 if (tids.isNotEmpty()) {
-                    val cmdBuilder = StringBuilder()
-                    cmdBuilder.append("echo performance > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2>/dev/null; ")
-                    cmdBuilder.append("echo performance > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor 2>/dev/null; ")
-                    if (tids.size > 0 && tids[0] > 0) cmdBuilder.append("taskset -p 1 ${tids[0]} 2>/dev/null; ")
-                    if (tids.size > 1 && tids[1] > 0) cmdBuilder.append("taskset -p 2 ${tids[1]} 2>/dev/null; ")
-                    if (tids.size > 2 && tids[2] > 0) cmdBuilder.append("taskset -p 4 ${tids[2]} 2>/dev/null; ")
-                    if (tids.size > 3 && tids[3] > 0) cmdBuilder.append("taskset -p 8 ${tids[3]} 2>/dev/null; ")
-                    if (tids.size > 4 && tids[4] > 0) cmdBuilder.append("taskset -p 30 ${tids[4]} 2>/dev/null; ")
-                    val p = Runtime.getRuntime().exec(arrayOf("su", "-c", cmdBuilder.toString()))
-                    p.waitFor()
-                    android.util.Log.i("GodHandAffinity", "Root thread affinity enforced successfully for " + tids.size + " threads")
+                    if (tids.size > 0 && tids[0] > 0) cmdBuilder.append("taskset -p 8 " + tids[0] + " 2>/dev/null; ")
+                    if (tids.size > 1 && tids[1] > 0) cmdBuilder.append("taskset -p 4 " + tids[1] + " 2>/dev/null; ")
+                    if (tids.size > 2 && tids[2] > 0) cmdBuilder.append("taskset -p 2 " + tids[2] + " 2>/dev/null; ")
+                    if (tids.size > 3 && tids[3] > 0) cmdBuilder.append("taskset -p 1 " + tids[3] + " 2>/dev/null; ")
+                    if (tids.size > 4 && tids[4] > 0) cmdBuilder.append("taskset -p f0 " + tids[4] + " 2>/dev/null; ")
                 }
+
+                val p = Runtime.getRuntime().exec(arrayOf(suPath, "-c", cmdBuilder.toString()))
+                p.waitFor()
+                android.util.Log.i("GodHandAffinity", "Root performance governor, PPM bypass & thread affinity locked via " + suPath + " (threads: " + tids.size + ")")
             } catch (e: Exception) {
                 android.util.Log.w("GodHandAffinity", "Root affinity enforcement skipped: " + e.message)
             }
