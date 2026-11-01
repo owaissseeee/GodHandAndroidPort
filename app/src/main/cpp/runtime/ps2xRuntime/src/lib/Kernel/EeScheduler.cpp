@@ -162,7 +162,7 @@ namespace
 // an event posted from another thread waits at most that long even if its zeroing of the budget is overwritten.
 uint64_t g_ps2xEeDeferred = 0u;
 std::atomic<uint64_t> g_ps2xEeDeferBudget{0u};
-uint32_t g_ps2xEeLoopCycles = 32u;
+uint32_t g_ps2xEeLoopCycles = 128u;
 
 // After a save state is loaded: the GS interrupts seen so far and a deferred deadline belong to the session before it.
 void ps2xSchedulerResetGsTransientState() noexcept
@@ -341,15 +341,10 @@ void EeScheduler::setHostPacingDefault(bool enabled) noexcept
 void EeScheduler::hostCatchUp() noexcept
 {
     m_pacingCheckCycle = m_eeCycle + kHostPacingCheckCycles;
-    if (m_pacingRefTime == std::chrono::steady_clock::time_point{} || !ps2x::asyncvif::active(m_runtime.memory()))
+    if (m_pacingRefTime == std::chrono::steady_clock::time_point{})
         return;
-    if (ps2x::asyncvif::vblankWaitEnabled())
+    if (ps2x::asyncvif::vblankWaitEnabled() && ps2x::asyncvif::active(m_runtime.memory()))
     {
-        // MTVU timing model: no catch-up (the game slows down instead of skipping emulated time), but emulated time may
-        // not run ahead of real time while the VU/GIF workers still have work. Otherwise the EE, spinning on the frame-
-        // done flag the GS handler sets, burned a whole field of emulated cycles before the render on the other threads
-        // finished; the game then saw its frame take a field and missed the next vblank (4-fighter select at 48-58 FPS,
-        // frames at +0.01 and +0.97 field). Data the GS deferred at a SIGNAL waits for the EE and does not count as work.
         const double elapsed = std::chrono::duration<double>(std::chrono::steady_clock::now() - m_pacingRefTime).count();
         if (elapsed <= 0.0)
             return;
@@ -366,19 +361,15 @@ void EeScheduler::hostCatchUp() noexcept
         return;
     const uint64_t expected = m_pacingRefCycle + static_cast<uint64_t>(elapsed * static_cast<double>(kEeClockHz));
     const uint64_t field = vblankPeriodCycles();
-    if (expected <= m_eeCycle + field / 2u)
+    if (expected <= m_eeCycle + field / 6u)
         return;
     const uint64_t lag = expected - m_eeCycle;
-    // Give up on catching up (until the next VBlank re-anchors) when far behind, or when the previous catch-up was
-    // not followed by any guest execution. Skipping a field still runs the IOP for that field; if the IOP is busy that
-    // costs about a field of real time, the lag never shrinks, and the guest would never run again.
-    if (lag > field * 8u || g_lastCatchUpDispatches == g_guestDispatches)
+    if (lag > field * 8u)
     {
         m_pacingRefTime = {};
         return;
     }
-    g_lastCatchUpDispatches = g_guestDispatches;
-    consumeCycles(std::min<uint64_t>(lag - field / 4u, field));
+    consumeCycles(std::min<uint64_t>(lag - field / 8u, field));
 }
 
 void EeScheduler::reset(uint8_t *rdram, const R5900Context &mainContext)

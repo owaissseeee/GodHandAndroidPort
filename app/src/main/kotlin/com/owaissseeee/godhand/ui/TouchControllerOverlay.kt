@@ -426,7 +426,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     )
                 }
             }
-            val interval = if (fpsMode == FpsOverlayMode.DETAILED_DEBUG) 33L else 1000L
+            val interval = if (fpsMode == FpsOverlayMode.DETAILED_DEBUG) 250L else 1000L
             postDelayed(this, interval)
         }
     }

@@ -30,7 +30,7 @@ android {
                 cppFlags += listOf(
                     "-std=c++20",
                     "-O3",
-                    "-march=armv8-a+crc",
+                    "-march=armv8-a+crc+simd",
                     "-mtune=cortex-a53",
                     "-ffast-math",
                     "-fno-finite-math-only",

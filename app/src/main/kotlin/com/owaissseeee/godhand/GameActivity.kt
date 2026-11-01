@@ -415,6 +415,24 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         }
     }
 
+    private fun findSuBinaryPath(): String? {
+        val paths = arrayOf(
+            "/system/bin/su",
+            "/system/xbin/su",
+            "/sbin/su",
+            "/data/adb/magisk/su",
+            "/data/adb/ksu/bin/su",
+            "/data/adb/ap/bin/su",
+            "/debug_ramdisk/su"
+        )
+        for (p in paths) {
+            try {
+                if (java.io.File(p).exists()) return p
+            } catch (_: Throwable) {}
+        }
+        return null
+    }
+
     override fun surfaceCreated(holder: SurfaceHolder) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             try {
@@ -453,21 +471,7 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         kotlin.concurrent.thread(name = "RootAffinityOptimizer", isDaemon = true) {
             try {
                 Thread.sleep(1500)
-                val suCandidates = arrayOf(
-                    "/system/bin/su",
-                    "/system/xbin/su",
-                    "/sbin/su",
-                    "/debug_ramdisk/su",
-                    "/data/adb/magisk/su",
-                    "/data/adb/ksu/bin/su",
-                    "/data/adb/ap/bin/su",
-                    "su"
-                )
-                val suPath = suCandidates.firstOrNull { p ->
-                    try {
-                        if (p == "su") true else java.io.File(p).exists()
-                    } catch (_: Throwable) { false }
-                } ?: return@thread
+                val suPath = findSuBinaryPath() ?: return@thread
 
                 val tids = NativeBridge.getPerformanceThreadIds()
                 val cmdBuilder = StringBuilder()

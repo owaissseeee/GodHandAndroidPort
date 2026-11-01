@@ -4,18 +4,19 @@ project(GodHandAndroid LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Strip any -march=armv8.2-a* or -mtune=cortex-a78 injected by build.gradle.kts so Cortex-A53 (ARMv8.0-A) never stalls or traps!
+string(REGEX REPLACE "-march=[^ ]+" "" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
+string(REGEX REPLACE "-march=[^ ]+" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+string(REGEX REPLACE "-mtune=[^ ]+" "" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
+string(REGEX REPLACE "-mtune=[^ ]+" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+
+set(GODHAND_PERF_FLAGS "-O3 -march=armv8-a+crc+simd -mtune=cortex-a53 -ffast-math -fno-finite-math-only -fno-signed-zeros -fno-math-errno -fno-trapping-math -fomit-frame-pointer -fvisibility-inlines-hidden -fno-semantic-interposition -ftls-model=initial-exec -mbranch-protection=none -DNDEBUG")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${GODHAND_PERF_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GODHAND_PERF_FLAGS}")
+
 # Force-include ARM64 NEON / SIMDe compatibility header across all recompiled & runtime sources
 add_compile_options(
     -include ${CMAKE_CURRENT_SOURCE_DIR}/simd_arm64_compat.h
-    -march=armv8-a
-    -mtune=generic
-    -fno-math-errno
-    -fno-trapping-math
-    -fomit-frame-pointer
-    -finline-functions
-    -fvisibility-inlines-hidden
-    -fno-semantic-interposition
-    -ftls-model=initial-exec
     -Wno-unused-variable
     -Wno-unused-but-set-variable
     -Wno-sign-compare
