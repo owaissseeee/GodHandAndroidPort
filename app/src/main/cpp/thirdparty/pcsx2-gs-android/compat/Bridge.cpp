@@ -9,6 +9,7 @@
 #include "GS/Renderers/Vulkan/GSDeviceVK.h"
 #include "GS/Renderers/OpenGL/GSDeviceOGL.h"
 #include <android/log.h>
+#include <dlfcn.h>
 #else
 #include "GS/Renderers/DX11/GSDevice11.h"
 #endif
@@ -49,7 +50,7 @@ namespace
         options.HWAccurateAlphaTest = false;                   // AccurateDATE = Off: Restores 60 FPS on Mali/Adreno TBDR
         options.UserHacks_DisableDepthSupport = false;         // Keep depth buffer emulation intact to prevent fullscreen blur smearing
         options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
-        options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Off; // Eliminates misaligned bloom halo rings (over SALOON and characters)
+        options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special; // Shifts and aligns distant building geometry correctly (Official GameIndex.yaml)
         options.UserHacks_NativeScaling = GSNativeScaling::Off;     // Disables downscale targets and post-processing downscaling
         options.UserHacks_MergePPSprite = false;               // RESTORES CHARACTER FACES & REMOVES LINE POPPING
         options.UserHacks_AlignSpriteX = false;
@@ -59,8 +60,8 @@ namespace
         options.TexturePreloading = TexturePreloadingLevel::Full;
         // SkipDraw: Cleanly strips the depth-of-field blur quad without corrupting framebuffers
         const char *skipDrawEnv = std::getenv("PS2X_SKIPDRAW");
-        const int skipDrawVal = skipDrawEnv ? std::atoi(skipDrawEnv) : 1;
-        options.SkipDrawStart = 1;
+        const int skipDrawVal = skipDrawEnv ? std::atoi(skipDrawEnv) : 0;
+        options.SkipDrawStart = skipDrawVal > 0 ? 1 : 0;
         options.SkipDrawEnd = skipDrawVal;
         options.VsyncQueueSize = 2;
 
@@ -289,7 +290,43 @@ gs_open_success:
         std::memcpy(g_regs + 0x1040, &regs->busdir, 8);
         std::memcpy(g_regs + 0x1080, &regs->siglblid, 8);
         // As PCSX2's MTGS: CSR.FIELD (bit 13) picks the field.
-        GSvsync((regs->csr & 0x2000u) ? 0u : 1u, true);
+        static uint32_t s_vsync_calls = 0;
+        bool shouldDraw = true;
+#if defined(__ANDROID__)
+        typedef int (*GetFrameskipModeFn)();
+        typedef float (*GetAvgFrametimeFn)();
+        static GetFrameskipModeFn s_getFsMode = nullptr;
+        static GetAvgFrametimeFn s_getAvgFrametime = nullptr;
+        static bool s_fsModeResolved = false;
+        if (!s_fsModeResolved) {
+            s_getFsMode = reinterpret_cast<GetFrameskipModeFn>(dlsym(RTLD_DEFAULT, "godhand_get_frameskip_mode"));
+            s_getAvgFrametime = reinterpret_cast<GetAvgFrametimeFn>(dlsym(RTLD_DEFAULT, "godhand_get_avg_frametime_ms"));
+            s_fsModeResolved = true;
+        }
+        const int fsMode = s_getFsMode ? s_getFsMode() : 0;
+#else
+        const int fsMode = 0;
+#endif
+        if (fsMode > 0)
+        {
+            ++s_vsync_calls;
+            if (fsMode == 1) // Auto (Skip on lag / hitch)
+            {
+                const float lastMs = s_getAvgFrametime ? s_getAvgFrametime() : 16.67f;
+                if (lastMs > 25.0f) {
+                    shouldDraw = (s_vsync_calls % 2 == 0);
+                } else {
+                    shouldDraw = true;
+                }
+            }
+            else if (fsMode == 2) // Skip 1 Frame
+                shouldDraw = (s_vsync_calls % 2 == 0);
+            else if (fsMode == 3) // Skip 2 Frames
+                shouldDraw = (s_vsync_calls % 3 == 0);
+            else if (fsMode == 4) // Skip 3 Frames (Potato Mode)
+                shouldDraw = (s_vsync_calls % 4 == 0);
+        }
+        GSvsync((regs->csr & 0x2000u) ? 0u : 1u, shouldDraw);
         WritePresentStats();
 #if defined(__ANDROID__)
         static uint64_t s_vsync_count = 0;

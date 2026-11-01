@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Pressed state: incandescent God Hand fiery orange glow -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="270"
+                android:startColor="#EA580C"
+                android:endColor="#991B1B" />
+            <stroke
+                android:width="2.5dp"
+                android:color="#FDE047" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    <!-- Disabled state -->
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <solid android:color="#261E24" />
+            <stroke
+                android:width="1.5dp"
+                android:color="#4B434C" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+    <!-- Default state: deep God Hand crimson with gold metallic border -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="270"
+                android:startColor="#991B1B"
+                android:endColor="#450A0A" />
+            <stroke
+                android:width="2dp"
+                android:color="#D4AF37" />
+            <corners android:radius="8dp" />
+        </shape>
+    </item>
+</selector>

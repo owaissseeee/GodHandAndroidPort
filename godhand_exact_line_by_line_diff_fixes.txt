@@ -397,7 +397,7 @@ FIND (Lines 70-169 of `app/src/main/cpp/runtime/ps2xRuntime/src/lib/vu/ps2_vu1_c
             if (!std::filesystem::exists(extPath, ec))
             {
                 if (FILE *f = std::fopen(extPath.string().c_str(), "wb"))
-                {
+                
                     std::fwrite(vuCode, 1, codeSize, f);
                     std::fclose(f);
                 }

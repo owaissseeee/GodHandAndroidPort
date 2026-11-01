@@ -34,7 +34,7 @@ namespace
     bool g_inlineCheckpoint = true; // PS2X_EE_INLINE_CHECKPOINT=0: the budget stays 0 (every checkpoint calls in)
     uint64_t g_deferUntil = 0u; // EE cycle up to which checkpoints may only add to g_ps2xEeDeferred
     EeScheduler *g_deferScheduler = nullptr;
-    thread_local bool t_onEeThread = false;
+    static bool t_onEeThread = false;
 
     // accountCycles (PS2X_EE_FAST_ACCOUNT, PS2X_EE_GS_POLL_CYCLES): game thread only.
     int g_fastAccount = -1;
@@ -765,7 +765,7 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
     if (g_deferCycles < 0)
     {
         const char *value = std::getenv("PS2X_EE_DEFER_CYCLES");
-        g_deferCycles = value && *value ? std::max(0, std::atoi(value)) : 256;
+        g_deferCycles = value && *value ? std::max(0, std::atoi(value)) : 1024;
         g_deferScheduler = this;
         const char *inlineValue = std::getenv("PS2X_EE_INLINE_CHECKPOINT");
         g_inlineCheckpoint = !(inlineValue && *inlineValue == '0');

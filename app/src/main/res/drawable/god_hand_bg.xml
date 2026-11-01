@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Deep obsidian charcoal leather base -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="75%p"
+                android:centerX="50%"
+                android:centerY="45%"
+                android:startColor="#2A1810"
+                android:centerColor="#141014"
+                android:endColor="#080709" />
+        </shape>
+    </item>
+    <!-- Fiery God Hand amber/crimson top-down ambient vignette -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="270"
+                android:startColor="#33D97706"
+                android:centerColor="#00000000"
+                android:endColor="#66000000" />
+        </shape>
+    </item>
+</layer-list>

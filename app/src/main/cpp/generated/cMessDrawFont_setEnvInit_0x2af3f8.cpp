@@ -346,13 +346,11 @@ label_2af4f8:
     // 0x2af4f8 / 0x2af4fc: font width fix (0.675f in 16:9, 0.9f in 4:3)
     ctx->pc = 0x2af4f8u;
     {
-        static const bool s_isWidescreen = []() {
-            const char* env = std::getenv("GODHAND_ASPECT_RATIO_IDX");
-            return !env || std::strcmp(env, "0") == 0;
-        }();
-        // 0x3F2CCCCD = 0.675f (16:9 font fix: 0.9f * 3/4)
+        const char* env = std::getenv("GODHAND_ASPECT_RATIO_IDX");
+        const bool isWidescreen = (!env || std::strcmp(env, "1") != 0);
+        // 0x3F2CCCCD = 0.675f (16:9 / Full Screen font fix: 0.9f * 3/4)
         // 0x3F666666 = 0.9f (4:3 Original)
-        const uint32_t atVal = s_isWidescreen ? 0x3F2CCCCDu : 0x3F666666u;
+        const uint32_t atVal = isWidescreen ? 0x3F2CCCCDu : 0x3F666666u;
         SET_GPR_S32(ctx, 1, static_cast<int32_t>(atVal));
     }
     ctx->pc = 0x2af4fcu;

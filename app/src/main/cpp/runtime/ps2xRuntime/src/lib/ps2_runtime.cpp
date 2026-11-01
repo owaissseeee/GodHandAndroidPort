@@ -123,7 +123,7 @@ namespace ps2_host_display
     std::string overlayNote;
     std::string lastFpsLine;
     unsigned lastFpsSerial = 0u;
-    thread_local std::string t_fpsLineCopy;
+    static std::string t_fpsLineCopy;
 
     void setOverlayNote(const char *text)
     {
@@ -328,8 +328,8 @@ namespace
         bool wrapped = false;
     };
 
-    thread_local DispatchHistory g_dispatchHistory;
-    thread_local uint64_t g_guestJumpSerial = 0u;
+    static DispatchHistory g_dispatchHistory;
+    static uint64_t g_guestJumpSerial = 0u;
 
     struct BranchEvent
     {
@@ -361,7 +361,7 @@ namespace
         {
             return nullptr;
         }
-        thread_local BranchTrace trace;
+        static BranchTrace trace;
         if (trace.events.empty())
         {
             trace.events.resize(size);

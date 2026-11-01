@@ -430,10 +430,12 @@ void GSThreadedBackend::Execute(const std::vector<uint8_t> &chunk, GSPrimitiveBa
             // PCSX2's GIF parser loads whole qwords with aligned vector loads; the queue packs records at any byte.
             if ((reinterpret_cast<uintptr_t>(payload) & 15u) != 0u)
             {
-                static thread_local std::vector<__m128> aligned;
-                aligned.resize((length + 15u) / 16u);
-                std::memcpy(aligned.data(), payload, length);
-                m_inner->RawGif(reinterpret_cast<const uint8_t *>(aligned.data()), length);
+                static std::vector<__m128> s_aligned;
+                const size_t qwc = (length + 15u) / 16u;
+                if (s_aligned.size() < qwc)
+                    s_aligned.resize(qwc);
+                std::memcpy(s_aligned.data(), payload, length);
+                m_inner->RawGif(reinterpret_cast<const uint8_t *>(s_aligned.data()), length);
             }
             else
                 m_inner->RawGif(payload, length);

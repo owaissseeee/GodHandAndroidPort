@@ -1516,6 +1516,23 @@ inline void VU1Interpreter::execUpper(uint32_t instr)
             return;
         case 0x1F: // CLIP
         {
+#if defined(__aarch64__) || defined(_M_ARM64)
+            const uint32x4_t vfs = vld1q_u32(reinterpret_cast<const uint32_t *>(m_state.vf[fs]));
+            const uint32x4_t vft = vld1q_u32(reinterpret_cast<const uint32_t *>(m_state.vf[ft]));
+            const uint32_t wBits = vgetq_lane_u32(vft, 3);
+            const int32_t limit = (wBits & 0x7F800000u) != 0u ? static_cast<int32_t>(wBits & 0x7FFFFFFFu) : 0x007FFFFF;
+            const int32x4_t bounds = vdupq_n_s32(limit);
+            const int32x4_t s_signed = vreinterpretq_s32_u32(vfs);
+            const int32x4_t s_neg = vreinterpretq_s32_u32(veorq_u32(vfs, vdupq_n_u32(0x80000000u)));
+            const uint32x4_t gt_pos = vcgtq_s32(s_signed, bounds);
+            const uint32x4_t gt_neg = vcgtq_s32(s_neg, bounds);
+            const uint32x4_t pos_mask = {1u << 0, 1u << 2, 1u << 4, 0};
+            const uint32x4_t neg_mask = {2u << 0, 2u << 2, 2u << 4, 0};
+            const uint32x4_t combined = vorrq_u32(vandq_u32(gt_pos, pos_mask), vandq_u32(gt_neg, neg_mask));
+            const uint32_t flags = vaddvq_u32(combined);
+            queueClip(flags);
+            return;
+#else
             uint32_t wBits = 0u;
             std::memcpy(&wBits, &m_state.vf[ft][3], sizeof(wBits));
             const int32_t limit = (wBits & 0x7F800000u) != 0u ? static_cast<int32_t>(wBits & 0x7FFFFFFFu) : 0x007FFFFF;
@@ -1545,6 +1562,7 @@ inline void VU1Interpreter::execUpper(uint32_t instr)
                 flags |= 0x20u;
             queueClip(flags);
             return;
+#endif
         }
         case 0x20: // ADDAq
             for (int c = 0; c < 4; c++)
@@ -3820,13 +3838,10 @@ struct VU1InterpreterAccess
         const int32x4_t s_neg = vreinterpretq_s32_u32(veorq_u32(vfs, vdupq_n_u32(0x80000000u)));
         const uint32x4_t gt_pos = vcgtq_s32(s_signed, bounds);
         const uint32x4_t gt_neg = vcgtq_s32(s_neg, bounds);
-        uint32_t flags = 0u;
-        if (vgetq_lane_u32(gt_pos, 0)) flags |= (1u << 0);
-        if (vgetq_lane_u32(gt_neg, 0)) flags |= (2u << 0);
-        if (vgetq_lane_u32(gt_pos, 1)) flags |= (1u << 2);
-        if (vgetq_lane_u32(gt_neg, 1)) flags |= (2u << 2);
-        if (vgetq_lane_u32(gt_pos, 2)) flags |= (1u << 4);
-        if (vgetq_lane_u32(gt_neg, 2)) flags |= (2u << 4);
+        const uint32x4_t pos_mask = {1u << 0, 1u << 2, 1u << 4, 0};
+        const uint32x4_t neg_mask = {2u << 0, 2u << 2, 2u << 4, 0};
+        const uint32x4_t combined = vorrq_u32(vandq_u32(gt_pos, pos_mask), vandq_u32(gt_neg, neg_mask));
+        const uint32_t flags = vaddvq_u32(combined);
         queueClipAt(vu, ctx, cycle, flags);
         return;
 #else

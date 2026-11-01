@@ -1,0 +1,1 @@
+pid 7297's current affinity mask: 8

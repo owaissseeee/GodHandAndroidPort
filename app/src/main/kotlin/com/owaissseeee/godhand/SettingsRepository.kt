@@ -30,7 +30,7 @@ class SettingsRepository(context: Context) {
         set(value) = prefs.edit().putInt("fps_idx", value.coerceIn(0, 1)).apply()
 
     var frameskipIdx: Int
-        get() = prefs.getInt("frameskip_idx_v2", 0).coerceIn(0, 4) // 0: Off (Recommended), 1: Auto (Skip on Lag), 2: Skip 1 Frame, 3: Skip 2 Frames, 4: Skip 3 Frames (Potato Mode)
+        get() = prefs.getInt("frameskip_idx_v2", 1).coerceIn(0, 4) // 0: Off, 1: Auto (Skip on Lag - Recommended), 2: Skip 1 Frame, 3: Skip 2 Frames, 4: Skip 3 Frames (Potato Mode)
         set(value) = prefs.edit().putInt("frameskip_idx_v2", value.coerceIn(0, 4)).apply()
 
     // --- Audio Settings ---

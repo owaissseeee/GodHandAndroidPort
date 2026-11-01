@@ -30,8 +30,8 @@ android {
                 cppFlags += listOf(
                     "-std=c++20",
                     "-O3",
-                    "-march=armv8.2-a+dotprod+fp16+rcpc",
-                    "-mtune=cortex-a78",
+                    "-march=armv8-a",
+                    "-mtune=generic",
                     "-fno-math-errno",
                     "-fno-trapping-math",
                     "-fomit-frame-pointer",

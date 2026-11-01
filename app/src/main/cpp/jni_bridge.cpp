@@ -475,10 +475,11 @@ Java_com_owaissseeee_godhand_NativeBridge_updatePadState(
 
     static uint32_t s_lastLogMask = 0;
     if (static_cast<uint32_t>(buttonMask) != s_lastLogMask) {
-        if (buttonMask != 0) {
-            __android_log_print(ANDROID_LOG_INFO, "GodHandInput", "TouchPad buttons pressed: 0x%04x (START=%d, CROSS=%d)",
-                                buttonMask, (buttonMask & (1 << 3)) ? 1 : 0, (buttonMask & (1 << 14)) ? 1 : 0);
-        }
+        // Silenced per-touch logging for release performance
+        // if (buttonMask != 0) {
+        //     __android_log_print(ANDROID_LOG_INFO, "GodHandInput", "TouchPad buttons pressed: 0x%04x (START=%d, CROSS=%d)",
+        //                         buttonMask, (buttonMask & (1 << 3)) ? 1 : 0, (buttonMask & (1 << 14)) ? 1 : 0);
+        // }
         s_lastLogMask = static_cast<uint32_t>(buttonMask);
     }
 }
@@ -537,6 +538,7 @@ JNIEXPORT void JNICALL
 Java_com_owaissseeee_godhand_NativeBridge_setAspectRatio(
     JNIEnv* /*env*/, jobject /*thiz*/, jint aspectIdx)
 {
+    setenv("GODHAND_ASPECT_RATIO_IDX", std::to_string(aspectIdx).c_str(), 1);
     godhand_set_aspect_ratio(aspectIdx);
 }
 

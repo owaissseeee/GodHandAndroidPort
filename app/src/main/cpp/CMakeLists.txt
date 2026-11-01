@@ -7,14 +7,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Force-include ARM64 NEON / SIMDe compatibility header across all recompiled & runtime sources
 add_compile_options(
     -include ${CMAKE_CURRENT_SOURCE_DIR}/simd_arm64_compat.h
-    -march=armv8.2-a+dotprod+fp16+rcpc
-    -mtune=cortex-a78
+    -march=armv8-a
+    -mtune=generic
     -fno-math-errno
     -fno-trapping-math
     -fomit-frame-pointer
     -finline-functions
     -fvisibility-inlines-hidden
     -fno-semantic-interposition
+    -ftls-model=initial-exec
     -Wno-unused-variable
     -Wno-unused-but-set-variable
     -Wno-sign-compare

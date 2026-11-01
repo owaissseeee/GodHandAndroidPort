@@ -737,7 +737,9 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
             const float prevScreenFps = g_statScreenFps.load(std::memory_order_relaxed);
             const float smoothScreenFps = (prevScreenFps > 0.0f) ? (prevScreenFps * 0.7f + rawScreenFps * 0.3f) : rawScreenFps;
 
-            const float gameSpeed = (smoothGameFps / 60.0f) * 100.0f;
+            const char *targetFpsEnv = std::getenv("GODHAND_TARGET_FPS_IDX");
+            const float targetGameFps = (targetFpsEnv && std::atoi(targetFpsEnv) == 0) ? 60.0f : 30.0f;
+            const float gameSpeed = (targetGameFps > 0.0f) ? ((smoothGameFps / targetGameFps) * 100.0f) : 100.0f;
 
             g_statScreenFps.store(smoothScreenFps, std::memory_order_relaxed);
             g_statAvgFrametimeMs.store(avgMs, std::memory_order_relaxed);
@@ -855,6 +857,14 @@ bool godhand_perf_get_stats(float* outStats, int statsCount, float* outHistory, 
 
 void godhand_set_frameskip_mode(int mode) {
     g_frameskipMode.store(mode, std::memory_order_release);
+}
+
+extern "C" __attribute__((visibility("default"))) float godhand_get_avg_frametime_ms() {
+    return g_statAvgFrametimeMs.load(std::memory_order_relaxed);
+}
+
+extern "C" __attribute__((visibility("default"))) int godhand_get_frameskip_mode() {
+    return g_frameskipMode.load(std::memory_order_relaxed);
 }
 
 void godhand_set_resolution_scale(float scale) {

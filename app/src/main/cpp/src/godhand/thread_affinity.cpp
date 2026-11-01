@@ -292,71 +292,63 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
     CPU_ZERO(&mask);
     int targetNice = requestedNice;
 
-    if (sorted.size() <= 4 || is_uniform_cluster) {
-        // Low-end / Uniform devices (4 cores total, or 8x A53/A55 like Helio G35/P35):
-        // Allow compute threads to float across compute cores with strict Linux scheduler priorities
-        if (sorted.size() <= 4) {
-            switch (role) {
-                case ThreadRole::EE_MAIN:
-                    CPU_SET(sorted[0].id, &mask);
-                    if (sorted.size() > 1) CPU_SET(sorted[1].id, &mask);
-                    targetNice = -20;
-                    break;
-                case ThreadRole::GS_RENDERER:
-                    for (const auto& c : sorted) CPU_SET(c.id, &mask);
-                    targetNice = -19;
-                    break;
-                case ThreadRole::VU1_WORKER:
-                    for (const auto& c : sorted) CPU_SET(c.id, &mask);
-                    targetNice = -18;
-                    break;
-                case ThreadRole::IOP_WORKER:
-                case ThreadRole::GIF_WORKER:
-                    CPU_SET(sorted.back().id, &mask);
-                    if (sorted.size() > 1) CPU_SET(sorted[sorted.size() - 2].id, &mask);
-                    targetNice = -16;
-                    break;
-                case ThreadRole::AUDIO_SPU2:
-                    for (const auto& c : sorted) CPU_SET(c.id, &mask);
-                    targetNice = -14;
-                    break;
-                default:
-                    CPU_SET(sorted.back().id, &mask);
-                    targetNice = -2;
-                    break;
-            }
-        } else {
-            // 8-core uniform cluster (Helio G35, P35, Unisoc T606):
-            switch (role) {
-                case ThreadRole::EE_MAIN:
-                    for (int bc : big_cores) CPU_SET(bc, &mask);
-                    targetNice = -20;
-                    break;
-                case ThreadRole::GS_RENDERER:
-                    for (int bc : big_cores) CPU_SET(bc, &mask);
-                    targetNice = -19;
-                    break;
-                case ThreadRole::VU1_WORKER:
-                    for (int bc : big_cores) CPU_SET(bc, &mask);
-                    targetNice = -18;
-                    break;
-                case ThreadRole::IOP_WORKER:
-                    for (int lc : little_cores) CPU_SET(lc, &mask);
-                    targetNice = -16;
-                    break;
-                case ThreadRole::GIF_WORKER:
-                    for (int lc : little_cores) CPU_SET(lc, &mask);
-                    targetNice = -15;
-                    break;
-                case ThreadRole::AUDIO_SPU2:
-                    for (int lc : little_cores) CPU_SET(lc, &mask);
-                    targetNice = -14;
-                    break;
-                default:
-                    for (int lc : little_cores) CPU_SET(lc, &mask);
-                    targetNice = -2;
-                    break;
-            }
+    if (sorted.size() <= 4) {
+        // Low-end 4-core devices:
+        switch (role) {
+            case ThreadRole::EE_MAIN:
+                CPU_SET(sorted[0].id, &mask);
+                targetNice = -20;
+                break;
+            case ThreadRole::VU1_WORKER:
+                CPU_SET(sorted[1].id, &mask);
+                targetNice = -18;
+                break;
+            case ThreadRole::GS_RENDERER:
+                CPU_SET(sorted[2].id, &mask);
+                targetNice = -19;
+                break;
+            case ThreadRole::IOP_WORKER:
+            case ThreadRole::GIF_WORKER:
+            case ThreadRole::AUDIO_SPU2:
+            default:
+                CPU_SET(sorted.back().id, &mask);
+                targetNice = -15;
+                break;
+        }
+    } else if (top_tier <= 1) {
+        // Budget 8-core A53/A55 cluster with frequency split (Helio G25, G35, P35, Unisoc T606):
+        // Cortex-A53/A55 cores draw <0.3W each, so thermal throttling does not occur.
+        // Dedicate 1-to-1 Big cores to compute threads so GSThread is never starved by IOP/GIF:
+        switch (role) {
+            case ThreadRole::EE_MAIN:
+                CPU_SET(big_cores[0], &mask);
+                targetNice = -20;
+                break;
+            case ThreadRole::VU1_WORKER:
+                CPU_SET(big_cores[1], &mask);
+                targetNice = -20;
+                break;
+            case ThreadRole::GS_RENDERER:
+                CPU_SET(big_cores[2], &mask);
+                targetNice = -19;
+                break;
+            case ThreadRole::GIF_WORKER:
+                CPU_SET(big_cores[3], &mask);
+                targetNice = -16;
+                break;
+            case ThreadRole::IOP_WORKER:
+                for (int lc : little_cores) CPU_SET(lc, &mask);
+                targetNice = -15;
+                break;
+            case ThreadRole::AUDIO_SPU2:
+                for (int lc : little_cores) CPU_SET(lc, &mask);
+                targetNice = -14;
+                break;
+            case ThreadRole::HOST_PUMP:
+            default:
+                for (int lc : little_cores) CPU_SET(lc, &mask);
+                targetNice = -2;
+                break;
         }
     } else if (big_cores.size() >= 4) {
         // 4+ Big/Prime cores (Dimensity 7050 with 4 Big cores, Snapdragon 7s Gen 2, SD 8 Gen 1/2/3, 870, 888, Tensor G1-G4, Exynos 1380/1480):
@@ -488,6 +480,7 @@ static std::atomic<int32_t> g_tidEE{0};
 static std::atomic<int32_t> g_tidVU{0};
 static std::atomic<int32_t> g_tidGS{0};
 static std::atomic<int32_t> g_tidGIF{0};
+static std::atomic<int32_t> g_tidIOP{0};
 static std::atomic<int64_t> g_lastFrameWorkNanos{16000000LL};
 
 extern "C" void godhand_perf_record_work_duration(int64_t ns) {
@@ -511,6 +504,8 @@ extern "C" void godhand_perf_get_tids(int32_t* out, int* count) {
     if (vu > 0) out[c++] = vu;
     if (gs > 0) out[c++] = gs;
     if (gif > 0) out[c++] = gif;
+    int32_t iop = g_tidIOP.load(std::memory_order_relaxed);
+    if (iop > 0) out[c++] = iop;
     *count = c;
 }
 
@@ -526,6 +521,7 @@ extern "C" void godhand_set_thread_affinity_and_priority(const char* name, int p
     else if (role == godhand::affinity::ThreadRole::VU1_WORKER) g_tidVU.store(tid, std::memory_order_relaxed);
     else if (role == godhand::affinity::ThreadRole::GS_RENDERER) g_tidGS.store(tid, std::memory_order_relaxed);
     else if (role == godhand::affinity::ThreadRole::GIF_WORKER) g_tidGIF.store(tid, std::memory_order_relaxed);
+    else if (role == godhand::affinity::ThreadRole::IOP_WORKER) g_tidIOP.store(tid, std::memory_order_relaxed);
 
     godhand::affinity::applyAffinity(role, name, niceVal);
 }

@@ -2617,14 +2617,15 @@ namespace ps2_host_input
 
             applyPressure(state);
 
-            static uint16_t s_lastIopBtns = 0;
-            if (state.buttons != s_lastIopBtns) {
-                if (state.buttons != 0) {
-                    __android_log_print(ANDROID_LOG_INFO, "GodHandInput", "IOP padState: buttons=0x%04x (START=%d)",
-                                        state.buttons, (state.buttons & ps2x::iop::PadButton::Start) ? 1 : 0);
-                }
-                s_lastIopBtns = state.buttons;
-            }
+            // Silenced per-touch IOP logging for release performance
+            // static uint16_t s_lastIopBtns = 0;
+            // if (state.buttons != s_lastIopBtns) {
+            //     if (state.buttons != 0) {
+            //         __android_log_print(ANDROID_LOG_INFO, "GodHandInput", "IOP padState: buttons=0x%04x (START=%d)",
+            //                             state.buttons, (state.buttons & ps2x::iop::PadButton::Start) ? 1 : 0);
+            //     }
+            //     s_lastIopBtns = state.buttons;
+            // }
         }
 #endif
         {

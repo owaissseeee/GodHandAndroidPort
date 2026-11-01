@@ -1,0 +1,1003 @@
+﻿
+11-01 17:15:03.854 I/ActivityTaskManager( 1124): START u0 {flg=0x10000000 cmp=com.owaissseeee.godhand/.MainActivity} 
+with LAUNCH_MULTIPLE from uid 2000 (BAL_ALLOW_PERMISSION) result code=0
+11-01 17:15:03.891 I/ActivityManager( 1124): Start proc 15196:com.owaissseeee.godhand/u0a459 for next-top-activity 
+{com.owaissseeee.godhand/com.owaissseeee.godhand.MainActivity}
+11-01 17:15:20.938 I/ImeTracker( 1124): com.owaissseeee.godhand:47ffc01f: onRequestHide at ORIGIN_SERVER reason 
+HIDE_UNSPECIFIED_WINDOW fromUser false
+11-01 17:15:20.940 I/ImeTracker(15196): com.owaissseeee.godhand:47ffc01f: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-01 17:15:23.928 I/artd    (10839): Dex parent of 
+/data/app/~~sU8lBKYghNVlwq_OxHjbxw==/com.owaissseeee.godhand-bAfQbYI-DDXu5c7nKq53WQ==/base.apk is not writable: 
+Permission denied
+11-01 17:15:23.928 I/artd    (10839): GetBestInfo checking odex in dalvik-cache (/data/dalvik-cache/arm64/data@app@~~sU
+8lBKYghNVlwq_OxHjbxw==@com.owaissseeee.godhand-bAfQbYI-DDXu5c7nKq53WQ==@base.apk@classes.dex)
+11-01 17:15:23.928 I/artd    (10839): Loading /data/dalvik-cache/arm64/data@app@~~sU8lBKYghNVlwq_OxHjbxw==@com.owaissse
+eee.godhand-bAfQbYI-DDXu5c7nKq53WQ==@base.apk@classes.dex with executable: 0
+11-01 17:15:23.928 I/artd    (10839): OatFileAssistant test for existing oat file /data/dalvik-cache/arm64/data@app@~~s
+U8lBKYghNVlwq_OxHjbxw==@com.owaissseeee.godhand-bAfQbYI-DDXu5c7nKq53WQ==@base.apk@classes.dex: File /data/dalvik-cache/
+arm64/data@app@~~sU8lBKYghNVlwq_OxHjbxw==@com.owaissseeee.godhand-bAfQbYI-DDXu5c7nKq53WQ==@base.apk@classes.vdex does 
+not exist.
+11-01 17:15:23.928 I/artd    (10839): GetBestInfo checking odex next to the dex file 
+(/data/app/~~sU8lBKYghNVlwq_OxHjbxw==/com.owaissseeee.godhand-bAfQbYI-DDXu5c7nKq53WQ==/oat/arm64/base.odex)
+11-01 17:15:23.928 I/artd    (10839): Loading 
+/data/app/~~sU8lBKYghNVlwq_OxHjbxw==/com.owaissseeee.godhand-bAfQbYI-DDXu5c7nKq53WQ==/oat/arm64/base.odex with 
+executable: 0
+11-01 17:15:23.929 I/artd    (10839): Successfully loaded 
+/data/app/~~sU8lBKYghNVlwq_OxHjbxw==/com.owaissseeee.godhand-bAfQbYI-DDXu5c7nKq53WQ==/oat/arm64/base.odex with 
+executable: 0
+11-01 17:15:23.930 I/artd    (10839): 
+/data/app/~~sU8lBKYghNVlwq_OxHjbxw==/com.owaissseeee.godhand-bAfQbYI-DDXu5c7nKq53WQ==/oat/arm64/base.odex is 
+kOatUpToDate with filter verify
+11-01 17:15:31.946 I/ssseeee.godhand(15196): Background concurrent copying GC freed 2389KB AllocSpace bytes, 0(0B) LOS 
+objects, 71% free, 3244KB/11MB, paused 214us,61us total 221.822ms
+11-01 17:15:38.341 I/ImeTracker( 1124): com.owaissseeee.godhand:e882ee7: onRequestHide at ORIGIN_SERVER reason 
+HIDE_UNSPECIFIED_WINDOW fromUser false
+11-01 17:15:38.344 I/ImeTracker(15196): com.owaissseeee.godhand:e882ee7: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-01 17:15:39.982 I/GodHandRecomp(15196): unpackImsArchive: 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/MODULES/IRX.IMS contains 9 files
+11-01 17:15:39.982 I/GodHandRecomp(15196): unpackImsArchive: extracting sio2man.irx (5248 bytes at 0x140)
+11-01 17:15:39.984 I/GodHandRecomp(15196): unpackImsArchive: extracting padman.irx (45952 bytes at 0x15C0)
+11-01 17:15:39.985 I/GodHandRecomp(15196): unpackImsArchive: extracting mcman.irx (103680 bytes at 0xC940)
+11-01 17:15:39.987 I/GodHandRecomp(15196): unpackImsArchive: extracting mcserv.irx (7744 bytes at 0x25E40)
+11-01 17:15:39.988 I/GodHandRecomp(15196): unpackImsArchive: extracting libsd.irx (30144 bytes at 0x27C80)
+11-01 17:15:39.990 I/GodHandRecomp(15196): unpackImsArchive: extracting SDRDRV.IRX (9216 bytes at 0x2F240)
+11-01 17:15:39.990 I/GodHandRecomp(15196): unpackImsArchive: extracting sdhd.irx (14720 bytes at 0x31640)
+11-01 17:15:39.991 I/GodHandRecomp(15196): unpackImsArchive: extracting snddrv.irx (20352 bytes at 0x34FC0)
+11-01 17:15:39.993 I/GodHandRecomp(15196): unpackImsArchive: extracting cri_adxi.irx (76928 bytes at 0x39F40)
+11-01 17:15:39.994 I/GodHandRecomp(15196): unpackImsArchive: successfully unpacked 9 modules into 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/MODULES
+11-01 17:15:39.995 I/GodHandRecomp(15196): unpackImsArchive: 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/MODULES/IRX.IMS contains 9 files
+11-01 17:15:39.995 I/GodHandRecomp(15196): unpackImsArchive: extracting sio2man.irx (5248 bytes at 0x140)
+11-01 17:15:39.996 I/GodHandRecomp(15196): unpackImsArchive: extracting padman.irx (45952 bytes at 0x15C0)
+11-01 17:15:39.997 I/GodHandRecomp(15196): unpackImsArchive: extracting mcman.irx (103680 bytes at 0xC940)
+11-01 17:15:39.999 I/GodHandRecomp(15196): unpackImsArchive: extracting mcserv.irx (7744 bytes at 0x25E40)
+11-01 17:15:39.999 I/GodHandRecomp(15196): unpackImsArchive: extracting libsd.irx (30144 bytes at 0x27C80)
+11-01 17:15:39.999 I/GodHandRecomp(15196): unpackImsArchive: extracting SDRDRV.IRX (9216 bytes at 0x2F240)
+11-01 17:15:40.000 I/GodHandRecomp(15196): unpackImsArchive: extracting sdhd.irx (14720 bytes at 0x31640)
+11-01 17:15:40.000 I/GodHandRecomp(15196): unpackImsArchive: extracting snddrv.irx (20352 bytes at 0x34FC0)
+11-01 17:15:40.001 I/GodHandRecomp(15196): unpackImsArchive: extracting cri_adxi.irx (76928 bytes at 0x39F40)
+11-01 17:15:40.002 I/GodHandRecomp(15196): unpackImsArchive: successfully unpacked 9 modules into 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/MODULES
+11-01 17:15:40.025 I/GodHandRecomp(15196): unpackImsArchive: 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/MODULES/IRX.IMS contains 9 files
+11-01 17:15:40.025 I/GodHandRecomp(15196): unpackImsArchive: extracting sio2man.irx (5248 bytes at 0x140)
+11-01 17:15:40.026 I/GodHandRecomp(15196): unpackImsArchive: extracting padman.irx (45952 bytes at 0x15C0)
+11-01 17:15:40.027 I/GodHandRecomp(15196): unpackImsArchive: extracting mcman.irx (103680 bytes at 0xC940)
+11-01 17:15:40.028 I/GodHandRecomp(15196): unpackImsArchive: extracting mcserv.irx (7744 bytes at 0x25E40)
+11-01 17:15:40.029 I/GodHandRecomp(15196): unpackImsArchive: extracting libsd.irx (30144 bytes at 0x27C80)
+11-01 17:15:40.030 I/GodHandRecomp(15196): unpackImsArchive: extracting SDRDRV.IRX (9216 bytes at 0x2F240)
+11-01 17:15:40.030 I/GodHandRecomp(15196): unpackImsArchive: extracting sdhd.irx (14720 bytes at 0x31640)
+11-01 17:15:40.030 I/GodHandRecomp(15196): unpackImsArchive: extracting snddrv.irx (20352 bytes at 0x34FC0)
+11-01 17:15:40.031 I/GodHandRecomp(15196): unpackImsArchive: extracting cri_adxi.irx (76928 bytes at 0x39F40)
+11-01 17:15:40.032 I/GodHandRecomp(15196): unpackImsArchive: successfully unpacked 9 modules into 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/MODULES
+11-01 17:15:40.033 I/GodHandRecomp(15196): Successfully validated CRI AFS with 1445 entries: 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/_DATA.AFS
+11-01 17:15:44.072 W/NotificationService( 1124): Toast already killed. pkg=com.owaissseeee.godhand 
+token=android.os.BinderProxy@370476
+11-01 17:16:06.520 I/ImeTracker( 1124): com.owaissseeee.godhand:10552147: onRequestHide at ORIGIN_SERVER reason 
+HIDE_UNSPECIFIED_WINDOW fromUser false
+11-01 17:16:06.521 I/ImeTracker(15196): com.owaissseeee.godhand:10552147: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-01 17:16:12.233 I/GodHandRecomp(15196): unpackImsArchive: 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/MODULES/IRX.IMS contains 9 files
+11-01 17:16:12.234 I/GodHandRecomp(15196): unpackImsArchive: extracting sio2man.irx (5248 bytes at 0x140)
+11-01 17:16:12.256 I/GodHandRecomp(15196): unpackImsArchive: extracting padman.irx (45952 bytes at 0x15C0)
+11-01 17:16:12.279 I/GodHandRecomp(15196): unpackImsArchive: extracting mcman.irx (103680 bytes at 0xC940)
+11-01 17:16:12.303 I/GodHandRecomp(15196): unpackImsArchive: extracting mcserv.irx (7744 bytes at 0x25E40)
+11-01 17:16:12.319 I/GodHandRecomp(15196): unpackImsArchive: extracting libsd.irx (30144 bytes at 0x27C80)
+11-01 17:16:12.349 I/GodHandRecomp(15196): unpackImsArchive: extracting SDRDRV.IRX (9216 bytes at 0x2F240)
+11-01 17:16:12.372 I/GodHandRecomp(15196): unpackImsArchive: extracting sdhd.irx (14720 bytes at 0x31640)
+11-01 17:16:12.395 I/GodHandRecomp(15196): unpackImsArchive: extracting snddrv.irx (20352 bytes at 0x34FC0)
+11-01 17:16:12.423 I/GodHandRecomp(15196): unpackImsArchive: extracting cri_adxi.irx (76928 bytes at 0x39F40)
+11-01 17:16:12.442 I/GodHandRecomp(15196): unpackImsArchive: successfully unpacked 9 modules into 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/MODULES
+11-01 17:16:12.443 I/GodHandRecomp(15196): unpackImsArchive: 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/MODULES/IRX.IMS contains 9 files
+11-01 17:16:12.444 I/GodHandRecomp(15196): unpackImsArchive: extracting sio2man.irx (5248 bytes at 0x140)
+11-01 17:16:12.445 I/GodHandRecomp(15196): unpackImsArchive: extracting padman.irx (45952 bytes at 0x15C0)
+11-01 17:16:12.447 I/GodHandRecomp(15196): unpackImsArchive: extracting mcman.irx (103680 bytes at 0xC940)
+11-01 17:16:12.452 I/GodHandRecomp(15196): unpackImsArchive: extracting mcserv.irx (7744 bytes at 0x25E40)
+11-01 17:16:12.452 I/GodHandRecomp(15196): unpackImsArchive: extracting libsd.irx (30144 bytes at 0x27C80)
+11-01 17:16:12.453 I/GodHandRecomp(15196): unpackImsArchive: extracting SDRDRV.IRX (9216 bytes at 0x2F240)
+11-01 17:16:12.454 I/GodHandRecomp(15196): unpackImsArchive: extracting sdhd.irx (14720 bytes at 0x31640)
+11-01 17:16:12.455 I/GodHandRecomp(15196): unpackImsArchive: extracting snddrv.irx (20352 bytes at 0x34FC0)
+11-01 17:16:12.456 I/GodHandRecomp(15196): unpackImsArchive: extracting cri_adxi.irx (76928 bytes at 0x39F40)
+11-01 17:16:12.458 I/GodHandRecomp(15196): unpackImsArchive: successfully unpacked 9 modules into 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/MODULES
+11-01 17:16:12.508 I/GodHandRecomp(15196): unpackImsArchive: 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/MODULES/IRX.IMS contains 9 files
+11-01 17:16:12.509 I/GodHandRecomp(15196): unpackImsArchive: extracting sio2man.irx (5248 bytes at 0x140)
+11-01 17:16:12.509 I/GodHandRecomp(15196): unpackImsArchive: extracting padman.irx (45952 bytes at 0x15C0)
+11-01 17:16:12.511 I/GodHandRecomp(15196): unpackImsArchive: extracting mcman.irx (103680 bytes at 0xC940)
+11-01 17:16:12.513 I/GodHandRecomp(15196): unpackImsArchive: extracting mcserv.irx (7744 bytes at 0x25E40)
+11-01 17:16:12.514 I/GodHandRecomp(15196): unpackImsArchive: extracting libsd.irx (30144 bytes at 0x27C80)
+11-01 17:16:12.515 I/GodHandRecomp(15196): unpackImsArchive: extracting SDRDRV.IRX (9216 bytes at 0x2F240)
+11-01 17:16:12.516 I/GodHandRecomp(15196): unpackImsArchive: extracting sdhd.irx (14720 bytes at 0x31640)
+11-01 17:16:12.517 I/GodHandRecomp(15196): unpackImsArchive: extracting snddrv.irx (20352 bytes at 0x34FC0)
+11-01 17:16:12.517 I/GodHandRecomp(15196): unpackImsArchive: extracting cri_adxi.irx (76928 bytes at 0x39F40)
+11-01 17:16:12.520 I/GodHandRecomp(15196): unpackImsArchive: successfully unpacked 9 modules into 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/MODULES
+11-01 17:16:12.520 I/GodHandRecomp(15196): Successfully validated CRI AFS with 1445 entries: 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/_DATA.AFS
+11-01 17:16:13.902 I/ImeTracker( 1124): com.owaissseeee.godhand:461c5028: onRequestHide at ORIGIN_SERVER reason 
+HIDE_UNSPECIFIED_WINDOW fromUser false
+11-01 17:16:13.903 I/ImeTracker(15196): com.owaissseeee.godhand:461c5028: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-01 17:16:16.085 I/ActivityTaskManager( 1124): START u0 {cmp=com.owaissseeee.godhand/.GameActivity (has extras)} 
+with LAUNCH_MULTIPLE from uid 10459 (sr=191967174) (BAL_ALLOW_VISIBLE_WINDOW) result code=0
+11-01 17:16:16.112 I/ActivityManager( 1124): Start proc 15722:com.owaissseeee.godhand:game/u0a459 for 
+next-top-activity {com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity}
+11-01 17:16:16.321 I/ee.godhand:game(15722): Using CollectorTypeCC GC.
+11-01 17:16:16.497 W/NotificationService( 1124): Toast already killed. pkg=com.owaissseeee.godhand 
+token=android.os.BinderProxy@89448ed
+11-01 17:16:16.563 W/ee.godhand:game(15722): Core platform API violation: Ljava/lang/reflect/Field;->accessFlags:I 
+from Landroid/os/Build; using reflection
+11-01 17:16:17.347 I/ee.godhand:game(15722): AssetManager2(0xb4000063d2286c28) locale list changing from [] to [en-US]
+11-01 17:16:17.415 I/ee.godhand:game(15722): AssetManager2(0xb4000063d2286f28) locale list changing from [] to [en-US]
+11-01 17:16:18.233 I/GodHandRecomp(15722): JNI_OnLoad: God Hand Native Recomp loaded on ARM64
+11-01 17:16:18.243 I/GodHandRecomp(15722): NativeBridge: audio unmuted (master volume 1.0)
+11-01 17:16:18.374 I/GodHandRecomp(15722): NativeBridge: audio master volume set to 1.00
+11-01 17:16:18.379 I/GodHandRecomp(15722): NativeBridge: audio buffer size set to 256 frames, scheduling=1
+11-01 17:16:18.455 I/GodHandRecomp(15722): Booting God Hand EE Static Recompiled Runtime on ARM64...
+11-01 17:16:18.455 I/GodHandRecomp(15722): bootAndroidRuntime: initializing EE runtime (frameskip=0)...
+11-01 17:16:18.455 I/GodHandRecomp(15722): Target cacheDir: /data/data/com.owaissseeee.godhand/files/godhand_cache, 
+bootElf: /data/data/com.owaissseeee.godhand/files/godhand_cache/SLUS_215.03
+11-01 17:16:18.463 I/GodHandNative(15722): [gs] renderer: PCSX2 GS bound successfully on Android!
+11-01 17:16:18.473 I/GodHandPerf(15722): [Affinity] Detected Core 3: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-01 17:16:18.473 I/GodHandPerf(15722): [Affinity] Detected Core 2: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-01 17:16:18.473 I/GodHandPerf(15722): [Affinity] Detected Core 1: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-01 17:16:18.473 I/GodHandPerf(15722): [Affinity] Detected Core 0: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-01 17:16:18.473 I/GodHandPerf(15722): [Affinity] Detected Core 7: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-01 17:16:18.473 I/GodHandPerf(15722): [Affinity] Detected Core 6: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-01 17:16:18.473 I/GodHandPerf(15722): [Affinity] Detected Core 5: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-01 17:16:18.473 I/GodHandPerf(15722): [Affinity] Detected Core 4: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-01 17:16:18.473 I/GodHandPerf(15722): [Affinity] Thread 'GSThread' (TID 15761) affinity set (uniform=0, 
+big_count=4, little_count=4), sched_setaffinity rc=0, nice=-19 (pr=0)
+11-01 17:16:18.500 I/GodHandNative(15722): GSPcsx2Backend::AttachHostWindow: win=0xb4000063a7d9e010 (1600x720), 
+windowChanged flagged
+11-01 17:16:18.500 I/GodHandRecomp(15722): Attached host window, initializing runtime...
+11-01 17:16:18.743 I/AAudio  (15722): AAudioStreamBuilder_openStream() called ----------------------------------------
+11-01 17:16:18.905 I/AAudio  (15722): AAudioStreamBuilder_openStream() returns 0 = AAUDIO_OK for s#1 ----------------
+11-01 17:16:18.940 E/AudioMTKGainController(  558): setNormalVolume(), invalid param, stream -1, mSceneIndex 0, index 
+3, devices 2, gainDevice 2, return
+11-01 17:16:19.020 I/ActivityTaskManager( 1124): Displayed com.owaissseeee.godhand/.GameActivity for user 0: +2s968ms
+11-01 17:16:19.061 I/raylib  (15722):     > Backend:       miniaudio | AAudio
+11-01 17:16:19.062 I/GodHandAudio(15722): InitAudioDevice result: ready=1
+11-01 17:16:19.069 I/ImeTracker( 1124): com.owaissseeee.godhand:af8c8d84: onRequestHide at ORIGIN_SERVER reason 
+HIDE_UNSPECIFIED_WINDOW fromUser false
+11-01 17:16:19.074 I/GodHandRecomp(15722): Runtime initialized. Loading ELF from 
+/data/data/com.owaissseeee.godhand/files/godhand_cache/SLUS_215.03 ...
+11-01 17:16:19.078 I/ImeTracker(15722): com.owaissseeee.godhand:af8c8d84: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-01 17:16:19.166 I/GodHandNative(15722): Loading segment: 0x100000 - 0x7867b4 (filesz: 0x360ce4, memsz: 0x6867b4)
+11-01 17:16:19.370 I/GodHandRecomp(15722): ELF loaded successfully. Entry point PC=0x00100008
+11-01 17:16:19.375 W/InteractionJankMonitor(15722): Initializing without READ_DEVICE_CONFIG permission. enabled=false, 
+interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=com.owaissseeee.godhand
+11-01 17:16:19.412 I/GodHandNative(15722): Registered code region: 100000 - 460ce4ELF file loaded successfully. Entry 
+point: 0x100008[   1.1847][HOOK] HLE: bound 63 SDK functions; not located in this ELF: sceSifSetSreg 
+sceSifGetDataTable sceSifSetCmdBuffer sceSifSetSysCmdBuffer sceSifGetOtherData sceSifAllocSysMemory sceSifLoadIopHeap 
+sceSifLoadElfPart sceSifLoadElf sceSifGetIopAddr sceSifSetIopAddr sceSifIsAliveIop sceDeci2Open sceDeci2Close 
+sceDeci2ReqSend sceDeci2Poll sceDeci2ExRecv sceDeci2ExSend sceDeci2ExReqSend sceDeci2ExLock sceDeci2ExUnLock 
+sceTtyWrite sceTtyRead sceTtyInit sceCdCallback sceCdInitEeCB sceCdReadIOPm sceCdSeek sceCdStandby sceCdStop 
+sceCdPause sceCdTrayReq sceMpegAddBs sceMpegIsEnd sceMpegIsRefBuffEmpty sceMpegSetDecodeMode sceMpegGetDecodeMode 
+sceMpegGetPictureRAW8xy sceMpegSetDefaultPtsGap sceMpegResetDefaultPtsGap sceMpegSetImageBuff sceMpegDispWidth 
+sceMpegDispHeight sceMpegDispCenterOffX sceMpegDispCenterOffY sceMpegDemuxPssRing sceMpegDemuxPss sceMpegAddStrCallback
+11-01 17:16:19.413 I/GodHandRecomp(15722): registerGeneratedVu1Programs: AOT VU1 microprograms registered successfully!
+11-01 17:16:19.413 I/GodHandNative(15722): [   1.1853][DLL] recompiled SNR2 module packs: 81
+11-01 17:16:19.413 I/GodHandNative(15722): [   1.1854][DLL] SNR2 DLL load logger + module code installer on
+11-01 17:16:19.413 I/GodHandNative(15722): [   1.1855][GS] flicker filter of the flip copy off (0x3c3ccc = 0x80 before 
+0x30b870)
+11-01 17:16:19.413 I/GodHandNative(15722): [   1.1855][GS] game_frame_counter observed on flip chain builder 0x30b870
+11-01 17:16:19.413 I/GodHandPerf(15722): [Affinity] Thread 'HostPump' (TID 15759) affinity set (uniform=0, 
+big_count=4, little_count=4), sched_setaffinity rc=0, nice=-2 (pr=0)
+11-01 17:16:19.413 I/GodHandRecomp(15722): Starting God Hand main loop on ARM64...
+11-01 17:16:19.416 I/GodHandNative(15722): Starting execution at address 0x100008[input] built without SDL3; using 
+GLFW's gamepads
+11-01 17:16:19.416 I/GodHandNative(15722): [input] controllers through GLFW (no vibration)
+11-01 17:16:19.418 I/GodHandPerf(15722): [Affinity] Thread 'EEThread' (TID 15778) affinity set (uniform=0, 
+big_count=4, little_count=4), sched_setaffinity rc=0, nice=-20 (pr=0)
+11-01 17:16:19.639 I/GodHandPerf(15722): [Affinity] Thread 'IOPThread' (TID 15779) affinity set (uniform=0, 
+big_count=4, little_count=4), sched_setaffinity rc=0, nice=-17 (pr=0)
+11-01 17:16:19.641 I/GodHandNative(15722): EnsureOpen: calling g_api->open (hwnd=0xb4000063a7d9e010, 1600x720, 
+scale=1.0, res=/data/data/com.owaissseeee.godhand/files/godhand_cache/resources)...
+11-01 17:16:19.641 I/pcsx2-gs(15722): Bridge::Open: Selected Vulkan renderer for Android
+11-01 17:16:19.641 I/pcsx2-gs(15722): Bridge::Open: Calling GSopen (window=1600x720, scale=1.0, 
+resources=/data/data/com.owaissseeee.godhand/files/godhand_cache/resources)...
+11-01 17:16:19.644 I/GodHandPerf(15722): [Affinity] Thread 'VUThread' (TID 15781) affinity set (uniform=0, 
+big_count=4, little_count=4), sched_setaffinity rc=0, nice=-20 (pr=0)
+11-01 17:16:19.644 I/GodHandPerf(15722): [Affinity] Thread 'GIFThread' (TID 15780) affinity set (uniform=0, 
+big_count=4, little_count=4), sched_setaffinity rc=0, nice=-16 (pr=0)
+11-01 17:16:32.696 I/GodHandGS(15722): [ShaderPrewarm] Prewarming God Hand TFX pipelines & shaders...
+11-01 17:16:33.634 I/GodHandGS(15722): [ShaderPrewarm] Complete: Prewarmed 32 pipelines, flushed to 
+vulkan_pipelines.bin
+11-01 17:16:33.883 I/pcsx2-gs(15722): Bridge::Open: GSopen SUCCEEDED! Native surface active. Renderer=14, Resolution: 
+0x0, Window: 1600x720
+11-01 17:16:33.883 I/GodHandNative(15722): [pcsx2-gs] Renderer 14, scale 1 (0x0), window 1600x720, options: 
+11-01 17:16:33.883 I/GodHandNative(15722): EnsureOpen: open result m_open=1
+11-01 17:16:33.890 I/GodHandNative(15722): GSPcsx2Backend::VSync: Updating PCSX2 GS window to 0xb4000063a7d9e010 
+(1600x720)...
+11-01 17:16:33.890 I/pcsx2-gs(15722): Bridge::UpdateWindow: updating window handle=0xb4000063a7d9e010 (1600x720)
+11-01 17:16:33.973 I/pcsx2-gs(15722): Bridge::UpdateWindow: GSUpdateDisplayWindow completed successfully
+11-01 17:16:33.987 I/pcsx2-gs(15722): Rendered Vulkan frame #1 successfully
+11-01 17:16:34.967 I/GodHandNative(15722): [SifInitRpc] Initialized[sceCdSearchFile] pc=0x2be494 ra=0x2be494 
+file=0x1fffe70 pathAddr=0x44c0b8 path="\MODULES\IRX.IMS;1"
+11-01 17:16:34.968 I/GodHandNative(15722): [sceCdSearchFile:ok] path="\MODULES\IRX.IMS;1" lsn=0x100000 size=0x4cbc0 
+sectors=0x9a
+11-01 17:16:34.970 I/GodHandNative(15722): [ps2xIOP] [IOP] loaded IRX id=1 entry=0x103c4 base=0x10000 start=0
+11-01 17:16:34.970 I/GodHandNative(15722): [SIF module] load-buffer-emulated id=1 ref=1 
+path="iopbuf:fnv64:19dbc3365ea56383"
+11-01 17:16:34.973 I/GodHandNative(15722): [ps2xIOP] [IOP printf] yet sif hasn't been init
+11-01 17:16:34.974 I/GodHandNative(15722): 
+11-01 17:16:34.974 I/GodHandNative(15722): [ps2xIOP] [IOP] loaded IRX id=2 entry=0x14148 base=0x10d00 start=0
+11-01 17:16:34.974 I/GodHandNative(15722): [SIF module] load-buffer-emulated id=2 ref=1 
+path="iopbuf:fnv64:19dbc3365ea56383"
+11-01 17:16:34.978 I/GodHandNative(15722): PS2 GsSetCrt: interlaced=1, videoMode=2, frameMode=0
+11-01 17:16:35.039 I/GodHandNative(15722): [ps2xIOP] [IOP] loaded IRX id=3 entry=0x1acb0 base=0x1ac00 start=0
+11-01 17:16:35.040 I/GodHandNative(15722): [SIF module] load-buffer-emulated id=3 ref=1 
+path="iopbuf:fnv64:19dbc3365ea56383"
+11-01 17:16:35.040 I/GodHandNative(15722): [ps2xIOP] [IOP Kprintf] SDR driver version 4.0.1 (C) SCEI
+11-01 17:16:35.040 I/GodHandNative(15722): 
+11-01 17:16:35.040 I/GodHandNative(15722): [ps2xIOP] [IOP Kprintf]  Exit rsd_main 
+11-01 17:16:35.040 I/GodHandNative(15722): 
+11-01 17:16:35.040 I/GodHandNative(15722): [ps2xIOP] [IOP] loaded IRX id=4 entry=0x20ca0 base=0x20900 start=2
+11-01 17:16:35.040 I/GodHandNative(15722): [SIF module] load-buffer-emulated id=4 ref=1 
+path="iopbuf:fnv64:19dbc3365ea56383"
+11-01 17:16:35.041 I/GodHandNative(15722): [ps2xIOP] [IOP] loaded IRX id=5 entry=0x25270 base=0x22600 start=2
+11-01 17:16:35.041 I/GodHandNative(15722): [SIF module] load-buffer-emulated id=5 ref=1 
+path="iopbuf:fnv64:19dbc3365ea56383"
+11-01 17:16:35.048 I/GodHandNative(15722): [ps2xIOP] [IOP] loaded IRX id=6 entry=0x26194 base=0x25400 start=0
+11-01 17:16:35.048 I/GodHandNative(15722): [SIF module] load-buffer-emulated id=6 ref=1 
+path="iopbuf:fnv64:19dbc3365ea56383"
+11-01 17:16:35.066 I/GodHandNative(15722): [ps2xIOP] [IOP printf] CRI ADX Driver Ver.9.67(Nov  4 2005 20:08:36)
+11-01 17:16:35.066 I/GodHandNative(15722): 
+11-01 17:16:35.066 I/GodHandNative(15722): [ps2xIOP] [IOP printf] CRI ADX Driver : sceSdInit Call = 0
+11-01 17:16:35.066 I/GodHandNative(15722): 
+11-01 17:16:35.066 I/GodHandNative(15722): [ps2xIOP] [IOP printf] CRI ADX Driver : Main Thread Priority = 39
+11-01 17:16:35.066 I/GodHandNative(15722): 
+11-01 17:16:35.067 I/GodHandNative(15722): [ps2xIOP] [IOP printf] CRI ADX Driver : PSM Thread Priority  = 39
+11-01 17:16:35.067 I/GodHandNative(15722): 
+11-01 17:16:35.067 I/GodHandNative(15722): [ps2xIOP] [IOP printf] CRI ADX Driver : DTX Thread Priority  = 48
+11-01 17:16:35.067 I/GodHandNative(15722): 
+11-01 17:16:35.067 I/GodHandNative(15722): [ps2xIOP] [IOP printf] CRI ADX Driver : SPU CORE Number = 1
+11-01 17:16:35.067 I/GodHandNative(15722): 
+11-01 17:16:35.067 I/GodHandNative(15722): [ps2xIOP] [IOP] loaded IRX id=7 entry=0x2cd7c base=0x2c800 start=2
+11-01 17:16:35.067 I/GodHandNative(15722): [SIF module] load-buffer-emulated id=7 ref=1 
+path="iopbuf:fnv64:19dbc3365ea56383"
+11-01 17:16:35.284 I/GodHandNative(15722): [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd50 pathAddr=0x3d9ee8 
+path="\0FLISTDV.DIR;1"
+11-01 17:16:35.284 I/GodHandNative(15722): [sceCdSearchFile:ok] path="\0FLISTDV.DIR;1" lsn=0x10009b size=0x17 
+sectors=0x1
+11-01 17:16:35.304 I/GodHandNative(15722): [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd40 pathAddr=0x3d9ee8 
+path="\WOLVES.FST;1"
+11-01 17:16:36.276 I/GodHandNative(15722): sceCdSearchFile failed: \WOLVES.FST;1 (root: 
+/data/data/com.owaissseeee.godhand/files/godhand_cache, repeat=1)
+11-01 17:16:36.276 I/GodHandNative(15722): [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd40 pathAddr=0x3d9ee8 
+path="\_DATA.AFS;1"
+11-01 17:16:36.276 I/GodHandNative(15722): [sceCdSearchFile:ok] path="\_DATA.AFS;1" lsn=0x10009d size=0x5be75000 
+sectors=0xb7cea
+11-01 17:16:36.588 I/GodHandNative(15722): [ipu] ipu: first bytes in: 08 10 10 13 10 13 16 16 16 16 16 16 1A 18 1A 1B 
+11-01 17:16:36.817 I/GodHandNative(15722): [ps2xIOP] [IOP] loaded IRX id=8 entry=0x42c98 base=0x42b00 start=2
+11-01 17:16:36.817 I/GodHandNative(15722): [SIF module] load-buffer-emulated id=8 ref=1 
+path="iopbuf:fnv64:43e20dfb6c24e67a"
+11-01 17:16:36.817 I/GodHandNative(15722): [ps2xIOP] [IOP] loaded IRX id=9 entry=0x6da40 base=0x6da00 start=2
+11-01 17:16:36.817 I/GodHandNative(15722): [SIF module] load-buffer-emulated id=9 ref=1 
+path="iopbuf:fnv64:63e5cc9de8698a12"
+11-01 17:16:37.007 I/GodHandNative(15722): [ps2xIOP] [SIO2] pad 0 mode 0x41
+11-01 17:16:37.048 I/GodHandNative(15722): [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-01 17:16:37.428 I/GodHandNative(15722): [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x3d9c68 pathAddr=0x3d9c90 
+path="\GODHAND.FST;1"
+11-01 17:16:37.428 I/GodHandNative(15722): [sceCdSearchFile:ok] path="\GODHAND.FST;1" lsn=0x1b7d88 size=0x80b0 
+sectors=0x11
+11-01 17:16:37.428 I/GodHandNative(15722): [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffab0 pathAddr=0x3d9c90 
+path="\GODHAND.FST;1"
+11-01 17:16:37.429 I/GodHandNative(15722): [sceCdSearchFile:ok] path="\GODHAND.FST;1" lsn=0x1b7d88 size=0x80b0 
+sectors=0x11
+11-01 17:16:37.439 I/GodHandNative(15722): [ps2xIOP] [SIO2] pad 0 mode 0x41
+11-01 17:16:38.208 I/GodHandNative(15722): [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-01 17:16:38.307 I/GodHandNative(15722): [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-01 17:16:38.417 I/GodHandNative(15722): [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-01 17:16:38.719 I/GodHandNative(15722): [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-01 17:16:38.927 I/GodHandNative(15722): [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-01 17:16:38.996 I/GodHandNative(15722): [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-01 17:16:39.287 I/GodHandNative(15722): [cd-read] slow host read: 39 ms for 163840 bytes at offset 0x3e7bb800 of 
+_DATA.AFS
+11-01 17:16:39.297 I/GodHandNative(15722): [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-01 17:16:39.387 I/pcsx2-gs(15722): Rendered Vulkan frame #60 successfully
+11-01 17:16:39.388 I/GodHandNative(15722): [gs] PCSX2 GS: 60 fields, 17.5 MB of GIF data
+11-01 17:16:39.809 I/GodHandNative(15722): [ps2xIOP] [SIO2] pad 0 mode 0x79
+11-01 17:16:39.931 I/GodHandNative(15722): [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-01 17:16:40.264 I/GodHandNative(15722): [ps2xIOP] [SIO2] pad 0 mode 0x79
+11-01 17:16:40.401 I/GodHandNative(15722): [cd-read] slow host read: 75 ms for 1048576 bytes at offset 0x9c3800 of 
+_DATA.AFS
+11-01 17:16:40.990 I/GodHandNative(15722): [  22.7622][DLL] DLL slots: hole 0x007957c0..0x008a0000, runtime heap limit 
+0x007957c0; room base 0x00799080, event base 0x007a8080, mcport base 0x007c0080
+11-01 17:16:40.991 I/GodHandNative(15722): [  22.7635][DLL] slot mcport heap created: descriptor 0x00798020 heap 
+0x007c0000 size 0x20000
+11-01 17:16:40.991 I/GodHandNative(15722): [  22.7637][DLL] slot redirect mcport: ra 0x002ae540 heap 0x00754230 -> 
+0x00798020 (DLL base 0x007c0080) dll/Release/McPort.rel
+11-01 17:16:41.072 I/GodHandNative(15722): [cd-read] slow host read: 45 ms for 114688 bytes at offset 0x3da23000 of 
+_DATA.AFS
+11-01 17:16:41.178 I/GodHandNative(15722): [  22.9506][DLL] #2 link ..\PS2_EE_Release\McPort.elf base 0x007c0080 size 
+0x1bec7 (end 0x007dbf47) check 0 (ok) relocs 606 funcs 470 ctors +0x9648 align 0x80 ra 0x002ae59c
+11-01 17:16:41.277 I/GodHandNative(15722): [  23.0496][DLL] #3 registered ..\PS2_EE_Release\McPort.elf base 0x007c0080 
+size 0x1bec7 name@0x007d7d80 ctors 0x007c96c8 (header 0x7c96c8) ra 0x00394e6c
+11-01 17:16:41.279 I/GodHandNative(15722): [  23.0518][DLL] module code installed: ..\PS2_EE_Release\McPort.elf base 
+0x007c0080 entries 2827/2827 code 0x007c0180-0x007cf578 sha256 ok
+11-01 17:16:41.440 I/GodHandNative(15722): [SifRegisterRpc] sid=0x80000400 sd=0x7d2f98 func=0x7cf018 buf=0x7d3000 
+cfunc=0x0 cbuf=0x0 qd=0x7d2f80 (EE server for IOP clients; the IOP serves this SID too, EE clients stay bound to 
+it)[ps2xIOP] [IOP] sceSifBindRpc cd=0x0594d8 sid=0x80000400 -> EE server 0x007d2f98 buf 0x007d3000
+11-01 17:16:41.718 I/GodHandNative(15722): [cd-read] slow host read: 104 ms for 456704 bytes at offset 0x3cc1c000 of 
+_DATA.AFS
+11-01 17:16:42.979 I/GodHandNative(15722): [ps2xIOP] [SIO2] memory card slot 1: 
+/data/data/com.owaissseeee.godhand/files/Mcd001.ps2
+11-01 17:16:44.617 I/pcsx2-gs(15722): Rendered Vulkan frame #120 successfully
+11-01 17:16:45.199 I/GodHandRecomp(15196): unpackImsArchive: 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/MODULES/IRX.IMS contains 9 files
+11-01 17:16:45.199 I/GodHandRecomp(15196): unpackImsArchive: extracting sio2man.irx (5248 bytes at 0x140)
+11-01 17:16:45.200 I/GodHandRecomp(15196): unpackImsArchive: extracting padman.irx (45952 bytes at 0x15C0)
+11-01 17:16:45.200 I/GodHandRecomp(15196): unpackImsArchive: extracting mcman.irx (103680 bytes at 0xC940)
+11-01 17:16:45.202 I/GodHandRecomp(15196): unpackImsArchive: extracting mcserv.irx (7744 bytes at 0x25E40)
+11-01 17:16:45.202 I/GodHandRecomp(15196): unpackImsArchive: extracting libsd.irx (30144 bytes at 0x27C80)
+11-01 17:16:45.203 I/GodHandRecomp(15196): unpackImsArchive: extracting SDRDRV.IRX (9216 bytes at 0x2F240)
+11-01 17:16:45.203 I/GodHandRecomp(15196): unpackImsArchive: extracting sdhd.irx (14720 bytes at 0x31640)
+11-01 17:16:45.204 I/GodHandRecomp(15196): unpackImsArchive: extracting snddrv.irx (20352 bytes at 0x34FC0)
+11-01 17:16:45.204 I/GodHandRecomp(15196): unpackImsArchive: extracting cri_adxi.irx (76928 bytes at 0x39F40)
+11-01 17:16:45.205 I/GodHandRecomp(15196): unpackImsArchive: successfully unpacked 9 modules into 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/MODULES
+11-01 17:16:45.206 I/GodHandRecomp(15196): unpackImsArchive: 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/MODULES/IRX.IMS contains 9 files
+11-01 17:16:45.206 I/GodHandRecomp(15196): unpackImsArchive: extracting sio2man.irx (5248 bytes at 0x140)
+11-01 17:16:45.206 I/GodHandRecomp(15196): unpackImsArchive: extracting padman.irx (45952 bytes at 0x15C0)
+11-01 17:16:45.208 I/GodHandRecomp(15196): unpackImsArchive: extracting mcman.irx (103680 bytes at 0xC940)
+11-01 17:16:45.210 I/GodHandRecomp(15196): unpackImsArchive: extracting mcserv.irx (7744 bytes at 0x25E40)
+11-01 17:16:45.211 I/GodHandRecomp(15196): unpackImsArchive: extracting libsd.irx (30144 bytes at 0x27C80)
+11-01 17:16:45.211 I/GodHandRecomp(15196): unpackImsArchive: extracting SDRDRV.IRX (9216 bytes at 0x2F240)
+11-01 17:16:45.212 I/GodHandRecomp(15196): unpackImsArchive: extracting sdhd.irx (14720 bytes at 0x31640)
+11-01 17:16:45.214 I/GodHandRecomp(15196): unpackImsArchive: extracting snddrv.irx (20352 bytes at 0x34FC0)
+11-01 17:16:45.214 I/GodHandRecomp(15196): unpackImsArchive: extracting cri_adxi.irx (76928 bytes at 0x39F40)
+11-01 17:16:45.216 I/GodHandRecomp(15196): unpackImsArchive: successfully unpacked 9 modules into 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/MODULES
+11-01 17:16:45.229 I/GodHandRecomp(15196): unpackImsArchive: 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/MODULES/IRX.IMS contains 9 files
+11-01 17:16:45.230 I/GodHandRecomp(15196): unpackImsArchive: extracting sio2man.irx (5248 bytes at 0x140)
+11-01 17:16:45.230 I/GodHandRecomp(15196): unpackImsArchive: extracting padman.irx (45952 bytes at 0x15C0)
+11-01 17:16:45.231 I/GodHandRecomp(15196): unpackImsArchive: extracting mcman.irx (103680 bytes at 0xC940)
+11-01 17:16:45.235 I/GodHandRecomp(15196): unpackImsArchive: extracting mcserv.irx (7744 bytes at 0x25E40)
+11-01 17:16:45.235 I/GodHandRecomp(15196): unpackImsArchive: extracting libsd.irx (30144 bytes at 0x27C80)
+11-01 17:16:45.236 I/GodHandRecomp(15196): unpackImsArchive: extracting SDRDRV.IRX (9216 bytes at 0x2F240)
+11-01 17:16:45.236 I/GodHandRecomp(15196): unpackImsArchive: extracting sdhd.irx (14720 bytes at 0x31640)
+11-01 17:16:45.237 I/GodHandRecomp(15196): unpackImsArchive: extracting snddrv.irx (20352 bytes at 0x34FC0)
+11-01 17:16:45.237 I/GodHandRecomp(15196): unpackImsArchive: extracting cri_adxi.irx (76928 bytes at 0x39F40)
+11-01 17:16:45.239 I/GodHandRecomp(15196): unpackImsArchive: successfully unpacked 9 modules into 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/MODULES
+11-01 17:16:45.240 I/GodHandRecomp(15196): Successfully validated CRI AFS with 1445 entries: 
+/data/user/0/com.owaissseeee.godhand/files/godhand_cache/_DATA.AFS
+11-01 17:16:46.217 I/GodHandNative(15722): [  27.9890][DLL] module code removed (unregistered): 
+..\PS2_EE_Release\McPort.elf base 0x007c0080
+11-01 17:16:46.217 I/GodHandNative(15722): [  27.9894][DLL] unregister ..\PS2_EE_Release\McPort.elf base 0x007c0080 ra 
+0x00394f98
+11-01 17:16:46.301 I/pcsx2-gs(15722): Rendered Vulkan frame #180 successfully
+11-01 17:16:46.749 I/GodHandNative(15722): [cd-read] slow host read: 50 ms for 784384 bytes at offset 0x45c5f000 of 
+_DATA.AFS
+11-01 17:16:47.009 I/GodHandNative(15722): [ipu] ipu: bdec out y[0..7]=37 37 37 37 37 37 37 37  cb[0..3]=128 128 128 
+128  cr[0..3]=128 128 128 128
+11-01 17:16:47.112 I/GodHandNative(15722): [ipu] ipu: csc in  y[0..7]=37 37 37 37 37 37 37 37  cb[0..3]=128 128 128 
+128  cr[0..3]=128 128 128 128
+11-01 17:16:49.659 W/NotificationService( 1124): Toast already killed. pkg=com.owaissseeee.godhand 
+token=android.os.BinderProxy@1977350
+11-01 17:16:49.865 I/pcsx2-gs(15722): Rendered Vulkan frame #240 successfully
+11-01 17:16:54.215 I/pcsx2-gs(15722): Rendered Vulkan frame #300 successfully
+11-01 17:16:54.805 I/InputDispatcher( 1124): Channel [Gesture Monitor] swipe-up is stealing input gesture for device 3 
+from [b574da3 com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity, [Gesture Monitor] edge-swipe]
+11-01 17:16:56.083 I/GodHandRecomp(15722): NativeBridge: audio muted (master volume 0.0)
+11-01 17:16:56.085 I/ee.godhand:game(15722): CollectorTransition concurrent copying GC freed 347KB AllocSpace bytes, 
+0(0B) LOS objects, 79% free, 2134KB/10MB, paused 155us,59us total 147.833ms
+11-01 17:16:56.088 I/GodHandRecomp(15722): NativeBridge: onSurfaceDestroyed called
+11-01 17:16:56.088 I/GodHandNative(15722): GSPcsx2Backend::DetachHostWindow: surface marked invalid (backgrounded)
+11-01 17:16:56.109 I/GodHandRecomp(15722): NativeBridge: audio muted (master volume 0.0)
+11-01 17:16:56.675 I/ActivityManager( 1124): Killing 15196:com.owaissseeee.godhand/u0a459 (adj 905): remove task
+11-01 17:16:56.690 I/ActivityManager( 1124): Killing 15722:com.owaissseeee.godhand:game/u0a459 (adj 905): remove task
+11-01 17:16:56.739 W/UsageStatsService( 1124): Unexpected activity event reported! 
+(com.owaissseeee.godhand/com.owaissseeee.godhand.MainActivity event : 23 instanceId : 55691956)
+11-01 17:16:56.779 I/WindowManager( 1124): WIN DEATH: Window{b574da3 u0 
+com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity}
+11-01 17:16:56.790 W/UsageStatsService( 1124): Unexpected activity event reported! 
+(com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity event : 23 instanceId : 24397030)
+11-01 17:16:58.228 I/ActivityTaskManager( 1124): START u0 {act=android.intent.action.MAIN 
+cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.owaissseeee.godhand/.MainActivity bnds=[0,712][144,952]} 
+with LAUNCH_MULTIPLE from uid 10403 (sr=31467177) (BAL_ALLOW_VISIBLE_WINDOW) result code=0
+11-01 17:16:58.268 I/ActivityManager( 1124): Start proc 15984:com.owaissseeee.godhand/u0a459 for next-top-activity 
+{com.owaissseeee.godhand/com.owaissseeee.godhand.MainActivity}
+11-01 17:16:58.294 I/ssseeee.godhand(15984): Using CollectorTypeCC GC.
+11-01 17:16:58.314 W/ssseeee.godhand(15984): Core platform API violation: Ljava/lang/reflect/Field;->accessFlags:I 
+from Landroid/os/Build; using reflection
+11-01 17:16:58.429 I/ssseeee.godhand(15984): AssetManager2(0xb4000063d2286c28) locale list changing from [] to [en-US]
+11-01 17:16:58.575 I/ssseeee.godhand(15984): AssetManager2(0xb4000063d2286f28) locale list changing from [] to [en-US]
+11-01 17:17:00.155 I/ActivityTaskManager( 1124): Displayed com.owaissseeee.godhand/.MainActivity for user 0: +1s945ms
+11-01 17:17:00.184 I/ImeTracker( 1124): com.owaissseeee.godhand:70227d96: onRequestHide at ORIGIN_SERVER reason 
+HIDE_UNSPECIFIED_WINDOW fromUser false
+11-01 17:17:00.187 I/ImeTracker(15984): com.owaissseeee.godhand:70227d96: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-01 17:17:00.852 I/ActivityTaskManager( 1124): START u0 {cmp=com.owaissseeee.godhand/.GameActivity (has extras)} 
+with LAUNCH_MULTIPLE from uid 10459 (sr=255856221) (BAL_ALLOW_VISIBLE_WINDOW) result code=0
+11-01 17:17:00.873 I/ActivityManager( 1124): Start proc 16025:com.owaissseeee.godhand:game/u0a459 for 
+next-top-activity {com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity}
+11-01 17:17:00.897 I/ee.godhand:game(16025): Using CollectorTypeCC GC.
+11-01 17:17:00.910 W/ee.godhand:game(16025): Core platform API violation: Ljava/lang/reflect/Field;->accessFlags:I 
+from Landroid/os/Build; using reflection
+11-01 17:17:00.963 I/ee.godhand:game(16025): AssetManager2(0xb4000063d2286c28) locale list changing from [] to [en-US]
+11-01 17:17:00.994 I/ee.godhand:game(16025): AssetManager2(0xb4000063d2286f28) locale list changing from [] to [en-US]
+11-01 17:17:01.322 I/GodHandRecomp(16025): JNI_OnLoad: God Hand Native Recomp loaded on ARM64
+11-01 17:17:01.322 I/GodHandRecomp(16025): NativeBridge: audio unmuted (master volume 1.0)
+11-01 17:17:01.381 I/GodHandRecomp(16025): NativeBridge: audio master volume set to 1.00
+11-01 17:17:01.382 I/GodHandRecomp(16025): NativeBridge: audio buffer size set to 256 frames, scheduling=1
+11-01 17:17:01.383 I/GodHandRecomp(16025): Booting God Hand EE Static Recompiled Runtime on ARM64...
+11-01 17:17:01.383 I/GodHandRecomp(16025): bootAndroidRuntime: initializing EE runtime (frameskip=0)...
+11-01 17:17:01.383 I/GodHandRecomp(16025): Target cacheDir: /data/data/com.owaissseeee.godhand/files/godhand_cache, 
+bootElf: /data/data/com.owaissseeee.godhand/files/godhand_cache/SLUS_215.03
+11-01 17:17:01.384 I/GodHandNative(16025): [gs] renderer: PCSX2 GS bound successfully on Android!
+11-01 17:17:01.385 I/GodHandPerf(16025): [Affinity] Detected Core 3: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-01 17:17:01.385 I/GodHandPerf(16025): [Affinity] Detected Core 2: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-01 17:17:01.385 I/GodHandPerf(16025): [Affinity] Detected Core 1: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-01 17:17:01.385 I/GodHandPerf(16025): [Affinity] Detected Core 0: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-01 17:17:01.385 I/GodHandPerf(16025): [Affinity] Detected Core 7: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-01 17:17:01.385 I/GodHandPerf(16025): [Affinity] Detected Core 6: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-01 17:17:01.385 I/GodHandPerf(16025): [Affinity] Detected Core 5: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-01 17:17:01.385 I/GodHandPerf(16025): [Affinity] Detected Core 4: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-01 17:17:01.391 I/GodHandPerf(16025): [Affinity] Thread 'GSThread' (TID 16046) affinity set (uniform=0, 
+big_count=4, little_count=4), sched_setaffinity rc=0, nice=-19 (pr=0)
+11-01 17:17:01.400 I/GodHandNative(16025): GSPcsx2Backend::AttachHostWindow: win=0xb4000063a7da1010 (1600x720), 
+windowChanged flagged
+11-01 17:17:01.400 I/GodHandRecomp(16025): Attached host window, initializing runtime...
+11-01 17:17:01.433 I/AAudio  (16025): AAudioStreamBuilder_openStream() called ----------------------------------------
+11-01 17:17:01.457 I/AAudio  (16025): AAudioStreamBuilder_openStream() returns 0 = AAUDIO_OK for s#1 ----------------
+11-01 17:17:01.462 E/AudioMTKGainController(  558): setNormalVolume(), invalid param, stream -1, mSceneIndex 0, index 
+3, devices 2, gainDevice 2, return
+11-01 17:17:01.488 I/raylib  (16025):     > Backend:       miniaudio | AAudio
+11-01 17:17:01.489 I/GodHandAudio(16025): InitAudioDevice result: ready=1
+11-01 17:17:01.496 I/GodHandRecomp(16025): Runtime initialized. Loading ELF from 
+/data/data/com.owaissseeee.godhand/files/godhand_cache/SLUS_215.03 ...
+11-01 17:17:01.507 I/GodHandNative(16025): Loading segment: 0x100000 - 0x7867b4 (filesz: 0x360ce4, memsz: 0x6867b4)
+11-01 17:17:01.514 I/ActivityTaskManager( 1124): Displayed com.owaissseeee.godhand/.GameActivity for user 0: +669ms
+11-01 17:17:01.540 I/GodHandRecomp(16025): ELF loaded successfully. Entry point PC=0x00100008
+11-01 17:17:01.550 I/ImeTracker( 1124): com.owaissseeee.godhand:78d822ba: onRequestHide at ORIGIN_SERVER reason 
+HIDE_UNSPECIFIED_WINDOW fromUser false
+11-01 17:17:01.552 I/ImeTracker(16025): com.owaissseeee.godhand:78d822ba: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-01 17:17:01.555 I/GodHandNative(16025): Registered code region: 100000 - 460ce4ELF file loaded successfully. Entry 
+point: 0x100008[   0.2377][HOOK] HLE: bound 63 SDK functions; not located in this ELF: sceSifSetSreg 
+sceSifGetDataTable sceSifSetCmdBuffer sceSifSetSysCmdBuffer sceSifGetOtherData sceSifAllocSysMemory sceSifLoadIopHeap 
+sceSifLoadElfPart sceSifLoadElf sceSifGetIopAddr sceSifSetIopAddr sceSifIsAliveIop sceDeci2Open sceDeci2Close 
+sceDeci2ReqSend sceDeci2Poll sceDeci2ExRecv sceDeci2ExSend sceDeci2ExReqSend sceDeci2ExLock sceDeci2ExUnLock 
+sceTtyWrite sceTtyRead sceTtyInit sceCdCallback sceCdInitEeCB sceCdReadIOPm sceCdSeek sceCdStandby sceCdStop 
+sceCdPause sceCdTrayReq sceMpegAddBs sceMpegIsEnd sceMpegIsRefBuffEmpty sceMpegSetDecodeMode sceMpegGetDecodeMode 
+sceMpegGetPictureRAW8xy sceMpegSetDefaultPtsGap sceMpegResetDefaultPtsGap sceMpegSetImageBuff sceMpegDispWidth 
+sceMpegDispHeight sceMpegDispCenterOffX sceMpegDispCenterOffY sceMpegDemuxPssRing sceMpegDemuxPss sceMpegAddStrCallback
+11-01 17:17:01.555 I/GodHandRecomp(16025): registerGeneratedVu1Programs: AOT VU1 microprograms registered successfully!
+11-01 17:17:01.556 I/GodHandNative(16025): [   0.2388][DLL] recompiled SNR2 module packs: 81
+11-01 17:17:01.556 I/GodHandNative(16025): [   0.2391][DLL] SNR2 DLL load logger + module code installer on
+11-01 17:17:01.556 I/GodHandNative(16025): [   0.2392][GS] flicker filter of the flip copy off (0x3c3ccc = 0x80 before 
+0x30b870)
+11-01 17:17:01.556 I/GodHandNative(16025): [   0.2392][GS] game_frame_counter observed on flip chain builder 0x30b870
+11-01 17:17:01.557 I/GodHandPerf(16025): [Affinity] Thread 'HostPump' (TID 16045) affinity set (uniform=0, 
+big_count=4, little_count=4), sched_setaffinity rc=0, nice=-2 (pr=0)
+11-01 17:17:01.557 I/GodHandRecomp(16025): Starting God Hand main loop on ARM64...
+11-01 17:17:01.559 I/GodHandNative(16025): Starting execution at address 0x100008[input] built without SDL3; using 
+GLFW's gamepads
+11-01 17:17:01.559 I/GodHandNative(16025): [input] controllers through GLFW (no vibration)
+11-01 17:17:01.563 I/GodHandPerf(16025): [Affinity] Thread 'EEThread' (TID 16057) affinity set (uniform=0, 
+big_count=4, little_count=4), sched_setaffinity rc=0, nice=-20 (pr=0)
+11-01 17:17:01.570 I/GodHandPerf(16025): [Affinity] Thread 'IOPThread' (TID 16058) affinity set (uniform=0, 
+big_count=4, little_count=4), sched_setaffinity rc=0, nice=-17 (pr=0)
+11-01 17:17:01.580 I/GodHandNative(16025): EnsureOpen: calling g_api->open (hwnd=0xb4000063a7da1010, 1600x720, 
+scale=1.0, res=/data/data/com.owaissseeee.godhand/files/godhand_cache/resources)...
+11-01 17:17:01.580 I/pcsx2-gs(16025): Bridge::Open: Selected Vulkan renderer for Android
+11-01 17:17:01.580 I/pcsx2-gs(16025): Bridge::Open: Calling GSopen (window=1600x720, scale=1.0, 
+resources=/data/data/com.owaissseeee.godhand/files/godhand_cache/resources)...
+11-01 17:17:01.584 I/GodHandPerf(16025): [Affinity] Thread 'VUThread' (TID 16060) affinity set (uniform=0, 
+big_count=4, little_count=4), sched_setaffinity rc=0, nice=-20 (pr=0)
+11-01 17:17:01.584 I/GodHandPerf(16025): [Affinity] Thread 'GIFThread' (TID 16059) affinity set (uniform=0, 
+big_count=4, little_count=4), sched_setaffinity rc=0, nice=-16 (pr=0)
+11-01 17:17:01.872 W/InteractionJankMonitor(16025): Initializing without READ_DEVICE_CONFIG permission. enabled=false, 
+interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=com.owaissseeee.godhand
+11-01 17:17:02.473 I/GodHandGS(16025): [ShaderPrewarm] Prewarming God Hand TFX pipelines & shaders...
+11-01 17:17:02.509 I/GodHandGS(16025): [ShaderPrewarm] Complete: Prewarmed 32 pipelines, flushed to 
+vulkan_pipelines.bin
+11-01 17:17:02.518 I/pcsx2-gs(16025): Bridge::Open: GSopen SUCCEEDED! Native surface active. Renderer=14, Resolution: 
+0x0, Window: 1600x720
+11-01 17:17:02.519 I/GodHandNative(16025): [pcsx2-gs] Renderer 14, scale 1 (0x0), window 1600x720, options: 
+11-01 17:17:02.519 I/GodHandNative(16025): EnsureOpen: open result m_open=1
+11-01 17:17:02.521 I/GodHandNative(16025): GSPcsx2Backend::VSync: Updating PCSX2 GS window to 0xb4000063a7da1010 
+(1600x720)...
+11-01 17:17:02.521 I/pcsx2-gs(16025): Bridge::UpdateWindow: updating window handle=0xb4000063a7da1010 (1600x720)
+11-01 17:17:02.547 I/pcsx2-gs(16025): Bridge::UpdateWindow: GSUpdateDisplayWindow completed successfully
+11-01 17:17:02.556 I/pcsx2-gs(16025): Rendered Vulkan frame #1 successfully
+11-01 17:17:03.436 I/GodHandNative(16025): [SifInitRpc] Initialized[sceCdSearchFile] pc=0x2be494 ra=0x2be494 
+file=0x1fffe70 pathAddr=0x44c0b8 path="\MODULES\IRX.IMS;1"
+11-01 17:17:03.437 I/GodHandNative(16025): [sceCdSearchFile:ok] path="\MODULES\IRX.IMS;1" lsn=0x100000 size=0x4cbc0 
+sectors=0x9a
+11-01 17:17:03.438 I/GodHandNative(16025): [ps2xIOP] [IOP] loaded IRX id=1 entry=0x103c4 base=0x10000 start=0
+11-01 17:17:03.438 I/GodHandNative(16025): [SIF module] load-buffer-emulated id=1 ref=1 
+path="iopbuf:fnv64:19dbc3365ea56383"
+11-01 17:17:03.440 I/GodHandNative(16025): [ps2xIOP] [IOP printf] yet sif hasn't been init
+11-01 17:17:03.440 I/GodHandNative(16025): 
+11-01 17:17:03.440 I/GodHandNative(16025): [ps2xIOP] [IOP] loaded IRX id=2 entry=0x14148 base=0x10d00 start=0
+11-01 17:17:03.440 I/GodHandNative(16025): [SIF module] load-buffer-emulated id=2 ref=1 
+path="iopbuf:fnv64:19dbc3365ea56383"
+11-01 17:17:03.441 I/GodHandNative(16025): PS2 GsSetCrt: interlaced=1, videoMode=2, frameMode=0
+11-01 17:17:03.458 I/GodHandNative(16025): [ps2xIOP] [IOP] loaded IRX id=3 entry=0x1acb0 base=0x1ac00 start=0
+11-01 17:17:03.458 I/GodHandNative(16025): [SIF module] load-buffer-emulated id=3 ref=1 
+path="iopbuf:fnv64:19dbc3365ea56383"
+11-01 17:17:03.458 I/GodHandNative(16025): [ps2xIOP] [IOP Kprintf] SDR driver version 4.0.1 (C) SCEI
+11-01 17:17:03.458 I/GodHandNative(16025): 
+11-01 17:17:03.458 I/GodHandNative(16025): [ps2xIOP] [IOP Kprintf]  Exit rsd_main 
+11-01 17:17:03.458 I/GodHandNative(16025): 
+11-01 17:17:03.459 I/GodHandNative(16025): [ps2xIOP] [IOP] loaded IRX id=4 entry=0x20ca0 base=0x20900 start=2
+11-01 17:17:03.459 I/GodHandNative(16025): [SIF module] load-buffer-emulated id=4 ref=1 
+path="iopbuf:fnv64:19dbc3365ea56383"
+11-01 17:17:03.459 I/GodHandNative(16025): [ps2xIOP] [IOP] loaded IRX id=5 entry=0x25270 base=0x22600 start=2
+11-01 17:17:03.459 I/GodHandNative(16025): [SIF module] load-buffer-emulated id=5 ref=1 
+path="iopbuf:fnv64:19dbc3365ea56383"
+11-01 17:17:03.466 I/GodHandNative(16025): [ps2xIOP] [IOP] loaded IRX id=6 entry=0x26194 base=0x25400 start=0
+11-01 17:17:03.466 I/GodHandNative(16025): [SIF module] load-buffer-emulated id=6 ref=1 
+path="iopbuf:fnv64:19dbc3365ea56383"
+11-01 17:17:03.472 I/GodHandNative(16025): [ps2xIOP] [IOP printf] CRI ADX Driver Ver.9.67(Nov  4 2005 20:08:36)
+11-01 17:17:03.472 I/GodHandNative(16025): 
+11-01 17:17:03.472 I/GodHandNative(16025): [ps2xIOP] [IOP printf] CRI ADX Driver : sceSdInit Call = 0
+11-01 17:17:03.472 I/GodHandNative(16025): 
+11-01 17:17:03.472 I/GodHandNative(16025): [ps2xIOP] [IOP printf] CRI ADX Driver : Main Thread Priority = 39
+11-01 17:17:03.472 I/GodHandNative(16025): 
+11-01 17:17:03.472 I/GodHandNative(16025): [ps2xIOP] [IOP printf] CRI ADX Driver : PSM Thread Priority  = 39
+11-01 17:17:03.472 I/GodHandNative(16025): 
+11-01 17:17:03.472 I/GodHandNative(16025): [ps2xIOP] [IOP printf] CRI ADX Driver : DTX Thread Priority  = 48
+11-01 17:17:03.472 I/GodHandNative(16025): 
+11-01 17:17:03.472 I/GodHandNative(16025): [ps2xIOP] [IOP printf] CRI ADX Driver : SPU CORE Number = 1
+11-01 17:17:03.472 I/GodHandNative(16025): 
+11-01 17:17:03.472 I/GodHandNative(16025): [ps2xIOP] [IOP] loaded IRX id=7 entry=0x2cd7c base=0x2c800 start=2
+11-01 17:17:03.472 I/GodHandNative(16025): [SIF module] load-buffer-emulated id=7 ref=1 
+path="iopbuf:fnv64:19dbc3365ea56383"
+11-01 17:17:03.474 I/GodHandNative(16025): [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd50 pathAddr=0x3d9ee8 
+path="\0FLISTDV.DIR;1"
+11-01 17:17:03.474 I/GodHandNative(16025): [sceCdSearchFile:ok] path="\0FLISTDV.DIR;1" lsn=0x10009b size=0x17 
+sectors=0x1
+11-01 17:17:03.483 I/GodHandNative(16025): [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd40 pathAddr=0x3d9ee8 
+path="\WOLVES.FST;1"
+11-01 17:17:03.494 I/GodHandNative(16025): sceCdSearchFile failed: \WOLVES.FST;1 (root: 
+/data/data/com.owaissseeee.godhand/files/godhand_cache, repeat=1)
+11-01 17:17:03.495 I/GodHandNative(16025): [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd40 pathAddr=0x3d9ee8 
+path="\_DATA.AFS;1"
+11-01 17:17:03.495 I/GodHandNative(16025): [sceCdSearchFile:ok] path="\_DATA.AFS;1" lsn=0x10009d size=0x5be75000 
+sectors=0xb7cea
+11-01 17:17:03.503 I/GodHandNative(16025): [ipu] ipu: first bytes in: 08 10 10 13 10 13 16 16 16 16 16 16 1A 18 1A 1B 
+11-01 17:17:03.507 I/GodHandNative(16025): [ps2xIOP] [IOP] loaded IRX id=8 entry=0x42c98 base=0x42b00 start=2
+11-01 17:17:03.507 I/GodHandNative(16025): [SIF module] load-buffer-emulated id=8 ref=1 
+path="iopbuf:fnv64:43e20dfb6c24e67a"
+11-01 17:17:03.508 I/GodHandNative(16025): [ps2xIOP] [IOP] loaded IRX id=9 entry=0x6da40 base=0x6da00 start=2
+11-01 17:17:03.508 I/GodHandNative(16025): [SIF module] load-buffer-emulated id=9 ref=1 
+path="iopbuf:fnv64:63e5cc9de8698a12"
+11-01 17:17:03.564 I/GodHandNative(16025): [ps2xIOP] [SIO2] pad 0 mode 0x41
+11-01 17:17:03.608 I/GodHandNative(16025): [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-01 17:17:04.004 I/GodHandNative(16025): [ps2xIOP] [SIO2] pad 0 mode 0x41
+11-01 17:17:04.012 I/GodHandNative(16025): [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x3d9c68 pathAddr=0x3d9c90 
+path="\GODHAND.FST;1"
+11-01 17:17:04.012 I/GodHandNative(16025): [sceCdSearchFile:ok] path="\GODHAND.FST;1" lsn=0x1b7d88 size=0x80b0 
+sectors=0x11
+11-01 17:17:04.012 I/GodHandNative(16025): [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffab0 pathAddr=0x3d9c90 
+path="\GODHAND.FST;1"
+11-01 17:17:04.012 I/GodHandNative(16025): [sceCdSearchFile:ok] path="\GODHAND.FST;1" lsn=0x1b7d88 size=0x80b0 
+sectors=0x11
+11-01 17:17:04.349 I/GodHandNative(16025): [cd-read] slow host read: 37 ms for 1048576 bytes at offset 0x1c135000 of 
+_DATA.AFS
+11-01 17:17:04.529 I/GodHandNative(16025): [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-01 17:17:04.597 I/GodHandNative(16025): [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-01 17:17:04.711 I/GodHandNative(16025): [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-01 17:17:05.037 I/GodHandNative(16025): [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-01 17:17:05.252 I/GodHandNative(16025): [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-01 17:17:05.325 I/GodHandNative(16025): [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-01 17:17:05.601 I/GodHandNative(16025): [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-01 17:17:05.646 I/pcsx2-gs(16025): Rendered Vulkan frame #60 successfully
+11-01 17:17:05.646 I/GodHandNative(16025): [gs] PCSX2 GS: 60 fields, 17.5 MB of GIF data
+11-01 17:17:06.102 I/GodHandNative(16025): [ps2xIOP] [SIO2] pad 0 mode 0x79
+11-01 17:17:06.210 I/GodHandNative(16025): [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-01 17:17:06.532 I/GodHandNative(16025): [ps2xIOP] [SIO2] pad 0 mode 0x79
+11-01 17:17:06.918 I/GodHandNative(16025): [   5.6013][DLL] DLL slots: hole 0x007957c0..0x008a0000, runtime heap limit 
+0x007957c0; room base 0x00799080, event base 0x007a8080, mcport base 0x007c0080
+11-01 17:17:06.919 I/GodHandNative(16025): [   5.6025][DLL] slot mcport heap created: descriptor 0x00798020 heap 
+0x007c0000 size 0x20000
+11-01 17:17:06.920 I/GodHandNative(16025): [   5.6028][DLL] slot redirect mcport: ra 0x002ae540 heap 0x00754230 -> 
+0x00798020 (DLL base 0x007c0080) dll/Release/McPort.rel
+11-01 17:17:07.062 I/GodHandNative(16025): [   5.7451][DLL] #2 link ..\PS2_EE_Release\McPort.elf base 0x007c0080 size 
+0x1bec7 (end 0x007dbf47) check 0 (ok) relocs 606 funcs 470 ctors +0x9648 align 0x80 ra 0x002ae59c
+11-01 17:17:07.157 I/GodHandNative(16025): [   5.8401][DLL] #3 registered ..\PS2_EE_Release\McPort.elf base 0x007c0080 
+size 0x1bec7 name@0x007d7d80 ctors 0x007c96c8 (header 0x7c96c8) ra 0x00394e6c
+11-01 17:17:07.159 I/GodHandNative(16025): [   5.8421][DLL] module code installed: ..\PS2_EE_Release\McPort.elf base 
+0x007c0080 entries 2827/2827 code 0x007c0180-0x007cf578 sha256 ok
+11-01 17:17:07.160 I/GodHandNative(16025): [SifRegisterRpc] sid=0x80000400 sd=0x7d2f98 func=0x7cf018 buf=0x7d3000 
+cfunc=0x0 cbuf=0x0 qd=0x7d2f80 (EE server for IOP clients; the IOP serves this SID too, EE clients stay bound to 
+it)[ps2xIOP] [IOP] sceSifBindRpc cd=0x0594d8 sid=0x80000400 -> EE server 0x007d2f98 buf 0x007d3000
+11-01 17:17:07.345 I/GodHandNative(16025): [ps2xIOP] [SIO2] memory card slot 1: 
+/data/data/com.owaissseeee.godhand/files/Mcd001.ps2
+11-01 17:17:07.737 I/pcsx2-gs(16025): Rendered Vulkan frame #120 successfully
+11-01 17:17:09.921 I/GodHandNative(16025): [   8.6044][DLL] module code removed (unregistered): 
+..\PS2_EE_Release\McPort.elf base 0x007c0080
+11-01 17:17:09.922 I/GodHandNative(16025): [   8.6049][DLL] unregister ..\PS2_EE_Release\McPort.elf base 0x007c0080 ra 
+0x00394f98
+11-01 17:17:10.010 I/pcsx2-gs(16025): Rendered Vulkan frame #180 successfully
+11-01 17:17:10.272 I/GodHandNative(16025): [ipu] ipu: bdec out y[0..7]=37 37 37 37 37 37 37 37  cb[0..3]=128 128 128 
+128  cr[0..3]=128 128 128 128
+11-01 17:17:10.362 I/GodHandNative(16025): [ipu] ipu: csc in  y[0..7]=37 37 37 37 37 37 37 37  cb[0..3]=128 128 128 
+128  cr[0..3]=128 128 128 128
+11-01 17:17:13.200 I/pcsx2-gs(16025): Rendered Vulkan frame #240 successfully
+11-01 17:17:17.713 I/pcsx2-gs(16025): Rendered Vulkan frame #300 successfully
+11-01 17:17:21.337 I/pcsx2-gs(16025): Rendered Vulkan frame #360 successfully
+11-01 17:17:21.911 I/GodHandNative(16025): [  20.5938][DLL] slot mcport (heap D reset): empty after release (no block, 
+no registry entry)
+11-01 17:17:22.124 I/GodHandNative(16025): [  20.8073][DLL] slot room heap created: descriptor 0x00798000 heap 
+0x00799000 size 0xf000
+11-01 17:17:22.124 I/GodHandNative(16025): [  20.8076][DLL] slot redirect room: ra 0x002be5a0 heap 0x00754220 -> 
+0x00798000 (DLL base 0x00799080) dll/Release/r020.rel
+11-01 17:17:22.344 I/GodHandNative(16025): [  21.0267][DLL] #6 link ..\PS2_EE_Release\r020.elf base 0x00799080 size 
+0x5e41 (end 0x0079eec1) check 0 (ok) relocs 455 funcs 82 ctors +0x38f0 align 0x80 ra 0x002be6b4
+11-01 17:17:22.350 I/GodHandNative(16025): [  21.0334][DLL] #7 registered ..\PS2_EE_Release\r020.elf base 0x00799080 
+size 0x5e41 name@0x0079d48a ctors 0x0079c970 (header 0x79c970) ra 0x00394e6c
+11-01 17:17:22.351 I/GodHandNative(16025): [  21.0345][DLL] module code installed: ..\PS2_EE_Release\r020.elf base 
+0x00799080 entries 389/389 code 0x00799180-0x0079ca40 sha256 ok
+11-01 17:17:25.088 I/pcsx2-gs(16025): Rendered Vulkan frame #420 successfully
+11-01 17:17:25.257 I/GodHandNative(16025): [spu2-silence] output dropped to exact 0 after loud sound (t=7.410 s): ATTR 
+c080/c001 MMIX 0fc0/0fcc MVOL 3fff,3fff/3fff,3fff EVOL 1400,1400/0000,0000 AVOL1 7fff,7fff BVOL1 7fff,7fff core0 out 
+0,0 voices 1/0 ADMA 0/1
+11-01 17:17:26.507 I/pcsx2-gs(16025): Rendered Vulkan frame #480 successfully
+11-01 17:17:26.551 I/GodHandNative(16025): [spu2-silence] output dropped to exact 0 after loud sound (t=7.945 s): ATTR 
+c080/c001 MMIX 0fc0/0fcc MVOL 3fff,3fff/3fff,3fff EVOL 1400,1400/0000,0000 AVOL1 7fff,7fff BVOL1 7fff,7fff core0 out 
+0,0 voices 1/0 ADMA 0/1
+11-01 17:17:28.664 I/pcsx2-gs(16025): Rendered Vulkan frame #540 successfully
+11-01 17:17:30.874 I/pcsx2-gs(16025): Rendered Vulkan frame #600 successfully
+11-01 17:17:33.238 I/pcsx2-gs(16025): Rendered Vulkan frame #660 successfully
+11-01 17:17:35.456 I/pcsx2-gs(16025): Rendered Vulkan frame #720 successfully
+11-01 17:17:37.682 I/pcsx2-gs(16025): Rendered Vulkan frame #780 successfully
+11-01 17:17:40.036 I/pcsx2-gs(16025): Rendered Vulkan frame #840 successfully
+11-01 17:17:42.288 I/pcsx2-gs(16025): Rendered Vulkan frame #900 successfully
+11-01 17:17:44.542 I/pcsx2-gs(16025): Rendered Vulkan frame #960 successfully
+11-01 17:17:47.074 I/pcsx2-gs(16025): Rendered Vulkan frame #1020 successfully
+11-01 17:17:50.066 I/pcsx2-gs(16025): Rendered Vulkan frame #1080 successfully
+11-01 17:17:52.683 I/pcsx2-gs(16025): Rendered Vulkan frame #1140 successfully
+11-01 17:17:55.259 I/pcsx2-gs(16025): Rendered Vulkan frame #1200 successfully
+11-01 17:17:57.546 I/ImeTracker( 1124): com.owaissseeee.godhand:b5ebad0e: onRequestHide at ORIGIN_SERVER reason 
+HIDE_UNSPECIFIED_WINDOW fromUser false
+11-01 17:17:57.556 I/ImeTracker(16025): com.owaissseeee.godhand:b5ebad0e: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-01 17:17:57.664 I/pcsx2-gs(16025): Rendered Vulkan frame #1260 successfully
+11-01 17:18:00.098 I/pcsx2-gs(16025): Rendered Vulkan frame #1320 successfully
+11-01 17:18:02.381 I/ImeTracker( 1124): com.owaissseeee.godhand:362231ab: onRequestHide at ORIGIN_SERVER reason 
+HIDE_SAME_WINDOW_FOCUSED_WITHOUT_EDITOR fromUser false
+11-01 17:18:02.523 I/pcsx2-gs(16025): Rendered Vulkan frame #1380 successfully
+11-01 17:18:02.581 I/ImeTracker(16025): com.owaissseeee.godhand:362231ab: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-01 17:18:04.629 I/ImeTracker( 1124): com.owaissseeee.godhand:8d014bcd: onRequestHide at ORIGIN_SERVER reason 
+HIDE_UNSPECIFIED_WINDOW fromUser false
+11-01 17:18:04.631 I/ImeTracker(16025): com.owaissseeee.godhand:8d014bcd: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-01 17:18:05.019 I/pcsx2-gs(16025): Rendered Vulkan frame #1440 successfully
+11-01 17:18:05.543 I/GodHandInput(16025): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+11-01 17:18:05.563 I/GodHandInput(16025): IOP padState: buttons=0x0008 (START=1)
+11-01 17:18:05.708 I/GodHandInput(16025): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+11-01 17:18:05.722 I/GodHandInput(16025): IOP padState: buttons=0x0008 (START=1)
+11-01 17:18:05.956 I/GodHandInput(16025): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+11-01 17:18:05.961 I/GodHandInput(16025): IOP padState: buttons=0x0008 (START=1)
+11-01 17:18:06.170 I/GodHandInput(16025): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+11-01 17:18:06.206 I/GodHandInput(16025): IOP padState: buttons=0x0008 (START=1)
+11-01 17:18:06.367 I/GodHandInput(16025): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+11-01 17:18:06.403 I/GodHandInput(16025): IOP padState: buttons=0x0008 (START=1)
+11-01 17:18:06.582 I/GodHandInput(16025): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+11-01 17:18:07.183 I/GodHandInput(16025): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+11-01 17:18:07.227 I/GodHandInput(16025): IOP padState: buttons=0x0008 (START=1)
+11-01 17:18:07.520 I/GodHandInput(16025): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+11-01 17:18:07.552 I/GodHandInput(16025): IOP padState: buttons=0x0008 (START=1)
+11-01 17:18:07.580 I/pcsx2-gs(16025): Rendered Vulkan frame #1500 successfully
+11-01 17:18:07.800 I/GodHandInput(16025): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+11-01 17:18:07.815 I/GodHandInput(16025): IOP padState: buttons=0x0008 (START=1)
+11-01 17:18:08.006 I/GodHandInput(16025): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+11-01 17:18:08.014 I/GodHandInput(16025): IOP padState: buttons=0x0008 (START=1)
+11-01 17:18:08.203 I/GodHandInput(16025): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+11-01 17:18:08.219 I/GodHandInput(16025): IOP padState: buttons=0x0008 (START=1)
+11-01 17:18:08.411 I/GodHandInput(16025): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+11-01 17:18:08.454 I/GodHandInput(16025): IOP padState: buttons=0x0008 (START=1)
+11-01 17:18:08.650 I/GodHandInput(16025): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+11-01 17:18:08.690 I/GodHandInput(16025): IOP padState: buttons=0x0008 (START=1)
+11-01 17:18:08.955 I/GodHandInput(16025): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+11-01 17:18:08.969 I/GodHandInput(16025): IOP padState: buttons=0x0008 (START=1)
+11-01 17:18:09.256 I/GodHandInput(16025): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+11-01 17:18:09.258 I/GodHandInput(16025): IOP padState: buttons=0x0008 (START=1)
+11-01 17:18:09.759 I/GodHandInput(16025): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+11-01 17:18:09.766 I/GodHandInput(16025): IOP padState: buttons=0x0008 (START=1)
+11-01 17:18:09.974 I/GodHandInput(16025): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+11-01 17:18:10.010 I/GodHandInput(16025): IOP padState: buttons=0x0008 (START=1)
+11-01 17:18:10.095 I/pcsx2-gs(16025): Rendered Vulkan frame #1560 successfully
+11-01 17:18:12.604 I/pcsx2-gs(16025): Rendered Vulkan frame #1620 successfully
+11-01 17:18:14.519 I/GodHandNative(16025): [sif-dma] 1024-byte transfer polled 0.66 ms after issue: done (the 2 ms 
+rule said in progress)
+11-01 17:18:14.520 I/GodHandNative(16025): [sif-dma] 1024-byte transfer polled 0.66 ms after issue: done (the 2 ms 
+rule said in progress)
+11-01 17:18:15.227 I/pcsx2-gs(16025): Rendered Vulkan frame #1680 successfully
+11-01 17:18:17.812 I/pcsx2-gs(16025): Rendered Vulkan frame #1740 successfully
+11-01 17:18:20.386 I/pcsx2-gs(16025): Rendered Vulkan frame #1800 successfully
+11-01 17:18:22.775 I/GodHandNative(16025): [  81.4578][DLL] module code removed (unregistered): 
+..\PS2_EE_Release\r020.elf base 0x00799080
+11-01 17:18:22.775 I/GodHandNative(16025): [  81.4582][DLL] unregister ..\PS2_EE_Release\r020.elf base 0x00799080 ra 
+0x00394f98
+11-01 17:18:22.877 I/pcsx2-gs(16025): Rendered Vulkan frame #1860 successfully
+11-01 17:18:23.155 I/GodHandNative(16025): [  81.8382][DLL] slot room (heap D reset): empty after release (no block, 
+no registry entry)
+11-01 17:18:23.155 I/GodHandNative(16025): [  81.8385][DLL] slot room reset with heap D (ra 0x002a6218)
+11-01 17:18:23.450 I/GodHandNative(16025): [  82.1332][DLL] slot redirect room: ra 0x002be5a0 heap 0x00754220 -> 
+0x00798000 (DLL base 0x00799080) dll/Release/r100.rel
+11-01 17:18:23.678 I/GodHandNative(16025): [  82.3605][DLL] #10 link ..\PS2_EE_Release\r100.elf base 0x00799080 size 
+0x643f (end 0x0079f4bf) check 0 (ok) relocs 688 funcs 99 ctors +0x3090 align 0x80 ra 0x002be6b4
+11-01 17:18:23.683 I/GodHandNative(16025): [  82.3660][DLL] #11 registered ..\PS2_EE_Release\r100.elf base 0x00799080 
+size 0x643f name@0x0079ce7f ctors 0x0079c110 (header 0x79c110) ra 0x00394e6c
+11-01 17:18:23.683 I/GodHandNative(16025): [  82.3665][DLL] module code installed: ..\PS2_EE_Release\r100.elf base 
+0x00799080 entries 1378/1378 code 0x00799180-0x0079c300 sha256 ok
+11-01 17:18:26.429 I/pcsx2-gs(16025): Rendered Vulkan frame #1920 successfully
+11-01 17:18:31.932 I/pcsx2-gs(16025): Rendered Vulkan frame #1980 successfully
+11-01 17:18:32.833 I/GodHandNative(16025): [  91.5161][DLL] slot event heap created: descriptor 0x00798010 heap 
+0x007a8000 size 0x18000
+11-01 17:18:32.833 I/GodHandNative(16025): [  91.5166][DLL] slot redirect event: ra 0x00297410 heap 0x00754220 -> 
+0x00798010 (DLL base 0x007a8080) dll/Release/Event.rel
+11-01 17:18:33.164 I/GodHandNative(16025): [  91.8475][DLL] #13 link ..\PS2_EE_Release\Event.elf base 0x007a8080 size 
+0x13a2f (end 0x007bbaaf) check 0 (ok) relocs 518 funcs 393 ctors +0xa890 align 0x80 ra 0x002be6b4
+11-01 17:18:33.241 I/GodHandNative(16025): [  91.9245][DLL] #14 registered ..\PS2_EE_Release\Event.elf base 0x007a8080 
+size 0x13a2f name@0x007b8a69 ctors 0x007b2910 (header 0x7b2910) ra 0x00394e6c
+11-01 17:18:33.243 I/GodHandNative(16025): [  91.9265][DLL] module code installed: ..\PS2_EE_Release\Event.elf base 
+0x007a8080 entries 2371/2371 code 0x007a8180-0x007b4ad8 sha256 ok
+11-01 17:18:36.703 I/pcsx2-gs(16025): Rendered Vulkan frame #2040 successfully
+11-01 17:18:41.176 I/pcsx2-gs(16025): Rendered Vulkan frame #2100 successfully
+11-01 17:18:42.894 I/GodHandInput(16025): TouchPad buttons pressed: 0x0008 (START=1, CROSS=0)
+11-01 17:18:42.913 I/GodHandInput(16025): IOP padState: buttons=0x0008 (START=1)
+11-01 17:18:44.943 I/pcsx2-gs(16025): Rendered Vulkan frame #2160 successfully
+11-01 17:18:46.327 I/GodHandNative(16025): [ 105.0101][DLL] module code removed (unregistered): 
+..\PS2_EE_Release\Event.elf base 0x007a8080
+11-01 17:18:46.327 I/GodHandNative(16025): [ 105.0105][DLL] unregister ..\PS2_EE_Release\Event.elf base 0x007a8080 ra 
+0x00394f98
+11-01 17:18:46.637 I/GodHandNative(16025): [sif-dma] 2048-byte transfer polled 0.39 ms after issue: done (the 2 ms 
+rule said in progress)
+11-01 17:18:46.638 I/GodHandNative(16025): [sif-dma] 2048-byte transfer polled 0.39 ms after issue: done (the 2 ms 
+rule said in progress)
+11-01 17:18:48.263 I/pcsx2-gs(16025): Rendered Vulkan frame #2220 successfully
+11-01 17:18:50.805 I/pcsx2-gs(16025): Rendered Vulkan frame #2280 successfully
+11-01 17:18:57.959 I/pcsx2-gs(16025): Rendered Vulkan frame #2340 successfully
+11-01 17:18:59.017 I/GodHandInput(16025): TouchPad buttons pressed: 0x8000 (START=0, CROSS=0)
+11-01 17:18:59.214 I/GodHandInput(16025): TouchPad buttons pressed: 0x8000 (START=0, CROSS=0)
+11-01 17:18:59.378 I/GodHandInput(16025): TouchPad buttons pressed: 0x8000 (START=0, CROSS=0)
+11-01 17:18:59.503 I/GodHandInput(16025): TouchPad buttons pressed: 0x8000 (START=0, CROSS=0)
+11-01 17:18:59.522 I/GodHandInput(16025): IOP padState: buttons=0x8000 (START=0)
+11-01 17:18:59.624 I/GodHandInput(16025): TouchPad buttons pressed: 0x8000 (START=0, CROSS=0)
+11-01 17:18:59.789 I/GodHandInput(16025): TouchPad buttons pressed: 0x8000 (START=0, CROSS=0)
+11-01 17:19:00.475 W/ee.godhand:game(16025): Cleared Reference was only reachable from finalizer (only reported once)
+11-01 17:19:00.482 I/ee.godhand:game(16025): NativeAlloc concurrent copying GC freed 4101KB AllocSpace bytes, 
+33(852KB) LOS objects, 72% free, 3137KB/11MB, paused 297us,113us total 110.782ms
+11-01 17:19:00.924 I/ImeTracker( 1124): com.owaissseeee.godhand:b714d7dc: onRequestHide at ORIGIN_SERVER reason 
+HIDE_UNSPECIFIED_WINDOW fromUser false
+11-01 17:19:00.928 I/ImeTracker(16025): com.owaissseeee.godhand:b714d7dc: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-01 17:19:02.909 I/ImeTracker( 1124): com.owaissseeee.godhand:6e87ea69: onRequestHide at ORIGIN_SERVER reason 
+HIDE_SAME_WINDOW_FOCUSED_WITHOUT_EDITOR fromUser false
+11-01 17:19:02.956 I/ImeTracker(16025): com.owaissseeee.godhand:6e87ea69: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-01 17:19:03.620 I/pcsx2-gs(16025): Rendered Vulkan frame #2400 successfully
+11-01 17:19:05.752 I/ImeTracker( 1124): com.owaissseeee.godhand:40786c10: onRequestHide at ORIGIN_SERVER reason 
+HIDE_SAME_WINDOW_FOCUSED_WITHOUT_EDITOR fromUser false
+11-01 17:19:05.808 I/ImeTracker(16025): com.owaissseeee.godhand:40786c10: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-01 17:19:06.234 I/ImeTracker( 1124): com.owaissseeee.godhand:5a1c31e0: onRequestHide at ORIGIN_SERVER reason 
+HIDE_UNSPECIFIED_WINDOW fromUser false
+11-01 17:19:06.238 I/ImeTracker(16025): com.owaissseeee.godhand:5a1c31e0: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-01 17:19:06.706 I/GodHandInput(16025): TouchPad buttons pressed: 0x8000 (START=0, CROSS=0)
+11-01 17:19:06.751 I/GodHandInput(16025): IOP padState: buttons=0x8000 (START=0)
+11-01 17:19:06.937 I/GodHandInput(16025): TouchPad buttons pressed: 0x8000 (START=0, CROSS=0)
+11-01 17:19:06.963 I/GodHandInput(16025): IOP padState: buttons=0x8000 (START=0)
+11-01 17:19:07.217 I/GodHandInput(16025): TouchPad buttons pressed: 0x8000 (START=0, CROSS=0)
+11-01 17:19:07.412 I/GodHandInput(16025): TouchPad buttons pressed: 0x8000 (START=0, CROSS=0)
+11-01 17:19:07.585 I/GodHandInput(16025): TouchPad buttons pressed: 0x8000 (START=0, CROSS=0)
+11-01 17:19:07.655 I/GodHandInput(16025): IOP padState: buttons=0x8000 (START=0)
+11-01 17:19:07.759 I/GodHandInput(16025): TouchPad buttons pressed: 0x8000 (START=0, CROSS=0)
+11-01 17:19:07.947 I/GodHandInput(16025): TouchPad buttons pressed: 0x8000 (START=0, CROSS=0)
+11-01 17:19:08.122 I/GodHandInput(16025): TouchPad buttons pressed: 0x8000 (START=0, CROSS=0)
+11-01 17:19:08.286 I/GodHandInput(16025): TouchPad buttons pressed: 0x8000 (START=0, CROSS=0)
+11-01 17:19:08.806 I/GodHandInput(16025): TouchPad buttons pressed: 0x0100 (START=0, CROSS=0)
+11-01 17:19:09.105 I/pcsx2-gs(16025): Rendered Vulkan frame #2460 successfully
+11-01 17:19:10.156 I/GodHandInput(16025): TouchPad buttons pressed: 0x8000 (START=0, CROSS=0)
+11-01 17:19:10.165 I/GodHandInput(16025): IOP padState: buttons=0x8000 (START=0)
+11-01 17:19:10.329 I/GodHandInput(16025): TouchPad buttons pressed: 0x8000 (START=0, CROSS=0)
+11-01 17:19:10.500 I/GodHandInput(16025): TouchPad buttons pressed: 0x8000 (START=0, CROSS=0)
+11-01 17:19:10.715 I/GodHandInput(16025): TouchPad buttons pressed: 0x1000 (START=0, CROSS=0)
+11-01 17:19:10.746 I/GodHandInput(16025): IOP padState: buttons=0x1000 (START=0)
+11-01 17:19:10.904 I/GodHandInput(16025): TouchPad buttons pressed: 0x1000 (START=0, CROSS=0)
+11-01 17:19:10.927 I/GodHandInput(16025): IOP padState: buttons=0x1000 (START=0)
+11-01 17:19:11.070 I/GodHandInput(16025): TouchPad buttons pressed: 0x1000 (START=0, CROSS=0)
+11-01 17:19:11.225 I/GodHandInput(16025): TouchPad buttons pressed: 0x1000 (START=0, CROSS=0)
+11-01 17:19:11.406 I/GodHandInput(16025): TouchPad buttons pressed: 0x1000 (START=0, CROSS=0)
+11-01 17:19:11.595 I/GodHandInput(16025): TouchPad buttons pressed: 0x1000 (START=0, CROSS=0)
+11-01 17:19:11.771 I/GodHandInput(16025): TouchPad buttons pressed: 0x1000 (START=0, CROSS=0)
+11-01 17:19:11.966 I/GodHandInput(16025): TouchPad buttons pressed: 0x1000 (START=0, CROSS=0)
+11-01 17:19:12.004 I/GodHandInput(16025): IOP padState: buttons=0x1000 (START=0)
+11-01 17:19:12.288 I/GodHandInput(16025): TouchPad buttons pressed: 0x1000 (START=0, CROSS=0)
+11-01 17:19:12.367 I/GodHandInput(16025): IOP padState: buttons=0x1000 (START=0)
+11-01 17:19:12.510 I/GodHandInput(16025): TouchPad buttons pressed: 0x1000 (START=0, CROSS=0)
+11-01 17:19:12.558 I/GodHandInput(16025): IOP padState: buttons=0x1000 (START=0)
+11-01 17:19:12.701 I/GodHandInput(16025): TouchPad buttons pressed: 0x1000 (START=0, CROSS=0)
+11-01 17:19:12.749 I/GodHandInput(16025): IOP padState: buttons=0x1000 (START=0)
+11-01 17:19:12.897 I/GodHandInput(16025): TouchPad buttons pressed: 0x1000 (START=0, CROSS=0)
+11-01 17:19:12.937 I/GodHandInput(16025): IOP padState: buttons=0x1000 (START=0)
+11-01 17:19:13.077 I/GodHandInput(16025): TouchPad buttons pressed: 0x1000 (START=0, CROSS=0)
+11-01 17:19:13.853 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:13.885 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:19:14.075 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:14.231 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:14.257 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:19:14.429 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:14.449 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:19:14.596 I/pcsx2-gs(16025): Rendered Vulkan frame #2520 successfully
+11-01 17:19:14.628 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:14.641 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:19:14.798 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:14.827 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:19:15.023 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:15.201 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:15.384 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:15.590 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:15.764 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:15.936 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:16.101 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:16.128 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:19:16.276 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:16.468 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:16.492 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:19:16.647 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:16.670 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:19:16.828 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:16.853 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:19:16.964 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:20.161 I/pcsx2-gs(16025): Rendered Vulkan frame #2580 successfully
+11-01 17:19:22.448 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:22.629 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:22.804 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:22.908 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:22.956 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:19:25.752 I/pcsx2-gs(16025): Rendered Vulkan frame #2640 successfully
+11-01 17:19:27.938 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:28.100 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:28.237 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:28.244 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:19:28.378 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:28.508 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:28.665 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:28.823 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:28.825 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:19:28.997 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:29.008 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:19:31.384 I/pcsx2-gs(16025): Rendered Vulkan frame #2700 successfully
+11-01 17:19:33.899 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:33.926 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:19:34.066 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:34.224 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:34.357 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:37.014 I/pcsx2-gs(16025): Rendered Vulkan frame #2760 successfully
+11-01 17:19:42.750 I/pcsx2-gs(16025): Rendered Vulkan frame #2820 successfully
+11-01 17:19:48.422 I/pcsx2-gs(16025): Rendered Vulkan frame #2880 successfully
+11-01 17:19:54.588 I/pcsx2-gs(16025): Rendered Vulkan frame #2940 successfully
+11-01 17:19:58.481 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:58.514 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:19:58.668 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:58.858 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:59.052 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:59.229 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:59.393 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:59.565 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:59.746 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:59.928 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:19:59.971 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:20:00.092 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:00.193 I/pcsx2-gs(16025): Rendered Vulkan frame #3000 successfully
+11-01 17:20:00.277 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:00.430 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:00.604 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:00.787 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:00.958 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:00.960 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:20:01.124 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:01.142 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:20:01.264 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:01.411 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:01.583 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:01.750 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:01.939 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:02.114 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:02.315 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:02.498 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:02.689 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:02.878 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:03.024 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:03.198 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:03.330 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:20:03.439 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:03.507 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:20:03.782 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:03.872 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:20:04.005 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:04.061 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:20:04.211 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:04.237 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:20:04.711 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:04.774 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:20:04.894 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:04.957 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:20:05.066 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:05.290 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:05.452 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:05.509 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:20:05.649 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:05.686 I/pcsx2-gs(16025): Rendered Vulkan frame #3060 successfully
+11-01 17:20:05.840 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:06.038 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:06.177 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:06.378 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:06.555 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:06.616 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:20:06.748 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:06.801 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:20:06.926 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:06.981 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:20:07.108 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:07.297 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:07.486 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:07.668 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:07.845 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:20:11.200 I/pcsx2-gs(16025): Rendered Vulkan frame #3120 successfully
+11-01 17:20:17.096 I/pcsx2-gs(16025): Rendered Vulkan frame #3180 successfully
+11-01 17:20:23.690 I/pcsx2-gs(16025): Rendered Vulkan frame #3240 successfully
+11-01 17:20:29.713 I/pcsx2-gs(16025): Rendered Vulkan frame #3300 successfully
+11-01 17:20:36.018 I/pcsx2-gs(16025): Rendered Vulkan frame #3360 successfully
+11-01 17:20:41.816 I/pcsx2-gs(16025): Rendered Vulkan frame #3420 successfully
+11-01 17:20:47.607 I/pcsx2-gs(16025): Rendered Vulkan frame #3480 successfully
+11-01 17:20:53.072 I/pcsx2-gs(16025): Rendered Vulkan frame #3540 successfully
+11-01 17:20:58.300 I/pcsx2-gs(16025): Rendered Vulkan frame #3600 successfully
+11-01 17:20:58.300 I/GodHandNative(16025): [gs] PCSX2 GS: 3600 fields, 3981.2 MB of GIF data
+11-01 17:21:03.737 I/pcsx2-gs(16025): Rendered Vulkan frame #3660 successfully
+11-01 17:21:06.772 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:06.780 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:21:07.001 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:07.191 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:07.347 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:07.461 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:21:07.529 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:07.742 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:07.794 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:21:07.932 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:07.965 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:21:08.088 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:08.285 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:08.468 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:08.502 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:21:08.664 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:08.702 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:21:08.822 I/pcsx2-gs(16025): Rendered Vulkan frame #3720 successfully
+11-01 17:21:08.845 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:08.852 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:21:09.027 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:09.067 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:21:09.229 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:09.404 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:09.411 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:21:09.614 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:09.647 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:21:09.781 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:09.795 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:21:09.992 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:10.007 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:21:10.476 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:10.499 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:21:10.689 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:10.689 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:21:10.919 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:10.929 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:21:11.087 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:11.299 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:11.309 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:21:11.479 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:11.498 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+11-01 17:21:11.648 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:11.843 I/GodHandInput(16025): TouchPad buttons pressed: 0x4000 (START=0, CROSS=1)
+11-01 17:21:11.858 I/GodHandInput(16025): IOP padState: buttons=0x4000 (START=0)
+
+

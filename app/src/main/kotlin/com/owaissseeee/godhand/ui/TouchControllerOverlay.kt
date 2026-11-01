@@ -2,9 +2,13 @@
 package com.owaissseeee.godhand.ui
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.DashPathEffect
 import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.graphics.RectF
 import android.graphics.Typeface
 import android.os.Handler
@@ -15,6 +19,7 @@ import android.view.MotionEvent
 import android.view.View
 import com.owaissseeee.godhand.NativeBridge
 import com.owaissseeee.godhand.SettingsRepository
+import java.io.File
 import java.util.Locale
 import kotlin.math.abs
 import kotlin.math.atan2
@@ -177,16 +182,73 @@ class TouchControllerOverlay(context: Context) : View(context) {
         VirtualButton("DODGE_RIGHT", "▶ SWAY", 0, 0.73f, 0.78f, 24f, isDodgeButton = true, dodgeAxisX = 1.0f)
     )
 
-    // Paints
-    private val fillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
-    private val activePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
-    private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    // Custom Texture Modding Manager for In-Game Touch Controls
+    private val textureManager = CustomTouchTextureManager(context)
+
+    // God Hand Themed Vector & Texture Paints
+    private val coreDiskPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
+    private val outerGoldRingPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
-        strokeWidth = 2f * density
+        strokeWidth = 2.4f * density
     }
+    private val innerBevelRingPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+        strokeWidth = 1.2f * density
+    }
+    private val activeGlowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         textSize = 12f * density
         textAlign = Paint.Align.CENTER
+        typeface = Typeface.DEFAULT_BOLD
+    }
+    private val stickTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        textSize = 10f * density
+        textAlign = Paint.Align.CENTER
+        typeface = Typeface.MONOSPACE
+        isFakeBoldText = true
+        color = 0xFFF59E0B.toInt()
+    }
+    private val texturePaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
+    private val textureActivePaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG).apply {
+        colorFilter = PorterDuffColorFilter(0x77FF5722.toInt(), PorterDuff.Mode.SRC_ATOP)
+    }
+
+    // PS2 / God Hand Button Symbol Specific Paints
+    private val symTrianglePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        textSize = 15f * density
+        textAlign = Paint.Align.CENTER
+        color = 0xFF34D399.toInt() // Martial Emerald
+        typeface = Typeface.DEFAULT_BOLD
+    }
+    private val symCirclePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        textSize = 15f * density
+        textAlign = Paint.Align.CENTER
+        color = 0xFFF87171.toInt() // Fiery Crimson
+        typeface = Typeface.DEFAULT_BOLD
+    }
+    private val symCrossPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        textSize = 15f * density
+        textAlign = Paint.Align.CENTER
+        color = 0xFF60A5FA.toInt() // Oceanic Azure
+        typeface = Typeface.DEFAULT_BOLD
+    }
+    private val symSquarePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        textSize = 15f * density
+        textAlign = Paint.Align.CENTER
+        color = 0xFFF472B6.toInt() // God Hand Violet/Pink
+        typeface = Typeface.DEFAULT_BOLD
+    }
+    private val symDpadPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        textSize = 14f * density
+        textAlign = Paint.Align.CENTER
+        color = 0xFFFDE047.toInt() // Amber Gold
+        typeface = Typeface.DEFAULT_BOLD
+    }
+    private val symActivePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        textSize = 15f * density
+        textAlign = Paint.Align.CENTER
+        color = 0xFFFFFFFF.toInt()
+        typeface = Typeface.DEFAULT_BOLD
     }
 
     // Edit Mode Highlight Paints
@@ -251,15 +313,29 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
     private fun updatePaintsOpacity() {
         val alphaNorm = controlsOpacity.coerceIn(0.10f, 1.0f)
-        val fillAlpha = (0x55 * alphaNorm).toInt().coerceIn(10, 255)
-        val activeAlpha = (0xAA * alphaNorm).toInt().coerceIn(20, 255)
-        val strokeAlpha = (0x99 * alphaNorm).toInt().coerceIn(20, 255)
-        val textAlpha = (0xDD * alphaNorm).toInt().coerceIn(30, 255)
+        val fillAlpha = (0x66 * alphaNorm).toInt().coerceIn(15, 255)
+        val activeAlpha = (0xDD * alphaNorm).toInt().coerceIn(30, 255)
+        val goldAlpha = (0xCC * alphaNorm).toInt().coerceIn(30, 255)
+        val textAlpha = (0xEE * alphaNorm).toInt().coerceIn(40, 255)
 
-        fillPaint.color = (fillAlpha shl 24) or 0x1E293B
-        activePaint.color = (activeAlpha shl 24) or 0xEF4444
-        strokePaint.color = (strokeAlpha shl 24) or 0xF59E0B
+        coreDiskPaint.color = (fillAlpha shl 24) or 0x141014 // Dark Obsidian Core
+        activeGlowPaint.color = (activeAlpha shl 24) or 0xDC2626 // God Hand Fiery Orange-Red
+        outerGoldRingPaint.color = (goldAlpha shl 24) or 0xD4AF37 // Metallic Burnished Gold
+        innerBevelRingPaint.color = (goldAlpha shl 24) or 0x92400E // Amber Bronze
         textPaint.color = (textAlpha shl 24) or 0xFFFFFF
+        texturePaint.alpha = (alphaNorm * 255).toInt().coerceIn(25, 255)
+    }
+
+    private fun getSymbolPaint(id: String, isPressed: Boolean): Paint {
+        if (isPressed) return symActivePaint
+        return when (id) {
+            "TRIANGLE" -> symTrianglePaint
+            "CIRCLE" -> symCirclePaint
+            "CROSS" -> symCrossPaint
+            "SQUARE" -> symSquarePaint
+            "DPAD_UP", "DPAD_DOWN", "DPAD_LEFT", "DPAD_RIGHT" -> symDpadPaint
+            else -> textPaint
+        }
     }
 
     fun applySettings(repo: SettingsRepository) {
@@ -390,9 +466,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 val br = btn.effectiveRadiusDp * density
                 val isPressed = btn.activePointerId != -1
 
-                canvas.drawCircle(bx, by, br, if (isPressed) activePaint else fillPaint)
-                canvas.drawCircle(bx, by, br, strokePaint)
-                canvas.drawText(btn.label, bx, by + 4f * density, textPaint)
+                drawButton(canvas, btn, bx, by, br, isPressed)
 
                 // Highlight selected button in Edit Mode
                 if (isEditMode && selectedElementId == btn.id) {
@@ -407,9 +481,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     val by = h * btn.normY
                     val br = btn.effectiveRadiusDp * density
                     val isPressed = btn.activePointerId != -1
-                    canvas.drawCircle(bx, by, br, if (isPressed) activePaint else fillPaint)
-                    canvas.drawCircle(bx, by, br, strokePaint)
-                    canvas.drawText(btn.label, bx, by + 4f * density, textPaint)
+                    drawButton(canvas, btn, bx, by, br, isPressed)
                 }
             }
         }
@@ -423,18 +495,55 @@ class TouchControllerOverlay(context: Context) : View(context) {
         }
     }
 
+    private fun drawButton(canvas: Canvas, btn: VirtualButton, bx: Float, by: Float, br: Float, isPressed: Boolean) {
+        val customTex = textureManager.getTexture(btn.id)
+        if (customTex != null) {
+            val destRect = RectF(bx - br, by - br, bx + br, by + br)
+            canvas.drawBitmap(customTex, null, destRect, if (isPressed) textureActivePaint else texturePaint)
+        } else {
+            // God Hand Martial Arts Themed Vector Button:
+            // Dark obsidian leather core + dual burnished gold metallic rings
+            canvas.drawCircle(bx, by, br, if (isPressed) activeGlowPaint else coreDiskPaint)
+            canvas.drawCircle(bx, by, br, outerGoldRingPaint)
+            canvas.drawCircle(bx, by, br * 0.82f, innerBevelRingPaint)
+
+            val symPaint = getSymbolPaint(btn.id, isPressed)
+            canvas.drawText(btn.label, bx, by + 4.5f * density, symPaint)
+        }
+    }
+
     private fun drawLeftStick(canvas: Canvas, w: Float, h: Float) {
         val lx = if (leftStickSticky || leftStickPointerId == -1) (w * leftBaseNormX) else leftCenterX
         val ly = if (leftStickSticky || leftStickPointerId == -1) (h * leftBaseNormY) else leftCenterY
         val stickRadius = 56f * density * leftStickScale
 
-        canvas.drawCircle(lx, ly, stickRadius, fillPaint)
-        canvas.drawCircle(lx, ly, stickRadius, strokePaint)
+        val baseTex = textureManager.getTexture("STICK_BASE")
+        if (baseTex != null) {
+            val rect = RectF(lx - stickRadius, ly - stickRadius, lx + stickRadius, ly + stickRadius)
+            canvas.drawBitmap(baseTex, null, rect, texturePaint)
+        } else {
+            // Outer Compass Rim & Core
+            canvas.drawCircle(lx, ly, stickRadius, coreDiskPaint)
+            canvas.drawCircle(lx, ly, stickRadius, outerGoldRingPaint)
+            canvas.drawCircle(lx, ly, stickRadius * 0.85f, innerBevelRingPaint)
+            // Compass axis crosshairs
+            canvas.drawLine(lx - stickRadius * 0.35f, ly, lx + stickRadius * 0.35f, ly, innerBevelRingPaint)
+            canvas.drawLine(lx, ly - stickRadius * 0.35f, lx, ly + stickRadius * 0.35f, innerBevelRingPaint)
+        }
 
         val lKnobX = if (leftStickPointerId != -1) leftCurrX else lx
         val lKnobY = if (leftStickPointerId != -1) leftCurrY else ly
-        canvas.drawCircle(lKnobX, lKnobY, 26f * density * leftStickScale, if (leftStickPointerId != -1) activePaint else strokePaint)
-        canvas.drawText("MOVE", lx, ly + stickRadius + 16f * density, textPaint)
+        val knobRadius = 26f * density * leftStickScale
+
+        val knobTex = textureManager.getTexture("STICK_KNOB")
+        if (knobTex != null) {
+            val rect = RectF(lKnobX - knobRadius, lKnobY - knobRadius, lKnobX + knobRadius, lKnobY + knobRadius)
+            canvas.drawBitmap(knobTex, null, rect, if (leftStickPointerId != -1) textureActivePaint else texturePaint)
+        } else {
+            canvas.drawCircle(lKnobX, lKnobY, knobRadius, if (leftStickPointerId != -1) activeGlowPaint else outerGoldRingPaint)
+            canvas.drawCircle(lKnobX, lKnobY, knobRadius * 0.82f, coreDiskPaint)
+        }
+        canvas.drawText("MOVE", lx, ly + stickRadius + 16f * density, stickTextPaint)
 
         if (isEditMode && selectedElementId == "LEFT_STICK") {
             canvas.drawCircle(lx, ly, stickRadius + 6f * density, editSelectedStrokePaint)
@@ -446,13 +555,30 @@ class TouchControllerOverlay(context: Context) : View(context) {
         val ry = if (rightStickSticky || rightStickPointerId == -1) (h * rightBaseNormY) else rightCenterY
         val rRadius = 48f * density * rightStickScale
 
-        canvas.drawCircle(rx, ry, rRadius, fillPaint)
-        canvas.drawCircle(rx, ry, rRadius, strokePaint)
+        val baseTex = textureManager.getTexture("RIGHT_STICK_BASE") ?: textureManager.getTexture("STICK_BASE")
+        if (baseTex != null) {
+            val rect = RectF(rx - rRadius, ry - rRadius, rx + rRadius, ry + rRadius)
+            canvas.drawBitmap(baseTex, null, rect, texturePaint)
+        } else {
+            // God Hand Dodge Roulette Rim & Core
+            canvas.drawCircle(rx, ry, rRadius, coreDiskPaint)
+            canvas.drawCircle(rx, ry, rRadius, outerGoldRingPaint)
+            canvas.drawCircle(rx, ry, rRadius * 0.85f, innerBevelRingPaint)
+        }
 
         val rKnobX = if (rightStickPointerId != -1) rightCurrX else rx
         val rKnobY = if (rightStickPointerId != -1) rightCurrY else ry
-        canvas.drawCircle(rKnobX, rKnobY, 22f * density * rightStickScale, if (rightStickPointerId != -1) activePaint else strokePaint)
-        canvas.drawText("DODGE (R-STICK)", rx, ry + rRadius + 16f * density, textPaint)
+        val knobRadius = 22f * density * rightStickScale
+
+        val knobTex = textureManager.getTexture("RIGHT_STICK_KNOB") ?: textureManager.getTexture("STICK_KNOB")
+        if (knobTex != null) {
+            val rect = RectF(rKnobX - knobRadius, rKnobY - knobRadius, rKnobX + knobRadius, rKnobY + knobRadius)
+            canvas.drawBitmap(knobTex, null, rect, if (rightStickPointerId != -1) textureActivePaint else texturePaint)
+        } else {
+            canvas.drawCircle(rKnobX, rKnobY, knobRadius, if (rightStickPointerId != -1) activeGlowPaint else outerGoldRingPaint)
+            canvas.drawCircle(rKnobX, rKnobY, knobRadius * 0.82f, coreDiskPaint)
+        }
+        canvas.drawText("DODGE (R-STICK)", rx, ry + rRadius + 16f * density, stickTextPaint)
 
         if (isEditMode && selectedElementId == "RIGHT_STICK") {
             canvas.drawCircle(rx, ry, rRadius + 6f * density, editSelectedStrokePaint)
@@ -480,7 +606,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
     private fun drawToolbarButton(canvas: Canvas, label: String, cx: Float, cy: Float, halfW: Float, halfH: Float) {
         val rect = RectF(cx - halfW, cy - halfH, cx + halfW, cy + halfH)
         canvas.drawRoundRect(rect, 4f * density, 4f * density, editBtnPaint)
-        canvas.drawRoundRect(rect, 4f * density, 4f * density, strokePaint)
+        canvas.drawRoundRect(rect, 4f * density, 4f * density, editToolbarBorderPaint)
         canvas.drawText(label, cx, cy + 4f * density, editBtnTextPaint)
     }
 
@@ -647,24 +773,26 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     val rRadius = 48f * density * rightStickScale
 
                     if (dodgeMode == DODGE_MODE_STICK) {
-                        if (rightStickSticky) {
-                            if (hypot(x - rBaseX, y - rBaseY) <= rRadius * 1.6f && rightStickPointerId == -1) {
-                                rightStickPointerId = pid
-                                rightCenterX = rBaseX
-                                rightCenterY = rBaseY
-                                rightCurrX = x
-                                rightCurrY = y
-                                hapticTick()
-                            }
+                        val inRightStickZone = if (rightStickSticky) {
+                            hypot(x - rBaseX, y - rBaseY) <= rRadius * 2.0f
                         } else {
-                            if (x > w * 0.50f && y > h * 0.40f && rightStickPointerId == -1) {
-                                rightStickPointerId = pid
-                                rightCenterX = x
-                                rightCenterY = y
-                                rightCurrX = x
-                                rightCurrY = y
-                                hapticTick()
-                            }
+                            x > w * 0.50f && y > h * 0.40f
+                        }
+                        if (inRightStickZone && rightStickPointerId == -1) {
+                            rightStickPointerId = pid
+                            rightCenterX = if (rightStickSticky) rBaseX else x
+                            rightCenterY = if (rightStickSticky) rBaseY else y
+                            val maxR = 36f * density * rightStickScale
+                            val dx = x - rightCenterX
+                            val dy = y - rightCenterY
+                            val dist = hypot(dx, dy)
+                            val clamped = min(dist, maxR)
+                            val angle = atan2(dy, dx)
+                            rightCurrX = rightCenterX + cos(angle) * clamped
+                            rightCurrY = rightCenterY + sin(angle) * clamped
+                            rightStickX = (dx / maxR).coerceIn(-1f, 1f)
+                            rightStickY = (dy / maxR).coerceIn(-1f, 1f)
+                            hapticTick()
                         }
                     } else if (dodgeMode == DODGE_MODE_SWIPE) {
                         // Swipe dodge trigger zone on right side
@@ -679,23 +807,26 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     val lBaseX = w * leftBaseNormX
                     val lBaseY = h * leftBaseNormY
                     val lRadius = 56f * density * leftStickScale
-
-                    if (leftStickSticky) {
-                        if (hypot(x - lBaseX, y - lBaseY) <= lRadius * 1.6f && leftStickPointerId == -1) {
-                            leftStickPointerId = pid
-                            leftCenterX = lBaseX
-                            leftCenterY = lBaseY
-                            leftCurrX = x
-                            leftCurrY = y
-                        }
+                    val inLeftStickZone = if (leftStickSticky) {
+                        hypot(x - lBaseX, y - lBaseY) <= lRadius * 2.0f
                     } else {
-                        if (x < w * 0.45f && leftStickPointerId == -1) {
-                            leftStickPointerId = pid
-                            leftCenterX = x
-                            leftCenterY = y
-                            leftCurrX = x
-                            leftCurrY = y
-                        }
+                        x < w * 0.45f && y > h * 0.35f
+                    }
+
+                    if (inLeftStickZone && leftStickPointerId == -1) {
+                        leftStickPointerId = pid
+                        leftCenterX = if (leftStickSticky) lBaseX else x
+                        leftCenterY = if (leftStickSticky) lBaseY else y
+                        val maxR = 56f * density * leftStickScale
+                        val dx = x - leftCenterX
+                        val dy = y - leftCenterY
+                        val dist = hypot(dx, dy)
+                        val clamped = min(dist, maxR)
+                        val angle = atan2(dy, dx)
+                        leftCurrX = leftCenterX + cos(angle) * clamped
+                        leftCurrY = leftCenterY + sin(angle) * clamped
+                        leftStickX = (dx / maxR).coerceIn(-1f, 1f)
+                        leftStickY = (dy / maxR).coerceIn(-1f, 1f)
                     }
                 }
             }
@@ -776,12 +907,6 @@ class TouchControllerOverlay(context: Context) : View(context) {
         }
 
         // Recompute combined button mask & dispatch
-        val prevMask = buttonMask
-        val prevLx = leftStickX
-        val prevLy = leftStickY
-        val prevRx = rightStickX
-        val prevRy = rightStickY
-
         var mask = 0
         for (btn in buttons) {
             if (btn.activePointerId != -1 && !btn.isDodgeButton) {
@@ -790,13 +915,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
         }
         buttonMask = mask
         NativeBridge.updatePadState(buttonMask, leftStickX, leftStickY, rightStickX, rightStickY)
-
-        if (prevMask != mask ||
-            abs(prevLx - leftStickX) > 0.02f || abs(prevLy - leftStickY) > 0.02f ||
-            abs(prevRx - rightStickX) > 0.02f || abs(prevRy - rightStickY) > 0.02f ||
-            action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
-            invalidate()
-        }
+        invalidate()
         return true
     }
 
@@ -983,3 +1102,72 @@ class TouchControllerOverlay(context: Context) : View(context) {
         }
     }
 }
+
+/**
+ * Handles discovery, decoding, and caching of custom .png textures for on-screen touch controls.
+ * Users can drop custom PNGs into Android/data/com.owaissseeee.godhand/files/touch_textures/
+ * to completely skin each button in-game!
+ */
+class CustomTouchTextureManager(private val context: Context) {
+    private val textureCache = mutableMapOf<String, Bitmap?>()
+    private val texturesDir: File by lazy {
+        File(context.getExternalFilesDir(null), "touch_textures").also {
+            if (!it.exists()) it.mkdirs()
+        }
+    }
+
+    private val idToFileName = mapOf(
+        "TRIANGLE" to "btn_triangle.png",
+        "CIRCLE" to "btn_circle.png",
+        "CROSS" to "btn_cross.png",
+        "SQUARE" to "btn_square.png",
+        "L1" to "btn_l1.png",
+        "L2" to "btn_l2.png",
+        "R1" to "btn_r1.png",
+        "R2" to "btn_r2.png",
+        "DPAD_UP" to "dpad_up.png",
+        "DPAD_DOWN" to "dpad_down.png",
+        "DPAD_LEFT" to "dpad_left.png",
+        "DPAD_RIGHT" to "dpad_right.png",
+        "START" to "btn_start.png",
+        "MENU" to "btn_exit.png",
+        "SETTINGS" to "btn_settings.png",
+        "DODGE_UP" to "dodge_up.png",
+        "DODGE_DOWN" to "dodge_down.png",
+        "DODGE_LEFT" to "dodge_left.png",
+        "DODGE_RIGHT" to "dodge_right.png",
+        "STICK_BASE" to "stick_base.png",
+        "STICK_KNOB" to "stick_knob.png",
+        "RIGHT_STICK_BASE" to "dodge_stick_base.png",
+        "RIGHT_STICK_KNOB" to "dodge_stick_knob.png"
+    )
+
+    fun getTexture(id: String): Bitmap? {
+        if (textureCache.containsKey(id)) {
+            return textureCache[id]
+        }
+        val fileName = idToFileName[id] ?: "${id.lowercase(Locale.US)}.png"
+        val file = File(texturesDir, fileName)
+        var bmp: Bitmap? = null
+        if (file.exists() && file.length() > 0) {
+            try {
+                bmp = BitmapFactory.decodeFile(file.absolutePath)
+            } catch (_: Exception) {}
+        }
+        if (bmp == null) {
+            // Check assets/touch_textures/
+            try {
+                context.assets.open("touch_textures/$fileName").use { stream ->
+                    bmp = BitmapFactory.decodeStream(stream)
+                }
+            } catch (_: Exception) {}
+        }
+        textureCache[id] = bmp
+        return bmp
+    }
+
+    fun clearCache() {
+        textureCache.clear()
+    }
+}
+

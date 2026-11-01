@@ -146,31 +146,13 @@ void func_0030B870_0x30b870(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x30b8ec: 0x3c18003c  lui         $t8, 0x3C
     ctx->pc = 0x30b8ecu;
     SET_GPR_S32(ctx, 24, (int32_t)((uint32_t)60 << 16));
-    // 0x30b8f0 / 0x30b8f4: widescreen patch (Arapapa / nemesis2000 SLUS-21503 + Dynamic Full Screen)
+    // 0x30b8f0 / 0x30b8f4: widescreen patch (Arapapa / nemesis2000 SLUS-21503 + Full Screen)
     ctx->pc = 0x30b8f0u;
     {
-        static const uint32_t s_atVal = []() {
-            const char* env = std::getenv("GODHAND_ASPECT_RATIO_IDX");
-            const int aspectIdx = env ? std::atoi(env) : 0;
-            if (aspectIdx == 1) {
-                return 0x3F6EEEEFu; // 4:3 Original (0.93333334f)
-            } else if (aspectIdx == 2) {
-                // Full screen: compute from physical screen aspect ratio
-                float screenAspect = 16.0f / 9.0f;
-                const char* aspectEnv = std::getenv("GODHAND_SCREEN_ASPECT");
-                if (aspectEnv && *aspectEnv) {
-                    float val = std::strtof(aspectEnv, nullptr);
-                    if (val > 1.0f && val < 4.0f) screenAspect = val;
-                }
-                float fov = 0.700000005f * screenAspect;
-                uint32_t bits = 0;
-                std::memcpy(&bits, &fov, sizeof(bits));
-                return bits;
-            } else {
-                return 0x3F9F49F1u; // 16:9 Widescreen (1.2444438f)
-            }
-        }();
-        SET_GPR_S32(ctx, 1, static_cast<int32_t>(s_atVal));
+        const char* env = std::getenv("GODHAND_ASPECT_RATIO_IDX");
+        const int aspectIdx = env ? std::atoi(env) : 0;
+        const uint32_t atVal = (aspectIdx == 1) ? 0x3F6EEEEFu : 0x3F9F49F1u; // 4:3 = 0.93333334f, 16:9 & Full Screen = 1.2444438f
+        SET_GPR_S32(ctx, 1, static_cast<int32_t>(atVal));
     }
     ctx->pc = 0x30b8f4u;
     // 0x30b8f8: 0x44812000  mtc1        $at, $f4
@@ -2464,30 +2446,13 @@ label_30c344:
     // 0x30c380: 0x241500e0  addiu       $s5, $zero, 0xE0
     ctx->pc = 0x30c380u;
     SET_GPR_S32(ctx, 21, (int32_t)ADD32(GPR_U32(ctx, 0), 224));
-    // 0x30c384 / 0x30c388: widescreen patch (half-height mode + Dynamic Full Screen)
+    // 0x30c384 / 0x30c388: widescreen patch (half-height mode + Full Screen)
     ctx->pc = 0x30c384u;
     {
-        static const uint32_t s_atVal = []() {
-            const char* env = std::getenv("GODHAND_ASPECT_RATIO_IDX");
-            const int aspectIdx = env ? std::atoi(env) : 0;
-            if (aspectIdx == 1) {
-                return 0x3EEEEEEFu; // 4:3 Original half-height (0.46666667f)
-            } else if (aspectIdx == 2) {
-                float screenAspect = 16.0f / 9.0f;
-                const char* aspectEnv = std::getenv("GODHAND_SCREEN_ASPECT");
-                if (aspectEnv && *aspectEnv) {
-                    float val = std::strtof(aspectEnv, nullptr);
-                    if (val > 1.0f && val < 4.0f) screenAspect = val;
-                }
-                float fov = 0.350000002f * screenAspect;
-                uint32_t bits = 0;
-                std::memcpy(&bits, &fov, sizeof(bits));
-                return bits;
-            } else {
-                return 0x3F1F49F1u; // 16:9 Widescreen half-height (0.6222219f)
-            }
-        }();
-        SET_GPR_S32(ctx, 1, static_cast<int32_t>(s_atVal));
+        const char* env = std::getenv("GODHAND_ASPECT_RATIO_IDX");
+        const int aspectIdx = env ? std::atoi(env) : 0;
+        const uint32_t atVal = (aspectIdx == 1) ? 0x3EEEEEEFu : 0x3F1F49F1u; // 4:3 = 0.46666667f, 16:9 & Full Screen = 0.6222219f
+        SET_GPR_S32(ctx, 1, static_cast<int32_t>(atVal));
     }
     ctx->pc = 0x30c388u;
     // 0x30c38c: 0x44812000  mtc1        $at, $f4

@@ -31,7 +31,9 @@
 #pragma comment(lib, "Synchronization.lib") // WaitOnAddress / WakeByAddressSingle
 #endif
 
-#if defined(_M_X64) || defined(__x86_64__)
+#if defined(__aarch64__) || defined(_M_ARM64)
+#define PS2X_IOP_SPIN_PAUSE() __asm__ __volatile__("yield" ::: "memory")
+#elif defined(_M_X64) || defined(__x86_64__)
 #include <immintrin.h>
 #define PS2X_IOP_SPIN_PAUSE() _mm_pause()
 #else
@@ -441,7 +443,7 @@ namespace ps2x::iop
                     if (++spins < 1024u)
                         continue;
                     spins = 0u;
-                    if (std::chrono::steady_clock::now() - idleSince < std::chrono::milliseconds(2))
+                    if (std::chrono::steady_clock::now() - idleSince < std::chrono::microseconds(50))
                         continue;
                     std::unique_lock<std::mutex> lock(wakeMutex);
                     workerSleeping.store(true, std::memory_order_release);

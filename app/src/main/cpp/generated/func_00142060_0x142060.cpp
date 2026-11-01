@@ -4445,13 +4445,11 @@ label_142fdc:
     // 0x14300c: gauge width fix (0.75f in 16:9, 1.0f in 4:3)
     ctx->pc = 0x14300cu;
     {
-        static const bool s_isWidescreen = []() {
-            const char* env = std::getenv("GODHAND_ASPECT_RATIO_IDX");
-            return !env || std::strcmp(env, "0") == 0;
-        }();
-        // 0x3F400000 = 0.75f (16:9 Gauge fix: 1.0f * 3/4)
+        const char* env = std::getenv("GODHAND_ASPECT_RATIO_IDX");
+        const bool isWidescreen = (!env || std::strcmp(env, "1") != 0);
+        // 0x3F400000 = 0.75f (16:9 / Full Screen Gauge fix: 1.0f * 3/4)
         // 0x3F800000 = 1.0f (4:3 Original)
-        const uint32_t atVal = s_isWidescreen ? 0x3F400000u : 0x3F800000u;
+        const uint32_t atVal = isWidescreen ? 0x3F400000u : 0x3F800000u;
         SET_GPR_S32(ctx, 1, static_cast<int32_t>(atVal));
     }
     // 0x143010: 0x44813000  mtc1        $at, $f6

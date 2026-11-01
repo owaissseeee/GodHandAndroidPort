@@ -30,7 +30,6 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
     private lateinit var surfaceView: SurfaceView
     private lateinit var touchOverlay: TouchControllerOverlay
     private var inputManager: InputManager? = null
-
     private var adpfSession: PerformanceHintManager.Session? = null
     private var adpfInitialized = false
 
@@ -40,27 +39,57 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         if (tids.isNotEmpty()) {
             try {
                 val phm = getSystemService(PerformanceHintManager::class.java)
-                // 16,666,666 ns = 60.0 FPS target budget
-                adpfSession = phm?.createHintSession(tids, 16_666_666L)
+                adpfSession = phm?.createHintSession(tids, 33_333_333L)
                 adpfInitialized = true
             } catch (_: Throwable) {}
         }
     }
 
-    private val adpfFrameCallback = object : Choreographer.FrameCallback {
+    private val adpfFrameCallback = object : android.view.Choreographer.FrameCallback {
         override fun doFrame(frameTimeNanos: Long) {
             if (!isFinishing && !isDestroyed) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     ensureAdpfSession()
                     val duration = NativeBridge.getLastFrameWorkDurationNanos()
                     if (duration > 0L) {
-                        // Report at least 15.5ms so the kernel governor never downclocks Big cores when idle!
-                        val reported = maxOf(duration, 15_500_000L)
-                        adpfSession?.reportActualWorkDuration(reported)
+                        val reported = maxOf(duration, 30_000_000L)
+                        try {
+                            adpfSession?.reportActualWorkDuration(reported)
+                        } catch (_: Throwable) {}
                     }
                 }
-                Choreographer.getInstance().postFrameCallback(this)
+                android.view.Choreographer.getInstance().postFrameCallback(this)
             }
+        }
+    }
+
+    private fun enforceSixtyHzDisplayMode() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val params = window.attributes
+            params.preferredRefreshRate = 60.0f
+            try {
+                val currentDisplay = display
+                val modes = currentDisplay?.supportedModes ?: emptyArray()
+                val mode60 = modes.firstOrNull { kotlin.math.abs(it.refreshRate - 60.0f) < 0.5f }
+                if (mode60 != null) {
+                    params.preferredDisplayModeId = mode60.modeId
+                }
+            } catch (_: Throwable) {}
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                params.setFrameRateBoostOnTouchEnabled(false)
+            }
+            window.attributes = params
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                @Suppress("DEPRECATION")
+                val modes = windowManager.defaultDisplay.supportedModes
+                val mode60 = modes.firstOrNull { kotlin.math.abs(it.refreshRate - 60.0f) < 0.5f }
+                if (mode60 != null) {
+                    val params = window.attributes
+                    params.preferredDisplayModeId = mode60.modeId
+                    window.attributes = params
+                }
+            } catch (_: Throwable) {}
         }
     }
 
@@ -83,14 +112,7 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             setTurnScreenOn(true)
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val params = window.attributes
-            params.preferredRefreshRate = 60.0f
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                params.setFrameRateBoostOnTouchEnabled(false)
-            }
-            window.attributes = params
-        }
+        enforceSixtyHzDisplayMode()
         IsoCacheProcessor(this).ensureResourcesCopied()
         settings = SettingsRepository(this)
 
@@ -185,20 +207,64 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
     private fun showQuitConfirmationDialog() {
         if (isFinishing || isDestroyed) return
         runOnUiThread {
-            AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert)
-                .setTitle("Quit to Menu?")
-                .setMessage("Are you sure you want to exit to the main menu?")
-                .setPositiveButton("Quit") { _, _ ->
-                    handleExitToMenu()
+            android.app.Dialog(this).apply {
+                requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
+                window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT))
+                val root = android.widget.LinearLayout(this@GameActivity).apply {
+                    orientation = android.widget.LinearLayout.VERTICAL
+                    setBackgroundResource(R.drawable.dialog_god_hand_bg)
+                    setPadding(32, 26, 32, 26)
+                    layoutParams = android.widget.LinearLayout.LayoutParams(
+                        (resources.displayMetrics.widthPixels * 0.55f).toInt().coerceAtMost(480),
+                        android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
                 }
-                .setNegativeButton("Cancel") { dialog, _ ->
-                    dialog.dismiss()
-                    hideSystemUI()
+                val title = android.widget.TextView(this@GameActivity).apply {
+                    text = "⚔ QUIT TO MAIN MENU?"
+                    textSize = 17f
+                    setTextColor(0xFFF59E0B.toInt())
+                    typeface = android.graphics.Typeface.DEFAULT_BOLD
                 }
-                .setOnDismissListener {
-                    hideSystemUI()
+                val msg = android.widget.TextView(this@GameActivity).apply {
+                    text = "Are you sure you want to end your current fight and return to the main menu?"
+                    textSize = 13.5f
+                    setTextColor(0xFFE2E8F0.toInt())
+                    setPadding(0, 10, 0, 20)
                 }
-                .show()
+                val row = android.widget.LinearLayout(this@GameActivity).apply {
+                    orientation = android.widget.LinearLayout.HORIZONTAL
+                }
+                val btnCancel = android.widget.Button(this@GameActivity).apply {
+                    text = "CANCEL"
+                    textSize = 13f
+                    setTextColor(0xFFCBD5E1.toInt())
+                    setBackgroundResource(R.drawable.btn_god_hand_secondary)
+                    setOnClickListener {
+                        dismiss()
+                        hideSystemUI()
+                    }
+                }
+                val btnQuit = android.widget.Button(this@GameActivity).apply {
+                    text = "QUIT TO MENU"
+                    textSize = 13f
+                    setTextColor(0xFFFFFFFF.toInt())
+                    setBackgroundResource(R.drawable.btn_god_hand_primary)
+                    setOnClickListener {
+                        dismiss()
+                        handleExitToMenu()
+                    }
+                }
+                val btnH = (48 * resources.displayMetrics.density).toInt()
+                row.addView(btnCancel, android.widget.LinearLayout.LayoutParams(0, btnH, 1f).apply { setMargins(0, 0, 8, 0) })
+                row.addView(btnQuit, android.widget.LinearLayout.LayoutParams(0, btnH, 1.2f).apply { setMargins(8, 0, 0, 0) })
+
+                root.addView(title)
+                root.addView(msg)
+                root.addView(row)
+                setContentView(root)
+                setOnDismissListener { hideSystemUI() }
+                show()
+            }
         }
     }
 
@@ -314,16 +380,17 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
 
     override fun onResume() {
         super.onResume()
+        enforceSixtyHzDisplayMode()
         hideSystemUI()
         touchOverlay.applySettings(settings)
         checkConnectedControllers()
         NativeBridge.setAudioMuted(false)
-        Choreographer.getInstance().postFrameCallback(adpfFrameCallback)
+        android.view.Choreographer.getInstance().postFrameCallback(adpfFrameCallback)
     }
 
     override fun onPause() {
         super.onPause()
-        Choreographer.getInstance().removeFrameCallback(adpfFrameCallback)
+        android.view.Choreographer.getInstance().removeFrameCallback(adpfFrameCallback)
         NativeBridge.setAudioMuted(true)
     }
 
@@ -334,13 +401,6 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
 
     override fun onDestroy() {
         super.onDestroy()
-        Choreographer.getInstance().removeFrameCallback(adpfFrameCallback)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            try {
-                adpfSession?.close()
-            } catch (_: Throwable) {}
-            adpfSession = null
-        }
         inputManager?.unregisterInputDeviceListener(inputDeviceListener)
         NativeBridge.setAudioMuted(true)
         Process.killProcess(Process.myPid())
@@ -390,6 +450,27 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             holder.surface, width, height,
             rendererIdx, resolutionIdx, aspectIdx, fpsIdx, frameskipIdx
         )
+        kotlin.concurrent.thread(name = "RootAffinityOptimizer", isDaemon = true) {
+            try {
+                Thread.sleep(1500)
+                val tids = NativeBridge.getPerformanceThreadIds()
+                if (tids.isNotEmpty()) {
+                    val cmdBuilder = StringBuilder()
+                    cmdBuilder.append("echo performance > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2>/dev/null; ")
+                    cmdBuilder.append("echo performance > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor 2>/dev/null; ")
+                    if (tids.size > 0 && tids[0] > 0) cmdBuilder.append("taskset -p 1 ${tids[0]} 2>/dev/null; ")
+                    if (tids.size > 1 && tids[1] > 0) cmdBuilder.append("taskset -p 2 ${tids[1]} 2>/dev/null; ")
+                    if (tids.size > 2 && tids[2] > 0) cmdBuilder.append("taskset -p 4 ${tids[2]} 2>/dev/null; ")
+                    if (tids.size > 3 && tids[3] > 0) cmdBuilder.append("taskset -p 8 ${tids[3]} 2>/dev/null; ")
+                    if (tids.size > 4 && tids[4] > 0) cmdBuilder.append("taskset -p 30 ${tids[4]} 2>/dev/null; ")
+                    val p = Runtime.getRuntime().exec(arrayOf("su", "-c", cmdBuilder.toString()))
+                    p.waitFor()
+                    android.util.Log.i("GodHandAffinity", "Root thread affinity enforced successfully for " + tids.size + " threads")
+                }
+            } catch (e: Exception) {
+                android.util.Log.w("GodHandAffinity", "Root affinity enforcement skipped: " + e.message)
+            }
+        }
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
