@@ -408,6 +408,7 @@ public:
     [[nodiscard]] const GuestThread *currentThread() const;
     [[nodiscard]] int currentThreadId() const noexcept;
     [[nodiscard]] R5900Context *currentContext();
+    [[nodiscard]] bool rescheduleRequested() const noexcept { return m_rescheduleRequested; }
     [[nodiscard]] uint8_t *rdram() const noexcept;
 
     // Direct syscall tests use the same main-thread record without starting a

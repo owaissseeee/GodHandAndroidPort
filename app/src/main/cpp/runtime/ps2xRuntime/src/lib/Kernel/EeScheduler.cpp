@@ -780,6 +780,21 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
         return false;
     }
     t_onEeThread = true; // the full path runs before any deferral (g_deferUntil starts at 0)
+#if defined(__ANDROID__)
+    const R5900Context *curCtx = currentContext();
+    if (curCtx != nullptr)
+    {
+        const uint32_t pc = curCtx->pc;
+        // God Hand VBlank busy-wait loop inside func_0030B148 (after initial counter latch at 0x0030B148..0x0030B164):
+        // Fast-forward directly to the next VBlank boundary instead of spinning for ~6,000,000 EE cycles!
+        if (__builtin_expect(pc >= 0x0030B168u && pc < 0x0030B298u, 0))
+        {
+            accountCycles(static_cast<uint32_t>(charge));
+            skipIdleCycles();
+            return m_rescheduleRequested;
+        }
+    }
+#endif
     accountCycles(static_cast<uint32_t>(charge)); // also accounts g_ps2xEeDeferred
     const bool due = [this]() noexcept -> bool
     {
@@ -883,7 +898,11 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
         else
             m_pendingEeTimerInterrupts |= memory.advanceEeTimers(elapsed);
         g_iopStash += elapsed;
+#if defined(__ANDROID__)
+        if (g_iopStash >= 32768u)
+#else
         if (g_iopStash >= 8192u)
+#endif
         {
             m_runtime.advanceIopEeCycles(g_iopStash);
             g_iopStash = 0u;
@@ -906,7 +925,11 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
     // checkpoint saves three out-of-line calls per guest basic block (~2% of the game thread in fights).
     static uint64_t iopCycleStash = 0u;
     iopCycleStash += elapsed;
+#if defined(__ANDROID__)
+    if (iopCycleStash >= 32768u)
+#else
     if (iopCycleStash >= 512u)
+#endif
     {
         m_runtime.advanceIopEeCycles(iopCycleStash);
         iopCycleStash = 0u;

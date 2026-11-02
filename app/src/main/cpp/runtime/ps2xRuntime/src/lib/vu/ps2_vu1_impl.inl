@@ -507,6 +507,15 @@ VU1_FORCE_INLINE void VU1Interpreter::updateFmacFlags(const uint8_t laneFlags[4]
         status |= flags;
     }
 
+    if (m_unit == Unit::VU0)
+    {
+        m_state.mac = mac;
+        if (extraSticky != 0u)
+            m_state.status |= extraSticky;
+        m_state.status = (m_state.status & 0x0FC0u) | (status & 0x003Fu);
+        return;
+    }
+
     const int slot = freeSlot(m_flagValid, kMaxFlagEntries);
     if (slot < 0)
     {
@@ -1139,6 +1148,7 @@ VU1_FORCE_INLINE void VU1Interpreter::advanceTo(uint64_t targetCycle)
 VU1_FORCE_INLINE uint64_t VU1Interpreter::calculatePairReadyCycle(const DecodedInstructionPair &decoded) const
 {
     uint64_t ready = m_cycle;
+#if !defined(__aarch64__) && !defined(_M_ARM64)
     const InstructionUsage *usages[2] = {
         &decoded.upperUsage,
         &decoded.lowerUsage};
@@ -1164,6 +1174,7 @@ VU1_FORCE_INLINE uint64_t VU1Interpreter::calculatePairReadyCycle(const DecodedI
             }
         }
     }
+#endif
 
     if (decoded.lowerUsage.pipeline == PipelineFdiv && m_fdiv.valid)
         ready = std::max(ready, m_fdiv.readyCycle);
@@ -1184,6 +1195,10 @@ VU1_FORCE_INLINE uint64_t VU1Interpreter::calculatePairReadyCycle(const DecodedI
 
 VU1_FORCE_INLINE void VU1Interpreter::markPairWrites(const DecodedInstructionPair &decoded)
 {
+#if defined(__aarch64__) || defined(_M_ARM64)
+    (void)decoded;
+    return;
+#else
     const VfAccess lowerWrite = decoded.lowerUsage.vfWrite;
     if (lowerWrite.reg != 0u &&
         decoded.suppressedLowerVf != lowerWrite.reg)
@@ -1221,6 +1236,7 @@ VU1_FORCE_INLINE void VU1Interpreter::markPairWrites(const DecodedInstructionPai
                 m_accReady[component] = m_cycle + kAccForwardLatency;
         }
     }
+#endif
 }
 
 
@@ -3073,17 +3089,33 @@ struct VU1InterpreterAccess
 
     static VU1_FORCE_INLINE void writeVf(VU1Interpreter &vu, Vu1FastCtx &ctx, uint32_t reg, __m128 raw, __m128 normalized, uint32_t dest)
     {
+#if defined(__aarch64__) || defined(_M_ARM64)
+        float *dst = rawReg(vu, reg);
+        const __m128 out = (dest == 0xFu)
+            ? normalized
+            : blendDest(_mm_load_ps(ctx.norm[reg]), normalized, dest);
+        _mm_storeu_ps(dst, out);
+        _mm_store_ps(ctx.norm[reg], out);
+        (void)raw;
+#else
         storeDest(rawReg(vu, reg), raw, dest);
         if (dest == 0xFu)
             _mm_store_ps(ctx.norm[reg], normalized);
         else
             _mm_store_ps(ctx.norm[reg], blendDest(_mm_load_ps(ctx.norm[reg]), normalized, dest));
+#endif
     }
 
     static VU1_FORCE_INLINE void writeVfFull(VU1Interpreter &vu, Vu1FastCtx &ctx, uint32_t reg, __m128 raw, __m128 normalized)
     {
+#if defined(__aarch64__) || defined(_M_ARM64)
+        _mm_storeu_ps(rawReg(vu, reg), normalized);
+        _mm_store_ps(ctx.norm[reg], normalized);
+        (void)raw;
+#else
         _mm_storeu_ps(rawReg(vu, reg), raw);
         _mm_store_ps(ctx.norm[reg], normalized);
+#endif
     }
 
     static VU1_FORCE_INLINE void resetVf0(VU1Interpreter &vu, Vu1FastCtx &ctx)
@@ -3653,9 +3685,9 @@ struct VU1InterpreterAccess
     {
         uint32x4_t u;
         std::memcpy(&u, &v, sizeof(u));
-        static constexpr int32_t kShift[4] = {-31, -30, -29, -28};
-        const uint32x4_t bits = vandq_u32(u, vdupq_n_u32(0x80000000u));
-        return vaddvq_u32(vshlq_u32(bits, vld1q_s32(kShift)));
+        const uint32x4_t msb = vshrq_n_u32(u, 31);
+        static constexpr int32_t kShift[4] = {0, 1, 2, 3};
+        return vaddvq_u32(vshlq_u32(msb, vld1q_s32(kShift)));
     }
 #endif
 

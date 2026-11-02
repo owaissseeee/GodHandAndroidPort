@@ -1130,6 +1130,30 @@ bool PS2Runtime::initialize(const char *title)
     return false;
 }
 
+extern uint64_t g_ps2xEeDeferred;
+extern std::atomic<uint64_t> g_ps2xEeDeferBudget;
+extern uint32_t g_ps2xEeLoopCycles;
+
+namespace
+{
+    alignas(64) PS2Runtime::RecompiledFunction g_fastJumpTable[2097152] = {};
+    std::atomic<bool> g_fastJumpTableInitialized{false};
+
+    void initFastJumpTable()
+    {
+        bool expected = false;
+        if (!g_fastJumpTableInitialized.compare_exchange_strong(expected, true)) return;
+        if (g_ps2RecompiledFunctionTableBase == 0x100000u && g_ps2RecompiledFunctionTableSlotCount <= 2097152) {
+            const uint32_t baseSlot = g_ps2RecompiledFunctionTableBase >> 2;
+            for (uint32_t i = 0; i < g_ps2RecompiledFunctionTableSlotCount; ++i) {
+                if (g_ps2RecompiledFunctionTable[i]) {
+                    g_fastJumpTable[baseSlot + i] = g_ps2RecompiledFunctionTable[i];
+                }
+            }
+        }
+    }
+}
+
 bool PS2Runtime::loadELF(const std::string &elfPath)
 {
     configureIoPathsFromElf(elfPath);
@@ -1381,6 +1405,7 @@ bool PS2Runtime::loadELF(const std::string &elfPath)
                                       elfCrc32,
                                       elfCrc32Valid);
 
+    initFastJumpTable();
     RUNTIME_LOG("ELF file loaded successfully. Entry point: 0x" << std::hex << m_cpuContext.pc << std::dec);
     return true;
 }
@@ -1477,21 +1502,7 @@ namespace
         return page ? &page[(address >> 2) & (kModulePageSlots - 1u)] : nullptr;
     }
 
-    alignas(64) PS2Runtime::RecompiledFunction g_fastJumpTable[2097152] = {};
-    std::atomic<bool> g_fastJumpTableInitialized{false};
 
-    void initFastJumpTable() {
-        bool expected = false;
-        if (!g_fastJumpTableInitialized.compare_exchange_strong(expected, true)) return;
-        if (g_ps2RecompiledFunctionTableBase == 0x100000u && g_ps2RecompiledFunctionTableSlotCount <= 2097152) {
-            const uint32_t baseSlot = g_ps2RecompiledFunctionTableBase >> 2;
-            for (uint32_t i = 0; i < g_ps2RecompiledFunctionTableSlotCount; ++i) {
-                if (g_ps2RecompiledFunctionTable[i]) {
-                    g_fastJumpTable[baseSlot + i] = g_ps2RecompiledFunctionTable[i];
-                }
-            }
-        }
-    }
 
     // The one lookup every dispatch path uses: generated table for its own range, module table everywhere else.
     PS2Runtime::RecompiledFunction anyFunction(uint32_t address)
@@ -1851,14 +1862,26 @@ bool PS2Runtime::dispatchGuestBranch(uint8_t *rdram,
     // Every inter-function transfer is also a deterministic EE safe point.
     // Backward edges inside generated functions use eeCheckpointDue(), while
     // this charge bounds straight-line call chains that have no local loop.
-    if (m_eeScheduler && m_eeScheduler->checkpointDue(EeScheduler::kGuestDispatchCycles))
+    if (__builtin_expect(m_eeScheduler != nullptr, 1))
     {
-        return false;
+        const uint32_t charge = EeScheduler::kGuestDispatchCycles;
+        const uint64_t deferred = g_ps2xEeDeferred + charge;
+        if (__builtin_expect(deferred < g_ps2xEeDeferBudget.load(std::memory_order_relaxed) && !m_eeScheduler->rescheduleRequested(), 1))
+        {
+            g_ps2xEeDeferred = deferred;
+        }
+        else
+        {
+            if (m_eeScheduler->checkpointDue(charge))
+                return false;
+        }
     }
 
     if (!isCall)
     {
+#if !defined(__ANDROID__)
         pushBranchEvent(2u, sourcePc, targetPc, ctx, 0u);
+#endif
         ++g_guestJumpSerial;
         if (!hasFunction(targetPc))
         {
@@ -1905,8 +1928,10 @@ bool PS2Runtime::dispatchGuestBranch(uint8_t *rdram,
         return false;
     }
 
+#if !defined(__ANDROID__)
     if (singleLookup)
         pushDispatchPc(targetPc);
+#endif
     const uint32_t entryPc = ctx->pc;
     const uint64_t jumpSerial = g_guestJumpSerial;
     pushBranchEvent(0u, sourcePc, targetPc, ctx, fallthroughPc);
@@ -2814,9 +2839,7 @@ void PS2Runtime::postEeEvent(EeEvent event)
 // Budget of the deferred EE checkpoints (Kernel/EeScheduler.cpp). Checked here, before the call into the scheduler:
 // it was tried inline in the generated code (in ps2_runtime.h), and the extra code in tens of thousands of loops made
 // the game thread ~4 points slower overall (PROGRESS §76).
-extern uint64_t g_ps2xEeDeferred;
-extern std::atomic<uint64_t> g_ps2xEeDeferBudget;
-extern uint32_t g_ps2xEeLoopCycles;
+
 
 bool PS2Runtime::eeCheckpointDue(uint32_t cycles) noexcept
 {
