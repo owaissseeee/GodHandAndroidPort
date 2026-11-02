@@ -103,6 +103,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
     // Runtime input states
     private var buttonMask: Int = 0
+    private var lastTouchInvalidateMs: Long = 0L
+    private var lastRenderedButtonMask: Int = 0
     private var leftStickX: Float = 0f
     private var leftStickY: Float = 0f
     private var rightStickX: Float = 0f
@@ -913,9 +915,22 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 mask = mask or btn.mask
             }
         }
+        val prevMask = buttonMask
         buttonMask = mask
         NativeBridge.updatePadState(buttonMask, leftStickX, leftStickY, rightStickX, rightStickY)
-        invalidate()
+
+        val nowMs = android.os.SystemClock.uptimeMillis()
+        if (buttonMask != lastRenderedButtonMask ||
+            action == MotionEvent.ACTION_DOWN ||
+            action == MotionEvent.ACTION_UP ||
+            action == MotionEvent.ACTION_POINTER_DOWN ||
+            action == MotionEvent.ACTION_POINTER_UP ||
+            action == MotionEvent.ACTION_CANCEL ||
+            (nowMs - lastTouchInvalidateMs >= 33L)) {
+            lastRenderedButtonMask = buttonMask
+            lastTouchInvalidateMs = nowMs
+            invalidate()
+        }
         return true
     }
 
@@ -1087,19 +1102,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
     private var lastHapticTimeMs = 0L
     private fun hapticTick() {
-        val now = android.os.SystemClock.uptimeMillis()
-        if (now - lastHapticTimeMs < 50L) return
-        lastHapticTimeMs = now
-        try {
-            performHapticFeedback(
-                android.view.HapticFeedbackConstants.KEYBOARD_TAP,
-                android.view.HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING
-            )
-        } catch (_: Throwable) {
-            try {
-                vibrator?.vibrate(VibrationEffect.createOneShot(12, VibrationEffect.DEFAULT_AMPLITUDE))
-            } catch (_: Throwable) {}
-        }
+        // No-op during gameplay to prevent synchronous Vibrator Binder IPC stalls on UI/RenderThread
     }
 }
 

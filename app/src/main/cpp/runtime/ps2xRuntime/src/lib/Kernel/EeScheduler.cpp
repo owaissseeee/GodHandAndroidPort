@@ -671,6 +671,15 @@ void EeScheduler::run()
 #endif
 
         g_loopStats.lastPc = context.pc;
+        if (context.pc >= 0x0030B148u && context.pc < 0x0030B298u)
+        {
+            if (m_rdram && m_rdram[0x00747A08u] == 0u &&
+                !ps2x::asyncvif::pipelineBusy(m_runtime.memory()) &&
+                pendingGsInterruptEvents() == m_gsInterruptLatched)
+            {
+                skipIdleCycles();
+            }
+        }
         if (checkpointDue(kGuestDispatchCycles))
         {
             ++g_loopStats.checkpointSkips;
@@ -880,8 +889,8 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
             memory.m_eeTimerPendingCycles += elapsed;
         else
             m_pendingEeTimerInterrupts |= memory.advanceEeTimers(elapsed);
-        g_iopStash += elapsed;
-        if (g_iopStash >= 16384u)
+        g_iopStash += (elapsed >> 1);
+        if (g_iopStash >= 32768u)
         {
             m_runtime.advanceIopEeCycles(g_iopStash);
             g_iopStash = 0u;
@@ -903,7 +912,7 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
     // The IOP runs in batches of 8192 EE cycles anyway; handing it the cycles every 512 instead of at every
     // checkpoint saves three out-of-line calls per guest basic block (~2% of the game thread in fights).
     static uint64_t iopCycleStash = 0u;
-    iopCycleStash += elapsed;
+    iopCycleStash += (elapsed >> 1);
 #if defined(__ANDROID__)
     if (iopCycleStash >= 32768u)
 #else

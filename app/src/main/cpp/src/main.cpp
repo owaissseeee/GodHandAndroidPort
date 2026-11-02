@@ -806,11 +806,10 @@ extern "C" int godhand_get_device_tier();
 extern "C" void godhand_set_frameskip_mode(int mode);
 
 void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererIdx, int resScaleIdx, int aspectIdx, int fpsIdx, int frameskipIdx) {
-    if (frameskipIdx == 1) {
-        frameskipIdx = 0; // Disable broken Auto-Frameskip from stale SharedPreferences
-    }
-    __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "bootAndroidRuntime: initializing EE runtime (frameskip=%d)...", frameskipIdx);
-    godhand_set_frameskip_mode(frameskipIdx);
+    // Frameskip forces multi-frame draw batching and latency spikes on Android; always run unbatched 60Hz/30Hz VSync!
+    frameskipIdx = 0;
+    __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "bootAndroidRuntime: initializing EE runtime (frameskip forced 0 / unbatched)...");
+    godhand_set_frameskip_mode(0);
 
     // Internal resolution scale mapping from UI spinner index:
     // 0: "0.5x (Super Ultra Low Potato)" -> 0.5f
@@ -907,7 +906,7 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     ps2x::asyncvif::setDefaultEnabled(true);
     // Disable artificial host pacing sleep on asyncvif so VUThread processes enemy/house geometry at 100% speed!
     ps2x::asyncvif::setHostPacingDefault(false);
-    EeScheduler::setHostPacingDefault(false);
+    EeScheduler::setHostPacingDefault(true);
     GSThreadedBackend::SetEnabledByDefault(true);
     GSThreadedBackend::SetGpuByDefault(true);
 

@@ -322,20 +322,21 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
                 break;
         }
     } else if (top_tier <= 1 || big_cores.size() >= 4) {
-        // 8-core Big/Little topology (4 Big cores + 4 Little cores):
-        // Dedicated 1:1 Big Core assignment for zero preemption:
-        // - Big Core 0: 100% EXCLUSIVELY DEDICATED TO EE_MAIN (Nice -20)
-        // - Big Core 1: 100% EXCLUSIVELY DEDICATED TO VU1_WORKER (Nice -20)
-        // - Big Core 2: 100% EXCLUSIVELY DEDICATED TO GS_RENDERER (Nice -19)
-        // - Big Core 3: 100% EXCLUSIVELY DEDICATED TO GIF_WORKER (Nice -16)
-        // - Little Cores (4..7): IOP_WORKER (Nice -15), AUDIO_SPU2 (Nice -16), HOST_PUMP (Nice -2)
+        // Unified 4-Big + 4-Little layout for all 8-core SoCs (Helio G25, Dimensity 7300, Snapdragon):
+        //   big_cores[0] : EE_MAIN     (dedicated Big core + fallback to big_cores[3] on budget tier)
+        //   big_cores[1] : VU1_WORKER  (dedicated Big core + fallback to big_cores[3] on budget tier)
+        //   big_cores[2] : GS_RENDERER (100% EXCLUSIVE Big core — never preempted by IOP or GIF!)
+        //   big_cores[3] : GIF_WORKER  (dedicated Big core)
+        //   little_cores : IOP_WORKER, AUDIO_SPU2, HOST_PUMP (all Little cores)
         switch (role) {
             case ThreadRole::EE_MAIN:
                 CPU_SET(big_cores[0], &mask);
+                if (top_tier <= 1 && big_cores.size() >= 4) CPU_SET(big_cores[3], &mask);
                 targetNice = -20;
                 break;
             case ThreadRole::VU1_WORKER:
                 CPU_SET(big_cores[1 % big_cores.size()], &mask);
+                if (top_tier <= 1 && big_cores.size() >= 4) CPU_SET(big_cores[3], &mask);
                 targetNice = -20;
                 break;
             case ThreadRole::GS_RENDERER:
@@ -347,20 +348,34 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
                     CPU_SET(big_cores[3], &mask);
                 else
                     CPU_SET(big_cores[2 % big_cores.size()], &mask);
+                if (top_tier <= 1) {
+                    for (int c : little_cores) CPU_SET(c, &mask);
+                }
                 targetNice = -16;
                 break;
             case ThreadRole::IOP_WORKER:
-                for (int lc : little_cores) CPU_SET(lc, &mask);
-                if (little_cores.empty() && big_cores.size() >= 4) CPU_SET(big_cores[3], &mask);
+                if (!little_cores.empty()) {
+                    for (int lc : little_cores) CPU_SET(lc, &mask);
+                } else if (big_cores.size() >= 4) {
+                    CPU_SET(big_cores[3], &mask);
+                }
                 targetNice = -15;
                 break;
             case ThreadRole::AUDIO_SPU2:
-                for (int lc : little_cores) CPU_SET(lc, &mask);
+                if (!little_cores.empty()) {
+                    for (int lc : little_cores) CPU_SET(lc, &mask);
+                } else if (big_cores.size() >= 4) {
+                    CPU_SET(big_cores[3], &mask);
+                }
                 targetNice = -16;
                 break;
             case ThreadRole::HOST_PUMP:
             default:
-                for (int lc : little_cores) CPU_SET(lc, &mask);
+                if (!little_cores.empty()) {
+                    for (int lc : little_cores) CPU_SET(lc, &mask);
+                } else if (big_cores.size() >= 4) {
+                    CPU_SET(big_cores[3], &mask);
+                }
                 targetNice = -2;
                 break;
         }
