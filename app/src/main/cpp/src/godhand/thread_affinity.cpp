@@ -152,6 +152,12 @@ static std::vector<CpuCoreInfo> detectSortedCores() {
 
     long conf_cpus = sysconf(_SC_NPROCESSORS_CONF);
     int total_cpus = (conf_cpus > 0 && conf_cpus <= 64) ? static_cast<int>(conf_cpus) : 8;
+    for (int probe = total_cpus; probe < 8; ++probe) {
+        std::ifstream f("/sys/devices/system/cpu/cpu" + std::to_string(probe) + "/cpufreq/cpuinfo_max_freq");
+        if (f.is_open()) {
+            total_cpus = probe + 1;
+        }
+    }
 
     auto cpuinfoList = parseCpuInfoFile();
 
@@ -315,22 +321,21 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
                 targetNice = -15;
                 break;
         }
-    } else if (top_tier <= 1) {
-        // Budget 8-core A53/A55 cluster with frequency split (Helio G25, G35, P35, Unisoc T606):
-        // big_cores[0..3] = 4x 2.00 GHz Cortex-A53; little_cores[0..3] = 4x 1.50 GHz Cortex-A53.
-        // - Give EE_MAIN primary big_cores[0] + fallback big_cores[3] (so kernel IRQ on Core 3 never stalls EEThread)
-        // - Give VU1_WORKER primary big_cores[1] + fallback big_cores[3]
-        // - Share big_cores[2] (2.0 GHz) between GS_RENDERER (36%) and GIF_WORKER (10%)
-        // - Place IOP_WORKER on big_cores[3] (2.0 GHz) + little_cores so SIF/DMA RPCs finish at 2.0 GHz speed!
+    } else if (top_tier <= 1 || big_cores.size() >= 4) {
+        // 8-core Big/Little topology (4 Big cores + 4 Little cores):
+        // Dedicated 1:1 Big Core assignment for zero preemption:
+        // - Big Core 0: 100% EXCLUSIVELY DEDICATED TO EE_MAIN (Nice -20)
+        // - Big Core 1: 100% EXCLUSIVELY DEDICATED TO VU1_WORKER (Nice -20)
+        // - Big Core 2: 100% EXCLUSIVELY DEDICATED TO GS_RENDERER (Nice -19)
+        // - Big Core 3: 100% EXCLUSIVELY DEDICATED TO GIF_WORKER (Nice -16)
+        // - Little Cores (4..7): IOP_WORKER (Nice -15), AUDIO_SPU2 (Nice -16), HOST_PUMP (Nice -2)
         switch (role) {
             case ThreadRole::EE_MAIN:
                 CPU_SET(big_cores[0], &mask);
-                if (big_cores.size() >= 4) CPU_SET(big_cores[3], &mask);
                 targetNice = -20;
                 break;
             case ThreadRole::VU1_WORKER:
-                CPU_SET(big_cores[1], &mask);
-                if (big_cores.size() >= 4) CPU_SET(big_cores[3], &mask);
+                CPU_SET(big_cores[1 % big_cores.size()], &mask);
                 targetNice = -20;
                 break;
             case ThreadRole::GS_RENDERER:
@@ -338,57 +343,16 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
                 targetNice = -19;
                 break;
             case ThreadRole::GIF_WORKER:
-                CPU_SET(big_cores[2 % big_cores.size()], &mask);
-                if (big_cores.size() >= 4) CPU_SET(big_cores[3], &mask);
+                if (big_cores.size() >= 4)
+                    CPU_SET(big_cores[3], &mask);
+                else
+                    CPU_SET(big_cores[2 % big_cores.size()], &mask);
                 targetNice = -16;
                 break;
             case ThreadRole::IOP_WORKER:
-                if (big_cores.size() >= 4) CPU_SET(big_cores[3], &mask);
                 for (int lc : little_cores) CPU_SET(lc, &mask);
+                if (little_cores.empty() && big_cores.size() >= 4) CPU_SET(big_cores[3], &mask);
                 targetNice = -15;
-                break;
-            case ThreadRole::AUDIO_SPU2:
-                for (int lc : little_cores) CPU_SET(lc, &mask);
-                targetNice = -16;
-                break;
-            case ThreadRole::HOST_PUMP:
-            default:
-                for (int lc : little_cores) CPU_SET(lc, &mask);
-                targetNice = -2;
-                break;
-        }
-    } else if (big_cores.size() >= 4) {
-        // 4+ Big/Prime cores (Dimensity 7050 with 4 Big cores, Snapdragon 7s Gen 2, SD 8 Gen 1/2/3, 870, 888, Tensor G1-G4, Exynos 1380/1480):
-        // Thermal-Optimized Multi-Core Architecture (Sustained 60 FPS without Thermal Clamping):
-        // Running all 4 Big cores pinned at nice -20 consumes ~8W, causing thin phones (Motorola Edge 50 Fusion, etc.)
-        // to overheat in 3-4 minutes and throttle Cortex-A78 down to 1.4 GHz (causing FPS to collapse to 45).
-        // By consolidating GS_RENDERER (18%), IOP_WORKER (15%), and GIF_WORKER (9%) onto Big Core 2 (~42% combined load),
-        // Big Core 3 is left completely UNBURDENED / IDLE, dropping package power by ~40% and keeping SoC skin temp < 38°C!
-        // - Big Core 0: 100% EXCLUSIVELY DEDICATED TO EE_MAIN (Nice -20, ZERO PREEMPTION!)
-        // - Big Core 1: 100% EXCLUSIVELY DEDICATED TO VU1_WORKER (Nice -20, 3D vertex transforms & skinning)
-        // - Big Core 2: Shared by GS_RENDERER (Nice -19), IOP_WORKER (Nice -17), and GIF_WORKER (Nice -16)
-        // - Big Core 3: Left unpinned / idle (eliminates thermal throttling)
-        // - Little Cores: Audio SPU2 (Nice -16), Host window pump (Nice -2), touch input, OS background threads
-        switch (role) {
-            case ThreadRole::EE_MAIN:
-                CPU_SET(big_cores[0], &mask);
-                targetNice = -20;
-                break;
-            case ThreadRole::VU1_WORKER:
-                CPU_SET(big_cores[1], &mask);
-                targetNice = -20;
-                break;
-            case ThreadRole::GS_RENDERER:
-                CPU_SET(big_cores[2], &mask);
-                targetNice = -19;
-                break;
-            case ThreadRole::IOP_WORKER:
-                CPU_SET(big_cores[2], &mask);
-                targetNice = -17;
-                break;
-            case ThreadRole::GIF_WORKER:
-                CPU_SET(big_cores[2], &mask);
-                targetNice = -16;
                 break;
             case ThreadRole::AUDIO_SPU2:
                 for (int lc : little_cores) CPU_SET(lc, &mask);

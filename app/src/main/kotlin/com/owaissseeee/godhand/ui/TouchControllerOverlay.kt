@@ -1155,12 +1155,16 @@ class CustomTouchTextureManager(private val context: Context) {
             } catch (_: Exception) {}
         }
         if (bmp == null) {
-            // Check assets/touch_textures/
-            try {
-                context.assets.open("touch_textures/$fileName").use { stream ->
-                    bmp = BitmapFactory.decodeStream(stream)
-                }
-            } catch (_: Exception) {}
+            // Check assets (touch_icons, touchicon, touch_textures)
+            val assetFolders = arrayOf("touch_icons", "touchicon", "touch_textures")
+            for (folder in assetFolders) {
+                try {
+                    context.assets.open("$folder/$fileName").use { stream ->
+                        bmp = BitmapFactory.decodeStream(stream)
+                    }
+                    if (bmp != null) break
+                } catch (_: Exception) {}
+            }
         }
         textureCache[id] = bmp
         return bmp

@@ -58,7 +58,7 @@ namespace
         options.UserHacks_MergePPSprite = false;               // RESTORES CHARACTER FACES & REMOVES LINE POPPING
         options.UserHacks_AlignSpriteX = false;
         options.GetSkipCountFunctionId = -1;
-        options.SkipDuplicateFrames = false;
+        options.SkipDuplicateFrames = true;
         options.TriFilter = TriFiltering::Off;
         options.TexturePreloading = TexturePreloadingLevel::Full;
         // SkipDraw: Cleanly strips the depth-of-field blur quad without corrupting framebuffers

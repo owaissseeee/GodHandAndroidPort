@@ -694,25 +694,6 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
     }
 
     const auto presentStart = std::chrono::steady_clock::now();
-#if defined(__ANDROID__)
-    const uint64_t curGameFrames = g_perfGameFrames.load(std::memory_order_relaxed);
-    static uint64_t s_lastPresentedGameFrame = 0;
-    static uint32_t s_consecutiveSkippedVBlanks = 0;
-    const bool hasNewGameFrame = (curGameFrames != s_lastPresentedGameFrame);
-    const bool hasNewGifData = (m_gifBytes != m_gifBytesAtPresent);
-
-    // In 30 FPS console-lock mode, every 2nd VBlank has no new Game EE flip.
-    // Skip at most 1 intermediate VBlank when no new Game EE frame was flipped,
-    // cutting GSThread & PowerVR GE8320 swapchain overhead in half!
-    if (!hasNewGameFrame && !hasNewGifData && curGameFrames > 0 && s_consecutiveSkippedVBlanks < 1u)
-    {
-        ++s_consecutiveSkippedVBlanks;
-        return;
-    }
-    s_lastPresentedGameFrame = curGameFrames;
-    s_consecutiveSkippedVBlanks = 0;
-    m_gifBytesAtPresent = m_gifBytes;
-#endif
     g_api->vsync(reinterpret_cast<const Pcsx2GsPrivRegs *>(&regs));
     WriteFrameTime(presentStart);
     g_presents.fetch_add(1u, std::memory_order_relaxed);

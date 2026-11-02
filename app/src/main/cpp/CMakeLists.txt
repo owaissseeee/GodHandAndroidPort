@@ -104,6 +104,7 @@ target_link_libraries(godhand_android PRIVATE
 file(GLOB GODHAND_VU1_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/generated/vu1/*.cpp")
 if(GODHAND_VU1_SOURCES)
     add_library(godhand_vu1_code STATIC ${GODHAND_VU1_SOURCES})
+    target_compile_options(godhand_vu1_code PRIVATE -O3 -fomit-frame-pointer -finline-functions)
     target_include_directories(godhand_vu1_code PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/runtime/ps2xRuntime/src/lib/vu

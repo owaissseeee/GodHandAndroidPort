@@ -3,7 +3,11 @@
 #include "runtime/gs/gs_frontend.h"
 #include "runtime/ps2_memory.h"
 #include "ps2_vu1_detail.h"
+#if defined(__GNUC__) || defined(__clang__)
+#define VU1_FORCE_INLINE __attribute__((always_inline)) inline
+#else
 #define VU1_FORCE_INLINE inline
+#endif
 #include "ps2_vu1_impl.inl"
 
 #include <algorithm>

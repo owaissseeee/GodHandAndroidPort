@@ -781,17 +781,49 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
     }
     t_onEeThread = true; // the full path runs before any deferral (g_deferUntil starts at 0)
 #if defined(__ANDROID__)
-    const R5900Context *curCtx = currentContext();
-    if (curCtx != nullptr)
+    if (const GuestThread *running = currentThread(); running != nullptr && !m_insideInterrupt && running->invocations.empty())
     {
-        const uint32_t pc = curCtx->pc;
-        // God Hand VBlank busy-wait loop inside func_0030B148 (after initial counter latch at 0x0030B148..0x0030B164):
-        // Fast-forward directly to the next VBlank boundary instead of spinning for ~6,000,000 EE cycles!
+        const uint32_t pc = running->context.pc;
         if (__builtin_expect(pc >= 0x0030B168u && pc < 0x0030B298u, 0))
         {
-            accountCycles(static_cast<uint32_t>(charge));
-            skipIdleCycles();
-            return m_rescheduleRequested;
+            // 1. If GIFThread raised a GS SIGNAL/FINISH interrupt, unwind immediately so the EE GS handler
+            //    kicks the next DMA part of the frame with zero delay!
+            if (gsInterruptUnseen() || !m_pendingInvocations.empty())
+            {
+                m_checkpointPending.store(true, std::memory_order_release);
+                m_unwinding = true;
+                g_deferUntil = 0u;
+                g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
+                return true;
+            }
+            // 2. If VUThread or GIFThread is STILL busy rendering the current frame, DO NOT advance m_eeCycle
+            //    (advancing m_eeCycle here would make VBlank fire before the frame finishes drawing!).
+            //    Instead, sleep briefly waiting for VUThread/GIFThread to finish or raise GS SIGNAL/FINISH!
+            if (ps2x::asyncvif::pipelineBusy(m_runtime.memory()))
+            {
+                ps2x::asyncvif::waitPipelineIdle(m_runtime.memory(), std::chrono::microseconds(150));
+                if (gsInterruptUnseen())
+                {
+                    m_checkpointPending.store(true, std::memory_order_release);
+                    m_unwinding = true;
+                    g_deferUntil = 0u;
+                    g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
+                    return true;
+                }
+            }
+            else
+            {
+                // 3. VUThread and GIFThread are 100% IDLE (frame drawing is completely finished!).
+                //    Now it is 100% safe to fast-forward the remaining idle EE cycles to the VBlank boundary!
+                skipIdleCycles();
+                if (m_checkpointPending.load(std::memory_order_acquire))
+                {
+                    m_unwinding = true;
+                    g_deferUntil = 0u;
+                    g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
+                    return true;
+                }
+            }
         }
     }
 #endif
@@ -898,11 +930,7 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
         else
             m_pendingEeTimerInterrupts |= memory.advanceEeTimers(elapsed);
         g_iopStash += elapsed;
-#if defined(__ANDROID__)
-        if (g_iopStash >= 32768u)
-#else
-        if (g_iopStash >= 8192u)
-#endif
+        if (g_iopStash >= 4096u)
         {
             m_runtime.advanceIopEeCycles(g_iopStash);
             g_iopStash = 0u;

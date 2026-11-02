@@ -3023,21 +3023,14 @@ struct VU1InterpreterAccess
     static VU1_FORCE_INLINE __m128 vnorm(__m128 value)
     {
 #if defined(__aarch64__) || defined(_M_ARM64)
-        static const bool s_skipNorm = [] {
-            const char *c = std::getenv("PS2X_VU1_SKIP_CLAMP");
-            return !c || *c != '0';
-        }();
-        if (s_skipNorm)
-            return value;
-        float32x4_t fv;
-        std::memcpy(&fv, &value, sizeof(fv));
-        const uint32x4_t bits = vreinterpretq_u32_f32(fv);
-        const uint32x4_t exp_mask = vdupq_n_u32(0x7F800000u);
-        const uint32x4_t is_inf_or_nan = vceqq_u32(vandq_u32(bits, exp_mask), exp_mask);
-        const uint32x4_t clamped = vorrq_u32(vandq_u32(bits, vdupq_n_u32(0x80000000u)), vdupq_n_u32(0x7F7FFFFFu));
-        const float32x4_t rf = vreinterpretq_f32_u32(vbslq_u32(is_inf_or_nan, clamped, bits));
+        uint32x4_t bits;
+        std::memcpy(&bits, &value, 16);
+        const uint32x4_t sign = vandq_u32(bits, vdupq_n_u32(0x80000000u));
+        const uint32x4_t mag  = vminq_u32(vandq_u32(bits, vdupq_n_u32(0x7FFFFFFFu)), vdupq_n_u32(0x7F7FFFFFu));
+        const uint32x4_t norm = vandq_u32(mag, vcgeq_u32(mag, vdupq_n_u32(0x00800000u)));
+        const uint32x4_t res  = vorrq_u32(sign, norm);
         __m128 out;
-        std::memcpy(&out, &rf, sizeof(out));
+        std::memcpy(&out, &res, 16);
         return out;
 #else
         const __m128i bits = _mm_castps_si128(value);
@@ -3089,33 +3082,17 @@ struct VU1InterpreterAccess
 
     static VU1_FORCE_INLINE void writeVf(VU1Interpreter &vu, Vu1FastCtx &ctx, uint32_t reg, __m128 raw, __m128 normalized, uint32_t dest)
     {
-#if defined(__aarch64__) || defined(_M_ARM64)
-        float *dst = rawReg(vu, reg);
-        const __m128 out = (dest == 0xFu)
-            ? normalized
-            : blendDest(_mm_load_ps(ctx.norm[reg]), normalized, dest);
-        _mm_storeu_ps(dst, out);
-        _mm_store_ps(ctx.norm[reg], out);
-        (void)raw;
-#else
         storeDest(rawReg(vu, reg), raw, dest);
         if (dest == 0xFu)
             _mm_store_ps(ctx.norm[reg], normalized);
         else
             _mm_store_ps(ctx.norm[reg], blendDest(_mm_load_ps(ctx.norm[reg]), normalized, dest));
-#endif
     }
 
     static VU1_FORCE_INLINE void writeVfFull(VU1Interpreter &vu, Vu1FastCtx &ctx, uint32_t reg, __m128 raw, __m128 normalized)
     {
-#if defined(__aarch64__) || defined(_M_ARM64)
-        _mm_storeu_ps(rawReg(vu, reg), normalized);
-        _mm_store_ps(ctx.norm[reg], normalized);
-        (void)raw;
-#else
         _mm_storeu_ps(rawReg(vu, reg), raw);
         _mm_store_ps(ctx.norm[reg], normalized);
-#endif
     }
 
     static VU1_FORCE_INLINE void resetVf0(VU1Interpreter &vu, Vu1FastCtx &ctx)
@@ -3825,6 +3802,16 @@ struct VU1InterpreterAccess
 
         if constexpr (cross)
             result = _mm_and_ps(result, destMask(0xEu));
+#if defined(__aarch64__) || defined(_M_ARM64)
+        {
+            uint32x4_t bits;
+            std::memcpy(&bits, &result, 16);
+            const uint32x4_t sign = vandq_u32(bits, vdupq_n_u32(0x80000000u));
+            const uint32x4_t mag  = vminq_u32(vandq_u32(bits, vdupq_n_u32(0x7FFFFFFFu)), vdupq_n_u32(0x7F7FFFFFu));
+            const uint32x4_t res  = vorrq_u32(sign, mag);
+            std::memcpy(&result, &res, 16);
+        }
+#endif
         normalized = result;
         return result;
     }

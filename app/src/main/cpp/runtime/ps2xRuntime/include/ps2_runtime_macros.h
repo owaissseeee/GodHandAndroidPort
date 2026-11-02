@@ -130,8 +130,14 @@ static inline uint32_t ps2_plzcw32(uint32_t x)
 PS2_FORCEINLINE __m128 ps2VuClampVector(__m128 value)
 {
 #if defined(__aarch64__) || defined(_M_ARM64)
-    // Hardware FPCR.FZ and FPCR.DN are active on ARM64; return directly in 0 cycles!
-    return value;
+    uint32x4_t bits;
+    std::memcpy(&bits, &value, 16);
+    const uint32x4_t sign = vandq_u32(bits, vdupq_n_u32(0x80000000u));
+    const uint32x4_t mag  = vminq_u32(vandq_u32(bits, vdupq_n_u32(0x7FFFFFFFu)), vdupq_n_u32(0x7F7FFFFFu));
+    const uint32x4_t res  = vorrq_u32(sign, mag);
+    __m128 out;
+    std::memcpy(&out, &res, 16);
+    return out;
 #else
     const __m128i bits = _mm_castps_si128(value);
     const __m128i exponentMask = _mm_set1_epi32(0x7F800000);
@@ -143,18 +149,14 @@ PS2_FORCEINLINE __m128 ps2VuClampVector(__m128 value)
 
 PS2_FORCEINLINE float ps2FpuClamp(float value)
 {
-#if defined(__aarch64__) || defined(_M_ARM64)
-    return value;
-#else
     uint32_t bits;
     std::memcpy(&bits, &value, sizeof(bits));
-    if ((bits & 0x7F800000u) == 0x7F800000u)
+    if (__builtin_expect((bits & 0x7F800000u) == 0x7F800000u, 0))
     {
         bits = (bits & 0x80000000u) | 0x7F7FFFFFu;
         std::memcpy(&value, &bits, sizeof(value));
     }
     return value;
-#endif
 }
 
 PS2_FORCEINLINE void ps2FpuAlignOperands(float &a, float &b)
@@ -895,8 +897,8 @@ inline __m128i ps2_u64_to_epi64_pair(uint64_t value)
 #define FPU_ADD_S(a, b) ((float)(a) + (float)(b))
 #define FPU_SUB_S(a, b) ((float)(a) - (float)(b))
 #define FPU_MUL_S(a, b) ((float)(a) * (float)(b))
-#define FPU_DIV_S(a, b) ((float)(a) / (float)(b))
-#define FPU_SQRT_S(a) sqrtf(fabsf((float)(a)))
+#define FPU_DIV_S(a, b) ps2FpuClamp((float)(a) / (float)(b))
+#define FPU_SQRT_S(a) ps2FpuClamp(sqrtf(fabsf((float)(a))))
 #define FPU_ABS_S(a) fabsf((float)(a))
 #define FPU_MOV_S(a) ((float)(a))
 #define FPU_NEG_S(a) (-(float)(a))
