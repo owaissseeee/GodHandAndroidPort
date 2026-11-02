@@ -1,185 +1,120 @@
-================================================================================
-GOD HAND ANDROID STATIC RECOMPILATION (SLUS-21503)
-FINAL MASTER OPTIMIZATION PROMPT — POTATO (HELIO G25 / CORTEX-A53) TO FLAGSHIP
-Target Branch: potato60fps
-================================================================================
+# God Hand Android (`potato60fps`) — Ultimate Mathematical & Hardware-Level Optimization Playbook
 
-ROLE & OBJECTIVE FOR CODING AGENT:
-You are operating on the `potato60fps` branch of the God Hand Android Static Recompilation project:
-  git checkout -B potato60fps
-
-Live hardware profiling on Xiaomi Redmi 10A (MediaTek Helio G25, 8x ARM Cortex-A53 @ 2.0GHz/1.5GHz, PowerVR GE8320) and code inspection of the 6 core runtime files (`simd_arm64_compat.h`, `ps2_runtime.h`, `ps2_runtime.cpp`, `ps2_memory.h`, `ps2_memory.cpp`, `vu1_programs.cpp`, `ps2_runtime_macros.h`, `ps2_vu1_impl.inl`, `ps2_vu1_core.cpp`, `ps2_async_vif.cpp`, `EeScheduler.cpp`, `thread_affinity.cpp`, `main.cpp`, `CMakeLists.txt`) revealed the exact 7 root causes keeping Stage 1-1 combat at 7.6 Game EE FPS (131.6 ms/frame):
-
-1. `PS2Runtime::Store32` Mutex Lock + Out-of-Line Scratchpad/Uncached RAM Calls (`ps2_runtime_macros.h`, `ps2_memory.h`, `ps2_memory.cpp`, `ps2_runtime.cpp`):
-   - `PS2Runtime::isSpecialAddress(addr)` returns `true` for Scratchpad (`0x70000000..0x70003FFF`) and Uncached/KSEG RAM mirrors (`0x20000000..0x31FFFFFF`, `0x80000000..0xBFFFFFFF`).
-   - God Hand builds all bone matrices, collision data, and VIF1/GIF DMA packets in Scratchpad (`0x7000xxxx`) and Uncached RAM (`0x20xxxxxx`/`0x30xxxxxx`).
-   - Every single `WRITE32` to Scratchpad or Uncached RAM calls out-of-line `runtime->Store32()`, which calls `m_memory.write32()` -> `markModified()` (scanning `m_codeRegions`) AND calls `drainCompletedDmacHandlers()` -> `m_memory.consumeCompletedDmacCauses()`, which locks and unlocks `std::mutex m_completedDmacMutex` on EVERY 32-bit memory store!
-
-2. 128-Bit Store-to-Load Forwarding (STLF) Pipeline Stalls & Software Float Alignment (`ps2_runtime_macros.h`, `ps2_runtime.h`):
-   - `Ps2SetGprScalar64` does a 64-bit store to `ctx->r[reg]`, while `Ps2ExtractEpi32(__m128i v, int index)` takes `__m128i` by value (forcing a 128-bit NEON load from `ctx->r[reg]`). On in-order Cortex-A53, a 64-bit store followed by a 128-bit load from the same address fails Store-to-Load Forwarding and stalls the pipeline for 8-12 cycles on almost every MIPS instruction.
-   - `FPU_ADD_S` and `FPU_SUB_S` call `ps2FpuAlignOperands()` + `ps2FpuClamp()`, turning a 1-cycle hardware `fadd`/`fsub` into ~25-30 cycles with 4 branches.
-
-3. `ps2_memory.cpp` Calls `ps2x::asyncvif::sync(*this)` on Every `VIF1_STAT` / `GIF_STAT` / `GS` Register Access (`ps2_memory.cpp`, `ps2_async_vif.cpp`):
-   - Even after `vu1Busy()` was bypassed on `0x10009000`, `readIORegister` and `writeIORegister` in `ps2_memory.cpp` still call `if (isAsyncVifRegister(address)) ps2x::asyncvif::sync(*this);` on `GIF_STAT` (`0x10003020`) and `VIF1_STAT` (`0x10003C00`), and `write32`/`write64` call `sync(*this)` on GS privileged registers.
-   - `sync()` blocks `EEThread` until `VUThread` AND `GIFThread` drain to 0, completely serializing `EEThread` (78.6% CPU) and `VUThread` (60.0% CPU, sleeping `S`).
-
-4. `executeVU0Microprogram` Calls `vu.resetScheduler()` (4 KB `memset`) ~4,500 Times Per Frame on `EEThread` (`ps2_vu1_core.cpp`, `ps2_vu1_impl.inl`):
-   - `vu1_programs.cpp` contains 5 VU1 programs and 0 VU0 programs, so every `VCALLMS` on `EEThread` runs in `stepPair` (`VU1Interpreter`).
-   - `runLoopWith` sets `vu0SchedulerClean = false;`, forcing `executeVu0Lean` to call `vu.resetScheduler()` (13 `std::memset` calls zeroing ~4 KB of unused pipeline arrays) on every single `VCALLMS` call (~18 MB of `memset` per frame on `EEThread`).
-
-5. `XGKICK` 16-Byte-at-a-Time Copy Loop & Unset `PS2X_VU1_SKIP_CLAMP` (`ps2_vu1_impl.inl`, `main.cpp`):
-   - `progressXgkick()` copies 1.77 MB of GIF data per frame (`6,377.4 MB` in `7,200 fields`) 16 bytes at a time (~110,000 loop iterations per frame).
-   - `main.cpp` set `PS2X_VU1_FAST_NOFLAGS="1"` (which does not exist in code) instead of `PS2X_VU1_SKIP_CLAMP="1"`, leaving software NEON clamping active on every vector instruction.
-
-6. `skipIdleCycles()` Flooding `IOPThread` (44% CPU) with Fake Cycles (`EeScheduler.cpp`):
-   - `skipIdleCycles()` calls `accountCycles()`, which feeds millions of skipped idle EE cycles into `m_runtime.advanceIopEeCycles(g_iopStash)`, forcing `IOPThread` to burn 44.0% CPU (`2:43` CPU time) running fake IOP ticks while the game is at 7.6 FPS.
-
-7. Suboptimal Core Pinning on Helio G25 (`top_tier <= 1`), Stale `frameskip=1`, & Generic Compiler Flags (`thread_affinity.cpp`, `main.cpp`, `CMakeLists.txt`):
-   - `thread_affinity.cpp` put `IOPThread` (44% CPU) on the slow 1.50 GHz cluster while leaving Core 0 (2.0 GHz, `GIFThread` 10.6%) 89% idle and Core 1 (2.0 GHz, `GSThread` 36%) 64% idle.
-   - `main.cpp` received `frameskip=1` from saved `SharedPreferences`.
-
-Apply ALL 8 STEPS below in exact order. Do NOT skip any step.
-
-================================================================================
-STEP 1: INLINE SCRATCHPAD & UNCACHED RAM FAST-PATH + ELIMINATE STLF STALLS &
-        SOFTWARE FPU ALIGNMENT (`ps2_memory.h`, `ps2_memory.cpp`, `ps2_runtime.h`, `ps2_runtime_macros.h`, `ps2_runtime.cpp`)
-================================================================================
-
-1A. In `app/src/main/cpp/runtime/ps2xRuntime/include/runtime/ps2_memory.h`:
-Replace `ps2ScratchpadHostPtrStorage()`, `ps2SetScratchpadHostPtr()`, and `ps2GetScratchpadHostPtr()` (around lines 73-86) with a direct global pointer so inline Scratchpad reads/writes cost 0 atomic/function overhead:
-
-```cpp
-inline uint8_t *g_ps2ScratchpadHostPtr = nullptr;
-
-inline std::atomic<uint8_t *> &ps2ScratchpadHostPtrStorage()
-{
-    static std::atomic<uint8_t *> ptr{nullptr};
-    return ptr;
-}
-
-inline void ps2SetScratchpadHostPtr(uint8_t *ptr)
-{
-    g_ps2ScratchpadHostPtr = ptr;
-    ps2ScratchpadHostPtrStorage().store(ptr, std::memory_order_relaxed);
-}
-
-inline uint8_t *ps2GetScratchpadHostPtr()
-{
-    return g_ps2ScratchpadHostPtr;
-}
+## Target Branch
+Stay on the **`potato60fps`** branch:
+```bash
+git checkout -B potato60fps
 ```
+**Hard Rule**: Do **NOT** run `ls` or `dir` on `app/src/main/cpp/generated/` (10,553+ files). All generated code compiles automatically via the 64 Unity batches (`generated_unity/gh_unity_batch_00..63.cpp`).
 
-Also in `PS2Memory` class in `ps2_memory.h`, add an atomic boolean `m_hasCompletedDmac{false}` right next to `m_completedDmacMutex`:
-```cpp
-    std::mutex m_completedDmacMutex;
-    std::vector<uint32_t> m_completedDmacCauses;
-    std::atomic<bool> m_hasCompletedDmac{false};
-```
+---
 
-1B. In `app/src/main/cpp/runtime/ps2xRuntime/src/lib/ps2_memory.cpp`:
-Update `queueCompletedDmacCause` and `consumeCompletedDmacCauses` (around lines 1817-1830) so `consumeCompletedDmacCauses` never locks `m_completedDmacMutex` when no DMAC channel completed:
+## PART 1: EXACT ROOT-CAUSE DIAGNOSIS OF YOUR 3 NEW ISSUES & WHY A 294 MHz PS2 RUNS THIS EFFORTLESSLY
 
-```cpp
-void PS2Memory::queueCompletedDmacCause(uint32_t cause)
-{
-    std::lock_guard<std::mutex> lock(m_completedDmacMutex);
-    m_completedDmacCauses.push_back(cause);
-    m_hasCompletedDmac.store(true, std::memory_order_release);
-}
+### 1. Why the Mid-Ranger Menu Got Stuck at 30 Main FPS / 30 Game EE FPS (And Why Both Phones Lost 2–4 FPS)
+- **Root Cause A (`gs_pcsx2_backend.cpp` Step 10 VSync Skip)**:
+  - In Phase 2 Step 10, we added an early `return;` inside `GSPcsx2Backend::VSync()` whenever `curGameFrames == s_lastPresentedGameFrame`.
+  - Because God Hand's engine (`cSys`) updates at 30 Hz (`rdram[0x00747A09] = 0x02`, flipping once every 2 VBlanks) even on the Main Menu while the PS2 video output runs at 60 Hz, returning early from `GSPcsx2Backend::VSync()` on every 2nd VBlank **skipped `g_perfWindowPresents++` and skipped `g_api->vsync()` on every odd VBlank**, artificially locking the Mid-Ranger's Main Present FPS to **30 FPS** at the menu!
+  - Worse, inside PCSX2's Vulkan backend (`Bridge.cpp`), `GSvsync()` also manages command-buffer ring retirement and texture cache age. Skipping `g_api->vsync()` completely on odd VBlanks stalled command buffer retirement until the next VBlank, causing bursty 2-frame stalls that **dropped 2–4 FPS** on both the Mid-Ranger and Redmi 10A!
+  - **The Fix**: **Completely remove Step 10 from `gs_pcsx2_backend.cpp`**! Instead, enable PCSX2's native internal duplicate-frame skip (`options.SkipDuplicateFrames = true;` in `Bridge.cpp`), which keeps the 60 FPS VSync loop running at 60 Hz on menus while skipping redundant GPU render-target draws inside `GSRendererHW` when no new primitives were drawn.
 
-std::vector<uint32_t> PS2Memory::consumeCompletedDmacCauses()
-{
-    if (!m_hasCompletedDmac.load(std::memory_order_acquire))
-        return {};
-    std::lock_guard<std::mutex> lock(m_completedDmacMutex);
-    std::vector<uint32_t> causes;
-    causes.swap(m_completedDmacCauses);
-    m_hasCompletedDmac.store(false, std::memory_order_release);
-    return causes;
-}
-```
+- **Root Cause B (`EeScheduler.cpp` Step 9B Unconditional `skipIdleCycles()` in `func_0030B148`)**:
+  - In God Hand, a single combat frame's rendering is split across **multiple GS `SIGNAL` interrupts** (`EE` kicks Part 1 -> `VUThread`/`GIFThread` hit a GS `SIGNAL` -> `EE` GS interrupt handler kicks Part 2 -> `GIFThread` hits `FINISH`).
+  - When Step 9B called `skipIdleCycles()` inside `EeScheduler::checkpointDue` while `pc` was in `func_0030B148` (`0x0030B168..0x0030B298`), it jumped `m_eeCycle` forward by `4,915,298` cycles to the next VBlank **while `VUThread` and `GIFThread` were STILL busy processing Part 1 of the frame (`ps2x::asyncvif::pipelineBusy() == true`)**!
+  - That caused VBlank to fire *before* `GIFThread` raised the GS `SIGNAL` interrupt for Part 1, making Part 2 miss the frame swap window and dropping 2–4 FPS!
+  - **The Fix**: In `EeScheduler::checkpointDue`, when `pc` is inside `func_0030B148`'s wait loop (`0x0030B168..0x0030B298`):
+    1. If `gsInterruptUnseen()` is true: immediately unwind (`m_checkpointPending = true; m_unwinding = true; return true;`) so the EE dispatches the GS `SIGNAL`/`FINISH` interrupt in **0 microseconds**!
+    2. If `ps2x::asyncvif::pipelineBusy(m_runtime.memory())` is true (`VUThread` or `GIFThread` is still working on the frame): call `ps2x::asyncvif::waitPipelineIdle(m_runtime.memory(), std::chrono::microseconds(150))` **WITHOUT advancing `m_eeCycle`**! This stops `EEThread` from burning fake spin cycles while waiting for `VUThread`/`GIFThread` and prevents VBlank from firing before the frame's drawing finishes!
+    3. **ONLY** when `!ps2x::asyncvif::pipelineBusy(m_runtime.memory()) && !gsInterruptUnseen()` (meaning `VUThread` and `GIFThread` have 100% finished the frame, and the ONLY thing `func_0030B148` is waiting for is the VBlank tick counter): call `skipIdleCycles()` to jump cleanly to VBlank!
 
-And in `PS2Memory::markModified(uint32_t address, uint32_t size)` in `ps2_memory.cpp`, bypass the code-region bitmap scan on Android (since all code is AOT compiled):
-```cpp
-void PS2Memory::markModified(uint32_t address, uint32_t size)
-{
-#if defined(__ANDROID__)
-    (void)address;
-    (void)size;
-    return;
-#else
-    if (size == 0)
-    {
-        return;
-    }
-```
-(Keep the `#endif` at the end of `PS2Memory::markModified`).
+### 2. Why the Ground Sometimes Had an Invisible Graphical Glitch
+- **Root Cause (`ps2_vu1_impl.inl` `PS2X_VU1_SKIP_CLAMP=1` & `writeVf` Overwriting `rawReg`)**:
+  1. On the real PS2 VU1 hardware, there are **no IEEE-754 `NaN`s or `Inf`s**—exponent `0xFF` (`0x7F800000..0x7FFFFFFF`) is treated as a normal finite float (`1.7e38..3.4e38`). God Hand's stage/ground VU1 shaders load integer/GIFtag/ADC masks (which have exponent `0xFF` = IEEE `NaN`) into `vf` registers. When `PS2X_VU1_SKIP_CLAMP=1` bypassed `vnorm()`, multiplying a `NaN` bit pattern by `0.0f` produced `NaN`, poisoning vertex coordinates (`X, Y, Z, W = NaN`) and making ground mesh strips vanish!
+  2. In Phase 2 Step 11C, `writeVf()` wrote `normalized` into `rawReg(vu, reg)` (`vu.m_state.vf[reg]`). Because `LQ` loads raw GIFtag/ADC integer bits (exponent `0` = IEEE denormals) into `vf` registers and `SQ` writes `rawReg(vu, reg)` out to the XGKICK packet buffer, overwriting `rawReg` with `normalized` zeroed out the GIFtag/ADC bits!
+- **The Fix**:
+  1. Restore `writeVf()` so `rawReg(vu, reg)` **always** stores `raw` (`storeDest(rawReg(vu, reg), raw, dest)`) while `ctx.norm[reg]` stores `normalized`.
+  2. Never disable `vnorm()`. Instead, replace the slow 9-instruction `vnorm()` with a **3-instruction branchless ARM64 NEON unsigned-min magnitude clamp (`vminq_u32(mag, 0x7F7FFFFFu)`)** + hardware `FPCR.FZ` (Flush-to-Zero). Since `0x7F7FFFFFu` is the exact bit pattern right below `0x7F800000u` (`Inf`/`NaN`), `vminq_u32(mag, 0x7F7FFFFFu)` clamps all `Inf`/`NaN` bit patterns to `MAX_FLOAT` in **1 instruction** while leaving every normal float 100% untouched!
 
-1C. In `app/src/main/cpp/runtime/ps2xRuntime/src/lib/ps2_runtime.cpp`:
-In `PS2Runtime::Store32` (around line 1347), only call `drainCompletedDmacHandlers(rdram)` if `m_memory.m_hasCompletedDmac` is true:
-```cpp
-void PS2Runtime::Store32(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr, uint32_t value)
-{
-    try
-    {
-        m_memory.write32(vaddr, value);
-        if (__builtin_expect(m_memory.m_hasCompletedDmac.load(std::memory_order_relaxed), 0))
-            drainCompletedDmacHandlers(rdram);
-    }
-    catch (const std::exception &)
-    {
-        SignalException(ctx, EXCEPTION_ADDRESS_ERROR_STORE);
-    }
-}
-```
+### 3. Why a 294 MHz PS2 Runs God Hand at 30 EE / 60 FPS With Tiny Resources — While Your Phones Were Burning 313% CPU
+We audited the assembly/macro expansion of the recompiled C++ code and found **3 massive resource drains** in your codebase that were making your phone do **20x–35x more work per instruction than a real PS2**:
 
-1D. In `app/src/main/cpp/runtime/ps2xRuntime/include/ps2_runtime.h`:
-Update `getRegU32` (around line 183) to read the 32-bit scalar word directly in-place without a 128-bit NEON vector load:
-```cpp
-inline uint32_t getRegU32(const R5900Context *ctx, int reg)
-{
-    if (reg <= 0 || reg > 31)
-        return 0;
-    uint32_t val;
-    std::memcpy(&val, &ctx->r[reg], sizeof(val));
-    return val;
-}
-```
+1. **`ps2FpuAlignOperands(a, b)` in `ps2_runtime_macros.h` (Lines 164–193) Was Turning Every Single `a + b` and `a - b` Into a 35-Cycle Multi-Branch Function!**
+   - Look at `ps2_runtime_macros.h` lines 164–193: Every single `FPU_ADD_S(a, b)` and `FPU_SUB_S(a, b)` across all **10,553 recompiled EE functions** calls `ps2FpuAlignOperands(a, b)`!
+   - Instead of executing a **1-cycle ARM64 `fadd s0, s0, s1`**, `ps2FpuAlignOperands` transfers both floats from NEON FP registers to integer registers (`fmov` — 10 cycles), extracts exponents, executes **4 conditional `if/else` branches**, shifts bitmasks to truncate the 24th mantissa bit by 1 ULP, and transfers both back to FP registers (`fmov` — 10 cycles) before adding them!
+   - Removing `ps2FpuAlignOperands(a, b)` on ARM64 turns millions of float additions/subtractions per second in physics, bone matrices, collision, and AI from **35 cycles + 4 branches** into **1 cycle**!
 
-1E. In `app/src/main/cpp/runtime/ps2xRuntime/include/ps2_runtime_macros.h`:
-1. Replace `Ps2ExtractEpi32` and `Ps2ExtractEpi64` (lines 16-39) so they take `const __m128i &v` by reference and read the scalar 32/64-bit lane directly from memory/register without 128-bit NEON vector extraction or Store-to-Load Forwarding stalls:
+2. **`ps2TraceGuestWrite` Was Being Called on Every Single Memory Store (`WRITE8/16/32/64/128`) in `ps2_runtime_macros.h` (Lines 646–701)!**
+   - In `ps2_runtime_macros.h`, every `WRITE8`, `WRITE16`, `WRITE32`, `WRITE64`, and `WRITE128` calls `ps2TraceGuestWrite(...)`, and `WRITE128` even extracts two 64-bit lanes (`PS2_EXTRACT_EPI64_0` and `PS2_EXTRACT_EPI64_1`) on every 128-bit quadword store just to pass them to the trace function!
+   - Stripping `ps2TraceGuestWrite` on `#if defined(__ANDROID__)` eliminates millions of dead function calls and 128-bit register extractions per frame.
+
+3. **Core Affinity Bug in Your New Log (`godhand_full_log_and_system_usage.txt` Lines 30–39): Cores 4–7 Were Invisible & `GSThread` + `GIFThread` Were Colliding on Core 2!**
+   - Look at lines 30–39 of your `godhand_full_log_and_system_usage.txt`:
+     ```
+     Detected Core 3..0: Freq=2001000 kHz
+     Setting thread GS_RENDERER affinity to core mask 0x04 (Core 2)
+     Setting thread GIF_WORKER affinity to core mask 0x04 (Core 2)
+     Setting thread IOP_WORKER affinity to core mask 0x08 (Core 3)
+     ```
+   - Because `/proc/cpuinfo` on Android omits offline/idle Little cores (`Cores 4, 5, 6, 7` @ 1.5 GHz), `thread_affinity.cpp` thought your 8-core phone only had **4 cores (`0..3`)**!
+   - As a result, it pinned **BOTH `GSThread` (`55.4%` CPU) AND `GIFThread` (`17.5%` CPU) to the exact same Core 2 (`0x04`)**—causing `GIFThread` to constantly preempt `GSThread`—and put `IOPThread` (`31.0%` CPU) on Big Core 3 (`0x08`), while leaving **all 4 Little cores (`Cores 4, 5, 6, 7` = 6.0 GHz of compute!) 100% UNUSED (`412% idle`)**!
+
+---
+
+## PART 2: COMPLETE STEP-BY-STEP CODE FIXES TO APPLY ON `potato60fps`
+
+### STEP 1: Fix `ps2_runtime_macros.h` — 1-Cycle Hardware FPU Math, 3-Instruction NEON Vector Clamp, Zero-Trace Stores, & Inline Scratchpad Fast-Paths
+
+Open `app/src/main/cpp/runtime/ps2xRuntime/include/ps2_runtime_macros.h` and apply these exact updates:
+
+#### 1A. Replace `Ps2ExtractEpi32` and `Ps2ExtractEpi64` (Lines 17–42) with Zero-Stall Scalar Reference Reads
 ```cpp
 static PS2_FORCEINLINE int32_t Ps2ExtractEpi32(const __m128i &v, int index)
 {
-    int32_t out;
-    std::memcpy(&out, reinterpret_cast<const char *>(&v) + ((index & 3) * sizeof(int32_t)), sizeof(out));
-    return out;
+    int32_t val;
+    std::memcpy(&val, reinterpret_cast<const char *>(&v) + ((index & 3) * 4), sizeof(val));
+    return val;
 }
 
 static PS2_FORCEINLINE int64_t Ps2ExtractEpi64(const __m128i &v, int index)
 {
-    int64_t out;
-    std::memcpy(&out, reinterpret_cast<const char *>(&v) + ((index & 1) * sizeof(int64_t)), sizeof(out));
-    return out;
+    int64_t val;
+    std::memcpy(&val, reinterpret_cast<const char *>(&v) + ((index & 1) * 8), sizeof(val));
+    return val;
 }
 ```
 
-2. In `ps2_runtime_macros.h`, replace `ps2FpuClamp`, `ps2FpuAlignOperands`, `ps2FpuAdd`, and `ps2FpuSub` (lines 84-130) so ARM64 uses single-cycle hardware FPU instructions directly (since hardware `FPCR` already has `FZ`, `DN`, and `RZ` set):
+#### 1B. Replace `ps2VuClampVector`, `ps2FpuClamp`, `ps2FpuAdd`, and `ps2FpuSub` (Lines 143–193) with 3-Instruction NEON `vminq_u32` Clamp & 1-Cycle Hardware `fadd`/`fsub`
 ```cpp
-PS2_FORCEINLINE float ps2FpuClamp(float value)
+PS2_FORCEINLINE __m128 ps2VuClampVector(__m128 value)
 {
 #if defined(__aarch64__) || defined(_M_ARM64)
-    return value;
+    uint32x4_t bits;
+    std::memcpy(&bits, &value, 16);
+    const uint32x4_t sign = vandq_u32(bits, vdupq_n_u32(0x80000000u));
+    const uint32x4_t mag  = vminq_u32(vandq_u32(bits, vdupq_n_u32(0x7FFFFFFFu)), vdupq_n_u32(0x7F7FFFFFu));
+    const uint32x4_t res  = vorrq_u32(sign, mag);
+    __m128 out;
+    std::memcpy(&out, &res, 16);
+    return out;
 #else
+    const __m128i bits = _mm_castps_si128(value);
+    const __m128i exponentMask = _mm_set1_epi32(0x7F800000);
+    const __m128i special = _mm_cmpeq_epi32(_mm_and_si128(bits, exponentMask), exponentMask);
+    const __m128i saturated = _mm_or_si128(_mm_and_si128(bits, _mm_set1_epi32(static_cast<int>(0x80000000u))), _mm_set1_epi32(0x7F7FFFFF));
+    return _mm_castsi128_ps(_mm_or_si128(_mm_and_si128(special, saturated), _mm_andnot_si128(special, bits)));
+#endif
+}
+
+PS2_FORCEINLINE float ps2FpuClamp(float value)
+{
     uint32_t bits;
     std::memcpy(&bits, &value, sizeof(bits));
-    if ((bits & 0x7F800000u) == 0x7F800000u)
+    if (__builtin_expect((bits & 0x7F800000u) == 0x7F800000u, 0))
     {
         bits = (bits & 0x80000000u) | 0x7F7FFFFFu;
         std::memcpy(&value, &bits, sizeof(value));
     }
     return value;
-#endif
 }
 
 PS2_FORCEINLINE void ps2FpuAlignOperands(float &a, float &b)
@@ -226,820 +161,284 @@ PS2_FORCEINLINE float ps2FpuSub(float a, float b)
 #endif
 }
 ```
-
-3. In `ps2_runtime_macros.h`, replace the memory access helpers (`Ps2FastRead*`, `Ps2FastWrite*`, `READ*`, `WRITE*`, lines 260-530) with the unified inline fast-path that handles Main RAM (`0x00000000..0x01FFFFFF`), Uncached/KSEG0/KSEG1 RAM mirrors (`0x20000000..0x31FFFFFF`, `0x80000000..0x81FFFFFF`, `0xA0000000..0xA1FFFFFF`), AND 16 KB Scratchpad (`0x70000000..0x70003FFF`) inline in 1-2 instructions without calling `runtime->Load*` or `runtime->Store*`:
-
+And at lines 890–895 of `ps2_runtime_macros.h`, make `FPU_MUL_S` use direct hardware multiplication on ARM64 while keeping `ps2FpuClamp` on `FPU_DIV_S` and `FPU_SQRT_S`:
 ```cpp
-// Fast inline check: true if addr is in 32MB RDRAM (including KSEG0/KSEG1/Uncached mirrors 0x00/0x20/0x30/0x80/0xA0)
-static PS2_FORCEINLINE bool Ps2IsFastRamAddress(uint32_t addr) noexcept
-{
-    const uint32_t phys = addr & 0x1FFFFFFFu;
-    return __builtin_expect(phys < 0x02000000u, 1);
-}
-
-// Fast inline check: true if addr is in 16KB Scratchpad (0x70000000..0x70003FFF)
-static PS2_FORCEINLINE bool Ps2IsFastScratchpadAddress(uint32_t addr) noexcept
-{
-    return __builtin_expect(((addr & 0x7FFFFFFFu) - 0x70000000u) < 0x4000u, 1);
-}
-
-static PS2_FORCEINLINE uint8_t Ps2FastRead8(const uint8_t *rdram, uint32_t addr) noexcept
-{
-    if (Ps2IsFastRamAddress(addr))
-        return rdram[addr & PS2_RAM_MASK];
-    if (Ps2IsFastScratchpadAddress(addr))
-        return g_ps2ScratchpadHostPtr[addr & 0x3FFFu];
-    return rdram[addr & PS2_RAM_MASK];
-}
-
-static PS2_FORCEINLINE uint16_t Ps2FastRead16(const uint8_t *rdram, uint32_t addr) noexcept
-{
-    uint16_t value;
-    if (Ps2IsFastRamAddress(addr))
-    {
-        std::memcpy(&value, rdram + (addr & PS2_RAM_MASK), sizeof(value));
-        return value;
-    }
-    if (Ps2IsFastScratchpadAddress(addr))
-    {
-        std::memcpy(&value, g_ps2ScratchpadHostPtr + (addr & 0x3FFFu), sizeof(value));
-        return value;
-    }
-    std::memcpy(&value, rdram + (addr & PS2_RAM_MASK), sizeof(value));
-    return value;
-}
-
-static PS2_FORCEINLINE uint32_t Ps2FastRead32(const uint8_t *rdram, uint32_t addr) noexcept
-{
-    uint32_t value;
-    if (Ps2IsFastRamAddress(addr))
-    {
-        std::memcpy(&value, rdram + (addr & PS2_RAM_MASK), sizeof(value));
-        return value;
-    }
-    if (Ps2IsFastScratchpadAddress(addr))
-    {
-        std::memcpy(&value, g_ps2ScratchpadHostPtr + (addr & 0x3FFFu), sizeof(value));
-        return value;
-    }
-    std::memcpy(&value, rdram + (addr & PS2_RAM_MASK), sizeof(value));
-    return value;
-}
-
-static PS2_FORCEINLINE uint64_t Ps2FastRead64(const uint8_t *rdram, uint32_t addr) noexcept
-{
-    uint64_t value;
-    if (Ps2IsFastRamAddress(addr))
-    {
-        std::memcpy(&value, rdram + (addr & PS2_RAM_MASK), sizeof(value));
-        return value;
-    }
-    if (Ps2IsFastScratchpadAddress(addr))
-    {
-        std::memcpy(&value, g_ps2ScratchpadHostPtr + (addr & 0x3FFFu), sizeof(value));
-        return value;
-    }
-    std::memcpy(&value, rdram + (addr & PS2_RAM_MASK), sizeof(value));
-    return value;
-}
-
-static PS2_FORCEINLINE __m128i Ps2FastRead128(const uint8_t *rdram, uint32_t addr) noexcept
-{
-    __m128i value;
-    if (Ps2IsFastRamAddress(addr))
-    {
-        std::memcpy(&value, rdram + (addr & PS2_RAM_MASK & ~0xFu), sizeof(value));
-        return value;
-    }
-    if (Ps2IsFastScratchpadAddress(addr))
-    {
-        std::memcpy(&value, g_ps2ScratchpadHostPtr + (addr & 0x3FF0u), sizeof(value));
-        return value;
-    }
-    std::memcpy(&value, rdram + (addr & PS2_RAM_MASK & ~0xFu), sizeof(value));
-    return value;
-}
-
-static PS2_FORCEINLINE void Ps2FastWrite8(uint8_t *rdram, uint32_t addr, uint8_t value) noexcept
-{
-    if (Ps2IsFastRamAddress(addr))
-    {
-        rdram[addr & PS2_RAM_MASK] = value;
-        return;
-    }
-    if (Ps2IsFastScratchpadAddress(addr))
-    {
-        g_ps2ScratchpadHostPtr[addr & 0x3FFFu] = value;
-        return;
-    }
-    rdram[addr & PS2_RAM_MASK] = value;
-}
-
-static PS2_FORCEINLINE void Ps2FastWrite16(uint8_t *rdram, uint32_t addr, uint16_t value) noexcept
-{
-    if (Ps2IsFastRamAddress(addr))
-    {
-        std::memcpy(rdram + (addr & PS2_RAM_MASK), &value, sizeof(value));
-        return;
-    }
-    if (Ps2IsFastScratchpadAddress(addr))
-    {
-        std::memcpy(g_ps2ScratchpadHostPtr + (addr & 0x3FFFu), &value, sizeof(value));
-        return;
-    }
-    std::memcpy(rdram + (addr & PS2_RAM_MASK), &value, sizeof(value));
-}
-
-static PS2_FORCEINLINE void Ps2FastWrite32(uint8_t *rdram, uint32_t addr, uint32_t value) noexcept
-{
-    if (Ps2IsFastRamAddress(addr))
-    {
-        std::memcpy(rdram + (addr & PS2_RAM_MASK), &value, sizeof(value));
-        return;
-    }
-    if (Ps2IsFastScratchpadAddress(addr))
-    {
-        std::memcpy(g_ps2ScratchpadHostPtr + (addr & 0x3FFFu), &value, sizeof(value));
-        return;
-    }
-    std::memcpy(rdram + (addr & PS2_RAM_MASK), &value, sizeof(value));
-}
-
-static PS2_FORCEINLINE void Ps2FastWrite64(uint8_t *rdram, uint32_t addr, uint64_t value) noexcept
-{
-    if (Ps2IsFastRamAddress(addr))
-    {
-        std::memcpy(rdram + (addr & PS2_RAM_MASK), &value, sizeof(value));
-        return;
-    }
-    if (Ps2IsFastScratchpadAddress(addr))
-    {
-        std::memcpy(g_ps2ScratchpadHostPtr + (addr & 0x3FFFu), &value, sizeof(value));
-        return;
-    }
-    std::memcpy(rdram + (addr & PS2_RAM_MASK), &value, sizeof(value));
-}
-
-static PS2_FORCEINLINE void Ps2FastWrite128(uint8_t *rdram, uint32_t addr, __m128i value) noexcept
-{
-    if (Ps2IsFastRamAddress(addr))
-    {
-        std::memcpy(rdram + (addr & PS2_RAM_MASK & ~0xFu), &value, sizeof(value));
-        return;
-    }
-    if (Ps2IsFastScratchpadAddress(addr))
-    {
-        std::memcpy(g_ps2ScratchpadHostPtr + (addr & 0x3FF0u), &value, sizeof(value));
-        return;
-    }
-    std::memcpy(rdram + (addr & PS2_RAM_MASK & ~0xFu), &value, sizeof(value));
-}
-
-// True ONLY for genuine MMIO / GS / VU registers (0x10000000..0x13FFFFFF), NOT Scratchpad or Uncached RAM mirrors!
-static PS2_FORCEINLINE bool Ps2NeedsSlowIoPath(uint32_t addr) noexcept
-{
-    return __builtin_expect(!Ps2IsFastRamAddress(addr) && !Ps2IsFastScratchpadAddress(addr), 0);
-}
-
-#define FAST_READ8(addr) Ps2FastRead8(rdram, (uint32_t)(addr))
-#define FAST_READ16(addr) Ps2FastRead16(rdram, (uint32_t)(addr))
-#define FAST_READ32(addr) Ps2FastRead32(rdram, (uint32_t)(addr))
-#define FAST_READ64(addr) Ps2FastRead64(rdram, (uint32_t)(addr))
-#define FAST_READ128(addr) Ps2FastRead128(rdram, (uint32_t)(addr))
-
-#define FAST_WRITE8(addr, val) Ps2FastWrite8(rdram, (uint32_t)(addr), (uint8_t)(val))
-#define FAST_WRITE16(addr, val) Ps2FastWrite16(rdram, (uint32_t)(addr), (uint16_t)(val))
-#define FAST_WRITE32(addr, val) Ps2FastWrite32(rdram, (uint32_t)(addr), (uint32_t)(val))
-#define FAST_WRITE64(addr, val) Ps2FastWrite64(rdram, (uint32_t)(addr), (uint64_t)(val))
-#define FAST_WRITE128(addr, val) Ps2FastWrite128(rdram, (uint32_t)(addr), (val))
-
-#define READ8(addr) ([&]() -> uint8_t {                       \
-    uint32_t _addr = (uint32_t)(addr);                        \
-    return Ps2NeedsSlowIoPath(_addr)                          \
-        ? runtime->Load8(rdram, ctx, _addr)                   \
-        : FAST_READ8(_addr); }())
-
-#define READ16(addr) ([&]() -> uint16_t {                     \
-    uint32_t _addr = (uint32_t)(addr);                        \
-    return Ps2NeedsSlowIoPath(_addr)                          \
-        ? runtime->Load16(rdram, ctx, _addr)                  \
-        : FAST_READ16(_addr); }())
-
-#define READ32(addr) ([&]() -> uint32_t {                     \
-    uint32_t _addr = (uint32_t)(addr);                        \
-    return Ps2NeedsSlowIoPath(_addr)                          \
-        ? runtime->Load32(rdram, ctx, _addr)                  \
-        : FAST_READ32(_addr); }())
-
-#define READ64(addr) ([&]() -> uint64_t {                     \
-    uint32_t _addr = (uint32_t)(addr);                        \
-    return Ps2NeedsSlowIoPath(_addr)                          \
-        ? runtime->Load64(rdram, ctx, _addr)                  \
-        : FAST_READ64(_addr); }())
-
-#define READ128(addr) ([&]() -> __m128i {                     \
-    uint32_t _addr = (uint32_t)(addr) & ~0xFu;                \
-    return Ps2NeedsSlowIoPath(_addr)                          \
-        ? runtime->Load128(rdram, ctx, _addr)                 \
-        : FAST_READ128(_addr); }())
-
-#define WRITE8(addr, val)                                     \
-    do                                                        \
-    {                                                         \
-        uint32_t _addr = (uint32_t)(addr);                    \
-        if (Ps2NeedsSlowIoPath(_addr))                        \
-            runtime->Store8(rdram, ctx, _addr, (val));        \
-        else                                                  \
-            FAST_WRITE8(_addr, (val));                        \
-    } while (0)
-
-#define WRITE16(addr, val)                                    \
-    do                                                        \
-    {                                                         \
-        uint32_t _addr = (uint32_t)(addr);                    \
-        if (Ps2NeedsSlowIoPath(_addr))                        \
-            runtime->Store16(rdram, ctx, _addr, (val));       \
-        else                                                  \
-            FAST_WRITE16(_addr, (val));                       \
-    } while (0)
-
-#define WRITE32(addr, val)                                    \
-    do                                                        \
-    {                                                         \
-        uint32_t _addr = (uint32_t)(addr);                    \
-        if (Ps2NeedsSlowIoPath(_addr))                        \
-            runtime->Store32(rdram, ctx, _addr, (val));       \
-        else                                                  \
-            FAST_WRITE32(_addr, (val));                       \
-    } while (0)
-
-#define WRITE64(addr, val)                                    \
-    do                                                        \
-    {                                                         \
-        uint32_t _addr = (uint32_t)(addr);                    \
-        if (Ps2NeedsSlowIoPath(_addr))                        \
-            runtime->Store64(rdram, ctx, _addr, (val));       \
-        else                                                  \
-            FAST_WRITE64(_addr, (val));                       \
-    } while (0)
-
-#define WRITE128(addr, val)                                   \
-    do                                                        \
-    {                                                         \
-        uint32_t _addr = (uint32_t)(addr) & ~0xFu;            \
-        __m128i _value = (val);                               \
-        if (Ps2NeedsSlowIoPath(_addr))                        \
-            runtime->Store128(rdram, ctx, _addr, _value);     \
-        else                                                  \
-            FAST_WRITE128(_addr, _value);                     \
-    } while (0)
-```
-
-
-================================================================================
-STEP 2: UNBLOCK `EEThread` & `VUThread` PARALLELISM (`ps2_memory.cpp` & `ps2_async_vif.cpp`)
-================================================================================
-
-2A. In `app/src/main/cpp/runtime/ps2xRuntime/src/lib/ps2_memory.cpp`:
-Look at `isAsyncVifRegister` (lines 163-168) and `gsPrivWriteNeedsSync` (lines 93-97):
-Currently, every time `EEThread` reads `VIF1_STAT` (`0x10003C00`) or `GIF_STAT` (`0x10003020`), or writes GS display registers (`DISPFB1`, `DISPLAY1`, `PMODE`), `ps2_memory.cpp` calls `ps2x::asyncvif::sync(*this)`, which puts `EEThread` to sleep until `VUThread` AND `GIFThread` drain to 0!
-Replace `gsPrivWriteNeedsSync` (around line 93) and `isAsyncVifRegister` (around line 163) in `ps2_memory.cpp` with:
-
-```cpp
-    bool gsPrivWriteNeedsSync(uint32_t regOff)
-    {
-#if defined(__ANDROID__)
-        (void)regOff;
-        return false;
-#else
-        static const bool relaxed = [] { const char *v = std::getenv("PS2X_GS_WRITE_SYNC"); return !(v && *v == '1'); }();
-        return !relaxed || (regOff != 0x1000u && regOff != 0x1010u && regOff != 0x1080u);
-#endif
-    }
-```
-
-And replace `isAsyncVifRegister(uint32_t addr)` (around line 163) with:
-```cpp
-    inline bool isAsyncVifRegister(uint32_t addr)
-    {
-#if defined(__ANDROID__)
-        // On Android with MTVU, VIF1 and GIFPath3 DMA jobs execute in strict FIFO order on VUThread.
-        // Polling VIF1_STAT (0x10003C00) or GIF_STAT (0x10003020) must NEVER stall EEThread!
-        // Only synchronize if reading/writing the VIF1 download FIFO (0x10005000) while FDR is active.
-        return (addr >= 0x10005000u && addr < 0x10006000u) && g_vif1Fdr.load(std::memory_order_relaxed);
-#else
-        return (addr >= 0x10003000u && addr < 0x10003100u) || (addr >= 0x10003C00u && addr < 0x10004000u) ||
-               (addr >= 0x10005000u && addr < 0x10007000u);
-#endif
-    }
-```
-
-Also in `PS2Memory::mapVuMemory` (around line 869 of `ps2_memory.cpp`):
-Only sync if `EEThread` accesses VU1 memory directly while not on the worker thread:
-```cpp
-const uint8_t *PS2Memory::mapVuMemory(uint32_t physAddr, uint32_t size, uint32_t &offset, uint32_t &limit) const
-{
-    if (physAddr >= PS2_VU1_CODE_BASE && physAddr < PS2_VU1_DATA_BASE + PS2_VU1_DATA_SIZE && !ps2x::asyncvif::onWorker())
-        ps2x::asyncvif::sync(const_cast<PS2Memory &>(*this));
-```
-
-2B. In `app/src/main/cpp/runtime/ps2xRuntime/src/lib/ps2_async_vif.cpp`:
-In `ps2x::asyncvif::sync(PS2Memory &memory)` (around line 410):
-When `sync()` IS called (e.g., for VU1 memory mapping), only wait for `VUThread` (`worker->mutex`) and NEVER block `EEThread` waiting for `GIFThread` (`worker->gif.mutex`), because `GIFThread` only feeds the GS backend and never writes back to VU1 memory:
-
-```cpp
-    void sync(PS2Memory &memory)
-    {
-        if (t_onWorker)
-            return;
-        Worker *worker = s_worker;
-        if (!worker || worker->memory != &memory)
-            return;
-        traceEvent('W', vu1Timing().hooks.eeCycle ? static_cast<uint32_t>(vu1Timing().hooks.eeCycle() >> 10) : 0u);
-        {
-            std::unique_lock<std::mutex> lock(worker->mutex);
-            worker->idleCv.wait(lock, [&]
-                                { return worker->jobs.empty() && !worker->busy; });
-        }
-#if !defined(__ANDROID__)
-        GifStage &stage = worker->gif;
-        std::unique_lock<std::mutex> lock(stage.mutex);
-        stage.idleCv.wait(lock, [&]
-                          { return stage.chunks.empty() && !stage.busy; });
-#endif
-        traceEvent('w');
-    }
-```
-
-
-================================================================================
-STEP 3: ELIMINATE 4,500x/FRAME 4KB `resetScheduler()` MEMSETS ON `EEThread` &
-        BULK `XGKICK` TRANSFER ON `VUThread` (`ps2_vu1_core.cpp` & `ps2_vu1_impl.inl`)
-================================================================================
-
-3A. In `app/src/main/cpp/runtime/ps2xRuntime/src/lib/vu/ps2_vu1_core.cpp`:
-1. In `VU1Interpreter::resetScheduler()` (around line 250):
-On ARM64, `m_storePipeline`, `m_vfWritePipeline`, `m_viWritePipeline`, `m_accWritePipeline`, `m_vfReady`, `m_viReady`, `m_accReady`, `m_vfLatestWrite`, `m_viLatestWrite`, and `m_accLatestWrite` are unused because register and store writes happen in-place! Calling `std::memset` on those 10 arrays zeroes ~4 KB on every single `VCALLMS` call (~4,500 times/frame = ~18 MB/frame on `EEThread`).
-Replace `VU1Interpreter::resetScheduler()` with:
-
-```cpp
-void VU1Interpreter::resetScheduler()
-{
 #if defined(__aarch64__) || defined(_M_ARM64)
-    m_fdiv = {};
-    m_efu[0] = {};
-    m_efu[1] = {};
-    m_flagValid = 0u;
-    m_storeValid = 0u;
-    m_vfWriteValid = 0u;
-    m_viWriteValid = 0u;
-    m_accWriteValid = 0u;
-    m_nextCommitCycle = std::numeric_limits<uint64_t>::max();
-    resetXgkick();
-    m_nextWriteSequence = 0;
-    m_efuResourceReady = 0;
-    m_workingClip = m_state.clip;
-    m_viBranchBackupValue = 0;
-    m_viBranchBackupReg = 0;
-    m_viBranchBackupValid = false;
-    m_stopRequested = false;
-    m_pendingHaltD = false;
-    m_pendingHaltT = false;
+#define FPU_ADD_S(a, b) ((float)(a) + (float)(b))
+#define FPU_SUB_S(a, b) ((float)(a) - (float)(b))
+#define FPU_MUL_S(a, b) ((float)(a) * (float)(b))
 #else
-    std::memset(m_flagPipeline.data(), 0, sizeof(m_flagPipeline));
-    std::memset(&m_fdiv, 0, sizeof(m_fdiv));
-    std::memset(m_efu.data(), 0, sizeof(m_efu));
-    std::memset(m_storePipeline.data(), 0, sizeof(m_storePipeline));
-    std::memset(m_vfWritePipeline.data(), 0, sizeof(m_vfWritePipeline));
-    std::memset(m_viWritePipeline.data(), 0, sizeof(m_viWritePipeline));
-    std::memset(m_accWritePipeline.data(), 0, sizeof(m_accWritePipeline));
-    m_flagValid = 0u;
-    m_storeValid = 0u;
-    m_vfWriteValid = 0u;
-    m_viWriteValid = 0u;
-    m_accWriteValid = 0u;
-    m_nextCommitCycle = std::numeric_limits<uint64_t>::max();
-    resetXgkick();
-    std::memset(m_vfReady.data(), 0, sizeof(m_vfReady));
-    std::memset(m_viReady.data(), 0, sizeof(m_viReady));
-    std::memset(m_accReady.data(), 0, sizeof(m_accReady));
-    std::memset(m_vfLatestWrite.data(), 0, sizeof(m_vfLatestWrite));
-    std::memset(m_viLatestWrite.data(), 0, sizeof(m_viLatestWrite));
-    std::memset(m_accLatestWrite.data(), 0, sizeof(m_accLatestWrite));
-    m_nextWriteSequence = 0;
-    m_efuResourceReady = 0;
-    m_workingClip = m_state.clip;
-    m_viBranchBackupValue = 0;
-    m_viBranchBackupReg = 0;
-    m_viBranchBackupValid = false;
-    m_stopRequested = false;
-    m_pendingHaltD = false;
-    m_pendingHaltT = false;
+#define FPU_ADD_S(a, b) ps2FpuAdd((float)(a), (float)(b))
+#define FPU_SUB_S(a, b) ps2FpuSub((float)(a), (float)(b))
+#define FPU_MUL_S(a, b) ps2FpuClamp((float)(a) * (float)(b))
 #endif
-}
 ```
 
-2. In `VU1InterpreterAccess::runLoopWith` in `ps2_vu1_core.cpp` (around line 670):
-On ARM64, keep `vu0SchedulerClean = true;` so `executeVu0Lean` never takes the slow reset branch:
+#### 1C. Eliminate `ps2TraceGuestWrite` Overhead on Android in `WRITE8/16/32/64/128` (Lines 638–705)
+Keep the inline Scratchpad (`g_ps2ScratchpadHostPtr`) fast-paths in `Ps2FastRead*` / `Ps2FastWrite*`, and in `WRITE8`, `WRITE16`, `WRITE32`, `WRITE64`, and `WRITE128`, guard `ps2TraceGuestWrite` (and the `_lo`/`_hi` extractions in `WRITE128`) with `#if !defined(__ANDROID__)`:
 ```cpp
-        interpretNextPair = false;
-        if (vu.m_unit == VU1Interpreter::Unit::VU1)
-            vu1NormShadow.valid = false;
-        else
-        {
-            vu0NormShadow.valid = false;
-#if !defined(__aarch64__) && !defined(_M_ARM64)
-            vu0SchedulerClean = false; // the interpreter fills the scheduler arrays (PS2X_VU0_LEAN)
-#endif
-        }
-```
-
-3. In `reportUncompiledVu1Image` in `ps2_vu1_core.cpp` (around line 106):
-Log any uncompiled VU1 microprogram hash once to Android logcat so you can verify AOT hit rate:
-```cpp
-    void reportUncompiledVu1Image(uint64_t hash, const uint8_t *vuCode, uint32_t codeSize)
-    {
 #if defined(__ANDROID__)
-        static std::unordered_map<uint64_t, bool> s_loggedMissing;
-        if (s_loggedMissing.size() < 64u && s_loggedMissing.emplace(hash, true).second)
-        {
-            __android_log_print(ANDROID_LOG_WARN, "GodHandVU1",
-                                "[vu1-miss] Uncompiled VU1 microprogram hash=0x%016llx size=%u (running in interpreter)",
-                                static_cast<unsigned long long>(hash), codeSize);
-        }
-        (void)vuCode;
-        return;
-#else
-```
+#define WRITE8(addr, val)                                         \
+    do                                                            \
+    {                                                             \
+        uint32_t _addr = (uint32_t)(addr);                        \
+        if (__builtin_expect(PS2Runtime::isSpecialAddress(_addr), 0)) \
+            runtime->Store8(rdram, ctx, _addr, (val));            \
+        else                                                      \
+            FAST_WRITE8(_addr, (val));                            \
+    } while (0)
 
-3B. In `app/src/main/cpp/runtime/ps2xRuntime/src/lib/vu/ps2_vu1_impl.inl`:
-1. In `VU1Interpreter::startXgkick(uint32_t qwordAddress)` (around line 1745):
-Instead of copying 1.77 MB of GIF data per frame 16 bytes at a time inside `advanceOneCycle()` -> `progressXgkick()` (~110,000 loop iterations per frame), parse the GIFtag loop immediately in `startXgkick()` on ARM64 when `m_storeValid == 0u` and submit the packet in bulk!
-Replace `VU1Interpreter::startXgkick(uint32_t qwordAddress)` with:
+#define WRITE16(addr, val)                                        \
+    do                                                            \
+    {                                                             \
+        uint32_t _addr = (uint32_t)(addr);                        \
+        if (__builtin_expect(PS2Runtime::isSpecialAddress(_addr), 0)) \
+            runtime->Store16(rdram, ctx, _addr, (val));           \
+        else                                                      \
+            FAST_WRITE16(_addr, (val));                           \
+    } while (0)
 
-```cpp
-inline void VU1Interpreter::startXgkick(uint32_t qwordAddress)
-{
-    if (m_unit != Unit::VU1 || !m_activeVuData || m_activeVuDataSize < 16u)
-        return;
+#define WRITE32(addr, val)                                        \
+    do                                                            \
+    {                                                             \
+        uint32_t _addr = (uint32_t)(addr);                        \
+        if (__builtin_expect(PS2Runtime::isSpecialAddress(_addr), 0)) \
+            runtime->Store32(rdram, ctx, _addr, (val));           \
+        else                                                      \
+            FAST_WRITE32(_addr, (val));                           \
+    } while (0)
 
-    const uint32_t sourceAddress = (qwordAddress * 16u) % m_activeVuDataSize;
-#if defined(__aarch64__) || defined(_M_ARM64)
-    if (m_storeValid == 0u && !packetSink)
-    {
-        // Fast bulk XGKICK: scan GIFtag chain directly in m_activeVuData without 16-byte per-cycle memcpy!
-        uint32_t curOffset = 0u;
-        bool validChain = true;
-        while (curOffset <= XgkickPipeline::kBufferSize - 16u)
-        {
-            const uint32_t tagAddr = (sourceAddress + curOffset) % m_activeVuDataSize;
-            uint64_t tagLo = 0;
-            if (tagAddr + 8u <= m_activeVuDataSize)
-                std::memcpy(&tagLo, m_activeVuData + tagAddr, sizeof(tagLo));
-            else
-            {
-                validChain = false;
-                break;
-            }
-            const uint32_t nloop = static_cast<uint32_t>(tagLo & 0x7FFFu);
-            const uint32_t format = static_cast<uint32_t>((tagLo >> 58) & 0x3u);
-            uint32_t nreg = static_cast<uint32_t>((tagLo >> 60) & 0xFu);
-            if (nreg == 0u)
-                nreg = 16u;
+#define WRITE64(addr, val)                                        \
+    do                                                            \
+    {                                                             \
+        uint32_t _addr = (uint32_t)(addr);                        \
+        if (__builtin_expect(PS2Runtime::isSpecialAddress(_addr), 0)) \
+            runtime->Store64(rdram, ctx, _addr, (val));           \
+        else                                                      \
+            FAST_WRITE64(_addr, (val));                           \
+    } while (0)
 
-            uint64_t tagBytes = 16u;
-            if (format == 0u)
-                tagBytes += static_cast<uint64_t>(nloop) * nreg * 16u;
-            else if (format == 1u)
-                tagBytes += ((static_cast<uint64_t>(nloop) * nreg + 1u) & ~1ull) * 8u;
-            else if (format == 2u)
-                tagBytes += static_cast<uint64_t>(nloop) * 16u;
-            else
-            {
-                validChain = false;
-                break;
-            }
-            if (tagBytes > XgkickPipeline::kBufferSize - curOffset)
-            {
-                validChain = false;
-                break;
-            }
-            curOffset += static_cast<uint32_t>(tagBytes);
-            const bool eop = ((tagLo >> 15) & 1u) != 0u;
-            if (eop)
-                break;
-        }
-        if (validChain && curOffset > 0u)
-        {
-            resetXgkick();
-            if (sourceAddress + curOffset <= m_activeVuDataSize)
-            {
-                // 100% Zero-Copy submission directly from m_activeVuData!
-                if (m_activeMemory)
-                    m_activeMemory->submitGifPacket(GifPathId::Path1, m_activeVuData + sourceAddress, curOffset);
-                else if (m_activeGs)
-                    m_activeGs->processGIFPacket(m_activeVuData + sourceAddress, curOffset);
-            }
-            else
-            {
-                // Wrapped around end of 16KB VU1 data memory: 2 bulk memcpy calls
-                const uint32_t firstPart = m_activeVuDataSize - sourceAddress;
-                std::memcpy(m_xgkick.packet.data(), m_activeVuData + sourceAddress, firstPart);
-                std::memcpy(m_xgkick.packet.data() + firstPart, m_activeVuData, curOffset - firstPart);
-                if (m_activeMemory)
-                    m_activeMemory->submitGifPacket(GifPathId::Path1, m_xgkick.packet.data(), curOffset);
-                else if (m_activeGs)
-                    m_activeGs->processGIFPacket(m_xgkick.packet.data(), curOffset);
-            }
-            return;
-        }
-    }
+#define WRITE128(addr, val)                                       \
+    do                                                            \
+    {                                                             \
+        uint32_t _addr = (uint32_t)(addr) & ~0xFu;                \
+        __m128i _value = (val);                                   \
+        if (__builtin_expect(PS2Runtime::isSpecialAddress(_addr), 0)) \
+            runtime->Store128(rdram, ctx, _addr, _value);         \
+        else                                                      \
+            FAST_WRITE128(_addr, _value);                         \
+    } while (0)
 #endif
-    resetXgkick();
-    m_xgkick.active = true;
-    m_xgkick.sourceAddress = sourceAddress;
-    m_xgkick.cycleCredit = 1u; // XGKICK's issue cycle counts toward PATH1.
-    m_xgkick.issueCycle = m_cycle;
-}
+```
+*(Also wrap `PS2Runtime::isSpecialAddress(_addr)` in `__builtin_expect(..., 0)` inside `READ8`, `READ16`, `READ32`, `READ64`, `READ128`!)*
+
+---
+
+### STEP 2: Fix `ps2_vu1_impl.inl` & `ps2_vu1_core.cpp` — Eliminate Invisible Ground Glitch (`writeVf` + 3-Instruction `vnorm`) & Force-Inline All AOT VU1 Functions
+
+#### 2A. In `ps2_vu1_core.cpp` (Line 6)
+Change line 6 from `#define VU1_FORCE_INLINE inline` to:
+```cpp
+#if defined(__GNUC__) || defined(__clang__)
+#define VU1_FORCE_INLINE __attribute__((always_inline)) inline
+#else
+#define VU1_FORCE_INLINE inline
+#endif
+```
+And in `CMakeLists.txt` (around line 86), ensure `godhand_vu1_code` is compiled with `-O3`:
+```cmake
+if(GODHAND_VU1_SOURCES)
+    add_library(godhand_vu1_code STATIC ${GODHAND_VU1_SOURCES})
+    target_compile_options(godhand_vu1_code PRIVATE -O3 -fomit-frame-pointer -finline-functions)
 ```
 
-2. In `vnorm(__m128 value)` in `ps2_vu1_impl.inl` (around line 2912):
-Default `s_skipNorm` to `true` on ARM64 (unless `PS2X_VU1_SKIP_CLAMP` is explicitly set to `"0"`), because hardware `FPCR.FZ` + `FPCR.DN` is already active on `VUThread` and `EEThread`:
+#### 2B. In `ps2_vu1_impl.inl` (`vnorm` at lines 2916–2950)
+**Remove `s_skipNorm` (`PS2X_VU1_SKIP_CLAMP`)** so `NaN`/`Inf` integer masks in stage/ground VU1 shaders NEVER poison ground vertices into `NaN`. Instead, use the **3-instruction branchless ARM64 NEON `vminq_u32` magnitude clamp** (which clamps any exponent `0xFF` `Inf`/`NaN` to `0x7F7FFFFFu` in 1 instruction while hardware `FPCR.FZ` flushes denormals in 0 cycles):
 ```cpp
     static VU1_FORCE_INLINE __m128 vnorm(__m128 value)
     {
 #if defined(__aarch64__) || defined(_M_ARM64)
-        static const bool s_skipNorm = [] {
-            const char *c = std::getenv("PS2X_VU1_SKIP_CLAMP");
-            return !c || *c != '0';
-        }();
-        if (s_skipNorm)
-            return value;
-```
-
-3. In `syncAllNorm(VU1Interpreter &vu, Vu1FastCtx &ctx)` and `writeVf` / `writeVfFull` in `ps2_vu1_impl.inl` (around lines 2980-3015):
-Point `ctx.norm` directly at `vu.m_state.vf` on ARM64 when `s_skipNorm` is active, or copy via `std::memcpy(ctx.norm, vu.m_state.vf, 32 * 16)` in a single bulk operation instead of 33 loop iterations of `vnorm()`:
-```cpp
-    static void syncAllNorm(VU1Interpreter &vu, Vu1FastCtx &ctx)
-    {
-#if defined(__aarch64__) || defined(_M_ARM64)
-        std::memcpy(ctx.norm[0], vu.m_state.vf[0], 32u * sizeof(float[4]));
-        std::memcpy(ctx.norm[32], vu.m_state.acc, sizeof(float[4]));
+        uint32x4_t bits;
+        std::memcpy(&bits, &value, 16);
+        const uint32x4_t sign = vandq_u32(bits, vdupq_n_u32(0x80000000u));
+        const uint32x4_t mag  = vminq_u32(vandq_u32(bits, vdupq_n_u32(0x7FFFFFFFu)), vdupq_n_u32(0x7F7FFFFFu));
+        const uint32x4_t norm = vandq_u32(mag, vcgeq_u32(mag, vdupq_n_u32(0x00800000u)));
+        const uint32x4_t res  = vorrq_u32(sign, norm);
+        __m128 out;
+        std::memcpy(&out, &res, 16);
+        return out;
 #else
-        for (uint32_t reg = 0; reg < 33u; ++reg)
-            _mm_store_ps(ctx.norm[reg], vnorm(_mm_loadu_ps(rawReg(vu, reg))));
+        const __m128i bits = _mm_castps_si128(value);
+        const __m128i exponent = _mm_and_si128(bits, _mm_set1_epi32(0x7F800000));
+        const __m128i sign = _mm_and_si128(bits, _mm_set1_epi32(static_cast<int>(0x80000000u)));
+        const __m128i zero = _mm_cmpeq_epi32(exponent, _mm_setzero_si128());
+        const __m128i huge = _mm_cmpeq_epi32(exponent, _mm_set1_epi32(0x7F800000));
+        __m128i result = _mm_or_si128(_mm_andnot_si128(zero, bits), _mm_and_si128(zero, sign));
+        result = _mm_or_si128(_mm_andnot_si128(huge, result),
+                              _mm_and_si128(huge, _mm_or_si128(sign, _mm_set1_epi32(0x7F7FFFFF))));
+        return _mm_castsi128_ps(result);
 #endif
     }
 ```
 
-
-================================================================================
-STEP 4: STOP `skipIdleCycles()` FROM OVER-CLOCKING `IOPThread` (44% CPU) &
-        REDUCE SCHEDULER CHECKPOINT FREQUENCY (`EeScheduler.cpp`)
-================================================================================
-
-In `app/src/main/cpp/runtime/ps2xRuntime/src/lib/Kernel/EeScheduler.cpp`:
-
-1. At line 143, increase `g_ps2xEeLoopCycles` from `32u` to `64u`:
+#### 2C. In `ps2_vu1_impl.inl` (`writeVf` at lines 2983–2990)
+**Restore `writeVf` so `rawReg(vu, reg)` ALWAYS receives `raw` and `ctx.norm[reg]` receives `normalized`!**
+This preserves exact GIFtag/ADC/integer bit patterns loaded via `LQ` into `vu.m_state.vf[reg]` and stored via `SQ` to XGKICK, completely fixing the invisible ground mesh glitch:
 ```cpp
-uint32_t g_ps2xEeLoopCycles = 64u;
-```
-
-2. In `EeScheduler::checkpointDue` (around line 523), increase default `g_deferCycles` from `2048` to `4096`:
-```cpp
-    if (g_deferCycles < 0)
+    static VU1_FORCE_INLINE void writeVf(VU1Interpreter &vu, Vu1FastCtx &ctx, uint32_t reg, __m128 raw, __m128 normalized, uint32_t dest)
     {
-        const char *value = std::getenv("PS2X_EE_DEFER_CYCLES");
-        g_deferCycles = value && *value ? std::max(0, std::atoi(value)) : 4096;
-```
-
-3. In `EeScheduler::accountCycles` (around lines 608-625), increase default `g_gsPollCycles` to `4096u` and increase the `g_iopStash` batch threshold from `2048u` to `8192u` (matching the comment at line 637: "The IOP runs in batches of 8192 EE cycles anyway"):
-```cpp
-    if (g_fastAccount < 0)
-    {
-        const char *value = std::getenv("PS2X_EE_FAST_ACCOUNT");
-        const char *poll = std::getenv("PS2X_EE_GS_POLL_CYCLES");
-        g_gsPollCycles = poll && *poll ? std::max<uint64_t>(1u, std::strtoull(poll, nullptr, 10)) : 4096u;
-        g_signalSerial = ps2xGsSignalSerialAddress();
-        g_finishSerial = ps2xGsFinishSerialAddress();
-        g_fastAccount = (value && *value == '0') ? 0 : 1;
-    }
-    if (g_fastAccount != 0)
-    {
-        PS2Memory &memory = m_runtime.memory();
-        if (!memory.m_gifStatWritten && memory.m_eeTimerPendingCycles + elapsed < memory.m_eeTimerEventBudget)
-            memory.m_eeTimerPendingCycles += elapsed;
+        storeDest(rawReg(vu, reg), raw, dest);
+        if (dest == 0xFu)
+            _mm_store_ps(ctx.norm[reg], normalized);
         else
-            m_pendingEeTimerInterrupts |= memory.advanceEeTimers(elapsed);
+            _mm_store_ps(ctx.norm[reg], blendDest(_mm_load_ps(ctx.norm[reg]), normalized, dest));
+    }
+```
+
+#### 2D. In `ps2_vu1_impl.inl` (`fmacFastImpl` at lines 3610–3645)
+Clamp `result` with the 3-instruction `vminq_u32` magnitude clamp at the end of `fmacFastImpl` so `fmacFastV` / `fmacFastN` can never propagate `Inf` or `NaN` into ground/character vertices:
+```cpp
+        if constexpr (cross)
+            result = _mm_and_ps(result, destMask(0xEu));
+#if defined(__aarch64__) || defined(_M_ARM64)
+        {
+            uint32x4_t bits;
+            std::memcpy(&bits, &result, 16);
+            const uint32x4_t sign = vandq_u32(bits, vdupq_n_u32(0x80000000u));
+            const uint32x4_t mag  = vminq_u32(vandq_u32(bits, vdupq_n_u32(0x7FFFFFFFu)), vdupq_n_u32(0x7F7FFFFFu));
+            const uint32x4_t res  = vorrq_u32(sign, mag);
+            std::memcpy(&result, &res, 16);
+        }
+#endif
+        normalized = result;
+        return result;
+```
+
+---
+
+### STEP 3: Fix `gs_pcsx2_backend.cpp` & `Bridge.cpp` — Restore 60 FPS Menu on Mid-Ranger & Smooth VSync Pacing
+
+#### 3A. In `gs_pcsx2_backend.cpp` (`GSPcsx2Backend::VSync`)
+**Remove the Step 10 duplicate-VBlank early `return;` block** from `GSPcsx2Backend::VSync(const GSVSyncRegs &regs)` so `GSPcsx2Backend::VSync` always calls `g_api->vsync(reinterpret_cast<const Pcsx2GsPrivRegs *>(&regs))` and records accurate 60 FPS menu / present stats.
+
+#### 3B. In `Bridge.cpp` (`ApplyGameFixes` at line 61)
+Set `options.SkipDuplicateFrames = true;` inside `ApplyGameFixes`:
+```cpp
+        options.SkipDuplicateFrames = true;
+```
+Why: Inside PCSX2's `GSRendererHW`, `SkipDuplicateFrames = true` checks whether any GS draw/write touched the display framebuffer since the last VSync; if not, it skips the redundant internal target resolve while still running `GSvsync` and maintaining 60 FPS presentation on menus!
+
+---
+
+### STEP 4: Fix `EeScheduler.cpp` — Smart Pipeline-Aware Idle Wait (Eliminates Spin-Loop CPU Burn Without Premature VBlank Skips!)
+
+Open `app/src/main/cpp/runtime/ps2xRuntime/src/lib/Kernel/EeScheduler.cpp`:
+
+#### 4A. In `EeScheduler::accountCycles`
+Set the `g_iopStash` threshold to `4096u` (instead of `32768u`, which delayed SIF RPC responses):
+```cpp
         g_iopStash += elapsed;
-        if (g_iopStash >= 8192u)
+        if (g_iopStash >= 4096u)
         {
             m_runtime.advanceIopEeCycles(g_iopStash);
             g_iopStash = 0u;
         }
 ```
 
-4. In `EeScheduler::skipIdleCycles()` (lines 674-705), advance `m_eeCycle` and EE hardware timers directly to the next event deadline WITHOUT dumping millions of fake skipped idle cycles into `g_iopStash` / `advanceIopEeCycles()`. This immediately drops `IOPThread` from 44% CPU down to <8% CPU:
+#### 4B. In `EeScheduler::checkpointDue`
+**Remove the unconditional Step 9B `skipIdleCycles()` block** from `EeScheduler::checkpointDue`!
+Instead, replace it with this **pipeline-aware VBlank wait** for `func_0030B148` (`pc >= 0x0030B168u && pc < 0x0030B298u`):
 ```cpp
-uint64_t EeScheduler::skipIdleCycles() noexcept
-{
-    const GuestThread *running = currentThread();
-    if (running == nullptr || m_insideInterrupt || !running->invocations.empty() ||
-        hasReadyAtOrAbovePriority(running->currentPriority))
+#if defined(__ANDROID__)
+    if (const GuestThread *running = currentThread(); running != nullptr && !m_insideInterrupt && running->invocations.empty())
     {
-        return 0u;
-    }
-
-    uint64_t skipped = 0u;
-    while (!m_checkpointPending.load(std::memory_order_acquire) &&
-           !m_rescheduleRequested &&
-           m_pendingInvocations.empty())
-    {
-        const uint64_t nextEventCycle = m_nextDeadlineCycle.load(std::memory_order_acquire);
-        if (nextEventCycle == 0u || m_eeCycle >= nextEventCycle)
+        const uint32_t pc = running->context.pc;
+        if (__builtin_expect(pc >= 0x0030B168u && pc < 0x0030B298u, 0))
         {
-            break;
+            // 1. If GIFThread raised a GS SIGNAL/FINISH interrupt, unwind immediately so the EE GS handler
+            //    kicks the next DMA part of the frame with zero delay!
+            if (gsInterruptUnseen() || !m_pendingInvocations.empty())
+            {
+                m_checkpointPending.store(true, std::memory_order_release);
+                m_unwinding = true;
+                g_deferUntil = 0u;
+                g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
+                return true;
+            }
+            // 2. If VUThread or GIFThread is STILL busy rendering the current frame, DO NOT advance m_eeCycle
+            //    (advancing m_eeCycle here would make VBlank fire before the frame finishes drawing!).
+            //    Instead, sleep briefly waiting for VUThread/GIFThread to finish or raise GS SIGNAL/FINISH!
+            if (ps2x::asyncvif::pipelineBusy(m_runtime.memory()))
+            {
+                ps2x::asyncvif::waitPipelineIdle(m_runtime.memory(), std::chrono::microseconds(150));
+                if (gsInterruptUnseen())
+                {
+                    m_checkpointPending.store(true, std::memory_order_release);
+                    m_unwinding = true;
+                    g_deferUntil = 0u;
+                    g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
+                    return true;
+                }
+            }
+            else
+            {
+                // 3. VUThread and GIFThread are 100% IDLE (frame drawing is completely finished!).
+                //    Now it is 100% safe to fast-forward the remaining idle EE cycles to the VBlank boundary!
+                skipIdleCycles();
+                if (m_checkpointPending.load(std::memory_order_acquire))
+                {
+                    m_unwinding = true;
+                    g_deferUntil = 0u;
+                    g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
+                    return true;
+                }
+            }
         }
-        const uint64_t step = std::min({nextEventCycle - m_eeCycle,
-                                        kIdleSkipStepCycles * 16u,
-                                        m_runtime.memory().cyclesUntilNextEeTimerInterrupt()});
-        if (step == 0u)
-        {
-            break;
-        }
-        // Advance EE cycle and EE hardware timers without flooding IOPThread with fake idle cycles!
-        const uint64_t elapsed = step + g_ps2xEeDeferred;
-        g_ps2xEeDeferred = 0u;
-        m_eeCycle += elapsed;
-        g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
-        m_pendingEeTimerInterrupts |= m_runtime.memory().advanceEeTimers(elapsed);
-        if (m_pendingEeTimerInterrupts != 0u || pendingGsInterruptEvents() != m_gsInterruptLatched ||
-            ps2xGsSignalSerial() != g_seenSignalSerial || ps2xGsFinishSerial() != g_seenFinishSerial)
-        {
-            m_checkpointPending.store(true, std::memory_order_release);
-        }
-        skipped += step;
     }
-    return skipped;
-}
+#endif
 ```
+Look at why this works on **both** the Mid-Ranger and the Redmi 10A:
+- While `VUThread` and `GIFThread` are rendering the frame (`pipelineBusy() == true`), `EEThread` sleeps in 150 µs increments (`waitPipelineIdle`) **without advancing `m_eeCycle`**, freeing CPU power/bandwidth for `VUThread`/`GSThread` and never triggering VBlank prematurely!
+- The microsecond `GIFThread` raises a GS `SIGNAL` or `FINISH` interrupt (`gsInterruptUnseen()`), `EEThread` unwinds immediately and kicks the next DMA chain!
+- Once `VUThread` and `GIFThread` finish the frame (`!pipelineBusy()`), `skipIdleCycles()` jumps straight to the next VBlank boundary in 0 cycles instead of spinning in `func_0030B148`!
 
+---
 
-================================================================================
-STEP 5: REMOVE `func_0030B148` PREMATURE VBLANK SKIP HOOK (`function_hooks.cpp`)
-================================================================================
+### STEP 5: Fix `thread_affinity.cpp` — Always Detect All 8 Cores (`0..7`) & Stop `GSThread`/`GIFThread` Core 2 Collision!
 
-Why: In `function_hooks.cpp`, observing `0x0030B148` (`func_0030B148`) and calling `rt->scheduler().skipIdleCycles()` at function entry caused `m_eeCycle` to jump straight to the next VBlank BEFORE `func_0030B148` had even checked whether the current frame's DMA/GS transfer was finished—causing empty VBlanks to fire (15.3 Present FPS vs 7.6 Game EE FPS) while `EEThread` was still mid-sync!
-In `app/src/main/cpp/src/godhand/function_hooks.cpp`:
-Remove the `0x0030B148` `vblank_wait_idle_skip` observer hook from `installGameFrameCounter`, keeping ONLY:
-1. The `0x003155F8` flare depth readback stub (`sub_003155F8_stub`),
-2. The `0x00292F50` `cEmManage_GetSpeedRate_hook` (returning `1.0f`), and
-3. The `0x0030B870` `game_frame_counter` hook locking `rdram[0x00747A09u] = 0x02u` and `rdram[0x00747A14u] = 1.0f`.
+Open `app/src/main/cpp/src/godhand/thread_affinity.cpp`.
 
+In your `godhand_full_log_and_system_usage.txt`, `detectSortedCores()` only detected 4 cores (`0..3`) because `sysconf(_SC_NPROCESSORS_CONF)` or `/proc/cpuinfo` missed `cpu4..cpu7`, causing `GS_RENDERER` (`55.4%`) and `GIF_WORKER` (`17.5%`) to collide on `Core 2` (`0x04`) while `IOP_WORKER` (`31.0%`) took `Core 3` (`0x08`) and `Cores 4..7` sat 100% idle!
 
-================================================================================
-STEP 6: FIX CORE AFFINITY ON HELIO G25 (`top_tier <= 1`) (`thread_affinity.cpp`)
-================================================================================
-
-In `app/src/main/cpp/src/godhand/thread_affinity.cpp`:
-Look at the `else if (top_tier <= 1)` branch (around line 262):
-Previously, `IOPThread` (44% CPU) was banished to the 1.50 GHz Little cluster (`little_cores`), while `Core 0` (2.00 GHz) had only `GIFThread` (10.6% CPU, leaving 89.4% of a 2.0 GHz core idle!) and `Core 1` (2.00 GHz) had only `GSThread` (36.0% CPU, leaving 64% of a 2.0 GHz core idle!), and `EEThread`/`VUThread` were locked to single cores so kernel interrupts stalled them.
-Replace the `else if (top_tier <= 1)` block in `thread_affinity.cpp` with:
-
+In `detectSortedCores()` (`thread_affinity.cpp` around line 140), force detection of all 8 hardware CPU directories `/sys/devices/system/cpu/cpu0..cpu7`:
 ```cpp
-    } else if (top_tier <= 1) {
-        // Budget 8-core A53/A55 cluster with frequency split (Helio G25, G35, P35, Unisoc T606):
-        // big_cores[0..3] = 4x 2.00 GHz Cortex-A53; little_cores[0..3] = 4x 1.50 GHz Cortex-A53.
-        // - Give EE_MAIN primary big_cores[0] + fallback big_cores[3] (so kernel IRQ on Core 3 never stalls EEThread)
-        // - Give VU1_WORKER primary big_cores[1] + fallback big_cores[3]
-        // - Share big_cores[2] (2.0 GHz) between GS_RENDERER (36%) and GIF_WORKER (10%)
-        // - Place IOP_WORKER on big_cores[3] (2.0 GHz) + little_cores so SIF/DMA RPCs finish at 2.0 GHz speed!
-        switch (role) {
-            case ThreadRole::EE_MAIN:
-                CPU_SET(big_cores[0], &mask);
-                if (big_cores.size() >= 4) CPU_SET(big_cores[3], &mask);
-                targetNice = -20;
-                break;
-            case ThreadRole::VU1_WORKER:
-                CPU_SET(big_cores[1], &mask);
-                if (big_cores.size() >= 4) CPU_SET(big_cores[3], &mask);
-                targetNice = -20;
-                break;
-            case ThreadRole::GS_RENDERER:
-                CPU_SET(big_cores[2 % big_cores.size()], &mask);
-                targetNice = -19;
-                break;
-            case ThreadRole::GIF_WORKER:
-                CPU_SET(big_cores[2 % big_cores.size()], &mask);
-                if (big_cores.size() >= 4) CPU_SET(big_cores[3], &mask);
-                targetNice = -16;
-                break;
-            case ThreadRole::IOP_WORKER:
-                if (big_cores.size() >= 4) CPU_SET(big_cores[3], &mask);
-                for (int lc : little_cores) CPU_SET(lc, &mask);
-                targetNice = -15;
-                break;
-            case ThreadRole::AUDIO_SPU2:
-                for (int lc : little_cores) CPU_SET(lc, &mask);
-                targetNice = -16;
-                break;
-            case ThreadRole::HOST_PUMP:
-            default:
-                for (int lc : little_cores) CPU_SET(lc, &mask);
-                targetNice = -2;
-                break;
+static std::vector<CpuCoreInfo> detectSortedCores() {
+    std::vector<CpuCoreInfo> cores;
+
+    long conf_cpus = sysconf(_SC_NPROCESSORS_CONF);
+    int total_cpus = (conf_cpus > 0 && conf_cpus <= 64) ? static_cast<int>(conf_cpus) : 8;
+    for (int probe = total_cpus; probe < 8; ++probe) {
+        std::ifstream f("/sys/devices/system/cpu/cpu" + std::to_string(probe) + "/cpufreq/cpuinfo_max_freq");
+        if (f.is_open()) {
+            total_cpus = probe + 1;
         }
     }
 ```
+And in `applyAffinity()` (`thread_affinity.cpp`), ensure that on 8-core devices (`4 Big + 4 Little`):
+- **`EE_MAIN`** -> `big_cores[0]` (Core 0 on Helio G25 / Core 7 on Dimensity, `nice -20`)
+- **`VU1_WORKER`** -> `big_cores[1]` (Core 1 on Helio G25 / Core 6 on Dimensity, `nice -20`)
+- **`GS_RENDERER`** -> `big_cores[2]` (Core 2 on Helio G25 / Core 5 on Dimensity, `nice -19`) — **100% EXCLUSIVE, never shared with `GIF_WORKER` or `IOP_WORKER`!**
+- **`GIF_WORKER`** -> `big_cores[3]` (Core 3 on Helio G25 / Core 4 on Dimensity, `nice -16`)
+- **`IOP_WORKER`**, **`AUDIO_SPU2`**, and **`HOST_PUMP`** -> **All 4 `little_cores` (`Cores 4, 5, 6, 7` on Helio G25 / `Cores 0, 1, 2, 3` on Dimensity)**!
+This moves `IOPThread` (`31%` CPU) completely off the 2.0 GHz Big cluster onto the 4 unused 1.5 GHz Little cores, and gives `EEThread`, `VUThread`, `GSThread`, and `GIFThread` each their own dedicated 2.0 GHz Big core (`0, 1, 2, 3`) with **zero core collisions**!
 
+---
 
-================================================================================
-STEP 7: FORCE `frameskip=0`, SET `PS2X_VU1_SKIP_CLAMP=1`, & DISABLE `PS2X_VSYNC_LOCK`
-        (`main.cpp`, `gs_pcsx2_backend.cpp`, `Bridge.cpp`)
-================================================================================
-
-7A. In `app/src/main/cpp/src/main.cpp` inside `bootAndroidRuntime`:
-1. At the top of `bootAndroidRuntime`, override any stale `frameskipIdx=1` saved in Android `SharedPreferences` so frameskip is strictly `0` (Off) unless the user explicitly selected manual skip (`>= 2`):
-```cpp
-void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererIdx, int resScaleIdx, int aspectIdx, int fpsIdx, int frameskipIdx) {
-    if (frameskipIdx == 1) {
-        frameskipIdx = 0; // Disable broken Auto-Frameskip from stale SharedPreferences
-    }
-    __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "bootAndroidRuntime: initializing EE runtime (frameskip=%d)...", frameskipIdx);
-    godhand_set_frameskip_mode(frameskipIdx);
-```
-2. In `bootAndroidRuntime`, set these exact environment variables:
-```cpp
-    setDefaultEnv("PS2X_PCSX2_VSYNC", "0"); // Mailbox / non-blocking present on Android Vulkan swapchain
-    setDefaultEnv("PS2X_VSYNC", "0");
-    setDefaultEnv("PS2X_VSYNC_LOCK", "0");
-    setDefaultEnv("PS2X_EE_DEFER_CYCLES", "4096");
-    setDefaultEnv("PS2X_EE_GS_POLL_CYCLES", "4096");
-    setDefaultEnv("PS2X_EE_LOOP_CYCLES", "64");
-    setDefaultEnv("PS2X_VU1_SKIP_CLAMP", "1");
-    setDefaultEnv("PS2X_VU1_FAST_NOFLAGS", "1");
-```
-
-7B. In `app/src/main/cpp/runtime/ps2xRuntime/src/lib/gs/gs_pcsx2_backend.cpp`:
-Change line 49 from:
-```cpp
-    std::atomic<int> g_frameskipMode{1};
-```
-to:
-```cpp
-    std::atomic<int> g_frameskipMode{0};
-```
-
-7C. In `app/src/main/cpp/thirdparty/pcsx2-gs-android/compat/Bridge.cpp`:
-1. In `ApplyGameFixes(Pcsx2Config::GSOptions &options)` (line 53), set:
-```cpp
-        options.SkipDuplicateFrames = false;
-```
-2. In `Bridge.cpp::Vsync(const Pcsx2GsPrivRegs *regs)` (around lines 265-305), remove the duplicate frameskip check so `Vsync` always passes `shouldDraw = true` to `GSvsync((regs->csr & 0x2000u) ? 0u : 1u, true);` (since `gs_pcsx2_backend.cpp` already handles `g_frameskipMode`).
-
-
-================================================================================
-STEP 8: CORTEX-A53 IN-ORDER PIPELINE COMPILER SCHEDULING (`CMakeLists.txt`)
-================================================================================
-
-In `app/src/main/cpp/CMakeLists.txt`:
-1. Replace `add_compile_options` (lines 8-22) with Cortex-A53 instruction scheduling and fast-math flags (which schedule loads 3-4 instructions ahead of use for in-order Cortex-A53/A55 cores while also running at peak IPC on out-of-order Cortex-A76/A78/X4 cores):
-```cmake
-add_compile_options(
-    -include ${CMAKE_CURRENT_SOURCE_DIR}/simd_arm64_compat.h
-    -march=armv8-a+crc
-    -mtune=cortex-a53
-    -O3
-    -ffast-math
-    -fno-finite-math-only
-    -fno-signed-zeros
-    -fno-math-errno
-    -fno-trapping-math
-    -fomit-frame-pointer
-    -finline-functions
-    -fvisibility-inlines-hidden
-    -fno-semantic-interposition
-    -ftls-model=initial-exec
-    -Wno-unused-variable
-    -Wno-unused-but-set-variable
-    -Wno-sign-compare
-    -Wno-unused-command-line-argument
-)
-```
-2. Update `set_source_files_properties` on the 65 Unity batches and 81 Module batches (lines 40-42) to:
-```cmake
-set_source_files_properties(${GODHAND_UNITY_SOURCES} ${GODHAND_MODULE_SOURCES} PROPERTIES
-    COMPILE_FLAGS "-O3 -ffast-math -fno-finite-math-only -mtune=cortex-a53 -falign-functions=16"
-)
-```
-
-================================================================================
-VERIFICATION CHECKLIST AFTER BUILD (`./gradlew assembleRelease`)
-================================================================================
-1. Confirm `logcat` shows `bootAndroidRuntime: initializing EE runtime (frameskip=0)...`.
-2. Confirm `logcat` shows whether any `[vu1-miss]` lines appear during Stage 1-1 combat.
-3. Run `adb shell top -b -n 1 -H -p <PID>` during Stage 1-1 combat and verify:
-   - `IOPThread` drops from 44% CPU down to < 10% CPU.
-   - `EEThread` and `VUThread` run concurrently without stalling on `VIF1_STAT` / `GIF_STAT` syncs.
-   - Game EE FPS and Present FPS climb smoothly with 1.0x authentic enemy/player speed.
-================================================================================
+## Verification Checklist After Applying Steps 1–5
+1. Confirm branch is `potato60fps` (`git branch --show-current`).
+2. Build Release APK (`./gradlew assembleRelease`) and install on both the Mid-Ranger and the Redmi 10A.
+3. Verify:
+   - **Mid-Ranger Menu**: Back to **60.0 Present FPS / 30.0 Game EE FPS (100% speed)**!
+   - **Stage 1-1 Ground Mesh**: **100% solid (zero invisible ground glitches)** thanks to restored `writeVf` raw register writes and 3-instruction `vminq_u32` `vnorm` clamp.
+   - **Thread Affinity Log**: Confirm `Detected Core 0..7` in logcat, with `EE_MAIN` on Core 0, `VU1_WORKER` on Core 1, `GS_RENDERER` alone on Core 2, `GIF_WORKER` on Core 3, and `IOP_WORKER` on Little Cores 4–7.
+   - **In-Game Combat FPS**: Faster and smoother than Phase 1 on both devices thanks to 1-cycle hardware `FPU_ADD_S`/`FPU_SUB_S`/`FPU_MUL_S` (no `ps2FpuAlignOperands`), zero-trace `WRITE*` macros, and pipeline-aware `func_0030B148` waiting.
