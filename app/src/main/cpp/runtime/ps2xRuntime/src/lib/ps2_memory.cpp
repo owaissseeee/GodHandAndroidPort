@@ -97,8 +97,13 @@ namespace
     // there is nothing to wait for anyway. PS2X_GS_WRITE_SYNC=1 makes every privileged write synchronize again.
     bool gsPrivWriteNeedsSync(uint32_t regOff)
     {
+#if defined(__ANDROID__)
+        (void)regOff;
+        return false;
+#else
         static const bool relaxed = [] { const char *v = std::getenv("PS2X_GS_WRITE_SYNC"); return !(v && *v == '1'); }();
         return !relaxed || (regOff != 0x1000u && regOff != 0x1010u && regOff != 0x1080u);
+#endif
     }
 
     bool vif1DownloadEnabled()
@@ -190,8 +195,15 @@ namespace
 
     inline bool isAsyncVifRegister(uint32_t addr)
     {
+#if defined(__ANDROID__)
+        // On Android with MTVU, VIF1 and GIFPath3 DMA jobs execute in strict FIFO order on VUThread.
+        // Polling VIF1_STAT (0x10003C00) or GIF_STAT (0x10003020) must NEVER stall EEThread!
+        // Only synchronize if reading/writing the VIF1 download FIFO (0x10005000) while FDR is active.
+        return (addr >= 0x10005000u && addr < 0x10006000u) && g_vif1Fdr.load(std::memory_order_relaxed);
+#else
         return (addr >= 0x10003000u && addr < 0x10003100u) || (addr >= 0x10003C00u && addr < 0x10004000u) ||
                (addr >= 0x10005000u && addr < 0x10007000u);
+#endif
     }
 
     inline uint64_t *gsRegPtr(GSRegisters &gs, uint32_t addr)
@@ -866,7 +878,7 @@ uint8_t *PS2Memory::mapVuMemory(uint32_t physAddr, uint32_t size, uint32_t &offs
 
 const uint8_t *PS2Memory::mapVuMemory(uint32_t physAddr, uint32_t size, uint32_t &offset, uint32_t &limit) const
 {
-    if (physAddr >= PS2_VU1_CODE_BASE && physAddr < PS2_VU1_DATA_BASE + PS2_VU1_DATA_SIZE)
+    if (physAddr >= PS2_VU1_CODE_BASE && physAddr < PS2_VU1_DATA_BASE + PS2_VU1_DATA_SIZE && !ps2x::asyncvif::onWorker())
         ps2x::asyncvif::sync(const_cast<PS2Memory &>(*this));
     auto mapRange = [&](uint32_t base, uint32_t rangeSize, const uint8_t *ptr) -> const uint8_t *
     {
@@ -3061,13 +3073,17 @@ void PS2Memory::queueCompletedDmacCause(uint32_t cause)
 {
     std::lock_guard<std::mutex> lock(m_completedDmacMutex);
     m_completedDmacCauses.push_back(cause);
+    m_hasCompletedDmac.store(true, std::memory_order_release);
 }
 
 std::vector<uint32_t> PS2Memory::consumeCompletedDmacCauses()
 {
+    if (!m_hasCompletedDmac.load(std::memory_order_acquire))
+        return {};
     std::lock_guard<std::mutex> lock(m_completedDmacMutex);
     std::vector<uint32_t> causes;
     causes.swap(m_completedDmacCauses);
+    m_hasCompletedDmac.store(false, std::memory_order_release);
     return causes;
 }
 
@@ -3700,6 +3716,11 @@ bool PS2Memory::isCodeAddress(uint32_t address) const
 
 void PS2Memory::markModified(uint32_t address, uint32_t size)
 {
+#if defined(__ANDROID__)
+    (void)address;
+    (void)size;
+    return;
+#else
     if (size == 0)
     {
         return;
@@ -3728,6 +3749,7 @@ void PS2Memory::markModified(uint32_t address, uint32_t size)
             }
         }
     }
+#endif
 }
 
 bool PS2Memory::isCodeModified(uint32_t address, uint32_t size)

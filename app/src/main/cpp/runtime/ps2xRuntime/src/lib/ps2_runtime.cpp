@@ -2711,7 +2711,8 @@ void PS2Runtime::Store32(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr, uint
     try
     {
         m_memory.write32(vaddr, value);
-        drainCompletedDmacHandlers(rdram);
+        if (__builtin_expect(m_memory.m_hasCompletedDmac.load(std::memory_order_relaxed), 0))
+            drainCompletedDmacHandlers(rdram);
     }
     catch (const std::exception &)
     {

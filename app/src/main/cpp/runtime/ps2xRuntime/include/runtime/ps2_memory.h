@@ -70,6 +70,8 @@ inline constexpr uint32_t PS2_FIO_S_IFREG = 0x2000;
 static_assert((PS2_RAM_SIZE & (PS2_RAM_SIZE - 1u)) == 0u, "PS2_RAM_SIZE must be a power of two");
 static_assert(PS2_RAM_MASK == (PS2_RAM_SIZE - 1u), "PS2_RAM_MASK must match PS2_RAM_SIZE");
 
+inline uint8_t *g_ps2ScratchpadHostPtr = nullptr;
+
 inline std::atomic<uint8_t *> &ps2ScratchpadHostPtrStorage()
 {
     static std::atomic<uint8_t *> ptr{nullptr};
@@ -78,12 +80,13 @@ inline std::atomic<uint8_t *> &ps2ScratchpadHostPtrStorage()
 
 inline void ps2SetScratchpadHostPtr(uint8_t *ptr)
 {
+    g_ps2ScratchpadHostPtr = ptr;
     ps2ScratchpadHostPtrStorage().store(ptr, std::memory_order_relaxed);
 }
 
 inline uint8_t *ps2GetScratchpadHostPtr()
 {
-    return ps2ScratchpadHostPtrStorage().load(std::memory_order_relaxed);
+    return g_ps2ScratchpadHostPtr;
 }
 
 inline bool ps2IsScratchpadAddress(uint32_t addr)
@@ -421,8 +424,10 @@ public:
     std::vector<PendingTransfer> m_pendingGifTransfers;
     std::vector<PendingTransfer> m_pendingVif0Transfers;
     std::vector<PendingTransfer> m_pendingVif1Transfers;
+    friend class PS2Runtime;
     std::mutex m_completedDmacMutex;
     std::vector<uint32_t> m_completedDmacCauses;
+    std::atomic<bool> m_hasCompletedDmac{false};
 
     struct CodeRegion
     {

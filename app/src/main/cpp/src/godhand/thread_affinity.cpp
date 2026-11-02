@@ -317,32 +317,39 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
         }
     } else if (top_tier <= 1) {
         // Budget 8-core A53/A55 cluster with frequency split (Helio G25, G35, P35, Unisoc T606):
-        // Cortex-A53/A55 cores draw <0.3W each, so thermal throttling does not occur.
-        // Dedicate 1-to-1 Big cores to compute threads so GSThread is never starved by IOP/GIF:
+        // big_cores[0..3] = 4x 2.00 GHz Cortex-A53; little_cores[0..3] = 4x 1.50 GHz Cortex-A53.
+        // - Give EE_MAIN primary big_cores[0] + fallback big_cores[3] (so kernel IRQ on Core 3 never stalls EEThread)
+        // - Give VU1_WORKER primary big_cores[1] + fallback big_cores[3]
+        // - Share big_cores[2] (2.0 GHz) between GS_RENDERER (36%) and GIF_WORKER (10%)
+        // - Place IOP_WORKER on big_cores[3] (2.0 GHz) + little_cores so SIF/DMA RPCs finish at 2.0 GHz speed!
         switch (role) {
             case ThreadRole::EE_MAIN:
                 CPU_SET(big_cores[0], &mask);
+                if (big_cores.size() >= 4) CPU_SET(big_cores[3], &mask);
                 targetNice = -20;
                 break;
             case ThreadRole::VU1_WORKER:
                 CPU_SET(big_cores[1], &mask);
+                if (big_cores.size() >= 4) CPU_SET(big_cores[3], &mask);
                 targetNice = -20;
                 break;
             case ThreadRole::GS_RENDERER:
-                CPU_SET(big_cores[2], &mask);
+                CPU_SET(big_cores[2 % big_cores.size()], &mask);
                 targetNice = -19;
                 break;
             case ThreadRole::GIF_WORKER:
-                CPU_SET(big_cores[3], &mask);
+                CPU_SET(big_cores[2 % big_cores.size()], &mask);
+                if (big_cores.size() >= 4) CPU_SET(big_cores[3], &mask);
                 targetNice = -16;
                 break;
             case ThreadRole::IOP_WORKER:
+                if (big_cores.size() >= 4) CPU_SET(big_cores[3], &mask);
                 for (int lc : little_cores) CPU_SET(lc, &mask);
                 targetNice = -15;
                 break;
             case ThreadRole::AUDIO_SPU2:
                 for (int lc : little_cores) CPU_SET(lc, &mask);
-                targetNice = -14;
+                targetNice = -16;
                 break;
             case ThreadRole::HOST_PUMP:
             default:

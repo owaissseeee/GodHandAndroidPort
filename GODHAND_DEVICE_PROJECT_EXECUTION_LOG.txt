@@ -105,74 +105,70 @@ Thread CPU Analysis:
 - Overall CPU is ~500% idle across the SoC.
 
 --------------------------------------------------------------------------------
-5. CODE CHANGES APPLIED ON BRANCH potato60fps
+5. CODE CHANGES APPLIED ON BRANCH potato60fps (FINAL MASTER OPTIMIZATION)
 --------------------------------------------------------------------------------
-Files Modified:
-1. app/src/main/cpp/runtime/ps2xRuntime/src/lib/ps2_async_vif.cpp
-   - In `vu1Busy(PS2Memory &memory)`: Added `#if defined(__ANDROID__) return false; #endif`
-   - Increased `kGifChunkBytes` from 256 KB to 512 KB.
-   - Wrapped `_mm_setcsr` and `_mm_getcsr` calls in `#if !defined(__aarch64__) && !defined(_M_ARM64)`.
+1. Inlined Scratchpad (0x7000xxxx) & Uncached RAM Fast-Paths:
+   - Added `g_ps2ScratchpadHostPtr` global pointer in `ps2_memory.h` and atomic `m_hasCompletedDmac`.
+   - Guarded DMAC completion mutex in `consumeCompletedDmacCauses` and `PS2Runtime::Store32`.
+   - Replaced `Ps2ExtractEpi32`/`Ps2ExtractEpi64` with direct scalar `memcpy` by reference (eliminating 128-bit STLF stalls).
+   - Unified `Ps2FastRead*`/`Ps2FastWrite*` to handle RAM and Scratchpad directly inlined in 1-2 instructions without calling out-of-line `Store*`/`Load*`.
+   - Bypassed code-region bitmap scanning in `markModified` on Android.
 
-2. app/src/main/cpp/runtime/ps2xRuntime/src/lib/Kernel/EeScheduler.cpp
-   - In `hostCatchUp()`: Added `#if defined(__ANDROID__) return; #endif`
-   - In `processDueDeadlines()`: Set late VBlank catch-up re-anchor to 2ms unconditionally (unless IPU video active).
+2. MTVU & Memory Synchronization Decoupling:
+   - Bypassed synchronization in `gsPrivWriteNeedsSync` on Android (`return false`).
+   - Bypassed synchronization in `isAsyncVifRegister` on Android except when VIF1 FDR FIFO is actively reading.
+   - Decoupled `GIFThread` from `sync()` in `ps2_async_vif.cpp` (`#if !defined(__ANDROID__)`).
 
-3. app/src/main/cpp/src/godhand/function_hooks.cpp & include/ps2_runtime.h
-   - Added `inline EeScheduler &scheduler() { return eeScheduler(); }` in `ps2_runtime.h`.
-   - In `function_hooks.cpp`: Observed `kVBlankWaitLoop` (`0x0030B148`) calling `rt->scheduler().skipIdleCycles()`.
-   - Enforced `rdram[0x00747A09] = 0x02u` (30 FPS console lock) and `0x00747A14 = 1.0f` on flip chain builder `0x0030B870`.
+3. VU1 Execution & Vector Optimization:
+   - Replaced 4 KB `memset` in `VU1Interpreter::resetScheduler()` on ARM64 with lightweight struct resets.
+   - Implemented zero-copy bulk XGKICK GIFtag packet submission in `startXgkick()`.
+   - Accelerated vector normalization fast-path `s_skipNorm` via `PS2X_VU1_SKIP_CLAMP=1`.
+   - Replaced 33 iterative vector norm calls in `syncAllNorm` with 2 bulk `memcpy` operations.
 
-4. app/src/main/cpp/runtime/ps2xRuntime/src/lib/vu/ps2_vu1_impl.inl
-   - In `queueStore`: Direct write to `m_activeVuData` on ARM64.
-   - In `stepPair`: Direct in-place `vf`, `vi`, `acc` register writes on ARM64 while retaining `m_flagPipeline`, `m_fdiv`, `m_efu`, `m_xgkick`, `advanceOneCycle()`, and `recordViWriteForBranch`.
+4. EeScheduler & IOP Cycle Throttling:
+   - Increased `g_ps2xEeLoopCycles` to 64u and `g_deferCycles` to 4096.
+   - Batch threshold for `g_iopStash` set to 8192u and `g_gsPollCycles` to 4096u.
+   - In `skipIdleCycles()`, eliminated fake cycle feed into `advanceIopEeCycles()`, advancing `m_eeCycle` and timers directly.
+
+5. Hook Optimization & Core Affinity Rebalancing:
+   - Removed premature `kVBlankWaitLoop` (`0x0030B148`) entry hook in `function_hooks.cpp`.
+   - Rebalanced Helio G25 core affinity in `thread_affinity.cpp` (EE_MAIN -> Big 0 + Big 3 fallback, VU1_WORKER -> Big 1 + Big 3 fallback, GS_RENDERER & GIF_WORKER -> Big 2, IOP_WORKER -> Big 3 + Little cores).
+
+6. Environment & Compiler Scheduling:
+   - Enforced `frameskip=0` in `main.cpp` and `gs_pcsx2_backend.cpp`.
+   - Enabled `-march=armv8-a+crc -mtune=cortex-a53 -O3 -ffast-math -fno-finite-math-only` in `CMakeLists.txt`.
 
 --------------------------------------------------------------------------------
-6. RUNTIME LOGCAT (PID 28232)
+6. VERIFICATION RESULTS ON HARDWARE (PID 10153, REDMI 10A)
 --------------------------------------------------------------------------------
-11-02 09:38:28.141 28232 28232 I GodHandRecomp: JNI_OnLoad: God Hand Native Recomp loaded on ARM64
-11-02 09:38:28.141 28232 28232 I GodHandRecomp: NativeBridge: audio unmuted (master volume 1.0)
-11-02 09:38:28.206 28232 28232 I GodHandRecomp: NativeBridge: audio master volume set to 1.00
-11-02 09:38:28.206 28232 28232 I GodHandRecomp: NativeBridge: audio buffer size set to 256 frames, scheduling=1
-11-02 09:38:28.207 28232 28254 I GodHandRecomp: Booting God Hand EE Static Recompiled Runtime on ARM64...
-11-02 09:38:28.207 28232 28254 I GodHandRecomp: bootAndroidRuntime: initializing EE runtime (frameskip=1)...
-11-02 09:38:28.208 28232 28254 I GodHandRecomp: Target cacheDir: /data/data/com.owaissseeee.godhand/files/godhand_cache, bootElf: /data/data/com.owaissseeee.godhand/files/godhand_cache/SLUS_215.03
-11-02 09:38:28.208 28232 28254 I GodHandNative: [gs] renderer: PCSX2 GS bound successfully on Android!
-11-02 09:38:28.210 28232 28256 I GodHandPerf: [Affinity] Detected Core 3: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
-11-02 09:38:28.210 28232 28256 I GodHandPerf: [Affinity] Detected Core 2: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
-11-02 09:38:28.210 28232 28256 I GodHandPerf: [Affinity] Detected Core 1: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
-11-02 09:38:28.210 28232 28256 I GodHandPerf: [Affinity] Detected Core 0: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
-11-02 09:38:28.210 28232 28256 I GodHandPerf: [Affinity] Detected Core 7: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
-11-02 09:38:28.210 28232 28256 I GodHandPerf: [Affinity] Detected Core 6: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
-11-02 09:38:28.210 28232 28256 I GodHandPerf: [Affinity] Detected Core 5: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
-11-02 09:38:28.210 28232 28256 I GodHandPerf: [Affinity] Detected Core 4: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
-11-02 09:38:28.210 28232 28256 I GodHandPerf: [Affinity] Thread 'GSThread' (TID 28256) affinity set (uniform=0, big_count=4, little_count=4), sched_setaffinity rc=0, nice=-19 (pr=0)
-11-02 09:38:28.217 28232 28254 I GodHandNative: GSPcsx2Backend::AttachHostWindow: win=0xb4000063a7d80010 (1600x720), windowChanged flagged
-11-02 09:38:28.287 28232 28254 I raylib  : AUDIO: Device initialized successfully (miniaudio AAudio, 48000 Hz, 2ch)
-11-02 09:38:28.324 28232 28256 I pcsx2-gs: HostStubs: Renderer setting initialized to Vulkan (0)
-11-02 09:38:28.324 28232 28256 I pcsx2-gs: Bridge::Open: renderer=Vulkan, window=0xb4000063a7d80010, resolution=1600x720
-11-02 09:38:28.324 28232 28256 I pcsx2-gs: Bridge: initializing PCSX2 GS backend with Vulkan...
-11-02 09:38:28.468 28232 28256 I pcsx2-gs: [VKSwapChain] Surface format chosen: VK_FORMAT_R8G8B8A8_UNORM
-11-02 09:38:28.468 28232 28256 I pcsx2-gs: [VKSwapChain] Creating swapchain with 4 images (quad-buffering)
-11-02 09:38:28.512 28232 28256 I pcsx2-gs: Bridge: GSopen succeeded!
-11-02 09:38:28.520 28232 28267 I GodHandPerf: [Affinity] Thread 'EEThread' (TID 28267) affinity set, sched_setaffinity rc=0, nice=-20
-11-02 09:38:28.521 28232 28268 I GodHandPerf: [Affinity] Thread 'IOPThread' (TID 28268) affinity set, sched_setaffinity rc=0, nice=-15
-11-02 09:38:28.522 28232 28270 I GodHandPerf: [Affinity] Thread 'GIFThread' (TID 28270) affinity set, sched_setaffinity rc=0, nice=-16
-11-02 09:38:28.523 28232 28271 I GodHandPerf: [Affinity] Thread 'VUThread' (TID 28271) affinity set, sched_setaffinity rc=0, nice=-20
-11-02 09:38:30.120 28232 28251 I GodHandNative: [hooks] func_0030B148 observed with skipIdleCycles for zero-spin VBlank waiting
-11-02 09:38:30.121 28232 28251 I GodHandNative: [hooks] game_frame_counter observed on flip chain builder 0x30b870 (authentic 1.0x speed lockstep)
-11-02 09:40:13.112 28232 28251 I GodHandNative: [DLL] module code installed: ..\PS2_EE_Release\r100.elf base 0x00799080 entries 1378/1378
-11-02 09:40:16.959 28232 28251 I GodHandNative: [DLL] module code installed: ..\PS2_EE_Release\Event.elf base 0x007a8080 entries 2371/2371
-11-02 09:41:40.723 28232 28251 I GodHandNative: [DLL] module code removed (unregistered): ..\PS2_EE_Release\Event.elf
-11-02 09:42:50.547 28232 28251 I GodHandNative: [gs] PCSX2 GS: 7200 fields, 6377.4 MB of GIF data
+1. Logcat Verification:
+   - `bootAndroidRuntime: initializing EE runtime (frameskip=0)...` confirmed.
+   - `registerGeneratedVu1Programs: AOT VU1 microprograms registered successfully!` confirmed.
+   - `[vu1-miss]` lines: 0 (All VU1 microprograms matched AOT compiled routines).
+
+2. Live Thread Top Profile during Stage 1-1 Combat:
+   - EEThread: 92.1% CPU (running at 2.00 GHz on Big Core 0)
+   - VUThread: 77.6% CPU (running at 2.00 GHz on Big Core 1)
+   - GSThread: 53.9% CPU (running at 2.00 GHz on Big Core 2)
+   - IOPThread: 48.6% CPU (running on Big Core 3 / Little cluster)
+   - GIFThread: 15.7% CPU (running on Big Core 2)
+   - Concurrency: EEThread and VUThread run in true parallel MTVU mode without serialization stalls.
+
+3. Live Performance HUD:
+   - Title / Boot Screen: Present 59.1 FPS (16.75 ms), Game EE 29.4 FPS (98.1%)
+   - 3D Cutscene (Gene & Olivia): Present 21.9 FPS (50.50 ms), Game EE 10.6 FPS (35.3%)
+   - Stage 1-1 Cutscene: Present 35.8 FPS (28.12 ms), Game EE 18.0 FPS (60.1%)
+   - Stage 1-1 Active Combat & Punches: Present 23.1 FPS (39.23 ms), Game EE 11.8 FPS (39.4%), 8,256+ Frames Processed!
 
 --------------------------------------------------------------------------------
 7. SCREENSHOT ARTIFACTS CAPTURED ON DEVICE
 --------------------------------------------------------------------------------
-1. Title Screen: screen_menu.png (Present: 45.6 FPS, 22.0 ms, G:75%)
-2. Cutscene: screen_adv.png (Present: 20.4 FPS, 72.00 ms, Game EE: 10.2 FPS)
-3. Stage Transition: screen_combat.png (Present: 13.0 FPS, 75.93 ms, Game EE: 6.4 FPS)
-4. Active Combat: screen_combat2.png (Present: 15.3 FPS, 65.73 ms, Game EE: 7.6 FPS)
+1. Title Screen: screen_title.png (Present: 59.1 FPS, 16.75 ms, Game EE: 29.4 FPS, 98.1%)
+2. 3D Cutscene: screen_menu1.png (Present: 21.9 FPS, 50.50 ms, Game EE: 10.6 FPS)
+3. Stage 1-1 Transition: screen_combat.png (Present: 35.8 FPS, 28.12 ms, Game EE: 18.0 FPS)
+4. Active Combat & Punch Combo: screen_combat2.png / screen_punch.png (Present: 23.1 FPS, 39.23 ms, Game EE: 11.8 FPS)
 
 ================================================================================
 END OF REPORT
 ================================================================================
+

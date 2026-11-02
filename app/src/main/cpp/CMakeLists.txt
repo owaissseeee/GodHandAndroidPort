@@ -14,9 +14,21 @@ set(GODHAND_PERF_FLAGS "-O3 -march=armv8-a+crc+simd -mtune=cortex-a53 -ffast-mat
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${GODHAND_PERF_FLAGS}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GODHAND_PERF_FLAGS}")
 
-# Force-include ARM64 NEON / SIMDe compatibility header across all recompiled & runtime sources
 add_compile_options(
     -include ${CMAKE_CURRENT_SOURCE_DIR}/simd_arm64_compat.h
+    -march=armv8-a+crc
+    -mtune=cortex-a53
+    -O3
+    -ffast-math
+    -fno-finite-math-only
+    -fno-signed-zeros
+    -fno-math-errno
+    -fno-trapping-math
+    -fomit-frame-pointer
+    -finline-functions
+    -fvisibility-inlines-hidden
+    -fno-semantic-interposition
+    -ftls-model=initial-exec
     -Wno-unused-variable
     -Wno-unused-but-set-variable
     -Wno-sign-compare
@@ -43,7 +55,7 @@ file(GLOB GODHAND_MODULE_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/generated_modules_
 file(GLOB GODHAND_HOST_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/godhand/*.cpp")
 
 set_source_files_properties(${GODHAND_UNITY_SOURCES} ${GODHAND_MODULE_SOURCES} PROPERTIES
-    COMPILE_FLAGS "-O3 -fno-unroll-loops -falign-functions=16"
+    COMPILE_FLAGS "-O3 -ffast-math -fno-finite-math-only -mtune=cortex-a53 -falign-functions=16"
 )
 
 add_library(godhand_android SHARED

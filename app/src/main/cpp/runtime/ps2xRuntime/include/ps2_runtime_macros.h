@@ -14,31 +14,18 @@
 
 #include "ps2_runtime.h"
 
-static PS2_FORCEINLINE int32_t Ps2ExtractEpi32(__m128i v, int index)
+static PS2_FORCEINLINE int32_t Ps2ExtractEpi32(const __m128i &v, int index)
 {
-    switch (index & 3)
-    {
-    case 0:
-        return _mm_extract_epi32(v, 0);
-    case 1:
-        return _mm_extract_epi32(v, 1);
-    case 2:
-        return _mm_extract_epi32(v, 2);
-    default:
-        return _mm_extract_epi32(v, 3);
-    }
+    int32_t out;
+    std::memcpy(&out, reinterpret_cast<const char *>(&v) + ((index & 3) * sizeof(int32_t)), sizeof(out));
+    return out;
 }
 
-static PS2_FORCEINLINE int64_t Ps2ExtractEpi64(__m128i v, int index)
+static PS2_FORCEINLINE int64_t Ps2ExtractEpi64(const __m128i &v, int index)
 {
-    if ((index & 1) == 0)
-    {
-        return _mm_cvtsi128_si64(v);
-    }
-    else
-    {
-        return _mm_extract_epi64(v, 1);
-    }
+    int64_t out;
+    std::memcpy(&out, reinterpret_cast<const char *>(&v) + ((index & 1) * sizeof(int64_t)), sizeof(out));
+    return out;
 }
 
 static inline uint32_t ps2_clz32(uint32_t x)
@@ -456,62 +443,175 @@ static inline __attribute__((always_inline)) uint8_t* ps2ResolveGuestPointer(
     return rdram + (addr & 0x01FFFFFFu);
 }
 
-static PS2_FORCEINLINE uint8_t Ps2FastRead8(const uint8_t *rdram, uint32_t addr)
+// Fast inline check: true if addr is in 32MB RDRAM (including KSEG0/KSEG1/Uncached mirrors 0x00/0x20/0x30/0x80/0xA0)
+static PS2_FORCEINLINE bool Ps2IsFastRamAddress(uint32_t addr) noexcept
 {
+    const uint32_t phys = addr & 0x1FFFFFFFu;
+    return __builtin_expect(phys < 0x02000000u, 1);
+}
+
+// Fast inline check: true if addr is in 16KB Scratchpad (0x70000000..0x70003FFF)
+static PS2_FORCEINLINE bool Ps2IsFastScratchpadAddress(uint32_t addr) noexcept
+{
+    return __builtin_expect(((addr & 0x7FFFFFFFu) - 0x70000000u) < 0x4000u, 1);
+}
+
+static PS2_FORCEINLINE uint8_t Ps2FastRead8(const uint8_t *rdram, uint32_t addr) noexcept
+{
+    if (Ps2IsFastRamAddress(addr))
+        return rdram[addr & PS2_RAM_MASK];
+    if (Ps2IsFastScratchpadAddress(addr) && g_ps2ScratchpadHostPtr)
+        return g_ps2ScratchpadHostPtr[addr & 0x3FFFu];
     return rdram[addr & PS2_RAM_MASK];
 }
 
-static PS2_FORCEINLINE uint16_t Ps2FastRead16(const uint8_t *rdram, uint32_t addr)
+static PS2_FORCEINLINE uint16_t Ps2FastRead16(const uint8_t *rdram, uint32_t addr) noexcept
 {
     uint16_t value;
-    __builtin_memcpy(&value, rdram + (addr & PS2_RAM_MASK), sizeof(value));
+    if (Ps2IsFastRamAddress(addr))
+    {
+        std::memcpy(&value, rdram + (addr & PS2_RAM_MASK), sizeof(value));
+        return value;
+    }
+    if (Ps2IsFastScratchpadAddress(addr) && g_ps2ScratchpadHostPtr)
+    {
+        std::memcpy(&value, g_ps2ScratchpadHostPtr + (addr & 0x3FFFu), sizeof(value));
+        return value;
+    }
+    std::memcpy(&value, rdram + (addr & PS2_RAM_MASK), sizeof(value));
     return value;
 }
 
-static PS2_FORCEINLINE uint32_t Ps2FastRead32(const uint8_t *rdram, uint32_t addr)
+static PS2_FORCEINLINE uint32_t Ps2FastRead32(const uint8_t *rdram, uint32_t addr) noexcept
 {
     uint32_t value;
-    __builtin_memcpy(&value, rdram + (addr & PS2_RAM_MASK), sizeof(value));
+    if (Ps2IsFastRamAddress(addr))
+    {
+        std::memcpy(&value, rdram + (addr & PS2_RAM_MASK), sizeof(value));
+        return value;
+    }
+    if (Ps2IsFastScratchpadAddress(addr) && g_ps2ScratchpadHostPtr)
+    {
+        std::memcpy(&value, g_ps2ScratchpadHostPtr + (addr & 0x3FFFu), sizeof(value));
+        return value;
+    }
+    std::memcpy(&value, rdram + (addr & PS2_RAM_MASK), sizeof(value));
     return value;
 }
 
-static PS2_FORCEINLINE uint64_t Ps2FastRead64(const uint8_t *rdram, uint32_t addr)
+static PS2_FORCEINLINE uint64_t Ps2FastRead64(const uint8_t *rdram, uint32_t addr) noexcept
 {
     uint64_t value;
-    __builtin_memcpy(&value, rdram + (addr & PS2_RAM_MASK), sizeof(value));
+    if (Ps2IsFastRamAddress(addr))
+    {
+        std::memcpy(&value, rdram + (addr & PS2_RAM_MASK), sizeof(value));
+        return value;
+    }
+    if (Ps2IsFastScratchpadAddress(addr) && g_ps2ScratchpadHostPtr)
+    {
+        std::memcpy(&value, g_ps2ScratchpadHostPtr + (addr & 0x3FFFu), sizeof(value));
+        return value;
+    }
+    std::memcpy(&value, rdram + (addr & PS2_RAM_MASK), sizeof(value));
     return value;
 }
 
-static PS2_FORCEINLINE __m128i Ps2FastRead128(const uint8_t *rdram, uint32_t addr)
+static PS2_FORCEINLINE __m128i Ps2FastRead128(const uint8_t *rdram, uint32_t addr) noexcept
 {
     __m128i value;
-    __builtin_memcpy(&value, rdram + (addr & PS2_RAM_MASK & ~0xFu), sizeof(value));
+    if (Ps2IsFastRamAddress(addr))
+    {
+        std::memcpy(&value, rdram + (addr & PS2_RAM_MASK & ~0xFu), sizeof(value));
+        return value;
+    }
+    if (Ps2IsFastScratchpadAddress(addr) && g_ps2ScratchpadHostPtr)
+    {
+        std::memcpy(&value, g_ps2ScratchpadHostPtr + (addr & 0x3FF0u), sizeof(value));
+        return value;
+    }
+    std::memcpy(&value, rdram + (addr & PS2_RAM_MASK & ~0xFu), sizeof(value));
     return value;
 }
 
-static PS2_FORCEINLINE void Ps2FastWrite8(uint8_t *rdram, uint32_t addr, uint8_t value)
+static PS2_FORCEINLINE void Ps2FastWrite8(uint8_t *rdram, uint32_t addr, uint8_t value) noexcept
 {
+    if (Ps2IsFastRamAddress(addr))
+    {
+        rdram[addr & PS2_RAM_MASK] = value;
+        return;
+    }
+    if (Ps2IsFastScratchpadAddress(addr) && g_ps2ScratchpadHostPtr)
+    {
+        g_ps2ScratchpadHostPtr[addr & 0x3FFFu] = value;
+        return;
+    }
     rdram[addr & PS2_RAM_MASK] = value;
 }
 
-static PS2_FORCEINLINE void Ps2FastWrite16(uint8_t *rdram, uint32_t addr, uint16_t value)
+static PS2_FORCEINLINE void Ps2FastWrite16(uint8_t *rdram, uint32_t addr, uint16_t value) noexcept
 {
-    __builtin_memcpy(rdram + (addr & PS2_RAM_MASK), &value, sizeof(value));
+    if (Ps2IsFastRamAddress(addr))
+    {
+        std::memcpy(rdram + (addr & PS2_RAM_MASK), &value, sizeof(value));
+        return;
+    }
+    if (Ps2IsFastScratchpadAddress(addr) && g_ps2ScratchpadHostPtr)
+    {
+        std::memcpy(g_ps2ScratchpadHostPtr + (addr & 0x3FFFu), &value, sizeof(value));
+        return;
+    }
+    std::memcpy(rdram + (addr & PS2_RAM_MASK), &value, sizeof(value));
 }
 
-static PS2_FORCEINLINE void Ps2FastWrite32(uint8_t *rdram, uint32_t addr, uint32_t value)
+static PS2_FORCEINLINE void Ps2FastWrite32(uint8_t *rdram, uint32_t addr, uint32_t value) noexcept
 {
-    __builtin_memcpy(rdram + (addr & PS2_RAM_MASK), &value, sizeof(value));
+    if (Ps2IsFastRamAddress(addr))
+    {
+        std::memcpy(rdram + (addr & PS2_RAM_MASK), &value, sizeof(value));
+        return;
+    }
+    if (Ps2IsFastScratchpadAddress(addr) && g_ps2ScratchpadHostPtr)
+    {
+        std::memcpy(g_ps2ScratchpadHostPtr + (addr & 0x3FFFu), &value, sizeof(value));
+        return;
+    }
+    std::memcpy(rdram + (addr & PS2_RAM_MASK), &value, sizeof(value));
 }
 
-static PS2_FORCEINLINE void Ps2FastWrite64(uint8_t *rdram, uint32_t addr, uint64_t value)
+static PS2_FORCEINLINE void Ps2FastWrite64(uint8_t *rdram, uint32_t addr, uint64_t value) noexcept
 {
-    __builtin_memcpy(rdram + (addr & PS2_RAM_MASK), &value, sizeof(value));
+    if (Ps2IsFastRamAddress(addr))
+    {
+        std::memcpy(rdram + (addr & PS2_RAM_MASK), &value, sizeof(value));
+        return;
+    }
+    if (Ps2IsFastScratchpadAddress(addr) && g_ps2ScratchpadHostPtr)
+    {
+        std::memcpy(g_ps2ScratchpadHostPtr + (addr & 0x3FFFu), &value, sizeof(value));
+        return;
+    }
+    std::memcpy(rdram + (addr & PS2_RAM_MASK), &value, sizeof(value));
 }
 
-static PS2_FORCEINLINE void Ps2FastWrite128(uint8_t *rdram, uint32_t addr, __m128i value)
+static PS2_FORCEINLINE void Ps2FastWrite128(uint8_t *rdram, uint32_t addr, __m128i value) noexcept
 {
-    __builtin_memcpy(rdram + (addr & PS2_RAM_MASK & ~0xFu), &value, sizeof(value));
+    if (Ps2IsFastRamAddress(addr))
+    {
+        std::memcpy(rdram + (addr & PS2_RAM_MASK & ~0xFu), &value, sizeof(value));
+        return;
+    }
+    if (Ps2IsFastScratchpadAddress(addr) && g_ps2ScratchpadHostPtr)
+    {
+        std::memcpy(g_ps2ScratchpadHostPtr + (addr & 0x3FF0u), &value, sizeof(value));
+        return;
+    }
+    std::memcpy(rdram + (addr & PS2_RAM_MASK & ~0xFu), &value, sizeof(value));
+}
+
+// True ONLY for genuine MMIO / GS / VU registers (0x10000000..0x13FFFFFF), NOT Scratchpad or Uncached RAM mirrors!
+static PS2_FORCEINLINE bool Ps2NeedsSlowIoPath(uint32_t addr) noexcept
+{
+    return __builtin_expect(!Ps2IsFastRamAddress(addr) && !Ps2IsFastScratchpadAddress(addr), 0);
 }
 
 #define FAST_READ8(addr) Ps2FastRead8(rdram, (uint32_t)(addr))
@@ -528,83 +628,83 @@ static PS2_FORCEINLINE void Ps2FastWrite128(uint8_t *rdram, uint32_t addr, __m12
 
 #define READ8(addr) ([&]() -> uint8_t {                       \
     uint32_t _addr = (uint32_t)(addr);                        \
-    return __builtin_expect(PS2Runtime::isSpecialAddress(_addr), 0) \
+    return Ps2NeedsSlowIoPath(_addr)                          \
         ? runtime->Load8(rdram, ctx, _addr)                   \
         : FAST_READ8(_addr); }())
 
 #define READ16(addr) ([&]() -> uint16_t {                     \
     uint32_t _addr = (uint32_t)(addr);                        \
-    return __builtin_expect(PS2Runtime::isSpecialAddress(_addr), 0) \
+    return Ps2NeedsSlowIoPath(_addr)                          \
         ? runtime->Load16(rdram, ctx, _addr)                  \
         : FAST_READ16(_addr); }())
 
 #define READ32(addr) ([&]() -> uint32_t {                     \
     uint32_t _addr = (uint32_t)(addr);                        \
-    return __builtin_expect(PS2Runtime::isSpecialAddress(_addr), 0) \
+    return Ps2NeedsSlowIoPath(_addr)                          \
         ? runtime->Load32(rdram, ctx, _addr)                  \
         : FAST_READ32(_addr); }())
 
 #define READ64(addr) ([&]() -> uint64_t {                     \
     uint32_t _addr = (uint32_t)(addr);                        \
-    return __builtin_expect(PS2Runtime::isSpecialAddress(_addr), 0) \
+    return Ps2NeedsSlowIoPath(_addr)                          \
         ? runtime->Load64(rdram, ctx, _addr)                  \
         : FAST_READ64(_addr); }())
 
 #define READ128(addr) ([&]() -> __m128i {                     \
     uint32_t _addr = (uint32_t)(addr) & ~0xFu;                \
-    return __builtin_expect(PS2Runtime::isSpecialAddress(_addr), 0) \
+    return Ps2NeedsSlowIoPath(_addr)                          \
         ? runtime->Load128(rdram, ctx, _addr)                 \
         : FAST_READ128(_addr); }())
 
-#define WRITE8(addr, val)                                                            \
-    do                                                                               \
-    {                                                                                \
-        uint32_t _addr = (addr);                                                     \
-        if (__builtin_expect(PS2Runtime::isSpecialAddress(_addr), 0))                \
-            runtime->Store8(rdram, ctx, _addr, (val));                               \
-        else                                                                         \
-            FAST_WRITE8(_addr, (val));                                               \
+#define WRITE8(addr, val)                                     \
+    do                                                        \
+    {                                                         \
+        uint32_t _addr = (uint32_t)(addr);                    \
+        if (Ps2NeedsSlowIoPath(_addr))                        \
+            runtime->Store8(rdram, ctx, _addr, (val));        \
+        else                                                  \
+            FAST_WRITE8(_addr, (val));                        \
     } while (0)
 
-#define WRITE16(addr, val)                                                             \
-    do                                                                                 \
-    {                                                                                  \
-        uint32_t _addr = (addr);                                                       \
-        if (__builtin_expect(PS2Runtime::isSpecialAddress(_addr), 0))                  \
-            runtime->Store16(rdram, ctx, _addr, (val));                                \
-        else                                                                           \
-            FAST_WRITE16(_addr, (val));                                                \
+#define WRITE16(addr, val)                                    \
+    do                                                        \
+    {                                                         \
+        uint32_t _addr = (uint32_t)(addr);                    \
+        if (Ps2NeedsSlowIoPath(_addr))                        \
+            runtime->Store16(rdram, ctx, _addr, (val));       \
+        else                                                  \
+            FAST_WRITE16(_addr, (val));                       \
     } while (0)
 
-#define WRITE32(addr, val)                                                             \
-    do                                                                                 \
-    {                                                                                  \
-        uint32_t _addr = (addr);                                                       \
-        if (__builtin_expect(PS2Runtime::isSpecialAddress(_addr), 0))                  \
-            runtime->Store32(rdram, ctx, _addr, (val));                                \
-        else                                                                           \
-            FAST_WRITE32(_addr, (val));                                                \
+#define WRITE32(addr, val)                                    \
+    do                                                        \
+    {                                                         \
+        uint32_t _addr = (uint32_t)(addr);                    \
+        if (Ps2NeedsSlowIoPath(_addr))                        \
+            runtime->Store32(rdram, ctx, _addr, (val));       \
+        else                                                  \
+            FAST_WRITE32(_addr, (val));                       \
     } while (0)
 
-#define WRITE64(addr, val)                                                             \
-    do                                                                                 \
-    {                                                                                  \
-        uint32_t _addr = (addr);                                                       \
-        if (__builtin_expect(PS2Runtime::isSpecialAddress(_addr), 0))                  \
-            runtime->Store64(rdram, ctx, _addr, (val));                                \
-        else                                                                           \
-            FAST_WRITE64(_addr, (val));                                                \
+#define WRITE64(addr, val)                                    \
+    do                                                        \
+    {                                                         \
+        uint32_t _addr = (uint32_t)(addr);                    \
+        if (Ps2NeedsSlowIoPath(_addr))                        \
+            runtime->Store64(rdram, ctx, _addr, (val));       \
+        else                                                  \
+            FAST_WRITE64(_addr, (val));                       \
     } while (0)
 
-#define WRITE128(addr, val)                                                          \
-    do                                                                               \
-    {                                                                                \
-        uint32_t _addr = (uint32_t)(addr) & ~0xFu;                                   \
-        __m128i _value = (val);                                                      \
-        if (__builtin_expect(PS2Runtime::isSpecialAddress(_addr), 0))                \
-            runtime->Store128(rdram, ctx, _addr, _value);                            \
-        else                                                                         \
-            FAST_WRITE128(_addr, _value);                                            \
+#define WRITE128(addr, val)                                   \
+    do                                                        \
+    {                                                         \
+        uint32_t _addr = (uint32_t)(addr) & ~0xFu;            \
+        __m128i _value = (val);                               \
+        if (Ps2NeedsSlowIoPath(_addr))                        \
+            runtime->Store128(rdram, ctx, _addr, _value);     \
+        else                                                  \
+            FAST_WRITE128(_addr, _value);                     \
     } while (0)
 
 // Packed Compare Greater Than (PCGT)

@@ -806,6 +806,9 @@ extern "C" int godhand_get_device_tier();
 extern "C" void godhand_set_frameskip_mode(int mode);
 
 void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererIdx, int resScaleIdx, int aspectIdx, int fpsIdx, int frameskipIdx) {
+    if (frameskipIdx == 1) {
+        frameskipIdx = 0; // Disable broken Auto-Frameskip from stale SharedPreferences
+    }
     __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "bootAndroidRuntime: initializing EE runtime (frameskip=%d)...", frameskipIdx);
     godhand_set_frameskip_mode(frameskipIdx);
 
@@ -831,9 +834,13 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     }
     setEnv("GODHAND_SCREEN_ASPECT", std::to_string(screenAspect));
     setEnv("GODHAND_ASPECT_RATIO_IDX", std::to_string(aspectIdx));
-    setEnv("PS2X_PCSX2_VSYNC", "1");
-    setEnv("PS2X_VSYNC", "1");
-    setDefaultEnv("PS2X_GS_POLL_CYCLES", "512");
+    setDefaultEnv("PS2X_PCSX2_VSYNC", "0"); // Mailbox / non-blocking present on Android Vulkan swapchain
+    setDefaultEnv("PS2X_VSYNC", "0");
+    setDefaultEnv("PS2X_VSYNC_LOCK", "0");
+    setDefaultEnv("PS2X_EE_DEFER_CYCLES", "4096");
+    setDefaultEnv("PS2X_EE_GS_POLL_CYCLES", "4096");
+    setDefaultEnv("PS2X_EE_LOOP_CYCLES", "64");
+    setDefaultEnv("PS2X_VU1_SKIP_CLAMP", "1");
     setDefaultEnv("PS2X_VU1_FAST_NOFLAGS", "1");
     const char* stretchVal = (aspectIdx == 1) ? "0" : (aspectIdx == 2) ? "2" : "1";
     setEnv("PS2X_PCSX2_STRETCH", stretchVal);

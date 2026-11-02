@@ -1034,6 +1034,77 @@ inline void VU1Interpreter::startXgkick(uint32_t qwordAddress)
         return;
 
     const uint32_t sourceAddress = (qwordAddress * 16u) % m_activeVuDataSize;
+#if defined(__aarch64__) || defined(_M_ARM64)
+    if (m_storeValid == 0u && !packetSink)
+    {
+        // Fast bulk XGKICK: scan GIFtag chain directly in m_activeVuData without 16-byte per-cycle memcpy!
+        uint32_t curOffset = 0u;
+        bool validChain = true;
+        while (curOffset <= XgkickPipeline::kBufferSize - 16u)
+        {
+            const uint32_t tagAddr = (sourceAddress + curOffset) % m_activeVuDataSize;
+            uint64_t tagLo = 0;
+            if (tagAddr + 8u <= m_activeVuDataSize)
+                std::memcpy(&tagLo, m_activeVuData + tagAddr, sizeof(tagLo));
+            else
+            {
+                validChain = false;
+                break;
+            }
+            const uint32_t nloop = static_cast<uint32_t>(tagLo & 0x7FFFu);
+            const uint32_t format = static_cast<uint32_t>((tagLo >> 58) & 0x3u);
+            uint32_t nreg = static_cast<uint32_t>((tagLo >> 60) & 0xFu);
+            if (nreg == 0u)
+                nreg = 16u;
+
+            uint64_t tagBytes = 16u;
+            if (format == 0u)
+                tagBytes += static_cast<uint64_t>(nloop) * nreg * 16u;
+            else if (format == 1u)
+                tagBytes += ((static_cast<uint64_t>(nloop) * nreg + 1u) & ~1ull) * 8u;
+            else if (format == 2u)
+                tagBytes += static_cast<uint64_t>(nloop) * 16u;
+            else
+            {
+                validChain = false;
+                break;
+            }
+            if (tagBytes > XgkickPipeline::kBufferSize - curOffset)
+            {
+                validChain = false;
+                break;
+            }
+            curOffset += static_cast<uint32_t>(tagBytes);
+            const bool eop = ((tagLo >> 15) & 1u) != 0u;
+            if (eop)
+                break;
+        }
+        if (validChain && curOffset > 0u)
+        {
+            resetXgkick();
+            if (sourceAddress + curOffset <= m_activeVuDataSize)
+            {
+                // 100% Zero-Copy submission directly from m_activeVuData!
+                if (m_activeMemory)
+                    m_activeMemory->submitGifPacket(GifPathId::Path1, m_activeVuData + sourceAddress, curOffset);
+                else if (m_activeGs)
+                    m_activeGs->processGIFPacket(m_activeVuData + sourceAddress, curOffset);
+            }
+            else
+            {
+                // Wrapped around end of 16KB VU1 data memory: 2 bulk memcpy calls
+                const uint32_t firstPart = m_activeVuDataSize - sourceAddress;
+                std::memcpy(m_xgkick.packet.data(), m_activeVuData + sourceAddress, firstPart);
+                std::memcpy(m_xgkick.packet.data() + firstPart, m_activeVuData, curOffset - firstPart);
+                if (m_activeMemory)
+                    m_activeMemory->submitGifPacket(GifPathId::Path1, m_xgkick.packet.data(), curOffset);
+                else if (m_activeGs)
+                    m_activeGs->processGIFPacket(m_xgkick.packet.data(), curOffset);
+            }
+            return;
+        }
+    }
+#endif
     resetXgkick();
     m_xgkick.active = true;
     m_xgkick.sourceAddress = sourceAddress;
@@ -2936,6 +3007,12 @@ struct VU1InterpreterAccess
     static VU1_FORCE_INLINE __m128 vnorm(__m128 value)
     {
 #if defined(__aarch64__) || defined(_M_ARM64)
+        static const bool s_skipNorm = [] {
+            const char *c = std::getenv("PS2X_VU1_SKIP_CLAMP");
+            return !c || *c != '0';
+        }();
+        if (s_skipNorm)
+            return value;
         float32x4_t fv;
         std::memcpy(&fv, &value, sizeof(fv));
         const uint32x4_t bits = vreinterpretq_u32_f32(fv);
@@ -3020,8 +3097,13 @@ struct VU1InterpreterAccess
 
     static void syncAllNorm(VU1Interpreter &vu, Vu1FastCtx &ctx)
     {
+#if defined(__aarch64__) || defined(_M_ARM64)
+        std::memcpy(ctx.norm[0], vu.m_state.vf[0], 32u * sizeof(float[4]));
+        std::memcpy(ctx.norm[32], vu.m_state.acc, sizeof(float[4]));
+#else
         for (uint32_t reg = 0; reg < 33u; ++reg)
             _mm_store_ps(ctx.norm[reg], vnorm(_mm_loadu_ps(rawReg(vu, reg))));
+#endif
     }
 
     static VU1_FORCE_INLINE __m128 qN(VU1Interpreter &vu)

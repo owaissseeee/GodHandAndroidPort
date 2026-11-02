@@ -104,9 +104,14 @@ namespace
     void reportUncompiledVu1Image(uint64_t hash, const uint8_t *vuCode, uint32_t codeSize)
     {
 #if defined(__ANDROID__)
-        (void)hash;
+        static std::unordered_map<uint64_t, bool> s_loggedMissing;
+        if (s_loggedMissing.size() < 64u && s_loggedMissing.emplace(hash, true).second)
+        {
+            __android_log_print(ANDROID_LOG_WARN, "GodHandVU1",
+                                "[vu1-miss] Uncompiled VU1 microprogram hash=0x%016llx size=%u (running in interpreter)",
+                                static_cast<unsigned long long>(hash), codeSize);
+        }
         (void)vuCode;
-        (void)codeSize;
         return;
 #else
         static std::unordered_map<uint64_t, bool> reported;
@@ -764,6 +769,27 @@ VU1Interpreter::VU1Interpreter(Unit unit)
 
 void VU1Interpreter::resetScheduler()
 {
+#if defined(__aarch64__) || defined(_M_ARM64)
+    m_fdiv = {};
+    m_efu[0] = {};
+    m_efu[1] = {};
+    m_flagValid = 0u;
+    m_storeValid = 0u;
+    m_vfWriteValid = 0u;
+    m_viWriteValid = 0u;
+    m_accWriteValid = 0u;
+    m_nextCommitCycle = std::numeric_limits<uint64_t>::max();
+    resetXgkick();
+    m_nextWriteSequence = 0;
+    m_efuResourceReady = 0;
+    m_workingClip = m_state.clip;
+    m_viBranchBackupValue = 0;
+    m_viBranchBackupReg = 0;
+    m_viBranchBackupValid = false;
+    m_stopRequested = false;
+    m_pendingHaltD = false;
+    m_pendingHaltT = false;
+#else
     std::memset(m_flagPipeline.data(), 0, sizeof(m_flagPipeline));
     std::memset(&m_fdiv, 0, sizeof(m_fdiv));
     std::memset(m_efu.data(), 0, sizeof(m_efu));
@@ -793,6 +819,7 @@ void VU1Interpreter::resetScheduler()
     m_stopRequested = false;
     m_pendingHaltD = false;
     m_pendingHaltT = false;
+#endif
 }
 
 void VU1Interpreter::reset()
@@ -1537,7 +1564,9 @@ bool VU1InterpreterAccess::runLoopWith(VU1Interpreter &vu, uint8_t *vuCode, uint
         else
         {
             vu0NormShadow.valid = false;
+#if !defined(__aarch64__) && !defined(_M_ARM64)
             vu0SchedulerClean = false; // the interpreter fills the scheduler arrays (PS2X_VU0_LEAN)
+#endif
         }
 
         vu.commitReadyPipelines();

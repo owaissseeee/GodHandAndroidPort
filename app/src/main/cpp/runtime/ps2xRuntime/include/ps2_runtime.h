@@ -193,12 +193,11 @@ struct alignas(16) R5900Context
 
 inline uint32_t getRegU32(const R5900Context *ctx, int reg)
 {
-    // Check if reg is valid (0-31)
-    if (reg < 0 || reg > 31)
+    if (reg <= 0 || reg > 31)
         return 0;
-    if (reg == 0)
-        return 0;
-    return static_cast<uint32_t>(_mm_extract_epi32(ctx->r[reg], 0));
+    uint32_t val;
+    std::memcpy(&val, &ctx->r[reg], sizeof(val));
+    return val;
 }
 
 inline void setReturnU32(R5900Context *ctx, uint32_t value)

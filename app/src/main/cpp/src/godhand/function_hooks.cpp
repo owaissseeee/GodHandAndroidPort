@@ -1039,24 +1039,6 @@ namespace godhand
             GH_INFO(Gs, "sub_003155F8 flare depth readback stubbed for mobile GPU performance");
         }
 
-        // Hook God Hand's VBlank wait loop (func_0030B148) so once the EE has finished
-        // computing the frame, it fast-forwards remaining idle cycles to the next VBlank
-        // instead of burning 15ms spinning in a guest while-loop on Cortex-A53!
-        constexpr uint32_t kVBlankWaitLoop = 0x0030B148u;
-        if (runtime.hasFunction(kVBlankWaitLoop))
-        {
-            FunctionHooks::instance().observeEntry(
-                kVBlankWaitLoop,
-                "vblank_wait_idle_skip",
-                [](uint8_t *, R5900Context *, PS2Runtime *rt) {
-                    if (rt)
-                    {
-                        rt->scheduler().skipIdleCycles();
-                    }
-                });
-            GH_INFO(Gs, "func_0030B148 observed with skipIdleCycles for zero-spin VBlank waiting");
-        }
-
         constexpr uint32_t kFlipChainBuilder = 0x30B870u;
         if (!runtime.hasFunction(kFlipChainBuilder) ||
             !FunctionHooks::instance().observeEntry(kFlipChainBuilder, "game_frame_counter", [](uint8_t *rdram, R5900Context *, PS2Runtime *) {
