@@ -243,6 +243,7 @@ namespace
     uint32_t g_pendingMaskedIntc = 0u;
     uint32_t g_pendingMaskedDmac = 0u;
     std::atomic<bool> s_hostPacingDefault{false};
+    thread_local bool t_inIdleSkip = false;
 
     constexpr uint64_t microsecondsToEeCycles(uint64_t microseconds)
     {
@@ -341,6 +342,7 @@ void EeScheduler::setHostPacingDefault(bool enabled) noexcept
 void EeScheduler::hostCatchUp() noexcept
 {
 #if defined(__ANDROID__)
+    m_pacingCheckCycle = m_eeCycle + kHostPacingCheckCycles;
     return;
 #else
     m_pacingCheckCycle = m_eeCycle + kHostPacingCheckCycles;
@@ -671,15 +673,6 @@ void EeScheduler::run()
 #endif
 
         g_loopStats.lastPc = context.pc;
-        if (context.pc >= 0x0030B148u && context.pc < 0x0030B298u)
-        {
-            if (m_rdram && m_rdram[0x00747A08u] == 0u &&
-                !ps2x::asyncvif::pipelineBusy(m_runtime.memory()) &&
-                pendingGsInterruptEvents() == m_gsInterruptLatched)
-            {
-                skipIdleCycles();
-            }
-        }
         if (checkpointDue(kGuestDispatchCycles))
         {
             ++g_loopStats.checkpointSkips;
@@ -864,20 +857,18 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
     uint64_t elapsed = (cycles == 0u && g_ps2xEeDeferred != 0u) ? 0u : std::max<uint64_t>(1u, cycles);
     elapsed += g_ps2xEeDeferred;
     g_ps2xEeDeferred = 0u;
-    m_eeCycle += elapsed;
+
+    // Active game code charges 62.5% EE cycles (prevents mid-frame VBlank overflow on mobile CPUs),
+    // while skipIdleCycles() charges 100% to reach the exact VBlank deadline immediately.
+    const uint64_t eeCharge = t_inIdleSkip ? elapsed : std::max<uint64_t>(1u, (elapsed * 5u) >> 3);
+    m_eeCycle += eeCharge;
     g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed); // relative to the old cycle; the next checkpoint renews it
-    // PS2X_EE_FAST_ACCOUNT=0: the previous per-checkpoint work. Otherwise:
-    // - the common case of PS2Memory::advanceEeTimers (add the cycles, still short of the next timer event) is done
-    //   here; advanceEeTimers still runs whenever it has work to do, so timer interrupts land on the same cycle;
-    // - the GS interrupt state (CSR and the SIGNAL/FINISH serials, written all the time by the GIF/GS threads) is
-    //   looked at every PS2X_EE_GS_POLL_CYCLES EE cycles (default 256, ~1 us) instead of at every checkpoint. Those
-    //   events arrive from other threads at no fixed EE cycle anyway; the cache line they share was a miss per check.
-    // The settings are plain globals (a function-local static would cost a thread-local guard check per call).
+
     if (g_fastAccount < 0)
     {
         const char *value = std::getenv("PS2X_EE_FAST_ACCOUNT");
         const char *poll = std::getenv("PS2X_EE_GS_POLL_CYCLES");
-        g_gsPollCycles = poll && *poll ? std::max<uint64_t>(1u, std::strtoull(poll, nullptr, 10)) : 4096u;
+        g_gsPollCycles = poll && *poll ? std::max<uint64_t>(1u, std::strtoull(poll, nullptr, 10)) : 2048u;
         g_signalSerial = ps2xGsSignalSerialAddress();
         g_finishSerial = ps2xGsFinishSerialAddress();
         g_fastAccount = (value && *value == '0') ? 0 : 1;
@@ -885,12 +876,14 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
     if (g_fastAccount != 0)
     {
         PS2Memory &memory = m_runtime.memory();
-        if (!memory.m_gifStatWritten && memory.m_eeTimerPendingCycles + elapsed < memory.m_eeTimerEventBudget)
-            memory.m_eeTimerPendingCycles += elapsed;
+        if (!memory.m_gifStatWritten && memory.m_eeTimerPendingCycles + eeCharge < memory.m_eeTimerEventBudget)
+            memory.m_eeTimerPendingCycles += eeCharge;
         else
-            m_pendingEeTimerInterrupts |= memory.advanceEeTimers(elapsed);
-        g_iopStash += (elapsed >> 1);
-        if (g_iopStash >= 32768u)
+            m_pendingEeTimerInterrupts |= memory.advanceEeTimers(eeCharge);
+
+        // CRITICAL FOR AUDIO & CLOVER FMV: Always feed 100% of `elapsed` to IOP/SPU2 every 2048 cycles!
+        g_iopStash += elapsed;
+        if (g_iopStash >= 2048u)
         {
             m_runtime.advanceIopEeCycles(g_iopStash);
             g_iopStash = 0u;
@@ -908,16 +901,10 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
             m_checkpointPending.store(true, std::memory_order_release);
         return;
     }
-    m_pendingEeTimerInterrupts |= m_runtime.memory().advanceEeTimers(elapsed);
-    // The IOP runs in batches of 8192 EE cycles anyway; handing it the cycles every 512 instead of at every
-    // checkpoint saves three out-of-line calls per guest basic block (~2% of the game thread in fights).
+    m_pendingEeTimerInterrupts |= m_runtime.memory().advanceEeTimers(eeCharge);
     static uint64_t iopCycleStash = 0u;
-    iopCycleStash += (elapsed >> 1);
-#if defined(__ANDROID__)
-    if (iopCycleStash >= 32768u)
-#else
+    iopCycleStash += elapsed;
     if (iopCycleStash >= 512u)
-#endif
     {
         m_runtime.advanceIopEeCycles(iopCycleStash);
         iopCycleStash = 0u;
@@ -966,6 +953,7 @@ uint64_t EeScheduler::skipIdleCycles() noexcept
         return 0u;
     }
 
+    t_inIdleSkip = true;
     uint64_t skipped = 0u;
     while (!m_checkpointPending.load(std::memory_order_acquire) &&
            !m_rescheduleRequested &&
@@ -977,25 +965,16 @@ uint64_t EeScheduler::skipIdleCycles() noexcept
             break;
         }
         const uint64_t step = std::min({nextEventCycle - m_eeCycle,
-                                        kIdleSkipStepCycles * 16u,
+                                        kIdleSkipStepCycles * 8u,
                                         m_runtime.memory().cyclesUntilNextEeTimerInterrupt()});
         if (step == 0u)
         {
             break;
         }
-        // Advance EE cycle and EE hardware timers without flooding IOPThread with fake idle cycles!
-        const uint64_t elapsed = step + g_ps2xEeDeferred;
-        g_ps2xEeDeferred = 0u;
-        m_eeCycle += elapsed;
-        g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
-        m_pendingEeTimerInterrupts |= m_runtime.memory().advanceEeTimers(elapsed);
-        if (m_pendingEeTimerInterrupts != 0u || pendingGsInterruptEvents() != m_gsInterruptLatched ||
-            ps2xGsSignalSerial() != g_seenSignalSerial || ps2xGsFinishSerial() != g_seenFinishSerial)
-        {
-            m_checkpointPending.store(true, std::memory_order_release);
-        }
+        accountCycles(static_cast<uint32_t>(step));
         skipped += step;
     }
+    t_inIdleSkip = false;
     return skipped;
 }
 
@@ -2734,20 +2713,20 @@ void EeScheduler::processDueDeadlines()
         {
             if (scheduled.event.type == EeEventType::VBlankStart)
             {
-                // MTVU timing model: no catch-up beyond 2 ms of jitter. Catching up 2 fields after a late frame fired the
-                // next vblank right after this one; a frame that needs ~18 ms of rendering then got 2 vblanks and the next
-                // got none, so every image stayed 2 refreshes on screen and the next was skipped (~37 distinct images/s
-                // at "60 FPS" in the heaviest map). Late vblanks now re-anchor: the game runs a little below 60 instead,
-                // each image shown once, as in PCSX2.
-                // While the IPU decodes an FMV its commands run inside the EE's register writes (a full-picture CSC
-                // takes ~3 ms) and push vblanks past the 2 ms: the movie ran at ~82% speed. Then late vblanks catch up
-                // as in the synchronous mode (ps2_memory.cpp ps2xIpuActiveRecently, PS2X_IPU_CATCHUP=0 turns it off).
-                // Always re-anchor late VBlanks within 2ms (except during IPU video playback) so a late frame
-                // never fires 2 VBlanks back-to-back!
-                const auto catchUp = !ps2xIpuActiveRecently()
+                const auto nowTp = std::chrono::steady_clock::now();
+                const auto catchUp = (ps2x::asyncvif::active(m_runtime.memory()) && !ps2xIpuActiveRecently())
                                          ? std::chrono::duration_cast<std::chrono::steady_clock::duration>(std::chrono::milliseconds(2))
                                          : std::chrono::duration_cast<std::chrono::steady_clock::duration>(kMaxVBlankCatchUpFields * vblankPeriod());
-                const auto hostStart = std::max(scheduled.hostDeadline, std::chrono::steady_clock::now() - catchUp);
+                const auto hostStart = std::max(scheduled.hostDeadline, nowTp - catchUp);
+                if (hostStart > scheduled.hostDeadline)
+                {
+                    const auto droppedUs = std::chrono::duration_cast<std::chrono::microseconds>(hostStart - scheduled.hostDeadline).count();
+                    if (droppedUs > 0)
+                    {
+                        const uint64_t lostEeCycles = microsecondsToEeCycles(static_cast<uint64_t>(std::min<int64_t>(droppedUs, 16667)));
+                        m_runtime.advanceIopEeCycles(lostEeCycles);
+                    }
+                }
                 // PS2X_PACING_STATS=1 (round 10): every 2 s, how late the vblanks fired against their host deadline, the
                 // real time dropped by the re-anchor above (= emulated time lost for good: the SPU2 makes that much less
                 // audio), the EE pacing sleep, the EE thread's CPU use and on which core class it ran (sampled per vblank).

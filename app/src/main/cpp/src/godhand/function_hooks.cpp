@@ -1039,6 +1039,23 @@ namespace godhand
             GH_INFO(Gs, "sub_003155F8 flare depth readback stubbed for mobile GPU performance");
         }
 
+        // Hook func_0030B148 (frame-end VBlank wait loop) to immediately fast-forward idle EE cycles
+        // to the next VBlank boundary instead of burning 98.6% CPU spinning in a tight loop!
+        constexpr uint32_t kVBlankWaitFunc = 0x0030B148u;
+        if (runtime.hasFunction(kVBlankWaitFunc))
+        {
+            FunctionHooks::instance().observeEntry(
+                kVBlankWaitFunc,
+                "vblank_wait_idle_skip",
+                [](uint8_t *rdram, R5900Context *, PS2Runtime *rt) {
+                    if (rt && rdram && rdram[0x00747A08u] == 0u)
+                    {
+                        rt->scheduler().skipIdleCycles();
+                    }
+                });
+            GH_INFO(Gs, "func_0030B148 hooked with skipIdleCycles()");
+        }
+
         constexpr uint32_t kFlipChainBuilder = 0x30B870u;
         if (!runtime.hasFunction(kFlipChainBuilder) ||
             !FunctionHooks::instance().observeEntry(kFlipChainBuilder, "game_frame_counter", [](uint8_t *rdram, R5900Context *, PS2Runtime *) {

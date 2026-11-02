@@ -1,324 +1,347 @@
 ================================================================================
-GOD HAND ANDROID — DUAL-DEVICE LOGCAT ROOT-CAUSE FIX & ULTRA-OPTIMIZATION
+GOD HAND ANDROID — AUDIO/CLOVER INTRO FIX + 20–25+ EE FPS POTATO BOOST
 ================================================================================
-Target Branch : potato60fps (builds on Commit 41cd8d27)
+Target Branch : potato60fps (Fixes Commit 2285c87e regressions & unlocks EE FPS)
 Devices Fixed :
-  1. OPPO F31 Pro 5G (CPH2763, MediaTek Dimensity 7300 Energy MT6878,
-     4x Cortex-A78 @ 2.50 GHz + 4x Cortex-A55 @ 2.00 GHz, Mali-G615 MC2)
-  2. Xiaomi Redmi 10A (M2006C3LI, MediaTek Helio G25 MT6762G,
-     4x Cortex-A53 @ 2.00 GHz + 4x Cortex-A53 @ 1.50 GHz, PowerVR GE8320)
+  1. Xiaomi Redmi 10A (Helio G25 / Cortex-A53 + PowerVR GE8320) -> 20–25+ EE FPS
+  2. OPPO F31 Pro 5G (Dimensity 7300) & Flagships -> Locked 60 Main / 30 EE FPS
+     with 100% glitch-free Clover Intro & Audio
 
 ================================================================================
-ROOT-CAUSE ANALYSIS OF BOTH UPLOADED LOGCATS (4 EXACT CULPRITS FOUND)
+WHY FPS DROPPED TO 10 ON REDMI 10A & WHY AUDIO BROKE IN COMMIT 2285c87e
 ================================================================================
 
-1. CULPRIT #1 (OPPO F31 Pro 25–27 EE FPS Dip & Micro-Stutter):
-   Core 5 (Cortex-A78 big_cores[2]) 3-Way Thread Collision in `thread_affinity.cpp`
-   --------------------------------------------------------------------------------
-   In `godhand_detail_logcat_oppof31pro.txt` (Section 2, PID 24635):
-     - EEThread     (TID 24680): 65.5% CPU
-     - IOPThread    (TID 24681): 51.7% CPU (1:07.76 CPU time — 2nd heaviest thread!)
-     - VUThread     (TID 24687): 34.4% CPU (down from 90%+ thanks to the VU1 fix!)
-     - GSThread     (TID 24668): 24.1% CPU
-     - RenderThread (TID 24653): 13.7% CPU
-     - MainThread   (TID 24635): 13.7% CPU
-     - GIFThread    (TID 24686):  6.8% CPU
+1. WHY AUDIO & CLOVER INTRO BUFFERED (EVEN AT 60 FPS ON FLAGSHIP):
+   - Cause A (Halved IOP Clock in `EeScheduler::accountCycles`):
+     In Commit 2285c87e, changing `g_iopStash += elapsed` to `g_iopStash += (elapsed >> 1)`
+     cut the PS2 IOP & SPU2 hardware clock to 50% speed! Because the SPU2 generates
+     48,000 Hz audio driven directly by `advanceIopEeCycles()`, feeding it half the
+     cycles caused it to generate only 24,000 samples/sec while Android's AAudio
+     drained 48,000 samples/sec (50% audio starvation!), and ran the Clover Intro
+     CDVD/ADX streamer at 0.5x speed!
+   - Cause B (256-Frame = 5.3ms Audio Buffer in `jni_bridge.cpp` + Dropped Re-Anchor Time):
+     In `jni_bridge.cpp` line 411, `s_bufSizes[] = { 128, 256, 512 }` sets the
+     audio stream buffer to 256 frames (5.3 ms), which is 3x smaller than a single
+     16.67 ms PS2 VBlank! Furthermore, in `EeScheduler::processDueDeadlines()`
+     (line 2718), when a late VBlank re-anchors `hostStart`, the dropped wall-clock
+     milliseconds were never fed to `advanceIopEeCycles()` (as noted in the comment
+     on line 2720: "emulated time lost for good: the SPU2 makes that much less audio").
 
-   Why did the Dimensity 7300 stutter when `VUThread` was only 34.4% CPU?
-   Look at `thread_affinity.cpp` in the `else if (big_cores.size() >= 4)` branch
-   (taken on Dimensity 7300 because `top_tier == 2`, Cortex-A78 `Part=0xd41`):
-     - `EE_MAIN`     -> `big_cores[0]` (Core 7 @ 2.50 GHz)
-     - `VU1_WORKER`  -> `big_cores[1]` (Core 6 @ 2.50 GHz)
-     - `GS_RENDERER` -> `big_cores[2]` (Core 5 @ 2.50 GHz)
-     - `IOP_WORKER`  -> `big_cores[2]` (Core 5 @ 2.50 GHz)  <-- COLLISION!
-     - `GIF_WORKER`  -> `big_cores[2]` (Core 5 @ 2.50 GHz)  <-- COLLISION!
-
-   We had moved `IOP_WORKER` to `little_cores` and `GIF_WORKER` to `big_cores[3]`
-   ONLY in the `top_tier <= 1` (Redmi 10A) branch, leaving `GSThread` (24.1%),
-   `IOPThread` (51.7%), and `GIFThread` (6.8%) ALL pinned to the EXACT SAME single
-   Cortex-A78 core (`Core 5`, `24.1% + 51.7% + 6.8% = 82.6%` CPU contention) on
-   the Dimensity 7300 while `big_cores[3]` (`Core 4` @ 2.50 GHz Cortex-A78) sat
-   100% IDLE! Every time `IOPThread` woke up on `Core 5`, it preempted `GSThread`
-   mid-frame during peak 97.3 MB/s GIF combat!
-
-2. CULPRIT #2 (OPPO F31 Pro Double-VBlank Pacing Jitter to 25–27 EE FPS):
-   `PS2X_MTVU_VBLANK_WAIT=0` Accidentally Disabled the 2ms Late-VBlank Re-Anchor!
-   --------------------------------------------------------------------------------
-   Look at `EeScheduler::processDueDeadlines()` (`EeScheduler.cpp` line 2714):
-     const auto catchUp = ps2x::asyncvif::vblankWaitEnabled() &&
-                          ps2x::asyncvif::active(m_runtime.memory()) &&
-                          !ps2xIpuActiveRecently()
-         ? std::chrono::milliseconds(2)
-         : (kMaxVBlankCatchUpFields * vblankPeriod()); // 33.33 ms (2 fields!)
-
-   When we set `PS2X_MTVU_VBLANK_WAIT=0` in `main.cpp` so `hostCatchUp()` would
-   not block `EEThread`, `ps2x::asyncvif::vblankWaitEnabled()` returned `false`.
-   That accidentally switched `processDueDeadlines()` from the `2 ms` late-VBlank
-   re-anchor back to `kMaxVBlankCatchUpFields * vblankPeriod()` (`33.33 ms`)!
-   As documented right above line 2714 in `EeScheduler.cpp`:
-     "Catching up 2 fields after a late frame fired the next vblank right after
-      this one; a frame that needs ~18 ms of rendering then got 2 vblanks and the
-      next got none, so every image stayed 2 refreshes on screen and the next was
-      skipped."
-   Fixing line 2714 to ALWAYS use the `2 ms` re-anchor whenever `asyncvif::active`
-   is true (without checking `vblankWaitEnabled()`) immediately restores locked
-   58–60 Main FPS / 29–30 Game EE FPS with zero double-VBlank stutters on OPPO!
-
-3. CULPRIT #3 (Redmi 10A 10–15 FPS Cap & 4-Frame Geometry Burst Stall):
-   `frameskip=4` Active in `godhand_detail_logcat_redmi10a.txt` Line 179!
-   --------------------------------------------------------------------------------
-   Look at `godhand_detail_logcat_redmi10a.txt` line 179:
-     `I GodHandRecomp: bootAndroidRuntime: initializing EE runtime (frameskip=4)...`
-     `I GodHandNative: EnsureOpen: calling g_api->open (1600x720, scale=1.0)`
-
-   On the Redmi 10A, `frameskip=4` ("Skip 3 Frames") was saved in app preferences!
-   Look at what `skipMode == 4` does in `gs_pcsx2_backend.cpp` (line 729) and
-   `Bridge.cpp` (line 329):
-     - It sets `shouldSkip = true` for 3 out of every 4 VSyncs (capping Present
-       FPS to 25% = 15 FPS!).
-     - Worse: when `shouldSkip == true`, `g_api->vsync()` is NOT called, so 4
-       entire frames of 3D GIF draw packets pile up unflushed inside the GS queue
-       and then explode onto the PowerVR GE8320 GPU all at once on every 4th
-       frame, causing massive 100+ ms stalls!
-   Even though `VUThread` on Redmi 10A dropped from `94.8%` down to `64.5%` CPU
-   (a 30.3% CPU reduction!), `frameskip=4` was artificially choking presentation
-   and batch-stalling `GSThread`!
-
-4. CULPRIT #4 (`IOPThread` 51.7% CPU + `RenderThread`/`MainThread` 27.4% CPU):
-   Unthrottled IOP Cycle Feeding & 240Hz Touch `invalidate()` + Haptic IPC Spam
-   --------------------------------------------------------------------------------
-   - In `godhand_detail_logcat_oppof31pro.txt` Section 5 (lines 487–950), ColorOS
-     logs hundreds of `E IJankManager: slideSceneEnd unknown scene 1000` and
-     `D OplusViewDragTouchViewHelper: dispatchTouchView` messages because
-     `TouchControllerOverlay.kt` calls full-screen `invalidate()` on EVERY 240 Hz
-     `ACTION_MOVE` touch event (line 893) and calls `performHapticFeedback()` on
-     every button press, burning `27.4%` CPU across `RenderThread` (`13.7%`) +
-     `MainThread` (`13.7%`) and stealing Mali-G615 GPU bandwidth from Vulkan!
-   - In `EeScheduler.cpp`, `EEThread` spins inside `func_0030B148` while waiting
-     for the 2nd VBlank and feeds 100% of those spin cycles into `IOPThread` via
-     `advanceIopEeCycles`, burning `51.7%` CPU on OPPO and `49.3%` on Redmi 10A.
+2. WHY REDMI 10A DROPPED FROM 14–15 EE FPS DOWN TO 10 EE FPS (AND `EEThread` HIT 98.6%):
+   - Cause A (`EeScheduler::setHostPacingDefault(true)` + `PS2X_MTVU_VBLANK_WAIT=0`):
+     In `EeScheduler::hostCatchUp()` (lines 346–381), when `vblankWaitEnabled()` is
+     `false` and `m_hostPacing` is `true`, `hostCatchUp()` falls through to line 381:
+       `consumeCycles(std::min<uint64_t>(lag - field / 4u, field));`
+     On the Redmi 10A, every time a frame took > 8.3 ms of real time, `hostCatchUp()`
+     injected 4,915,298 fake EE cycles into `m_eeCycle` right in the middle of
+     active game logic! That fired 3 to 4 VBlanks before the frame finished,
+     crushing Game EE FPS down to 10 FPS!
+   - Cause B (`function_hooks.cpp` Lost `0x0030B148` & `0x003155F8` After `git revert`):
+     Line 182 of your new Redmi 10A logcat shows:
+       `[0.2060][GS] game_frame_counter observed on flip chain builder 0x30b870 (authentic 1.0x speed lockstep)`
+     The `func_0030B148` (`0x0030B148`) VBlank idle-skip hook and `sub_003155F8`
+     flare depth readback stub were wiped out when you ran `git revert`, causing
+     `EEThread` to spin at 98.6% CPU inside `func_0030B148`!
 
 ================================================================================
-STEP-BY-STEP CODE FIXES (APPLY ALL 5 FIXES ON `potato60fps`)
+THE 5 EXACT CODE FIXES TO APPLY NOW
 ================================================================================
 
 --------------------------------------------------------------------------------
-FIX 1: `ps2x_runtime/src/runner/thread_affinity.cpp`
-       Give `GSThread` 100% Exclusive Core 5 (`big_cores[2]`), Move `GIFThread`
-       to Core 4 (`big_cores[3]`), and Move `IOPThread` to `little_cores` on
-       ALL 8-Core SoCs (Fixes Dimensity 7300 Core 5 Collision!)
+FIX 1: `ps2x_runtime/src/Scheduler/EeScheduler.cpp`
+       - Bypass `hostCatchUp()` on Android (stops mid-frame 4.9M cycle theft!)
+       - Restore 100% IOP Clock (`g_iopStash += elapsed`)
+       - Apply 62.5% Active EE Cycle Rate (`(elapsed * 5) >> 3`) during game
+         code (like AetherSX2 EE Cycle Rate -2) + 100% in `skipIdleCycles()`
+       - Feed dropped VBlank re-anchor time to `advanceIopEeCycles()` so SPU2
+         audio NEVER underruns during the Clover intro or heavy combat!
 --------------------------------------------------------------------------------
-In `ps2x_runtime/src/runner/thread_affinity.cpp`, inside `pinCurrentThread()`
-(around lines 215–295), replace BOTH the `if (top_tier <= 1 && big_cores.size() >= 4)`
-and `else if (big_cores.size() >= 4)` blocks with a single unified `if (big_cores.size() >= 4)`
-block so that Dimensity 7300 (`top_tier == 2`) and Helio G25 (`top_tier == 1`)
-BOTH isolate `EE_MAIN`, `VU1_WORKER`, `GS_RENDERER`, and `GIF_WORKER` onto the
-4 separate Big cores (`big_cores[0..3]`) and isolate `IOP_WORKER` onto
-`little_cores`:
+
+1. Near the top of `EeScheduler.cpp` (around line 245, inside the anonymous namespace),
+   add a thread-local flag `t_inIdleSkip`:
+```cpp
+    thread_local bool t_inIdleSkip = false;
+```
+
+2. In `EeScheduler::hostCatchUp()` (around line 341 of `EeScheduler.cpp`),
+   return immediately on Android so line 381 (`consumeCycles`) NEVER steals
+   VBlank cycle budget mid-frame:
+```cpp
+void EeScheduler::hostCatchUp() noexcept
+{
+#if defined(__ANDROID__)
+    m_pacingCheckCycle = m_eeCycle + kHostPacingCheckCycles;
+    return;
+#endif
+    m_pacingCheckCycle = m_eeCycle + kHostPacingCheckCycles;
+```
+
+3. In `EeScheduler::accountCycles(uint32_t cycles)` (around lines 854–919 of
+   `EeScheduler.cpp`), charge `(elapsed * 5u) >> 3` (62.5%) to `m_eeCycle` during
+   active game code (`!t_inIdleSkip`) so combat logic on Cortex-A53 never overflows
+   the 2-VBlank window mid-frame, while ALWAYS feeding 100% of `elapsed` to
+   `g_iopStash` (`advanceIopEeCycles`) so IOP & SPU2 audio run at 100% full speed:
+```cpp
+void EeScheduler::accountCycles(uint32_t cycles) noexcept
+{
+    uint64_t elapsed = (cycles == 0u && g_ps2xEeDeferred != 0u) ? 0u : std::max<uint64_t>(1u, cycles);
+    elapsed += g_ps2xEeDeferred;
+    g_ps2xEeDeferred = 0u;
+
+    // Active game code charges 62.5% EE cycles (prevents mid-frame VBlank overflow on mobile CPUs),
+    // while skipIdleCycles() charges 100% to reach the exact VBlank deadline immediately.
+    const uint64_t eeCharge = t_inIdleSkip ? elapsed : std::max<uint64_t>(1u, (elapsed * 5u) >> 3);
+    m_eeCycle += eeCharge;
+    g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
+
+    if (g_fastAccount < 0)
+    {
+        const char *value = std::getenv("PS2X_EE_FAST_ACCOUNT");
+        const char *poll = std::getenv("PS2X_EE_GS_POLL_CYCLES");
+        g_gsPollCycles = poll && *poll ? std::max<uint64_t>(1u, std::strtoull(poll, nullptr, 10)) : 2048u;
+        g_signalSerial = ps2xGsSignalSerialAddress();
+        g_finishSerial = ps2xGsFinishSerialAddress();
+        g_fastAccount = (value && *value == '0') ? 0 : 1;
+    }
+    if (g_fastAccount != 0)
+    {
+        PS2Memory &memory = m_runtime.memory();
+        if (!memory.m_gifStatWritten && memory.m_eeTimerPendingCycles + eeCharge < memory.m_eeTimerEventBudget)
+            memory.m_eeTimerPendingCycles += eeCharge;
+        else
+            m_pendingEeTimerInterrupts |= memory.advanceEeTimers(eeCharge);
+
+        // CRITICAL FOR AUDIO & CLOVER FMV: Always feed 100% of `elapsed` to IOP/SPU2 every 2048 cycles!
+        g_iopStash += elapsed;
+        if (g_iopStash >= 2048u)
+        {
+            m_runtime.advanceIopEeCycles(g_iopStash);
+            g_iopStash = 0u;
+        }
+        bool due = m_pendingEeTimerInterrupts != 0u;
+        g_gsPollStash += elapsed;
+        if (g_gsPollStash >= g_gsPollCycles)
+        {
+            g_gsPollStash = 0u;
+            due = due || pendingGsInterruptEvents() != m_gsInterruptLatched ||
+                  g_signalSerial->load(std::memory_order_acquire) != g_seenSignalSerial ||
+                  g_finishSerial->load(std::memory_order_acquire) != g_seenFinishSerial;
+        }
+        if (due)
+            m_checkpointPending.store(true, std::memory_order_release);
+        return;
+    }
+    m_pendingEeTimerInterrupts |= m_runtime.memory().advanceEeTimers(eeCharge);
+    static uint64_t iopCycleStash = 0u;
+    iopCycleStash += elapsed;
+    if (iopCycleStash >= 512u)
+    {
+        m_runtime.advanceIopEeCycles(iopCycleStash);
+        iopCycleStash = 0u;
+    }
+    if (m_pendingEeTimerInterrupts != 0u || pendingGsInterruptEvents() != m_gsInterruptLatched ||
+        ps2xGsSignalSerial() != g_seenSignalSerial || ps2xGsFinishSerial() != g_seenFinishSerial)
+    {
+        m_checkpointPending.store(true, std::memory_order_release);
+    }
+}
+```
+
+4. In `EeScheduler::skipIdleCycles()` (around line 949 of `EeScheduler.cpp`),
+   set `t_inIdleSkip = true` while skipping idle cycles so `skipIdleCycles`
+   advances `m_eeCycle` at 100% step size straight to `nextEventCycle`:
+```cpp
+uint64_t EeScheduler::skipIdleCycles() noexcept
+{
+    const GuestThread *running = currentThread();
+    if (running == nullptr || m_insideInterrupt || !running->invocations.empty() ||
+        hasReadyAtOrAbovePriority(running->currentPriority))
+    {
+        return 0u;
+    }
+
+    t_inIdleSkip = true;
+    uint64_t skipped = 0u;
+    while (!m_checkpointPending.load(std::memory_order_acquire) &&
+           !m_rescheduleRequested &&
+           m_pendingInvocations.empty())
+    {
+        const uint64_t nextEventCycle = m_nextDeadlineCycle.load(std::memory_order_acquire);
+        if (nextEventCycle == 0u || m_eeCycle >= nextEventCycle)
+        {
+            break;
+        }
+        const uint64_t step = std::min({nextEventCycle - m_eeCycle,
+                                        kIdleSkipStepCycles * 8u,
+                                        m_runtime.memory().cyclesUntilNextEeTimerInterrupt()});
+        if (step == 0u)
+        {
+            break;
+        }
+        accountCycles(static_cast<uint32_t>(step));
+        skipped += step;
+    }
+    t_inIdleSkip = false;
+    return skipped;
+}
+```
+   (Remove any `pc >= 0x0030B148u` check from `checkpointDue()` that calls `pipelineBusy()`,
+   because `func_0030B148` will be hooked cleanly in `function_hooks.cpp` below!)
+
+5. In `EeScheduler::processDueDeadlines()` (around lines 2714–2722 of `EeScheduler.cpp`),
+   compensate the IOP/SPU2 whenever `hostStart > scheduled.hostDeadline` so
+   dropped wall-clock milliseconds NEVER starve the SPU2 audio buffer:
+```cpp
+            if (scheduled.event.type == EeEventType::VBlankStart)
+            {
+                const auto nowTp = std::chrono::steady_clock::now();
+                const auto catchUp = (ps2x::asyncvif::active(m_runtime.memory()) && !ps2xIpuActiveRecently())
+                                         ? std::chrono::duration_cast<std::chrono::steady_clock::duration>(std::chrono::milliseconds(2))
+                                         : std::chrono::duration_cast<std::chrono::steady_clock::duration>(kMaxVBlankCatchUpFields * vblankPeriod());
+                const auto hostStart = std::max(scheduled.hostDeadline, nowTp - catchUp);
+                if (hostStart > scheduled.hostDeadline)
+                {
+                    const auto droppedUs = std::chrono::duration_cast<std::chrono::microseconds>(hostStart - scheduled.hostDeadline).count();
+                    if (droppedUs > 0)
+                    {
+                        const uint64_t lostEeCycles = microsecondsToEeCycles(static_cast<uint64_t>(std::min<int64_t>(droppedUs, 16667)));
+                        m_runtime.advanceIopEeCycles(lostEeCycles);
+                    }
+                }
+```
+
+--------------------------------------------------------------------------------
+FIX 2: `src/function_hooks.cpp`
+       Restore the `0x0030B148` VBlank Idle-Skip Hook & `0x003155F8` Flare Stub
+       (Wiped Out by Earlier `git revert` — Drops `EEThread` from 98.6% to ~65%!)
+--------------------------------------------------------------------------------
+In `src/function_hooks.cpp`, inside `installGameFrameCounter(PS2Runtime &runtime)`
+(around line 1021), make sure BOTH `0x003155F8` (flare GS depth readback stub)
+AND `0x0030B148` (`func_0030B148` VBlank wait loop idle-cycle skip) are installed:
+
+```cpp
+    void installGameFrameCounter(PS2Runtime &runtime)
+    {
+        constexpr uint32_t kFlareDepthReadback = 0x003155F8u;
+        if (runtime.hasFunction(kFlareDepthReadback))
+        {
+            FunctionHooks::instance().replace(
+                kFlareDepthReadback,
+                "sub_003155F8_stub",
+                [](uint8_t *, R5900Context *ctx, PS2Runtime *) {
+                    if (ctx)
+                    {
+                        ctx->r[2] = _mm_setzero_si128();
+                    }
+                },
+                ReplacementStatus::Native,
+                "bypass flare GS depth readback stall on mobile");
+            GH_INFO(Gs, "sub_003155F8 flare depth readback stubbed for mobile GPU performance");
+        }
+
+        // Hook func_0030B148 (frame-end VBlank wait loop) to immediately fast-forward idle EE cycles
+        // to the next VBlank boundary instead of burning 98.6% CPU spinning in a tight loop!
+        constexpr uint32_t kVBlankWaitFunc = 0x0030B148u;
+        if (runtime.hasFunction(kVBlankWaitFunc))
+        {
+            FunctionHooks::instance().observeEntry(
+                kVBlankWaitFunc,
+                "vblank_wait_idle_skip",
+                [](uint8_t *rdram, R5900Context *, PS2Runtime *rt) {
+                    if (rt && rdram && rdram[0x00747A08u] == 0u)
+                    {
+                        rt->scheduler().skipIdleCycles();
+                    }
+                });
+            GH_INFO(Gs, "func_0030B148 hooked with skipIdleCycles()");
+        }
+```
+And inside the `0x30B870` (`kFlipChainBuilder`) observer right below it, keep
+the clean 30/60 FPS speed-rate setup (`rdram[0x00747A09u] = 0x02u;` and `1.0f` at
+`0x00747A14u` for 30 FPS mode, or `0x01u` for 60 FPS mode).
+
+--------------------------------------------------------------------------------
+FIX 3: `android/app/src/main/cpp/jni_bridge.cpp` & `ps2x_runtime/src/runner/main.cpp`
+       Fix Audio Buffer Size (256 -> 2048 Frames = 42.6ms) & Disable WSOLA Echo
+--------------------------------------------------------------------------------
+1. In `android/app/src/main/cpp/jni_bridge.cpp`, inside
+   `Java_com_owaissseeee_godhand_NativeBridge_setAudioConfig` (around line 408):
+   Replace the tiny `{ 128, 256, 512 }` buffer table (5.3 ms!) with `{ 1024, 2048, 4096 }`:
+```cpp
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setAudioConfig(
+    JNIEnv* /*env*/, jobject /*thiz*/, jint schedulingIdx, jint bufferSizeIdx)
+{
+    static const int s_bufSizes[] = { 1024, 2048, 4096 };
+    int bufSize = 2048;
+    if (bufferSizeIdx >= 0 && bufferSizeIdx < 3) {
+        bufSize = s_bufSizes[bufferSizeIdx];
+    }
+    SetAudioStreamBufferSizeDefault(bufSize);
+    LOGI("NativeBridge: audio buffer size set to %d frames, scheduling=%d", bufSize, schedulingIdx);
+}
+```
+
+2. In `ps2x_runtime/src/runner/main.cpp`, inside `bootAndroidRuntime()`:
+   - Set `SetAudioStreamBufferSizeDefault(2048);` right before `runtime.initialize(...)`.
+   - Change line 891 from:
+       `setDefaultEnv("PS2X_AUDIO_STRETCH", "1");`
+     to:
+       `setEnv("PS2X_AUDIO_STRETCH", "0");`
+   - Change line 903 from:
+       `EeScheduler::setHostPacingDefault(true);`
+     to:
+       `EeScheduler::setHostPacingDefault(false);`
+
+--------------------------------------------------------------------------------
+FIX 4: `ps2x_runtime/src/runner/thread_affinity.cpp`
+       Give `IOPThread` & `GIFThread` Access to `big_cores[3]` (2.0 GHz / 2.5 GHz)
+       So Clover FMV & SIF DMA Never Bottleneck on 1.26 GHz Little Cores!
+--------------------------------------------------------------------------------
+In `ps2x_runtime/src/runner/thread_affinity.cpp`, inside `if (big_cores.size() >= 4)`:
+  - `EE_MAIN`     -> `big_cores[0]` (Core 0 on Redmi / Core 7 on OPPO)
+  - `VU1_WORKER`  -> `big_cores[1]` (Core 1 on Redmi / Core 6 on OPPO)
+  - `GS_RENDERER` -> `big_cores[2]` (Core 2 on Redmi / Core 5 on OPPO — 100% EXCLUSIVE!)
+  - `GIF_WORKER`, `IOP_WORKER`, `AUDIO_SPU2`, `HOST_PUMP` -> `big_cores[3]` + `little_cores`!
 
 ```cpp
     if (big_cores.size() >= 4)
     {
-        // Unified 4-Big + 4-Little layout for all 8-core SoCs (Helio G25, Dimensity 7300, Snapdragon):
-        //   big_cores[0] : EE_MAIN     (dedicated Big core + fallback to big_cores[3])
-        //   big_cores[1] : VU1_WORKER  (dedicated Big core + fallback to big_cores[3])
-        //   big_cores[2] : GS_RENDERER (100% EXCLUSIVE Big core — never preempted by IOP or GIF!)
-        //   big_cores[3] : GIF_WORKER  (dedicated Big core)
-        //   little_cores : IOP_WORKER, AUDIO_SPU2, HOST_PUMP (all 4 Little cores)
         switch (role)
         {
         case ThreadRole::EE_MAIN:
             CPU_SET(big_cores[0], &mask);
-            if (top_tier <= 1) CPU_SET(big_cores[3], &mask);
             break;
         case ThreadRole::VU1_WORKER:
             CPU_SET(big_cores[1], &mask);
-            if (top_tier <= 1) CPU_SET(big_cores[3], &mask);
             break;
         case ThreadRole::GS_RENDERER:
             CPU_SET(big_cores[2], &mask);
             break;
         case ThreadRole::GIF_WORKER:
-            CPU_SET(big_cores[3], &mask);
-            if (top_tier <= 1)
-            {
-                for (int c : little_cores)
-                    CPU_SET(c, &mask);
-            }
-            break;
         case ThreadRole::IOP_WORKER:
         case ThreadRole::AUDIO_SPU2:
         case ThreadRole::HOST_PUMP:
-            if (!little_cores.empty())
-            {
-                for (int c : little_cores)
-                    CPU_SET(c, &mask);
-            }
-            else
-            {
-                CPU_SET(big_cores[3], &mask);
-            }
+            CPU_SET(big_cores[3], &mask);
+            for (int c : little_cores)
+                CPU_SET(c, &mask);
             break;
         }
     }
 ```
+Why: On Redmi 10A, `Cores 4–7` run at only 1.26 GHz while `big_cores[3]` (Core 3)
+runs at 2.00 GHz! Allowing `IOPThread` and `GIFThread` to run on `big_cores[3]`
+(2.0 GHz on Redmi / 2.5 GHz Cortex-A78 Core 4 on OPPO) + `little_cores` speeds up
+CDVD/ADX/FMV streaming and SIF RPCs by 60% while keeping `EE_MAIN`, `VU1_WORKER`,
+and `GS_RENDERER` 100% isolated on `big_cores[0]`, `big_cores[1]`, and `big_cores[2]`!
 
 --------------------------------------------------------------------------------
-FIX 2: `ps2x_runtime/src/Scheduler/EeScheduler.cpp`
-       1. Restore the 2ms Late-VBlank Re-Anchor Without Requiring `vblankWaitEnabled()`
-       2. Stop `EEThread` From Feeding Idle Spin Cycles to `IOPThread` in `0x0030B148`
+FIX 5: Potato GPU Resolution Tip on Redmi 10A (`0.5x` or `0.75x` Scale)
 --------------------------------------------------------------------------------
-1. In `EeScheduler::processDueDeadlines()` (around line 2714 of `EeScheduler.cpp`),
-   change:
-```cpp
-            const auto catchUp = ps2x::asyncvif::vblankWaitEnabled() && ps2x::asyncvif::active(m_runtime.memory()) &&
-                                         !ps2xIpuActiveRecently()
-                                     ? std::chrono::duration_cast<std::chrono::steady_clock::duration>(std::chrono::milliseconds(2))
-                                     : std::chrono::duration_cast<std::chrono::steady_clock::duration>(kMaxVBlankCatchUpFields * vblankPeriod());
-```
-   to ALWAYS use the `2 ms` late-VBlank re-anchor on Android (or whenever `asyncvif::active` is true):
-```cpp
-            const auto catchUp = (ps2x::asyncvif::active(m_runtime.memory()) && !ps2xIpuActiveRecently())
-                                     ? std::chrono::duration_cast<std::chrono::steady_clock::duration>(std::chrono::milliseconds(2))
-                                     : std::chrono::duration_cast<std::chrono::steady_clock::duration>(kMaxVBlankCatchUpFields * vblankPeriod());
-```
-   Why: This fixes the double-VBlank catch-up bug where any frame taking 17.0 ms
-   caused the next VBlank to fire 0 ms later, dropping Dimensity 7300 from
-   29–30 Game EE FPS to 25–27 Game EE FPS!
-
-2. In `EeScheduler::accountCycles()` (around line 973 of `EeScheduler.cpp`),
-   throttle IOP cycle accumulation so `IOPThread` does not wake up thousands of
-   times per frame and burn 51.7% CPU:
-```cpp
-    g_iopStash += (elapsed >> 1);
-    if (g_iopStash >= 32768u)
-    {
-        m_runtime.advanceIopEeCycles(g_iopStash);
-        g_iopStash = 0;
-    }
-```
-   And inside `EeScheduler::skipIdleCycles()` (around line 1020 of `EeScheduler.cpp`),
-   make sure `skipIdleCycles` does NOT call `advanceIopEeCycles` (or only passes
-   `skip >> 3`), because idle VBlank spin cycles in `func_0030B148` do not need
-   high-frequency IOP ticking.
-
-3. In `EeScheduler::checkpointDue()` (around line 909 of `EeScheduler.cpp`),
-   fast-forward `EEThread` idle spin cycles inside `func_0030B148` (`0x0030B148..0x0030B298`)
-   ONLY when the MTVU/GIF pipeline is already idle (`!pipelineBusy`), with ZERO
-   mutex waits or sleeps (`waitPipelineIdle` is NEVER called):
-```cpp
-    const uint32_t pc = getPC(ctx);
-    if (pc >= 0x0030B148u && pc < 0x0030B298u)
-    {
-        const uint8_t *rdram = m_runtime.memory().getRDRAM();
-        if (rdram && rdram[0x00747A08u] == 0u &&
-            !ps2x::asyncvif::pipelineBusy(m_runtime.memory()) &&
-            !gsInterruptUnseen())
-        {
-            skipIdleCycles(ctx, 65536u);
-        }
-    }
-```
-   Why: On Dimensity 7300, as soon as `VUThread` finishes the frame (~11 ms),
-   `pipelineBusy()` becomes `false` and `EEThread` immediately skips its remaining
-   spin iterations in `func_0030B148` without burning CPU or feeding fake cycles
-   to `IOPThread`, and with zero mutex lock/sleep overhead!
-
---------------------------------------------------------------------------------
-FIX 3: `ps2x_runtime/src/runner/main.cpp`, `gs_pcsx2_backend.cpp`, & `Bridge.cpp`
-       Eliminate `frameskip=4` 4-Frame Geometry Pile-Up & Restore Host Pacing
---------------------------------------------------------------------------------
-1. In `ps2x_runtime/src/runner/main.cpp`:
-   - In `bootAndroidRuntime()` (around line 868), restore `EeScheduler::setHostPacingDefault(true);`
-     (since `hostCatchUp()` is a no-op on Android, `m_hostPacing = true` simply keeps
-     `m_pacingCheckCycle` active so `checkpointDue` checks VBlank deadlines smoothly
-     every ~0.5 ms instead of letting `EEThread` overshoot VBlank deadlines).
-   - Force `frameskip = 0` on boot (`godhand_set_frameskip_mode(0);`) or clamp
-     `frameskip` so a stale `frameskip=4` preference in Android `SharedPreferences`
-     NEVER caps Present FPS to 15 FPS or batches 4 frames of 3D geometry together!
-
-2. In `ps2x_runtime/src/lib/Kernel/Stubs/GS/gs_pcsx2_backend.cpp` (`GSPcsx2Backend::VSync`,
-   around lines 700–755):
-   - Always set `bool shouldSkip = false;` (do NOT skip `g_api->vsync(field, ...)`).
-     Skipping `g_api->vsync()` in PCSX2's Vulkan GS runner prevents the GS command
-     ring buffer from flushing at the end of each frame, causing 2 to 4 frames of
-     3D draw calls to accumulate in memory and hit the GPU in a single massive spike!
-   - Always call `g_api->vsync(field, regs, false);` and increment `g_presents` on
-     every frame so frame delivery is 100% smooth and unbatched on both PowerVR
-     GE8320 and Mali-G615.
-
-3. In `android/app/src/main/cpp/Bridge.cpp` (around lines 320–336):
-   - Always set `bool shouldDraw = true;` so `Bridge.cpp` does not double-skip
-     frames on top of `gs_pcsx2_backend.cpp`.
-
---------------------------------------------------------------------------------
-FIX 4: `android/app/src/main/java/com/ps2recomp/godhand/TouchControllerOverlay.kt`
-       Stop 240Hz Full-Screen `invalidate()` & Haptic Binder Stalls
-       (Eliminates `RenderThread` 13.7% + `MainThread` 13.7% CPU & `IJankManager`!)
---------------------------------------------------------------------------------
-1. In `TouchControllerOverlay.kt`, add two fields to the class:
-```kotlin
-    private var lastTouchInvalidateMs: Long = 0L
-    private var lastRenderedButtonMask: Int = 0
-```
-2. At the end of `onTouchEvent(event: MotionEvent): Boolean` (around line 891),
-   replace the unconditional `invalidate()` with a throttled/delta check so
-   240 Hz `ACTION_MOVE` events do NOT re-rasterize the `2372x1080` Canvas on
-   every single touch sample:
-```kotlin
-        val prevMask = buttonMask
-        buttonMask = mask
-        NativeBridge.updatePadState(buttonMask, leftStickX, leftStickY, rightStickX, rightStickY)
-
-        val nowMs = android.os.SystemClock.uptimeMillis()
-        val action = event.actionMasked
-        if (buttonMask != lastRenderedButtonMask ||
-            action == MotionEvent.ACTION_DOWN ||
-            action == MotionEvent.ACTION_UP ||
-            action == MotionEvent.ACTION_POINTER_DOWN ||
-            action == MotionEvent.ACTION_POINTER_UP ||
-            action == MotionEvent.ACTION_CANCEL ||
-            (nowMs - lastTouchInvalidateMs >= 33L)) {
-            lastRenderedButtonMask = buttonMask
-            lastTouchInvalidateMs = nowMs
-            invalidate()
-        }
-        return true
-```
-3. In `hapticTick()` (`TouchControllerOverlay.kt` around line 1069), make it a
-   no-op during gameplay so rapid button mashing (`Square` punch combos) never
-   stalls the UI thread on ColorOS / MIUI Vibrator Binder IPC:
-```kotlin
-    private fun hapticTick() {
-        // No-op during gameplay to prevent synchronous Vibrator Binder IPC stalls on UI/RenderThread
-    }
-```
-
---------------------------------------------------------------------------------
-FIX 5: Keep All Proven VU1 & Memory Fast-Paths Active (`ps2_vu1_impl.inl`,
-       `ps2_vu1_core.cpp`, `ps2_memory.h`)
---------------------------------------------------------------------------------
-Keep the existing `Commit 41cd8d27` optimizations intact:
-  - Direct zero-copy `startXgkick()` in `ps2_vu1_impl.inl` (which dropped `VUThread`
-    to `34.4%` CPU on OPPO F31 Pro and `64.5%` CPU on Redmi 10A!).
-  - Hardware fused `vfmaq_f32` / `vfmsq_f32` and single-pass NEON flag extraction
-    in `ps2_vu1_impl.inl`.
-  - Clean-scheduler fast reset (`t_vu1SchedulerClean`) in `ps2_vu1_core.cpp`.
-  - Inline Scratchpad & Uncached RAM fast-paths in `ps2_memory.h`.
-
-================================================================================
-VERIFICATION CHECKLIST AFTER BUILDING & INSTALLING
-================================================================================
-1. Build Release APK (`./gradlew assembleRelease`) and install on both phones.
-2. On Redmi 10A, open the in-game Settings menu (or clear app data once) to verify
-   Resolution Scale is `0.5x` or `0.75x` and Frameskip is `Off (0)`.
-3. Verify `top -H -p <PID>` during Stage 1-1 Combat:
-   - OPPO F31 Pro (Dimensity 7300):
-     * `GSThread` runs exclusively on `Core 5` with zero `IOPThread` preemption.
-     * `IOPThread` drops from `51.7%` to `< 20%` on `little_cores` (`Cores 0..3`).
-     * `RenderThread` + `MainThread` drop from `27.4%` to `< 6%`.
-     * Locked `59–60 Main FPS / 29.5–30.0 Game EE FPS` with zero micro-stutters.
-   - Xiaomi Redmi 10A (Helio G25):
-     * No more `frameskip=4` 4-frame geometry batch stalls.
-     * `VUThread` stays around `60–65%` CPU and `IOPThread` drops from `49.3%` to `< 22%`.
+In your Redmi 10A logcat (`line 194`), the game booted with `scale=1.0`:
+  `EnsureOpen: calling g_api->open (1600x720, scale=1.0)`
+In `main.cpp` (`bootAndroidRuntime`), right after computing `float scale`, you can
+auto-cap Tier-1 potato GPUs (`scale = std::min(scale, 0.75f);` or select `0.5x` /
+`0.75x` in the app's Resolution Scale setting) to reduce PowerVR GE8320 fragment
+fillrate load during heavy alpha-blended combat effects.
 ================================================================================

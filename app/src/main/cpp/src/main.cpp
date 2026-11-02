@@ -50,6 +50,8 @@
 #include <string_view>
 #include <thread>
 #include <vector>
+
+extern "C" void SetAudioStreamBufferSizeDefault(int size);
 #if !defined(__aarch64__) && !defined(_M_ARM64)
 #include <xmmintrin.h>
 #include <pmmintrin.h>
@@ -670,7 +672,7 @@ int main(int argc, char *argv[])
     GSThreadedBackend::SetEnabledByDefault(true);
     GSThreadedBackend::SetGpuByDefault(true);
     ps2x::asyncvif::setHostPacingDefault(true); // only matters with PS2X_MTVU=1 (MTVU itself stays off by default)
-    EeScheduler::setHostPacingDefault(true);
+    EeScheduler::setHostPacingDefault(false);
 
     // Hidden runs: no visible window, no sound, no monitor-driven vsync, no dialogs.
     if (headless)
@@ -825,6 +827,9 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     if (resScaleIdx >= 0 && resScaleIdx < static_cast<int>(sizeof(s_scales) / sizeof(s_scales[0]))) {
         scale = s_scales[resScaleIdx];
     }
+    if (godhand_get_device_tier() <= 1) {
+        scale = std::min(scale, 0.75f);
+    }
     setEnv("PS2X_GS_SCALE", std::to_string(scale));
     setEnv("GODHAND_TARGET_FPS_IDX", "2"); // Lock 30 FPS Console Pacing (2 VBlanks/flip = 60 Hz display present)
     float screenAspect = 16.0f / 9.0f;
@@ -893,7 +898,7 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
 
     setDefaultEnv("PS2X_GS_SHADER_CACHE_DIR", (cacheDir / "gs_shaders").string());
     setDefaultEnv("PS2X_SIO2_RECV1", "2");
-    setDefaultEnv("PS2X_AUDIO_STRETCH", "1");
+    setEnv("PS2X_AUDIO_STRETCH", "0");
     setDefaultEnv("PS2X_IOP_THREAD", "1");
     setDefaultEnv("PS2X_MTVU", "1");
     setEnv("PS2X_MTVU_STREAM", "0");
@@ -906,7 +911,7 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     ps2x::asyncvif::setDefaultEnabled(true);
     // Disable artificial host pacing sleep on asyncvif so VUThread processes enemy/house geometry at 100% speed!
     ps2x::asyncvif::setHostPacingDefault(false);
-    EeScheduler::setHostPacingDefault(true);
+    EeScheduler::setHostPacingDefault(false);
     GSThreadedBackend::SetEnabledByDefault(true);
     GSThreadedBackend::SetGpuByDefault(true);
 
@@ -917,6 +922,7 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     GSPcsx2Backend::AttachHostWindow(static_cast<void*>(win));
     ps2_host_display::setStartFullscreen(true);
 
+    SetAudioStreamBufferSizeDefault(2048);
     __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "Attached host window, initializing runtime...");
     if (!runtime.initialize(godhand::kGameTitle)) {
         __android_log_print(ANDROID_LOG_ERROR, "GodHandRecomp", "runtime.initialize failed!");

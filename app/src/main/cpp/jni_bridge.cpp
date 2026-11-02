@@ -408,8 +408,8 @@ JNIEXPORT void JNICALL
 Java_com_owaissseeee_godhand_NativeBridge_setAudioConfig(
     JNIEnv* /*env*/, jobject /*thiz*/, jint schedulingIdx, jint bufferSizeIdx)
 {
-    static const int s_bufSizes[] = { 128, 256, 512 };
-    int bufSize = 256;
+    static const int s_bufSizes[] = { 1024, 2048, 4096 };
+    int bufSize = 2048;
     if (bufferSizeIdx >= 0 && bufferSizeIdx < 3) {
         bufSize = s_bufSizes[bufferSizeIdx];
     }
