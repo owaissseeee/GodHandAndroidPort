@@ -656,6 +656,22 @@ VU1_FORCE_INLINE void VU1Interpreter::queueP(float value, uint32_t latency)
 
 VU1_FORCE_INLINE void VU1Interpreter::queueStore(uint32_t address, const uint32_t words[4], uint8_t laneMask)
 {
+#if defined(__aarch64__) || defined(_M_ARM64)
+    if (!m_activeVuData || address + 16u > m_activeVuDataSize)
+        return;
+    if (laneMask == 0xFu)
+    {
+        std::memcpy(m_activeVuData + address, words, 16u);
+    }
+    else
+    {
+        uint32_t *dst = reinterpret_cast<uint32_t *>(m_activeVuData + address);
+        if (laneMask & 0x8u) dst[0] = words[0];
+        if (laneMask & 0x4u) dst[1] = words[1];
+        if (laneMask & 0x2u) dst[2] = words[2];
+        if (laneMask & 0x1u) dst[3] = words[3];
+    }
+#else
     const int slot = freeSlot(m_storeValid, kMaxPendingStores);
     if (slot < 0)
     {
@@ -670,6 +686,7 @@ VU1_FORCE_INLINE void VU1Interpreter::queueStore(uint32_t address, const uint32_
     std::copy(words, words + 4, store.words.begin());
     m_storeValid |= 1u << slot;
     noteReadyCycle(store.readyCycle);
+#endif
 }
 
 VU1_FORCE_INLINE void VU1Interpreter::queueVfWrite(uint8_t reg, uint8_t laneMask,
@@ -4124,174 +4141,160 @@ struct VU1InterpreterAccess
                                                 uint32_t codeSize, uint64_t budgetEnd)
     {
         bool ended = false;
-            uint64_t readyCycle = vu.calculatePairReadyCycle(decoded);
-            while (readyCycle > vu.m_cycle)
+#if !defined(__aarch64__) && !defined(_M_ARM64)
+        uint64_t readyCycle = vu.calculatePairReadyCycle(decoded);
+        while (readyCycle > vu.m_cycle)
+        {
+            if (readyCycle >= budgetEnd)
             {
-                if (readyCycle >= budgetEnd)
-                {
-                    vu.advanceTo(budgetEnd);
-                    break;
-                }
-                vu.advanceTo(readyCycle);
-                readyCycle = vu.calculatePairReadyCycle(decoded);
+                vu.advanceTo(budgetEnd);
+                break;
             }
-            if (vu.m_cycle >= budgetEnd)
-                return StepResult::Budget;
+            vu.advanceTo(readyCycle);
+            readyCycle = vu.calculatePairReadyCycle(decoded);
+        }
+#endif
+        if (vu.m_cycle >= budgetEnd)
+            return StepResult::Budget;
 
-            uint8_t writtenVi = 0u;
-            int32_t oldVi = 0;
-            if (const uint32_t viWrites = decoded.lowerUsage.viWrite & 0xFFFEu; viWrites != 0u)
-            {
-                writtenVi = static_cast<uint8_t>(std::countr_zero(viWrites));
-                oldVi = vu.m_state.vi[writtenVi];
-            }
+        uint8_t writtenVi = 0u;
+        int32_t oldVi = 0;
+        if (const uint32_t viWrites = decoded.lowerUsage.viWrite & 0xFFFEu; viWrites != 0u)
+        {
+            writtenVi = static_cast<uint8_t>(std::countr_zero(viWrites));
+            oldVi = vu.m_state.vi[writtenVi];
+        }
 
-            const VU1Interpreter::VfAccess upperWrite = decoded.upperUsage.vfWrite;
-            const VU1Interpreter::VfAccess lowerWrite = decoded.lowerUsage.vfWrite;
-            const bool hasUpperWrite = upperWrite.reg != 0u;
-            const bool hasLowerWrite = lowerWrite.reg != 0u && decoded.suppressedLowerVf != lowerWrite.reg;
-            const bool hasDistinctLowerWrite = hasLowerWrite && (!hasUpperWrite || lowerWrite.reg != upperWrite.reg);
-            float oldUpperVf[4]{};
-            float newUpperVf[4]{};
-            float oldLowerVf[4]{};
-            float newLowerVf[4]{};
-            float oldAcc[4]{};
-            float newAcc[4]{};
-            if (hasUpperWrite)
-                std::memcpy(oldUpperVf, vu.m_state.vf[upperWrite.reg], sizeof(oldUpperVf));
-            if (hasDistinctLowerWrite)
-                std::memcpy(oldLowerVf, vu.m_state.vf[lowerWrite.reg], sizeof(oldLowerVf));
-            if (decoded.upperUsage.accWrite != 0u)
-                std::memcpy(oldAcc, vu.m_state.acc, sizeof(oldAcc));
+#if !defined(__aarch64__) && !defined(_M_ARM64)
+        const VU1Interpreter::VfAccess upperWrite = decoded.upperUsage.vfWrite;
+        const VU1Interpreter::VfAccess lowerWrite = decoded.lowerUsage.vfWrite;
+        const bool hasUpperWrite = upperWrite.reg != 0u;
+        const bool hasLowerWrite = lowerWrite.reg != 0u && decoded.suppressedLowerVf != lowerWrite.reg;
+        const bool hasDistinctLowerWrite = hasLowerWrite && (!hasUpperWrite || lowerWrite.reg != upperWrite.reg);
+        float oldUpperVf[4]{};
+        float newUpperVf[4]{};
+        float oldLowerVf[4]{};
+        float newLowerVf[4]{};
+        float oldAcc[4]{};
+        float newAcc[4]{};
+        if (hasUpperWrite)
+            std::memcpy(oldUpperVf, vu.m_state.vf[upperWrite.reg], sizeof(oldUpperVf));
+        if (hasDistinctLowerWrite)
+            std::memcpy(oldLowerVf, vu.m_state.vf[lowerWrite.reg], sizeof(oldLowerVf));
+        if (decoded.upperUsage.accWrite != 0u)
+            std::memcpy(oldAcc, vu.m_state.acc, sizeof(oldAcc));
+#endif
 
-            if (decoded.iBit)
+        if (decoded.iBit)
+        {
+            vu.execUpper(decoded.upper);
+            float immediate = 0.0f;
+            std::memcpy(&immediate, &decoded.lower, sizeof(immediate));
+            vu.m_state.i = vu.normalizeOperand(immediate);
+        }
+        else if (decoded.upperVfShadowReg != 0u)
+        {
+            float oldVf[4]{};
+            float upperVf[4]{};
+            std::memcpy(oldVf, vu.m_state.vf[decoded.upperVfShadowReg], sizeof(oldVf));
+            vu.execUpper(decoded.upper);
+            std::memcpy(upperVf, vu.m_state.vf[decoded.upperVfShadowReg], sizeof(upperVf));
+            std::memcpy(vu.m_state.vf[decoded.upperVfShadowReg], oldVf, sizeof(oldVf));
+            vu.execLower(decoded.lower, vuData, dataSize, gs, memory, decoded.upper);
+            std::memcpy(vu.m_state.vf[decoded.upperVfShadowReg], upperVf, sizeof(upperVf));
+        }
+        else
+        {
+            vu.execUpper(decoded.upper);
+            vu.execLower(decoded.lower, vuData, dataSize, gs, memory, decoded.upper);
+        }
+
+        vu.m_viBranchBackupValid = false;
+
+#if !defined(__aarch64__) && !defined(_M_ARM64)
+        if (hasUpperWrite)
+        {
+            std::memcpy(newUpperVf, vu.m_state.vf[upperWrite.reg], sizeof(newUpperVf));
+            std::memcpy(vu.m_state.vf[upperWrite.reg], oldUpperVf, sizeof(oldUpperVf));
+            const uint32_t latency = decoded.upperUsage.vfLatency != 0u ? decoded.upperUsage.vfLatency : decoded.upperUsage.latency;
+            vu.queueVfWrite(upperWrite.reg, upperWrite.lanes, newUpperVf, latency);
+        }
+        if (hasDistinctLowerWrite)
+        {
+            std::memcpy(newLowerVf, vu.m_state.vf[lowerWrite.reg], sizeof(newLowerVf));
+            std::memcpy(vu.m_state.vf[lowerWrite.reg], oldLowerVf, sizeof(oldLowerVf));
+            const uint32_t latency = decoded.lowerUsage.vfLatency != 0u ? decoded.lowerUsage.vfLatency : decoded.lowerUsage.latency;
+            vu.queueVfWrite(lowerWrite.reg, lowerWrite.lanes, newLowerVf, latency);
+        }
+        if (decoded.upperUsage.accWrite != 0u)
+        {
+            std::memcpy(newAcc, vu.m_state.acc, sizeof(newAcc));
+            std::memcpy(vu.m_state.acc, oldAcc, sizeof(oldAcc));
+            vu.queueAccWrite(decoded.upperUsage.accWrite, newAcc, VU1Interpreter::kAccForwardLatency);
+        }
+        if (writtenVi != 0u)
+        {
+            const int32_t newVi = vu.m_state.vi[writtenVi];
+            vu.m_state.vi[writtenVi] = oldVi;
+            const uint32_t latency = decoded.lowerUsage.viLatency != 0u ? decoded.lowerUsage.viLatency : decoded.lowerUsage.latency;
+            vu.queueViWrite(writtenVi, newVi, latency);
+        }
+        vu.markPairWrites(decoded);
+#endif
+        if (writtenVi != 0u && decoded.lowerUsage.delaysNextBranchRead)
+            vu.recordViWriteForBranch(writtenVi, oldVi);
+
+        vu.m_state.vf[0][0] = 0.0f;
+        vu.m_state.vf[0][1] = 0.0f;
+        vu.m_state.vf[0][2] = 0.0f;
+        vu.m_state.vf[0][3] = 1.0f;
+        vu.m_state.vi[0] = 0;
+
+        uint32_t nextPc = vu.m_state.pc + 8u;
+        if (nextPc >= codeSize)
+            nextPc = 0u;
+        vu.m_state.pc = nextPc;
+
+        if (vu.m_state.branchPending)
+        {
+            if (vu.m_state.branchDelay == 0u)
             {
-                vu.execUpper(decoded.upper);
-                float immediate = 0.0f;
-                std::memcpy(&immediate, &decoded.lower, sizeof(immediate));
-                vu.m_state.i = vu.normalizeOperand(immediate);
-            }
-            else if (decoded.upperVfShadowReg != 0u)
-            {
-                float oldVf[4]{};
-                float upperVf[4]{};
-                std::memcpy(oldVf,
-                            vu.m_state.vf[decoded.upperVfShadowReg],
-                            sizeof(oldVf));
-                vu.execUpper(decoded.upper);
-                std::memcpy(upperVf,
-                            vu.m_state.vf[decoded.upperVfShadowReg],
-                            sizeof(upperVf));
-                std::memcpy(vu.m_state.vf[decoded.upperVfShadowReg],
-                            oldVf,
-                            sizeof(oldVf));
-                vu.execLower(decoded.lower, vuData, dataSize, gs, memory, decoded.upper);
-                std::memcpy(vu.m_state.vf[decoded.upperVfShadowReg],
-                            upperVf,
-                            sizeof(upperVf));
+                vu.m_state.pc = vu.m_state.branchTarget & vu.microAddressMask();
+                vu.m_state.branchPending = false;
             }
             else
             {
-                vu.execUpper(decoded.upper);
-                vu.execLower(decoded.lower, vuData, dataSize, gs, memory, decoded.upper);
+                --vu.m_state.branchDelay;
             }
+        }
 
-            vu.m_viBranchBackupValid = false;
+        const bool dHalt = decoded.dBit && vu.m_state.dBitEnabled;
+        const bool tHalt = decoded.tBit && vu.m_state.tBitEnabled;
+        const bool haltBit = dHalt || tHalt;
+        const bool haltBranch = haltBit && decoded.lowerUsage.pipeline == VU1Interpreter::PipelineBranch;
 
-            if (hasUpperWrite)
-            {
-                std::memcpy(newUpperVf, vu.m_state.vf[upperWrite.reg], sizeof(newUpperVf));
-                std::memcpy(vu.m_state.vf[upperWrite.reg], oldUpperVf, sizeof(oldUpperVf));
-                const uint32_t latency =
-                    decoded.upperUsage.vfLatency != 0u
-                        ? decoded.upperUsage.vfLatency
-                        : decoded.upperUsage.latency;
-                vu.queueVfWrite(upperWrite.reg, upperWrite.lanes, newUpperVf, latency);
-            }
-            if (hasDistinctLowerWrite)
-            {
-                std::memcpy(newLowerVf, vu.m_state.vf[lowerWrite.reg], sizeof(newLowerVf));
-                std::memcpy(vu.m_state.vf[lowerWrite.reg], oldLowerVf, sizeof(oldLowerVf));
-                const uint32_t latency = decoded.lowerUsage.vfLatency != 0u
-                                             ? decoded.lowerUsage.vfLatency
-                                             : decoded.lowerUsage.latency;
-                vu.queueVfWrite(lowerWrite.reg, lowerWrite.lanes, newLowerVf, latency);
-            }
-            if (decoded.upperUsage.accWrite != 0u)
-            {
-                std::memcpy(newAcc, vu.m_state.acc, sizeof(newAcc));
-                std::memcpy(vu.m_state.acc, oldAcc, sizeof(oldAcc));
-                // ACC is forwarded to the next upper instruction. Its arithmetic
-                // flags still use the normal four-cycle FMAC timeline.
-                vu.queueAccWrite(decoded.upperUsage.accWrite, newAcc,
-                              VU1Interpreter::kAccForwardLatency);
-            }
-            if (writtenVi != 0u)
-            {
-                const int32_t newVi = vu.m_state.vi[writtenVi];
-                vu.m_state.vi[writtenVi] = oldVi;
-                const uint32_t latency =
-                    decoded.lowerUsage.viLatency != 0u
-                        ? decoded.lowerUsage.viLatency
-                        : decoded.lowerUsage.latency;
-                vu.queueViWrite(writtenVi, newVi, latency);
-            }
-
-            vu.markPairWrites(decoded);
-            if (writtenVi != 0u && decoded.lowerUsage.delaysNextBranchRead)
-                vu.recordViWriteForBranch(writtenVi, oldVi);
-
-            vu.m_state.vf[0][0] = 0.0f;
-            vu.m_state.vf[0][1] = 0.0f;
-            vu.m_state.vf[0][2] = 0.0f;
-            vu.m_state.vf[0][3] = 1.0f;
-            vu.m_state.vi[0] = 0;
-
-            uint32_t nextPc = vu.m_state.pc + 8u;
-            if (nextPc >= codeSize)
-                nextPc = 0u;
-            vu.m_state.pc = nextPc;
-
-            if (vu.m_state.branchPending)
-            {
-                if (vu.m_state.branchDelay == 0u)
-                {
-                    vu.m_state.pc = vu.m_state.branchTarget & vu.microAddressMask();
-                    vu.m_state.branchPending = false;
-                }
-                else
-                {
-                    --vu.m_state.branchDelay;
-                }
-            }
-
-            const bool dHalt = decoded.dBit && vu.m_state.dBitEnabled;
-            const bool tHalt = decoded.tBit && vu.m_state.tBitEnabled;
-            const bool haltBit = dHalt || tHalt;
-            const bool haltBranch = haltBit && decoded.lowerUsage.pipeline == VU1Interpreter::PipelineBranch;
-
-            if (vu.m_state.haltAfterDelaySlot)
-            {
-                vu.m_state.stoppedByD = vu.m_pendingHaltD;
-                vu.m_state.stoppedByT = vu.m_pendingHaltT;
-                ended = true;
-            }
-            else if (vu.m_state.ebit)
-                ended = true;
-            else if (haltBit && !haltBranch)
-            {
-                vu.m_state.stoppedByD = dHalt;
-                vu.m_state.stoppedByT = tHalt;
-                ended = true;
-            }
-            else if (decoded.eBit)
-                vu.m_state.ebit = true;
-            else if (haltBranch)
-            {
-                vu.m_state.haltAfterDelaySlot = true;
-                vu.m_pendingHaltD = dHalt;
-                vu.m_pendingHaltT = tHalt;
-            }
+        if (vu.m_state.haltAfterDelaySlot)
+        {
+            vu.m_state.stoppedByD = vu.m_pendingHaltD;
+            vu.m_state.stoppedByT = vu.m_pendingHaltT;
+            ended = true;
+        }
+        else if (vu.m_state.ebit)
+            ended = true;
+        else if (haltBit && !haltBranch)
+        {
+            vu.m_state.stoppedByD = dHalt;
+            vu.m_state.stoppedByT = tHalt;
+            ended = true;
+        }
+        else if (decoded.eBit)
+            vu.m_state.ebit = true;
+        else if (haltBranch)
+        {
+            vu.m_state.haltAfterDelaySlot = true;
+            vu.m_pendingHaltD = dHalt;
+            vu.m_pendingHaltT = tHalt;
+        }
 
         vu.advanceOneCycle();
         return ended ? StepResult::Ended : StepResult::Continue;

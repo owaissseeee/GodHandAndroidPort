@@ -393,6 +393,8 @@ public:
 
     EeScheduler &eeScheduler();
     const EeScheduler &eeScheduler() const;
+    inline EeScheduler &scheduler() { return eeScheduler(); }
+    inline const EeScheduler &scheduler() const { return eeScheduler(); }
     void postEeEvent(EeEvent event);
     bool eeCheckpointDue(uint32_t cycles = 32u) noexcept;
     [[noreturn]] void eeWaitVSyncTicks(uint32_t ticks, uint32_t resumePc);

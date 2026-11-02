@@ -341,6 +341,13 @@ void EeScheduler::setHostPacingDefault(bool enabled) noexcept
 void EeScheduler::hostCatchUp() noexcept
 {
     m_pacingCheckCycle = m_eeCycle + kHostPacingCheckCycles;
+#if defined(__ANDROID__)
+    // CRITICAL ANDROID FIX:
+    // Never call consumeCycles(field) to artificially advance m_eeCycle ahead of guest code execution!
+    // Consuming EE cycles when the mobile CPU is busy steals the 4,915,298-cycle VBlank budget from
+    // EEThread, firing premature VBlankStart events before the game finishes building its frame!
+    return;
+#else
     if (m_pacingRefTime == std::chrono::steady_clock::time_point{} || !ps2x::asyncvif::active(m_runtime.memory()))
         return;
     if (ps2x::asyncvif::vblankWaitEnabled())
@@ -371,6 +378,7 @@ void EeScheduler::hostCatchUp() noexcept
     }
     g_lastCatchUpDispatches = g_guestDispatches;
     consumeCycles(std::min<uint64_t>(lag - field / 4u, field));
+#endif
 }
 
 void EeScheduler::reset(uint8_t *rdram, const R5900Context &mainContext)
@@ -2703,8 +2711,9 @@ void EeScheduler::processDueDeadlines()
                 // While the IPU decodes an FMV its commands run inside the EE's register writes (a full-picture CSC
                 // takes ~3 ms) and push vblanks past the 2 ms: the movie ran at ~82% speed. Then late vblanks catch up
                 // as in the synchronous mode (ps2_memory.cpp ps2xIpuActiveRecently, PS2X_IPU_CATCHUP=0 turns it off).
-                const auto catchUp = ps2x::asyncvif::vblankWaitEnabled() && ps2x::asyncvif::active(m_runtime.memory()) &&
-                                             !ps2xIpuActiveRecently()
+                // Always re-anchor late VBlanks within 2ms (except during IPU video playback) so a late frame
+                // never fires 2 VBlanks back-to-back!
+                const auto catchUp = !ps2xIpuActiveRecently()
                                          ? std::chrono::duration_cast<std::chrono::steady_clock::duration>(std::chrono::milliseconds(2))
                                          : std::chrono::duration_cast<std::chrono::steady_clock::duration>(kMaxVBlankCatchUpFields * vblankPeriod());
                 const auto hostStart = std::max(scheduled.hostDeadline, std::chrono::steady_clock::now() - catchUp);

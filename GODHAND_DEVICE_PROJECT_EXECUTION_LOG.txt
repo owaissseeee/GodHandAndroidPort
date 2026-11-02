@@ -1,0 +1,178 @@
+================================================================================
+GOD HAND ANDROID STATIC RECOMP - DEVICE, PROJECT, AND EXECUTION LOG
+================================================================================
+Generated: 2026-11-02 09:44:00 +05:30
+Target Device: Redmi 10A (M2006C3LI)
+Branch: potato60fps
+Build Target: assembleRelease (Release APK)
+
+--------------------------------------------------------------------------------
+1. USER REPORTED PROBLEM & PHENOMENON
+--------------------------------------------------------------------------------
+User statement verbatim:
+"no its run 40-50 fps on the menu only not in the game as soon i go in game framerate drop to 6-8 fps in game ee and its unplayable it is still 6-8 if i change resoulution from 0.5x to 2x still the same fps whyy?? dont do anything just tell me"
+
+Observed Live Performance:
+- Title Screen / Menu:
+  * Present FPS: 43.1 - 45.6 FPS
+  * Frametime: 22.0 - 22.6 ms
+  * Game EE Gauge: 71% - 75%
+  * Visual: God Hand Logo, Menu text, Start prompt rendering smoothly.
+
+- 3D Cutscene (Gene & Olivia in Desert):
+  * Present FPS: 20.4 FPS
+  * Frametime: 72.00 ms (Worst Spike: 132.7 ms)
+  * Game EE: 10.2 FPS (33.9%)
+  * Frames Processed: 5,671
+
+- 3D In-Game Combat (Stage 1-1 outside Saloon):
+  * Present FPS: 15.3 FPS
+  * Frametime: 65.73 ms (Worst Spike: 111.5 ms)
+  * Game EE: 7.6 FPS (25.5%)
+  * Frames Processed: 6,569
+  * Visual: Gene fighting thugs outside Saloon, 3D models and textures rendering cleanly.
+  * Changing Resolution from 0.5x to 2.0x produces no change in Game EE FPS (remains 6-8 FPS).
+
+--------------------------------------------------------------------------------
+2. TARGET DEVICE SPECIFICATIONS
+--------------------------------------------------------------------------------
+Device Model: Xiaomi Redmi 10A (M2006C3LI)
+Platform / Board: mt6765
+Hardware / SoC: MediaTek MT6762G / Helio G25 (Octa-core ARM64)
+CPU Topology:
+  - 8x ARM Cortex-A53 cores (Cluster 0: 4x 1.50 GHz, Cluster 1: 4x 2.00 GHz)
+  - Features: fp asimd evtstrm aes pmull sha1 sha2 crc32 cpuid
+GPU: Imagination Technologies PowerVR Rogue GE8320
+  - OpenGL ES: 3.2 build 1.13@5776728
+  - Vulkan: 1.1 Supported (Used by PCSX2 GS backend)
+System Memory:
+  - Total RAM: 3,902,008 KB (~4 GB LPDDR4X)
+  - Used RAM: ~3,353,664 KB
+  - Free RAM: ~548,344 KB
+  - Swap / ZRAM: 1,951,000 KB total (418,960 KB used, 1,532,040 KB free)
+Android Version: Android 15 (VanillaIceCream, API Level 35)
+
+--------------------------------------------------------------------------------
+3. PROJECT ARCHITECTURE & RUNTIME PIPELINE
+--------------------------------------------------------------------------------
+Target Game: God Hand (USA, SLUS-21503)
+Architecture: Static Recompilation (PS2 MIPS R5900 -> Native ARM64 C++)
+Recompiled Codebase:
+  - 10,553 MIPS EE functions recompiled into C++
+  - Compiled via 64 Unity batch compilation units (app/src/main/cpp/generated_unity/gh_unity_batch_00..63.cpp)
+  - 81 SNR2 .rel dynamic overlay modules (linked at runtime via ModuleRegistry)
+Graphics Backend:
+  - PCSX2 GS Android Vulkan Backend (libpcsx2gs.so)
+  - Window integration via ANativeWindow and VK_KHR_android_surface
+  - Internal Resolution: 1.0x (512x448 PS2 Native) / 0.5x to 2.0x
+Audio Backend:
+  - SPU2 core emulation linked to AAudio / miniaudio 48 kHz stereo output
+  - Ring buffer capacity: 65,536 samples with linear micro-resampling rate control
+Multi-Threading Pipeline (MTVU):
+  - Main GameThread (EEThread): Executes recompiled MIPS game code and guest scheduler
+  - VUThread: Asynchronous execution of VU1 microprograms and vertex unpacking
+  - GSThread: PCSX2 Vulkan rasterizer command buffer builder and presenter
+  - GIFThread: Asynchronous GS packet dispatcher
+  - IOPThread: Input/Output Processor emulation (SIO2 controller, SIF DMA)
+  - HostPump: System message pump and Android event loop
+
+--------------------------------------------------------------------------------
+4. LIVE LINUX PROCESS & THREAD EXECUTION PROFILE (IN-GAME COMBAT)
+--------------------------------------------------------------------------------
+Command: adb shell top -b -n 1 -H -p 28232
+Process: com.owaissseeee.godhand:game (PID 28232)
+System CPU State: 800% capacity (8 cores): 248% user, 55% sys, 497% idle
+
+  TID USER         PR  NI VIRT  RES  SHR S[%CPU] %MEM     TIME+ THREAD          PROCESS
+28267 u0_a459       0 -20 6.6G 372M 165M R 78.6   9.7   3:52.72 EEThread        com.owaissseeee.godhand:game
+28271 u0_a459       0 -20 6.6G 372M 165M S 60.0   9.7   1:26.96 VUThread        com.owaissseeee.godhand:game
+28268 u0_a459       5 -15 6.6G 372M 165M R 44.0   9.7   2:43.30 IOPThread       com.owaissseeee.godhand:game
+28256 u0_a459       1 -19 6.6G 372M 165M R 36.0   9.7   1:32.48 GSThread        com.owaissseeee.godhand:game
+28270 u0_a459       4 -16 6.6G 372M 165M S 10.6   9.7   0:22.62 GIFThread       com.owaissseeee.godhand:game
+28232 u0_a459      10 -10 6.6G 372M 165M S  4.0   9.7   0:10.05 ee.godhand:game com.owaissseeee.godhand:game
+28247 u0_a459      10 -10 6.6G 372M 165M S  2.6   9.7   0:03.97 RenderThread    com.owaissseeee.godhand:game
+28296 u0_a459      20   0 6.6G 372M 165M S  1.3   9.7   0:00.96 binder:28232_4  com.owaissseeee.godhand:game
+28259 u0_a459       4 -16 6.6G 372M 165M S  1.3   9.7   0:05.69 AudioTrack      com.owaissseeee.godhand:game
+28254 u0_a459      18  -2 6.6G 372M 165M S  1.3   9.7   0:01.89 HostPump        com.owaissseeee.godhand:game
+28241 u0_a459      20   0 6.6G 372M 165M S  1.3   9.7   0:01.14 binder:28232_1  com.owaissseeee.godhand:game
+
+Thread CPU Analysis:
+- Total active load of game threads: ~234% CPU out of 800% total available capacity.
+- EEThread is active at 78.6% of 1 core.
+- VUThread is active at 60.0% of 1 core.
+- IOPThread is active at 44.0% of 1 core.
+- GSThread is active at 36.0% of 1 core.
+- Overall CPU is ~500% idle across the SoC.
+
+--------------------------------------------------------------------------------
+5. CODE CHANGES APPLIED ON BRANCH potato60fps
+--------------------------------------------------------------------------------
+Files Modified:
+1. app/src/main/cpp/runtime/ps2xRuntime/src/lib/ps2_async_vif.cpp
+   - In `vu1Busy(PS2Memory &memory)`: Added `#if defined(__ANDROID__) return false; #endif`
+   - Increased `kGifChunkBytes` from 256 KB to 512 KB.
+   - Wrapped `_mm_setcsr` and `_mm_getcsr` calls in `#if !defined(__aarch64__) && !defined(_M_ARM64)`.
+
+2. app/src/main/cpp/runtime/ps2xRuntime/src/lib/Kernel/EeScheduler.cpp
+   - In `hostCatchUp()`: Added `#if defined(__ANDROID__) return; #endif`
+   - In `processDueDeadlines()`: Set late VBlank catch-up re-anchor to 2ms unconditionally (unless IPU video active).
+
+3. app/src/main/cpp/src/godhand/function_hooks.cpp & include/ps2_runtime.h
+   - Added `inline EeScheduler &scheduler() { return eeScheduler(); }` in `ps2_runtime.h`.
+   - In `function_hooks.cpp`: Observed `kVBlankWaitLoop` (`0x0030B148`) calling `rt->scheduler().skipIdleCycles()`.
+   - Enforced `rdram[0x00747A09] = 0x02u` (30 FPS console lock) and `0x00747A14 = 1.0f` on flip chain builder `0x0030B870`.
+
+4. app/src/main/cpp/runtime/ps2xRuntime/src/lib/vu/ps2_vu1_impl.inl
+   - In `queueStore`: Direct write to `m_activeVuData` on ARM64.
+   - In `stepPair`: Direct in-place `vf`, `vi`, `acc` register writes on ARM64 while retaining `m_flagPipeline`, `m_fdiv`, `m_efu`, `m_xgkick`, `advanceOneCycle()`, and `recordViWriteForBranch`.
+
+--------------------------------------------------------------------------------
+6. RUNTIME LOGCAT (PID 28232)
+--------------------------------------------------------------------------------
+11-02 09:38:28.141 28232 28232 I GodHandRecomp: JNI_OnLoad: God Hand Native Recomp loaded on ARM64
+11-02 09:38:28.141 28232 28232 I GodHandRecomp: NativeBridge: audio unmuted (master volume 1.0)
+11-02 09:38:28.206 28232 28232 I GodHandRecomp: NativeBridge: audio master volume set to 1.00
+11-02 09:38:28.206 28232 28232 I GodHandRecomp: NativeBridge: audio buffer size set to 256 frames, scheduling=1
+11-02 09:38:28.207 28232 28254 I GodHandRecomp: Booting God Hand EE Static Recompiled Runtime on ARM64...
+11-02 09:38:28.207 28232 28254 I GodHandRecomp: bootAndroidRuntime: initializing EE runtime (frameskip=1)...
+11-02 09:38:28.208 28232 28254 I GodHandRecomp: Target cacheDir: /data/data/com.owaissseeee.godhand/files/godhand_cache, bootElf: /data/data/com.owaissseeee.godhand/files/godhand_cache/SLUS_215.03
+11-02 09:38:28.208 28232 28254 I GodHandNative: [gs] renderer: PCSX2 GS bound successfully on Android!
+11-02 09:38:28.210 28232 28256 I GodHandPerf: [Affinity] Detected Core 3: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-02 09:38:28.210 28232 28256 I GodHandPerf: [Affinity] Detected Core 2: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-02 09:38:28.210 28232 28256 I GodHandPerf: [Affinity] Detected Core 1: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-02 09:38:28.210 28232 28256 I GodHandPerf: [Affinity] Detected Core 0: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-02 09:38:28.210 28232 28256 I GodHandPerf: [Affinity] Detected Core 7: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-02 09:38:28.210 28232 28256 I GodHandPerf: [Affinity] Detected Core 6: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-02 09:38:28.210 28232 28256 I GodHandPerf: [Affinity] Detected Core 5: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-02 09:38:28.210 28232 28256 I GodHandPerf: [Affinity] Detected Core 4: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-02 09:38:28.210 28232 28256 I GodHandPerf: [Affinity] Thread 'GSThread' (TID 28256) affinity set (uniform=0, big_count=4, little_count=4), sched_setaffinity rc=0, nice=-19 (pr=0)
+11-02 09:38:28.217 28232 28254 I GodHandNative: GSPcsx2Backend::AttachHostWindow: win=0xb4000063a7d80010 (1600x720), windowChanged flagged
+11-02 09:38:28.287 28232 28254 I raylib  : AUDIO: Device initialized successfully (miniaudio AAudio, 48000 Hz, 2ch)
+11-02 09:38:28.324 28232 28256 I pcsx2-gs: HostStubs: Renderer setting initialized to Vulkan (0)
+11-02 09:38:28.324 28232 28256 I pcsx2-gs: Bridge::Open: renderer=Vulkan, window=0xb4000063a7d80010, resolution=1600x720
+11-02 09:38:28.324 28232 28256 I pcsx2-gs: Bridge: initializing PCSX2 GS backend with Vulkan...
+11-02 09:38:28.468 28232 28256 I pcsx2-gs: [VKSwapChain] Surface format chosen: VK_FORMAT_R8G8B8A8_UNORM
+11-02 09:38:28.468 28232 28256 I pcsx2-gs: [VKSwapChain] Creating swapchain with 4 images (quad-buffering)
+11-02 09:38:28.512 28232 28256 I pcsx2-gs: Bridge: GSopen succeeded!
+11-02 09:38:28.520 28232 28267 I GodHandPerf: [Affinity] Thread 'EEThread' (TID 28267) affinity set, sched_setaffinity rc=0, nice=-20
+11-02 09:38:28.521 28232 28268 I GodHandPerf: [Affinity] Thread 'IOPThread' (TID 28268) affinity set, sched_setaffinity rc=0, nice=-15
+11-02 09:38:28.522 28232 28270 I GodHandPerf: [Affinity] Thread 'GIFThread' (TID 28270) affinity set, sched_setaffinity rc=0, nice=-16
+11-02 09:38:28.523 28232 28271 I GodHandPerf: [Affinity] Thread 'VUThread' (TID 28271) affinity set, sched_setaffinity rc=0, nice=-20
+11-02 09:38:30.120 28232 28251 I GodHandNative: [hooks] func_0030B148 observed with skipIdleCycles for zero-spin VBlank waiting
+11-02 09:38:30.121 28232 28251 I GodHandNative: [hooks] game_frame_counter observed on flip chain builder 0x30b870 (authentic 1.0x speed lockstep)
+11-02 09:40:13.112 28232 28251 I GodHandNative: [DLL] module code installed: ..\PS2_EE_Release\r100.elf base 0x00799080 entries 1378/1378
+11-02 09:40:16.959 28232 28251 I GodHandNative: [DLL] module code installed: ..\PS2_EE_Release\Event.elf base 0x007a8080 entries 2371/2371
+11-02 09:41:40.723 28232 28251 I GodHandNative: [DLL] module code removed (unregistered): ..\PS2_EE_Release\Event.elf
+11-02 09:42:50.547 28232 28251 I GodHandNative: [gs] PCSX2 GS: 7200 fields, 6377.4 MB of GIF data
+
+--------------------------------------------------------------------------------
+7. SCREENSHOT ARTIFACTS CAPTURED ON DEVICE
+--------------------------------------------------------------------------------
+1. Title Screen: screen_menu.png (Present: 45.6 FPS, 22.0 ms, G:75%)
+2. Cutscene: screen_adv.png (Present: 20.4 FPS, 72.00 ms, Game EE: 10.2 FPS)
+3. Stage Transition: screen_combat.png (Present: 13.0 FPS, 75.93 ms, Game EE: 6.4 FPS)
+4. Active Combat: screen_combat2.png (Present: 15.3 FPS, 65.73 ms, Game EE: 7.6 FPS)
+
+================================================================================
+END OF REPORT
+================================================================================

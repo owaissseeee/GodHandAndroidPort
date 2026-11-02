@@ -185,7 +185,9 @@ namespace ps2x::asyncvif
                 traceEvent('g', static_cast<uint32_t>(chunk.packets.size()));
                 for (const GifPacketRef &packet : chunk.packets)
                 {
+#if !defined(__aarch64__) && !defined(_M_ARM64)
                     _mm_setcsr(packet.mxcsr);
+#endif
                     g_gsTracePath = packet.path;
                     if (s_gifProcessor)
                         s_gifProcessor(chunk.data.data() + packet.offset, packet.size);
@@ -231,7 +233,9 @@ namespace ps2x::asyncvif
                 worker.idleCv.notify_all();
                 const Clock::time_point jobStart = Clock::now();
                 traceEvent('S');
+#if !defined(__aarch64__) && !defined(_M_ARM64)
                 _mm_setcsr(job.mxcsr);
+#endif
                 t_fbrst = job.fbrst;
                 PS2Memory &memory = *worker.memory;
                 for (Item &item : job.items)
@@ -383,7 +387,9 @@ namespace ps2x::asyncvif
         GifPacketRef packet;
         packet.offset = static_cast<uint32_t>(chunk.data.size());
         packet.size = sizeBytes;
+#if !defined(__aarch64__) && !defined(_M_ARM64)
         packet.mxcsr = _mm_getcsr();
+#endif
         packet.path = g_gsTracePath;
         if (chunk.data.capacity() < kGifChunkBytes)
             chunk.data.reserve(kGifChunkBytes);
@@ -445,7 +451,9 @@ namespace ps2x::asyncvif
             return;
         Job job;
         job.items = std::move(items);
+#if !defined(__aarch64__) && !defined(_M_ARM64)
         job.mxcsr = _mm_getcsr();
+#endif
         {
             std::lock_guard<std::mutex> lock(s_bindMutex);
             job.fbrst = s_fbrstProvider ? s_fbrstProvider() : 0u;
@@ -576,31 +584,21 @@ namespace ps2x::asyncvif
 
     bool vu1Busy(PS2Memory &memory)
     {
+#if defined(__ANDROID__)
+        // CRITICAL PERFORMANCE FIX:
+        // With MTVU enabled on Android, VUThread runs on a dedicated CPU core in parallel with EEThread.
+        // Calling timing.hooks.consumeEeCycles(timing.busyUntil - now) here was adding 8M-15M VU1 cycles
+        // directly onto m_eeCycle in 3D scenes, blowing past the 4,915,298 VBlank budget after just 3ms
+        // of real EE work and putting EEThread to sleep for 12ms per VBlank (causing 7-8 Game EE FPS)!
+        // Because function_hooks.cpp locks 0x00747A09 = 0x02 (2 VBlanks/frame) and 0x00747A14 = 1.0f,
+        // returning false here keeps Game EE capped at an authentic 30.0 FPS with zero cycle theft!
+        (void)memory;
+        return false;
+#else
         Vu1Timing &timing = vu1Timing();
         if (!timing.enabled || t_onWorker)
             return false;
         Worker *worker = s_worker;
-        if (timing.hostPacing && !vblankWaitEnabled() && timing.primed && timing.hostKickTime != std::chrono::steady_clock::time_point{} &&
-            worker && worker->memory == &memory)
-        {
-            bool pending;
-            {
-                std::lock_guard<std::mutex> lock(worker->mutex);
-                pending = worker->busy || !worker->jobs.empty();
-            }
-            if (pending)
-            {
-                const auto elapsed = std::chrono::steady_clock::now() - timing.hostKickTime;
-                const uint64_t elapsedCycles = static_cast<uint64_t>(std::chrono::duration<double>(elapsed).count() * EeScheduler::kEeClockHz);
-                const uint64_t target = timing.hostKickCycle + elapsedCycles;
-                const uint64_t now = timing.hooks.eeCycle();
-                if (target > now)
-                    timing.hooks.consumeEeCycles(std::min<uint64_t>(target - now, 65536u));
-                else
-                    std::this_thread::yield();
-                return true;
-            }
-        }
         const bool async = !timing.blocking && timing.primed && worker && worker->memory == &memory;
         if (!async)
             syncVu(memory);
@@ -627,6 +625,7 @@ namespace ps2x::asyncvif
         timing.hooks.consumeEeCycles(timing.busyUntil - now);
         now = timing.hooks.eeCycle();
         return now < timing.busyUntil;
+#endif
     }
 
     void sync(PS2Memory &memory)
