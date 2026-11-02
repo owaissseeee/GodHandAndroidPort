@@ -897,8 +897,8 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     setDefaultEnv("PS2X_AUDIO_STRETCH", "1");
     setDefaultEnv("PS2X_IOP_THREAD", "1");
     setDefaultEnv("PS2X_MTVU", "1");
-    setEnv("PS2X_MTVU_STREAM", "1");
-    setEnv("PS2X_MTVU_VBLANK_WAIT", "1");
+    setEnv("PS2X_MTVU_STREAM", "0");
+    setEnv("PS2X_MTVU_VBLANK_WAIT", "0");
     setDefaultEnv("PS2X_GS_ASYNC_PRESENT", "1");
     setDefaultEnv("PS2X_GS_ASYNC_READBACK", "all");
     setDefaultEnv("PS2X_PGS_COALESCE", "1");
@@ -907,7 +907,7 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     ps2x::asyncvif::setDefaultEnabled(true);
     // Disable artificial host pacing sleep on asyncvif so VUThread processes enemy/house geometry at 100% speed!
     ps2x::asyncvif::setHostPacingDefault(false);
-    EeScheduler::setHostPacingDefault(true);
+    EeScheduler::setHostPacingDefault(false);
     GSThreadedBackend::SetEnabledByDefault(true);
     GSThreadedBackend::SetGpuByDefault(true);
 

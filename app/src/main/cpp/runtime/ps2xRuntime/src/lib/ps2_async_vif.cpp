@@ -1,4 +1,5 @@
 #include "runtime/ps2_async_vif.h"
+#include "ps2_runtime_macros.h"
 #include "runtime/ps2_memory.h"
 #include "runtime/ee_scheduler.h"
 #include "runtime/gs/ps2_gif_arbiter.h"
@@ -209,6 +210,7 @@ namespace ps2x::asyncvif
             ThreadNaming::SetCurrentThreadName("VUThread");
             ThreadPriority::RaiseCurrentThread(ThreadPriority::Level::Highest);
             godhand_set_thread_affinity_and_priority("VUThread", 5, 4, -20);
+            ps2_enable_arm64_fast_fpcr();
             t_onWorker = true;
             const char *statsValue = std::getenv("PS2X_MTVU_STATS");
             const bool stats = statsValue && *statsValue && *statsValue != '0';

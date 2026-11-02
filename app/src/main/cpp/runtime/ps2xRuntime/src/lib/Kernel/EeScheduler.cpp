@@ -340,6 +340,9 @@ void EeScheduler::setHostPacingDefault(bool enabled) noexcept
 
 void EeScheduler::hostCatchUp() noexcept
 {
+#if defined(__ANDROID__)
+    return;
+#else
     m_pacingCheckCycle = m_eeCycle + kHostPacingCheckCycles;
     if (m_pacingRefTime == std::chrono::steady_clock::time_point{} || !ps2x::asyncvif::active(m_runtime.memory()))
         return;
@@ -356,9 +359,6 @@ void EeScheduler::hostCatchUp() noexcept
         ps2x::asyncvif::waitPipelineIdle(m_runtime.memory(), std::chrono::microseconds(static_cast<int64_t>(std::min(aheadUs, 1000.0))));
         return;
     }
-#if defined(__ANDROID__)
-    return;
-#else
     const double elapsed = std::chrono::duration<double>(std::chrono::steady_clock::now() - m_pacingRefTime).count();
     if (elapsed <= 0.0)
         return;
@@ -645,7 +645,8 @@ void EeScheduler::run()
             continue;
         }
 
-        if (!m_runtime.hasFunction(context.pc))
+        PS2Runtime::RecompiledFunction function = m_runtime.lookupFunction(context.pc);
+        if (__builtin_expect(function == nullptr, 0))
         {
             ++g_loopStats.missing;
             if (!running->invocations.empty())
@@ -665,8 +666,9 @@ void EeScheduler::run()
             }
             continue;
         }
+#if !defined(__ANDROID__)
         ps2xTraceSchedulerDispatch(&context);
-        PS2Runtime::RecompiledFunction function = m_runtime.lookupFunction(context.pc);
+#endif
 
         g_loopStats.lastPc = context.pc;
         if (checkpointDue(kGuestDispatchCycles))
@@ -776,53 +778,6 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
         return false;
     }
     t_onEeThread = true; // the full path runs before any deferral (g_deferUntil starts at 0)
-#if defined(__ANDROID__)
-    if (const GuestThread *running = currentThread(); running != nullptr && !m_insideInterrupt && running->invocations.empty())
-    {
-        const uint32_t pc = running->context.pc;
-        if (__builtin_expect(pc >= 0x0030B148u && pc < 0x0030B298u, 0))
-        {
-            // 1. If GIFThread raised a GS SIGNAL/FINISH interrupt, unwind immediately so the EE GS handler
-            //    kicks the next DMA part of the frame with zero delay!
-            if (gsInterruptUnseen() || !m_pendingInvocations.empty())
-            {
-                m_checkpointPending.store(true, std::memory_order_release);
-                m_unwinding = true;
-                g_deferUntil = 0u;
-                g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
-                return true;
-            }
-            // 2. If VUThread or GIFThread is STILL busy rendering the current frame, DO NOT advance m_eeCycle
-            //    (advancing m_eeCycle here would make VBlank fire before the frame finishes drawing!).
-            //    Instead, sleep briefly waiting for VUThread/GIFThread to finish or raise GS SIGNAL/FINISH!
-            if (ps2x::asyncvif::pipelineBusy(m_runtime.memory()))
-            {
-                ps2x::asyncvif::waitPipelineIdle(m_runtime.memory(), std::chrono::microseconds(250));
-                if (gsInterruptUnseen())
-                {
-                    m_checkpointPending.store(true, std::memory_order_release);
-                    m_unwinding = true;
-                    g_deferUntil = 0u;
-                    g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
-                    return true;
-                }
-            }
-            else
-            {
-                // 3. VUThread and GIFThread are 100% IDLE (frame drawing is completely finished!).
-                //    Now it is 100% safe to fast-forward the remaining idle EE cycles to the VBlank boundary!
-                skipIdleCycles();
-                if (m_checkpointPending.load(std::memory_order_acquire))
-                {
-                    m_unwinding = true;
-                    g_deferUntil = 0u;
-                    g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
-                    return true;
-                }
-            }
-        }
-    }
-#endif
     accountCycles(static_cast<uint32_t>(charge)); // also accounts g_ps2xEeDeferred
     const bool due = [this]() noexcept -> bool
     {
@@ -2279,6 +2234,10 @@ void EeScheduler::publishSnapshot()
 
 void EeScheduler::publishSnapshotNow()
 {
+#if defined(__ANDROID__)
+    m_snapshotDirty = false;
+    return;
+#else
     m_snapshotDirty = false;
     EeKernelSnapshot next{};
     next.sequence = ++m_snapshotSequence;
@@ -2341,6 +2300,7 @@ void EeScheduler::publishSnapshotNow()
         std::lock_guard lock(m_snapshotMutex);
         m_snapshot = std::move(next);
     }
+#endif
 }
 
 void EeScheduler::assertExecutor() const
@@ -3120,10 +3080,15 @@ void EeScheduler::saveSharedVu0Random(const R5900Context &context)
 
 void EeScheduler::publishDebugContext(const R5900Context &context)
 {
+#if defined(__ANDROID__)
+    (void)context;
+    return;
+#else
     m_runtime.m_debugPc.store(context.pc, std::memory_order_relaxed);
     m_runtime.m_debugRa.store(getRegU32(&context, 31), std::memory_order_relaxed);
     m_runtime.m_debugSp.store(getRegU32(&context, 29), std::memory_order_relaxed);
     m_runtime.m_debugGp.store(getRegU32(&context, 28), std::memory_order_relaxed);
+#endif
 }
 
 void EeScheduler::publishIdleDebugContext()
