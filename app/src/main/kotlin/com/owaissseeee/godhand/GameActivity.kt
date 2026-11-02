@@ -32,6 +32,15 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
     private var inputManager: InputManager? = null
     private var adpfSession: PerformanceHintManager.Session? = null
     private var adpfInitialized = false
+    private var inGameSettingsDialog: SettingsDialog? = null
+
+    private val importSaveLauncher = registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.OpenDocument()) { uri: android.net.Uri? ->
+        if (uri != null) {
+            val (ok, message) = SaveManager.importSaveFromZip(this, uri)
+            android.widget.Toast.makeText(this, message, android.widget.Toast.LENGTH_LONG).show()
+            inGameSettingsDialog?.refreshActiveTab()
+        }
+    }
 
     private fun ensureAdpfSession() {
         if (adpfInitialized || Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return
@@ -184,7 +193,7 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
     private fun showInGameSettingsDialog() {
         if (isFinishing || isDestroyed) return
         runOnUiThread {
-            SettingsDialog(
+            inGameSettingsDialog = SettingsDialog(
                 context = this,
                 settings = settings,
                 isMidGame = true,
@@ -192,13 +201,16 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                     touchOverlay.startEditMode()
                     hideSystemUI()
                 },
+                onImportSaveRequested = {
+                    importSaveLauncher.launch(arrayOf("*/*"))
+                },
                 onSettingsChanged = {
                     touchOverlay.applySettings(settings)
                     checkConnectedControllers()
                     hideSystemUI()
                 }
             ).apply {
-                setOnDismissListener { hideSystemUI() }
+                setOnDismissListener { inGameSettingsDialog = null; hideSystemUI() }
                 show()
             }
         }
@@ -262,7 +274,7 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                 root.addView(msg)
                 root.addView(row)
                 setContentView(root)
-                setOnDismissListener { hideSystemUI() }
+                setOnDismissListener { inGameSettingsDialog = null; hideSystemUI() }
                 show()
             }
         }

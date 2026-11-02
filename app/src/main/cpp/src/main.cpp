@@ -822,7 +822,7 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     // 5: "4x (2048x1792 QHD)" -> 4.0f
     // 6: "6x" -> 6.0f
     // 7: "8x (4K)" -> 8.0f
-    static const float s_scales[] = { 0.5f, 0.75f, 1.0f, 2.0f, 3.0f, 4.0f, 6.0f, 8.0f };
+    static const float s_scales[] = { 0.5f, 0.75f, 1.0f, 2.0f, 3.0f, 4.0f };
     float scale = 1.0f;
     if (resScaleIdx >= 0 && resScaleIdx < static_cast<int>(sizeof(s_scales) / sizeof(s_scales[0]))) {
         scale = s_scales[resScaleIdx];

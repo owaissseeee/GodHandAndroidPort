@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
 import android.view.Window
 import android.widget.Button
@@ -35,9 +36,12 @@ class MainActivity : ComponentActivity() {
     private var progressDialog: Dialog? = null
     private var progressDialogBar: ProgressBar? = null
     private var progressDialogLabel: TextView? = null
+    private var isProcessingIso = false
+    private var activeSettingsDialog: SettingsDialog? = null
 
     private val pickIsoLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
         if (uri != null) {
+            isProcessingIso = true
             try {
                 contentResolver.takePersistableUriPermission(
                     uri,
@@ -45,12 +49,22 @@ class MainActivity : ComponentActivity() {
                 )
             } catch (_: Exception) {}
             isoPromptDialog?.dismiss()
+            isoPromptDialog = null
             startCachingPipeline(uri, isDirectory = false)
         } else {
+            isProcessingIso = false
             // User cancelled picker; re-prompt if cache still not ready
             if (!processor.isCacheReady()) {
                 showIsoPromptDialog()
             }
+        }
+    }
+
+    private val importSaveLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
+        if (uri != null) {
+            val (ok, message) = SaveManager.importSaveFromZip(this, uri)
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+            activeSettingsDialog?.refreshActiveTab()
         }
     }
 
@@ -79,8 +93,8 @@ class MainActivity : ComponentActivity() {
         super.onResume()
         loadCustomArtworkIfAvailable()
         val ready = processor.isCacheReady() && isShaderCacheReady()
-        binding.btnMenuPlay.isEnabled = true // Always responsive; prompts if missing
-        if (!ready && !processor.isCacheReady()) {
+        binding.btnMenuPlay.isEnabled = true
+        if (!ready && !processor.isCacheReady() && !isProcessingIso) {
             if (isoPromptDialog == null || !isoPromptDialog!!.isShowing) {
                 showIsoPromptDialog()
             }
@@ -88,44 +102,70 @@ class MainActivity : ComponentActivity() {
     }
 
     /**
-     * Checks if custom background or custom title images exist in the app's files or storage.
-     * Allows the user to drop in custom artwork easily in the future!
+     * Checks if custom background or custom title images exist in the app's files, storage,
+     * or drawable resources. Allows the user to drop in custom artwork easily!
      */
     private fun loadCustomArtworkIfAvailable() {
         try {
             // 1. Custom Background Picture Check
-            val customBgCandidates = listOf(
-                File(getExternalFilesDir(null), "main_bg.png"),
-                File(getExternalFilesDir(null), "god_hand_bg.png"),
-                File(filesDir, "main_bg.png")
-            )
-            val customBgFile = customBgCandidates.firstOrNull { it.exists() && it.length() > 0 }
-            if (customBgFile != null) {
-                val bmp = BitmapFactory.decodeFile(customBgFile.absolutePath)
-                if (bmp != null) {
-                    binding.mainBackgroundImage.setImageBitmap(bmp)
+            // A) Check resource drawables first
+            val customBgResId = resources.getIdentifier("custom_main_bg", "drawable", packageName)
+            val fallbackBgResId = if (customBgResId != 0) customBgResId else resources.getIdentifier("main_bg", "drawable", packageName)
+            if (fallbackBgResId != 0) {
+                binding.mainBackgroundImage.setImageResource(fallbackBgResId)
+            } else {
+                // B) Check storage file candidates
+                val customBgCandidates = listOf(
+                    File(getExternalFilesDir(null), "main_bg.png"),
+                    File(getExternalFilesDir(null), "main_bg.jpg"),
+                    File(getExternalFilesDir(null), "god_hand_bg.png"),
+                    File(filesDir, "main_bg.png"),
+                    File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "GodHand/main_bg.png"),
+                    File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "GodHand/main_bg.jpg")
+                )
+                val customBgFile = customBgCandidates.firstOrNull { it.exists() && it.length() > 0 }
+                if (customBgFile != null) {
+                    val bmp = BitmapFactory.decodeFile(customBgFile.absolutePath)
+                    if (bmp != null) {
+                        binding.mainBackgroundImage.setImageBitmap(bmp)
+                    }
                 }
             }
 
             // 2. Custom Title Picture Check
-            val customTitleCandidates = listOf(
-                File(getExternalFilesDir(null), "title_logo.png"),
-                File(getExternalFilesDir(null), "god_hand_logo.png"),
-                File(filesDir, "title_logo.png")
-            )
-            val customTitleFile = customTitleCandidates.firstOrNull { it.exists() && it.length() > 0 }
-            if (customTitleFile != null) {
-                val bmp = BitmapFactory.decodeFile(customTitleFile.absolutePath)
-                if (bmp != null) {
-                    binding.godHandTitleLogo.setImageBitmap(bmp)
-                    binding.godHandTitleLogo.visibility = View.VISIBLE
-                    binding.godHandTitleText.visibility = View.GONE
-                    binding.godHandSubtitleText.visibility = View.GONE
-                }
+            // A) Check resource drawables first (god_hand_logo.png or title_logo.png in res/drawable)
+            val customLogoResId = resources.getIdentifier("god_hand_logo", "drawable", packageName)
+            val titleLogoResId = if (customLogoResId != 0) customLogoResId else resources.getIdentifier("title_logo", "drawable", packageName)
+            if (titleLogoResId != 0) {
+                binding.godHandTitleLogo.setImageResource(titleLogoResId)
+                binding.godHandTitleLogo.visibility = View.VISIBLE
+                binding.godHandTitleText.visibility = View.GONE
+                binding.godHandSubtitleText.visibility = View.GONE
             } else {
-                binding.godHandTitleLogo.visibility = View.GONE
-                binding.godHandTitleText.visibility = View.VISIBLE
-                binding.godHandSubtitleText.visibility = View.VISIBLE
+                // B) Check storage file candidates
+                val customTitleCandidates = listOf(
+                    File(getExternalFilesDir(null), "title_logo.png"),
+                    File(getExternalFilesDir(null), "god_hand_logo.png"),
+                    File(getExternalFilesDir(null), "title_logo.webp"),
+                    File(filesDir, "title_logo.png"),
+                    File(filesDir, "god_hand_logo.png"),
+                    File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "GodHand/title_logo.png"),
+                    File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "GodHand/god_hand_logo.png")
+                )
+                val customTitleFile = customTitleCandidates.firstOrNull { it.exists() && it.length() > 0 }
+                if (customTitleFile != null) {
+                    val bmp = BitmapFactory.decodeFile(customTitleFile.absolutePath)
+                    if (bmp != null) {
+                        binding.godHandTitleLogo.setImageBitmap(bmp)
+                        binding.godHandTitleLogo.visibility = View.VISIBLE
+                        binding.godHandTitleText.visibility = View.GONE
+                        binding.godHandSubtitleText.visibility = View.GONE
+                    }
+                } else {
+                    binding.godHandTitleLogo.visibility = View.GONE
+                    binding.godHandTitleText.visibility = View.VISIBLE
+                    binding.godHandSubtitleText.visibility = View.VISIBLE
+                }
             }
         } catch (_: Exception) {
             // Fallback to default XML vector & typography gracefully
@@ -144,16 +184,22 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        // 2. SETTINGS BUTTON (Opens 4-Tab Dialog: Graphics, Controls, Sound, Logs)
+        // 2. SETTINGS BUTTON (Opens 5-Tab Dialog: Graphics, Controls, Sound, Saves, Logs)
         binding.btnMenuSettings.setOnClickListener {
-            SettingsDialog(
+            activeSettingsDialog = SettingsDialog(
                 context = this,
                 settings = settings,
                 isMidGame = false,
+                onImportSaveRequested = {
+                    importSaveLauncher.launch(arrayOf("*/*"))
+                },
                 onSettingsChanged = {
                     // Applied immediately
                 }
-            ).show()
+            ).apply {
+                setOnDismissListener { activeSettingsDialog = null }
+                show()
+            }
         }
 
         // 3. QUIT BUTTON
@@ -178,6 +224,11 @@ class MainActivity : ComponentActivity() {
      */
     private fun showIsoPromptDialog() {
         if (isFinishing || isDestroyed) return
+        if (isProcessingIso || processor.isCacheReady()) {
+            isoPromptDialog?.dismiss()
+            isoPromptDialog = null
+            return
+        }
         if (isoPromptDialog?.isShowing == true) return
 
         isoPromptDialog = Dialog(this).apply {
@@ -216,6 +267,9 @@ class MainActivity : ComponentActivity() {
                 setTextColor(0xFFFFFFFF.toInt())
                 setBackgroundResource(R.drawable.btn_god_hand_primary)
                 setOnClickListener {
+                    isProcessingIso = true
+                    isoPromptDialog?.dismiss()
+                    isoPromptDialog = null
                     pickIsoLauncher.launch(arrayOf("*/*"))
                 }
             }
@@ -239,6 +293,10 @@ class MainActivity : ComponentActivity() {
             root.addView(btnQuit, LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, 48.dpToPx()
             ).apply { setMargins(0, 10, 0, 0) })
+
+            setOnDismissListener {
+                isoPromptDialog = null
+            }
 
             setContentView(root)
             show()
@@ -296,6 +354,9 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun startCachingPipeline(uri: Uri, isDirectory: Boolean) {
+        isProcessingIso = true
+        isoPromptDialog?.dismiss()
+        isoPromptDialog = null
         showProgressDialog("Extracting God Hand ISO data...")
         lifecycleScope.launch {
             val success = processor.processAndOptimizeGameSource(uri, isDirectory) { prog ->
@@ -307,6 +368,7 @@ class MainActivity : ComponentActivity() {
             if (success) {
                 startShaderPrecompilation()
             } else {
+                isProcessingIso = false
                 progressDialog?.dismiss()
                 Toast.makeText(this@MainActivity, "Failed to parse ISO. Please select a valid God Hand PS2 ISO.", Toast.LENGTH_LONG).show()
                 showIsoPromptDialog()
@@ -342,6 +404,7 @@ class MainActivity : ComponentActivity() {
 
             delay(200)
             progressDialog?.dismiss()
+            isProcessingIso = false
             Toast.makeText(this@MainActivity, "God Hand Ready! Hit PLAY to enter the ring.", Toast.LENGTH_SHORT).show()
         }
     }

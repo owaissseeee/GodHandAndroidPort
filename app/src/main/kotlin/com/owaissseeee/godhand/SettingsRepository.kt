@@ -31,14 +31,14 @@ class SettingsRepository(context: Context) {
 
     var resolutionIdx: Int
         get() {
-            if (!prefs.contains("res_idx_v3")) {
+            if (!prefs.contains("res_idx_v4")) {
                 val def = if (isCortexA53OrPotato) 1 else 2
-                prefs.edit().putInt("res_idx_v3", def).apply()
+                prefs.edit().putInt("res_idx_v4", def).apply()
                 return def
             }
-            return prefs.getInt("res_idx_v3", 2).coerceIn(0, 7)
+            return prefs.getInt("res_idx_v4", 2).coerceIn(0, 5)
         }
-        set(value) = prefs.edit().putInt("res_idx_v3", value.coerceIn(0, 7)).apply()
+        set(value) = prefs.edit().putInt("res_idx_v4", value.coerceIn(0, 5)).apply()
 
     var aspectIdx: Int
         get() {
@@ -52,14 +52,15 @@ class SettingsRepository(context: Context) {
 
     var fpsIdx: Int
         get() {
-            if (!prefs.contains("fps_idx_v4")) {
-                val def = if (isCortexA53OrPotato) 2 else 0
-                prefs.edit().putInt("fps_idx_v4", def).apply()
+            if (!prefs.contains("fps_idx_v5")) {
+                val def = if (isCortexA53OrPotato) 1 else 0
+                prefs.edit().putInt("fps_idx_v5", def).apply()
                 return def
             }
-            return prefs.getInt("fps_idx_v4", 2).coerceIn(0, 2)
+            return prefs.getInt("fps_idx_v5", 0).coerceIn(0, 1)
         }
-        set(value) = prefs.edit().putInt("fps_idx_v4", value.coerceIn(0, 2)).apply()
+        set(value) = prefs.edit().putInt("fps_idx_v5", value.coerceIn(0, 1)).apply()
+
     var frameskipIdx: Int
         get() = prefs.getInt("frameskip_idx_v2", 1).coerceIn(0, 4) // 0: Off, 1: Auto (Skip on Lag - Recommended), 2: Skip 1 Frame, 3: Skip 2 Frames, 4: Skip 3 Frames (Potato Mode)
         set(value) = prefs.edit().putInt("frameskip_idx_v2", value.coerceIn(0, 4)).apply()
@@ -70,7 +71,7 @@ class SettingsRepository(context: Context) {
         set(value) = prefs.edit().putInt("audio_scheduling_idx", value.coerceIn(0, 2)).apply()
 
     var audioBufferSizeIdx: Int
-        get() = prefs.getInt("audio_buffer_size_idx", 1).coerceIn(0, 2) // 0: 128 frames, 1: 256 frames, 2: 512 frames (Helio G35)
+        get() = prefs.getInt("audio_buffer_size_idx", 1).coerceIn(0, 2) // 0: 1024 frames, 1: 2048 frames, 2: 4096 frames
         set(value) = prefs.edit().putInt("audio_buffer_size_idx", value.coerceIn(0, 2)).apply()
 
     var audioVolume: Float

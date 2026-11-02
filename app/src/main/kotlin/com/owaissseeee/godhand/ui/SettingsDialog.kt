@@ -14,6 +14,7 @@ import android.view.Window
 import android.widget.*
 import com.owaissseeee.godhand.NativeBridge
 import com.owaissseeee.godhand.R
+import com.owaissseeee.godhand.SaveManager
 import com.owaissseeee.godhand.SettingsRepository
 import java.io.BufferedReader
 import java.io.File
@@ -27,10 +28,11 @@ class SettingsDialog(
     private val settings: SettingsRepository,
     private val isMidGame: Boolean = false,
     private val onEditControlsRequested: (() -> Unit)? = null,
+    private val onImportSaveRequested: (() -> Unit)? = null,
     private val onSettingsChanged: (() -> Unit)? = null
 ) : Dialog(context) {
 
-    private var activeTab = 0 // 0: Graphics, 1: Controls, 2: Sound, 3: Logs
+    private var activeTab = 0 // 0: Graphics, 1: Controls, 2: Sound, 3: Saves, 4: Logs
     private val tabButtons = mutableListOf<Button>()
     private lateinit var contentContainer: LinearLayout
 
@@ -76,7 +78,7 @@ class SettingsDialog(
         header.addView(btnClose, LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT))
         root.addView(header)
 
-        // 2. 4 Tabs Bar (GRAPHICS, CONTROLS, SOUND, LOGS)
+        // 2. 5 Tabs Bar (GRAPHICS, CONTROLS, SOUND, SAVES, LOGS)
         val tabScroll = HorizontalScrollView(context).apply {
             isHorizontalScrollBarEnabled = false
         }
@@ -84,7 +86,7 @@ class SettingsDialog(
             orientation = LinearLayout.HORIZONTAL
             setPadding(0, 0, 0, 16)
         }
-        val tabs = listOf("GRAPHICS", "CONTROLS", "SOUND", "LOGS")
+        val tabs = listOf("GRAPHICS", "CONTROLS", "SOUND", "SAVES", "LOGS")
         for (i in tabs.indices) {
             val btnTab = Button(context).apply {
                 text = tabs[i]
@@ -117,6 +119,10 @@ class SettingsDialog(
         selectTab(0)
     }
 
+    fun refreshActiveTab() {
+        buildTabContent()
+    }
+
     private fun selectTab(idx: Int) {
         activeTab = idx
         for (i in tabButtons.indices) {
@@ -140,7 +146,8 @@ class SettingsDialog(
             0 -> buildGraphicsTab()
             1 -> buildControlsTab()
             2 -> buildSoundTab()
-            3 -> buildLogsTab()
+            3 -> buildSavesTab()
+            4 -> buildLogsTab()
         }
     }
 
@@ -156,6 +163,7 @@ class SettingsDialog(
             settings.rendererIdx = pos
         }
 
+        // 6x and 8x removed as requested
         addSpinnerRow(
             "Internal Resolution",
             listOf(
@@ -164,9 +172,7 @@ class SettingsDialog(
                 "1.0x (Native PS2 512x448 - Authentic Console Default)",
                 "2.0x (1024x896 2x HD - Flagship Balanced)",
                 "3.0x (1536x1344 3x FHD+)",
-                "4.0x (2048x1792 4x QHD)",
-                "6.0x (3072x2688)",
-                "8.0x (4096x3584 4K Extreme)"
+                "4.0x (2048x1792 4x QHD)"
             ),
             settings.resolutionIdx
         ) { pos ->
@@ -188,9 +194,10 @@ class SettingsDialog(
             }
         }
 
+        // 120 FPS removed as requested (now 60 FPS and 30 FPS)
         addSpinnerRow(
             if (isMidGame) "Target Frame Rate (Set in Main Menu)" else "Target Frame Rate",
-            listOf("60 FPS (Mid-Range / Flagship)", "120 FPS (Flagship High-Refresh)", "30 FPS (Potato / Cortex-A53 Boost)"),
+            listOf("60 FPS (Mid-Range / Flagship)", "30 FPS (Potato / Cortex-A53 Boost)"),
             settings.fpsIdx,
             enabled = !isMidGame
         ) { pos ->
@@ -220,139 +227,89 @@ class SettingsDialog(
 
         addSpinnerRow(
             "Controller Mode",
-            listOf("Auto-Detect (Recommended)", "Touch Controls Only", "Physical Gamepad Only"),
+            listOf("Auto-Detect (Touch + Gamepad)", "Touchscreen Only", "Physical Gamepad Only"),
             settings.controllerMode
         ) { pos ->
             settings.controllerMode = pos
-            onSettingsChanged?.invoke()
         }
 
         addSwitchRow(
-            "Auto-Hide Touch on Gamepad",
-            "Automatically hide on-screen buttons when Bluetooth/USB controller is connected",
+            "Auto-Hide Touch Controls",
+            "Automatically hides the on-screen virtual buttons when a Bluetooth or USB controller is connected.",
             settings.autoHideTouchOnGamepad
         ) { checked ->
             settings.autoHideTouchOnGamepad = checked
-            onSettingsChanged?.invoke()
         }
 
-        addSectionHeader("THUMBSTICK BEHAVIOR")
+        addSwitchRow(
+            "Sticky Left Stick (Walk/Run)",
+            "Left analog stick holds its direction when released near the boundary.",
+            settings.leftStickSticky
+        ) { checked ->
+            settings.leftStickSticky = checked
+        }
 
-        addSpinnerRow(
-            "Left Thumbstick (Move)",
-            listOf("Sticky (Fixed Position - Recommended)", "Floating (Spawns at Touch Down)"),
-            if (settings.leftStickSticky) 0 else 1
-        ) { pos ->
-            settings.leftStickSticky = (pos == 0)
-            onSettingsChanged?.invoke()
+        addSwitchRow(
+            "Sticky Right Stick (Dodge/Weave)",
+            "Right stick springs smoothly to center after quick dodge gestures.",
+            settings.rightStickSticky
+        ) { checked ->
+            settings.rightStickSticky = checked
         }
 
         addSpinnerRow(
-            "Right Thumbstick (Dodge)",
-            listOf("Sticky (Fixed Position - Recommended)", "Floating (Spawns at Touch Down)"),
-            if (settings.rightStickSticky) 0 else 1
-        ) { pos ->
-            settings.rightStickSticky = (pos == 0)
-            onSettingsChanged?.invoke()
-        }
-
-        addSectionHeader("DODGE CONTROL MECHANISM")
-
-        addSpinnerRow(
-            "Dodge Input Type",
-            listOf(
-                "1. Right Thumbstick (Standard Analog)",
-                "2. Swipe Gestures (Flick Right Side)",
-                "3. Dedicated 4-Way Dodge Buttons"
-            ),
+            "Dodge Input Style",
+            listOf("Right Analog Stick (Default)", "Screen Swipe Gestures", "Dedicated Dodge D-Pad Buttons"),
             settings.dodgeMode
         ) { pos ->
             settings.dodgeMode = pos
-            onSettingsChanged?.invoke()
         }
-
-        addSectionHeader("APPEARANCE & CUSTOMIZATION")
 
         addSliderRow(
-            "Touch Controls Opacity",
-            (settings.touchControlsOpacity * 100f).toInt(),
-            10, 100, "%"
-        ) { progress ->
-            settings.touchControlsOpacity = progress / 100f
-            onSettingsChanged?.invoke()
+            "On-Screen Controls Opacity",
+            (settings.touchControlsOpacity * 100).toInt(),
+            min = 10,
+            max = 100,
+            unit = "%"
+        ) { pct ->
+            settings.touchControlsOpacity = pct / 100.0f
         }
 
-        // Custom Textures Modding Info Card
-        val texturesDir = File(context.getExternalFilesDir(null), "touch_textures")
-        if (!texturesDir.exists()) texturesDir.mkdirs()
-        val customTextureCount = texturesDir.listFiles { f -> f.extension.equals("png", ignoreCase = true) }?.size ?: 0
+        addSpinnerRow(
+            "FPS & Performance HUD",
+            listOf("Compact (FPS & Frame Time)", "Detailed Debug (Frame Times Graph + Pacing)", "Hidden (Clean Screen)"),
+            settings.fpsOverlayMode
+        ) { pos ->
+            settings.fpsOverlayMode = pos
+        }
 
-        val textureCard = LinearLayout(context).apply {
-            orientation = LinearLayout.VERTICAL
-            setBackgroundResource(R.drawable.card_god_hand)
-            setPadding(16, 14, 16, 14)
-        }
-        val txtTitle = TextView(context).apply {
-            text = "🎨 CUSTOM TOUCH TEXTURES (PNG MODDING)"
-            setTextColor(0xFFF59E0B.toInt())
-            textSize = 13f
-            typeface = android.graphics.Typeface.DEFAULT_BOLD
-        }
-        val txtDesc = TextView(context).apply {
-            text = "Drop your custom .png button textures into:\n" +
-                   "${texturesDir.absolutePath}\n\n" +
-                   "Files: btn_cross.png, btn_circle.png, btn_square.png, btn_triangle.png, btn_l1.png, btn_r1.png, btn_l2.png, btn_r2.png, dpad_up.png, stick_base.png, stick_knob.png\n" +
-                   "Active Custom Textures Found: $customTextureCount"
-            setTextColor(0xFFCBD5E1.toInt())
-            textSize = 11.5f
-            setPadding(0, 4, 0, 4)
-        }
-        textureCard.addView(txtTitle)
-        textureCard.addView(txtDesc)
-        contentContainer.addView(textureCard, LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
-        ).apply { setMargins(0, 10, 0, 10) })
-
-        // Action Button: EDIT ON-SCREEN CONTROLS
-        val btnEditControls = Button(context).apply {
-            text = "✏ EDIT ON-SCREEN CONTROLS (DRAG & RESIZE)"
-            textSize = 13f
-            setBackgroundResource(R.drawable.btn_god_hand_primary)
-            setTextColor(0xFFFFFFFF.toInt())
-            setOnClickListener {
-                dismiss()
-                onEditControlsRequested?.invoke()
+        if (isMidGame && onEditControlsRequested != null) {
+            val btnEdit = Button(context).apply {
+                text = "✏ REPOSITION ON-SCREEN BUTTONS"
+                textSize = 13f
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
+                setTextColor(0xFFFDE047.toInt())
+                setBackgroundResource(R.drawable.btn_god_hand_primary)
+                setOnClickListener {
+                    dismiss()
+                    onEditControlsRequested.invoke()
+                }
             }
+            contentContainer.addView(btnEdit, LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, 50.dpToPx()
+            ).apply { setMargins(0, 16, 0, 0) })
         }
-        contentContainer.addView(btnEditControls, LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
-        ).apply { setMargins(0, 12, 0, 8) })
-
-        val btnResetLayout = Button(context).apply {
-            text = "RESET CONTROLS TO FACTORY DEFAULT"
-            textSize = 12f
-            setBackgroundResource(R.drawable.btn_god_hand_secondary)
-            setTextColor(0xFFF1F5F9.toInt())
-            setOnClickListener {
-                settings.resetCustomButtonLayout()
-                onSettingsChanged?.invoke()
-                Toast.makeText(context, "Controls reset to default layout", Toast.LENGTH_SHORT).show()
-            }
-        }
-        contentContainer.addView(btnResetLayout, LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
-        ).apply { setMargins(0, 4, 0, 16) })
     }
 
     private fun buildSoundTab() {
-        addSectionHeader("AUDIO ENGINE & LATENCY SCHEDULING")
+        addSectionHeader("AUDIO LATENCY & SPU2 SCHEDULING")
 
         addSpinnerRow(
-            "Audio Scheduling Mode",
+            "Audio Scheduling",
             listOf(
-                "Real-time Audio (SCHED_FIFO / Low Latency)",
-                "Balanced Audio (SCHED_NORMAL - Default)",
-                "Safe Buffer (High Stability for Low-End SoCs like Helio G35)"
+                "Real-time (Lowest Latency - High-End Chips)",
+                "Balanced (Zero Crackle - Recommended)",
+                "Safe Headroom Buffer (Helio G35 / Low-End Potato Cores)"
             ),
             settings.audioSchedulingIdx
         ) { pos ->
@@ -361,11 +318,11 @@ class SettingsDialog(
         }
 
         addSpinnerRow(
-            "Audio Buffer Size",
+            "Audio Stream Buffer Size",
             listOf(
-                "Ultra Low Latency (128 frames / 2.9ms)",
-                "Standard (256 frames / 5.8ms - Default)",
-                "High Buffer (512 frames / 11.6ms - Helio G35 Glitch Prevention)"
+                "1024 frames (~21.3 ms)",
+                "2048 frames (~42.6 ms - Glitch-Free Default)",
+                "4096 frames (~85.3 ms - Maximum Underrun Protection)"
             ),
             settings.audioBufferSizeIdx
         ) { pos ->
@@ -373,78 +330,182 @@ class SettingsDialog(
             NativeBridge.setAudioConfig(settings.audioSchedulingIdx, pos)
         }
 
-        // Master Volume Slider
-        val volRow = LinearLayout(context).apply {
+        addSliderRow(
+            "Master Volume",
+            (settings.audioVolume * 100).toInt(),
+            min = 0,
+            max = 100,
+            unit = "%"
+        ) { pct ->
+            val vol = pct / 100.0f
+            settings.audioVolume = vol
+            NativeBridge.setAudioVolume(vol)
+        }
+    }
+
+    private fun buildSavesTab() {
+        addSectionHeader("PS2 MEMORY CARD & SAVE DATA")
+
+        val saveInfo = SaveManager.getActiveSaveInfo(context)
+        val statusCard = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(0, 8, 0, 8)
+            setBackgroundResource(R.drawable.card_god_hand)
+            setPadding(24, 20, 24, 20)
         }
-        val volHeader = TextView(context).apply {
-            text = "Master Volume: ${(settings.audioVolume * 100).toInt()}%"
-            setTextColor(0xFFE2E8F0.toInt())
+
+        val tvStatus = TextView(context).apply {
+            text = if (saveInfo != null) "✔ ACTIVE SAVE DETECTED" else "⚠ NO SAVE DATA FOUND YET"
             textSize = 14f
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
+            setTextColor(if (saveInfo != null) 0xFF4ADE80.toInt() else 0xFFF59E0B.toInt())
         }
-        val volSeek = SeekBar(context).apply {
-            max = 100
-            progress = (settings.audioVolume * 100).toInt()
-            setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(p0: SeekBar?, p: Int, fromUser: Boolean) {
-                    if (fromUser) {
-                        val vol = p / 100f
-                        settings.audioVolume = vol
-                        volHeader.text = "Master Volume: $p%"
-                        NativeBridge.setAudioVolume(vol)
+        val tvDetails = TextView(context).apply {
+            text = if (saveInfo != null) {
+                val dateStr = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date(saveInfo.lastModified))
+                val sizeKb = (saveInfo.totalBytes / 1024.0).toInt()
+                "Folder: ${saveInfo.folderName} (God Hand PS2 Save)\nSize: $sizeKb KB (${saveInfo.fileCount} files)\nLast Modified: $dateStr\nPath: ${saveInfo.path}"
+            } else {
+                "No God Hand save folder (BASLUS-21503) detected on device memory card.\nLaunch the game and save at any in-game save prompt (Memory Card Slot 1)."
+            }
+            textSize = 12f
+            setTextColor(0xFFCBD5E1.toInt())
+            setPadding(0, 8, 0, 0)
+        }
+        statusCard.addView(tvStatus)
+        statusCard.addView(tvDetails)
+        contentContainer.addView(statusCard)
+
+        addSectionHeader("SAVE ACTIONS (EXPORT & IMPORT)")
+
+        val btnRow = LinearLayout(context).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setPadding(0, 8, 0, 16)
+        }
+
+        val btnExport = Button(context).apply {
+            text = "💾 EXPORT SAVE"
+            textSize = 13f
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
+            setBackgroundResource(R.drawable.btn_god_hand_primary)
+            setTextColor(0xFFFFFFFF.toInt())
+            setOnClickListener {
+                val (ok, result) = SaveManager.exportSaveToZip(context)
+                if (ok) {
+                    val file = File(result)
+                    Toast.makeText(context, "Exported: ${file.name}\nAlso copied to Downloads/GodHand_Saves!", Toast.LENGTH_LONG).show()
+                    SaveManager.shareSaveZip(context, file)
+                    buildTabContent()
+                } else {
+                    Toast.makeText(context, result, Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
+        val btnImport = Button(context).apply {
+            text = "📂 IMPORT SAVE"
+            textSize = 13f
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
+            setBackgroundResource(R.drawable.btn_god_hand_secondary)
+            setTextColor(0xFFFDE047.toInt())
+            setOnClickListener {
+                if (onImportSaveRequested != null) {
+                    onImportSaveRequested.invoke()
+                } else {
+                    Toast.makeText(context, "Save import is available via the Main Menu settings.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        btnRow.addView(btnExport, LinearLayout.LayoutParams(0, 50.dpToPx(), 1f).apply { setMargins(0, 0, 6, 0) })
+        btnRow.addView(btnImport, LinearLayout.LayoutParams(0, 50.dpToPx(), 1f).apply { setMargins(6, 0, 0, 0) })
+        contentContainer.addView(btnRow)
+
+        addSectionHeader("LOCAL SAVE SNAPSHOTS (INSTANT RESTORE)")
+        val backups = SaveManager.listLocalBackups(context)
+        if (backups.isEmpty()) {
+            val emptyTv = TextView(context).apply {
+                text = "No backup archives created yet.\nTap 'EXPORT SAVE' above to create an instant backup snapshot."
+                textSize = 12f
+                setTextColor(0xFF94A3B8.toInt())
+                setPadding(0, 6, 0, 12)
+            }
+            contentContainer.addView(emptyTv)
+        } else {
+            for (bk in backups) {
+                val itemRow = LinearLayout(context).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    gravity = Gravity.CENTER_VERTICAL
+                    setBackgroundResource(R.drawable.card_god_hand)
+                    setPadding(16, 12, 16, 12)
+                }
+                val infoCol = LinearLayout(context).apply {
+                    orientation = LinearLayout.VERTICAL
+                }
+                val nameTv = TextView(context).apply {
+                    text = bk.name
+                    textSize = 12.5f
+                    typeface = android.graphics.Typeface.DEFAULT_BOLD
+                    setTextColor(0xFFF8FAFC.toInt())
+                }
+                val dateStr = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date(bk.lastModified()))
+                val sizeStr = "${bk.length() / 1024} KB"
+                val subTv = TextView(context).apply {
+                    text = "$dateStr • $sizeStr"
+                    textSize = 11f
+                    setTextColor(0xFF94A3B8.toInt())
+                }
+                infoCol.addView(nameTv)
+                infoCol.addView(subTv)
+
+                val btnRestore = Button(context).apply {
+                    text = "RESTORE"
+                    textSize = 11f
+                    setBackgroundResource(R.drawable.btn_god_hand_secondary)
+                    setTextColor(0xFFF59E0B.toInt())
+                    setOnClickListener {
+                        val (ok, msg) = SaveManager.restoreBackup(context, bk)
+                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                        if (ok) buildTabContent()
                     }
                 }
-                override fun onStartTrackingTouch(p0: SeekBar?) {}
-                override fun onStopTrackingTouch(p0: SeekBar?) {}
-            })
-        }
-        volRow.addView(volHeader)
-        volRow.addView(volSeek)
-        contentContainer.addView(volRow)
 
-        addSwitchRow(
-            "Mute Audio",
-            "Instantly silence SPU2 audio output",
-            settings.audioVolume == 0f
-        ) { checked ->
-            NativeBridge.setAudioMuted(checked)
-        }
+                val btnShare = Button(context).apply {
+                    text = "SHARE"
+                    textSize = 11f
+                    setBackgroundResource(R.drawable.btn_god_hand_secondary)
+                    setTextColor(0xFFCBD5E1.toInt())
+                    setOnClickListener {
+                        SaveManager.shareSaveZip(context, bk)
+                    }
+                }
 
-        addSectionHeader("PERFORMANCE HUD & MONITORING")
-
-        addSpinnerRow(
-            "Performance HUD Overlay",
-            listOf("Compact (Minimal Pill)", "Detailed Debug (FPS & Frametime Graph)", "Hidden (Watermark Tap Target)"),
-            settings.fpsOverlayMode
-        ) { pos ->
-            settings.fpsOverlayMode = pos
-            onSettingsChanged?.invoke()
+                itemRow.addView(infoCol, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+                itemRow.addView(btnRestore, LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(4, 0, 4, 0) })
+                itemRow.addView(btnShare, LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT))
+                contentContainer.addView(itemRow, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT).apply { setMargins(0, 0, 0, 8) })
+            }
         }
     }
 
     private fun buildLogsTab() {
-        addSectionHeader("LIVE LOGS & ENGINE DIAGNOSTICS")
+        addSectionHeader("LIVE NATIVE ENGINE LOGCAT")
+
+        val logView = TextView(context).apply {
+            setTextColor(0xFF94A3B8.toInt())
+            textSize = 10f
+            typeface = android.graphics.Typeface.MONOSPACE
+            setBackgroundColor(0xFF0F172A.toInt())
+            setPadding(16, 16, 16, 16)
+        }
 
         val controlRow = LinearLayout(context).apply {
             orientation = LinearLayout.HORIZONTAL
-            setPadding(0, 4, 0, 10)
-        }
-
-        val logView = TextView(context).apply {
-            typeface = android.graphics.Typeface.MONOSPACE
-            textSize = 10.5f
-            setTextColor(0xFF10B981.toInt())
-            setBackgroundResource(R.drawable.card_god_hand)
-            setPadding(14, 14, 14, 14)
-            setTextIsSelectable(true)
+            setPadding(0, 0, 0, 8)
         }
 
         fun fetchLogs() {
             try {
-                val process = ProcessBuilder("logcat", "-d", "-t", "300")
-                    .redirectErrorStream(true)
-                    .start()
+                val process = Runtime.getRuntime().exec("logcat -d")
                 val reader = BufferedReader(InputStreamReader(process.inputStream))
                 val sb = StringBuilder()
                 var line: String?
@@ -618,4 +679,6 @@ class SettingsDialog(
         row.addView(seek)
         contentContainer.addView(row)
     }
+
+    private fun Int.dpToPx(): Int = (this * context.resources.displayMetrics.density).toInt()
 }

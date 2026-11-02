@@ -433,7 +433,7 @@ Java_com_owaissseeee_godhand_NativeBridge_onSurfaceCreated(
 
     godhand_set_frameskip_mode(frameskipIdx);
 
-    float target_hz = (fpsIdx == 1) ? 120.0f : ((fpsIdx == 0) ? 60.0f : 30.0f);
+    float target_hz = (fpsIdx == 0) ? 60.0f : 30.0f;
     using PFN_setFrameRate = int (*)(ANativeWindow*, float, int8_t);
     static auto pfn_setFrameRate = reinterpret_cast<PFN_setFrameRate>(dlsym(RTLD_DEFAULT, "ANativeWindow_setFrameRate"));
     if (pfn_setFrameRate && win) {
@@ -526,7 +526,7 @@ JNIEXPORT void JNICALL
 Java_com_owaissseeee_godhand_NativeBridge_setResolutionScale(
     JNIEnv* /*env*/, jobject /*thiz*/, jint resScaleIdx)
 {
-    static const float s_scales[] = { 0.5f, 0.75f, 1.0f, 2.0f, 3.0f, 4.0f, 6.0f, 8.0f };
+    static const float s_scales[] = { 0.5f, 0.75f, 1.0f, 2.0f, 3.0f, 4.0f };
     float scale = 1.0f;
     if (resScaleIdx >= 0 && resScaleIdx < static_cast<int>(sizeof(s_scales) / sizeof(s_scales[0]))) {
         scale = s_scales[resScaleIdx];

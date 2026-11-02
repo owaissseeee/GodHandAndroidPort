@@ -35,7 +35,7 @@ void applyPatches(uint8_t* rdram, int fpsIdx, int aspectIdx, float /*customScale
     // FPS configuration:
     // fpsIdx == 0 or 1: 60/120 FPS (1 VBlank = 0x01)
     // fpsIdx == 2: 30 FPS console lock (2 VBlanks = 0x02)
-    const uint8_t vblanks = (fpsIdx == 0 || fpsIdx == 1) ? 0x01 : 0x02;
+    const uint8_t vblanks = (fpsIdx == 0) ? 0x01 : 0x02;
     rdram[kFrameLimiterAddr] = vblanks;
     const float normalRate = 1.0f;
     std::memcpy(rdram + 0x00747A14u, &normalRate, sizeof(normalRate));
@@ -46,7 +46,7 @@ void applyPatches(uint8_t* rdram, int fpsIdx, int aspectIdx, float /*customScale
 
 void updateFrameTiming(uint8_t* rdram, int fpsIdx) {
     if (!rdram) return;
-    const uint8_t vblanks = (fpsIdx == 0 || fpsIdx == 1) ? 0x01 : 0x02;
+    const uint8_t vblanks = (fpsIdx == 0) ? 0x01 : 0x02;
     rdram[kFrameLimiterAddr] = vblanks;
     const float normalRate = 1.0f;
     std::memcpy(rdram + 0x00747A14u, &normalRate, sizeof(normalRate));
