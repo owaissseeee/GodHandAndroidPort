@@ -897,8 +897,8 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     setDefaultEnv("PS2X_AUDIO_STRETCH", "1");
     setDefaultEnv("PS2X_IOP_THREAD", "1");
     setDefaultEnv("PS2X_MTVU", "1");
-    setDefaultEnv("PS2X_MTVU_STREAM", "0");
-    setDefaultEnv("PS2X_MTVU_VBLANK_WAIT", "0");
+    setEnv("PS2X_MTVU_STREAM", "1");
+    setEnv("PS2X_MTVU_VBLANK_WAIT", "1");
     setDefaultEnv("PS2X_GS_ASYNC_PRESENT", "1");
     setDefaultEnv("PS2X_GS_ASYNC_READBACK", "all");
     setDefaultEnv("PS2X_PGS_COALESCE", "1");

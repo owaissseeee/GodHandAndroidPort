@@ -1042,24 +1042,20 @@ inline void VU1Interpreter::startXgkick(uint32_t qwordAddress)
     if (m_unit != Unit::VU1 || !m_activeVuData || m_activeVuDataSize < 16u)
         return;
 
-    const uint32_t sourceAddress = (qwordAddress * 16u) % m_activeVuDataSize;
+    const uint32_t mask = m_activeVuDataSize - 1u;
+    const uint32_t sourceAddress = (qwordAddress * 16u) & mask;
+    resetXgkick();
+
 #if defined(__aarch64__) || defined(_M_ARM64)
-    if (m_storeValid == 0u && !packetSink)
+    if (!packetSink)
     {
-        // Fast bulk XGKICK: scan GIFtag chain directly in m_activeVuData without 16-byte per-cycle memcpy!
-        uint32_t curOffset = 0u;
-        bool validChain = true;
-        while (curOffset <= XgkickPipeline::kBufferSize - 16u)
+        uint32_t totalBytes = 0u;
+        bool valid = true;
+        while (totalBytes <= XgkickPipeline::kBufferSize - 16u)
         {
-            const uint32_t tagAddr = (sourceAddress + curOffset) % m_activeVuDataSize;
-            uint64_t tagLo = 0;
-            if (tagAddr + 8u <= m_activeVuDataSize)
-                std::memcpy(&tagLo, m_activeVuData + tagAddr, sizeof(tagLo));
-            else
-            {
-                validChain = false;
-                break;
-            }
+            const uint32_t tagAddr = (sourceAddress + totalBytes) & mask;
+            uint64_t tagLo = 0u;
+            std::memcpy(&tagLo, m_activeVuData + tagAddr, sizeof(tagLo));
             const uint32_t nloop = static_cast<uint32_t>(tagLo & 0x7FFFu);
             const uint32_t format = static_cast<uint32_t>((tagLo >> 58) & 0x3u);
             uint32_t nreg = static_cast<uint32_t>((tagLo >> 60) & 0xFu);
@@ -1075,46 +1071,46 @@ inline void VU1Interpreter::startXgkick(uint32_t qwordAddress)
                 tagBytes += static_cast<uint64_t>(nloop) * 16u;
             else
             {
-                validChain = false;
+                valid = false;
                 break;
             }
-            if (tagBytes > XgkickPipeline::kBufferSize - curOffset)
+            if (tagBytes > XgkickPipeline::kBufferSize - totalBytes)
             {
-                validChain = false;
+                valid = false;
                 break;
             }
-            curOffset += static_cast<uint32_t>(tagBytes);
-            const bool eop = ((tagLo >> 15) & 1u) != 0u;
-            if (eop)
+            totalBytes += static_cast<uint32_t>(tagBytes);
+            if (((tagLo >> 15) & 1u) != 0u) // EOP bit
                 break;
         }
-        if (validChain && curOffset > 0u)
+
+        if (valid && totalBytes > 0u)
         {
-            resetXgkick();
-            if (sourceAddress + curOffset <= m_activeVuDataSize)
+            if (__builtin_expect(sourceAddress + totalBytes <= m_activeVuDataSize, 1))
             {
-                // 100% Zero-Copy submission directly from m_activeVuData!
+                // 99.99% Fast Path: Contiguous in VU1 memory — submit directly with ZERO intermediate copy!
                 if (m_activeMemory)
-                    m_activeMemory->submitGifPacket(GifPathId::Path1, m_activeVuData + sourceAddress, curOffset);
+                    m_activeMemory->submitGifPacket(GifPathId::Path1, m_activeVuData + sourceAddress, totalBytes);
                 else if (m_activeGs)
-                    m_activeGs->processGIFPacket(m_activeVuData + sourceAddress, curOffset);
+                    m_activeGs->processGIFPacket(m_activeVuData + sourceAddress, totalBytes);
+                return;
             }
             else
             {
-                // Wrapped around end of 16KB VU1 data memory: 2 bulk memcpy calls
-                const uint32_t firstPart = m_activeVuDataSize - sourceAddress;
-                std::memcpy(m_xgkick.packet.data(), m_activeVuData + sourceAddress, firstPart);
-                std::memcpy(m_xgkick.packet.data() + firstPart, m_activeVuData, curOffset - firstPart);
+                // Wrapped around 16 KB boundary: copy two contiguous slices into m_xgkick.packet and submit
+                const uint32_t firstChunk = m_activeVuDataSize - sourceAddress;
+                std::memcpy(m_xgkick.packet.data(), m_activeVuData + sourceAddress, firstChunk);
+                std::memcpy(m_xgkick.packet.data() + firstChunk, m_activeVuData, totalBytes - firstChunk);
                 if (m_activeMemory)
-                    m_activeMemory->submitGifPacket(GifPathId::Path1, m_xgkick.packet.data(), curOffset);
+                    m_activeMemory->submitGifPacket(GifPathId::Path1, m_xgkick.packet.data(), totalBytes);
                 else if (m_activeGs)
-                    m_activeGs->processGIFPacket(m_xgkick.packet.data(), curOffset);
+                    m_activeGs->processGIFPacket(m_xgkick.packet.data(), totalBytes);
+                return;
             }
-            return;
         }
     }
 #endif
-    resetXgkick();
+
     m_xgkick.active = true;
     m_xgkick.sourceAddress = sourceAddress;
     m_xgkick.cycleCredit = 1u; // XGKICK's issue cycle counts toward PATH1.
@@ -3682,30 +3678,52 @@ struct VU1InterpreterAccess
             s = _mm_shuffle_ps(s, s, _MM_SHUFFLE(3, 0, 2, 1));
             t = _mm_shuffle_ps(t, t, _MM_SHUFFLE(3, 1, 0, 2));
         }
-        __m128 result;
+        float32x4_t vs, vt, va, vr;
+        std::memcpy(&vs, &s, 16);
+        std::memcpy(&vt, &t, 16);
         if constexpr (K == FK::Add)
-            result = _mm_add_ps(s, t);
+            vr = vaddq_f32(vs, vt);
         else if constexpr (K == FK::Sub)
-            result = _mm_sub_ps(s, t);
+            vr = vsubq_f32(vs, vt);
         else if constexpr (K == FK::Mul || K == FK::Opmula)
-            result = _mm_mul_ps(s, t);
+            vr = vmulq_f32(vs, vt);
         else if constexpr (K == FK::Madd)
-            result = _mm_add_ps(a, _mm_mul_ps(s, t));
+        {
+            std::memcpy(&va, &a, 16);
+            vr = vfmaq_f32(va, vs, vt);
+        }
         else
-            result = _mm_sub_ps(a, _mm_mul_ps(s, t));
+        {
+            std::memcpy(&va, &a, 16);
+            vr = vfmsq_f32(va, vs, vt);
+        }
 
+        uint32x4_t bits = vreinterpretq_u32_f32(vr);
         if constexpr (cross)
-            result = _mm_and_ps(result, destMask(0xEu));
-        result = vnorm(result);
+        {
+            static constexpr uint32_t kCrossMask[4] = {0xFFFFFFFFu, 0xFFFFFFFFu, 0xFFFFFFFFu, 0u};
+            bits = vandq_u32(bits, vld1q_u32(kCrossMask));
+        }
+        // Fast 3-instruction magnitude clamp (prevents Inf/NaN overflow while FPCR.FZ flushes denormals in hardware)
+        const uint32x4_t sign = vandq_u32(bits, vdupq_n_u32(0x80000000u));
+        const uint32x4_t mag  = vminq_u32(vandq_u32(bits, vdupq_n_u32(0x7FFFFFFFu)), vdupq_n_u32(0x7F7FFFFFu));
+        bits = vorrq_u32(sign, mag);
+        vr = vreinterpretq_f32_u32(bits);
+
         if (dest != 0u)
         {
-            const __m128 zero = _mm_setzero_ps();
-            const uint32_t sign = kRev4[neonMovemaskPs(result)] & dest;
-            const uint32_t zeroBits = kRev4[neonMovemaskPs(_mm_cmpeq_ps(result, zero))] & dest;
-            flags.mac = zeroBits | (sign << 4);
-            flags.status = (zeroBits != 0u ? 1u : 0u) | (sign != 0u ? 2u : 0u);
+            // Single-pass NEON flag extraction directly in PS2 bit order (X=8, Y=4, Z=2, W=1) with zero table lookups!
+            static constexpr uint32_t kZMask[4] = {0x08u, 0x04u, 0x02u, 0x01u};
+            static constexpr uint32_t kSMask[4] = {0x80u, 0x40u, 0x20u, 0x10u};
+            const uint32x4_t zBits = vandq_u32(vceqzq_f32(vr), vld1q_u32(kZMask));
+            const uint32x4_t sBits = vandq_u32(vcltzq_s32(vreinterpretq_s32_u32(bits)), vld1q_u32(kSMask));
+            const uint32_t mac = vaddvq_u32(vorrq_u32(zBits, sBits)) & (dest | (dest << 4));
+            flags.mac = mac;
+            flags.status = ((mac & 0x0Fu) != 0u ? 1u : 0u) | ((mac & 0xF0u) != 0u ? 2u : 0u);
             flags.extra = 0u;
         }
+        __m128 result;
+        std::memcpy(&result, &vr, 16);
         normalized = result;
         return result;
 #else
@@ -3788,6 +3806,36 @@ struct VU1InterpreterAccess
             s = _mm_shuffle_ps(s, s, _MM_SHUFFLE(3, 0, 2, 1));
             t = _mm_shuffle_ps(t, t, _MM_SHUFFLE(3, 1, 0, 2));
         }
+#if defined(__aarch64__) || defined(_M_ARM64)
+        float32x4_t vs, vt, va, vr;
+        std::memcpy(&vs, &s, 16);
+        std::memcpy(&vt, &t, 16);
+        if constexpr (K == FK::Add)
+            vr = vaddq_f32(vs, vt);
+        else if constexpr (K == FK::Sub)
+            vr = vsubq_f32(vs, vt);
+        else if constexpr (K == FK::Mul || K == FK::Opmula)
+            vr = vmulq_f32(vs, vt);
+        else if constexpr (K == FK::Madd)
+        {
+            std::memcpy(&va, &a, 16);
+            vr = vfmaq_f32(va, vs, vt);
+        }
+        else
+        {
+            std::memcpy(&va, &a, 16);
+            vr = vfmsq_f32(va, vs, vt);
+        }
+        if constexpr (cross)
+        {
+            static constexpr uint32_t kCrossMask[4] = {0xFFFFFFFFu, 0xFFFFFFFFu, 0xFFFFFFFFu, 0u};
+            vr = vreinterpretq_f32_u32(vandq_u32(vreinterpretq_u32_f32(vr), vld1q_u32(kCrossMask)));
+        }
+        __m128 result;
+        std::memcpy(&result, &vr, 16);
+        normalized = result;
+        return result;
+#else
         __m128 result;
         if constexpr (K == FK::Add)
             result = _mm_add_ps(s, t);
@@ -3802,18 +3850,9 @@ struct VU1InterpreterAccess
 
         if constexpr (cross)
             result = _mm_and_ps(result, destMask(0xEu));
-#if defined(__aarch64__) || defined(_M_ARM64)
-        {
-            uint32x4_t bits;
-            std::memcpy(&bits, &result, 16);
-            const uint32x4_t sign = vandq_u32(bits, vdupq_n_u32(0x80000000u));
-            const uint32x4_t mag  = vminq_u32(vandq_u32(bits, vdupq_n_u32(0x7FFFFFFFu)), vdupq_n_u32(0x7F7FFFFFu));
-            const uint32x4_t res  = vorrq_u32(sign, mag);
-            std::memcpy(&result, &res, 16);
-        }
-#endif
         normalized = result;
         return result;
+#endif
     }
 
     template <FK K>

@@ -341,13 +341,6 @@ void EeScheduler::setHostPacingDefault(bool enabled) noexcept
 void EeScheduler::hostCatchUp() noexcept
 {
     m_pacingCheckCycle = m_eeCycle + kHostPacingCheckCycles;
-#if defined(__ANDROID__)
-    // CRITICAL ANDROID FIX:
-    // Never call consumeCycles(field) to artificially advance m_eeCycle ahead of guest code execution!
-    // Consuming EE cycles when the mobile CPU is busy steals the 4,915,298-cycle VBlank budget from
-    // EEThread, firing premature VBlankStart events before the game finishes building its frame!
-    return;
-#else
     if (m_pacingRefTime == std::chrono::steady_clock::time_point{} || !ps2x::asyncvif::active(m_runtime.memory()))
         return;
     if (ps2x::asyncvif::vblankWaitEnabled())
@@ -363,6 +356,9 @@ void EeScheduler::hostCatchUp() noexcept
         ps2x::asyncvif::waitPipelineIdle(m_runtime.memory(), std::chrono::microseconds(static_cast<int64_t>(std::min(aheadUs, 1000.0))));
         return;
     }
+#if defined(__ANDROID__)
+    return;
+#else
     const double elapsed = std::chrono::duration<double>(std::chrono::steady_clock::now() - m_pacingRefTime).count();
     if (elapsed <= 0.0)
         return;
@@ -784,7 +780,7 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
     if (const GuestThread *running = currentThread(); running != nullptr && !m_insideInterrupt && running->invocations.empty())
     {
         const uint32_t pc = running->context.pc;
-        if (__builtin_expect(pc >= 0x0030B168u && pc < 0x0030B298u, 0))
+        if (__builtin_expect(pc >= 0x0030B148u && pc < 0x0030B298u, 0))
         {
             // 1. If GIFThread raised a GS SIGNAL/FINISH interrupt, unwind immediately so the EE GS handler
             //    kicks the next DMA part of the frame with zero delay!
@@ -801,7 +797,7 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
             //    Instead, sleep briefly waiting for VUThread/GIFThread to finish or raise GS SIGNAL/FINISH!
             if (ps2x::asyncvif::pipelineBusy(m_runtime.memory()))
             {
-                ps2x::asyncvif::waitPipelineIdle(m_runtime.memory(), std::chrono::microseconds(150));
+                ps2x::asyncvif::waitPipelineIdle(m_runtime.memory(), std::chrono::microseconds(250));
                 if (gsInterruptUnseen())
                 {
                     m_checkpointPending.store(true, std::memory_order_release);
@@ -930,7 +926,7 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
         else
             m_pendingEeTimerInterrupts |= memory.advanceEeTimers(elapsed);
         g_iopStash += elapsed;
-        if (g_iopStash >= 4096u)
+        if (g_iopStash >= 16384u)
         {
             m_runtime.advanceIopEeCycles(g_iopStash);
             g_iopStash = 0u;
@@ -2635,6 +2631,10 @@ void EeScheduler::processDueDeadlines()
                         deferred = true;
                         break;
                     }
+#if defined(__ANDROID__)
+                    if (std::chrono::steady_clock::now() - waitStart > std::chrono::milliseconds(12))
+                        break;
+#else
                     if (std::chrono::steady_clock::now() - waitStart > std::chrono::milliseconds(100))
                     {
                         static int logged = 0;
@@ -2642,6 +2642,7 @@ void EeScheduler::processDueDeadlines()
                             std::fprintf(stderr, "[mtvu] vblank waited 100 ms for the VU/GIF workers; going ahead\n");
                         break;
                     }
+#endif
                     ps2x::asyncvif::waitPipelineIdle(m_runtime.memory(), std::chrono::microseconds(250));
                 }
                 lock.lock();

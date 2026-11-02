@@ -1399,13 +1399,42 @@ void VU1Interpreter::reportReservedInstruction(bool upper, uint32_t instruction)
     m_stopRequested = true;
 }
 
+static thread_local bool t_vu1SchedulerClean = false;
+
 void VU1Interpreter::execute(uint8_t *vuCode, uint32_t codeSize,
                              uint8_t *vuData, uint32_t dataSize,
                              GS &gs, PS2Memory *memory,
                              uint32_t startPC, uint32_t top, uint32_t itop,
                              uint32_t maxCycles)
 {
-    resetScheduler();
+    if (m_unit == Unit::VU1 && t_vu1SchedulerClean &&
+        (m_vfWriteValid | m_viWriteValid | m_accWriteValid | m_storeValid) == 0u &&
+        m_cycle < (std::numeric_limits<uint64_t>::max() >> 1))
+    {
+        m_cycle += kVu0LeanCycleGap;
+        m_fdiv.valid = false;
+        for (auto &entry : m_efu)
+            entry.valid = false;
+        m_flagValid = 0u;
+        m_nextCommitCycle = std::numeric_limits<uint64_t>::max();
+        resetXgkick();
+        m_nextWriteSequence = 0;
+        m_efuResourceReady = 0;
+        m_workingClip = m_state.clip;
+        m_viBranchBackupValue = 0;
+        m_viBranchBackupReg = 0;
+        m_viBranchBackupValid = false;
+        m_stopRequested = false;
+        m_pendingHaltD = false;
+        m_pendingHaltT = false;
+    }
+    else
+    {
+        resetScheduler();
+        if (m_unit == Unit::VU1)
+            t_vu1SchedulerClean = true;
+        m_cycle = 0;
+    }
     m_state.pc = startPC & microAddressMask();
     m_state.ebit = false;
     m_state.haltAfterDelaySlot = false;
@@ -1564,13 +1593,14 @@ bool VU1InterpreterAccess::runLoopWith(VU1Interpreter &vu, uint8_t *vuCode, uint
         }
         interpretNextPair = false;
         if (vu.m_unit == VU1Interpreter::Unit::VU1)
+        {
             vu1NormShadow.valid = false;
+            t_vu1SchedulerClean = false;
+        }
         else
         {
             vu0NormShadow.valid = false;
-#if !defined(__aarch64__) && !defined(_M_ARM64)
             vu0SchedulerClean = false; // the interpreter fills the scheduler arrays (PS2X_VU0_LEAN)
-#endif
         }
 
         vu.commitReadyPipelines();
