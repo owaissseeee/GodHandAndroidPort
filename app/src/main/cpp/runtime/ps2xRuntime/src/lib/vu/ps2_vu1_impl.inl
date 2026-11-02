@@ -530,62 +530,30 @@ VU1_FORCE_INLINE void VU1Interpreter::updateFmacFlags(const uint8_t laneFlags[4]
 
 VU1_FORCE_INLINE void VU1Interpreter::applyFmacDest(float *dst, float *result, uint8_t dest)
 {
-#if defined(__aarch64__) || defined(_M_ARM64)
-    if (dest == 0u)
-        return;
-    uint32_t mac = 0u;
-    uint32_t status = 0u;
-    for (uint32_t c = 0; c < 4u; ++c)
-    {
-        const uint8_t lane = static_cast<uint8_t>(1u << (3u - c));
-        if ((dest & lane) == 0u)
-            continue;
-        uint32_t bits;
-        std::memcpy(&bits, &result[c], 4);
-        if ((bits & 0x7F800000u) == 0x7F800000u)
-        {
-            bits = (bits & 0x80000000u) | 0x7F7FFFFFu;
-            std::memcpy(&result[c], &bits, 4);
-        }
-        dst[c] = result[c];
-        if ((bits & 0x7FFFFFFFu) == 0u)
-        {
-            mac |= lane;
-            status |= 1u;
-        }
-        if ((bits & 0x80000000u) != 0u)
-        {
-            mac |= static_cast<uint32_t>(lane) << 4;
-            status |= 2u;
-        }
-    }
-    m_state.mac = static_cast<uint16_t>(mac);
-    m_state.status = static_cast<uint16_t>((m_state.status & 0xFF0u) | status | (status << 6));
-#else
     uint8_t laneFlags[4]{};
     normalizeFmacResult(result, dest, laneFlags);
+#if defined(__aarch64__) || defined(_M_ARM64)
+    updateFmacFlags(laneFlags, dest, 0u);
+#else
     updateFmacFlags(laneFlags, dest, calculateFmacProductSticky(dest));
-    applyDest(dst, result, dest);
 #endif
+    applyDest(dst, result, dest);
 }
 
 VU1_FORCE_INLINE void VU1Interpreter::applyFmacDestAcc(float *result, uint8_t dest)
 {
-#if defined(__aarch64__) || defined(_M_ARM64)
-    applyFmacDest(m_state.acc, result, dest);
-#else
     uint8_t laneFlags[4]{};
     normalizeFmacResult(result, dest, laneFlags);
+#if defined(__aarch64__) || defined(_M_ARM64)
+    updateFmacFlags(laneFlags, dest, 0u);
+#else
     updateFmacFlags(laneFlags, dest, calculateFmacProductSticky(dest));
-    applyDestAcc(result, dest);
 #endif
+    applyDestAcc(result, dest);
 }
 
 VU1_FORCE_INLINE void VU1Interpreter::queueFsset(uint16_t immediate)
 {
-#if defined(__aarch64__) || defined(_M_ARM64)
-    m_state.status = static_cast<uint16_t>((m_state.status & 0x03Fu) | (immediate & 0xFC0u));
-#else
     for (uint32_t mask = m_flagValid; mask != 0u; mask &= mask - 1u)
     {
         FlagPipelineEntry &entry = m_flagPipeline[static_cast<size_t>(std::countr_zero(mask))];
@@ -608,15 +576,11 @@ VU1_FORCE_INLINE void VU1Interpreter::queueFsset(uint16_t immediate)
     entry.writesSticky = true;
     m_flagValid |= 1u << slot;
     noteReadyCycle(entry.readyCycle);
-#endif
 }
 
 VU1_FORCE_INLINE void VU1Interpreter::queueClip(uint32_t clip)
 {
     m_workingClip = ((m_workingClip << 6) | (clip & 0x3Fu)) & 0xFFFFFFu;
-#if defined(__aarch64__) || defined(_M_ARM64)
-    m_state.clip = m_workingClip;
-#else
     const int slot = freeSlot(m_flagValid, kMaxFlagEntries);
     if (slot < 0)
     {
@@ -632,15 +596,11 @@ VU1_FORCE_INLINE void VU1Interpreter::queueClip(uint32_t clip)
     entry.writesClip = true;
     m_flagValid |= 1u << slot;
     noteReadyCycle(entry.readyCycle);
-#endif
 }
 
 VU1_FORCE_INLINE void VU1Interpreter::queueFcset(uint32_t clip)
 {
     m_workingClip = clip & 0xFFFFFFu;
-#if defined(__aarch64__) || defined(_M_ARM64)
-    m_state.clip = m_workingClip;
-#else
     for (uint32_t mask = m_flagValid; mask != 0u; mask &= mask - 1u)
     {
         FlagPipelineEntry &entry = m_flagPipeline[static_cast<size_t>(std::countr_zero(mask))];
@@ -662,24 +622,10 @@ VU1_FORCE_INLINE void VU1Interpreter::queueFcset(uint32_t clip)
     entry.writesClip = true;
     m_flagValid |= 1u << slot;
     noteReadyCycle(entry.readyCycle);
-#endif
 }
 
 VU1_FORCE_INLINE void VU1Interpreter::queueQ(float value, uint32_t latency, uint32_t statusDi)
 {
-#if defined(__aarch64__) || defined(_M_ARM64)
-    (void)latency;
-    uint32_t bits;
-    std::memcpy(&bits, &value, 4);
-    if ((bits & 0x7F800000u) == 0x7F800000u)
-    {
-        bits = (bits & 0x80000000u) | 0x7F7FFFFFu;
-        std::memcpy(&value, &bits, 4);
-    }
-    m_state.q = value;
-    const uint32_t currentDi = statusDi & 0x30u;
-    m_state.status = static_cast<uint16_t>((m_state.status & 0xFCFu) | currentDi | (currentDi << 6));
-#else
     uint32_t ignoredFlags = 0u;
     value = normalizeResult(value, ignoredFlags);
     m_fdiv.valid = true;
@@ -687,22 +633,10 @@ VU1_FORCE_INLINE void VU1Interpreter::queueQ(float value, uint32_t latency, uint
     m_fdiv.value = value;
     m_fdiv.statusDi = statusDi & 0x30u;
     noteReadyCycle(m_fdiv.readyCycle);
-#endif
 }
 
 VU1_FORCE_INLINE void VU1Interpreter::queueP(float value, uint32_t latency)
 {
-#if defined(__aarch64__) || defined(_M_ARM64)
-    (void)latency;
-    uint32_t bits;
-    std::memcpy(&bits, &value, 4);
-    if ((bits & 0x7F800000u) == 0x7F800000u)
-    {
-        bits = (bits & 0x80000000u) | 0x7F7FFFFFu;
-        std::memcpy(&value, &bits, 4);
-    }
-    m_state.p = value;
-#else
     uint32_t ignoredFlags = 0u;
     value = normalizeResult(value, ignoredFlags);
     for (ScalarPipelineEntry &entry : m_efu)
@@ -712,34 +646,16 @@ VU1_FORCE_INLINE void VU1Interpreter::queueP(float value, uint32_t latency)
             entry.valid = true;
             entry.readyCycle = m_cycle + latency;
             entry.value = value;
-            // EFU throughput is one cycle shorter than result visibility.
             m_efuResourceReady = m_cycle + (latency > 0u ? latency - 1u : 0u);
             noteReadyCycle(entry.readyCycle);
             return;
         }
     }
     reportReservedInstruction(false, 0xFFFFFFF9u);
-#endif
 }
 
 VU1_FORCE_INLINE void VU1Interpreter::queueStore(uint32_t address, const uint32_t words[4], uint8_t laneMask)
 {
-#if defined(__aarch64__) || defined(_M_ARM64)
-    if (!m_activeVuData || address + 16u > m_activeVuDataSize)
-        return;
-    if (laneMask == 0xFu)
-    {
-        std::memcpy(m_activeVuData + address, words, 16u);
-    }
-    else
-    {
-        uint32_t *dst = reinterpret_cast<uint32_t *>(m_activeVuData + address);
-        if (laneMask & 0x8u) dst[0] = words[0];
-        if (laneMask & 0x4u) dst[1] = words[1];
-        if (laneMask & 0x2u) dst[2] = words[2];
-        if (laneMask & 0x1u) dst[3] = words[3];
-    }
-#else
     const int slot = freeSlot(m_storeValid, kMaxPendingStores);
     if (slot < 0)
     {
@@ -754,7 +670,6 @@ VU1_FORCE_INLINE void VU1Interpreter::queueStore(uint32_t address, const uint32_
     std::copy(words, words + 4, store.words.begin());
     m_storeValid |= 1u << slot;
     noteReadyCycle(store.readyCycle);
-#endif
 }
 
 VU1_FORCE_INLINE void VU1Interpreter::queueVfWrite(uint8_t reg, uint8_t laneMask,
@@ -1101,69 +1016,12 @@ inline void VU1Interpreter::startXgkick(uint32_t qwordAddress)
     if (m_unit != Unit::VU1 || !m_activeVuData || m_activeVuDataSize < 16u)
         return;
 
-#if defined(__aarch64__) || defined(_M_ARM64)
-    const uint32_t startAddr = (qwordAddress * 16u) & (m_activeVuDataSize - 1u);
-    uint32_t curOffset = 0u;
-    bool wrapped = false;
-    while (curOffset < XgkickPipeline::kBufferSize)
-    {
-        const uint32_t tagAddr = (startAddr + curOffset) & (m_activeVuDataSize - 1u);
-        if (startAddr + curOffset >= m_activeVuDataSize)
-            wrapped = true;
-        uint64_t tagLo = 0;
-        std::memcpy(&tagLo, m_activeVuData + tagAddr, sizeof(tagLo));
-        const uint32_t nloop = static_cast<uint32_t>(tagLo & 0x7FFFu);
-        const uint32_t format = static_cast<uint32_t>((tagLo >> 58) & 0x3u);
-        uint32_t nreg = static_cast<uint32_t>((tagLo >> 60) & 0xFu);
-        if (nreg == 0u)
-            nreg = 16u;
-
-        uint32_t tagBytes = 16u;
-        if (format == 0u)
-            tagBytes += nloop * nreg * 16u;
-        else if (format == 1u)
-            tagBytes += ((nloop * nreg + 1u) & ~1u) * 8u;
-        else if (format == 2u)
-            tagBytes += nloop * 16u;
-        else
-            return;
-
-        if (curOffset + tagBytes > m_activeVuDataSize)
-            break;
-        if (startAddr + curOffset + tagBytes > m_activeVuDataSize)
-            wrapped = true;
-        curOffset += tagBytes;
-        if (((tagLo >> 15) & 1u) != 0u) // EOP bit
-            break;
-    }
-    if (curOffset == 0u)
-        return;
-    if (!wrapped)
-    {
-        // 99.9% fast path: Zero-copy direct submission from VU1 data memory!
-        if (m_activeMemory)
-            m_activeMemory->submitGifPacket(GifPathId::Path1, m_activeVuData + startAddr, curOffset);
-        else if (m_activeGs)
-            m_activeGs->processGIFPacket(m_activeVuData + startAddr, curOffset);
-    }
-    else
-    {
-        const uint32_t firstChunk = m_activeVuDataSize - startAddr;
-        std::memcpy(m_xgkick.packet.data(), m_activeVuData + startAddr, firstChunk);
-        std::memcpy(m_xgkick.packet.data() + firstChunk, m_activeVuData, curOffset - firstChunk);
-        if (m_activeMemory)
-            m_activeMemory->submitGifPacket(GifPathId::Path1, m_xgkick.packet.data(), curOffset);
-        else if (m_activeGs)
-            m_activeGs->processGIFPacket(m_xgkick.packet.data(), curOffset);
-    }
-#else
     const uint32_t sourceAddress = (qwordAddress * 16u) % m_activeVuDataSize;
     resetXgkick();
     m_xgkick.active = true;
     m_xgkick.sourceAddress = sourceAddress;
     m_xgkick.cycleCredit = 1u; // XGKICK's issue cycle counts toward PATH1.
     m_xgkick.issueCycle = m_cycle;
-#endif
 }
 
 VU1_FORCE_INLINE void VU1Interpreter::advanceOneCycle()
@@ -1304,6 +1162,13 @@ inline void VU1Interpreter::execUpper(uint32_t instr)
     uint8_t op = instr & 0x3F;
 
     float *vd = m_state.vf[fd];
+#if defined(__aarch64__) || defined(_M_ARM64)
+    const float *vs = m_state.vf[fs];
+    const float *vt = m_state.vf[ft];
+    const float *acc = m_state.acc;
+    const float q = m_state.q;
+    const float i = m_state.i;
+#else
     float normalizedVs[4];
     float normalizedVt[4];
     float normalizedAcc[4];
@@ -1318,7 +1183,8 @@ inline void VU1Interpreter::execUpper(uint32_t instr)
     const float *acc = normalizedAcc;
     const float q = normalizeOperand(m_state.q);
     const float i = normalizeOperand(m_state.i);
-    float result[4];
+#endif
+    alignas(16) float result[4];
 
     // Upper opcode decoding (bits 5:0 of upper word)
     switch (op)
@@ -4257,103 +4123,6 @@ struct VU1InterpreterAccess
                                                 uint8_t *vuData, uint32_t dataSize, GS &gs, PS2Memory *memory,
                                                 uint32_t codeSize, uint64_t budgetEnd)
     {
-#if defined(__aarch64__) || defined(_M_ARM64)
-        if (vu.m_cycle >= budgetEnd)
-            return StepResult::Budget;
-
-        uint8_t writtenVi = 0u;
-        int32_t oldVi = 0;
-        if (const uint32_t viWrites = decoded.lowerUsage.viWrite & 0xFFFEu; viWrites != 0u)
-        {
-            writtenVi = static_cast<uint8_t>(std::countr_zero(viWrites));
-            oldVi = vu.m_state.vi[writtenVi];
-        }
-
-        if (decoded.iBit)
-        {
-            vu.execUpper(decoded.upper);
-            float immediate = 0.0f;
-            std::memcpy(&immediate, &decoded.lower, sizeof(immediate));
-            vu.m_state.i = immediate;
-        }
-        else if (decoded.upperVfShadowReg != 0u)
-        {
-            float oldVf[4];
-            float upperVf[4];
-            std::memcpy(oldVf, vu.m_state.vf[decoded.upperVfShadowReg], sizeof(oldVf));
-            vu.execUpper(decoded.upper);
-            std::memcpy(upperVf, vu.m_state.vf[decoded.upperVfShadowReg], sizeof(upperVf));
-            std::memcpy(vu.m_state.vf[decoded.upperVfShadowReg], oldVf, sizeof(oldVf));
-            vu.execLower(decoded.lower, vuData, dataSize, gs, memory, decoded.upper);
-            std::memcpy(vu.m_state.vf[decoded.upperVfShadowReg], upperVf, sizeof(upperVf));
-        }
-        else
-        {
-            vu.execUpper(decoded.upper);
-            vu.execLower(decoded.lower, vuData, dataSize, gs, memory, decoded.upper);
-        }
-
-        vu.m_viBranchBackupValid = false;
-        if (writtenVi != 0u && decoded.lowerUsage.delaysNextBranchRead)
-            vu.recordViWriteForBranch(writtenVi, oldVi);
-
-        vu.m_state.vf[0][0] = 0.0f;
-        vu.m_state.vf[0][1] = 0.0f;
-        vu.m_state.vf[0][2] = 0.0f;
-        vu.m_state.vf[0][3] = 1.0f;
-        vu.m_state.vi[0] = 0;
-
-        uint32_t nextPc = vu.m_state.pc + 8u;
-        if (nextPc >= codeSize)
-            nextPc = 0u;
-        vu.m_state.pc = nextPc;
-
-        if (vu.m_state.branchPending)
-        {
-            if (vu.m_state.branchDelay == 0u)
-            {
-                vu.m_state.pc = vu.m_state.branchTarget & vu.microAddressMask();
-                vu.m_state.branchPending = false;
-            }
-            else
-            {
-                --vu.m_state.branchDelay;
-            }
-        }
-
-        bool ended = false;
-        const bool dHalt = decoded.dBit && vu.m_state.dBitEnabled;
-        const bool tHalt = decoded.tBit && vu.m_state.tBitEnabled;
-        const bool haltBit = dHalt || tHalt;
-        const bool haltBranch = haltBit && decoded.lowerUsage.pipeline == VU1Interpreter::PipelineBranch;
-
-        if (vu.m_state.haltAfterDelaySlot)
-        {
-            vu.m_state.stoppedByD = vu.m_pendingHaltD;
-            vu.m_state.stoppedByT = vu.m_pendingHaltT;
-            ended = true;
-        }
-        else if (vu.m_state.ebit)
-            ended = true;
-        else if (haltBit && !haltBranch)
-        {
-            vu.m_state.stoppedByD = dHalt;
-            vu.m_state.stoppedByT = tHalt;
-            ended = true;
-        }
-        else if (decoded.eBit)
-            vu.m_state.ebit = true;
-        else if (haltBranch)
-        {
-            vu.m_state.haltAfterDelaySlot = true;
-            vu.m_pendingHaltD = dHalt;
-            vu.m_pendingHaltT = tHalt;
-        }
-
-        ++vu.m_cycle;
-        vu.m_state.cycles = vu.m_cycle;
-        return ended ? StepResult::Ended : StepResult::Continue;
-#else
         bool ended = false;
             uint64_t readyCycle = vu.calculatePairReadyCycle(decoded);
             while (readyCycle > vu.m_cycle)
@@ -4526,8 +4295,6 @@ struct VU1InterpreterAccess
 
         vu.advanceOneCycle();
         return ended ? StepResult::Ended : StepResult::Continue;
-
-#endif
     }
 };
 

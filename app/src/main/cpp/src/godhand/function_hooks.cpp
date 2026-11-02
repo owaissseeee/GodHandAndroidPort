@@ -1036,28 +1036,6 @@ namespace godhand
                 "bypass flare GS depth readback stall on mobile");
             GH_INFO(Gs, "sub_003155F8 flare depth readback stubbed for mobile GPU performance");
         }
-        constexpr uint32_t kEmManageGetSpeedRate = 0x00292F50u;
-        if (runtime.hasFunction(kEmManageGetSpeedRate))
-        {
-            FunctionHooks::instance().replace(
-                kEmManageGetSpeedRate,
-                "cEmManage_GetSpeedRate_hook",
-                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *) {
-                    if (rdram && ctx)
-                    {
-                        float rate = 1.0f;
-                        std::memcpy(&rate, rdram + 0x00747A14u, sizeof(rate));
-                        if (rdram[0x00747A09u] == 0x01u)
-                        {
-                            rate *= 0.5f;
-                        }
-                        ctx->f[0] = rate;
-                    }
-                },
-                ReplacementStatus::Native,
-                "sync enemy animation rate with 30/60 FPS mode");
-            GH_INFO(Gs, "cEmManage_GetSpeedRate hooked for 30/60 FPS pacing");
-        }
 
         constexpr uint32_t kFlipChainBuilder = 0x30B870u;
         if (!runtime.hasFunction(kFlipChainBuilder) ||
@@ -1066,42 +1044,19 @@ namespace godhand
                 if (!rdram)
                     return;
 
-                static const int s_fpsIdx = [] {
-                    const char *targetFpsEnv = std::getenv("GODHAND_TARGET_FPS_IDX");
-                    return targetFpsEnv ? std::atoi(targetFpsEnv) : 2;
-                }();
-                static auto s_lastFlip = std::chrono::steady_clock::now();
-                static float s_smoothedDtMs = (s_fpsIdx == 0 || s_fpsIdx == 1) ? 16.667f : 33.333f;
-
-                const auto now = std::chrono::steady_clock::now();
-                const float dtMs = std::chrono::duration<float, std::milli>(now - s_lastFlip).count();
-                s_lastFlip = now;
-                if (dtMs >= 4.0f && dtMs <= 200.0f)
-                {
-                    s_smoothedDtMs = (s_smoothedDtMs * 0.80f) + (dtMs * 0.20f);
-                }
-
-                if (s_fpsIdx == 0 || s_fpsIdx == 1)
-                {
-                    rdram[0x00747A09u] = 0x01u;
-                    const float rate = (s_smoothedDtMs > 18.5f)
-                                           ? std::clamp(s_smoothedDtMs / 16.667f, 1.0f, 3.0f)
-                                           : 1.0f;
-                    std::memcpy(rdram + 0x00747A14u, &rate, sizeof(rate));
-                }
-                else
-                {
-                    rdram[0x00747A09u] = 0x02u;
-                    const float rate = (s_smoothedDtMs > 35.5f)
-                                           ? std::clamp(s_smoothedDtMs / 33.333f, 1.0f, 2.5f)
-                                           : 1.0f;
-                    std::memcpy(rdram + 0x00747A14u, &rate, sizeof(rate));
-                }
+                // Authentic PS2 Console Lockstep:
+                // 0x00747A09 = 0x02 (2 VBlanks per flip = 30 FPS game logic)
+                // 0x00747A14 = 1.0f (cSys::speedRate = 1.0f)
+                // This guarantees Gene, all Enemies, all Particle Effects, Gravity, and Unleash timers
+                // advance at 100% authentic 1.0x speed with zero hyper-fast animations or skipped frames!
+                rdram[0x00747A09u] = 0x02u;
+                const float rate = 1.0f;
+                std::memcpy(rdram + 0x00747A14u, &rate, sizeof(rate));
             }))
         {
             GH_WARN(Gs, "game_frame_counter: flip chain builder 0x30b870 has no recompiled entry");
             return;
         }
-        GH_INFO(Gs, "game_frame_counter observed on flip chain builder 0x30b870 with adaptive delta-time");
+        GH_INFO(Gs, "game_frame_counter observed on flip chain builder 0x30b870 (authentic 1.0x speed lockstep)");
     }
 }

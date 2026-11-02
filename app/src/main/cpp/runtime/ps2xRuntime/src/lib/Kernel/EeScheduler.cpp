@@ -38,7 +38,7 @@ namespace
 
     // accountCycles (PS2X_EE_FAST_ACCOUNT, PS2X_EE_GS_POLL_CYCLES): game thread only.
     int g_fastAccount = -1;
-    uint64_t g_gsPollCycles = 1024u;
+    uint64_t g_gsPollCycles = 512u;
     uint64_t g_gsPollStash = 0u;
     uint64_t g_iopStash = 0u;
     const std::atomic<uint32_t> *g_signalSerial = nullptr;
@@ -162,7 +162,7 @@ namespace
 // an event posted from another thread waits at most that long even if its zeroing of the budget is overwritten.
 uint64_t g_ps2xEeDeferred = 0u;
 std::atomic<uint64_t> g_ps2xEeDeferBudget{0u};
-uint32_t g_ps2xEeLoopCycles = 128u;
+uint32_t g_ps2xEeLoopCycles = 32u;
 
 // After a save state is loaded: the GS interrupts seen so far and a deferred deadline belong to the session before it.
 void ps2xSchedulerResetGsTransientState() noexcept
@@ -341,9 +341,9 @@ void EeScheduler::setHostPacingDefault(bool enabled) noexcept
 void EeScheduler::hostCatchUp() noexcept
 {
     m_pacingCheckCycle = m_eeCycle + kHostPacingCheckCycles;
-    if (m_pacingRefTime == std::chrono::steady_clock::time_point{})
+    if (m_pacingRefTime == std::chrono::steady_clock::time_point{} || !ps2x::asyncvif::active(m_runtime.memory()))
         return;
-    if (ps2x::asyncvif::vblankWaitEnabled() && ps2x::asyncvif::active(m_runtime.memory()))
+    if (ps2x::asyncvif::vblankWaitEnabled())
     {
         const double elapsed = std::chrono::duration<double>(std::chrono::steady_clock::now() - m_pacingRefTime).count();
         if (elapsed <= 0.0)
@@ -361,15 +361,16 @@ void EeScheduler::hostCatchUp() noexcept
         return;
     const uint64_t expected = m_pacingRefCycle + static_cast<uint64_t>(elapsed * static_cast<double>(kEeClockHz));
     const uint64_t field = vblankPeriodCycles();
-    if (expected <= m_eeCycle + field / 6u)
+    if (expected <= m_eeCycle + field / 2u)
         return;
     const uint64_t lag = expected - m_eeCycle;
-    if (lag > field * 8u)
+    if (lag > field * 8u || g_lastCatchUpDispatches == g_guestDispatches)
     {
         m_pacingRefTime = {};
         return;
     }
-    consumeCycles(std::min<uint64_t>(lag - field / 8u, field));
+    g_lastCatchUpDispatches = g_guestDispatches;
+    consumeCycles(std::min<uint64_t>(lag - field / 4u, field));
 }
 
 void EeScheduler::reset(uint8_t *rdram, const R5900Context &mainContext)
@@ -756,7 +757,7 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
     if (g_deferCycles < 0)
     {
         const char *value = std::getenv("PS2X_EE_DEFER_CYCLES");
-        g_deferCycles = value && *value ? std::max(0, std::atoi(value)) : 2048;
+        g_deferCycles = value && *value ? std::max(0, std::atoi(value)) : 512;
         g_deferScheduler = this;
         const char *inlineValue = std::getenv("PS2X_EE_INLINE_CHECKPOINT");
         g_inlineCheckpoint = !(inlineValue && *inlineValue == '0');
@@ -861,7 +862,7 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
     {
         const char *value = std::getenv("PS2X_EE_FAST_ACCOUNT");
         const char *poll = std::getenv("PS2X_EE_GS_POLL_CYCLES");
-        g_gsPollCycles = poll && *poll ? std::max<uint64_t>(1u, std::strtoull(poll, nullptr, 10)) : 2048u;
+        g_gsPollCycles = poll && *poll ? std::max<uint64_t>(1u, std::strtoull(poll, nullptr, 10)) : 512u;
         g_signalSerial = ps2xGsSignalSerialAddress();
         g_finishSerial = ps2xGsFinishSerialAddress();
         g_fastAccount = (value && *value == '0') ? 0 : 1;
@@ -874,7 +875,7 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
         else
             m_pendingEeTimerInterrupts |= memory.advanceEeTimers(elapsed);
         g_iopStash += elapsed;
-        if (g_iopStash >= 2048u)
+        if (g_iopStash >= 512u)
         {
             m_runtime.advanceIopEeCycles(g_iopStash);
             g_iopStash = 0u;

@@ -58,7 +58,7 @@ namespace
         options.UserHacks_MergePPSprite = false;               // RESTORES CHARACTER FACES & REMOVES LINE POPPING
         options.UserHacks_AlignSpriteX = false;
         options.GetSkipCountFunctionId = -1;
-        options.SkipDuplicateFrames = true;
+        options.SkipDuplicateFrames = false;
         options.TriFilter = TriFiltering::Off;
         options.TexturePreloading = TexturePreloadingLevel::Full;
         // SkipDraw: Cleanly strips the depth-of-field blur quad without corrupting framebuffers
@@ -292,51 +292,8 @@ gs_open_success:
         std::memcpy(g_regs + 0x1010, &regs->imr, 8);
         std::memcpy(g_regs + 0x1040, &regs->busdir, 8);
         std::memcpy(g_regs + 0x1080, &regs->siglblid, 8);
-        // As PCSX2's MTGS: CSR.FIELD (bit 13) picks the field.
-        static uint32_t s_vsync_calls = 0;
-        bool shouldDraw = true;
-#if defined(__ANDROID__)
-        typedef int (*GetFrameskipModeFn)();
-        typedef float (*GetAvgFrametimeFn)();
-        static GetFrameskipModeFn s_getFsMode = nullptr;
-        static GetAvgFrametimeFn s_getAvgFrametime = nullptr;
-        static bool s_fsModeResolved = false;
-        if (!s_fsModeResolved) {
-            s_getFsMode = reinterpret_cast<GetFrameskipModeFn>(dlsym(RTLD_DEFAULT, "godhand_get_frameskip_mode"));
-            s_getAvgFrametime = reinterpret_cast<GetAvgFrametimeFn>(dlsym(RTLD_DEFAULT, "godhand_get_avg_frametime_ms"));
-            s_fsModeResolved = true;
-        }
-        const int fsMode = s_getFsMode ? s_getFsMode() : 0;
-#else
-        const int fsMode = 0;
-#endif
-        if (fsMode > 0)
-        {
-            ++s_vsync_calls;
-            if (fsMode == 1) // Auto (Skip on lag / hitch)
-            {
-                const float lastMs = s_getAvgFrametime ? s_getAvgFrametime() : 16.67f;
-                if (lastMs > 25.0f) {
-                    shouldDraw = (s_vsync_calls % 2 == 0);
-                } else {
-                    shouldDraw = true;
-                }
-            }
-            else if (fsMode == 2) // Skip 1 Frame
-                shouldDraw = (s_vsync_calls % 2 == 0);
-            else if (fsMode == 3) // Skip 2 Frames
-                shouldDraw = (s_vsync_calls % 3 == 0);
-            else if (fsMode == 4) // Skip 3 Frames (Potato Mode)
-                shouldDraw = (s_vsync_calls % 4 == 0);
-        }
-        GSvsync((regs->csr & 0x2000u) ? 0u : 1u, shouldDraw);
+        GSvsync((regs->csr & 0x2000u) ? 0u : 1u, true);
         WritePresentStats();
-#if defined(__ANDROID__)
-        static uint64_t s_vsync_count = 0;
-        if (++s_vsync_count == 1 || s_vsync_count % 60 == 0) {
-            __android_log_print(ANDROID_LOG_INFO, "pcsx2-gs", "Rendered Vulkan frame #%llu successfully", (unsigned long long)s_vsync_count);
-        }
-#endif
     }
 
     void Reset()

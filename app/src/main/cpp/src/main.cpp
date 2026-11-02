@@ -818,39 +818,26 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     // 5: "4x (2048x1792 QHD)" -> 4.0f
     // 6: "6x" -> 6.0f
     // 7: "8x (4K)" -> 8.0f
-    const int deviceTier = godhand_get_device_tier();
     static const float s_scales[] = { 0.5f, 0.75f, 1.0f, 2.0f, 3.0f, 4.0f, 6.0f, 8.0f };
-    float scale = (deviceTier == 1) ? 0.75f : 1.0f;
+    float scale = 1.0f;
     if (resScaleIdx >= 0 && resScaleIdx < static_cast<int>(sizeof(s_scales) / sizeof(s_scales[0]))) {
         scale = s_scales[resScaleIdx];
     }
     setEnv("PS2X_GS_SCALE", std::to_string(scale));
-    // On Tier 1 Potato (Cortex-A53 / Helio G25), enforce 30 FPS Console Lock (idx 2) so CPU/VU1/GPU load is halved!
-    const int effectiveFpsIdx = (deviceTier == 1 && fpsIdx == 0) ? 2 : fpsIdx;
-    setEnv("GODHAND_TARGET_FPS_IDX", std::to_string(effectiveFpsIdx));
+    setEnv("GODHAND_TARGET_FPS_IDX", "2"); // Lock 30 FPS Console Pacing (2 VBlanks/flip = 60 Hz display present)
     float screenAspect = 16.0f / 9.0f;
     if (width > 0 && height > 0) {
         screenAspect = static_cast<float>(width) / static_cast<float>(height);
     }
     setEnv("GODHAND_SCREEN_ASPECT", std::to_string(screenAspect));
     setEnv("GODHAND_ASPECT_RATIO_IDX", std::to_string(aspectIdx));
-
-    // CRITICAL FIX: Set PS2X_PCSX2_VSYNC="2" (Mailbox / Non-blocking) and PS2X_VSYNC="0"
-    // so GSThread never stalls for 33.3ms waiting for the next FIFO edge while EeScheduler already paces VBlanks!
-    setEnv("PS2X_PCSX2_VSYNC", "2");
-    setEnv("PS2X_VSYNC", "0");
-    setEnv("PS2X_VSYNC_LOCK", "0");
-    setDefaultEnv("PS2X_EE_LOOP_CYCLES", (deviceTier == 1) ? "160" : "128");
-    setDefaultEnv("PS2X_EE_DEFER_CYCLES", "2048");
-    setDefaultEnv("PS2X_EE_GS_POLL_CYCLES", "2048");
-    setDefaultEnv("PS2X_GS_POLL_CYCLES", "2048");
+    setEnv("PS2X_PCSX2_VSYNC", "1");
+    setEnv("PS2X_VSYNC", "1");
+    setDefaultEnv("PS2X_GS_POLL_CYCLES", "512");
     setDefaultEnv("PS2X_VU1_FAST_NOFLAGS", "1");
-    setDefaultEnv("PS2X_VU1_SKIP_CLAMP", "1");
-
     const char* stretchVal = (aspectIdx == 1) ? "0" : (aspectIdx == 2) ? "2" : "1";
     setEnv("PS2X_PCSX2_STRETCH", stretchVal);
-    const bool useGles = (rendererIdx == 1);
-    setEnv("GODHAND_RENDERER", useGles ? "gles" : "vulkan");
+    setEnv("GODHAND_RENDERER", (rendererIdx == 1) ? "gles" : "vulkan");
     setEnv("PS2X_GS_RENDERER", "pcsx2");
     setEnv("GODHAND_HEADLESS", "0");
 

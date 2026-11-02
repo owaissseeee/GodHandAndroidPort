@@ -1540,9 +1540,7 @@ bool VU1InterpreterAccess::runLoopWith(VU1Interpreter &vu, uint8_t *vuCode, uint
             vu0SchedulerClean = false; // the interpreter fills the scheduler arrays (PS2X_VU0_LEAN)
         }
 
-#if !defined(__aarch64__) && !defined(_M_ARM64)
         vu.commitReadyPipelines();
-#endif
         if (vu.m_state.pc + 8u > codeSize)
             break;
 

@@ -20,14 +20,14 @@ class SettingsRepository(context: Context) {
 
     var rendererIdx: Int
         get() {
-            if (!prefs.contains("renderer_idx_v3")) {
-                val def = if (isCortexA53OrPotato) 1 else 0
-                prefs.edit().putInt("renderer_idx_v3", def).apply()
+            if (!prefs.contains("renderer_idx_v4")) {
+                val def = 0
+                prefs.edit().putInt("renderer_idx_v4", def).apply()
                 return def
             }
-            return prefs.getInt("renderer_idx_v3", 0).coerceIn(0, 2)
+            return prefs.getInt("renderer_idx_v4", 0).coerceIn(0, 2)
         }
-        set(value) = prefs.edit().putInt("renderer_idx_v3", value.coerceIn(0, 2)).apply()
+        set(value) = prefs.edit().putInt("renderer_idx_v4", value.coerceIn(0, 2)).apply()
 
     var resolutionIdx: Int
         get() {

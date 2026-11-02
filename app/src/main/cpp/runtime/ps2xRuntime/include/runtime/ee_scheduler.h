@@ -275,7 +275,7 @@ public:
     static constexpr int kPriorityCount = 128;
     static constexpr uint64_t kEeClockHz = 294912000ull;
     static constexpr uint32_t kGeneratedCheckpointCycles = 32u;
-    static constexpr uint32_t kGuestDispatchCycles = 64u;
+    static constexpr uint32_t kGuestDispatchCycles = 8u;
     static constexpr uint64_t kDefaultTimeSliceCycles = 65536ull;
     static constexpr uint64_t kIdleSkipStepCycles = 1024ull;
     static constexpr uint32_t kCycleWaitType = 0xC1C1E000u;
