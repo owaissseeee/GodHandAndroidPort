@@ -1048,7 +1048,7 @@ namespace godhand
                 kVBlankWaitFunc,
                 "vblank_wait_idle_skip",
                 [](uint8_t *rdram, R5900Context *, PS2Runtime *rt) {
-                    if (rt && rdram && rdram[0x00747A08u] == 0u)
+                    if (rt && rdram && rdram[0x00747A08u] < rdram[0x00747A09u])
                     {
                         rt->scheduler().skipIdleCycles();
                     }

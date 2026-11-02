@@ -275,7 +275,8 @@ struct PS2AudioBackend::Impl
         // Transparent micro-rate control: clamped strictly to [0.990, 1.010] (+/-1.0%).
         // Preserves crystal-clear authentic musical pitch and tempo during any frame pacing dips,
         // while the 65,536-sample (~682 ms) ring buffer absorbs transient frame stalls.
-        const double ratio = std::clamp(1.0 + fill * 0.55, 0.35, 1.40);
+        // Strictly cap upper ratio at 1.005 so audio NEVER speeds up or shifts pitch high!
+        const double ratio = std::clamp(1.0 + fill * 0.04, 0.94, 1.005);
         for (size_t frame = 0u; frame < frames; ++frame)
         {
             if (owner->primed && owner->queued < 4u)
@@ -392,7 +393,7 @@ void PS2AudioBackend::setAudioReady(bool ready)
         const char *audioMute = std::getenv("PS2X_AUDIO_MUTE");
         if (audioMute && *audioMute && *audioMute != '0')
             SetMasterVolume(0.0f);
-        SetAudioStreamBufferSizeDefault(512);
+        SetAudioStreamBufferSizeDefault(1024);
         if (const char *outPath = std::getenv("PS2X_AUDIO_OUT_DUMP"); outPath && *outPath && !m_impl->outDump)
             m_impl->outDump = std::fopen(outPath, "wb");
         m_impl->stream = LoadAudioStream(48000, 16, 2);

@@ -781,6 +781,19 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
     }
     t_onEeThread = true; // the full path runs before any deferral (g_deferUntil starts at 0)
     accountCycles(static_cast<uint32_t>(charge)); // also accounts g_ps2xEeDeferred
+
+    if (m_rdram && !m_insideInterrupt)
+    {
+        if (const GuestThread *running = currentThread())
+        {
+            const uint32_t pc = running->activeContext().pc;
+            if (pc >= 0x0030B148u && pc < 0x0030B298u &&
+                m_rdram[0x00747A08u] < m_rdram[0x00747A09u])
+            {
+                skipIdleCycles();
+            }
+        }
+    }
     const bool due = [this]() noexcept -> bool
     {
         if (m_hostPacing && m_eeCycle >= m_pacingCheckCycle)
@@ -858,17 +871,15 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
     elapsed += g_ps2xEeDeferred;
     g_ps2xEeDeferred = 0u;
 
-    // Active game code charges 62.5% EE cycles (prevents mid-frame VBlank overflow on mobile CPUs),
-    // while skipIdleCycles() charges 100% to reach the exact VBlank deadline immediately.
-    const uint64_t eeCharge = t_inIdleSkip ? elapsed : std::max<uint64_t>(1u, (elapsed * 5u) >> 3);
+    const uint64_t eeCharge = t_inIdleSkip ? elapsed : std::max<uint64_t>(1u, elapsed >> 1);
     m_eeCycle += eeCharge;
-    g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed); // relative to the old cycle; the next checkpoint renews it
+    g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
 
     if (g_fastAccount < 0)
     {
         const char *value = std::getenv("PS2X_EE_FAST_ACCOUNT");
         const char *poll = std::getenv("PS2X_EE_GS_POLL_CYCLES");
-        g_gsPollCycles = poll && *poll ? std::max<uint64_t>(1u, std::strtoull(poll, nullptr, 10)) : 2048u;
+        g_gsPollCycles = poll && *poll ? std::max<uint64_t>(1u, std::strtoull(poll, nullptr, 10)) : 4096u;
         g_signalSerial = ps2xGsSignalSerialAddress();
         g_finishSerial = ps2xGsFinishSerialAddress();
         g_fastAccount = (value && *value == '0') ? 0 : 1;
@@ -881,15 +892,15 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
         else
             m_pendingEeTimerInterrupts |= memory.advanceEeTimers(eeCharge);
 
-        // CRITICAL FOR AUDIO & CLOVER FMV: Always feed 100% of `elapsed` to IOP/SPU2 every 2048 cycles!
-        g_iopStash += elapsed;
-        if (g_iopStash >= 2048u)
+        // Feed eeCharge (not elapsed) so active + skipped cycles equal exact 1.0x IOP clock!
+        g_iopStash += eeCharge;
+        if (g_iopStash >= 8192u)
         {
             m_runtime.advanceIopEeCycles(g_iopStash);
             g_iopStash = 0u;
         }
         bool due = m_pendingEeTimerInterrupts != 0u;
-        g_gsPollStash += elapsed;
+        g_gsPollStash += eeCharge;
         if (g_gsPollStash >= g_gsPollCycles)
         {
             g_gsPollStash = 0u;
@@ -903,8 +914,8 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
     }
     m_pendingEeTimerInterrupts |= m_runtime.memory().advanceEeTimers(eeCharge);
     static uint64_t iopCycleStash = 0u;
-    iopCycleStash += elapsed;
-    if (iopCycleStash >= 512u)
+    iopCycleStash += eeCharge;
+    if (iopCycleStash >= 8192u)
     {
         m_runtime.advanceIopEeCycles(iopCycleStash);
         iopCycleStash = 0u;
@@ -2718,15 +2729,7 @@ void EeScheduler::processDueDeadlines()
                                          ? std::chrono::duration_cast<std::chrono::steady_clock::duration>(std::chrono::milliseconds(2))
                                          : std::chrono::duration_cast<std::chrono::steady_clock::duration>(kMaxVBlankCatchUpFields * vblankPeriod());
                 const auto hostStart = std::max(scheduled.hostDeadline, nowTp - catchUp);
-                if (hostStart > scheduled.hostDeadline)
-                {
-                    const auto droppedUs = std::chrono::duration_cast<std::chrono::microseconds>(hostStart - scheduled.hostDeadline).count();
-                    if (droppedUs > 0)
-                    {
-                        const uint64_t lostEeCycles = microsecondsToEeCycles(static_cast<uint64_t>(std::min<int64_t>(droppedUs, 16667)));
-                        m_runtime.advanceIopEeCycles(lostEeCycles);
-                    }
-                }
+                // Do NOT call m_runtime.advanceIopEeCycles(lostEeCycles) here; m_eeCycle already accounted them.
                 // PS2X_PACING_STATS=1 (round 10): every 2 s, how late the vblanks fired against their host deadline, the
                 // real time dropped by the re-anchor above (= emulated time lost for good: the SPU2 makes that much less
                 // audio), the EE pacing sleep, the EE thread's CPU use and on which core class it ran (sampled per vblank).
