@@ -3,9 +3,10 @@
 [![Platform](https://img.shields.io/badge/Platform-Android%208.0%2B%20(API%2026%2B)-brightgreen.svg)](https://developer.android.com)
 [![Architecture](https://img.shields.io/badge/Architecture-ARM64--v8a-blue.svg)](https://developer.android.com/ndk)
 [![Graphics](https://img.shields.io/badge/Graphics-Vulkan%20%7C%20OpenGL%20ES%203.2-orange.svg)](https://www.khronos.org/vulkan/)
+[![Port Author](https://img.shields.io/badge/Port%20by-owaissseeee-red.svg)](https://github.com/owaissseeee)
 [![License](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](LICENSE)
 
-An native **ARM64 Android port** of the PlayStation 2 classic **God Hand (USA, SLUS-21503)**, achieved through complete **Static Binary Recompilation (AOT)**. 
+An authentic **ARM64 Android port** of the PlayStation 2 masterpiece **God Hand (USA, SLUS-21503)**, achieved through complete **Static Binary Recompilation (AOT)**. **Port by owaissseeee**.
 
 Unlike traditional emulators that translate MIPS CPU and VU instructions at runtime with heavy JIT interpretation overhead, this project recompiled all **10,553 Emotion Engine functions** and **81 SNR2 overlay modules** directly into native C++20 and compiled them ahead-of-time with Clang ThinLTO, delivering console-accurate gameplay up to **60 FPS** on Android hardware.
 
@@ -13,12 +14,26 @@ Unlike traditional emulators that translate MIPS CPU and VU instructions at runt
 
 ## ⚡ Key Features
 
-* **Native ARM64 Execution**: Zero CPU JIT recompilation overhead; PS2 machine instructions execute directly as native ARM64 machine code.
+* **Native ARM64 Execution**: Zero CPU JIT recompilation overhead; PS2 machine instructions execute directly as native ARM64 machine code compiled via Clang ThinLTO.
 * **Vulkan PCSX2-GS Backend**: Hardware-accelerated graphics rendering via modern Vulkan with multi-threaded GIF packet submission and quad-buffered swapchains.
 * **AOT Vector Unit 1 (VU1) Acceleration**: Heavy microprograms recompiled ahead-of-time with ARM64 NEON bitwise vector normalization.
 * **Multi-Threaded VU1 (MTVU)**: Asynchronous parallel dispatch for VIF1 unpacking, VU1 execution, and GS rendering across dedicated CPU cores.
-* **Dynamic Mid-Game Settings (⚙)**: In-game settings icon beside `EXIT` allows real-time adjustments to resolution, frameskip, aspect ratio, and audio at the VSync boundary without crashes or restarts.
-* **Universal Device Compatibility**: Tuned CPU affinity and performance presets scaling from low-end octacore devices (Helio G35 / Mali-G52) up to flagship processors (Snapdragon 8 Gen 1/2/3, Dimensity 9000+).
+* **Authentic DevSeville 60 FPS Patch**: Unlocks GS progressive 60Hz display mode (`SCE_GS_DTV480P`) while preserving true 1.0f internal game physics rate, eliminating slow-motion animations, desynced particles, and rushed roulette countdowns. Authentic 30 FPS console lock remains fully available.
+* **True Fullscreen Hor+ Dynamic Widescreen**: Replaces distorted 2D image stretching with real-time 3D camera projection FOV expansion (`0.7f * aspect`), accompanied by dynamic font scaling for modern 19.5:9, 20:9, and ultrawide screens.
+* **Comprehensive In-Game Cheats Engine**: Action Replay / Codebreaker / ASM cheats toggleable mid-game with persistent saving:
+  * **Health & Defense**: Infinite Health, True Super-Armor Invulnerability (zero flinch/stagger from enemy attacks while Gene deals 100% full attack damage with all moves and launchers), and Screen-Aligned Max Health Capacity.
+  * **Resources & Meters**: Infinite Gold, Infinite Roulette Orbs, Max Roulette Orbs, Infinite / Max Tension Gauge.
+  * **Combat Mastery**: Enable Double God Hand (dual God Hands ASM), Have All Techniques & Roulettes, Freeze Roulette Timer, Damage Multipliers (1x–5x), Always Run Forward, and Dynamic Difficulty Lock (Die Meter).
+  * **Cosmetics & Unlockables**: Gene Costume Switcher (Normal, Karate Gi, Business Suit, Carnival), Olivia Costume Switcher (Normal, Bunny Girl, Cowgirl), Casino Slots Cheats, and Full Jukebox Unlocks.
+* **Integrated Memory Card / Saves Manager**: Dedicated Saves tab allows one-click export of `Mcd001.ps2` (compatible with PCSX2 / AetherSX2 / NetherSX2), timestamped card backups, and compressed ZIP archives via the Android Share sheet, plus instant save file restoration.
+* **Dual-Mode Zero-Overhead FPS HUD**:
+  * **Compact HUD**: Displays real-time **Game EE FPS** and emulation execution speed with lockstep color indicator.
+  * **Detailed Debug View**: Tap to reveal **Screen Present FPS**, frame duration, worst frame spike, and an interactive 64-frame frametime micro-histogram.
+* **Modernized UI & Asset System**:
+  * Seamless custom artwork support: automatically loads high-resolution `main_bg.png` and `title_logo.png` directly from `assets/`.
+  * Streamlined Settings dialog featuring a top-right close button (`✕`) and full screen-width layout.
+  * Clean analog joysticks with all visual clutter and redundant subtext removed.
+  * Cross-process JSON synchronization (`SettingsRepository`) ensuring seamless settings persistence between `MainActivity` and the `:game` execution process.
 * **3 God Hand Dodge Modes**:
   1. **Right Thumbstick**: Authentic dual-analog stick dodging.
   2. **Swipe Gestures**: Quick directional swipes on the right half of the screen trigger rapid 160ms duck, backflip, and side sways.
@@ -26,7 +41,6 @@ Unlike traditional emulators that translate MIPS CPU and VU instructions at runt
 * **Interactive Controls Layout Editor**: Drag, reposition, scale (`[-]` / `[+]`), and adjust opacity of every button and thumbstick with persistent JSON saving.
 * **Controller Auto-Detection**: Plug-and-play support for Bluetooth, USB, and OTG gamepads (Xbox, DualShock 4, DualSense, standard HID) with automatic touch overlay hiding.
 * **Adaptive Audio Engine**: Powered by Oboe / OpenSL ES with customizable buffer sizes (128, 256, 512 frames) and real-time thread scheduling.
-* **Zero-Overhead FPS HUD**: Compact pill, detailed frametime histogram (with 16.7ms and 33.3ms guides), and hidden watermark modes.
 
 ---
 
@@ -97,8 +111,6 @@ build_release.bat
 
 ---
 
----
-
 ## 🚀 Installation & First Launch (Bring Your Own ISO)
 
 > [!IMPORTANT]
@@ -119,20 +131,25 @@ build_release.bat
 
 ---
 
-## ⚠️ Known Issues & Workarounds
+## ⚠️ 60 FPS vs 30 FPS Experience
 
-* **60 FPS Physics & Particle Timing**:
-  * God Hand was originally programmed with hard-coded physics and animation update loops locked to 30 FPS on the PlayStation 2 console.
-  * When running in **60 FPS Mode (Dynamic Delta-Time Sync)**, certain enemy knockback distances, grapple timings, and particle effect decay rates may behave slightly faster or desynchronize.
-  * **Workaround**: Switch **Target Frame Rate** to **`30 FPS (Console Native Lock - Recommended)`** in the Graphics settings tab for 100% console-accurate physics, authentic particle timing, and rock-solid stability.
+* **DevSeville 60 FPS Patch**:
+  * The project incorporates the authentic **DevSeville 60 FPS GS progressive display patch** (`SCE_GS_DTV480P`), unlocking 60Hz presentation while maintaining a clean 1.0f internal game speed rate. This eliminates slow-motion movement, desynced particle effects, and rapid roulette timer countdowns.
+  * **Recommendation**: If you prefer the 100% pure authentic PlayStation 2 console combat physics, switch **Target Frame Rate** to **`30 FPS (Console Native Lock)`** in the Graphics settings tab.
 
 ---
 
-## 🎨 How to Customize App Name & Icon
+## 🎨 How to Customize App Artwork & Identity
 
-Before building your own release APK, you can easily personalize the application's display name and app icon:
+Before building your own release APK, you can easily personalize the application's appearance:
 
-1. **Changing App Name**:
+1. **Custom Main Menu Background & Logo**:
+   * Simply place your custom images in `app/src/main/assets/`:
+     * `app/src/main/assets/main_bg.png`: Fullscreen background image (e.g., 2752x1536 or 1920x1080).
+     * `app/src/main/assets/title_logo.png`: Game title logo banner.
+   * The app automatically loads and renders these assets with aspect-ratio preservation and hardware memory optimization.
+
+2. **Changing App Name**:
    * Open [`app/src/main/res/values/strings.xml`](file:///app/src/main/res/values/strings.xml) and edit:
      ```xml
      <string name="app_name">Your Custom Name</string>
@@ -142,7 +159,7 @@ Before building your own release APK, you can easily personalize the application
      android:label="@string/app_name"
      ```
 
-2. **Changing App Icon**:
+3. **Changing App Icon**:
    * **In Android Studio (Recommended)**:
      1. Right-click the `app/src/main/res` folder in the project tree.
      2. Select **New $\to$ Image Asset**.
@@ -155,20 +172,43 @@ Before building your own release APK, you can easily personalize the application
 
 ## 🎮 In-Game Controls & Customization
 
-* **Header Buttons**:
+* **Header Controls**:
   * `EXIT`: Prompt clean exit to main menu without background memory leaks.
   * `⚙`: Open the In-Game Categorized Settings modal dialog.
+  * `✕`: Top-right close button for instant dialog dismissal.
 * **Settings Tabs**:
-  * **GRAPHICS**: Renderer (Vulkan / GLES), Internal Resolution (0.5x Potato to 8.0x 4K), Aspect Ratio (16:9 / 4:3), Target FPS, Frameskip.
-  * **CONTROLS**: Controller Mode (Auto / Touch / Gamepad), Auto-Hide on Gamepad, Sticky Thumbsticks, 3 Dodge Modes, Touch Opacity, and the **Interactive Layout Editor**.
-  * **AUDIO & SYSTEM**: Audio Scheduling Mode (Real-time / Balanced / Safe), Buffer Size (128 / 256 / 512 frames), Master Volume, and Performance HUD modes.
+  * **GRAPHICS**: 
+    * Renderer: Vulkan / OpenGL ES 3.2.
+    * Internal Resolution: 0.5x Potato Mode (256x224) up to 4.0x 4K UHD.
+    * Aspect Ratio: Original 4:3, Standard 16:9, or **True Fullscreen Hor+ Widescreen** (expanded 3D camera FOV without 2D stretching).
+    * Target FPS: 30 FPS Console Native Lock / 60 FPS DevSeville Progressive Patch.
+    * Frameskip: Off, Auto (>34ms trigger), Skip 1 Frame, Skip 2 Frames, or Skip 3 Frames (Potato Mode).
+  * **CONTROLS**: 
+    * Controller Mode: Auto, Touch Only, or Gamepad Only.
+    * Auto-Hide Touch Controls on Gamepad Connection.
+    * 3 Dodge Modes: Right Thumbstick, Swipe Gestures, or Dedicated Dodge Buttons.
+    * Touch Opacity slider and **Interactive Controls Layout Editor**.
+  * **AUDIO & SYSTEM**: 
+    * Audio Scheduling: Real-time, Balanced, or Safe Mode.
+    * Buffer Size: 128, 256, or 512 frames (Oboe / AAudio).
+    * Master Volume & Dual-Mode Performance FPS HUD.
+  * **CHEATS**: 
+    * Health & Protection: Infinite Health, True Super-Armor Invulnerability, Max Capacity Health Bar (screen-aligned).
+    * Resources & Currency: Infinite Gold, Infinite Roulette Orbs, Max Roulette Orbs.
+    * Combat & Meters: Infinite / Max Tension, Double God Hand ASM, Have All Techniques & Roulettes, Freeze Roulette Timer, Damage Multipliers (1x–5x), Always Run Forward, Die Difficulty Lock.
+    * Cosmetics & Unlockables: Gene Costumes (Karate Gi, Business Suit, Carnival), Olivia Costumes (Bunny Girl, Cowgirl), Casino Mods, and Full Jukebox Unlocks.
+  * **SAVES**: 
+    * One-click **Export Saves** to `/sdcard/Download/GodHand_Saves/` (`Mcd001.ps2`, timestamped backups, and compressed ZIP archives ready for sharing or transferring to PCSX2 / AetherSX2 / NetherSX2).
+    * One-click **Import Saves** from local device storage.
 
 ---
 
 ## 👏 Credits & Acknowledgments
 
+* **Port by owaissseeee**: Android native static recompilation port, Vulkan backend integration, touch HUD, controls layout editor, cheats engine, Hor+ widescreen projection, and mobile performance optimization.
 * **Capcom & Clover Studio**: For creating *God Hand*, one of the greatest beat-'em-up masterpieces of all time.
 * **GodHandRecomp / GodHandRecompile Community**: For the foundational PlayStation 2 static recompilation work, reverse-engineered function symbol maps, and God Hand recompiler pipeline research.
+* **DevSeville**: For the authentic *God Hand* 60 FPS progressive display patch research and implementation.
 * **PS2Recomp & MrBroccoli**: Static binary recompilation pipeline architecture and toolchain.
 * **PCSX2 Team**: Industry-standard PlayStation 2 GS graphics emulation backend and Vulkan renderer.
 * **Raylib**: Lightweight windowing and input abstractions.
