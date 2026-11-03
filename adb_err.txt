@@ -1,4 +1,0 @@
-* daemon not running; starting now at tcp:5037
-* daemon started successfully
-taskset: failed to get pid 7301's affinity: Permission denied
-taskset: failed to get pid 7285's affinity: Permission denied

@@ -120,6 +120,7 @@ backups/
 *.mp4
 *.webm
 *.log
+/*.txt
 !app/src/main/res/**/*.png
 !app/src/main/res/**/*.webp
 !app/src/main/res/**/*.xml
