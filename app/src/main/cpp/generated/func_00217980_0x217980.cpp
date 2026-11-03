@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -5183,7 +5184,13 @@ label_218ae4:
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 17), 1384)));
     // 0x218ae8: 0x2442ffff  addiu       $v0, $v0, -0x1
     ctx->pc = 0x218ae8u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countdown_self");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));
+    }
     // 0x218aec: 0x21c00  sll         $v1, $v0, 16
     ctx->pc = 0x218aecu;
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 2), 16));
@@ -5289,7 +5296,13 @@ label_218b00:
     ctx->pc = 0x218B34u;
     // 0x218b34: 0x2462ffff  addiu       $v0, $v1, -0x1
     ctx->pc = 0x218b34u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countdown");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 3), 4294967295));
+    }
     // 0x218b38: 0x10000034  b           . + 4 + (0x34 << 2)
     ctx->pc = 0x218B38u;
     {
@@ -5406,7 +5419,14 @@ label_218b74:
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 17), 1448)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x218b90: 0x3c013f80  lui         $at, 0x3F80
     ctx->pc = 0x218b90u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_rate_f1_s1");
+        if (hook) hook(rdram, ctx, runtime);
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
+    } else {
+    SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
+    }
     // 0x218b94: 0x44810000  mtc1        $at, $f0
     ctx->pc = 0x218b94u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }

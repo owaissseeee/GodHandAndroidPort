@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -46,7 +47,13 @@ void cGameObj_SetTgtTurn_0x2a7498(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2a74b0: 0x46006342  mul.s       $f13, $f12, $f0
     ctx->pc = 0x2a74b0u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_tgt_turn_rate");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     ctx->f[13] = FPU_MUL_S(ctx->f[12], ctx->f[0]);
+    }
     // 0x2a74b4: 0x8e0400f0  lw          $a0, 0xF0($s0)
     ctx->pc = 0x2a74b4u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 240)));

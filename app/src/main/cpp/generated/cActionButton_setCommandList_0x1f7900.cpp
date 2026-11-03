@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -29,7 +30,14 @@ void cActionButton_setCommandList_0x1f7900(uint8_t* rdram, R5900Context* ctx, PS
 
     // 0x1f7900: 0x27bdff90  addiu       $sp, $sp, -0x70
     ctx->pc = 0x1f7900u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_hold_action_request2");
+        if (hook) hook(rdram, ctx, runtime);
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967184));
+    } else {
+    SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967184));
+    }
     // 0x1f7904: 0x7fb40020  sq          $s4, 0x20($sp)
     ctx->pc = 0x1f7904u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 32), GPR_VEC(ctx, 20));

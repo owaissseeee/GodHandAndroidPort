@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -1063,7 +1064,13 @@ label_2561e8:
 label_2561f4:
     // 0x2561f4: 0x8e4205f0  lw          $v0, 0x5F0($s2)
     ctx->pc = 0x2561f4u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_cd_s2_5f0");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 18), 1520)));
+    }
     // 0x2561f8: 0x1040000a  beqz        $v0, . + 4 + (0xA << 2)
     ctx->pc = 0x2561F8u;
     {
@@ -1211,7 +1218,13 @@ label_256224:
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 29), 52), bits); }
     // 0x2562a0: 0xe64205c4  swc1        $f2, 0x5C4($s2)
     ctx->pc = 0x2562a0u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_air_step_f2_s2");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     { float f = ctx->f[2]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 18), 1476), bits); }
+    }
     // 0x2562a4: 0xc4400004  lwc1        $f0, 0x4($v0)
     ctx->pc = 0x2562a4u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 2), 4)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -2073,7 +2086,13 @@ label_256560:
 label_25656c:
     // 0x25656c: 0x8e4205f0  lw          $v0, 0x5F0($s2)
     ctx->pc = 0x25656cu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_cd_s2_5f0");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 18), 1520)));
+    }
     // 0x256570: 0x1040000a  beqz        $v0, . + 4 + (0xA << 2)
     ctx->pc = 0x256570u;
     {
@@ -2244,7 +2263,13 @@ label_256608:
     ctx->f[0] = FPU_SUB_S(ctx->f[3], ctx->f[0]);
     // 0x25660c: 0xe64005c4  swc1        $f0, 0x5C4($s2)
     ctx->pc = 0x25660cu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_air_step_f0_s2");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 18), 1476), bits); }
+    }
     // 0x256610: 0xc64005c4  lwc1        $f0, 0x5C4($s2)
     ctx->pc = 0x256610u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 18), 1476)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }

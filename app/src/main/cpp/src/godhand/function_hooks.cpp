@@ -1,4 +1,5 @@
 #include "godhand/function_hooks.h"
+#include "godhand/frame_patches.h"
 #include "godhand/godhand_perf.h"
 #include "godhand/log.h"
 #include "godhand/module_registry.h"
@@ -1014,6 +1015,7 @@ namespace godhand
 
     void installGameFrameCounter(PS2Runtime &runtime)
     {
+        kamite::installFramePatches(runtime);
         constexpr uint32_t kFlareDepthReadback = 0x003155F8u;
         if (runtime.hasFunction(kFlareDepthReadback))
         {
@@ -1068,15 +1070,7 @@ namespace godhand
                     {
                         const uint32_t fullFlickerOff = 0x80u;
                         std::memcpy(rdram + 0x003C3CCCu, &fullFlickerOff, sizeof(fullFlickerOff));
-                        // Dynamic FPS enforcement: 0x01 for 60 FPS, 0x02 for 30 FPS console lock
-                        const int currentFpsMode = godhand::mobile::getFpsMode();
-                        const uint8_t vblanks = (currentFpsMode == 0) ? 0x01u : 0x02u;
-                        rdram[0x00747A09u] = vblanks;
-                        // Speed rate remains 1.0f in both 60 FPS and 30 FPS modes
-                        const float rate = 1.0f;
-                        std::memcpy(rdram + 0x00747A14u, &rate, sizeof(rate));
-                        std::memcpy(rdram + 0x00741DC0u, &rate, sizeof(rate));
-                        std::memcpy(rdram + 0x00754C48u, &rate, sizeof(rate));
+// Frame divider & rates are now dynamically managed by kamite::frameStart
                         // Enforce non-stretched widescreen / ultrawide FOV every frame
                         godhand::mobile::applyWidescreenPatch(rdram, godhand::mobile::getAspectMode());
                         CheatsEngine::instance().applyFrameCheats(rdram);
@@ -1088,51 +1082,7 @@ namespace godhand
                 "lock-free combined flicker-off + dynamic 60/30 FPS frame counter + cheats engine");
         }
 
-        // DevSeville 60 FPS GS Patches (sceGsResetGraph & sceGsSetDefDispEnv)
-        constexpr uint32_t kSceGsResetGraph = 0x003951F8u;
-        if (runtime.hasFunction(kSceGsResetGraph))
-        {
-            static GuestFunction s_origGsReset = runtime.lookupFunction(kSceGsResetGraph);
-            FunctionHooks::instance().replace(
-                kSceGsResetGraph,
-                "sceGsResetGraph_devseville_60fps",
-                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
-                    if (godhand::mobile::getFpsMode() == 0) // 60 FPS
-                    {
-                        // DevSeville 60 FPS patch (SLUS-21503):
-                        // 00395204 lui a1, 0000 -> SCE_GS_NOINTERLACE (0)
-                        // 0039520c lui a2, 0050 -> SCE_GS_DTV480P (0x50 = 60Hz progressive)
-                        // 00395214 lui a3, 0001 -> SCE_GS_FIELD (1 = FRAME)
-                        SET_GPR_S32(ctx, 5, 0);
-                        SET_GPR_S32(ctx, 6, 0x50);
-                        SET_GPR_S32(ctx, 7, 1);
-                    }
-                    if (s_origGsReset)
-                        s_origGsReset(rdram, ctx, rt);
-                },
-                ReplacementStatus::Native,
-                "DevSeville 60 FPS GS reset mode hook");
-        }
-
-        constexpr uint32_t kSceGsSetDefDispEnv = 0x00396570u;
-        if (runtime.hasFunction(kSceGsSetDefDispEnv))
-        {
-            static GuestFunction s_origSetDefDispEnv = runtime.lookupFunction(kSceGsSetDefDispEnv);
-            FunctionHooks::instance().replace(
-                kSceGsSetDefDispEnv,
-                "sceGsSetDefDispEnv_devseville_60fps",
-                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
-                    if (godhand::mobile::getFpsMode() == 0) // 60 FPS
-                    {
-                        // DevSeville 60 FPS: 00396594 lui t1, 0010
-                        SET_GPR_S32(ctx, 9, 0x10);
-                    }
-                    if (s_origSetDefDispEnv)
-                        s_origSetDefDispEnv(rdram, ctx, rt);
-                },
-                ReplacementStatus::Native,
-                "DevSeville 60 FPS display environment hook");
-        }
+// DevSeville 60 FPS GS Patches removed in favor of kamite 60 FPS suite
 
         // True Invulnerability & Super-Armor:
         // Hook cOmBase_checkDamage (0x001B7380). If victim == playerPtr, return 0!
@@ -1217,14 +1167,7 @@ namespace godhand
                                     if (maxTime <= 0.0f) maxTime = 99.0f;
                                     std::memcpy(rdram + timerObj + 0x3Cu, &maxTime, sizeof(maxTime));
                                 }
-                                else if (godhand::mobile::getFpsMode() == 0)
-                                {
-                                    // 60 FPS pacing: compensate timer decrement so it ticks at authentic 30Hz speed
-                                    float remTime = 0.0f;
-                                    std::memcpy(&remTime, rdram + timerObj + 0x3Cu, sizeof(remTime));
-                                    remTime += 8.0f;
-                                    std::memcpy(rdram + timerObj + 0x3Cu, &remTime, sizeof(remTime));
-                                }
+// Roulette pacing handled accurately by kamite::km_fps60_roulette_timer
                             }
                         }
                     }

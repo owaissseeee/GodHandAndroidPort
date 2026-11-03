@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -101,7 +102,13 @@ void func_0026A200_0x26a200(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x26A250u;
     // 0x26a250: 0x2462ffff  addiu       $v0, $v1, -0x1
     ctx->pc = 0x26a250u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countdown");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 3), 4294967295));
+    }
     // 0x26a254: 0xa0821865  sb          $v0, 0x1865($a0)
     ctx->pc = 0x26a254u;
     WRITE8(ADD32(GPR_U32(ctx, 4), 6245), (uint8_t)GPR_U32(ctx, 2));

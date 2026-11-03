@@ -1,4 +1,5 @@
 #include "godhand_patches_mobile.h"
+#include "godhand/frame_patches.h"
 #include <cstring>
 #include <cmath>
 #include <cstdlib>
@@ -25,10 +26,11 @@ static std::atomic<uint32_t> s_screenHeight{720u};
 
 void setFpsMode(int fpsIdx) {
     s_fpsIdx.store(fpsIdx, std::memory_order_relaxed);
+    kamite::requestFps60(fpsIdx == 0);
 }
 
 int getFpsMode() {
-    return s_fpsIdx.load(std::memory_order_relaxed);
+    return kamite::fps60() ? 0 : 1;
 }
 
 void setAspectMode(int aspectIdx) {

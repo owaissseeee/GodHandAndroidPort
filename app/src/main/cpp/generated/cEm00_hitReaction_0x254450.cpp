@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -1855,7 +1856,13 @@ label_2549b8:
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 17), 1448)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[12] = f; }
     // 0x2549d4: 0x2482ffff  addiu       $v0, $a0, -0x1
     ctx->pc = 0x2549d4u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countdown_v0a0");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 4294967295));
+    }
     // 0x2549d8: 0x3c013ec9  lui         $at, 0x3EC9
     ctx->pc = 0x2549d8u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16073 << 16));
@@ -1985,7 +1992,13 @@ label_254a54:
     ctx->f[0] = FPU_SUB_S(ctx->f[3], ctx->f[0]);
     // 0x254a58: 0xe62005c4  swc1        $f0, 0x5C4($s1)
     ctx->pc = 0x254a58u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_air_step_f0_s1");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 17), 1476), bits); }
+    }
     // 0x254a5c: 0xc62005c4  lwc1        $f0, 0x5C4($s1)
     ctx->pc = 0x254a5cu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 17), 1476)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -5763,7 +5776,13 @@ label_25558c:
 label_255594:
     // 0x255594: 0x8e2205f0  lw          $v0, 0x5F0($s1)
     ctx->pc = 0x255594u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_cd_s1_5f0");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 1520)));
+    }
     // 0x255598: 0x1040000a  beqz        $v0, . + 4 + (0xA << 2)
     ctx->pc = 0x255598u;
     {
@@ -5840,7 +5859,13 @@ label_2555cc:
             ctx->in_delay_slot = true;
             ctx->branch_pc = 0x2555CCu;
             // 0x2555d0: 0x8e2205f4  lw          $v0, 0x5F4($s1) (Delay Slot)
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_cd_s1_5f4");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
             SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 1524)));
+    }
             ctx->in_delay_slot = false;
             ctx->pc = 0x255600u;
             goto label_255600;
@@ -5895,7 +5920,13 @@ label_2555ec:
         ctx->in_delay_slot = true;
         ctx->branch_pc = 0x2555ECu;
         // 0x2555f0: 0x8e2205f4  lw          $v0, 0x5F4($s1) (Delay Slot)
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_cd_s1_5f4");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
         SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 1524)));
+    }
         ctx->in_delay_slot = false;
         if (branch_taken_0x2555ec) {
             ctx->pc = 0x255600u;
@@ -5921,7 +5952,13 @@ label_2555f4:
 label_2555fc:
     // 0x2555fc: 0x8e2205f4  lw          $v0, 0x5F4($s1)
     ctx->pc = 0x2555fcu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_cd_s1_5f4");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 1524)));
+    }
 label_255600:
     // 0x255600: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x255600u;

@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -1625,7 +1626,13 @@ label_303878:
 label_30387c:
     // 0x30387c: 0x641824  and         $v1, $v1, $a0
     ctx->pc = 0x30387cu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_effect_world_slow");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 4));
+    }
 label_303880:
     // 0x303880: 0x5060000e  beql        $v1, $zero, . + 4 + (0xE << 2)
 label_303884:
@@ -1863,7 +1870,13 @@ label_3038f0:
 label_3038f4:
     // 0x3038f4: 0x641824  and         $v1, $v1, $a0
     ctx->pc = 0x3038f4u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_effect_world_slow");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 4));
+    }
 label_3038f8:
     // 0x3038f8: 0x50600005  beql        $v1, $zero, . + 4 + (0x5 << 2)
 label_3038fc:

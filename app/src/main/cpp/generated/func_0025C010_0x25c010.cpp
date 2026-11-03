@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -479,7 +480,13 @@ label_25c0c8:
 label_25c0cc:
     // 0x25c0cc: 0x2462ffff  addiu       $v0, $v1, -0x1
     ctx->pc = 0x25c0ccu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countdown");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 3), 4294967295));
+    }
 label_25c0d0:
     // 0x25c0d0: 0x8e0400f0  lw          $a0, 0xF0($s0)
     ctx->pc = 0x25c0d0u;
@@ -511,7 +518,13 @@ label_25c0e8:
 label_25c0ec:
     // 0x25c0ec: 0x8e0205f0  lw          $v0, 0x5F0($s0)
     ctx->pc = 0x25c0ecu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_cd_s0_5f0");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 1520)));
+    }
 label_25c0f0:
     // 0x25c0f0: 0x10400012  beqz        $v0, . + 4 + (0x12 << 2)
 label_25c0f4:

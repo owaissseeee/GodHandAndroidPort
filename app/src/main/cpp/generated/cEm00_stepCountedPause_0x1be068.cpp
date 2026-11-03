@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -309,7 +310,13 @@ label_1be11c:
 label_1be13c:
     // 0x1be13c: 0x8e020900  lw          $v0, 0x900($s0)
     ctx->pc = 0x1be13cu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_om_cd_s0_900");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 2304)));
+    }
     // 0x1be140: 0x4410007  bgez        $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x1BE140u;
     {
@@ -318,7 +325,13 @@ label_1be13c:
         ctx->in_delay_slot = true;
         ctx->branch_pc = 0x1BE140u;
         // 0x1be144: 0x2442ffff  addiu       $v0, $v0, -0x1 (Delay Slot)
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countdown_self");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
         SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));
+    }
         ctx->in_delay_slot = false;
         if (branch_taken_0x1be140) {
             ctx->pc = 0x1BE160u;
@@ -343,7 +356,13 @@ label_1be13c:
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 2304)));
     // 0x1be15c: 0x2442ffff  addiu       $v0, $v0, -0x1
     ctx->pc = 0x1be15cu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countdown_self");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));
+    }
 label_1be160:
     // 0x1be160: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x1BE160u;

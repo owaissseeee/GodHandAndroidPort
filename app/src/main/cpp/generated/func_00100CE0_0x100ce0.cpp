@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -399,7 +400,13 @@ label_100e28:
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }
     // 0x100e50: 0x46030000  add.s       $f0, $f0, $f3
     ctx->pc = 0x100e50u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_coat_wind");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[3]);
+    }
     // 0x100e54: 0x4601a502  mul.s       $f20, $f20, $f1
     ctx->pc = 0x100e54u;
     ctx->f[20] = FPU_MUL_S(ctx->f[20], ctx->f[1]);

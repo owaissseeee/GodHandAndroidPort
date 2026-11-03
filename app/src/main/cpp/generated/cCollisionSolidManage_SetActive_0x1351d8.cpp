@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -28,7 +29,14 @@ void cCollisionSolidManage_SetActive_0x1351d8(uint8_t* rdram, R5900Context* ctx,
 
     // 0x1351d8: 0x27bdffe0  addiu       $sp, $sp, -0x20
     ctx->pc = 0x1351d8u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_hold_body_switch");
+        if (hook) hook(rdram, ctx, runtime);
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
+    } else {
+    SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
+    }
     // 0x1351dc: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x1351dcu;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 16));
