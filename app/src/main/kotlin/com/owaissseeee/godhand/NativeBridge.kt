@@ -27,6 +27,9 @@ object NativeBridge {
     external fun setFrameskipMode(mode: Int)
     external fun setResolutionScale(resScaleIdx: Int)
     external fun setAspectRatio(aspectIdx: Int)
+    external fun setFpsMode(fpsIdx: Int)
+    external fun setCheatBool(key: String, enabled: Boolean)
+    external fun setCheatInt(key: String, value: Int)
     external fun getPerformanceStats(outStats: FloatArray, outHistory: FloatArray?): Boolean
     external fun getPerformanceThreadIds(): IntArray
     external fun getLastFrameWorkDurationNanos(): Long

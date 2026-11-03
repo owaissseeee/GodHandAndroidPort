@@ -1,3 +1,4 @@
+#include "godhand_patches_mobile.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -343,14 +344,19 @@ label_2af4f0:
     }
     ctx->pc = 0x2AF4F8u;
 label_2af4f8:
-    // 0x2af4f8 / 0x2af4fc: font width fix (0.675f in 16:9, 0.9f in 4:3)
+    // 0x2af4f8 / 0x2af4fc: font width fix (0.675f in 16:9, 0.9f in 4:3, scaled for Full Screen)
     ctx->pc = 0x2af4f8u;
     {
-        const char* env = std::getenv("GODHAND_ASPECT_RATIO_IDX");
-        const bool isWidescreen = (!env || std::strcmp(env, "1") != 0);
-        // 0x3F2CCCCD = 0.675f (16:9 / Full Screen font fix: 0.9f * 3/4)
-        // 0x3F666666 = 0.9f (4:3 Original)
-        const uint32_t atVal = isWidescreen ? 0x3F2CCCCDu : 0x3F666666u;
+        const int aspectIdx = godhand::mobile::getAspectMode();
+        uint32_t atVal = 0x3F2CCCCDu; // 16:9 font scale = 0.675f
+        if (aspectIdx == 1) {
+            atVal = 0x3F666666u; // 4:3 font scale = 0.9f
+        } else if (aspectIdx == 2) {
+            uint32_t sw = 0, sh = 0;
+            godhand::mobile::getScreenDimensions(&sw, &sh);
+            float fontScale = (sw > 0 && sh > 0) ? (1.2f / (static_cast<float>(sw) / static_cast<float>(sh))) : 0.54f;
+            std::memcpy(&atVal, &fontScale, sizeof(atVal));
+        }
         SET_GPR_S32(ctx, 1, static_cast<int32_t>(atVal));
     }
     ctx->pc = 0x2af4fcu;

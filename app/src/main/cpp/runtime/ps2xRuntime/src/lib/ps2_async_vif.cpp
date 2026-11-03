@@ -73,7 +73,7 @@ namespace ps2x::asyncvif
             GifChunk next;
             {
                 std::unique_lock<std::mutex> lock(stage.mutex);
-                stage.idleCv.wait(lock, [&]
+                stage.idleCv.wait_for(lock, std::chrono::milliseconds(100), [&]
                                   { return stage.queuedBytes < kMaxQueuedGifBytes; });
                 stage.queuedBytes += stage.current.data.size();
                 stage.chunks.push_back(std::move(stage.current));
@@ -463,7 +463,7 @@ namespace ps2x::asyncvif
         traceEvent('K', static_cast<uint32_t>(job.items.size()));
         {
             std::unique_lock<std::mutex> lock(worker->mutex);
-            worker->idleCv.wait(lock, [&]
+            worker->idleCv.wait_for(lock, std::chrono::milliseconds(100), [&]
                                 { return worker->jobs.size() < kMaxQueuedJobs; });
             worker->jobs.push_back(std::move(job));
         }
@@ -502,7 +502,7 @@ namespace ps2x::asyncvif
             if (!worker || worker->memory != &memory)
                 return;
             std::unique_lock<std::mutex> lock(worker->mutex);
-            worker->idleCv.wait(lock, [&]
+            worker->idleCv.wait_for(lock, std::chrono::milliseconds(100), [&]
                                 { return worker->jobs.empty() && !worker->busy; });
         }
     }
@@ -640,12 +640,12 @@ namespace ps2x::asyncvif
         traceEvent('W', vu1Timing().hooks.eeCycle ? static_cast<uint32_t>(vu1Timing().hooks.eeCycle() >> 10) : 0u); // EE cycle / 1024
         {
             std::unique_lock<std::mutex> lock(worker->mutex);
-            worker->idleCv.wait(lock, [&]
+            worker->idleCv.wait_for(lock, std::chrono::milliseconds(100), [&]
                                 { return worker->jobs.empty() && !worker->busy; });
         }
         GifStage &stage = worker->gif;
         std::unique_lock<std::mutex> lock(stage.mutex);
-        stage.idleCv.wait(lock, [&]
+        stage.idleCv.wait_for(lock, std::chrono::milliseconds(100), [&]
                           { return stage.chunks.empty() && !stage.busy; });
         traceEvent('w');
     }

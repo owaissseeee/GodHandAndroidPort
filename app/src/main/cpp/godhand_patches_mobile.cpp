@@ -2,6 +2,7 @@
 #include <cstring>
 #include <cmath>
 #include <cstdlib>
+#include <atomic>
 
 namespace godhand {
 namespace mobile {
@@ -17,28 +18,76 @@ static constexpr uint32_t kCameraAspectAddr = 0x00586B88;
 static constexpr float kAspect16x9 = 1.2444438f;
 static constexpr float kAspect4x3  = 0.93333334f;
 
+static std::atomic<int> s_fpsIdx{0}; // 0 = 60 FPS, 1 = 30 FPS
+static std::atomic<int> s_aspectIdx{2}; // 0 = 16:9, 1 = 4:3, 2 = Full Screen
+static std::atomic<uint32_t> s_screenWidth{1600u};
+static std::atomic<uint32_t> s_screenHeight{720u};
+
+void setFpsMode(int fpsIdx) {
+    s_fpsIdx.store(fpsIdx, std::memory_order_relaxed);
+}
+
+int getFpsMode() {
+    return s_fpsIdx.load(std::memory_order_relaxed);
+}
+
+void setAspectMode(int aspectIdx) {
+    s_aspectIdx.store(aspectIdx, std::memory_order_relaxed);
+}
+
+int getAspectMode() {
+    return s_aspectIdx.load(std::memory_order_relaxed);
+}
+
+void setScreenDimensions(uint32_t width, uint32_t height) {
+    if (width > 0) s_screenWidth.store(width, std::memory_order_relaxed);
+    if (height > 0) s_screenHeight.store(height, std::memory_order_relaxed);
+}
+
+void getScreenDimensions(uint32_t* width, uint32_t* height) {
+    if (width) *width = s_screenWidth.load(std::memory_order_relaxed);
+    if (height) *height = s_screenHeight.load(std::memory_order_relaxed);
+}
+
 void applyWidescreenPatch(uint8_t* rdram, int aspectIdx) {
     if (!rdram) return;
-    // aspectIdx:
-    // 0 = 16:9 Widescreen (kAspect16x9 = 1.2444438f)
-    // 1 = 4:3 Original (kAspect4x3 = 0.93333334f)
-    // 2 = Full Screen: Uses the proven 16:9 FOV matching God Hand's internal
-    //     post-processing/culling buffers while PCSX2 stretches edge-to-edge.
-    //     Pushing in-game camera FOV beyond 16:9 caused frustum culling lines across cutscene geometry.
-    const float fovScale = (aspectIdx == 1) ? kAspect4x3 : kAspect16x9;
+    float fovScale = kAspect16x9;
+    if (aspectIdx == 1) {
+        // 4:3 Standard PS2
+        fovScale = kAspect4x3;
+    } else if (aspectIdx == 2) {
+        // Full Screen: Hor+ Ultrawide projection to prevent stretching across full screen
+        uint32_t w = s_screenWidth.load(std::memory_order_relaxed);
+        uint32_t h = s_screenHeight.load(std::memory_order_relaxed);
+        if (w > 0 && h > 0) {
+            float aspect = static_cast<float>(w) / static_cast<float>(h);
+            fovScale = 0.700000005f * aspect;
+        } else {
+            fovScale = 1.5555556f;
+        }
+    } else {
+        // 16:9 Standard Widescreen
+        fovScale = kAspect16x9;
+    }
     std::memcpy(rdram + kCameraAspectAddr, &fovScale, sizeof(fovScale));
 }
 
 void applyPatches(uint8_t* rdram, int fpsIdx, int aspectIdx, float /*customScale*/) {
     if (!rdram) return;
     
+    setFpsMode(fpsIdx);
+    setAspectMode(aspectIdx);
+
     // FPS configuration:
-    // fpsIdx == 0 or 1: 60/120 FPS (1 VBlank = 0x01)
-    // fpsIdx == 2: 30 FPS console lock (2 VBlanks = 0x02)
+    // fpsIdx == 0: 60 FPS (1 VBlank = 0x01)
+    // fpsIdx == 1: 30 FPS console lock (2 VBlanks = 0x02)
     const uint8_t vblanks = (fpsIdx == 0) ? 0x01 : 0x02;
     rdram[kFrameLimiterAddr] = vblanks;
-    const float normalRate = 1.0f;
-    std::memcpy(rdram + 0x00747A14u, &normalRate, sizeof(normalRate));
+    // Speed rate remains 1.0f in both 60 FPS and 30 FPS per DevSeville 60 FPS specification.
+    const float speedRate = 1.0f;
+    std::memcpy(rdram + 0x00747A14u, &speedRate, sizeof(speedRate));
+    std::memcpy(rdram + 0x00741DC0u, &speedRate, sizeof(speedRate));
+    std::memcpy(rdram + 0x00754C48u, &speedRate, sizeof(speedRate));
 
     // Widescreen patch:
     applyWidescreenPatch(rdram, aspectIdx);
@@ -46,13 +95,20 @@ void applyPatches(uint8_t* rdram, int fpsIdx, int aspectIdx, float /*customScale
 
 void updateFrameTiming(uint8_t* rdram, int fpsIdx) {
     if (!rdram) return;
+    setFpsMode(fpsIdx);
     const uint8_t vblanks = (fpsIdx == 0) ? 0x01 : 0x02;
     rdram[kFrameLimiterAddr] = vblanks;
-    const float normalRate = 1.0f;
-    std::memcpy(rdram + 0x00747A14u, &normalRate, sizeof(normalRate));
+    const float speedRate = 1.0f;
+    std::memcpy(rdram + 0x00747A14u, &speedRate, sizeof(speedRate));
+    std::memcpy(rdram + 0x00741DC0u, &speedRate, sizeof(speedRate));
+    std::memcpy(rdram + 0x00754C48u, &speedRate, sizeof(speedRate));
 }
 
-void updateProjectionMatrix(uint8_t* rdram, int aspectIdx, float /*viewportW*/, float /*viewportH*/) {
+void updateProjectionMatrix(uint8_t* rdram, int aspectIdx, float viewportW, float viewportH) {
+    if (viewportW > 0.0f && viewportH > 0.0f) {
+        setScreenDimensions(static_cast<uint32_t>(viewportW), static_cast<uint32_t>(viewportH));
+    }
+    setAspectMode(aspectIdx);
     applyWidescreenPatch(rdram, aspectIdx);
 }
 

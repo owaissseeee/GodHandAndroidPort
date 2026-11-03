@@ -18,6 +18,8 @@
 #include "ps2_host_backend.h"
 #include "godhand/game_disc.h"
 #include "godhand/godhand_perf.h"
+#include "src/godhand/cheats_engine.h"
+#include "godhand_patches_mobile.h"
 
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, "GodHandRecomp", __VA_ARGS__)
@@ -432,6 +434,9 @@ Java_com_owaissseeee_godhand_NativeBridge_onSurfaceCreated(
     }
 
     godhand_set_frameskip_mode(frameskipIdx);
+    godhand::mobile::setScreenDimensions(width, height);
+    godhand::mobile::setFpsMode(fpsIdx);
+    godhand::mobile::setAspectMode(aspectIdx);
 
     float target_hz = (fpsIdx == 0) ? 60.0f : 30.0f;
     using PFN_setFrameRate = int (*)(ANativeWindow*, float, int8_t);
@@ -540,6 +545,39 @@ Java_com_owaissseeee_godhand_NativeBridge_setAspectRatio(
 {
     setenv("GODHAND_ASPECT_RATIO_IDX", std::to_string(aspectIdx).c_str(), 1);
     godhand_set_aspect_ratio(aspectIdx);
+    godhand::mobile::setAspectMode(aspectIdx);
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setFpsMode(
+    JNIEnv* /*env*/, jobject /*thiz*/, jint fpsIdx)
+{
+    godhand::mobile::setFpsMode(fpsIdx);
+    LOGI("NativeBridge: Target FPS mode set to %d (%s)", fpsIdx, (fpsIdx == 0) ? "60 FPS" : "30 FPS");
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setCheatBool(
+    JNIEnv* env, jobject /*thiz*/, jstring keyStr, jboolean enabled)
+{
+    if (!keyStr) return;
+    const char* keyChars = env->GetStringUTFChars(keyStr, nullptr);
+    if (keyChars) {
+        godhand::CheatsEngine::instance().setCheatBool(keyChars, enabled == JNI_TRUE);
+        env->ReleaseStringUTFChars(keyStr, keyChars);
+    }
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setCheatInt(
+    JNIEnv* env, jobject /*thiz*/, jstring keyStr, jint value)
+{
+    if (!keyStr) return;
+    const char* keyChars = env->GetStringUTFChars(keyStr, nullptr);
+    if (keyChars) {
+        godhand::CheatsEngine::instance().setCheatInt(keyChars, static_cast<int>(value));
+        env->ReleaseStringUTFChars(keyStr, keyChars);
+    }
 }
 
 extern "C" void godhand_perf_get_tids(int32_t* out, int* count);

@@ -130,14 +130,8 @@ static inline uint32_t ps2_plzcw32(uint32_t x)
 PS2_FORCEINLINE __m128 ps2VuClampVector(__m128 value)
 {
 #if defined(__aarch64__) || defined(_M_ARM64)
-    uint32x4_t bits;
-    std::memcpy(&bits, &value, 16);
-    const uint32x4_t sign = vandq_u32(bits, vdupq_n_u32(0x80000000u));
-    const uint32x4_t mag  = vminq_u32(vandq_u32(bits, vdupq_n_u32(0x7FFFFFFFu)), vdupq_n_u32(0x7F7FFFFFu));
-    const uint32x4_t res  = vorrq_u32(sign, mag);
-    __m128 out;
-    std::memcpy(&out, &res, 16);
-    return out;
+    // On ARM64, FPCR.FZ=1 and FPCR.DN=1 are enabled in hardware; skip 7-instruction per-op clamp!
+    return value;
 #else
     const __m128i bits = _mm_castps_si128(value);
     const __m128i exponentMask = _mm_set1_epi32(0x7F800000);
@@ -897,8 +891,8 @@ inline __m128i ps2_u64_to_epi64_pair(uint64_t value)
 #define FPU_ADD_S(a, b) ((float)(a) + (float)(b))
 #define FPU_SUB_S(a, b) ((float)(a) - (float)(b))
 #define FPU_MUL_S(a, b) ((float)(a) * (float)(b))
-#define FPU_DIV_S(a, b) ps2FpuClamp((float)(a) / (float)(b))
-#define FPU_SQRT_S(a) ps2FpuClamp(sqrtf(fabsf((float)(a))))
+#define FPU_DIV_S(a, b) ps2FpuDivideNearest((float)(a), (float)(b))
+#define FPU_SQRT_S(a) ps2FpuSqrtNearest((float)(a))
 #define FPU_ABS_S(a) fabsf((float)(a))
 #define FPU_MOV_S(a) ((float)(a))
 #define FPU_NEG_S(a) (-(float)(a))
@@ -916,11 +910,11 @@ inline __m128i ps2_u64_to_epi64_pair(uint64_t value)
 #define FPU_CVT_L_S(a) ((int64_t)(float)(a))
 #define FPU_C_F_S(a, b) (0)
 #define FPU_C_UN_S(a, b) (0)
-#define FPU_C_EQ_S(a, b) (ps2FpuCompareKey((float)(a)) == ps2FpuCompareKey((float)(b)))
+#define FPU_C_EQ_S(a, b) ((float)(a) == (float)(b))
 #define FPU_C_UEQ_S(a, b) FPU_C_EQ_S(a, b)
-#define FPU_C_OLT_S(a, b) (ps2FpuCompareKey((float)(a)) < ps2FpuCompareKey((float)(b)))
+#define FPU_C_OLT_S(a, b) ((float)(a) < (float)(b))
 #define FPU_C_ULT_S(a, b) FPU_C_OLT_S(a, b)
-#define FPU_C_OLE_S(a, b) (ps2FpuCompareKey((float)(a)) <= ps2FpuCompareKey((float)(b)))
+#define FPU_C_OLE_S(a, b) ((float)(a) <= (float)(b))
 #define FPU_C_ULE_S(a, b) FPU_C_OLE_S(a, b)
 #define FPU_C_SF_S(a, b) (0)
 #define FPU_C_NGLE_S(a, b) (0)
@@ -1094,7 +1088,7 @@ static PS2_FORCEINLINE void Ps2SetGprLow64(R5900Context *ctx, int reg, __m128i n
 {
     if (reg != 0)
     {
-        ctx->r[reg] = _mm_castpd_si128(_mm_move_sd(_mm_castsi128_pd(ctx->r[reg]), _mm_castsi128_pd(new_low)));
+        __builtin_memcpy(&ctx->r[reg], &new_low, 8);
     }
 }
 

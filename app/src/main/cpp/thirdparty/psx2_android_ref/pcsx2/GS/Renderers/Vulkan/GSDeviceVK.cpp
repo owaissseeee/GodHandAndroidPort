@@ -2769,6 +2769,11 @@ GSDevice::PresentResult GSDeviceVK::BeginPresent(bool frame_skip)
 		return PresentResult::DeviceLost;
 
 	if (frame_skip)
+	{
+		ExecuteCommandBuffer(false);
+		return PresentResult::FrameSkipped;
+	}
+	if (false)
 		return PresentResult::FrameSkipped;
 
 	// If we're running surfaceless, kick the command buffer so we don't run out of descriptors.

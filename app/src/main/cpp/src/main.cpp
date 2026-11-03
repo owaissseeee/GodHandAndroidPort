@@ -809,9 +809,9 @@ extern "C" void godhand_set_frameskip_mode(int mode);
 
 void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererIdx, int resScaleIdx, int aspectIdx, int fpsIdx, int frameskipIdx) {
     // Frameskip forces multi-frame draw batching and latency spikes on Android; always run unbatched 60Hz/30Hz VSync!
-    frameskipIdx = 0;
-    __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "bootAndroidRuntime: initializing EE runtime (frameskip forced 0 / unbatched)...");
-    godhand_set_frameskip_mode(0);
+    // frameskipIdx is active
+    __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "bootAndroidRuntime: initializing EE runtime (frameskip=%d)...", frameskipIdx);
+    godhand_set_frameskip_mode(frameskipIdx);
 
     // Internal resolution scale mapping from UI spinner index:
     // 0: "0.5x (Super Ultra Low Potato)" -> 0.5f

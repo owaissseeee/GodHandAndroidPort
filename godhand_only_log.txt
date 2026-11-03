@@ -1,0 +1,185 @@
+11-03 04:32:08.886  1124  1770 I ActivityManager: Force stopping com.owaissseeee.godhand appid=10459 user=0: from pid 3994
+11-03 04:32:09.029  1124  1770 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=com.owaissseeee.godhand/.MainActivity} with LAUNCH_MULTIPLE from uid 2000 (BAL_ALLOW_PERMISSION) result code=0
+11-03 04:32:09.093  1124  1160 I ActivityManager: Start proc 4002:com.owaissseeee.godhand/u0a459 for next-top-activity {com.owaissseeee.godhand/com.owaissseeee.godhand.MainActivity}
+11-03 04:32:09.114  4002  4002 I ssseeee.godhand: Using CollectorTypeCC GC.
+11-03 04:32:09.124  4002  4002 W ssseeee.godhand: Core platform API violation: Ljava/lang/reflect/Field;->accessFlags:I from Landroid/os/Build; using reflection
+11-03 04:32:09.220  4002  4002 I ssseeee.godhand: AssetManager2(0xb4000063d2286c28) locale list changing from [] to [en-US]
+11-03 04:32:09.281  4002  4002 I ssseeee.godhand: AssetManager2(0xb4000063d2286f28) locale list changing from [] to [en-US]
+11-03 04:32:09.400 29364  3935 I NearbySharing: Got package event: PackageReplaced(packageName=com.owaissseeee.godhand)
+11-03 04:32:09.601  1124  1147 I ActivityTaskManager: Displayed com.owaissseeee.godhand/.MainActivity for user 0: +601ms
+11-03 04:32:09.636  1124  1264 I ImeTracker: com.owaissseeee.godhand:e307430e: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+11-03 04:32:09.643  4002  4002 I ImeTracker: com.owaissseeee.godhand:e307430e: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-03 04:32:24.826  3843  3845 I artd    : Dex parent of /data/app/~~lyHab70oVRwpQVvby9C0ow==/com.owaissseeee.godhand-GZE8KkjB2ByMhl7RyEasTQ==/base.apk is not writable: Permission denied
+11-03 04:32:24.826  3843  3845 I artd    : GetBestInfo checking odex in dalvik-cache (/data/dalvik-cache/arm64/data@app@~~lyHab70oVRwpQVvby9C0ow==@com.owaissseeee.godhand-GZE8KkjB2ByMhl7RyEasTQ==@base.apk@classes.dex)
+11-03 04:32:24.826  3843  3845 I artd    : Loading /data/dalvik-cache/arm64/data@app@~~lyHab70oVRwpQVvby9C0ow==@com.owaissseeee.godhand-GZE8KkjB2ByMhl7RyEasTQ==@base.apk@classes.dex with executable: 0
+11-03 04:32:24.826  3843  3845 I artd    : OatFileAssistant test for existing oat file /data/dalvik-cache/arm64/data@app@~~lyHab70oVRwpQVvby9C0ow==@com.owaissseeee.godhand-GZE8KkjB2ByMhl7RyEasTQ==@base.apk@classes.dex: File /data/dalvik-cache/arm64/data@app@~~lyHab70oVRwpQVvby9C0ow==@com.owaissseeee.godhand-GZE8KkjB2ByMhl7RyEasTQ==@base.apk@classes.vdex does not exist.
+11-03 04:32:24.826  3843  3845 I artd    : GetBestInfo checking odex next to the dex file (/data/app/~~lyHab70oVRwpQVvby9C0ow==/com.owaissseeee.godhand-GZE8KkjB2ByMhl7RyEasTQ==/oat/arm64/base.odex)
+11-03 04:32:24.826  3843  3845 I artd    : Loading /data/app/~~lyHab70oVRwpQVvby9C0ow==/com.owaissseeee.godhand-GZE8KkjB2ByMhl7RyEasTQ==/oat/arm64/base.odex with executable: 0
+11-03 04:32:24.827  3843  3845 I artd    : Successfully loaded /data/app/~~lyHab70oVRwpQVvby9C0ow==/com.owaissseeee.godhand-GZE8KkjB2ByMhl7RyEasTQ==/oat/arm64/base.odex with executable: 0
+11-03 04:32:24.828  3843  3845 I artd    : /data/app/~~lyHab70oVRwpQVvby9C0ow==/com.owaissseeee.godhand-GZE8KkjB2ByMhl7RyEasTQ==/oat/arm64/base.odex is kOatUpToDate with filter verify
+11-03 04:32:57.729  1124  1630 I ActivityTaskManager: START u0 {cmp=com.owaissseeee.godhand/.GameActivity (has extras)} with LAUNCH_MULTIPLE from uid 10459 (sr=223298797) (BAL_ALLOW_VISIBLE_WINDOW) result code=0
+11-03 04:32:57.750  1124  1160 I ActivityManager: Start proc 4314:com.owaissseeee.godhand:game/u0a459 for next-top-activity {com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity}
+11-03 04:32:57.773  4314  4314 I ee.godhand:game: Using CollectorTypeCC GC.
+11-03 04:32:57.784  4314  4314 W ee.godhand:game: Core platform API violation: Ljava/lang/reflect/Field;->accessFlags:I from Landroid/os/Build; using reflection
+11-03 04:32:57.840  4314  4314 I ee.godhand:game: AssetManager2(0xb4000063d2286c28) locale list changing from [] to [en-US]
+11-03 04:32:57.871  4314  4314 I ee.godhand:game: AssetManager2(0xb4000063d2286f28) locale list changing from [] to [en-US]
+11-03 04:32:57.986  4314  4314 I GodHandRecomp: JNI_OnLoad: God Hand Native Recomp loaded on ARM64
+11-03 04:32:57.986  4314  4314 I GodHandRecomp: NativeBridge: audio unmuted (master volume 1.0)
+11-03 04:32:58.047  4314  4314 I GodHandRecomp: NativeBridge: audio master volume set to 1.00
+11-03 04:32:58.047  4314  4314 I GodHandRecomp: NativeBridge: audio buffer size set to 2048 frames, scheduling=1
+11-03 04:32:58.049  4314  4337 I GodHandRecomp: Booting God Hand EE Static Recompiled Runtime on ARM64...
+11-03 04:32:58.049  4314  4337 I GodHandRecomp: bootAndroidRuntime: initializing EE runtime (frameskip=0)...
+11-03 04:32:58.050  4314  4337 I GodHandPerf: [Affinity] Detected Core 3: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-03 04:32:58.050  4314  4337 I GodHandPerf: [Affinity] Detected Core 2: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-03 04:32:58.050  4314  4337 I GodHandPerf: [Affinity] Detected Core 1: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-03 04:32:58.050  4314  4337 I GodHandPerf: [Affinity] Detected Core 0: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-03 04:32:58.050  4314  4337 I GodHandPerf: [Affinity] Detected Core 7: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-03 04:32:58.050  4314  4337 I GodHandPerf: [Affinity] Detected Core 6: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-03 04:32:58.050  4314  4337 I GodHandPerf: [Affinity] Detected Core 5: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-03 04:32:58.050  4314  4337 I GodHandPerf: [Affinity] Detected Core 4: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-03 04:32:58.050  4314  4337 I GodHandRecomp: Target cacheDir: /data/data/com.owaissseeee.godhand/files/godhand_cache, bootElf: /data/data/com.owaissseeee.godhand/files/godhand_cache/SLUS_215.03
+11-03 04:32:58.050  4314  4337 I GodHandNative: [gs] renderer: PCSX2 GS bound successfully on Android!
+11-03 04:32:58.052  4314  4340 I GodHandPerf: [Affinity] Detected Core 3: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-03 04:32:58.052  4314  4340 I GodHandPerf: [Affinity] Detected Core 2: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-03 04:32:58.052  4314  4340 I GodHandPerf: [Affinity] Detected Core 1: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-03 04:32:58.052  4314  4340 I GodHandPerf: [Affinity] Detected Core 0: Tier=1, Freq=2001000 kHz, Part=0xd03, Impl=0x41
+11-03 04:32:58.052  4314  4340 I GodHandPerf: [Affinity] Detected Core 7: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-03 04:32:58.052  4314  4340 I GodHandPerf: [Affinity] Detected Core 6: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-03 04:32:58.052  4314  4340 I GodHandPerf: [Affinity] Detected Core 5: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-03 04:32:58.052  4314  4340 I GodHandPerf: [Affinity] Detected Core 4: Tier=1, Freq=1500000 kHz, Part=0xd03, Impl=0x41
+11-03 04:32:58.052  4314  4340 I GodHandPerf: [Affinity] Thread 'GSThread' (TID 4340) affinity set (uniform=0, big_count=4, little_count=4), sched_setaffinity rc=0, nice=-19 (pr=0)
+11-03 04:32:58.059  4314  4337 I GodHandNative: GSPcsx2Backend::AttachHostWindow: win=0xb4000063a7d7d010 (1600x720), windowChanged flagged
+11-03 04:32:58.059  4314  4337 I GodHandRecomp: Attached host window, initializing runtime...
+11-03 04:32:58.131  4314  4337 I GodHandAudio: InitAudioDevice result: ready=1
+11-03 04:32:58.138  4314  4337 I GodHandRecomp: Runtime initialized. Loading ELF from /data/data/com.owaissseeee.godhand/files/godhand_cache/SLUS_215.03 ...
+11-03 04:32:58.145  4314  4334 I GodHandNative: Loading segment: 0x100000 - 0x7867b4 (filesz: 0x360ce4, memsz: 0x6867b4)
+11-03 04:32:58.181  4314  4337 I GodHandRecomp: ELF loaded successfully. Entry point PC=0x00100008
+11-03 04:32:58.182  4314  4334 I GodHandNative: Registered code region: 100000 - 460ce4ELF file loaded successfully. Entry point: 0x100008[   0.2008][HOOK] HLE: bound 63 SDK functions; not located in this ELF: sceSifSetSreg sceSifGetDataTable sceSifSetCmdBuffer sceSifSetSysCmdBuffer sceSifGetOtherData sceSifAllocSysMemory sceSifLoadIopHeap sceSifLoadElfPart sceSifLoadElf sceSifGetIopAddr sceSifSetIopAddr sceSifIsAliveIop sceDeci2Open sceDeci2Close sceDeci2ReqSend sceDeci2Poll sceDeci2ExRecv sceDeci2ExSend sceDeci2ExReqSend sceDeci2ExLock sceDeci2ExUnLock sceTtyWrite sceTtyRead sceTtyInit sceCdCallback sceCdInitEeCB sceCdReadIOPm sceCdSeek sceCdStandby sceCdStop sceCdPause sceCdTrayReq sceMpegAddBs sceMpegIsEnd sceMpegIsRefBuffEmpty sceMpegSetDecodeMode sceMpegGetDecodeMode sceMpegGetPictureRAW8xy sceMpegSetDefaultPtsGap sceMpegResetDefaultPtsGap sceMpegSetImageBuff sceMpegDispWidth sceMpegDispHeight sceMpegDispCenterOffX sceMpegDispCenterOffY sceMpegDemuxPssRing sceMpegDemuxPss sceMpegAddStrCallback
+11-03 04:32:58.183  4314  4337 I GodHandRecomp: registerGeneratedVu1Programs: AOT VU1 microprograms registered successfully!
+11-03 04:32:58.183  4314  4334 I GodHandNative: [   0.2013][DLL] recompiled SNR2 module packs: 81
+11-03 04:32:58.183  4314  4334 I GodHandNative: [   0.2014][DLL] SNR2 DLL load logger + module code installer on
+11-03 04:32:58.183  4314  4337 I GodHandPerf: [Affinity] Thread 'HostPump' (TID 4337) affinity set (uniform=0, big_count=4, little_count=4), sched_setaffinity rc=0, nice=-2 (pr=0)
+11-03 04:32:58.183  4314  4337 I GodHandRecomp: Starting God Hand main loop on ARM64...
+11-03 04:32:58.184  4314  4334 I GodHandNative: Starting execution at address 0x100008[input] built without SDL3; using GLFW's gamepads
+11-03 04:32:58.184  4314  4334 I GodHandNative: [input] controllers through GLFW (no vibration)
+11-03 04:32:58.187  4314  4344 I GodHandPerf: [Affinity] Thread 'EEThread' (TID 4344) affinity set (uniform=0, big_count=4, little_count=4), sched_setaffinity rc=0, nice=-20 (pr=0)
+11-03 04:32:58.197  4314  4345 I GodHandPerf: [Affinity] Thread 'IOPThread' (TID 4345) affinity set (uniform=0, big_count=4, little_count=4), sched_setaffinity rc=0, nice=-15 (pr=0)
+11-03 04:32:58.205  4314  4340 I GodHandNative: EnsureOpen: calling g_api->open (hwnd=0xb4000063a7d7d010, 1600x720, scale=0.8, res=/data/data/com.owaissseeee.godhand/files/godhand_cache/resources)...
+11-03 04:32:58.205  4314  4340 I pcsx2-gs: Bridge::Open: Calling GSopen (window=1600x720, scale=0.8, resources=/data/data/com.owaissseeee.godhand/files/godhand_cache/resources)...
+11-03 04:32:58.208  4314  4346 I GodHandPerf: [Affinity] Thread 'GIFThread' (TID 4346) affinity set (uniform=0, big_count=4, little_count=4), sched_setaffinity rc=0, nice=-16 (pr=0)
+11-03 04:32:58.208  4314  4347 I GodHandPerf: [Affinity] Thread 'VUThread' (TID 4347) affinity set (uniform=0, big_count=4, little_count=4), sched_setaffinity rc=0, nice=-20 (pr=0)
+11-03 04:32:58.434  1124  1147 I ActivityTaskManager: Displayed com.owaissseeee.godhand/.GameActivity for user 0: +716ms
+11-03 04:32:58.465  1124  1264 I ImeTracker: com.owaissseeee.godhand:f2530f55: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false
+11-03 04:32:58.467  4314  4314 I ImeTracker: com.owaissseeee.godhand:f2530f55: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-03 04:32:58.658  4314  4362 I ee.godhand:game: Waiting for a blocking GC NativeAlloc
+11-03 04:32:58.721  4314  4362 I ee.godhand:game: WaitForGcToComplete blocked NativeAlloc on NativeAlloc for 62.758ms
+11-03 04:32:58.807  4314  4362 W InteractionJankMonitor: Initializing without READ_DEVICE_CONFIG permission. enabled=false, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=com.owaissseeee.godhand
+11-03 04:32:58.923  4314  4340 I GodHandGS: [ShaderPrewarm] Prewarming God Hand TFX pipelines & shaders...
+11-03 04:32:58.970  4314  4340 I GodHandGS: [ShaderPrewarm] Complete: Prewarmed 32 pipelines, flushed to vulkan_pipelines.bin
+11-03 04:32:58.977  4314  4334 I GodHandNative: [pcsx2-gs] Renderer 14, scale 1 (0x0), window 1600x720, options: 
+11-03 04:32:58.977  4314  4340 I GodHandNative: EnsureOpen: open result m_open=1
+11-03 04:32:58.980  4314  4340 I GodHandNative: GSPcsx2Backend::VSync: Updating PCSX2 GS window to 0xb4000063a7d7d010 (1600x720)...
+11-03 04:32:59.094  4314  4334 I GodHandNative: [SifInitRpc] Initialized[sceCdSearchFile] pc=0x2be494 ra=0x2be494 file=0x1fffe70 pathAddr=0x44c0b8 path="\MODULES\IRX.IMS;1"
+11-03 04:32:59.095  4314  4334 I GodHandNative: [sceCdSearchFile:ok] path="\MODULES\IRX.IMS;1" lsn=0x100000 size=0x4cbc0 sectors=0x9a
+11-03 04:32:59.096  4314  4334 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=1 entry=0x103c4 base=0x10000 start=0
+11-03 04:32:59.096  4314  4334 I GodHandNative: [SIF module] load-buffer-emulated id=1 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-03 04:32:59.098  4314  4334 I GodHandNative: [ps2xIOP] [IOP printf] yet sif hasn't been init
+11-03 04:32:59.098  4314  4334 I GodHandNative: 
+11-03 04:32:59.098  4314  4334 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=2 entry=0x14148 base=0x10d00 start=0
+11-03 04:32:59.098  4314  4334 I GodHandNative: [SIF module] load-buffer-emulated id=2 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-03 04:32:59.098  4314  4334 I GodHandNative: PS2 GsSetCrt: interlaced=1, videoMode=2, frameMode=0
+11-03 04:32:59.128  4314  4334 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=3 entry=0x1acb0 base=0x1ac00 start=0
+11-03 04:32:59.128  4314  4334 I GodHandNative: [SIF module] load-buffer-emulated id=3 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-03 04:32:59.128  4314  4334 I GodHandNative: [ps2xIOP] [IOP Kprintf] SDR driver version 4.0.1 (C) SCEI
+11-03 04:32:59.129  4314  4334 I GodHandNative: 
+11-03 04:32:59.129  4314  4334 I GodHandNative: [ps2xIOP] [IOP Kprintf]  Exit rsd_main 
+11-03 04:32:59.129  4314  4334 I GodHandNative: 
+11-03 04:32:59.129  4314  4334 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=4 entry=0x20ca0 base=0x20900 start=2
+11-03 04:32:59.129  4314  4334 I GodHandNative: [SIF module] load-buffer-emulated id=4 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-03 04:32:59.130  4314  4334 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=5 entry=0x25270 base=0x22600 start=2
+11-03 04:32:59.130  4314  4334 I GodHandNative: [SIF module] load-buffer-emulated id=5 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-03 04:32:59.137  4314  4334 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=6 entry=0x26194 base=0x25400 start=0
+11-03 04:32:59.137  4314  4334 I GodHandNative: [SIF module] load-buffer-emulated id=6 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-03 04:32:59.141  4314  4334 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver Ver.9.67(Nov  4 2005 20:08:36)
+11-03 04:32:59.142  4314  4334 I GodHandNative: 
+11-03 04:32:59.142  4314  4334 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : sceSdInit Call = 0
+11-03 04:32:59.142  4314  4334 I GodHandNative: 
+11-03 04:32:59.142  4314  4334 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : Main Thread Priority = 39
+11-03 04:32:59.142  4314  4334 I GodHandNative: 
+11-03 04:32:59.142  4314  4334 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : PSM Thread Priority  = 39
+11-03 04:32:59.142  4314  4334 I GodHandNative: 
+11-03 04:32:59.142  4314  4334 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : DTX Thread Priority  = 48
+11-03 04:32:59.142  4314  4334 I GodHandNative: 
+11-03 04:32:59.142  4314  4334 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : SPU CORE Number = 1
+11-03 04:32:59.142  4314  4334 I GodHandNative: 
+11-03 04:32:59.142  4314  4334 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=7 entry=0x2cd7c base=0x2c800 start=2
+11-03 04:32:59.142  4314  4334 I GodHandNative: [SIF module] load-buffer-emulated id=7 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-03 04:32:59.144  4314  4334 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd50 pathAddr=0x3d9ee8 path="\0FLISTDV.DIR;1"
+11-03 04:32:59.144  4314  4334 I GodHandNative: [sceCdSearchFile:ok] path="\0FLISTDV.DIR;1" lsn=0x10009b size=0x17 sectors=0x1
+11-03 04:32:59.144  4314  4334 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd40 pathAddr=0x3d9ee8 path="\WOLVES.FST;1"
+11-03 04:32:59.159  4314  4334 I GodHandNative: sceCdSearchFile failed: \WOLVES.FST;1 (root: /data/data/com.owaissseeee.godhand/files/godhand_cache, repeat=1)
+11-03 04:32:59.159  4314  4334 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd40 pathAddr=0x3d9ee8 path="\_DATA.AFS;1"
+11-03 04:32:59.159  4314  4334 I GodHandNative: [sceCdSearchFile:ok] path="\_DATA.AFS;1" lsn=0x10009d size=0x5be75000 sectors=0xb7cea
+11-03 04:32:59.168  4314  4334 I GodHandNative: [ipu] ipu: first bytes in: 08 10 10 13 10 13 16 16 16 16 16 16 1A 18 1A 1B 
+11-03 04:32:59.172  4314  4334 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=8 entry=0x42c98 base=0x42b00 start=2
+11-03 04:32:59.172  4314  4334 I GodHandNative: [SIF module] load-buffer-emulated id=8 ref=1 path="iopbuf:fnv64:43e20dfb6c24e67a"
+11-03 04:32:59.173  4314  4334 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=9 entry=0x6da40 base=0x6da00 start=2
+11-03 04:32:59.173  4314  4334 I GodHandNative: [SIF module] load-buffer-emulated id=9 ref=1 path="iopbuf:fnv64:63e5cc9de8698a12"
+11-03 04:32:59.230  4314  4334 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x41
+11-03 04:32:59.273  4314  4334 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-03 04:32:59.636  4314  4334 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x3d9c68 pathAddr=0x3d9c90 path="\GODHAND.FST;1"
+11-03 04:32:59.636  4314  4334 I GodHandNative: [sceCdSearchFile:ok] path="\GODHAND.FST;1" lsn=0x1b7d88 size=0x80b0 sectors=0x11
+11-03 04:32:59.637  4314  4334 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffab0 pathAddr=0x3d9c90 path="\GODHAND.FST;1"
+11-03 04:32:59.637  4314  4334 I GodHandNative: [sceCdSearchFile:ok] path="\GODHAND.FST;1" lsn=0x1b7d88 size=0x80b0 sectors=0x11
+11-03 04:32:59.642  4314  4334 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x41
+11-03 04:32:59.974  4314  4334 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-03 04:33:00.015  4314  4334 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-03 04:33:00.081  4314  4334 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-03 04:33:00.276  4314  4334 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-03 04:33:00.410  4314  4334 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-03 04:33:00.457  4314  4334 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-03 04:33:00.628  4314  4334 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-03 04:33:00.674  4314  4334 I GodHandNative: [gs] PCSX2 GS: 60 fields, 17.5 MB of GIF data
+11-03 04:33:00.933  4314  4334 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x79
+11-03 04:33:00.999  4314  4334 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-03 04:33:01.192  4314  4334 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x79
+11-03 04:33:01.428  4314  4334 I GodHandNative: [   3.4461][DLL] DLL slots: hole 0x007957c0..0x008a0000, runtime heap limit 0x007957c0; room base 0x00799080, event base 0x007a8080, mcport base 0x007c0080
+11-03 04:33:01.431  4314  4334 I GodHandNative: [   3.4494][DLL] slot mcport heap created: descriptor 0x00798020 heap 0x007c0000 size 0x20000
+11-03 04:33:01.431  4314  4334 I GodHandNative: [   3.4496][DLL] slot redirect mcport: ra 0x002ae540 heap 0x00754230 -> 0x00798020 (DLL base 0x007c0080) dll/Release/McPort.rel
+11-03 04:33:01.521  4314  4334 I GodHandNative: [   3.5392][DLL] #2 link ..\PS2_EE_Release\McPort.elf base 0x007c0080 size 0x1bec7 (end 0x007dbf47) check 0 (ok) relocs 606 funcs 470 ctors +0x9648 align 0x80 ra 0x002ae59c
+11-03 04:33:01.636  4314  4334 I GodHandNative: [   3.6546][DLL] #3 registered ..\PS2_EE_Release\McPort.elf base 0x007c0080 size 0x1bec7 name@0x007d7d80 ctors 0x007c96c8 (header 0x7c96c8) ra 0x00394e6c
+11-03 04:33:01.637  4314  4334 I GodHandNative: [   3.6560][DLL] module code installed: ..\PS2_EE_Release\McPort.elf base 0x007c0080 entries 2827/2827 code 0x007c0180-0x007cf578 sha256 ok
+11-03 04:33:01.638  4314  4334 I GodHandNative: [SifRegisterRpc] sid=0x80000400 sd=0x7d2f98 func=0x7cf018 buf=0x7d3000 cfunc=0x0 cbuf=0x0 qd=0x7d2f80 (EE server for IOP clients; the IOP serves this SID too, EE clients stay bound to it)[ps2xIOP] [IOP] sceSifBindRpc cd=0x0594d8 sid=0x80000400 -> EE server 0x007d2f98 buf 0x007d3000
+11-03 04:33:01.768  4314  4334 I GodHandNative: [ps2xIOP] [SIO2] memory card slot 1: /data/data/com.owaissseeee.godhand/files/Mcd001.ps2
+11-03 04:33:04.356  4314  4334 I GodHandNative: [   6.3742][DLL] module code removed (unregistered): ..\PS2_EE_Release\McPort.elf base 0x007c0080
+11-03 04:33:04.356  4314  4334 I GodHandNative: [   6.3746][DLL] unregister ..\PS2_EE_Release\McPort.elf base 0x007c0080 ra 0x00394f98
+11-03 04:33:04.680  4314  4334 I GodHandNative: [ipu] ipu: bdec out y[0..7]=37 37 37 37 37 37 37 37  cb[0..3]=128 128 128 128  cr[0..3]=128 128 128 128
+11-03 04:33:04.749  4314  4334 I GodHandNative: [ipu] ipu: csc in  y[0..7]=37 37 37 37 37 37 37 37  cb[0..3]=128 128 128 128  cr[0..3]=128 128 128 128
+11-03 04:33:08.081  4314  4334 I GodHandNative: [  10.0991][DLL] slot mcport (heap D reset): empty after release (no block, no registry entry)
+11-03 04:33:08.201  4314  4334 I GodHandNative: [  10.2198][DLL] slot room heap created: descriptor 0x00798000 heap 0x00799000 size 0xf000
+11-03 04:33:08.201  4314  4334 I GodHandNative: [  10.2200][DLL] slot redirect room: ra 0x002be5a0 heap 0x00754220 -> 0x00798000 (DLL base 0x00799080) dll/Release/r020.rel
+11-03 04:33:08.319  4314  4334 I GodHandNative: [  10.3376][DLL] #6 link ..\PS2_EE_Release\r020.elf base 0x00799080 size 0x5e41 (end 0x0079eec1) check 0 (ok) relocs 455 funcs 82 ctors +0x38f0 align 0x80 ra 0x002be6b4
+11-03 04:33:08.323  4314  4334 I GodHandNative: [  10.3415][DLL] #7 registered ..\PS2_EE_Release\r020.elf base 0x00799080 size 0x5e41 name@0x0079d48a ctors 0x0079c970 (header 0x79c970) ra 0x00394e6c
+11-03 04:33:08.323  4314  4334 I GodHandNative: [  10.3421][DLL] module code installed: ..\PS2_EE_Release\r020.elf base 0x00799080 entries 389/389 code 0x00799180-0x0079ca40 sha256 ok
+11-03 04:33:13.892  4314  4334 I GodHandNative: [spu2-adma] core 1 stream gave 892 silent blocks (4757.3 ms) after loud audio, ending at t=9.926 s
+11-03 04:33:22.872  4314  4334 I GodHandNative: [sif-dma] 2048-byte transfer polled 0.63 ms after issue: done (the 2 ms rule said in progress)
+11-03 04:33:22.872  4314  4334 I GodHandNative: [sif-dma] 2048-byte transfer polled 0.63 ms after issue: done (the 2 ms rule said in progress)
+11-03 04:33:27.102  4314  4334 I GodHandNative: [  29.1209][DLL] module code removed (unregistered): ..\PS2_EE_Release\r020.elf base 0x00799080
+11-03 04:33:27.103  4314  4334 I GodHandNative: [  29.1213][DLL] unregister ..\PS2_EE_Release\r020.elf base 0x00799080 ra 0x00394f98
+11-03 04:33:27.314  4314  4334 I GodHandNative: [  29.3323][DLL] slot room (heap D reset): empty after release (no block, no registry entry)
+11-03 04:33:27.314  4314  4334 I GodHandNative: [  29.3325][DLL] slot room reset with heap D (ra 0x002a6218)
+11-03 04:33:27.486  4314  4334 I GodHandNative: [  29.5050][DLL] slot redirect room: ra 0x002be5a0 heap 0x00754220 -> 0x00798000 (DLL base 0x00799080) dll/Release/r100.rel
+11-03 04:33:27.615  4314  4334 I GodHandNative: [  29.6341][DLL] #10 link ..\PS2_EE_Release\r100.elf base 0x00799080 size 0x643f (end 0x0079f4bf) check 0 (ok) relocs 688 funcs 99 ctors +0x3090 align 0x80 ra 0x002be6b4
+11-03 04:33:27.619  4314  4334 I GodHandNative: [  29.6374][DLL] #11 registered ..\PS2_EE_Release\r100.elf base 0x00799080 size 0x643f name@0x0079ce7f ctors 0x0079c110 (header 0x79c110) ra 0x00394e6c
+11-03 04:33:27.620  4314  4334 I GodHandNative: [  29.6383][DLL] module code installed: ..\PS2_EE_Release\r100.elf base 0x00799080 entries 1378/1378 code 0x00799180-0x0079c300 sha256 ok
+11-03 04:33:30.637  4314  4334 I GodHandNative: [  32.6550][DLL] slot event heap created: descriptor 0x00798010 heap 0x007a8000 size 0x18000
+11-03 04:33:30.637  4314  4334 I GodHandNative: [  32.6556][DLL] slot redirect event: ra 0x00297410 heap 0x00754220 -> 0x00798010 (DLL base 0x007a8080) dll/Release/Event.rel
+11-03 04:33:30.770  4314  4334 I GodHandNative: [  32.7882][DLL] #13 link ..\PS2_EE_Release\Event.elf base 0x007a8080 size 0x13a2f (end 0x007bbaaf) check 0 (ok) relocs 518 funcs 393 ctors +0xa890 align 0x80 ra 0x002be6b4
+11-03 04:33:30.848  4314  4334 I GodHandNative: [  32.8663][DLL] #14 registered ..\PS2_EE_Release\Event.elf base 0x007a8080 size 0x13a2f name@0x007b8a69 ctors 0x007b2910 (header 0x7b2910) ra 0x00394e6c
+11-03 04:33:30.849  4314  4334 I GodHandNative: [  32.8680][DLL] module code installed: ..\PS2_EE_Release\Event.elf base 0x007a8080 entries 2371/2371 code 0x007a8180-0x007b4ad8 sha256 ok
+11-03 04:33:46.077  4314  4334 I GodHandNative: [  48.0957][DLL] module code removed (unregistered): ..\PS2_EE_Release\Event.elf base 0x007a8080
+11-03 04:33:46.077  4314  4334 I GodHandNative: [  48.0961][DLL] unregister ..\PS2_EE_Release\Event.elf base 0x007a8080 ra 0x00394f98
+11-03 04:33:46.193  4314  4334 I GodHandNative: [sif-dma] 2048-byte transfer polled 0.36 ms after issue: done (the 2 ms rule said in progress)
+11-03 04:33:46.193  4314  4334 I GodHandNative: [sif-dma] 2048-byte transfer polled 0.36 ms after issue: done (the 2 ms rule said in progress)
+11-03 04:35:03.331  4314  4334 I GodHandNative: [gs] PCSX2 GS: 3600 fields, 3763.8 MB of GIF data
+11-03 04:35:53.989  4314  4341 I ee.godhand:game: Explicit concurrent copying GC freed 3598KB AllocSpace bytes, 0(0B) LOS objects, 79% free, 2176KB/10MB, paused 143us,354us total 58.342ms

@@ -91,6 +91,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
+        settings.reload()
         loadCustomArtworkIfAvailable()
         val ready = processor.isCacheReady() && isShaderCacheReady()
         binding.btnMenuPlay.isEnabled = true
@@ -102,69 +103,102 @@ class MainActivity : ComponentActivity() {
     }
 
     /**
-     * Checks if custom background or custom title images exist in the app's files, storage,
+     * Checks if custom background or custom title images exist in assets, app's files, storage,
      * or drawable resources. Allows the user to drop in custom artwork easily!
      */
     private fun loadCustomArtworkIfAvailable() {
         try {
             // 1. Custom Background Picture Check
-            // A) Check resource drawables first
-            val customBgResId = resources.getIdentifier("custom_main_bg", "drawable", packageName)
-            val fallbackBgResId = if (customBgResId != 0) customBgResId else resources.getIdentifier("main_bg", "drawable", packageName)
-            if (fallbackBgResId != 0) {
-                binding.mainBackgroundImage.setImageResource(fallbackBgResId)
-            } else {
-                // B) Check storage file candidates
-                val customBgCandidates = listOf(
-                    File(getExternalFilesDir(null), "main_bg.png"),
-                    File(getExternalFilesDir(null), "main_bg.jpg"),
-                    File(getExternalFilesDir(null), "god_hand_bg.png"),
-                    File(filesDir, "main_bg.png"),
-                    File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "GodHand/main_bg.png"),
-                    File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "GodHand/main_bg.jpg")
-                )
-                val customBgFile = customBgCandidates.firstOrNull { it.exists() && it.length() > 0 }
-                if (customBgFile != null) {
-                    val bmp = BitmapFactory.decodeFile(customBgFile.absolutePath)
+            // A) Check assets/main_bg.png first!
+            var bgLoaded = false
+            try {
+                assets.open("main_bg.png").use { stream ->
+                    val opts = BitmapFactory.Options().apply { inPreferredConfig = android.graphics.Bitmap.Config.RGB_565 }
+                    val bmp = BitmapFactory.decodeStream(stream, null, opts)
                     if (bmp != null) {
                         binding.mainBackgroundImage.setImageBitmap(bmp)
+                        bgLoaded = true
+                    }
+                }
+            } catch (_: Exception) {}
+
+            if (!bgLoaded) {
+                // B) Check resource drawables
+                val customBgResId = resources.getIdentifier("custom_main_bg", "drawable", packageName)
+                val fallbackBgResId = if (customBgResId != 0) customBgResId else resources.getIdentifier("main_bg", "drawable", packageName)
+                if (fallbackBgResId != 0) {
+                    binding.mainBackgroundImage.setImageResource(fallbackBgResId)
+                } else {
+                    // C) Check storage file candidates
+                    val customBgCandidates = listOf(
+                        File(getExternalFilesDir(null), "main_bg.png"),
+                        File(getExternalFilesDir(null), "main_bg.jpg"),
+                        File(getExternalFilesDir(null), "god_hand_bg.png"),
+                        File(filesDir, "main_bg.png"),
+                        File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "GodHand/main_bg.png"),
+                        File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "GodHand/main_bg.jpg")
+                    )
+                    val customBgFile = customBgCandidates.firstOrNull { it.exists() && it.length() > 0 }
+                    if (customBgFile != null) {
+                        val bmp = BitmapFactory.decodeFile(customBgFile.absolutePath)
+                        if (bmp != null) {
+                            binding.mainBackgroundImage.setImageBitmap(bmp)
+                        }
                     }
                 }
             }
 
             // 2. Custom Title Picture Check
-            // A) Check resource drawables first (god_hand_logo.png or title_logo.png in res/drawable)
-            val customLogoResId = resources.getIdentifier("god_hand_logo", "drawable", packageName)
-            val titleLogoResId = if (customLogoResId != 0) customLogoResId else resources.getIdentifier("title_logo", "drawable", packageName)
-            if (titleLogoResId != 0) {
-                binding.godHandTitleLogo.setImageResource(titleLogoResId)
-                binding.godHandTitleLogo.visibility = View.VISIBLE
-                binding.godHandTitleText.visibility = View.GONE
-                binding.godHandSubtitleText.visibility = View.GONE
-            } else {
-                // B) Check storage file candidates
-                val customTitleCandidates = listOf(
-                    File(getExternalFilesDir(null), "title_logo.png"),
-                    File(getExternalFilesDir(null), "god_hand_logo.png"),
-                    File(getExternalFilesDir(null), "title_logo.webp"),
-                    File(filesDir, "title_logo.png"),
-                    File(filesDir, "god_hand_logo.png"),
-                    File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "GodHand/title_logo.png"),
-                    File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "GodHand/god_hand_logo.png")
-                )
-                val customTitleFile = customTitleCandidates.firstOrNull { it.exists() && it.length() > 0 }
-                if (customTitleFile != null) {
-                    val bmp = BitmapFactory.decodeFile(customTitleFile.absolutePath)
+            // A) Check assets/title_logo.png first!
+            var logoLoaded = false
+            try {
+                assets.open("title_logo.png").use { stream ->
+                    val bmp = BitmapFactory.decodeStream(stream)
                     if (bmp != null) {
                         binding.godHandTitleLogo.setImageBitmap(bmp)
                         binding.godHandTitleLogo.visibility = View.VISIBLE
                         binding.godHandTitleText.visibility = View.GONE
-                        binding.godHandSubtitleText.visibility = View.GONE
+                        binding.godHandSubtitleText.visibility = View.VISIBLE
+                        binding.godHandSubtitleText.text = "PORT BY OWAISSSEEEE • PS2 STATIC RECOMPILATION"
+                        logoLoaded = true
                     }
-                } else {
-                    binding.godHandTitleLogo.visibility = View.GONE
-                    binding.godHandTitleText.visibility = View.VISIBLE
+                }
+            } catch (_: Exception) {}
+
+            if (!logoLoaded) {
+                // B) Check resource drawables first (god_hand_logo.png or title_logo.png in res/drawable)
+                val customLogoResId = resources.getIdentifier("god_hand_logo", "drawable", packageName)
+                val titleLogoResId = if (customLogoResId != 0) customLogoResId else resources.getIdentifier("title_logo", "drawable", packageName)
+                if (titleLogoResId != 0) {
+                    binding.godHandTitleLogo.setImageResource(titleLogoResId)
+                    binding.godHandTitleLogo.visibility = View.VISIBLE
+                    binding.godHandTitleText.visibility = View.GONE
                     binding.godHandSubtitleText.visibility = View.VISIBLE
+                } else {
+                    // C) Check storage file candidates
+                    val customTitleCandidates = listOf(
+                        File(getExternalFilesDir(null), "title_logo.png"),
+                        File(getExternalFilesDir(null), "god_hand_logo.png"),
+                        File(getExternalFilesDir(null), "title_logo.webp"),
+                        File(filesDir, "title_logo.png"),
+                        File(filesDir, "god_hand_logo.png"),
+                        File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "GodHand/title_logo.png"),
+                        File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "GodHand/god_hand_logo.png")
+                    )
+                    val customTitleFile = customTitleCandidates.firstOrNull { it.exists() && it.length() > 0 }
+                    if (customTitleFile != null) {
+                        val bmp = BitmapFactory.decodeFile(customTitleFile.absolutePath)
+                        if (bmp != null) {
+                            binding.godHandTitleLogo.setImageBitmap(bmp)
+                            binding.godHandTitleLogo.visibility = View.VISIBLE
+                            binding.godHandTitleText.visibility = View.GONE
+                            binding.godHandSubtitleText.visibility = View.VISIBLE
+                        }
+                    } else {
+                        binding.godHandTitleLogo.visibility = View.GONE
+                        binding.godHandTitleText.visibility = View.VISIBLE
+                        binding.godHandSubtitleText.visibility = View.VISIBLE
+                    }
                 }
             }
         } catch (_: Exception) {
@@ -186,6 +220,7 @@ class MainActivity : ComponentActivity() {
 
         // 2. SETTINGS BUTTON (Opens 5-Tab Dialog: Graphics, Controls, Sound, Saves, Logs)
         binding.btnMenuSettings.setOnClickListener {
+            settings.reload()
             activeSettingsDialog = SettingsDialog(
                 context = this,
                 settings = settings,
@@ -417,7 +452,7 @@ class MainActivity : ComponentActivity() {
 
     private fun updateBottomBadge() {
         val soc = if (Build.VERSION.SDK_INT >= 31) "${Build.SOC_MANUFACTURER} ${Build.SOC_MODEL}" else Build.HARDWARE
-        binding.tvBottomBadge.text = "Detected SoC: $soc • Vulkan PCSX2-GS • ARM64 Static Recomp"
+        binding.tvBottomBadge.text = "Port by owaissseeee • Detected SoC: $soc • Vulkan PCSX2-GS • ARM64 Recomp"
     }
 
     private fun Int.dpToPx(): Int {

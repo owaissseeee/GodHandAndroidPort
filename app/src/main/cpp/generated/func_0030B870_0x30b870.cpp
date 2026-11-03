@@ -1,3 +1,4 @@
+#include "godhand_patches_mobile.h"
 #include <stdexcept>
 #include <cstdlib>
 #include "ps2_runtime_macros.h"
@@ -146,12 +147,19 @@ void func_0030B870_0x30b870(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x30b8ec: 0x3c18003c  lui         $t8, 0x3C
     ctx->pc = 0x30b8ecu;
     SET_GPR_S32(ctx, 24, (int32_t)((uint32_t)60 << 16));
-    // 0x30b8f0 / 0x30b8f4: widescreen patch (Arapapa / nemesis2000 SLUS-21503 + Full Screen)
+    // 0x30b8f0 / 0x30b8f4: widescreen patch (Arapapa / nemesis2000 SLUS-21503 + Dynamic Full Screen Hor+)
     ctx->pc = 0x30b8f0u;
     {
-        const char* env = std::getenv("GODHAND_ASPECT_RATIO_IDX");
-        const int aspectIdx = env ? std::atoi(env) : 0;
-        const uint32_t atVal = (aspectIdx == 1) ? 0x3F6EEEEFu : 0x3F9F49F1u; // 4:3 = 0.93333334f, 16:9 & Full Screen = 1.2444438f
+        const int aspectIdx = godhand::mobile::getAspectMode();
+        uint32_t atVal = 0x3F9F49F1u; // 16:9 = 1.2444438f
+        if (aspectIdx == 1) {
+            atVal = 0x3F6EEEEFu; // 4:3 = 0.93333334f
+        } else if (aspectIdx == 2) {
+            uint32_t sw = 0, sh = 0;
+            godhand::mobile::getScreenDimensions(&sw, &sh);
+            float fov = (sw > 0 && sh > 0) ? (0.700000005f * (static_cast<float>(sw) / static_cast<float>(sh))) : 1.5555556f;
+            std::memcpy(&atVal, &fov, sizeof(atVal));
+        }
         SET_GPR_S32(ctx, 1, static_cast<int32_t>(atVal));
     }
     ctx->pc = 0x30b8f4u;
@@ -2446,12 +2454,20 @@ label_30c344:
     // 0x30c380: 0x241500e0  addiu       $s5, $zero, 0xE0
     ctx->pc = 0x30c380u;
     SET_GPR_S32(ctx, 21, (int32_t)ADD32(GPR_U32(ctx, 0), 224));
-    // 0x30c384 / 0x30c388: widescreen patch (half-height mode + Full Screen)
+    // 0x30c384 / 0x30c388: widescreen patch (half-height mode + Dynamic Full Screen Hor+)
     ctx->pc = 0x30c384u;
     {
-        const char* env = std::getenv("GODHAND_ASPECT_RATIO_IDX");
-        const int aspectIdx = env ? std::atoi(env) : 0;
-        const uint32_t atVal = (aspectIdx == 1) ? 0x3EEEEEEFu : 0x3F1F49F1u; // 4:3 = 0.46666667f, 16:9 & Full Screen = 0.6222219f
+        const int aspectIdx = godhand::mobile::getAspectMode();
+        uint32_t atVal = 0x3F1F49F1u; // 16:9 = 0.6222219f
+        if (aspectIdx == 1) {
+            atVal = 0x3EEEEEEFu; // 4:3 = 0.46666667f
+        } else if (aspectIdx == 2) {
+            uint32_t sw = 0, sh = 0;
+            godhand::mobile::getScreenDimensions(&sw, &sh);
+            float fov = (sw > 0 && sh > 0) ? (0.700000005f * (static_cast<float>(sw) / static_cast<float>(sh))) : 1.5555556f;
+            fov *= 0.5f;
+            std::memcpy(&atVal, &fov, sizeof(atVal));
+        }
         SET_GPR_S32(ctx, 1, static_cast<int32_t>(atVal));
     }
     ctx->pc = 0x30c388u;

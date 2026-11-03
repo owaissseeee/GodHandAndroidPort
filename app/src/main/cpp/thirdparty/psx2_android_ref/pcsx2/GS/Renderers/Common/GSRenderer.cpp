@@ -31,6 +31,8 @@
 #include <thread>
 #include <mutex>
 
+extern "C" int32_t pcsx2gs_get_frameskip(void);
+
 static void DumpGSPrivRegs(const GSPrivRegSet& r, const std::string& filename);
 
 static constexpr std::array<PresentShader, 8> s_tv_shader_indices = {
@@ -646,6 +648,49 @@ void GSRenderer::VSync(u32 field, bool registers_written, bool idle_frame)
 		else
 		{
 			m_skipped_duplicate_frames = 0;
+		}
+	}
+
+	const int fs_mode = pcsx2gs_get_frameskip();
+	if (fs_mode > 0 && !GSCapture::IsCapturingVideo())
+	{
+		static uint32_t s_fs_counter = 0;
+		static int s_auto_consecutive = 0;
+		static auto s_prev_frame_time = std::chrono::steady_clock::now();
+
+		auto cur_time = std::chrono::steady_clock::now();
+		float delta_ms = std::chrono::duration<float, std::milli>(cur_time - s_prev_frame_time).count();
+		s_prev_frame_time = cur_time;
+
+		if (fs_mode == 1)
+		{
+			if (delta_ms > 34.0f && s_auto_consecutive < 2)
+			{
+				skip_frame = true;
+				s_auto_consecutive++;
+			}
+			else
+			{
+				s_auto_consecutive = 0;
+			}
+		}
+		else if (fs_mode == 2)
+		{
+			s_fs_counter++;
+			if ((s_fs_counter % 2) != 0)
+				skip_frame = true;
+		}
+		else if (fs_mode == 3)
+		{
+			s_fs_counter++;
+			if ((s_fs_counter % 3) != 0)
+				skip_frame = true;
+		}
+		else if (fs_mode >= 4)
+		{
+			s_fs_counter++;
+			if ((s_fs_counter % 4) != 0)
+				skip_frame = true;
 		}
 	}
 

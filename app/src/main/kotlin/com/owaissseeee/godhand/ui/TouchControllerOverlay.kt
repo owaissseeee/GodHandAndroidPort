@@ -78,6 +78,11 @@ class TouchControllerOverlay(context: Context) : View(context) {
     private val density = resources.displayMetrics.density
     private val vibrator = context.getSystemService(Vibrator::class.java)
     private val handler = Handler(Looper.getMainLooper())
+    private var repo: SettingsRepository = SettingsRepository(context)
+    private var isAutoRunPulsing = false
+    private var wasMovingForward = false
+    private var lastForwardTapTime = 0L
+    private val runPulseHandler = Handler(Looper.getMainLooper())
 
     var onExitClicked: (() -> Unit)? = null
     var onSettingsClicked: (() -> Unit)? = null
@@ -341,6 +346,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
     }
 
     fun applySettings(repo: SettingsRepository) {
+        this.repo = repo
         val layout = repo.getCustomButtonLayout()
         for (btn in buttons) {
             val cfg = layout[btn.id]
@@ -417,8 +423,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 totalPresents = perfStats[5].toLong()
             }
             if (fpsMode != FpsOverlayMode.HIDDEN) {
-                val curFpsInt = screenFps.toInt()
-                if (fpsMode == FpsOverlayMode.DETAILED_DEBUG || kotlin.math.abs(curFpsInt - lastDrawnFps) >= 2 || lastDrawnFps == 0) {
+                val curFpsInt = if (fpsMode == FpsOverlayMode.COMPACT) gameFps.toInt() else screenFps.toInt()
+                if (fpsMode == FpsOverlayMode.DETAILED_DEBUG || kotlin.math.abs(curFpsInt - lastDrawnFps) >= 1 || lastDrawnFps == 0) {
                     lastDrawnFps = curFpsInt
                     invalidate(
                         fpsBounds.left.toInt().coerceAtLeast(0),
@@ -545,7 +551,6 @@ class TouchControllerOverlay(context: Context) : View(context) {
             canvas.drawCircle(lKnobX, lKnobY, knobRadius, if (leftStickPointerId != -1) activeGlowPaint else outerGoldRingPaint)
             canvas.drawCircle(lKnobX, lKnobY, knobRadius * 0.82f, coreDiskPaint)
         }
-        canvas.drawText("MOVE", lx, ly + stickRadius + 16f * density, stickTextPaint)
 
         if (isEditMode && selectedElementId == "LEFT_STICK") {
             canvas.drawCircle(lx, ly, stickRadius + 6f * density, editSelectedStrokePaint)
@@ -580,7 +585,6 @@ class TouchControllerOverlay(context: Context) : View(context) {
             canvas.drawCircle(rKnobX, rKnobY, knobRadius, if (rightStickPointerId != -1) activeGlowPaint else outerGoldRingPaint)
             canvas.drawCircle(rKnobX, rKnobY, knobRadius * 0.82f, coreDiskPaint)
         }
-        canvas.drawText("DODGE (R-STICK)", rx, ry + rRadius + 16f * density, stickTextPaint)
 
         if (isEditMode && selectedElementId == "RIGHT_STICK") {
             canvas.drawCircle(rx, ry, rRadius + 6f * density, editSelectedStrokePaint)
@@ -626,8 +630,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 canvas.drawRoundRect(fpsBounds, 8f * density, 8f * density, fpsBorderPaint)
 
                 fpsDotPaint.color = when {
-                    screenFps >= 57.5f -> 0xFF22C55E.toInt()
-                    screenFps >= 45.0f -> 0xFFEAB308.toInt()
+                    gameFps >= 28.5f -> 0xFF22C55E.toInt()
+                    gameFps >= 22.0f -> 0xFFEAB308.toInt()
                     else -> 0xFFEF4444.toInt()
                 }
                 val dotX = left + 12f * density
@@ -636,7 +640,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
                 val textX = left + 22f * density
                 val textY = top + heightDp / 2f + 4f * density
-                val info = String.format(Locale.US, "%.1f FPS  %.1f ms | G:%.0f%%", screenFps, avgFrametimeMs, gameSpeed)
+                val info = String.format(Locale.US, "%.1f FPS  %.1f ms | G:%.0f%%", gameFps, avgFrametimeMs, gameSpeed)
                 canvas.drawText(info, textX, textY, fpsTextPaint)
             }
 
@@ -700,7 +704,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     }
                 }
 
-                canvas.drawText("[TAP TO TOGGLE: COMPACT / DEBUG / HIDE]", left + widthDp / 2f, top + 122f * density, fpsHintPaint)
+                canvas.drawText("Port by owaissseeee • [TAP TO CYCLE]", left + widthDp / 2f, top + 122f * density, fpsHintPaint)
             }
 
             FpsOverlayMode.HIDDEN -> {
@@ -827,8 +831,38 @@ class TouchControllerOverlay(context: Context) : View(context) {
                         val angle = atan2(dy, dx)
                         leftCurrX = leftCenterX + cos(angle) * clamped
                         leftCurrY = leftCenterY + sin(angle) * clamped
+                        val rawY = (dy / maxR).coerceIn(-1f, 1f)
                         leftStickX = (dx / maxR).coerceIn(-1f, 1f)
-                        leftStickY = (dy / maxR).coerceIn(-1f, 1f)
+                        leftStickY = rawY
+
+                        val isForward = (rawY < -0.30f)
+                        if (repo.cheatAlwaysRun) {
+                            if (isForward && !wasMovingForward && !isAutoRunPulsing) {
+                                wasMovingForward = true
+                                isAutoRunPulsing = true
+                                NativeBridge.updatePadState(buttonMask, leftStickX, -1.0f, rightStickX, rightStickY)
+                                runPulseHandler.postDelayed({
+                                    NativeBridge.updatePadState(buttonMask, leftStickX, 0.0f, rightStickX, rightStickY)
+                                    runPulseHandler.postDelayed({
+                                        isAutoRunPulsing = false
+                                        NativeBridge.updatePadState(buttonMask, leftStickX, leftStickY, rightStickX, rightStickY)
+                                    }, 25L)
+                                }, 25L)
+                            } else if (!isForward) {
+                                wasMovingForward = false
+                            }
+                        } else if (repo.fpsIdx == 0) {
+                            if (isForward && !wasMovingForward) {
+                                val now = android.os.SystemClock.uptimeMillis()
+                                if (now - lastForwardTapTime in 40L..450L) {
+                                    leftStickY = -1.0f
+                                }
+                                lastForwardTapTime = now
+                                wasMovingForward = true
+                            } else if (!isForward) {
+                                wasMovingForward = false
+                            }
+                        }
                     }
                 }
             }
@@ -848,8 +882,38 @@ class TouchControllerOverlay(context: Context) : View(context) {
                         val angle = atan2(dy, dx)
                         leftCurrX = leftCenterX + cos(angle) * clamped
                         leftCurrY = leftCenterY + sin(angle) * clamped
+                        val rawY = (dy / maxR).coerceIn(-1f, 1f)
                         leftStickX = (dx / maxR).coerceIn(-1f, 1f)
-                        leftStickY = (dy / maxR).coerceIn(-1f, 1f)
+                        leftStickY = rawY
+
+                        val isForward = (rawY < -0.30f)
+                        if (repo.cheatAlwaysRun) {
+                            if (isForward && !wasMovingForward && !isAutoRunPulsing) {
+                                wasMovingForward = true
+                                isAutoRunPulsing = true
+                                NativeBridge.updatePadState(buttonMask, leftStickX, -1.0f, rightStickX, rightStickY)
+                                runPulseHandler.postDelayed({
+                                    NativeBridge.updatePadState(buttonMask, leftStickX, 0.0f, rightStickX, rightStickY)
+                                    runPulseHandler.postDelayed({
+                                        isAutoRunPulsing = false
+                                        NativeBridge.updatePadState(buttonMask, leftStickX, leftStickY, rightStickX, rightStickY)
+                                    }, 25L)
+                                }, 25L)
+                            } else if (!isForward) {
+                                wasMovingForward = false
+                            }
+                        } else if (repo.fpsIdx == 0) {
+                            if (isForward && !wasMovingForward) {
+                                val now = android.os.SystemClock.uptimeMillis()
+                                if (now - lastForwardTapTime in 40L..450L) {
+                                    leftStickY = -1.0f
+                                }
+                                lastForwardTapTime = now
+                                wasMovingForward = true
+                            } else if (!isForward) {
+                                wasMovingForward = false
+                            }
+                        }
                     } else if (p == rightStickPointerId) {
                         val maxR = 36f * density * rightStickScale
                         val dx = x - rightCenterX
@@ -896,6 +960,9 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     leftStickPointerId = -1
                     leftStickX = 0f
                     leftStickY = 0f
+                    wasMovingForward = false
+                    isAutoRunPulsing = false
+                    runPulseHandler.removeCallbacksAndMessages(null)
                 }
                 if (pid == rightStickPointerId || action == MotionEvent.ACTION_CANCEL) {
                     rightStickPointerId = -1
@@ -917,7 +984,9 @@ class TouchControllerOverlay(context: Context) : View(context) {
         }
         val prevMask = buttonMask
         buttonMask = mask
-        NativeBridge.updatePadState(buttonMask, leftStickX, leftStickY, rightStickX, rightStickY)
+        if (!isAutoRunPulsing) {
+            NativeBridge.updatePadState(buttonMask, leftStickX, leftStickY, rightStickX, rightStickY)
+        }
 
         val nowMs = android.os.SystemClock.uptimeMillis()
         if (buttonMask != lastRenderedButtonMask ||

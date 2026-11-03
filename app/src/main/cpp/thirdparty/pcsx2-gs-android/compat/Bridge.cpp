@@ -15,6 +15,7 @@
 #endif
 
 #include <algorithm>
+#include <atomic>
 #include <chrono>
 #include <cstdio>
 #include <cstdlib>
@@ -451,4 +452,19 @@ extern "C" PCSX2GS_EXPORT void pcsx2gs_set_aspect(uint32_t mode)
 extern "C" PCSX2GS_EXPORT void pcsx2gs_update_window(void *hwnd, uint32_t width, uint32_t height)
 {
     UpdateWindow(hwnd, width, height);
+}
+
+namespace
+{
+    std::atomic<int32_t> g_frameskipMode{0};
+}
+
+extern "C" PCSX2GS_EXPORT void pcsx2gs_set_frameskip(int32_t mode)
+{
+    g_frameskipMode.store(mode, std::memory_order_release);
+}
+
+extern "C" PCSX2GS_EXPORT int32_t pcsx2gs_get_frameskip(void)
+{
+    return g_frameskipMode.load(std::memory_order_relaxed);
 }

@@ -43,6 +43,7 @@ namespace
     const Pcsx2GsApi *g_api = nullptr;
     void(__cdecl *g_setAspect)(uint32_t) = nullptr; // pcsx2gs_set_aspect, when the DLL has it
     void(*g_updateWindow)(void *, uint32_t, uint32_t) = nullptr;
+    void(*g_setFrameskip)(int32_t) = nullptr;
     const std::chrono::steady_clock::time_point g_processStart = std::chrono::steady_clock::now();
     HWND g_parent = nullptr;
     HWND g_child = nullptr;
@@ -238,6 +239,7 @@ bool GSPcsx2Backend::Requested()
 #if defined(__ANDROID__)
         g_api = pcsx2gs_get_api(PCSX2GS_API_VERSION);
         g_setAspect = pcsx2gs_set_aspect;
+        g_setFrameskip = pcsx2gs_set_frameskip;
         g_updateWindow = pcsx2gs_update_window;
         if (!g_api)
         {
@@ -253,12 +255,17 @@ bool GSPcsx2Backend::Requested()
                 const auto updateWindow = reinterpret_cast<void(*)(void*, uint32_t, uint32_t)>(dlsym(module, "pcsx2gs_update_window"));
                 if (updateWindow)
                     g_updateWindow = updateWindow;
+                const auto setFrameskip = reinterpret_cast<void(*)(int32_t)>(dlsym(module, "pcsx2gs_set_frameskip"));
+                if (setFrameskip)
+                    g_setFrameskip = setFrameskip;
             }
         }
         if (g_api)
         {
             if (!g_updateWindow && g_api->update_window)
                 g_updateWindow = g_api->update_window;
+            if (g_setFrameskip)
+                g_setFrameskip(g_frameskipMode.load(std::memory_order_relaxed));
             __android_log_print(ANDROID_LOG_INFO, "GodHandNative", "[gs] renderer: PCSX2 GS bound successfully on Android!");
             return true;
         }
@@ -683,6 +690,10 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
         const uint32_t mode = (pendingAspect == 1) ? 0u : (pendingAspect == 2) ? 2u : 1u;
         g_setAspect(mode);
     }
+    if (g_setFrameskip)
+    {
+        g_setFrameskip(g_frameskipMode.load(std::memory_order_relaxed));
+    }
 
     const uint32_t width = g_clientWidth.load(std::memory_order_relaxed);
     const uint32_t height = g_clientHeight.load(std::memory_order_relaxed);
@@ -857,6 +868,9 @@ bool godhand_perf_get_stats(float* outStats, int statsCount, float* outHistory, 
 
 void godhand_set_frameskip_mode(int mode) {
     g_frameskipMode.store(mode, std::memory_order_release);
+    if (g_setFrameskip) {
+        g_setFrameskip(mode);
+    }
 }
 
 extern "C" __attribute__((visibility("default"))) float godhand_get_avg_frametime_ms() {

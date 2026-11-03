@@ -3,6 +3,9 @@
 #include "godhand/log.h"
 #include "godhand/module_registry.h"
 #include "godhand/sha256.h"
+#include "cheats_engine.h"
+#include "godhand_patches_mobile.h"
+#include "ps2_runtime_macros.h"
 #include "runtime/ps2_save_state.h"
 #include "runtime/ee_scheduler.h"
 #include "ps2_runtime.h"
@@ -1004,20 +1007,9 @@ namespace godhand
     // 0.5 * I(y) + 0.25 * I(y-1) + 0.25 * I(y+1), the interlace flicker filter. At SCALE x the copies are offset by
     // SCALE high-resolution rows, so every edge shows three times (round 7 simulation of ev01 field 4400). With k = 0x80
     // the game's own builder makes a full-weight copy and two RGBA-0 additions (Cs = 0, no change): the frame as drawn.
-    void installHiresFlipCopy(PS2Runtime &runtime)
+    void installHiresFlipCopy(PS2Runtime & /*runtime*/)
     {
-        constexpr uint32_t kFlipChainBuilder = 0x30B870u;
-        constexpr uint32_t kFlickerWeight = 0x3C3CCCu;
-        if (!runtime.hasFunction(kFlipChainBuilder) ||
-            !FunctionHooks::instance().observeEntry(kFlipChainBuilder, "hires_flip_copy", [](uint8_t *rdram, R5900Context *, PS2Runtime *) {
-                const uint32_t full = 0x80u;
-                std::memcpy(rdram + kFlickerWeight, &full, sizeof(full));
-            }))
-        {
-            GH_WARN(Gs, "flip chain builder 0x30b870 has no recompiled entry; the flicker filter stays on");
-            return;
-        }
-        GH_INFO(Gs, "flicker filter of the flip copy off (0x3c3ccc = 0x80 before 0x30b870)");
+        // Merged directly into installGameFrameCounter's lock-free 0x30B870 replacement below!
     }
 
     void installGameFrameCounter(PS2Runtime &runtime)
@@ -1036,44 +1028,239 @@ namespace godhand
                 },
                 ReplacementStatus::Native,
                 "bypass flare GS depth readback stall on mobile");
-            GH_INFO(Gs, "sub_003155F8 flare depth readback stubbed for mobile GPU performance");
         }
 
-        // Hook func_0030B148 (frame-end VBlank wait loop) to immediately fast-forward idle EE cycles
-        // to the next VBlank boundary instead of burning 98.6% CPU spinning in a tight loop!
         constexpr uint32_t kVBlankWaitFunc = 0x0030B148u;
         if (runtime.hasFunction(kVBlankWaitFunc))
         {
-            FunctionHooks::instance().observeEntry(
+            static GuestFunction s_origVBlankWait = runtime.lookupFunction(kVBlankWaitFunc);
+            FunctionHooks::instance().replace(
                 kVBlankWaitFunc,
-                "vblank_wait_idle_skip",
-                [](uint8_t *rdram, R5900Context *, PS2Runtime *rt) {
-                    if (rt && rdram && rdram[0x00747A08u] < rdram[0x00747A09u])
+                "vblank_wait_idle_skip_fast",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    if (rt && rdram)
                     {
-                        rt->scheduler().skipIdleCycles();
+                        uint32_t spins = 0;
+                        while (rdram[0x00747A08u] < rdram[0x00747A09u] &&
+                               !rt->isStopRequested())
+                        {
+                            if (rt->scheduler().skipIdleCycles() == 0u || ++spins > 500u)
+                                break;
+                        }
                     }
-                });
-            GH_INFO(Gs, "func_0030B148 hooked with skipIdleCycles()");
+                    if (s_origVBlankWait)
+                        s_origVBlankWait(rdram, ctx, rt);
+                },
+                ReplacementStatus::Native,
+                "lock-free VBlank idle skip for both VBlank #1 and VBlank #2");
         }
 
-        constexpr uint32_t kFlipChainBuilder = 0x30B870u;
-        if (!runtime.hasFunction(kFlipChainBuilder) ||
-            !FunctionHooks::instance().observeEntry(kFlipChainBuilder, "game_frame_counter", [](uint8_t *rdram, R5900Context *, PS2Runtime *) {
-                godhand_perf_record_game_frame();
-                if (!rdram)
-                    return;
-
-                // Authentic PS2 Console Lockstep:
-                // 0x00747A09 = 0x02 (2 VBlanks per flip = 30 FPS game logic)
-                // 0x00747A14 = 1.0f (cSys::speedRate = 1.0f)
-                rdram[0x00747A09u] = 0x02u;
-                const float rate = 1.0f;
-                std::memcpy(rdram + 0x00747A14u, &rate, sizeof(rate));
-            }))
+        constexpr uint32_t kFlipChainBuilder = 0x0030B870u;
+        if (runtime.hasFunction(kFlipChainBuilder))
         {
-            GH_WARN(Gs, "game_frame_counter: flip chain builder 0x30b870 has no recompiled entry");
-            return;
+            static GuestFunction s_origFlipBuilder = runtime.lookupFunction(kFlipChainBuilder);
+            FunctionHooks::instance().replace(
+                kFlipChainBuilder,
+                "game_frame_counter_fast",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    godhand_perf_record_game_frame();
+                    if (rdram)
+                    {
+                        const uint32_t fullFlickerOff = 0x80u;
+                        std::memcpy(rdram + 0x003C3CCCu, &fullFlickerOff, sizeof(fullFlickerOff));
+                        // Dynamic FPS enforcement: 0x01 for 60 FPS, 0x02 for 30 FPS console lock
+                        const int currentFpsMode = godhand::mobile::getFpsMode();
+                        const uint8_t vblanks = (currentFpsMode == 0) ? 0x01u : 0x02u;
+                        rdram[0x00747A09u] = vblanks;
+                        // Speed rate remains 1.0f in both 60 FPS and 30 FPS modes
+                        const float rate = 1.0f;
+                        std::memcpy(rdram + 0x00747A14u, &rate, sizeof(rate));
+                        std::memcpy(rdram + 0x00741DC0u, &rate, sizeof(rate));
+                        std::memcpy(rdram + 0x00754C48u, &rate, sizeof(rate));
+                        // Enforce non-stretched widescreen / ultrawide FOV every frame
+                        godhand::mobile::applyWidescreenPatch(rdram, godhand::mobile::getAspectMode());
+                        CheatsEngine::instance().applyFrameCheats(rdram);
+                    }
+                    if (s_origFlipBuilder)
+                        s_origFlipBuilder(rdram, ctx, rt);
+                },
+                ReplacementStatus::Native,
+                "lock-free combined flicker-off + dynamic 60/30 FPS frame counter + cheats engine");
         }
-        GH_INFO(Gs, "game_frame_counter observed on flip chain builder 0x30b870 (authentic 1.0x speed lockstep)");
+
+        // DevSeville 60 FPS GS Patches (sceGsResetGraph & sceGsSetDefDispEnv)
+        constexpr uint32_t kSceGsResetGraph = 0x003951F8u;
+        if (runtime.hasFunction(kSceGsResetGraph))
+        {
+            static GuestFunction s_origGsReset = runtime.lookupFunction(kSceGsResetGraph);
+            FunctionHooks::instance().replace(
+                kSceGsResetGraph,
+                "sceGsResetGraph_devseville_60fps",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    if (godhand::mobile::getFpsMode() == 0) // 60 FPS
+                    {
+                        // DevSeville 60 FPS patch (SLUS-21503):
+                        // 00395204 lui a1, 0000 -> SCE_GS_NOINTERLACE (0)
+                        // 0039520c lui a2, 0050 -> SCE_GS_DTV480P (0x50 = 60Hz progressive)
+                        // 00395214 lui a3, 0001 -> SCE_GS_FIELD (1 = FRAME)
+                        SET_GPR_S32(ctx, 5, 0);
+                        SET_GPR_S32(ctx, 6, 0x50);
+                        SET_GPR_S32(ctx, 7, 1);
+                    }
+                    if (s_origGsReset)
+                        s_origGsReset(rdram, ctx, rt);
+                },
+                ReplacementStatus::Native,
+                "DevSeville 60 FPS GS reset mode hook");
+        }
+
+        constexpr uint32_t kSceGsSetDefDispEnv = 0x00396570u;
+        if (runtime.hasFunction(kSceGsSetDefDispEnv))
+        {
+            static GuestFunction s_origSetDefDispEnv = runtime.lookupFunction(kSceGsSetDefDispEnv);
+            FunctionHooks::instance().replace(
+                kSceGsSetDefDispEnv,
+                "sceGsSetDefDispEnv_devseville_60fps",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    if (godhand::mobile::getFpsMode() == 0) // 60 FPS
+                    {
+                        // DevSeville 60 FPS: 00396594 lui t1, 0010
+                        SET_GPR_S32(ctx, 9, 0x10);
+                    }
+                    if (s_origSetDefDispEnv)
+                        s_origSetDefDispEnv(rdram, ctx, rt);
+                },
+                ReplacementStatus::Native,
+                "DevSeville 60 FPS display environment hook");
+        }
+
+        // True Invulnerability & Super-Armor:
+        // Hook cOmBase_checkDamage (0x001B7380). If victim == playerPtr, return 0!
+        // Attack misses Gene completely: zero damage, zero flinch, zero knockback.
+        // Enemies receiving Gene's attacks continue to take 100% damage, flinches, launches, and roulette hits!
+        constexpr uint32_t kOmBase_checkDamage = 0x001B7380u;
+        if (runtime.hasFunction(kOmBase_checkDamage))
+        {
+            static GuestFunction s_origCheckDamage = runtime.lookupFunction(kOmBase_checkDamage);
+            FunctionHooks::instance().replace(
+                kOmBase_checkDamage,
+                "cOmBase_checkDamage_invulnerability",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    if (rdram && ctx && CheatsEngine::instance().isCheatEnabled("invincibility"))
+                    {
+                        uint32_t victim = GPR_U32(ctx, 4); // a0 = this (character receiving damage check)
+                        uint32_t playerPtr = 0;
+                        std::memcpy(&playerPtr, rdram + 0x00747A94u, sizeof(playerPtr));
+                        if (playerPtr >= 0x00100000u && playerPtr < 0x02000000u && victim == playerPtr)
+                        {
+                            // Return 0: Miss! No damage, no flinch, no knockback!
+                            SET_GPR_S32(ctx, 2, 0);
+                            ctx->pc = GPR_U32(ctx, 31);
+                            return;
+                        }
+                    }
+                    if (s_origCheckDamage)
+                        s_origCheckDamage(rdram, ctx, rt);
+                },
+                ReplacementStatus::Native,
+                "Invulnerability super armor: immune to incoming hits, Gene attacks unaffected");
+        }
+
+        // Technique Mastery: Unlock All Techniques & Skills
+        constexpr uint32_t kCoreSave_getSkill = 0x001FAF58u;
+        if (runtime.hasFunction(kCoreSave_getSkill))
+        {
+            static GuestFunction s_origGetSkill = runtime.lookupFunction(kCoreSave_getSkill);
+            FunctionHooks::instance().replace(
+                kCoreSave_getSkill,
+                "cCoreSave_getSkill_cheat",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    if (CheatsEngine::instance().isCheatEnabled("all_techniques"))
+                    {
+                        // Return 1: skill is possessed and unlocked!
+                        SET_GPR_S32(ctx, 2, 1);
+                        ctx->pc = GPR_U32(ctx, 31);
+                        return;
+                    }
+                    if (s_origGetSkill)
+                        s_origGetSkill(rdram, ctx, rt);
+                },
+                ReplacementStatus::Native,
+                "Unlock all techniques and skills hook");
+        }
+
+        // Roulette Selection Timer: 60 FPS Pacing & Freeze Timer
+        constexpr uint32_t kRouletteUpdate = 0x00162C98u;
+        if (runtime.hasFunction(kRouletteUpdate))
+        {
+            static GuestFunction s_origRouletteUpdate = runtime.lookupFunction(kRouletteUpdate);
+            FunctionHooks::instance().replace(
+                kRouletteUpdate,
+                "cRoulette_Update_timer",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    if (s_origRouletteUpdate)
+                        s_origRouletteUpdate(rdram, ctx, rt);
+
+                    if (rdram && ctx)
+                    {
+                        uint32_t s0 = GPR_U32(ctx, 16);
+                        if (s0 >= 0x00100000u && s0 < 0x02000000u)
+                        {
+                            uint32_t timerObj = 0;
+                            std::memcpy(&timerObj, rdram + s0 + 0x80u, sizeof(timerObj));
+                            if (timerObj >= 0x00100000u && timerObj < 0x02000000u)
+                            {
+                                if (CheatsEngine::instance().isCheatEnabled("freeze_roulette"))
+                                {
+                                    float maxTime = 99.0f;
+                                    std::memcpy(&maxTime, rdram + timerObj + 0x38u, sizeof(maxTime));
+                                    if (maxTime <= 0.0f) maxTime = 99.0f;
+                                    std::memcpy(rdram + timerObj + 0x3Cu, &maxTime, sizeof(maxTime));
+                                }
+                                else if (godhand::mobile::getFpsMode() == 0)
+                                {
+                                    // 60 FPS pacing: compensate timer decrement so it ticks at authentic 30Hz speed
+                                    float remTime = 0.0f;
+                                    std::memcpy(&remTime, rdram + timerObj + 0x3Cu, sizeof(remTime));
+                                    remTime += 8.0f;
+                                    std::memcpy(rdram + timerObj + 0x3Cu, &remTime, sizeof(remTime));
+                                }
+                            }
+                        }
+                    }
+                },
+                ReplacementStatus::Native,
+                "Roulette timer 60 FPS pacing & freeze timer hook");
+        }
+
+        constexpr uint32_t kGetCostumeNo = 0x001FC0A8u;
+        if (runtime.hasFunction(kGetCostumeNo))
+        {
+            FunctionHooks::instance().replace(
+                kGetCostumeNo,
+                "cCoreSave_getCostumeNo_cheat",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    int costume = CheatsEngine::instance().getCheatInt("gene_costume");
+                    bool dbl = CheatsEngine::instance().isCheatEnabled("double_god_hand");
+                    uint32_t v0 = (uint32_t)((costume * 2) | (dbl ? 1 : 0));
+                    SET_GPR_ZE32(ctx, 2, v0);
+                },
+                ReplacementStatus::Native,
+                "Double God Hand and Gene Costume modifier hook");
+        }
+
+        constexpr uint32_t kGetOliviaCostumeNo = 0x001FC740u;
+        if (runtime.hasFunction(kGetOliviaCostumeNo))
+        {
+            FunctionHooks::instance().replace(
+                kGetOliviaCostumeNo,
+                "cCoreSave_GetOliviaCostumeNo_cheat",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    int olivia = CheatsEngine::instance().getCheatInt("olivia_costume");
+                    SET_GPR_S32(ctx, 2, olivia);
+                },
+                ReplacementStatus::Native,
+                "Olivia Costume modifier hook");
+        }
     }
 }

@@ -1,0 +1,1570 @@
+================================================================================
+ GOD HAND ANDROID STATIC RECOMP — OPPO F31 PRO DETAILED LOGCAT & TELEMETRY
+================================================================================
+
+TARGET DEVICE:
+  Model: OPPO F31 Pro (CPH2763 / OP5F19L1)
+  Device ID: CII7PJEUJBVKBQ55
+  SoC: MediaTek Dimensity 7300 Energy (MT6878 / mt6878)
+  CPU Architecture: 8-Core (4x Cortex-A78 @ 2.50 GHz, 4x Cortex-A55 @ 2.00 GHz)
+  GPU: ARM Mali-G615 MC2 (Vulkan 1.3 / OpenGL ES 3.2)
+  RAM: 8.0 GB LPDDR4X / LPDDR5
+  Screen Resolution: 1080 x 2372 (Full HD+ AMOLED)
+  OS: Android 16 (ColorOS / Vanilla Android API 36)
+  Game Process: com.owaissseeee.godhand:game (PID: 24635)
+  Git Branch: potato60fps (Commit: 41cd8d27)
+  Live Gameplay Metric: 58.4 FPS (16.7 ms frame-time, G: 97% locked speed)
+
+--------------------------------------------------------------------------------
+ 1. LIVE HARDWARE CLOCK FREQUENCIES (ALL 8 CORES ACTIVE)
+--------------------------------------------------------------------------------
+  Core 0: 2.000 GHz [Cortex-A55 Efficiency Core (2.0 GHz)]
+  Core 1: 2.000 GHz [Cortex-A55 Efficiency Core (2.0 GHz)]
+  Core 2: 2.000 GHz [Cortex-A55 Efficiency Core (2.0 GHz)]
+  Core 3: 2.000 GHz [Cortex-A55 Efficiency Core (2.0 GHz)]
+  Core 4: 2.500 GHz [Cortex-A78 Performance Big Core (2.5 GHz)]
+  Core 5: 2.500 GHz [Cortex-A78 Performance Big Core (2.5 GHz)]
+  Core 6: 2.500 GHz [Cortex-A78 Performance Big Core (2.5 GHz)]
+  Core 7: 2.500 GHz [Cortex-A78 Performance Big Core (2.5 GHz)]
+
+--------------------------------------------------------------------------------
+ 2. LIVE REAL-TIME THREAD CPU UTILIZATION (top -b -n 1 -H -p 24635)
+--------------------------------------------------------------------------------
+Threads: 45 total,   2 running,  43 sleeping,   0 stopped,   0 zombie
+  Mem:  7636960K total,  7266236K used,   370724K free,     2172K buffers
+ Swap:  7864316K total,  4507576K used,  3356740K free,  1694228K cached
+800%cpu 272%user   3%nice 183%sys 297%idle   0%iow  38%irq   7%sirq   0%host
+  TID USER         PR  NI VIRT  RES  SHR S[%CPU] %MEM     TIME+ THREAD          PROCESS
+24680 u0_a458       0 -20  16G 721M 515M R 65.5   9.6   1:18.23 EEThread        com.owaissseeee.godhand:game
+24681 u0_a458       5 -15  16G 721M 515M S 51.7   9.6   1:07.76 IOPThread       com.owaissseeee.godhand:game
+24687 u0_a458       0 -20  16G 721M 515M R 34.4   9.6   0:48.88 VUThread        com.owaissseeee.godhand:game
+24668 u0_a458       1 -19  16G 721M 515M S 24.1   9.6   0:34.53 GSThread        com.owaissseeee.godhand:game
+24653 u0_a458      10 -10  16G 721M 515M S 13.7   9.6   0:06.83 RenderThread    com.owaissseeee.godhand:game
+24635 u0_a458      10 -10  16G 721M 515M S 13.7   9.6   0:09.25 ee.godhand:game com.owaissseeee.godhand:game
+24686 u0_a458       4 -16  16G 721M 515M S  6.8   9.6   0:10.55 GIFThread       com.owaissseeee.godhand:game
+25009 u0_a458      20   0  16G 721M 515M S  3.4   9.6   0:00.57 binder:24635_7  com.owaissseeee.godhand:game
+24674 u0_a458      10 -10  16G 721M 515M S  3.4   9.6   0:01.15 GPU completion  com.owaissseeee.godhand:game
+24671 u0_a458      -3 -16  16G 721M 515M S  3.4   9.6   0:07.21 AudioTrack      com.owaissseeee.godhand:game
+24656 u0_a458      16  -4  16G 721M 515M S  3.4   9.6   0:00.68 mali-event-hand com.owaissseeee.godhand:game
+24659 u0_a458      16  -4  16G 721M 515M S  3.4   9.6   0:00.54 ged-swd         com.owaissseeee.godhand:game
+25113 u0_a458      20   0  16G 721M 515M S  0.0   9.6   0:00.01 mali-compiler   com.owaissseeee.godhand:game
+24975 u0_a458      20   0  16G 721M 515M S  0.0   9.6   0:01.03 binder:24635_6  com.owaissseeee.godhand:game
+24692 u0_a458       0 -20  16G 721M 515M S  0.0   9.6   0:00.40 binder:24635_5  com.owaissseeee.godhand:game
+24688 u0_a458      20   0  16G 721M 515M S  0.0   9.6   0:00.00 InteractionJank com.owaissseeee.godhand:game
+24685 u0_a458      20   0  16G 721M 515M S  0.0   9.6   0:00.15 mali-mem-purge  com.owaissseeee.godhand:game
+24684 u0_a458      20   0  16G 721M 515M S  0.0   9.6   0:02.76 mali-event-hand com.owaissseeee.godhand:game
+24677 u0_a458      20   0  16G 721M 515M S  0.0   9.6   0:00.02 InsetsAnimation com.owaissseeee.godhand:game
+24675 u0_a458      20   0  16G 721M 515M S  0.0   9.6   0:01.18 binder:24635_5  com.owaissseeee.godhand:game
+24673 u0_a458      10 -10  16G 721M 515M S  0.0   9.6   0:00.00 HWC release     com.owaissseeee.godhand:game
+24670 u0_a458      10 -10  16G 721M 515M S  0.0   9.6   0:00.00 ee.godhand:game com.owaissseeee.godhand:game
+24667 u0_a458      18  -2  16G 721M 515M S  0.0   9.6   0:00.69 HostPump        com.owaissseeee.godhand:game
+24666 u0_a458      20   0  16G 721M 515M S  0.0   9.6   0:00.91 binder:24635_4  com.owaissseeee.godhand:game
+24664 u0_a458      18  -2  16G 721M 515M S  0.0   9.6   0:00.00 hwuiTask0       com.owaissseeee.godhand:game
+24665 u0_a458      18  -2  16G 721M 515M S  0.0   9.6   0:00.00 hwuiTask1       com.owaissseeee.godhand:game
+24663 u0_a458      10 -10  16G 721M 515M S  0.0   9.6   0:00.00 TracingMuxer    com.owaissseeee.godhand:game
+24662 u0_a458      18  -2  16G 721M 515M S  0.0   9.6   0:00.00 FramePolicy     com.owaissseeee.godhand:game
+24661 u0_a458      10 -10  16G 721M 515M S  0.0   9.6   0:00.00 ee.godhand:game com.owaissseeee.godhand:game
+24658 u0_a458      16  -4  16G 721M 515M S  0.0   9.6   0:00.85 mali-cpu-comman com.owaissseeee.godhand:game
+24657 u0_a458      16  -4  16G 721M 515M S  0.0   9.6   0:00.14 mali-mem-purge  com.owaissseeee.godhand:game
+24651 u0_a458      20   0  16G 721M 515M S  0.0   9.6   0:00.00 UIMonitorThread com.owaissseeee.godhand:game
+24650 u0_a458      29   9  16G 721M 515M S  0.0   9.6   0:00.00 Profile Saver   com.owaissseeee.godhand:game
+24649 u0_a458      30  10  16G 721M 515M S  0.0   9.6   0:00.00 oplus.view.bg   com.owaissseeee.godhand:game
+24648 u0_a458      20   0  16G 721M 515M S  0.0   9.6   0:00.00 SurfaceSyncGrou com.owaissseeee.godhand:game
+24647 u0_a458      20   0  16G 721M 515M S  0.0   9.6   0:00.00 binder:24635_3  com.owaissseeee.godhand:game
+24646 u0_a458      20   0  16G 721M 515M S  0.0   9.6   0:01.01 binder:24635_2  com.owaissseeee.godhand:game
+24645 u0_a458      20   0  16G 721M 515M S  0.0   9.6   0:01.15 binder:24635_1  com.owaissseeee.godhand:game
+24643 u0_a458      24   4  16G 721M 515M S  0.0   9.6   0:00.00 FinalizerDaemon com.owaissseeee.godhand:game
+24642 u0_a458      24   4  16G 721M 515M S  0.0   9.6   0:00.00 ReferenceQueueD com.owaissseeee.godhand:game
+24644 u0_a458      24   4  16G 721M 515M S  0.0   9.6   0:00.00 FinalizerWatchd com.owaissseeee.godhand:game
+24638 u0_a458       0 -20  16G 721M 515M S  0.0   9.6   0:00.00 Signal Catcher  com.owaissseeee.godhand:game
+24641 u0_a458      24   4  16G 721M 515M S  0.0   9.6   0:00.06 HeapTaskDaemon  com.owaissseeee.godhand:game
+24640 u0_a458      29   9  16G 721M 515M S  0.0   9.6   0:00.03 Jit thread pool com.owaissseeee.godhand:game
+24639 u0_a458       0 -20  16G 721M 515M S  0.0   9.6   0:00.00 perfetto_hprof_ com.owaissseeee.godhand:game
+
+--------------------------------------------------------------------------------
+ 3. MEMORY CONSUMPTION PROFILE (dumpsys meminfo)
+--------------------------------------------------------------------------------
+Applications Memory Usage (in Kilobytes):
+Uptime: 642047993 Realtime: 760237729
+
+** MEMINFO in pid 24635 [com.owaissseeee.godhand:game] **
+                   Pss  Private  Private  SwapPss      Rss     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty    Total     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------   ------
+  Native Heap   173388   173336       12       41   174388   285696   235969    49726
+  Dalvik Heap     4298     4276        0      110     4828     8328     2184     6144
+ Dalvik Other      838      784        0        1     1312                           
+        Stack     1488     1488        0        0     1496                           
+       Ashmem     4132     4096        0        0     4644                           
+    Other dev       47        8       20        0      696                           
+     .so mmap    67415     7296    55196       14   121064                           
+    .jar mmap     2003        0      152        0    39708                           
+    .apk mmap      387        0        0        0     2120                           
+    .ttf mmap      148        0       60        0      328                           
+    .dex mmap     2500        0     1304        0     4516                           
+    .oat mmap      307        0        0        0    16696                           
+    .art mmap     1361      896       44      325    13364                           
+   Other mmap       30        4        0        0     1076                           
+    GL mtrack   343876   343876        0        0   343876                           
+      Unknown     7537     7352      176        2     8016                           
+        TOTAL   610248   543412    56964      493   738128   294024   238153    55870
+ 
+ App Summary
+                       Pss(KB)                        Rss(KB)
+                        ------                         ------
+           Java Heap:     5216                          18192
+         Native Heap:   173336                         174388
+                Code:    64008                         184520
+               Stack:     1488                           1496
+            Graphics:   343876                         343876
+       Private Other:    12452
+              System:     9872
+             Unknown:                                   15656
+ 
+           TOTAL PSS:   610248            TOTAL RSS:   738128       TOTAL SWAP PSS:      493
+ 
+ Objects
+               Views:        7         ViewRootImpl:        1
+         AppContexts:        5           Activities:        1
+              Assets:       61        AssetManagers:        0
+       Local Binders:       16        Proxy Binders:       89
+       Parcel memory:       11         Parcel count:       39
+    Death Recipients:        0             WebViews:        0
+ 
+ Native Allocations
+                         Count                       Total(kB)
+                        ------                         ------
+   Bitmap (malloced):       22                           7935
+    Other (malloced):      383                             35
+ Other (nonmalloced):      103                            277
+ 
+ SQL
+         MEMORY_USED:        0
+  PAGECACHE_OVERFLOW:        0          MALLOC_SIZE:        0
+
+--------------------------------------------------------------------------------
+ 4. GOD HAND NATIVE RUNTIME LOGCAT (Boot, DLL Links, IRX, GS, SIO2, IPU)
+--------------------------------------------------------------------------------
+--------- beginning of main
+11-02 17:41:27.549  5962  6057 I GodHandNative: [gs] renderer: PCSX2 GS bound successfully on Android!
+11-02 17:41:27.558  5962  6057 I GodHandNative: GSPcsx2Backend::AttachHostWindow: win=0xb4000077599c6410 (2372x1080), windowChanged flagged
+11-02 17:41:27.956  5962  6022 I GodHandNative: Loading segment: 0x100000 - 0x7867b4 (filesz: 0x360ce4, memsz: 0x6867b4)
+11-02 17:41:27.978  5962  6022 I GodHandNative: Registered code region: 100000 - 460ce4ELF file loaded successfully. Entry point: 0x100008[   0.5575][HOOK] HLE: bound 63 SDK functions; not located in this ELF: sceSifSetSreg sceSifGetDataTable sceSifSetCmdBuffer sceSifSetSysCmdBuffer sceSifGetOtherData sceSifAllocSysMemory sceSifLoadIopHeap sceSifLoadElfPart sceSifLoadElf sceSifGetIopAddr sceSifSetIopAddr sceSifIsAliveIop sceDeci2Open sceDeci2Close sceDeci2ReqSend sceDeci2Poll sceDeci2ExRecv sceDeci2ExSend sceDeci2ExReqSend sceDeci2ExLock sceDeci2ExUnLock sceTtyWrite sceTtyRead sceTtyInit sceCdCallback sceCdInitEeCB sceCdReadIOPm sceCdSeek sceCdStandby sceCdStop sceCdPause sceCdTrayReq sceMpegAddBs sceMpegIsEnd sceMpegIsRefBuffEmpty sceMpegSetDecodeMode sceMpegGetDecodeMode sceMpegGetPictureRAW8xy sceMpegSetDefaultPtsGap sceMpegResetDefaultPtsGap sceMpegSetImageBuff sceMpegDispWidth sceMpegDispHeight sceMpegDispCenterOffX sceMpegDispCenterOffY sceMpegDemuxPssRing sceMpegDemuxPss sceMpegAddStrCallback
+11-02 17:41:27.978  5962  6022 I GodHandNative: [   0.5577][DLL] recompiled SNR2 module packs: 81
+11-02 17:41:27.978  5962  6022 I GodHandNative: [   0.5577][DLL] SNR2 DLL load logger + module code installer on
+11-02 17:41:27.978  5962  6022 I GodHandNative: [   0.5578][GS] flicker filter of the flip copy off (0x3c3ccc = 0x80 before 0x30b870)
+11-02 17:41:27.978  5962  6022 I GodHandNative: [   0.5578][GS] game_frame_counter observed on flip chain builder 0x30b870 (authentic 1.0x speed lockstep)
+11-02 17:41:27.982  5962  6022 I GodHandNative: Starting execution at address 0x100008[input] built without SDL3; using GLFW's gamepads
+11-02 17:41:27.982  5962  6022 I GodHandNative: [input] controllers through GLFW (no vibration)
+11-02 17:41:28.007  5962  6067 I GodHandNative: EnsureOpen: calling g_api->open (hwnd=0xb4000077599c6410, 2372x1080, scale=2.0, res=/data/data/com.owaissseeee.godhand/files/godhand_cache/resources)...
+11-02 17:41:28.327  5962  6067 I GodHandNative: EnsureOpen: open result m_open=1
+11-02 17:41:28.329  5962  6067 I GodHandNative: GSPcsx2Backend::VSync: Updating PCSX2 GS window to 0xb4000077599c6410 (2372x1080)...
+11-02 17:41:28.329  5962  6022 I GodHandNative: [pcsx2-gs] Renderer 14, scale 2 (0x0), window 2372x1080, options: 
+11-02 17:41:28.533  5962  6022 I GodHandNative: [SifInitRpc] Initialized[sceCdSearchFile] pc=0x2be494 ra=0x2be494 file=0x1fffe70 pathAddr=0x44c0b8 path="\MODULES\IRX.IMS;1"
+11-02 17:41:28.533  5962  6022 I GodHandNative: [sceCdSearchFile:ok] path="\MODULES\IRX.IMS;1" lsn=0x100000 size=0x4cbc0 sectors=0x9a
+11-02 17:41:28.536  5962  6022 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=1 entry=0x103c4 base=0x10000 start=0
+11-02 17:41:28.536  5962  6022 I GodHandNative: [SIF module] load-buffer-emulated id=1 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 17:41:28.536  5962  6022 I GodHandNative: [ps2xIOP] [IOP printf] yet sif hasn't been init
+11-02 17:41:28.536  5962  6022 I GodHandNative: 
+11-02 17:41:28.536  5962  6022 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=2 entry=0x14148 base=0x10d00 start=0
+11-02 17:41:28.536  5962  6022 I GodHandNative: [SIF module] load-buffer-emulated id=2 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 17:41:28.536  5962  6022 I GodHandNative: PS2 GsSetCrt: interlaced=1, videoMode=2, frameMode=0
+11-02 17:41:28.552  5962  6022 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=3 entry=0x1acb0 base=0x1ac00 start=0
+11-02 17:41:28.553  5962  6022 I GodHandNative: [SIF module] load-buffer-emulated id=3 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 17:41:28.553  5962  6022 I GodHandNative: [ps2xIOP] [IOP Kprintf] SDR driver version 4.0.1 (C) SCEI
+11-02 17:41:28.553  5962  6022 I GodHandNative: 
+11-02 17:41:28.553  5962  6022 I GodHandNative: [ps2xIOP] [IOP Kprintf]  Exit rsd_main 
+11-02 17:41:28.553  5962  6022 I GodHandNative: 
+11-02 17:41:28.553  5962  6022 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=4 entry=0x20ca0 base=0x20900 start=2
+11-02 17:41:28.553  5962  6022 I GodHandNative: [SIF module] load-buffer-emulated id=4 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 17:41:28.554  5962  6022 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=5 entry=0x25270 base=0x22600 start=2
+11-02 17:41:28.554  5962  6022 I GodHandNative: [SIF module] load-buffer-emulated id=5 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 17:41:28.555  5962  6022 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=6 entry=0x26194 base=0x25400 start=0
+11-02 17:41:28.555  5962  6022 I GodHandNative: [SIF module] load-buffer-emulated id=6 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 17:41:28.566  5962  6022 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver Ver.9.67(Nov  4 2005 20:08:36)
+11-02 17:41:28.566  5962  6022 I GodHandNative: 
+11-02 17:41:28.566  5962  6022 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : sceSdInit Call = 0
+11-02 17:41:28.566  5962  6022 I GodHandNative: 
+11-02 17:41:28.566  5962  6022 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : Main Thread Priority = 39
+11-02 17:41:28.566  5962  6022 I GodHandNative: 
+11-02 17:41:28.566  5962  6022 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : PSM Thread Priority  = 39
+11-02 17:41:28.566  5962  6022 I GodHandNative: 
+11-02 17:41:28.566  5962  6022 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : DTX Thread Priority  = 48
+11-02 17:41:28.566  5962  6022 I GodHandNative: 
+11-02 17:41:28.566  5962  6022 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : SPU CORE Number = 1
+11-02 17:41:28.566  5962  6022 I GodHandNative: 
+11-02 17:41:28.567  5962  6022 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=7 entry=0x2cd7c base=0x2c800 start=2
+11-02 17:41:28.567  5962  6022 I GodHandNative: [SIF module] load-buffer-emulated id=7 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 17:41:28.574  5962  6022 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd50 pathAddr=0x3d9ee8 path="\0FLISTDV.DIR;1"
+11-02 17:41:28.576  5962  6022 I GodHandNative: [sceCdSearchFile:ok] path="\0FLISTDV.DIR;1" lsn=0x10009b size=0x17 sectors=0x1
+11-02 17:41:28.576  5962  6022 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd40 pathAddr=0x3d9ee8 path="\WOLVES.FST;1"
+11-02 17:41:28.593  5962  6022 I GodHandNative: sceCdSearchFile failed: \WOLVES.FST;1 (root: /data/data/com.owaissseeee.godhand/files/godhand_cache, repeat=1)
+11-02 17:41:28.593  5962  6022 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd40 pathAddr=0x3d9ee8 path="\_DATA.AFS;1"
+11-02 17:41:28.593  5962  6022 I GodHandNative: [sceCdSearchFile:ok] path="\_DATA.AFS;1" lsn=0x10009d size=0x5be75000 sectors=0xb7cea
+11-02 17:41:28.625  5962  6022 I GodHandNative: [ipu] ipu: first bytes in: 08 10 10 13 10 13 16 16 16 16 16 16 1A 18 1A 1B 
+11-02 17:41:28.627  5962  6022 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=8 entry=0x42c98 base=0x42b00 start=2
+11-02 17:41:28.627  5962  6022 I GodHandNative: [SIF module] load-buffer-emulated id=8 ref=1 path="iopbuf:fnv64:43e20dfb6c24e67a"
+11-02 17:41:28.628  5962  6022 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=9 entry=0x6da40 base=0x6da00 start=2
+11-02 17:41:28.628  5962  6022 I GodHandNative: [SIF module] load-buffer-emulated id=9 ref=1 path="iopbuf:fnv64:63e5cc9de8698a12"
+11-02 17:41:28.649  5962  6022 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x41
+11-02 17:41:28.669  5962  6022 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 17:41:28.813  5962  6022 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x3d9c68 pathAddr=0x3d9c90 path="\GODHAND.FST;1"
+11-02 17:41:28.813  5962  6022 I GodHandNative: [sceCdSearchFile:ok] path="\GODHAND.FST;1" lsn=0x1b7d88 size=0x80b0 sectors=0x11
+11-02 17:41:28.813  5962  6022 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffab0 pathAddr=0x3d9c90 path="\GODHAND.FST;1"
+11-02 17:41:28.813  5962  6022 I GodHandNative: [sceCdSearchFile:ok] path="\GODHAND.FST;1" lsn=0x1b7d88 size=0x80b0 sectors=0x11
+11-02 17:41:28.818  5962  6022 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x41
+11-02 17:41:29.000  5962  6022 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 17:41:29.034  5962  6022 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-02 17:41:29.127  5962  6022 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 17:41:29.267  5962  6022 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-02 17:41:29.366  5962  6022 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 17:41:29.400  5962  6022 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-02 17:41:29.481  5962  6022 I GodHandNative: [gs] PCSX2 GS: 60 fields, 17.5 MB of GIF data
+11-02 17:41:29.540  5962  6022 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 17:41:29.793  5962  6022 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x79
+11-02 17:41:29.842  5962  6022 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 17:41:30.004  5962  6022 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x79
+11-02 17:41:30.180  5962  6022 I GodHandNative: [   2.7599][DLL] DLL slots: hole 0x007957c0..0x008a0000, runtime heap limit 0x007957c0; room base 0x00799080, event base 0x007a8080, mcport base 0x007c0080
+11-02 17:41:30.180  5962  6022 I GodHandNative: [   2.7602][DLL] slot mcport heap created: descriptor 0x00798020 heap 0x007c0000 size 0x20000
+11-02 17:41:30.180  5962  6022 I GodHandNative: [   2.7603][DLL] slot redirect mcport: ra 0x002ae540 heap 0x00754230 -> 0x00798020 (DLL base 0x007c0080) dll/Release/McPort.rel
+11-02 17:41:30.242  5962  6022 I GodHandNative: [   2.8225][DLL] #2 link ..\PS2_EE_Release\McPort.elf base 0x007c0080 size 0x1bec7 (end 0x007dbf47) check 0 (ok) relocs 606 funcs 470 ctors +0x9648 align 0x80 ra 0x002ae59c
+11-02 17:41:30.481  5962  6022 I GodHandNative: [   3.0612][DLL] #3 registered ..\PS2_EE_Release\McPort.elf base 0x007c0080 size 0x1bec7 name@0x007d7d80 ctors 0x007c96c8 (header 0x7c96c8) ra 0x00394e6c
+11-02 17:41:30.483  5962  6022 I GodHandNative: [   3.0626][DLL] module code installed: ..\PS2_EE_Release\McPort.elf base 0x007c0080 entries 2827/2827 code 0x007c0180-0x007cf578 sha256 ok
+11-02 17:41:30.490  5962  6022 I GodHandNative: [SifRegisterRpc] sid=0x80000400 sd=0x7d2f98 func=0x7cf018 buf=0x7d3000 cfunc=0x0 cbuf=0x0 qd=0x7d2f80 (EE server for IOP clients; the IOP serves this SID too, EE clients stay bound to it)[ps2xIOP] [IOP] sceSifBindRpc cd=0x0594d8 sid=0x80000400 -> EE server 0x007d2f98 buf 0x007d3000
+11-02 17:41:30.572  5962  6022 I GodHandNative: [ps2xIOP] [SIO2] memory card slot 1: /data/data/com.owaissseeee.godhand/files/Mcd001.ps2
+11-02 17:41:31.632  5962  6022 I GodHandNative: [   4.2119][DLL] module code removed (unregistered): ..\PS2_EE_Release\McPort.elf base 0x007c0080
+11-02 17:41:31.632  5962  6022 I GodHandNative: [   4.2121][DLL] unregister ..\PS2_EE_Release\McPort.elf base 0x007c0080 ra 0x00394f98
+11-02 17:41:32.093  5962  6022 I GodHandNative: [ipu] ipu: bdec out y[0..7]=37 37 37 37 37 37 37 37  cb[0..3]=128 128 128 128  cr[0..3]=128 128 128 128
+11-02 17:41:32.111  5962  6022 I GodHandNative: [ipu] ipu: csc in  y[0..7]=37 37 37 37 37 37 37 37  cb[0..3]=128 128 128 128  cr[0..3]=128 128 128 128
+11-02 17:41:35.256  5962  6022 I GodHandNative: [   7.8358][DLL] slot mcport (heap D reset): empty after release (no block, no registry entry)
+11-02 17:41:35.350  5962  6022 I GodHandNative: [   7.9297][DLL] slot room heap created: descriptor 0x00798000 heap 0x00799000 size 0xf000
+11-02 17:41:35.350  5962  6022 I GodHandNative: [   7.9297][DLL] slot redirect room: ra 0x002be5a0 heap 0x00754220 -> 0x00798000 (DLL base 0x00799080) dll/Release/r020.rel
+11-02 17:41:35.451  5962  6022 I GodHandNative: [   8.0308][DLL] #6 link ..\PS2_EE_Release\r020.elf base 0x00799080 size 0x5e41 (end 0x0079eec1) check 0 (ok) relocs 455 funcs 82 ctors +0x38f0 align 0x80 ra 0x002be6b4
+11-02 17:41:35.460  5962  6022 I GodHandNative: [   8.0400][DLL] #7 registered ..\PS2_EE_Release\r020.elf base 0x00799080 size 0x5e41 name@0x0079d48a ctors 0x0079c970 (header 0x79c970) ra 0x00394e6c
+11-02 17:41:35.461  5962  6022 I GodHandNative: [   8.0408][DLL] module code installed: ..\PS2_EE_Release\r020.elf base 0x00799080 entries 389/389 code 0x00799180-0x0079ca40 sha256 ok
+11-02 17:41:49.456  5962  6022 I GodHandNative: [sif-dma] 2048-byte transfer polled 1.26 ms after issue: done (the 2 ms rule said in progress)
+11-02 17:41:49.457  5962  6022 I GodHandNative: [sif-dma] 2048-byte transfer polled 1.26 ms after issue: done (the 2 ms rule said in progress)
+11-02 17:41:52.699  5962  6022 I GodHandNative: [  25.2785][DLL] module code removed (unregistered): ..\PS2_EE_Release\r020.elf base 0x00799080
+11-02 17:41:52.699  5962  6022 I GodHandNative: [  25.2788][DLL] unregister ..\PS2_EE_Release\r020.elf base 0x00799080 ra 0x00394f98
+11-02 17:41:52.866  5962  6022 I GodHandNative: [  25.4458][DLL] slot room (heap D reset): empty after release (no block, no registry entry)
+11-02 17:41:52.866  5962  6022 I GodHandNative: [  25.4460][DLL] slot room reset with heap D (ra 0x002a6218)
+11-02 17:41:52.997  5962  6022 I GodHandNative: [  25.5775][DLL] slot redirect room: ra 0x002be5a0 heap 0x00754220 -> 0x00798000 (DLL base 0x00799080) dll/Release/r100.rel
+11-02 17:41:53.097  5962  6022 I GodHandNative: [  25.6768][DLL] #10 link ..\PS2_EE_Release\r100.elf base 0x00799080 size 0x643f (end 0x0079f4bf) check 0 (ok) relocs 688 funcs 99 ctors +0x3090 align 0x80 ra 0x002be6b4
+11-02 17:41:53.113  5962  6022 I GodHandNative: [  25.6928][DLL] #11 registered ..\PS2_EE_Release\r100.elf base 0x00799080 size 0x643f name@0x0079ce7f ctors 0x0079c110 (header 0x79c110) ra 0x00394e6c
+11-02 17:41:53.113  5962  6022 I GodHandNative: [  25.6933][DLL] module code installed: ..\PS2_EE_Release\r100.elf base 0x00799080 entries 1378/1378 code 0x00799180-0x0079c300 sha256 ok
+11-02 17:41:55.153  5962  6022 I GodHandNative: [  27.7328][DLL] slot event heap created: descriptor 0x00798010 heap 0x007a8000 size 0x18000
+11-02 17:41:55.153  5962  6022 I GodHandNative: [  27.7331][DLL] slot redirect event: ra 0x00297410 heap 0x00754220 -> 0x00798010 (DLL base 0x007a8080) dll/Release/Event.rel
+11-02 17:41:55.241  5962  6022 I GodHandNative: [  27.8209][DLL] #13 link ..\PS2_EE_Release\Event.elf base 0x007a8080 size 0x13a2f (end 0x007bbaaf) check 0 (ok) relocs 518 funcs 393 ctors +0xa890 align 0x80 ra 0x002be6b4
+11-02 17:41:55.428  5962  6022 I GodHandNative: [  28.0081][DLL] #14 registered ..\PS2_EE_Release\Event.elf base 0x007a8080 size 0x13a2f name@0x007b8a69 ctors 0x007b2910 (header 0x7b2910) ra 0x00394e6c
+11-02 17:41:55.429  5962  6022 I GodHandNative: [  28.0095][DLL] module code installed: ..\PS2_EE_Release\Event.elf base 0x007a8080 entries 2371/2371 code 0x007a8180-0x007b4ad8 sha256 ok
+11-02 17:41:59.144  5962  6022 I GodHandNative: [  31.7235][DLL] module code removed (unregistered): ..\PS2_EE_Release\Event.elf base 0x007a8080
+11-02 17:41:59.144  5962  6022 I GodHandNative: [  31.7238][DLL] unregister ..\PS2_EE_Release\Event.elf base 0x007a8080 ra 0x00394f98
+11-02 17:41:59.347  5962  6022 I GodHandNative: [sif-dma] 1024-byte transfer polled 0.73 ms after issue: done (the 2 ms rule said in progress)
+11-02 17:41:59.347  5962  6022 I GodHandNative: [sif-dma] 1024-byte transfer polled 0.73 ms after issue: done (the 2 ms rule said in progress)
+11-02 17:42:38.356  5962  6022 I GodHandNative: [gs] PCSX2 GS: 3600 fields, 3256.0 MB of GIF data
+11-02 17:53:06.854 18276 18446 I GodHandNative: [gs] renderer: PCSX2 GS bound successfully on Android!
+11-02 17:53:06.866 18276 18446 I GodHandNative: GSPcsx2Backend::AttachHostWindow: win=0xb4000076eaa24410 (2372x1080), windowChanged flagged
+11-02 17:53:07.347 18276 18432 I GodHandNative: Loading segment: 0x100000 - 0x7867b4 (filesz: 0x360ce4, memsz: 0x6867b4)
+11-02 17:53:07.379 18276 18432 I GodHandNative: Registered code region: 100000 - 460ce4ELF file loaded successfully. Entry point: 0x100008[   0.6718][HOOK] HLE: bound 63 SDK functions; not located in this ELF: sceSifSetSreg sceSifGetDataTable sceSifSetCmdBuffer sceSifSetSysCmdBuffer sceSifGetOtherData sceSifAllocSysMemory sceSifLoadIopHeap sceSifLoadElfPart sceSifLoadElf sceSifGetIopAddr sceSifSetIopAddr sceSifIsAliveIop sceDeci2Open sceDeci2Close sceDeci2ReqSend sceDeci2Poll sceDeci2ExRecv sceDeci2ExSend sceDeci2ExReqSend sceDeci2ExLock sceDeci2ExUnLock sceTtyWrite sceTtyRead sceTtyInit sceCdCallback sceCdInitEeCB sceCdReadIOPm sceCdSeek sceCdStandby sceCdStop sceCdPause sceCdTrayReq sceMpegAddBs sceMpegIsEnd sceMpegIsRefBuffEmpty sceMpegSetDecodeMode sceMpegGetDecodeMode sceMpegGetPictureRAW8xy sceMpegSetDefaultPtsGap sceMpegResetDefaultPtsGap sceMpegSetImageBuff sceMpegDispWidth sceMpegDispHeight sceMpegDispCenterOffX sceMpegDispCenterOffY sceMpegDemuxPssRing sceMpegDemuxPss sceMpegAddStrCallback
+11-02 17:53:07.379 18276 18432 I GodHandNative: [   0.6720][DLL] recompiled SNR2 module packs: 81
+11-02 17:53:07.379 18276 18432 I GodHandNative: [   0.6720][DLL] SNR2 DLL load logger + module code installer on
+11-02 17:53:07.379 18276 18432 I GodHandNative: [   0.6720][GS] flicker filter of the flip copy off (0x3c3ccc = 0x80 before 0x30b870)
+11-02 17:53:07.379 18276 18432 I GodHandNative: [   0.6720][GS] game_frame_counter observed on flip chain builder 0x30b870 (authentic 1.0x speed lockstep)
+11-02 17:53:07.389 18276 18432 I GodHandNative: Starting execution at address 0x100008[input] built without SDL3; using GLFW's gamepads
+11-02 17:53:07.389 18276 18432 I GodHandNative: [input] controllers through GLFW (no vibration)
+11-02 17:53:07.400 18276 18448 I GodHandNative: EnsureOpen: calling g_api->open (hwnd=0xb4000076eaa24410, 2372x1080, scale=2.0, res=/data/data/com.owaissseeee.godhand/files/godhand_cache/resources)...
+11-02 17:53:07.733 18276 18448 I GodHandNative: EnsureOpen: open result m_open=1
+11-02 17:53:07.734 18276 18448 I GodHandNative: GSPcsx2Backend::VSync: Updating PCSX2 GS window to 0xb4000076eaa24410 (2372x1080)...
+11-02 17:53:07.735 18276 18432 I GodHandNative: [pcsx2-gs] Renderer 14, scale 2 (0x0), window 2372x1080, options: 
+11-02 17:53:07.949 18276 18432 I GodHandNative: [SifInitRpc] Initialized[sceCdSearchFile] pc=0x2be494 ra=0x2be494 file=0x1fffe70 pathAddr=0x44c0b8 path="\MODULES\IRX.IMS;1"
+11-02 17:53:07.949 18276 18432 I GodHandNative: [sceCdSearchFile:ok] path="\MODULES\IRX.IMS;1" lsn=0x100000 size=0x4cbc0 sectors=0x9a
+11-02 17:53:07.953 18276 18432 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=1 entry=0x103c4 base=0x10000 start=0
+11-02 17:53:07.953 18276 18432 I GodHandNative: [SIF module] load-buffer-emulated id=1 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 17:53:07.953 18276 18432 I GodHandNative: [ps2xIOP] [IOP printf] yet sif hasn't been init
+11-02 17:53:07.953 18276 18432 I GodHandNative: 
+11-02 17:53:07.953 18276 18432 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=2 entry=0x14148 base=0x10d00 start=0
+11-02 17:53:07.953 18276 18432 I GodHandNative: [SIF module] load-buffer-emulated id=2 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 17:53:07.955 18276 18432 I GodHandNative: PS2 GsSetCrt: interlaced=1, videoMode=2, frameMode=0
+11-02 17:53:07.960 18276 18432 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=3 entry=0x1acb0 base=0x1ac00 start=0
+11-02 17:53:07.960 18276 18432 I GodHandNative: [SIF module] load-buffer-emulated id=3 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 17:53:07.960 18276 18432 I GodHandNative: [ps2xIOP] [IOP Kprintf] SDR driver version 4.0.1 (C) SCEI
+11-02 17:53:07.960 18276 18432 I GodHandNative: 
+11-02 17:53:07.960 18276 18432 I GodHandNative: [ps2xIOP] [IOP Kprintf]  Exit rsd_main 
+11-02 17:53:07.960 18276 18432 I GodHandNative: 
+11-02 17:53:07.960 18276 18432 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=4 entry=0x20ca0 base=0x20900 start=2
+11-02 17:53:07.960 18276 18432 I GodHandNative: [SIF module] load-buffer-emulated id=4 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 17:53:07.963 18276 18432 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=5 entry=0x25270 base=0x22600 start=2
+11-02 17:53:07.963 18276 18432 I GodHandNative: [SIF module] load-buffer-emulated id=5 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 17:53:07.965 18276 18432 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=6 entry=0x26194 base=0x25400 start=0
+11-02 17:53:07.965 18276 18432 I GodHandNative: [SIF module] load-buffer-emulated id=6 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 17:53:07.977 18276 18432 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver Ver.9.67(Nov  4 2005 20:08:36)
+11-02 17:53:07.977 18276 18432 I GodHandNative: 
+11-02 17:53:07.977 18276 18432 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : sceSdInit Call = 0
+11-02 17:53:07.977 18276 18432 I GodHandNative: 
+11-02 17:53:07.977 18276 18432 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : Main Thread Priority = 39
+11-02 17:53:07.977 18276 18432 I GodHandNative: 
+11-02 17:53:07.977 18276 18432 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : PSM Thread Priority  = 39
+11-02 17:53:07.977 18276 18432 I GodHandNative: 
+11-02 17:53:07.977 18276 18432 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : DTX Thread Priority  = 48
+11-02 17:53:07.977 18276 18432 I GodHandNative: 
+11-02 17:53:07.977 18276 18432 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : SPU CORE Number = 1
+11-02 17:53:07.977 18276 18432 I GodHandNative: 
+11-02 17:53:07.977 18276 18432 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=7 entry=0x2cd7c base=0x2c800 start=2
+11-02 17:53:07.977 18276 18432 I GodHandNative: [SIF module] load-buffer-emulated id=7 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 17:53:07.987 18276 18432 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd50 pathAddr=0x3d9ee8 path="\0FLISTDV.DIR;1"
+11-02 17:53:07.987 18276 18432 I GodHandNative: [sceCdSearchFile:ok] path="\0FLISTDV.DIR;1" lsn=0x10009b size=0x17 sectors=0x1
+11-02 17:53:07.988 18276 18432 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd40 pathAddr=0x3d9ee8 path="\WOLVES.FST;1"
+11-02 17:53:08.004 18276 18432 I GodHandNative: sceCdSearchFile failed: \WOLVES.FST;1 (root: /data/data/com.owaissseeee.godhand/files/godhand_cache, repeat=1)
+11-02 17:53:08.004 18276 18432 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd40 pathAddr=0x3d9ee8 path="\_DATA.AFS;1"
+11-02 17:53:08.004 18276 18432 I GodHandNative: [sceCdSearchFile:ok] path="\_DATA.AFS;1" lsn=0x10009d size=0x5be75000 sectors=0xb7cea
+11-02 17:53:08.018 18276 18432 I GodHandNative: [ipu] ipu: first bytes in: 08 10 10 13 10 13 16 16 16 16 16 16 1A 18 1A 1B 
+11-02 17:53:08.021 18276 18432 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=8 entry=0x42c98 base=0x42b00 start=2
+11-02 17:53:08.021 18276 18432 I GodHandNative: [SIF module] load-buffer-emulated id=8 ref=1 path="iopbuf:fnv64:43e20dfb6c24e67a"
+11-02 17:53:08.021 18276 18432 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=9 entry=0x6da40 base=0x6da00 start=2
+11-02 17:53:08.022 18276 18432 I GodHandNative: [SIF module] load-buffer-emulated id=9 ref=1 path="iopbuf:fnv64:63e5cc9de8698a12"
+11-02 17:53:08.159 18276 18432 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x41
+11-02 17:53:08.160 18276 18432 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 17:53:08.312 18276 18432 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x3d9c68 pathAddr=0x3d9c90 path="\GODHAND.FST;1"
+11-02 17:53:08.312 18276 18432 I GodHandNative: [sceCdSearchFile:ok] path="\GODHAND.FST;1" lsn=0x1b7d88 size=0x80b0 sectors=0x11
+11-02 17:53:08.312 18276 18432 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffab0 pathAddr=0x3d9c90 path="\GODHAND.FST;1"
+11-02 17:53:08.312 18276 18432 I GodHandNative: [sceCdSearchFile:ok] path="\GODHAND.FST;1" lsn=0x1b7d88 size=0x80b0 sectors=0x11
+11-02 17:53:08.318 18276 18432 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x41
+11-02 17:53:08.518 18276 18432 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 17:53:08.539 18276 18432 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-02 17:53:08.595 18276 18432 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 17:53:08.758 18276 18432 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-02 17:53:08.857 18276 18432 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 17:53:08.889 18276 18432 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-02 17:53:08.984 18276 18432 I GodHandNative: [gs] PCSX2 GS: 60 fields, 17.5 MB of GIF data
+11-02 17:53:09.026 18276 18432 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 17:53:09.270 18276 18432 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x79
+11-02 17:53:09.328 18276 18432 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 17:53:09.521 18276 18432 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x79
+11-02 17:53:09.702 18276 18432 I GodHandNative: [   2.9959][DLL] DLL slots: hole 0x007957c0..0x008a0000, runtime heap limit 0x007957c0; room base 0x00799080, event base 0x007a8080, mcport base 0x007c0080
+11-02 17:53:09.702 18276 18432 I GodHandNative: [   2.9962][DLL] slot mcport heap created: descriptor 0x00798020 heap 0x007c0000 size 0x20000
+11-02 17:53:09.702 18276 18432 I GodHandNative: [   2.9963][DLL] slot redirect mcport: ra 0x002ae540 heap 0x00754230 -> 0x00798020 (DLL base 0x007c0080) dll/Release/McPort.rel
+11-02 17:53:09.782 18276 18432 I GodHandNative: [   3.0764][DLL] #2 link ..\PS2_EE_Release\McPort.elf base 0x007c0080 size 0x1bec7 (end 0x007dbf47) check 0 (ok) relocs 606 funcs 470 ctors +0x9648 align 0x80 ra 0x002ae59c
+11-02 17:53:10.000 18276 18432 I GodHandNative: [   3.2946][DLL] #3 registered ..\PS2_EE_Release\McPort.elf base 0x007c0080 size 0x1bec7 name@0x007d7d80 ctors 0x007c96c8 (header 0x7c96c8) ra 0x00394e6c
+11-02 17:53:10.001 18276 18432 I GodHandNative: [   3.2953][DLL] module code installed: ..\PS2_EE_Release\McPort.elf base 0x007c0080 entries 2827/2827 code 0x007c0180-0x007cf578 sha256 ok
+11-02 17:53:10.007 18276 18432 I GodHandNative: [SifRegisterRpc] sid=0x80000400 sd=0x7d2f98 func=0x7cf018 buf=0x7d3000 cfunc=0x0 cbuf=0x0 qd=0x7d2f80 (EE server for IOP clients; the IOP serves this SID too, EE clients stay bound to it)[ps2xIOP] [IOP] sceSifBindRpc cd=0x0594d8 sid=0x80000400 -> EE server 0x007d2f98 buf 0x007d3000
+11-02 17:53:10.090 18276 18432 I GodHandNative: [ps2xIOP] [SIO2] memory card slot 1: /data/data/com.owaissseeee.godhand/files/Mcd001.ps2
+11-02 17:53:11.144 18276 18432 I GodHandNative: [   4.4384][DLL] module code removed (unregistered): ..\PS2_EE_Release\McPort.elf base 0x007c0080
+11-02 17:53:11.144 18276 18432 I GodHandNative: [   4.4386][DLL] unregister ..\PS2_EE_Release\McPort.elf base 0x007c0080 ra 0x00394f98
+11-02 17:53:11.614 18276 18432 I GodHandNative: [ipu] ipu: bdec out y[0..7]=37 37 37 37 37 37 37 37  cb[0..3]=128 128 128 128  cr[0..3]=128 128 128 128
+11-02 17:53:11.632 18276 18432 I GodHandNative: [ipu] ipu: csc in  y[0..7]=37 37 37 37 37 37 37 37  cb[0..3]=128 128 128 128  cr[0..3]=128 128 128 128
+11-02 17:53:13.468 18276 18432 I GodHandNative: [sif-dma] 1024-byte transfer polled 0.16 ms after issue: done (the 2 ms rule said in progress)
+11-02 17:53:13.468 18276 18432 I GodHandNative: [sif-dma] 1024-byte transfer polled 0.16 ms after issue: done (the 2 ms rule said in progress)
+11-02 17:53:13.763 18276 18432 I GodHandNative: [   7.0569][DLL] slot mcport (heap D reset): empty after release (no block, no registry entry)
+11-02 17:53:13.875 18276 18432 I GodHandNative: [   7.1688][DLL] slot room heap created: descriptor 0x00798000 heap 0x00799000 size 0xf000
+11-02 17:53:13.875 18276 18432 I GodHandNative: [   7.1694][DLL] slot redirect room: ra 0x002be5a0 heap 0x00754220 -> 0x00798000 (DLL base 0x00799080) dll/Release/r020.rel
+11-02 17:53:13.964 18276 18432 I GodHandNative: [   7.2581][DLL] #6 link ..\PS2_EE_Release\r020.elf base 0x00799080 size 0x5e41 (end 0x0079eec1) check 0 (ok) relocs 455 funcs 82 ctors +0x38f0 align 0x80 ra 0x002be6b4
+11-02 17:53:13.980 18276 18432 I GodHandNative: [   7.2745][DLL] #7 registered ..\PS2_EE_Release\r020.elf base 0x00799080 size 0x5e41 name@0x0079d48a ctors 0x0079c970 (header 0x79c970) ra 0x00394e6c
+11-02 17:53:13.981 18276 18432 I GodHandNative: [   7.2748][DLL] module code installed: ..\PS2_EE_Release\r020.elf base 0x00799080 entries 389/389 code 0x00799180-0x0079ca40 sha256 ok
+11-02 17:53:21.712 18276 18432 I GodHandNative: [sif-dma] 2048-byte transfer polled 1.26 ms after issue: done (the 2 ms rule said in progress)
+11-02 17:53:21.713 18276 18432 I GodHandNative: [sif-dma] 2048-byte transfer polled 1.26 ms after issue: done (the 2 ms rule said in progress)
+11-02 17:53:24.952 18276 18432 I GodHandNative: [  18.2464][DLL] module code removed (unregistered): ..\PS2_EE_Release\r020.elf base 0x00799080
+11-02 17:53:24.953 18276 18432 I GodHandNative: [  18.2468][DLL] unregister ..\PS2_EE_Release\r020.elf base 0x00799080 ra 0x00394f98
+11-02 17:53:25.115 18276 18432 I GodHandNative: [  18.4091][DLL] slot room (heap D reset): empty after release (no block, no registry entry)
+11-02 17:53:25.115 18276 18432 I GodHandNative: [  18.4093][DLL] slot room reset with heap D (ra 0x002a6218)
+11-02 17:53:25.247 18276 18432 I GodHandNative: [  18.5413][DLL] slot redirect room: ra 0x002be5a0 heap 0x00754220 -> 0x00798000 (DLL base 0x00799080) dll/Release/r100.rel
+11-02 17:53:25.347 18276 18432 I GodHandNative: [  18.6415][DLL] #10 link ..\PS2_EE_Release\r100.elf base 0x00799080 size 0x643f (end 0x0079f4bf) check 0 (ok) relocs 688 funcs 99 ctors +0x3090 align 0x80 ra 0x002be6b4
+11-02 17:53:25.364 18276 18432 I GodHandNative: [  18.6586][DLL] #11 registered ..\PS2_EE_Release\r100.elf base 0x00799080 size 0x643f name@0x0079ce7f ctors 0x0079c110 (header 0x79c110) ra 0x00394e6c
+11-02 17:53:25.365 18276 18432 I GodHandNative: [  18.6594][DLL] module code installed: ..\PS2_EE_Release\r100.elf base 0x00799080 entries 1378/1378 code 0x00799180-0x0079c300 sha256 ok
+11-02 17:53:27.329 18276 18432 I GodHandNative: [  20.6227][DLL] slot event heap created: descriptor 0x00798010 heap 0x007a8000 size 0x18000
+11-02 17:53:27.329 18276 18432 I GodHandNative: [  20.6230][DLL] slot redirect event: ra 0x00297410 heap 0x00754220 -> 0x00798010 (DLL base 0x007a8080) dll/Release/Event.rel
+11-02 17:53:27.393 18276 18432 I GodHandNative: [  20.6873][DLL] #13 link ..\PS2_EE_Release\Event.elf base 0x007a8080 size 0x13a2f (end 0x007bbaaf) check 0 (ok) relocs 518 funcs 393 ctors +0xa890 align 0x80 ra 0x002be6b4
+11-02 17:53:27.575 18276 18432 I GodHandNative: [  20.8692][DLL] #14 registered ..\PS2_EE_Release\Event.elf base 0x007a8080 size 0x13a2f name@0x007b8a69 ctors 0x007b2910 (header 0x7b2910) ra 0x00394e6c
+11-02 17:53:27.577 18276 18432 I GodHandNative: [  20.8708][DLL] module code installed: ..\PS2_EE_Release\Event.elf base 0x007a8080 entries 2371/2371 code 0x007a8180-0x007b4ad8 sha256 ok
+11-02 17:53:51.144 18276 18432 I GodHandNative: [  44.4379][DLL] module code removed (unregistered): ..\PS2_EE_Release\Event.elf base 0x007a8080
+11-02 17:53:51.144 18276 18432 I GodHandNative: [  44.4382][DLL] unregister ..\PS2_EE_Release\Event.elf base 0x007a8080 ra 0x00394f98
+11-02 17:53:51.332 18276 18432 I GodHandNative: [sif-dma] 2048-byte transfer polled 0.72 ms after issue: done (the 2 ms rule said in progress)
+11-02 17:53:51.332 18276 18432 I GodHandNative: [sif-dma] 2048-byte transfer polled 0.72 ms after issue: done (the 2 ms rule said in progress)
+11-02 17:53:53.337 18276 18432 I GodHandNative: [spu2-adma] core 1 stream gave 362 silent blocks (1930.7 ms) after loud audio, ending at t=44.638 s
+11-02 17:54:10.237 18276 18432 I GodHandNative: [gs] PCSX2 GS: 3600 fields, 3741.6 MB of GIF data
+11-02 17:55:15.158 18276 18432 I GodHandNative: [gs] PCSX2 GS: 7200 fields, 9521.9 MB of GIF data
+11-02 17:55:15.347 18276 18432 I GodHandNative: [sif-dma] 1024-byte transfer polled 0.35 ms after issue: done (the 2 ms rule said in progress)
+11-02 17:55:15.347 18276 18432 I GodHandNative: [sif-dma] 1024-byte transfer polled 0.35 ms after issue: done (the 2 ms rule said in progress)
+11-02 17:55:45.080 18276 18432 I GodHandNative: [sif-dma] 2048-byte transfer polled 1.56 ms after issue: done (the 2 ms rule said in progress)
+11-02 17:55:45.080 18276 18432 I GodHandNative: [sif-dma] 2048-byte transfer polled 1.56 ms after issue: done (the 2 ms rule said in progress)
+11-02 17:56:19.739 18276 18432 I GodHandNative: [gs] PCSX2 GS: 10800 fields, 16037.2 MB of GIF data
+11-02 18:01:31.184 21664 21793 I GodHandNative: [gs] renderer: PCSX2 GS bound successfully on Android!
+11-02 18:01:31.196 21664 21793 I GodHandNative: GSPcsx2Backend::AttachHostWindow: win=0xb4000076ead93a10 (2372x1080), windowChanged flagged
+11-02 18:01:31.454 21664 21783 I GodHandNative: Loading segment: 0x100000 - 0x7867b4 (filesz: 0x360ce4, memsz: 0x6867b4)
+11-02 18:01:31.475 21664 21783 I GodHandNative: Registered code region: 100000 - 460ce4ELF file loaded successfully. Entry point: 0x100008[   0.3660][HOOK] HLE: bound 63 SDK functions; not located in this ELF: sceSifSetSreg sceSifGetDataTable sceSifSetCmdBuffer sceSifSetSysCmdBuffer sceSifGetOtherData sceSifAllocSysMemory sceSifLoadIopHeap sceSifLoadElfPart sceSifLoadElf sceSifGetIopAddr sceSifSetIopAddr sceSifIsAliveIop sceDeci2Open sceDeci2Close sceDeci2ReqSend sceDeci2Poll sceDeci2ExRecv sceDeci2ExSend sceDeci2ExReqSend sceDeci2ExLock sceDeci2ExUnLock sceTtyWrite sceTtyRead sceTtyInit sceCdCallback sceCdInitEeCB sceCdReadIOPm sceCdSeek sceCdStandby sceCdStop sceCdPause sceCdTrayReq sceMpegAddBs sceMpegIsEnd sceMpegIsRefBuffEmpty sceMpegSetDecodeMode sceMpegGetDecodeMode sceMpegGetPictureRAW8xy sceMpegSetDefaultPtsGap sceMpegResetDefaultPtsGap sceMpegSetImageBuff sceMpegDispWidth sceMpegDispHeight sceMpegDispCenterOffX sceMpegDispCenterOffY sceMpegDemuxPssRing sceMpegDemuxPss sceMpegAddStrCallback
+11-02 18:01:31.475 21664 21783 I GodHandNative: [   0.3662][DLL] recompiled SNR2 module packs: 81
+11-02 18:01:31.475 21664 21783 I GodHandNative: [   0.3663][DLL] SNR2 DLL load logger + module code installer on
+11-02 18:01:31.475 21664 21783 I GodHandNative: [   0.3663][GS] flicker filter of the flip copy off (0x3c3ccc = 0x80 before 0x30b870)
+11-02 18:01:31.475 21664 21783 I GodHandNative: [   0.3663][GS] game_frame_counter observed on flip chain builder 0x30b870 (authentic 1.0x speed lockstep)
+11-02 18:01:31.478 21664 21783 I GodHandNative: Starting execution at address 0x100008[input] built without SDL3; using GLFW's gamepads
+11-02 18:01:31.478 21664 21783 I GodHandNative: [input] controllers through GLFW (no vibration)
+11-02 18:01:31.500 21664 21808 I GodHandNative: EnsureOpen: calling g_api->open (hwnd=0xb4000076ead93a10, 2372x1080, scale=2.0, res=/data/data/com.owaissseeee.godhand/files/godhand_cache/resources)...
+11-02 18:01:31.724 21664 21808 I GodHandNative: EnsureOpen: open result m_open=1
+11-02 18:01:31.725 21664 21808 I GodHandNative: GSPcsx2Backend::VSync: Updating PCSX2 GS window to 0xb4000076ead93a10 (2372x1080)...
+11-02 18:01:31.725 21664 21783 I GodHandNative: [pcsx2-gs] Renderer 14, scale 2 (0x0), window 2372x1080, options: 
+11-02 18:01:31.904 21664 21783 I GodHandNative: [SifInitRpc] Initialized[sceCdSearchFile] pc=0x2be494 ra=0x2be494 file=0x1fffe70 pathAddr=0x44c0b8 path="\MODULES\IRX.IMS;1"
+11-02 18:01:31.904 21664 21783 I GodHandNative: [sceCdSearchFile:ok] path="\MODULES\IRX.IMS;1" lsn=0x100000 size=0x4cbc0 sectors=0x9a
+11-02 18:01:31.906 21664 21783 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=1 entry=0x103c4 base=0x10000 start=0
+11-02 18:01:31.906 21664 21783 I GodHandNative: [SIF module] load-buffer-emulated id=1 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:01:31.907 21664 21783 I GodHandNative: [ps2xIOP] [IOP printf] yet sif hasn't been init
+11-02 18:01:31.907 21664 21783 I GodHandNative: 
+11-02 18:01:31.907 21664 21783 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=2 entry=0x14148 base=0x10d00 start=0
+11-02 18:01:31.907 21664 21783 I GodHandNative: [SIF module] load-buffer-emulated id=2 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:01:31.909 21664 21783 I GodHandNative: PS2 GsSetCrt: interlaced=1, videoMode=2, frameMode=0
+11-02 18:01:31.911 21664 21783 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=3 entry=0x1acb0 base=0x1ac00 start=0
+11-02 18:01:31.911 21664 21783 I GodHandNative: [SIF module] load-buffer-emulated id=3 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:01:31.911 21664 21783 I GodHandNative: [ps2xIOP] [IOP Kprintf] SDR driver version 4.0.1 (C) SCEI
+11-02 18:01:31.911 21664 21783 I GodHandNative: 
+11-02 18:01:31.911 21664 21783 I GodHandNative: [ps2xIOP] [IOP Kprintf]  Exit rsd_main 
+11-02 18:01:31.911 21664 21783 I GodHandNative: 
+11-02 18:01:31.911 21664 21783 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=4 entry=0x20ca0 base=0x20900 start=2
+11-02 18:01:31.911 21664 21783 I GodHandNative: [SIF module] load-buffer-emulated id=4 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:01:31.912 21664 21783 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=5 entry=0x25270 base=0x22600 start=2
+11-02 18:01:31.912 21664 21783 I GodHandNative: [SIF module] load-buffer-emulated id=5 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:01:31.914 21664 21783 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=6 entry=0x26194 base=0x25400 start=0
+11-02 18:01:31.914 21664 21783 I GodHandNative: [SIF module] load-buffer-emulated id=6 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:01:31.934 21664 21783 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver Ver.9.67(Nov  4 2005 20:08:36)
+11-02 18:01:31.934 21664 21783 I GodHandNative: 
+11-02 18:01:31.934 21664 21783 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : sceSdInit Call = 0
+11-02 18:01:31.934 21664 21783 I GodHandNative: 
+11-02 18:01:31.934 21664 21783 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : Main Thread Priority = 39
+11-02 18:01:31.934 21664 21783 I GodHandNative: 
+11-02 18:01:31.934 21664 21783 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : PSM Thread Priority  = 39
+11-02 18:01:31.934 21664 21783 I GodHandNative: 
+11-02 18:01:31.934 21664 21783 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : DTX Thread Priority  = 48
+11-02 18:01:31.934 21664 21783 I GodHandNative: 
+11-02 18:01:31.934 21664 21783 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : SPU CORE Number = 1
+11-02 18:01:31.934 21664 21783 I GodHandNative: 
+11-02 18:01:31.934 21664 21783 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=7 entry=0x2cd7c base=0x2c800 start=2
+11-02 18:01:31.934 21664 21783 I GodHandNative: [SIF module] load-buffer-emulated id=7 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:01:31.936 21664 21783 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd50 pathAddr=0x3d9ee8 path="\0FLISTDV.DIR;1"
+11-02 18:01:31.936 21664 21783 I GodHandNative: [sceCdSearchFile:ok] path="\0FLISTDV.DIR;1" lsn=0x10009b size=0x17 sectors=0x1
+11-02 18:01:31.937 21664 21783 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd40 pathAddr=0x3d9ee8 path="\WOLVES.FST;1"
+11-02 18:01:31.956 21664 21783 I GodHandNative: sceCdSearchFile failed: \WOLVES.FST;1 (root: /data/data/com.owaissseeee.godhand/files/godhand_cache, repeat=1)
+11-02 18:01:31.956 21664 21783 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd40 pathAddr=0x3d9ee8 path="\_DATA.AFS;1"
+11-02 18:01:31.957 21664 21783 I GodHandNative: [sceCdSearchFile:ok] path="\_DATA.AFS;1" lsn=0x10009d size=0x5be75000 sectors=0xb7cea
+11-02 18:01:31.963 21664 21783 I GodHandNative: [ipu] ipu: first bytes in: 08 10 10 13 10 13 16 16 16 16 16 16 1A 18 1A 1B 
+11-02 18:01:31.965 21664 21783 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=8 entry=0x42c98 base=0x42b00 start=2
+11-02 18:01:31.965 21664 21783 I GodHandNative: [SIF module] load-buffer-emulated id=8 ref=1 path="iopbuf:fnv64:43e20dfb6c24e67a"
+11-02 18:01:31.965 21664 21783 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=9 entry=0x6da40 base=0x6da00 start=2
+11-02 18:01:31.965 21664 21783 I GodHandNative: [SIF module] load-buffer-emulated id=9 ref=1 path="iopbuf:fnv64:63e5cc9de8698a12"
+11-02 18:01:31.985 21664 21783 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x41
+11-02 18:01:32.000 21664 21783 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 18:01:32.151 21664 21783 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x3d9c68 pathAddr=0x3d9c90 path="\GODHAND.FST;1"
+11-02 18:01:32.151 21664 21783 I GodHandNative: [sceCdSearchFile:ok] path="\GODHAND.FST;1" lsn=0x1b7d88 size=0x80b0 sectors=0x11
+11-02 18:01:32.151 21664 21783 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffab0 pathAddr=0x3d9c90 path="\GODHAND.FST;1"
+11-02 18:01:32.151 21664 21783 I GodHandNative: [sceCdSearchFile:ok] path="\GODHAND.FST;1" lsn=0x1b7d88 size=0x80b0 sectors=0x11
+11-02 18:01:32.156 21664 21783 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x41
+11-02 18:01:32.347 21664 21783 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 18:01:32.381 21664 21783 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-02 18:01:32.441 21664 21783 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 18:01:32.592 21664 21783 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-02 18:01:32.690 21664 21783 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 18:01:32.725 21664 21783 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-02 18:01:32.806 21664 21783 I GodHandNative: [gs] PCSX2 GS: 60 fields, 17.5 MB of GIF data
+11-02 18:01:32.860 21664 21783 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 18:01:33.091 21664 21783 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x79
+11-02 18:01:33.143 21664 21783 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 18:01:33.293 21664 21783 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x79
+11-02 18:01:33.474 21664 21783 I GodHandNative: [   2.3653][DLL] DLL slots: hole 0x007957c0..0x008a0000, runtime heap limit 0x007957c0; room base 0x00799080, event base 0x007a8080, mcport base 0x007c0080
+11-02 18:01:33.474 21664 21783 I GodHandNative: [   2.3655][DLL] slot mcport heap created: descriptor 0x00798020 heap 0x007c0000 size 0x20000
+11-02 18:01:33.474 21664 21783 I GodHandNative: [   2.3655][DLL] slot redirect mcport: ra 0x002ae540 heap 0x00754230 -> 0x00798020 (DLL base 0x007c0080) dll/Release/McPort.rel
+11-02 18:01:33.541 21664 21783 I GodHandNative: [   2.4323][DLL] #2 link ..\PS2_EE_Release\McPort.elf base 0x007c0080 size 0x1bec7 (end 0x007dbf47) check 0 (ok) relocs 606 funcs 470 ctors +0x9648 align 0x80 ra 0x002ae59c
+11-02 18:01:33.774 21664 21783 I GodHandNative: [   2.6652][DLL] #3 registered ..\PS2_EE_Release\McPort.elf base 0x007c0080 size 0x1bec7 name@0x007d7d80 ctors 0x007c96c8 (header 0x7c96c8) ra 0x00394e6c
+11-02 18:01:33.775 21664 21783 I GodHandNative: [   2.6657][DLL] module code installed: ..\PS2_EE_Release\McPort.elf base 0x007c0080 entries 2827/2827 code 0x007c0180-0x007cf578 sha256 ok
+11-02 18:01:33.778 21664 21783 I GodHandNative: [SifRegisterRpc] sid=0x80000400 sd=0x7d2f98 func=0x7cf018 buf=0x7d3000 cfunc=0x0 cbuf=0x0 qd=0x7d2f80 (EE server for IOP clients; the IOP serves this SID too, EE clients stay bound to it)[ps2xIOP] [IOP] sceSifBindRpc cd=0x0594d8 sid=0x80000400 -> EE server 0x007d2f98 buf 0x007d3000
+11-02 18:01:33.862 21664 21783 I GodHandNative: [ps2xIOP] [SIO2] memory card slot 1: /data/data/com.owaissseeee.godhand/files/Mcd001.ps2
+11-02 18:01:34.892 21664 21783 I GodHandNative: [   3.7834][DLL] module code removed (unregistered): ..\PS2_EE_Release\McPort.elf base 0x007c0080
+11-02 18:01:34.892 21664 21783 I GodHandNative: [   3.7834][DLL] unregister ..\PS2_EE_Release\McPort.elf base 0x007c0080 ra 0x00394f98
+11-02 18:01:35.360 21664 21783 I GodHandNative: [ipu] ipu: bdec out y[0..7]=37 37 37 37 37 37 37 37  cb[0..3]=128 128 128 128  cr[0..3]=128 128 128 128
+11-02 18:01:35.379 21664 21783 I GodHandNative: [ipu] ipu: csc in  y[0..7]=37 37 37 37 37 37 37 37  cb[0..3]=128 128 128 128  cr[0..3]=128 128 128 128
+11-02 18:01:38.515 21664 21783 I GodHandNative: [   7.4060][DLL] slot mcport (heap D reset): empty after release (no block, no registry entry)
+11-02 18:01:38.614 21664 21783 I GodHandNative: [   7.5052][DLL] slot room heap created: descriptor 0x00798000 heap 0x00799000 size 0xf000
+11-02 18:01:38.614 21664 21783 I GodHandNative: [   7.5055][DLL] slot redirect room: ra 0x002be5a0 heap 0x00754220 -> 0x00798000 (DLL base 0x00799080) dll/Release/r020.rel
+11-02 18:01:38.714 21664 21783 I GodHandNative: [   7.6048][DLL] #6 link ..\PS2_EE_Release\r020.elf base 0x00799080 size 0x5e41 (end 0x0079eec1) check 0 (ok) relocs 455 funcs 82 ctors +0x38f0 align 0x80 ra 0x002be6b4
+11-02 18:01:38.730 21664 21783 I GodHandNative: [   7.6210][DLL] #7 registered ..\PS2_EE_Release\r020.elf base 0x00799080 size 0x5e41 name@0x0079d48a ctors 0x0079c970 (header 0x79c970) ra 0x00394e6c
+11-02 18:01:38.731 21664 21783 I GodHandNative: [   7.6219][DLL] module code installed: ..\PS2_EE_Release\r020.elf base 0x00799080 entries 389/389 code 0x00799180-0x0079ca40 sha256 ok
+11-02 18:02:32.067 21664 21783 I GodHandNative: [gs] PCSX2 GS: 3600 fields, 1632.4 MB of GIF data
+11-02 18:02:45.022 21664 21783 I GodHandNative: [sif-dma] 2048-byte transfer polled 1.26 ms after issue: done (the 2 ms rule said in progress)
+11-02 18:02:45.022 21664 21783 I GodHandNative: [sif-dma] 2048-byte transfer polled 1.26 ms after issue: done (the 2 ms rule said in progress)
+11-02 18:02:48.283 21664 21783 I GodHandNative: [  77.1737][DLL] module code removed (unregistered): ..\PS2_EE_Release\r020.elf base 0x00799080
+11-02 18:02:48.283 21664 21783 I GodHandNative: [  77.1744][DLL] unregister ..\PS2_EE_Release\r020.elf base 0x00799080 ra 0x00394f98
+11-02 18:02:48.454 21664 21783 I GodHandNative: [  77.3447][DLL] slot room (heap D reset): empty after release (no block, no registry entry)
+11-02 18:02:48.454 21664 21783 I GodHandNative: [  77.3451][DLL] slot room reset with heap D (ra 0x002a6218)
+11-02 18:02:48.586 21664 21783 I GodHandNative: [  77.4775][DLL] slot redirect room: ra 0x002be5a0 heap 0x00754220 -> 0x00798000 (DLL base 0x00799080) dll/Release/r100.rel
+11-02 18:02:48.686 21664 21783 I GodHandNative: [  77.5775][DLL] #10 link ..\PS2_EE_Release\r100.elf base 0x00799080 size 0x643f (end 0x0079f4bf) check 0 (ok) relocs 688 funcs 99 ctors +0x3090 align 0x80 ra 0x002be6b4
+11-02 18:02:48.701 21664 21783 I GodHandNative: [  77.5921][DLL] #11 registered ..\PS2_EE_Release\r100.elf base 0x00799080 size 0x643f name@0x0079ce7f ctors 0x0079c110 (header 0x79c110) ra 0x00394e6c
+11-02 18:02:48.703 21664 21783 I GodHandNative: [  77.5941][DLL] module code installed: ..\PS2_EE_Release\r100.elf base 0x00799080 entries 1378/1378 code 0x00799180-0x0079c300 sha256 ok
+11-02 18:02:50.699 21664 21783 I GodHandNative: [  79.5897][DLL] slot event heap created: descriptor 0x00798010 heap 0x007a8000 size 0x18000
+11-02 18:02:50.699 21664 21783 I GodHandNative: [  79.5898][DLL] slot redirect event: ra 0x00297410 heap 0x00754220 -> 0x00798010 (DLL base 0x007a8080) dll/Release/Event.rel
+11-02 18:02:50.765 21664 21783 I GodHandNative: [  79.6563][DLL] #13 link ..\PS2_EE_Release\Event.elf base 0x007a8080 size 0x13a2f (end 0x007bbaaf) check 0 (ok) relocs 518 funcs 393 ctors +0xa890 align 0x80 ra 0x002be6b4
+11-02 18:02:50.950 21664 21783 I GodHandNative: [  79.8409][DLL] #14 registered ..\PS2_EE_Release\Event.elf base 0x007a8080 size 0x13a2f name@0x007b8a69 ctors 0x007b2910 (header 0x7b2910) ra 0x00394e6c
+11-02 18:02:50.954 21664 21783 I GodHandNative: [  79.8450][DLL] module code installed: ..\PS2_EE_Release\Event.elf base 0x007a8080 entries 2371/2371 code 0x007a8180-0x007b4ad8 sha256 ok
+11-02 18:03:00.120 21664 21783 I GodHandNative: [  89.0115][DLL] module code removed (unregistered): ..\PS2_EE_Release\Event.elf base 0x007a8080
+11-02 18:03:00.121 21664 21783 I GodHandNative: [  89.0118][DLL] unregister ..\PS2_EE_Release\Event.elf base 0x007a8080 ra 0x00394f98
+11-02 18:03:00.312 21664 21783 I GodHandNative: [sif-dma] 2048-byte transfer polled 0.73 ms after issue: done (the 2 ms rule said in progress)
+11-02 18:03:00.312 21664 21783 I GodHandNative: [sif-dma] 2048-byte transfer polled 0.73 ms after issue: done (the 2 ms rule said in progress)
+11-02 18:03:02.362 21664 21783 I GodHandNative: [spu2-adma] core 1 stream gave 364 silent blocks (1941.3 ms) after loud audio, ending at t=89.842 s
+11-02 18:03:34.970 21664 21783 I GodHandNative: [gs] PCSX2 GS: 7200 fields, 6339.3 MB of GIF data
+11-02 18:05:34.498 24635 24667 I GodHandNative: [gs] renderer: PCSX2 GS bound successfully on Android!
+11-02 18:05:34.507 24635 24667 I GodHandNative: GSPcsx2Backend::AttachHostWindow: win=0xb4000076eac23e10 (2372x1080), windowChanged flagged
+11-02 18:05:34.797 24635 24661 I GodHandNative: Loading segment: 0x100000 - 0x7867b4 (filesz: 0x360ce4, memsz: 0x6867b4)
+11-02 18:05:34.817 24635 24661 I GodHandNative: Registered code region: 100000 - 460ce4ELF file loaded successfully. Entry point: 0x100008[   0.3825][HOOK] HLE: bound 63 SDK functions; not located in this ELF: sceSifSetSreg sceSifGetDataTable sceSifSetCmdBuffer sceSifSetSysCmdBuffer sceSifGetOtherData sceSifAllocSysMemory sceSifLoadIopHeap sceSifLoadElfPart sceSifLoadElf sceSifGetIopAddr sceSifSetIopAddr sceSifIsAliveIop sceDeci2Open sceDeci2Close sceDeci2ReqSend sceDeci2Poll sceDeci2ExRecv sceDeci2ExSend sceDeci2ExReqSend sceDeci2ExLock sceDeci2ExUnLock sceTtyWrite sceTtyRead sceTtyInit sceCdCallback sceCdInitEeCB sceCdReadIOPm sceCdSeek sceCdStandby sceCdStop sceCdPause sceCdTrayReq sceMpegAddBs sceMpegIsEnd sceMpegIsRefBuffEmpty sceMpegSetDecodeMode sceMpegGetDecodeMode sceMpegGetPictureRAW8xy sceMpegSetDefaultPtsGap sceMpegResetDefaultPtsGap sceMpegSetImageBuff sceMpegDispWidth sceMpegDispHeight sceMpegDispCenterOffX sceMpegDispCenterOffY sceMpegDemuxPssRing sceMpegDemuxPss sceMpegAddStrCallback
+11-02 18:05:34.817 24635 24661 I GodHandNative: [   0.3826][DLL] recompiled SNR2 module packs: 81
+11-02 18:05:34.817 24635 24661 I GodHandNative: [   0.3827][DLL] SNR2 DLL load logger + module code installer on
+11-02 18:05:34.817 24635 24661 I GodHandNative: [   0.3827][GS] flicker filter of the flip copy off (0x3c3ccc = 0x80 before 0x30b870)
+11-02 18:05:34.817 24635 24661 I GodHandNative: [   0.3827][GS] game_frame_counter observed on flip chain builder 0x30b870 (authentic 1.0x speed lockstep)
+11-02 18:05:34.821 24635 24661 I GodHandNative: Starting execution at address 0x100008[input] built without SDL3; using GLFW's gamepads
+11-02 18:05:34.821 24635 24661 I GodHandNative: [input] controllers through GLFW (no vibration)
+11-02 18:05:34.840 24635 24668 I GodHandNative: EnsureOpen: calling g_api->open (hwnd=0xb4000076eac23e10, 2372x1080, scale=2.0, res=/data/data/com.owaissseeee.godhand/files/godhand_cache/resources)...
+11-02 18:05:35.088 24635 24668 I GodHandNative: EnsureOpen: open result m_open=1
+11-02 18:05:35.089 24635 24668 I GodHandNative: GSPcsx2Backend::VSync: Updating PCSX2 GS window to 0xb4000076eac23e10 (2372x1080)...
+11-02 18:05:35.091 24635 24661 I GodHandNative: [pcsx2-gs] Renderer 14, scale 2 (0x0), window 2372x1080, options: 
+11-02 18:05:35.335 24635 24661 I GodHandNative: [SifInitRpc] Initialized[sceCdSearchFile] pc=0x2be494 ra=0x2be494 file=0x1fffe70 pathAddr=0x44c0b8 path="\MODULES\IRX.IMS;1"
+11-02 18:05:35.335 24635 24661 I GodHandNative: [sceCdSearchFile:ok] path="\MODULES\IRX.IMS;1" lsn=0x100000 size=0x4cbc0 sectors=0x9a
+11-02 18:05:35.339 24635 24661 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=1 entry=0x103c4 base=0x10000 start=0
+11-02 18:05:35.339 24635 24661 I GodHandNative: [SIF module] load-buffer-emulated id=1 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:05:35.339 24635 24661 I GodHandNative: [ps2xIOP] [IOP printf] yet sif hasn't been init
+11-02 18:05:35.339 24635 24661 I GodHandNative: 
+11-02 18:05:35.339 24635 24661 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=2 entry=0x14148 base=0x10d00 start=0
+11-02 18:05:35.339 24635 24661 I GodHandNative: [SIF module] load-buffer-emulated id=2 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:05:35.339 24635 24661 I GodHandNative: PS2 GsSetCrt: interlaced=1, videoMode=2, frameMode=0
+11-02 18:05:35.358 24635 24661 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=3 entry=0x1acb0 base=0x1ac00 start=0
+11-02 18:05:35.358 24635 24661 I GodHandNative: [SIF module] load-buffer-emulated id=3 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:05:35.358 24635 24661 I GodHandNative: [ps2xIOP] [IOP Kprintf] SDR driver version 4.0.1 (C) SCEI
+11-02 18:05:35.358 24635 24661 I GodHandNative: 
+11-02 18:05:35.358 24635 24661 I GodHandNative: [ps2xIOP] [IOP Kprintf]  Exit rsd_main 
+11-02 18:05:35.358 24635 24661 I GodHandNative: 
+11-02 18:05:35.358 24635 24661 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=4 entry=0x20ca0 base=0x20900 start=2
+11-02 18:05:35.358 24635 24661 I GodHandNative: [SIF module] load-buffer-emulated id=4 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:05:35.358 24635 24661 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=5 entry=0x25270 base=0x22600 start=2
+11-02 18:05:35.358 24635 24661 I GodHandNative: [SIF module] load-buffer-emulated id=5 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:05:35.358 24635 24661 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=6 entry=0x26194 base=0x25400 start=0
+11-02 18:05:35.358 24635 24661 I GodHandNative: [SIF module] load-buffer-emulated id=6 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:05:35.359 24635 24661 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver Ver.9.67(Nov  4 2005 20:08:36)
+11-02 18:05:35.359 24635 24661 I GodHandNative: 
+11-02 18:05:35.359 24635 24661 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : sceSdInit Call = 0
+11-02 18:05:35.359 24635 24661 I GodHandNative: 
+11-02 18:05:35.359 24635 24661 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : Main Thread Priority = 39
+11-02 18:05:35.359 24635 24661 I GodHandNative: 
+11-02 18:05:35.359 24635 24661 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : PSM Thread Priority  = 39
+11-02 18:05:35.359 24635 24661 I GodHandNative: 
+11-02 18:05:35.359 24635 24661 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : DTX Thread Priority  = 48
+11-02 18:05:35.360 24635 24661 I GodHandNative: 
+11-02 18:05:35.360 24635 24661 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : SPU CORE Number = 1
+11-02 18:05:35.360 24635 24661 I GodHandNative: 
+11-02 18:05:35.360 24635 24661 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=7 entry=0x2cd7c base=0x2c800 start=2
+11-02 18:05:35.360 24635 24661 I GodHandNative: [SIF module] load-buffer-emulated id=7 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:05:35.371 24635 24661 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd50 pathAddr=0x3d9ee8 path="\0FLISTDV.DIR;1"
+11-02 18:05:35.383 24635 24661 I GodHandNative: [sceCdSearchFile:ok] path="\0FLISTDV.DIR;1" lsn=0x10009b size=0x17 sectors=0x1
+11-02 18:05:35.383 24635 24661 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd40 pathAddr=0x3d9ee8 path="\WOLVES.FST;1"
+11-02 18:05:35.400 24635 24661 I GodHandNative: sceCdSearchFile failed: \WOLVES.FST;1 (root: /data/data/com.owaissseeee.godhand/files/godhand_cache, repeat=1)
+11-02 18:05:35.400 24635 24661 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd40 pathAddr=0x3d9ee8 path="\_DATA.AFS;1"
+11-02 18:05:35.400 24635 24661 I GodHandNative: [sceCdSearchFile:ok] path="\_DATA.AFS;1" lsn=0x10009d size=0x5be75000 sectors=0xb7cea
+11-02 18:05:35.407 24635 24661 I GodHandNative: [ipu] ipu: first bytes in: 08 10 10 13 10 13 16 16 16 16 16 16 1A 18 1A 1B 
+11-02 18:05:35.409 24635 24661 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=8 entry=0x42c98 base=0x42b00 start=2
+11-02 18:05:35.409 24635 24661 I GodHandNative: [SIF module] load-buffer-emulated id=8 ref=1 path="iopbuf:fnv64:43e20dfb6c24e67a"
+11-02 18:05:35.410 24635 24661 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=9 entry=0x6da40 base=0x6da00 start=2
+11-02 18:05:35.410 24635 24661 I GodHandNative: [SIF module] load-buffer-emulated id=9 ref=1 path="iopbuf:fnv64:63e5cc9de8698a12"
+11-02 18:05:35.429 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x41
+11-02 18:05:35.446 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 18:05:35.594 24635 24661 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x3d9c68 pathAddr=0x3d9c90 path="\GODHAND.FST;1"
+11-02 18:05:35.595 24635 24661 I GodHandNative: [sceCdSearchFile:ok] path="\GODHAND.FST;1" lsn=0x1b7d88 size=0x80b0 sectors=0x11
+11-02 18:05:35.595 24635 24661 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffab0 pathAddr=0x3d9c90 path="\GODHAND.FST;1"
+11-02 18:05:35.595 24635 24661 I GodHandNative: [sceCdSearchFile:ok] path="\GODHAND.FST;1" lsn=0x1b7d88 size=0x80b0 sectors=0x11
+11-02 18:05:35.595 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x41
+11-02 18:05:35.780 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 18:05:35.811 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-02 18:05:35.863 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 18:05:36.011 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-02 18:05:36.113 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 18:05:36.145 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-02 18:05:36.234 24635 24661 I GodHandNative: [gs] PCSX2 GS: 60 fields, 17.5 MB of GIF data
+11-02 18:05:36.281 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 18:05:36.511 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x79
+11-02 18:05:36.564 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 18:05:36.712 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x79
+11-02 18:05:36.895 24635 24661 I GodHandNative: [   2.4602][DLL] DLL slots: hole 0x007957c0..0x008a0000, runtime heap limit 0x007957c0; room base 0x00799080, event base 0x007a8080, mcport base 0x007c0080
+11-02 18:05:36.895 24635 24661 I GodHandNative: [   2.4604][DLL] slot mcport heap created: descriptor 0x00798020 heap 0x007c0000 size 0x20000
+11-02 18:05:36.895 24635 24661 I GodHandNative: [   2.4604][DLL] slot redirect mcport: ra 0x002ae540 heap 0x00754230 -> 0x00798020 (DLL base 0x007c0080) dll/Release/McPort.rel
+11-02 18:05:36.962 24635 24661 I GodHandNative: [   2.5275][DLL] #2 link ..\PS2_EE_Release\McPort.elf base 0x007c0080 size 0x1bec7 (end 0x007dbf47) check 0 (ok) relocs 606 funcs 470 ctors +0x9648 align 0x80 ra 0x002ae59c
+11-02 18:05:37.195 24635 24661 I GodHandNative: [   2.7605][DLL] #3 registered ..\PS2_EE_Release\McPort.elf base 0x007c0080 size 0x1bec7 name@0x007d7d80 ctors 0x007c96c8 (header 0x7c96c8) ra 0x00394e6c
+11-02 18:05:37.196 24635 24661 I GodHandNative: [   2.7610][DLL] module code installed: ..\PS2_EE_Release\McPort.elf base 0x007c0080 entries 2827/2827 code 0x007c0180-0x007cf578 sha256 ok
+11-02 18:05:37.199 24635 24661 I GodHandNative: [SifRegisterRpc] sid=0x80000400 sd=0x7d2f98 func=0x7cf018 buf=0x7d3000 cfunc=0x0 cbuf=0x0 qd=0x7d2f80 (EE server for IOP clients; the IOP serves this SID too, EE clients stay bound to it)[ps2xIOP] [IOP] sceSifBindRpc cd=0x0594d8 sid=0x80000400 -> EE server 0x007d2f98 buf 0x007d3000
+11-02 18:05:37.283 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] memory card slot 1: /data/data/com.owaissseeee.godhand/files/Mcd001.ps2
+11-02 18:05:38.314 24635 24661 I GodHandNative: [   3.8793][DLL] module code removed (unregistered): ..\PS2_EE_Release\McPort.elf base 0x007c0080
+11-02 18:05:38.314 24635 24661 I GodHandNative: [   3.8794][DLL] unregister ..\PS2_EE_Release\McPort.elf base 0x007c0080 ra 0x00394f98
+11-02 18:05:38.783 24635 24661 I GodHandNative: [ipu] ipu: bdec out y[0..7]=37 37 37 37 37 37 37 37  cb[0..3]=128 128 128 128  cr[0..3]=128 128 128 128
+11-02 18:05:38.800 24635 24661 I GodHandNative: [ipu] ipu: csc in  y[0..7]=37 37 37 37 37 37 37 37  cb[0..3]=128 128 128 128  cr[0..3]=128 128 128 128
+11-02 18:05:40.252 24635 24661 I GodHandNative: [sif-dma] 1024-byte transfer polled 0.15 ms after issue: done (the 2 ms rule said in progress)
+11-02 18:05:40.253 24635 24661 I GodHandNative: [sif-dma] 1024-byte transfer polled 0.14 ms after issue: done (the 2 ms rule said in progress)
+11-02 18:05:40.549 24635 24661 I GodHandNative: [   6.1148][DLL] slot mcport (heap D reset): empty after release (no block, no registry entry)
+11-02 18:05:40.649 24635 24661 I GodHandNative: [   6.2145][DLL] slot room heap created: descriptor 0x00798000 heap 0x00799000 size 0xf000
+11-02 18:05:40.649 24635 24661 I GodHandNative: [   6.2145][DLL] slot redirect room: ra 0x002be5a0 heap 0x00754220 -> 0x00798000 (DLL base 0x00799080) dll/Release/r020.rel
+11-02 18:05:40.750 24635 24661 I GodHandNative: [   6.3150][DLL] #6 link ..\PS2_EE_Release\r020.elf base 0x00799080 size 0x5e41 (end 0x0079eec1) check 0 (ok) relocs 455 funcs 82 ctors +0x38f0 align 0x80 ra 0x002be6b4
+11-02 18:05:40.767 24635 24661 I GodHandNative: [   6.3326][DLL] #7 registered ..\PS2_EE_Release\r020.elf base 0x00799080 size 0x5e41 name@0x0079d48a ctors 0x0079c970 (header 0x79c970) ra 0x00394e6c
+11-02 18:05:40.768 24635 24661 I GodHandNative: [   6.3330][DLL] module code installed: ..\PS2_EE_Release\r020.elf base 0x00799080 entries 389/389 code 0x00799180-0x0079ca40 sha256 ok
+11-02 18:05:45.103 24635 24661 I GodHandNative: [spu2-adma] core 1 stream gave 902 silent blocks (4810.7 ms) after loud audio, ending at t=9.712 s
+11-02 18:05:47.985 24635 24661 I GodHandNative: [sif-dma] 2048-byte transfer polled 1.26 ms after issue: done (the 2 ms rule said in progress)
+11-02 18:05:47.986 24635 24661 I GodHandNative: [sif-dma] 2048-byte transfer polled 1.26 ms after issue: done (the 2 ms rule said in progress)
+11-02 18:05:51.221 24635 24661 I GodHandNative: [  16.7862][DLL] module code removed (unregistered): ..\PS2_EE_Release\r020.elf base 0x00799080
+11-02 18:05:51.221 24635 24661 I GodHandNative: [  16.7865][DLL] unregister ..\PS2_EE_Release\r020.elf base 0x00799080 ra 0x00394f98
+11-02 18:05:51.389 24635 24661 I GodHandNative: [  16.9547][DLL] slot room (heap D reset): empty after release (no block, no registry entry)
+11-02 18:05:51.390 24635 24661 I GodHandNative: [  16.9550][DLL] slot room reset with heap D (ra 0x002a6218)
+11-02 18:05:51.522 24635 24661 I GodHandNative: [  17.0873][DLL] slot redirect room: ra 0x002be5a0 heap 0x00754220 -> 0x00798000 (DLL base 0x00799080) dll/Release/r100.rel
+11-02 18:05:51.621 24635 24661 I GodHandNative: [  17.1864][DLL] #10 link ..\PS2_EE_Release\r100.elf base 0x00799080 size 0x643f (end 0x0079f4bf) check 0 (ok) relocs 688 funcs 99 ctors +0x3090 align 0x80 ra 0x002be6b4
+11-02 18:05:51.636 24635 24661 I GodHandNative: [  17.2018][DLL] #11 registered ..\PS2_EE_Release\r100.elf base 0x00799080 size 0x643f name@0x0079ce7f ctors 0x0079c110 (header 0x79c110) ra 0x00394e6c
+11-02 18:05:51.637 24635 24661 I GodHandNative: [  17.2023][DLL] module code installed: ..\PS2_EE_Release\r100.elf base 0x00799080 entries 1378/1378 code 0x00799180-0x0079c300 sha256 ok
+11-02 18:05:53.568 24635 24661 I GodHandNative: [  19.1330][DLL] slot event heap created: descriptor 0x00798010 heap 0x007a8000 size 0x18000
+11-02 18:05:53.568 24635 24661 I GodHandNative: [  19.1334][DLL] slot redirect event: ra 0x00297410 heap 0x00754220 -> 0x00798010 (DLL base 0x007a8080) dll/Release/Event.rel
+11-02 18:05:53.633 24635 24661 I GodHandNative: [  19.1980][DLL] #13 link ..\PS2_EE_Release\Event.elf base 0x007a8080 size 0x13a2f (end 0x007bbaaf) check 0 (ok) relocs 518 funcs 393 ctors +0xa890 align 0x80 ra 0x002be6b4
+11-02 18:05:53.813 24635 24661 I GodHandNative: [  19.3782][DLL] #14 registered ..\PS2_EE_Release\Event.elf base 0x007a8080 size 0x13a2f name@0x007b8a69 ctors 0x007b2910 (header 0x7b2910) ra 0x00394e6c
+11-02 18:05:53.814 24635 24661 I GodHandNative: [  19.3798][DLL] module code installed: ..\PS2_EE_Release\Event.elf base 0x007a8080 entries 2371/2371 code 0x007a8180-0x007b4ad8 sha256 ok
+11-02 18:06:31.164 24635 24661 I GodHandNative: [  56.7297][DLL] module code removed (unregistered): ..\PS2_EE_Release\Event.elf base 0x007a8080
+11-02 18:06:31.164 24635 24661 I GodHandNative: [  56.7299][DLL] unregister ..\PS2_EE_Release\Event.elf base 0x007a8080 ra 0x00394f98
+11-02 18:06:31.357 24635 24661 I GodHandNative: [sif-dma] 1024-byte transfer polled 0.73 ms after issue: done (the 2 ms rule said in progress)
+11-02 18:06:31.357 24635 24661 I GodHandNative: [sif-dma] 2048-byte transfer polled 0.73 ms after issue: done (the 2 ms rule said in progress)
+11-02 18:06:33.339 24635 24661 I GodHandNative: [spu2-adma] core 1 stream gave 360 silent blocks (1920.0 ms) after loud audio, ending at t=57.457 s
+11-02 18:06:35.996 24635 24661 I GodHandNative: [gs] PCSX2 GS: 3600 fields, 3575.5 MB of GIF data
+11-02 18:07:39.986 24635 24661 I GodHandNative: [gs] PCSX2 GS: 7200 fields, 9804.6 MB of GIF data
+
+--------------------------------------------------------------------------------
+ 5. FULL PROCESS LOGCAT DUMP (PID 24635)
+--------------------------------------------------------------------------------
+--------- beginning of main
+11-02 18:05:34.268 24635 24635 E ee.godhand:game: Unknown bits set in runtime_flags: 0x40000000
+11-02 18:05:34.268 24635 24635 I ee.godhand:game: Using generational CollectorTypeCMC GC.
+11-02 18:05:34.286 24635 24635 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+11-02 18:05:34.290 24635 24635 D OplusActivityThreadExtImpl: java.lang.NoSuchMethodException: dalvik.system.VMRuntime.SupressionGC [int, int]
+11-02 18:05:34.291 24635 24635 I OneTrace: Mark active for pid=24635? true
+11-02 18:05:34.291 24635 24635 D cutils-dev: otrace_set_tracing_enabled? true tag:0
+11-02 18:05:34.292 24635 24635 D cutils-dev: properties changed in otrace_seq_number_changed!
+11-02 18:05:34.306 24635 24646 D OplusActivityManager: get AMS extension: android.os.BinderProxy@879a603
+11-02 18:05:34.307 24635 24646 D OplusAppHeapManager: java.lang.NoSuchMethodException: dalvik.system.VMRuntime.updateProcessValue [int, int, int]
+11-02 18:05:34.308 24635 24646 D SurfaceSyncGroup: preCreateSurfaceSyncGroupTimerThread
+11-02 18:05:34.313 24635 24635 D CompactWindowAppManager: initCompactApplicationInfo CompactMode: , NormalMode: 
+--------- beginning of system
+11-02 18:05:34.314 24635 24635 V Configuration: Updating configuration, locales updated from [] to [en_IN]
+11-02 18:05:34.315 24635 24635 D OplusScrollToTopManager: setIsInWhiteList false
+11-02 18:05:34.316 24635 24635 D OplusViewDebugManager: OplusViewDebugManager Constructor android.view.debug.OplusViewDebugManager@f84fbb9 [mHasViewDebugProperty true] [mHasMsgDebugProperty false] [DEBUG false] [EXTRAINFOENABLE false] [LIGHT_OS true]
+11-02 18:05:34.319 24635 24635 D CompatChangeReporter: Compat change id reported: 202956589; UID 10458; state: ENABLED
+11-02 18:05:34.320 24635 24635 W libc    : Access denied finding property "ro.odm.prev.product.name"
+11-02 18:05:34.320 24635 24635 W libc    : Access denied finding property "ro.vendor.oplus.gundam"
+11-02 18:05:34.325 24635 24635 D nativeloader: Configuring clns-9 for other apk /data/app/~~Wd6FPXpp4Z6mXoKUay8XyQ==/com.owaissseeee.godhand-NlIsdEGVyneSvxGrCTfzSg==/base.apk. target_sdk_version=35, uses_libraries=, library_path=/data/app/~~Wd6FPXpp4Z6mXoKUay8XyQ==/com.owaissseeee.godhand-NlIsdEGVyneSvxGrCTfzSg==/lib/arm64:/data/app/~~Wd6FPXpp4Z6mXoKUay8XyQ==/com.owaissseeee.godhand-NlIsdEGVyneSvxGrCTfzSg==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.owaissseeee.godhand
+11-02 18:05:34.327 24635 24635 I ee.godhand:game: AssetManager2(0xb40000778f5f1228) locale list changing from [] to [en-IN]
+11-02 18:05:34.331 24635 24635 V GraphicsEnvironment: Currently set values for:
+11-02 18:05:34.331 24635 24635 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+11-02 18:05:34.331 24635 24635 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+11-02 18:05:34.331 24635 24635 V GraphicsEnvironment: com.owaissseeee.godhand is not listed in per-application setting
+11-02 18:05:34.331 24635 24635 V GraphicsEnvironment: ANGLE allowlist from config: 
+11-02 18:05:34.331 24635 24635 V GraphicsEnvironment: com.owaissseeee.godhand is not listed in ANGLE allowlist or settings, returning default
+11-02 18:05:34.331 24635 24635 V GraphicsEnvironment: App is not on the allowlist for updatable production driver.
+11-02 18:05:34.333 24635 24635 D ResourcesManagerExtImpl: applyConfigurationToAppResourcesLocked app.getDisplayId() return callback.displayId:-1
+11-02 18:05:34.336 24635 24635 I HWUI    : SupportApps size 0
+11-02 18:05:34.336 24635 24635 D ExtensionsLoader: createInstance(64bit) : createExtendedFactory
+11-02 18:05:34.337 24635 24635 D ExtensionsLoader: Opened libSchedAssistExtImpl.so
+11-02 18:05:34.337 24635 24635 E SchedAssist: open sharedFd failed with error=No such file or directory
+11-02 18:05:34.337 24635 24635 E SchedAssist: open sharedFd failed with error=No such file or directory
+11-02 18:05:34.337 24635 24635 E SchedAssist: open sharedFd failed with error=Permission denied
+11-02 18:05:34.337 24635 24635 E SchedAssist: open sharedFd failed with error=Permission denied
+11-02 18:05:34.339 24635 24635 I ee.godhand:game: AssetManager2(0xb40000778f5f1828) locale list changing from [] to [en-IN]
+11-02 18:05:34.339 24635 24653 D OplusGraphicsEvent: OplusGraphicsEventListener create now!
+11-02 18:05:34.340 24635 24635 D ResourcesManagerExtImpl: applyConfigurationToAppResourcesLocked app.getDisplayId() return callback.displayId:0
+11-02 18:05:34.340 24635 24653 D OplusGraphicsEvent: addEventListener success!
+11-02 18:05:34.340 24635 24653 D ExtensionsLoader: createInstance(64bit) : createExtendedFactory
+11-02 18:05:34.340 24635 24653 D ExtensionsLoader: Opened libSchedAssistExtImpl.so
+11-02 18:05:34.340 24635 24653 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+11-02 18:05:34.350 24635 24635 E ashmem  : Pinning is deprecated since Android Q. Please use trim or other methods.
+11-02 18:05:34.355 24635 24635 E OplusPredictiveBackController:  NoSuchMethodException 
+11-02 18:05:34.355 24635 24635 D OplusPredictiveBackController: initPredictiveBackConfig for com.owaissseeee.godhand.GameActivity@ca6506b initPredictiveBackConfig mShouldInterceptKeyEvent false
+11-02 18:05:34.362 24635 24635 I oplus.android.OplusFrameworkFactoryImpl: Unknow feature:IOplusTextViewRTLUtilForUG
+11-02 18:05:34.366 24635 24635 I SurfaceFactory: [static] sSurfaceFactory = com.mediatek.view.impl.SurfaceFactoryImpl@bd78847
+11-02 18:05:34.370 24635 24653 D ExtensionsLoader: createInstance(64bit) : createExtendedFactory
+11-02 18:05:34.370 24635 24635 D Vibrator: SystemVibrator Created
+11-02 18:05:34.370 24635 24653 D ExtensionsLoader: Opened libeglextimpl.so
+11-02 18:05:34.370 24635 24653 D PreCache: [IPreCacheRus]loadRUSConfigs#102 failed to transact: -22 prc:com.owaissseeee.godhand:game
+11-02 18:05:34.373 24635 24635 D CompatChangeReporter: Compat change id reported: 279646685; UID 10458; state: ENABLED
+11-02 18:05:34.379 24635 24635 D CompatChangeReporter: Compat change id reported: 309578419; UID 10458; state: ENABLED
+11-02 18:05:34.380 24635 24635 D DesktopModeFlags: Toggle override initialized to: OVERRIDE_UNSET
+11-02 18:05:34.387 24635 24635 W WindowOnBackDispatcher: OnBackInvokedCallback is not enabled for the application.
+11-02 18:05:34.387 24635 24635 W WindowOnBackDispatcher: Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+11-02 18:05:34.388 24635 24635 D ActivityThread: ComponentInfo{com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity} checkFinished=false 2
+11-02 18:05:34.388 24635 24635 D ResourcesManagerExtImpl: applyConfigurationToAppResourcesLocked app.getDisplayId() return callback.displayId:0
+11-02 18:05:34.411 24635 24635 W libc    : Access denied finding property "ro.hardware.chipname"
+11-02 18:05:34.411 24635 24635 W ee.godhand:game: type=1400 audit(0.0:198728): avc:  denied  { execstack } for  scontext=u:r:untrusted_app:s0:c202,c257,c512,c768 tcontext=u:r:untrusted_app:s0:c202,c257,c512,c768 tclass=process permissive=0 app=com.owaissseeee.godhand
+11-02 18:05:34.414 24635 24635 D nativeloader: Load /data/app/~~Wd6FPXpp4Z6mXoKUay8XyQ==/com.owaissseeee.godhand-NlIsdEGVyneSvxGrCTfzSg==/lib/arm64/libpcsx2gs.so using class loader ns clns-9 (caller=/data/app/~~Wd6FPXpp4Z6mXoKUay8XyQ==/com.owaissseeee.godhand-NlIsdEGVyneSvxGrCTfzSg==/base.apk): ok
+11-02 18:05:34.442 24635 24635 D nativeloader: Load /data/app/~~Wd6FPXpp4Z6mXoKUay8XyQ==/com.owaissseeee.godhand-NlIsdEGVyneSvxGrCTfzSg==/lib/arm64/libgodhand_android.so using class loader ns clns-9 (caller=/data/app/~~Wd6FPXpp4Z6mXoKUay8XyQ==/com.owaissseeee.godhand-NlIsdEGVyneSvxGrCTfzSg==/base.apk): ok
+11-02 18:05:34.442 24635 24635 I GodHandRecomp: JNI_OnLoad: God Hand Native Recomp loaded on ARM64
+11-02 18:05:34.444 24635 24635 I GodHandRecomp: NativeBridge: audio unmuted (master volume 1.0)
+11-02 18:05:34.446 24635 24635 E [UAH_CLIENT]: uahInit enter
+11-02 18:05:34.448 24635 24635 W ee.godhand:game: AIBinder_linkToDeath is being called with a non-null cookie and no onUnlink callback set. This might not be intended. AIBinder_DeathRecipient_setOnUnlinked should be called first.
+11-02 18:05:34.448 24635 24635 I [UAH_CLIENT]: UahGetFeatureStatus enter
+11-02 18:05:34.451 24635 24635 D nativeloader: Load libpowerhalwrap_jni.so using system ns (caller=/system_ext/framework/mediatek-framework.jar): ok
+11-02 18:05:34.451 24635 24635 I PowerHalWrapper: PowerHalWrapper.getInstance 
+11-02 18:05:34.451 24635 24635 I PowerHalWrapper: PowerHalWrapper.getInstance 
+11-02 18:05:34.451 24635 24635 I M-ProMotion: M-ProMotion is disabled
+11-02 18:05:34.453 24635 24635 D CompatChangeReporter: Compat change id reported: 352594277; UID 10458; state: ENABLED
+11-02 18:05:34.453 24635 24635 D OplusInputMethodUtil: init sDebug to false, init sDebugIme to false, init sAlwaysOn to false
+11-02 18:05:34.453 24635 24635 D OplusInputMethodUtil: updateDebugToClass InputMethodManager.DEBUG = false
+11-02 18:05:34.453 24635 24635 D OplusInputMethodUtil: updateDebugToClass ImeFocusController.DEBUG = false
+11-02 18:05:34.453 24635 24662 I PowerHalWrapper: PowerHalWrapper.getInstance 
+11-02 18:05:34.453 24635 24635 D OplusInputMethodUtil: updateDebugToClass OnBackInvokedDispatcher.DEBUG = false
+11-02 18:05:34.453 24635 24635 D OplusInputMethodUtil: updateDebugToClass InsetsController.DEBUG = false
+11-02 18:05:34.453 24635 24635 D OplusInputMethodUtil: updateDebugToClass BaseInputConnection.DEBUG = false
+11-02 18:05:34.457 24635 24635 D CompatChangeReporter: Compat change id reported: 349153669; UID 10458; state: ENABLED
+11-02 18:05:34.458 24635 24635 D WindowManager: Add to mViews: com.android.internal.policy.DecorView{41f3f22 I.E...... R.....ID 0,0-0,0 alpha=1.0 viewInfo = }[GameActivity],pkg= com.owaissseeee.godhand
+11-02 18:05:34.459 24635 24653 D ExtensionsLoader: createInstance(64bit) : createExtendedFactory
+11-02 18:05:34.460 24635 24664 W ServiceManagerCppClient: Failed to get isDeclared for mapper/mediatek: Status(-1, EX_SECURITY): 'SELinux denied for service.'
+11-02 18:05:34.460 24635 24664 E Gralloc5: Failed to load mapper.mediatek.so
+11-02 18:05:34.462 24635 24653 D ExtensionsLoader: Opened libhwuiextimpl.so
+11-02 18:05:34.462 24635 24653 D skia    : setRusSupported enable 0
+11-02 18:05:34.466 24635 24635 D InsetsController: Setting requestedVisibleTypes to -12 (was -9)
+11-02 18:05:34.471 24635 24635 D ViewRootImplExtImpl: onDisplayChanged -1 for VRI android.view.ViewRootImpl@b7d907a
+11-02 18:05:34.472 24635 24635 D ResourcesManagerExtImpl: applyConfigurationToAppResourcesLocked app.getDisplayId() return callback.displayId:0
+11-02 18:05:34.473 24635 24635 E OplusBracketLog: [OplusViewMirrorManager] updateHostViewRootIfNeeded, not support android.view.ViewRootImpl@b7d907a
+11-02 18:05:34.473 24635 24635 I SurfaceView: 249028651 onAttachedToWindow
+11-02 18:05:34.474 24635 24635 D ViewRootImplExtImpl: wrapConfigInfoIntoFlags rotation=1, smallestScreenWidthDp=0, residentWS=false, scenario=0, bounds=Rect(0, 0 - 2372, 1080), relayoutAsync=false, flags=0, newFlags=1243611144, title=com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity
+11-02 18:05:34.483 24635 24635 D VRI[GameActivity]: relayoutWindow result, sizeChanged:true, surfaceControlChanged:true, transformHintChanged:true, mSurfaceSize:Point(2372, 1080), mLastSurfaceSize:Point(0, 0), mWidth:-1, mHeight:-1, requestedWidth:2372, requestedHeight:1080, transformHint:4, installOrientation:0, displayRotation:1, isSurfaceValid:true, attr.flag:-2122251904, tmpFrames:ClientWindowFrames{frame=[0,0][2372,1080] display=[0,0][2372,1080] parentFrame=[0,0][0,0]}, relayoutAsync:false, mSyncSeqId:0
+11-02 18:05:34.483 24635 24635 W VRI[GameActivity]: updateBlastSurfaceIfNeeded, surfaceSize:Point(2372, 1080), lastSurfaceSize:Point(0, 0), format:-3, blastBufferQueue:null
+11-02 18:05:34.484 24635 24635 E ee.godhand:game: [perfctl] 24635 24635 FPSGO ver:7
+11-02 18:05:34.484 24635 24635 E ee.godhand:game: [perfctl] 1 1 1 0
+11-02 18:05:34.485 24635 24635 D BufferQueueConsumer: [](id:603b00000000,api:0,p:-1,c:24635) connect: controlledByApp=false
+11-02 18:05:34.485 24635 24635 D BufferQueueConsumer: [VRI[GameActivity]#0(BLAST Consumer)0](id:603b00000000,api:0,p:-1,c:24635) setMaxAcquiredBufferCount: 3
+11-02 18:05:34.488 24635 24653 D HWUI    : createSurface new attribs array
+11-02 18:05:34.489 24635 24635 E OplusDisplayModeManager: has been initialized.
+11-02 18:05:34.490 24635 24653 D libEGL  : this is from skia gles
+11-02 18:05:34.493 24635 24635 D SurfaceView: 249028651, SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity], layerid: 258531 createBlastSurfaceControls
+11-02 18:05:34.493 24635 24635 D BufferQueueConsumer: [](id:603b00000001,api:0,p:-1,c:24635) connect: controlledByApp=false
+11-02 18:05:34.493 24635 24635 D BufferQueueConsumer: [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1(BLAST Consumer)1](id:603b00000001,api:0,p:-1,c:24635) setMaxAcquiredBufferCount: 3
+11-02 18:05:34.493 24635 24635 I SurfaceView: 249028651 visibleChanged -- surfaceCreated 
+11-02 18:05:34.496 24635 24635 I GodHandRecomp: NativeBridge: audio master volume set to 1.00
+11-02 18:05:34.496 24635 24635 I GodHandRecomp: NativeBridge: audio buffer size set to 256 frames, scheduling=1
+11-02 18:05:34.497 24635 24667 I GodHandRecomp: Booting God Hand EE Static Recompiled Runtime on ARM64...
+11-02 18:05:34.497 24635 24667 I GodHandRecomp: bootAndroidRuntime: initializing EE runtime (frameskip=0)...
+11-02 18:05:34.497 24635 24667 I GodHandRecomp: Target cacheDir: /data/data/com.owaissseeee.godhand/files/godhand_cache, bootElf: /data/data/com.owaissseeee.godhand/files/godhand_cache/SLUS_215.03
+11-02 18:05:34.498 24635 24667 I GodHandNative: [gs] renderer: PCSX2 GS bound successfully on Android!
+11-02 18:05:34.498 24635 24668 I GodHandPerf: [Affinity] Detected Core 7: Tier=2, Freq=2500000 kHz, Part=0xd41, Impl=0x41
+11-02 18:05:34.498 24635 24668 I GodHandPerf: [Affinity] Detected Core 6: Tier=2, Freq=2500000 kHz, Part=0xd41, Impl=0x41
+11-02 18:05:34.498 24635 24668 I GodHandPerf: [Affinity] Detected Core 5: Tier=2, Freq=2500000 kHz, Part=0xd41, Impl=0x41
+11-02 18:05:34.498 24635 24668 I GodHandPerf: [Affinity] Detected Core 4: Tier=2, Freq=2500000 kHz, Part=0xd41, Impl=0x41
+11-02 18:05:34.498 24635 24668 I GodHandPerf: [Affinity] Detected Core 3: Tier=1, Freq=2000000 kHz, Part=0xd05, Impl=0x41
+11-02 18:05:34.498 24635 24668 I GodHandPerf: [Affinity] Detected Core 2: Tier=1, Freq=2000000 kHz, Part=0xd05, Impl=0x41
+11-02 18:05:34.498 24635 24668 I GodHandPerf: [Affinity] Detected Core 1: Tier=1, Freq=2000000 kHz, Part=0xd05, Impl=0x41
+11-02 18:05:34.498 24635 24668 I GodHandPerf: [Affinity] Detected Core 0: Tier=1, Freq=2000000 kHz, Part=0xd05, Impl=0x41
+11-02 18:05:34.499 24635 24668 I GodHandPerf: [Affinity] Thread 'GSThread' (TID 24668) affinity set (uniform=0, big_count=4, little_count=4), sched_setaffinity rc=0, nice=-19 (pr=0)
+11-02 18:05:34.499 24635 24635 D SurfaceView: 249028651 handleSyncNoBuffer
+11-02 18:05:34.500 24635 24635 D SurfaceView: 249028651 finishedDrawing
+11-02 18:05:34.500 24635 24635 D SurfaceView: 249028651 performDrawFinished mAttachedToWindow true
+11-02 18:05:34.501 24635 24635 I SurfaceControl:  setExtendedRangeBrightness sc=Surface(name=com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity)/@0x653859,currentBufferRatio=1.0,desiredRatio=1.0
+11-02 18:05:34.502 24635 24635 D SurfaceView: 249028651 dispatchDraw mDrawFinished true isAboveParent false (mPrivateFlags & PFLAG_SKIP_DRAW) 128
+11-02 18:05:34.502 24635 24635 D SurfaceView: 249028651 clearSurfaceViewPort mCornerRadius 0.0
+11-02 18:05:34.507 24635 24667 I GodHandNative: GSPcsx2Backend::AttachHostWindow: win=0xb4000076eac23e10 (2372x1080), windowChanged flagged
+11-02 18:05:34.507 24635 24667 I GodHandRecomp: Attached host window, initializing runtime...
+11-02 18:05:34.533 24635 24667 I AAudio  : AAudioStreamBuilder_openStream() called ----------------------------------------
+11-02 18:05:34.533 24635 24667 I AudioStreamBuilder: rate   =      0, channels  = 2, channelMask = 0x80000003, format   = 5, sharing = SH, dir = OUTPUT
+11-02 18:05:34.533 24635 24667 I AudioStreamBuilder: device = AUDIO_PORT_HANDLE_NONE, sessionId = -1, perfMode = 12, callback: ON with frames = 480, error callback: ON
+11-02 18:05:34.533 24635 24667 I AudioStreamBuilder: usage  =      0, contentType = 0, inputPreset = 0, allowedCapturePolicy = 0
+11-02 18:05:34.533 24635 24667 I AudioStreamBuilder: privacy sensitive = false, opPackageName = (null), attributionTag = (null)
+11-02 18:05:34.533 24635 24667 D AudioStreamBuilder: build, global mmap policy is 0
+11-02 18:05:34.533 24635 24667 D AudioSystem: onNewService: media.audio_policy service obtained 0xb4000076ec27e3c0
+11-02 18:05:34.540 24635 24667 D AudioSystem: getService: IAudioPolicyService retrieved: 0xb4000076ec27e3c0  cached: 0xb4000076ec27e3c0
+11-02 18:05:34.540 24635 24667 D AudioStreamBuilder: build, system mmap policy is 2
+11-02 18:05:34.540 24635 24667 D AudioStreamBuilder: build, final mmap policy is 2
+11-02 18:05:34.541 24635 24667 D AudioStreamBuilder: build, system mmap exclusive policy is 2
+11-02 18:05:34.541 24635 24667 D AudioStreamBuilder: build, final mmap exclusive policy is 2
+11-02 18:05:34.542 24635 24667 D ee.godhand:game: PlayerBase::PlayerBase()
+11-02 18:05:34.559 24635 24667 D ee.godhand:game: PlayerBase::PlayerBase()
+11-02 18:05:34.559 24635 24667 D AudioStreamInternal_Client: ~AudioStreamInternal() 0xb4000076ec267800 called
+11-02 18:05:34.559 24635 24667 D AAudioStream: ~AudioStream(s#1) mPlayerBase strongCount = 1
+11-02 18:05:34.559 24635 24667 D ee.godhand:game: PlayerBase::~PlayerBase()
+11-02 18:05:34.559 24635 24667 D AudioStreamTrack: open(), request notificationFrames = 0, frameCount = 1440
+11-02 18:05:34.560 24635 24667 I AudioTrack: set(): type=audio,case=1,attributes=1,content_type=2,usage=1,source=0,flags=0x100
+11-02 18:05:34.560 24635 24667 D AudioTrackExtImpl: AudioTrackExtImpl init
+11-02 18:05:34.560 24635 24667 D ExtensionsLoader: createInstance(64bit) : createExtendedFactory
+11-02 18:05:34.561 24635 24667 D ExtensionsLoader: Opened libSchedAssistExtImpl.so
+11-02 18:05:34.561 24635 24667 D AudioTrack: set(): streamType -1, sampleRate 0, format 0x5, channelMask 0x3, frameCount 1440, flags #104, notificationFrames 0, sessionId 0, transferType 1, uid -1, pid -1
+11-02 18:05:34.561 24635 24667 D ListServiceUtils: mListServiceUtils::init CallingPid 24635
+11-02 18:05:34.562 24635 24667 D ListServiceUtils: mListServiceUtils::init this 0xb4000076ec27e580
+11-02 18:05:34.564 24635 24667 I AudioTrack: set(): 0xb400007758fb6c00, Create AudioTrackThread, tid = 24671
+11-02 18:05:34.565 24635 24667 D AudioSystem: onNewServiceWithAdapter: media.audio_flinger service obtained 0xb4000076ec351340
+11-02 18:05:34.577 24635 24667 D AudioSystem: getService: IAudioFlingerService retrieved: 0xb4000076ec27e700  IAudioFlinger cached: 0xb4000076ec351340
+11-02 18:05:34.579 24635 24667 D AudioDetectPulse: setDetectPulse, mIsDetectPulse 0, 0x78459a00e0
+11-02 18:05:34.580 24635 24667 D AudioTrackExtImpl: doSchedBoost, set audioapp task boost, pid=24635, tid=24667, enable=1, ret=0
+11-02 18:05:34.608 24635 24667 D AudioTrack: createTrack state 0 output.outputId=29
+11-02 18:05:34.610 24635 24667 I AudioTrack: createTrack_l(0): AUDIO_OUTPUT_FLAG_FAST successful; frameCount 1440 -> 1440
+11-02 18:05:34.611 24635 24667 I AudioTrack: createTrack_l(19224) on outputId(29) : 0xb400007758fb6c00, mCblk = 0x7847e39000,  mLatency = 72, mAfLatency = 42, frameCount = 1440, mSampleRate = 48000, mFlags = 0x4, mReqFrameCount = 1440, mNotificationFramesAct = 256
+11-02 18:05:34.612 24635 24667 D AudioTrackExtImpl: doSchedBoost, set audioapp task boost, pid=24635, tid=24667, enable=0, ret=0
+11-02 18:05:34.631 24635 24653 I GrallocExtra: gralloc_extra_query:is_SW3D 0
+11-02 18:05:34.632 24635 24653 D BLASTBufferQueue: [VRI[GameActivity]#0](f:0,a:1) acquireNextBufferLocked size=2372x1080 mFrameNumber=1 applyTransaction=true mTimestamp=641918289066107(auto) mPendingTransactions.size=0 graphicBufferId=105806519336960 transform=7
+11-02 18:05:34.633 24635 24653 D VRI[GameActivity]: Received frameCommittedCallback lastAttemptedDrawFrameNum=1 didProduceBuffer=true syncBuffer=false
+11-02 18:05:34.633 24635 24653 D ExtensionsLoader: createInstance(64bit) : createExtendedFactory
+11-02 18:05:34.634 24635 24653 D ExtensionsLoader: Opened libSchedAssistExtImpl.so
+11-02 18:05:34.634 24635 24674 D LibMBrainProxy: Init Paramters
+11-02 18:05:34.635 24635 24674 W ServiceManagerCppClient: Failed to get isDeclared for vendor.mediatek.hardware.mbrain.IMBrain/default: Status(-1, EX_SECURITY): 'SELinux denied for service.'
+11-02 18:05:34.635 24635 24635 D VRI[GameActivity]: draw finished. seqId=0
+11-02 18:05:34.637 24635 24667 E AudioTrackExtImpl: get fade type, but return null, pid 24635, uid 10458
+11-02 18:05:34.637 24635 24667 D AudioTrack: set: pop_optimize mIsPopOptimizeSupport:0, mIsPopOptimizeFlush:0
+11-02 18:05:34.637 24635 24667 D AudioTrack: setVolume(19224) left 1.000 right 1.000 , callingPid 24635
+11-02 18:05:34.639 24635 24667 D AudioStreamTrack: open() flags changed from 0x00000104 to 0x00000004
+11-02 18:05:34.639 24635 24667 D AAudioStream: setState(s#2) from 0 to 2
+11-02 18:05:34.640 24635 24667 I AAudio  : AAudioStreamBuilder_openStream() returns 0 = AAUDIO_OK for s#2 ----------------
+11-02 18:05:34.640 24635 24667 D AAudio  : AAudioStream_requestStart(s#2) called --------------
+11-02 18:05:34.641 24635 24667 D AAudioStream: setState(s#2) from 2 to 3
+11-02 18:05:34.641 24635 24667 D AudioTrack: start(19224): prior state:STATE_STOPPED output 29 stream 3 session 135017
+11-02 18:05:34.649 24635 24635 W VRI[GameActivity]: handleResized, msg:, frameChanged:false, configChanged:false, displayChanged:false, attachedFrameChanged:false, compatScaleChanged:false, pendingDragResizing=false
+11-02 18:05:34.652 24635 24635 W VRI[GameActivity]: handleResized, msg:, frameChanged:false, configChanged:false, displayChanged:false, attachedFrameChanged:false, compatScaleChanged:false, pendingDragResizing=false
+11-02 18:05:34.652 24635 24677 D OplusWindowManager: get WMS extension: android.os.BinderProxy@dcdf2ea
+11-02 18:05:34.653 24635 24635 I DynamicFramerate [FRTCConfigManager]: initFrameRateConfig: 
+11-02 18:05:34.653 24635 24635 I DynamicFramerate [FRTCConfigManager]: 	levelsFor120hz: [120, 60]
+11-02 18:05:34.653 24635 24635 I DynamicFramerate [FRTCConfigManager]: 	thresholdsFor120hz: [200]
+11-02 18:05:34.653 24635 24635 I DynamicFramerate [FRTCConfigManager]: 	levelsFor90hz: [90]
+11-02 18:05:34.653 24635 24635 I DynamicFramerate [FRTCConfigManager]: 	thresholdsFor90hz: []
+11-02 18:05:34.653 24635 24635 I DynamicFramerate [FRTCConfigManager]: FRTCConfigManager: FRTC_CAPABILITY = 120, package name = com.owaissseeee.godhand, WINDOW_ANIMATION_SPEED_RATE = 10, SCROLL_ANIMATION_SPEED_RATE = 20, PACKAGE_ENABLE = false
+11-02 18:05:34.653 24635 24635 I DynamicFramerate [DynamicFrameRateController]: init info: mPackageName = com.owaissseeee.godhand, mIsEnabled = false
+11-02 18:05:34.657 24635 24635 D VRI[GameActivity]: onFocusEvent true
+11-02 18:05:34.666 24635 24653 D VRI[GameActivity]: Received frameCommittedCallback lastAttemptedDrawFrameNum=2 didProduceBuffer=true syncBuffer=false
+11-02 18:05:34.667 24635 24635 D VRI[GameActivity]: draw finished. seqId=0
+11-02 18:05:34.671 24635 24635 I DynamicFramerate [FRTCConfigManager]: initFrameRateConfig: 
+11-02 18:05:34.671 24635 24635 I DynamicFramerate [FRTCConfigManager]: 	levelsFor120hz: [120, 60]
+11-02 18:05:34.671 24635 24635 I DynamicFramerate [FRTCConfigManager]: 	thresholdsFor120hz: [200]
+11-02 18:05:34.671 24635 24635 I DynamicFramerate [FRTCConfigManager]: 	levelsFor90hz: [90]
+11-02 18:05:34.671 24635 24635 I DynamicFramerate [FRTCConfigManager]: 	thresholdsFor90hz: []
+11-02 18:05:34.671 24635 24635 I DynamicFramerate [FRTCConfigManager]: FRTCConfigManager: FRTC_CAPABILITY = 120, package name = com.owaissseeee.godhand, WINDOW_ANIMATION_SPEED_RATE = 10, SCROLL_ANIMATION_SPEED_RATE = 20, PACKAGE_ENABLE = false
+11-02 18:05:34.671 24635 24635 I DynamicFramerate [DynamicFrameRateController]: init info: mPackageName = com.owaissseeee.godhand, mIsEnabled = false
+11-02 18:05:34.681 24635 24635 D InsetsController: hide(ime(), fromIme=false)
+11-02 18:05:34.681 24635 24635 I ImeTracker: com.owaissseeee.godhand:dc6477ad: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-02 18:05:34.695 24635 24667 D AAudio  : AAudioStream_requestStart(s#2) returned 0 ---------
+11-02 18:05:34.699 24635 24666 D AudioStreamTrack: onAudioDeviceUpdate() devices 2 => 2
+11-02 18:05:34.785 24635 24671 D AAudioStream: setState(s#2) from 3 to 4
+11-02 18:05:34.785 24635 24667 I raylib  : AUDIO: Device initialized successfully
+11-02 18:05:34.785 24635 24667 I raylib  :     > Backend:       miniaudio | AAudio
+11-02 18:05:34.785 24635 24667 I raylib  :     > Format:        32-bit IEEE Floating Point -> 32-bit IEEE Floating Point
+11-02 18:05:34.785 24635 24667 I raylib  :     > Channels:      2 -> 2
+11-02 18:05:34.785 24635 24667 I raylib  :     > Sample rate:   48000 -> 48000
+11-02 18:05:34.785 24635 24667 I raylib  :     > Periods size:  1440
+11-02 18:05:34.785 24635 24667 I raylib  : STREAM: Initialized successfully (48000 Hz, 16 bit, Stereo)
+11-02 18:05:34.785 24635 24667 I GodHandAudio: InitAudioDevice result: ready=1
+11-02 18:05:34.788 24635 24667 I GodHandRecomp: Runtime initialized. Loading ELF from /data/data/com.owaissseeee.godhand/files/godhand_cache/SLUS_215.03 ...
+11-02 18:05:34.797 24635 24661 I GodHandNative: Loading segment: 0x100000 - 0x7867b4 (filesz: 0x360ce4, memsz: 0x6867b4)
+11-02 18:05:34.817 24635 24667 I GodHandRecomp: ELF loaded successfully. Entry point PC=0x00100008
+11-02 18:05:34.817 24635 24661 I GodHandNative: Registered code region: 100000 - 460ce4ELF file loaded successfully. Entry point: 0x100008[   0.3825][HOOK] HLE: bound 63 SDK functions; not located in this ELF: sceSifSetSreg sceSifGetDataTable sceSifSetCmdBuffer sceSifSetSysCmdBuffer sceSifGetOtherData sceSifAllocSysMemory sceSifLoadIopHeap sceSifLoadElfPart sceSifLoadElf sceSifGetIopAddr sceSifSetIopAddr sceSifIsAliveIop sceDeci2Open sceDeci2Close sceDeci2ReqSend sceDeci2Poll sceDeci2ExRecv sceDeci2ExSend sceDeci2ExReqSend sceDeci2ExLock sceDeci2ExUnLock sceTtyWrite sceTtyRead sceTtyInit sceCdCallback sceCdInitEeCB sceCdReadIOPm sceCdSeek sceCdStandby sceCdStop sceCdPause sceCdTrayReq sceMpegAddBs sceMpegIsEnd sceMpegIsRefBuffEmpty sceMpegSetDecodeMode sceMpegGetDecodeMode sceMpegGetPictureRAW8xy sceMpegSetDefaultPtsGap sceMpegResetDefaultPtsGap sceMpegSetImageBuff sceMpegDispWidth sceMpegDispHeight sceMpegDispCenterOffX sceMpegDispCenterOffY sceMpegDemuxPssRing sceMpegDemuxPss sceMpegAddStrCallback
+11-02 18:05:34.817 24635 24667 I GodHandRecomp: registerGeneratedVu1Programs: AOT VU1 microprograms registered successfully!
+11-02 18:05:34.817 24635 24661 I GodHandNative: [   0.3826][DLL] recompiled SNR2 module packs: 81
+11-02 18:05:34.817 24635 24661 I GodHandNative: [   0.3827][DLL] SNR2 DLL load logger + module code installer on
+11-02 18:05:34.817 24635 24661 I GodHandNative: [   0.3827][GS] flicker filter of the flip copy off (0x3c3ccc = 0x80 before 0x30b870)
+11-02 18:05:34.817 24635 24661 I GodHandNative: [   0.3827][GS] game_frame_counter observed on flip chain builder 0x30b870 (authentic 1.0x speed lockstep)
+11-02 18:05:34.817 24635 24667 I GodHandPerf: [Affinity] Thread 'HostPump' (TID 24667) affinity set (uniform=0, big_count=4, little_count=4), sched_setaffinity rc=0, nice=-2 (pr=0)
+11-02 18:05:34.817 24635 24667 I GodHandRecomp: Starting God Hand main loop on ARM64...
+11-02 18:05:34.821 24635 24661 I GodHandNative: Starting execution at address 0x100008[input] built without SDL3; using GLFW's gamepads
+11-02 18:05:34.821 24635 24661 I GodHandNative: [input] controllers through GLFW (no vibration)
+11-02 18:05:34.823 24635 24680 I GodHandPerf: [Affinity] Thread 'EEThread' (TID 24680) affinity set (uniform=0, big_count=4, little_count=4), sched_setaffinity rc=0, nice=-20 (pr=0)
+11-02 18:05:34.838 24635 24681 I GodHandPerf: [Affinity] Thread 'IOPThread' (TID 24681) affinity set (uniform=0, big_count=4, little_count=4), sched_setaffinity rc=0, nice=-15 (pr=0)
+11-02 18:05:34.840 24635 24668 I GodHandNative: EnsureOpen: calling g_api->open (hwnd=0xb4000076eac23e10, 2372x1080, scale=2.0, res=/data/data/com.owaissseeee.godhand/files/godhand_cache/resources)...
+11-02 18:05:34.840 24635 24668 I pcsx2-gs: Bridge::Open: Selected Vulkan renderer for Android
+11-02 18:05:34.840 24635 24668 I pcsx2-gs: Bridge::Open: Calling GSopen (window=2372x1080, scale=2.0, resources=/data/data/com.owaissseeee.godhand/files/godhand_cache/resources)...
+11-02 18:05:34.847 24635 24668 D colorx  : VulkanExtImpl Init
+11-02 18:05:34.848 24635 24668 D vulkan  : searching for layers in '/data/app/~~Wd6FPXpp4Z6mXoKUay8XyQ==/com.owaissseeee.godhand-NlIsdEGVyneSvxGrCTfzSg==/lib/arm64'
+11-02 18:05:34.848 24635 24668 D vulkan  : searching for layers in '/data/app/~~Wd6FPXpp4Z6mXoKUay8XyQ==/com.owaissseeee.godhand-NlIsdEGVyneSvxGrCTfzSg==/base.apk!/lib/arm64-v8a'
+11-02 18:05:34.848 24635 24668 D colorx  : I can't find colorx layer , let's enumerate colorx layers first.
+11-02 18:05:34.853 24635 24668 D Surface : Surface::dispatchSetGameApi
+11-02 18:05:34.853 24635 24668 D Surface : dispatchSetGameApi pid[24635] tid[24668] GameApi[1]
+11-02 18:05:34.853 24635 24668 D Surface : dispatchSetGameApi res:0
+11-02 18:05:34.853 24635 24668 D vulkan  : set game api vulkan successfully
+11-02 18:05:34.853 24635 24668 D BLASTBufferQueue: ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1 getBufferCacheFlag 0
+11-02 18:05:34.854 24635 24668 D BLASTBufferQueue: ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1 getMaxAcquireBufferCount 3
+11-02 18:05:34.854 24635 24668 D BLASTBufferQueue: ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1 getOrignalMaxAcquireBufferCount 3
+11-02 18:05:34.879 24635 24668 W libc    : Access denied finding property "ro.vendor.mtk.gpud.mm.fbc.disable"
+11-02 18:05:34.879 24635 24668 W libc    : Access denied finding property "ro.vendor.mtk.gpud.mm.fbc.disable"
+11-02 18:05:34.879 24635 24668 W libc    : Access denied finding property "ro.vendor.mtk.gpud.mm.fbc.disable"
+11-02 18:05:34.879 24635 24668 W libc    : Access denied finding property "ro.vendor.mtk.gpud.mm.fbc.disable"
+11-02 18:05:34.879 24635 24668 E ee.godhand:game: Usage not permitted! format = 0x38, permitted usage bits = 0x53ff,usage = 0xb00, invalid usage bits: 0x800
+11-02 18:05:34.879 24635 24668 E mali_gralloc: ERROR: Unrecognized and/or unsupported format 0x38 and usage 0xb00
+11-02 18:05:34.879 24635 24668 E ee.godhand:game: Usage not permitted! format = 0x3b, permitted usage bits = 0x101d7f7ff,usage = 0xb00, invalid usage bits: 0x800
+11-02 18:05:34.879 24635 24668 E mali_gralloc: ERROR: Unrecognized and/or unsupported format 0x3b and usage 0xb00
+11-02 18:05:34.879 24635 24668 W libc    : Access denied finding property "ro.vendor.mtk.gpud.mm.fbc.disable"
+11-02 18:05:34.879 24635 24668 W libc    : Access denied finding property "ro.vendor.mtk.gpud.mm.fbc.disable"
+11-02 18:05:34.880 24635 24668 W libc    : Access denied finding property "ro.vendor.mtk.gpud.mm.fbc.disable"
+11-02 18:05:34.880 24635 24668 W libc    : Access denied finding property "ro.vendor.mtk.gpud.mm.fbc.disable"
+11-02 18:05:34.880 24635 24668 E ee.godhand:game: Usage not permitted! format = 0x38, permitted usage bits = 0x53ff,usage = 0xb00, invalid usage bits: 0x800
+11-02 18:05:34.880 24635 24668 E mali_gralloc: ERROR: Unrecognized and/or unsupported format 0x38 and usage 0xb00
+11-02 18:05:34.880 24635 24668 E ee.godhand:game: Usage not permitted! format = 0x3b, permitted usage bits = 0x101d7f7ff,usage = 0xb00, invalid usage bits: 0x800
+11-02 18:05:34.880 24635 24668 E mali_gralloc: ERROR: Unrecognized and/or unsupported format 0x3b and usage 0xb00
+11-02 18:05:34.880 24635 24668 D BLASTBufferQueue: ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1 getBufferCacheFlag 0
+11-02 18:05:34.880 24635 24668 D BLASTBufferQueue: ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1 getMaxAcquireBufferCount 3
+11-02 18:05:34.880 24635 24668 D BLASTBufferQueue: ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1 getOrignalMaxAcquireBufferCount 3
+11-02 18:05:34.921 24635 24668 D BLASTBufferQueue: [ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1](f:0,a:1) acquireNextBufferLocked size=2372x1080 mFrameNumber=1 applyTransaction=true mTimestamp=641918578557107(auto) mPendingTransactions.size=0 graphicBufferId=105806519336972 transform=0
+11-02 18:05:35.018 24635 24687 I GodHandPerf: [Affinity] Thread 'VUThread' (TID 24687) affinity set (uniform=0, big_count=4, little_count=4), sched_setaffinity rc=0, nice=-20 (pr=0)
+11-02 18:05:35.035 24635 24686 I GodHandPerf: [Affinity] Thread 'GIFThread' (TID 24686) affinity set (uniform=0, big_count=4, little_count=4), sched_setaffinity rc=0, nice=-16 (pr=0)
+11-02 18:05:35.039 24635 24677 W InteractionJankMonitor: Initializing without READ_DEVICE_CONFIG permission. enabled=false, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=com.owaissseeee.godhand
+11-02 18:05:35.071 24635 24668 I GodHandGS: [ShaderPrewarm] Prewarming God Hand TFX pipelines & shaders...
+11-02 18:05:35.080 24635 24668 I GodHandGS: [ShaderPrewarm] Complete: Prewarmed 48 pipelines, flushed to vulkan_pipelines.bin
+11-02 18:05:35.088 24635 24668 I pcsx2-gs: Bridge::Open: GSopen SUCCEEDED! Native surface active. Renderer=14, Resolution: 0x0, Window: 2372x1080
+11-02 18:05:35.088 24635 24668 I GodHandNative: EnsureOpen: open result m_open=1
+11-02 18:05:35.089 24635 24668 I GodHandNative: GSPcsx2Backend::VSync: Updating PCSX2 GS window to 0xb4000076eac23e10 (2372x1080)...
+11-02 18:05:35.089 24635 24668 I pcsx2-gs: Bridge::UpdateWindow: updating window handle=0xb4000076eac23e10 (2372x1080)
+11-02 18:05:35.091 24635 24661 I GodHandNative: [pcsx2-gs] Renderer 14, scale 2 (0x0), window 2372x1080, options: 
+11-02 18:05:35.095 24635 24668 D Surface : Surface::dispatchSetGameApi
+11-02 18:05:35.095 24635 24668 D Surface : dispatchSetGameApi res:0
+11-02 18:05:35.095 24635 24668 D vulkan  : set game api vulkan successfully
+11-02 18:05:35.095 24635 24668 D BLASTBufferQueue: ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1 getBufferCacheFlag 0
+11-02 18:05:35.095 24635 24668 D BLASTBufferQueue: ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1 getMaxAcquireBufferCount 3
+11-02 18:05:35.095 24635 24668 D BLASTBufferQueue: ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1 getOrignalMaxAcquireBufferCount 3
+11-02 18:05:35.095 24635 24668 W libc    : Access denied finding property "ro.vendor.mtk.gpud.mm.fbc.disable"
+11-02 18:05:35.095 24635 24668 W libc    : Access denied finding property "ro.vendor.mtk.gpud.mm.fbc.disable"
+11-02 18:05:35.095 24635 24668 W libc    : Access denied finding property "ro.vendor.mtk.gpud.mm.fbc.disable"
+11-02 18:05:35.095 24635 24668 W libc    : Access denied finding property "ro.vendor.mtk.gpud.mm.fbc.disable"
+11-02 18:05:35.096 24635 24668 E ee.godhand:game: Usage not permitted! format = 0x38, permitted usage bits = 0x53ff,usage = 0xb00, invalid usage bits: 0x800
+11-02 18:05:35.096 24635 24668 E mali_gralloc: ERROR: Unrecognized and/or unsupported format 0x38 and usage 0xb00
+11-02 18:05:35.096 24635 24668 E ee.godhand:game: Usage not permitted! format = 0x3b, permitted usage bits = 0x101d7f7ff,usage = 0xb00, invalid usage bits: 0x800
+11-02 18:05:35.096 24635 24668 E mali_gralloc: ERROR: Unrecognized and/or unsupported format 0x3b and usage 0xb00
+11-02 18:05:35.096 24635 24668 W libc    : Access denied finding property "ro.vendor.mtk.gpud.mm.fbc.disable"
+11-02 18:05:35.096 24635 24668 W libc    : Access denied finding property "ro.vendor.mtk.gpud.mm.fbc.disable"
+11-02 18:05:35.096 24635 24668 W libc    : Access denied finding property "ro.vendor.mtk.gpud.mm.fbc.disable"
+11-02 18:05:35.096 24635 24668 W libc    : Access denied finding property "ro.vendor.mtk.gpud.mm.fbc.disable"
+11-02 18:05:35.096 24635 24668 E ee.godhand:game: Usage not permitted! format = 0x38, permitted usage bits = 0x53ff,usage = 0xb00, invalid usage bits: 0x800
+11-02 18:05:35.096 24635 24668 E mali_gralloc: ERROR: Unrecognized and/or unsupported format 0x38 and usage 0xb00
+11-02 18:05:35.096 24635 24668 E ee.godhand:game: Usage not permitted! format = 0x3b, permitted usage bits = 0x101d7f7ff,usage = 0xb00, invalid usage bits: 0x800
+11-02 18:05:35.096 24635 24668 E mali_gralloc: ERROR: Unrecognized and/or unsupported format 0x3b and usage 0xb00
+11-02 18:05:35.096 24635 24668 D BLASTBufferQueue: ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1 getBufferCacheFlag 0
+11-02 18:05:35.096 24635 24668 D BLASTBufferQueue: ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1 getMaxAcquireBufferCount 3
+11-02 18:05:35.097 24635 24668 D BLASTBufferQueue: ed7e02b SurfaceView[com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity]#1 getOrignalMaxAcquireBufferCount 3
+11-02 18:05:35.122 24635 24668 I pcsx2-gs: Bridge::UpdateWindow: GSUpdateDisplayWindow completed successfully
+11-02 18:05:35.335 24635 24661 I GodHandNative: [SifInitRpc] Initialized[sceCdSearchFile] pc=0x2be494 ra=0x2be494 file=0x1fffe70 pathAddr=0x44c0b8 path="\MODULES\IRX.IMS;1"
+11-02 18:05:35.335 24635 24661 I GodHandNative: [sceCdSearchFile:ok] path="\MODULES\IRX.IMS;1" lsn=0x100000 size=0x4cbc0 sectors=0x9a
+11-02 18:05:35.339 24635 24661 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=1 entry=0x103c4 base=0x10000 start=0
+11-02 18:05:35.339 24635 24661 I GodHandNative: [SIF module] load-buffer-emulated id=1 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:05:35.339 24635 24661 I GodHandNative: [ps2xIOP] [IOP printf] yet sif hasn't been init
+11-02 18:05:35.339 24635 24661 I GodHandNative: 
+11-02 18:05:35.339 24635 24661 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=2 entry=0x14148 base=0x10d00 start=0
+11-02 18:05:35.339 24635 24661 I GodHandNative: [SIF module] load-buffer-emulated id=2 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:05:35.339 24635 24661 I GodHandNative: PS2 GsSetCrt: interlaced=1, videoMode=2, frameMode=0
+11-02 18:05:35.358 24635 24661 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=3 entry=0x1acb0 base=0x1ac00 start=0
+11-02 18:05:35.358 24635 24661 I GodHandNative: [SIF module] load-buffer-emulated id=3 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:05:35.358 24635 24661 I GodHandNative: [ps2xIOP] [IOP Kprintf] SDR driver version 4.0.1 (C) SCEI
+11-02 18:05:35.358 24635 24661 I GodHandNative: 
+11-02 18:05:35.358 24635 24661 I GodHandNative: [ps2xIOP] [IOP Kprintf]  Exit rsd_main 
+11-02 18:05:35.358 24635 24661 I GodHandNative: 
+11-02 18:05:35.358 24635 24661 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=4 entry=0x20ca0 base=0x20900 start=2
+11-02 18:05:35.358 24635 24661 I GodHandNative: [SIF module] load-buffer-emulated id=4 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:05:35.358 24635 24661 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=5 entry=0x25270 base=0x22600 start=2
+11-02 18:05:35.358 24635 24661 I GodHandNative: [SIF module] load-buffer-emulated id=5 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:05:35.358 24635 24661 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=6 entry=0x26194 base=0x25400 start=0
+11-02 18:05:35.358 24635 24661 I GodHandNative: [SIF module] load-buffer-emulated id=6 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:05:35.359 24635 24661 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver Ver.9.67(Nov  4 2005 20:08:36)
+11-02 18:05:35.359 24635 24661 I GodHandNative: 
+11-02 18:05:35.359 24635 24661 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : sceSdInit Call = 0
+11-02 18:05:35.359 24635 24661 I GodHandNative: 
+11-02 18:05:35.359 24635 24661 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : Main Thread Priority = 39
+11-02 18:05:35.359 24635 24661 I GodHandNative: 
+11-02 18:05:35.359 24635 24661 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : PSM Thread Priority  = 39
+11-02 18:05:35.359 24635 24661 I GodHandNative: 
+11-02 18:05:35.359 24635 24661 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : DTX Thread Priority  = 48
+11-02 18:05:35.360 24635 24661 I GodHandNative: 
+11-02 18:05:35.360 24635 24661 I GodHandNative: [ps2xIOP] [IOP printf] CRI ADX Driver : SPU CORE Number = 1
+11-02 18:05:35.360 24635 24661 I GodHandNative: 
+11-02 18:05:35.360 24635 24661 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=7 entry=0x2cd7c base=0x2c800 start=2
+11-02 18:05:35.360 24635 24661 I GodHandNative: [SIF module] load-buffer-emulated id=7 ref=1 path="iopbuf:fnv64:19dbc3365ea56383"
+11-02 18:05:35.371 24635 24661 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd50 pathAddr=0x3d9ee8 path="\0FLISTDV.DIR;1"
+11-02 18:05:35.383 24635 24661 I GodHandNative: [sceCdSearchFile:ok] path="\0FLISTDV.DIR;1" lsn=0x10009b size=0x17 sectors=0x1
+11-02 18:05:35.383 24635 24661 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd40 pathAddr=0x3d9ee8 path="\WOLVES.FST;1"
+11-02 18:05:35.400 24635 24661 I GodHandNative: sceCdSearchFile failed: \WOLVES.FST;1 (root: /data/data/com.owaissseeee.godhand/files/godhand_cache, repeat=1)
+11-02 18:05:35.400 24635 24661 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffd40 pathAddr=0x3d9ee8 path="\_DATA.AFS;1"
+11-02 18:05:35.400 24635 24661 I GodHandNative: [sceCdSearchFile:ok] path="\_DATA.AFS;1" lsn=0x10009d size=0x5be75000 sectors=0xb7cea
+11-02 18:05:35.407 24635 24661 I GodHandNative: [ipu] ipu: first bytes in: 08 10 10 13 10 13 16 16 16 16 16 16 1A 18 1A 1B 
+11-02 18:05:35.409 24635 24661 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=8 entry=0x42c98 base=0x42b00 start=2
+11-02 18:05:35.409 24635 24661 I GodHandNative: [SIF module] load-buffer-emulated id=8 ref=1 path="iopbuf:fnv64:43e20dfb6c24e67a"
+11-02 18:05:35.410 24635 24661 I GodHandNative: [ps2xIOP] [IOP] loaded IRX id=9 entry=0x6da40 base=0x6da00 start=2
+11-02 18:05:35.410 24635 24661 I GodHandNative: [SIF module] load-buffer-emulated id=9 ref=1 path="iopbuf:fnv64:63e5cc9de8698a12"
+11-02 18:05:35.429 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x41
+11-02 18:05:35.446 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 18:05:35.594 24635 24661 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x3d9c68 pathAddr=0x3d9c90 path="\GODHAND.FST;1"
+11-02 18:05:35.595 24635 24661 I GodHandNative: [sceCdSearchFile:ok] path="\GODHAND.FST;1" lsn=0x1b7d88 size=0x80b0 sectors=0x11
+11-02 18:05:35.595 24635 24661 I GodHandNative: [sceCdSearchFile] pc=0x33286c ra=0x33286c file=0x1fffab0 pathAddr=0x3d9c90 path="\GODHAND.FST;1"
+11-02 18:05:35.595 24635 24661 I GodHandNative: [sceCdSearchFile:ok] path="\GODHAND.FST;1" lsn=0x1b7d88 size=0x80b0 sectors=0x11
+11-02 18:05:35.595 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x41
+11-02 18:05:35.671 24635 24649 D OplusScrollToTopManager: com.owaissseeee.godhand/com.owaissseeee.godhand.GameActivity,This com.android.internal.policy.DecorView{41f3f22 V.E...... R....... 0,0-2372,1080 aid=0 alpha=1.0 viewInfo = }[GameActivity] change focus to true
+11-02 18:05:35.780 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 18:05:35.811 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-02 18:05:35.863 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 18:05:36.011 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-02 18:05:36.113 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 18:05:36.145 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x73
+11-02 18:05:36.201 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:36.204 24635 24635 D ViewExtract: [OplusViewExtractManager] OplusViewExtractManager init com.owaissseeee.godhand
+11-02 18:05:36.234 24635 24661 I GodHandNative: [gs] PCSX2 GS: 60 fields, 17.5 MB of GIF data
+11-02 18:05:36.281 24635 24635 D OplusInputMethodManagerInternal: get inputMethodManager extension: com.android.internal.view.IInputMethodManager$Stub$Proxy@d297af
+11-02 18:05:36.281 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 18:05:36.281 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:36.282 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:36.406 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:36.463 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:36.464 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:36.511 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x79
+11-02 18:05:36.564 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0xf3
+11-02 18:05:36.578 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:36.643 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:36.644 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:36.712 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] pad 0 mode 0x79
+11-02 18:05:36.729 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:36.823 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:36.823 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:36.895 24635 24661 I GodHandNative: [   2.4602][DLL] DLL slots: hole 0x007957c0..0x008a0000, runtime heap limit 0x007957c0; room base 0x00799080, event base 0x007a8080, mcport base 0x007c0080
+11-02 18:05:36.895 24635 24661 I GodHandNative: [   2.4604][DLL] slot mcport heap created: descriptor 0x00798020 heap 0x007c0000 size 0x20000
+11-02 18:05:36.895 24635 24661 I GodHandNative: [   2.4604][DLL] slot redirect mcport: ra 0x002ae540 heap 0x00754230 -> 0x00798020 (DLL base 0x007c0080) dll/Release/McPort.rel
+11-02 18:05:36.904 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:36.962 24635 24661 I GodHandNative: [   2.5275][DLL] #2 link ..\PS2_EE_Release\McPort.elf base 0x007c0080 size 0x1bec7 (end 0x007dbf47) check 0 (ok) relocs 606 funcs 470 ctors +0x9648 align 0x80 ra 0x002ae59c
+11-02 18:05:36.978 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:36.979 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:37.060 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:37.149 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:37.149 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:37.195 24635 24661 I GodHandNative: [   2.7605][DLL] #3 registered ..\PS2_EE_Release\McPort.elf base 0x007c0080 size 0x1bec7 name@0x007d7d80 ctors 0x007c96c8 (header 0x7c96c8) ra 0x00394e6c
+11-02 18:05:37.196 24635 24661 I GodHandNative: [   2.7610][DLL] module code installed: ..\PS2_EE_Release\McPort.elf base 0x007c0080 entries 2827/2827 code 0x007c0180-0x007cf578 sha256 ok
+11-02 18:05:37.199 24635 24661 I GodHandNative: [SifRegisterRpc] sid=0x80000400 sd=0x7d2f98 func=0x7cf018 buf=0x7d3000 cfunc=0x0 cbuf=0x0 qd=0x7d2f80 (EE server for IOP clients; the IOP serves this SID too, EE clients stay bound to it)[ps2xIOP] [IOP] sceSifBindRpc cd=0x0594d8 sid=0x80000400 -> EE server 0x007d2f98 buf 0x007d3000
+11-02 18:05:37.218 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:37.283 24635 24661 I GodHandNative: [ps2xIOP] [SIO2] memory card slot 1: /data/data/com.owaissseeee.godhand/files/Mcd001.ps2
+11-02 18:05:37.309 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:37.309 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:37.362 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:37.464 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:37.464 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:37.517 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:37.615 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:37.616 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:37.652 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:37.738 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:37.738 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:37.799 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:37.901 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:37.901 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:37.966 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:38.052 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:38.052 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:38.129 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:38.232 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:38.232 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:38.293 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:38.314 24635 24661 I GodHandNative: [   3.8793][DLL] module code removed (unregistered): ..\PS2_EE_Release\McPort.elf base 0x007c0080
+11-02 18:05:38.314 24635 24661 I GodHandNative: [   3.8794][DLL] unregister ..\PS2_EE_Release\McPort.elf base 0x007c0080 ra 0x00394f98
+11-02 18:05:38.383 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:38.383 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:38.445 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:38.555 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:38.555 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:38.616 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:38.702 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:38.702 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:38.779 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:38.783 24635 24661 I GodHandNative: [ipu] ipu: bdec out y[0..7]=37 37 37 37 37 37 37 37  cb[0..3]=128 128 128 128  cr[0..3]=128 128 128 128
+11-02 18:05:38.800 24635 24661 I GodHandNative: [ipu] ipu: csc in  y[0..7]=37 37 37 37 37 37 37 37  cb[0..3]=128 128 128 128  cr[0..3]=128 128 128 128
+11-02 18:05:38.872 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:38.872 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:38.959 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:39.044 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:39.045 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:39.122 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:39.212 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:39.212 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:39.289 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:39.387 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:39.388 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:39.428 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:39.537 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:39.538 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:39.616 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:39.710 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:39.710 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:39.771 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:39.873 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:39.874 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:39.971 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:40.028 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:40.028 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:40.152 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:40.216 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:40.216 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:40.252 24635 24661 I GodHandNative: [sif-dma] 1024-byte transfer polled 0.15 ms after issue: done (the 2 ms rule said in progress)
+11-02 18:05:40.253 24635 24661 I GodHandNative: [sif-dma] 1024-byte transfer polled 0.14 ms after issue: done (the 2 ms rule said in progress)
+11-02 18:05:40.315 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:40.400 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:40.400 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:40.494 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:40.549 24635 24661 I GodHandNative: [   6.1148][DLL] slot mcport (heap D reset): empty after release (no block, no registry entry)
+11-02 18:05:40.566 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:40.566 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:40.649 24635 24661 I GodHandNative: [   6.2145][DLL] slot room heap created: descriptor 0x00798000 heap 0x00799000 size 0xf000
+11-02 18:05:40.649 24635 24661 I GodHandNative: [   6.2145][DLL] slot redirect room: ra 0x002be5a0 heap 0x00754220 -> 0x00798000 (DLL base 0x00799080) dll/Release/r020.rel
+11-02 18:05:40.661 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:40.727 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:40.727 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:40.750 24635 24661 I GodHandNative: [   6.3150][DLL] #6 link ..\PS2_EE_Release\r020.elf base 0x00799080 size 0x5e41 (end 0x0079eec1) check 0 (ok) relocs 455 funcs 82 ctors +0x38f0 align 0x80 ra 0x002be6b4
+11-02 18:05:40.767 24635 24661 I GodHandNative: [   6.3326][DLL] #7 registered ..\PS2_EE_Release\r020.elf base 0x00799080 size 0x5e41 name@0x0079d48a ctors 0x0079c970 (header 0x79c970) ra 0x00394e6c
+11-02 18:05:40.768 24635 24661 I GodHandNative: [   6.3330][DLL] module code installed: ..\PS2_EE_Release\r020.elf base 0x00799080 entries 389/389 code 0x00799180-0x0079ca40 sha256 ok
+11-02 18:05:40.838 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:40.916 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:40.916 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:41.021 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:41.102 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:41.102 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:41.212 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:41.261 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:41.261 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:41.375 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:41.449 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:41.449 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:41.556 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:41.621 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:41.621 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:41.729 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:41.803 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:41.804 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:41.934 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:41.978 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:41.980 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:42.097 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:42.163 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:42.163 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:42.275 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:42.335 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:42.335 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:42.454 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:42.533 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:42.533 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:42.657 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:42.713 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:42.714 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:42.825 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:42.917 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:42.918 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:43.005 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:43.100 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:43.100 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:43.214 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:43.272 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:43.273 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:43.387 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:43.484 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:43.485 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:43.581 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:43.645 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:43.646 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:43.764 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:43.868 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:43.868 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:43.950 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:44.036 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:44.036 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:44.140 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:44.220 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:44.220 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:44.330 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:44.410 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:44.413 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:44.510 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:44.586 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:44.586 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:44.691 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:44.782 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:44.783 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:44.869 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:44.953 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:44.953 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:45.045 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:45.103 24635 24661 I GodHandNative: [spu2-adma] core 1 stream gave 902 silent blocks (4810.7 ms) after loud audio, ending at t=9.712 s
+11-02 18:05:45.132 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:45.133 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:45.234 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:45.288 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:45.288 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:45.394 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:45.475 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:45.476 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:45.563 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:45.659 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:45.659 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:45.752 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:45.830 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:45.831 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:45.916 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:46.002 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:46.002 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:46.088 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:46.173 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:46.174 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:46.268 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:46.350 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:46.350 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:46.439 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:46.513 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:46.515 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:46.612 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:46.688 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:46.688 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:46.776 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:46.869 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:46.870 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:46.955 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:47.036 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:47.036 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:47.135 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:47.212 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:47.213 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:47.303 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:47.388 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:47.388 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:47.457 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:05:47.532 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:05:47.533 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:05:47.985 24635 24661 I GodHandNative: [sif-dma] 2048-byte transfer polled 1.26 ms after issue: done (the 2 ms rule said in progress)
+11-02 18:05:47.986 24635 24661 I GodHandNative: [sif-dma] 2048-byte transfer polled 1.26 ms after issue: done (the 2 ms rule said in progress)
+11-02 18:05:51.221 24635 24661 I GodHandNative: [  16.7862][DLL] module code removed (unregistered): ..\PS2_EE_Release\r020.elf base 0x00799080
+11-02 18:05:51.221 24635 24661 I GodHandNative: [  16.7865][DLL] unregister ..\PS2_EE_Release\r020.elf base 0x00799080 ra 0x00394f98
+11-02 18:05:51.389 24635 24661 I GodHandNative: [  16.9547][DLL] slot room (heap D reset): empty after release (no block, no registry entry)
+11-02 18:05:51.390 24635 24661 I GodHandNative: [  16.9550][DLL] slot room reset with heap D (ra 0x002a6218)
+11-02 18:05:51.522 24635 24661 I GodHandNative: [  17.0873][DLL] slot redirect room: ra 0x002be5a0 heap 0x00754220 -> 0x00798000 (DLL base 0x00799080) dll/Release/r100.rel
+11-02 18:05:51.621 24635 24661 I GodHandNative: [  17.1864][DLL] #10 link ..\PS2_EE_Release\r100.elf base 0x00799080 size 0x643f (end 0x0079f4bf) check 0 (ok) relocs 688 funcs 99 ctors +0x3090 align 0x80 ra 0x002be6b4
+11-02 18:05:51.636 24635 24661 I GodHandNative: [  17.2018][DLL] #11 registered ..\PS2_EE_Release\r100.elf base 0x00799080 size 0x643f name@0x0079ce7f ctors 0x0079c110 (header 0x79c110) ra 0x00394e6c
+11-02 18:05:51.637 24635 24661 I GodHandNative: [  17.2023][DLL] module code installed: ..\PS2_EE_Release\r100.elf base 0x00799080 entries 1378/1378 code 0x00799180-0x0079c300 sha256 ok
+11-02 18:05:53.568 24635 24661 I GodHandNative: [  19.1330][DLL] slot event heap created: descriptor 0x00798010 heap 0x007a8000 size 0x18000
+11-02 18:05:53.568 24635 24661 I GodHandNative: [  19.1334][DLL] slot redirect event: ra 0x00297410 heap 0x00754220 -> 0x00798010 (DLL base 0x007a8080) dll/Release/Event.rel
+11-02 18:05:53.633 24635 24661 I GodHandNative: [  19.1980][DLL] #13 link ..\PS2_EE_Release\Event.elf base 0x007a8080 size 0x13a2f (end 0x007bbaaf) check 0 (ok) relocs 518 funcs 393 ctors +0xa890 align 0x80 ra 0x002be6b4
+11-02 18:05:53.813 24635 24661 I GodHandNative: [  19.3782][DLL] #14 registered ..\PS2_EE_Release\Event.elf base 0x007a8080 size 0x13a2f name@0x007b8a69 ctors 0x007b2910 (header 0x7b2910) ra 0x00394e6c
+11-02 18:05:53.814 24635 24661 I GodHandNative: [  19.3798][DLL] module code installed: ..\PS2_EE_Release\Event.elf base 0x007a8080 entries 2371/2371 code 0x007a8180-0x007b4ad8 sha256 ok
+11-02 18:06:30.326 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:06:30.410 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:06:30.410 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:06:30.597 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:06:30.664 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:06:30.664 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:06:31.164 24635 24661 I GodHandNative: [  56.7297][DLL] module code removed (unregistered): ..\PS2_EE_Release\Event.elf base 0x007a8080
+11-02 18:06:31.164 24635 24661 I GodHandNative: [  56.7299][DLL] unregister ..\PS2_EE_Release\Event.elf base 0x007a8080 ra 0x00394f98
+11-02 18:06:31.357 24635 24661 I GodHandNative: [sif-dma] 1024-byte transfer polled 0.73 ms after issue: done (the 2 ms rule said in progress)
+11-02 18:06:31.357 24635 24661 I GodHandNative: [sif-dma] 2048-byte transfer polled 0.73 ms after issue: done (the 2 ms rule said in progress)
+11-02 18:06:33.339 24635 24661 I GodHandNative: [spu2-adma] core 1 stream gave 360 silent blocks (1920.0 ms) after loud audio, ending at t=57.457 s
+11-02 18:06:34.935 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:06:35.222 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:35.996 24635 24661 I GodHandNative: [gs] PCSX2 GS: 3600 fields, 3575.5 MB of GIF data
+11-02 18:06:37.347 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:37.499 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:06:37.499 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:06:37.500 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:06:37.500 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:06:37.590 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:06:37.672 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:06:37.674 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:06:38.084 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:06:38.237 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:38.330 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:38.422 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:38.514 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:39.097 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:39.223 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:39.224 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:06:39.292 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:39.394 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:39.394 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:06:39.568 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:06:39.568 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:06:40.124 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:06:40.303 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:40.393 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:41.125 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:41.270 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:41.437 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:06:41.438 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:06:41.688 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:06:42.511 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:42.592 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:43.441 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:43.560 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:43.561 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:06:43.657 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:06:43.657 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:06:43.657 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:06:43.657 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:06:44.067 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:06:44.453 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:44.546 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:45.486 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:45.819 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:46.142 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:06:46.142 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:06:46.375 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:06:46.443 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:46.558 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:46.636 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:46.758 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:46.836 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:46.933 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:47.012 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:47.105 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:47.179 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:47.262 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:47.263 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:06:47.463 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:06:47.463 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:06:48.418 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:06:50.005 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:50.709 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:50.808 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:50.928 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:51.006 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:51.105 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:51.105 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:06:51.203 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:51.264 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:51.382 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:51.452 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:51.659 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:06:51.660 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:06:52.021 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:06:52.097 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:06:52.097 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:06:52.155 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:06:52.195 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:52.295 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:52.392 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:52.491 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:52.677 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:06:52.677 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:06:52.677 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:06:52.677 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:06:52.816 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:06:53.078 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:54.195 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:54.289 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:54.419 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:54.482 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:54.594 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:54.662 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:54.756 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:54.840 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:54.925 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:55.007 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:06:55.106 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:06:55.448 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:06:55.448 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:06:55.580 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:06:56.023 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:06:56.023 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:02.630 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:02.909 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:02.909 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:03.236 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:03.392 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:03.393 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:04.332 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:04.783 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:04.984 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:04.984 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:04.997 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:05.365 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:06.544 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:06.643 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:06.729 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:06.729 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:07:06.829 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:06.935 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:06.935 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:07:06.984 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:07.084 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:07.149 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:07.263 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:07.320 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:07.425 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:07.425 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:07:07.474 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:07.577 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:07.596 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:07.596 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:07.785 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:08.038 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:09.991 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:10.092 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:10.209 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:10.272 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:10.398 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:10.445 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:10.578 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:10.578 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:07:10.717 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:10.717 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:10.904 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:11.213 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:12.757 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:12.831 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:12.959 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:13.026 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:13.137 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:13.186 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:13.302 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:13.351 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:13.472 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:13.527 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:13.613 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:13.645 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:13.645 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:13.862 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:13.924 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:13.925 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:13.994 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:14.084 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:14.085 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:14.161 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:14.264 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:14.264 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:14.312 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:14.420 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:14.420 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:14.493 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:14.574 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:14.574 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:14.596 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:14.877 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:14.977 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:15.052 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:15.161 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:15.218 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:15.316 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:15.552 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:15.552 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:17.293 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:19.035 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:19.035 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:19.214 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:19.400 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:19.400 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:22.037 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:22.038 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:22.124 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:22.124 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:23.301 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:23.525 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:23.526 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:23.759 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:07:23.759 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:23.760 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:07:23.760 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:23.844 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:24.017 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:24.017 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:24.290 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:24.357 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:24.358 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:27.791 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:30.012 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:30.012 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:32.273 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:32.493 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:32.577 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:32.836 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:32.837 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:35.293 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:36.184 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:36.192 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:36.265 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:36.265 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:36.700 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:37.034 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:38.226 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:38.319 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:38.448 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:38.448 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:07:38.512 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:38.633 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:38.695 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:38.793 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:38.893 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:39.001 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:39.093 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:39.201 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:39.316 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:39.317 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:39.485 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:39.986 24635 24661 I GodHandNative: [gs] PCSX2 GS: 7200 fields, 9804.6 MB of GIF data
+11-02 18:07:40.023 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:40.935 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:41.180 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:41.288 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:41.360 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:41.467 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:41.546 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:41.646 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:41.713 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:41.809 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:41.809 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:07:41.870 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:41.983 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:42.618 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:43.372 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:43.474 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:43.586 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:43.768 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:43.874 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:43.935 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:44.067 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:44.101 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:44.234 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:44.402 24635 24666 I ee.godhand:game: Explicit concurrent mark compact GC freed 3800KB AllocSpace bytes, 0(0B) LOS objects, 73% free, 2184KB/8328KB, paused 145us,595us total 8.534ms
+11-02 18:07:44.501 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:44.502 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:44.687 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:45.147 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:47.153 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:47.424 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 5
+11-02 18:07:47.537 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 6
+11-02 18:07:47.779 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:47.780 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:49.030 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:49.045 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:49.045 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:49.161 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:49.262 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:49.263 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:49.378 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:49.423 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:49.423 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:49.534 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:49.569 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:49.570 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:49.838 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:49.903 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:49.903 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:49.974 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:50.059 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:50.059 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:50.151 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:50.200 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:50.200 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:50.906 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:51.478 24635 24635 I VelocityTracker: LSQ2 speed rezero
+11-02 18:07:51.479 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:51.479 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:51.935 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:52.041 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:52.046 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:52.115 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:52.196 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:52.196 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:52.273 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:52.350 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:52.351 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:52.441 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:52.517 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:52.524 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:52.622 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:52.694 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:52.694 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:52.788 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:52.877 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:52.878 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:52.994 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:53.112 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:53.112 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:53.160 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:53.269 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:53.269 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:53.331 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+11-02 18:07:53.432 24635 24635 D OplusViewDragTouchViewHelper: dispatchTouchView action = 1
+11-02 18:07:53.432 24635 24635 D ViewRootImplExtImpl: the up motion event handled by client, just return
+11-02 18:07:53.807 24635 24635 E IJankManager: slideSceneEnd unknown scene 1000 mScene:-1
+

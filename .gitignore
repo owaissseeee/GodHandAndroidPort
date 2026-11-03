@@ -123,6 +123,7 @@ backups/
 !app/src/main/res/**/*.png
 !app/src/main/res/**/*.webp
 !app/src/main/res/**/*.xml
+!app/src/main/assets/**
 
 AGENTS.md
 GEMINI.md

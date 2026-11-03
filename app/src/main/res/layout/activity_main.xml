@@ -6,7 +6,7 @@
     android:background="#0A080A"
     tools:context=".MainActivity">
 
-    <!-- 1. Background Image (Modular: User can replace drawable or supply custom bitmap in future) -->
+    <!-- 1. Background Image -->
     <ImageView
         android:id="@+id/main_background_image"
         android:layout_width="match_parent"
@@ -27,9 +27,9 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="8dp">
 
-        <!-- Title Area (Modular: User can swap with custom Logo Image in future) -->
+        <!-- Title Area -->
         <LinearLayout
             android:id="@+id/god_hand_title_container"
             android:layout_width="wrap_content"
@@ -37,11 +37,11 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <!-- Future Custom Title Picture Slot -->
+            <!-- Title Picture Slot (1000x191 logo, 5.23:1 aspect ratio) -->
             <ImageView
                 android:id="@+id/god_hand_title_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="120dp"
+                android:layout_width="260dp"
+                android:layout_height="50dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
                 android:visibility="gone"
@@ -59,7 +59,7 @@
                 android:shadowRadius="10"
                 android:text="GOD HAND"
                 android:textColor="#F59E0B"
-                android:textSize="50sp"
+                android:textSize="36sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -67,56 +67,56 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:letterSpacing="0.2"
-                android:text="PS2 STATIC RECOMPILATION • ARM64"
+                android:letterSpacing="0.15"
+                android:text="PORT BY OWAISSSEEEE • PS2 STATIC RECOMPILATION"
                 android:textColor="#D4AF37"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <!-- Menu Action Options (PLAY, SETTINGS, QUIT) -->
         <LinearLayout
-            android:layout_width="320dp"
+            android:layout_width="260dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="12dp"
             android:orientation="vertical">
 
             <!-- 1. PLAY BUTTON -->
             <Button
                 android:id="@+id/btn_menu_play"
                 android:layout_width="match_parent"
-                android:layout_height="58dp"
+                android:layout_height="44dp"
                 android:background="@drawable/btn_god_hand_primary"
-                android:letterSpacing="0.1"
+                android:letterSpacing="0.08"
                 android:text="⚔   P L A Y"
                 android:textColor="#FFFFFF"
-                android:textSize="17sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <!-- 2. SETTINGS BUTTON -->
             <Button
                 android:id="@+id/btn_menu_settings"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginTop="14dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/btn_god_hand_secondary"
-                android:letterSpacing="0.08"
+                android:letterSpacing="0.06"
                 android:text="⚙   S E T T I N G S"
                 android:textColor="#FDE047"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <!-- 3. QUIT BUTTON -->
             <Button
                 android:id="@+id/btn_menu_quit"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginTop="14dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/btn_god_hand_secondary"
-                android:letterSpacing="0.08"
+                android:letterSpacing="0.06"
                 android:text="✕   Q U I T"
                 android:textColor="#E2E8F0"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -129,11 +129,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="8dp"
         android:alpha="0.75"
         android:letterSpacing="0.05"
-        android:text="Vulkan PCSX2-GS Engine • 60 FPS Authenticated"
+        android:text="Port by owaissseeee • Vulkan PCSX2-GS Engine"
         android:textColor="#94A3B8"
-        android:textSize="11sp" />
+        android:textSize="10sp" />
 
 </FrameLayout>

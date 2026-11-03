@@ -18,13 +18,16 @@ add_compile_options(
     -include ${CMAKE_CURRENT_SOURCE_DIR}/simd_arm64_compat.h
     -march=armv8-a+crc
     -mtune=cortex-a53
+    -mbranch-protection=none
     -O3
     -ffast-math
     -fno-finite-math-only
     -fno-signed-zeros
     -fno-math-errno
     -fno-trapping-math
+    -ffp-contract=fast
     -fomit-frame-pointer
+    -momit-leaf-frame-pointer
     -finline-functions
     -fvisibility-inlines-hidden
     -fno-semantic-interposition
@@ -63,6 +66,7 @@ add_library(godhand_android SHARED
     godhand_patches_mobile.cpp
     snr2_unified_registry.cpp
     src/main.cpp
+    src/godhand/cheats_engine.cpp
     ${GODHAND_HOST_SOURCES}
     ${GODHAND_UNITY_SOURCES}
     ${GODHAND_MODULE_SOURCES}

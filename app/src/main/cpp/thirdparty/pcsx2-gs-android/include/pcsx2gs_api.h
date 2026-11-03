@@ -152,6 +152,8 @@ typedef const Pcsx2GsApi *(*Pcsx2GsGetApiFn)(uint32_t version);
 const Pcsx2GsApi *pcsx2gs_get_api(uint32_t version);
 void pcsx2gs_set_aspect(uint32_t mode);
 void pcsx2gs_update_window(void *hwnd, uint32_t width, uint32_t height);
+void pcsx2gs_set_frameskip(int32_t mode);
+int32_t pcsx2gs_get_frameskip(void);
 
 #ifdef __cplusplus
 }

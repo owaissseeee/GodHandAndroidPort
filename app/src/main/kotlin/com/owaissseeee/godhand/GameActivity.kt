@@ -480,6 +480,7 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             holder.surface, width, height,
             rendererIdx, resolutionIdx, aspectIdx, fpsIdx, frameskipIdx
         )
+        settings.syncCheatsToNative()
         kotlin.concurrent.thread(name = "RootAffinityOptimizer", isDaemon = true) {
             try {
                 Thread.sleep(1500)
