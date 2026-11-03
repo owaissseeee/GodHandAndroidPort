@@ -546,8 +546,16 @@ namespace ps2x::asyncvif
 
     bool vblankWaitEnabled()
     {
+#if defined(__ANDROID__)
+        // On Android, enqueue() already bounds the MTVU queue and GS downloads sync explicitly.
+        // Returning false here stops EEThread from stalling up to 12ms at every VBlank waiting for
+        // VUThread and GIFThread to drain, enabling true 3-core parallel pipeline overlap!
+        static const bool enabled = [] { const char *v = std::getenv("PS2X_MTVU_VBLANK_WAIT"); return v && *v == '1'; }();
+        return enabled;
+#else
         static const bool enabled = [] { const char *v = std::getenv("PS2X_MTVU_VBLANK_WAIT"); return !(v && *v == '0'); }();
         return enabled;
+#endif
     }
 
     bool pipelineBusy(PS2Memory &memory)

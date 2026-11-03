@@ -1035,26 +1035,28 @@ namespace godhand
         constexpr uint32_t kVBlankWaitFunc = 0x0030B148u;
         if (runtime.hasFunction(kVBlankWaitFunc))
         {
-            static GuestFunction s_origVBlankWait = runtime.lookupFunction(kVBlankWaitFunc);
+            static GuestFunction s_origVBlankWait = nullptr;
+            s_origVBlankWait = FunctionHooks::instance().original(kVBlankWaitFunc);
+            if (!s_origVBlankWait)
+                s_origVBlankWait = runtime.lookupFunction(kVBlankWaitFunc);
             FunctionHooks::instance().replace(
                 kVBlankWaitFunc,
-                "vblank_wait_idle_skip_fast",
+                "vblank_wait_idle_skip",
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
                     if (rt && rdram)
                     {
-                        uint32_t spins = 0;
-                        while (rdram[0x00747A08u] < rdram[0x00747A09u] &&
-                               !rt->isStopRequested())
+                        const uint8_t reqVb = rdram[0x00747A09u] != 0u ? rdram[0x00747A09u] : 2u;
+                        if (rdram[0x00747A08u] < reqVb)
                         {
-                            if (rt->scheduler().skipIdleCycles() == 0u || ++spins > 500u)
-                                break;
+                            rt->scheduler().skipIdleCycles();
                         }
                     }
                     if (s_origVBlankWait)
                         s_origVBlankWait(rdram, ctx, rt);
                 },
-                ReplacementStatus::Native,
-                "lock-free VBlank idle skip for both VBlank #1 and VBlank #2");
+                ReplacementStatus::Observed,
+                "lock-free VBlank idle skip for both VBlanks");
+            GH_INFO(Gs, "func_0030B148 replaced with lock-free skipIdleCycles()");
         }
 
         constexpr uint32_t kFlipChainBuilder = 0x0030B870u;

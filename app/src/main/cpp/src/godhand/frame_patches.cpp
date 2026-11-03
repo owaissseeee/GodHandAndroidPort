@@ -61,17 +61,35 @@ static std::vector<std::string> g_patchFlagNames;
 static std::atomic<uint32_t> g_ps2xPatchFlags{0};
 static std::unordered_map<std::string, PS2Runtime::RecompiledFunction> g_hostHooks;
 
+inline uint32_t fastPatchFlagMask(const char *name) noexcept
+{
+    if (!name) return 0u;
+    if (name[0] == 'f')
+    {
+        if (name[1] == 'p') return 1u << 0; // "fps60"
+        if (name[1] == 'r') return 1u << 1; // "frame_hook"
+    }
+    else if (name[0] == 'r')
+    {
+        return 1u << 2; // "roulette_timer"
+    }
+    return 0u;
+}
+
 uint32_t ps2xPatchFlagMask(const char *name)
 {
+    const uint32_t fast = fastPatchFlagMask(name);
+    if (__builtin_expect(fast != 0u, 1))
+        return fast;
     std::lock_guard<std::mutex> lock(g_patchRegistryMutex);
     const std::string key = name ? name : "";
     for (size_t i = 0; i < g_patchFlagNames.size(); ++i)
     {
         if (g_patchFlagNames[i] == key)
-            return 1u << i;
+            return 1u << (i + 3u);
     }
     g_patchFlagNames.push_back(key);
-    return 1u << (g_patchFlagNames.size() - 1u);
+    return 1u << (g_patchFlagNames.size() - 1u + 3u);
 }
 
 void ps2xSetPatchFlag(const char *name, bool enabled)
@@ -85,6 +103,9 @@ void ps2xSetPatchFlag(const char *name, bool enabled)
 
 bool ps2xPatchFlag(const char *name)
 {
+    const uint32_t fast = fastPatchFlagMask(name);
+    if (__builtin_expect(fast != 0u, 1))
+        return (g_ps2xPatchFlags.load(std::memory_order_relaxed) & fast) != 0u;
     return (g_ps2xPatchFlags.load(std::memory_order_relaxed) & ps2xPatchFlagMask(name)) != 0u;
 }
 

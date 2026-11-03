@@ -256,10 +256,12 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
     std::vector<int> little_cores;
 
     if (is_uniform_cluster) {
-        // Uniform cluster (Helio G35, Helio P35, Unisoc SC9863A/T606, budget 4-core A53/A55)
+        // Uniform cluster (Helio G35, Helio P35, Unisoc SC9863A/T606, budget 4-core A53/A55):
+        // 'sorted' is sorted descending (highest clock first, e.g. 2.0 GHz Cores 0-3 first).
+        // First half (i < half) are the performance cluster; second half (i >= half) are the efficiency cluster.
         const size_t half = sorted.size() / 2;
         for (size_t i = 0; i < sorted.size(); ++i) {
-            if (i >= half) big_cores.push_back(sorted[i].id);
+            if (i < half) big_cores.push_back(sorted[i].id);
             else little_cores.push_back(sorted[i].id);
         }
     } else {
