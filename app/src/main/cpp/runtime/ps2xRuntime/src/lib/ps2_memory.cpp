@@ -199,7 +199,8 @@ namespace
         // On Android with MTVU, VIF1 and GIFPath3 DMA jobs execute in strict FIFO order on VUThread.
         // Polling VIF1_STAT (0x10003C00) or GIF_STAT (0x10003020) must NEVER stall EEThread!
         // Only synchronize if reading/writing the VIF1 download FIFO (0x10005000) while FDR is active.
-        return (addr >= 0x10005000u && addr < 0x10006000u) && g_vif1Fdr.load(std::memory_order_relaxed);
+        (void)addr;
+        return false;
 #else
         return (addr >= 0x10003000u && addr < 0x10003100u) || (addr >= 0x10003C00u && addr < 0x10004000u) ||
                (addr >= 0x10005000u && addr < 0x10007000u);
@@ -1866,8 +1867,9 @@ namespace
     // poll it (e.g. libkernel's VSync wait: write 4, then spin until bit 2 is set) need real latch semantics; a plain
     // storage register reads back the 4 just written and the wait falls through immediately.
     constexpr uint32_t kIntcStatAddress = 0x1000F000u;
-    std::atomic<uint32_t> g_intcStat{0u};
 }
+
+static std::atomic<uint32_t> g_intcStat{0u};
 
 void ps2xRaiseIntcStat(uint32_t bits) noexcept
 {

@@ -395,7 +395,20 @@ public:
     inline EeScheduler &scheduler() { return eeScheduler(); }
     inline const EeScheduler &scheduler() const { return eeScheduler(); }
     void postEeEvent(EeEvent event);
-    bool eeCheckpointDue(uint32_t cycles = 32u) noexcept;
+        bool eeCheckpointDueSlow(uint32_t cycles) noexcept;
+    PS2_FORCEINLINE bool eeCheckpointDue(uint32_t cycles = 32u) noexcept
+    {
+        extern uint64_t g_ps2xEeDeferred;
+        extern std::atomic<uint64_t> g_ps2xEeDeferBudget;
+        extern uint32_t g_ps2xEeLoopCycles;
+        const uint64_t deferred = g_ps2xEeDeferred + (cycles == 32u ? g_ps2xEeLoopCycles : cycles);
+        if (__builtin_expect(deferred < g_ps2xEeDeferBudget.load(std::memory_order_relaxed), 1))
+        {
+            g_ps2xEeDeferred = deferred;
+            return false;
+        }
+        return eeCheckpointDueSlow(cycles);
+    }
     [[noreturn]] void eeWaitVSyncTicks(uint32_t ticks, uint32_t resumePc);
 
     struct EeExitHandlerRegistration

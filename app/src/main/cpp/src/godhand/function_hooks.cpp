@@ -48,6 +48,10 @@ namespace godhand
 
         std::mutex g_mutex;
         std::unordered_map<uint32_t, Hook> g_hooks;
+    }
+
+    namespace
+    {
 
         const char *statusName(ReplacementStatus status)
         {
@@ -1034,6 +1038,9 @@ namespace godhand
                 "bypass flare GS depth readback stall on mobile");
         }
 
+        static std::chrono::steady_clock::time_point s_lastFrameFlipTp{};
+        static uint64_t s_totalGameFrames = 0u;
+
         constexpr uint32_t kVBlankWaitFunc = 0x0030B148u;
         if (runtime.hasFunction(kVBlankWaitFunc))
         {
@@ -1047,8 +1054,16 @@ namespace godhand
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
                     if (rt && rdram)
                     {
-                        const uint8_t reqVb = rdram[0x00747A09u] != 0u ? rdram[0x00747A09u] : 2u;
-                        if (rdram[0x00747A08u] < reqVb)
+                        const auto now = std::chrono::steady_clock::now();
+                        if (s_totalGameFrames > 120u && s_lastFrameFlipTp.time_since_epoch().count() != 0)
+                        {
+                            const double workMs = std::chrono::duration<double, std::milli>(now - s_lastFrameFlipTp).count();
+                            if (workMs >= 15.5 && rdram[0x00747A08u] == 0u && rdram[0x00747A09u] >= 2u)
+                            {
+                                rdram[0x00747A08u] = rdram[0x00747A09u] - 1u;
+                            }
+                        }
+                        if (rdram[0x00747A08u] < rdram[0x00747A09u])
                         {
                             rt->scheduler().skipIdleCycles();
                         }
@@ -1057,8 +1072,8 @@ namespace godhand
                         s_origVBlankWait(rdram, ctx, rt);
                 },
                 ReplacementStatus::Observed,
-                "lock-free VBlank idle skip for both VBlanks");
-            GH_INFO(Gs, "func_0030B148 replaced with lock-free skipIdleCycles()");
+                "adaptive real-time VBlank compensation + skipIdleCycles()");
+            GH_INFO(Gs, "func_0030B148 hooked with adaptive real-time VBlank compensation + skipIdleCycles()");
         }
 
         constexpr uint32_t kFlipChainBuilder = 0x0030B870u;
@@ -1071,6 +1086,8 @@ namespace godhand
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
                     godhand_perf_record_game_frame();
                     godhand::notifyFrameHeartbeat();
+                    ++s_totalGameFrames;
+                    s_lastFrameFlipTp = std::chrono::steady_clock::now();
                     if (rdram)
                     {
                         const uint32_t fullFlickerOff = 0x80u;
@@ -1184,22 +1201,26 @@ namespace godhand
         constexpr uint32_t kGetCostumeNo = 0x001FC0A8u;
         if (runtime.hasFunction(kGetCostumeNo))
         {
-            static GuestFunction s_origCostume = runtime.lookupFunction(kGetCostumeNo);
             FunctionHooks::instance().replace(
                 kGetCostumeNo,
                 "cCoreSave_getCostumeNo_cheat",
-                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
-                    if (s_origCostume)
-                        s_origCostume(rdram, ctx, rt);
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *) {
+                    if (!ctx) return;
+                    uint32_t a0 = GPR_U32(ctx, 4);
+                    uint32_t v0 = 0u;
+                    if (rdram && a0 != 0u && a0 < 0x02000000u) {
+                        uint32_t ptr = FAST_READ32(a0);
+                        if (ptr != 0u && ptr < 0x02000000u) {
+                            v0 = FAST_READ8(ptr + 0xAEu);
+                        }
+                    }
                     int costume = CheatsEngine::instance().getCheatInt("gene_costume");
                     bool dbl = CheatsEngine::instance().isCheatEnabled("double_god_hand");
                     if (costume != 0 || dbl) {
-                        uint32_t v0 = (uint32_t)((costume * 2) | (dbl ? 1 : 0));
-                        SET_GPR_ZE32(ctx, 2, v0);
+                        v0 = (uint32_t)((costume * 2) | (dbl ? 1 : 0));
                     }
-                    if (ctx && ctx->pc == kGetCostumeNo) {
-                        ctx->pc = GPR_U32(ctx, 31);
-                    }
+                    SET_GPR_ZE32(ctx, 2, v0);
+                    ctx->pc = GPR_U32(ctx, 31);
                 },
                 ReplacementStatus::Native,
                 "Double God Hand and Gene Costume modifier hook");
@@ -1208,20 +1229,25 @@ namespace godhand
         constexpr uint32_t kGetOliviaCostumeNo = 0x001FC740u;
         if (runtime.hasFunction(kGetOliviaCostumeNo))
         {
-            static GuestFunction s_origOliviaCostume = runtime.lookupFunction(kGetOliviaCostumeNo);
             FunctionHooks::instance().replace(
                 kGetOliviaCostumeNo,
                 "cCoreSave_GetOliviaCostumeNo_cheat",
-                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
-                    if (s_origOliviaCostume)
-                        s_origOliviaCostume(rdram, ctx, rt);
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *) {
+                    if (!ctx) return;
+                    uint32_t a0 = GPR_U32(ctx, 4);
+                    uint32_t v0 = 0u;
+                    if (rdram && a0 != 0u && a0 < 0x02000000u) {
+                        uint32_t ptr = FAST_READ32(a0);
+                        if (ptr != 0u && ptr < 0x02000000u) {
+                            v0 = FAST_READ32(ptr + 0xBC0u);
+                        }
+                    }
                     int olivia = CheatsEngine::instance().getCheatInt("olivia_costume");
                     if (olivia != 0) {
-                        SET_GPR_S32(ctx, 2, olivia);
+                        v0 = static_cast<uint32_t>(olivia);
                     }
-                    if (ctx && ctx->pc == kGetOliviaCostumeNo) {
-                        ctx->pc = GPR_U32(ctx, 31);
-                    }
+                    SET_GPR_S32(ctx, 2, static_cast<int32_t>(v0));
+                    ctx->pc = GPR_U32(ctx, 31);
                 },
                 ReplacementStatus::Native,
                 "Olivia Costume modifier hook");

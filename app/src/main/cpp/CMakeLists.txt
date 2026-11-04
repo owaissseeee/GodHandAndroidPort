@@ -16,10 +16,11 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GODHAND_PERF_FLAGS}")
 
 add_compile_options(
     -include ${CMAKE_CURRENT_SOURCE_DIR}/simd_arm64_compat.h
+    -O3
+    -flto=thin
     -march=armv8-a+crc
     -mtune=cortex-a53
     -mbranch-protection=none
-    -O3
     -ffast-math
     -fno-finite-math-only
     -fno-signed-zeros
@@ -29,6 +30,7 @@ add_compile_options(
     -fomit-frame-pointer
     -momit-leaf-frame-pointer
     -finline-functions
+    -fvisibility=hidden
     -fvisibility-inlines-hidden
     -fno-semantic-interposition
     -ftls-model=initial-exec
@@ -38,7 +40,10 @@ add_compile_options(
     -Wno-unused-command-line-argument
 )
 
+add_compile_definitions(NDEBUG=1 PS2X_FAST_FP_CLAMP=1 PS2X_FAST_ARM64_SIMD=1)
+
 add_link_options(
+    -Wl,--lto-O3
     -flto=thin
     -Wl,--gc-sections
     -Wl,-O3

@@ -323,12 +323,46 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
                 targetNice = -15;
                 break;
         }
-    } else if (top_tier <= 1 || big_cores.size() >= 4) {
-        // Dedicated 1:1 Big Core assignment for zero preemption:
-        // - Big Core 0: 100% EXCLUSIVELY DEDICATED TO EE_MAIN (Nice -20)
-        // - Big Core 1: 100% EXCLUSIVELY DEDICATED TO VU1_WORKER (Nice -20)
-        // - Big Core 2: 100% EXCLUSIVELY DEDICATED TO GS_RENDERER (Nice -19)
-        // - Big Core 3 + Little Cores: GIF_WORKER, IOP_WORKER, AUDIO_SPU2, HOST_PUMP
+    } else if (top_tier <= 1) {
+        // Budget 8-core A53/A55 cluster with frequency split (Helio G25 / Redmi 10A):
+        // In usage_log.txt, little_cores (cpu4..7) are throttled to 501-643 MHz while
+        // big_cores (cpu0..3) run at 2001 MHz, and VUThread (1.3% CPU) + GIFThread (2.7% CPU)
+        // leave big_cores[1] and big_cores[3] 97% idle!
+        // - big_cores[0] (2.0 GHz): 100% EXCLUSIVELY DEDICATED TO EE_MAIN (Zero contention!)
+        // - big_cores[1] (2.0 GHz): VU1_WORKER (1.3%) + GIF_WORKER (2.7%)
+        // - big_cores[2] (2.0 GHz): GS_RENDERER (21.6%)
+        // - big_cores[3] (2.0 GHz): IOP_WORKER (runs 4x faster at 2.0 GHz than at 501 MHz!)
+        switch (role) {
+            case ThreadRole::EE_MAIN:
+                CPU_SET(big_cores[0], &mask);
+                targetNice = -20;
+                break;
+            case ThreadRole::VU1_WORKER:
+            case ThreadRole::GIF_WORKER:
+                CPU_SET(big_cores[1], &mask);
+                targetNice = (role == ThreadRole::VU1_WORKER) ? -20 : -16;
+                break;
+            case ThreadRole::GS_RENDERER:
+                CPU_SET(big_cores[2], &mask);
+                targetNice = -19;
+                break;
+            case ThreadRole::IOP_WORKER:
+                CPU_SET(big_cores[3], &mask);
+                targetNice = -15;
+                break;
+            case ThreadRole::AUDIO_SPU2:
+                CPU_SET(big_cores[1], &mask);
+                CPU_SET(big_cores[3], &mask);
+                targetNice = -16;
+                break;
+            case ThreadRole::HOST_PUMP:
+            default:
+                for (int lc : little_cores) CPU_SET(lc, &mask);
+                targetNice = -2;
+                break;
+        }
+    } else if (big_cores.size() >= 4) {
+        // Dedicated 1:1 Big Core assignment for zero preemption (Flagship 4+ Big Cores):
         switch (role) {
             case ThreadRole::EE_MAIN:
                 CPU_SET(big_cores[0], &mask);

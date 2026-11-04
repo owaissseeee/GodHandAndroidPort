@@ -217,6 +217,7 @@ namespace godhand
             // Initial grace period for ELF load and boot initialization
             std::this_thread::sleep_for(std::chrono::seconds(4));
 
+            const int64_t watchdogStartNs = nowSteadyNs();
             bool isStalled = false;
             int64_t lastDumpedStamp = 0;
             int64_t stallStartTimeMs = 0;
@@ -228,15 +229,22 @@ namespace godhand
                 if (!g_watchdogRunning.load(std::memory_order_relaxed))
                     break;
 
+                const int64_t nowNs = nowSteadyNs();
                 const int64_t lastNs = g_lastHeartbeatNs.load(std::memory_order_relaxed);
+                int64_t stallMs = 0;
                 if (lastNs == 0)
                 {
-                    // Game loop has not produced its first frame yet
-                    continue;
+                    const int64_t bootMs = (nowNs - watchdogStartNs) / 1000000;
+                    if (bootMs < 8000)
+                    {
+                        continue; // Initial boot grace period
+                    }
+                    stallMs = bootMs;
                 }
-
-                const int64_t nowNs = nowSteadyNs();
-                const int64_t stallMs = (nowNs - lastNs) / 1000000;
+                else
+                {
+                    stallMs = (nowNs - lastNs) / 1000000;
+                }
 
                 // Freeze / Stall Detection (threshold: 2500 ms)
                 if (stallMs >= 2500)
@@ -283,6 +291,34 @@ namespace godhand
                         LOG_PERF("Present: %4.1f FPS (avg %5.2f ms, spike %5.2f ms) | EE: %4.1f FPS (%5.1f%%) | Frames: %llu | RAM: %ld MB",
                                  screenFps, avgMs, worstMs, gameFps, gameSpeed,
                                  static_cast<unsigned long long>(presents), rssMb);
+
+                        PS2Runtime *rt = g_runtime.load(std::memory_order_relaxed);
+                        if (rt)
+                        {
+                            std::map<uint32_t, int> samples;
+                            for (int i = 0; i < 40; ++i)
+                            {
+                                if (const R5900Context *ctx = rt->eeScheduler().currentContext())
+                                    ++samples[ctx->pc];
+                                std::this_thread::sleep_for(std::chrono::microseconds(250));
+                            }
+                            std::vector<std::pair<int, uint32_t>> hot;
+                            for (const auto &pair : samples)
+                                hot.emplace_back(pair.second, pair.first);
+                            std::sort(hot.begin(), hot.end(), std::greater<>());
+                            std::string hotStr;
+                            for (size_t i = 0; i < hot.size() && i < 3; ++i)
+                            {
+                                char hbuf[128];
+                                std::snprintf(hbuf, sizeof(hbuf), "[#%zu: %d%% @%s] ",
+                                              i + 1, hot[i].first * 100 / 40, guestLabel(hot[i].second).c_str());
+                                hotStr += hbuf;
+                            }
+                            if (!hotStr.empty())
+                            {
+                                LOG_PERF("EE Hotspots: %s", hotStr.c_str());
+                            }
+                        }
                     }
                 }
             }

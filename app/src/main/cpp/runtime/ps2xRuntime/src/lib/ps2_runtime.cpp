@@ -1866,7 +1866,7 @@ bool PS2Runtime::dispatchGuestBranch(uint8_t *rdram,
 
     // Every inter-function transfer is also a deterministic EE safe point.
     // Use eeCheckpointDue() so inter-function calls take the 2-instruction deferred budget fast-path!
-    if (eeCheckpointDue(EeScheduler::kGuestDispatchCycles))
+    if (__builtin_expect(eeCheckpointDue(EeScheduler::kGuestDispatchCycles), 0))
     {
         return false;
     }
@@ -2883,22 +2883,14 @@ void PS2Runtime::postEeEvent(EeEvent event)
 // the game thread ~4 points slower overall (PROGRESS §76).
 
 
-bool PS2Runtime::eeCheckpointDue(uint32_t cycles) noexcept
+bool PS2Runtime::eeCheckpointDueSlow(uint32_t cycles) noexcept
 {
-    const uint64_t deferred = g_ps2xEeDeferred + (cycles == 32u ? g_ps2xEeLoopCycles : cycles);
-    if (deferred < g_ps2xEeDeferBudget.load(std::memory_order_relaxed))
-    {
-        g_ps2xEeDeferred = deferred;
-        return false;
-    }
-    // PS2X_EE_LOOP_CYCLES=<n>: EE cycles charged per backward branch of generated code (default 32). A plain global
-    // read once: a function-local static costs a thread-local guard check on every backward branch.
     static uint32_t s_loopCycles = 0u;
-    if (s_loopCycles == 0u)
+    if (__builtin_expect(s_loopCycles == 0u, 0))
     {
         const char *v = std::getenv("PS2X_EE_LOOP_CYCLES");
-        s_loopCycles = v && *v ? static_cast<uint32_t>(std::max(1, std::atoi(v))) : 16u;
-        g_ps2xEeLoopCycles = s_loopCycles; // the fast path above
+        s_loopCycles = v && *v ? static_cast<uint32_t>(std::max(1, std::atoi(v))) : 32u;
+        g_ps2xEeLoopCycles = s_loopCycles;
     }
     if (cycles == 32u)
         cycles = s_loopCycles;

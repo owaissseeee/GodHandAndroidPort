@@ -716,7 +716,7 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
         godhand_perf_record_work_duration(static_cast<int64_t>(deltaUs * 1000.0));
         const float deltaMs = static_cast<float>(deltaUs / 1000.0);
         // Exclude pauses/resumes (> 250ms or < 0.1ms) from skewing hitch metrics
-        if (deltaMs >= 0.1f && deltaMs <= 250.0f) {
+        if (deltaMs >= 0.1f && deltaMs <= 1000.0f) {
             const uint32_t head = g_perfRingHead.load(std::memory_order_relaxed);
             g_perfRingMs[head % K_PERF_RING_SIZE] = deltaMs;
             g_perfRingHead.store(head + 1, std::memory_order_release);
