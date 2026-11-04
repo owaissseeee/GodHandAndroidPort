@@ -1076,7 +1076,6 @@ namespace godhand
                     }
                     if (divider > 0u && vblankCounter < divider)
                     {
-                        rt->advanceIopEeCycles(4096u);
                         rt->scheduler().skipIdleCycles();
                     }
                 });

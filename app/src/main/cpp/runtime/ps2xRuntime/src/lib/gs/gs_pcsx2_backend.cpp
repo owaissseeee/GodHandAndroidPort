@@ -77,6 +77,10 @@ extern "C" float ps2_get_game_speed_ratio(void) {
     const float gameSpeedPct = g_statGameSpeed.load(std::memory_order_relaxed);
     if (gameSpeedPct > 5.0f && gameSpeedPct <= 120.0f) {
         const float gameSpeedRatio = gameSpeedPct * 0.01f;
+        // When frameskip is active (mode > 0), game throughput is measured by gameSpeedRatio (EE frame rate)
+        if (g_frameskipMode.load(std::memory_order_relaxed) > 0) {
+            return std::clamp(gameSpeedRatio, 0.15f, 1.05f);
+        }
         return std::min(inst, gameSpeedRatio);
     }
     return inst;

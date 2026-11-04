@@ -695,7 +695,6 @@ void EeScheduler::run()
                 const uint32_t divider = m_rdram[0x00747A09u];
                 if (divider > 0u && vblankCounter < divider)
                 {
-                    m_runtime.advanceIopEeCycles(4096u);
                     skipIdleCycles();
                 }
             }
@@ -707,7 +706,6 @@ void EeScheduler::run()
                 std::memcpy(&divider, m_rdram + 0x00747A10u, sizeof(divider));
                 if (divider > 0u && vblankCounter < divider)
                 {
-                    m_runtime.advanceIopEeCycles(4096u);
                     skipIdleCycles();
                 }
             }
@@ -974,7 +972,7 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
         // Feed eeCharge (which includes 100% of skipped idle cycles up to VBlank) to IOP in
         // 32,768-cycle batches (~150x/frame instead of 4,500x/frame), cutting IOPThread
         // condition-variable wakeups by 16x while keeping SPU2 audio & FMV 100% locked to VBlank!
-        g_iopStash += elapsed;
+        g_iopStash += eeCharge;
         if (g_iopStash >= 2048u)
         {
             m_runtime.advanceIopEeCycles(g_iopStash);

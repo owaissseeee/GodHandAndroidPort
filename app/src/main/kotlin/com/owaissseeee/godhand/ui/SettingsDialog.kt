@@ -458,9 +458,8 @@ class SettingsDialog(
             listOf(
                 "Off (Render Every Frame - Recommended)",
                 "Auto (Skip on Lag/Hitch)",
-                "Skip 1 Frame (Light Boost)",
-                "Skip 2 Frames (Heavy Boost)",
-                "Skip 3 Frames (Max Throttle for Low-End Helio G35 / A53 Cores)"
+                "Skip 1 Frame (2x Engine Speedup)",
+                "Skip 2 Frames (Max Speedup)"
             ),
             settings.frameskipIdx
         ) { pos ->

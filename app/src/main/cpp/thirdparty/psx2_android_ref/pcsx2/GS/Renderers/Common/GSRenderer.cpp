@@ -652,55 +652,68 @@ void GSRenderer::VSync(u32 field, bool registers_written, bool idle_frame)
 	}
 
 	const int fs_mode = pcsx2gs_get_frameskip();
-	bool next_skip = false;
-	if (fs_mode > 0 && !GSCapture::IsCapturingVideo())
-	{
-		static uint32_t s_fs_counter = 0;
-		static int s_auto_consecutive = 0;
-		static auto s_prev_frame_time = std::chrono::steady_clock::now();
+	static u32 s_prev_field = 0xFFFFFFFF;
+	static uint32_t s_fs_frame_counter = 0;
+	static bool s_skip_game_frame = false;
+	static int s_auto_consecutive = 0;
+	static auto s_prev_frame_time = std::chrono::steady_clock::now();
 
+	const bool is_toggling_fields = (field != s_prev_field);
+	s_prev_field = field;
+
+	// In 2-field interlaced mode (God Hand standard 30 FPS console lock), field 1 marks
+	// the completion of the full game frame (field 0: 3D models, field 1: 2D HUD/effects).
+	// In non-interlaced (progressive 480p) mode where fields do not toggle, every VSync is a frame boundary.
+	const bool is_frame_boundary = is_toggling_fields ? (field == 1) : true;
+
+	// Skip presentation if the current frame was marked to be skipped
+	if (s_skip_game_frame)
+		skip_frame = true;
+
+	if (is_frame_boundary)
+	{
 		auto cur_time = std::chrono::steady_clock::now();
 		float delta_ms = std::chrono::duration<float, std::milli>(cur_time - s_prev_frame_time).count();
 		s_prev_frame_time = cur_time;
 
-		if (fs_mode == 1)
+		bool next_frame_skip = false;
+		if (fs_mode > 0 && !GSCapture::IsCapturingVideo())
 		{
-			if (delta_ms > 34.0f && s_auto_consecutive < 2)
+			s_fs_frame_counter++;
+
+			if (fs_mode == 1) // Auto (Skip on lag)
 			{
-				next_skip = true;
-				s_auto_consecutive++;
+				if (delta_ms > 34.0f && s_auto_consecutive < 2)
+				{
+					next_frame_skip = true;
+					s_auto_consecutive++;
+				}
+				else
+				{
+					s_auto_consecutive = 0;
+				}
 			}
-			else
+			else if (fs_mode == 2) // Skip 1 Frame (2x Engine Speedup)
 			{
-				s_auto_consecutive = 0;
+				if ((s_fs_frame_counter % 2) != 0)
+					next_frame_skip = true;
+			}
+			else if (fs_mode >= 3) // Skip 2 Frames (Max Speedup)
+			{
+				if ((s_fs_frame_counter % 3) != 0)
+					next_frame_skip = true;
 			}
 		}
-		else if (fs_mode == 2)
+		else
 		{
-			s_fs_counter++;
-			if ((s_fs_counter % 2) != 0)
-				next_skip = true;
+			s_auto_consecutive = 0;
 		}
-		else if (fs_mode == 3)
-		{
-			s_fs_counter++;
-			if ((s_fs_counter % 3) != 0)
-				next_skip = true;
-		}
-		else if (fs_mode >= 4)
-		{
-			s_fs_counter++;
-			if ((s_fs_counter % 4) != 0)
-				next_skip = true;
-		}
+
+		s_skip_game_frame = next_frame_skip;
+
+		// Apply the frameskip decision to all draws of both fields of the upcoming game frame
+		m_skip_current_draws = next_frame_skip;
 	}
-
-	// Skip presentation if the current frame was skipped during drawing
-	if (m_skip_current_draws)
-		skip_frame = true;
-
-	// Update draw-skipping state for the upcoming frame (real emulator frameskip)
-	m_skip_current_draws = next_skip;
 
 	const bool blank_frame = skip_frame ? true : !Merge(field);
 

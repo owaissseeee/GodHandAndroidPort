@@ -278,7 +278,9 @@ struct PS2AudioBackend::Impl
         // Preserves crystal-clear authentic musical pitch and tempo during any frame pacing dips,
         // while the 65,536-sample (~682 ms) ring buffer absorbs transient frame stalls.
         // Micro-rate control: dynamically drain up to +6% if buffer builds up, down to -8% on slowdown.
-        const double ratio = std::clamp(1.0 + fill * 0.05, 0.92, 1.06);
+        // When stretching is active (low FPS), clamp max ratio to 1.00 so audio does not outpace video.
+        const double maxRatio = owner->stretching ? 1.00 : 1.06;
+        const double ratio = std::clamp(1.0 + fill * 0.05, 0.92, maxRatio);
         for (size_t frame = 0u; frame < frames; ++frame)
         {
             if (owner->primed && owner->queued < 4u)
@@ -491,7 +493,12 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
         if (d.lastSubmit != std::chrono::steady_clock::time_point{})
             d.longestGap = std::max(d.longestGap, std::chrono::duration<double>(now - d.lastSubmit).count());
         if (gap)
+        {
             ++d.gaps;
+            d.stretch.reset();
+            d.rateStart = now;
+            d.rateFrames = 0u;
+        }
         d.lastSubmit = now;
     }
     if (stretchEnabled)
@@ -560,10 +567,12 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
         }
         if (d.stretching)
         {
-            // Tempo = speed, nudged by up to 10% to bring the queue back to its target.
-            const double fill = (static_cast<double>(d.queued + d.stretch.heldSamples()) - static_cast<double>(Impl::kRateTargetSamples)) /
+            // When stretching during framerate dips, lock tempo strictly to game/display speed.
+            // Never let positive queue fill push tempo faster than d.speed (which causes audio to outrun video).
+            const double fill = (static_cast<double>(d.queued) - static_cast<double>(Impl::kRateTargetSamples)) /
                                 static_cast<double>(Impl::kRateTargetSamples);
-            const double tempo = std::clamp(d.speed * (1.0 + std::clamp(0.2 * fill, -0.15, 0.15)), 0.15, 1.05);
+            const double tempoAdj = (fill < 0.0) ? std::clamp(0.2 * fill, -0.15, 0.0) : 0.0;
+            const double tempo = std::clamp(d.speed * (1.0 + tempoAdj), 0.15, 1.0);
             d.stretched.clear();
             d.stretch.push(samples);
             d.stretch.process(tempo, d.stretched);
