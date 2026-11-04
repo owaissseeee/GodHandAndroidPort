@@ -1027,6 +1027,7 @@ namespace godhand
                     if (ctx)
                     {
                         ctx->r[2] = _mm_setzero_si128();
+                        ctx->pc = GPR_U32(ctx, 31);
                     }
                 },
                 ReplacementStatus::Native,
@@ -1183,14 +1184,22 @@ namespace godhand
         constexpr uint32_t kGetCostumeNo = 0x001FC0A8u;
         if (runtime.hasFunction(kGetCostumeNo))
         {
+            static GuestFunction s_origCostume = runtime.lookupFunction(kGetCostumeNo);
             FunctionHooks::instance().replace(
                 kGetCostumeNo,
                 "cCoreSave_getCostumeNo_cheat",
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    if (s_origCostume)
+                        s_origCostume(rdram, ctx, rt);
                     int costume = CheatsEngine::instance().getCheatInt("gene_costume");
                     bool dbl = CheatsEngine::instance().isCheatEnabled("double_god_hand");
-                    uint32_t v0 = (uint32_t)((costume * 2) | (dbl ? 1 : 0));
-                    SET_GPR_ZE32(ctx, 2, v0);
+                    if (costume != 0 || dbl) {
+                        uint32_t v0 = (uint32_t)((costume * 2) | (dbl ? 1 : 0));
+                        SET_GPR_ZE32(ctx, 2, v0);
+                    }
+                    if (ctx && ctx->pc == kGetCostumeNo) {
+                        ctx->pc = GPR_U32(ctx, 31);
+                    }
                 },
                 ReplacementStatus::Native,
                 "Double God Hand and Gene Costume modifier hook");
@@ -1199,15 +1208,52 @@ namespace godhand
         constexpr uint32_t kGetOliviaCostumeNo = 0x001FC740u;
         if (runtime.hasFunction(kGetOliviaCostumeNo))
         {
+            static GuestFunction s_origOliviaCostume = runtime.lookupFunction(kGetOliviaCostumeNo);
             FunctionHooks::instance().replace(
                 kGetOliviaCostumeNo,
                 "cCoreSave_GetOliviaCostumeNo_cheat",
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    if (s_origOliviaCostume)
+                        s_origOliviaCostume(rdram, ctx, rt);
                     int olivia = CheatsEngine::instance().getCheatInt("olivia_costume");
-                    SET_GPR_S32(ctx, 2, olivia);
+                    if (olivia != 0) {
+                        SET_GPR_S32(ctx, 2, olivia);
+                    }
+                    if (ctx && ctx->pc == kGetOliviaCostumeNo) {
+                        ctx->pc = GPR_U32(ctx, 31);
+                    }
                 },
                 ReplacementStatus::Native,
                 "Olivia Costume modifier hook");
+        }
+        constexpr uint32_t kMeasureText = 0x002B0700u;
+        if (runtime.hasFunction(kMeasureText))
+        {
+            FunctionHooks::instance().replace(
+                kMeasureText,
+                "cMessDrawFont_measureText_guard",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime) {
+                    const uint32_t strPtr = GPR_U32(ctx, 5);
+                    if (strPtr == 0u || (strPtr < 0x02000000u && READ16(strPtr) == 0u)) {
+                        const uint32_t outWidthPtr = GPR_U32(ctx, 7);
+                        const uint32_t outHeightPtr = GPR_U32(ctx, 8);
+                        if (outWidthPtr != 0u && outWidthPtr < 0x02000000u) {
+                            WRITE32(outWidthPtr, 0u);
+                        }
+                        if (outHeightPtr != 0u && outHeightPtr < 0x02000000u) {
+                            WRITE32(outHeightPtr, 0u);
+                        }
+                        SET_GPR_S32(ctx, 2, 0);
+                        if (ctx) ctx->pc = GPR_U32(ctx, 31);
+                        return;
+                    }
+                    GuestFunction orig = FunctionHooks::instance().original(kMeasureText);
+                    if (orig) {
+                        orig(rdram, ctx, runtime);
+                    }
+                },
+                ReplacementStatus::Native,
+                "Save menu empty string freeze guard (Kamite Oct 27)");
         }
     }
 }
