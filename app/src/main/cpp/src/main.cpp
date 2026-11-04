@@ -22,6 +22,7 @@
 #include "godhand/function_hooks.h"
 #include "godhand/game_disc.h"
 #include "godhand/hang_dump.h"
+#include "godhand/freeze_watchdog.h"
 #include "godhand/hle_bindings.h"
 #include "godhand/host_window.h"
 #include "godhand/log.h"
@@ -746,6 +747,7 @@ int main(int argc, char *argv[])
         // TODO(godhand): a "game_frame" observer on God Hand's main-loop function (ps2_host_display::noteGameFrame for the
         // F3 overlay), as Urban did on 0x128dc0. The address is not known yet.
         godhand::hangdump::setRuntime(&runtime);
+        godhand::startFreezeAndPerfWatchdog(&runtime);
         godhand::calltrace::installFromEnvironment(runtime);
         godhand::FunctionHooks::instance().logBindings();
         godhand::callprofile::installFromEnvironment(runtime); // last: wraps whatever the slots hold now
@@ -958,6 +960,7 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     godhand::mobile::applyPatches(runtime.memory().getRDRAM(), fpsIdx, aspectIdx, static_cast<float>(scale));
 
     godhand_set_thread_affinity_and_priority("HostPump", 0, 1, 0);
+    godhand::startFreezeAndPerfWatchdog(&runtime);
 
     __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "Starting God Hand main loop on ARM64...");
     runtime.run();

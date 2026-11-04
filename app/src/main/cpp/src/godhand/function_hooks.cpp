@@ -1,6 +1,7 @@
 #include "godhand/function_hooks.h"
 #include "godhand/frame_patches.h"
 #include "godhand/godhand_perf.h"
+#include "godhand/freeze_watchdog.h"
 #include "godhand/log.h"
 #include "godhand/module_registry.h"
 #include "godhand/sha256.h"
@@ -1068,6 +1069,7 @@ namespace godhand
                 "game_frame_counter_fast",
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
                     godhand_perf_record_game_frame();
+                    godhand::notifyFrameHeartbeat();
                     if (rdram)
                     {
                         const uint32_t fullFlickerOff = 0x80u;
