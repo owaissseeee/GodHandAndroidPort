@@ -1864,6 +1864,23 @@ bool PS2Runtime::dispatchGuestBranch(uint8_t *rdram,
     ctx->pc = targetPc;
     const bool isCall = (kind == GuestBranchKind::DirectCall || kind == GuestBranchKind::IndirectCall);
 
+    // Fast-path intercept for 0x0030ADD8 -> jal func_002B4BC0 (God Hand's real VBlank wait loop):
+    // When *(uint32_t*)(rdram + 0x00753D80) < rdram[0x00747A09], fast-forward directly to VBlank!
+    if (__builtin_expect(targetPc == 0x002B4BC0u && sourcePc == 0x0030ADD8u, 0) && m_eeScheduler && rdram)
+    {
+        if (m_eeScheduler->vsyncTick() > 240u)
+        {
+            uint32_t vblankCounter = 0u;
+            std::memcpy(&vblankCounter, rdram + 0x00753D80u, sizeof(vblankCounter));
+            const uint32_t divider = rdram[0x00747A09u];
+            if (divider > 0u && vblankCounter < divider)
+            {
+                advanceIopEeCycles(4096u);
+                m_eeScheduler->skipIdleCycles();
+            }
+        }
+    }
+
     // Every inter-function transfer is also a deterministic EE safe point.
     // Use eeCheckpointDue() so inter-function calls take the 2-instruction deferred budget fast-path!
     if (__builtin_expect(eeCheckpointDue(EeScheduler::kGuestDispatchCycles), 0))

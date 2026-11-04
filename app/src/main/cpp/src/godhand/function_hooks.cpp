@@ -1041,39 +1041,38 @@ namespace godhand
         static std::chrono::steady_clock::time_point s_lastFrameFlipTp{};
         static uint64_t s_totalGameFrames = 0u;
 
-        constexpr uint32_t kVBlankWaitFunc = 0x0030B148u;
-        if (runtime.hasFunction(kVBlankWaitFunc))
+        // Real VBlank Wait Loop Architecture in God Hand (SLUS_215.03):
+        // - In func_0030AC40, label_30add8 (0x0030ADD8..0x0030ADEC) is the real VBlank wait loop:
+        //     0x0030ADD8: jal  func_002B4BC0          ($ra = 0x0030ADE0)
+        //     0x0030ADE0: lbu  $v1, 0x569($s0)        (reads divider byte rdram[0x00747A09] = 2)
+        //     0x0030ADE4: lw   $v0, 0x3D80($s1)       (reads 32-bit VBlank counter *(uint32_t*)(rdram + 0x00753D80))
+        //     0x0030ADE8: sltu $v0, $v0, $v1          (counter < divider)
+        //     0x0030ADEC: bnez $v0, label_30add8      (loops while *(uint32_t*)(rdram + 0x00753D80) < 2)
+        // - func_0030B148 is the VBlank IRQ callback that increments *(uint32_t*)(rdram + 0x00753D80).
+        // - Hooking func_002B4BC0 (0x002B4BC0) intercepts EVERY iteration of the 0x0030ADD8 wait loop:
+        constexpr uint32_t kVBlankWaitHelper = 0x002B4BC0u;
+        if (runtime.hasFunction(kVBlankWaitHelper))
         {
-            static GuestFunction s_origVBlankWait = nullptr;
-            s_origVBlankWait = FunctionHooks::instance().original(kVBlankWaitFunc);
-            if (!s_origVBlankWait)
-                s_origVBlankWait = runtime.lookupFunction(kVBlankWaitFunc);
-            FunctionHooks::instance().replace(
-                kVBlankWaitFunc,
-                "vblank_wait_idle_skip",
+            FunctionHooks::instance().observeEntry(
+                kVBlankWaitHelper,
+                "vblank_wait_loop_0030add8_skip",
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
-                    if (rt && rdram)
+                    if (!rt || !rdram)
+                        return;
+                    const uint32_t ra = ctx ? GPR_U32(ctx, 31) : 0u;
+                    if (ra != 0x0030ADE0u || s_totalGameFrames <= 120u)
+                        return;
+
+                    uint32_t vblankCounter = 0u;
+                    std::memcpy(&vblankCounter, rdram + 0x00753D80u, sizeof(vblankCounter));
+                    const uint32_t divider = rdram[0x00747A09u];
+                    if (divider > 0u && vblankCounter < divider)
                     {
-                        const auto now = std::chrono::steady_clock::now();
-                        if (s_totalGameFrames > 120u && s_lastFrameFlipTp.time_since_epoch().count() != 0)
-                        {
-                            const double workMs = std::chrono::duration<double, std::milli>(now - s_lastFrameFlipTp).count();
-                            if (workMs >= 15.5 && rdram[0x00747A08u] == 0u && rdram[0x00747A09u] >= 2u)
-                            {
-                                rdram[0x00747A08u] = rdram[0x00747A09u] - 1u;
-                            }
-                        }
-                        if (rdram[0x00747A08u] < rdram[0x00747A09u])
-                        {
-                            rt->scheduler().skipIdleCycles();
-                        }
+                        rt->advanceIopEeCycles(4096u);
+                        rt->scheduler().skipIdleCycles();
                     }
-                    if (s_origVBlankWait)
-                        s_origVBlankWait(rdram, ctx, rt);
-                },
-                ReplacementStatus::Observed,
-                "adaptive real-time VBlank compensation + skipIdleCycles()");
-            GH_INFO(Gs, "func_0030B148 hooked with adaptive real-time VBlank compensation + skipIdleCycles()");
+                });
+            GH_INFO(Gs, "func_002B4BC0 (called by 0x0030ADD8 VBlank wait loop) hooked with 0x00753D80 compensation + skipIdleCycles()");
         }
 
         constexpr uint32_t kFlipChainBuilder = 0x0030B870u;

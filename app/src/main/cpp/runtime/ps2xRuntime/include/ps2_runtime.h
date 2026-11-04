@@ -470,6 +470,7 @@ public:
     inline const PS2RomDevice &romDevice() const { return m_romDevice; }
     inline PS2Vfs &vfs() { return m_vfs; }
     inline const PS2Vfs &vfs() const { return m_vfs; }
+    void advanceIopEeCycles(uint64_t eeCycles) noexcept;
 
 private:
     struct GuestHeapBlock
@@ -496,7 +497,6 @@ private:
     [[nodiscard]] bool canBindIopRpc(uint32_t sid) const noexcept;
     [[nodiscard]] ps2x::iop::RpcResult handleIopRpc(uint8_t *rdram, R5900Context *ctx, ps2x::iop::RpcRequest request);
     void notifyIopSifTransfer(uint8_t *rdram, const ps2x::iop::SifTransfer &transfer);
-    void advanceIopEeCycles(uint64_t eeCycles) noexcept;
     void resetIop();
 
     friend class PS2IopTransport;

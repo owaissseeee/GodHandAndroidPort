@@ -683,13 +683,18 @@ void EeScheduler::run()
 #endif
 
         g_loopStats.lastPc = context.pc;
-        // Whenever the main thread resumes at ANY mid-function PC inside func_0030B148
-        // (0x0030B148..0x0030B238) after an EE timer or VBlank #1 interrupt, fast-forward
-        // directly to the next event instead of spinning in the MIPS loop!
-        if (context.pc >= 0x0030B148u && context.pc <= 0x0030B238u && m_rdram != nullptr)
+
+        // Real VBlank Wait Loop in God Hand (0x0030ADD8..0x0030ADEC in func_0030AC40):
+        // Only active during gameplay (m_vsyncTick > 240u) so boot sequence is 100% clean.
+        if (m_rdram != nullptr && m_vsyncTick > 240u &&
+            context.pc >= 0x0030ADD8u && context.pc <= 0x0030ADECu)
         {
-            if (m_rdram[0x00747A08u] < m_rdram[0x00747A09u])
+            uint32_t vblankCounter = 0u;
+            std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
+            const uint32_t divider = m_rdram[0x00747A09u];
+            if (divider > 0u && vblankCounter < divider)
             {
+                m_runtime.advanceIopEeCycles(4096u);
                 skipIdleCycles();
             }
         }
@@ -735,11 +740,14 @@ void EeScheduler::run()
         // Whenever the guest is spinning inside func_0030B148 (0x0030B148..0x0030B238) waiting for VBlank #1
         // or VBlank #2 (even after an intermediate GS/IOP interrupt aborted an earlier skip), fast-forward
         // directly to the next VBlank deadline without spinning the CPU!
-        if (m_rdram != nullptr && running->invocations.empty() && m_pendingInvocations.empty() &&
-            context.pc >= 0x0030B148u && context.pc <= 0x0030B238u)
+        if (m_rdram != nullptr && m_vsyncTick > 240u &&
+            running->invocations.empty() && m_pendingInvocations.empty() &&
+            context.pc >= 0x0030ADD8u && context.pc <= 0x0030ADECu)
         {
-            const uint8_t reqVb = m_rdram[0x00747A09u] != 0u ? m_rdram[0x00747A09u] : 2u;
-            if (m_rdram[0x00747A08u] < reqVb)
+            uint32_t vblankCounter = 0u;
+            std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
+            const uint32_t divider = m_rdram[0x00747A09u];
+            if (divider > 0u && vblankCounter < divider)
             {
                 skipIdleCycles();
             }
@@ -818,15 +826,20 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
     t_onEeThread = true; // the full path runs before any deferral (g_deferUntil starts at 0)
     accountCycles(static_cast<uint32_t>(charge)); // also accounts g_ps2xEeDeferred
 
-    if (m_rdram && !m_insideInterrupt)
+    if (m_rdram && !m_insideInterrupt && m_vsyncTick > 240u)
     {
         if (const GuestThread *running = currentThread())
         {
             const uint32_t pc = running->activeContext().pc;
-            if (pc >= 0x0030B148u && pc <= 0x0030B238u &&
-                m_rdram[0x00747A08u] < m_rdram[0x00747A09u])
+            if (pc >= 0x0030ADD8u && pc <= 0x0030ADECu)
             {
-                skipIdleCycles();
+                uint32_t vblankCounter = 0u;
+                std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
+                const uint32_t divider = m_rdram[0x00747A09u];
+                if (divider > 0u && vblankCounter < divider)
+                {
+                    skipIdleCycles();
+                }
             }
         }
     }
@@ -909,7 +922,7 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
 
     // Active game code charges 25% EE cycles (so heavy combat frames never trigger mid-frame VBlanks on Cortex-A53),
     // while skipIdleCycles() charges 100% to reach the exact VBlank deadline immediately upon hitting func_0030B148.
-    const uint64_t eeCharge = t_inIdleSkip ? elapsed : std::max<uint64_t>(1u, elapsed >> 2);
+    const uint64_t eeCharge = t_inIdleSkip ? elapsed : std::max<uint64_t>(1u, (elapsed * 5u) >> 3);
     m_eeCycle += eeCharge;
     if (cycles != 0u)
         g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
@@ -934,8 +947,8 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
         // Feed eeCharge (which includes 100% of skipped idle cycles up to VBlank) to IOP in
         // 32,768-cycle batches (~150x/frame instead of 4,500x/frame), cutting IOPThread
         // condition-variable wakeups by 16x while keeping SPU2 audio & FMV 100% locked to VBlank!
-        g_iopStash += eeCharge;
-        if (g_iopStash >= 32768u)
+        g_iopStash += elapsed;
+        if (g_iopStash >= 2048u)
         {
             m_runtime.advanceIopEeCycles(g_iopStash);
             g_iopStash = 0u;
@@ -2849,8 +2862,34 @@ void EeScheduler::processEvent(const EeEvent &event)
         requestStop();
         break;
     case EeEventType::VBlankStart:
+    {
         ps2x::asyncvif::traceEvent('V', static_cast<uint32_t>(m_eeCycle >> 10)); // EE cycle / 1024
         ps2x::pnach::applyContinuous(m_rdram); // PS2X_PNACH patch=1 lines, at every vblank like PCSX2 (also after a load)
+
+        // Adaptive Real-Time VBlank Compensation on the TRUE 32-bit VBlank Counter (0x00753D80):
+        if (m_rdram != nullptr && m_vsyncTick > 240u)
+        {
+            static auto s_lastCompletedFrameTp = std::chrono::steady_clock::now();
+            const auto nowVb = std::chrono::steady_clock::now();
+            uint32_t vblankCounter = 0u;
+            std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
+            const uint32_t divider = m_rdram[0x00747A09u];
+            if (vblankCounter == 0u && divider >= 2u)
+            {
+                const double frameElapsedMs = std::chrono::duration<double, std::milli>(nowVb - s_lastCompletedFrameTp).count();
+                if (frameElapsedMs >= 18.0)
+                {
+                    vblankCounter = divider - 1u;
+                    std::memcpy(m_rdram + 0x00753D80u, &vblankCounter, sizeof(vblankCounter));
+                    s_lastCompletedFrameTp = nowVb;
+                }
+            }
+            else if (vblankCounter >= 1u)
+            {
+                s_lastCompletedFrameTp = nowVb;
+            }
+        }
+
         ps2xRaiseIntcStat(1u << 2); // INTC VBON
         ++m_vsyncTick;
         m_runtime.memory().gs().vsyncTick.store(m_vsyncTick, std::memory_order_release);
@@ -2889,6 +2928,7 @@ void EeScheduler::processEvent(const EeEvent &event)
         }
         dispatchIrq(false, 2u);
         break;
+    }
     case EeEventType::ExternalWake:
         completeExternalWait(event.id, event.value, KE_OK);
         break;
