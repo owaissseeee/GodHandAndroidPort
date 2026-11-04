@@ -70,6 +70,17 @@ namespace
     std::atomic<float> g_statWorstFrametimeMs{16.67f};
     std::atomic<float> g_statGameFps{60.0f};
     std::atomic<float> g_statGameSpeed{100.0f};
+    std::atomic<float> g_instantGameSpeed{1.0f};
+
+extern "C" float ps2_get_game_speed_ratio(void) {
+    const float inst = g_instantGameSpeed.load(std::memory_order_relaxed);
+    const float gameSpeedPct = g_statGameSpeed.load(std::memory_order_relaxed);
+    if (gameSpeedPct > 5.0f && gameSpeedPct <= 120.0f) {
+        const float gameSpeedRatio = gameSpeedPct * 0.01f;
+        return std::min(inst, gameSpeedRatio);
+    }
+    return inst;
+}
 
     std::chrono::steady_clock::time_point g_perfLastPresent{};
     std::chrono::steady_clock::time_point g_perfWindowStart{};
@@ -724,6 +735,16 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
             g_perfWindowPresents++;
             if (deltaMs > g_perfWindowWorstMs) {
                 g_perfWindowWorstMs = deltaMs;
+            }
+
+            // Real-time instantaneous speed ratio tracking for lockstep audio synchronization
+            if (deltaMs >= 5.0f) {
+                // VSync baseline interval is 16.667ms (60 Hz NTSC VBlank field frequency)
+                constexpr float targetVsyncMs = 16.667f;
+                const float instRatio = std::clamp(targetVsyncMs / deltaMs, 0.15f, 1.10f);
+                const float prev = g_instantGameSpeed.load(std::memory_order_relaxed);
+                const float blend = (instRatio < prev) ? 0.40f : 0.15f;
+                g_instantGameSpeed.store(prev * (1.0f - blend) + instRatio * blend, std::memory_order_relaxed);
             }
         }
     }

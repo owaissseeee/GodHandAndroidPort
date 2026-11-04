@@ -1,4 +1,6 @@
 #include "runtime/ps2_audio.h"
+
+extern "C" float ps2_get_game_speed_ratio(void);
 #include "runtime/ps2_memory.h"
 #include "ps2_host_backend.h"
 #include <algorithm>
@@ -496,10 +498,30 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
     {
         Impl &d = *m_impl;
         const auto now = std::chrono::steady_clock::now();
-        // The stall restarts the speed window: counted in, one ~40 ms load hitch pulled a 0.5 s window under 0.925 and
-        // switched the stretch on for seconds: every sound's attack played twice, 5-20 ms apart (hidden run 2026-10-17
-        // 09:01, 131 repeats of 5-50 ms in the output). The stall is now a short underrun.
-        if (d.rateStart == std::chrono::steady_clock::time_point{} || gap)
+        // Real-time presentation speed ratio feed from GS backend:
+        // Ensures TimeStretch responds immediately from the very first sample during cutscenes
+        // without waiting for a 0.5s window or getting disabled by dialogue pause gaps.
+        const double displaySpeed = static_cast<double>(ps2_get_game_speed_ratio());
+        if (displaySpeed > 0.05 && displaySpeed <= 1.25)
+        {
+            if (displaySpeed < d.speed)
+                d.speed = std::clamp(d.speed * 0.40 + displaySpeed * 0.60, 0.15, 1.05);
+            else
+                d.speed = std::clamp(d.speed * 0.85 + displaySpeed * 0.15, 0.15, 1.05);
+
+            if (d.speed < 0.93)
+            {
+                if (!d.stretching)
+                {
+                    d.stretching = true;
+                    d.stretch.reset();
+                    if (d.statsEnabled)
+                        std::fprintf(stderr, "[audio] time-stretch on (inst speed %.2f)\n", d.speed);
+                }
+            }
+        }
+
+        if (d.rateStart == std::chrono::steady_clock::time_point{})
         {
             d.rateStart = now;
             d.rateFrames = 0u;
@@ -511,16 +533,14 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
         if (window >= 0.5)
         {
             const double measured = static_cast<double>(d.rateFrames) / (window * 48000.0);
-            // A window with almost no audio (loading, pause) says nothing about the speed.
             if (measured > 0.05)
             {
-                d.speed = std::clamp(d.speed * 0.6 + measured * 0.4, 0.15, 1.1);
-                d.slowWindows = measured < 0.97 ? d.slowWindows + 1u : 0u;
+                const double effective = (displaySpeed > 0.05 && displaySpeed < 1.05) ? std::min(measured, displaySpeed) : measured;
+                d.speed = std::clamp(d.speed * 0.5 + effective * 0.5, 0.15, 1.05);
+                d.slowWindows = d.speed < 0.97 ? d.slowWindows + 1u : 0u;
             }
             d.rateFrames = 0u;
             d.rateStart = now;
-            // Engage TimeStretch after 1 slow window if a substantial drop (speed < 0.90, e.g. 15-25 FPS),
-            // or 2 slow windows for minor dips (< 0.97). Keeps dialogue in 1:1 sync during cutscene FPS drops.
             if (!d.stretching && ((d.speed < 0.90 && d.slowWindows >= 1u) || (d.speed < 0.97 && d.slowWindows >= 2u)))
             {
                 d.stretching = true;
@@ -528,12 +548,9 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
                 if (d.statsEnabled)
                     std::fprintf(stderr, "[audio] time-stretch on (speed %.2f)\n", d.speed);
             }
-            // Off only once the queue is back near its target too: leaving at 140 ms (after a state load) the fine
-            // rate control (0.5%) took minutes to bring it back, the sound lagging the picture meanwhile; the stretch
-            // drains it at up to 5% in about a second.
-            else if (d.stretching && d.speed > 0.99 &&
+            else if (d.stretching && d.speed > 0.98 &&
                      std::abs(static_cast<double>(d.queued + d.stretch.heldSamples()) -
-                              static_cast<double>(Impl::kRateTargetSamples)) < 0.25 * static_cast<double>(Impl::kRateTargetSamples))
+                              static_cast<double>(Impl::kRateTargetSamples)) < 0.35 * static_cast<double>(Impl::kRateTargetSamples))
             {
                 d.stretching = false;
                 leaving = true;

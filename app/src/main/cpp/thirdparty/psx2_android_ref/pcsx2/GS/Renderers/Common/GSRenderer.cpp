@@ -652,6 +652,7 @@ void GSRenderer::VSync(u32 field, bool registers_written, bool idle_frame)
 	}
 
 	const int fs_mode = pcsx2gs_get_frameskip();
+	bool next_skip = false;
 	if (fs_mode > 0 && !GSCapture::IsCapturingVideo())
 	{
 		static uint32_t s_fs_counter = 0;
@@ -666,7 +667,7 @@ void GSRenderer::VSync(u32 field, bool registers_written, bool idle_frame)
 		{
 			if (delta_ms > 34.0f && s_auto_consecutive < 2)
 			{
-				skip_frame = true;
+				next_skip = true;
 				s_auto_consecutive++;
 			}
 			else
@@ -678,23 +679,30 @@ void GSRenderer::VSync(u32 field, bool registers_written, bool idle_frame)
 		{
 			s_fs_counter++;
 			if ((s_fs_counter % 2) != 0)
-				skip_frame = true;
+				next_skip = true;
 		}
 		else if (fs_mode == 3)
 		{
 			s_fs_counter++;
 			if ((s_fs_counter % 3) != 0)
-				skip_frame = true;
+				next_skip = true;
 		}
 		else if (fs_mode >= 4)
 		{
 			s_fs_counter++;
 			if ((s_fs_counter % 4) != 0)
-				skip_frame = true;
+				next_skip = true;
 		}
 	}
 
-	const bool blank_frame = !Merge(field);
+	// Skip presentation if the current frame was skipped during drawing
+	if (m_skip_current_draws)
+		skip_frame = true;
+
+	// Update draw-skipping state for the upcoming frame (real emulator frameskip)
+	m_skip_current_draws = next_skip;
+
+	const bool blank_frame = skip_frame ? true : !Merge(field);
 
 	m_last_draw_n = s_n;
 	m_last_transfer_n = s_transfer_n;
