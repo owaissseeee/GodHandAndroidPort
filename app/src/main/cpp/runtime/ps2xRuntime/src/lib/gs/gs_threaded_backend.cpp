@@ -135,7 +135,11 @@ GSThreadedBackend::GSThreadedBackend(std::unique_ptr<GSRasterBackend> inner)
     // 64 chunks (4 MB) in flight by default instead of 8: the game thread produces draws in bursts (each VU1 job's
     // XGKICK output) and waited for room ~8.6% of the time in Urban Reign's heaviest 4-fighter map while this thread
     // sat idle the rest of the frame (37.6/40.2 -> 44.6 FPS; 256 gives the same as 64).
+#if defined(__ANDROID__) || defined(PLATFORM_ANDROID)
+    m_queueChunkLimit = 4u;
+#else
     m_queueChunkLimit = 64u;
+#endif
     if (const char *limit = std::getenv("PS2X_GS_QUEUE_CHUNKS"))
         m_queueChunkLimit = static_cast<size_t>(std::clamp(std::atoi(limit), 1, static_cast<int>(kMaxPendingChunks)));
     const char *fifEnv = std::getenv("PS2X_GS_MAX_FRAMES_IN_FLIGHT");

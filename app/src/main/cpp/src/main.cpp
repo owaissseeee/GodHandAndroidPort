@@ -911,9 +911,9 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     setDefaultEnv("PS2X_VU0_LEAN", "1");
     setDefaultEnv("PS2X_PCSX2_TEXTURES", "0"); // Skip filesystem replacement texture directory scan on Android!
     ps2x::asyncvif::setDefaultEnabled(true);
-    // Disable artificial host pacing sleep on asyncvif so VUThread processes enemy/house geometry at 100% speed!
-    ps2x::asyncvif::setHostPacingDefault(false);
-    EeScheduler::setHostPacingDefault(false);
+    // Host pacing keeps EE synchronized with the VU/GIF/GS pipeline to prevent input lag and audio desync
+    ps2x::asyncvif::setHostPacingDefault(true);
+    EeScheduler::setHostPacingDefault(true);
     GSThreadedBackend::SetEnabledByDefault(true);
     GSThreadedBackend::SetGpuByDefault(true);
 

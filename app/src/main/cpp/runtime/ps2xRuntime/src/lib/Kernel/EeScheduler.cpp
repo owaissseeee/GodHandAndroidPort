@@ -342,10 +342,6 @@ void EeScheduler::setHostPacingDefault(bool enabled) noexcept
 
 void EeScheduler::hostCatchUp() noexcept
 {
-#if defined(__ANDROID__)
-    m_pacingCheckCycle = m_eeCycle + kHostPacingCheckCycles;
-    return;
-#else
     m_pacingCheckCycle = m_eeCycle + kHostPacingCheckCycles;
     if (m_pacingRefTime == std::chrono::steady_clock::time_point{} || !ps2x::asyncvif::active(m_runtime.memory()))
         return;
@@ -377,7 +373,6 @@ void EeScheduler::hostCatchUp() noexcept
     }
     g_lastCatchUpDispatches = g_guestDispatches;
     consumeCycles(std::min<uint64_t>(lag - field / 4u, field));
-#endif
 }
 
 void EeScheduler::reset(uint8_t *rdram, const R5900Context &mainContext)
@@ -2652,7 +2647,7 @@ void EeScheduler::processDueDeadlines()
                         break;
                     }
 #if defined(__ANDROID__)
-                    if (std::chrono::steady_clock::now() - waitStart > std::chrono::milliseconds(12))
+                    if (std::chrono::steady_clock::now() - waitStart > std::chrono::milliseconds(100))
                         break;
 #else
                     if (std::chrono::steady_clock::now() - waitStart > std::chrono::milliseconds(100))

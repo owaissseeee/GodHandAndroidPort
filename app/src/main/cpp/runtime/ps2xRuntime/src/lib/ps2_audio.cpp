@@ -512,9 +512,9 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
         {
             const double measured = static_cast<double>(d.rateFrames) / (window * 48000.0);
             // A window with almost no audio (loading, pause) says nothing about the speed.
-            if (measured > 0.2)
+            if (measured > 0.05)
             {
-                d.speed = std::min(1.1, d.speed * 0.6 + measured * 0.4);
+                d.speed = std::clamp(d.speed * 0.6 + measured * 0.4, 0.15, 1.1);
                 d.slowWindows = measured < 0.97 ? d.slowWindows + 1u : 0u;
             }
             d.rateFrames = 0u;
@@ -545,7 +545,7 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
             // Tempo = speed, nudged by up to 10% to bring the queue back to its target.
             const double fill = (static_cast<double>(d.queued + d.stretch.heldSamples()) - static_cast<double>(Impl::kRateTargetSamples)) /
                                 static_cast<double>(Impl::kRateTargetSamples);
-            const double tempo = std::clamp(d.speed * (1.0 + std::clamp(0.2 * fill, -0.15, 0.15)), 0.25, 1.05);
+            const double tempo = std::clamp(d.speed * (1.0 + std::clamp(0.2 * fill, -0.15, 0.15)), 0.15, 1.05);
             d.stretched.clear();
             d.stretch.push(samples);
             d.stretch.process(tempo, d.stretched);
