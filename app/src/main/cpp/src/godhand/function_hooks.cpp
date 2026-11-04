@@ -1060,19 +1060,27 @@ namespace godhand
                     if (!rt || !rdram)
                         return;
                     const uint32_t ra = ctx ? GPR_U32(ctx, 31) : 0u;
-                    if (ra != 0x0030ADE0u || s_totalGameFrames <= 120u)
+                    if ((ra != 0x0030ADE0u && ra != 0x0030ADA0u) || s_totalGameFrames <= 120u)
                         return;
 
                     uint32_t vblankCounter = 0u;
                     std::memcpy(&vblankCounter, rdram + 0x00753D80u, sizeof(vblankCounter));
-                    const uint32_t divider = rdram[0x00747A09u];
+                    uint32_t divider = 0u;
+                    if (ra == 0x0030ADA0u)
+                    {
+                        std::memcpy(&divider, rdram + 0x00747A10u, sizeof(divider));
+                    }
+                    else
+                    {
+                        divider = rdram[0x00747A09u];
+                    }
                     if (divider > 0u && vblankCounter < divider)
                     {
                         rt->advanceIopEeCycles(4096u);
                         rt->scheduler().skipIdleCycles();
                     }
                 });
-            GH_INFO(Gs, "func_002B4BC0 (called by 0x0030ADD8 VBlank wait loop) hooked with 0x00753D80 compensation + skipIdleCycles()");
+            GH_INFO(Gs, "func_002B4BC0 (called by 0x0030ADD8 combat & 0x0030AD98 cutscene VBlank wait loops) hooked with 0x00753D80 compensation + skipIdleCycles()");
         }
 
         constexpr uint32_t kFlipChainBuilder = 0x0030B870u;

@@ -342,6 +342,10 @@ void EeScheduler::setHostPacingDefault(bool enabled) noexcept
 
 void EeScheduler::hostCatchUp() noexcept
 {
+#if defined(__ANDROID__)
+    m_pacingCheckCycle = m_eeCycle + kHostPacingCheckCycles;
+    return;
+#else
     m_pacingCheckCycle = m_eeCycle + kHostPacingCheckCycles;
     if (m_pacingRefTime == std::chrono::steady_clock::time_point{} || !ps2x::asyncvif::active(m_runtime.memory()))
         return;
@@ -373,6 +377,7 @@ void EeScheduler::hostCatchUp() noexcept
     }
     g_lastCatchUpDispatches = g_guestDispatches;
     consumeCycles(std::min<uint64_t>(lag - field / 4u, field));
+#endif
 }
 
 void EeScheduler::reset(uint8_t *rdram, const R5900Context &mainContext)
@@ -679,18 +684,32 @@ void EeScheduler::run()
 
         g_loopStats.lastPc = context.pc;
 
-        // Real VBlank Wait Loop in God Hand (0x0030ADD8..0x0030ADEC in func_0030AC40):
+        // Real VBlank Wait Loop in God Hand (0x0030ADD8..0x0030ADEC for combat, 0x0030AD98..0x0030ADAC for cutscenes in func_0030AC40):
         // Only active during gameplay (m_vsyncTick > 240u) so boot sequence is 100% clean.
-        if (m_rdram != nullptr && m_vsyncTick > 240u &&
-            context.pc >= 0x0030ADD8u && context.pc <= 0x0030ADECu)
+        if (m_rdram != nullptr && m_vsyncTick > 240u)
         {
-            uint32_t vblankCounter = 0u;
-            std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
-            const uint32_t divider = m_rdram[0x00747A09u];
-            if (divider > 0u && vblankCounter < divider)
+            if (context.pc >= 0x0030ADD8u && context.pc <= 0x0030ADECu)
             {
-                m_runtime.advanceIopEeCycles(4096u);
-                skipIdleCycles();
+                uint32_t vblankCounter = 0u;
+                std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
+                const uint32_t divider = m_rdram[0x00747A09u];
+                if (divider > 0u && vblankCounter < divider)
+                {
+                    m_runtime.advanceIopEeCycles(4096u);
+                    skipIdleCycles();
+                }
+            }
+            else if (context.pc >= 0x0030AD98u && context.pc <= 0x0030ADACu)
+            {
+                uint32_t vblankCounter = 0u;
+                std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
+                uint32_t divider = 0u;
+                std::memcpy(&divider, m_rdram + 0x00747A10u, sizeof(divider));
+                if (divider > 0u && vblankCounter < divider)
+                {
+                    m_runtime.advanceIopEeCycles(4096u);
+                    skipIdleCycles();
+                }
             }
         }
         if (checkpointDue(kGuestDispatchCycles))
@@ -736,15 +755,28 @@ void EeScheduler::run()
         // or VBlank #2 (even after an intermediate GS/IOP interrupt aborted an earlier skip), fast-forward
         // directly to the next VBlank deadline without spinning the CPU!
         if (m_rdram != nullptr && m_vsyncTick > 240u &&
-            running->invocations.empty() && m_pendingInvocations.empty() &&
-            context.pc >= 0x0030ADD8u && context.pc <= 0x0030ADECu)
+            running->invocations.empty() && m_pendingInvocations.empty())
         {
-            uint32_t vblankCounter = 0u;
-            std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
-            const uint32_t divider = m_rdram[0x00747A09u];
-            if (divider > 0u && vblankCounter < divider)
+            if (context.pc >= 0x0030ADD8u && context.pc <= 0x0030ADECu)
             {
-                skipIdleCycles();
+                uint32_t vblankCounter = 0u;
+                std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
+                const uint32_t divider = m_rdram[0x00747A09u];
+                if (divider > 0u && vblankCounter < divider)
+                {
+                    skipIdleCycles();
+                }
+            }
+            else if (context.pc >= 0x0030AD98u && context.pc <= 0x0030ADACu)
+            {
+                uint32_t vblankCounter = 0u;
+                std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
+                uint32_t divider = 0u;
+                std::memcpy(&divider, m_rdram + 0x00747A10u, sizeof(divider));
+                if (divider > 0u && vblankCounter < divider)
+                {
+                    skipIdleCycles();
+                }
             }
         }
 
@@ -2862,26 +2894,35 @@ void EeScheduler::processEvent(const EeEvent &event)
         ps2x::pnach::applyContinuous(m_rdram); // PS2X_PNACH patch=1 lines, at every vblank like PCSX2 (also after a load)
 
         // Adaptive Real-Time VBlank Compensation on the TRUE 32-bit VBlank Counter (0x00753D80):
+        // ONLY active during in-game combat; during cutscenes (Sta::kEvent = 0x20000000 at 0x00747A84),
+        // the game strictly enforces authentic 2-VBlank timing (30 FPS) so dialogue and scene transitions stay in 1:1 lockstep!
         if (m_rdram != nullptr && m_vsyncTick > 240u)
         {
-            static auto s_lastCompletedFrameTp = std::chrono::steady_clock::now();
-            const auto nowVb = std::chrono::steady_clock::now();
-            uint32_t vblankCounter = 0u;
-            std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
-            const uint32_t divider = m_rdram[0x00747A09u];
-            if (vblankCounter == 0u && divider >= 2u)
+            uint32_t sta = 0u;
+            std::memcpy(&sta, m_rdram + 0x00747A84u, sizeof(sta));
+            const bool isCutscene = (sta & 0x20000000u) != 0u;
+
+            if (!isCutscene)
             {
-                const double frameElapsedMs = std::chrono::duration<double, std::milli>(nowVb - s_lastCompletedFrameTp).count();
-                if (frameElapsedMs >= 18.0)
+                static auto s_lastCompletedFrameTp = std::chrono::steady_clock::now();
+                const auto nowVb = std::chrono::steady_clock::now();
+                uint32_t vblankCounter = 0u;
+                std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
+                const uint32_t divider = m_rdram[0x00747A09u];
+                if (vblankCounter == 0u && divider >= 2u)
                 {
-                    vblankCounter = divider - 1u;
-                    std::memcpy(m_rdram + 0x00753D80u, &vblankCounter, sizeof(vblankCounter));
+                    const double frameElapsedMs = std::chrono::duration<double, std::milli>(nowVb - s_lastCompletedFrameTp).count();
+                    if (frameElapsedMs >= 18.0)
+                    {
+                        vblankCounter = divider - 1u;
+                        std::memcpy(m_rdram + 0x00753D80u, &vblankCounter, sizeof(vblankCounter));
+                        s_lastCompletedFrameTp = nowVb;
+                    }
+                }
+                else if (vblankCounter >= 1u)
+                {
                     s_lastCompletedFrameTp = nowVb;
                 }
-            }
-            else if (vblankCounter >= 1u)
-            {
-                s_lastCompletedFrameTp = nowVb;
             }
         }
 

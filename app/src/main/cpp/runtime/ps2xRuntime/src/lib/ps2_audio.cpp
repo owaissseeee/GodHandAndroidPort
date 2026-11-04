@@ -485,7 +485,7 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
     {
         Impl &d = *m_impl;
         const auto now = std::chrono::steady_clock::now();
-        gap = d.lastSubmit != std::chrono::steady_clock::time_point{} && now - d.lastSubmit > std::chrono::milliseconds(50);
+        gap = d.lastSubmit != std::chrono::steady_clock::time_point{} && now - d.lastSubmit > std::chrono::milliseconds(250);
         if (d.lastSubmit != std::chrono::steady_clock::time_point{})
             d.longestGap = std::max(d.longestGap, std::chrono::duration<double>(now - d.lastSubmit).count());
         if (gap)
@@ -519,8 +519,9 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
             }
             d.rateFrames = 0u;
             d.rateStart = now;
-            // On only after two slow windows in a row (1 s): a real slowdown, not a single dip.
-            if (!d.stretching && d.speed < 0.97 && d.slowWindows >= 2u)
+            // Engage TimeStretch after 1 slow window if a substantial drop (speed < 0.90, e.g. 15-25 FPS),
+            // or 2 slow windows for minor dips (< 0.97). Keeps dialogue in 1:1 sync during cutscene FPS drops.
+            if (!d.stretching && ((d.speed < 0.90 && d.slowWindows >= 1u) || (d.speed < 0.97 && d.slowWindows >= 2u)))
             {
                 d.stretching = true;
                 d.stretch.reset();
