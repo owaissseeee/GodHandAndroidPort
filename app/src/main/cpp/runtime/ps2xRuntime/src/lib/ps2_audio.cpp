@@ -275,8 +275,8 @@ struct PS2AudioBackend::Impl
         // Transparent micro-rate control: clamped strictly to [0.990, 1.010] (+/-1.0%).
         // Preserves crystal-clear authentic musical pitch and tempo during any frame pacing dips,
         // while the 65,536-sample (~682 ms) ring buffer absorbs transient frame stalls.
-        // Strictly cap upper ratio at 1.005 so audio NEVER speeds up or shifts pitch high!
-        const double ratio = std::clamp(1.0 + fill * 0.04, 0.94, 1.005);
+        // Micro-rate control: dynamically drain up to +6% if buffer builds up, down to -8% on slowdown.
+        const double ratio = std::clamp(1.0 + fill * 0.05, 0.92, 1.06);
         for (size_t frame = 0u; frame < frames; ++frame)
         {
             if (owner->primed && owner->queued < 4u)
@@ -545,7 +545,7 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
             // Tempo = speed, nudged by up to 10% to bring the queue back to its target.
             const double fill = (static_cast<double>(d.queued + d.stretch.heldSamples()) - static_cast<double>(Impl::kRateTargetSamples)) /
                                 static_cast<double>(Impl::kRateTargetSamples);
-            const double tempo = std::clamp(d.speed * (1.0 + std::clamp(0.2 * fill, -0.1, 0.1)), 0.5, 1.05);
+            const double tempo = std::clamp(d.speed * (1.0 + std::clamp(0.2 * fill, -0.15, 0.15)), 0.25, 1.05);
             d.stretched.clear();
             d.stretch.push(samples);
             d.stretch.process(tempo, d.stretched);
@@ -563,8 +563,8 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
         samples = samples.last(Impl::kRingSamples);
     if (m_impl->queued + samples.size() > Impl::kRingSamples)
     {
-        const size_t drop = std::min(m_impl->queued, std::max(m_impl->queued + samples.size() - Impl::kRingSamples,
-                                                          m_impl->queued > 4096u ? m_impl->queued - 4096u : 0u));
+        const size_t overflow = (m_impl->queued + samples.size()) - Impl::kRingSamples;
+        const size_t drop = std::min(m_impl->queued, overflow);
         m_impl->read = (m_impl->read + drop) % Impl::kRingSamples;
         m_impl->queued -= drop;
         m_impl->droppedFrames += drop / 2u;
