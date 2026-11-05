@@ -685,8 +685,7 @@ void EeScheduler::run()
 
         g_loopStats.lastPc = context.pc;
 
-        // Real VBlank Wait Loop in God Hand (0x0030ADD8..0x0030ADEC for combat, 0x0030AD98..0x0030ADAC for cutscenes in func_0030AC40,
-        // and 0x003B0170..0x003B0228 for VSync / VSync2 in sceGsSyncV):
+        // Real VBlank Wait Loop in God Hand (0x0030ADD8..0x0030ADEC for combat, 0x0030AD98..0x0030ADAC for cutscenes in func_0030AC40):
         // Only active during gameplay (m_vsyncTick > 240u) so boot sequence is 100% clean.
         if (m_rdram != nullptr && m_vsyncTick > 240u)
         {
@@ -710,10 +709,6 @@ void EeScheduler::run()
                 {
                     skipIdleCycles();
                 }
-            }
-            else if (context.pc >= 0x003B0208u && context.pc <= 0x003B0224u)
-            {
-                skipIdleCycles();
             }
         }
         if (checkpointDue(kGuestDispatchCycles))
@@ -781,10 +776,6 @@ void EeScheduler::run()
                 {
                     skipIdleCycles();
                 }
-            }
-            else if (context.pc >= 0x003B0208u && context.pc <= 0x003B0224u)
-            {
-                skipIdleCycles();
             }
         }
 
@@ -886,10 +877,6 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
                 {
                     skipIdleCycles();
                 }
-            }
-            else if (pc >= 0x003B0208u && pc <= 0x003B0224u)
-            {
-                skipIdleCycles();
             }
         }
     }
