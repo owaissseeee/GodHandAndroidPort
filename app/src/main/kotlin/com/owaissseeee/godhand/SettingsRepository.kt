@@ -110,14 +110,13 @@ class SettingsRepository(context: Context) {
 
     var fpsIdx: Int
         get() {
-            if (!prefs.contains("fps_idx_v5")) {
-                val def = if (isCortexA53OrPotato) 1 else 0
-                putInt("fps_idx_v5", def)
-                return def
+            if (!prefs.contains("fps_idx_v6")) {
+                putInt("fps_idx_v6", 1) // Default 30 FPS Authentic PS2 Console Lock on all devices
+                return 1
             }
-            return prefs.getInt("fps_idx_v5", 0).coerceIn(0, 1)
+            return prefs.getInt("fps_idx_v6", 1).coerceIn(0, 1)
         }
-        set(value) = putInt("fps_idx_v5", value.coerceIn(0, 1))
+        set(value) = putInt("fps_idx_v6", value.coerceIn(0, 1))
 
     var frameskipIdx: Int
         get() = prefs.getInt("frameskip_idx_v2", 1).coerceIn(0, 2) // 0: Off, 1: Auto (Skip on Lag - Recommended), 2: Skip 1 Frame (2x Speedup)

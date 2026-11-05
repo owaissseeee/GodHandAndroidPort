@@ -1875,7 +1875,6 @@ bool PS2Runtime::dispatchGuestBranch(uint8_t *rdram,
             const uint32_t divider = rdram[0x00747A09u];
             if (divider > 0u && vblankCounter < divider)
             {
-                advanceIopEeCycles(4096u);
                 m_eeScheduler->skipIdleCycles();
             }
         }

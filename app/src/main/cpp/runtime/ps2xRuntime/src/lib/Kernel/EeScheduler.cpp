@@ -2893,44 +2893,6 @@ void EeScheduler::processEvent(const EeEvent &event)
         ps2x::asyncvif::traceEvent('V', static_cast<uint32_t>(m_eeCycle >> 10)); // EE cycle / 1024
         ps2x::pnach::applyContinuous(m_rdram); // PS2X_PNACH patch=1 lines, at every vblank like PCSX2 (also after a load)
 
-        // Adaptive Real-Time VBlank Compensation & 2x Engine Frameskip:
-        if (m_rdram != nullptr && m_vsyncTick > 240u)
-        {
-            uint32_t sta = 0u;
-            std::memcpy(&sta, m_rdram + 0x00747A84u, sizeof(sta));
-            const bool isCutscene = (sta & 0x20000000u) != 0u;
-
-            static auto s_lastCompletedFrameTp = std::chrono::steady_clock::now();
-            const auto nowVb = std::chrono::steady_clock::now();
-            uint32_t vblankCounter = 0u;
-            std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
-            const uint32_t divider = isCutscene ? m_rdram[0x00747A10u] : m_rdram[0x00747A09u];
-            const int fsMode = pcsx2gs_get_frameskip();
-
-            if (fsMode == 2 && !isCutscene) // 1 Frame Skip (2x Engine Speedup in combat)
-            {
-                // Advance vblankCounter to divider every single VBlank!
-                // The EE game engine runs at full 2x speed (60 FPS logic), while the GS presents 30 FPS.
-                vblankCounter = (vblankCounter >= divider) ? 0u : divider;
-                std::memcpy(m_rdram + 0x00753D80u, &vblankCounter, sizeof(vblankCounter));
-                s_lastCompletedFrameTp = nowVb;
-            }
-            else if (!isCutscene && vblankCounter == 0u && divider >= 2u)
-            {
-                const double frameElapsedMs = std::chrono::duration<double, std::milli>(nowVb - s_lastCompletedFrameTp).count();
-                if (frameElapsedMs >= 16.0)
-                {
-                    vblankCounter = divider - 1u;
-                    std::memcpy(m_rdram + 0x00753D80u, &vblankCounter, sizeof(vblankCounter));
-                    s_lastCompletedFrameTp = nowVb;
-                }
-            }
-            else if (vblankCounter >= 1u)
-            {
-                s_lastCompletedFrameTp = nowVb;
-            }
-        }
-
         ps2xRaiseIntcStat(1u << 2); // INTC VBON
         ++m_vsyncTick;
         m_runtime.memory().gs().vsyncTick.store(m_vsyncTick, std::memory_order_release);
