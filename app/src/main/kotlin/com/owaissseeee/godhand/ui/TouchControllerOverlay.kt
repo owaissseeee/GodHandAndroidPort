@@ -217,7 +217,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
     }
     private val texturePaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
     private val textureActivePaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG).apply {
-        colorFilter = PorterDuffColorFilter(0x7764748B.toInt(), PorterDuff.Mode.SRC_ATOP)
+        colorFilter = PorterDuffColorFilter(0x88000000.toInt(), PorterDuff.Mode.SRC_ATOP)
     }
 
     // PS2 / God Hand Button Symbol Specific Paints
@@ -326,7 +326,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
         val textAlpha = (0xEE * alphaNorm).toInt().coerceIn(40, 255)
 
         coreDiskPaint.color = (fillAlpha shl 24) or 0x141014 // Dark Obsidian Core
-        activeGlowPaint.color = (activeAlpha shl 24) or 0x64748B // Sleek Subtle Grey Highlight
+        activeGlowPaint.color = (activeAlpha shl 24) or 0x000000 // Deep Black Pressed Highlight
         outerGoldRingPaint.color = (goldAlpha shl 24) or 0xD4AF37 // Metallic Burnished Gold
         innerBevelRingPaint.color = (goldAlpha shl 24) or 0x92400E // Amber Bronze
         textPaint.color = (textAlpha shl 24) or 0xFFFFFF
