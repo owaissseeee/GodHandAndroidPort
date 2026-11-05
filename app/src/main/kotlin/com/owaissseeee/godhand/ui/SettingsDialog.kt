@@ -458,8 +458,7 @@ class SettingsDialog(
             listOf(
                 "Off (Render Every Frame - Recommended)",
                 "Auto (Skip on Lag/Hitch)",
-                "Skip 1 Frame (2x Engine Speedup)",
-                "Skip 2 Frames (Max Speedup)"
+                "Skip 1 Frame (2x Engine Speedup)"
             ),
             settings.frameskipIdx
         ) { pos ->

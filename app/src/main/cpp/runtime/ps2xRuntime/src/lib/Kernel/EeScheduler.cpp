@@ -20,6 +20,7 @@ bool ps2xHostVsync(std::chrono::steady_clock::time_point &lastVblank, std::chron
 // calling thread's CPU time in ms.
 int ps2xCurrentCoreClass() noexcept;
 double ps2xCurrentThreadCpuMs() noexcept;
+extern "C" int32_t pcsx2gs_get_frameskip(void);
 
 namespace
 {
@@ -710,11 +711,6 @@ void EeScheduler::run()
                     skipIdleCycles();
                 }
             }
-            else if (context.pc >= 0x003B0170u && context.pc <= 0x003B0228u)
-            {
-                skipIdleCycles();
-                ps2xRaiseIntcStat(1u << 2);
-            }
         }
         if (checkpointDue(kGuestDispatchCycles))
         {
@@ -781,11 +777,6 @@ void EeScheduler::run()
                 {
                     skipIdleCycles();
                 }
-            }
-            else if (context.pc >= 0x003B0170u && context.pc <= 0x003B0228u)
-            {
-                skipIdleCycles();
-                ps2xRaiseIntcStat(1u << 2);
             }
         }
 
@@ -2902,36 +2893,41 @@ void EeScheduler::processEvent(const EeEvent &event)
         ps2x::asyncvif::traceEvent('V', static_cast<uint32_t>(m_eeCycle >> 10)); // EE cycle / 1024
         ps2x::pnach::applyContinuous(m_rdram); // PS2X_PNACH patch=1 lines, at every vblank like PCSX2 (also after a load)
 
-        // Adaptive Real-Time VBlank Compensation on the TRUE 32-bit VBlank Counter (0x00753D80):
-        // ONLY active during in-game combat; during cutscenes (Sta::kEvent = 0x20000000 at 0x00747A84),
-        // the game strictly enforces authentic 2-VBlank timing (30 FPS) so dialogue and scene transitions stay in 1:1 lockstep!
+        // Adaptive Real-Time VBlank Compensation & 2x Engine Frameskip:
         if (m_rdram != nullptr && m_vsyncTick > 240u)
         {
             uint32_t sta = 0u;
             std::memcpy(&sta, m_rdram + 0x00747A84u, sizeof(sta));
             const bool isCutscene = (sta & 0x20000000u) != 0u;
 
-            if (!isCutscene)
+            static auto s_lastCompletedFrameTp = std::chrono::steady_clock::now();
+            const auto nowVb = std::chrono::steady_clock::now();
+            uint32_t vblankCounter = 0u;
+            std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
+            const uint32_t divider = isCutscene ? m_rdram[0x00747A10u] : m_rdram[0x00747A09u];
+            const int fsMode = pcsx2gs_get_frameskip();
+
+            if (fsMode == 2 && !isCutscene) // 1 Frame Skip (2x Engine Speedup in combat)
             {
-                static auto s_lastCompletedFrameTp = std::chrono::steady_clock::now();
-                const auto nowVb = std::chrono::steady_clock::now();
-                uint32_t vblankCounter = 0u;
-                std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
-                const uint32_t divider = m_rdram[0x00747A09u];
-                if (vblankCounter == 0u && divider >= 2u)
+                // Advance vblankCounter to divider every single VBlank!
+                // The EE game engine runs at full 2x speed (60 FPS logic), while the GS presents 30 FPS.
+                vblankCounter = (vblankCounter >= divider) ? 0u : divider;
+                std::memcpy(m_rdram + 0x00753D80u, &vblankCounter, sizeof(vblankCounter));
+                s_lastCompletedFrameTp = nowVb;
+            }
+            else if (!isCutscene && vblankCounter == 0u && divider >= 2u)
+            {
+                const double frameElapsedMs = std::chrono::duration<double, std::milli>(nowVb - s_lastCompletedFrameTp).count();
+                if (frameElapsedMs >= 16.0)
                 {
-                    const double frameElapsedMs = std::chrono::duration<double, std::milli>(nowVb - s_lastCompletedFrameTp).count();
-                    if (frameElapsedMs >= 18.0)
-                    {
-                        vblankCounter = divider - 1u;
-                        std::memcpy(m_rdram + 0x00753D80u, &vblankCounter, sizeof(vblankCounter));
-                        s_lastCompletedFrameTp = nowVb;
-                    }
-                }
-                else if (vblankCounter >= 1u)
-                {
+                    vblankCounter = divider - 1u;
+                    std::memcpy(m_rdram + 0x00753D80u, &vblankCounter, sizeof(vblankCounter));
                     s_lastCompletedFrameTp = nowVb;
                 }
+            }
+            else if (vblankCounter >= 1u)
+            {
+                s_lastCompletedFrameTp = nowVb;
             }
         }
 

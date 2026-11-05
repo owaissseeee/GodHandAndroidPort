@@ -2589,8 +2589,8 @@ bool GSDeviceVK::Create(GSVSyncMode vsync_mode, bool allow_present_throttle)
 					if (GetTFXPipeline(p))
 						compiled++;
 
-					// Prewarm ROAA feedback loop for alpha, additive, and modulated draws
-					if (m_features.framebuffer_fetch && (tfx == 0 || cfg.src_factor == 6))
+					// Prewarm feedback loop for alpha, additive, and modulated particle draws (prevents 2x particle stutter)
+					if (tfx == 0 || cfg.src_factor == 6 || cfg.src_factor == 14)
 					{
 						p.feedback_loop_flags = FeedbackLoopFlag_ReadAndWriteRT;
 						if (GetTFXPipeline(p))

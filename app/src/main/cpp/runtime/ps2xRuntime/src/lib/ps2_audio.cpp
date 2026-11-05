@@ -266,11 +266,7 @@ struct PS2AudioBackend::Impl
         std::lock_guard<std::mutex> lock(owner->pcmMutex);
         owner->requestedFrames += frames;
         
-        if (ps2_is_in_cutscene() && !ps2_is_cutscene_ready_for_audio())
-        {
-            // Mute / keep silence until the first visual frame of the cutscene is presented to screen
-            return;
-        }
+
         if (!owner->primed && owner->queued >= kPrimeSamples)
         {
             owner->primed = true;
@@ -516,11 +512,7 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
     }
     if (!m_impl->streamReady)
         return;
-    if (ps2_is_in_cutscene() && !ps2_is_cutscene_ready_for_audio())
-    {
-        // Drop audio samples during cutscene loading/setup so no speech queue accumulates before visual presentation
-        return;
-    }
+
     m_impl->producedFrames += samples.size() / 2u;
     // PS2X_AUDIO_STRETCH (default on): below ~97% speed (measured from how fast the emulated SPU2 makes audio over
     // 0.5 s windows) the audio goes through TimeStretch; back above 99% it is passed through untouched again.

@@ -702,11 +702,6 @@ void GSRenderer::VSync(u32 field, bool registers_written, bool idle_frame)
 				if ((s_fs_frame_counter % 2) != 0)
 					next_frame_skip = true;
 			}
-			else if (fs_mode >= 3) // Skip 2 Frames (Max Speedup)
-			{
-				if ((s_fs_frame_counter % 3) != 0)
-					next_frame_skip = true;
-			}
 		}
 		else
 		{

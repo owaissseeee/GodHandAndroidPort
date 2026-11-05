@@ -1125,9 +1125,10 @@ namespace godhand
                         {
                             g_cutsceneFirstFrameDrawn.store(true, std::memory_order_relaxed);
                         }
+                        float flipDeltaMs = 0.0f;
                         if (s_lastCutsceneFlipTp.time_since_epoch().count() > 0)
                         {
-                            const float flipDeltaMs = std::chrono::duration<float, std::milli>(nowFlip - s_lastCutsceneFlipTp).count();
+                            flipDeltaMs = std::chrono::duration<float, std::milli>(nowFlip - s_lastCutsceneFlipTp).count();
                             if (flipDeltaMs >= 10.0f)
                             {
                                 const float cutsceneSpeed = std::clamp(33.333f / flipDeltaMs, 0.15f, 1.05f);
@@ -1137,12 +1138,15 @@ namespace godhand
                         s_lastCutsceneFlipTp = nowFlip;
 
                         static uint32_t s_cutsceneLogCounter = 0;
-                        if ((++s_cutsceneLogCounter % 60) == 0)
+                        if ((++s_cutsceneLogCounter % 20) == 0)
                         {
 #if defined(__ANDROID__)
+                            const float cFps = (flipDeltaMs > 0.1f) ? (1000.0f / flipDeltaMs) : 0.0f;
                             __android_log_print(ANDROID_LOG_INFO, "GodHandCutscene",
-                                "[Cutscene] Frame: %llu | Speed: %.2f | ActivePlay: %d | FirstFrameDrawn: %d | VisualFrames: %u",
+                                "[CutsceneTelemetry] Frame: %llu | CutscenePresent: %4.1f FPS (%5.2f ms) | SpeedRatio: %.2f | ActivePlay: %d | FirstFrameDrawn: %d | VisualFrames: %u",
                                 (unsigned long long)s_totalGameFrames,
+                                cFps,
+                                flipDeltaMs,
                                 g_cutsceneSpeedRatio.load(std::memory_order_relaxed),
                                 g_cutsceneActivePlaying.load(std::memory_order_relaxed) ? 1 : 0,
                                 g_cutsceneFirstFrameDrawn.load(std::memory_order_relaxed) ? 1 : 0,
