@@ -33,6 +33,22 @@
 #include <thread>
 #include <unordered_map>
 #include <vector>
+#if defined(__ANDROID__)
+#include <android/log.h>
+#endif
+
+extern "C" {
+    float ps2_get_game_speed_ratio(void);
+    void ps2_audio_flush_cutscene(void);
+    std::atomic<bool> g_inCutscene{false};
+    std::atomic<float> g_cutsceneSpeedRatio{1.0f};
+    std::atomic<bool> g_cutsceneFirstFrameDrawn{false};
+    std::atomic<bool> g_cutsceneActivePlaying{false};
+
+    bool ps2_is_in_cutscene(void) { return g_inCutscene.load(std::memory_order_relaxed); }
+    float ps2_get_cutscene_speed_ratio(void) { return g_cutsceneSpeedRatio.load(std::memory_order_relaxed); }
+    bool ps2_is_cutscene_ready_for_audio(void) { return g_cutsceneFirstFrameDrawn.load(std::memory_order_relaxed); }
+}
 
 namespace godhand
 {
@@ -1093,7 +1109,55 @@ namespace godhand
                     godhand_perf_record_game_frame();
                     godhand::notifyFrameHeartbeat();
                     ++s_totalGameFrames;
-                    s_lastFrameFlipTp = std::chrono::steady_clock::now();
+                    const auto nowFlip = std::chrono::steady_clock::now();
+                    s_lastFrameFlipTp = nowFlip;
+
+                    static std::chrono::steady_clock::time_point s_lastCutsceneFlipTp{};
+                    const bool isCutscene = (rdram && (FAST_READ32(0x747A84u) & 0x20000000u) != 0);
+                    const bool wasInCutscene = g_inCutscene.load(std::memory_order_relaxed);
+
+                    static uint32_t s_cutsceneVisualFrames = 0;
+                    if (isCutscene)
+                    {
+                        g_inCutscene.store(true, std::memory_order_relaxed);
+                        s_cutsceneVisualFrames++;
+                        if (g_cutsceneActivePlaying.load(std::memory_order_relaxed) || s_cutsceneVisualFrames >= 3)
+                        {
+                            g_cutsceneFirstFrameDrawn.store(true, std::memory_order_relaxed);
+                        }
+                        if (s_lastCutsceneFlipTp.time_since_epoch().count() > 0)
+                        {
+                            const float flipDeltaMs = std::chrono::duration<float, std::milli>(nowFlip - s_lastCutsceneFlipTp).count();
+                            if (flipDeltaMs >= 10.0f)
+                            {
+                                const float cutsceneSpeed = std::clamp(33.333f / flipDeltaMs, 0.15f, 1.05f);
+                                g_cutsceneSpeedRatio.store(cutsceneSpeed, std::memory_order_relaxed);
+                            }
+                        }
+                        s_lastCutsceneFlipTp = nowFlip;
+
+                        static uint32_t s_cutsceneLogCounter = 0;
+                        if ((++s_cutsceneLogCounter % 60) == 0)
+                        {
+#if defined(__ANDROID__)
+                            __android_log_print(ANDROID_LOG_INFO, "GodHandCutscene",
+                                "[Cutscene] Frame: %llu | Speed: %.2f | ActivePlay: %d | FirstFrameDrawn: %d | VisualFrames: %u",
+                                (unsigned long long)s_totalGameFrames,
+                                g_cutsceneSpeedRatio.load(std::memory_order_relaxed),
+                                g_cutsceneActivePlaying.load(std::memory_order_relaxed) ? 1 : 0,
+                                g_cutsceneFirstFrameDrawn.load(std::memory_order_relaxed) ? 1 : 0,
+                                s_cutsceneVisualFrames);
+#endif
+                        }
+                    }
+                    else if (wasInCutscene)
+                    {
+                        s_cutsceneVisualFrames = 0;
+                        g_inCutscene.store(false, std::memory_order_relaxed);
+                        g_cutsceneActivePlaying.store(false, std::memory_order_relaxed);
+                        g_cutsceneFirstFrameDrawn.store(false, std::memory_order_relaxed);
+                        s_lastCutsceneFlipTp = {};
+                    }
                     if (rdram)
                     {
                         const uint32_t fullFlickerOff = 0x80u;
@@ -1111,6 +1175,72 @@ namespace godhand
         }
 
 // DevSeville 60 FPS GS Patches removed in favor of kamite 60 FPS suite
+
+        constexpr uint32_t kEventPlayStart = 0x00296458u;
+        if (runtime.hasFunction(kEventPlayStart))
+        {
+            FunctionHooks::instance().observeEntry(
+                kEventPlayStart,
+                "cutscene_play_start_gate",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    g_inCutscene.store(true, std::memory_order_relaxed);
+                    g_cutsceneActivePlaying.store(false, std::memory_order_relaxed);
+                    g_cutsceneFirstFrameDrawn.store(false, std::memory_order_relaxed);
+                    ps2_audio_flush_cutscene();
+                    const float curRatio = ::ps2_get_game_speed_ratio();
+                    g_cutsceneSpeedRatio.store(std::clamp(curRatio, 0.15f, 1.05f), std::memory_order_relaxed);
+#if defined(__ANDROID__)
+                    __android_log_print(ANDROID_LOG_INFO, "GodHandCutscene",
+                        "[CutsceneGate] cEvent_playStart (0x00296458): audio ring flushed, gating audio until visual scene begins playing, initial speed: %.2f", curRatio);
+#endif
+                });
+        }
+
+        constexpr uint32_t kEventMovePlayInit = 0x00296CA8u;
+        if (runtime.hasFunction(kEventMovePlayInit))
+        {
+            FunctionHooks::instance().observeEntry(
+                kEventMovePlayInit,
+                "cutscene_move_play_init",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    g_inCutscene.store(true, std::memory_order_relaxed);
+                    g_cutsceneActivePlaying.store(true, std::memory_order_relaxed);
+#if defined(__ANDROID__)
+                    __android_log_print(ANDROID_LOG_INFO, "GodHandCutscene",
+                        "[CutsceneGate] cEvent_movePlayInit (0x00296CA8): cutscene scene initialized, activating visual frame sync");
+#endif
+                });
+        }
+
+        constexpr uint32_t kEventMovePlayStep = 0x00296DD8u;
+        if (runtime.hasFunction(kEventMovePlayStep))
+        {
+            FunctionHooks::instance().observeEntry(
+                kEventMovePlayStep,
+                "cutscene_move_play_step",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    g_inCutscene.store(true, std::memory_order_relaxed);
+                    g_cutsceneActivePlaying.store(true, std::memory_order_relaxed);
+                });
+        }
+
+        constexpr uint32_t kEventEndPlay = 0x00297128u;
+        if (runtime.hasFunction(kEventEndPlay))
+        {
+            FunctionHooks::instance().observeEntry(
+                kEventEndPlay,
+                "cutscene_play_end_ungate",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    g_inCutscene.store(false, std::memory_order_relaxed);
+                    g_cutsceneActivePlaying.store(false, std::memory_order_relaxed);
+                    g_cutsceneFirstFrameDrawn.store(false, std::memory_order_relaxed);
+                    g_cutsceneSpeedRatio.store(1.0f, std::memory_order_relaxed);
+#if defined(__ANDROID__)
+                    __android_log_print(ANDROID_LOG_INFO, "GodHandCutscene",
+                        "[CutsceneGate] cEvent_endPlay (0x00297128): cutscene ended, audio ungated");
+#endif
+                });
+        }
 
         // True Invulnerability & Super-Armor:
         // Hook cOmBase_checkDamage (0x001B7380). If victim == playerPtr, return 0!

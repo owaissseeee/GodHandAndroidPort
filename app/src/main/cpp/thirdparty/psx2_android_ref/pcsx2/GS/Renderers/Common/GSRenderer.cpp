@@ -22,6 +22,10 @@
 #include "common/StringUtil.h"
 #include "common/Timer.h"
 
+#if defined(__ANDROID__)
+#include <android/log.h>
+#endif
+
 #include "fmt/format.h"
 #include "IconsFontAwesome.h"
 
@@ -934,6 +938,19 @@ void GSRenderer::VSync(u32 field, bool registers_written, bool idle_frame)
 
 	if (GSConfig.ShouldDump(s_n, g_perfmon.GetFrame()) && GSConfig.SaveTransferImages)
 		DumpTransferImages();
+#if defined(__ANDROID__)
+	static uint32_t s_logFrameCounter = 0;
+	if ((++s_logFrameCounter % 60) == 0)
+	{
+		__android_log_print(ANDROID_LOG_INFO, "GodHandGS",
+			"[Telemetry] Frame: %d | DrawN: %lld | Transfers: %lld | SkippedFrame: %d | SkipDraws: %d",
+			g_perfmon.GetFrame(),
+			(long long)s_n,
+			(long long)s_transfer_n,
+			skip_frame ? 1 : 0,
+			m_skip_current_draws ? 1 : 0);
+	}
+#endif
 }
 
 void GSRenderer::QueueSnapshot(const std::string& path, const u32 gsdump_frames)

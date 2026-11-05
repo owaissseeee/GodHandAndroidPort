@@ -2511,61 +2511,92 @@ bool GSDeviceVK::Create(GSVSyncMode vsync_mode, bool allow_present_throttle)
 	InitializeState();
 
 #if defined(__ANDROID__)
-	__android_log_print(ANDROID_LOG_INFO, "GodHandGS", "[ShaderPrewarm] Prewarming God Hand TFX pipelines & shaders...");
+	__android_log_print(ANDROID_LOG_INFO, "GodHandGS", "[ShaderPrewarm] Prewarming God Hand TFX pipelines & shaders (geometry & heavy particle modes)...");
 	uint32_t compiled = 0;
 
-	// Common God Hand topologies:
-	// 0 = Triangle (geometry & characters), 1 = Sprite (HUD, 2D overlays, explosions, particles)
-	for (u8 topo = 0; topo <= 1; ++topo)
+	struct PrewarmConfig {
+		u8 blend_enable;
+		u8 src_factor;
+		u8 dst_factor;
+		u8 zwe;
+		u8 ztst;
+		u8 wrgba;
+		u8 blend_hw;
+	};
+
+	static constexpr PrewarmConfig s_prewarm_configs[] = {
+		// Opaque world, terrain, characters, and skybox (blending OFF)
+		{ 0,  0,  0, 1, 2, 0x0F, 1 }, // Opaque geometry: blend disabled, ZWrite ON, GEQUAL
+		{ 0,  0,  0, 1, 1, 0x0F, 1 }, // Opaque UI quad: blend disabled, ZWrite ON, ALWAYS
+		{ 0,  0,  0, 0, 1, 0x0F, 1 }, // Background clear / quad: blend disabled, ZWrite OFF, ALWAYS
+		{ 0,  0,  0, 0, 2, 0x0F, 1 }, // Depth test GEQUAL without ZWrite
+
+		// Standard geometry & alpha blend (characters, world, transparent objects)
+		{ 1,  6,  7, 1, 2, 0x0F, 1 }, // SRC_ALPHA, ONE_MINUS_SRC_ALPHA, ZWrite ON, GEQUAL, WRGBA 0x0F
+		{ 1,  6,  7, 0, 2, 0x0F, 1 }, // SRC_ALPHA, ONE_MINUS_SRC_ALPHA, ZWrite OFF, GEQUAL, WRGBA 0x0F
+		{ 1,  6,  7, 0, 2, 0x07, 1 }, // SRC_ALPHA, ONE_MINUS_SRC_ALPHA, ZWrite OFF, GEQUAL, WRGBA 0x07 (RGB only)
+
+		// Heavy particles, fire, sparks, God Reel auras, shockwaves
+		{ 1,  6, 14, 0, 2, 0x0F, 1 }, // SRC_ALPHA, ONE, ZWrite OFF, GEQUAL, WRGBA 0x0F (Additive Alpha - Fire/Sparks)
+		{ 1,  6, 14, 0, 2, 0x07, 1 }, // SRC_ALPHA, ONE, ZWrite OFF, GEQUAL, WRGBA 0x07 (Additive Alpha, RGB only)
+		{ 1, 14, 14, 0, 2, 0x0F, 1 }, // ONE, ONE, ZWrite OFF, GEQUAL, WRGBA 0x0F (Full Additive - Explosions)
+		{ 1, 14,  7, 0, 2, 0x0F, 1 }, // ONE, ONE_MINUS_SRC_ALPHA, ZWrite OFF, GEQUAL, WRGBA 0x0F (Premultiplied Alpha)
+
+		// Full-screen flashes, UI overlays, HUD quads
+		{ 1, 14, 14, 0, 1, 0x0F, 1 }, // ONE, ONE, ZWrite OFF, ALWAYS, WRGBA 0x0F (Screen flash)
+		{ 1,  6,  7, 0, 1, 0x0F, 1 }, // SRC_ALPHA, ONE_MINUS_SRC_ALPHA, ZWrite OFF, ALWAYS, WRGBA 0x0F (HUD / 2D screen overlay)
+
+		// Software blend fallback (blend_hw = 0)
+		{ 1,  6, 14, 0, 2, 0x0F, 0 }, // Additive with programmable fallback
+		{ 1,  6,  7, 0, 2, 0x0F, 0 }, // Alpha with programmable fallback
+	};
+
+	// Prewarm topologies: 2 = Triangle (99.9% of all PS2 3D & 2D draws), 1 = Line
+	for (u8 topo : {2, 1})
 	{
-		// Common TFX modes: 0 = Modulate, 1 = Decal, 2 = Highlight, 3 = Highlight2
-		for (u8 tfx = 0; tfx <= 3; ++tfx)
+		// Common TFX modes: 0 = Modulate, 1 = Decal, 2 = Highlight, 4 = None (untextured)
+		for (u8 tfx : {0, 1, 2, 4})
 		{
 			for (u8 fog = 0; fog <= 1; ++fog)
 			{
-				PipelineSelector p;
-				p.topology = topo;
-				p.rt = true;
-				p.ds = true;
-				p.vs.expand = GSHWDrawConfig::VSExpand::None;
-				p.vs.point_size = false;
-
-				p.ps.tfx = tfx;
-				p.ps.tcc = 1;
-				p.ps.fog = fog;
-				p.ps.blend_hw = 1;
-				p.ps.fst = 0;
-				p.ps.date = 0;
-				p.ps.colclip_hw = 0;
-
-				// Standard alpha blend
-				p.bs.enable = 1;
-				p.bs.src_factor = 6; // SRC_ALPHA
-				p.bs.dst_factor = 7; // ONE_MINUS_SRC_ALPHA
-				p.bs.op = 0;         // ADD
-				p.cms.wrgba = 0x0F;
-
-				p.dss.zwe = true;
-				p.dss.ztst = 2; // GEQUAL
-
-				// Prewarm standard draw
-				if (GetTFXPipeline(p))
-					compiled++;
-
-				// Prewarm particle / explosion ROAA feedback loop
-				if (m_features.framebuffer_fetch)
+				for (const auto& cfg : s_prewarm_configs)
 				{
-					p.feedback_loop_flags = FeedbackLoopFlag_ReadAndWriteRT;
+					PipelineSelector p;
+					p.topology = topo;
+					p.rt = true;
+					p.ds = true;
+					p.vs.expand = GSHWDrawConfig::VSExpand::None;
+					p.vs.point_size = false;
+
+					p.ps.tfx = tfx;
+					p.ps.tcc = 1;
+					p.ps.fog = fog;
+					p.ps.blend_hw = cfg.blend_hw;
+					p.ps.fst = 0;
+					p.ps.date = 0;
+					p.ps.colclip_hw = 0;
+
+					p.bs.enable = cfg.blend_enable;
+					p.bs.src_factor = cfg.src_factor;
+					p.bs.dst_factor = cfg.dst_factor;
+					p.bs.op = 0; // ADD
+					p.cms.wrgba = cfg.wrgba;
+
+					p.dss.zwe = (cfg.zwe != 0);
+					p.dss.ztst = cfg.ztst;
+
+					p.feedback_loop_flags = FeedbackLoopFlag_None;
 					if (GetTFXPipeline(p))
 						compiled++;
-				}
 
-				// Prewarm additive particle explosion blend (One, One)
-				p.bs.src_factor = 14; // ONE
-				p.bs.dst_factor = 14; // ONE
-				p.feedback_loop_flags = FeedbackLoopFlag_None;
-				if (GetTFXPipeline(p))
-					compiled++;
+					// Prewarm ROAA feedback loop for alpha, additive, and modulated draws
+					if (m_features.framebuffer_fetch && (tfx == 0 || cfg.src_factor == 6))
+					{
+						p.feedback_loop_flags = FeedbackLoopFlag_ReadAndWriteRT;
+						if (GetTFXPipeline(p))
+							compiled++;
+					}
+				}
 			}
 		}
 	}
@@ -2875,13 +2906,7 @@ void GSDeviceVK::EndPresent()
 	MoveToNextCommandBuffer();
 	InvalidateCachedState();
 
-#if defined(__ANDROID__)
-	static uint32_t s_flushFrameCounter = 0;
-	if ((++s_flushFrameCounter % 300) == 0 && g_vulkan_shader_cache)
-	{
-		g_vulkan_shader_cache->FlushPipelineCache();
-	}
-#endif
+
 }
 
 bool GSDeviceVK::IsPresenting() const
@@ -5753,6 +5778,12 @@ VkPipeline GSDeviceVK::GetTFXPipeline(const PipelineSelector& p)
 	const auto it = m_tfx_pipelines.find(p);
 	if (it != m_tfx_pipelines.end())
 		return it->second;
+
+#if defined(__ANDROID__)
+	__android_log_print(ANDROID_LOG_WARN, "GodHandGS",
+		"[ShaderLive] LIVE Pipeline Compilation! Topo: %u TFX: %u Fog: %u BlendHW: %u Blend: (%u, %u) Ztst: %u Zwe: %u Feedback: %u WRGBA: 0x%02X",
+		p.topology, p.ps.tfx, p.ps.fog, p.ps.blend_hw, p.bs.src_factor, p.bs.dst_factor, p.dss.ztst, p.dss.zwe, p.feedback_loop_flags, p.cms.wrgba);
+#endif
 
 	VkPipeline pipeline = CreateTFXPipeline(p);
 	m_tfx_pipelines.emplace(p, pipeline);

@@ -1,6 +1,8 @@
 #include "runtime/ps2_audio.h"
 
 extern "C" float ps2_get_game_speed_ratio(void);
+extern "C" bool ps2_is_in_cutscene(void);
+extern "C" bool ps2_is_cutscene_ready_for_audio(void);
 #include "runtime/ps2_memory.h"
 #include "ps2_host_backend.h"
 #include <algorithm>
@@ -263,6 +265,12 @@ struct PS2AudioBackend::Impl
             return;
         std::lock_guard<std::mutex> lock(owner->pcmMutex);
         owner->requestedFrames += frames;
+        
+        if (ps2_is_in_cutscene() && !ps2_is_cutscene_ready_for_audio())
+        {
+            // Mute / keep silence until the first visual frame of the cutscene is presented to screen
+            return;
+        }
         if (!owner->primed && owner->queued >= kPrimeSamples)
         {
             owner->primed = true;
@@ -368,13 +376,17 @@ struct PS2AudioBackend::Impl
 };
 
 PS2AudioBackend::Impl *PS2AudioBackend::Impl::streamOwner = nullptr;
+static PS2AudioBackend *s_activeAudioBackend = nullptr;
 
 PS2AudioBackend::PS2AudioBackend() : m_impl(std::make_unique<Impl>())
 {
+    s_activeAudioBackend = this;
 }
 
 PS2AudioBackend::~PS2AudioBackend()
 {
+    if (s_activeAudioBackend == this)
+        s_activeAudioBackend = nullptr;
     if (m_impl)
     {
         stopAll();
@@ -468,6 +480,32 @@ void PS2AudioBackend::resetPcm()
     m_impl->statsStart = std::chrono::steady_clock::now();
 }
 
+void PS2AudioBackend::flushCutscenePcm()
+{
+    std::lock_guard<std::mutex> lock(m_impl->pcmMutex);
+    m_impl->read = 0u;
+    m_impl->queued = 0u;
+    m_impl->readFraction = 0.0;
+    m_impl->stretch.reset();
+    m_impl->stretched.clear();
+    m_impl->stretching = false;
+    m_impl->primed = false;
+    m_impl->fadePosition = 0;
+    m_impl->gapRemaining = 0;
+    m_impl->lastOutput = {};
+    m_impl->fadeSource = {};
+    m_impl->gapSource = {};
+    m_impl->everPrimed = false;
+}
+
+extern "C" void ps2_audio_flush_cutscene(void)
+{
+    if (s_activeAudioBackend)
+    {
+        s_activeAudioBackend->flushCutscenePcm();
+    }
+}
+
 void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
 {
     std::lock_guard<std::mutex> lock(m_impl->pcmMutex);
@@ -478,6 +516,11 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
     }
     if (!m_impl->streamReady)
         return;
+    if (ps2_is_in_cutscene() && !ps2_is_cutscene_ready_for_audio())
+    {
+        // Drop audio samples during cutscene loading/setup so no speech queue accumulates before visual presentation
+        return;
+    }
     m_impl->producedFrames += samples.size() / 2u;
     // PS2X_AUDIO_STRETCH (default on): below ~97% speed (measured from how fast the emulated SPU2 makes audio over
     // 0.5 s windows) the audio goes through TimeStretch; back above 99% it is passed through untouched again.
@@ -509,7 +552,23 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
         // Ensures TimeStretch responds immediately from the very first sample during cutscenes
         // without waiting for a 0.5s window or getting disabled by dialogue pause gaps.
         const double displaySpeed = static_cast<double>(ps2_get_game_speed_ratio());
-        if (displaySpeed > 0.05 && displaySpeed <= 1.25)
+        const bool inCutscene = ps2_is_in_cutscene();
+        if (inCutscene)
+        {
+            // During cutscenes, lock speed immediately to true display/game speed without sluggish smoothing
+            d.speed = std::clamp(displaySpeed, 0.15, 1.05);
+            if (d.speed < 0.95)
+            {
+                if (!d.stretching)
+                {
+                    d.stretching = true;
+                    d.stretch.reset();
+                    if (d.statsEnabled)
+                        std::fprintf(stderr, "[audio] time-stretch on (cutscene speed %.2f)\n", d.speed);
+                }
+            }
+        }
+        else if (displaySpeed > 0.05 && displaySpeed <= 1.25)
         {
             if (displaySpeed < d.speed)
                 d.speed = std::clamp(d.speed * 0.40 + displaySpeed * 0.60, 0.15, 1.05);
@@ -539,12 +598,15 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
         bool leaving = false;
         if (window >= 0.5)
         {
-            const double measured = static_cast<double>(d.rateFrames) / (window * 48000.0);
-            if (measured > 0.05)
+            if (!inCutscene)
             {
-                const double effective = (displaySpeed > 0.05 && displaySpeed < 1.05) ? std::min(measured, displaySpeed) : measured;
-                d.speed = std::clamp(d.speed * 0.5 + effective * 0.5, 0.15, 1.05);
-                d.slowWindows = d.speed < 0.97 ? d.slowWindows + 1u : 0u;
+                const double measured = static_cast<double>(d.rateFrames) / (window * 48000.0);
+                if (measured > 0.05)
+                {
+                    const double effective = (displaySpeed > 0.05 && displaySpeed < 1.05) ? std::min(measured, displaySpeed) : measured;
+                    d.speed = std::clamp(d.speed * 0.5 + effective * 0.5, 0.15, 1.05);
+                    d.slowWindows = d.speed < 0.97 ? d.slowWindows + 1u : 0u;
+                }
             }
             d.rateFrames = 0u;
             d.rateStart = now;

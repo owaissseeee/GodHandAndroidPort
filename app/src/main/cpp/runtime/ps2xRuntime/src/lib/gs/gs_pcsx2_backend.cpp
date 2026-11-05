@@ -72,12 +72,17 @@ namespace
     std::atomic<float> g_statGameSpeed{100.0f};
     std::atomic<float> g_instantGameSpeed{1.0f};
 
+extern "C" bool ps2_is_in_cutscene(void);
+extern "C" float ps2_get_cutscene_speed_ratio(void);
+
 extern "C" float ps2_get_game_speed_ratio(void) {
+    if (ps2_is_in_cutscene()) {
+        return ps2_get_cutscene_speed_ratio();
+    }
     const float inst = g_instantGameSpeed.load(std::memory_order_relaxed);
     const float gameSpeedPct = g_statGameSpeed.load(std::memory_order_relaxed);
     if (gameSpeedPct > 5.0f && gameSpeedPct <= 120.0f) {
         const float gameSpeedRatio = gameSpeedPct * 0.01f;
-        // When frameskip is active (mode > 0), game throughput is measured by gameSpeedRatio (EE frame rate)
         if (g_frameskipMode.load(std::memory_order_relaxed) > 0) {
             return std::clamp(gameSpeedRatio, 0.15f, 1.05f);
         }

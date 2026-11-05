@@ -2633,7 +2633,26 @@ void GSState::FlushPrim()
 		}
 
 		// Skip draw if Z test is enabled, but set to fail all pixels.
-		const bool skip_draw = (m_context->TEST.ZTE && m_context->TEST.ZTST == ZTST_NEVER) || m_skip_current_draws;
+		bool skip_draw = (m_context->TEST.ZTE && m_context->TEST.ZTST == ZTST_NEVER);
+		if (!skip_draw && m_skip_current_draws)
+		{
+			// Safe Emulator Frameskip:
+			// 1. NEVER skip depth clears (ZTST == ALWAYS with Z write) or color clears (!TME),
+			//    otherwise the depth buffer retains stale Z data and character meshes fail depth test.
+			// 2. NEVER skip 2D sprites (HUD icons, health bars, text, crosshairs) to eliminate HUD blinking.
+			// 3. NEVER skip point or line primitives.
+			// 4. ONLY skip heavy 3D geometry (GS_TRIANGLE_CLASS) drawn with depth testing enabled!
+			const bool is_sprite = (GSUtil::GetPrimClass(PRIM->PRIM) == GS_PRIM_CLASS::GS_SPRITE_CLASS);
+			const bool is_triangle = (GSUtil::GetPrimClass(PRIM->PRIM) == GS_PRIM_CLASS::GS_TRIANGLE_CLASS);
+			const bool is_depth_clear = (!m_context->TEST.ZTE || m_context->TEST.ZTST == ZTST_ALWAYS) && !m_context->ZBUF.ZMSK;
+			const bool is_color_clear = !PRIM->TME && is_sprite;
+			const bool is_3d_test = m_context->TEST.ZTE && (m_context->TEST.ZTST != ZTST_ALWAYS);
+
+			if (is_triangle && is_3d_test && !is_depth_clear && !is_color_clear)
+			{
+				skip_draw = true;
+			}
+		}
 		m_quad_check_valid = false;
 		m_quad_check_valid_shuffle = false;
 		m_drawlist.clear();
