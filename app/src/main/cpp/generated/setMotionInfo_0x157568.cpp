@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -800,7 +801,11 @@ label_15765c:
         ctx->in_delay_slot = true;
         ctx->branch_pc = 0x157658u;
         // 0x15765c: 0x46000000  add.s       $f0, $f0, $f0 (Delay Slot)
+    if (ps2xPatchFlag("fps60")) {
+        /* NOP */
+    } else {
         ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[0]);
+    }
         ctx->in_delay_slot = false;
         ctx->pc = 0x157660u;
         goto label_157660;
@@ -813,7 +818,11 @@ label_15765c:
             ctx->in_delay_slot = true;
             ctx->branch_pc = 0x157658u;
             // 0x15765c: 0x46000000  add.s       $f0, $f0, $f0 (Delay Slot)
+    if (ps2xPatchFlag("fps60")) {
+        /* NOP */
+    } else {
             ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[0]);
+    }
             ctx->in_delay_slot = false;
             ctx->pc = 0x157660u;
             goto label_157660;

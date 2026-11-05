@@ -135,9 +135,19 @@ GSThreadedBackend::GSThreadedBackend(std::unique_ptr<GSRasterBackend> inner)
     // 64 chunks (4 MB) in flight by default instead of 8: the game thread produces draws in bursts (each VU1 job's
     // XGKICK output) and waited for room ~8.6% of the time in Urban Reign's heaviest 4-fighter map while this thread
     // sat idle the rest of the frame (37.6/40.2 -> 44.6 FPS; 256 gives the same as 64).
+#if defined(__ANDROID__) || defined(PLATFORM_ANDROID)
+    m_queueChunkLimit = 4u;
+#else
     m_queueChunkLimit = 64u;
+#endif
     if (const char *limit = std::getenv("PS2X_GS_QUEUE_CHUNKS"))
         m_queueChunkLimit = static_cast<size_t>(std::clamp(std::atoi(limit), 1, static_cast<int>(kMaxPendingChunks)));
+    const char *fifEnv = std::getenv("PS2X_GS_MAX_FRAMES_IN_FLIGHT");
+#if defined(__ANDROID__) || defined(PLATFORM_ANDROID)
+    m_maxFramesInFlight = fifEnv ? static_cast<uint32_t>(std::clamp(std::atoi(fifEnv), 1, 4)) : 1u;
+#else
+    m_maxFramesInFlight = fifEnv ? static_cast<uint32_t>(std::clamp(std::atoi(fifEnv), 1, 4)) : 2u;
+#endif
     m_open.reserve(kPublishBytes + 4096u);
     m_worker = std::thread([this]
                            { WorkerLoop(); });
@@ -151,6 +161,8 @@ GSThreadedBackend::~GSThreadedBackend()
         m_pending.clear();
     }
     m_workCv.notify_all();
+    m_doneCv.notify_all();
+    m_frameDoneCv.notify_all();
     if (m_worker.joinable())
         m_worker.join();
 }
@@ -442,6 +454,12 @@ void GSThreadedBackend::Execute(const std::vector<uint8_t> &chunk, GSPrimitiveBa
             break;
         case Op::VSync:
             m_inner->VSync(readAt<GSVSyncRegs>(payload));
+            {
+                std::lock_guard<std::mutex> lock(m_queueMutex);
+                if (m_framesInFlight.load(std::memory_order_relaxed) > 0u)
+                    m_framesInFlight.fetch_sub(1u, std::memory_order_release);
+            }
+            m_frameDoneCv.notify_all();
             break;
         case Op::GsReset:
             m_inner->GsReset();
@@ -465,7 +483,11 @@ void GSThreadedBackend::Initialize(uint8_t *vram, uint32_t vramSize)
 
 void GSThreadedBackend::Reset()
 {
-    RunOnWorker([&] { m_inner->Reset(); });
+    RunOnWorker([&] {
+        m_inner->Reset();
+        m_framesInFlight.store(0u, std::memory_order_release);
+    });
+    m_frameDoneCv.notify_all();
 }
 
 void GSThreadedBackend::Submit(const GSPrimitiveBatch &batch)
@@ -592,6 +614,14 @@ void GSThreadedBackend::RawGif(const uint8_t *data, uint32_t sizeBytes)
 // The field ends: published at once, so the GS thread presents it without waiting for more GIF data.
 void GSThreadedBackend::VSync(const GSVSyncRegs &regs)
 {
+    {
+        std::unique_lock<std::mutex> lock(m_queueMutex);
+        m_frameDoneCv.wait_for(lock, std::chrono::milliseconds(500), [this] {
+            return m_stop || m_framesInFlight.load(std::memory_order_acquire) < m_maxFramesInFlight;
+        });
+        if (!m_stop && m_framesInFlight.load(std::memory_order_relaxed) < m_maxFramesInFlight)
+            m_framesInFlight.fetch_add(1u, std::memory_order_relaxed);
+    }
     Enqueue(Op::VSync, &regs, sizeof(regs));
     std::lock_guard<std::mutex> lock(m_producerMutex);
     PublishLocked();

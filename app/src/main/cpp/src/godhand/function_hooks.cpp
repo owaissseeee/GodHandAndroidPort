@@ -1,5 +1,7 @@
 #include "godhand/function_hooks.h"
+#include "godhand/frame_patches.h"
 #include "godhand/godhand_perf.h"
+#include "godhand/freeze_watchdog.h"
 #include "godhand/log.h"
 #include "godhand/module_registry.h"
 #include "godhand/sha256.h"
@@ -31,6 +33,22 @@
 #include <thread>
 #include <unordered_map>
 #include <vector>
+#if defined(__ANDROID__)
+#include <android/log.h>
+#endif
+
+extern "C" {
+    float ps2_get_game_speed_ratio(void);
+    void ps2_audio_flush_cutscene(void);
+    std::atomic<bool> g_inCutscene{false};
+    std::atomic<float> g_cutsceneSpeedRatio{1.0f};
+    std::atomic<bool> g_cutsceneFirstFrameDrawn{false};
+    std::atomic<bool> g_cutsceneActivePlaying{false};
+
+    bool ps2_is_in_cutscene(void) { return g_inCutscene.load(std::memory_order_relaxed); }
+    float ps2_get_cutscene_speed_ratio(void) { return g_cutsceneSpeedRatio.load(std::memory_order_relaxed); }
+    bool ps2_is_cutscene_ready_for_audio(void) { return g_cutsceneFirstFrameDrawn.load(std::memory_order_relaxed); }
+}
 
 namespace godhand
 {
@@ -46,6 +64,10 @@ namespace godhand
 
         std::mutex g_mutex;
         std::unordered_map<uint32_t, Hook> g_hooks;
+    }
+
+    namespace
+    {
 
         const char *statusName(ReplacementStatus status)
         {
@@ -1014,6 +1036,7 @@ namespace godhand
 
     void installGameFrameCounter(PS2Runtime &runtime)
     {
+        kamite::installFramePatches(runtime);
         constexpr uint32_t kFlareDepthReadback = 0x003155F8u;
         if (runtime.hasFunction(kFlareDepthReadback))
         {
@@ -1024,35 +1047,55 @@ namespace godhand
                     if (ctx)
                     {
                         ctx->r[2] = _mm_setzero_si128();
+                        ctx->pc = GPR_U32(ctx, 31);
                     }
                 },
                 ReplacementStatus::Native,
                 "bypass flare GS depth readback stall on mobile");
         }
 
-        constexpr uint32_t kVBlankWaitFunc = 0x0030B148u;
-        if (runtime.hasFunction(kVBlankWaitFunc))
+        static std::chrono::steady_clock::time_point s_lastFrameFlipTp{};
+        static uint64_t s_totalGameFrames = 0u;
+
+        // Real VBlank Wait Loop Architecture in God Hand (SLUS_215.03):
+        // - In func_0030AC40, label_30add8 (0x0030ADD8..0x0030ADEC) is the real VBlank wait loop:
+        //     0x0030ADD8: jal  func_002B4BC0          ($ra = 0x0030ADE0)
+        //     0x0030ADE0: lbu  $v1, 0x569($s0)        (reads divider byte rdram[0x00747A09] = 2)
+        //     0x0030ADE4: lw   $v0, 0x3D80($s1)       (reads 32-bit VBlank counter *(uint32_t*)(rdram + 0x00753D80))
+        //     0x0030ADE8: sltu $v0, $v0, $v1          (counter < divider)
+        //     0x0030ADEC: bnez $v0, label_30add8      (loops while *(uint32_t*)(rdram + 0x00753D80) < 2)
+        // - func_0030B148 is the VBlank IRQ callback that increments *(uint32_t*)(rdram + 0x00753D80).
+        // - Hooking func_002B4BC0 (0x002B4BC0) intercepts EVERY iteration of the 0x0030ADD8 wait loop:
+        constexpr uint32_t kVBlankWaitHelper = 0x002B4BC0u;
+        if (runtime.hasFunction(kVBlankWaitHelper))
         {
-            static GuestFunction s_origVBlankWait = runtime.lookupFunction(kVBlankWaitFunc);
-            FunctionHooks::instance().replace(
-                kVBlankWaitFunc,
-                "vblank_wait_idle_skip_fast",
+            FunctionHooks::instance().observeEntry(
+                kVBlankWaitHelper,
+                "vblank_wait_loop_0030add8_skip",
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
-                    if (rt && rdram)
+                    if (!rt || !rdram)
+                        return;
+                    const uint32_t ra = ctx ? GPR_U32(ctx, 31) : 0u;
+                    if ((ra != 0x0030ADE0u && ra != 0x0030ADA0u) || s_totalGameFrames <= 120u)
+                        return;
+
+                    uint32_t vblankCounter = 0u;
+                    std::memcpy(&vblankCounter, rdram + 0x00753D80u, sizeof(vblankCounter));
+                    uint32_t divider = 0u;
+                    if (ra == 0x0030ADA0u)
                     {
-                        uint32_t spins = 0;
-                        while (rdram[0x00747A08u] < rdram[0x00747A09u] &&
-                               !rt->isStopRequested())
-                        {
-                            if (rt->scheduler().skipIdleCycles() == 0u || ++spins > 500u)
-                                break;
-                        }
+                        std::memcpy(&divider, rdram + 0x00747A10u, sizeof(divider));
                     }
-                    if (s_origVBlankWait)
-                        s_origVBlankWait(rdram, ctx, rt);
-                },
-                ReplacementStatus::Native,
-                "lock-free VBlank idle skip for both VBlank #1 and VBlank #2");
+                    else
+                    {
+                        divider = rdram[0x00747A09u];
+                    }
+                    if (divider > 0u && vblankCounter < divider)
+                    {
+                        rt->scheduler().skipIdleCycles();
+                    }
+                });
+            GH_INFO(Gs, "func_002B4BC0 (called by 0x0030ADD8 combat & 0x0030AD98 cutscene VBlank wait loops) hooked with 0x00753D80 compensation + skipIdleCycles()");
         }
 
         constexpr uint32_t kFlipChainBuilder = 0x0030B870u;
@@ -1064,19 +1107,66 @@ namespace godhand
                 "game_frame_counter_fast",
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
                     godhand_perf_record_game_frame();
+                    godhand::notifyFrameHeartbeat();
+                    ++s_totalGameFrames;
+                    const auto nowFlip = std::chrono::steady_clock::now();
+                    s_lastFrameFlipTp = nowFlip;
+
+                    static std::chrono::steady_clock::time_point s_lastCutsceneFlipTp{};
+                    const bool isCutscene = (rdram && (FAST_READ32(0x747A84u) & 0x20000000u) != 0);
+                    const bool wasInCutscene = g_inCutscene.load(std::memory_order_relaxed);
+
+                    static uint32_t s_cutsceneVisualFrames = 0;
+                    if (isCutscene)
+                    {
+                        g_inCutscene.store(true, std::memory_order_relaxed);
+                        s_cutsceneVisualFrames++;
+                        if (g_cutsceneActivePlaying.load(std::memory_order_relaxed) || s_cutsceneVisualFrames >= 3)
+                        {
+                            g_cutsceneFirstFrameDrawn.store(true, std::memory_order_relaxed);
+                        }
+                        float flipDeltaMs = 0.0f;
+                        if (s_lastCutsceneFlipTp.time_since_epoch().count() > 0)
+                        {
+                            flipDeltaMs = std::chrono::duration<float, std::milli>(nowFlip - s_lastCutsceneFlipTp).count();
+                            if (flipDeltaMs >= 10.0f)
+                            {
+                                const float cutsceneSpeed = std::clamp(33.333f / flipDeltaMs, 0.15f, 1.05f);
+                                g_cutsceneSpeedRatio.store(cutsceneSpeed, std::memory_order_relaxed);
+                            }
+                        }
+                        s_lastCutsceneFlipTp = nowFlip;
+
+                        static uint32_t s_cutsceneLogCounter = 0;
+                        if ((++s_cutsceneLogCounter % 20) == 0)
+                        {
+#if defined(__ANDROID__)
+                            const float cFps = (flipDeltaMs > 0.1f) ? (1000.0f / flipDeltaMs) : 0.0f;
+                            __android_log_print(ANDROID_LOG_INFO, "GodHandCutscene",
+                                "[CutsceneTelemetry] Frame: %llu | CutscenePresent: %4.1f FPS (%5.2f ms) | SpeedRatio: %.2f | ActivePlay: %d | FirstFrameDrawn: %d | VisualFrames: %u",
+                                (unsigned long long)s_totalGameFrames,
+                                cFps,
+                                flipDeltaMs,
+                                g_cutsceneSpeedRatio.load(std::memory_order_relaxed),
+                                g_cutsceneActivePlaying.load(std::memory_order_relaxed) ? 1 : 0,
+                                g_cutsceneFirstFrameDrawn.load(std::memory_order_relaxed) ? 1 : 0,
+                                s_cutsceneVisualFrames);
+#endif
+                        }
+                    }
+                    else if (wasInCutscene)
+                    {
+                        s_cutsceneVisualFrames = 0;
+                        g_inCutscene.store(false, std::memory_order_relaxed);
+                        g_cutsceneActivePlaying.store(false, std::memory_order_relaxed);
+                        g_cutsceneFirstFrameDrawn.store(false, std::memory_order_relaxed);
+                        s_lastCutsceneFlipTp = {};
+                    }
                     if (rdram)
                     {
                         const uint32_t fullFlickerOff = 0x80u;
                         std::memcpy(rdram + 0x003C3CCCu, &fullFlickerOff, sizeof(fullFlickerOff));
-                        // Dynamic FPS enforcement: 0x01 for 60 FPS, 0x02 for 30 FPS console lock
-                        const int currentFpsMode = godhand::mobile::getFpsMode();
-                        const uint8_t vblanks = (currentFpsMode == 0) ? 0x01u : 0x02u;
-                        rdram[0x00747A09u] = vblanks;
-                        // Speed rate remains 1.0f in both 60 FPS and 30 FPS modes
-                        const float rate = 1.0f;
-                        std::memcpy(rdram + 0x00747A14u, &rate, sizeof(rate));
-                        std::memcpy(rdram + 0x00741DC0u, &rate, sizeof(rate));
-                        std::memcpy(rdram + 0x00754C48u, &rate, sizeof(rate));
+// Frame divider & rates are now dynamically managed by kamite::frameStart
                         // Enforce non-stretched widescreen / ultrawide FOV every frame
                         godhand::mobile::applyWidescreenPatch(rdram, godhand::mobile::getAspectMode());
                         CheatsEngine::instance().applyFrameCheats(rdram);
@@ -1088,50 +1178,72 @@ namespace godhand
                 "lock-free combined flicker-off + dynamic 60/30 FPS frame counter + cheats engine");
         }
 
-        // DevSeville 60 FPS GS Patches (sceGsResetGraph & sceGsSetDefDispEnv)
-        constexpr uint32_t kSceGsResetGraph = 0x003951F8u;
-        if (runtime.hasFunction(kSceGsResetGraph))
+// DevSeville 60 FPS GS Patches removed in favor of kamite 60 FPS suite
+
+        constexpr uint32_t kEventPlayStart = 0x00296458u;
+        if (runtime.hasFunction(kEventPlayStart))
         {
-            static GuestFunction s_origGsReset = runtime.lookupFunction(kSceGsResetGraph);
-            FunctionHooks::instance().replace(
-                kSceGsResetGraph,
-                "sceGsResetGraph_devseville_60fps",
+            FunctionHooks::instance().observeEntry(
+                kEventPlayStart,
+                "cutscene_play_start_gate",
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
-                    if (godhand::mobile::getFpsMode() == 0) // 60 FPS
-                    {
-                        // DevSeville 60 FPS patch (SLUS-21503):
-                        // 00395204 lui a1, 0000 -> SCE_GS_NOINTERLACE (0)
-                        // 0039520c lui a2, 0050 -> SCE_GS_DTV480P (0x50 = 60Hz progressive)
-                        // 00395214 lui a3, 0001 -> SCE_GS_FIELD (1 = FRAME)
-                        SET_GPR_S32(ctx, 5, 0);
-                        SET_GPR_S32(ctx, 6, 0x50);
-                        SET_GPR_S32(ctx, 7, 1);
-                    }
-                    if (s_origGsReset)
-                        s_origGsReset(rdram, ctx, rt);
-                },
-                ReplacementStatus::Native,
-                "DevSeville 60 FPS GS reset mode hook");
+                    g_inCutscene.store(true, std::memory_order_relaxed);
+                    g_cutsceneActivePlaying.store(false, std::memory_order_relaxed);
+                    g_cutsceneFirstFrameDrawn.store(false, std::memory_order_relaxed);
+                    ps2_audio_flush_cutscene();
+                    const float curRatio = ::ps2_get_game_speed_ratio();
+                    g_cutsceneSpeedRatio.store(std::clamp(curRatio, 0.15f, 1.05f), std::memory_order_relaxed);
+#if defined(__ANDROID__)
+                    __android_log_print(ANDROID_LOG_INFO, "GodHandCutscene",
+                        "[CutsceneGate] cEvent_playStart (0x00296458): audio ring flushed, gating audio until visual scene begins playing, initial speed: %.2f", curRatio);
+#endif
+                });
         }
 
-        constexpr uint32_t kSceGsSetDefDispEnv = 0x00396570u;
-        if (runtime.hasFunction(kSceGsSetDefDispEnv))
+        constexpr uint32_t kEventMovePlayInit = 0x00296CA8u;
+        if (runtime.hasFunction(kEventMovePlayInit))
         {
-            static GuestFunction s_origSetDefDispEnv = runtime.lookupFunction(kSceGsSetDefDispEnv);
-            FunctionHooks::instance().replace(
-                kSceGsSetDefDispEnv,
-                "sceGsSetDefDispEnv_devseville_60fps",
+            FunctionHooks::instance().observeEntry(
+                kEventMovePlayInit,
+                "cutscene_move_play_init",
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
-                    if (godhand::mobile::getFpsMode() == 0) // 60 FPS
-                    {
-                        // DevSeville 60 FPS: 00396594 lui t1, 0010
-                        SET_GPR_S32(ctx, 9, 0x10);
-                    }
-                    if (s_origSetDefDispEnv)
-                        s_origSetDefDispEnv(rdram, ctx, rt);
-                },
-                ReplacementStatus::Native,
-                "DevSeville 60 FPS display environment hook");
+                    g_inCutscene.store(true, std::memory_order_relaxed);
+                    g_cutsceneActivePlaying.store(true, std::memory_order_relaxed);
+#if defined(__ANDROID__)
+                    __android_log_print(ANDROID_LOG_INFO, "GodHandCutscene",
+                        "[CutsceneGate] cEvent_movePlayInit (0x00296CA8): cutscene scene initialized, activating visual frame sync");
+#endif
+                });
+        }
+
+        constexpr uint32_t kEventMovePlayStep = 0x00296DD8u;
+        if (runtime.hasFunction(kEventMovePlayStep))
+        {
+            FunctionHooks::instance().observeEntry(
+                kEventMovePlayStep,
+                "cutscene_move_play_step",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    g_inCutscene.store(true, std::memory_order_relaxed);
+                    g_cutsceneActivePlaying.store(true, std::memory_order_relaxed);
+                });
+        }
+
+        constexpr uint32_t kEventEndPlay = 0x00297128u;
+        if (runtime.hasFunction(kEventEndPlay))
+        {
+            FunctionHooks::instance().observeEntry(
+                kEventEndPlay,
+                "cutscene_play_end_ungate",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    g_inCutscene.store(false, std::memory_order_relaxed);
+                    g_cutsceneActivePlaying.store(false, std::memory_order_relaxed);
+                    g_cutsceneFirstFrameDrawn.store(false, std::memory_order_relaxed);
+                    g_cutsceneSpeedRatio.store(1.0f, std::memory_order_relaxed);
+#if defined(__ANDROID__)
+                    __android_log_print(ANDROID_LOG_INFO, "GodHandCutscene",
+                        "[CutsceneGate] cEvent_endPlay (0x00297128): cutscene ended, audio ungated");
+#endif
+                });
         }
 
         // True Invulnerability & Super-Armor:
@@ -1217,14 +1329,7 @@ namespace godhand
                                     if (maxTime <= 0.0f) maxTime = 99.0f;
                                     std::memcpy(rdram + timerObj + 0x3Cu, &maxTime, sizeof(maxTime));
                                 }
-                                else if (godhand::mobile::getFpsMode() == 0)
-                                {
-                                    // 60 FPS pacing: compensate timer decrement so it ticks at authentic 30Hz speed
-                                    float remTime = 0.0f;
-                                    std::memcpy(&remTime, rdram + timerObj + 0x3Cu, sizeof(remTime));
-                                    remTime += 8.0f;
-                                    std::memcpy(rdram + timerObj + 0x3Cu, &remTime, sizeof(remTime));
-                                }
+// Roulette pacing handled accurately by kamite::km_fps60_roulette_timer
                             }
                         }
                     }
@@ -1239,11 +1344,23 @@ namespace godhand
             FunctionHooks::instance().replace(
                 kGetCostumeNo,
                 "cCoreSave_getCostumeNo_cheat",
-                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *) {
+                    if (!ctx) return;
+                    uint32_t a0 = GPR_U32(ctx, 4);
+                    uint32_t v0 = 0u;
+                    if (rdram && a0 != 0u && a0 < 0x02000000u) {
+                        uint32_t ptr = FAST_READ32(a0);
+                        if (ptr != 0u && ptr < 0x02000000u) {
+                            v0 = FAST_READ8(ptr + 0xAEu);
+                        }
+                    }
                     int costume = CheatsEngine::instance().getCheatInt("gene_costume");
                     bool dbl = CheatsEngine::instance().isCheatEnabled("double_god_hand");
-                    uint32_t v0 = (uint32_t)((costume * 2) | (dbl ? 1 : 0));
+                    if (costume != 0 || dbl) {
+                        v0 = (uint32_t)((costume * 2) | (dbl ? 1 : 0));
+                    }
                     SET_GPR_ZE32(ctx, 2, v0);
+                    ctx->pc = GPR_U32(ctx, 31);
                 },
                 ReplacementStatus::Native,
                 "Double God Hand and Gene Costume modifier hook");
@@ -1255,12 +1372,54 @@ namespace godhand
             FunctionHooks::instance().replace(
                 kGetOliviaCostumeNo,
                 "cCoreSave_GetOliviaCostumeNo_cheat",
-                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *) {
+                    if (!ctx) return;
+                    uint32_t a0 = GPR_U32(ctx, 4);
+                    uint32_t v0 = 0u;
+                    if (rdram && a0 != 0u && a0 < 0x02000000u) {
+                        uint32_t ptr = FAST_READ32(a0);
+                        if (ptr != 0u && ptr < 0x02000000u) {
+                            v0 = FAST_READ32(ptr + 0xBC0u);
+                        }
+                    }
                     int olivia = CheatsEngine::instance().getCheatInt("olivia_costume");
-                    SET_GPR_S32(ctx, 2, olivia);
+                    if (olivia != 0) {
+                        v0 = static_cast<uint32_t>(olivia);
+                    }
+                    SET_GPR_S32(ctx, 2, static_cast<int32_t>(v0));
+                    ctx->pc = GPR_U32(ctx, 31);
                 },
                 ReplacementStatus::Native,
                 "Olivia Costume modifier hook");
+        }
+        constexpr uint32_t kMeasureText = 0x002B0700u;
+        if (runtime.hasFunction(kMeasureText))
+        {
+            FunctionHooks::instance().replace(
+                kMeasureText,
+                "cMessDrawFont_measureText_guard",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime) {
+                    const uint32_t strPtr = GPR_U32(ctx, 5);
+                    if (strPtr == 0u || (strPtr < 0x02000000u && READ16(strPtr) == 0u)) {
+                        const uint32_t outWidthPtr = GPR_U32(ctx, 7);
+                        const uint32_t outHeightPtr = GPR_U32(ctx, 8);
+                        if (outWidthPtr != 0u && outWidthPtr < 0x02000000u) {
+                            WRITE32(outWidthPtr, 0u);
+                        }
+                        if (outHeightPtr != 0u && outHeightPtr < 0x02000000u) {
+                            WRITE32(outHeightPtr, 0u);
+                        }
+                        SET_GPR_S32(ctx, 2, 0);
+                        if (ctx) ctx->pc = GPR_U32(ctx, 31);
+                        return;
+                    }
+                    GuestFunction orig = FunctionHooks::instance().original(kMeasureText);
+                    if (orig) {
+                        orig(rdram, ctx, runtime);
+                    }
+                },
+                ReplacementStatus::Native,
+                "Save menu empty string freeze guard (Kamite Oct 27)");
         }
     }
 }

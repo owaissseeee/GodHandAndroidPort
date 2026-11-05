@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -48,7 +49,14 @@ void func_0028ED28_0x28ed28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
 label_28ed3c:
     // 0x28ed3c: 0x8c8205b4  lw          $v0, 0x5B4($a0)
     ctx->pc = 0x28ed3cu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_dbg_em_dizzy");
+        if (hook) hook(rdram, ctx, runtime);
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 1460)));
+    } else {
+    SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 1460)));
+    }
     // 0x28ed40: 0x3c030001  lui         $v1, 0x1
     ctx->pc = 0x28ed40u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)1 << 16));

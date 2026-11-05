@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -268,7 +269,13 @@ label_268878:
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[2], &bits, sizeof(bits)); }
     // 0x268888: 0x46010001  sub.s       $f0, $f0, $f1
     ctx->pc = 0x268888u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_charge_sub_f0");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     ctx->f[0] = FPU_SUB_S(ctx->f[0], ctx->f[1]);
+    }
     // 0x26888c: 0x46020036  c.le.s      $f0, $f2
     ctx->pc = 0x26888cu;
     ctx->fcr31 = (FPU_C_OLE_S(ctx->f[0], ctx->f[2])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -377,7 +384,13 @@ label_2688d0:
     // NOP
     // 0x2688e4: 0x46010000  add.s       $f0, $f0, $f1
     ctx->pc = 0x2688e4u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_float_add_f0f1");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[1]);
+    }
     // 0x2688e8: 0x4600a034  c.lt.s      $f20, $f0
     ctx->pc = 0x2688e8u;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[20], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);

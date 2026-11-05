@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -831,7 +832,11 @@ label_1ac598:
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 16), 1540)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x1ac59c: 0x3c013d4c  lui         $at, 0x3D4C
     ctx->pc = 0x1ac59cu;
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)0x3CCCu << 16));
+    } else {
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15692 << 16));
+    }
     // 0x1ac5a0: 0x3421cccd  ori         $at, $at, 0xCCCD
     ctx->pc = 0x1ac5a0u;
     SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)52429);
@@ -1091,7 +1096,11 @@ label_1ac668:
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 16), 1540)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x1ac66c: 0x3c013ca3  lui         $at, 0x3CA3
     ctx->pc = 0x1ac66cu;
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)0x3C23u << 16));
+    } else {
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15523 << 16));
+    }
     // 0x1ac670: 0x3421d70a  ori         $at, $at, 0xD70A
     ctx->pc = 0x1ac670u;
     SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)55050);

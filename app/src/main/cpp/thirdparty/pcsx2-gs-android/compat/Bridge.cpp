@@ -63,8 +63,14 @@ namespace
         options.TriFilter = TriFiltering::Off;
         options.TexturePreloading = TexturePreloadingLevel::Full;
         // SkipDraw: Cleanly strips the depth-of-field blur quad without corrupting framebuffers
+        // On Android, default to SkipDraw 1 to eliminate the heavy post-processing depth blur
+        // that causes severe framerate collapse in the opening desert cutscene.
         const char *skipDrawEnv = std::getenv("PS2X_SKIPDRAW");
+#if defined(__ANDROID__)
+        const int skipDrawVal = skipDrawEnv ? std::atoi(skipDrawEnv) : 1;
+#else
         const int skipDrawVal = skipDrawEnv ? std::atoi(skipDrawEnv) : 0;
+#endif
         options.SkipDrawStart = skipDrawVal > 0 ? 1 : 0;
         options.SkipDrawEnd = skipDrawVal;
         options.VsyncQueueSize = 2;
@@ -196,6 +202,17 @@ namespace
                                                       : AspectRatioType::R4_3;
         ApplyGameFixes(options);
         ApplyOptions(options, params->options);
+        if (options.Renderer == GSRendererType::OGL)
+        {
+            // OpenGL ES compatibility for PowerVR GE8320 (Redmi 10A) and Mali/Adreno GLES:
+            // Prevent FBO texture self-feedback loops & unsupported GLES framebuffer fetch extensions.
+            // (Vulkan GSRendererType::VK is 100% untouched.)
+            options.DisableFramebufferFetch = true;
+            options.EnableAdrenoFramebufferFetch = false;
+            options.OverrideTextureBarriers = 0;
+            options.AccurateBlendingUnit = AccBlendLevel::Minimum;
+            options.UserHacks_DisableSafeFeatures = false;
+        }
         EmuConfig.GS = options;
         EmuConfig.CurrentAspectRatio = options.AspectRatio;
 
@@ -213,6 +230,12 @@ namespace
             if (options.Renderer == GSRendererType::VK) {
                 __android_log_print(ANDROID_LOG_WARN, "pcsx2-gs", "Bridge::Open: Vulkan failed, attempting OpenGL ES fallback...");
                 options.Renderer = GSRendererType::OGL;
+                options.DisableFramebufferFetch = true;
+                options.EnableAdrenoFramebufferFetch = false;
+                options.OverrideTextureBarriers = 0;
+                options.AccurateBlendingUnit = AccBlendLevel::Minimum;
+                options.UserHacks_DisableSafeFeatures = false;
+                EmuConfig.GS = options;
                 if (GSopen(options, options.Renderer, g_regs, vsync, false)) {
                     __android_log_print(ANDROID_LOG_INFO, "pcsx2-gs", "Bridge::Open: GSopen SUCCEEDED with OpenGL ES fallback!");
                     goto gs_open_success;

@@ -296,6 +296,7 @@ public:
     void accountCycles(uint32_t cycles) noexcept;
     uint64_t skipIdleCycles() noexcept;
     [[nodiscard]] bool isExecutingGuest() const noexcept;
+    [[nodiscard]] uint64_t vsyncTick() const noexcept { return m_vsyncTick; }
 
     // Kernel object API. All calls except postEvent/requestStop execute on the
     // EE executor and therefore need no host synchronization.

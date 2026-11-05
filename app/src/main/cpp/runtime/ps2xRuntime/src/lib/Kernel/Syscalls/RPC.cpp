@@ -938,6 +938,41 @@ namespace ps2_syscalls
             setReturnS32(ctx, 0);
             return;
         }
+
+        struct ClientBusyTracker {
+            uint64_t pollCount = 0;
+            std::chrono::steady_clock::time_point firstBusyTime{};
+        };
+        static std::unordered_map<uint32_t, ClientBusyTracker> s_busyTrackers;
+
+        if (it->second.busy)
+        {
+            auto &tracker = s_busyTrackers[clientPtr];
+            if (tracker.pollCount == 0)
+            {
+                tracker.firstBusyTime = std::chrono::steady_clock::now();
+            }
+            ++tracker.pollCount;
+            if ((tracker.pollCount & 2047u) == 0u)
+            {
+                const auto now = std::chrono::steady_clock::now();
+                const auto elapsedMs = std::chrono::duration<double, std::milli>(now - tracker.firstBusyTime).count();
+                if (elapsedMs > 2500.0 && tracker.pollCount > 1000)
+                {
+                    // SIF RPC client has been blocked for > 2.5 seconds with thousands of polls.
+                    // Clear busy to prevent permanent EE hang!
+                    it->second.busy = false;
+                    tracker.pollCount = 0;
+                    setReturnS32(ctx, 0);
+                    return;
+                }
+            }
+        }
+        else if (!s_busyTrackers.empty())
+        {
+            s_busyTrackers.erase(clientPtr);
+        }
+
         setReturnS32(ctx, it->second.busy ? 1 : 0);
     }
 

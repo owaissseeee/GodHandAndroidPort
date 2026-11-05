@@ -65,38 +65,89 @@ class SettingsRepository(context: Context) {
         saveAllToJsonFile()
     }
 
+    enum class DeviceTier {
+        POTATO,
+        MIDRANGE,
+        FLAGSHIP
+    }
+
     companion object {
-        val isCortexA53OrPotato: Boolean by lazy {
+        val deviceTier: DeviceTier by lazy {
             try {
-                val text = java.io.File("/proc/cpuinfo").readText()
-                text.contains("0xd03") || text.contains("0xd04") || text.contains("0xd05") ||
-                android.os.Build.HARDWARE.contains("mt6765", ignoreCase = true) ||
-                android.os.Build.BOARD.contains("mt6765", ignoreCase = true)
-            } catch (_: Throwable) { false }
+                val cpuinfo = try { java.io.File("/proc/cpuinfo").readText().lowercase() } catch (_: Throwable) { "" }
+                val hardware = android.os.Build.HARDWARE.lowercase()
+                val board = android.os.Build.BOARD.lowercase()
+                val socModel = if (android.os.Build.VERSION.SDK_INT >= 31) {
+                    try { android.os.Build.SOC_MODEL.lowercase() } catch (_: Throwable) { "" }
+                } else ""
+
+                // 1. Check Flagship (Snapdragon 8 Gen 1/2/3/4/Elite, Dimensity 9000/9200/9300/9400, Tensor, Cortex-X cores)
+                val hasFlagshipCore = cpuinfo.contains("0xd46") || cpuinfo.contains("0xd48") ||
+                                      cpuinfo.contains("0xd4e") || cpuinfo.contains("0xd4f") ||
+                                      cpuinfo.contains("0xd85")
+                val isFlagshipSnapdragon = hardware.contains("sm8450") || hardware.contains("sm8475") ||
+                                           hardware.contains("sm8550") || hardware.contains("sm8650") ||
+                                           hardware.contains("sm8750") || hardware.contains("sm8150") ||
+                                           hardware.contains("sm8250") || hardware.contains("sm8350") ||
+                                           board.contains("sm8450") || board.contains("sm8475") ||
+                                           board.contains("sm8550") || board.contains("sm8650") ||
+                                           board.contains("sm8750") || socModel.contains("sm8")
+                val isFlagshipDimensity = hardware.contains("mt6983") || hardware.contains("mt6985") ||
+                                          hardware.contains("mt6989") || hardware.contains("mt6991") ||
+                                          board.contains("mt698") || board.contains("mt699")
+                val isTensor = hardware.contains("tensor") || board.contains("zuma") || board.contains("gs101") || board.contains("gs201")
+                if (hasFlagshipCore || isFlagshipSnapdragon || isFlagshipDimensity || isTensor) {
+                    return@lazy DeviceTier.FLAGSHIP
+                }
+
+                // 2. Check Potato (Helio G25/G35/P22/P35, Unisoc SC9863A, Exynos 850, Cortex-A53/A55-only)
+                val isPotatoSoc = hardware.contains("mt6765") || hardware.contains("mt6762") ||
+                                  hardware.contains("mt6761") || board.contains("mt6765") ||
+                                  board.contains("mt6762") || hardware.contains("sc9863") ||
+                                  hardware.contains("universal3830") || hardware.contains("exynos850")
+                val hasBigCore = cpuinfo.contains("0xd09") || cpuinfo.contains("0xd0a") || cpuinfo.contains("0xd0b") ||
+                                 cpuinfo.contains("0xd0c") || cpuinfo.contains("0xd0d") || cpuinfo.contains("0xd47") ||
+                                 cpuinfo.contains("0xd41") || cpuinfo.contains("0xd44")
+                if (isPotatoSoc || (!hasBigCore && (cpuinfo.contains("0xd03") || cpuinfo.contains("0xd04") || cpuinfo.contains("0xd05")))) {
+                    return@lazy DeviceTier.POTATO
+                }
+
+                // 3. Mid-range (Dimensity 7050, 7200, 8100, Snapdragon 778G, 695, 680, 4 Gen 2, etc.)
+                DeviceTier.MIDRANGE
+            } catch (_: Throwable) {
+                DeviceTier.MIDRANGE
+            }
         }
+
+        val isCortexA53OrPotato: Boolean
+            get() = deviceTier == DeviceTier.POTATO
     }
 
     var rendererIdx: Int
         get() {
-            if (!prefs.contains("renderer_idx_v4")) {
-                val def = 0
-                putInt("renderer_idx_v4", def)
+            if (!prefs.contains("renderer_idx_v5")) {
+                val def = 0 // Vulkan PCSX2-GS
+                putInt("renderer_idx_v5", def)
                 return def
             }
-            return prefs.getInt("renderer_idx_v4", 0).coerceIn(0, 2)
+            return prefs.getInt("renderer_idx_v5", 0).coerceIn(0, 2)
         }
-        set(value) = putInt("renderer_idx_v4", value.coerceIn(0, 2))
+        set(value) = putInt("renderer_idx_v5", value.coerceIn(0, 2))
 
     var resolutionIdx: Int
         get() {
-            if (!prefs.contains("res_idx_v4")) {
-                val def = if (isCortexA53OrPotato) 1 else 2
-                putInt("res_idx_v4", def)
+            if (!prefs.contains("res_idx_v5")) {
+                val def = when (deviceTier) {
+                    DeviceTier.POTATO -> 1   // 0.75x
+                    DeviceTier.MIDRANGE -> 2 // 1.0x Native PS2
+                    DeviceTier.FLAGSHIP -> 3 // 2.0x 2x HD
+                }
+                putInt("res_idx_v5", def)
                 return def
             }
-            return prefs.getInt("res_idx_v4", 2).coerceIn(0, 5)
+            return prefs.getInt("res_idx_v5", 2).coerceIn(0, 5)
         }
-        set(value) = putInt("res_idx_v4", value.coerceIn(0, 5))
+        set(value) = putInt("res_idx_v5", value.coerceIn(0, 5))
 
     var aspectIdx: Int
         get() {
@@ -110,18 +161,17 @@ class SettingsRepository(context: Context) {
 
     var fpsIdx: Int
         get() {
-            if (!prefs.contains("fps_idx_v5")) {
-                val def = if (isCortexA53OrPotato) 1 else 0
-                putInt("fps_idx_v5", def)
-                return def
+            if (!prefs.contains("fps_idx_v6")) {
+                putInt("fps_idx_v6", 1) // Default 30 FPS Authentic PS2 Console Lock on all devices
+                return 1
             }
-            return prefs.getInt("fps_idx_v5", 0).coerceIn(0, 1)
+            return prefs.getInt("fps_idx_v6", 1).coerceIn(0, 1)
         }
-        set(value) = putInt("fps_idx_v5", value.coerceIn(0, 1))
+        set(value) = putInt("fps_idx_v6", value.coerceIn(0, 1))
 
     var frameskipIdx: Int
-        get() = prefs.getInt("frameskip_idx_v2", 1).coerceIn(0, 4) // 0: Off, 1: Auto (Skip on Lag - Recommended), 2: Skip 1 Frame, 3: Skip 2 Frames, 4: Skip 3 Frames (Potato Mode)
-        set(value) = putInt("frameskip_idx_v2", value.coerceIn(0, 4))
+        get() = prefs.getInt("frameskip_idx_v2", 1).coerceIn(0, 2) // 0: Off, 1: Auto (Skip on Lag - Recommended), 2: Skip 1 Frame (2x Speedup)
+        set(value) = putInt("frameskip_idx_v2", value.coerceIn(0, 2))
 
     // --- Audio Settings ---
     var audioSchedulingIdx: Int

@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -42,7 +43,14 @@ void fRand1_1_0x31d020(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
 label_31d030:
     // 0x31d030: 0x3c013f00  lui         $at, 0x3F00
     ctx->pc = 0x31d030u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_rand_float");
+        if (hook) hook(rdram, ctx, runtime);
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16128 << 16));
+    } else {
+    SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16128 << 16));
+    }
     // 0x31d034: 0x44810800  mtc1        $at, $f1
     ctx->pc = 0x31d034u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }

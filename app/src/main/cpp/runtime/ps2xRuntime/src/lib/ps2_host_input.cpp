@@ -2592,6 +2592,8 @@ namespace ps2_host_input
         {
             state.connected = true;
             const uint32_t touchBtns = ps2_pad::getButtons();
+            if (touchBtns != 0)
+                g_holdMask &= ~(1u << player);
             state.buttons |= static_cast<uint16_t>(touchBtns);
 
             const float flx = ps2_pad::getLx();

@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -111,7 +112,13 @@ void cIDBase_move_0x2aaa40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
 label_2aaa88:
     // 0x2aaa88: 0x9222001c  lbu         $v0, 0x1C($s1)
     ctx->pc = 0x2aaa88u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_ui_anim");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 17), 28)));
+    }
     // 0x2aaa8c: 0x5040003b  beql        $v0, $zero, . + 4 + (0x3B << 2)
     ctx->pc = 0x2AAA8Cu;
     {

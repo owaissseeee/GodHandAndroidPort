@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -61,7 +62,13 @@ void MoveEffect_0x30f228(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)4096 << 16));
     // 0x30f254: 0xac603bb8  sw          $zero, 0x3BB8($v1)
     ctx->pc = 0x30f254u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_effect_rate_for_flag");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     do { uint32_t _value = static_cast<uint32_t>(GPR_U32(ctx, 0)); ps2TraceGuestWrite(rdram, 0x3C3BB8u, 4u, _value, 0u, "WRITE32", ctx); FAST_WRITE32(0x3C3BB8u, _value); } while (0);
+    }
     // 0x30f258: 0x822024  and         $a0, $a0, $v0
     ctx->pc = 0x30f258u;
     SET_GPR_U64(ctx, 4, GPR_U64(ctx, 4) & GPR_U64(ctx, 2));
@@ -101,7 +108,11 @@ label_30f26c:
 label_30f274:
     // 0x30f274: 0x3c013f80  lui         $at, 0x3F80
     ctx->pc = 0x30f274u;
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)0x3F00u << 16));
+    } else {
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
+    }
     // 0x30f278: 0x44810000  mtc1        $at, $f0
     ctx->pc = 0x30f278u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }

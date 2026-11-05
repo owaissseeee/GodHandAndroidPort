@@ -497,11 +497,11 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                 cmdBuilder.append("echo " + android.os.Process.myPid() + " > /dev/cpuset/top-app/tasks 2>/dev/null; ")
 
                 if (tids.isNotEmpty()) {
-                    if (tids.size > 0 && tids[0] > 0) cmdBuilder.append("taskset -p 8 " + tids[0] + " 2>/dev/null; ")
-                    if (tids.size > 1 && tids[1] > 0) cmdBuilder.append("taskset -p 4 " + tids[1] + " 2>/dev/null; ")
-                    if (tids.size > 2 && tids[2] > 0) cmdBuilder.append("taskset -p 2 " + tids[2] + " 2>/dev/null; ")
-                    if (tids.size > 3 && tids[3] > 0) cmdBuilder.append("taskset -p 1 " + tids[3] + " 2>/dev/null; ")
-                    if (tids.size > 4 && tids[4] > 0) cmdBuilder.append("taskset -p f0 " + tids[4] + " 2>/dev/null; ")
+                    if (tids.size > 0 && tids[0] > 0) cmdBuilder.append("taskset -p 1 " + tids[0] + " 2>/dev/null; ")
+                    if (tids.size > 1 && tids[1] > 0) cmdBuilder.append("taskset -p 2 " + tids[1] + " 2>/dev/null; ")
+                    if (tids.size > 2 && tids[2] > 0) cmdBuilder.append("taskset -p 4 " + tids[2] + " 2>/dev/null; ")
+                    if (tids.size > 3 && tids[3] > 0) cmdBuilder.append("taskset -p 2 " + tids[3] + " 2>/dev/null; ")
+                    if (tids.size > 4 && tids[4] > 0) cmdBuilder.append("taskset -p 8 " + tids[4] + " 2>/dev/null; ")
                 }
 
                 val p = Runtime.getRuntime().exec(arrayOf(suPath, "-c", cmdBuilder.toString()))

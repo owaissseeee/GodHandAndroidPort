@@ -1,4 +1,8 @@
 #include "runtime/ps2_audio.h"
+
+extern "C" float ps2_get_game_speed_ratio(void);
+extern "C" bool ps2_is_in_cutscene(void);
+extern "C" bool ps2_is_cutscene_ready_for_audio(void);
 #include "runtime/ps2_memory.h"
 #include "ps2_host_backend.h"
 #include <algorithm>
@@ -261,6 +265,8 @@ struct PS2AudioBackend::Impl
             return;
         std::lock_guard<std::mutex> lock(owner->pcmMutex);
         owner->requestedFrames += frames;
+        
+
         if (!owner->primed && owner->queued >= kPrimeSamples)
         {
             owner->primed = true;
@@ -275,8 +281,10 @@ struct PS2AudioBackend::Impl
         // Transparent micro-rate control: clamped strictly to [0.990, 1.010] (+/-1.0%).
         // Preserves crystal-clear authentic musical pitch and tempo during any frame pacing dips,
         // while the 65,536-sample (~682 ms) ring buffer absorbs transient frame stalls.
-        // Strictly cap upper ratio at 1.005 so audio NEVER speeds up or shifts pitch high!
-        const double ratio = std::clamp(1.0 + fill * 0.04, 0.94, 1.005);
+        // Micro-rate control: dynamically drain up to +6% if buffer builds up, down to -8% on slowdown.
+        // When stretching is active (low FPS), clamp max ratio to 1.00 so audio does not outpace video.
+        const double maxRatio = owner->stretching ? 1.00 : 1.06;
+        const double ratio = std::clamp(1.0 + fill * 0.05, 0.92, maxRatio);
         for (size_t frame = 0u; frame < frames; ++frame)
         {
             if (owner->primed && owner->queued < 4u)
@@ -364,13 +372,17 @@ struct PS2AudioBackend::Impl
 };
 
 PS2AudioBackend::Impl *PS2AudioBackend::Impl::streamOwner = nullptr;
+static PS2AudioBackend *s_activeAudioBackend = nullptr;
 
 PS2AudioBackend::PS2AudioBackend() : m_impl(std::make_unique<Impl>())
 {
+    s_activeAudioBackend = this;
 }
 
 PS2AudioBackend::~PS2AudioBackend()
 {
+    if (s_activeAudioBackend == this)
+        s_activeAudioBackend = nullptr;
     if (m_impl)
     {
         stopAll();
@@ -464,6 +476,32 @@ void PS2AudioBackend::resetPcm()
     m_impl->statsStart = std::chrono::steady_clock::now();
 }
 
+void PS2AudioBackend::flushCutscenePcm()
+{
+    std::lock_guard<std::mutex> lock(m_impl->pcmMutex);
+    m_impl->read = 0u;
+    m_impl->queued = 0u;
+    m_impl->readFraction = 0.0;
+    m_impl->stretch.reset();
+    m_impl->stretched.clear();
+    m_impl->stretching = false;
+    m_impl->primed = false;
+    m_impl->fadePosition = 0;
+    m_impl->gapRemaining = 0;
+    m_impl->lastOutput = {};
+    m_impl->fadeSource = {};
+    m_impl->gapSource = {};
+    m_impl->everPrimed = false;
+}
+
+extern "C" void ps2_audio_flush_cutscene(void)
+{
+    if (s_activeAudioBackend)
+    {
+        s_activeAudioBackend->flushCutscenePcm();
+    }
+}
+
 void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
 {
     std::lock_guard<std::mutex> lock(m_impl->pcmMutex);
@@ -474,6 +512,7 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
     }
     if (!m_impl->streamReady)
         return;
+
     m_impl->producedFrames += samples.size() / 2u;
     // PS2X_AUDIO_STRETCH (default on): below ~97% speed (measured from how fast the emulated SPU2 makes audio over
     // 0.5 s windows) the audio goes through TimeStretch; back above 99% it is passed through untouched again.
@@ -485,21 +524,62 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
     {
         Impl &d = *m_impl;
         const auto now = std::chrono::steady_clock::now();
-        gap = d.lastSubmit != std::chrono::steady_clock::time_point{} && now - d.lastSubmit > std::chrono::milliseconds(50);
+        gap = d.lastSubmit != std::chrono::steady_clock::time_point{} && now - d.lastSubmit > std::chrono::milliseconds(250);
         if (d.lastSubmit != std::chrono::steady_clock::time_point{})
             d.longestGap = std::max(d.longestGap, std::chrono::duration<double>(now - d.lastSubmit).count());
         if (gap)
+        {
             ++d.gaps;
+            d.stretch.reset();
+            d.rateStart = now;
+            d.rateFrames = 0u;
+        }
         d.lastSubmit = now;
     }
     if (stretchEnabled)
     {
         Impl &d = *m_impl;
         const auto now = std::chrono::steady_clock::now();
-        // The stall restarts the speed window: counted in, one ~40 ms load hitch pulled a 0.5 s window under 0.925 and
-        // switched the stretch on for seconds: every sound's attack played twice, 5-20 ms apart (hidden run 2026-10-17
-        // 09:01, 131 repeats of 5-50 ms in the output). The stall is now a short underrun.
-        if (d.rateStart == std::chrono::steady_clock::time_point{} || gap)
+        // Real-time presentation speed ratio feed from GS backend:
+        // Ensures TimeStretch responds immediately from the very first sample during cutscenes
+        // without waiting for a 0.5s window or getting disabled by dialogue pause gaps.
+        const double displaySpeed = static_cast<double>(ps2_get_game_speed_ratio());
+        const bool inCutscene = ps2_is_in_cutscene();
+        if (inCutscene)
+        {
+            // During cutscenes, lock speed immediately to true display/game speed without sluggish smoothing
+            d.speed = std::clamp(displaySpeed, 0.15, 1.05);
+            if (d.speed < 0.95)
+            {
+                if (!d.stretching)
+                {
+                    d.stretching = true;
+                    d.stretch.reset();
+                    if (d.statsEnabled)
+                        std::fprintf(stderr, "[audio] time-stretch on (cutscene speed %.2f)\n", d.speed);
+                }
+            }
+        }
+        else if (displaySpeed > 0.05 && displaySpeed <= 1.25)
+        {
+            if (displaySpeed < d.speed)
+                d.speed = std::clamp(d.speed * 0.40 + displaySpeed * 0.60, 0.15, 1.05);
+            else
+                d.speed = std::clamp(d.speed * 0.85 + displaySpeed * 0.15, 0.15, 1.05);
+
+            if (d.speed < 0.93)
+            {
+                if (!d.stretching)
+                {
+                    d.stretching = true;
+                    d.stretch.reset();
+                    if (d.statsEnabled)
+                        std::fprintf(stderr, "[audio] time-stretch on (inst speed %.2f)\n", d.speed);
+                }
+            }
+        }
+
+        if (d.rateStart == std::chrono::steady_clock::time_point{})
         {
             d.rateStart = now;
             d.rateFrames = 0u;
@@ -510,29 +590,28 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
         bool leaving = false;
         if (window >= 0.5)
         {
-            const double measured = static_cast<double>(d.rateFrames) / (window * 48000.0);
-            // A window with almost no audio (loading, pause) says nothing about the speed.
-            if (measured > 0.2)
+            if (!inCutscene)
             {
-                d.speed = std::min(1.1, d.speed * 0.6 + measured * 0.4);
-                d.slowWindows = measured < 0.97 ? d.slowWindows + 1u : 0u;
+                const double measured = static_cast<double>(d.rateFrames) / (window * 48000.0);
+                if (measured > 0.05)
+                {
+                    const double effective = (displaySpeed > 0.05 && displaySpeed < 1.05) ? std::min(measured, displaySpeed) : measured;
+                    d.speed = std::clamp(d.speed * 0.5 + effective * 0.5, 0.15, 1.05);
+                    d.slowWindows = d.speed < 0.97 ? d.slowWindows + 1u : 0u;
+                }
             }
             d.rateFrames = 0u;
             d.rateStart = now;
-            // On only after two slow windows in a row (1 s): a real slowdown, not a single dip.
-            if (!d.stretching && d.speed < 0.97 && d.slowWindows >= 2u)
+            if (!d.stretching && ((d.speed < 0.90 && d.slowWindows >= 1u) || (d.speed < 0.97 && d.slowWindows >= 2u)))
             {
                 d.stretching = true;
                 d.stretch.reset();
                 if (d.statsEnabled)
                     std::fprintf(stderr, "[audio] time-stretch on (speed %.2f)\n", d.speed);
             }
-            // Off only once the queue is back near its target too: leaving at 140 ms (after a state load) the fine
-            // rate control (0.5%) took minutes to bring it back, the sound lagging the picture meanwhile; the stretch
-            // drains it at up to 5% in about a second.
-            else if (d.stretching && d.speed > 0.99 &&
+            else if (d.stretching && d.speed > 0.98 &&
                      std::abs(static_cast<double>(d.queued + d.stretch.heldSamples()) -
-                              static_cast<double>(Impl::kRateTargetSamples)) < 0.25 * static_cast<double>(Impl::kRateTargetSamples))
+                              static_cast<double>(Impl::kRateTargetSamples)) < 0.35 * static_cast<double>(Impl::kRateTargetSamples))
             {
                 d.stretching = false;
                 leaving = true;
@@ -542,10 +621,12 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
         }
         if (d.stretching)
         {
-            // Tempo = speed, nudged by up to 10% to bring the queue back to its target.
-            const double fill = (static_cast<double>(d.queued + d.stretch.heldSamples()) - static_cast<double>(Impl::kRateTargetSamples)) /
+            // When stretching during framerate dips, lock tempo strictly to game/display speed.
+            // Never let positive queue fill push tempo faster than d.speed (which causes audio to outrun video).
+            const double fill = (static_cast<double>(d.queued) - static_cast<double>(Impl::kRateTargetSamples)) /
                                 static_cast<double>(Impl::kRateTargetSamples);
-            const double tempo = std::clamp(d.speed * (1.0 + std::clamp(0.2 * fill, -0.1, 0.1)), 0.5, 1.05);
+            const double tempoAdj = (fill < 0.0) ? std::clamp(0.2 * fill, -0.15, 0.0) : 0.0;
+            const double tempo = std::clamp(d.speed * (1.0 + tempoAdj), 0.15, 1.0);
             d.stretched.clear();
             d.stretch.push(samples);
             d.stretch.process(tempo, d.stretched);
@@ -563,8 +644,8 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
         samples = samples.last(Impl::kRingSamples);
     if (m_impl->queued + samples.size() > Impl::kRingSamples)
     {
-        const size_t drop = std::min(m_impl->queued, std::max(m_impl->queued + samples.size() - Impl::kRingSamples,
-                                                          m_impl->queued > 4096u ? m_impl->queued - 4096u : 0u));
+        const size_t overflow = (m_impl->queued + samples.size()) - Impl::kRingSamples;
+        const size_t drop = std::min(m_impl->queued, overflow);
         m_impl->read = (m_impl->read + drop) % Impl::kRingSamples;
         m_impl->queued -= drop;
         m_impl->droppedFrames += drop / 2u;

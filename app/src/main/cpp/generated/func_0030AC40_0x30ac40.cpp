@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
+#include "godhand/frame_patches.h"
 #include <ps2_recompiled_functions.h>
 #include <ps2_recompiled_stubs.h>
 
@@ -555,6 +556,7 @@ label_30ade0:
     }
     ctx->pc = 0x30ADF4u;
 label_30adf4:
+    kamite::frameStart(rdram, ctx, runtime);
     // 0x30adf4: 0x8e623d84  lw          $v0, 0x3D84($s3)
     ctx->pc = 0x30adf4u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 19), 15748)));

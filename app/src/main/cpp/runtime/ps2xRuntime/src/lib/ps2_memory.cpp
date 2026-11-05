@@ -199,7 +199,8 @@ namespace
         // On Android with MTVU, VIF1 and GIFPath3 DMA jobs execute in strict FIFO order on VUThread.
         // Polling VIF1_STAT (0x10003C00) or GIF_STAT (0x10003020) must NEVER stall EEThread!
         // Only synchronize if reading/writing the VIF1 download FIFO (0x10005000) while FDR is active.
-        return (addr >= 0x10005000u && addr < 0x10006000u) && g_vif1Fdr.load(std::memory_order_relaxed);
+        (void)addr;
+        return false;
 #else
         return (addr >= 0x10003000u && addr < 0x10003100u) || (addr >= 0x10003C00u && addr < 0x10004000u) ||
                (addr >= 0x10005000u && addr < 0x10007000u);
@@ -496,13 +497,11 @@ namespace
         uint32_t undelivered = 0u;
     };
 
-    std::mutex g_eeTimerBacklogMutex;
-    std::unordered_map<const void *, EeTimerBacklog> g_eeTimerBacklogs;
+    EeTimerBacklog g_singleEeTimerBacklog{};
 
-    EeTimerBacklog &eeTimerBacklog(const void *memory)
+    inline EeTimerBacklog &eeTimerBacklog(const void *) noexcept
     {
-        std::lock_guard<std::mutex> lock(g_eeTimerBacklogMutex);
-        return g_eeTimerBacklogs[memory];
+        return g_singleEeTimerBacklog;
     }
 
     uint32_t addBacklog(uint32_t pending, uint64_t events)
@@ -618,9 +617,9 @@ bool PS2Memory::initialize(size_t ramSize)
 
     try
     {
-        // Allocate main RAM
-        m_rdram = new uint8_t[ramSize];
-        std::memset(m_rdram, 0, ramSize);
+        // Allocate main RAM (+64 guard bytes so branch-free unaligned 128-bit loads at the top of RDRAM never overrun)
+        m_rdram = new uint8_t[ramSize + 64u];
+        std::memset(m_rdram, 0, ramSize + 64u);
 
         // Allocate scratchpad
         m_scratchpad = new uint8_t[PS2_SCRATCHPAD_SIZE];
@@ -708,9 +707,7 @@ uint32_t PS2Memory::advanceEeTimers(uint64_t eeCycles) noexcept
     {
         constexpr uint32_t kGifStat = 0x10003020u;
         constexpr uint32_t kGifFqcMask = 0x1F000000u;
-        auto gifStatIt = m_ioRegisters.find(kGifStat);
-        if (gifStatIt != m_ioRegisters.end())
-            gifStatIt->second &= ~kGifFqcMask;
+        m_ioRegisters[kGifStat] &= ~kGifFqcMask;
         m_gifStatWritten = false;
     }
 
@@ -1870,8 +1867,9 @@ namespace
     // poll it (e.g. libkernel's VSync wait: write 4, then spin until bit 2 is set) need real latch semantics; a plain
     // storage register reads back the 4 just written and the wait falls through immediately.
     constexpr uint32_t kIntcStatAddress = 0x1000F000u;
-    std::atomic<uint32_t> g_intcStat{0u};
 }
+
+static std::atomic<uint32_t> g_intcStat{0u};
 
 void ps2xRaiseIntcStat(uint32_t bits) noexcept
 {
@@ -1880,7 +1878,6 @@ void ps2xRaiseIntcStat(uint32_t bits) noexcept
 
 bool PS2Memory::writeIORegister(uint32_t address, uint32_t value)
 {
-    ps2xEeFlushDeferredCycles(); // the exact EE cycle for timers, DMA and the scheduler (EeScheduler::checkpointDue)
     if (address == kIntcStatAddress)
     {
         g_intcStat.fetch_and(~value, std::memory_order_acq_rel);
@@ -1892,6 +1889,7 @@ bool PS2Memory::writeIORegister(uint32_t address, uint32_t value)
     uint32_t timerOffset = 0u;
     if (decodeEeTimerRegister(address, timerIndex, timerOffset))
     {
+        ps2xEeFlushDeferredCycles();
         EeTimerBacklog &backlog = eeTimerBacklog(this);
         backlog.undelivered |= flushEeTimers();
         struct BudgetRefresh
@@ -3493,7 +3491,8 @@ int PS2Memory::pollDmaRegisters()
 
 uint32_t PS2Memory::readIORegister(uint32_t address)
 {
-    ps2xEeFlushDeferredCycles(); // the exact EE cycle for timer counts (EeScheduler::checkpointDue)
+    if (address >= 0x10000000u && address < 0x10002000u)
+        ps2xEeFlushDeferredCycles();
     // PS2X_IO_READ_HIST=1: the 12 most read I/O registers every 2^22 reads (finds guest polling loops).
     static const bool readHist = [] { const char *v = std::getenv("PS2X_IO_READ_HIST"); return v && *v == '1'; }();
     if (readHist)

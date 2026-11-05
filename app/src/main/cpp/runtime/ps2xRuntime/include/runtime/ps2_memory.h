@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <array>
+#include <bitset>
 #include <functional>
 #include <vector>
 #include <unordered_map>
@@ -379,8 +380,71 @@ public:
     std::atomic<uint64_t> m_vifWriteCount{0};
     std::atomic<uint64_t> m_vu0CodeGeneration{0};
     std::atomic<uint64_t> m_vu1CodeGeneration{0};
-    // I/O registers
-    std::unordered_map<uint32_t, uint32_t> m_ioRegisters;
+    // Contiguous O(1) flat I/O register array for [0x10000000, 0x10010000) (eliminates ~36,000 unordered_map heap lookups/frame)
+    struct Ps2FlatIoMap
+    {
+        std::array<uint32_t, 16384> words{};
+        std::bitset<16384> written{};
+        std::unordered_map<uint32_t, uint32_t> overflow{};
+
+        struct Iterator
+        {
+            uint32_t first = 0u;
+            uint32_t second = 0u;
+            Iterator *operator->() noexcept { return this; }
+            const Iterator *operator->() const noexcept { return this; }
+            bool operator==(const Iterator &o) const noexcept { return first == o.first; }
+            bool operator!=(const Iterator &o) const noexcept { return first != o.first; }
+        };
+
+        void clear() noexcept
+        {
+            words.fill(0u);
+            written.reset();
+            overflow.clear();
+        }
+
+        uint32_t &operator[](uint32_t addr) noexcept
+        {
+            const uint32_t off = addr - PS2_IO_BASE;
+            if (__builtin_expect(off < PS2_IO_SIZE, 1))
+            {
+                const uint32_t idx = off >> 2;
+                written.set(idx);
+                return words[idx];
+            }
+            return overflow[addr];
+        }
+
+        size_t count(uint32_t addr) const noexcept
+        {
+            const uint32_t off = addr - PS2_IO_BASE;
+            if (__builtin_expect(off < PS2_IO_SIZE, 1))
+                return written.test(off >> 2) ? 1u : 0u;
+            return overflow.count(addr);
+        }
+
+        Iterator end() const noexcept { return Iterator{0xFFFFFFFFu, 0u}; }
+
+        Iterator find(uint32_t addr) const noexcept
+        {
+            const uint32_t off = addr - PS2_IO_BASE;
+            if (__builtin_expect(off < PS2_IO_SIZE, 1))
+            {
+                const uint32_t idx = off >> 2;
+                if (written.test(idx))
+                    return Iterator{addr, words[idx]};
+                return end();
+            }
+            auto it = overflow.find(addr);
+            if (it != overflow.end())
+                return Iterator{addr, it->second};
+            return end();
+        }
+
+
+    };
+    Ps2FlatIoMap m_ioRegisters;
 
     // Registers
     GSRegisters gs_regs;
@@ -463,5 +527,14 @@ public:
     void completeDmacChannel(uint32_t channelBase, uint32_t cause);
     void queueCompletedDmacCause(uint32_t cause);
 };
+
+namespace ps2x::state
+{
+    template <typename Ar>
+    inline void field(Ar &ar, PS2Memory::Ps2FlatIoMap &map)
+    {
+        ar.raw(map.words.data(), map.words.size() * sizeof(uint32_t));
+    }
+}
 
 #endif // PS2_MEMORY_H

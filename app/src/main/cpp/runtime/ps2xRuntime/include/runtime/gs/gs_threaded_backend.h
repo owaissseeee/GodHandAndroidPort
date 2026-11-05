@@ -95,6 +95,9 @@ private:
     mutable std::mutex m_queueMutex;
     mutable std::condition_variable m_workCv;
     mutable std::condition_variable m_doneCv;
+    mutable std::condition_variable m_frameDoneCv;
+    std::atomic<uint32_t> m_framesInFlight{0u};
+    uint32_t m_maxFramesInFlight = 1u;
     std::deque<std::vector<uint8_t>> m_pending;
     std::vector<std::vector<uint8_t>> m_spare;
     uint64_t m_published = 0u;

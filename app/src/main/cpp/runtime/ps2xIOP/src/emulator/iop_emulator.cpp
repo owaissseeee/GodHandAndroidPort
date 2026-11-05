@@ -811,6 +811,23 @@ namespace ps2x::iop::detail
             const int heldId = critical ? criticalThreadId : 0;
             const IopThread *held = heldId != 0 ? kernel.findThread(heldId) : nullptr;
             const uint32_t heldPc = held ? held->cpu.pc : 0u;
+            if (critical && held && isHaltLoop(held->cpu.pc))
+            {
+                std::ostringstream out;
+                out << "[IOP] Breaking fatal halt loop in thread " << held->id << " (pc 0x" << std::hex << held->cpu.pc
+                    << std::dec << describeCriHalt(held->cpu.pc) << "): re-enabling interrupts and terminating halted thread.";
+                log(LogLevel::Warning, out.str());
+                memory.setInterruptControl(1u);
+                if (IopThread *t = kernel.findThread(held->id))
+                {
+                    t->state = IopThreadState::Dormant;
+                    t->cpu.stopped = true;
+                    t->cpu.yielded = true;
+                }
+                criticalThreadId = 0;
+                criticalHeldId = 0;
+                return;
+            }
             const uint64_t start = totalCycles;
             const uint64_t deadline = totalCycles + kCriticalSectionMaxCycles;
             while ((heldInside() || urgentReady()) && totalCycles < deadline)
@@ -843,6 +860,22 @@ namespace ps2x::iop::detail
 #if !defined(__ANDROID__)
             log(stuck ? LogLevel::Warning : LogLevel::Info, out.str());
 #endif
+        }
+
+        bool isHaltLoop(uint32_t pc) const
+        {
+            const uint32_t physical = IopMemory::physicalAddress(pc);
+            for (const uint32_t at : {physical, physical - 4u})
+            {
+                if (at + 4u > IopMemory::RamSize)
+                    continue;
+                const uint32_t op = memory.read32(at);
+                if ((op >> 26) == 2u && ((((at + 4u) & 0xF0000000u) | ((op & 0x03FFFFFFu) << 2)) == at))
+                    return true;
+                if ((op & 0xFFFF0000u) == 0x10000000u && (op & 0x0000FFFFu) == 0xFFFFu)
+                    return true;
+            }
+            return false;
         }
 
         // Where a held thread is: IRX id + offset, and whether it spins on a jump to itself. CRI ADX 9.67's SJ error
@@ -1124,7 +1157,7 @@ namespace ps2x::iop::detail
         // Log only (sweep L1): a thread that keeps interrupts off for 2 s of IOP time has stopped the whole IOP (no
         // interrupt, no other thread runs; e.g. CRI's SJ error halt after "E2004090212"). Before this nothing in the
         // log said which thread it was, and PS2X_IOP_THREAD_LOG goes quiet in exactly this state.
-        void noteLongCriticalSection(const IopThread &thread, uint64_t sliceStart)
+        void noteLongCriticalSection(IopThread &thread, uint64_t sliceStart)
         {
             if (criticalHeldId != thread.id)
             {
@@ -1133,7 +1166,27 @@ namespace ps2x::iop::detail
                 criticalHeldLogged = false;
                 return;
             }
-            if (criticalHeldLogged || totalCycles - criticalHeldSince < kServerCallMaxCycles || criticalHeldLogs >= 4u)
+            if (totalCycles - criticalHeldSince >= kServerCallMaxCycles)
+            {
+                if (!criticalHeldLogged)
+                {
+                    criticalHeldLogged = true;
+                    ++criticalHeldLogs;
+                    std::ostringstream out;
+                    out << "[IOP] thread " << thread.id << " (prio " << thread.priority << ", entry 0x" << std::hex << thread.entry
+                        << ") held interrupts off for >2s: forcing interrupts ON and suspending thread to prevent system freeze; pc 0x"
+                        << std::hex << thread.cpu.pc << " ra 0x" << thread.cpu.gpr[31] << std::dec << describeCriHalt(thread.cpu.pc);
+                    log(LogLevel::Error, out.str());
+                }
+                memory.setInterruptControl(1u);
+                thread.state = IopThreadState::Suspended;
+                thread.cpu.stopped = true;
+                thread.cpu.yielded = true;
+                criticalThreadId = 0;
+                criticalHeldId = 0;
+                return;
+            }
+            if (criticalHeldLogged || criticalHeldLogs >= 4u)
                 return;
             criticalHeldLogged = true;
             ++criticalHeldLogs;
@@ -1197,10 +1250,28 @@ namespace ps2x::iop::detail
                     kernel.endTimeslice(*next, kThreadReturnSentinel);
                     if (!interruptsEnabled())
                     {
-                        if (const IopThread *ran = kernel.findThread(ranId); ran && ran->state == IopThreadState::Ready)
+                        if (IopThread *ran = kernel.findThread(ranId); ran && ran->state == IopThreadState::Ready)
                         {
-                            criticalThreadId = ranId;
-                            noteLongCriticalSection(*ran, before);
+                            if (isHaltLoop(ran->cpu.pc))
+                            {
+                                // The thread has entered an unrecoverable halt loop (e.g. CRI ADX error handler) with interrupts off.
+                                // Immediately break the halt loop, re-enable interrupts, and terminate the halted thread so the IOP and EE can proceed!
+                                std::ostringstream out;
+                                out << "[IOP] Breaking fatal halt loop in thread " << ran->id << " (pc 0x" << std::hex << ran->cpu.pc
+                                    << std::dec << describeCriHalt(ran->cpu.pc) << "): re-enabling interrupts and terminating thread to prevent system freeze.";
+                                log(LogLevel::Warning, out.str());
+                                memory.setInterruptControl(1u);
+                                ran->state = IopThreadState::Dormant;
+                                ran->cpu.stopped = true;
+                                ran->cpu.yielded = true;
+                                criticalThreadId = 0;
+                                criticalHeldId = 0;
+                            }
+                            else
+                            {
+                                criticalThreadId = ranId;
+                                noteLongCriticalSection(*ran, before);
+                            }
                         }
                         else
                             criticalHeldId = 0;

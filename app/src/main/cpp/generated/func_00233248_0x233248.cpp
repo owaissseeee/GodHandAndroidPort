@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -897,7 +898,13 @@ label_23351c:
 label_23354c:
     // 0x23354c: 0x8e2205f0  lw          $v0, 0x5F0($s1)
     ctx->pc = 0x23354cu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_cd_s1_5f0");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 1520)));
+    }
     // 0x233550: 0x1040001a  beqz        $v0, . + 4 + (0x1A << 2)
     ctx->pc = 0x233550u;
     {

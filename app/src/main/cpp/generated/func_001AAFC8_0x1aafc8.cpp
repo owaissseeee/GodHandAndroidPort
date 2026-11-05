@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -50,7 +51,13 @@ void func_001AAFC8_0x1aafc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     { float f = ctx->f[20]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 29), 32), bits); }
     // 0x1aafdc: 0x8e0209d4  lw          $v0, 0x9D4($s0)
     ctx->pc = 0x1aafdcu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_om_cd_s0_9d4");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 2516)));
+    }
     // 0x1aafe0: 0x10400002  beqz        $v0, . + 4 + (0x2 << 2)
     ctx->pc = 0x1AAFE0u;
     {

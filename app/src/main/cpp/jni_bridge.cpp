@@ -553,6 +553,13 @@ Java_com_owaissseeee_godhand_NativeBridge_setFpsMode(
     JNIEnv* /*env*/, jobject /*thiz*/, jint fpsIdx)
 {
     godhand::mobile::setFpsMode(fpsIdx);
+    float target_hz = (fpsIdx == 0) ? 60.0f : 30.0f;
+    using PFN_setFrameRate = int (*)(ANativeWindow*, float, int8_t);
+    static auto pfn_setFrameRate = reinterpret_cast<PFN_setFrameRate>(dlsym(RTLD_DEFAULT, "ANativeWindow_setFrameRate"));
+    ANativeWindow* win = g_native_window.load();
+    if (pfn_setFrameRate && win) {
+        pfn_setFrameRate(win, target_hz, 0);
+    }
     LOGI("NativeBridge: Target FPS mode set to %d (%s)", fpsIdx, (fpsIdx == 0) ? "60 FPS" : "30 FPS");
 }
 

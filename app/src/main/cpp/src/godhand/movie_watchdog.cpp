@@ -5,6 +5,7 @@
 // waiting for input that never arrives, stream or audio stalled). Then, after 20 s of game time without one decoded
 // macroblock, report the movie finished once; both callers call cMovie_Stop (0x2B4D68) themselves right after.
 #include "godhand/movie_watchdog.h"
+#include "godhand/freeze_watchdog.h"
 #include "godhand/function_hooks.h"
 #include "godhand/log.h"
 #include "ps2_runtime_macros.h" // GPR_U32 / SET_GPR_U32
@@ -26,6 +27,7 @@ namespace godhand
 
         void getStatusWithWatchdog(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime)
         {
+            godhand::notifyFrameHeartbeat();
             const uint32_t ra = GPR_U32(ctx, 31), handle = GPR_U32(ctx, 5);
             g_getStatus(rdram, ctx, runtime);
             if ((ra != kEndingReturn && ra != kMovieListReturn) || GPR_U32(ctx, 2) == 0u)

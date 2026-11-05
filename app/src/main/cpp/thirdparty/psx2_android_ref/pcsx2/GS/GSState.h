@@ -129,6 +129,8 @@ protected:
 	static constexpr int INVALID_ALPHA_MINMAX = 500;
 	static constexpr int MAX_DRAW_BUFFERS = 3;
 
+	bool m_skip_current_draws = false;
+
 	GSVertex m_v = {};
 	float m_q = 1.0f;
 	GSVector4i m_xyof = {};

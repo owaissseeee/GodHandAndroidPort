@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -48,13 +49,25 @@ void func_002EA9F0_0x2ea9f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 700)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x2eaa0c: 0x460218c0  add.s       $f3, $f3, $f2
     ctx->pc = 0x2eaa0cu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_uvscroll_u");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     ctx->f[3] = FPU_ADD_S(ctx->f[3], ctx->f[2]);
+    }
     // 0x2eaa10: 0xc48002c4  lwc1        $f0, 0x2C4($a0)
     ctx->pc = 0x2eaa10u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 708)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x2eaa14: 0x46000840  add.s       $f1, $f1, $f0
     ctx->pc = 0x2eaa14u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_uvscroll_v");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     ctx->f[1] = FPU_ADD_S(ctx->f[1], ctx->f[0]);
+    }
     // 0x2eaa18: 0x46032034  c.lt.s      $f4, $f3
     ctx->pc = 0x2eaa18u;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[4], ctx->f[3])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);

@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -296,7 +297,14 @@ label_10b740:
         ctx->in_delay_slot = true;
         ctx->branch_pc = 0x10B73Cu;
         // 0x10b740: 0x431021  addu        $v0, $v0, $v1 (Delay Slot)
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_gene_step_hold");
+        if (hook) hook(rdram, ctx, runtime);
         SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
+    } else {
+        SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
+    }
         ctx->in_delay_slot = false;
         ctx->pc = 0x10B744u;
         goto label_10b744;
@@ -308,7 +316,14 @@ label_10b740:
         ctx->in_delay_slot = true;
         ctx->branch_pc = 0x10B73Cu;
         // 0x10b740: 0x431021  addu        $v0, $v0, $v1 (Delay Slot)
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_gene_step_hold");
+        if (hook) hook(rdram, ctx, runtime);
         SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
+    } else {
+        SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
+    }
         ctx->in_delay_slot = false;
         if (branch_taken_0x10b73c) {
             ctx->pc = 0x10B748u;
@@ -319,7 +334,14 @@ label_10b740:
 label_10b744:
     // 0x10b744: 0x60102d  daddu       $v0, $v1, $zero
     ctx->pc = 0x10b744u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_gene_step_hold");
+        if (hook) hook(rdram, ctx, runtime);
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
+    } else {
+    SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
+    }
 label_10b748:
     // 0x10b748: 0xe0f809  jalr        $a3
 label_10b74c:
@@ -352,7 +374,14 @@ label_10b74c:
 label_10b750:
     // 0x10b750: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x10b750u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_hold_handler_end");
+        if (hook) hook(rdram, ctx, runtime);
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
+    } else {
+    SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
+    }
 label_10b754:
     // 0x10b754: 0x3e00008  jr          $ra
 label_10b758:

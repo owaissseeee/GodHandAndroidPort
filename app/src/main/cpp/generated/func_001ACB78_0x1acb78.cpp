@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -112,13 +113,21 @@ label_1acbb0:
 label_1acbb8:
     // 0x1acbb8: 0x3042000f  andi        $v0, $v0, 0xF
     ctx->pc = 0x1acbb8u;
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)31);
+    } else {
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)15);
+    }
     // 0x1acbbc: 0x24030001  addiu       $v1, $zero, 0x1
     ctx->pc = 0x1acbbcu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1acbc0: 0x2442000f  addiu       $v0, $v0, 0xF
     ctx->pc = 0x1acbc0u;
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 30));
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 15));
+    }
     // 0x1acbc4: 0xa20302f6  sb          $v1, 0x2F6($s0)
     ctx->pc = 0x1acbc4u;
     WRITE8(ADD32(GPR_U32(ctx, 16), 758), (uint8_t)GPR_U32(ctx, 3));
@@ -162,7 +171,11 @@ label_1acbd4:
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 16), 1568)));
     // 0x1acbec: 0x24030008  addiu       $v1, $zero, 0x8
     ctx->pc = 0x1acbecu;
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 16));
+    } else {
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 8));
+    }
     // 0x1acbf0: 0x24040002  addiu       $a0, $zero, 0x2
     ctx->pc = 0x1acbf0u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
@@ -779,7 +792,11 @@ label_1acdbc:
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1acdc4: 0x3c013eb2  lui         $at, 0x3EB2
     ctx->pc = 0x1acdc4u;
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)0x3E32u << 16));
+    } else {
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16050 << 16));
+    }
     // 0x1acdc8: 0x3421b8c2  ori         $at, $at, 0xB8C2
     ctx->pc = 0x1acdc8u;
     SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)47298);
@@ -1091,7 +1108,11 @@ label_1ace80:
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x1ACEB0u;
     // 0x1aceb4: 0x24060002  addiu       $a2, $zero, 0x2 (Delay Slot)
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
+    } else {
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
+    }
     ctx->in_delay_slot = false;
     ctx->pc = 0x1FD718u;
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1FD718u, 0x1ACEB0u, 0x1ACEB8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
@@ -1163,7 +1184,11 @@ label_1acee8:
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1acef0: 0x3c013db2  lui         $at, 0x3DB2
     ctx->pc = 0x1acef0u;
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)0x3D32u << 16));
+    } else {
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15794 << 16));
+    }
     // 0x1acef4: 0x3421b8c2  ori         $at, $at, 0xB8C2
     ctx->pc = 0x1acef4u;
     SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)47298);
@@ -1712,7 +1737,11 @@ label_1ad06c:
         ctx->in_delay_slot = true;
         ctx->branch_pc = 0x1AD080u;
         // 0x1ad084: 0x24020004  addiu       $v0, $zero, 0x4 (Delay Slot)
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 8));
+    } else {
         SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
+    }
         ctx->in_delay_slot = false;
         if (branch_taken_0x1ad080) {
             ctx->pc = 0x1AD098u;
