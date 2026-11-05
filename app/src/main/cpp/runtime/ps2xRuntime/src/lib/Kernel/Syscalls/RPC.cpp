@@ -948,24 +948,27 @@ namespace ps2_syscalls
         if (it->second.busy)
         {
             auto &tracker = s_busyTrackers[clientPtr];
-            const auto now = std::chrono::steady_clock::now();
             if (tracker.pollCount == 0)
             {
-                tracker.firstBusyTime = now;
+                tracker.firstBusyTime = std::chrono::steady_clock::now();
             }
             ++tracker.pollCount;
-            const auto elapsedMs = std::chrono::duration<double, std::milli>(now - tracker.firstBusyTime).count();
-            if (elapsedMs > 2500.0 && tracker.pollCount > 1000)
+            if ((tracker.pollCount & 2047u) == 0u)
             {
-                // SIF RPC client has been blocked for > 2.5 seconds with thousands of polls.
-                // Clear busy to prevent permanent EE hang!
-                it->second.busy = false;
-                tracker.pollCount = 0;
-                setReturnS32(ctx, 0);
-                return;
+                const auto now = std::chrono::steady_clock::now();
+                const auto elapsedMs = std::chrono::duration<double, std::milli>(now - tracker.firstBusyTime).count();
+                if (elapsedMs > 2500.0 && tracker.pollCount > 1000)
+                {
+                    // SIF RPC client has been blocked for > 2.5 seconds with thousands of polls.
+                    // Clear busy to prevent permanent EE hang!
+                    it->second.busy = false;
+                    tracker.pollCount = 0;
+                    setReturnS32(ctx, 0);
+                    return;
+                }
             }
         }
-        else
+        else if (!s_busyTrackers.empty())
         {
             s_busyTrackers.erase(clientPtr);
         }

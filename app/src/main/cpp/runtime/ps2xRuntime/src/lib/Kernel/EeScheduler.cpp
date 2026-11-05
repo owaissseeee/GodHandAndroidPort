@@ -711,6 +711,10 @@ void EeScheduler::run()
                     skipIdleCycles();
                 }
             }
+            else if (context.pc >= 0x003B0208u && context.pc <= 0x003B0224u)
+            {
+                skipIdleCycles();
+            }
         }
         if (checkpointDue(kGuestDispatchCycles))
         {
@@ -777,6 +781,10 @@ void EeScheduler::run()
                 {
                     skipIdleCycles();
                 }
+            }
+            else if (context.pc >= 0x003B0208u && context.pc <= 0x003B0224u)
+            {
+                skipIdleCycles();
             }
         }
 
@@ -867,6 +875,21 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
                 {
                     skipIdleCycles();
                 }
+            }
+            else if (pc >= 0x0030AD98u && pc <= 0x0030ADACu)
+            {
+                uint32_t vblankCounter = 0u;
+                std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
+                uint32_t divider = 0u;
+                std::memcpy(&divider, m_rdram + 0x00747A10u, sizeof(divider));
+                if (divider > 0u && vblankCounter < divider)
+                {
+                    skipIdleCycles();
+                }
+            }
+            else if (pc >= 0x003B0208u && pc <= 0x003B0224u)
+            {
+                skipIdleCycles();
             }
         }
     }

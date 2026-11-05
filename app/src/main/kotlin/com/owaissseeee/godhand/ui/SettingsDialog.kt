@@ -405,11 +405,11 @@ class SettingsDialog(
 
         addSpinnerRow(
             "Graphics Renderer",
-            listOf("Vulkan (PCSX2-GS - Best for Mali / Adreno / Pixel)", "OpenGL ES 3.2 (Alternate for Adreno / PowerVR)", "Native GLES"),
-            settings.rendererIdx,
-            enabled = !isMidGame
-        ) { pos ->
-            settings.rendererIdx = pos
+            listOf("Vulkan (PCSX2-GS - Best for Mali / Adreno / Pixel)"),
+            0,
+            enabled = false
+        ) { _ ->
+            settings.rendererIdx = 0
         }
 
         addSpinnerRow(
