@@ -1118,15 +1118,21 @@ namespace godhand
         constexpr uint32_t kSceGsSetDefDispEnv = 0x00396570u;
         if (runtime.hasFunction(kSceGsSetDefDispEnv))
         {
+            static GuestFunction s_origSetDefDispEnv = runtime.lookupFunction(kSceGsSetDefDispEnv);
             FunctionHooks::instance().replace(
                 kSceGsSetDefDispEnv,
-                "sceGsSetDefDispEnv_native",
+                "sceGsSetDefDispEnv_devseville_60fps",
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
-                    ps2_stubs::sceGsSetDefDispEnv(rdram, ctx, rt);
-                    if (ctx) ctx->pc = GPR_U32(ctx, 31);
+                    if (godhand::mobile::getFpsMode() == 0) // 60 FPS
+                    {
+                        // DevSeville 60 FPS: 00396594 lui t1, 0010
+                        SET_GPR_S32(ctx, 9, 0x10);
+                    }
+                    if (s_origSetDefDispEnv)
+                        s_origSetDefDispEnv(rdram, ctx, rt);
                 },
                 ReplacementStatus::Native,
-                "Native HLE sceGsSetDefDispEnv");
+                "DevSeville 60 FPS display environment hook");
         }
 
         // True Invulnerability & Super-Armor:
@@ -1302,34 +1308,6 @@ namespace godhand
                 },
                 ReplacementStatus::Native,
                 "Save menu empty string freeze guard (Kamite Oct 27)");
-        }
-
-        constexpr uint32_t kExecStoreImage = 0x003958D8u;
-        if (runtime.hasFunction(kExecStoreImage))
-        {
-            FunctionHooks::instance().replace(
-                kExecStoreImage,
-                "sceGsExecStoreImage_native",
-                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime) {
-                    ps2_stubs::sceGsExecStoreImage(rdram, ctx, runtime);
-                    if (ctx) ctx->pc = GPR_U32(ctx, 31);
-                },
-                ReplacementStatus::Native,
-                "Native HLE sceGsExecStoreImage replacing 16M cycle spin-wait loop");
-        }
-
-        constexpr uint32_t kExecLoadImage = 0x00395758u;
-        if (runtime.hasFunction(kExecLoadImage))
-        {
-            FunctionHooks::instance().replace(
-                kExecLoadImage,
-                "sceGsExecLoadImage_native",
-                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime) {
-                    ps2_stubs::sceGsExecLoadImage(rdram, ctx, runtime);
-                    if (ctx) ctx->pc = GPR_U32(ctx, 31);
-                },
-                ReplacementStatus::Native,
-                "Native HLE sceGsExecLoadImage replacing MIPS transfer loop");
         }
     }
 }
