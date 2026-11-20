@@ -34,6 +34,7 @@
 #include "godhand/frame_patches.h"
 #include "godhand/function_hooks.h"
 #include "godhand/game_layout.h"
+#include "godhand_patches_mobile.h"
 #include "godhand/log.h"
 #include "ps2_runtime_macros.h"
 #include "runtime/ee_scheduler.h"
@@ -101,12 +102,9 @@ void ps2xSetPatchFlag(const char *name, bool enabled)
         g_ps2xPatchFlags.fetch_and(~mask, std::memory_order_relaxed);
 }
 
-bool ps2xPatchFlag(const char *name)
+namespace kamite
 {
-    const uint32_t fast = fastPatchFlagMask(name);
-    if (__builtin_expect(fast != 0u, 1))
-        return (g_ps2xPatchFlags.load(std::memory_order_relaxed) & fast) != 0u;
-    return (g_ps2xPatchFlags.load(std::memory_order_relaxed) & ps2xPatchFlagMask(name)) != 0u;
+    std::atomic<bool> g_isFps60Active{false};
 }
 
 void ps2xRegisterHostHook(const char *name, PS2Runtime::RecompiledFunction hook)
@@ -375,6 +373,7 @@ namespace kamite
             if (on == g_fps60)
                 return;
             g_fps60 = on;
+            kamite::g_isFps60Active.store(on, std::memory_order_relaxed);
             ps2xSetPatchFlag("fps60", on);
             // ps2x::asyncvif::setVu1TimingScale(on ? 0.5 : 1.0);
             applyRoulettePeriod();
@@ -1955,9 +1954,12 @@ namespace kamite
 
     void installFramePatches(PS2Runtime &runtime)
     {
-        g_fps60 = true; // Default 60 FPS on Android
-        g_fps60User = g_fps60;
-        g_fps60Shown.store(g_fps60);
+        const bool is60 = (godhand::mobile::getFpsMode() == 0);
+        g_fps60 = is60;
+        g_fps60User = is60;
+        g_fps60Shown.store(is60);
+        kamite::g_isFps60Active.store(is60, std::memory_order_relaxed);
+        ps2xSetPatchFlag("fps60", is60);
         g_l3Dash = true; // Enable single-press L3 dash on Android
         ps2xRegisterHostHook("km_frame_start", &frameStartInternal);
         ps2xRegisterHostHook("km_fps60_hitbox_compare", &hitboxCompareInternal);

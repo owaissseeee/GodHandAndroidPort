@@ -627,7 +627,7 @@ void EeScheduler::run()
                 if (completed.kind == GuestInvocationKind::Interrupt &&
                     running->invocations.empty() && m_pendingInvocations.empty() &&
                     g_ps2xInVBlankWait.exchange(false, std::memory_order_relaxed) &&
-                    m_rdram && m_rdram[0x00747A08u] == 1u)
+                    m_rdram && *reinterpret_cast<const uint32_t*>(m_rdram + 0x00753D80u) < m_rdram[0x00747A09u])
                 {
                     skipIdleCycles();
                 }
@@ -720,16 +720,20 @@ void EeScheduler::run()
 
         // 100% Boot-Safe VBlank Spin-Loop Fast-Forward:
         // Runs AFTER function() has executed and right BEFORE processPendingEvents() consumes due deadlines.
-        // Whenever the guest is spinning inside func_0030B148 (0x0030B148..0x0030B298) waiting for VBlank #1
-        // or VBlank #2 (even after an intermediate GS/IOP interrupt aborted an earlier skip), fast-forward
-        // directly to the next VBlank deadline without spinning the CPU!
-        if (m_rdram != nullptr && running->invocations.empty() && m_pendingInvocations.empty() &&
-            context.pc >= 0x0030B148u && context.pc < 0x0030B298u)
+        // Whenever the guest is in the main loop wait (0x0030ADD8..0x0030ADEC or 0x002B4BC0) waiting for VBlank,
+        // fast-forward directly to the next VBlank deadline without spinning the CPU!
+        if (m_rdram != nullptr && running->invocations.empty() && m_pendingInvocations.empty())
         {
-            const uint8_t reqVb = m_rdram[0x00747A09u] != 0u ? m_rdram[0x00747A09u] : 2u;
-            if (m_rdram[0x00747A08u] < reqVb)
+            const uint32_t currentPc = context.pc;
+            if ((currentPc >= 0x0030ADD8u && currentPc <= 0x0030ADECu) || currentPc == 0x002B4BC0u ||
+                (currentPc >= 0x0030AD98u && currentPc <= 0x0030ADACu))
             {
-                skipIdleCycles();
+                const uint8_t reqVb = m_rdram[0x00747A09u] != 0u ? m_rdram[0x00747A09u] : 2u;
+                const uint32_t curVb = *reinterpret_cast<const uint32_t*>(m_rdram + 0x00753D80u);
+                if (curVb < reqVb)
+                {
+                    skipIdleCycles();
+                }
             }
         }
 
@@ -810,8 +814,9 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
         if (const GuestThread *running = currentThread())
         {
             const uint32_t pc = running->activeContext().pc;
-            if (pc >= 0x0030B148u && pc < 0x0030B298u &&
-                m_rdram[0x00747A08u] < m_rdram[0x00747A09u])
+            if (((pc >= 0x0030ADD8u && pc <= 0x0030ADECu) || pc == 0x002B4BC0u ||
+                 (pc >= 0x0030AD98u && pc <= 0x0030ADACu)) &&
+                *reinterpret_cast<const uint32_t*>(m_rdram + 0x00753D80u) < m_rdram[0x00747A09u])
             {
                 skipIdleCycles();
             }

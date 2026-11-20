@@ -64,7 +64,11 @@ namespace
         options.TexturePreloading = TexturePreloadingLevel::Full;
         // SkipDraw: Cleanly strips the depth-of-field blur quad without corrupting framebuffers
         const char *skipDrawEnv = std::getenv("PS2X_SKIPDRAW");
+#if defined(__ANDROID__)
+        const int skipDrawVal = skipDrawEnv ? std::atoi(skipDrawEnv) : 1;
+#else
         const int skipDrawVal = skipDrawEnv ? std::atoi(skipDrawEnv) : 0;
+#endif
         options.SkipDrawStart = skipDrawVal > 0 ? 1 : 0;
         options.SkipDrawEnd = skipDrawVal;
         options.VsyncQueueSize = 2;

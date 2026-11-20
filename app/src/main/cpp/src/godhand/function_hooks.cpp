@@ -1035,32 +1035,6 @@ namespace godhand
                 "bypass flare GS depth readback stall on mobile");
         }
 
-        constexpr uint32_t kVBlankWaitFunc = 0x0030B148u;
-        if (runtime.hasFunction(kVBlankWaitFunc))
-        {
-            static GuestFunction s_origVBlankWait = nullptr;
-            s_origVBlankWait = FunctionHooks::instance().original(kVBlankWaitFunc);
-            if (!s_origVBlankWait)
-                s_origVBlankWait = runtime.lookupFunction(kVBlankWaitFunc);
-            FunctionHooks::instance().replace(
-                kVBlankWaitFunc,
-                "vblank_wait_idle_skip",
-                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
-                    if (rt && rdram)
-                    {
-                        const uint8_t reqVb = rdram[0x00747A09u] != 0u ? rdram[0x00747A09u] : 2u;
-                        if (rdram[0x00747A08u] < reqVb)
-                        {
-                            rt->scheduler().skipIdleCycles();
-                        }
-                    }
-                    if (s_origVBlankWait)
-                        s_origVBlankWait(rdram, ctx, rt);
-                },
-                ReplacementStatus::Observed,
-                "lock-free VBlank idle skip for both VBlanks");
-            GH_INFO(Gs, "func_0030B148 replaced with lock-free skipIdleCycles()");
-        }
 
         constexpr uint32_t kFlipChainBuilder = 0x0030B870u;
         if (runtime.hasFunction(kFlipChainBuilder))
@@ -1088,7 +1062,51 @@ namespace godhand
                 "lock-free combined flicker-off + dynamic 60/30 FPS frame counter + cheats engine");
         }
 
-// DevSeville 60 FPS GS Patches removed in favor of kamite 60 FPS suite
+        // DevSeville 60 FPS GS Patches (sceGsResetGraph & sceGsSetDefDispEnv)
+        constexpr uint32_t kSceGsResetGraph = 0x003951F8u;
+        if (runtime.hasFunction(kSceGsResetGraph))
+        {
+            static GuestFunction s_origGsReset = runtime.lookupFunction(kSceGsResetGraph);
+            FunctionHooks::instance().replace(
+                kSceGsResetGraph,
+                "sceGsResetGraph_devseville_60fps",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    if (godhand::mobile::getFpsMode() == 0) // 60 FPS
+                    {
+                        // DevSeville 60 FPS patch (SLUS-21503):
+                        // 00395204 lui a1, 0000 -> SCE_GS_NOINTERLACE (0)
+                        // 0039520c lui a2, 0050 -> SCE_GS_DTV480P (0x50 = 60Hz progressive)
+                        // 00395214 lui a3, 0001 -> SCE_GS_FIELD (1 = FRAME)
+                        SET_GPR_S32(ctx, 5, 0);
+                        SET_GPR_S32(ctx, 6, 0x50);
+                        SET_GPR_S32(ctx, 7, 1);
+                    }
+                    if (s_origGsReset)
+                        s_origGsReset(rdram, ctx, rt);
+                },
+                ReplacementStatus::Native,
+                "DevSeville 60 FPS GS reset mode hook");
+        }
+
+        constexpr uint32_t kSceGsSetDefDispEnv = 0x00396570u;
+        if (runtime.hasFunction(kSceGsSetDefDispEnv))
+        {
+            static GuestFunction s_origSetDefDispEnv = runtime.lookupFunction(kSceGsSetDefDispEnv);
+            FunctionHooks::instance().replace(
+                kSceGsSetDefDispEnv,
+                "sceGsSetDefDispEnv_devseville_60fps",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    if (godhand::mobile::getFpsMode() == 0) // 60 FPS
+                    {
+                        // DevSeville 60 FPS: 00396594 lui t1, 0010
+                        SET_GPR_S32(ctx, 9, 0x10);
+                    }
+                    if (s_origSetDefDispEnv)
+                        s_origSetDefDispEnv(rdram, ctx, rt);
+                },
+                ReplacementStatus::Native,
+                "DevSeville 60 FPS display environment hook");
+        }
 
         // True Invulnerability & Super-Armor:
         // Hook cOmBase_checkDamage (0x001B7380). If victim == playerPtr, return 0!
