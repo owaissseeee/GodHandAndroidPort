@@ -472,6 +472,10 @@ namespace
 
     void pushDispatchPc(uint32_t pc)
     {
+#if defined(__ANDROID__)
+        (void)pc;
+        return;
+#else
         DispatchHistory &h = g_dispatchHistory;
         h.pcs[h.next] = pc;
         h.next = (h.next + 1u) % static_cast<uint32_t>(h.pcs.size());
@@ -479,6 +483,7 @@ namespace
         {
             h.wrapped = true;
         }
+#endif
     }
 
     std::string formatDispatchHistory()
@@ -1860,21 +1865,10 @@ bool PS2Runtime::dispatchGuestBranch(uint8_t *rdram,
     const bool isCall = (kind == GuestBranchKind::DirectCall || kind == GuestBranchKind::IndirectCall);
 
     // Every inter-function transfer is also a deterministic EE safe point.
-    // Backward edges inside generated functions use eeCheckpointDue(), while
-    // this charge bounds straight-line call chains that have no local loop.
-    if (__builtin_expect(m_eeScheduler != nullptr, 1))
+    // Use eeCheckpointDue() so inter-function calls take the 2-instruction deferred budget fast-path!
+    if (eeCheckpointDue(EeScheduler::kGuestDispatchCycles))
     {
-        const uint32_t charge = EeScheduler::kGuestDispatchCycles;
-        const uint64_t deferred = g_ps2xEeDeferred + charge;
-        if (__builtin_expect(deferred < g_ps2xEeDeferBudget.load(std::memory_order_relaxed) && !m_eeScheduler->rescheduleRequested(), 1))
-        {
-            g_ps2xEeDeferred = deferred;
-        }
-        else
-        {
-            if (m_eeScheduler->checkpointDue(charge))
-                return false;
-        }
+        return false;
     }
 
     if (!isCall)
@@ -1892,27 +1886,14 @@ bool PS2Runtime::dispatchGuestBranch(uint8_t *rdram,
         return false;
     }
 
-    static int s_singleLookup = -1; // plain global, not a guarded static (checked on every call)
-    if (s_singleLookup < 0)
-    {
-        const char *setting = std::getenv("PS2X_EE_SINGLE_LOOKUP");
-        s_singleLookup = (!setting || std::string_view(setting) != "0") ? 1 : 0;
-    }
-    const bool singleLookup = s_singleLookup != 0;
-    RecompiledFunction targetFn = nullptr;
-    if (singleLookup)
-    {
-        targetFn = anyFunction(targetPc);
-    }
-    else if (hasFunction(targetPc))
-        targetFn = lookupFunction(targetPc);
-    if (!targetFn)
+    RecompiledFunction targetFn = anyFunction(targetPc);
+    if (__builtin_expect(!targetFn, 0))
     {
         reportMissingFunction(rdram, ctx, targetPc, sourcePc, kind, debugName);
 
         const MissingFunctionPolicy policy = missingFunctionPolicy();
 
-        if (policy == MissingFunctionPolicy::SkipCallDebug && isCall)
+        if (policy == MissingFunctionPolicy::SkipCallDebug)
         {
             ctx->pc = fallthroughPc;
             return true;
@@ -1921,7 +1902,6 @@ bool PS2Runtime::dispatchGuestBranch(uint8_t *rdram,
         if (policy == MissingFunctionPolicy::ContinueToTarget)
         {
             ctx->pc = targetPc;
-            // if you need the app to keep open to open debug pannel change this to false
             return false;
         }
 
@@ -1929,23 +1909,25 @@ bool PS2Runtime::dispatchGuestBranch(uint8_t *rdram,
     }
 
 #if !defined(__ANDROID__)
-    if (singleLookup)
-        pushDispatchPc(targetPc);
-#endif
-    const uint32_t entryPc = ctx->pc;
-    const uint64_t jumpSerial = g_guestJumpSerial;
+    pushDispatchPc(targetPc);
     pushBranchEvent(0u, sourcePc, targetPc, ctx, fallthroughPc);
+#endif
+    const uint32_t entryPc = targetPc;
+    const uint64_t jumpSerial = g_guestJumpSerial;
     targetFn(rdram, ctx, this);
+#if !defined(__ANDROID__)
     pushBranchEvent(1u, targetPc, ctx->pc, ctx, fallthroughPc);
+#endif
 
-    if (m_eeScheduler->transferPending() || m_eeScheduler->unwinding() || isStopRequested() || ctx->pc == 0u)
+    if (__builtin_expect(m_eeScheduler->transferPending() || m_eeScheduler->unwinding() || isStopRequested() || ctx->pc == 0u, 0))
     {
         return false;
     }
 
-    if (ctx->pc == entryPc && jumpSerial == g_guestJumpSerial)
+    if (__builtin_expect(ctx->pc == entryPc && jumpSerial == g_guestJumpSerial, 1))
     {
         ctx->pc = fallthroughPc;
+        return true;
     }
 
     return ctx->pc == fallthroughPc;
@@ -2035,15 +2017,26 @@ void PS2Runtime::executeVU0Microprogram(uint8_t *rdram, R5900Context *ctx, uint3
     // this preparation cost more than the program itself (docs/PROGRESS.md §62).
     if (leanCall)
     {
-        ps2xVu0LoadRegisters(m_vu0, ctx->vu0_vf, ctx->vu0_acc);
         VU1State &state = m_vu0.state();
+#if defined(__aarch64__) || defined(_M_ARM64)
+        std::memcpy(state.vf, ctx->vu0_vf, sizeof(state.vf));
+        std::memcpy(state.acc, &ctx->vu0_acc, sizeof(state.acc));
+        state.vf[0][0] = 0.0f;
+        state.vf[0][1] = 0.0f;
+        state.vf[0][2] = 0.0f;
+        state.vf[0][3] = 1.0f;
+#else
+        ps2xVu0LoadRegisters(m_vu0, ctx->vu0_vf, ctx->vu0_acc);
+#endif
         for (uint32_t i = 1; i < 16u; ++i)
             state.vi[i] = static_cast<int16_t>(ctx->vi[i]);
         state.vi[0] = 0;
         state.q = ctx->vu0_q;
         state.p = ctx->vu0_p;
         state.i = ctx->vu0_i;
-        state.r = 0x3F800000u | (static_cast<uint32_t>(_mm_cvtsi128_si32(_mm_castps_si128(ctx->vu0_r))) & 0x007FFFFFu);
+        uint32_t rWord0 = 0u;
+        std::memcpy(&rWord0, &ctx->vu0_r, sizeof(rWord0));
+        state.r = 0x3F800000u | (rWord0 & 0x007FFFFFu);
         state.mac = ctx->vu0_mac_flags;
         state.clip = ctx->vu0_clip_flags;
         state.status = ctx->vu0_status;
@@ -2641,6 +2634,8 @@ uint32_t PS2Runtime::reserveAsyncCallbackStack(uint32_t size, uint32_t alignment
 
 uint8_t PS2Runtime::Load8(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr)
 {
+    if (__builtin_expect(((vaddr & 0x7FFFFFFFu) ^ 0x70000000u) < PS2_SCRATCHPAD_SIZE, 1))
+        return m_memory.getScratchpad()[vaddr & 0x3FFFu];
     try
     {
         return m_memory.read8(vaddr);
@@ -2654,6 +2649,12 @@ uint8_t PS2Runtime::Load8(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr)
 
 uint16_t PS2Runtime::Load16(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr)
 {
+    if (__builtin_expect(((vaddr & 0x7FFFFFFFu) ^ 0x70000000u) <= PS2_SCRATCHPAD_SIZE - sizeof(uint16_t), 1))
+    {
+        uint16_t val;
+        std::memcpy(&val, m_memory.getScratchpad() + (vaddr & 0x3FFFu), sizeof(val));
+        return val;
+    }
     try
     {
         return m_memory.read16(vaddr);
@@ -2667,6 +2668,12 @@ uint16_t PS2Runtime::Load16(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr)
 
 uint32_t PS2Runtime::Load32(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr)
 {
+    if (__builtin_expect(((vaddr & 0x7FFFFFFFu) ^ 0x70000000u) <= PS2_SCRATCHPAD_SIZE - sizeof(uint32_t), 1))
+    {
+        uint32_t val;
+        std::memcpy(&val, m_memory.getScratchpad() + (vaddr & 0x3FFFu), sizeof(val));
+        return val;
+    }
     try
     {
         return m_memory.read32(vaddr);
@@ -2680,6 +2687,12 @@ uint32_t PS2Runtime::Load32(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr)
 
 uint64_t PS2Runtime::Load64(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr)
 {
+    if (__builtin_expect(((vaddr & 0x7FFFFFFFu) ^ 0x70000000u) <= PS2_SCRATCHPAD_SIZE - sizeof(uint64_t), 1))
+    {
+        uint64_t val;
+        std::memcpy(&val, m_memory.getScratchpad() + (vaddr & 0x3FFFu), sizeof(val));
+        return val;
+    }
     try
     {
         return m_memory.read64(vaddr);
@@ -2693,9 +2706,12 @@ uint64_t PS2Runtime::Load64(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr)
 
 __m128i PS2Runtime::Load128(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr)
 {
+    const uint32_t aligned = vaddr & ~0xFu;
+    if (__builtin_expect(((aligned & 0x7FFFFFFFu) ^ 0x70000000u) <= PS2_SCRATCHPAD_SIZE - sizeof(__m128i), 1))
+        return _mm_loadu_si128(reinterpret_cast<const __m128i *>(m_memory.getScratchpad() + (aligned & 0x3FFFu)));
     try
     {
-        return m_memory.read128(vaddr & ~0xFu);
+        return m_memory.read128(aligned);
     }
     catch (const std::exception &)
     {
@@ -2706,6 +2722,11 @@ __m128i PS2Runtime::Load128(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr)
 
 void PS2Runtime::Store8(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr, uint8_t value)
 {
+    if (__builtin_expect(((vaddr & 0x7FFFFFFFu) ^ 0x70000000u) < PS2_SCRATCHPAD_SIZE, 1))
+    {
+        m_memory.getScratchpad()[vaddr & 0x3FFFu] = value;
+        return;
+    }
     ps2TraceGuestWrite(rdram, vaddr, 1u, value, 0u, "WRITE8", ctx);
     try
     {
@@ -2719,6 +2740,11 @@ void PS2Runtime::Store8(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr, uint8
 
 void PS2Runtime::Store16(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr, uint16_t value)
 {
+    if (__builtin_expect(((vaddr & 0x7FFFFFFFu) ^ 0x70000000u) <= PS2_SCRATCHPAD_SIZE - sizeof(uint16_t), 1))
+    {
+        std::memcpy(m_memory.getScratchpad() + (vaddr & 0x3FFFu), &value, sizeof(value));
+        return;
+    }
     ps2TraceGuestWrite(rdram, vaddr, 2u, value, 0u, "WRITE16", ctx);
     try
     {
@@ -2732,6 +2758,11 @@ void PS2Runtime::Store16(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr, uint
 
 void PS2Runtime::Store32(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr, uint32_t value)
 {
+    if (__builtin_expect(((vaddr & 0x7FFFFFFFu) ^ 0x70000000u) <= PS2_SCRATCHPAD_SIZE - sizeof(uint32_t), 1))
+    {
+        std::memcpy(m_memory.getScratchpad() + (vaddr & 0x3FFFu), &value, sizeof(value));
+        return;
+    }
     ps2TraceGuestWrite(rdram, vaddr, 4u, value, 0u, "WRITE32", ctx);
     try
     {
@@ -2747,6 +2778,11 @@ void PS2Runtime::Store32(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr, uint
 
 void PS2Runtime::Store64(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr, uint64_t value)
 {
+    if (__builtin_expect(((vaddr & 0x7FFFFFFFu) ^ 0x70000000u) <= PS2_SCRATCHPAD_SIZE - sizeof(uint64_t), 1))
+    {
+        std::memcpy(m_memory.getScratchpad() + (vaddr & 0x3FFFu), &value, sizeof(value));
+        return;
+    }
     ps2TraceGuestWrite(rdram, vaddr, 8u, value, 0u, "WRITE64", ctx);
     try
     {
@@ -2760,12 +2796,18 @@ void PS2Runtime::Store64(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr, uint
 
 void PS2Runtime::Store128(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr, __m128i value)
 {
+    const uint32_t aligned = vaddr & ~0xFu;
+    if (__builtin_expect(((aligned & 0x7FFFFFFFu) ^ 0x70000000u) <= PS2_SCRATCHPAD_SIZE - sizeof(__m128i), 1))
+    {
+        _mm_storeu_si128(reinterpret_cast<__m128i *>(m_memory.getScratchpad() + (aligned & 0x3FFFu)), value);
+        return;
+    }
     alignas(16) uint64_t _parts[2];
     _mm_storeu_si128(reinterpret_cast<__m128i *>(_parts), value);
-    ps2TraceGuestWrite(rdram, vaddr & ~0xFu, 16u, _parts[0], _parts[1], "WRITE128", ctx);
+    ps2TraceGuestWrite(rdram, aligned, 16u, _parts[0], _parts[1], "WRITE128", ctx);
     try
     {
-        m_memory.write128(vaddr & ~0xFu, value);
+        m_memory.write128(aligned, value);
     }
     catch (const std::exception &)
     {
@@ -2855,7 +2897,7 @@ bool PS2Runtime::eeCheckpointDue(uint32_t cycles) noexcept
     if (s_loopCycles == 0u)
     {
         const char *v = std::getenv("PS2X_EE_LOOP_CYCLES");
-        s_loopCycles = v && *v ? static_cast<uint32_t>(std::max(1, std::atoi(v))) : 32u;
+        s_loopCycles = v && *v ? static_cast<uint32_t>(std::max(1, std::atoi(v))) : 16u;
         g_ps2xEeLoopCycles = s_loopCycles; // the fast path above
     }
     if (cycles == 32u)

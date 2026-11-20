@@ -496,13 +496,11 @@ namespace
         uint32_t undelivered = 0u;
     };
 
-    std::mutex g_eeTimerBacklogMutex;
-    std::unordered_map<const void *, EeTimerBacklog> g_eeTimerBacklogs;
+    EeTimerBacklog g_singleEeTimerBacklog{};
 
-    EeTimerBacklog &eeTimerBacklog(const void *memory)
+    inline EeTimerBacklog &eeTimerBacklog(const void *) noexcept
     {
-        std::lock_guard<std::mutex> lock(g_eeTimerBacklogMutex);
-        return g_eeTimerBacklogs[memory];
+        return g_singleEeTimerBacklog;
     }
 
     uint32_t addBacklog(uint32_t pending, uint64_t events)
@@ -618,9 +616,9 @@ bool PS2Memory::initialize(size_t ramSize)
 
     try
     {
-        // Allocate main RAM
-        m_rdram = new uint8_t[ramSize];
-        std::memset(m_rdram, 0, ramSize);
+        // Allocate main RAM (+64 guard bytes so branch-free unaligned 128-bit loads at the top of RDRAM never overrun)
+        m_rdram = new uint8_t[ramSize + 64u];
+        std::memset(m_rdram, 0, ramSize + 64u);
 
         // Allocate scratchpad
         m_scratchpad = new uint8_t[PS2_SCRATCHPAD_SIZE];
@@ -708,9 +706,7 @@ uint32_t PS2Memory::advanceEeTimers(uint64_t eeCycles) noexcept
     {
         constexpr uint32_t kGifStat = 0x10003020u;
         constexpr uint32_t kGifFqcMask = 0x1F000000u;
-        auto gifStatIt = m_ioRegisters.find(kGifStat);
-        if (gifStatIt != m_ioRegisters.end())
-            gifStatIt->second &= ~kGifFqcMask;
+        m_ioRegisters[kGifStat] &= ~kGifFqcMask;
         m_gifStatWritten = false;
     }
 
@@ -1880,7 +1876,6 @@ void ps2xRaiseIntcStat(uint32_t bits) noexcept
 
 bool PS2Memory::writeIORegister(uint32_t address, uint32_t value)
 {
-    ps2xEeFlushDeferredCycles(); // the exact EE cycle for timers, DMA and the scheduler (EeScheduler::checkpointDue)
     if (address == kIntcStatAddress)
     {
         g_intcStat.fetch_and(~value, std::memory_order_acq_rel);
@@ -1892,6 +1887,7 @@ bool PS2Memory::writeIORegister(uint32_t address, uint32_t value)
     uint32_t timerOffset = 0u;
     if (decodeEeTimerRegister(address, timerIndex, timerOffset))
     {
+        ps2xEeFlushDeferredCycles();
         EeTimerBacklog &backlog = eeTimerBacklog(this);
         backlog.undelivered |= flushEeTimers();
         struct BudgetRefresh
@@ -3493,7 +3489,8 @@ int PS2Memory::pollDmaRegisters()
 
 uint32_t PS2Memory::readIORegister(uint32_t address)
 {
-    ps2xEeFlushDeferredCycles(); // the exact EE cycle for timer counts (EeScheduler::checkpointDue)
+    if (address >= 0x10000000u && address < 0x10002000u)
+        ps2xEeFlushDeferredCycles();
     // PS2X_IO_READ_HIST=1: the 12 most read I/O registers every 2^22 reads (finds guest polling loops).
     static const bool readHist = [] { const char *v = std::getenv("PS2X_IO_READ_HIST"); return v && *v == '1'; }();
     if (readHist)

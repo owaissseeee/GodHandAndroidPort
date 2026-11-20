@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -232,7 +233,13 @@ label_2b6970:
 label_2b6974:
     // 0x2b6974: 0x44816000  mtc1        $at, $f12
     ctx->pc = 0x2b6974u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_model_scroll");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[12], &bits, sizeof(bits)); }
+    }
 label_2b6978:
     // 0x2b6978: 0xc053934  jal         func_14E4D0
 label_2b697c:

@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -746,7 +747,13 @@ label_318bb4:
         ctx->in_delay_slot = true;
         ctx->branch_pc = 0x318BB0u;
         // 0x318bb4: 0x460105c2  mul.s       $f23, $f0, $f1 (Delay Slot)
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_map_scroll_step23");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
         ctx->f[23] = FPU_MUL_S(ctx->f[0], ctx->f[1]);
+    }
         ctx->in_delay_slot = false;
         ctx->pc = 0x318BB8u;
         goto label_318bb8;
@@ -758,7 +765,13 @@ label_318bb4:
         ctx->in_delay_slot = true;
         ctx->branch_pc = 0x318BB0u;
         // 0x318bb4: 0x460105c2  mul.s       $f23, $f0, $f1 (Delay Slot)
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_map_scroll_step23");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
         ctx->f[23] = FPU_MUL_S(ctx->f[0], ctx->f[1]);
+    }
         ctx->in_delay_slot = false;
         if (branch_taken_0x318bb0) {
             ctx->pc = 0x318BD4u;
@@ -2810,7 +2823,13 @@ label_319084:
 label_319088:
     // 0x319088: 0x46001002  mul.s       $f0, $f2, $f0
     ctx->pc = 0x319088u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_map_scroll_counter");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     ctx->f[0] = FPU_MUL_S(ctx->f[2], ctx->f[0]);
+    }
 label_31908c:
     // 0x31908c: 0x46000840  add.s       $f1, $f1, $f0
     ctx->pc = 0x31908cu;
@@ -3292,7 +3311,14 @@ label_31919c:
 label_3191a0:
     // 0x3191a0: 0x3c013b80  lui         $at, 0x3B80
     ctx->pc = 0x3191a0u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_map_scroll_phase");
+        if (hook) hook(rdram, ctx, runtime);
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15232 << 16));
+    } else {
+    SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15232 << 16));
+    }
 label_3191a4:
     // 0x3191a4: 0x44810800  mtc1        $at, $f1
     ctx->pc = 0x3191a4u;

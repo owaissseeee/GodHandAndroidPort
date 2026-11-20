@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -656,7 +657,13 @@ label_10d2b8:
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)1 << 16));
     // 0x10d2cc: 0x2484ffff  addiu       $a0, $a0, -0x1
     ctx->pc = 0x10d2ccu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countdown_a0");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 4294967295));
+    }
     // 0x10d2d0: 0x24060002  addiu       $a2, $zero, 0x2
     ctx->pc = 0x10d2d0u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 2));

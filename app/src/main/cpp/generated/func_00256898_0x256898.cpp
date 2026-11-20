@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -3394,7 +3395,13 @@ label_2571fc:
     ctx->f[0] = FPU_SUB_S(ctx->f[3], ctx->f[0]);
     // 0x257200: 0xe64005c4  swc1        $f0, 0x5C4($s2)
     ctx->pc = 0x257200u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_air_step_f0_s2");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 18), 1476), bits); }
+    }
 label_257204:
     // 0x257204: 0x3c013f80  lui         $at, 0x3F80
     ctx->pc = 0x257204u;
@@ -3474,7 +3481,14 @@ label_25722c:
     ctx->pc = 0x257238u;
     // 0x257238: 0x4600a036  c.le.s      $f20, $f0
     ctx->pc = 0x257238u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_rate_f0_s2");
+        if (hook) hook(rdram, ctx, runtime);
     ctx->fcr31 = (FPU_C_OLE_S(ctx->f[20], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
+    } else {
+    ctx->fcr31 = (FPU_C_OLE_S(ctx->f[20], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
+    }
     // 0x25723c: 0x0  nop
     ctx->pc = 0x25723cu;
     // NOP
@@ -3525,7 +3539,14 @@ label_25722c:
 label_257260:
     // 0x257260: 0x4600a036  c.le.s      $f20, $f0
     ctx->pc = 0x257260u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_rate_f0_s2");
+        if (hook) hook(rdram, ctx, runtime);
     ctx->fcr31 = (FPU_C_OLE_S(ctx->f[20], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
+    } else {
+    ctx->fcr31 = (FPU_C_OLE_S(ctx->f[20], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
+    }
     // 0x257264: 0x0  nop
     ctx->pc = 0x257264u;
     // NOP
@@ -3779,7 +3800,13 @@ label_257318:
 label_25732c:
     // 0x25732c: 0x8e4205f4  lw          $v0, 0x5F4($s2)
     ctx->pc = 0x25732cu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_cd_s2_5f4");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 18), 1524)));
+    }
     // 0x257330: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x257330u;
     {
@@ -3901,7 +3928,13 @@ label_257374:
 label_257388:
     // 0x257388: 0x8e4205f8  lw          $v0, 0x5F8($s2)
     ctx->pc = 0x257388u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_cd_s2_5f8");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 18), 1528)));
+    }
     // 0x25738c: 0x10400017  beqz        $v0, . + 4 + (0x17 << 2)
     ctx->pc = 0x25738Cu;
     {
@@ -4014,7 +4047,13 @@ label_2573c8:
 label_2573ec:
     // 0x2573ec: 0x8e4205fc  lw          $v0, 0x5FC($s2)
     ctx->pc = 0x2573ecu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_cd_s2_5fc");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 18), 1532)));
+    }
     // 0x2573f0: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x2573F0u;
     {
@@ -4372,7 +4411,13 @@ label_257500:
 label_257514:
     // 0x257514: 0x8e4205f4  lw          $v0, 0x5F4($s2)
     ctx->pc = 0x257514u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_cd_s2_5f4");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 18), 1524)));
+    }
     // 0x257518: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x257518u;
     {

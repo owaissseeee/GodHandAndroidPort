@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -1376,7 +1377,11 @@ label_28590c:
 label_285910:
     // 0x285910: 0x3c013dcc  lui         $at, 0x3DCC
     ctx->pc = 0x285910u;
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)0x3D4Cu << 16));
+    } else {
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15820 << 16));
+    }
 label_285914:
     // 0x285914: 0x3421cccd  ori         $at, $at, 0xCCCD
     ctx->pc = 0x285914u;
@@ -1488,7 +1493,11 @@ label_285954:
 label_285958:
     // 0x285958: 0x3c013dcc  lui         $at, 0x3DCC
     ctx->pc = 0x285958u;
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)0x3D4Cu << 16));
+    } else {
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15820 << 16));
+    }
 label_28595c:
     // 0x28595c: 0x3421cccd  ori         $at, $at, 0xCCCD
     ctx->pc = 0x28595cu;
@@ -1620,7 +1629,11 @@ label_28599c:
 label_2859a0:
     // 0x2859a0: 0x3c013dcc  lui         $at, 0x3DCC
     ctx->pc = 0x2859a0u;
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)0x3D4Cu << 16));
+    } else {
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15820 << 16));
+    }
 label_2859a4:
     // 0x2859a4: 0x3421cccd  ori         $at, $at, 0xCCCD
     ctx->pc = 0x2859a4u;

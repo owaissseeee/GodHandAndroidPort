@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -195,7 +196,13 @@ label_238434:
             ctx->in_delay_slot = true;
             ctx->branch_pc = 0x23843Cu;
             // 0x238440: 0x8e0205f0  lw          $v0, 0x5F0($s0) (Delay Slot)
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_cd_s0_5f0");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
             SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 1520)));
+    }
             ctx->in_delay_slot = false;
             ctx->pc = 0x23870Cu;
             goto label_23870c;
@@ -525,7 +532,13 @@ label_238518:
 label_238550:
     // 0x238550: 0x8e0205f0  lw          $v0, 0x5F0($s0)
     ctx->pc = 0x238550u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_cd_s0_5f0");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 1520)));
+    }
     // 0x238554: 0x10400008  beqz        $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x238554u;
     {
@@ -716,7 +729,13 @@ label_2385ec:
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 16), 1384)));
     // 0x2385f0: 0x2442ffff  addiu       $v0, $v0, -0x1
     ctx->pc = 0x2385f0u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countdown_self");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));
+    }
     // 0x2385f4: 0x21c00  sll         $v1, $v0, 16
     ctx->pc = 0x2385f4u;
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 2), 16));
@@ -1058,7 +1077,13 @@ label_2386e8:
     WRITE8(ADD32(GPR_U32(ctx, 16), 758), (uint8_t)GPR_U32(ctx, 2));
     // 0x238708: 0x8e0205f0  lw          $v0, 0x5F0($s0)
     ctx->pc = 0x238708u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_cd_s0_5f0");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 1520)));
+    }
 label_23870c:
     // 0x23870c: 0x10400008  beqz        $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x23870Cu;

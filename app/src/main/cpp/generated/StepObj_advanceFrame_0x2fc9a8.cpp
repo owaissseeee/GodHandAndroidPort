@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -113,7 +114,13 @@ label_2fc9e8:
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 31364)));
     // 0x2fc9f0: 0x641824  and         $v1, $v1, $a0
     ctx->pc = 0x2fc9f0u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_effect_world_slow");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 4));
+    }
     // 0x2fc9f4: 0x14600021  bnez        $v1, . + 4 + (0x21 << 2)
     ctx->pc = 0x2FC9F4u;
     {
@@ -307,7 +314,13 @@ label_2fca68:
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 31364)));
     // 0x2fca70: 0x641824  and         $v1, $v1, $a0
     ctx->pc = 0x2fca70u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_effect_world_slow");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 4));
+    }
     // 0x2fca74: 0x50600005  beql        $v1, $zero, . + 4 + (0x5 << 2)
     ctx->pc = 0x2FCA74u;
     {

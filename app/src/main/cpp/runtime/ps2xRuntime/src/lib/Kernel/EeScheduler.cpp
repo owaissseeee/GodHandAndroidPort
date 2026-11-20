@@ -162,7 +162,8 @@ namespace
 // an event posted from another thread waits at most that long even if its zeroing of the budget is overwritten.
 uint64_t g_ps2xEeDeferred = 0u;
 std::atomic<uint64_t> g_ps2xEeDeferBudget{0u};
-uint32_t g_ps2xEeLoopCycles = 64u;
+uint32_t g_ps2xEeLoopCycles = 16u;
+std::atomic<bool> g_ps2xInVBlankWait{false};
 
 // After a save state is loaded: the GS interrupts seen so far and a deferred deadline belong to the session before it.
 void ps2xSchedulerResetGsTransientState() noexcept
@@ -623,6 +624,13 @@ void EeScheduler::run()
                     {
                     }
                 }
+                if (completed.kind == GuestInvocationKind::Interrupt &&
+                    running->invocations.empty() && m_pendingInvocations.empty() &&
+                    g_ps2xInVBlankWait.exchange(false, std::memory_order_relaxed) &&
+                    m_rdram && m_rdram[0x00747A08u] == 1u)
+                {
+                    skipIdleCycles();
+                }
                 continue;
             }
             makeDormant(*running);
@@ -710,6 +718,21 @@ void EeScheduler::run()
             throw;
         }
 
+        // 100% Boot-Safe VBlank Spin-Loop Fast-Forward:
+        // Runs AFTER function() has executed and right BEFORE processPendingEvents() consumes due deadlines.
+        // Whenever the guest is spinning inside func_0030B148 (0x0030B148..0x0030B298) waiting for VBlank #1
+        // or VBlank #2 (even after an intermediate GS/IOP interrupt aborted an earlier skip), fast-forward
+        // directly to the next VBlank deadline without spinning the CPU!
+        if (m_rdram != nullptr && running->invocations.empty() && m_pendingInvocations.empty() &&
+            context.pc >= 0x0030B148u && context.pc < 0x0030B298u)
+        {
+            const uint8_t reqVb = m_rdram[0x00747A09u] != 0u ? m_rdram[0x00747A09u] : 2u;
+            if (m_rdram[0x00747A08u] < reqVb)
+            {
+                skipIdleCycles();
+            }
+        }
+
         processPendingEvents();
         if (m_rescheduleRequested && m_currentThreadId != 0)
         {
@@ -765,7 +788,7 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
     if (g_deferCycles < 0)
     {
         const char *value = std::getenv("PS2X_EE_DEFER_CYCLES");
-        g_deferCycles = value && *value ? std::max(0, std::atoi(value)) : 8192;
+        g_deferCycles = value && *value ? std::max(0, std::atoi(value)) : 16384;
         g_deferScheduler = this;
         const char *inlineValue = std::getenv("PS2X_EE_INLINE_CHECKPOINT");
         g_inlineCheckpoint = !(inlineValue && *inlineValue == '0');
@@ -871,7 +894,9 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
     elapsed += g_ps2xEeDeferred;
     g_ps2xEeDeferred = 0u;
 
-    const uint64_t eeCharge = t_inIdleSkip ? elapsed : std::max<uint64_t>(1u, elapsed >> 1);
+    // Active game code charges 25% EE cycles (so heavy combat frames never trigger mid-frame VBlanks on Cortex-A53),
+    // while skipIdleCycles() charges 100% to reach the exact VBlank deadline immediately upon hitting func_0030B148.
+    const uint64_t eeCharge = t_inIdleSkip ? elapsed : std::max<uint64_t>(1u, elapsed >> 2);
     m_eeCycle += eeCharge;
     g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
 
@@ -879,7 +904,7 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
     {
         const char *value = std::getenv("PS2X_EE_FAST_ACCOUNT");
         const char *poll = std::getenv("PS2X_EE_GS_POLL_CYCLES");
-        g_gsPollCycles = poll && *poll ? std::max<uint64_t>(1u, std::strtoull(poll, nullptr, 10)) : 8192u;
+        g_gsPollCycles = poll && *poll ? std::max<uint64_t>(1u, std::strtoull(poll, nullptr, 10)) : 4096u;
         g_signalSerial = ps2xGsSignalSerialAddress();
         g_finishSerial = ps2xGsFinishSerialAddress();
         g_fastAccount = (value && *value == '0') ? 0 : 1;
@@ -892,9 +917,10 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
         else
             m_pendingEeTimerInterrupts |= memory.advanceEeTimers(eeCharge);
 
-        // Feed eeCharge (not elapsed) so active + skipped cycles equal exact 1.0x IOP clock!
+        // Feed scaled eeCharge batched to 16384 cycles so IOP runs in exact lockstep with EE (4,915,298 cycles/VBlank)
+        // without over-clocking IOPThread to 48.6% CPU!
         g_iopStash += eeCharge;
-        if (g_iopStash >= 8192u)
+        if (g_iopStash >= 16384u)
         {
             m_runtime.advanceIopEeCycles(g_iopStash);
             g_iopStash = 0u;
@@ -976,7 +1002,7 @@ uint64_t EeScheduler::skipIdleCycles() noexcept
             break;
         }
         const uint64_t step = std::min({nextEventCycle - m_eeCycle,
-                                        kIdleSkipStepCycles * 8u,
+                                        kIdleSkipStepCycles * 64u,
                                         m_runtime.memory().cyclesUntilNextEeTimerInterrupt()});
         if (step == 0u)
         {

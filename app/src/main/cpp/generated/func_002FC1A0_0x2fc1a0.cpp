@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -1523,7 +1524,13 @@ label_2fc7d4:
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 9), 432)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[7] = f; }
     // 0x2fc7f0: 0x46040002  mul.s       $f0, $f0, $f4
     ctx->pc = 0x2fc7f0u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_effect_fade_rgb");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     ctx->f[0] = FPU_MUL_S(ctx->f[0], ctx->f[4]);
+    }
     // 0x2fc7f4: 0xc52501b4  lwc1        $f5, 0x1B4($t1)
     ctx->pc = 0x2fc7f4u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 9), 436)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[5] = f; }
@@ -1535,7 +1542,13 @@ label_2fc7d4:
     ctx->f[2] = FPU_MUL_S(ctx->f[2], ctx->f[7]);
     // 0x2fc800: 0x460518c2  mul.s       $f3, $f3, $f5
     ctx->pc = 0x2fc800u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_effect_fade_a");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     ctx->f[3] = FPU_MUL_S(ctx->f[3], ctx->f[5]);
+    }
     // 0x2fc804: 0xe5200188  swc1        $f0, 0x188($t1)
     ctx->pc = 0x2fc804u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 9), 392), bits); }

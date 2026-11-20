@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -64,7 +65,13 @@ void cEm00_updateSlotCooldown_0x126820(uint8_t* rdram, R5900Context* ctx, PS2Run
     ctx->pc = 0x126840u;
     // 0x126840: 0x8e021658  lw          $v0, 0x1658($s0)
     ctx->pc = 0x126840u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countdown_pl1658");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 5720)));
+    }
     // 0x126844: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x126844u;
     {

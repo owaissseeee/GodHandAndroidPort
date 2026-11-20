@@ -537,28 +537,107 @@ VU1_FORCE_INLINE void VU1Interpreter::updateFmacFlags(const uint8_t laneFlags[4]
     noteReadyCycle(entry->readyCycle);
 }
 
+#if defined(__aarch64__) || defined(_M_ARM64)
+VU1_FORCE_INLINE void ps2Arm64FastFmacNormalizeAndFlags(VU1Interpreter &vu, float *result, uint8_t dest,
+                                                        uint32_t &outMac, uint32_t &outStatus) noexcept
+{
+    float32x4_t vr = vld1q_f32(result);
+    uint32x4_t bits = vreinterpretq_u32_f32(vr);
+    const uint32x4_t sign = vandq_u32(bits, vdupq_n_u32(0x80000000u));
+    const uint32x4_t mag  = vminq_u32(vandq_u32(bits, vdupq_n_u32(0x7FFFFFFFu)), vdupq_n_u32(0x7F7FFFFFu));
+    bits = vorrq_u32(sign, mag);
+    vr = vreinterpretq_f32_u32(bits);
+    vst1q_f32(result, vr);
+
+    static constexpr uint32_t kZMask[4] = {0x08u, 0x04u, 0x02u, 0x01u};
+    static constexpr uint32_t kSMask[4] = {0x80u, 0x40u, 0x20u, 0x10u};
+    const uint32x4_t zBits = vandq_u32(vceqzq_f32(vr), vld1q_u32(kZMask));
+    const uint32x4_t sBits = vandq_u32(vcltzq_s32(vreinterpretq_s32_u32(bits)), vld1q_u32(kSMask));
+    const uint32_t mac = vaddvq_u32(vorrq_u32(zBits, sBits)) & (static_cast<uint32_t>(dest) | (static_cast<uint32_t>(dest) << 4));
+    outMac = mac;
+    outStatus = ((mac & 0x0Fu) != 0u ? 1u : 0u) | ((mac & 0xF0u) != 0u ? 2u : 0u);
+    (void)vu;
+}
+#endif
+
 VU1_FORCE_INLINE void VU1Interpreter::applyFmacDest(float *dst, float *result, uint8_t dest)
 {
+#if defined(__aarch64__) || defined(_M_ARM64)
+    if (dest != 0u)
+    {
+        uint32_t mac = 0u, status = 0u;
+        ps2Arm64FastFmacNormalizeAndFlags(*this, result, dest, mac, status);
+        if (m_unit == Unit::VU0)
+        {
+            m_state.mac = mac;
+            m_state.status = (m_state.status & 0x0FC0u) | (status & 0x003Fu);
+        }
+        else
+        {
+            const int slot = freeSlot(m_flagValid, kMaxFlagEntries);
+            if (slot >= 0)
+            {
+                FlagPipelineEntry *entry = &m_flagPipeline[static_cast<size_t>(slot)];
+                *entry = {};
+                entry->valid = true;
+                entry->issueCycle = m_cycle;
+                entry->readyCycle = m_cycle + kFmacLatency;
+                entry->mac = mac;
+                entry->status = status;
+                entry->writesMac = true;
+                entry->writesStatus = true;
+                m_flagValid |= 1u << slot;
+                noteReadyCycle(entry->readyCycle);
+            }
+        }
+        applyDest(dst, result, dest);
+    }
+#else
     uint8_t laneFlags[4]{};
     normalizeFmacResult(result, dest, laneFlags);
-#if defined(__aarch64__) || defined(_M_ARM64)
-    updateFmacFlags(laneFlags, dest, 0u);
-#else
     updateFmacFlags(laneFlags, dest, calculateFmacProductSticky(dest));
-#endif
     applyDest(dst, result, dest);
+#endif
 }
 
 VU1_FORCE_INLINE void VU1Interpreter::applyFmacDestAcc(float *result, uint8_t dest)
 {
+#if defined(__aarch64__) || defined(_M_ARM64)
+    if (dest != 0u)
+    {
+        uint32_t mac = 0u, status = 0u;
+        ps2Arm64FastFmacNormalizeAndFlags(*this, result, dest, mac, status);
+        if (m_unit == Unit::VU0)
+        {
+            m_state.mac = mac;
+            m_state.status = (m_state.status & 0x0FC0u) | (status & 0x003Fu);
+        }
+        else
+        {
+            const int slot = freeSlot(m_flagValid, kMaxFlagEntries);
+            if (slot >= 0)
+            {
+                FlagPipelineEntry *entry = &m_flagPipeline[static_cast<size_t>(slot)];
+                *entry = {};
+                entry->valid = true;
+                entry->issueCycle = m_cycle;
+                entry->readyCycle = m_cycle + kFmacLatency;
+                entry->mac = mac;
+                entry->status = status;
+                entry->writesMac = true;
+                entry->writesStatus = true;
+                m_flagValid |= 1u << slot;
+                noteReadyCycle(entry->readyCycle);
+            }
+        }
+        applyDestAcc(result, dest);
+    }
+#else
     uint8_t laneFlags[4]{};
     normalizeFmacResult(result, dest, laneFlags);
-#if defined(__aarch64__) || defined(_M_ARM64)
-    updateFmacFlags(laneFlags, dest, 0u);
-#else
     updateFmacFlags(laneFlags, dest, calculateFmacProductSticky(dest));
-#endif
     applyDestAcc(result, dest);
+#endif
 }
 
 VU1_FORCE_INLINE void VU1Interpreter::queueFsset(uint16_t immediate)

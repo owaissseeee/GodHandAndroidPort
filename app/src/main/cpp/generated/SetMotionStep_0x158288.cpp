@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -22,7 +23,14 @@ void SetMotionStep_0x158288(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
 
     // 0x158288: 0x94820434  lhu         $v0, 0x434($a0)
     ctx->pc = 0x158288u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_motion_step_rate");
+        if (hook) hook(rdram, ctx, runtime);
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 4), 1076)));
+    } else {
+    SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 4), 1076)));
+    }
     // 0x15828c: 0x30420004  andi        $v0, $v0, 0x4
     ctx->pc = 0x15828cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)4);

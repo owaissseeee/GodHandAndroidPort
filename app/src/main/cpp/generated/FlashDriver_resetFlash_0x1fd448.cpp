@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -172,7 +173,13 @@ void FlashDriver_resetFlash_0x1fd448(uint8_t* rdram, R5900Context* ctx, PS2Runti
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 2), 1448)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x1fd4f8: 0x46000842  mul.s       $f1, $f1, $f0
     ctx->pc = 0x1fd4f8u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_flash_guard_rate");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     ctx->f[1] = FPU_MUL_S(ctx->f[1], ctx->f[0]);
+    }
     // 0x1fd4fc: 0x46011041  sub.s       $f1, $f2, $f1
     ctx->pc = 0x1fd4fcu;
     ctx->f[1] = FPU_SUB_S(ctx->f[2], ctx->f[1]);

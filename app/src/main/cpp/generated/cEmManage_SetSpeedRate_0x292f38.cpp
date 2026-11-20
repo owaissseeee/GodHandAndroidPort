@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -22,7 +23,13 @@ void cEmManage_SetSpeedRate_0x292f38(uint8_t* rdram, R5900Context* ctx, PS2Runti
 
     // 0x292f38: 0xe48c0548  swc1        $f12, 0x548($a0)
     ctx->pc = 0x292f38u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_enemy_slow_rate");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     { float f = ctx->f[12]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 4), 1352), bits); }
+    }
     // 0x292f3c: 0x3c030074  lui         $v1, 0x74
     ctx->pc = 0x292f3cu;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
@@ -31,7 +38,13 @@ void cEmManage_SetSpeedRate_0x292f38(uint8_t* rdram, R5900Context* ctx, PS2Runti
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)117 << 16));
     // 0x292f44: 0xe46c1dc0  swc1        $f12, 0x1DC0($v1)
     ctx->pc = 0x292f44u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_effect_slow_rate");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     { float f = ctx->f[12]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); do { uint32_t _value = static_cast<uint32_t>(bits); ps2TraceGuestWrite(rdram, 0x741DC0u, 4u, _value, 0u, "WRITE32", ctx); FAST_WRITE32(0x741DC0u, _value); } while (0); }
+    }
     // 0x292f48: 0x3e00008  jr          $ra
     ctx->pc = 0x292F48u;
     {

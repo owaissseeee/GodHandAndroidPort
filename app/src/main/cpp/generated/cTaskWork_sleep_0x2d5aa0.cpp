@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -37,7 +38,14 @@ void cTaskWork_sleep_0x2d5aa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2d5aac: 0xa485000e  sh          $a1, 0xE($a0)
     ctx->pc = 0x2d5aacu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_task_sleep");
+        if (hook) hook(rdram, ctx, runtime);
     WRITE16(ADD32(GPR_U32(ctx, 4), 14), (uint16_t)GPR_U32(ctx, 5));
+    } else {
+    WRITE16(ADD32(GPR_U32(ctx, 4), 14), (uint16_t)GPR_U32(ctx, 5));
+    }
     // 0x2d5ab0: 0xa483000c  sh          $v1, 0xC($a0)
     ctx->pc = 0x2d5ab0u;
     WRITE16(ADD32(GPR_U32(ctx, 4), 12), (uint16_t)GPR_U32(ctx, 3));

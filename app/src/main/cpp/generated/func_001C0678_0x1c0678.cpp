@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -5085,7 +5086,13 @@ label_1c0dcc:
 label_1c0dd0:
     // 0x1c0dd0: 0x2442ffff  addiu       $v0, $v0, -0x1
     ctx->pc = 0x1c0dd0u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countdown_self");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));
+    }
 label_1c0dd4:
     // 0x1c0dd4: 0x21c00  sll         $v1, $v0, 16
     ctx->pc = 0x1c0dd4u;
@@ -12152,7 +12159,13 @@ label_1c1aac:
 label_1c1ab0:
     // 0x1c1ab0: 0x2462ffff  addiu       $v0, $v1, -0x1
     ctx->pc = 0x1c1ab0u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countdown");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 3), 4294967295));
+    }
 label_1c1ab4:
     // 0x1c1ab4: 0x3c013e4c  lui         $at, 0x3E4C
     ctx->pc = 0x1c1ab4u;
@@ -13674,7 +13687,11 @@ label_1c1d98:
 label_1c1d9c:
     // 0x1c1d9c: 0x3c013ca3  lui         $at, 0x3CA3
     ctx->pc = 0x1c1d9cu;
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)0x3C23u << 16));
+    } else {
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15523 << 16));
+    }
 label_1c1da0:
     // 0x1c1da0: 0x3421d70a  ori         $at, $at, 0xD70A
     ctx->pc = 0x1c1da0u;
@@ -14519,7 +14536,13 @@ label_1c1f84:
 label_1c1f88:
     // 0x1c1f88: 0x2442ffff  addiu       $v0, $v0, -0x1
     ctx->pc = 0x1c1f88u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countdown_self");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));
+    }
 label_1c1f8c:
     // 0x1c1f8c: 0x10600043  beqz        $v1, . + 4 + (0x43 << 2)
 label_1c1f90:
@@ -14697,7 +14720,11 @@ label_1c1fe8:
 label_1c1fec:
     // 0x1c1fec: 0x3c013ca3  lui         $at, 0x3CA3
     ctx->pc = 0x1c1fecu;
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)0x3C23u << 16));
+    } else {
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15523 << 16));
+    }
 label_1c1ff0:
     // 0x1c1ff0: 0x3421d70a  ori         $at, $at, 0xD70A
     ctx->pc = 0x1c1ff0u;
@@ -14841,7 +14868,13 @@ label_1c2050:
 label_1c2054:
     // 0x1c2054: 0x2442ffff  addiu       $v0, $v0, -0x1
     ctx->pc = 0x1c2054u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countdown_self");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));
+    }
 label_1c2058:
     // 0x1c2058: 0x21c00  sll         $v1, $v0, 16
     ctx->pc = 0x1c2058u;

@@ -67,6 +67,8 @@ add_library(godhand_android SHARED
     snr2_unified_registry.cpp
     src/main.cpp
     src/godhand/cheats_engine.cpp
+    src/godhand/frame_patches.cpp
+    src/godhand/freeze_watchdog.cpp
     ${GODHAND_HOST_SOURCES}
     ${GODHAND_UNITY_SOURCES}
     ${GODHAND_MODULE_SOURCES}

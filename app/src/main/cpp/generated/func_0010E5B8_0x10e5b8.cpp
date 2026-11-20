@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -1412,7 +1413,13 @@ label_10e7e4:
 label_10e7e8:
     // 0x10e7e8: 0x2462ffff  addiu       $v0, $v1, -0x1
     ctx->pc = 0x10e7e8u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countdown");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 3), 4294967295));
+    }
 label_10e7ec:
     // 0x10e7ec: 0x3c013e49  lui         $at, 0x3E49
     ctx->pc = 0x10e7ecu;
@@ -1852,7 +1859,13 @@ label_10e8d8:
 label_10e8dc:
     // 0x10e8dc: 0x46000841  sub.s       $f1, $f1, $f0
     ctx->pc = 0x10e8dcu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_charge_sub_f1");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     ctx->f[1] = FPU_SUB_S(ctx->f[1], ctx->f[0]);
+    }
 label_10e8e0:
     // 0x10e8e0: 0xe62005dc  swc1        $f0, 0x5DC($s1)
     ctx->pc = 0x10e8e0u;
@@ -1906,7 +1919,13 @@ label_10e8fc:
 label_10e900:
     // 0x10e900: 0x46001080  add.s       $f2, $f2, $f0
     ctx->pc = 0x10e900u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_charge_add_f2f0");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     ctx->f[2] = FPU_ADD_S(ctx->f[2], ctx->f[0]);
+    }
 label_10e904:
     // 0x10e904: 0x46140836  c.le.s      $f1, $f20
     ctx->pc = 0x10e904u;
@@ -3117,7 +3136,13 @@ label_10eb98:
 label_10eb9c:
     // 0x10eb9c: 0x2484ffff  addiu       $a0, $a0, -0x1
     ctx->pc = 0x10eb9cu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countdown_a0");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 4294967295));
+    }
 label_10eba0:
     // 0x10eba0: 0x431025  or          $v0, $v0, $v1
     ctx->pc = 0x10eba0u;

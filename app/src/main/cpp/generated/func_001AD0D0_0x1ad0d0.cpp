@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -669,7 +670,11 @@ label_1ad2d8:
 label_1ad2dc:
     // 0x1ad2dc: 0x3c013d20  lui         $at, 0x3D20
     ctx->pc = 0x1ad2dcu;
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)0x3CA0u << 16));
+    } else {
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15648 << 16));
+    }
     // 0x1ad2e0: 0x3421d97c  ori         $at, $at, 0xD97C
     ctx->pc = 0x1ad2e0u;
     SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)55676);
@@ -678,7 +683,11 @@ label_1ad2dc:
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x1ad2e8: 0x24030014  addiu       $v1, $zero, 0x14
     ctx->pc = 0x1ad2e8u;
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 40));
+    } else {
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 20));
+    }
     // 0x1ad2ec: 0x922402b4  lbu         $a0, 0x2B4($s1)
     ctx->pc = 0x1ad2ecu;
     SET_GPR_ZE32(ctx, 4, (uint8_t)READ8(ADD32(GPR_U32(ctx, 17), 692)));
@@ -835,7 +844,11 @@ label_1ad358:
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1ad360: 0x3c013d56  lui         $at, 0x3D56
     ctx->pc = 0x1ad360u;
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)0x3C56u << 16));
+    } else {
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15702 << 16));
+    }
     // 0x1ad364: 0x34217750  ori         $at, $at, 0x7750
     ctx->pc = 0x1ad364u;
     SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)30544);
@@ -1328,7 +1341,11 @@ label_1ad4fc:
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x1ad508: 0x2402000a  addiu       $v0, $zero, 0xA
     ctx->pc = 0x1ad508u;
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 20));
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 10));
+    }
     // 0x1ad50c: 0x24030002  addiu       $v1, $zero, 0x2
     ctx->pc = 0x1ad50cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2));

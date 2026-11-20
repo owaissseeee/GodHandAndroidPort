@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -367,7 +368,14 @@ label_1163cc:
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 17), 1448)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x1163d0: 0x26240580  addiu       $a0, $s1, 0x580
     ctx->pc = 0x1163d0u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_gene_rate_half");
+        if (hook) hook(rdram, ctx, runtime);
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 17), 1408));
+    } else {
+    SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 17), 1408));
+    }
     // 0x1163d4: 0x3c013ec9  lui         $at, 0x3EC9
     ctx->pc = 0x1163d4u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16073 << 16));
@@ -633,7 +641,13 @@ label_1164bc:
 label_1164c4:
     // 0x1164c4: 0x8e2215b8  lw          $v0, 0x15B8($s1)
     ctx->pc = 0x1164c4u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countdown_pl15b8");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 5560)));
+    }
     // 0x1164c8: 0x10400002  beqz        $v0, . + 4 + (0x2 << 2)
     ctx->pc = 0x1164C8u;
     {
@@ -662,7 +676,13 @@ label_1164d4:
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)116 << 16));
     // 0x1164dc: 0x24420001  addiu       $v0, $v0, 0x1
     ctx->pc = 0x1164dcu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countup_self");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 1));
+    }
     // 0x1164e0: 0xae2215b0  sw          $v0, 0x15B0($s1)
     ctx->pc = 0x1164e0u;
     WRITE32(ADD32(GPR_U32(ctx, 17), 5552), GPR_U32(ctx, 2));
@@ -1429,7 +1449,14 @@ label_116718:
 label_11671c:
     // 0x11671c: 0x240202d  daddu       $a0, $s2, $zero
     ctx->pc = 0x11671cu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_gene_rate_half");
+        if (hook) hook(rdram, ctx, runtime);
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
+    } else {
+    SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
+    }
     // 0x116720: 0x3c013ec9  lui         $at, 0x3EC9
     ctx->pc = 0x116720u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16073 << 16));
@@ -1595,7 +1622,14 @@ label_11678c:
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 17), 1448)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x1167a4: 0x46000801  sub.s       $f0, $f1, $f0
     ctx->pc = 0x1167a4u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_gene_rate_half");
+        if (hook) hook(rdram, ctx, runtime);
     ctx->f[0] = FPU_SUB_S(ctx->f[1], ctx->f[0]);
+    } else {
+    ctx->f[0] = FPU_SUB_S(ctx->f[1], ctx->f[0]);
+    }
     // 0x1167a8: 0xe62015c0  swc1        $f0, 0x15C0($s1)
     ctx->pc = 0x1167a8u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 17), 5568), bits); }
@@ -1745,7 +1779,13 @@ label_116814:
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 17), 1384)));
     // 0x116818: 0x2442ffff  addiu       $v0, $v0, -0x1
     ctx->pc = 0x116818u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_countdown_self");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));
+    }
     // 0x11681c: 0x21c00  sll         $v1, $v0, 16
     ctx->pc = 0x11681cu;
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 2), 16));

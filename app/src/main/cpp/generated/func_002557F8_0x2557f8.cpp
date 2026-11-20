@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -964,7 +965,13 @@ label_255ac0:
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[20], &bits, sizeof(bits)); }
     // 0x255aec: 0x46000840  add.s       $f1, $f1, $f0
     ctx->pc = 0x255aecu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_launch_rise");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     ctx->f[1] = FPU_ADD_S(ctx->f[1], ctx->f[0]);
+    }
     // 0x255af0: 0xe4810004  swc1        $f1, 0x4($a0)
     ctx->pc = 0x255af0u;
     { float f = ctx->f[1]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 4), 4), bits); }
@@ -973,7 +980,13 @@ label_255ac0:
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 17), 1476)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x255af8: 0x46020001  sub.s       $f0, $f0, $f2
     ctx->pc = 0x255af8u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_launch_fall");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     ctx->f[0] = FPU_SUB_S(ctx->f[0], ctx->f[2]);
+    }
     // 0x255afc: 0x46140036  c.le.s      $f0, $f20
     ctx->pc = 0x255afcu;
     ctx->fcr31 = (FPU_C_OLE_S(ctx->f[0], ctx->f[20])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -2015,7 +2028,13 @@ label_255e4c:
 label_255e6c:
     // 0x255e6c: 0x8e2205f0  lw          $v0, 0x5F0($s1)
     ctx->pc = 0x255e6cu;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_em_cd_s1_5f0");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 1520)));
+    }
     // 0x255e70: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x255E70u;
     {

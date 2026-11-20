@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -751,7 +752,11 @@ label_1c8228:
 label_1c8244:
     // 0x1c8244: 0x3c013d4c  lui         $at, 0x3D4C
     ctx->pc = 0x1c8244u;
+    if (ps2xPatchFlag("fps60")) {
+        SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)0x3CCCu << 16));
+    } else {
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15692 << 16));
+    }
     // 0x1c8248: 0x3421cccd  ori         $at, $at, 0xCCCD
     ctx->pc = 0x1c8248u;
     SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)52429);

@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -321,7 +322,13 @@ label_319a60:
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 16), 908)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[2] = f; }
     // 0x319a80: 0x46140042  mul.s       $f1, $f0, $f20
     ctx->pc = 0x319a80u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_map_scroll_step");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     ctx->f[1] = FPU_MUL_S(ctx->f[0], ctx->f[20]);
+    }
     // 0x319a84: 0x46190034  c.lt.s      $f0, $f25
     ctx->pc = 0x319a84u;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[0], ctx->f[25])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -595,7 +602,13 @@ label_319b3c:
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 16), 912)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[2] = f; }
     // 0x319b54: 0x46140042  mul.s       $f1, $f0, $f20
     ctx->pc = 0x319b54u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_map_scroll_step");
+        if (hook) hook(rdram, ctx, runtime);
+    } else {
     ctx->f[1] = FPU_MUL_S(ctx->f[0], ctx->f[20]);
+    }
     // 0x319b58: 0x46190034  c.lt.s      $f0, $f25
     ctx->pc = 0x319b58u;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[0], ctx->f[25])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);

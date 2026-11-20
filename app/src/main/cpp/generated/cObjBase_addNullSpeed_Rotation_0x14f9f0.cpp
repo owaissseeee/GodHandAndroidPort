@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -27,7 +28,14 @@ void cObjBase_addNullSpeed_Rotation_0x14f9f0(uint8_t* rdram, R5900Context* ctx, 
 
     // 0x14f9f0: 0x3c020074  lui         $v0, 0x74
     ctx->pc = 0x14f9f0u;
+    if (ps2xPatchFlag("fps60")) {
+        static PS2Runtime::RecompiledFunction hook = nullptr;
+        if (!hook) hook = ps2xHostHook("km_fps60_hold_null_rotation");
+        if (hook) hook(rdram, ctx, runtime);
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
+    } else {
+    SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
+    }
     // 0x14f9f4: 0x27bdfff0  addiu       $sp, $sp, -0x10
     ctx->pc = 0x14f9f4u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
