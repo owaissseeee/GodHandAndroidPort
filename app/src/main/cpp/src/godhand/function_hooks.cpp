@@ -1118,21 +1118,15 @@ namespace godhand
         constexpr uint32_t kSceGsSetDefDispEnv = 0x00396570u;
         if (runtime.hasFunction(kSceGsSetDefDispEnv))
         {
-            static GuestFunction s_origSetDefDispEnv = runtime.lookupFunction(kSceGsSetDefDispEnv);
             FunctionHooks::instance().replace(
                 kSceGsSetDefDispEnv,
-                "sceGsSetDefDispEnv_devseville_60fps",
+                "sceGsSetDefDispEnv_native",
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
-                    if (godhand::mobile::getFpsMode() == 0) // 60 FPS
-                    {
-                        // DevSeville 60 FPS: 00396594 lui t1, 0010
-                        SET_GPR_S32(ctx, 9, 0x10);
-                    }
-                    if (s_origSetDefDispEnv)
-                        s_origSetDefDispEnv(rdram, ctx, rt);
+                    ps2_stubs::sceGsSetDefDispEnv(rdram, ctx, rt);
+                    if (ctx) ctx->pc = GPR_U32(ctx, 31);
                 },
                 ReplacementStatus::Native,
-                "DevSeville 60 FPS display environment hook");
+                "Native HLE sceGsSetDefDispEnv");
         }
 
         // True Invulnerability & Super-Armor:
