@@ -5977,6 +5977,16 @@ __forceinline void GSState::VertexKick(u32 skip)
 			test |= static_cast<u32>(v0.eq(v1)) | static_cast<u32>(v1.eq(v2)) | static_cast<u32>(v0.eq(v2));
 		}
 
+		// Guard-band wrap rejection (God Hand Full Screen 20:9 Fix):
+		// Discard primitives that artificially span across the entire screen due to 16-bit GS coordinate overflow.
+		// In PS2 coordinates (1/16th pixel), standard screen width is 10,240 (640*16).
+		// Any 3D triangle or line spanning > 24,000 sub-pixels (> 1,500 pixels) in width or height is physically impossible
+		// in normal gameplay and is the sole cause of the vertical brown/black strip line at grazing angles.
+		if constexpr (primclass == GS_TRIANGLE_CLASS || primclass == GS_LINE_CLASS)
+		{
+			test |= static_cast<u32>(bbox.width() > 24000 || bbox.height() > 24000);
+		}
+
 		skip |= test;
 	}
 
