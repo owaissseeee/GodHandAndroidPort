@@ -27,8 +27,8 @@ namespace ps2x::asyncvif
     namespace
     {
 #if defined(__ANDROID__)
-        constexpr size_t kMaxQueuedJobs = 6u;
-        constexpr size_t kMaxQueuedGifBytes = 512u * 1024u;
+        constexpr size_t kMaxQueuedJobs = 32u;
+        constexpr size_t kMaxQueuedGifBytes = 1024u * 1024u;
 #else
         constexpr size_t kMaxQueuedJobs = 64u;
         constexpr size_t kMaxQueuedGifBytes = 8u * 1024u * 1024u;

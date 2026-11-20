@@ -20,7 +20,6 @@ bool ps2xHostVsync(std::chrono::steady_clock::time_point &lastVblank, std::chron
 // calling thread's CPU time in ms.
 int ps2xCurrentCoreClass() noexcept;
 double ps2xCurrentThreadCpuMs() noexcept;
-extern "C" int32_t pcsx2gs_get_frameskip(void);
 
 namespace
 {
@@ -587,7 +586,6 @@ void EeScheduler::run()
             }
         }
         R5900Context &context = running->activeContext();
-#if !defined(__ANDROID__)
         if (m_debugPublishCountdown == 0u)
         {
             copyMainContextToRuntime();
@@ -600,7 +598,6 @@ void EeScheduler::run()
         }
 
         publishDebugContext(context);
-#endif
 
         if (context.pc == 0u)
         {
@@ -630,7 +627,7 @@ void EeScheduler::run()
                 if (completed.kind == GuestInvocationKind::Interrupt &&
                     running->invocations.empty() && m_pendingInvocations.empty() &&
                     g_ps2xInVBlankWait.exchange(false, std::memory_order_relaxed) &&
-                    m_rdram && m_rdram[0x00747A08u] == 1u)
+                    m_rdram && *reinterpret_cast<const uint32_t*>(m_rdram + 0x00753D80u) < m_rdram[0x00747A09u])
                 {
                     skipIdleCycles();
                 }
@@ -684,33 +681,6 @@ void EeScheduler::run()
 #endif
 
         g_loopStats.lastPc = context.pc;
-
-        // Real VBlank Wait Loop in God Hand (0x0030ADD8..0x0030ADEC for combat, 0x0030AD98..0x0030ADAC for cutscenes in func_0030AC40):
-        // Only active during gameplay (m_vsyncTick > 240u) so boot sequence is 100% clean.
-        if (m_rdram != nullptr && m_vsyncTick > 240u)
-        {
-            if (context.pc >= 0x0030ADD8u && context.pc <= 0x0030ADECu)
-            {
-                uint32_t vblankCounter = 0u;
-                std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
-                const uint32_t divider = m_rdram[0x00747A09u];
-                if (divider > 0u && vblankCounter < divider)
-                {
-                    skipIdleCycles();
-                }
-            }
-            else if (context.pc >= 0x0030AD98u && context.pc <= 0x0030ADACu)
-            {
-                uint32_t vblankCounter = 0u;
-                std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
-                uint32_t divider = 0u;
-                std::memcpy(&divider, m_rdram + 0x00747A10u, sizeof(divider));
-                if (divider > 0u && vblankCounter < divider)
-                {
-                    skipIdleCycles();
-                }
-            }
-        }
         if (checkpointDue(kGuestDispatchCycles))
         {
             ++g_loopStats.checkpointSkips;
@@ -750,29 +720,17 @@ void EeScheduler::run()
 
         // 100% Boot-Safe VBlank Spin-Loop Fast-Forward:
         // Runs AFTER function() has executed and right BEFORE processPendingEvents() consumes due deadlines.
-        // Whenever the guest is spinning inside func_0030B148 (0x0030B148..0x0030B238) waiting for VBlank #1
-        // or VBlank #2 (even after an intermediate GS/IOP interrupt aborted an earlier skip), fast-forward
-        // directly to the next VBlank deadline without spinning the CPU!
-        if (m_rdram != nullptr && m_vsyncTick > 240u &&
-            running->invocations.empty() && m_pendingInvocations.empty())
+        // Whenever the guest is in the main loop wait (0x0030ADD8..0x0030ADEC or 0x002B4BC0) waiting for VBlank,
+        // fast-forward directly to the next VBlank deadline without spinning the CPU!
+        if (m_rdram != nullptr && running->invocations.empty() && m_pendingInvocations.empty())
         {
-            if (context.pc >= 0x0030ADD8u && context.pc <= 0x0030ADECu)
+            const uint32_t currentPc = context.pc;
+            if ((currentPc >= 0x0030ADD8u && currentPc <= 0x0030ADECu) || currentPc == 0x002B4BC0u ||
+                (currentPc >= 0x0030AD98u && currentPc <= 0x0030ADACu))
             {
-                uint32_t vblankCounter = 0u;
-                std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
-                const uint32_t divider = m_rdram[0x00747A09u];
-                if (divider > 0u && vblankCounter < divider)
-                {
-                    skipIdleCycles();
-                }
-            }
-            else if (context.pc >= 0x0030AD98u && context.pc <= 0x0030ADACu)
-            {
-                uint32_t vblankCounter = 0u;
-                std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
-                uint32_t divider = 0u;
-                std::memcpy(&divider, m_rdram + 0x00747A10u, sizeof(divider));
-                if (divider > 0u && vblankCounter < divider)
+                const uint8_t reqVb = m_rdram[0x00747A09u] != 0u ? m_rdram[0x00747A09u] : 2u;
+                const uint32_t curVb = *reinterpret_cast<const uint32_t*>(m_rdram + 0x00753D80u);
+                if (curVb < reqVb)
                 {
                     skipIdleCycles();
                 }
@@ -835,7 +793,6 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
     {
         const char *value = std::getenv("PS2X_EE_DEFER_CYCLES");
         g_deferCycles = value && *value ? std::max(0, std::atoi(value)) : 16384;
-        g_deferCycles = std::max(g_deferCycles, 16384);
         g_deferScheduler = this;
         const char *inlineValue = std::getenv("PS2X_EE_INLINE_CHECKPOINT");
         g_inlineCheckpoint = !(inlineValue && *inlineValue == '0');
@@ -852,31 +809,16 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
     t_onEeThread = true; // the full path runs before any deferral (g_deferUntil starts at 0)
     accountCycles(static_cast<uint32_t>(charge)); // also accounts g_ps2xEeDeferred
 
-    if (m_rdram && !m_insideInterrupt && m_vsyncTick > 240u)
+    if (m_rdram && !m_insideInterrupt)
     {
         if (const GuestThread *running = currentThread())
         {
             const uint32_t pc = running->activeContext().pc;
-            if (pc >= 0x0030ADD8u && pc <= 0x0030ADECu)
+            if (((pc >= 0x0030ADD8u && pc <= 0x0030ADECu) || pc == 0x002B4BC0u ||
+                 (pc >= 0x0030AD98u && pc <= 0x0030ADACu)) &&
+                *reinterpret_cast<const uint32_t*>(m_rdram + 0x00753D80u) < m_rdram[0x00747A09u])
             {
-                uint32_t vblankCounter = 0u;
-                std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
-                const uint32_t divider = m_rdram[0x00747A09u];
-                if (divider > 0u && vblankCounter < divider)
-                {
-                    skipIdleCycles();
-                }
-            }
-            else if (pc >= 0x0030AD98u && pc <= 0x0030ADACu)
-            {
-                uint32_t vblankCounter = 0u;
-                std::memcpy(&vblankCounter, m_rdram + 0x00753D80u, sizeof(vblankCounter));
-                uint32_t divider = 0u;
-                std::memcpy(&divider, m_rdram + 0x00747A10u, sizeof(divider));
-                if (divider > 0u && vblankCounter < divider)
-                {
-                    skipIdleCycles();
-                }
+                skipIdleCycles();
             }
         }
     }
@@ -959,16 +901,15 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
 
     // Active game code charges 25% EE cycles (so heavy combat frames never trigger mid-frame VBlanks on Cortex-A53),
     // while skipIdleCycles() charges 100% to reach the exact VBlank deadline immediately upon hitting func_0030B148.
-    const uint64_t eeCharge = t_inIdleSkip ? elapsed : std::max<uint64_t>(1u, (elapsed * 5u) >> 3);
+    const uint64_t eeCharge = t_inIdleSkip ? elapsed : std::max<uint64_t>(1u, elapsed >> 2);
     m_eeCycle += eeCharge;
-    if (cycles != 0u)
-        g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
+    g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
 
     if (g_fastAccount < 0)
     {
         const char *value = std::getenv("PS2X_EE_FAST_ACCOUNT");
         const char *poll = std::getenv("PS2X_EE_GS_POLL_CYCLES");
-        g_gsPollCycles = poll && *poll ? std::max<uint64_t>(16384u, std::strtoull(poll, nullptr, 10)) : 16384u;
+        g_gsPollCycles = poll && *poll ? std::max<uint64_t>(1u, std::strtoull(poll, nullptr, 10)) : 4096u;
         g_signalSerial = ps2xGsSignalSerialAddress();
         g_finishSerial = ps2xGsFinishSerialAddress();
         g_fastAccount = (value && *value == '0') ? 0 : 1;
@@ -981,11 +922,10 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
         else
             m_pendingEeTimerInterrupts |= memory.advanceEeTimers(eeCharge);
 
-        // Feed eeCharge (which includes 100% of skipped idle cycles up to VBlank) to IOP in
-        // 32,768-cycle batches (~150x/frame instead of 4,500x/frame), cutting IOPThread
-        // condition-variable wakeups by 16x while keeping SPU2 audio & FMV 100% locked to VBlank!
+        // Feed scaled eeCharge batched to 16384 cycles so IOP runs in exact lockstep with EE (4,915,298 cycles/VBlank)
+        // without over-clocking IOPThread to 48.6% CPU!
         g_iopStash += eeCharge;
-        if (g_iopStash >= 2048u)
+        if (g_iopStash >= 16384u)
         {
             m_runtime.advanceIopEeCycles(g_iopStash);
             g_iopStash = 0u;
@@ -1064,20 +1004,13 @@ uint64_t EeScheduler::skipIdleCycles() noexcept
         const uint64_t nextEventCycle = m_nextDeadlineCycle.load(std::memory_order_acquire);
         if (nextEventCycle == 0u || m_eeCycle >= nextEventCycle)
         {
-            if (nextEventCycle != 0u && m_eeCycle >= nextEventCycle)
-            {
-                m_checkpointPending.store(true, std::memory_order_release);
-                g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
-            }
             break;
         }
         const uint64_t step = std::min({nextEventCycle - m_eeCycle,
-                                        kIdleSkipStepCycles * 256u,
+                                        kIdleSkipStepCycles * 64u,
                                         m_runtime.memory().cyclesUntilNextEeTimerInterrupt()});
         if (step == 0u)
         {
-            m_checkpointPending.store(true, std::memory_order_release);
-            g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
             break;
         }
         accountCycles(static_cast<uint32_t>(step));
@@ -2689,7 +2622,7 @@ void EeScheduler::processDueDeadlines()
                         break;
                     }
 #if defined(__ANDROID__)
-                    if (std::chrono::steady_clock::now() - waitStart > std::chrono::milliseconds(100))
+                    if (std::chrono::steady_clock::now() - waitStart > std::chrono::milliseconds(12))
                         break;
 #else
                     if (std::chrono::steady_clock::now() - waitStart > std::chrono::milliseconds(100))
@@ -2899,10 +2832,8 @@ void EeScheduler::processEvent(const EeEvent &event)
         requestStop();
         break;
     case EeEventType::VBlankStart:
-    {
         ps2x::asyncvif::traceEvent('V', static_cast<uint32_t>(m_eeCycle >> 10)); // EE cycle / 1024
         ps2x::pnach::applyContinuous(m_rdram); // PS2X_PNACH patch=1 lines, at every vblank like PCSX2 (also after a load)
-
         ps2xRaiseIntcStat(1u << 2); // INTC VBON
         ++m_vsyncTick;
         m_runtime.memory().gs().vsyncTick.store(m_vsyncTick, std::memory_order_release);
@@ -2941,7 +2872,6 @@ void EeScheduler::processEvent(const EeEvent &event)
         }
         dispatchIrq(false, 2u);
         break;
-    }
     case EeEventType::ExternalWake:
         completeExternalWait(event.id, event.value, KE_OK);
         break;

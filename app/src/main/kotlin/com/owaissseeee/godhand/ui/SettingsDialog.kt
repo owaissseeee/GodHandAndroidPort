@@ -33,7 +33,7 @@ class SettingsDialog(
     private val onSettingsChanged: (() -> Unit)? = null
 ) : Dialog(context) {
 
-    private var activeTab = 0 // 0: Graphics, 1: Controls, 2: Sound, 3: Saves, 4: Cheats
+    private var activeTab = 0 // 0: Graphics, 1: Controls, 2: Sound, 3: Saves, 4: Cheats, 5: Logs
     private val tabButtons = mutableListOf<Button>()
     private lateinit var contentContainer: LinearLayout
     private lateinit var tabTitleTv: TextView
@@ -112,7 +112,8 @@ class SettingsDialog(
             "🕹️  CONTROLS",
             "🔊  SOUND",
             "💾  SAVES",
-            "⚡  CHEATS"
+            "⚡  CHEATS",
+            "📋  LOGS"
         )
         val tabsContainer = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
@@ -375,6 +376,10 @@ class SettingsDialog(
                 tabTitleTv.text = "⚡ GAMEPLAY CHEATS & MODS"
                 tabSubtitleTv.text = "Action Replay MAX & CodeBreaker memory modifiers (Live toggleable)"
             }
+            5 -> {
+                tabTitleTv.text = "📋 NATIVE SYSTEM LOGCAT"
+                tabSubtitleTv.text = "Real-time engine diagnostics, performance telemetry & crash inspect"
+            }
         }
 
         buildTabContent()
@@ -388,6 +393,7 @@ class SettingsDialog(
             2 -> buildSoundTab()
             3 -> buildSavesTab()
             4 -> buildCheatsTab()
+            5 -> buildLogsTab()
         }
     }
 
@@ -399,11 +405,11 @@ class SettingsDialog(
 
         addSpinnerRow(
             "Graphics Renderer",
-            listOf("Vulkan (PCSX2-GS - Best for Mali / Adreno / Pixel)"),
-            0,
-            enabled = false
-        ) { _ ->
-            settings.rendererIdx = 0
+            listOf("Vulkan (PCSX2-GS - Best for Mali / Adreno / Pixel)", "OpenGL ES 3.2 (Alternate for Adreno / PowerVR)", "Native GLES"),
+            settings.rendererIdx,
+            enabled = !isMidGame
+        ) { pos ->
+            settings.rendererIdx = pos
         }
 
         addSpinnerRow(
@@ -452,7 +458,9 @@ class SettingsDialog(
             listOf(
                 "Off (Render Every Frame - Recommended)",
                 "Auto (Skip on Lag/Hitch)",
-                "Skip 1 Frame (2x Engine Speedup)"
+                "Skip 1 Frame (Light Boost)",
+                "Skip 2 Frames (Heavy Boost)",
+                "Skip 3 Frames (Max Throttle for Low-End Helio G35 / A53 Cores)"
             ),
             settings.frameskipIdx
         ) { pos ->
@@ -919,6 +927,92 @@ class SettingsDialog(
                 NativeBridge.setCheatBool("unlock_jukebox", checked)
             }
         ))
+    }
+
+    // ==========================================
+    // 5. LOGS TAB
+    // ==========================================
+    private fun buildLogsTab() {
+        addSectionHeader("LIVE NATIVE ENGINE LOGCAT")
+
+        val logView = TextView(context).apply {
+            setTextColor(0xFF94A3B8.toInt())
+            textSize = 9.5f
+            typeface = android.graphics.Typeface.MONOSPACE
+            setBackgroundColor(0xFF0F172A.toInt())
+            setPadding(12.dpToPx(), 12.dpToPx(), 12.dpToPx(), 12.dpToPx())
+        }
+
+        val controlRow = LinearLayout(context).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setPadding(0, 0, 0, 6.dpToPx())
+        }
+
+        fun fetchLogs() {
+            try {
+                val process = Runtime.getRuntime().exec("logcat -d")
+                val reader = BufferedReader(InputStreamReader(process.inputStream))
+                val sb = StringBuilder()
+                var line: String?
+                val tags = listOf("pcsx2", "GodHand", "ps2", "vulkan", "recomp", "DEBUG", "AndroidRuntime", "fatal")
+                while (reader.readLine().also { line = it } != null) {
+                    val l = line ?: continue
+                    if (tags.any { l.contains(it, ignoreCase = true) }) {
+                        sb.append(l).append("\n")
+                    }
+                }
+                process.waitFor()
+                if (sb.isEmpty()) {
+                    logView.text = "[LOGS] No recent engine warnings or log messages. God Hand engine is operating smoothly."
+                } else {
+                    logView.text = sb.toString()
+                }
+            } catch (e: Exception) {
+                logView.text = "[LOGS] Error reading logcat: ${e.message}"
+            }
+        }
+
+        val btnRefresh = Button(context).apply {
+            text = "🔄 REFRESH"
+            textSize = 11f
+            setBackgroundResource(R.drawable.btn_god_hand_secondary)
+            setTextColor(0xFFFDE047.toInt())
+            setOnClickListener { fetchLogs() }
+        }
+        val btnCopy = Button(context).apply {
+            text = "📋 COPY"
+            textSize = 11f
+            setBackgroundResource(R.drawable.btn_god_hand_secondary)
+            setTextColor(0xFFFFFFFF.toInt())
+            setOnClickListener {
+                val clip = ClipData.newPlainText("GodHandLogs", logView.text)
+                (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).setPrimaryClip(clip)
+                Toast.makeText(context, "Logs copied to clipboard!", Toast.LENGTH_SHORT).show()
+            }
+        }
+        val btnClear = Button(context).apply {
+            text = "🗑 CLEAR"
+            textSize = 11f
+            setBackgroundResource(R.drawable.btn_god_hand_secondary)
+            setTextColor(0xFFCBD5E1.toInt())
+            setOnClickListener {
+                logView.text = "[LOGS CLEARED]"
+            }
+        }
+
+        controlRow.addView(btnRefresh, LinearLayout.LayoutParams(0, 36.dpToPx(), 1f).apply { setMargins(0, 0, 4.dpToPx(), 0) })
+        controlRow.addView(btnCopy, LinearLayout.LayoutParams(0, 36.dpToPx(), 1f).apply { setMargins(4.dpToPx(), 0, 4.dpToPx(), 0) })
+        controlRow.addView(btnClear, LinearLayout.LayoutParams(0, 36.dpToPx(), 1f).apply { setMargins(4.dpToPx(), 0, 0, 0) })
+        contentContainer.addView(controlRow)
+
+        val logScroll = ScrollView(context).apply {
+            addView(logView)
+        }
+        contentContainer.addView(logScroll, LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, 320.dpToPx()
+        ))
+
+        fetchLogs()
     }
 
     // ==========================================

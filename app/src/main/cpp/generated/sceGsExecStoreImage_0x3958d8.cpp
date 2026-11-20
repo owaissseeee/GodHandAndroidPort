@@ -844,7 +844,7 @@ label_395bc0:
     ctx->pc = 0x395BCCu;
     // 0x395bcc: 0x8c620000  lw          $v0, 0x0($v1)
     ctx->pc = 0x395bccu;
-    SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 0)));
+    SET_GPR_S32(ctx, 2, (int32_t)runtime->Load32(rdram, ctx, ADD32(GPR_U32(ctx, 3), 0)));
     // 0x395bd0: 0x30420100  andi        $v0, $v0, 0x100
     ctx->pc = 0x395bd0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)256);
@@ -933,7 +933,7 @@ label_395c08:
     ctx->pc = 0x395C14u;
     // 0x395c14: 0xdc620000  ld          $v0, 0x0($v1)
     ctx->pc = 0x395c14u;
-    SET_GPR_U64(ctx, 2, READ64(ADD32(GPR_U32(ctx, 3), 0)));
+    SET_GPR_U64(ctx, 2, runtime->Load64(rdram, ctx, ADD32(GPR_U32(ctx, 3), 0)));
     // 0x395c18: 0x30420002  andi        $v0, $v0, 0x2
     ctx->pc = 0x395c18u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)2);

@@ -1,11 +1,15 @@
 #pragma once
 
 #include "ps2_runtime.h"
+#include <atomic>
 
 struct R5900Context;
 
 namespace kamite
 {
+    extern std::atomic<bool> g_isFps60Active;
+    inline bool isFps60Active() noexcept { return g_isFps60Active.load(std::memory_order_relaxed); }
+
     // The 60 FPS mode and the L3 dash ([Game] Fps60 / L3Dash in kamite.ini; KAMITE_FPS60 / KAMITE_L3_DASH), and
     // the per-frame hook at the top of the game's main loop (also counts game frames for the F3 overlay). Before
     // runtime.run().
@@ -31,7 +35,15 @@ namespace kamite
 // Global host hook functions used by instruction-level patches
 uint32_t ps2xPatchFlagMask(const char *name);
 void ps2xSetPatchFlag(const char *name, bool enabled);
-bool ps2xPatchFlag(const char *name);
+
+inline bool ps2xPatchFlag(const char *name) noexcept
+{
+    if (__builtin_expect(name != nullptr && name[0] == 'f' && name[1] == 'p', 1))
+        return kamite::g_isFps60Active.load(std::memory_order_relaxed);
+    return false;
+}
+
 void ps2xRegisterHostHook(const char *name, PS2Runtime::RecompiledFunction hook);
 PS2Runtime::RecompiledFunction ps2xHostHook(const char *name);
+
 

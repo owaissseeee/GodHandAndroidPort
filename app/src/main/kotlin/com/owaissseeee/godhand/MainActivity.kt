@@ -218,7 +218,7 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        // 2. SETTINGS BUTTON (Opens 5-Tab Dialog: Graphics, Controls, Sound, Saves, Cheats)
+        // 2. SETTINGS BUTTON (Opens 5-Tab Dialog: Graphics, Controls, Sound, Saves, Logs)
         binding.btnMenuSettings.setOnClickListener {
             settings.reload()
             activeSettingsDialog = SettingsDialog(

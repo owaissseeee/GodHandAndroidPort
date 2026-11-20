@@ -27,7 +27,6 @@ public:
     void setAudioReady(bool ready);
     void submitPcm(std::span<const int16_t> samples);
     void resetPcm();
-    void flushCutscenePcm();
 
 private:
     struct DecodedSample

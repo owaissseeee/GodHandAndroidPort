@@ -313,6 +313,9 @@ namespace ps2_syscalls
         case 0x7F:
             GetMemorySize(rdram, ctx, runtime);
             return true;
+        case 0x80:
+            setReturnS32(ctx, 0);
+            return true;
         case 0x82:
             InitTLB(rdram, ctx, runtime);
             return true;

@@ -1864,25 +1864,9 @@ bool PS2Runtime::dispatchGuestBranch(uint8_t *rdram,
     ctx->pc = targetPc;
     const bool isCall = (kind == GuestBranchKind::DirectCall || kind == GuestBranchKind::IndirectCall);
 
-    // Fast-path intercept for 0x0030ADD8 -> jal func_002B4BC0 (God Hand's real VBlank wait loop):
-    // When *(uint32_t*)(rdram + 0x00753D80) < rdram[0x00747A09], fast-forward directly to VBlank!
-    if (__builtin_expect(targetPc == 0x002B4BC0u && sourcePc == 0x0030ADD8u, 0) && m_eeScheduler && rdram)
-    {
-        if (m_eeScheduler->vsyncTick() > 240u)
-        {
-            uint32_t vblankCounter = 0u;
-            std::memcpy(&vblankCounter, rdram + 0x00753D80u, sizeof(vblankCounter));
-            const uint32_t divider = rdram[0x00747A09u];
-            if (divider > 0u && vblankCounter < divider)
-            {
-                m_eeScheduler->skipIdleCycles();
-            }
-        }
-    }
-
     // Every inter-function transfer is also a deterministic EE safe point.
     // Use eeCheckpointDue() so inter-function calls take the 2-instruction deferred budget fast-path!
-    if (__builtin_expect(eeCheckpointDue(EeScheduler::kGuestDispatchCycles), 0))
+    if (eeCheckpointDue(EeScheduler::kGuestDispatchCycles))
     {
         return false;
     }
@@ -2899,14 +2883,22 @@ void PS2Runtime::postEeEvent(EeEvent event)
 // the game thread ~4 points slower overall (PROGRESS §76).
 
 
-bool PS2Runtime::eeCheckpointDueSlow(uint32_t cycles) noexcept
+bool PS2Runtime::eeCheckpointDue(uint32_t cycles) noexcept
 {
+    const uint64_t deferred = g_ps2xEeDeferred + (cycles == 32u ? g_ps2xEeLoopCycles : cycles);
+    if (deferred < g_ps2xEeDeferBudget.load(std::memory_order_relaxed))
+    {
+        g_ps2xEeDeferred = deferred;
+        return false;
+    }
+    // PS2X_EE_LOOP_CYCLES=<n>: EE cycles charged per backward branch of generated code (default 32). A plain global
+    // read once: a function-local static costs a thread-local guard check on every backward branch.
     static uint32_t s_loopCycles = 0u;
-    if (__builtin_expect(s_loopCycles == 0u, 0))
+    if (s_loopCycles == 0u)
     {
         const char *v = std::getenv("PS2X_EE_LOOP_CYCLES");
-        s_loopCycles = v && *v ? static_cast<uint32_t>(std::max(1, std::atoi(v))) : 32u;
-        g_ps2xEeLoopCycles = s_loopCycles;
+        s_loopCycles = v && *v ? static_cast<uint32_t>(std::max(1, std::atoi(v))) : 16u;
+        g_ps2xEeLoopCycles = s_loopCycles; // the fast path above
     }
     if (cycles == 32u)
         cycles = s_loopCycles;
