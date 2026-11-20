@@ -5978,13 +5978,29 @@ __forceinline void GSState::VertexKick(u32 skip)
 		}
 
 		// Guard-band wrap rejection (God Hand Full Screen 20:9 Fix):
-		// Discard primitives that artificially span across the entire screen due to 16-bit GS coordinate overflow.
-		// In PS2 coordinates (1/16th pixel), standard screen width is 10,240 (640*16).
-		// Any 3D triangle or line spanning > 24,000 sub-pixels (> 1,500 pixels) in width or height is physically impossible
-		// in normal gameplay and is the sole cause of the vertical brown/black strip line at grazing angles.
+		// Discard 3D world geometry triangles that artificially span across the entire screen due to 16-bit GS coordinate overflow.
+		//
+		// Rules:
+		// 1. NEVER filter 2D overlays, screen fades, or HUD elements:
+		//    - Screen fades and 2D UI have Z-buffer writes masked (m_context->ZBUF.ZMSK != 0) or alpha blending enabled (m_env.PRIM.ABE != 0).
+		//    - Screen fades cover the entire viewport in both width and height.
+		// 2. ONLY filter opaque 3D world geometry:
+		//    - Depth write is enabled (!m_context->ZBUF.ZMSK).
+		//    - Alpha blending is disabled (m_env.PRIM.ABE == 0).
+		//    - Triangle has an extreme horizontal or vertical wrap span (> 35000 sub-pixels) while being a thin sliver (< 12000 sub-pixels in the other axis),
+		//      OR spans > 48000 sub-pixels (the hallmark of a 65536 integer wrap).
 		if constexpr (primclass == GS_TRIANGLE_CLASS || primclass == GS_LINE_CLASS)
 		{
-			test |= static_cast<u32>(bbox.width() > 24000 || bbox.height() > 24000);
+			const bool is_3d_world_mesh = (m_context->ZBUF.ZMSK == 0) && (m_env.PRIM.ABE == 0);
+			if (is_3d_world_mesh)
+			{
+				const int w = bbox.width();
+				const int h = bbox.height();
+				if ((w > 35000 && h < 12000) || (h > 35000 && w < 12000) || w > 48000 || h > 48000)
+				{
+					test |= 1u;
+				}
+			}
 		}
 
 		skip |= test;
