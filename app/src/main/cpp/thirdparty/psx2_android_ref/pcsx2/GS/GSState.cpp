@@ -5977,6 +5977,25 @@ __forceinline void GSState::VertexKick(u32 skip)
 			test |= static_cast<u32>(v0.eq(v1)) | static_cast<u32>(v1.eq(v2)) | static_cast<u32>(v0.eq(v2));
 		}
 
+		// Guard-band wrap rejection (God Hand Full Screen 20:9 Fix):
+		// Discard 3D world geometry primitives that artificially span across the screen due to 16-bit GS coordinate overflow.
+		//
+		// Rules:
+		// 1. NEVER filter 2D overlays, screen fades, or HUD elements:
+		//    - 2D screen fades and HUD overlays do not perform 3D depth testing (TEST.ZTE == 0 or TEST.ZTST <= ZTST_ALWAYS).
+		// 2. ONLY filter 3D world geometry with active depth testing:
+		//    - Standard PS2 screen width is 10,240 (640*16). In 20:9 full screen, maximum visible width is ~15,920 sub-pixels.
+		//    - Any 3D world mesh triangle spanning > 24,000 sub-pixels (> 1,500 pixels) in width or height is physically impossible
+		//      in normal gameplay and is solely caused by VU1 16-bit coordinate overflow wrapping across the guard band.
+		if constexpr (primclass == GS_TRIANGLE_CLASS || primclass == GS_LINE_CLASS)
+		{
+			const bool is_3d_geometry = m_context->TEST.ZTE && (m_context->TEST.ZTST > ZTST_ALWAYS);
+			if (is_3d_geometry)
+			{
+				test |= static_cast<u32>(bbox.width() > 24000 || bbox.height() > 24000);
+			}
+		}
+
 		skip |= test;
 	}
 
