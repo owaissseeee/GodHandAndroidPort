@@ -576,7 +576,6 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         val cachePath = java.io.File(filesDir, "godhand_cache").absolutePath
         NativeBridge.setGameCacheDirectory(cachePath)
 
-        NativeBridge.setAudioVolume(settings.audioVolume)
         NativeBridge.setAudioChannelVolumes(
             settings.masterVolume,
             settings.bgmVolume,

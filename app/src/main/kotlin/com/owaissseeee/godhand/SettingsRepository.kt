@@ -23,6 +23,22 @@ class SettingsRepository(context: Context) {
         } catch (_: Throwable) {}
     }
 
+    private fun isFloatKey(k: String): Boolean {
+        return k.startsWith("audio_volume") || k == "touch_opacity" || k == "touch_controls_opacity" || k.startsWith("touch_pos_")
+    }
+
+    private fun getSafeFloat(key: String, def: Float): Float {
+        return try {
+            prefs.getFloat(key, def)
+        } catch (_: Exception) {
+            try {
+                (prefs.all[key] as? Number)?.toFloat() ?: def
+            } catch (_: Throwable) {
+                def
+            }
+        }
+    }
+
     fun reload() {
         try {
             if (syncFile.exists()) {
@@ -31,13 +47,19 @@ class SettingsRepository(context: Context) {
                 val keys = obj.keys()
                 while (keys.hasNext()) {
                     val k = keys.next()
-                    when (val v = obj.get(k)) {
-                        is Boolean -> editor.putBoolean(k, v)
-                        is Int -> editor.putInt(k, v)
-                        is Long -> editor.putLong(k, v)
-                        is Double -> editor.putFloat(k, v.toFloat())
-                        is Float -> editor.putFloat(k, v)
-                        is String -> editor.putString(k, v)
+                    val v = obj.get(k)
+                    if (isFloatKey(k)) {
+                        val num = (v as? Number)?.toFloat() ?: 1.0f
+                        editor.putFloat(k, num)
+                    } else {
+                        when (v) {
+                            is Boolean -> editor.putBoolean(k, v)
+                            is Int -> editor.putInt(k, v)
+                            is Long -> editor.putLong(k, v)
+                            is Double -> editor.putFloat(k, v.toFloat())
+                            is Float -> editor.putFloat(k, v)
+                            is String -> editor.putString(k, v)
+                        }
                     }
                 }
                 editor.commit()
@@ -134,23 +156,23 @@ class SettingsRepository(context: Context) {
         set(value) = putInt("audio_buffer_size_idx", value.coerceIn(0, 2))
 
     var audioVolume: Float
-        get() = prefs.getFloat("audio_volume", 1.0f).coerceIn(0.0f, 1.0f)
+        get() = getSafeFloat("audio_volume", 1.0f).coerceIn(0.0f, 1.0f)
         set(value) = putFloat("audio_volume", value.coerceIn(0.0f, 1.0f))
 
     var masterVolume: Float
-        get() = prefs.getFloat("audio_volume_master", 1.0f).coerceIn(0.0f, 1.0f)
+        get() = getSafeFloat("audio_volume_master", 1.0f).coerceIn(0.0f, 1.0f)
         set(value) = putFloat("audio_volume_master", value.coerceIn(0.0f, 1.0f))
 
     var bgmVolume: Float
-        get() = prefs.getFloat("audio_volume_bgm", 1.0f).coerceIn(0.0f, 1.0f)
+        get() = getSafeFloat("audio_volume_bgm", 1.0f).coerceIn(0.0f, 1.0f)
         set(value) = putFloat("audio_volume_bgm", value.coerceIn(0.0f, 1.0f))
 
     var sfxVolume: Float
-        get() = prefs.getFloat("audio_volume_sfx", 1.0f).coerceIn(0.0f, 1.0f)
+        get() = getSafeFloat("audio_volume_sfx", 1.0f).coerceIn(0.0f, 1.0f)
         set(value) = putFloat("audio_volume_sfx", value.coerceIn(0.0f, 1.0f))
 
     var voiceVolume: Float
-        get() = prefs.getFloat("audio_volume_voice", 1.0f).coerceIn(0.0f, 1.0f)
+        get() = getSafeFloat("audio_volume_voice", 1.0f).coerceIn(0.0f, 1.0f)
         set(value) = putFloat("audio_volume_voice", value.coerceIn(0.0f, 1.0f))
 
     // --- HD Custom Textures ---
@@ -193,7 +215,7 @@ class SettingsRepository(context: Context) {
         set(value) = putInt("dodge_mode", value.coerceIn(0, 2))
 
     var touchControlsOpacity: Float
-        get() = prefs.getFloat("touch_controls_opacity", 0.75f).coerceIn(0.10f, 1.0f)
+        get() = getSafeFloat("touch_controls_opacity", 0.75f).coerceIn(0.10f, 1.0f)
         set(value) = putFloat("touch_controls_opacity", value.coerceIn(0.10f, 1.0f))
 
     var fpsOverlayMode: Int

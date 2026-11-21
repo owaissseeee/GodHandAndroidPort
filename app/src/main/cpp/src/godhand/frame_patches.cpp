@@ -429,44 +429,27 @@ namespace kamite
             if (up && !down)
             {
                 injectStick(rdram, 1, 0x00u); // Up
+                uint64_t pressed = 0;
+                std::memcpy(&pressed, &ram8(rdram, 0x7474A0u + 0x1A0u), sizeof(pressed));
+                pressed |= (1ull << 49);
+                pressed &= ~(1ull << 48);
+                std::memcpy(&ram8(rdram, 0x7474A0u + 0x1A0u), &pressed, sizeof(pressed));
             }
             else if (down && !up)
             {
                 injectStick(rdram, 1, 0xFFu); // Down
+                uint64_t pressed = 0;
+                std::memcpy(&pressed, &ram8(rdram, 0x7474A0u + 0x1A0u), sizeof(pressed));
+                pressed |= (1ull << 48);
+                pressed &= ~(1ull << 49);
+                std::memcpy(&ram8(rdram, 0x7474A0u + 0x1A0u), &pressed, sizeof(pressed));
             }
         }
 
         void l3Dash(uint8_t *rdram)
         {
-            if (!g_l3Dash.load(std::memory_order_relaxed))
-                return;
-            uint16_t buttons = 0;
-            std::memcpy(&buttons, &ram8(rdram, kPadButtons), sizeof(buttons));
-            if ((buttons & 2u) == 0u)
-            {
-                g_dashFrames = 0;
-                g_dashArmed = false;
-                return;
-            }
-            const uint32_t perFrame = g_fps60 ? 2u : 1u; // game frames per 30 FPS frame
-            if (g_dashFrames++ == 0u)
-                g_dashArmed = true;
-            uint32_t gene = 0;
-            std::memcpy(&gene, &ram8(rdram, game::GameWork::address(game::GameWork::kPlayerObj)), sizeof(gene));
-            if (gene >= 0x100000u && gene < PS2_RAM_SIZE - 0x1000u && g_dashArmed)
-            {
-                if (ram8(rdram, gene + 0x2F5u) == 6u || g_dashFrames > 10u * perFrame)
-                    g_dashArmed = false;
-                else if (static_cast<int8_t>(ram8(rdram, gene + 0x627u)) < static_cast<int8_t>(2u * perFrame))
-                    ram8(rdram, gene + 0x627u) = static_cast<uint8_t>(2u * perFrame);
-            }
-            const uint8_t x = ram8(rdram, kStickBytes[0]), y = ram8(rdram, kStickBytes[1]);
-            const auto centred = [](uint8_t v) { return v >= 0x60u && v <= 0xA0u; };
-            if (centred(x) && centred(y))
-            {
-                injectStick(rdram, 1, 0x00u);
-                injectStick(rdram, 3, 0x00u);
-            }
+            (void)rdram;
+            return;
         }
 
         // The roulette's time: one count every g_roulettePeriod game frames. 1 at 30 frames/s, 2 at 60 (the PS2's
@@ -2098,7 +2081,7 @@ namespace kamite
         g_fps60Shown.store(is60);
         kamite::g_isFps60Active.store(is60, std::memory_order_relaxed);
         ps2xSetPatchFlag("fps60", is60);
-        g_l3Dash = true; // Enable single-press L3 dash on Android
+        g_l3Dash = false; // Disable single-press L3 dash (keep original analog controls)
         ps2xRegisterHostHook("km_frame_start", &frameStartInternal);
         ps2xRegisterHostHook("km_fps60_hitbox_compare", &hitboxCompareInternal);
         ps2xRegisterHostHook("km_fps60_roulette_timer", &rouletteTimer);

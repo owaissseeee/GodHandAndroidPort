@@ -665,8 +665,7 @@ class SettingsDialog(
             settings.masterVolume = vol
             settings.audioVolume = vol
             if (isMidGame) {
-                NativeBridge.setAudioVolume(vol)
-                NativeBridge.setAudioChannelVolumes(settings.masterVolume, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
+                NativeBridge.setAudioChannelVolumes(vol, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
             }
         }
 

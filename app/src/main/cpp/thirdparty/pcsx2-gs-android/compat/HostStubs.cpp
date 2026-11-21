@@ -260,6 +260,11 @@ void pcsx2gs::SetFolders(const std::string &resources, const std::string &cache)
 
 void pcsx2gs::SetTextureFolder(const std::string &folder)
 {
+    if (folder.empty()) {
+        EmuFolders::Textures.clear();
+        g_textureSerial.clear();
+        return;
+    }
     std::filesystem::path path(folder);
     while (!path.empty() && !path.has_filename())
         path = path.parent_path();

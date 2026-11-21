@@ -732,6 +732,9 @@ Java_com_owaissseeee_godhand_NativeBridge_setAudioChannelVolumes(
     JNIEnv* /*env*/, jobject /*thiz*/, jfloat master, jfloat bgm, jfloat sfx, jfloat voice)
 {
     godhand_set_audio_channel_volumes(master, bgm, sfx, voice);
+    if (IsAudioDeviceReady()) {
+        SetMasterVolume(master);
+    }
 }
 
 // -------------------------------------------------------------

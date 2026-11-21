@@ -1247,6 +1247,58 @@ namespace godhand
                 "Roulette timer 60 FPS pacing & freeze timer hook");
         }
 
+        // Roulette Dial Step Hook (0x00145238)
+        constexpr uint32_t kCockRouletteDial = 0x00145238u;
+        if (runtime.hasFunction(kCockRouletteDial))
+        {
+            static GuestFunction s_origCockRouletteDial = runtime.lookupFunction(kCockRouletteDial);
+            FunctionHooks::instance().replace(
+                kCockRouletteDial,
+                "cCockRoulette_Dial_hook",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    kamite::markRouletteSeen();
+                    if (s_origCockRouletteDial)
+                        s_origCockRouletteDial(rdram, ctx, rt);
+                },
+                ReplacementStatus::Native,
+                "mark roulette seen on cCockRoulette Dial");
+        }
+
+        // Roulette Wheel Move Hook (0x00145810) - 2-Way Navigation Support
+        constexpr uint32_t kCockRouletteMove = 0x00145810u;
+        if (runtime.hasFunction(kCockRouletteMove))
+        {
+            static GuestFunction s_origCockRouletteMove = runtime.lookupFunction(kCockRouletteMove);
+            FunctionHooks::instance().replace(
+                kCockRouletteMove,
+                "cCockRoulette_Move_hook",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    kamite::markRouletteSeen();
+                    uint32_t wheel = GPR_U32(ctx, 4); // a0 = cCockRoulette*
+                    uint16_t oldCursor = 0, count = 0;
+                    bool upPressed = false;
+                    if (rdram && wheel >= 0x100000u && wheel < 0x02000000u - 0x1000u)
+                    {
+                        std::memcpy(&oldCursor, rdram + wheel + 0x422u, sizeof(oldCursor));
+                        std::memcpy(&count, rdram + wheel + 0x3B2u, sizeof(count));
+                        uint64_t pressed = 0;
+                        std::memcpy(&pressed, rdram + 0x7474A0u + 0x1A0u, sizeof(pressed));
+                        upPressed = (pressed & (1ull << 49)) != 0u;
+                    }
+
+                    if (s_origCockRouletteMove)
+                        s_origCockRouletteMove(rdram, ctx, rt);
+
+                    if (upPressed && rdram && count > 1 && wheel >= 0x100000u && wheel < 0x02000000u - 0x1000u)
+                    {
+                        uint16_t newCursor = static_cast<uint16_t>((oldCursor + count - 1) % count);
+                        std::memcpy(rdram + wheel + 0x422u, &newCursor, sizeof(newCursor));
+                    }
+                },
+                ReplacementStatus::Native,
+                "cCockRoulette move with 2-way D-pad & stick navigation");
+        }
+
         constexpr uint32_t kGetCostumeNo = 0x001FC0A8u;
         if (runtime.hasFunction(kGetCostumeNo))
         {
