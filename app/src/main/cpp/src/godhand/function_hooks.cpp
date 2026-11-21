@@ -1366,61 +1366,6 @@ namespace godhand
                 "Roulette timer 60 FPS pacing & freeze timer hook");
         }
 
-        // Roulette Dial Step Hook (0x00145238)
-        constexpr uint32_t kCockRouletteDial = 0x00145238u;
-        if (runtime.hasFunction(kCockRouletteDial))
-        {
-            static GuestFunction s_origCockRouletteDial = runtime.lookupFunction(kCockRouletteDial);
-            FunctionHooks::instance().replace(
-                kCockRouletteDial,
-                "cCockRoulette_Dial_hook",
-                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
-                    kamite::markRouletteSeen();
-                    if (s_origCockRouletteDial)
-                        s_origCockRouletteDial(rdram, ctx, rt);
-                },
-                ReplacementStatus::Native,
-                "mark roulette seen on cCockRoulette Dial");
-        }
-
-        // Roulette Wheel Move Hook (0x00145810) - 2-Way Navigation Support
-        constexpr uint32_t kCockRouletteMove = 0x00145810u;
-        if (runtime.hasFunction(kCockRouletteMove))
-        {
-            static GuestFunction s_origCockRouletteMove = runtime.lookupFunction(kCockRouletteMove);
-            FunctionHooks::instance().replace(
-                kCockRouletteMove,
-                "cCockRoulette_Move_hook",
-                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
-                    kamite::markRouletteSeen();
-                    uint32_t wheel = GPR_U32(ctx, 4); // a0 = cCockRoulette*
-                    uint16_t cur = 0, count = 0;
-                    uint64_t pressed = 0;
-                    if (rdram && wheel >= 0x100000u && wheel < 0x02000000u - 0x1000u)
-                    {
-                        std::memcpy(&cur, rdram + wheel + 0x422u, sizeof(cur));
-                        std::memcpy(&count, rdram + wheel + 0x3B2u, sizeof(count));
-                        std::memcpy(&pressed, rdram + 0x7474A0u + 0x1A0u, sizeof(pressed));
-                    }
-
-                    constexpr uint64_t kStepMask = (1ull << 49) | (1ull << 48) | (1ull << 40);
-                    const bool isStepping = (pressed & kStepMask) != 0u;
-                    const bool upPressed = (pressed & (1ull << 49)) != 0u;
-
-                    // If stepping upwards and count > 1, pre-adjust cursor by -2 so the function's +1 steps backwards by 1!
-                    if (isStepping && upPressed && count > 1 && rdram && wheel >= 0x100000u && wheel < 0x02000000u - 0x1000u)
-                    {
-                        uint16_t preStepCursor = static_cast<uint16_t>((cur + count - 2) % count);
-                        std::memcpy(rdram + wheel + 0x422u, &preStepCursor, sizeof(preStepCursor));
-                    }
-
-                    if (s_origCockRouletteMove)
-                        s_origCockRouletteMove(rdram, ctx, rt);
-                },
-                ReplacementStatus::Native,
-                "cCockRoulette move with 2-way D-pad & stick navigation");
-        }
-
         // CRI ADX Stream Volume Hook 1-channel (0x00373FF0)
         if (runtime.hasFunction(kStreamVolume1))
         {

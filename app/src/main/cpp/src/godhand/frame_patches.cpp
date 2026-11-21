@@ -254,13 +254,13 @@ namespace kamite
             std::memcpy(&pressed, &ram8(rdram, 0x7474A0u + 0x1A0u), sizeof(pressed));
 
             const float ly = ps2_pad::getLy();
-            const float ry = ps2_pad::getRy();
             const uint32_t hostBtns = ps2_pad::getButtons();
 
+            // Pushing Left Stick UP or D-pad UP steps back one (spins wheel UP)
             const bool up = (pressed & (1ull << 49)) != 0u ||
                             ((guestPressed & 0x0010u) != 0u) ||
                             ((hostBtns & (1u << 4)) != 0u) ||
-                            (ly < -0.45f) || (ry < -0.45f);
+                            (ly < -0.45f);
 
             g_rouletteBack = up && count > 1;
             SET_GPR_S32(ctx, 3, up && count > 0 ? (cursor + count - 1) % count : cursor + 1);
@@ -331,41 +331,55 @@ namespace kamite
             setRamF32(rdram, wheel + 0x2A4u, g_rouletteSavedA);
         }
 
+        static uint32_t s_dpadHoldTimer = 0;
         void rouletteDpad(uint8_t *rdram)
         {
             if (g_rouletteSeen == 0u || g_gameFrame - g_rouletteSeen > 2u)
+            {
+                s_dpadHoldTimer = 0;
                 return;
+            }
 
-            const float hostLy = ps2_pad::getLy();
-            const float hostRy = ps2_pad::getRy();
             const uint32_t hostBtns = ps2_pad::getButtons();
-
             uint16_t guestBtnsRaw = 0;
             std::memcpy(&guestBtnsRaw, &ram8(rdram, kPadButtons), sizeof(guestBtnsRaw));
             const uint16_t guestBtnsPressed = static_cast<uint16_t>(~guestBtnsRaw);
 
-            // Built-in Roulette Wheel Navigation: D-Pad Up / Down OR Joystick Up / Down
-            const bool up = ((hostBtns & (1u << 4)) != 0u) || ((guestBtnsPressed & 0x0010u) != 0u) ||
-                            (hostLy < -0.45f) || (hostRy < -0.45f);
-            const bool down = ((hostBtns & (1u << 6)) != 0u) || ((guestBtnsPressed & 0x0040u) != 0u) ||
-                              (hostLy > 0.45f) || (hostRy > 0.45f);
+            // D-Pad Up / Down wheel navigation with edge-trigger & autorepeat (no right stick)
+            const bool dpadUp = ((hostBtns & (1u << 4)) != 0u) || ((guestBtnsPressed & 0x0010u) != 0u);
+            const bool dpadDown = ((hostBtns & (1u << 6)) != 0u) || ((guestBtnsPressed & 0x0040u) != 0u);
 
-            if (up && !down)
+            if (dpadUp == dpadDown)
             {
-                injectStick(rdram, 1, 0x00u); // Left stick Up
-                uint64_t pressed = 0;
-                std::memcpy(&pressed, &ram8(rdram, 0x7474A0u + 0x1A0u), sizeof(pressed));
-                pressed |= (1ull << 49);
-                pressed &= ~(1ull << 48);
-                std::memcpy(&ram8(rdram, 0x7474A0u + 0x1A0u), &pressed, sizeof(pressed));
+                s_dpadHoldTimer = 0;
+                return;
             }
-            else if (down && !up)
+
+            bool shouldStep = false;
+            if (s_dpadHoldTimer == 0)
             {
-                injectStick(rdram, 1, 0xFFu); // Left stick Down
+                shouldStep = true;
+            }
+            else if (s_dpadHoldTimer >= 18 && ((s_dpadHoldTimer - 18) % 10 == 0))
+            {
+                shouldStep = true;
+            }
+            ++s_dpadHoldTimer;
+
+            if (shouldStep)
+            {
                 uint64_t pressed = 0;
                 std::memcpy(&pressed, &ram8(rdram, 0x7474A0u + 0x1A0u), sizeof(pressed));
-                pressed |= (1ull << 48);
-                pressed &= ~(1ull << 49);
+                if (dpadUp)
+                {
+                    pressed |= (1ull << 49);
+                    pressed &= ~(1ull << 48);
+                }
+                else
+                {
+                    pressed |= (1ull << 48);
+                    pressed &= ~(1ull << 49);
+                }
                 std::memcpy(&ram8(rdram, 0x7474A0u + 0x1A0u), &pressed, sizeof(pressed));
             }
         }

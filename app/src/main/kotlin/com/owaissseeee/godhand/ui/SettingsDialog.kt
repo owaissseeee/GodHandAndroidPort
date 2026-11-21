@@ -630,38 +630,6 @@ class SettingsDialog(
     // 2. SOUND TAB
     // ==========================================
     private fun buildSoundTab() {
-        addSectionHeader("AUDIO LATENCY & SPU2 SCHEDULING")
-
-        addSpinnerRow(
-            "Audio Scheduling",
-            listOf(
-                "Real-time (Lowest Latency - High-End Chips)",
-                "Balanced (Zero Crackle - Recommended)",
-                "Safe Headroom Buffer (Helio G35 / Low-End Potato Cores)"
-            ),
-            settings.audioSchedulingIdx
-        ) { pos ->
-            settings.audioSchedulingIdx = pos
-            if (isMidGame) {
-                NativeBridge.setAudioConfig(pos, settings.audioBufferSizeIdx)
-            }
-        }
-
-        addSpinnerRow(
-            "Audio Stream Buffer Size",
-            listOf(
-                "1024 frames (~21.3 ms)",
-                "2048 frames (~42.6 ms - Glitch-Free Default)",
-                "4096 frames (~85.3 ms - Maximum Underrun Protection)"
-            ),
-            settings.audioBufferSizeIdx
-        ) { pos ->
-            settings.audioBufferSizeIdx = pos
-            if (isMidGame) {
-                NativeBridge.setAudioConfig(settings.audioSchedulingIdx, pos)
-            }
-        }
-
         addSectionHeader("SEPARATED AUDIO CHANNELS & MASTER VOLUME")
 
         addSliderRow(
@@ -718,6 +686,38 @@ class SettingsDialog(
             settings.voiceVolume = vol
             if (isMidGame) {
                 NativeBridge.setAudioChannelVolumes(settings.masterVolume, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
+            }
+        }
+
+        addSectionHeader("AUDIO LATENCY & SPU2 SCHEDULING")
+
+        addSpinnerRow(
+            "Audio Scheduling",
+            listOf(
+                "Real-time (Lowest Latency - High-End Chips)",
+                "Balanced (Zero Crackle - Recommended)",
+                "Safe Headroom Buffer (Helio G35 / Low-End Potato Cores)"
+            ),
+            settings.audioSchedulingIdx
+        ) { pos ->
+            settings.audioSchedulingIdx = pos
+            if (isMidGame) {
+                NativeBridge.setAudioConfig(pos, settings.audioBufferSizeIdx)
+            }
+        }
+
+        addSpinnerRow(
+            "Audio Stream Buffer Size",
+            listOf(
+                "1024 frames (~21.3 ms)",
+                "2048 frames (~42.6 ms - Glitch-Free Default)",
+                "4096 frames (~85.3 ms - Maximum Underrun Protection)"
+            ),
+            settings.audioBufferSizeIdx
+        ) { pos ->
+            settings.audioBufferSizeIdx = pos
+            if (isMidGame) {
+                NativeBridge.setAudioConfig(settings.audioSchedulingIdx, pos)
             }
         }
     }
@@ -805,8 +805,14 @@ class SettingsDialog(
             setBackgroundResource(R.drawable.btn_god_hand_primary)
             setTextColor(0xFFFFFFFF.toInt())
             setOnClickListener {
+                tvStateTitle.text = "⏳ SAVING SLOT $activeSlot..."
+                tvStateDetails.text = "Capturing RDRAM, VRAM & EE hardware state..."
                 onSaveStateRequested?.invoke(activeSlot)
-                buildTabContent()
+                postDelayed({
+                    if (activeTab == 3) {
+                        buildTabContent()
+                    }
+                }, 200)
             }
         }
         val btnLoadState = Button(context).apply {
@@ -1260,8 +1266,16 @@ class SettingsDialog(
         contentContainer.addView(controlRow)
 
         val logScroll = ScrollView(context).apply {
+            isNestedScrollingEnabled = true
+            setOnTouchListener { v, _ ->
+                v.parent?.requestDisallowInterceptTouchEvent(true)
+                false
+            }
+        }
+        val hScroll = HorizontalScrollView(context).apply {
             addView(logView)
         }
+        logScroll.addView(hScroll)
         contentContainer.addView(logScroll, LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT, 260.dpToPx()
         ))

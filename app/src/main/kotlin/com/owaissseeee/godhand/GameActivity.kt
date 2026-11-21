@@ -77,7 +77,7 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
 
     private fun resolveRealPathFromUri(uri: android.net.Uri): String? {
         try {
-            val docId = try {
+            val rawDocId = try {
                 if (android.provider.DocumentsContract.isDocumentUri(this, uri)) {
                     android.provider.DocumentsContract.getDocumentId(uri)
                 } else {
@@ -86,19 +86,30 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             } catch (_: Throwable) {
                 uri.path ?: ""
             }
+            val docId = android.net.Uri.decode(rawDocId ?: "")
+            val decodedUri = android.net.Uri.decode(uri.toString())
 
             if (docId.startsWith("raw:")) {
                 return docId.substring("raw:".length)
             }
             if (docId.startsWith("primary:")) {
                 val rel = docId.substring("primary:".length).trimStart('/')
-                return "/storage/emulated/0/$rel"
+                return if (rel.isEmpty()) {
+                    android.os.Environment.getExternalStorageDirectory().absolutePath
+                } else {
+                    java.io.File(android.os.Environment.getExternalStorageDirectory(), rel).absolutePath
+                }
             }
+            if (docId.equals("download", ignoreCase = true) || docId.equals("downloads", ignoreCase = true)) {
+                return android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS).absolutePath
+            }
+
+            // Check for SD Card or Volume UUID like "1234-5678:path"
             val colonIdx = docId.indexOf(':')
             if (colonIdx > 0) {
                 val vol = docId.substring(0, colonIdx)
                 val rel = docId.substring(colonIdx + 1).trimStart('/')
-                if (vol.matches(Regex("^[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}$"))) {
+                if (vol.matches(Regex("^[0-9A-Za-z]{4}-[0-9A-Za-z]{4}$"))) {
                     return "/storage/$vol/$rel"
                 }
                 val candidate = java.io.File("/storage/$vol/$rel")
@@ -107,6 +118,7 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                 }
             }
 
+            // Check ContentResolver query for MediaStore DATA column
             try {
                 val proj = arrayOf(android.provider.MediaStore.MediaColumns.DATA)
                 contentResolver.query(uri, proj, null, null, null)?.use { cursor ->
@@ -120,12 +132,26 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                 }
             } catch (_: Throwable) {}
 
-            val path = uri.path
-            if (path != null) {
-                if (path.contains("primary:")) {
-                    val rel = path.substringAfter("primary:").trimStart('/')
-                    return "/storage/emulated/0/$rel"
+            // Try decoded URI string inspection
+            if (decodedUri.contains("primary:")) {
+                val rel = decodedUri.substringAfter("primary:").substringBefore('?').substringBefore('&').trimStart('/')
+                return if (rel.isEmpty()) {
+                    android.os.Environment.getExternalStorageDirectory().absolutePath
+                } else {
+                    java.io.File(android.os.Environment.getExternalStorageDirectory(), rel).absolutePath
                 }
+            }
+            if (decodedUri.contains("/storage/")) {
+                val full = "/storage/" + decodedUri.substringAfter("/storage/").substringBefore('?').substringBefore('&')
+                return full
+            }
+            if (decodedUri.contains("/sdcard/")) {
+                val full = "/sdcard/" + decodedUri.substringAfter("/sdcard/").substringBefore('?').substringBefore('&')
+                return full
+            }
+
+            val path = uri.path?.let { android.net.Uri.decode(it) }
+            if (path != null) {
                 val treeIdx = path.indexOf("/document/raw:")
                 if (treeIdx != -1) {
                     return path.substring(treeIdx + "/document/raw:".length)
