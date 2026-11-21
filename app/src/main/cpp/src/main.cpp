@@ -812,6 +812,13 @@ extern "C" void godhand_set_frameskip_mode(int mode);
 static PS2Runtime* s_activeRuntime = nullptr;
 PS2Runtime* getActiveRuntime() { return s_activeRuntime; }
 
+static std::string s_explicitCacheDir;
+extern "C" void godhand_set_explicit_cache_dir(const char* dir) {
+    if (dir && *dir) {
+        s_explicitCacheDir = dir;
+    }
+}
+
 void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererIdx, int resScaleIdx, int aspectIdx, int fpsIdx, int frameskipIdx) {
     // Frameskip forces multi-frame draw batching and latency spikes on Android; always run unbatched 60Hz/30Hz VSync!
     // frameskipIdx is active
@@ -858,26 +865,35 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     setEnv("GODHAND_HEADLESS", "0");
 
     fs::path cacheDir;
-    static const char* const s_cacheCandidates[] = {
-        "/data/data/com.owaissseeee.godhand/files/godhand_cache",
-        "/data/user/0/com.owaissseeee.godhand/files/godhand_cache",
-        "/data/data/com.lasvola.godhand/files/godhand_cache",
-        "/data/user/0/com.lasvola.godhand/files/godhand_cache",
-        "/sdcard/Download/God Hand (USA)",
-        "/storage/emulated/0/Download/God Hand (USA)",
-        "/sdcard/godhand_cache",
-        "/storage/emulated/0/godhand_cache"
-    };
-    for (const char* cand : s_cacheCandidates) {
-        fs::path p(cand);
+    if (!s_explicitCacheDir.empty()) {
+        fs::path p(s_explicitCacheDir);
         std::error_code ec;
         if (fs::exists(p / "SLUS_215.03", ec)) {
             cacheDir = p;
-            break;
         }
     }
     if (cacheDir.empty()) {
-        cacheDir = "/data/data/com.owaissseeee.godhand/files/godhand_cache";
+        static const char* const s_cacheCandidates[] = {
+            "/data/data/com.owaissseeee.godhand/files/godhand_cache",
+            "/data/user/0/com.owaissseeee.godhand/files/godhand_cache",
+            "/data/data/com.lasvola.godhand/files/godhand_cache",
+            "/data/user/0/com.lasvola.godhand/files/godhand_cache",
+            "/sdcard/Download/God Hand (USA)",
+            "/storage/emulated/0/Download/God Hand (USA)",
+            "/sdcard/godhand_cache",
+            "/storage/emulated/0/godhand_cache"
+        };
+        for (const char* cand : s_cacheCandidates) {
+            fs::path p(cand);
+            std::error_code ec;
+            if (fs::exists(p / "SLUS_215.03", ec)) {
+                cacheDir = p;
+                break;
+            }
+        }
+    }
+    if (cacheDir.empty()) {
+        cacheDir = !s_explicitCacheDir.empty() ? fs::path(s_explicitCacheDir) : fs::path("/data/data/com.owaissseeee.godhand/files/godhand_cache");
     }
     fs::path bootElf = cacheDir / "SLUS_215.03";
     __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "Target cacheDir: %s, bootElf: %s", cacheDir.string().c_str(), bootElf.string().c_str());
@@ -927,7 +943,6 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     GSPcsx2Backend::AttachHostWindow(static_cast<void*>(win));
     ps2_host_display::setStartFullscreen(true);
 
-    SetAudioStreamBufferSizeDefault(2048);
     __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "Attached host window, initializing runtime...");
     if (!runtime.initialize(godhand::kGameTitle)) {
         __android_log_print(ANDROID_LOG_ERROR, "GodHandRecomp", "runtime.initialize failed!");

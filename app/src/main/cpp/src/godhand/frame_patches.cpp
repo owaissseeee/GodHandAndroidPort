@@ -47,6 +47,14 @@
 namespace godhand {
     PS2Runtime* getActiveRuntime();
 }
+
+namespace ps2_pad {
+    uint32_t getButtons();
+    float getLx();
+    float getLy();
+    float getRx();
+    float getRy();
+}
 #include <cmath>
 #include <cstdlib>
 #include <cstring>
@@ -131,7 +139,7 @@ namespace kamite
     {
         constexpr uint32_t kFrameDivider = game::GameWork::address(game::GameWork::kVblankDivider); // GameWork.unk569: 1 = 60 frames/s
         constexpr uint32_t kStickBytes[4] = {0x5E8146u, 0x5E8147u, 0x5E81C6u, 0x5E81C7u}; // left stick X/Y, two pads
-        constexpr uint32_t kPadButtons = 0x5E8242u;                                        // 16-bit; 2 = L3
+        constexpr uint32_t kPadButtons = 0x5E8142u;                                        // 16-bit; 2 = L3 (Pad 1 data packet at 0x5E8140)
         bool g_fps60 = false;     // the mode in effect this frame (the patch flag, the divider)
         bool g_fps60User = false; // the player's choice (Fps60, F2); off for the frames of a cutscene (frameStart)
         std::atomic<int> g_fps60Request{-1};   // F2 menu: 0 / 1, applied at the next frame start (game thread)
@@ -377,28 +385,29 @@ namespace kamite
                 s_targetSwitchCooldown = 0;
                 return;
             }
-            uint16_t buttons = 0;
-            std::memcpy(&buttons, &ram8(rdram, kPadButtons), sizeof(buttons));
-            const bool up = (buttons & 0x10u) != 0u, down = (buttons & 0x40u) != 0u;
-            if (up != down)
-            {
-                injectStick(rdram, 1, up ? 0x00u : 0xFFu);
-                injectStick(rdram, 3, up ? 0x00u : 0xFFu);
-            }
 
-            const bool dpadLeft = (buttons & 0x80u) != 0u;
-            const bool dpadRight = (buttons & 0x20u) != 0u;
-            const uint8_t rx = ram8(rdram, 0x5E8144u);
-            const bool stickLeft = (rx < 0x40u);
-            const bool stickRight = (rx > 0xC0u);
-            const bool goLeft = dpadLeft || stickLeft;
-            const bool goRight = dpadRight || stickRight;
+            const float hostRx = ps2_pad::getRx();
+            const float hostRy = ps2_pad::getRy();
+            const float hostLx = ps2_pad::getLx();
+            const float hostLy = ps2_pad::getLy();
+            const uint32_t hostBtns = ps2_pad::getButtons();
 
-            if (goLeft != goRight)
+            const uint8_t guestRx = ram8(rdram, 0x5E8144u);
+            const uint8_t guestRy = ram8(rdram, 0x5E8145u);
+            const uint8_t guestLy = ram8(rdram, 0x5E8147u);
+            uint16_t guestBtnsRaw = 0;
+            std::memcpy(&guestBtnsRaw, &ram8(rdram, kPadButtons), sizeof(guestBtnsRaw));
+            const uint16_t guestBtnsPressed = static_cast<uint16_t>(~guestBtnsRaw);
+
+            // 1. Built-in Roulette Target Selection: Right Stick flick Left / Right
+            const bool flickRight = (hostRx > 0.45f) || (guestRx > 185);
+            const bool flickLeft  = (hostRx < -0.45f) || (guestRx < 70);
+
+            if (flickRight != flickLeft)
             {
                 if (s_targetSwitchCooldown == 0)
                 {
-                    cycleRouletteTargetInternal(rdram, goRight ? 1 : -1);
+                    cycleRouletteTargetInternal(rdram, flickRight ? 1 : -1);
                     s_targetSwitchCooldown = 15;
                 }
                 else
@@ -409,6 +418,21 @@ namespace kamite
             else
             {
                 s_targetSwitchCooldown = 0;
+            }
+
+            // 2. Built-in Roulette Wheel Navigation: D-Pad Up / Down OR Joystick (Left/Right) Up / Down
+            const bool up = ((hostBtns & (1u << 4)) != 0u) || ((guestBtnsPressed & 0x0010u) != 0u) ||
+                            (hostLy < -0.45f) || (guestLy < 70) || (hostRy < -0.45f) || (guestRy < 70);
+            const bool down = ((hostBtns & (1u << 6)) != 0u) || ((guestBtnsPressed & 0x0040u) != 0u) ||
+                              (hostLy > 0.45f) || (guestLy > 185) || (hostRy > 0.45f) || (guestRy > 185);
+
+            if (up && !down)
+            {
+                injectStick(rdram, 1, 0x00u); // Up
+            }
+            else if (down && !up)
+            {
+                injectStick(rdram, 1, 0xFFu); // Down
             }
         }
 
@@ -2289,6 +2313,11 @@ namespace kamite
     bool rouletteUp()
     {
         return g_rouletteSeen != 0u && g_gameFrame - g_rouletteSeen <= 2u;
+    }
+
+    void markRouletteSeen()
+    {
+        g_rouletteSeen = g_gameFrame;
     }
 
     bool rouletteTimerDouble()

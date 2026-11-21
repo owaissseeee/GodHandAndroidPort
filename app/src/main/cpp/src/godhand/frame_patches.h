@@ -23,6 +23,7 @@ namespace kamite
     bool rouletteTimerDouble();
     // Game thread: the roulette wheel is on screen (cCockRoulette's move ran within the last two game frames).
     bool rouletteUp();
+    void markRouletteSeen();
     void setRouletteTimerDouble(bool on);
     void cycleRouletteTarget(int dir);
 

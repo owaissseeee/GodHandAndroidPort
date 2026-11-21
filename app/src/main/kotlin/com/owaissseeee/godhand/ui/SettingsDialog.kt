@@ -598,40 +598,6 @@ class SettingsDialog(
             settings.fpsOverlayMode = pos
         }
 
-        addSectionHeader("ROULETTE TARGET SELECTION & D-PAD FINESSE")
-
-        addSwitchRow(
-            "Roulette Timer: Double",
-            "Doubles the time to pick a Roulette move during combat (2x slower timer).",
-            settings.rouletteTimerDouble
-        ) { enabled ->
-            settings.rouletteTimerDouble = enabled
-            NativeBridge.setRouletteTimerDouble(enabled)
-        }
-
-        val dpadCard = LinearLayout(context).apply {
-            orientation = LinearLayout.VERTICAL
-            setBackgroundResource(R.drawable.card_god_hand)
-            setPadding(12.dpToPx(), 8.dpToPx(), 12.dpToPx(), 8.dpToPx())
-        }
-        val tvDpadTitle = TextView(context).apply {
-            text = "🕹️ D-PAD FINESSE & TARGET SELECTION"
-            textSize = 11f
-            typeface = android.graphics.Typeface.DEFAULT_BOLD
-            setTextColor(0xFFF59E0B.toInt())
-        }
-        val tvDpadDesc = TextView(context).apply {
-            text = "• D-Pad ▲/▼: Scroll Roulette Move Wheel\n• D-Pad ◀/▶ (or Right Stick ◄/►): Dynamically cycle Gene's locked target enemy during Roulette!"
-            textSize = 10f
-            setTextColor(0xFFCBD5E1.toInt())
-            setPadding(0, 3.dpToPx(), 0, 0)
-        }
-        dpadCard.addView(tvDpadTitle)
-        dpadCard.addView(tvDpadDesc)
-        contentContainer.addView(dpadCard, LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
-        ).apply { setMargins(0, 0, 0, 6.dpToPx()) })
-
         if (isMidGame && onEditControlsRequested != null) {
             val btnEdit = Button(context).apply {
                 text = "✏ REPOSITION ON-SCREEN BUTTONS"
@@ -666,7 +632,9 @@ class SettingsDialog(
             settings.audioSchedulingIdx
         ) { pos ->
             settings.audioSchedulingIdx = pos
-            NativeBridge.setAudioConfig(pos, settings.audioBufferSizeIdx)
+            if (isMidGame) {
+                NativeBridge.setAudioConfig(pos, settings.audioBufferSizeIdx)
+            }
         }
 
         addSpinnerRow(
@@ -679,7 +647,9 @@ class SettingsDialog(
             settings.audioBufferSizeIdx
         ) { pos ->
             settings.audioBufferSizeIdx = pos
-            NativeBridge.setAudioConfig(settings.audioSchedulingIdx, pos)
+            if (isMidGame) {
+                NativeBridge.setAudioConfig(settings.audioSchedulingIdx, pos)
+            }
         }
 
         addSectionHeader("SEPARATED AUDIO CHANNELS & MASTER VOLUME")
@@ -694,8 +664,10 @@ class SettingsDialog(
             val vol = pct / 100.0f
             settings.masterVolume = vol
             settings.audioVolume = vol
-            NativeBridge.setAudioVolume(vol)
-            NativeBridge.setAudioChannelVolumes(settings.masterVolume, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
+            if (isMidGame) {
+                NativeBridge.setAudioVolume(vol)
+                NativeBridge.setAudioChannelVolumes(settings.masterVolume, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
+            }
         }
 
         addSliderRow(
@@ -707,7 +679,9 @@ class SettingsDialog(
         ) { pct ->
             val vol = pct / 100.0f
             settings.bgmVolume = vol
-            NativeBridge.setAudioChannelVolumes(settings.masterVolume, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
+            if (isMidGame) {
+                NativeBridge.setAudioChannelVolumes(settings.masterVolume, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
+            }
         }
 
         addSliderRow(
@@ -719,7 +693,9 @@ class SettingsDialog(
         ) { pct ->
             val vol = pct / 100.0f
             settings.sfxVolume = vol
-            NativeBridge.setAudioChannelVolumes(settings.masterVolume, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
+            if (isMidGame) {
+                NativeBridge.setAudioChannelVolumes(settings.masterVolume, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
+            }
         }
 
         addSliderRow(
@@ -731,7 +707,9 @@ class SettingsDialog(
         ) { pct ->
             val vol = pct / 100.0f
             settings.voiceVolume = vol
-            NativeBridge.setAudioChannelVolumes(settings.masterVolume, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
+            if (isMidGame) {
+                NativeBridge.setAudioChannelVolumes(settings.masterVolume, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
+            }
         }
     }
 
@@ -1310,6 +1288,7 @@ class SettingsDialog(
             textSize = 12f
             typeface = android.graphics.Typeface.DEFAULT_BOLD
         }
+        var isInitial = true
         val sp = Spinner(context).apply {
             adapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, options)
             setSelection(currentIdx.coerceIn(0, options.size - 1))
@@ -1317,6 +1296,10 @@ class SettingsDialog(
             alpha = if (enabled) 1.0f else 0.45f
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(p: AdapterView<*>?, v: View?, pos: Int, id: Long) {
+                    if (isInitial) {
+                        isInitial = false
+                        return
+                    }
                     if (enabled) onSelect(pos)
                 }
                 override fun onNothingSelected(p: AdapterView<*>?) {}

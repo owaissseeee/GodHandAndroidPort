@@ -935,6 +935,13 @@ extern "C" void godhand_set_texture_replacement_dir(const char* dir) {
     } else {
         setenv("PS2X_PCSX2_TEXTURES", "0", 1);
     }
+#if defined(__ANDROID__)
+    using PFN_SetTexFolder = void (*)(const char*);
+    static auto pfn = reinterpret_cast<PFN_SetTexFolder>(dlsym(RTLD_DEFAULT, "pcsx2gs_set_texture_folder"));
+    if (pfn) {
+        pfn(dir);
+    }
+#endif
 }
 
 void godhand_perf_set_logging_enabled(bool enabled) {

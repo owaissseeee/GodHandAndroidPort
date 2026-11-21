@@ -760,6 +760,12 @@ bool GSDeviceVK::CreateDevice(VkSurfaceKHR surface, bool enable_validation_layer
 	}
 
 	VkResult res = vkCreateDevice(m_physical_device, &device_info, nullptr, &m_device);
+	if (res != VK_SUCCESS && device_info.pNext != nullptr)
+	{
+		LOG_VULKAN_ERROR(res, "vkCreateDevice with extended features failed, retrying with core features only...");
+		device_info.pNext = nullptr;
+		res = vkCreateDevice(m_physical_device, &device_info, nullptr, &m_device);
+	}
 	if (res != VK_SUCCESS)
 	{
 		LOG_VULKAN_ERROR(res, "vkCreateDevice failed: ");

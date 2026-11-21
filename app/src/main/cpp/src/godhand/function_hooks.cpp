@@ -1023,25 +1023,6 @@ namespace godhand
     {
         kamite::installFramePatches(runtime);
 
-        constexpr uint32_t kSetBgmLevel = 0x002D2D68u;
-        if (runtime.hasFunction(kSetBgmLevel))
-        {
-            static GuestFunction s_origSetBgmLevel = runtime.lookupFunction(kSetBgmLevel);
-            FunctionHooks::instance().replace(
-                kSetBgmLevel,
-                "cSnd_SetBgmLevel_hook",
-                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
-                    if (ctx) {
-                        ctx->f[12] *= godhand_get_bgm_volume();
-                    }
-                    if (s_origSetBgmLevel) {
-                        s_origSetBgmLevel(rdram, ctx, rt);
-                    }
-                },
-                ReplacementStatus::Native,
-                "scale BGM level by user setting");
-        }
-
         constexpr uint32_t kFlareDepthReadback = 0x003155F8u;
         if (runtime.hasFunction(kFlareDepthReadback))
         {
@@ -1237,6 +1218,7 @@ namespace godhand
                 kRouletteUpdate,
                 "cRoulette_Update_timer",
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    kamite::markRouletteSeen();
                     if (s_origRouletteUpdate)
                         s_origRouletteUpdate(rdram, ctx, rt);
 

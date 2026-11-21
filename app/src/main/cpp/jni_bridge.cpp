@@ -387,15 +387,24 @@ Java_com_owaissseeee_godhand_NativeBridge_unpackImsArchive(
     return JNI_FALSE;
 }
 
+extern "C" void godhand_set_explicit_cache_dir(const char* dir);
+extern "C" void godhand_set_audio_channel_volumes(float master, float bgm, float sfx, float voice);
+
 JNIEXPORT void JNICALL
 Java_com_owaissseeee_godhand_NativeBridge_setAudioMuted(
     JNIEnv* /*env*/, jobject /*thiz*/, jboolean muted)
 {
     if (muted) {
-        SetMasterVolume(0.0f);
+        godhand_set_audio_channel_volumes(0.0f, 0.0f, 0.0f, 0.0f);
+        if (IsAudioDeviceReady()) {
+            SetMasterVolume(0.0f);
+        }
         LOGI("NativeBridge: audio muted (master volume 0.0)");
     } else {
-        SetMasterVolume(1.0f);
+        godhand_set_audio_channel_volumes(1.0f, 1.0f, 1.0f, 1.0f);
+        if (IsAudioDeviceReady()) {
+            SetMasterVolume(1.0f);
+        }
         LOGI("NativeBridge: audio unmuted (master volume 1.0)");
     }
 }
@@ -404,7 +413,10 @@ JNIEXPORT void JNICALL
 Java_com_owaissseeee_godhand_NativeBridge_setAudioVolume(
     JNIEnv* /*env*/, jobject /*thiz*/, jfloat volume)
 {
-    SetMasterVolume(volume);
+    godhand_set_audio_channel_volumes(volume, 1.0f, 1.0f, 1.0f);
+    if (IsAudioDeviceReady()) {
+        SetMasterVolume(volume);
+    }
     LOGI("NativeBridge: audio master volume set to %.2f", volume);
 }
 
@@ -417,8 +429,23 @@ Java_com_owaissseeee_godhand_NativeBridge_setAudioConfig(
     if (bufferSizeIdx >= 0 && bufferSizeIdx < 3) {
         bufSize = s_bufSizes[bufferSizeIdx];
     }
-    SetAudioStreamBufferSizeDefault(bufSize);
+    if (IsAudioDeviceReady()) {
+        SetAudioStreamBufferSizeDefault(bufSize);
+    }
     LOGI("NativeBridge: audio buffer size set to %d frames, scheduling=%d", bufSize, schedulingIdx);
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setGameCacheDirectory(
+    JNIEnv* env, jobject /*thiz*/, jstring pathStr)
+{
+    if (pathStr) {
+        const char* p = env->GetStringUTFChars(pathStr, nullptr);
+        if (p) {
+            godhand_set_explicit_cache_dir(p);
+            env->ReleaseStringUTFChars(pathStr, p);
+        }
+    }
 }
 
 

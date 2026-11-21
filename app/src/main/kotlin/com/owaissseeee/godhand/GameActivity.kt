@@ -573,6 +573,9 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         val fpsIdx = intent.getIntExtra("fpsIdx", settings.fpsIdx)
         val frameskipIdx = intent.getIntExtra("frameskipIdx", settings.frameskipIdx)
 
+        val cachePath = java.io.File(filesDir, "godhand_cache").absolutePath
+        NativeBridge.setGameCacheDirectory(cachePath)
+
         NativeBridge.setAudioVolume(settings.audioVolume)
         NativeBridge.setAudioChannelVolumes(
             settings.masterVolume,

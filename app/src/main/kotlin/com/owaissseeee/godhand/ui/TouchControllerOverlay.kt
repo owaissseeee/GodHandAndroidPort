@@ -183,10 +183,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
         VirtualButton("DPAD_RIGHT", "▶", BTN_RIGHT, 0.20f, 0.48f, 22f),
         // Start & Header Navigation
         VirtualButton("START", "START", BTN_START, 0.50f, 0.90f, 24f),
-        VirtualButton("QUICK_SAVE", "QS", 0, 0.36f, 0.08f, 18f),
         VirtualButton("MENU", "EXIT", 0, 0.44f, 0.08f, 20f),
         VirtualButton("SETTINGS", "⚙", 0, 0.56f, 0.08f, 20f),
-        VirtualButton("QUICK_LOAD", "QL", 0, 0.64f, 0.08f, 18f),
         // Dodge Buttons (Mode 2)
         VirtualButton("DODGE_UP", "▲ DUCK", 0, 0.65f, 0.68f, 24f, isDodgeButton = true, dodgeAxisY = -1.0f),
         VirtualButton("DODGE_DOWN", "▼ FLIP", 0, 0.65f, 0.88f, 24f, isDodgeButton = true, dodgeAxisY = 1.0f),
@@ -524,9 +522,9 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 }
             }
         } else {
-            // If touch controls are hidden for physical gamepad, always keep EXIT, SETTINGS, QS and QL accessible
+            // If touch controls are hidden for physical gamepad, always keep EXIT and SETTINGS accessible
             for (btn in buttons) {
-                if (btn.id == "MENU" || btn.id == "SETTINGS" || btn.id == "QUICK_SAVE" || btn.id == "QUICK_LOAD") {
+                if (btn.id == "MENU" || btn.id == "SETTINGS") {
                     val bx = w * btn.normX
                     val by = h * btn.normY
                     val br = btn.effectiveRadiusDp * density
@@ -680,7 +678,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 val line3 = lastSpikeReport?.let { spike ->
                     val first = spike.substringBefore('\n')
                     if (first.length > 55) first.take(55) + "..." else first
-                } ?: "Port by owaissseeee • [TAP TO HIDE]"
+                } ?: "Port by owaissseeee"
 
                 val maxW = maxOf(
                     fpsDebugTextPaint.measureText(line1),
@@ -695,12 +693,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
             }
 
             FpsOverlayMode.HIDDEN -> {
-                val widthDp = 36f * density
-                val heightDp = 20f * density
-                fpsBounds.set(left, top, left + widthDp, top + heightDp)
-
-                canvas.drawRoundRect(fpsBounds, 6f * density, 6f * density, fpsHiddenBgPaint)
-                canvas.drawText("FPS", left + widthDp / 2f, top + 14f * density, fpsHiddenTextPaint)
+                fpsBounds.setEmpty()
             }
         }
     }
@@ -721,23 +714,11 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 val x = event.getX(idx)
                 val y = event.getY(idx)
 
-                // 1. HUD tap toggle
-                if (fpsBounds.contains(x, y)) {
-                    fpsMode = when (fpsMode) {
-                        FpsOverlayMode.COMPACT -> FpsOverlayMode.DETAILED_DEBUG
-                        FpsOverlayMode.DETAILED_DEBUG -> FpsOverlayMode.HIDDEN
-                        FpsOverlayMode.HIDDEN -> FpsOverlayMode.COMPACT
-                    }
-                    hapticTick()
-                    invalidate()
-                    return true
-                }
-
-                // 2. Check Virtual Buttons
+                // Virtual Buttons
                 var hitButton = false
                 for (btn in buttons) {
                     if (btn.isDodgeButton && dodgeMode != DODGE_MODE_BUTTONS) continue
-                    if (!showTouchControls && btn.id != "MENU" && btn.id != "SETTINGS" && btn.id != "QUICK_SAVE" && btn.id != "QUICK_LOAD") continue
+                    if (!showTouchControls && btn.id != "MENU" && btn.id != "SETTINGS") continue
 
                     val bx = w * btn.normX
                     val by = h * btn.normY
@@ -752,10 +733,6 @@ class TouchControllerOverlay(context: Context) : View(context) {
                             onExitClicked?.invoke()
                         } else if (btn.id == "SETTINGS") {
                             onSettingsClicked?.invoke()
-                        } else if (btn.id == "QUICK_SAVE") {
-                            onQuickSaveClicked?.invoke()
-                        } else if (btn.id == "QUICK_LOAD") {
-                            onQuickLoadClicked?.invoke()
                         } else if (btn.isDodgeButton) {
                             if (btn.dodgeAxisX != 0f) rightStickX = btn.dodgeAxisX
                             if (btn.dodgeAxisY != 0f) rightStickY = btn.dodgeAxisY
@@ -1141,10 +1118,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
             "DPAD_LEFT" to Pair(0.08f, 0.48f),
             "DPAD_RIGHT" to Pair(0.20f, 0.48f),
             "START" to Pair(0.50f, 0.90f),
-            "QUICK_SAVE" to Pair(0.36f, 0.08f),
             "MENU" to Pair(0.44f, 0.08f),
             "SETTINGS" to Pair(0.56f, 0.08f),
-            "QUICK_LOAD" to Pair(0.64f, 0.08f),
             "DODGE_UP" to Pair(0.65f, 0.68f),
             "DODGE_DOWN" to Pair(0.65f, 0.88f),
             "DODGE_LEFT" to Pair(0.57f, 0.78f),

@@ -19,6 +19,7 @@ object NativeBridge {
     external fun buildAfsFastIndex(cacheDir: String)
     external fun unpackImsArchive(cacheDir: String): Boolean
     external fun setAudioMuted(muted: Boolean)
+    external fun setGameCacheDirectory(path: String)
     external fun setAudioVolume(volume: Float)
     external fun setAudioConfig(schedulingIdx: Int, bufferSizeIdx: Int)
     external fun onSurfaceCreated(surface: Surface, width: Int, height: Int, rendererIdx: Int, resScaleIdx: Int, aspectIdx: Int, fpsIdx: Int, frameskipIdx: Int)

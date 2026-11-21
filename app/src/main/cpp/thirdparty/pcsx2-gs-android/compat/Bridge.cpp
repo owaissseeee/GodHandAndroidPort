@@ -5,6 +5,7 @@
 #include "Config.h"
 #include "GS/GS.h"
 #include "GS/Renderers/Common/GSRenderer.h"
+#include "GS/Renderers/HW/GSTextureReplacements.h"
 #if defined(__ANDROID__)
 #include "GS/Renderers/Vulkan/GSDeviceVK.h"
 #include "GS/Renderers/OpenGL/GSDeviceOGL.h"
@@ -368,8 +369,7 @@ gs_open_success:
     {
         if (!g_open || !dst || !g_gs_renderer)
             return 0;
-        g_gs_renderer->Flush(GSState::GSFlushReason::SAVESTATE);
-        g_gs_renderer->ReadbackTextureCache();
+        // Direct host VRAM copy: avoid calling Vulkan Flush/ReadbackTextureCache across threads on mobile
         const uint32_t bytes = std::min<uint32_t>(size, g_gs_renderer->m_mem.m_vmsize);
         std::memcpy(dst, g_gs_renderer->m_mem.m_vm8, bytes);
         return bytes;
@@ -469,6 +469,20 @@ extern "C" PCSX2GS_EXPORT const Pcsx2GsApi *pcsx2gs_get_api(uint32_t version)
 extern "C" PCSX2GS_EXPORT void pcsx2gs_set_aspect(uint32_t mode)
 {
     EmuConfig.CurrentAspectRatio = mode == 2u ? AspectRatioType::Stretch : mode == 1u ? AspectRatioType::R16_9 : AspectRatioType::R4_3;
+}
+
+extern "C" PCSX2GS_EXPORT void pcsx2gs_set_texture_folder(const char *dir)
+{
+    if (dir && *dir) {
+        pcsx2gs::SetTextureFolder(dir);
+        EmuConfig.GS.LoadTextureReplacements = true;
+        EmuConfig.GS.LoadTextureReplacementsAsync = true;
+    } else {
+        EmuConfig.GS.LoadTextureReplacements = false;
+    }
+    if (g_gs_renderer) {
+        GSTextureReplacements::ReloadReplacementMap();
+    }
 }
 
 extern "C" PCSX2GS_EXPORT void pcsx2gs_update_window(void *hwnd, uint32_t width, uint32_t height)

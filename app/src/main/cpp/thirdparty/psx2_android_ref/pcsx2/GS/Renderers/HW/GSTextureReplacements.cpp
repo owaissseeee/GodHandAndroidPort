@@ -413,7 +413,12 @@ void GSTextureReplacements::ReloadReplacementMap()
 			Host::OSD_WARNING_DURATION);
 	}
 
-	if (!FileSystem::FindFiles(replacement_dir.c_str(), "*", FILESYSTEM_FIND_FILES | FILESYSTEM_FIND_HIDDEN_FILES | FILESYSTEM_FIND_RECURSIVE, &files))
+	if (!FileSystem::FindFiles(replacement_dir.c_str(), "*", FILESYSTEM_FIND_FILES | FILESYSTEM_FIND_HIDDEN_FILES | FILESYSTEM_FIND_RECURSIVE, &files) || files.empty())
+	{
+		files.clear();
+		FileSystem::FindFiles(texture_dir.c_str(), "*", FILESYSTEM_FIND_FILES | FILESYSTEM_FIND_HIDDEN_FILES | FILESYSTEM_FIND_RECURSIVE, &files);
+	}
+	if (files.empty())
 		return;
 
 	std::string filename;
