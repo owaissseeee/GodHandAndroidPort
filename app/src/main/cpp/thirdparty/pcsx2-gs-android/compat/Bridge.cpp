@@ -206,11 +206,12 @@ namespace
         if (options.Renderer == GSRendererType::OGL)
         {
             // OpenGL ES 3.2 high-performance mobile TBDR configuration (Adreno / Mali / PowerVR):
-            // Enable framebuffer fetch (GL_EXT_shader_framebuffer_fetch / GL_ARM_shader_framebuffer_fetch)
-            // and hardware texture barriers (OverrideTextureBarriers = 1) to eliminate model distortion,
-            // blinking meshes, and FBO feedback blit stalls.
-            options.DisableFramebufferFetch = false;
-            options.EnableAdrenoFramebufferFetch = true;
+            // Disable buggy shader framebuffer fetch (GL_EXT_shader_framebuffer_fetch / GL_ARM_shader_framebuffer_fetch)
+            // on mobile GLES. ARM Mali and Adreno drivers fail on location 1 inout depth-as-RT and return stale tile reads
+            // during alpha tests, causing black hair cutouts and green quad artifacts.
+            // With DisableFramebufferFetch = true, PCSX2 uses the clean, authentic two-pass alpha testing and depth testing.
+            options.DisableFramebufferFetch = true;
+            options.EnableAdrenoFramebufferFetch = false;
             options.OverrideTextureBarriers = 1; // Force Enabled: true hardware barrier or memory barrier
             options.AccurateBlendingUnit = AccBlendLevel::Minimum;
             options.UserHacks_DisableSafeFeatures = true;
@@ -238,8 +239,8 @@ namespace
             if (options.Renderer == GSRendererType::VK) {
                 __android_log_print(ANDROID_LOG_WARN, "pcsx2-gs", "Bridge::Open: Vulkan failed, attempting OpenGL ES fallback...");
                 options.Renderer = GSRendererType::OGL;
-                options.DisableFramebufferFetch = false;
-                options.EnableAdrenoFramebufferFetch = true;
+                options.DisableFramebufferFetch = true;
+                options.EnableAdrenoFramebufferFetch = false;
                 options.OverrideTextureBarriers = 1; // Force Enabled: true hardware barrier or memory barrier
                 options.AccurateBlendingUnit = AccBlendLevel::Minimum;
                 options.UserHacks_DisableSafeFeatures = true;
