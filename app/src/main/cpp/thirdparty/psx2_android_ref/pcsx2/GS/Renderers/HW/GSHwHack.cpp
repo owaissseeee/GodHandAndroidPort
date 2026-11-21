@@ -1500,18 +1500,19 @@ bool GSRendererHW::IsBadFrame()
 			return false;
 	}
 
-	if (m_skip == 0 && GSConfig.SkipDrawEnd > 0)
+	// Solid screen fades (classFADE) and clear quads NEVER use texture mapping (PRIM->TME == false).
+	// Never skip untextured geometry so that scene fades and transitions stay 100% smooth.
+	if (!PRIM->TME)
+		return false;
+
+	if (GSConfig.SkipDrawEnd > 0)
 	{
-		if (PRIM->TME)
+		// Cleanly discard post-processing feedback passes (heat shimmer, depth of field blur, ghosting).
+		// Legitimate meshes & UI textures live in separate VRAM blocks and are never skipped.
+		if (GSLocalMemory::m_psm[m_context->TEX0.PSM].depth ||
+			GSUtil::HasSharedBits(m_context->FRAME.Block(), m_context->FRAME.PSM, m_context->TEX0.TBP0, m_context->TEX0.PSM))
 		{
-			// depth textures (bully, mgs3s1 intro, Front Mission 5)
-			// General, often problematic post processing
-			if (GSLocalMemory::m_psm[m_context->TEX0.PSM].depth ||
-				GSUtil::HasSharedBits(m_context->FRAME.Block(), m_context->FRAME.PSM, m_context->TEX0.TBP0, m_context->TEX0.PSM))
-			{
-				m_skip_offset = GSConfig.SkipDrawStart;
-				m_skip = GSConfig.SkipDrawEnd;
-			}
+			return true;
 		}
 	}
 

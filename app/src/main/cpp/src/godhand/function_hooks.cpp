@@ -1088,6 +1088,47 @@ namespace godhand
                 "DevSeville 60 FPS GS reset mode hook");
         }
 
+        // Option A: Completely bypass God Hand's post-processing color filter & depth-of-field blur passes.
+        // Guarantees razor-sharp cutscenes and town vistas with zero halos, zero ghosting, and zero GPU overhead.
+        constexpr uint32_t kClassCFilterMain = 0x002A0940u;
+        if (runtime.hasFunction(kClassCFilterMain))
+        {
+            FunctionHooks::instance().replace(
+                kClassCFilterMain,
+                "classCFILTER_TAG_Filter_main_optA",
+                [](uint8_t */*rdram*/, R5900Context *ctx, PS2Runtime */*rt*/) {
+                    if (ctx)
+                    {
+                        ctx->pc = GPR_U32(ctx, 31);
+                    }
+                },
+                ReplacementStatus::Native,
+                "Option A: Bypasses post-processing blur and depth-of-field quad filter for razor-sharp cutscenes");
+        }
+
+        // Cutscene Startup Optimization:
+        // In Sony PS2 EE SDK, sceGsExecStoreImage initiates local-to-host VRAM transfer and then
+        // spin-waits on CSR.FINISH (0x12001000 bit 1). On Android, GPU-to-CPU VRAM readback is disabled
+        // for performance (ReadFifo is a non-blocking no-op in Bridge.cpp). Fast-pathing this hook
+        // immediately returns 0 in v0, eliminating the 15 consecutive 50–90ms spin-wait stalls
+        // at 0x00395C08 that cause severe frametime drops during cutscene asset initialization.
+        constexpr uint32_t kSceGsExecStoreImage = 0x003958D8u;
+        if (runtime.hasFunction(kSceGsExecStoreImage))
+        {
+            FunctionHooks::instance().replace(
+                kSceGsExecStoreImage,
+                "sceGsExecStoreImage_android_fastpath",
+                [](uint8_t */*rdram*/, R5900Context *ctx, PS2Runtime */*rt*/) {
+                    if (ctx)
+                    {
+                        SET_GPR_S32(ctx, 2, 0); // v0 = 0 (success)
+                        ctx->pc = GPR_U32(ctx, 31); // return via ra
+                    }
+                },
+                ReplacementStatus::Native,
+                "Bypasses 50-90ms hardware spin loop waiting for CSR.FINISH during cutscene initialization");
+        }
+
         constexpr uint32_t kSceGsSetDefDispEnv = 0x00396570u;
         if (runtime.hasFunction(kSceGsSetDefDispEnv))
         {

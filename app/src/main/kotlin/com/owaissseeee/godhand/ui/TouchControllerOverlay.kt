@@ -139,7 +139,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
     }
 
     // Performance HUD State
-    private var fpsMode = FpsOverlayMode.COMPACT
+    private var fpsMode = FpsOverlayMode.HIDDEN
     private val perfStats = FloatArray(6)
     private val perfHistory = FloatArray(64)
     private var screenFps = 60.0f
@@ -148,6 +148,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
     private var gameFps = 60.0f
     private var gameSpeed = 100.0f
     private var totalPresents = 0L
+    private var lastSpikeReport: String? = null
 
     private val fpsBounds = RectF()
     private val graphBgRect = RectF()
@@ -299,12 +300,51 @@ class TouchControllerOverlay(context: Context) : View(context) {
     private val fpsDebugBorderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE; strokeWidth = 1.5f * density; color = 0x9938BDF8.toInt() }
     private val fpsHiddenBgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL; color = 0x44000000.toInt() }
     private val fpsDotPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
-    private val fpsTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = 0xFFF1F5F9.toInt(); textSize = 11f * density; typeface = Typeface.MONOSPACE; isFakeBoldText = true; textAlign = Paint.Align.LEFT }
-    private val fpsTitlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = 0xFF38BDF8.toInt(); textSize = 10.5f * density; typeface = Typeface.MONOSPACE; isFakeBoldText = true; textAlign = Paint.Align.LEFT }
-    private val fpsBadgePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = 0xFF94A3B8.toInt(); textSize = 9f * density; typeface = Typeface.MONOSPACE; textAlign = Paint.Align.RIGHT }
-    private val fpsDebugTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = 0xFFFFFFFF.toInt(); textSize = 10f * density; typeface = Typeface.MONOSPACE; isFakeBoldText = true; textAlign = Paint.Align.LEFT }
-    private val fpsDebugSubTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = 0xFFCBD5E1.toInt(); textSize = 9f * density; typeface = Typeface.MONOSPACE; textAlign = Paint.Align.LEFT }
-    private val fpsHintPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = 0x8894A3B8.toInt(); textSize = 8f * density; typeface = Typeface.MONOSPACE; textAlign = Paint.Align.CENTER }
+    private val fpsTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = 0xFFFFFFFF.toInt()
+        textSize = 11.5f * density
+        typeface = Typeface.MONOSPACE
+        isFakeBoldText = true
+        textAlign = Paint.Align.LEFT
+        setShadowLayer(4f, 1f, 1f, 0xDD000000.toInt())
+    }
+    private val fpsTitlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = 0xFF38BDF8.toInt()
+        textSize = 10.5f * density
+        typeface = Typeface.MONOSPACE
+        isFakeBoldText = true
+        textAlign = Paint.Align.LEFT
+        setShadowLayer(3f, 1f, 1f, 0xDD000000.toInt())
+    }
+    private val fpsBadgePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = 0xFF94A3B8.toInt()
+        textSize = 9f * density
+        typeface = Typeface.MONOSPACE
+        textAlign = Paint.Align.RIGHT
+        setShadowLayer(3f, 1f, 1f, 0xDD000000.toInt())
+    }
+    private val fpsDebugTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = 0xFFFFFFFF.toInt()
+        textSize = 10.5f * density
+        typeface = Typeface.MONOSPACE
+        isFakeBoldText = true
+        textAlign = Paint.Align.LEFT
+        setShadowLayer(4f, 1f, 1f, 0xDD000000.toInt())
+    }
+    private val fpsDebugSubTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = 0xFFCBD5E1.toInt()
+        textSize = 9.5f * density
+        typeface = Typeface.MONOSPACE
+        textAlign = Paint.Align.LEFT
+        setShadowLayer(3f, 1f, 1f, 0xDD000000.toInt())
+    }
+    private val fpsHintPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = 0xFF94A3B8.toInt()
+        textSize = 8.5f * density
+        typeface = Typeface.MONOSPACE
+        textAlign = Paint.Align.LEFT
+        setShadowLayer(3f, 1f, 1f, 0xDD000000.toInt())
+    }
     private val fpsHiddenTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = 0x66FFFFFF.toInt(); textSize = 9f * density; typeface = Typeface.MONOSPACE; textAlign = Paint.Align.CENTER }
     private val graphBgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL; color = 0xB0000000.toInt() }
     private val graphBorderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE; strokeWidth = 1f * density; color = 0x33FFFFFF.toInt() }
@@ -422,16 +462,14 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 gameSpeed = perfStats[4]
                 totalPresents = perfStats[5].toLong()
             }
+            if (hasHistory) {
+                lastSpikeReport = NativeBridge.getLastSpikeReport()
+            }
             if (fpsMode != FpsOverlayMode.HIDDEN) {
                 val curFpsInt = if (fpsMode == FpsOverlayMode.COMPACT) gameFps.toInt() else screenFps.toInt()
                 if (fpsMode == FpsOverlayMode.DETAILED_DEBUG || kotlin.math.abs(curFpsInt - lastDrawnFps) >= 1 || lastDrawnFps == 0) {
                     lastDrawnFps = curFpsInt
-                    invalidate(
-                        fpsBounds.left.toInt().coerceAtLeast(0),
-                        fpsBounds.top.toInt().coerceAtLeast(0),
-                        (fpsBounds.right + 4f * density).toInt().coerceAtMost(width),
-                        (fpsBounds.bottom + 4f * density).toInt().coerceAtMost(height)
-                    )
+                    invalidate()
                 }
             }
             val interval = if (fpsMode == FpsOverlayMode.DETAILED_DEBUG) 250L else 1000L
@@ -622,89 +660,34 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
         when (fpsMode) {
             FpsOverlayMode.COMPACT -> {
-                val widthDp = 210f * density
-                val heightDp = 30f * density
-                fpsBounds.set(left, top, left + widthDp, top + heightDp)
+                // User requirement: "fps | frametime | %", no dot, no blue background
+                val info = String.format(Locale.US, "%.1f FPS | %.1f ms | %.0f%%", gameFps, avgFrametimeMs, gameSpeed)
+                val textW = fpsTextPaint.measureText(info)
+                val textH = 22f * density
+                fpsBounds.set(left, top, left + textW + 12f * density, top + textH)
 
-                canvas.drawRoundRect(fpsBounds, 8f * density, 8f * density, fpsBgPaint)
-                canvas.drawRoundRect(fpsBounds, 8f * density, 8f * density, fpsBorderPaint)
-
-                fpsDotPaint.color = when {
-                    gameFps >= 28.5f -> 0xFF22C55E.toInt()
-                    gameFps >= 22.0f -> 0xFFEAB308.toInt()
-                    else -> 0xFFEF4444.toInt()
-                }
-                val dotX = left + 12f * density
-                val dotY = top + heightDp / 2f
-                canvas.drawCircle(dotX, dotY, 4f * density, fpsDotPaint)
-
-                val textX = left + 22f * density
-                val textY = top + heightDp / 2f + 4f * density
-                val info = String.format(Locale.US, "%.1f FPS  %.1f ms | G:%.0f%%", gameFps, avgFrametimeMs, gameSpeed)
-                canvas.drawText(info, textX, textY, fpsTextPaint)
+                canvas.drawText(info, left, top + 15f * density, fpsTextPaint)
             }
 
             FpsOverlayMode.DETAILED_DEBUG -> {
-                val widthDp = 264f * density
-                val heightDp = 130f * density
-                fpsBounds.set(left, top, left + widthDp, top + heightDp)
+                // User requirement: detailed version without the graph and without the blue background
+                val line1 = String.format(Locale.US, "PRESENT: %.1f FPS | %.1f ms | Worst: %.1f ms", screenFps, avgFrametimeMs, worstFrametimeMs)
+                val line2 = String.format(Locale.US, "GAME EE: %.1f FPS | %.0f%% | Presents: %d", gameFps, gameSpeed, totalPresents)
+                val line3 = lastSpikeReport?.let { spike ->
+                    val first = spike.substringBefore('\n')
+                    if (first.length > 55) first.take(55) + "..." else first
+                } ?: "Port by owaissseeee • [TAP TO HIDE]"
 
-                canvas.drawRoundRect(fpsBounds, 10f * density, 10f * density, fpsDebugBgPaint)
-                canvas.drawRoundRect(fpsBounds, 10f * density, 10f * density, fpsDebugBorderPaint)
+                val maxW = maxOf(
+                    fpsDebugTextPaint.measureText(line1),
+                    fpsDebugSubTextPaint.measureText(line2),
+                    fpsHintPaint.measureText(line3)
+                )
+                fpsBounds.set(left, top, left + maxW + 12f * density, top + 50f * density)
 
-                fpsDotPaint.color = when {
-                    screenFps >= 57.5f -> 0xFF22C55E.toInt()
-                    screenFps >= 45.0f -> 0xFFEAB308.toInt()
-                    else -> 0xFFEF4444.toInt()
-                }
-                val dotX = left + 14f * density
-                val dotY = top + 15f * density
-                canvas.drawCircle(dotX, dotY, 4.5f * density, fpsDotPaint)
-
-                canvas.drawText("GOD HAND PERF HUD", left + 24f * density, top + 18.5f * density, fpsTitlePaint)
-                canvas.drawText("[DEBUG]", left + widthDp - 14f * density, top + 18.5f * density, fpsBadgePaint)
-
-                val line1 = String.format(Locale.US, "PRESENT: %.1f FPS (%.2f ms) Worst: %.1fms", screenFps, avgFrametimeMs, worstFrametimeMs)
-                canvas.drawText(line1, left + 14f * density, top + 34f * density, fpsDebugTextPaint)
-
-                val line2 = String.format(Locale.US, "GAME EE: %.1f FPS (%.1f%%) Frames: %d", gameFps, gameSpeed, totalPresents)
-                canvas.drawText(line2, left + 14f * density, top + 47f * density, fpsDebugSubTextPaint)
-
-                val gx = left + 10f * density
-                val gy = top + 54f * density
-                val gw = widthDp - 20f * density
-                val gh = 52f * density
-
-                graphBgRect.set(gx, gy, gx + gw, gy + gh)
-                canvas.drawRoundRect(graphBgRect, 4f * density, 4f * density, graphBgPaint)
-                canvas.drawRoundRect(graphBgRect, 4f * density, 4f * density, graphBorderPaint)
-
-                val y16 = gy + gh * (1.0f - (16.67f / 50.0f))
-                canvas.drawLine(gx, y16, gx + gw, y16, graphLine16Paint)
-                canvas.drawText("16.7ms", gx + 4f * density, y16 - 2f * density, graphLabel16Paint)
-
-                val y33 = gy + gh * (1.0f - (33.33f / 50.0f))
-                canvas.drawLine(gx, y33, gx + gw, y33, graphLine33Paint)
-                canvas.drawText("33.3ms", gx + 4f * density, y33 - 2f * density, graphLabel33Paint)
-
-                val barW = gw / 64f
-                for (i in 0 until 64) {
-                    val ms = perfHistory[i].coerceIn(0f, 50f)
-                    if (ms > 0f) {
-                        val barH = (ms / 50f) * gh
-                        val bx = gx + i * barW
-                        val by = gy + gh - barH
-
-                        graphBarPaint.color = when {
-                            ms <= 18.0f -> 0xFF22C55E.toInt()
-                            ms <= 34.0f -> 0xFFF59E0B.toInt()
-                            else -> 0xFFEF4444.toInt()
-                        }
-                        canvas.drawLine(bx, gy + gh, bx, by, graphBarPaint)
-                    }
-                }
-
-                canvas.drawText("Port by owaissseeee • [TAP TO CYCLE]", left + widthDp / 2f, top + 122f * density, fpsHintPaint)
+                canvas.drawText(line1, left, top + 13f * density, fpsDebugTextPaint)
+                canvas.drawText(line2, left, top + 27f * density, fpsDebugSubTextPaint)
+                canvas.drawText(line3, left, top + 42f * density, fpsHintPaint)
             }
 
             FpsOverlayMode.HIDDEN -> {

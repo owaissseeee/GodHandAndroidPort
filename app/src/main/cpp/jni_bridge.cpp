@@ -604,6 +604,57 @@ Java_com_owaissseeee_godhand_NativeBridge_getLastFrameWorkDurationNanos(
     return static_cast<jlong>(godhand_perf_get_last_work_duration());
 }
 
+extern "C" {
+    void godhand_perf_set_logging_enabled(bool enabled);
+    bool godhand_perf_is_logging_enabled();
+    bool godhand_perf_get_last_spike_report(char* outBuf, size_t outSize);
+    bool godhand_perf_get_session_spike_log(char* outBuf, size_t outSize);
+    void godhand_perf_clear_session_spike_log();
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setSpikeLoggingEnabled(
+    JNIEnv* /*env*/, jobject /*thiz*/, jboolean enabled)
+{
+    godhand_perf_set_logging_enabled(enabled);
+}
+
+JNIEXPORT jboolean JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_isSpikeLoggingEnabled(
+    JNIEnv* /*env*/, jobject /*thiz*/)
+{
+    return static_cast<jboolean>(godhand_perf_is_logging_enabled());
+}
+
+JNIEXPORT jstring JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_getLastSpikeReport(
+    JNIEnv* env, jobject /*thiz*/)
+{
+    char buf[512]{};
+    if (godhand_perf_get_last_spike_report(buf, sizeof(buf))) {
+        return env->NewStringUTF(buf);
+    }
+    return nullptr;
+}
+
+JNIEXPORT jstring JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_getSessionSpikeLog(
+    JNIEnv* env, jobject /*thiz*/)
+{
+    std::vector<char> buf(65536, 0);
+    if (godhand_perf_get_session_spike_log(buf.data(), buf.size())) {
+        return env->NewStringUTF(buf.data());
+    }
+    return nullptr;
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_clearSessionSpikeLog(
+    JNIEnv* /*env*/, jobject /*thiz*/)
+{
+    godhand_perf_clear_session_spike_log();
+}
+
 static void startStdoutStderrRedirect() {
     static std::atomic<bool> s_started{false};
     if (s_started.exchange(true)) return;

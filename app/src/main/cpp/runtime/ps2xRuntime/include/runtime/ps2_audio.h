@@ -27,6 +27,7 @@ public:
     void setAudioReady(bool ready);
     void submitPcm(std::span<const int16_t> samples);
     void resetPcm();
+    static void getStats(uint32_t *outQueuedPct, uint32_t *outUnderruns);
 
 private:
     struct DecodedSample

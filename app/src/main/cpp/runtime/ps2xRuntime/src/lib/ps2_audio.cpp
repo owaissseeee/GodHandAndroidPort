@@ -838,3 +838,31 @@ void PS2AudioBackend::stopAll()
     m_impl->activeSounds.clear();
 #endif
 }
+
+void PS2AudioBackend::getStats(uint32_t *outQueuedPct, uint32_t *outUnderruns)
+{
+    Impl *owner = Impl::streamOwner;
+    if (owner)
+    {
+        if (outQueuedPct)
+        {
+            const size_t q = owner->queued;
+            const size_t target = Impl::kRateTargetSamples;
+            *outQueuedPct = (target > 0u) ? static_cast<uint32_t>(std::clamp((q * 100u) / target, static_cast<size_t>(0u), static_cast<size_t>(100u))) : 100u;
+        }
+        if (outUnderruns)
+        {
+            *outUnderruns = static_cast<uint32_t>(owner->underruns);
+        }
+    }
+    else
+    {
+        if (outQueuedPct) *outQueuedPct = 100u;
+        if (outUnderruns) *outUnderruns = 0u;
+    }
+}
+
+extern "C" void ps2_audio_get_stats(uint32_t *outQueuedPct, uint32_t *outUnderruns)
+{
+    PS2AudioBackend::getStats(outQueuedPct, outUnderruns);
+}

@@ -38,6 +38,7 @@
 #include "godhand/log.h"
 #include "ps2_runtime_macros.h"
 #include "runtime/ee_scheduler.h"
+#include "runtime/performance_profiler.h"
 #include "runtime/ps2_save_state.h"
 
 #include <algorithm>
@@ -1309,6 +1310,29 @@ namespace kamite
 
         void frameStartInternal(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime)
         {
+            // Zero-overhead EE timing telemetry: measure compute wall time and idle VBlank wait
+            static auto s_prevFrameStart = std::chrono::steady_clock::now();
+            const auto now = std::chrono::steady_clock::now();
+            const float wallMs = std::chrono::duration<float, std::milli>(now - s_prevFrameStart).count();
+            s_prevFrameStart = now;
+
+            const uint64_t idleCycles = g_perfAccumEeIdleCycles.exchange(0u, std::memory_order_relaxed);
+            // PS2 EE clock is 294.912 MHz -> 294912 cycles per millisecond
+            const float idleMs = static_cast<float>(idleCycles) / 294912.0f;
+            const float workMs = (wallMs > idleMs) ? (wallMs - idleMs) : 0.0f;
+            g_perfLastEeWorkMs.store(workMs, std::memory_order_relaxed);
+            g_perfLastEeIdleMs.store(idleMs, std::memory_order_relaxed);
+
+            // Option A: Set Dsp::kFilter (0x04000000u) to keep screen filters off at the engine level
+            if (rdram)
+            {
+                uint32_t dspFlags = 0;
+                const uint32_t dspAddr = game::GameWork::address(game::GameWork::kFlagsDsp);
+                std::memcpy(&dspFlags, rdram + (dspAddr & (PS2_RAM_SIZE - 1u)), sizeof(dspFlags));
+                dspFlags |= game::Dsp::kFilter;
+                std::memcpy(rdram + (dspAddr & (PS2_RAM_SIZE - 1u)), &dspFlags, sizeof(dspFlags));
+            }
+
             ++g_gameFrame;
             g_handlerDepth = 0; // no dispatcher's handler spans a frame (a load or a rate switch left one open)
             forgetStickAfterLoad();

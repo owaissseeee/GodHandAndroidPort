@@ -33,5 +33,10 @@ object NativeBridge {
     external fun getPerformanceStats(outStats: FloatArray, outHistory: FloatArray?): Boolean
     external fun getPerformanceThreadIds(): IntArray
     external fun getLastFrameWorkDurationNanos(): Long
+    external fun getLastSpikeReport(): String?
+    external fun setSpikeLoggingEnabled(enabled: Boolean)
+    external fun isSpikeLoggingEnabled(): Boolean
+    external fun getSessionSpikeLog(): String?
+    external fun clearSessionSpikeLog()
 }
 
