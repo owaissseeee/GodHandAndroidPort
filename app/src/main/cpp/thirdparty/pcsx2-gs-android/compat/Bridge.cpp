@@ -42,7 +42,7 @@ namespace
         options.ManualUserHacks = true; // Enforce manual user hacks so PCSX2 MaskUserHacks does not wipe SkipDraw or HalfPixelOffset
         // Mobile TBDR (Mali / Adreno / Xclipse / PowerVR) High-Performance Configuration:
         options.AccurateBlendingUnit = AccBlendLevel::Minimum; // Maximum hardware TBDR fillrate: disables slow shader sw_blending & pipeline barriers
-        options.OverrideTextureBarriers = 1;                  // 1 = Enabled: keeps texture_barrier true, preventing expensive RT clone allocations & render pass breaks
+        options.OverrideTextureBarriers = -1;                 // -1 = Auto: uses real driver texture barriers or framebuffer fetch without force-overriding broken dummy barriers
         options.DisableFramebufferFetch = false;
         options.EnableAdrenoFramebufferFetch = true;
         options.PreloadFrameWithGSData = false;
@@ -211,7 +211,7 @@ namespace
             // blinking meshes, and FBO feedback blit stalls.
             options.DisableFramebufferFetch = false;
             options.EnableAdrenoFramebufferFetch = true;
-            options.OverrideTextureBarriers = 1;
+            options.OverrideTextureBarriers = -1; // Auto: clean barriers/FB fetch without tile hazards
             options.AccurateBlendingUnit = AccBlendLevel::Minimum;
             options.UserHacks_DisableSafeFeatures = true;
             options.UserHacks_DisableDepthSupport = false;
@@ -238,7 +238,7 @@ namespace
                 options.Renderer = GSRendererType::OGL;
                 options.DisableFramebufferFetch = false;
                 options.EnableAdrenoFramebufferFetch = true;
-                options.OverrideTextureBarriers = 1;
+                options.OverrideTextureBarriers = -1; // Auto: clean barriers/FB fetch without tile hazards
                 options.AccurateBlendingUnit = AccBlendLevel::Minimum;
                 options.UserHacks_DisableSafeFeatures = true;
                 options.UserHacks_DisableDepthSupport = false;

@@ -247,29 +247,40 @@ namespace kamite
         void rouletteStep(uint8_t *rdram, R5900Context *ctx, PS2Runtime *)
         {
             const int32_t cursor = GPR_S32(ctx, 3), count = GPR_S32(ctx, 4);
-            uint16_t buttons = 0;
-            std::memcpy(&buttons, &ram8(rdram, kPadButtons), sizeof(buttons));
-            const uint16_t guestPressed = static_cast<uint16_t>(~buttons);
             uint64_t pressed = 0;
             std::memcpy(&pressed, &ram8(rdram, 0x7474A0u + 0x1A0u), sizeof(pressed));
 
             const float ly = ps2_pad::getLy();
             const uint32_t hostBtns = ps2_pad::getButtons();
+            const uint8_t stickY = ram8(rdram, kStickBytes[1]);
 
-            // Down: Left Stick DOWN (ly > 0.35f), host D-pad DOWN (bit 6), guest D-pad DOWN (0x0040), or GameWork bit 48
-            const bool isDown = ((pressed & (1ull << 48)) != 0u) ||
-                                (ly > 0.35f) ||
-                                ((hostBtns & (1u << 6)) != 0u) ||
-                                ((guestPressed & 0x0040u) != 0u);
-
-            // Up: Left Stick UP (ly < -0.35f), host D-pad UP (bit 4), guest D-pad UP (0x0010), or GameWork bit 49
-            const bool isUp = ((pressed & (1ull << 49)) != 0u) ||
-                              (ly < -0.35f) ||
+            // Up: Left Stick UP (ly < -0.30f), host D-pad UP (bit 4), GameWork bit 49, or stick Y in RAM < 0x50
+            const bool isUp = (ly < -0.30f) ||
                               ((hostBtns & (1u << 4)) != 0u) ||
-                              ((guestPressed & 0x0010u) != 0u);
+                              ((pressed & (1ull << 49)) != 0u) ||
+                              (stickY < 0x50u);
 
-            // True back step only when UP is active and DOWN is NOT active
-            const bool up = isUp && !isDown;
+            // Down: Left Stick DOWN (ly > 0.30f), host D-pad DOWN (bit 6), GameWork bit 48, or stick Y in RAM > 0xB0
+            const bool isDown = (ly > 0.30f) ||
+                                ((hostBtns & (1u << 6)) != 0u) ||
+                                ((pressed & (1ull << 48)) != 0u) ||
+                                (stickY > 0xB0u);
+
+            // Determine final direction: UP has priority if player triggered UP
+            bool up = false;
+            if (isUp && !isDown)
+            {
+                up = true;
+            }
+            else if (isUp && isDown)
+            {
+                // If both are flagged (e.g. residual game work bit), use live inputs
+                up = (ly < -0.30f) || ((hostBtns & (1u << 4)) != 0u) || ((pressed & (1ull << 49)) != 0u);
+            }
+            else
+            {
+                up = false;
+            }
 
             g_rouletteBack = up && count > 1;
             if (count > 0)
@@ -387,6 +398,10 @@ namespace kamite
 
             if (shouldStep)
             {
+                // Inject stick deflection into both controller ports so God Hand's dial step function (0x145308) detects movement
+                injectStick(rdram, 1, dpadUp ? 0x00u : 0xFFu); // 0x00 = Up, 0xFF = Down
+                injectStick(rdram, 3, dpadUp ? 0x00u : 0xFFu);
+
                 uint64_t pressed = 0;
                 std::memcpy(&pressed, &ram8(rdram, 0x7474A0u + 0x1A0u), sizeof(pressed));
                 if (dpadUp)
