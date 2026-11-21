@@ -6049,6 +6049,10 @@ bool GSRendererHW::EmulateDATEEarlyFail(DATEOptions& date, GSTextureCache::Targe
 	if (!date.enabled)
 		return false;
 
+	// On mobile OpenGL ES, do not prematurely drop draw calls (like Gene's hair or alpha effects)
+	if (g_gs_device->GetRenderAPI() == RenderAPI::OpenGL)
+		return false;
+
 	const bool is_overlap_alpha = m_prim_overlap != PRIM_OVERLAP_NO && !(m_cached_ctx.FRAME.FBMSK & 0x80000000);
 	if (m_cached_ctx.TEST.DATM == 0)
 	{
@@ -6098,9 +6102,10 @@ void GSRendererHW::EmulateDATESelectMethod(DATEOptions& date_options, GSTextureC
 
 	// It is way too complex to emulate texture shuffle with DATE, so use accurate path.
 	// No overlap should be triggered on gl/vk only as they support DATE_BARRIER.
-	if (features.framebuffer_fetch)
+	if (features.framebuffer_fetch && g_gs_device->GetRenderAPI() != RenderAPI::OpenGL)
 	{
-		// Full DATE is "free" with framebuffer fetch. The barrier gets cleared below.
+		// Full DATE is "free" with framebuffer fetch on desktop / Vulkan,
+		// but on mobile OpenGL ES tile-read destination alpha is non-coherent and discards hair/sprites.
 		GL_PERF("DATE: Accurate with framebuffer fetch");
 		date_options.barrier = true;
 		m_conf.require_full_barrier = true;

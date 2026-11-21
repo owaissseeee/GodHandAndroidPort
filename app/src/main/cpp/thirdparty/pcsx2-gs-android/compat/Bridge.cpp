@@ -205,13 +205,10 @@ namespace
         ApplyOptions(options, params->options);
         if (options.Renderer == GSRendererType::OGL)
         {
-            // OpenGL ES 3.2 high-performance mobile TBDR configuration (Adreno / Mali / PowerVR):
-            // Disable buggy shader framebuffer fetch (GL_EXT_shader_framebuffer_fetch / GL_ARM_shader_framebuffer_fetch)
-            // on mobile GLES. ARM Mali and Adreno drivers fail on location 1 inout depth-as-RT and return stale tile reads
-            // during alpha tests, causing black hair cutouts and green quad artifacts.
-            // With DisableFramebufferFetch = true, PCSX2 uses the clean, authentic two-pass alpha testing and depth testing.
-            options.DisableFramebufferFetch = true;
-            options.EnableAdrenoFramebufferFetch = false;
+            // OpenGL ES 3.2 mobile TBDR configuration (Adreno / Mali / PowerVR):
+            // Keep framebuffer fetch ENABLED for high-speed tile rendering, eliminating black screen.
+            options.DisableFramebufferFetch = false;
+            options.EnableAdrenoFramebufferFetch = true;
             options.OverrideTextureBarriers = 1; // Force Enabled: true hardware barrier or memory barrier
             options.AccurateBlendingUnit = AccBlendLevel::Minimum;
             options.UserHacks_DisableSafeFeatures = true;
@@ -239,8 +236,8 @@ namespace
             if (options.Renderer == GSRendererType::VK) {
                 __android_log_print(ANDROID_LOG_WARN, "pcsx2-gs", "Bridge::Open: Vulkan failed, attempting OpenGL ES fallback...");
                 options.Renderer = GSRendererType::OGL;
-                options.DisableFramebufferFetch = true;
-                options.EnableAdrenoFramebufferFetch = false;
+                options.DisableFramebufferFetch = false;
+                options.EnableAdrenoFramebufferFetch = true;
                 options.OverrideTextureBarriers = 1; // Force Enabled: true hardware barrier or memory barrier
                 options.AccurateBlendingUnit = AccBlendLevel::Minimum;
                 options.UserHacks_DisableSafeFeatures = true;

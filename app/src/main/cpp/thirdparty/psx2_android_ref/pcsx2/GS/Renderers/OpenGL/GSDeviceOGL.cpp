@@ -1615,7 +1615,7 @@ void GSDeviceOGL::CommitClear(GSTexture* t, bool use_write_fbo)
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_fbo_write);
 		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
 			t->IsRenderTarget() ? static_cast<GSTextureOGL*>(t)->GetID() : 0, 0);
-		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, (!m_features.stencil_buffer || m_features.framebuffer_fetch) ? GL_DEPTH_ATTACHMENT : GL_DEPTH_STENCIL_ATTACHMENT,
+		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, m_features.framebuffer_fetch ? GL_DEPTH_ATTACHMENT : GL_DEPTH_STENCIL_ATTACHMENT,
 			GL_TEXTURE_2D, t->IsDepthStencil() ? static_cast<GSTextureOGL*>(t)->GetID() : 0, 0);
 	}
 	else
@@ -1701,7 +1701,7 @@ void GSDeviceOGL::CommitClear(GSTexture* t, bool use_write_fbo)
 		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER,
 			t->IsRenderTarget() ?
 				GL_COLOR_ATTACHMENT0 :
-				((!m_features.stencil_buffer || m_features.framebuffer_fetch) ? GL_DEPTH_ATTACHMENT : GL_DEPTH_STENCIL_ATTACHMENT),
+				(m_features.framebuffer_fetch ? GL_DEPTH_ATTACHMENT : GL_DEPTH_STENCIL_ATTACHMENT),
 			GL_TEXTURE_2D, 0, 0);
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, GLState::fbo);
 	}
@@ -1820,9 +1820,15 @@ std::string GSDeviceOGL::GenGlslHeader(const std::string_view entry, GLenum type
 			// Prefer EXT when both are advertised. The shader also checks EXT
 			// first, and unlike ARM it supports inout framebuffer attachments.
 			if (GLAD_GL_EXT_shader_framebuffer_fetch)
+			{
 				header += "#extension GL_EXT_shader_framebuffer_fetch : enable\n";
+				header += "#define GL_EXT_shader_framebuffer_fetch 1\n";
+			}
 			else if (GLAD_GL_ARM_shader_framebuffer_fetch)
+			{
 				header += "#extension GL_ARM_shader_framebuffer_fetch : enable\n";
+				header += "#define GL_ARM_shader_framebuffer_fetch 1\n";
+			}
 		}
 
 		header += "precision highp float;\n";
@@ -1880,9 +1886,9 @@ std::string GSDeviceOGL::GenGlslHeader(const std::string_view entry, GLenum type
 		header += "#define PS_HAS_CONSERVATIVE_DEPTH 0\n";
 	}
 
-	if (!m_features.texture_barrier && !m_features.multidraw_fb_copy)
+	if (m_is_gles || (!m_features.texture_barrier && !m_features.multidraw_fb_copy))
 	{
-		header += "#define DEPTH_FEEDBACK_SUPPORT 0\n"; // None
+		header += "#define DEPTH_FEEDBACK_SUPPORT 0\n"; // None on mobile GLES: prevents invalid location 1 inout o_col1 green quad!
 	}
 	else if (m_features.depth_feedback)
 	{
@@ -2932,7 +2938,7 @@ void GSDeviceOGL::OMAttachDs(GSTexture* ds)
 
 	GLState::ds = static_cast<GSTextureOGL*>(ds);
 
-	const GLenum target = (!m_features.stencil_buffer || m_features.framebuffer_fetch) ? GL_DEPTH_ATTACHMENT : GL_DEPTH_STENCIL_ATTACHMENT;
+	const GLenum target = m_features.framebuffer_fetch ? GL_DEPTH_ATTACHMENT : GL_DEPTH_STENCIL_ATTACHMENT;
 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, target, GL_TEXTURE_2D, ds ? static_cast<GSTextureOGL*>(ds)->GetID() : 0, 0);
 }
 
@@ -3376,21 +3382,16 @@ void GSDeviceOGL::RenderHW(GSHWDrawConfig& config)
 		PSSetShaderResource(TEXTURE_TEXTURE, nullptr);
 
 	// Avoid changing framebuffer just to switch from rt+depth to rt and vice versa.
-	// Disabled on mobile GLES to prevent attaching depth buffers when not drawing depth,
-	// which creates illegal texture-framebuffer feedback loops if config.tex samples that depth buffer.
 	bool fb_optimization_needs_barrier = false;
-	if (!m_is_gles)
+	if (!(draw_rt || draw_ds_as_rt) && draw_ds && GLState::rt && GLState::rt->GetSize() == draw_ds->GetSize())
 	{
-		if (!(draw_rt || draw_ds_as_rt) && draw_ds && GLState::rt && GLState::rt->GetSize() == draw_ds->GetSize())
-		{
-			draw_rt = GLState::rt;
-			fb_optimization_needs_barrier = !GLState::rt_written && GLState::ds == draw_ds;
-		}
-		else if (!(draw_ds || draw_ds_as_rt) && draw_rt && GLState::ds && GLState::ds->GetSize() == draw_rt->GetSize())
-		{
-			draw_ds = GLState::ds;
-			fb_optimization_needs_barrier = !GLState::ds_written && GLState::rt == draw_rt;
-		}
+		draw_rt = GLState::rt;
+		fb_optimization_needs_barrier = !GLState::rt_written && GLState::ds == draw_ds;
+	}
+	else if (!(draw_ds || draw_ds_as_rt) && draw_rt && GLState::ds && GLState::ds->GetSize() == draw_rt->GetSize())
+	{
+		draw_ds = GLState::ds;
+		fb_optimization_needs_barrier = !GLState::ds_written && GLState::rt == draw_rt;
 	}
 
 	// Be careful of the rt already being bound and the blend using the RT without a barrier.
