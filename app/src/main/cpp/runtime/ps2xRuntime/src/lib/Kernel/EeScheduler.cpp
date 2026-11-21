@@ -1,4 +1,12 @@
 #include "runtime/ee_scheduler.h"
+#include "runtime/performance_profiler.h"
+
+// Global lock-free telemetry primitives for the spike detector
+std::atomic<uint32_t> g_perfLastActiveGuestPc{0u};
+std::atomic<uint64_t> g_perfAccumEeIdleCycles{0u};
+std::atomic<float> g_perfLastEeWorkMs{0.0f};
+std::atomic<float> g_perfLastEeIdleMs{0.0f};
+std::atomic<bool> g_perfSpikeLoggingEnabled{false};
 
 #include "ps2_log.h"
 #include "ps2_runtime_macros.h"
@@ -815,10 +823,17 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
         {
             const uint32_t pc = running->activeContext().pc;
             if (((pc >= 0x0030ADD8u && pc <= 0x0030ADECu) || pc == 0x002B4BC0u ||
-                 (pc >= 0x0030AD98u && pc <= 0x0030ADACu)) &&
-                *reinterpret_cast<const uint32_t*>(m_rdram + 0x00753D80u) < m_rdram[0x00747A09u])
+                 (pc >= 0x0030AD98u && pc <= 0x0030ADACu)))
             {
-                skipIdleCycles();
+                if (*reinterpret_cast<const uint32_t*>(m_rdram + 0x00753D80u) < m_rdram[0x00747A09u])
+                {
+                    skipIdleCycles();
+                }
+            }
+            else
+            {
+                // Capture active guest PC during game logic execution for spike telemetry
+                g_perfLastActiveGuestPc.store(pc, std::memory_order_relaxed);
             }
         }
     }
@@ -1017,6 +1032,10 @@ uint64_t EeScheduler::skipIdleCycles() noexcept
         skipped += step;
     }
     t_inIdleSkip = false;
+    if (skipped > 0u)
+    {
+        g_perfAccumEeIdleCycles.fetch_add(skipped, std::memory_order_relaxed);
+    }
     return skipped;
 }
 

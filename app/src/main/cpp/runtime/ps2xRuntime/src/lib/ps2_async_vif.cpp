@@ -27,8 +27,8 @@ namespace ps2x::asyncvif
     namespace
     {
 #if defined(__ANDROID__)
-        constexpr size_t kMaxQueuedJobs = 32u;
-        constexpr size_t kMaxQueuedGifBytes = 1024u * 1024u;
+        constexpr size_t kMaxQueuedJobs = 16u;
+        constexpr size_t kMaxQueuedGifBytes = 512u * 1024u;
 #else
         constexpr size_t kMaxQueuedJobs = 64u;
         constexpr size_t kMaxQueuedGifBytes = 8u * 1024u * 1024u;
@@ -473,6 +473,17 @@ namespace ps2x::asyncvif
             worker->jobs.push_back(std::move(job));
         }
         worker->workCv.notify_one();
+    }
+
+    extern "C" uint32_t ps2_async_vif_get_queue_depth()
+    {
+        Worker *worker = s_worker;
+        if (!worker)
+            return 0u;
+        std::unique_lock<std::mutex> lock(worker->mutex, std::try_to_lock);
+        if (!lock.owns_lock())
+            return 1u;
+        return static_cast<uint32_t>(worker->jobs.size());
     }
 
     namespace

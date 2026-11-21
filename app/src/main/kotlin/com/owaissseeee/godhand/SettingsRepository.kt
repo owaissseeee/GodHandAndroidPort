@@ -162,8 +162,12 @@ class SettingsRepository(context: Context) {
         set(value) = putFloat("touch_controls_opacity", value.coerceIn(0.10f, 1.0f))
 
     var fpsOverlayMode: Int
-        get() = prefs.getInt("fps_overlay_mode", 0).coerceIn(0, 2) // 0: Compact, 1: Detailed Debug, 2: Hidden
+        get() = prefs.getInt("fps_overlay_mode", 2).coerceIn(0, 2) // 0: Compact, 1: Detailed Debug, 2: Hidden (Default is OFF)
         set(value) = putInt("fps_overlay_mode", value.coerceIn(0, 2))
+
+    var perfSpikeLoggingEnabled: Boolean
+        get() = prefs.getBoolean("perf_spike_logging", false) // Default is OFF
+        set(value) = putBoolean("perf_spike_logging", value)
 
     // --- CHEAT ENGINE PREFERENCES ---
     // Health & Protection

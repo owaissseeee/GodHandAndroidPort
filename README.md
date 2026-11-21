@@ -2,7 +2,7 @@
 
 [![Platform](https://img.shields.io/badge/Platform-Android%208.0%2B%20(API%2026%2B)-brightgreen.svg)](https://developer.android.com)
 [![Architecture](https://img.shields.io/badge/Architecture-ARM64--v8a-blue.svg)](https://developer.android.com/ndk)
-[![Graphics](https://img.shields.io/badge/Graphics-Vulkan%20%7C%20OpenGL%20ES%203.2-orange.svg)](https://www.khronos.org/vulkan/)
+[![Graphics](https://img.shields.io/badge/Graphics-Vulkan-orange.svg)](https://www.khronos.org/vulkan/)
 [![Port Author](https://img.shields.io/badge/Port%20by-owaissseeee-red.svg)](https://github.com/owaissseeee)
 [![License](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](LICENSE)
 
@@ -18,20 +18,24 @@ Unlike traditional emulators that translate MIPS CPU and VU instructions at runt
 * **Vulkan PCSX2-GS Backend**: Hardware-accelerated graphics rendering via modern Vulkan with multi-threaded GIF packet submission and quad-buffered swapchains.
 * **AOT Vector Unit 1 (VU1) Acceleration**: Heavy microprograms recompiled ahead-of-time with ARM64 NEON bitwise vector normalization.
 * **Multi-Threaded VU1 (MTVU)**: Asynchronous parallel dispatch for VIF1 unpacking, VU1 execution, and GS rendering across dedicated CPU cores.
-* **Authentic DevSeville 60 FPS Patch**: Unlocks GS progressive 60Hz display mode (`SCE_GS_DTV480P`) while preserving true 1.0f internal game physics rate, eliminating slow-motion animations, desynced particles, and rushed roulette countdowns. Authentic 30 FPS console lock remains fully available.
-* **True Fullscreen Hor+ Dynamic Widescreen**: Replaces distorted 2D image stretching with real-time 3D camera projection FOV expansion (`0.7f * aspect`), accompanied by dynamic font scaling for modern 19.5:9, 20:9, and ultrawide screens.
+* **Kamite 60 FPS Suite & Frame Pacing Engine**: Seamless 60 FPS gameplay with accurate 1-cycle animation step flags, authentic cloth and physics pacing, natural roulette timing, and zero slow-motion/fast-forward desyncs. The authentic DevSeville 60 FPS patch and native 30 FPS console lock are also fully supported.
+* **Hardware-Level Feedback Pass Culling (Razor-Sharp Cutscenes)**: Discards post-processing framebuffer feedback quads (`HasSharedBits(FRAME, TEX0)`), eliminating heat shimmer mirages, wire/pole double-vision ghosting, vertical smear trails, and white shoulder halos while preserving 100% smooth screen fades (`classFADE`).
+* **Cutscene Fast-Path Optimization (`sceGsExecStoreImage`)**: Bypasses the 50–90 ms hardware spin loop waiting for unused VRAM download handshakes on mobile, ensuring instantaneous cutscene startup.
+* **Zero-Overhead Deep Performance Profiler & Persistent Spike Logger**: Lock-free circular ring buffer capturing thread-level telemetry (EE CPU compute, guest PC, VU1 queue backlog, Vulkan presentation time, audio buffer fill) on any frame drop > 18.0 ms. Includes persistent session log viewer in settings and a zero-overhead disable toggle.
+* **Low-Latency Async VIF Queue (16 Jobs / 512 KB)**: Cuts queued command latency in half for immediate touch/controller response and smooth combat flow.
+* **20:9 Edge-to-Edge Fullscreen & Guard-Band Wrap Rejection**: Eliminates 16-bit GS coordinate overflow horizontal strip lines while keeping screen fades 100% smooth, accompanied by real-time 3D camera projection FOV expansion (`0.7f * aspect`).
 * **Comprehensive In-Game Cheats Engine**: Action Replay / Codebreaker / ASM cheats toggleable mid-game with persistent saving:
   * **Health & Defense**: Infinite Health, True Super-Armor Invulnerability (zero flinch/stagger from enemy attacks while Gene deals 100% full attack damage with all moves and launchers), and Screen-Aligned Max Health Capacity.
   * **Resources & Meters**: Infinite Gold, Infinite Roulette Orbs, Max Roulette Orbs, Infinite / Max Tension Gauge.
   * **Combat Mastery**: Enable Double God Hand (dual God Hands ASM), Have All Techniques & Roulettes, Freeze Roulette Timer, Damage Multipliers (1x–5x), Always Run Forward, and Dynamic Difficulty Lock (Die Meter).
   * **Cosmetics & Unlockables**: Gene Costume Switcher (Normal, Karate Gi, Business Suit, Carnival), Olivia Costume Switcher (Normal, Bunny Girl, Cowgirl), Casino Slots Cheats, and Full Jukebox Unlocks.
 * **Integrated Memory Card / Saves Manager**: Dedicated Saves tab allows one-click export of `Mcd001.ps2` (compatible with PCSX2 / AetherSX2 / NetherSX2), timestamped card backups, and compressed ZIP archives via the Android Share sheet, plus instant save file restoration.
-* **Dual-Mode Zero-Overhead FPS HUD**:
-  * **Compact HUD**: Displays real-time **Game EE FPS** and emulation execution speed with lockstep color indicator.
-  * **Detailed Debug View**: Tap to reveal **Screen Present FPS**, frame duration, worst frame spike, and an interactive 64-frame frametime micro-histogram.
+* **Dual-Mode Minimal FPS HUD**:
+  * **Compact HUD**: Clean, transparent shadowed text `"fps | frametime | %"` (e.g. `60.0 FPS | 16.7 ms | 100%`) without background blocks or colored dots.
+  * **Detailed Debug View**: Clean multi-line text readout of Screen Present FPS, Game EE FPS/%, worst frame spike, and bottleneck classification without obstructive background boxes.
 * **Modernized UI & Asset System**:
   * Seamless custom artwork support: automatically loads high-resolution `main_bg.png` and `title_logo.png` directly from `assets/`.
-  * Streamlined Settings dialog featuring a top-right close button (`✕`) and full screen-width layout.
+  * Streamlined Settings dialog featuring a dedicated 6-tab navigation sidebar with smooth scrolling, clean Vulkan lock, and top-right dialog cross close button (`✕`).
   * Clean analog joysticks with all visual clutter and redundant subtext removed.
   * Cross-process JSON synchronization (`SettingsRepository`) ensuring seamless settings persistence between `MainActivity` and the `:game` execution process.
 * **3 God Hand Dodge Modes**:
@@ -131,11 +135,15 @@ build_release.bat
 
 ---
 
-## ⚠️ 60 FPS vs 30 FPS Experience
+## ⚠️ 60 FPS vs 30 FPS Modes
 
-* **DevSeville 60 FPS Patch**:
-  * The project incorporates the authentic **DevSeville 60 FPS GS progressive display patch** (`SCE_GS_DTV480P`), unlocking 60Hz presentation while maintaining a clean 1.0f internal game speed rate. This eliminates slow-motion movement, desynced particle effects, and rapid roulette timer countdowns.
-  * **Recommendation**: If you prefer the 100% pure authentic PlayStation 2 console combat physics, switch **Target Frame Rate** to **`30 FPS (Console Native Lock)`** in the Graphics settings tab.
+* **Kamite 60 FPS Suite (Recommended)**:
+  * Powered by the groundbreaking research from [God-Hand-Rearmed](https://github.com/God-Hand-Rearmed/God-Hand-Rearmed).
+  * Decouples the 60Hz display update rate from internal game systems by advancing animation step flags every cycle, maintaining authentic cloth/physics pacing, natural roulette timers, and instant combat response without speed warping.
+* **DevSeville 60 FPS Progressive Patch**:
+  * Unlocks GS progressive 60Hz display mode (`SCE_GS_DTV480P`) while maintaining a clean 1.0f internal game speed rate.
+* **Authentic 30 FPS Console Native Lock**:
+  * If you prefer the 100% original PlayStation 2 console combat physics, switch **Target Frame Rate** to **`30 FPS (Console Native Lock)`** in the Graphics settings tab.
 
 ---
 
@@ -178,10 +186,10 @@ Before building your own release APK, you can easily personalize the application
   * `✕`: Top-right close button for instant dialog dismissal.
 * **Settings Tabs**:
   * **GRAPHICS**: 
-    * Renderer: Vulkan / OpenGL ES 3.2.
+    * Renderer: Vulkan (PCSX2-GS - High Performance).
     * Internal Resolution: 0.5x Potato Mode (256x224) up to 4.0x 4K UHD.
-    * Aspect Ratio: Original 4:3, Standard 16:9, or **True Fullscreen Hor+ Widescreen** (expanded 3D camera FOV without 2D stretching).
-    * Target FPS: 30 FPS Console Native Lock / 60 FPS DevSeville Progressive Patch.
+    * Aspect Ratio: Original 4:3, Standard 16:9, or **True Fullscreen Hor+ Widescreen** (expanded 3D camera FOV without 2D stretching and guard-band wrap filter).
+    * Target FPS: Kamite 60 FPS Suite / DevSeville 60 FPS / 30 FPS Console Native Lock.
     * Frameskip: Off, Auto (>34ms trigger), Skip 1 Frame, Skip 2 Frames, or Skip 3 Frames (Potato Mode).
   * **CONTROLS**: 
     * Controller Mode: Auto, Touch Only, or Gamepad Only.
@@ -200,12 +208,16 @@ Before building your own release APK, you can easily personalize the application
   * **SAVES**: 
     * One-click **Export Saves** to `/sdcard/Download/GodHand_Saves/` (`Mcd001.ps2`, timestamped backups, and compressed ZIP archives ready for sharing or transferring to PCSX2 / AetherSX2 / NetherSX2).
     * One-click **Import Saves** from local device storage.
+  * **PERFORMANCE PROFILER & LOGS**:
+    * Session Spike Log Viewer: Persistent log capturing deep micro-stutter telemetry across the entire gameplay session.
+    * Real-time Spike Logging Toggle: Easily disable logging for zero overhead on lower-end devices or enable for precise bottleneck isolation.
 
 ---
 
 ## 👏 Credits & Acknowledgments
 
-* **Port by owaissseeee**: Android native static recompilation port, Vulkan backend integration, touch HUD, controls layout editor, cheats engine, Hor+ widescreen projection, and mobile performance optimization.
+* **Port by owaissseeee**: Android native static recompilation port, Vulkan backend integration, touch HUD, controls layout editor, cheats engine, Hor+ widescreen projection, razor-sharp cutscene feedback culling, performance spike profiler, and mobile performance optimization.
+* **God-Hand-Rearmed (Kamite, LasVola, and contributors)**: For the foundational reverse engineering, ordered depth-shuffle research, and the groundbreaking **Kamite 60 FPS suite** ([https://github.com/God-Hand-Rearmed/God-Hand-Rearmed](https://github.com/God-Hand-Rearmed/God-Hand-Rearmed)).
 * **Capcom & Clover Studio**: For creating *God Hand*, one of the greatest beat-'em-up masterpieces of all time.
 * **GodHandRecomp / GodHandRecompile Community**: For the foundational PlayStation 2 static recompilation work, reverse-engineered function symbol maps, and God Hand recompiler pipeline research.
 * **DevSeville**: For the authentic *God Hand* 60 FPS progressive display patch research and implementation.

@@ -38,6 +38,7 @@ namespace
     // nativeScaling: 2 (Aggressive: Fixes post effects)
     void ApplyGameFixes(Pcsx2Config::GSOptions &options)
     {
+        options.ManualUserHacks = true; // Enforce manual user hacks so PCSX2 MaskUserHacks does not wipe SkipDraw or HalfPixelOffset
         // Mobile TBDR (Mali / Adreno / Xclipse / PowerVR) High-Performance Configuration:
         options.AccurateBlendingUnit = AccBlendLevel::Minimum; // Maximum hardware TBDR fillrate: disables slow shader sw_blending & pipeline barriers
         options.OverrideTextureBarriers = 1;                  // 1 = Enabled: keeps texture_barrier true, preventing expensive RT clone allocations & render pass breaks
@@ -51,7 +52,7 @@ namespace
         options.HWAccurateAlphaTest = false;                   // AccurateDATE = Off: Restores 60 FPS on Mali/Adreno TBDR
         options.UserHacks_DisableDepthSupport = false;         // Keep depth buffer emulation intact to prevent fullscreen blur smearing
         options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
-        options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Normal; // Normal (1) is faster on mobile/potato GPUs
+        options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special; // Special (2) as specified by PCSX2 GameIndex.yaml for God Hand texture alignment
         options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
         options.Mipmap = false;
         options.HWMipmap = false;

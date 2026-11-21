@@ -1,6 +1,9 @@
 #include "runtime/gs/gs_pcsx2_backend.h"
 #include "runtime/gs/gs_aspect.h"
+#include "runtime/performance_profiler.h"
 
+#include <cinttypes>
+#include <mutex>
 #include <algorithm>
 #include <atomic>
 #include <chrono>
@@ -62,6 +65,14 @@ namespace
     constexpr size_t K_PERF_RING_SIZE = 128;
     std::atomic<uint32_t> g_perfRingHead{0};
     float g_perfRingMs[K_PERF_RING_SIZE]{};
+
+    constexpr size_t K_PERF_SPIKE_RING_SIZE = 64;
+    std::atomic<uint32_t> g_perfSpikeHead{0};
+    FrameSpikeRecord g_perfSpikeRing[K_PERF_SPIKE_RING_SIZE]{};
+    std::mutex g_spikeMutex;
+    char g_lastSpikeReport[512] = "No performance spikes detected (60 FPS solid).";
+    std::string g_sessionSpikeLog;
+    std::chrono::steady_clock::time_point g_lastSpikeLogTime{};
 
     std::atomic<uint64_t> g_perfGameFrames{0};
 
@@ -711,6 +722,7 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
 
     // Accurate, zero-overhead frametime & FPS recording at physical present boundary
     const auto presentEnd = std::chrono::steady_clock::now();
+    const float presentDurationMs = std::chrono::duration<float, std::milli>(presentEnd - presentStart).count();
     if (g_perfLastPresent.time_since_epoch().count() != 0) {
         const double deltaUs = std::chrono::duration<double, std::micro>(presentEnd - g_perfLastPresent).count();
         godhand_perf_record_work_duration(static_cast<int64_t>(deltaUs * 1000.0));
@@ -724,6 +736,16 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
             g_perfWindowPresents++;
             if (deltaMs > g_perfWindowWorstMs) {
                 g_perfWindowWorstMs = deltaMs;
+            }
+
+            // Zero-overhead Spike Detector: triggers telemetry snapshot only when a true frame drop occurs
+            if (g_perfSpikeLoggingEnabled.load(std::memory_order_relaxed)) {
+                // Adaptive threshold: 60 FPS mode uses >= 24.0 ms; 30 FPS mode uses >= 44.0 ms
+                const float curGameFps = g_statGameFps.load(std::memory_order_relaxed);
+                const float spikeThreshold = (curGameFps >= 45.0f) ? 24.0f : 44.0f;
+                if (deltaMs >= spikeThreshold) {
+                    godhand_perf_record_spike(GSPcsx2Backend::Presents(), deltaMs, presentDurationMs);
+                }
             }
         }
     }
@@ -887,6 +909,132 @@ void godhand_set_resolution_scale(float scale) {
 
 void godhand_set_aspect_ratio(int aspectIdx) {
     g_pendingAspect.store(aspectIdx, std::memory_order_release);
+}
+
+void godhand_perf_set_logging_enabled(bool enabled) {
+    g_perfSpikeLoggingEnabled.store(enabled, std::memory_order_release);
+}
+
+bool godhand_perf_is_logging_enabled() {
+    return g_perfSpikeLoggingEnabled.load(std::memory_order_acquire);
+}
+
+void godhand_perf_record_spike(
+    uint64_t frameNumber,
+    float totalFrametimeMs,
+    float gsPresentTimeMs
+) {
+    if (!g_perfSpikeLoggingEnabled.load(std::memory_order_relaxed)) {
+        return;
+    }
+
+    // Rate-limit: at most 1 log per 400ms to avoid overhead during room transitions / hitching
+    const auto now = std::chrono::steady_clock::now();
+    const auto timeSinceLastMs = std::chrono::duration<float, std::milli>(now - g_lastSpikeLogTime).count();
+    if (g_lastSpikeLogTime.time_since_epoch().count() != 0 && timeSinceLastMs < 400.0f) {
+        return;
+    }
+    g_lastSpikeLogTime = now;
+
+    FrameSpikeRecord rec{};
+    rec.frameNumber = frameNumber;
+    rec.totalFrametimeMs = totalFrametimeMs;
+    rec.eeTimeMs = g_perfLastEeWorkMs.load(std::memory_order_relaxed);
+    rec.eeIdleTimeMs = g_perfLastEeIdleMs.load(std::memory_order_relaxed);
+    rec.topGuestPc = g_perfLastActiveGuestPc.load(std::memory_order_relaxed);
+    rec.vu1QueueDepth = ps2_async_vif_get_queue_depth();
+    rec.gsPresentTimeMs = gsPresentTimeMs;
+
+    ps2_audio_get_stats(&rec.audioBufferFillPct, &rec.audioUnderruns);
+
+    // Classify primary bottleneck
+    if (rec.eeTimeMs >= 14.0f) {
+        std::snprintf(rec.bottleneckReason, sizeof(rec.bottleneckReason),
+                      "EE CPU Compute Bound (PC: 0x%08X)", rec.topGuestPc);
+    } else if (rec.vu1QueueDepth >= 2u) {
+        std::snprintf(rec.bottleneckReason, sizeof(rec.bottleneckReason),
+                      "VU1 Microprogram Queue Stalled (Depth: %u)", rec.vu1QueueDepth);
+    } else if (rec.gsPresentTimeMs >= 8.0f) {
+        std::snprintf(rec.bottleneckReason, sizeof(rec.bottleneckReason),
+                      "Vulkan Swapchain / GPU Presentation Wait");
+    } else if (rec.audioUnderruns > 0u && rec.audioBufferFillPct < 20u) {
+        std::snprintf(rec.bottleneckReason, sizeof(rec.bottleneckReason),
+                      "Audio Buffer Starvation (Fill: %u%%)", rec.audioBufferFillPct);
+    } else {
+        std::snprintf(rec.bottleneckReason, sizeof(rec.bottleneckReason),
+                      "GPU Fragment / Rasterization Load");
+    }
+
+#if defined(__ANDROID__)
+    __android_log_print(ANDROID_LOG_WARN, "GodHandPerf",
+        "[PERF SPIKE] Frame #%" PRIu64 ": %.1f ms (+%.1f ms drop)\n"
+        "  EE: %.1f ms (Idle: %.1f ms) | PC: 0x%08X\n"
+        "  VU1: Queue: %u\n"
+        "  GS Present: %.1f ms\n"
+        "  Audio: %u%% fill (%u underruns)\n"
+        "  Bottleneck: %s",
+        rec.frameNumber, rec.totalFrametimeMs, rec.totalFrametimeMs - 16.67f,
+        rec.eeTimeMs, rec.eeIdleTimeMs, rec.topGuestPc,
+        rec.vu1QueueDepth,
+        rec.gsPresentTimeMs,
+        rec.audioBufferFillPct, rec.audioUnderruns,
+        rec.bottleneckReason);
+#endif
+
+    {
+        std::lock_guard<std::mutex> lock(g_spikeMutex);
+        std::snprintf(g_lastSpikeReport, sizeof(g_lastSpikeReport),
+            "SPIKE #%" PRIu64 ": %.1fms | EE: %.1fms (0x%08X) | VU1: Q%u | GS: %.1fms\n-> %s",
+            rec.frameNumber, rec.totalFrametimeMs, rec.eeTimeMs, rec.topGuestPc,
+            rec.vu1QueueDepth, rec.gsPresentTimeMs, rec.bottleneckReason);
+
+        char entry[384];
+        std::snprintf(entry, sizeof(entry),
+            "[%02llu:%02llu] Drop #%" PRIu64 ": %.1f ms (EE: %.1f ms | VU1: Q%u | GS: %.1f ms)\n -> %s\n",
+            static_cast<unsigned long long>((rec.frameNumber / 3600)),
+            static_cast<unsigned long long>((rec.frameNumber / 60) % 60),
+            rec.frameNumber, rec.totalFrametimeMs, rec.eeTimeMs,
+            rec.vu1QueueDepth, rec.gsPresentTimeMs, rec.bottleneckReason);
+
+        if (g_sessionSpikeLog.size() + sizeof(entry) > 65536) {
+            g_sessionSpikeLog.erase(0, 16384);
+        }
+        g_sessionSpikeLog += entry;
+    }
+
+    const uint32_t head = g_perfSpikeHead.load(std::memory_order_relaxed);
+    g_perfSpikeRing[head % K_PERF_SPIKE_RING_SIZE] = rec;
+    g_perfSpikeHead.store(head + 1, std::memory_order_release);
+}
+
+bool godhand_perf_get_last_spike_report(char *outBuf, size_t outSize) {
+    if (!outBuf || outSize == 0) return false;
+    std::lock_guard<std::mutex> lock(g_spikeMutex);
+    if (g_perfSpikeHead.load(std::memory_order_acquire) == 0u) {
+        return false;
+    }
+    std::strncpy(outBuf, g_lastSpikeReport, outSize - 1);
+    outBuf[outSize - 1] = '\0';
+    return true;
+}
+
+bool godhand_perf_get_session_spike_log(char *outBuf, size_t outSize) {
+    if (!outBuf || outSize == 0) return false;
+    std::lock_guard<std::mutex> lock(g_spikeMutex);
+    if (g_sessionSpikeLog.empty()) {
+        std::snprintf(outBuf, outSize, "No performance spikes or major frame drops recorded in this session. Running smoothly!");
+        return true;
+    }
+    std::strncpy(outBuf, g_sessionSpikeLog.c_str(), outSize - 1);
+    outBuf[outSize - 1] = '\0';
+    return true;
+}
+
+void godhand_perf_clear_session_spike_log() {
+    std::lock_guard<std::mutex> lock(g_spikeMutex);
+    g_sessionSpikeLog.clear();
+    g_perfSpikeHead.store(0, std::memory_order_release);
+    std::snprintf(g_lastSpikeReport, sizeof(g_lastSpikeReport), "Session spike log cleared.");
 }
 
 } // extern "C"

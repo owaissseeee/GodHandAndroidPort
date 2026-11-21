@@ -475,6 +475,7 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
 
         NativeBridge.setAudioVolume(settings.audioVolume)
         NativeBridge.setAudioConfig(settings.audioSchedulingIdx, settings.audioBufferSizeIdx)
+        NativeBridge.setSpikeLoggingEnabled(settings.perfSpikeLoggingEnabled)
 
         NativeBridge.onSurfaceCreated(
             holder.surface, width, height,
