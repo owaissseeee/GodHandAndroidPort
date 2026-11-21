@@ -1510,7 +1510,12 @@ bool GSRendererHW::IsBadFrame()
 		// Cleanly discard post-processing feedback passes (heat shimmer, depth of field blur, ghosting).
 		// Legitimate meshes & UI textures live in separate VRAM blocks and are never skipped.
 		if (GSLocalMemory::m_psm[m_context->TEX0.PSM].depth ||
-			GSUtil::HasSharedBits(m_context->FRAME.Block(), m_context->FRAME.PSM, m_context->TEX0.TBP0, m_context->TEX0.PSM))
+			GSUtil::HasSharedBits(m_context->FRAME.Block(), m_context->FRAME.PSM, m_context->TEX0.TBP0, m_context->TEX0.PSM) ||
+			(PRIM->ABE && (m_vt.m_primclass == GS_SPRITE_CLASS || m_vt.m_primclass == GS_TRIANGLE_CLASS) &&
+			 m_vt.m_min.p.x <= 1.0f && m_vt.m_min.p.y <= 1.0f &&
+			 m_vt.m_max.p.x >= 510.0f && m_vt.m_max.p.y >= 440.0f &&
+			 m_context->TEX0.TBP0 != m_context->FRAME.Block() &&
+			 (m_context->TEX0.TBP0 >= 0x0800 && m_context->TEX0.TBP0 <= 0x3800)))
 		{
 			return true;
 		}

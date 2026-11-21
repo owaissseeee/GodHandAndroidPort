@@ -209,12 +209,12 @@ namespace
             // Keep framebuffer fetch ENABLED for high-speed tile rendering, eliminating black screen.
             options.DisableFramebufferFetch = false;
             options.EnableAdrenoFramebufferFetch = true;
-            options.OverrideTextureBarriers = 1; // Force Enabled: true hardware barrier or memory barrier
-            options.AccurateBlendingUnit = AccBlendLevel::Basic;
-            options.UserHacks_DisableSafeFeatures = false;
+            options.OverrideTextureBarriers = -1; // Auto: real driver barriers or framebuffer fetch
+            options.AccurateBlendingUnit = AccBlendLevel::Minimum; // Matches Vulkan, prevents pipeline stalls & blend artifacts
+            options.UserHacks_DisableSafeFeatures = true; // Prevents ground shadow clear heuristics bug!
             options.UserHacks_DisableDepthSupport = false;
             options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special;
-            options.UserHacks_NativeScaling = GSNativeScaling::Off;
+            options.UserHacks_NativeScaling = GSNativeScaling::Aggressive; // GameIndex.yaml fix for God Hand post-effects & blur alignment!
             options.HWDownloadMode = GSHardwareDownloadMode::Disabled;
             options.UserHacks_AutoFlush = GSHWAutoFlushLevel::Disabled;
             options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
@@ -238,12 +238,12 @@ namespace
                 options.Renderer = GSRendererType::OGL;
                 options.DisableFramebufferFetch = false;
                 options.EnableAdrenoFramebufferFetch = true;
-                options.OverrideTextureBarriers = 1; // Force Enabled: true hardware barrier or memory barrier
-                options.AccurateBlendingUnit = AccBlendLevel::Basic;
-                options.UserHacks_DisableSafeFeatures = false;
+                options.OverrideTextureBarriers = -1;
+                options.AccurateBlendingUnit = AccBlendLevel::Minimum;
+                options.UserHacks_DisableSafeFeatures = true;
                 options.UserHacks_DisableDepthSupport = false;
                 options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special;
-                options.UserHacks_NativeScaling = GSNativeScaling::Off;
+                options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
                 options.HWDownloadMode = GSHardwareDownloadMode::Disabled;
                 options.UserHacks_AutoFlush = GSHWAutoFlushLevel::Disabled;
                 options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;

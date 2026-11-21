@@ -274,8 +274,14 @@ void pcsx2gs::SetTextureFolder(const std::string &folder)
     while (!path.empty() && !path.has_filename())
         path = path.parent_path();
 
-    // If folder contains a game serial subfolder (e.g. SLUS-21503), descend into it
-    if (std::filesystem::exists(path / "SLUS-21503", ec))
+    // Check if folder contains God Hand textures or serial subfolders
+    if (std::filesystem::exists(path / "textures" / "SLUS-21503", ec))
+        path = path / "textures" / "SLUS-21503";
+    else if (std::filesystem::exists(path / "GodHand_Textures" / "SLUS-21503", ec))
+        path = path / "GodHand_Textures" / "SLUS-21503";
+    else if (std::filesystem::exists(path / "GodHand_Textures", ec))
+        path = path / "GodHand_Textures";
+    else if (std::filesystem::exists(path / "SLUS-21503", ec))
         path = path / "SLUS-21503";
     else if (std::filesystem::exists(path / "slus-21503", ec))
         path = path / "slus-21503";

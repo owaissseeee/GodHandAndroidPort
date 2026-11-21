@@ -125,7 +125,9 @@ class MainActivity : ComponentActivity() {
             // 2. Extract Document ID or Tree Document ID
             var docId: String? = null
             try {
-                docId = DocumentsContract.getTreeDocumentId(uri)
+                if (DocumentsContract.isTreeUri(uri)) {
+                    docId = DocumentsContract.getTreeDocumentId(uri)
+                }
             } catch (_: Throwable) {}
             if (docId == null) {
                 try {
@@ -192,36 +194,127 @@ class MainActivity : ComponentActivity() {
                 return "/storage/emulated/0/" + cleanId.substring("/sdcard/".length)
             }
 
-            // 6. Check for downloads virtual id or msf: id
+            // 6. Base downloads checks
+            val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            val extStorageDir = Environment.getExternalStorageDirectory()
+
             if (cleanId.equals("download", ignoreCase = true) || cleanId.equals("downloads", ignoreCase = true)) {
-                return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath
+                return downloadDir.absolutePath
             }
-            if (cleanId.startsWith("downloads/") || cleanId.startsWith("download/")) {
-                val rel = cleanId.substringAfter('/').trimStart('/')
-                return File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), rel).absolutePath
+            if (cleanId.matches(Regex("^(download|downloads)[:/].*", RegexOption.IGNORE_CASE))) {
+                val rel = cleanId.replaceFirst(Regex("^(download|downloads)[:/]", RegexOption.IGNORE_CASE), "").trimStart('/')
+                val candidate = File(downloadDir, rel)
+                if (candidate.exists()) return candidate.absolutePath
+                return candidate.absolutePath
             }
 
-            val msfIdStr = if (cleanId.startsWith("msf:")) cleanId.substring(4) else cleanId
-            val numericId = msfIdStr.toLongOrNull()
+            // Helper to recursively find a directory by name (up to maxDepth)
+            fun findDirectoryByName(root: File, targetName: String, maxDepth: Int): File? {
+                if (!root.exists() || !root.isDirectory || maxDepth <= 0) return null
+                val direct = File(root, targetName)
+                if (direct.exists() && direct.isDirectory) return direct
+                val list = root.listFiles() ?: return null
+                for (item in list) {
+                    if (item.isDirectory) {
+                        if (item.name.equals(targetName, ignoreCase = true)) return item
+                        val subMatch = findDirectoryByName(item, targetName, maxDepth - 1)
+                        if (subMatch != null) return subMatch
+                    }
+                }
+                return null
+            }
+
+            // 7. Query DocumentsProvider for display name and data column using tree document URI
+            var displayName: String? = null
+            var dataFromDoc: String? = null
+            try {
+                val docUri = if (DocumentsContract.isTreeUri(uri)) {
+                    val treeId = DocumentsContract.getTreeDocumentId(uri)
+                    DocumentsContract.buildDocumentUriUsingTree(uri, treeId)
+                } else uri
+                contentResolver.query(docUri, null, null, null, null)?.use { cursor ->
+                    if (cursor.moveToFirst()) {
+                        val nameCol = cursor.getColumnIndex(DocumentsContract.Document.COLUMN_DISPLAY_NAME)
+                        if (nameCol != -1) displayName = cursor.getString(nameCol)
+                        val dataCol = cursor.getColumnIndex("_data")
+                        if (dataCol != -1) dataFromDoc = cursor.getString(dataCol)
+                    }
+                }
+            } catch (_: Throwable) {}
+
+            if (!dataFromDoc.isNullOrBlank()) {
+                val file = File(dataFromDoc)
+                if (file.exists()) return file.absolutePath
+            }
+
+            // 8. Query MediaStore for numeric ID / msf: ID
+            val msfIdStr = when {
+                cleanId.startsWith("msf:") -> cleanId.substring(4)
+                cleanId.all { it.isDigit() } -> cleanId
+                else -> null
+            }
+            val numericId = msfIdStr?.toLongOrNull()
             if (numericId != null) {
-                try {
-                    val contentUri = android.content.ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"),
-                        numericId
-                    )
-                    contentResolver.query(contentUri, arrayOf(MediaStore.MediaColumns.DATA), null, null, null)?.use { cursor ->
-                        if (cursor.moveToFirst()) {
-                            val idx = cursor.getColumnIndex(MediaStore.MediaColumns.DATA)
-                            if (idx != -1) {
-                                val p = cursor.getString(idx)
-                                if (!p.isNullOrBlank()) return p
+                val urisToQuery = mutableListOf<Uri>()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    urisToQuery.add(android.content.ContentUris.withAppendedId(MediaStore.Downloads.EXTERNAL_CONTENT_URI, numericId))
+                }
+                urisToQuery.add(android.content.ContentUris.withAppendedId(MediaStore.Files.getContentUri("external"), numericId))
+
+                for (queryUri in urisToQuery) {
+                    try {
+                        contentResolver.query(
+                            queryUri,
+                            arrayOf(MediaStore.MediaColumns.DATA, MediaStore.MediaColumns.DISPLAY_NAME),
+                            null,
+                            null,
+                            null
+                        )?.use { cursor ->
+                            if (cursor.moveToFirst()) {
+                                val dIdx = cursor.getColumnIndex(MediaStore.MediaColumns.DATA)
+                                if (dIdx != -1) {
+                                    val p = cursor.getString(dIdx)
+                                    if (!p.isNullOrBlank()) {
+                                        val f = File(p)
+                                        if (f.exists()) return f.absolutePath
+                                    }
+                                }
+                                if (displayName.isNullOrBlank()) {
+                                    val nIdx = cursor.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
+                                    if (nIdx != -1) displayName = cursor.getString(nIdx)
+                                }
                             }
                         }
-                    }
-                } catch (_: Throwable) {}
+                    } catch (_: Throwable) {}
+                }
             }
 
-            // 7. Check SD card / secondary volume UUID (e.g. 1234-5678:path)
+            // 9. Match directory by displayName across Download and external storage
+            val targetName = displayName ?: cleanId.substringAfterLast(':').substringAfterLast('/').trim()
+            if (targetName.isNotBlank() && targetName != "tree" && targetName != "document") {
+                // Check Download root directly
+                val directInDownloads = File(downloadDir, targetName)
+                if (directInDownloads.exists()) return directInDownloads.absolutePath
+
+                // Check external storage root directly
+                val directInExt = File(extStorageDir, targetName)
+                if (directInExt.exists()) return directInExt.absolutePath
+
+                // Check Documents directly
+                val docDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+                val directInDocs = File(docDir, targetName)
+                if (directInDocs.exists()) return directInDocs.absolutePath
+
+                // Recursive search in Download (up to 4 levels)
+                val recursiveInDownloads = findDirectoryByName(downloadDir, targetName, 4)
+                if (recursiveInDownloads != null) return recursiveInDownloads.absolutePath
+
+                // Recursive search in external storage root (up to 3 levels)
+                val recursiveInExt = findDirectoryByName(extStorageDir, targetName, 3)
+                if (recursiveInExt != null) return recursiveInExt.absolutePath
+            }
+
+            // 10. Secondary external storage UUID check
             val colonIdx = cleanId.indexOf(':')
             if (colonIdx > 0) {
                 val vol = cleanId.substring(0, colonIdx)
@@ -232,22 +325,6 @@ class MainActivity : ComponentActivity() {
                 val candidate = File("/storage/$vol/$rel")
                 if (candidate.exists()) {
                     return candidate.absolutePath
-                }
-            }
-
-            // 8. Heuristic scan for named folders in standard locations
-            val folderName = cleanId.substringAfterLast(':').substringAfterLast('/').trim()
-            if (folderName.isNotBlank() && folderName != "tree" && folderName != "document") {
-                val searchDirs = listOf(
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                    Environment.getExternalStorageDirectory(),
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
-                )
-                for (dir in searchDirs) {
-                    val candidate = File(dir, folderName)
-                    if (candidate.exists()) {
-                        return candidate.absolutePath
-                    }
                 }
             }
 
