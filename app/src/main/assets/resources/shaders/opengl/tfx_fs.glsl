@@ -125,12 +125,16 @@ in SHADER
 	// Basically the only scenario where this'll happen is RGBA masked and DATE is active.
 	#undef PS_NO_COLOR
 	#define PS_NO_COLOR 0
-	#if defined(GL_EXT_shader_framebuffer_fetch)
+	#if defined(HAS_FB_FETCH_EXT) || defined(GL_EXT_shader_framebuffer_fetch)
 		#undef TARGET_0_QUALIFIER
 		#define TARGET_0_QUALIFIER inout
 		#define LAST_FRAG_COLOR o_col0
-	#elif defined(GL_ARM_shader_framebuffer_fetch)
+	#elif defined(HAS_FB_FETCH_ARM) || defined(GL_ARM_shader_framebuffer_fetch)
 		#define LAST_FRAG_COLOR gl_LastFragColorARM
+	#else
+		#undef TARGET_0_QUALIFIER
+		#define TARGET_0_QUALIFIER inout
+		#define LAST_FRAG_COLOR o_col0
 	#endif
 #endif
 
@@ -193,8 +197,10 @@ float sample_from_depth()
 	return 0.0f;
 #elif HAS_FRAMEBUFFER_FETCH && (DEPTH_FEEDBACK_SUPPORT == 2)
 	return o_col1;
-#else
+#elif (DEPTH_FEEDBACK_SUPPORT == 1 || (DEPTH_FEEDBACK_SUPPORT == 2 && !HAS_FRAMEBUFFER_FETCH))
 	return texelFetch(DepthSampler, ivec2(gl_FragCoord.xy), 0).r;
+#else
+	return 0.0f;
 #endif
 }
 

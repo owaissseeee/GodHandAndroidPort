@@ -202,8 +202,15 @@ class SettingsRepository(context: Context) {
         set(value) = putBoolean("custom_textures_enabled", value)
 
     var customTexturePath: String
-        get() = prefs.getString("custom_texture_path", "/sdcard/Download/GodHand_Textures/SLUS-21503") ?: "/sdcard/Download/GodHand_Textures/SLUS-21503"
-        set(value) = putString("custom_texture_path", value)
+        get() {
+            val p = prefs.getString("custom_texture_path", "/storage/emulated/0/Download/GodHand_Textures/SLUS-21503")
+                ?: "/storage/emulated/0/Download/GodHand_Textures/SLUS-21503"
+            return if (p.startsWith("/sdcard/")) "/storage/emulated/0/" + p.substring("/sdcard/".length) else p
+        }
+        set(value) {
+            val p = if (value.startsWith("/sdcard/")) "/storage/emulated/0/" + value.substring("/sdcard/".length) else value
+            putString("custom_texture_path", p)
+        }
 
     // --- Roulette & Save States ---
     var rouletteTimerDouble: Boolean

@@ -265,8 +265,12 @@ void pcsx2gs::SetTextureFolder(const std::string &folder)
         g_textureSerial.clear();
         return;
     }
+    std::string normFolder = folder;
+    if (normFolder.rfind("/sdcard", 0) == 0) {
+        normFolder = "/storage/emulated/0" + normFolder.substr(7);
+    }
     std::error_code ec;
-    std::filesystem::path path(folder);
+    std::filesystem::path path(normFolder);
     while (!path.empty() && !path.has_filename())
         path = path.parent_path();
 

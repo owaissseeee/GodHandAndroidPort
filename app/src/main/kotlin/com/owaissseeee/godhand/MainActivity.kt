@@ -83,7 +83,9 @@ class MainActivity : ComponentActivity() {
                 settings.customTexturePath = path
                 settings.customTexturesEnabled = true
                 Toast.makeText(this, "HD Texture Folder: $path", Toast.LENGTH_LONG).show()
-                activeSettingsDialog?.refreshActiveTab()
+                runOnUiThread {
+                    activeSettingsDialog?.refreshActiveTab()
+                }
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !Environment.isExternalStorageManager()) {
                     Toast.makeText(this, "Please grant All Files Access to load custom textures directly", Toast.LENGTH_LONG).show()
@@ -107,57 +109,119 @@ class MainActivity : ComponentActivity() {
     private fun resolveRealPathFromUri(uri: Uri): String? {
         try {
             val uriStr = uri.toString()
-            val decodedUri = Uri.decode(uriStr)
+            var decodedUri = uriStr
+            for (i in 0 until 3) {
+                val next = Uri.decode(decodedUri)
+                if (next == decodedUri) break
+                decodedUri = next
+            }
 
             // 1. Direct file scheme
             if (uri.scheme == "file") {
-                return uri.path
+                val p = uri.path
+                if (!p.isNullOrBlank()) return p
             }
 
-            // 2. Extract Document ID if possible
+            // 2. Extract Document ID or Tree Document ID
             var docId: String? = null
             try {
-                if (DocumentsContract.isDocumentUri(this, uri)) {
-                    docId = DocumentsContract.getDocumentId(uri)
-                }
+                docId = DocumentsContract.getTreeDocumentId(uri)
             } catch (_: Throwable) {}
             if (docId == null) {
                 try {
-                    docId = DocumentsContract.getTreeDocumentId(uri)
+                    docId = DocumentsContract.getDocumentId(uri)
                 } catch (_: Throwable) {}
             }
             if (docId == null) {
                 docId = uri.lastPathSegment
             }
-            val rawDocId = Uri.decode(docId ?: "")
 
-            // Strip common tree/document prefixes: "/tree/", "tree/", "/document/", "document/"
-            var cleanId = rawDocId
+            var cleanId = docId ?: ""
+            for (i in 0 until 3) {
+                val next = Uri.decode(cleanId)
+                if (next == cleanId) break
+                cleanId = next
+            }
+
+            // Strip common tree/document prefixes repeatedly
             val prefixes = listOf("/tree/", "tree/", "/document/", "document/")
-            for (p in prefixes) {
-                if (cleanId.startsWith(p)) {
-                    cleanId = cleanId.substring(p.length)
+            var changed = true
+            while (changed) {
+                changed = false
+                for (p in prefixes) {
+                    if (cleanId.startsWith(p)) {
+                        cleanId = cleanId.substring(p.length)
+                        changed = true
+                    }
                 }
             }
 
-            // Check raw: prefix
-            if (cleanId.startsWith("raw:")) {
-                return cleanId.substring("raw:".length)
+            // 3. Check raw: prefix
+            if (cleanId.contains("raw:")) {
+                val rawPath = cleanId.substringAfter("raw:")
+                if (rawPath.isNotBlank()) return rawPath
+            }
+            if (decodedUri.contains("raw:")) {
+                val rawPath = decodedUri.substringAfter("raw:").substringBefore('?').substringBefore('&')
+                if (rawPath.isNotBlank()) return rawPath
             }
 
-            // Check primary: prefix
-            if (cleanId.contains("primary:")) {
-                val rel = cleanId.substringAfter("primary:").trimStart('/')
+            // 4. Check primary: prefix
+            val primaryTarget = when {
+                cleanId.contains("primary:") -> cleanId.substringAfter("primary:")
+                decodedUri.contains("primary:") -> decodedUri.substringAfter("primary:")
+                else -> null
+            }
+            if (primaryTarget != null) {
+                val rel = primaryTarget.substringBefore('?').substringBefore('&').trimStart('/')
                 val extDir = Environment.getExternalStorageDirectory().absolutePath
                 return if (rel.isEmpty()) extDir else File(extDir, rel).absolutePath
             }
 
-            // Check for downloads virtual id
+            // 5. Check direct /storage/ or /sdcard/
+            if (decodedUri.contains("/storage/")) {
+                return "/storage/" + decodedUri.substringAfter("/storage/").substringBefore('?').substringBefore('&')
+            }
+            if (decodedUri.contains("/sdcard/")) {
+                return "/storage/emulated/0/" + decodedUri.substringAfter("/sdcard/").substringBefore('?').substringBefore('&').trimStart('/')
+            }
+            if (cleanId.startsWith("/storage/")) {
+                return cleanId
+            }
+            if (cleanId.startsWith("/sdcard/")) {
+                return "/storage/emulated/0/" + cleanId.substring("/sdcard/".length)
+            }
+
+            // 6. Check for downloads virtual id or msf: id
             if (cleanId.equals("download", ignoreCase = true) || cleanId.equals("downloads", ignoreCase = true)) {
                 return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath
             }
+            if (cleanId.startsWith("downloads/") || cleanId.startsWith("download/")) {
+                val rel = cleanId.substringAfter('/').trimStart('/')
+                return File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), rel).absolutePath
+            }
 
-            // Check SD card / secondary volume UUID (e.g. 1234-5678:path or 1234-5678)
+            val msfIdStr = if (cleanId.startsWith("msf:")) cleanId.substring(4) else cleanId
+            val numericId = msfIdStr.toLongOrNull()
+            if (numericId != null) {
+                try {
+                    val contentUri = android.content.ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"),
+                        numericId
+                    )
+                    contentResolver.query(contentUri, arrayOf(MediaStore.MediaColumns.DATA), null, null, null)?.use { cursor ->
+                        if (cursor.moveToFirst()) {
+                            val idx = cursor.getColumnIndex(MediaStore.MediaColumns.DATA)
+                            if (idx != -1) {
+                                val p = cursor.getString(idx)
+                                if (!p.isNullOrBlank()) return p
+                            }
+                        }
+                    }
+                } catch (_: Throwable) {}
+            }
+
+            // 7. Check SD card / secondary volume UUID (e.g. 1234-5678:path)
             val colonIdx = cleanId.indexOf(':')
             if (colonIdx > 0) {
                 val vol = cleanId.substring(0, colonIdx)
@@ -171,17 +235,20 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
-            // Check decoded URI string inspection
-            if (decodedUri.contains("primary:")) {
-                val rel = decodedUri.substringAfter("primary:").substringBefore('?').substringBefore('&').trimStart('/')
-                val extDir = Environment.getExternalStorageDirectory().absolutePath
-                return if (rel.isEmpty()) extDir else File(extDir, rel).absolutePath
-            }
-            if (decodedUri.contains("/storage/")) {
-                return "/storage/" + decodedUri.substringAfter("/storage/").substringBefore('?').substringBefore('&')
-            }
-            if (decodedUri.contains("/sdcard/")) {
-                return "/sdcard/" + decodedUri.substringAfter("/sdcard/").substringBefore('?').substringBefore('&')
+            // 8. Heuristic scan for named folders in standard locations
+            val folderName = cleanId.substringAfterLast(':').substringAfterLast('/').trim()
+            if (folderName.isNotBlank() && folderName != "tree" && folderName != "document") {
+                val searchDirs = listOf(
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                    Environment.getExternalStorageDirectory(),
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+                )
+                for (dir in searchDirs) {
+                    val candidate = File(dir, folderName)
+                    if (candidate.exists()) {
+                        return candidate.absolutePath
+                    }
+                }
             }
 
             val path = uri.path?.let { Uri.decode(it) }

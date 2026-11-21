@@ -210,11 +210,11 @@ namespace
             options.DisableFramebufferFetch = false;
             options.EnableAdrenoFramebufferFetch = true;
             options.OverrideTextureBarriers = 1; // Force Enabled: true hardware barrier or memory barrier
-            options.AccurateBlendingUnit = AccBlendLevel::Minimum;
-            options.UserHacks_DisableSafeFeatures = true;
+            options.AccurateBlendingUnit = AccBlendLevel::Basic;
+            options.UserHacks_DisableSafeFeatures = false;
             options.UserHacks_DisableDepthSupport = false;
             options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special;
-            options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
+            options.UserHacks_NativeScaling = GSNativeScaling::Off;
             options.HWDownloadMode = GSHardwareDownloadMode::Disabled;
             options.UserHacks_AutoFlush = GSHWAutoFlushLevel::Disabled;
             options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
@@ -239,11 +239,11 @@ namespace
                 options.DisableFramebufferFetch = false;
                 options.EnableAdrenoFramebufferFetch = true;
                 options.OverrideTextureBarriers = 1; // Force Enabled: true hardware barrier or memory barrier
-                options.AccurateBlendingUnit = AccBlendLevel::Minimum;
-                options.UserHacks_DisableSafeFeatures = true;
+                options.AccurateBlendingUnit = AccBlendLevel::Basic;
+                options.UserHacks_DisableSafeFeatures = false;
                 options.UserHacks_DisableDepthSupport = false;
                 options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special;
-                options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
+                options.UserHacks_NativeScaling = GSNativeScaling::Off;
                 options.HWDownloadMode = GSHardwareDownloadMode::Disabled;
                 options.UserHacks_AutoFlush = GSHWAutoFlushLevel::Disabled;
                 options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
@@ -499,6 +499,7 @@ extern "C" PCSX2GS_EXPORT void pcsx2gs_set_texture_folder(const char *dir)
         GSTextureReplacements::UpdateConfig(oldConfig);
         GSTextureReplacements::GameChanged();
         GSTextureReplacements::ReloadReplacementMap();
+        g_gs_renderer->PurgeTextureCache(true, false, true);
     }
 }
 

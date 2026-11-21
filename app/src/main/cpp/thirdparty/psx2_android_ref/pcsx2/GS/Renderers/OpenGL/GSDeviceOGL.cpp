@@ -1822,12 +1822,12 @@ std::string GSDeviceOGL::GenGlslHeader(const std::string_view entry, GLenum type
 			if (GLAD_GL_EXT_shader_framebuffer_fetch)
 			{
 				header += "#extension GL_EXT_shader_framebuffer_fetch : enable\n";
-				header += "#define GL_EXT_shader_framebuffer_fetch 1\n";
+				header += "#define HAS_FB_FETCH_EXT 1\n";
 			}
 			else if (GLAD_GL_ARM_shader_framebuffer_fetch)
 			{
 				header += "#extension GL_ARM_shader_framebuffer_fetch : enable\n";
-				header += "#define GL_ARM_shader_framebuffer_fetch 1\n";
+				header += "#define HAS_FB_FETCH_ARM 1\n";
 			}
 		}
 

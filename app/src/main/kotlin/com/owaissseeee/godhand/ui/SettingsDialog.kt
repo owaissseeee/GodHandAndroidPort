@@ -545,7 +545,7 @@ class SettingsDialog(
                 setBackgroundResource(R.drawable.btn_god_hand_secondary)
                 setTextColor(0xFFFDE047.toInt())
                 setOnClickListener {
-                    settings.customTexturePath = "/sdcard/Download/GodHand_Textures/SLUS-21503"
+                    settings.customTexturePath = "/storage/emulated/0/Download/GodHand_Textures/SLUS-21503"
                     NativeBridge.setCustomTextureDirectory(settings.customTexturePath)
                     buildTabContent()
                 }
@@ -583,8 +583,11 @@ class SettingsDialog(
             .setMessage("Enter the absolute folder path containing your replacement textures:")
             .setView(container)
             .setPositiveButton("SAVE") { _, _ ->
-                val newPath = input.text.toString().trim()
+                var newPath = input.text.toString().trim()
                 if (newPath.isNotBlank()) {
+                    if (newPath.startsWith("/sdcard/")) {
+                        newPath = "/storage/emulated/0/" + newPath.substring("/sdcard/".length)
+                    }
                     settings.customTexturePath = newPath
                     settings.customTexturesEnabled = true
                     NativeBridge.setCustomTextureDirectory(newPath)
