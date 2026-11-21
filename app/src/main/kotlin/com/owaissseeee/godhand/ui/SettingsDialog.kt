@@ -396,12 +396,15 @@ class SettingsDialog(
         addSectionHeader("GPU RENDERING ENGINE")
 
         addSpinnerRow(
-            "Graphics Renderer",
-            listOf("Vulkan (PCSX2-GS - High Performance)"),
-            0,
-            enabled = false
-        ) {
-            settings.rendererIdx = 0
+            if (isMidGame) "Graphics Renderer (Set in Main Menu)" else "Graphics Renderer",
+            listOf(
+                "Vulkan (PCSX2-GS - High Performance Default)",
+                "OpenGL ES (Safe Compatibility - Qualcomm & Mali)"
+            ),
+            settings.rendererIdx,
+            enabled = !isMidGame
+        ) { pos ->
+            settings.rendererIdx = pos
         }
 
         addSpinnerRow(

@@ -795,8 +795,11 @@ namespace godhand {
 
 void notifySurfaceChanged(ANativeWindow* win, int width, int height) {
     if (win) {
-        if (width > 0 && height > 0) {
-            ANativeWindow_setBuffersGeometry(win, width, height, WINDOW_FORMAT_RGBA_8888);
+        const char* ren = std::getenv("GODHAND_RENDERER");
+        if (ren && (std::strcmp(ren, "gles") == 0 || std::strcmp(ren, "opengl") == 0)) {
+            if (width > 0 && height > 0) {
+                ANativeWindow_setBuffersGeometry(win, width, height, WINDOW_FORMAT_RGBA_8888);
+            }
         }
         GSPcsx2Backend::AttachHostWindow(static_cast<void*>(win));
     }
@@ -855,8 +858,8 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     }
     setEnv("GODHAND_SCREEN_ASPECT", std::to_string(screenAspect));
     setEnv("GODHAND_ASPECT_RATIO_IDX", std::to_string(aspectIdx));
-    setDefaultEnv("PS2X_PCSX2_VSYNC", "0"); // Mailbox / non-blocking present on Android Vulkan swapchain
-    setDefaultEnv("PS2X_VSYNC", "0");
+    setDefaultEnv("PS2X_PCSX2_VSYNC", "1"); // FIFO presentation: syncs with 60Hz display to eliminate LTPO 120Hz fence wait spikes
+    setDefaultEnv("PS2X_VSYNC", "1");
     setDefaultEnv("PS2X_VSYNC_LOCK", "0");
     setDefaultEnv("PS2X_EE_DEFER_CYCLES", "4096");
     setDefaultEnv("PS2X_EE_GS_POLL_CYCLES", "4096");
@@ -930,7 +933,7 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     setEnv("PS2X_MTVU_STREAM", "0");
     setEnv("PS2X_MTVU_VBLANK_WAIT", "0");
     setDefaultEnv("PS2X_GS_ASYNC_PRESENT", "1");
-    setDefaultEnv("PS2X_GS_ASYNC_READBACK", "all");
+    setDefaultEnv("PS2X_GS_ASYNC_READBACK", "0"); // Disable hardware readbacks on mobile: God Hand flare depth is stubbed in function_hooks.cpp
     setDefaultEnv("PS2X_PGS_COALESCE", "1");
     setDefaultEnv("PS2X_VU0_LEAN", "1");
     setDefaultEnv("PS2X_PCSX2_TEXTURES", "0"); // Skip filesystem replacement texture directory scan on Android!
@@ -941,7 +944,7 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     GSThreadedBackend::SetEnabledByDefault(true);
     GSThreadedBackend::SetGpuByDefault(true);
 
-    if (win && width > 0 && height > 0) {
+    if (rendererIdx == 1 && win && width > 0 && height > 0) {
         ANativeWindow_setBuffersGeometry(win, width, height, WINDOW_FORMAT_RGBA_8888);
     }
     PS2Runtime runtime;

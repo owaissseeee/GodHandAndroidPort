@@ -55,6 +55,7 @@ namespace
         options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
         options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special; // Special (2) as specified by PCSX2 GameIndex.yaml for God Hand texture alignment
         options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
+        options.HWDownloadMode = GSHardwareDownloadMode::Disabled; // Disable hardware readbacks on mobile: eliminates CPU/GPU pipeline flushes
         options.Mipmap = false;
         options.HWMipmap = false;
         options.UseDebugDevice = false;
@@ -204,14 +205,19 @@ namespace
         ApplyOptions(options, params->options);
         if (options.Renderer == GSRendererType::OGL)
         {
-            // OpenGL ES compatibility for PowerVR GE8320 (Redmi 10A) and Mali/Adreno GLES:
-            // Prevent FBO texture self-feedback loops & unsupported GLES framebuffer fetch extensions.
-            // (Vulkan GSRendererType::VK is 100% untouched.)
-            options.DisableFramebufferFetch = true;
-            options.EnableAdrenoFramebufferFetch = false;
-            options.OverrideTextureBarriers = 0;
+            // OpenGL ES 3.2 high-performance mobile TBDR configuration (Adreno / Mali / PowerVR):
+            // Enable framebuffer fetch (GL_EXT_shader_framebuffer_fetch / GL_ARM_shader_framebuffer_fetch)
+            // and hardware texture barriers (OverrideTextureBarriers = 1) to eliminate model distortion,
+            // blinking meshes, and FBO feedback blit stalls.
+            options.DisableFramebufferFetch = false;
+            options.EnableAdrenoFramebufferFetch = true;
+            options.OverrideTextureBarriers = 1;
             options.AccurateBlendingUnit = AccBlendLevel::Minimum;
-            options.UserHacks_DisableSafeFeatures = false;
+            options.UserHacks_DisableSafeFeatures = true;
+            options.UserHacks_DisableDepthSupport = false;
+            options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special;
+            options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
+            options.HWDownloadMode = GSHardwareDownloadMode::Disabled;
         }
         EmuConfig.GS = options;
         EmuConfig.CurrentAspectRatio = options.AspectRatio;
@@ -230,11 +236,15 @@ namespace
             if (options.Renderer == GSRendererType::VK) {
                 __android_log_print(ANDROID_LOG_WARN, "pcsx2-gs", "Bridge::Open: Vulkan failed, attempting OpenGL ES fallback...");
                 options.Renderer = GSRendererType::OGL;
-                options.DisableFramebufferFetch = true;
-                options.EnableAdrenoFramebufferFetch = false;
-                options.OverrideTextureBarriers = 0;
+                options.DisableFramebufferFetch = false;
+                options.EnableAdrenoFramebufferFetch = true;
+                options.OverrideTextureBarriers = 1;
                 options.AccurateBlendingUnit = AccBlendLevel::Minimum;
-                options.UserHacks_DisableSafeFeatures = false;
+                options.UserHacks_DisableSafeFeatures = true;
+                options.UserHacks_DisableDepthSupport = false;
+                options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special;
+                options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
+                options.HWDownloadMode = GSHardwareDownloadMode::Disabled;
                 EmuConfig.GS = options;
                 if (GSopen(options, options.Renderer, g_regs, vsync, false)) {
                     __android_log_print(ANDROID_LOG_INFO, "pcsx2-gs", "Bridge::Open: GSopen SUCCEEDED with OpenGL ES fallback!");

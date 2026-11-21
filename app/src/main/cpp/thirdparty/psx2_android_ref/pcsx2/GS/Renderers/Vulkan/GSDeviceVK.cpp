@@ -723,7 +723,9 @@ bool GSDeviceVK::CreateDevice(VkSurfaceKHR surface, bool enable_validation_layer
 	VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT fragment_shader_interlock_ext_feature = {
 		VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_SHADER_INTERLOCK_FEATURES_EXT};
 
-	if (m_optional_extensions.vk_khr_synchronization2)
+	const bool is_vk12_or_higher = (m_device_properties.apiVersion >= VK_API_VERSION_1_2);
+
+	if (is_vk12_or_higher && m_optional_extensions.vk_khr_synchronization2)
 	{
 		sync2_features.synchronization2 = VK_TRUE;
 		Vulkan::AddPointerToChain(&device_info, &sync2_features);
@@ -743,17 +745,17 @@ bool GSDeviceVK::CreateDevice(VkSurfaceKHR surface, bool enable_validation_layer
 		rasterization_order_access_feature.rasterizationOrderColorAttachmentAccess = VK_TRUE;
 		Vulkan::AddPointerToChain(&device_info, &rasterization_order_access_feature);
 	}
-	if (m_optional_extensions.vk_ext_attachment_feedback_loop_layout)
+	if (is_vk12_or_higher && m_optional_extensions.vk_ext_attachment_feedback_loop_layout)
 	{
 		attachment_feedback_loop_feature.attachmentFeedbackLoopLayout = VK_TRUE;
 		Vulkan::AddPointerToChain(&device_info, &attachment_feedback_loop_feature);
 	}
-	if (m_optional_extensions.vk_swapchain_maintenance1)
+	if (is_vk12_or_higher && m_optional_extensions.vk_swapchain_maintenance1)
 	{
 		swapchain_maintenance1_feature.swapchainMaintenance1 = VK_TRUE;
 		Vulkan::AddPointerToChain(&device_info, &swapchain_maintenance1_feature);
 	}
-	if (m_optional_extensions.vk_ext_fragment_shader_interlock)
+	if (is_vk12_or_higher && m_optional_extensions.vk_ext_fragment_shader_interlock)
 	{
 		fragment_shader_interlock_ext_feature.fragmentShaderPixelInterlock = VK_TRUE;
 		Vulkan::AddPointerToChain(&device_info, &fragment_shader_interlock_ext_feature);
