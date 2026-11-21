@@ -18,7 +18,7 @@ Unlike traditional emulators that translate MIPS CPU and VU instructions at runt
 * **Vulkan PCSX2-GS Backend**: Hardware-accelerated graphics rendering via modern Vulkan with multi-threaded GIF packet submission and quad-buffered swapchains.
 * **AOT Vector Unit 1 (VU1) Acceleration**: Heavy microprograms recompiled ahead-of-time with ARM64 NEON bitwise vector normalization.
 * **Multi-Threaded VU1 (MTVU)**: Asynchronous parallel dispatch for VIF1 unpacking, VU1 execution, and GS rendering across dedicated CPU cores.
-* **Kamite 60 FPS Suite & Frame Pacing Engine**: Seamless 60 FPS gameplay with accurate 1-cycle animation step flags, authentic cloth and physics pacing, natural roulette timing, and zero slow-motion/fast-forward desyncs. The authentic DevSeville 60 FPS patch and native 30 FPS console lock are also fully supported.
+* **60 FPS Suite & Frame Pacing Engine**: Seamless 60 FPS gameplay with accurate 1-cycle animation step flags, authentic cloth and physics pacing, natural roulette timing, and zero slow-motion/fast-forward desyncs. The authentic DevSeville 60 FPS patch and native 30 FPS console lock are also fully supported.
 * **Hardware-Level Feedback Pass Culling (Razor-Sharp Cutscenes)**: Discards post-processing framebuffer feedback quads (`HasSharedBits(FRAME, TEX0)`), eliminating heat shimmer mirages, wire/pole double-vision ghosting, vertical smear trails, and white shoulder halos while preserving 100% smooth screen fades (`classFADE`).
 * **Cutscene Fast-Path Optimization (`sceGsExecStoreImage`)**: Bypasses the 50–90 ms hardware spin loop waiting for unused VRAM download handshakes on mobile, ensuring instantaneous cutscene startup.
 * **Zero-Overhead Deep Performance Profiler & Persistent Spike Logger**: Lock-free circular ring buffer capturing thread-level telemetry (EE CPU compute, guest PC, VU1 queue backlog, Vulkan presentation time, audio buffer fill) on any frame drop > 18.0 ms. Includes persistent session log viewer in settings and a zero-overhead disable toggle.
@@ -55,10 +55,8 @@ Unlike traditional emulators that translate MIPS CPU and VU instructions at runt
 | **Flagship Elite** | Snapdragon 8 Gen 2 / Gen 3, Dimensity 9200 / 9300 | **2.0x – 4.0x (1080p - 2K)** | Off | **60 FPS Solid** |
 | **Upper Mid-Range**| Snapdragon 778G / 870 / 865, Dimensity 7050 / 8200 | **1.0x – 2.0x (Native - HD)**| Auto / Off | **45 – 60 FPS** |
 | **Mid-Range**      | Snapdragon 680 / 695, Helio G99 / G95 | **1.0x (512x448 Native)** | Auto | **30 – 50 FPS** |
-| **Potato / Low-End**| MediaTek Helio G35 / P35, Unisoc T606, SD 480 | **0.5x (Super Ultra Low)** | Skip 2 or Skip 3 | **Playable 30 FPS** |
+| **Potato / Low-End**| MediaTek Helio G35 / P35, Unisoc T606, SD 480 | **0.5x (Super Ultra Low)** | Auto | **Playable 30 FPS** |
 
-> [!TIP]
-> On devices with unified Cortex-A53 cores (like **Helio G35**), select **0.5x (Super Ultra Low Potato Mode)** and **Safe Audio Buffer (512 frames)** under Audio Settings for smooth, glitch-free performance.
 
 ---
 
@@ -135,13 +133,10 @@ build_release.bat
 
 ---
 
-## ⚠️ 60 FPS vs 30 FPS Modes
+##  60 FPS vs 30 FPS Modes
 
-* **Kamite 60 FPS Suite (Recommended)**:
-  * Powered by the groundbreaking research from [God-Hand-Rearmed](https://github.com/God-Hand-Rearmed/God-Hand-Rearmed).
+* **60 FPS Suite (Recommended)**:
   * Decouples the 60Hz display update rate from internal game systems by advancing animation step flags every cycle, maintaining authentic cloth/physics pacing, natural roulette timers, and instant combat response without speed warping.
-* **DevSeville 60 FPS Progressive Patch**:
-  * Unlocks GS progressive 60Hz display mode (`SCE_GS_DTV480P`) while maintaining a clean 1.0f internal game speed rate.
 * **Authentic 30 FPS Console Native Lock**:
   * If you prefer the 100% original PlayStation 2 console combat physics, switch **Target Frame Rate** to **`30 FPS (Console Native Lock)`** in the Graphics settings tab.
 
@@ -190,7 +185,7 @@ Before building your own release APK, you can easily personalize the application
     * Internal Resolution: 0.5x Potato Mode (256x224) up to 4.0x 4K UHD.
     * Aspect Ratio: Original 4:3, Standard 16:9, or **True Fullscreen Hor+ Widescreen** (expanded 3D camera FOV without 2D stretching and guard-band wrap filter).
     * Target FPS: Kamite 60 FPS Suite / DevSeville 60 FPS / 30 FPS Console Native Lock.
-    * Frameskip: Off, Auto (>34ms trigger), Skip 1 Frame, Skip 2 Frames, or Skip 3 Frames (Potato Mode).
+    * Frameskip: Off, Auto (>34ms trigger), Skip 1 Frame.
   * **CONTROLS**: 
     * Controller Mode: Auto, Touch Only, or Gamepad Only.
     * Auto-Hide Touch Controls on Gamepad Connection.
@@ -217,10 +212,9 @@ Before building your own release APK, you can easily personalize the application
 ## 👏 Credits & Acknowledgments
 
 * **Port by owaissseeee**: Android native static recompilation port, Vulkan backend integration, touch HUD, controls layout editor, cheats engine, Hor+ widescreen projection, razor-sharp cutscene feedback culling, performance spike profiler, and mobile performance optimization.
-* **God-Hand-Rearmed (Kamite, LasVola, and contributors)**: For the foundational reverse engineering, ordered depth-shuffle research, and the groundbreaking **Kamite 60 FPS suite** ([https://github.com/God-Hand-Rearmed/God-Hand-Rearmed](https://github.com/God-Hand-Rearmed/God-Hand-Rearmed)).
+* **God-Hand-Rearmed (Kamite, LasVola, and contributors)**: For the foundational reverse engineering, ordered depth-shuffle research, and the groundbreaking **60 FPS suite**.
 * **Capcom & Clover Studio**: For creating *God Hand*, one of the greatest beat-'em-up masterpieces of all time.
 * **GodHandRecomp / GodHandRecompile Community**: For the foundational PlayStation 2 static recompilation work, reverse-engineered function symbol maps, and God Hand recompiler pipeline research.
-* **DevSeville**: For the authentic *God Hand* 60 FPS progressive display patch research and implementation.
 * **PS2Recomp & MrBroccoli**: Static binary recompilation pipeline architecture and toolchain.
 * **PCSX2 Team**: Industry-standard PlayStation 2 GS graphics emulation backend and Vulkan renderer.
 * **Raylib**: Lightweight windowing and input abstractions.
