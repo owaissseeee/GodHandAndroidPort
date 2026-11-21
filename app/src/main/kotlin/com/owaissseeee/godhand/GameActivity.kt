@@ -77,18 +77,66 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
 
     private fun resolveRealPathFromUri(uri: android.net.Uri): String? {
         try {
-            val docId = android.provider.DocumentsContract.getTreeDocumentId(uri)
+            val docId = try {
+                if (android.provider.DocumentsContract.isDocumentUri(this, uri)) {
+                    android.provider.DocumentsContract.getDocumentId(uri)
+                } else {
+                    android.provider.DocumentsContract.getTreeDocumentId(uri)
+                }
+            } catch (_: Throwable) {
+                uri.path ?: ""
+            }
+
+            if (docId.startsWith("raw:")) {
+                return docId.substring("raw:".length)
+            }
             if (docId.startsWith("primary:")) {
-                val rel = docId.substring("primary:".length)
+                val rel = docId.substring("primary:".length).trimStart('/')
                 return "/storage/emulated/0/$rel"
-            } else if (docId.contains(":")) {
-                val p = docId.split(":")
-                if (p.size >= 2) {
-                    return "/storage/${p[0]}/${p[1]}"
+            }
+            val colonIdx = docId.indexOf(':')
+            if (colonIdx > 0) {
+                val vol = docId.substring(0, colonIdx)
+                val rel = docId.substring(colonIdx + 1).trimStart('/')
+                if (vol.matches(Regex("^[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}$"))) {
+                    return "/storage/$vol/$rel"
+                }
+                val candidate = java.io.File("/storage/$vol/$rel")
+                if (candidate.exists()) {
+                    return candidate.absolutePath
+                }
+            }
+
+            try {
+                val proj = arrayOf(android.provider.MediaStore.MediaColumns.DATA)
+                contentResolver.query(uri, proj, null, null, null)?.use { cursor ->
+                    val colIdx = cursor.getColumnIndex(android.provider.MediaStore.MediaColumns.DATA)
+                    if (colIdx != -1 && cursor.moveToFirst()) {
+                        val path = cursor.getString(colIdx)
+                        if (!path.isNullOrBlank() && java.io.File(path).exists()) {
+                            return path
+                        }
+                    }
+                }
+            } catch (_: Throwable) {}
+
+            val path = uri.path
+            if (path != null) {
+                if (path.contains("primary:")) {
+                    val rel = path.substringAfter("primary:").trimStart('/')
+                    return "/storage/emulated/0/$rel"
+                }
+                val treeIdx = path.indexOf("/document/raw:")
+                if (treeIdx != -1) {
+                    return path.substring(treeIdx + "/document/raw:".length)
+                }
+                val file = java.io.File(path)
+                if (file.exists()) {
+                    return file.absolutePath
                 }
             }
         } catch (_: Throwable) {}
-        return uri.path
+        return "/storage/emulated/0/Download/GodHand_Textures/SLUS-21503"
     }
 
     fun getSaveStatesDir(): java.io.File {

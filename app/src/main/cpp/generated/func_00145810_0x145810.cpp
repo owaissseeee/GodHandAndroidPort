@@ -1,3 +1,4 @@
+#include "godhand/frame_patches.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -194,7 +195,7 @@ label_145884:
     SET_GPR_S32(ctx, 4, (int16_t)READ16(ADD32(GPR_U32(ctx, 17), 946)));
     // 0x1458cc: 0x24630001  addiu       $v1, $v1, 0x1
     ctx->pc = 0x1458ccu;
-    SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 1));
+    kamite::rouletteStepHook(rdram, ctx, runtime);
     // 0x1458d0: 0x31400  sll         $v0, $v1, 16
     ctx->pc = 0x1458d0u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 3), 16));
@@ -224,6 +225,7 @@ label_145884:
     ctx->pc = 0x1458e4u;
     WRITE16(ADD32(GPR_U32(ctx, 17), 1058), (uint16_t)GPR_U32(ctx, 0));
 label_1458e8:
+    kamite::rouletteSlideBeginHook(rdram, ctx, runtime);
     // 0x1458e8: 0xc62002a4  lwc1        $f0, 0x2A4($s1)
     ctx->pc = 0x1458e8u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 17), 676)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -1074,6 +1076,7 @@ label_145c08:
         }
     }
     ctx->pc = 0x145C88u;
+    kamite::rouletteSlideEndHook(rdram, ctx, runtime);
     // 0x145c88: 0x8e220090  lw          $v0, 0x90($s1)
     ctx->pc = 0x145c88u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 144)));

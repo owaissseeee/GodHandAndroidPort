@@ -19,18 +19,18 @@ static constexpr uint32_t kCameraAspectAddr = 0x00586B88;
 static constexpr float kAspect16x9 = 1.2444438f;
 static constexpr float kAspect4x3  = 0.93333334f;
 
-static std::atomic<int> s_fpsIdx{0}; // 0 = 60 FPS, 1 = 30 FPS
+static std::atomic<int> s_fpsIdx{0}; // 0 = 30 FPS (Default), 1 = 60 FPS (Experimental)
 static std::atomic<int> s_aspectIdx{2}; // 0 = 16:9, 1 = 4:3, 2 = Full Screen
 static std::atomic<uint32_t> s_screenWidth{1600u};
 static std::atomic<uint32_t> s_screenHeight{720u};
 
 void setFpsMode(int fpsIdx) {
     s_fpsIdx.store(fpsIdx, std::memory_order_relaxed);
-    kamite::requestFps60(fpsIdx == 0);
+    kamite::requestFps60(fpsIdx == 1);
 }
 
 int getFpsMode() {
-    return kamite::fps60() ? 0 : 1;
+    return kamite::fps60() ? 1 : 0;
 }
 
 void setAspectMode(int aspectIdx) {
@@ -81,9 +81,9 @@ void applyPatches(uint8_t* rdram, int fpsIdx, int aspectIdx, float /*customScale
     setAspectMode(aspectIdx);
 
     // FPS configuration:
-    // fpsIdx == 0: 60 FPS (1 VBlank = 0x01)
-    // fpsIdx == 1: 30 FPS console lock (2 VBlanks = 0x02)
-    const uint8_t vblanks = (fpsIdx == 0) ? 0x01 : 0x02;
+    // fpsIdx == 0: 30 FPS console lock (2 VBlanks = 0x02) - DEFAULT
+    // fpsIdx == 1: 60 FPS experimental (1 VBlank = 0x01)
+    const uint8_t vblanks = (fpsIdx == 1) ? 0x01 : 0x02;
     rdram[kFrameLimiterAddr] = vblanks;
     // Speed rate remains 1.0f in both 60 FPS and 30 FPS per DevSeville 60 FPS specification.
     const float speedRate = 1.0f;
@@ -98,7 +98,7 @@ void applyPatches(uint8_t* rdram, int fpsIdx, int aspectIdx, float /*customScale
 void updateFrameTiming(uint8_t* rdram, int fpsIdx) {
     if (!rdram) return;
     setFpsMode(fpsIdx);
-    const uint8_t vblanks = (fpsIdx == 0) ? 0x01 : 0x02;
+    const uint8_t vblanks = (fpsIdx == 1) ? 0x01 : 0x02;
     rdram[kFrameLimiterAddr] = vblanks;
     const float speedRate = 1.0f;
     std::memcpy(rdram + 0x00747A14u, &speedRate, sizeof(speedRate));

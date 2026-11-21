@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.provider.DocumentsContract
+import android.provider.MediaStore
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -103,18 +104,69 @@ class MainActivity : ComponentActivity() {
 
     private fun resolveRealPathFromUri(uri: Uri): String? {
         try {
-            val docId = DocumentsContract.getTreeDocumentId(uri)
+            val docId = try {
+                if (DocumentsContract.isDocumentUri(this, uri)) {
+                    DocumentsContract.getDocumentId(uri)
+                } else {
+                    DocumentsContract.getTreeDocumentId(uri)
+                }
+            } catch (_: Throwable) {
+                uri.path ?: ""
+            }
+
+            if (docId.startsWith("raw:")) {
+                return docId.substring("raw:".length)
+            }
             if (docId.startsWith("primary:")) {
-                val rel = docId.substring("primary:".length)
+                val rel = docId.substring("primary:".length).trimStart('/')
                 return "/storage/emulated/0/$rel"
-            } else if (docId.contains(":")) {
-                val p = docId.split(":")
-                if (p.size >= 2) {
-                    return "/storage/${p[0]}/${p[1]}"
+            }
+            // Check for SD Card UUID like "1234-5678:path"
+            val colonIdx = docId.indexOf(':')
+            if (colonIdx > 0) {
+                val vol = docId.substring(0, colonIdx)
+                val rel = docId.substring(colonIdx + 1).trimStart('/')
+                if (vol.matches(Regex("^[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}$"))) {
+                    return "/storage/$vol/$rel"
+                }
+                val candidate = File("/storage/$vol/$rel")
+                if (candidate.exists()) {
+                    return candidate.absolutePath
+                }
+            }
+
+            // Check ContentResolver query for MediaStore DATA column
+            try {
+                val proj = arrayOf(MediaStore.MediaColumns.DATA)
+                contentResolver.query(uri, proj, null, null, null)?.use { cursor ->
+                    val colIdx = cursor.getColumnIndex(MediaStore.MediaColumns.DATA)
+                    if (colIdx != -1 && cursor.moveToFirst()) {
+                        val path = cursor.getString(colIdx)
+                        if (!path.isNullOrBlank() && File(path).exists()) {
+                            return path
+                        }
+                    }
+                }
+            } catch (_: Throwable) {}
+
+            // Try uri path decoding
+            val path = uri.path
+            if (path != null) {
+                if (path.contains("primary:")) {
+                    val rel = path.substringAfter("primary:").trimStart('/')
+                    return "/storage/emulated/0/$rel"
+                }
+                val treeIdx = path.indexOf("/document/raw:")
+                if (treeIdx != -1) {
+                    return path.substring(treeIdx + "/document/raw:".length)
+                }
+                val file = File(path)
+                if (file.exists()) {
+                    return file.absolutePath
                 }
             }
         } catch (_: Throwable) {}
-        return uri.path
+        return "/storage/emulated/0/Download/GodHand_Textures/SLUS-21503"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -125,6 +177,20 @@ class MainActivity : ComponentActivity() {
         settings = SettingsRepository(this)
         processor = IsoCacheProcessor(this)
         processor.ensureResourcesCopied()
+        NativeBridge.setGameCacheDirectory(processor.cacheDir.absolutePath)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !Environment.isExternalStorageManager()) {
+            try {
+                val intent = Intent(android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).apply {
+                    data = Uri.parse("package:$packageName")
+                }
+                startActivity(intent)
+            } catch (_: Exception) {
+                try {
+                    startActivity(Intent(android.provider.Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION))
+                } catch (_: Exception) {}
+            }
+        }
 
         loadCustomArtworkIfAvailable()
         setupMenuButtons()

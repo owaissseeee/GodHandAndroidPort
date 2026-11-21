@@ -467,7 +467,7 @@ Java_com_owaissseeee_godhand_NativeBridge_onSurfaceCreated(
     godhand::mobile::setFpsMode(fpsIdx);
     godhand::mobile::setAspectMode(aspectIdx);
 
-    float target_hz = (fpsIdx == 0) ? 60.0f : 30.0f;
+    float target_hz = (fpsIdx == 1) ? 60.0f : 30.0f;
     using PFN_setFrameRate = int (*)(ANativeWindow*, float, int8_t);
     static auto pfn_setFrameRate = reinterpret_cast<PFN_setFrameRate>(dlsym(RTLD_DEFAULT, "ANativeWindow_setFrameRate"));
     if (pfn_setFrameRate && win) {

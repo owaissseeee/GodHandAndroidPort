@@ -893,9 +893,11 @@ bool godhand_perf_get_stats(float* outStats, int statsCount, float* outHistory, 
 }
 
 void godhand_set_frameskip_mode(int mode) {
-    g_frameskipMode.store(mode, std::memory_order_release);
+    // UI mapping: 0 = Off, 1 = Skip 1 Frame (maps to pcsx2gs mode 2)
+    const int actual_mode = (mode == 1) ? 2 : mode;
+    g_frameskipMode.store(actual_mode, std::memory_order_release);
     if (g_setFrameskip) {
-        g_setFrameskip(mode);
+        g_setFrameskip(actual_mode);
     }
 }
 

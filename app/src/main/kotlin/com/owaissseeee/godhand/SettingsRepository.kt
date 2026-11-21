@@ -154,18 +154,18 @@ class SettingsRepository(context: Context) {
 
     var fpsIdx: Int
         get() {
-            if (!prefs.contains("fps_idx_v5")) {
-                val def = if (isCortexA53OrPotato) 1 else 0
-                putInt("fps_idx_v5", def)
+            if (!prefs.contains("fps_idx_v6")) {
+                val def = 0 // 0: 30 FPS (Authentic PS2 - Default)
+                putInt("fps_idx_v6", def)
                 return def
             }
-            return getSafeInt("fps_idx_v5", 0).coerceIn(0, 1)
+            return getSafeInt("fps_idx_v6", 0).coerceIn(0, 1)
         }
-        set(value) = putInt("fps_idx_v5", value.coerceIn(0, 1))
+        set(value) = putInt("fps_idx_v6", value.coerceIn(0, 1))
 
     var frameskipIdx: Int
-        get() = getSafeInt("frameskip_idx_v2", 1).coerceIn(0, 4) // 0: Off, 1: Auto (Skip on Lag - Recommended), 2: Skip 1 Frame, 3: Skip 2 Frames, 4: Skip 3 Frames (Potato Mode)
-        set(value) = putInt("frameskip_idx_v2", value.coerceIn(0, 4))
+        get() = getSafeInt("frameskip_idx_v3", 0).coerceIn(0, 1) // 0: Off (Full 1:1 Rendering - Default), 1: Skip 1 Frame (Mild Potato Boost)
+        set(value) = putInt("frameskip_idx_v3", value.coerceIn(0, 1))
 
     // --- Audio Settings ---
     var audioSchedulingIdx: Int

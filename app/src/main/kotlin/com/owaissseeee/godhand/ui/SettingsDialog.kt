@@ -436,7 +436,7 @@ class SettingsDialog(
 
         addSpinnerRow(
             "Target Frame Rate",
-            listOf("60 FPS (Native Speed / Uncapped)", "30 FPS (Authentic PS2 / Potato Boost)"),
+            listOf("30 FPS (Authentic PS2 - Default)", "60 FPS (Experimental / Physics Uncapped)"),
             settings.fpsIdx
         ) { pos ->
             settings.fpsIdx = pos
@@ -448,11 +448,8 @@ class SettingsDialog(
         addSpinnerRow(
             "Frameskip Engine",
             listOf(
-                "Off (Render Every Frame - Recommended)",
-                "Auto (Skip on Lag/Hitch)",
-                "Skip 1 Frame (Light Boost)",
-                "Skip 2 Frames (Heavy Boost)",
-                "Skip 3 Frames (Max Throttle for Low-End Helio G35 / A53 Cores)"
+                "Off (Full 1:1 Rendering - Default)",
+                "Skip 1 Frame (Mild Potato Boost)"
             ),
             settings.frameskipIdx
         ) { pos ->

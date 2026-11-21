@@ -249,9 +249,19 @@ namespace kamite
             const int32_t cursor = GPR_S32(ctx, 3), count = GPR_S32(ctx, 4);
             uint16_t buttons = 0;
             std::memcpy(&buttons, &ram8(rdram, kPadButtons), sizeof(buttons));
+            const uint16_t guestPressed = static_cast<uint16_t>(~buttons);
             uint64_t pressed = 0;
             std::memcpy(&pressed, &ram8(rdram, 0x7474A0u + 0x1A0u), sizeof(pressed));
-            const bool up = (pressed & (1ull << 49)) != 0u || ((pressed & (1ull << 48)) == 0u && (buttons & 0x10u) != 0u);
+
+            const float ly = ps2_pad::getLy();
+            const float ry = ps2_pad::getRy();
+            const uint32_t hostBtns = ps2_pad::getButtons();
+
+            const bool up = (pressed & (1ull << 49)) != 0u ||
+                            ((guestPressed & 0x0010u) != 0u) ||
+                            ((hostBtns & (1u << 4)) != 0u) ||
+                            (ly < -0.45f) || (ry < -0.45f);
+
             g_rouletteBack = up && count > 1;
             SET_GPR_S32(ctx, 3, up && count > 0 ? (cursor + count - 1) % count : cursor + 1);
         }
@@ -1383,10 +1393,6 @@ namespace kamite
             // back, so the game ran at 60 with none of the mode's fixes ("the old broken 60 FPS", Thinso, Oct 27).
             rateChange(rdram, ram8(rdram, kFrameDivider), g_fps60 ? 1u : 2u);
             ram8(rdram, kFrameDivider) = g_fps60 ? 1u : 2u;
-            if (godhand::checkStreamVolumesDirty())
-            {
-                godhand::reapplyStreamVolumes(rdram, ctx, runtime);
-            }
             if (!g_fps60)
             {
                 restoreInjected(rdram);
@@ -1435,10 +1441,6 @@ namespace kamite
                 g_holds = g_staleRestores = 0u;
             l3Dash(rdram);
             rouletteDpad(rdram);
-            if (godhand::checkStreamVolumesDirty())
-            {
-                godhand::reapplyStreamVolumes(rdram, ctx, runtime);
-            }
         }
 
         // Replaces c.eq.s f0,f2 at 0x2C81C0: the condition is "same integer frame" (cvt.w.s of both).
@@ -2239,6 +2241,26 @@ namespace kamite
     void cycleRouletteTarget(int dir)
     {
         (void)dir;
+    }
+
+    void rouletteSeenHook(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime)
+    {
+        rouletteSeen(rdram, ctx, runtime);
+    }
+
+    void rouletteStepHook(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime)
+    {
+        rouletteStep(rdram, ctx, runtime);
+    }
+
+    void rouletteSlideBeginHook(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime)
+    {
+        rouletteSlideBegin(rdram, ctx, runtime);
+    }
+
+    void rouletteSlideEndHook(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime)
+    {
+        rouletteSlideEnd(rdram, ctx, runtime);
     }
 }
 

@@ -27,6 +27,11 @@ namespace kamite
     void setRouletteTimerDouble(bool on);
     void cycleRouletteTarget(int dir);
 
+    void rouletteSeenHook(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime);
+    void rouletteStepHook(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime);
+    void rouletteSlideBeginHook(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime);
+    void rouletteSlideEndHook(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime);
+
     // Main game loop hook at label_30adf4: in func_0030AC40
     void frameStart(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime);
 

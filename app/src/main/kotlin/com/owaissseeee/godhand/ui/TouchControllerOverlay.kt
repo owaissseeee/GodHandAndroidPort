@@ -819,7 +819,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                             } else if (!isForward) {
                                 wasMovingForward = false
                             }
-                        } else if (repo.fpsIdx == 0) {
+                        } else if (repo.fpsIdx == 1) {
                             if (isForward && !wasMovingForward) {
                                 val now = android.os.SystemClock.uptimeMillis()
                                 if (now - lastForwardTapTime in 40L..450L) {
@@ -870,7 +870,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                             } else if (!isForward) {
                                 wasMovingForward = false
                             }
-                        } else if (repo.fpsIdx == 0) {
+                        } else if (repo.fpsIdx == 1) {
                             if (isForward && !wasMovingForward) {
                                 val now = android.os.SystemClock.uptimeMillis()
                                 if (now - lastForwardTapTime in 40L..450L) {

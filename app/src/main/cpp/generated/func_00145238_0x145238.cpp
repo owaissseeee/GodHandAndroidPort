@@ -342,6 +342,7 @@ label_1452e4:
         }
     }
     ctx->pc = 0x145308u;
+    kamite::rouletteSeenHook(rdram, ctx, runtime);
     // 0x145308: 0x966204d0  lhu         $v0, 0x4D0($s3)
     ctx->pc = 0x145308u;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 19), 1232)));
