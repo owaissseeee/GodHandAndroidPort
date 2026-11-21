@@ -1320,6 +1320,40 @@ class SettingsDialog(
         controlRow.addView(btnSysLogcat, LinearLayout.LayoutParams(0, 34.dpToPx(), 1f).apply { setMargins(3.dpToPx(), 0, 0, 0) })
         contentContainer.addView(controlRow)
 
+        val btnGsDump = Button(context).apply {
+            text = "📸 1-TAP CAPTURE GS DUMP (.gs)"
+            textSize = 11f
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
+            setBackgroundResource(R.drawable.btn_god_hand_primary)
+            setTextColor(0xFFFFFFFF.toInt())
+            setOnClickListener {
+                Toast.makeText(context, "Capturing GS Dump on next frame...", Toast.LENGTH_SHORT).show()
+                Thread {
+                    val exportDir = try {
+                        val d = File("/storage/emulated/0/Download/GodHand_GSDumps")
+                        if (!d.exists()) d.mkdirs()
+                        if (d.exists() && d.canWrite()) d else context.getExternalFilesDir("GSDumps") ?: context.filesDir
+                    } catch (e: Exception) {
+                        context.getExternalFilesDir("GSDumps") ?: context.filesDir
+                    }
+                    val dumpPath = NativeBridge.captureGsDump(exportDir.absolutePath)
+                    post {
+                        if (dumpPath.isNotBlank() && !dumpPath.startsWith("ERROR")) {
+                            val clip = ClipData.newPlainText("GSDumpPath", dumpPath)
+                            (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).setPrimaryClip(clip)
+                            Toast.makeText(context, "📸 GS Dump Captured!\nSaved to: $dumpPath\n(Copied to clipboard)", Toast.LENGTH_LONG).show()
+                            logView.text = "[GS DUMP CAPTURED SUCCESS]\nFile: $dumpPath\nTransfer this file to PC and open in PCSX2 Debugger.\n\n" + logView.text
+                        } else {
+                            Toast.makeText(context, "GS Dump: $dumpPath", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }.start()
+            }
+        }
+        contentContainer.addView(btnGsDump, LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, 38.dpToPx()
+        ).apply { setMargins(0, 4.dpToPx(), 0, 8.dpToPx()) })
+
         val logScroll = ScrollView(context).apply {
             isNestedScrollingEnabled = true
             setOnTouchListener { v, _ ->

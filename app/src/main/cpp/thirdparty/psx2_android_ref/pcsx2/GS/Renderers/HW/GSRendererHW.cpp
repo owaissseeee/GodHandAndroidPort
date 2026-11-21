@@ -6102,10 +6102,9 @@ void GSRendererHW::EmulateDATESelectMethod(DATEOptions& date_options, GSTextureC
 
 	// It is way too complex to emulate texture shuffle with DATE, so use accurate path.
 	// No overlap should be triggered on gl/vk only as they support DATE_BARRIER.
-	if (features.framebuffer_fetch && g_gs_device->GetRenderAPI() != RenderAPI::OpenGL)
+	if (features.framebuffer_fetch)
 	{
-		// Full DATE is "free" with framebuffer fetch on desktop / Vulkan,
-		// but on mobile OpenGL ES tile-read destination alpha is non-coherent and discards hair/sprites.
+		// Full DATE is "free" with framebuffer fetch on both Vulkan (subpassLoad) and OpenGL ES (shader_framebuffer_fetch).
 		GL_PERF("DATE: Accurate with framebuffer fetch");
 		date_options.barrier = true;
 		m_conf.require_full_barrier = true;

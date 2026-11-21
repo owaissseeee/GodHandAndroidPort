@@ -3,6 +3,8 @@
 #include "runtime/performance_profiler.h"
 
 #include <cinttypes>
+#include <condition_variable>
+#include <ctime>
 #include <mutex>
 #include <algorithm>
 #include <atomic>
@@ -201,6 +203,36 @@ extern "C" const char* godhand_get_explicit_cache_dir();
         default: return 32u;
         }
     }
+
+#pragma pack(push, 4)
+    struct GSDumpHeader
+    {
+        uint32_t state_version;
+        uint32_t state_size;
+        uint32_t serial_offset;
+        uint32_t serial_size;
+        uint32_t crc;
+        uint32_t screenshot_width;
+        uint32_t screenshot_height;
+        uint32_t screenshot_offset;
+        uint32_t screenshot_size;
+    };
+#pragma pack(pop)
+
+    struct OneTapGsDumpState
+    {
+        std::atomic<bool> requested{false};
+        std::string targetDir;
+        std::string savedGsPath;
+        std::mutex mutex;
+        std::condition_variable cv;
+        bool done = false;
+
+        std::FILE *gsFile = nullptr;
+        std::FILE *dumpFile = nullptr;
+        int framesLeft = 0;
+    };
+    static OneTapGsDumpState s_oneTapDump;
 }
 
 // PS2X_FRAME_TIMES with PCSX2's GS: one row per present (vsync), in the columns of the host loop's file (ps2_runtime.cpp)
@@ -669,6 +701,28 @@ void GSPcsx2Backend::RawGif(const uint8_t *data, uint32_t sizeBytes)
         m_gifBytes += sizeBytes;
         if (gifDump().active)
             gifDumpRecord('G', data, sizeBytes & ~15u);
+
+        if (s_oneTapDump.framesLeft > 0)
+        {
+            if (s_oneTapDump.gsFile)
+            {
+                const uint8_t id = 0;
+                const uint8_t path_idx = 1;
+                const uint32_t sz = sizeBytes;
+                std::fwrite(&id, 1, 1, s_oneTapDump.gsFile);
+                std::fwrite(&path_idx, 1, 1, s_oneTapDump.gsFile);
+                std::fwrite(&sz, 4, 1, s_oneTapDump.gsFile);
+                std::fwrite(data, 1, sizeBytes, s_oneTapDump.gsFile);
+            }
+            if (s_oneTapDump.dumpFile)
+            {
+                const uint8_t type = 'G';
+                const uint32_t sz = sizeBytes;
+                std::fwrite(&type, 1, 1, s_oneTapDump.dumpFile);
+                std::fwrite(&sz, 4, 1, s_oneTapDump.dumpFile);
+                std::fwrite(data, 1, sizeBytes, s_oneTapDump.dumpFile);
+            }
+        }
     }
 }
 
@@ -733,6 +787,116 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
     g_api->vsync(reinterpret_cast<const Pcsx2GsPrivRegs *>(&regs));
     WriteFrameTime(presentStart);
     g_presents.fetch_add(1u, std::memory_order_relaxed);
+
+    // 1-Tap GS Dump capture handler
+    if (s_oneTapDump.requested.exchange(false, std::memory_order_acq_rel))
+    {
+        std::time_t t = std::time(nullptr);
+        std::tm tm{};
+#if defined(_WIN32)
+        localtime_s(&tm, &t);
+#else
+        localtime_r(&t, &tm);
+#endif
+        char timeBuf[64];
+        std::strftime(timeBuf, sizeof(timeBuf), "%Y%m%d_%H%M%S", &tm);
+        std::string base = s_oneTapDump.targetDir + "/godhand_dump_" + timeBuf;
+        std::string gsPath = base + ".gs";
+        std::string dumpPath = base + ".dump";
+
+        s_oneTapDump.gsFile = std::fopen(gsPath.c_str(), "wb");
+        s_oneTapDump.dumpFile = std::fopen(dumpPath.c_str(), "wb");
+
+        if (s_oneTapDump.gsFile)
+        {
+            const uint32_t fake_crc = 0xFFFFFFFFu;
+            std::fwrite(&fake_crc, 4, 1, s_oneTapDump.gsFile);
+            const std::string serial = "SLUS-21503";
+            const uint32_t hdr_sz = sizeof(GSDumpHeader) + static_cast<uint32_t>(serial.size());
+            std::fwrite(&hdr_sz, 4, 1, s_oneTapDump.gsFile);
+
+            std::vector<uint8_t> vram(m_vramSize, 0u);
+            if (g_api && g_api->save_vram)
+                vram.resize(g_api->save_vram(vram.data(), static_cast<uint32_t>(vram.size())));
+
+            GSDumpHeader hdr{};
+            hdr.state_version = 0x00010000u;
+            hdr.state_size = static_cast<uint32_t>(vram.size());
+            hdr.crc = 0x6FB69282u;
+            hdr.serial_offset = sizeof(hdr);
+            hdr.serial_size = static_cast<uint32_t>(serial.size());
+            hdr.screenshot_width = 0;
+            hdr.screenshot_height = 0;
+            hdr.screenshot_offset = hdr.serial_offset + hdr.serial_size;
+            hdr.screenshot_size = 0;
+
+            std::fwrite(&hdr, sizeof(hdr), 1, s_oneTapDump.gsFile);
+            std::fwrite(serial.data(), 1, serial.size(), s_oneTapDump.gsFile);
+            std::fwrite(vram.data(), 1, vram.size(), s_oneTapDump.gsFile);
+            std::fwrite(&regs, sizeof(regs), 1, s_oneTapDump.gsFile);
+
+            if (s_oneTapDump.dumpFile)
+            {
+                const uint8_t type = 'M';
+                const uint32_t sz = static_cast<uint32_t>(vram.size());
+                std::fwrite(&type, 1, 1, s_oneTapDump.dumpFile);
+                std::fwrite(&sz, 4, 1, s_oneTapDump.dumpFile);
+                std::fwrite(vram.data(), 1, vram.size(), s_oneTapDump.dumpFile);
+            }
+
+            s_oneTapDump.framesLeft = 2; // Capture 2 complete frames
+            s_oneTapDump.savedGsPath = gsPath;
+#if defined(__ANDROID__)
+            __android_log_print(ANDROID_LOG_INFO, "GodHandDump", "Started 1-tap GS dump to: %s", gsPath.c_str());
+#endif
+        }
+    }
+    else if (s_oneTapDump.framesLeft > 0)
+    {
+        if (s_oneTapDump.gsFile)
+        {
+            const uint8_t idRegs = 3;
+            std::fwrite(&idRegs, 1, 1, s_oneTapDump.gsFile);
+            std::fwrite(&regs, sizeof(regs), 1, s_oneTapDump.gsFile);
+            const uint8_t idVsync = 1;
+            const uint8_t field = (regs.csr & 0x2000u) ? 0u : 1u;
+            std::fwrite(&idVsync, 1, 1, s_oneTapDump.gsFile);
+            std::fwrite(&field, 1, 1, s_oneTapDump.gsFile);
+        }
+        if (s_oneTapDump.dumpFile)
+        {
+            const uint8_t type = 'V';
+            const uint32_t sz = sizeof(uint64_t) + sizeof(regs);
+            const uint64_t fld = (regs.csr & 0x2000u) ? 0u : 1u;
+            std::fwrite(&type, 1, 1, s_oneTapDump.dumpFile);
+            std::fwrite(&sz, 4, 1, s_oneTapDump.dumpFile);
+            std::fwrite(&fld, sizeof(fld), 1, s_oneTapDump.dumpFile);
+            std::fwrite(&regs, sizeof(regs), 1, s_oneTapDump.dumpFile);
+        }
+
+        s_oneTapDump.framesLeft--;
+        if (s_oneTapDump.framesLeft == 0)
+        {
+            if (s_oneTapDump.gsFile)
+            {
+                std::fclose(s_oneTapDump.gsFile);
+                s_oneTapDump.gsFile = nullptr;
+            }
+            if (s_oneTapDump.dumpFile)
+            {
+                std::fclose(s_oneTapDump.dumpFile);
+                s_oneTapDump.dumpFile = nullptr;
+            }
+            {
+                std::lock_guard<std::mutex> lk(s_oneTapDump.mutex);
+                s_oneTapDump.done = true;
+            }
+            s_oneTapDump.cv.notify_all();
+#if defined(__ANDROID__)
+            __android_log_print(ANDROID_LOG_INFO, "GodHandDump", "Completed 1-tap GS dump to: %s", s_oneTapDump.savedGsPath.c_str());
+#endif
+        }
+    }
 
     // Accurate, zero-overhead frametime & FPS recording at physical present boundary
     const auto presentEnd = std::chrono::steady_clock::now();
@@ -1094,5 +1258,20 @@ void godhand_perf_clear_session_spike_log() {
 }
 
 } // extern "C"
+
+std::string GSPcsx2Backend::TriggerDump(const std::string& directory)
+{
+    {
+        std::lock_guard<std::mutex> lk(s_oneTapDump.mutex);
+        s_oneTapDump.targetDir = directory.empty() ? "/storage/emulated/0/Download" : directory;
+        s_oneTapDump.savedGsPath.clear();
+        s_oneTapDump.done = false;
+        s_oneTapDump.requested.store(true, std::memory_order_release);
+    }
+
+    std::unique_lock<std::mutex> lk(s_oneTapDump.mutex);
+    s_oneTapDump.cv.wait_for(lk, std::chrono::milliseconds(1500), [] { return s_oneTapDump.done; });
+    return s_oneTapDump.savedGsPath.empty() ? (s_oneTapDump.targetDir + "/godhand_dump_captured.gs") : s_oneTapDump.savedGsPath;
+}
 
 #endif // PS2X_HAS_PCSX2_GS

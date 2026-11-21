@@ -22,6 +22,7 @@
 #include "src/godhand/save_state_manager.h"
 #include "src/godhand/frame_patches.h"
 #include "godhand_patches_mobile.h"
+#include "runtime/gs/gs_pcsx2_backend.h"
 
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, "GodHandRecomp", __VA_ARGS__)
@@ -781,6 +782,20 @@ Java_com_owaissseeee_godhand_NativeBridge_setCustomTextureDirectory(
         godhand_set_texture_replacement_dir(nativePath);
         env->ReleaseStringUTFChars(pathStr, nativePath);
     }
+}
+
+JNIEXPORT jstring JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_captureGsDump(JNIEnv* env, jobject /*thiz*/, jstring outDirStr) {
+    std::string outDir = "/storage/emulated/0/Download";
+    if (outDirStr) {
+        const char* cstr = env->GetStringUTFChars(outDirStr, nullptr);
+        if (cstr && *cstr) {
+            outDir = cstr;
+        }
+        env->ReleaseStringUTFChars(outDirStr, cstr);
+    }
+    std::string path = GSPcsx2Backend::TriggerDump(outDir);
+    return env->NewStringUTF(path.c_str());
 }
 
 static void startStdoutStderrRedirect() {

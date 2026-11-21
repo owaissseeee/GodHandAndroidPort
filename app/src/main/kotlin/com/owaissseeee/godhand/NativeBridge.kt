@@ -49,5 +49,6 @@ object NativeBridge {
     external fun saveState(slot: Int, directoryPath: String): Boolean
     external fun loadState(slot: Int, directoryPath: String): Boolean
     external fun getStateInfo(slot: Int, directoryPath: String): String?
+    external fun captureGsDump(outDir: String = ""): String
 }
 

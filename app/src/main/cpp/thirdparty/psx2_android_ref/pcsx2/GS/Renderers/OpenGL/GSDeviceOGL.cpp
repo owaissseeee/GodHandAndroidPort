@@ -942,7 +942,10 @@ bool GSDeviceOGL::CheckFeatures()
 	}
 
 	m_features.framebuffer_fetch =
-		GLAD_GL_EXT_shader_framebuffer_fetch || (m_is_gles && GLAD_GL_ARM_shader_framebuffer_fetch);
+		GLAD_GL_EXT_shader_framebuffer_fetch ||
+		(m_is_gles && (GLAD_GL_ARM_shader_framebuffer_fetch ||
+		               GLAD_GL_EXT_shader_framebuffer_fetch_non_coherent ||
+		               GLAD_GL_QCOM_shader_framebuffer_fetch_noncoherent));
 	if (m_features.framebuffer_fetch && GSConfig.DisableFramebufferFetch)
 	{
 		Host::AddOSDMessage(
@@ -968,6 +971,10 @@ bool GSDeviceOGL::CheckFeatures()
 				fn = (PFNGLTEXTUREBARRIERPROC)m_gl_context->GetProcAddress("glTextureBarrierKHR");
 			if (fn)
 				glTextureBarrier = fn;
+			else if (GLAD_GL_EXT_shader_framebuffer_fetch_non_coherent && glFramebufferFetchBarrierEXT)
+				glTextureBarrier = glFramebufferFetchBarrierEXT;
+			else if (GLAD_GL_QCOM_shader_framebuffer_fetch_noncoherent && glFramebufferFetchBarrierQCOM)
+				glTextureBarrier = glFramebufferFetchBarrierQCOM;
 			else
 				glTextureBarrier = ReplaceGL::MemoryBarrierAsTextureBarrier;
 		}
@@ -985,6 +992,10 @@ bool GSDeviceOGL::CheckFeatures()
 				fn = (PFNGLTEXTUREBARRIERPROC)m_gl_context->GetProcAddress("glTextureBarrierKHR");
 			if (fn)
 				glTextureBarrier = fn;
+			else if (GLAD_GL_EXT_shader_framebuffer_fetch_non_coherent && glFramebufferFetchBarrierEXT)
+				glTextureBarrier = glFramebufferFetchBarrierEXT;
+			else if (GLAD_GL_QCOM_shader_framebuffer_fetch_noncoherent && glFramebufferFetchBarrierQCOM)
+				glTextureBarrier = glFramebufferFetchBarrierQCOM;
 			else
 				glTextureBarrier = ReplaceGL::MemoryBarrierAsTextureBarrier;
 			m_features.texture_barrier = true;
@@ -1003,7 +1014,7 @@ bool GSDeviceOGL::CheckFeatures()
 	m_features.prefer_new_textures = m_is_gles || is_mali || is_adreno || is_powervr;
 	if (m_is_gles || is_adreno)
 	{
-		m_features.stencil_buffer = false;
+		m_features.stencil_buffer = !m_features.framebuffer_fetch;
 		m_features.test_and_sample_depth = false;
 	}
 	else
@@ -1822,6 +1833,16 @@ std::string GSDeviceOGL::GenGlslHeader(const std::string_view entry, GLenum type
 			if (GLAD_GL_EXT_shader_framebuffer_fetch)
 			{
 				header += "#extension GL_EXT_shader_framebuffer_fetch : enable\n";
+				header += "#define HAS_FB_FETCH_EXT 1\n";
+			}
+			else if (GLAD_GL_EXT_shader_framebuffer_fetch_non_coherent)
+			{
+				header += "#extension GL_EXT_shader_framebuffer_fetch_non_coherent : enable\n";
+				header += "#define HAS_FB_FETCH_EXT 1\n";
+			}
+			else if (GLAD_GL_QCOM_shader_framebuffer_fetch_noncoherent)
+			{
+				header += "#extension GL_QCOM_shader_framebuffer_fetch_noncoherent : enable\n";
 				header += "#define HAS_FB_FETCH_EXT 1\n";
 			}
 			else if (GLAD_GL_ARM_shader_framebuffer_fetch)

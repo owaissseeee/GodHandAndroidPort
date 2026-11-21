@@ -129,7 +129,7 @@ in SHADER
 	// Basically the only scenario where this'll happen is RGBA masked and DATE is active.
 	#undef PS_NO_COLOR
 	#define PS_NO_COLOR 0
-	#if defined(HAS_FB_FETCH_EXT) || defined(GL_EXT_shader_framebuffer_fetch)
+	#if defined(HAS_FB_FETCH_EXT) || defined(GL_EXT_shader_framebuffer_fetch) || defined(GL_EXT_shader_framebuffer_fetch_non_coherent) || defined(GL_QCOM_shader_framebuffer_fetch_noncoherent)
 		#undef TARGET_0_QUALIFIER
 		#define TARGET_0_QUALIFIER inout
 		#define LAST_FRAG_COLOR o_col0

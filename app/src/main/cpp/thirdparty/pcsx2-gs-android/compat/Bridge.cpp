@@ -318,6 +318,10 @@ gs_open_success:
 #endif
     }
 
+    std::mutex g_texDirMutex;
+    std::string g_pendingTexDir;
+    std::atomic<bool> g_pendingTexDirChanged{false};
+
     void Vsync(const Pcsx2GsPrivRegs *regs)
     {
         if (!g_open || !regs)
@@ -330,6 +334,32 @@ gs_open_success:
         std::memcpy(g_regs + 0x1080, &regs->siglblid, 8);
         GSvsync((regs->csr & 0x2000u) ? 0u : 1u, true);
         WritePresentStats();
+
+        // Process pending texture pack folder changes safely on GSThread at frame boundary
+        if (g_pendingTexDirChanged.exchange(false, std::memory_order_acq_rel))
+        {
+            std::string dir;
+            {
+                std::lock_guard<std::mutex> lock(g_texDirMutex);
+                dir = g_pendingTexDir;
+            }
+            Pcsx2Config::GSOptions oldConfig = GSConfig;
+            if (!dir.empty()) {
+                pcsx2gs::SetTextureFolder(dir.c_str());
+                EmuConfig.GS.LoadTextureReplacements = true;
+                EmuConfig.GS.LoadTextureReplacementsAsync = true;
+            } else {
+                pcsx2gs::SetTextureFolder("");
+                EmuConfig.GS.LoadTextureReplacements = false;
+            }
+            GSUpdateConfig(EmuConfig.GS);
+            if (g_gs_renderer) {
+                GSTextureReplacements::UpdateConfig(oldConfig);
+                GSTextureReplacements::GameChanged();
+                GSTextureReplacements::ReloadReplacementMap();
+                g_gs_renderer->PurgeTextureCache(true, false, true);
+            }
+        }
     }
 
     void Reset()
@@ -485,21 +515,23 @@ extern "C" PCSX2GS_EXPORT void pcsx2gs_set_aspect(uint32_t mode)
 
 extern "C" PCSX2GS_EXPORT void pcsx2gs_set_texture_folder(const char *dir)
 {
-    Pcsx2Config::GSOptions oldConfig = GSConfig;
-    if (dir && *dir) {
-        pcsx2gs::SetTextureFolder(dir);
-        EmuConfig.GS.LoadTextureReplacements = true;
-        EmuConfig.GS.LoadTextureReplacementsAsync = true;
-    } else {
-        pcsx2gs::SetTextureFolder("");
-        EmuConfig.GS.LoadTextureReplacements = false;
+    {
+        std::lock_guard<std::mutex> lock(g_texDirMutex);
+        g_pendingTexDir = dir ? dir : "";
+        g_pendingTexDirChanged.store(true, std::memory_order_release);
     }
-    GSUpdateConfig(EmuConfig.GS);
-    if (g_gs_renderer) {
-        GSTextureReplacements::UpdateConfig(oldConfig);
-        GSTextureReplacements::GameChanged();
-        GSTextureReplacements::ReloadReplacementMap();
-        g_gs_renderer->PurgeTextureCache(true, false, true);
+    // If GS is not yet running or renderer not yet created, apply immediately
+    if (!g_open || !g_gs_renderer) {
+        if (dir && *dir) {
+            pcsx2gs::SetTextureFolder(dir);
+            EmuConfig.GS.LoadTextureReplacements = true;
+            EmuConfig.GS.LoadTextureReplacementsAsync = true;
+        } else {
+            pcsx2gs::SetTextureFolder("");
+            EmuConfig.GS.LoadTextureReplacements = false;
+        }
+        GSUpdateConfig(EmuConfig.GS);
+        g_pendingTexDirChanged.store(false, std::memory_order_relaxed);
     }
 }
 
