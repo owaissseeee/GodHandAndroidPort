@@ -460,7 +460,7 @@ bool GSPcsx2Backend::EnsureOpen()
     params.resources = resources.c_str();
     params.cache = cache.c_str();
     params.vsync = static_cast<uint32_t>(std::clamp(envInt("PS2X_PCSX2_VSYNC", 2), 0, 2)); // mailbox: no tearing, no wait
-    params.stretch = static_cast<uint32_t>(std::clamp(envInt("PS2X_PCSX2_STRETCH", 1), 0, 2));
+    params.stretch = static_cast<uint32_t>(std::clamp(envInt("PS2X_PCSX2_STRETCH", 2), 0, 2));
     // Image options (pcsx2gs_api.h): PS2X_PCSX2_<KEY> -> key=value.
     static constexpr struct
     {
@@ -501,20 +501,24 @@ bool GSPcsx2Backend::EnsureOpen()
     {
         const char *textureDir = std::getenv("PS2X_PCSX2_TEXTURE_DIR");
         std::filesystem::path folder = (textureDir && *textureDir) ? std::filesystem::path(textureDir)
-                                                                 : dir / "textures" / "SLUS-21209";
+                                                                 : dir / "textures" / "SLUS-21503";
         if (!(textureDir && *textureDir))
         {
             std::filesystem::path base = dir;
             for (int up = 0; up < 4; ++up, base = base.parent_path())
             {
-                if (std::filesystem::is_directory(base / "textures" / "SLUS-21209" / "replacements", ec))
+                if (std::filesystem::is_directory(base / "textures" / "SLUS-21503" / "replacements", ec))
                 {
-                    folder = base / "textures" / "SLUS-21209";
+                    folder = base / "textures" / "SLUS-21503";
                     break;
                 }
             }
         }
         if (std::filesystem::is_directory(folder / "replacements", ec))
+            options += "texture_dir=" + utf8(folder) + ";";
+        else if (folder.filename() == "replacements" && std::filesystem::is_directory(folder, ec))
+            options += "texture_dir=" + utf8(folder.parent_path()) + ";";
+        else if (std::filesystem::is_directory(folder, ec))
             options += "texture_dir=" + utf8(folder) + ";";
         else if (textureDir && *textureDir)
             std::fprintf(stderr, "[gs] PS2X_PCSX2_TEXTURE_DIR: no replacements folder in %s\n", utf8(folder).c_str());
@@ -909,6 +913,28 @@ void godhand_set_resolution_scale(float scale) {
 
 void godhand_set_aspect_ratio(int aspectIdx) {
     g_pendingAspect.store(aspectIdx, std::memory_order_release);
+}
+
+extern "C" uint32_t godhand_save_gs_vram(uint8_t* dst, uint32_t size) {
+    if (g_api && g_api->save_vram && dst && size > 0) {
+        return g_api->save_vram(dst, size);
+    }
+    return 0;
+}
+
+extern "C" void godhand_load_gs_vram(const uint8_t* src, uint32_t size) {
+    if (g_api && g_api->load_vram && src && size > 0) {
+        g_api->load_vram(src, size);
+    }
+}
+
+extern "C" void godhand_set_texture_replacement_dir(const char* dir) {
+    if (dir && *dir) {
+        setenv("PS2X_PCSX2_TEXTURE_DIR", dir, 1);
+        setenv("PS2X_PCSX2_TEXTURES", "1", 1);
+    } else {
+        setenv("PS2X_PCSX2_TEXTURES", "0", 1);
+    }
 }
 
 void godhand_perf_set_logging_enabled(bool enabled) {

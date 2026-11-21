@@ -809,6 +809,9 @@ void notifySurfaceDestroyed() {
 extern "C" int godhand_get_device_tier();
 extern "C" void godhand_set_frameskip_mode(int mode);
 
+static PS2Runtime* s_activeRuntime = nullptr;
+PS2Runtime* getActiveRuntime() { return s_activeRuntime; }
+
 void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererIdx, int resScaleIdx, int aspectIdx, int fpsIdx, int frameskipIdx) {
     // Frameskip forces multi-frame draw batching and latency spikes on Android; always run unbatched 60Hz/30Hz VSync!
     // frameskipIdx is active
@@ -963,7 +966,9 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     godhand::startFreezeAndPerfWatchdog(&runtime);
 
     __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "Starting God Hand main loop on ARM64...");
+    s_activeRuntime = &runtime;
     runtime.run();
+    s_activeRuntime = nullptr;
 }
 
 } // namespace godhand

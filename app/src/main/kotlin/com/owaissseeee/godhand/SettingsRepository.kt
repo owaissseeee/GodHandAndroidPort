@@ -100,13 +100,14 @@ class SettingsRepository(context: Context) {
 
     var aspectIdx: Int
         get() {
-            if (!prefs.contains("aspect_idx_v2")) {
-                putInt("aspect_idx_v2", 2)
-                return 2
+            if (!prefs.contains("aspect_idx_v3")) {
+                val def = 2 // 2: Full Screen (Device Aspect - Edge-to-Edge - Default)
+                putInt("aspect_idx_v3", def)
+                return def
             }
-            return prefs.getInt("aspect_idx_v2", 2).coerceIn(0, 2)
+            return prefs.getInt("aspect_idx_v3", 2).coerceIn(0, 2)
         }
-        set(value) = putInt("aspect_idx_v2", value.coerceIn(0, 2))
+        set(value) = putInt("aspect_idx_v3", value.coerceIn(0, 2))
 
     var fpsIdx: Int
         get() {
@@ -135,6 +136,40 @@ class SettingsRepository(context: Context) {
     var audioVolume: Float
         get() = prefs.getFloat("audio_volume", 1.0f).coerceIn(0.0f, 1.0f)
         set(value) = putFloat("audio_volume", value.coerceIn(0.0f, 1.0f))
+
+    var masterVolume: Float
+        get() = prefs.getFloat("audio_volume_master", 1.0f).coerceIn(0.0f, 1.0f)
+        set(value) = putFloat("audio_volume_master", value.coerceIn(0.0f, 1.0f))
+
+    var bgmVolume: Float
+        get() = prefs.getFloat("audio_volume_bgm", 1.0f).coerceIn(0.0f, 1.0f)
+        set(value) = putFloat("audio_volume_bgm", value.coerceIn(0.0f, 1.0f))
+
+    var sfxVolume: Float
+        get() = prefs.getFloat("audio_volume_sfx", 1.0f).coerceIn(0.0f, 1.0f)
+        set(value) = putFloat("audio_volume_sfx", value.coerceIn(0.0f, 1.0f))
+
+    var voiceVolume: Float
+        get() = prefs.getFloat("audio_volume_voice", 1.0f).coerceIn(0.0f, 1.0f)
+        set(value) = putFloat("audio_volume_voice", value.coerceIn(0.0f, 1.0f))
+
+    // --- HD Custom Textures ---
+    var customTexturesEnabled: Boolean
+        get() = prefs.getBoolean("custom_textures_enabled", false)
+        set(value) = putBoolean("custom_textures_enabled", value)
+
+    var customTexturePath: String
+        get() = prefs.getString("custom_texture_path", "/sdcard/Download/GodHand_Textures/SLUS-21503") ?: "/sdcard/Download/GodHand_Textures/SLUS-21503"
+        set(value) = putString("custom_texture_path", value)
+
+    // --- Roulette & Save States ---
+    var rouletteTimerDouble: Boolean
+        get() = prefs.getBoolean("roulette_timer_double", false)
+        set(value) = putBoolean("roulette_timer_double", value)
+
+    var activeSaveStateSlot: Int
+        get() = prefs.getInt("active_save_state_slot", 1).coerceIn(1, 5)
+        set(value) = putInt("active_save_state_slot", value.coerceIn(1, 5))
 
     // --- Controls Settings ---
     var controllerMode: Int

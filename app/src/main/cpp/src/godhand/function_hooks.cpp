@@ -35,6 +35,8 @@
 #include <unordered_map>
 #include <vector>
 
+extern "C" float godhand_get_bgm_volume();
+
 namespace godhand
 {
     namespace
@@ -1001,6 +1003,8 @@ namespace godhand
     }
 }
 
+extern "C" float godhand_get_bgm_volume();
+
 namespace godhand
 {
     // God Hand's flip copy at internal resolution (see function_hooks.h). Each frame func_0030B870 builds the PATH3
@@ -1018,6 +1022,26 @@ namespace godhand
     void installGameFrameCounter(PS2Runtime &runtime)
     {
         kamite::installFramePatches(runtime);
+
+        constexpr uint32_t kSetBgmLevel = 0x002D2D68u;
+        if (runtime.hasFunction(kSetBgmLevel))
+        {
+            static GuestFunction s_origSetBgmLevel = runtime.lookupFunction(kSetBgmLevel);
+            FunctionHooks::instance().replace(
+                kSetBgmLevel,
+                "cSnd_SetBgmLevel_hook",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    if (ctx) {
+                        ctx->f[12] *= godhand_get_bgm_volume();
+                    }
+                    if (s_origSetBgmLevel) {
+                        s_origSetBgmLevel(rdram, ctx, rt);
+                    }
+                },
+                ReplacementStatus::Native,
+                "scale BGM level by user setting");
+        }
+
         constexpr uint32_t kFlareDepthReadback = 0x003155F8u;
         if (runtime.hasFunction(kFlareDepthReadback))
         {

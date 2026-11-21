@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.provider.DocumentsContract
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -66,6 +67,34 @@ class MainActivity : ComponentActivity() {
             Toast.makeText(this, message, Toast.LENGTH_LONG).show()
             activeSettingsDialog?.refreshActiveTab()
         }
+    }
+
+    private val textureFolderPickerLauncher = registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri: Uri? ->
+        if (uri != null) {
+            val path = resolveRealPathFromUri(uri)
+            if (path != null) {
+                settings.customTexturePath = path
+                settings.customTexturesEnabled = true
+                Toast.makeText(this, "HD Texture Folder: $path", Toast.LENGTH_LONG).show()
+                activeSettingsDialog?.refreshActiveTab()
+            }
+        }
+    }
+
+    private fun resolveRealPathFromUri(uri: Uri): String? {
+        try {
+            val docId = DocumentsContract.getTreeDocumentId(uri)
+            if (docId.startsWith("primary:")) {
+                val rel = docId.substring("primary:".length)
+                return "/storage/emulated/0/$rel"
+            } else if (docId.contains(":")) {
+                val p = docId.split(":")
+                if (p.size >= 2) {
+                    return "/storage/${p[0]}/${p[1]}"
+                }
+            }
+        } catch (_: Throwable) {}
+        return uri.path
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -227,6 +256,9 @@ class MainActivity : ComponentActivity() {
                 isMidGame = false,
                 onImportSaveRequested = {
                     importSaveLauncher.launch(arrayOf("*/*"))
+                },
+                onPickTextureFolderRequested = {
+                    textureFolderPickerLauncher.launch(null)
                 },
                 onSettingsChanged = {
                     // Applied immediately

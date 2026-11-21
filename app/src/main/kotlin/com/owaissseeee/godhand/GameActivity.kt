@@ -42,6 +42,63 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         }
     }
 
+    val textureFolderPickerLauncher = registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.OpenDocumentTree()) { uri: android.net.Uri? ->
+        if (uri != null) {
+            val path = resolveRealPathFromUri(uri)
+            if (path != null) {
+                settings.customTexturePath = path
+                settings.customTexturesEnabled = true
+                NativeBridge.setCustomTextureDirectory(path)
+                android.widget.Toast.makeText(this, "HD Texture Folder: $path", android.widget.Toast.LENGTH_LONG).show()
+                inGameSettingsDialog?.refreshActiveTab()
+            }
+        }
+    }
+
+    private fun resolveRealPathFromUri(uri: android.net.Uri): String? {
+        try {
+            val docId = android.provider.DocumentsContract.getTreeDocumentId(uri)
+            if (docId.startsWith("primary:")) {
+                val rel = docId.substring("primary:".length)
+                return "/storage/emulated/0/$rel"
+            } else if (docId.contains(":")) {
+                val p = docId.split(":")
+                if (p.size >= 2) {
+                    return "/storage/${p[0]}/${p[1]}"
+                }
+            }
+        } catch (_: Throwable) {}
+        return uri.path
+    }
+
+    fun getSaveStatesDir(): java.io.File {
+        val dir = getExternalFilesDir("savestates") ?: java.io.File(filesDir, "savestates")
+        if (!dir.exists()) dir.mkdirs()
+        return dir
+    }
+
+    fun performQuickSave(slot: Int = settings.activeSaveStateSlot) {
+        val dir = getSaveStatesDir().absolutePath
+        val ok = NativeBridge.saveState(slot, dir)
+        if (ok) {
+            android.widget.Toast.makeText(this, "⚡ Quick Saved (Slot $slot)", android.widget.Toast.LENGTH_SHORT).show()
+            inGameSettingsDialog?.refreshActiveTab()
+        } else {
+            android.widget.Toast.makeText(this, "❌ Quick Save Failed (Slot $slot)", android.widget.Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun performQuickLoad(slot: Int = settings.activeSaveStateSlot) {
+        val dir = getSaveStatesDir().absolutePath
+        val ok = NativeBridge.loadState(slot, dir)
+        if (ok) {
+            android.widget.Toast.makeText(this, "⚡ Quick Loaded (Slot $slot)", android.widget.Toast.LENGTH_SHORT).show()
+            inGameSettingsDialog?.dismiss()
+        } else {
+            android.widget.Toast.makeText(this, "❌ Load Failed: Slot $slot is empty", android.widget.Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun ensureAdpfSession() {
         if (adpfInitialized || Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return
         val tids = NativeBridge.getPerformanceThreadIds()
@@ -137,6 +194,12 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             onSettingsClicked = {
                 showInGameSettingsDialog()
             }
+            onQuickSaveClicked = {
+                performQuickSave()
+            }
+            onQuickLoadClicked = {
+                performQuickLoad()
+            }
             onSaveEditLayout = { map ->
                 settings.saveCustomButtonLayout(map)
             }
@@ -204,9 +267,30 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                 onImportSaveRequested = {
                     importSaveLauncher.launch(arrayOf("*/*"))
                 },
+                onPickTextureFolderRequested = {
+                    textureFolderPickerLauncher.launch(null)
+                },
+                onSaveStateRequested = { slot ->
+                    performQuickSave(slot)
+                },
+                onLoadStateRequested = { slot ->
+                    performQuickLoad(slot)
+                },
                 onSettingsChanged = {
                     touchOverlay.applySettings(settings)
                     checkConnectedControllers()
+                    NativeBridge.setAudioChannelVolumes(
+                        settings.masterVolume,
+                        settings.bgmVolume,
+                        settings.sfxVolume,
+                        settings.voiceVolume
+                    )
+                    NativeBridge.setRouletteTimerDouble(settings.rouletteTimerDouble)
+                    if (settings.customTexturesEnabled && settings.customTexturePath.isNotBlank()) {
+                        NativeBridge.setCustomTextureDirectory(settings.customTexturePath)
+                    } else {
+                        NativeBridge.setCustomTextureDirectory("")
+                    }
                     hideSystemUI()
                 }
             ).apply {
@@ -341,6 +425,14 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             return true
         }
         if (event != null && isGamepadEvent(event.source)) {
+            if (keyCode == KeyEvent.KEYCODE_BUTTON_L1 && (physicalPadMask and TouchControllerOverlay.BTN_SELECT != 0)) {
+                performQuickSave()
+                return true
+            }
+            if (keyCode == KeyEvent.KEYCODE_BUTTON_R1 && (physicalPadMask and TouchControllerOverlay.BTN_SELECT != 0)) {
+                performQuickLoad()
+                return true
+            }
             val mask = mapKeyCodeToMask(keyCode)
             if (mask != 0) {
                 physicalPadMask = physicalPadMask or mask
@@ -353,6 +445,14 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         if (event != null && isGamepadEvent(event.source)) {
+            if (keyCode == KeyEvent.KEYCODE_BUTTON_L1 && (physicalPadMask and TouchControllerOverlay.BTN_SELECT != 0)) {
+                performQuickSave()
+                return true
+            }
+            if (keyCode == KeyEvent.KEYCODE_BUTTON_R1 && (physicalPadMask and TouchControllerOverlay.BTN_SELECT != 0)) {
+                performQuickLoad()
+                return true
+            }
             val mask = mapKeyCodeToMask(keyCode)
             if (mask != 0) {
                 physicalPadMask = physicalPadMask and mask.inv()
@@ -474,8 +574,20 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         val frameskipIdx = intent.getIntExtra("frameskipIdx", settings.frameskipIdx)
 
         NativeBridge.setAudioVolume(settings.audioVolume)
+        NativeBridge.setAudioChannelVolumes(
+            settings.masterVolume,
+            settings.bgmVolume,
+            settings.sfxVolume,
+            settings.voiceVolume
+        )
         NativeBridge.setAudioConfig(settings.audioSchedulingIdx, settings.audioBufferSizeIdx)
         NativeBridge.setSpikeLoggingEnabled(settings.perfSpikeLoggingEnabled)
+        NativeBridge.setRouletteTimerDouble(settings.rouletteTimerDouble)
+        if (settings.customTexturesEnabled && settings.customTexturePath.isNotBlank()) {
+            NativeBridge.setCustomTextureDirectory(settings.customTexturePath)
+        } else {
+            NativeBridge.setCustomTextureDirectory("")
+        }
 
         NativeBridge.onSurfaceCreated(
             holder.surface, width, height,

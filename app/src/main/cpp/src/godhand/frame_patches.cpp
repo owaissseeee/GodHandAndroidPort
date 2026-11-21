@@ -43,6 +43,10 @@
 
 #include <algorithm>
 #include <atomic>
+
+namespace godhand {
+    PS2Runtime* getActiveRuntime();
+}
 #include <cmath>
 #include <cstdlib>
 #include <cstring>
@@ -309,17 +313,103 @@ namespace kamite
             setRamF32(rdram, wheel + 0x2A4u, g_rouletteSavedA);
         }
 
+        static int s_targetSwitchCooldown = 0;
+
+        void cycleRouletteTargetInternal(uint8_t *rdram, int dir)
+        {
+            uint32_t gene = 0;
+            std::memcpy(&gene, &ram8(rdram, game::GameWork::address(game::GameWork::kPlayerObj)), sizeof(gene));
+            if (gene < 0x100000u || gene >= 0x02000000u - 0x1000u)
+                return;
+
+            std::vector<uint32_t> enemies;
+            uint32_t slot = 0;
+            std::memcpy(&slot, &ram8(rdram, 0x5864F0u + 0x500u), sizeof(slot));
+            for (int guard = 0; guard < 128 && slot >= 0x100000u && slot < 0x02000000u - 16u; ++guard)
+            {
+                uint32_t object = 0, next = 0;
+                std::memcpy(&object, &ram8(rdram, slot + 8u), sizeof(object));
+                std::memcpy(&next, &ram8(rdram, slot + 4u), sizeof(next));
+                if (object >= 0x100000u && object < 0x02000000u - 0x1000u)
+                {
+                    enemies.push_back(object);
+                }
+                slot = next;
+            }
+
+            if (enemies.empty())
+                return;
+
+            uint32_t currentTarget = 0;
+            std::memcpy(&currentTarget, &ram8(rdram, gene + 0x364u), sizeof(currentTarget));
+
+            int currentIndex = -1;
+            for (size_t i = 0; i < enemies.size(); ++i)
+            {
+                if (enemies[i] == currentTarget)
+                {
+                    currentIndex = static_cast<int>(i);
+                    break;
+                }
+            }
+
+            int nextIndex = 0;
+            if (currentIndex >= 0)
+            {
+                if (dir > 0)
+                    nextIndex = (currentIndex + 1) % static_cast<int>(enemies.size());
+                else
+                    nextIndex = (currentIndex - 1 + static_cast<int>(enemies.size())) % static_cast<int>(enemies.size());
+            }
+            else
+            {
+                nextIndex = (dir > 0) ? 0 : static_cast<int>(enemies.size()) - 1;
+            }
+
+            uint32_t newTarget = enemies[nextIndex];
+            std::memcpy(&ram8(rdram, gene + 0x364u), &newTarget, sizeof(newTarget));
+        }
+
         void rouletteDpad(uint8_t *rdram)
         {
             if (g_rouletteSeen == 0u || g_gameFrame - g_rouletteSeen > 2u)
+            {
+                s_targetSwitchCooldown = 0;
                 return;
+            }
             uint16_t buttons = 0;
             std::memcpy(&buttons, &ram8(rdram, kPadButtons), sizeof(buttons));
             const bool up = (buttons & 0x10u) != 0u, down = (buttons & 0x40u) != 0u;
-            if (up == down)
-                return;
-            injectStick(rdram, 1, up ? 0x00u : 0xFFu);
-            injectStick(rdram, 3, up ? 0x00u : 0xFFu);
+            if (up != down)
+            {
+                injectStick(rdram, 1, up ? 0x00u : 0xFFu);
+                injectStick(rdram, 3, up ? 0x00u : 0xFFu);
+            }
+
+            const bool dpadLeft = (buttons & 0x80u) != 0u;
+            const bool dpadRight = (buttons & 0x20u) != 0u;
+            const uint8_t rx = ram8(rdram, 0x5E8144u);
+            const bool stickLeft = (rx < 0x40u);
+            const bool stickRight = (rx > 0xC0u);
+            const bool goLeft = dpadLeft || stickLeft;
+            const bool goRight = dpadRight || stickRight;
+
+            if (goLeft != goRight)
+            {
+                if (s_targetSwitchCooldown == 0)
+                {
+                    cycleRouletteTargetInternal(rdram, goRight ? 1 : -1);
+                    s_targetSwitchCooldown = 15;
+                }
+                else
+                {
+                    s_targetSwitchCooldown--;
+                }
+            }
+            else
+            {
+                s_targetSwitchCooldown = 0;
+            }
         }
 
         void l3Dash(uint8_t *rdram)
@@ -2211,4 +2301,18 @@ namespace kamite
         g_rouletteSlow.store(on, std::memory_order_relaxed);
         g_rouletteRequest.store(1, std::memory_order_relaxed);
     }
+
+    void cycleRouletteTarget(int dir)
+    {
+        PS2Runtime* rt = godhand::getActiveRuntime();
+        if (!rt) return;
+        uint8_t* rdram = rt->memory().getRDRAM();
+        if (!rdram) return;
+        cycleRouletteTargetInternal(rdram, dir);
+    }
+}
+
+extern "C" void godhand_cycle_roulette_target(int dir)
+{
+    kamite::cycleRouletteTarget(dir);
 }

@@ -19,6 +19,8 @@
 #include "godhand/game_disc.h"
 #include "godhand/godhand_perf.h"
 #include "src/godhand/cheats_engine.h"
+#include "src/godhand/save_state_manager.h"
+#include "src/godhand/frame_patches.h"
 #include "godhand_patches_mobile.h"
 
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", __VA_ARGS__)
@@ -653,6 +655,102 @@ Java_com_owaissseeee_godhand_NativeBridge_clearSessionSpikeLog(
     JNIEnv* /*env*/, jobject /*thiz*/)
 {
     godhand_perf_clear_session_spike_log();
+}
+
+// -------------------------------------------------------------
+// Save States JNI
+// -------------------------------------------------------------
+JNIEXPORT jboolean JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_saveState(
+    JNIEnv* env, jobject /*thiz*/, jint slot, jstring dirStr)
+{
+    if (!dirStr) return JNI_FALSE;
+    const char* nativeDir = env->GetStringUTFChars(dirStr, nullptr);
+    std::string dir = nativeDir ? nativeDir : "";
+    if (nativeDir) env->ReleaseStringUTFChars(dirStr, nativeDir);
+    return godhand::savestate::saveState(slot, dir) ? JNI_TRUE : JNI_FALSE;
+}
+
+JNIEXPORT jboolean JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_loadState(
+    JNIEnv* env, jobject /*thiz*/, jint slot, jstring dirStr)
+{
+    if (!dirStr) return JNI_FALSE;
+    const char* nativeDir = env->GetStringUTFChars(dirStr, nullptr);
+    std::string dir = nativeDir ? nativeDir : "";
+    if (nativeDir) env->ReleaseStringUTFChars(dirStr, nativeDir);
+    return godhand::savestate::loadState(slot, dir) ? JNI_TRUE : JNI_FALSE;
+}
+
+JNIEXPORT jstring JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_getStateInfo(
+    JNIEnv* env, jobject /*thiz*/, jint slot, jstring dirStr)
+{
+    if (!dirStr) return nullptr;
+    const char* nativeDir = env->GetStringUTFChars(dirStr, nullptr);
+    std::string dir = nativeDir ? nativeDir : "";
+    if (nativeDir) env->ReleaseStringUTFChars(dirStr, nativeDir);
+    std::string info = godhand::savestate::getStateInfo(slot, dir);
+    if (info.empty()) return nullptr;
+    return env->NewStringUTF(info.c_str());
+}
+
+// -------------------------------------------------------------
+// Audio Channels JNI
+// -------------------------------------------------------------
+extern "C" void godhand_set_audio_channel_volumes(float master, float bgm, float sfx, float voice);
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setAudioChannelVolumes(
+    JNIEnv* /*env*/, jobject /*thiz*/, jfloat master, jfloat bgm, jfloat sfx, jfloat voice)
+{
+    godhand_set_audio_channel_volumes(master, bgm, sfx, voice);
+}
+
+// -------------------------------------------------------------
+// Roulette & D-Pad Finesse JNI
+// -------------------------------------------------------------
+extern "C" void godhand_cycle_roulette_target(int dir);
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_cycleRouletteTarget(
+    JNIEnv* /*env*/, jobject /*thiz*/, jint direction)
+{
+    godhand_cycle_roulette_target(direction);
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setRouletteTimerDouble(
+    JNIEnv* /*env*/, jobject /*thiz*/, jboolean enabled)
+{
+    kamite::setRouletteTimerDouble(enabled);
+}
+
+JNIEXPORT jboolean JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_isRouletteUp(
+    JNIEnv* /*env*/, jobject /*thiz*/)
+{
+    return kamite::rouletteUp() ? JNI_TRUE : JNI_FALSE;
+}
+
+// -------------------------------------------------------------
+// Custom HD Texture Pack JNI
+// -------------------------------------------------------------
+extern "C" void godhand_set_texture_replacement_dir(const char* dir);
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setCustomTextureDirectory(
+    JNIEnv* env, jobject /*thiz*/, jstring pathStr)
+{
+    if (!pathStr) {
+        godhand_set_texture_replacement_dir("");
+        return;
+    }
+    const char* nativePath = env->GetStringUTFChars(pathStr, nullptr);
+    if (nativePath) {
+        godhand_set_texture_replacement_dir(nativePath);
+        env->ReleaseStringUTFChars(pathStr, nativePath);
+    }
 }
 
 static void startStdoutStderrRedirect() {

@@ -30,6 +30,9 @@ class SettingsDialog(
     private val isMidGame: Boolean = false,
     private val onEditControlsRequested: (() -> Unit)? = null,
     private val onImportSaveRequested: (() -> Unit)? = null,
+    private val onPickTextureFolderRequested: (() -> Unit)? = null,
+    private val onSaveStateRequested: ((slot: Int) -> Unit)? = null,
+    private val onLoadStateRequested: ((slot: Int) -> Unit)? = null,
     private val onSettingsChanged: (() -> Unit)? = null
 ) : Dialog(context) {
 
@@ -48,7 +51,7 @@ class SettingsDialog(
 
     init {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window?.setBackgroundDrawable(ColorDrawable(Color.argb(246, 11, 15, 25))) // Deep full-screen console dark slate
+        window?.setBackgroundDrawable(ColorDrawable(Color.argb(250, 22, 14, 9))) // Warm God Hand western leather & dark walnut
         window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
         // Root Console Split-View Layout (Horizontal)
@@ -67,8 +70,8 @@ class SettingsDialog(
         val sidebar = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
             val bg = GradientDrawable().apply {
-                setColor(0xFF0F172A.toInt()) // slate-900
-                setStroke(1.dpToPx(), 0xFF1E293B.toInt())
+                setColor(0xFF140D08.toInt()) // Deep walnut brown
+                setStroke(1.dpToPx(), 0xFF352014.toInt())
                 cornerRadius = 10f.dpToPx()
             }
             background = bg
@@ -97,7 +100,7 @@ class SettingsDialog(
         val appSub = TextView(context).apply {
             text = "SYSTEM SETTINGS"
             textSize = 9f
-            setTextColor(0xFF64748B.toInt()) // Slate-500
+            setTextColor(0xFFA89682.toInt()) // Warm tan
             letterSpacing = 0.12f
             typeface = android.graphics.Typeface.MONOSPACE
         }
@@ -154,8 +157,8 @@ class SettingsDialog(
         val rightPane = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
             val bg = GradientDrawable().apply {
-                setColor(0xFF0B0F19.toInt())
-                setStroke(1.dpToPx(), 0xFF1E293B.toInt())
+                setColor(0xFF1A110A.toInt()) // Dark saddle leather
+                setStroke(1.dpToPx(), 0xFF3D2717.toInt())
                 cornerRadius = 10f.dpToPx()
             }
             background = bg
@@ -179,14 +182,14 @@ class SettingsDialog(
         tabTitleTv = TextView(context).apply {
             text = "DISPLAY & RENDERING"
             textSize = 14f
-            setTextColor(0xFFF8FAFC.toInt())
+            setTextColor(0xFFF5EBE1.toInt())
             typeface = android.graphics.Typeface.DEFAULT_BOLD
             letterSpacing = 0.05f
         }
         tabSubtitleTv = TextView(context).apply {
             text = "Configure resolution, renderer, and frameskip engine"
             textSize = 10.5f
-            setTextColor(0xFF94A3B8.toInt())
+            setTextColor(0xFFA89682.toInt())
         }
         titleContainer.addView(tabTitleTv)
         titleContainer.addView(tabSubtitleTv)
@@ -194,11 +197,11 @@ class SettingsDialog(
         val btnCloseCross = TextView(context).apply {
             text = "✕"
             textSize = 16f
-            setTextColor(0xFFF8FAFC.toInt())
+            setTextColor(0xFFF5EBE1.toInt())
             gravity = Gravity.CENTER
             val bg = GradientDrawable().apply {
-                setColor(0xFF1E293B.toInt())
-                setStroke(1.dpToPx(), 0xFF334155.toInt())
+                setColor(0xFF2E1C11.toInt())
+                setStroke(1.dpToPx(), 0xFF4D301E.toInt())
                 cornerRadius = 16f.dpToPx()
             }
             background = bg
@@ -220,7 +223,7 @@ class SettingsDialog(
         ))
 
         val divider = View(context).apply {
-            setBackgroundColor(0xFF1E293B.toInt())
+            setBackgroundColor(0xFF382315.toInt())
         }
         headerLayout.addView(divider, LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT, 1.dpToPx()
@@ -330,7 +333,7 @@ class SettingsDialog(
             val b = tabButtons[i]
             if (i == activeTab) {
                 val activeBg = GradientDrawable().apply {
-                    setColor(0xFF1E293B.toInt())
+                    setColor(0xFF382417.toInt())
                     setStroke(2.dpToPx(), 0xFFF59E0B.toInt())
                     cornerRadius = 6f.dpToPx()
                 }
@@ -339,7 +342,7 @@ class SettingsDialog(
                 b.typeface = android.graphics.Typeface.DEFAULT_BOLD
             } else {
                 b.setBackgroundColor(Color.TRANSPARENT)
-                b.setTextColor(0xFF94A3B8.toInt())
+                b.setTextColor(0xFFA89682.toInt())
                 b.typeface = android.graphics.Typeface.DEFAULT
             }
         }
@@ -421,7 +424,7 @@ class SettingsDialog(
 
         addSpinnerRow(
             if (isMidGame) "Aspect Ratio (Set in Main Menu)" else "Aspect Ratio",
-            listOf("16:9 Widescreen (Native FOV)", "4:3 Original (Pillarboxed)", "Full Screen (Device Aspect - Edge-to-Edge)"),
+            listOf("16:9 Widescreen (Native FOV)", "4:3 Original (Pillarboxed)", "Full Screen (Device Aspect - Edge-to-Edge - Default)"),
             settings.aspectIdx,
             enabled = !isMidGame
         ) { pos ->
@@ -457,6 +460,77 @@ class SettingsDialog(
             if (isMidGame) {
                 NativeBridge.setFrameskipMode(pos)
             }
+        }
+
+        addSectionHeader("HD CUSTOM TEXTURE INJECTION")
+
+        addSwitchRow(
+            "Enable HD Custom Textures",
+            "Loads replacement textures at runtime (PCSX2 format: DDS & PNG). Zero performance overhead when not replacing.",
+            settings.customTexturesEnabled
+        ) { enabled ->
+            settings.customTexturesEnabled = enabled
+            if (enabled && settings.customTexturePath.isNotBlank()) {
+                NativeBridge.setCustomTextureDirectory(settings.customTexturePath)
+            } else {
+                NativeBridge.setCustomTextureDirectory("")
+            }
+            buildTabContent()
+        }
+
+        if (settings.customTexturesEnabled) {
+            val pathCard = LinearLayout(context).apply {
+                orientation = LinearLayout.VERTICAL
+                setBackgroundResource(R.drawable.card_god_hand)
+                setPadding(12.dpToPx(), 8.dpToPx(), 12.dpToPx(), 8.dpToPx())
+            }
+            val tvPathHeader = TextView(context).apply {
+                text = "TEXTURE PACK DIRECTORY"
+                textSize = 11f
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
+                setTextColor(0xFFF59E0B.toInt())
+            }
+            val tvPath = TextView(context).apply {
+                text = settings.customTexturePath
+                textSize = 10.5f
+                setTextColor(0xFFCBD5E1.toInt())
+                setPadding(0, 3.dpToPx(), 0, 8.dpToPx())
+            }
+            pathCard.addView(tvPathHeader)
+            pathCard.addView(tvPath)
+
+            val btnRow = LinearLayout(context).apply {
+                orientation = LinearLayout.HORIZONTAL
+            }
+            val btnPick = Button(context).apply {
+                text = "📁 SELECT FOLDER"
+                textSize = 11.5f
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
+                setBackgroundResource(R.drawable.btn_god_hand_primary)
+                setTextColor(0xFFFFFFFF.toInt())
+                setOnClickListener {
+                    onPickTextureFolderRequested?.invoke()
+                }
+            }
+            val btnReset = Button(context).apply {
+                text = "RESET PATH"
+                textSize = 11.5f
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
+                setBackgroundResource(R.drawable.btn_god_hand_secondary)
+                setTextColor(0xFFFDE047.toInt())
+                setOnClickListener {
+                    settings.customTexturePath = "/sdcard/Download/GodHand_Textures/SLUS-21503"
+                    NativeBridge.setCustomTextureDirectory(settings.customTexturePath)
+                    buildTabContent()
+                }
+            }
+            btnRow.addView(btnPick, LinearLayout.LayoutParams(0, 38.dpToPx(), 1.4f).apply { setMargins(0, 0, 6.dpToPx(), 0) })
+            btnRow.addView(btnReset, LinearLayout.LayoutParams(0, 38.dpToPx(), 1f))
+            pathCard.addView(btnRow)
+
+            contentContainer.addView(pathCard, LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { setMargins(0, 0, 0, 6.dpToPx()) })
         }
     }
 
@@ -524,6 +598,40 @@ class SettingsDialog(
             settings.fpsOverlayMode = pos
         }
 
+        addSectionHeader("ROULETTE TARGET SELECTION & D-PAD FINESSE")
+
+        addSwitchRow(
+            "Roulette Timer: Double",
+            "Doubles the time to pick a Roulette move during combat (2x slower timer).",
+            settings.rouletteTimerDouble
+        ) { enabled ->
+            settings.rouletteTimerDouble = enabled
+            NativeBridge.setRouletteTimerDouble(enabled)
+        }
+
+        val dpadCard = LinearLayout(context).apply {
+            orientation = LinearLayout.VERTICAL
+            setBackgroundResource(R.drawable.card_god_hand)
+            setPadding(12.dpToPx(), 8.dpToPx(), 12.dpToPx(), 8.dpToPx())
+        }
+        val tvDpadTitle = TextView(context).apply {
+            text = "🕹️ D-PAD FINESSE & TARGET SELECTION"
+            textSize = 11f
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
+            setTextColor(0xFFF59E0B.toInt())
+        }
+        val tvDpadDesc = TextView(context).apply {
+            text = "• D-Pad ▲/▼: Scroll Roulette Move Wheel\n• D-Pad ◀/▶ (or Right Stick ◄/►): Dynamically cycle Gene's locked target enemy during Roulette!"
+            textSize = 10f
+            setTextColor(0xFFCBD5E1.toInt())
+            setPadding(0, 3.dpToPx(), 0, 0)
+        }
+        dpadCard.addView(tvDpadTitle)
+        dpadCard.addView(tvDpadDesc)
+        contentContainer.addView(dpadCard, LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply { setMargins(0, 0, 0, 6.dpToPx()) })
+
         if (isMidGame && onEditControlsRequested != null) {
             val btnEdit = Button(context).apply {
                 text = "✏ REPOSITION ON-SCREEN BUTTONS"
@@ -574,16 +682,56 @@ class SettingsDialog(
             NativeBridge.setAudioConfig(settings.audioSchedulingIdx, pos)
         }
 
+        addSectionHeader("SEPARATED AUDIO CHANNELS & MASTER VOLUME")
+
         addSliderRow(
             "Master Volume",
-            (settings.audioVolume * 100).toInt(),
+            (settings.masterVolume * 100).toInt(),
             min = 0,
             max = 100,
             unit = "%"
         ) { pct ->
             val vol = pct / 100.0f
+            settings.masterVolume = vol
             settings.audioVolume = vol
             NativeBridge.setAudioVolume(vol)
+            NativeBridge.setAudioChannelVolumes(settings.masterVolume, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
+        }
+
+        addSliderRow(
+            "BGM & Music Volume",
+            (settings.bgmVolume * 100).toInt(),
+            min = 0,
+            max = 100,
+            unit = "%"
+        ) { pct ->
+            val vol = pct / 100.0f
+            settings.bgmVolume = vol
+            NativeBridge.setAudioChannelVolumes(settings.masterVolume, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
+        }
+
+        addSliderRow(
+            "Sound Effects (SFX) Volume",
+            (settings.sfxVolume * 100).toInt(),
+            min = 0,
+            max = 100,
+            unit = "%"
+        ) { pct ->
+            val vol = pct / 100.0f
+            settings.sfxVolume = vol
+            NativeBridge.setAudioChannelVolumes(settings.masterVolume, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
+        }
+
+        addSliderRow(
+            "Character Voice Volume",
+            (settings.voiceVolume * 100).toInt(),
+            min = 0,
+            max = 100,
+            unit = "%"
+        ) { pct ->
+            val vol = pct / 100.0f
+            settings.voiceVolume = vol
+            NativeBridge.setAudioChannelVolumes(settings.masterVolume, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
         }
     }
 
@@ -591,6 +739,105 @@ class SettingsDialog(
     // 3. SAVES TAB
     // ==========================================
     private fun buildSavesTab() {
+        addSectionHeader("INSTANT SAVE STATES (ZERO PERFORMANCE LOSS)")
+
+        val stateDir = (context.getExternalFilesDir("savestates") ?: File(context.filesDir, "savestates")).absolutePath
+        val activeSlot = settings.activeSaveStateSlot
+
+        // Slot Selector Buttons (1 to 5)
+        val slotButtonsRow = LinearLayout(context).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setPadding(0, 4.dpToPx(), 0, 6.dpToPx())
+        }
+
+        for (slot in 1..5) {
+            val btnSlot = Button(context).apply {
+                text = "SLOT $slot"
+                textSize = 11f
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
+                val isSelected = (slot == activeSlot)
+                val bg = GradientDrawable().apply {
+                    setColor(if (isSelected) 0xFF4D331E.toInt() else 0xFF2A1C12.toInt())
+                    setStroke(if (isSelected) 2.dpToPx() else 1.dpToPx(), if (isSelected) 0xFFF59E0B.toInt() else 0xFF472F1D.toInt())
+                    cornerRadius = 6f.dpToPx()
+                }
+                background = bg
+                setTextColor(if (isSelected) 0xFFF59E0B.toInt() else 0xFFA89682.toInt())
+                setOnClickListener {
+                    settings.activeSaveStateSlot = slot
+                    buildTabContent()
+                }
+            }
+            slotButtonsRow.addView(btnSlot, LinearLayout.LayoutParams(0, 36.dpToPx(), 1f).apply {
+                setMargins(if (slot > 1) 4.dpToPx() else 0, 0, 0, 0)
+            })
+        }
+        contentContainer.addView(slotButtonsRow)
+
+        // Slot Info Card
+        val slotInfoRaw = NativeBridge.getStateInfo(activeSlot, stateDir)
+        val stateCard = LinearLayout(context).apply {
+            orientation = LinearLayout.VERTICAL
+            setBackgroundResource(R.drawable.card_god_hand)
+            setPadding(14.dpToPx(), 10.dpToPx(), 14.dpToPx(), 10.dpToPx())
+        }
+        val tvStateTitle = TextView(context).apply {
+            text = if (!slotInfoRaw.isNullOrEmpty()) "✔ SLOT $activeSlot: ACTIVE SAVE STATE" else "⚪ SLOT $activeSlot: EMPTY"
+            textSize = 12.5f
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
+            setTextColor(if (!slotInfoRaw.isNullOrEmpty()) 0xFF4ADE80.toInt() else 0xFFA89682.toInt())
+        }
+        val tvStateDetails = TextView(context).apply {
+            if (!slotInfoRaw.isNullOrEmpty()) {
+                val parts = slotInfoRaw.split("|")
+                val timestamp = parts.getOrNull(0)?.toLongOrNull() ?: 0L
+                val stage = parts.getOrNull(1) ?: "Stage 1-1"
+                val hp = parts.getOrNull(2) ?: "100"
+                val dateStr = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date(timestamp))
+                text = "Location: $stage • Gene HP: $hp%\nTimestamp: $dateStr\nStorage: state_slot_$activeSlot.ghstate (~36 MB)"
+            } else {
+                text = "No save state stored in Slot $activeSlot.\nUse 'SAVE TO SLOT $activeSlot' or press Select + L1 in-game."
+            }
+            textSize = 11f
+            setTextColor(0xFFCBD5E1.toInt())
+            setPadding(0, 4.dpToPx(), 0, 0)
+        }
+        stateCard.addView(tvStateTitle)
+        stateCard.addView(tvStateDetails)
+        contentContainer.addView(stateCard)
+
+        // Save & Load Buttons
+        val stateActionsRow = LinearLayout(context).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setPadding(0, 8.dpToPx(), 0, 10.dpToPx())
+        }
+        val btnSaveState = Button(context).apply {
+            text = "⚡ SAVE TO SLOT $activeSlot"
+            textSize = 11.5f
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
+            setBackgroundResource(R.drawable.btn_god_hand_primary)
+            setTextColor(0xFFFFFFFF.toInt())
+            setOnClickListener {
+                onSaveStateRequested?.invoke(activeSlot)
+                buildTabContent()
+            }
+        }
+        val btnLoadState = Button(context).apply {
+            text = "⚡ LOAD SLOT $activeSlot"
+            textSize = 11.5f
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
+            setBackgroundResource(R.drawable.btn_god_hand_secondary)
+            setTextColor(0xFFFDE047.toInt())
+            isEnabled = !slotInfoRaw.isNullOrEmpty()
+            alpha = if (isEnabled) 1.0f else 0.45f
+            setOnClickListener {
+                onLoadStateRequested?.invoke(activeSlot)
+            }
+        }
+        stateActionsRow.addView(btnSaveState, LinearLayout.LayoutParams(0, 42.dpToPx(), 1f).apply { setMargins(0, 0, 6.dpToPx(), 0) })
+        stateActionsRow.addView(btnLoadState, LinearLayout.LayoutParams(0, 42.dpToPx(), 1f).apply { setMargins(6.dpToPx(), 0, 0, 0) })
+        contentContainer.addView(stateActionsRow)
+
         addSectionHeader("PS2 MEMORY CARD STATUS")
 
         val saveInfo = SaveManager.getActiveSaveInfo(context)
@@ -939,10 +1186,10 @@ class SettingsDialog(
         }
 
         val logView = TextView(context).apply {
-            setTextColor(0xFF94A3B8.toInt())
+            setTextColor(0xFFA89682.toInt())
             textSize = 9.5f
             typeface = android.graphics.Typeface.MONOSPACE
-            setBackgroundColor(0xFF0F172A.toInt())
+            setBackgroundColor(0xFF100A06.toInt())
             setPadding(12.dpToPx(), 12.dpToPx(), 12.dpToPx(), 12.dpToPx())
         }
 

@@ -13,6 +13,33 @@
 
 namespace
 {
+    static std::atomic<float> s_masterVolume{1.0f};
+    static std::atomic<float> s_bgmVolume{1.0f};
+    static std::atomic<float> s_sfxVolume{1.0f};
+    static std::atomic<float> s_voiceVolume{1.0f};
+}
+
+extern "C" void godhand_set_audio_channel_volumes(float master, float bgm, float sfx, float voice) {
+    s_masterVolume.store(std::clamp(master, 0.0f, 1.0f), std::memory_order_relaxed);
+    s_bgmVolume.store(std::clamp(bgm, 0.0f, 1.0f), std::memory_order_relaxed);
+    s_sfxVolume.store(std::clamp(sfx, 0.0f, 1.0f), std::memory_order_relaxed);
+    s_voiceVolume.store(std::clamp(voice, 0.0f, 1.0f), std::memory_order_relaxed);
+}
+
+extern "C" float godhand_get_bgm_volume() {
+    return s_bgmVolume.load(std::memory_order_relaxed);
+}
+
+extern "C" float godhand_get_sfx_volume() {
+    return s_sfxVolume.load(std::memory_order_relaxed);
+}
+
+extern "C" float godhand_get_voice_volume() {
+    return s_voiceVolume.load(std::memory_order_relaxed);
+}
+
+namespace
+{
     std::vector<uint8_t> buildWavFromPcm(const int16_t *pcm, size_t sampleCount, uint32_t sampleRate)
     {
         const uint32_t dataSize = static_cast<uint32_t>(sampleCount * 2);
@@ -332,6 +359,12 @@ struct PS2AudioBackend::Impl
             }
             output[frame * 2u] = owner->lastOutput[0];
             output[frame * 2u + 1u] = owner->lastOutput[1];
+        }
+        const float master = s_masterVolume.load(std::memory_order_relaxed);
+        if (master < 0.999f)
+        {
+            for (size_t i = 0u; i < requested; ++i)
+                output[i] = static_cast<int16_t>(std::clamp(output[i] * master, -32768.0f, 32767.0f));
         }
         if (owner->outDump)
         {
@@ -813,7 +846,9 @@ void PS2AudioBackend::playDecodedSample(uint32_t sampleKey, DecodedSample &sampl
     Sound snd = LoadSoundFromWave(wave);
     UnloadWave(wave);
     SetSoundPitch(snd, pitch);
-    SetSoundVolume(snd, volume);
+    const float channelVol = isBgm ? s_bgmVolume.load(std::memory_order_relaxed)
+                                   : s_sfxVolume.load(std::memory_order_relaxed);
+    SetSoundVolume(snd, volume * channelVol);
     m_impl->activeSounds.push_back({snd, sampleKey});
     PlaySound(snd);
 #endif

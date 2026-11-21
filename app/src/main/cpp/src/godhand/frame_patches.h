@@ -24,6 +24,7 @@ namespace kamite
     // Game thread: the roulette wheel is on screen (cCockRoulette's move ran within the last two game frames).
     bool rouletteUp();
     void setRouletteTimerDouble(bool on);
+    void cycleRouletteTarget(int dir);
 
     // Main game loop hook at label_30adf4: in func_0030AC40
     void frameStart(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime);
