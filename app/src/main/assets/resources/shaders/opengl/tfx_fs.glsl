@@ -61,7 +61,11 @@
 
 #define NEEDS_RT (NEEDS_RT_EARLY || NEEDS_RT_FOR_AFAIL || (!PS_PRIMID_INIT && (PS_FBMASK || SW_BLEND_NEEDS_RT || SW_AD_TO_HW)))
 #define NEEDS_TEX (PS_TFX != 4)
+#if (DEPTH_FEEDBACK_SUPPORT != 0)
 #define SW_DEPTH (NEEDS_DEPTH_FOR_AFAIL || NEEDS_DEPTH_FOR_ZTST || NEEDS_DEPTH_FOR_AA1)
+#else
+#define SW_DEPTH 0
+#endif
 #define ZWRITE (SW_DEPTH || PS_ZCLAMP || PS_ZFLOOR)
 
 layout(std140, binding = 0) uniform cb21
@@ -194,13 +198,13 @@ vec4 sample_from_rt()
 float sample_from_depth()
 {
 #if !SW_DEPTH
-	return 0.0f;
+	return gl_FragCoord.z;
 #elif HAS_FRAMEBUFFER_FETCH && (DEPTH_FEEDBACK_SUPPORT == 2)
 	return o_col1;
 #elif (DEPTH_FEEDBACK_SUPPORT == 1 || (DEPTH_FEEDBACK_SUPPORT == 2 && !HAS_FRAMEBUFFER_FETCH))
 	return texelFetch(DepthSampler, ivec2(gl_FragCoord.xy), 0).r;
 #else
-	return 0.0f;
+	return gl_FragCoord.z;
 #endif
 }
 

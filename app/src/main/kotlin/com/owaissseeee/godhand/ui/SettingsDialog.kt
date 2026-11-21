@@ -1217,19 +1217,19 @@ class SettingsDialog(
     // 5. LOGS TAB
     // ==========================================
     private fun buildLogsTab() {
-        addSectionHeader("PERFORMANCE SPIKE & ENGINE LOGS")
+        addSectionHeader("FREEZE DETECTOR & ENGINE LOGS")
 
-        // Switch to toggle spike logging (Zero overhead when turned off, default OFF)
+        // Switch to toggle spike logging (Zero overhead when turned off, default ON)
         var spikeLoggingOn = settings.perfSpikeLoggingEnabled
         addSwitchRow(
-            "Enable Frame Drop Logger",
-            "Zero-overhead telemetry. Captures hardware state on noticeable stutter.",
+            "Automatic Freeze & Frame Drop Logger",
+            "Zero-overhead telemetry. Captures hardware state on engine freezes (>=100ms) or stutter.",
             spikeLoggingOn
         ) { enabled ->
             spikeLoggingOn = enabled
             settings.perfSpikeLoggingEnabled = enabled
             NativeBridge.setSpikeLoggingEnabled(enabled)
-            val msg = if (enabled) "Spike detector ENABLED" else "Spike detector DISABLED (0 overhead)"
+            val msg = if (enabled) "Freeze & Spike detector ENABLED" else "Spike detector DISABLED (0 overhead)"
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
         }
 
@@ -1249,9 +1249,9 @@ class SettingsDialog(
         fun fetchSessionLogs() {
             val logs = NativeBridge.getSessionSpikeLog()
             if (logs.isNullOrBlank()) {
-                logView.text = "[SESSION SPIKE LOG]\nNo performance spikes or major frame drops recorded in this session.\nGod Hand engine is running at full console speed."
+                logView.text = "[SESSION FREEZE & SPIKE LOG]\nNo performance spikes or engine freezes recorded in this session.\nGod Hand engine is running at full console speed."
             } else {
-                logView.text = "[SESSION SPIKE LOG - PERSISTENT]\n" + logs
+                logView.text = "[SESSION FREEZE & SPIKE LOG - PERSISTENT]\n" + logs
             }
         }
 

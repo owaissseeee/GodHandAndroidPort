@@ -9133,7 +9133,7 @@ void GSRendererHW::EmulateAlphaTest(DATEOptions& date_options)
 	const bool free_fbfetch_feedback = features.framebuffer_fetch && !afail_needs_depth;
 
 	// Determine if we have the correct features for depth feedback.
-	const bool depth_feedback_supported = features.feedback_loops();
+	const bool depth_feedback_supported = features.depth_feedback;
 
 	// We need depth feedback but do not have the correct features.
 	const bool avoid_feedback = afail_needs_depth && !depth_feedback_supported;

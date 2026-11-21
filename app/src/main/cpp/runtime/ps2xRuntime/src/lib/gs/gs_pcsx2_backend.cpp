@@ -965,14 +965,15 @@ void godhand_perf_record_spike(
     float totalFrametimeMs,
     float gsPresentTimeMs
 ) {
-    if (!g_perfSpikeLoggingEnabled.load(std::memory_order_relaxed)) {
+    // Always record engine freezes (>= 100ms) even if general drop logger is off
+    if (!g_perfSpikeLoggingEnabled.load(std::memory_order_relaxed) && totalFrametimeMs < 100.0f) {
         return;
     }
 
-    // Rate-limit: at most 1 log per 400ms to avoid overhead during room transitions / hitching
+    // Rate-limit: at most 1 log per 400ms to avoid overhead during room transitions / hitching (freezes bypass rate limit)
     const auto now = std::chrono::steady_clock::now();
     const auto timeSinceLastMs = std::chrono::duration<float, std::milli>(now - g_lastSpikeLogTime).count();
-    if (g_lastSpikeLogTime.time_since_epoch().count() != 0 && timeSinceLastMs < 400.0f) {
+    if (totalFrametimeMs < 100.0f && g_lastSpikeLogTime.time_since_epoch().count() != 0 && timeSinceLastMs < 400.0f) {
         return;
     }
     g_lastSpikeLogTime = now;
@@ -989,7 +990,10 @@ void godhand_perf_record_spike(
     ps2_audio_get_stats(&rec.audioBufferFillPct, &rec.audioUnderruns);
 
     // Classify primary bottleneck
-    if (rec.eeTimeMs >= 14.0f) {
+    if (totalFrametimeMs >= 100.0f) {
+        std::snprintf(rec.bottleneckReason, sizeof(rec.bottleneckReason),
+                      "ENGINE FREEZE / STALL (PC: 0x%08X)", rec.topGuestPc);
+    } else if (rec.eeTimeMs >= 14.0f) {
         std::snprintf(rec.bottleneckReason, sizeof(rec.bottleneckReason),
                       "EE CPU Compute Bound (PC: 0x%08X)", rec.topGuestPc);
     } else if (rec.vu1QueueDepth >= 2u) {
@@ -1008,12 +1012,13 @@ void godhand_perf_record_spike(
 
 #if defined(__ANDROID__)
     __android_log_print(ANDROID_LOG_WARN, "GodHandPerf",
-        "[PERF SPIKE] Frame #%" PRIu64 ": %.1f ms (+%.1f ms drop)\n"
+        "[%s] Frame #%" PRIu64 ": %.1f ms (+%.1f ms drop)\n"
         "  EE: %.1f ms (Idle: %.1f ms) | PC: 0x%08X\n"
         "  VU1: Queue: %u\n"
         "  GS Present: %.1f ms\n"
         "  Audio: %u%% fill (%u underruns)\n"
         "  Bottleneck: %s",
+        (totalFrametimeMs >= 100.0f ? "ENGINE FREEZE" : "PERF SPIKE"),
         rec.frameNumber, rec.totalFrametimeMs, rec.totalFrametimeMs - 16.67f,
         rec.eeTimeMs, rec.eeIdleTimeMs, rec.topGuestPc,
         rec.vu1QueueDepth,
@@ -1025,17 +1030,27 @@ void godhand_perf_record_spike(
     {
         std::lock_guard<std::mutex> lock(g_spikeMutex);
         std::snprintf(g_lastSpikeReport, sizeof(g_lastSpikeReport),
-            "SPIKE #%" PRIu64 ": %.1fms | EE: %.1fms (0x%08X) | VU1: Q%u | GS: %.1fms\n-> %s",
+            "%s #%" PRIu64 ": %.1fms | EE: %.1fms (0x%08X) | VU1: Q%u | GS: %.1fms\n-> %s",
+            (totalFrametimeMs >= 100.0f ? "FREEZE" : "SPIKE"),
             rec.frameNumber, rec.totalFrametimeMs, rec.eeTimeMs, rec.topGuestPc,
             rec.vu1QueueDepth, rec.gsPresentTimeMs, rec.bottleneckReason);
 
         char entry[384];
-        std::snprintf(entry, sizeof(entry),
-            "[%02llu:%02llu] Drop #%" PRIu64 ": %.1f ms (EE: %.1f ms | VU1: Q%u | GS: %.1f ms)\n -> %s\n",
-            static_cast<unsigned long long>((rec.frameNumber / 3600)),
-            static_cast<unsigned long long>((rec.frameNumber / 60) % 60),
-            rec.frameNumber, rec.totalFrametimeMs, rec.eeTimeMs,
-            rec.vu1QueueDepth, rec.gsPresentTimeMs, rec.bottleneckReason);
+        if (totalFrametimeMs >= 100.0f) {
+            std::snprintf(entry, sizeof(entry),
+                "[%02llu:%02llu] ⚠️ FREEZE #%" PRIu64 ": %.1f ms (EE: %.1f ms | VU1: Q%u | GS: %.1f ms)\n -> %s\n",
+                static_cast<unsigned long long>((rec.frameNumber / 3600)),
+                static_cast<unsigned long long>((rec.frameNumber / 60) % 60),
+                rec.frameNumber, rec.totalFrametimeMs, rec.eeTimeMs,
+                rec.vu1QueueDepth, rec.gsPresentTimeMs, rec.bottleneckReason);
+        } else {
+            std::snprintf(entry, sizeof(entry),
+                "[%02llu:%02llu] Drop #%" PRIu64 ": %.1f ms (EE: %.1f ms | VU1: Q%u | GS: %.1f ms)\n -> %s\n",
+                static_cast<unsigned long long>((rec.frameNumber / 3600)),
+                static_cast<unsigned long long>((rec.frameNumber / 60) % 60),
+                rec.frameNumber, rec.totalFrametimeMs, rec.eeTimeMs,
+                rec.vu1QueueDepth, rec.gsPresentTimeMs, rec.bottleneckReason);
+        }
 
         if (g_sessionSpikeLog.size() + sizeof(entry) > 65536) {
             g_sessionSpikeLog.erase(0, 16384);

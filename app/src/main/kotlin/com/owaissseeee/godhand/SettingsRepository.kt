@@ -251,7 +251,7 @@ class SettingsRepository(context: Context) {
         set(value) = putInt("fps_overlay_mode", value.coerceIn(0, 2))
 
     var perfSpikeLoggingEnabled: Boolean
-        get() = prefs.getBoolean("perf_spike_logging", false) // Default is OFF
+        get() = prefs.getBoolean("perf_spike_logging", true) // Default is ON to capture freezes & spikes
         set(value) = putBoolean("perf_spike_logging", value)
 
     // --- CHEAT ENGINE PREFERENCES ---
