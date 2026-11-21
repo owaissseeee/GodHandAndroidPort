@@ -44,6 +44,12 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
 
     val textureFolderPickerLauncher = registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.OpenDocumentTree()) { uri: android.net.Uri? ->
         if (uri != null) {
+            try {
+                contentResolver.takePersistableUriPermission(
+                    uri,
+                    android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            } catch (_: Exception) {}
             val path = resolveRealPathFromUri(uri)
             if (path != null) {
                 settings.customTexturePath = path
@@ -51,6 +57,20 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                 NativeBridge.setCustomTextureDirectory(path)
                 android.widget.Toast.makeText(this, "HD Texture Folder: $path", android.widget.Toast.LENGTH_LONG).show()
                 inGameSettingsDialog?.refreshActiveTab()
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R && !android.os.Environment.isExternalStorageManager()) {
+                    android.widget.Toast.makeText(this, "Please grant All Files Access to load custom textures directly", android.widget.Toast.LENGTH_LONG).show()
+                    try {
+                        val intent = android.content.Intent(android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).apply {
+                            data = android.net.Uri.parse("package:$packageName")
+                        }
+                        startActivity(intent)
+                    } catch (_: Exception) {
+                        try {
+                            startActivity(android.content.Intent(android.provider.Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION))
+                        } catch (_: Exception) {}
+                    }
+                }
             }
         }
     }

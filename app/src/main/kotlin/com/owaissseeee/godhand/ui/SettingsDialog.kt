@@ -509,6 +509,19 @@ class SettingsDialog(
                 setBackgroundResource(R.drawable.btn_god_hand_primary)
                 setTextColor(0xFFFFFFFF.toInt())
                 setOnClickListener {
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R && !android.os.Environment.isExternalStorageManager()) {
+                        android.widget.Toast.makeText(context, "Please grant All Files Access so textures can be loaded", android.widget.Toast.LENGTH_LONG).show()
+                        try {
+                            val intent = android.content.Intent(android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).apply {
+                                data = android.net.Uri.parse("package:${context.packageName}")
+                            }
+                            context.startActivity(intent)
+                        } catch (_: Exception) {
+                            try {
+                                context.startActivity(android.content.Intent(android.provider.Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION))
+                            } catch (_: Exception) {}
+                        }
+                    }
                     onPickTextureFolderRequested?.invoke()
                 }
             }

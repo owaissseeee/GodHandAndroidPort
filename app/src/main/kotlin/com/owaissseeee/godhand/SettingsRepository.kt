@@ -27,12 +27,30 @@ class SettingsRepository(context: Context) {
         return k.startsWith("audio_volume") || k == "touch_opacity" || k == "touch_controls_opacity" || k.startsWith("touch_pos_")
     }
 
+    private fun isIntKey(k: String): Boolean {
+        return k.endsWith("_idx") || k.endsWith("_idx_v2") || k.endsWith("_idx_v3") || k.endsWith("_idx_v4") || k.endsWith("_idx_v5") ||
+               k.endsWith("_mode") || k.endsWith("_slot") || k.endsWith("_multiplier") || k.endsWith("_lock") || k.endsWith("_costume") ||
+               k == "cheat_speed_modifier" || k == "cheat_gene_costume" || k == "cheat_olivia_costume"
+    }
+
     private fun getSafeFloat(key: String, def: Float): Float {
         return try {
             prefs.getFloat(key, def)
         } catch (_: Exception) {
             try {
                 (prefs.all[key] as? Number)?.toFloat() ?: def
+            } catch (_: Throwable) {
+                def
+            }
+        }
+    }
+
+    private fun getSafeInt(key: String, def: Int): Int {
+        return try {
+            prefs.getInt(key, def)
+        } catch (_: Exception) {
+            try {
+                (prefs.all[key] as? Number)?.toInt() ?: def
             } catch (_: Throwable) {
                 def
             }
@@ -51,6 +69,9 @@ class SettingsRepository(context: Context) {
                     if (isFloatKey(k)) {
                         val num = (v as? Number)?.toFloat() ?: 1.0f
                         editor.putFloat(k, num)
+                    } else if (isIntKey(k)) {
+                        val num = (v as? Number)?.toInt() ?: 0
+                        editor.putInt(k, num)
                     } else {
                         when (v) {
                             is Boolean -> editor.putBoolean(k, v)
@@ -105,7 +126,7 @@ class SettingsRepository(context: Context) {
                 putInt("renderer_idx_v4", def)
                 return def
             }
-            return prefs.getInt("renderer_idx_v4", 0).coerceIn(0, 2)
+            return getSafeInt("renderer_idx_v4", 0).coerceIn(0, 2)
         }
         set(value) = putInt("renderer_idx_v4", value.coerceIn(0, 2))
 
@@ -116,7 +137,7 @@ class SettingsRepository(context: Context) {
                 putInt("res_idx_v4", def)
                 return def
             }
-            return prefs.getInt("res_idx_v4", 2).coerceIn(0, 5)
+            return getSafeInt("res_idx_v4", 2).coerceIn(0, 5)
         }
         set(value) = putInt("res_idx_v4", value.coerceIn(0, 5))
 
@@ -127,7 +148,7 @@ class SettingsRepository(context: Context) {
                 putInt("aspect_idx_v3", def)
                 return def
             }
-            return prefs.getInt("aspect_idx_v3", 2).coerceIn(0, 2)
+            return getSafeInt("aspect_idx_v3", 2).coerceIn(0, 2)
         }
         set(value) = putInt("aspect_idx_v3", value.coerceIn(0, 2))
 
@@ -138,21 +159,21 @@ class SettingsRepository(context: Context) {
                 putInt("fps_idx_v5", def)
                 return def
             }
-            return prefs.getInt("fps_idx_v5", 0).coerceIn(0, 1)
+            return getSafeInt("fps_idx_v5", 0).coerceIn(0, 1)
         }
         set(value) = putInt("fps_idx_v5", value.coerceIn(0, 1))
 
     var frameskipIdx: Int
-        get() = prefs.getInt("frameskip_idx_v2", 1).coerceIn(0, 4) // 0: Off, 1: Auto (Skip on Lag - Recommended), 2: Skip 1 Frame, 3: Skip 2 Frames, 4: Skip 3 Frames (Potato Mode)
+        get() = getSafeInt("frameskip_idx_v2", 1).coerceIn(0, 4) // 0: Off, 1: Auto (Skip on Lag - Recommended), 2: Skip 1 Frame, 3: Skip 2 Frames, 4: Skip 3 Frames (Potato Mode)
         set(value) = putInt("frameskip_idx_v2", value.coerceIn(0, 4))
 
     // --- Audio Settings ---
     var audioSchedulingIdx: Int
-        get() = prefs.getInt("audio_scheduling_idx", 1).coerceIn(0, 2) // 0: Real-time, 1: Balanced, 2: Safe Buffer (Helio G35)
+        get() = getSafeInt("audio_scheduling_idx", 1).coerceIn(0, 2) // 0: Real-time, 1: Balanced, 2: Safe Buffer (Helio G35)
         set(value) = putInt("audio_scheduling_idx", value.coerceIn(0, 2))
 
     var audioBufferSizeIdx: Int
-        get() = prefs.getInt("audio_buffer_size_idx", 1).coerceIn(0, 2) // 0: 1024 frames, 1: 2048 frames, 2: 4096 frames
+        get() = getSafeInt("audio_buffer_size_idx", 1).coerceIn(0, 2) // 0: 1024 frames, 1: 2048 frames, 2: 4096 frames
         set(value) = putInt("audio_buffer_size_idx", value.coerceIn(0, 2))
 
     var audioVolume: Float
@@ -190,12 +211,12 @@ class SettingsRepository(context: Context) {
         set(value) = putBoolean("roulette_timer_double", value)
 
     var activeSaveStateSlot: Int
-        get() = prefs.getInt("active_save_state_slot", 1).coerceIn(1, 5)
+        get() = getSafeInt("active_save_state_slot", 1).coerceIn(1, 5)
         set(value) = putInt("active_save_state_slot", value.coerceIn(1, 5))
 
     // --- Controls Settings ---
     var controllerMode: Int
-        get() = prefs.getInt("controller_mode", 0).coerceIn(0, 2) // 0: Auto-Detect, 1: Touch Only, 2: Gamepad Only
+        get() = getSafeInt("controller_mode", 0).coerceIn(0, 2) // 0: Auto-Detect, 1: Touch Only, 2: Gamepad Only
         set(value) = putInt("controller_mode", value.coerceIn(0, 2))
 
     var autoHideTouchOnGamepad: Boolean
@@ -211,7 +232,7 @@ class SettingsRepository(context: Context) {
         set(value) = putBoolean("right_stick_sticky", value)
 
     var dodgeMode: Int
-        get() = prefs.getInt("dodge_mode", 0).coerceIn(0, 2) // 0: Right Stick, 1: Swipe Gestures, 2: Dodge Buttons
+        get() = getSafeInt("dodge_mode", 0).coerceIn(0, 2) // 0: Right Stick, 1: Swipe Gestures, 2: Dodge Buttons
         set(value) = putInt("dodge_mode", value.coerceIn(0, 2))
 
     var touchControlsOpacity: Float
@@ -219,7 +240,7 @@ class SettingsRepository(context: Context) {
         set(value) = putFloat("touch_controls_opacity", value.coerceIn(0.10f, 1.0f))
 
     var fpsOverlayMode: Int
-        get() = prefs.getInt("fps_overlay_mode", 2).coerceIn(0, 2) // 0: Compact, 1: Detailed Debug, 2: Hidden (Default is OFF)
+        get() = getSafeInt("fps_overlay_mode", 2).coerceIn(0, 2) // 0: Compact, 1: Detailed Debug, 2: Hidden (Default is OFF)
         set(value) = putInt("fps_overlay_mode", value.coerceIn(0, 2))
 
     var perfSpikeLoggingEnabled: Boolean
@@ -275,7 +296,7 @@ class SettingsRepository(context: Context) {
         set(value) = putBoolean("cheat_always_run", value)
 
     var cheatDamageMultiplier: Int
-        get() = prefs.getInt("cheat_damage_multiplier", 0).coerceIn(0, 2) // 0: 1x (Normal), 1: 2x (Double), 2: 999 (Max)
+        get() = getSafeInt("cheat_damage_multiplier", 0).coerceIn(0, 2) // 0: 1x (Normal), 1: 2x (Double), 2: 999 (Max)
         set(value) = putInt("cheat_damage_multiplier", value.coerceIn(0, 2))
 
     var cheatFreezeRoulette: Boolean
@@ -283,7 +304,7 @@ class SettingsRepository(context: Context) {
         set(value) = putBoolean("cheat_freeze_roulette", value)
 
     var cheatDifficultyLock: Int
-        get() = prefs.getInt("cheat_difficulty_lock", 0).coerceIn(0, 2) // 0: Normal (Dynamic), 1: Level DIE, 2: Level 1
+        get() = getSafeInt("cheat_difficulty_lock", 0).coerceIn(0, 2) // 0: Normal (Dynamic), 1: Level DIE, 2: Level 1
         set(value) = putInt("cheat_difficulty_lock", value.coerceIn(0, 2))
 
     var hasSeenCheatsWarning: Boolean
@@ -292,11 +313,11 @@ class SettingsRepository(context: Context) {
 
     // Cosmetics, Casino & Unlockables
     var cheatGeneCostume: Int
-        get() = prefs.getInt("cheat_gene_costume", 0).coerceIn(0, 3) // 0: Normal, 1: Devil Hand, 2: Karate Gi, 3: Carnival
+        get() = getSafeInt("cheat_gene_costume", 0).coerceIn(0, 3) // 0: Normal, 1: Devil Hand, 2: Karate Gi, 3: Carnival
         set(value) = putInt("cheat_gene_costume", value.coerceIn(0, 3))
 
     var cheatOliviaCostume: Int
-        get() = prefs.getInt("cheat_olivia_costume", 0).coerceIn(0, 1) // 0: Normal, 1: Bunny Girl
+        get() = getSafeInt("cheat_olivia_costume", 0).coerceIn(0, 1) // 0: Normal, 1: Bunny Girl
         set(value) = putInt("cheat_olivia_costume", value.coerceIn(0, 1))
 
     var cheatCasinoTickets: Boolean

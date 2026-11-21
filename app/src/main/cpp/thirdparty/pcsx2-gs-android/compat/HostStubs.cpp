@@ -265,13 +265,27 @@ void pcsx2gs::SetTextureFolder(const std::string &folder)
         g_textureSerial.clear();
         return;
     }
+    std::error_code ec;
     std::filesystem::path path(folder);
     while (!path.empty() && !path.has_filename())
         path = path.parent_path();
-    if (path.filename() == "replacements")
+
+    // If folder contains a game serial subfolder (e.g. SLUS-21503), descend into it
+    if (std::filesystem::exists(path / "SLUS-21503", ec))
+        path = path / "SLUS-21503";
+    else if (std::filesystem::exists(path / "slus-21503", ec))
+        path = path / "slus-21503";
+
+    if (path.filename() == "replacements" || path.filename() == "Replacements")
         path = path.parent_path();
+
     EmuFolders::Textures = path.parent_path().string();
     g_textureSerial = path.filename().string();
+
+#if defined(__ANDROID__)
+    __android_log_print(ANDROID_LOG_INFO, "pcsx2-gs", "SetTextureFolder: '%s' -> Textures='%s', serial='%s'",
+                        folder.c_str(), EmuFolders::Textures.c_str(), g_textureSerial.c_str());
+#endif
 }
 
 void pcsx2gs::SetVerticalFrequency(double hz)

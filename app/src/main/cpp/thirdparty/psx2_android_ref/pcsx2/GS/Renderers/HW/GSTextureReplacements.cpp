@@ -18,6 +18,10 @@
 #include "GS/Renderers/HW/GSTextureReplacements.h"
 #include "VMManager.h"
 
+#if defined(__ANDROID__)
+#include <android/log.h>
+#endif
+
 #include <cinttypes>
 #include <condition_variable>
 #include <cstring>
@@ -418,6 +422,15 @@ void GSTextureReplacements::ReloadReplacementMap()
 		files.clear();
 		FileSystem::FindFiles(texture_dir.c_str(), "*", FILESYSTEM_FIND_FILES | FILESYSTEM_FIND_HIDDEN_FILES | FILESYSTEM_FIND_RECURSIVE, &files);
 	}
+	if (files.empty() && !EmuFolders::Textures.empty())
+	{
+		files.clear();
+		FileSystem::FindFiles(EmuFolders::Textures.c_str(), "*", FILESYSTEM_FIND_FILES | FILESYSTEM_FIND_HIDDEN_FILES | FILESYSTEM_FIND_RECURSIVE, &files);
+	}
+#if defined(__ANDROID__)
+	__android_log_print(ANDROID_LOG_INFO, "pcsx2-gs", "ReloadReplacementMap: Scanning '%s' and '%s' found %zu candidate files",
+	                    replacement_dir.c_str(), texture_dir.c_str(), files.size());
+#endif
 	if (files.empty())
 		return;
 
@@ -441,6 +454,11 @@ void GSTextureReplacements::ReloadReplacementMap()
 		name->CLUTHash = 0;
 		s_replacement_textures_without_clut_hash.insert(name.value());
 	}
+
+#if defined(__ANDROID__)
+	__android_log_print(ANDROID_LOG_INFO, "pcsx2-gs", "ReloadReplacementMap: Loaded %zu valid replacement texture mappings",
+	                    s_replacement_texture_filenames.size());
+#endif
 
 	if (!s_replacement_texture_filenames.empty())
 	{

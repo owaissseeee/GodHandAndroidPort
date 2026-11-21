@@ -473,14 +473,19 @@ extern "C" PCSX2GS_EXPORT void pcsx2gs_set_aspect(uint32_t mode)
 
 extern "C" PCSX2GS_EXPORT void pcsx2gs_set_texture_folder(const char *dir)
 {
+    Pcsx2Config::GSOptions oldConfig = GSConfig;
     if (dir && *dir) {
         pcsx2gs::SetTextureFolder(dir);
         EmuConfig.GS.LoadTextureReplacements = true;
         EmuConfig.GS.LoadTextureReplacementsAsync = true;
     } else {
+        pcsx2gs::SetTextureFolder("");
         EmuConfig.GS.LoadTextureReplacements = false;
     }
+    GSUpdateConfig(EmuConfig.GS);
     if (g_gs_renderer) {
+        GSTextureReplacements::UpdateConfig(oldConfig);
+        GSTextureReplacements::GameChanged();
         GSTextureReplacements::ReloadReplacementMap();
     }
 }

@@ -1,6 +1,11 @@
 #include "runtime/ps2_audio.h"
 #include "runtime/ps2_memory.h"
 #include "ps2_host_backend.h"
+
+namespace ps2x::iop
+{
+    void setVoiceGain(float gain);
+}
 #include <algorithm>
 #include <cmath>
 #include <span>
@@ -11,12 +16,23 @@
 #include <cstring>
 #include <vector>
 
+namespace godhand
+{
+    void setStreamVolumes(float bgm, float voice);
+}
+
 namespace
 {
     static std::atomic<float> s_masterVolume{1.0f};
     static std::atomic<float> s_bgmVolume{1.0f};
     static std::atomic<float> s_sfxVolume{1.0f};
     static std::atomic<float> s_voiceVolume{1.0f};
+
+    float gainOf(float percent)
+    {
+        float v = std::clamp(percent, 0.0f, 1.0f);
+        return v * v;
+    }
 }
 
 extern "C" void godhand_set_audio_channel_volumes(float master, float bgm, float sfx, float voice) {
@@ -24,6 +40,9 @@ extern "C" void godhand_set_audio_channel_volumes(float master, float bgm, float
     s_bgmVolume.store(std::clamp(bgm, 0.0f, 1.0f), std::memory_order_relaxed);
     s_sfxVolume.store(std::clamp(sfx, 0.0f, 1.0f), std::memory_order_relaxed);
     s_voiceVolume.store(std::clamp(voice, 0.0f, 1.0f), std::memory_order_relaxed);
+
+    godhand::setStreamVolumes(bgm, voice);
+    ps2x::iop::setVoiceGain(gainOf(sfx));
 }
 
 extern "C" float godhand_get_bgm_volume() {

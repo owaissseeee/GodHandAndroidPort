@@ -41,6 +41,57 @@ namespace godhand
 {
     namespace
     {
+        constexpr uint32_t kBgmPool = 0x5FEE00u + 0x2380u;
+        constexpr uint32_t kBgmNodeSize = 0xDCu;
+        constexpr uint32_t kBgmNodeCount = 16u;
+        constexpr uint32_t kStreamVolume1 = 0x00373FF0u;
+        constexpr uint32_t kStreamVolumeN = 0x003745C0u;
+
+        static GuestFunction s_origStreamVolume1 = nullptr;
+        static GuestFunction s_origStreamVolumeN = nullptr;
+
+        std::atomic<float> s_musicGain{1.0f};
+        std::atomic<float> s_voicesGain{1.0f};
+        std::atomic<bool> s_streamVolumesDirty{false};
+
+        struct StreamCall
+        {
+            uint32_t node = 0;
+            uint32_t category = 0;
+            int32_t channel = -1;
+            float volume = 1.0f;
+        };
+
+        std::mutex s_streamMutex;
+        std::vector<StreamCall> s_streamCalls;
+
+        void recordStreamCall(uint32_t node, uint32_t category, int32_t channel, float volume)
+        {
+            std::lock_guard<std::mutex> lock(s_streamMutex);
+            auto it = std::find_if(s_streamCalls.begin(), s_streamCalls.end(),
+                                   [&](const StreamCall &c) { return c.node == node && c.channel == channel; });
+            if (it == s_streamCalls.end())
+                s_streamCalls.push_back({node, category, channel, volume});
+            else
+                *it = {node, category, channel, volume};
+        }
+
+        bool isMusicNode(const uint8_t *rdram, uint32_t node)
+        {
+            if (!rdram || node < kBgmPool || node >= kBgmPool + kBgmNodeSize * kBgmNodeCount ||
+                (node - kBgmPool) % kBgmNodeSize != 0u)
+                return false;
+            int32_t bank = 0;
+            std::memcpy(&bank, rdram + node + 0x8Cu, sizeof(bank));
+            return (bank - 0x80) != 1; // Bank 0 = BGM; Bank 1 = cutscene dialogue/voices
+        }
+
+        float gainOf(float percent)
+        {
+            float v = std::clamp(percent, 0.0f, 1.0f);
+            return v * v;
+        }
+
         struct Hook
         {
             FunctionBinding binding;
@@ -68,6 +119,74 @@ namespace godhand
                 return "TEMPORARY-STUB";
             }
             return "?";
+        }
+    }
+
+    void setStreamVolumes(float bgm, float voice)
+    {
+        s_musicGain.store(gainOf(bgm), std::memory_order_relaxed);
+        s_voicesGain.store(gainOf(voice), std::memory_order_relaxed);
+        s_streamVolumesDirty.store(true, std::memory_order_release);
+    }
+
+    bool checkStreamVolumesDirty()
+    {
+        return s_streamVolumesDirty.exchange(false, std::memory_order_acq_rel);
+    }
+
+    void reapplyStreamVolumes(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime)
+    {
+        if (!rdram || !ctx || !runtime) return;
+        std::vector<StreamCall> calls;
+        {
+            std::lock_guard<std::mutex> lock(s_streamMutex);
+            s_streamCalls.erase(
+                std::remove_if(s_streamCalls.begin(), s_streamCalls.end(),
+                    [&](const StreamCall &c) {
+                        if (c.node < 0x100000u || c.node >= 0x02000000u) return true;
+                        uint32_t adxt = 0;
+                        std::memcpy(&adxt, rdram + c.node, sizeof(adxt));
+                        return adxt == 0u;
+                    }),
+                s_streamCalls.end());
+            calls = s_streamCalls;
+        }
+
+        for (const StreamCall &c : calls)
+        {
+            const float keepF12 = ctx->f[12];
+            const uint64_t keepA0 = GPR_U64(ctx, 4);
+            const uint64_t keepA1 = GPR_U64(ctx, 5);
+            const uint64_t keepA2 = GPR_U64(ctx, 6);
+
+            const bool music = isMusicNode(rdram, c.node);
+            const float gain = (music ? s_musicGain : s_voicesGain).load(std::memory_order_relaxed);
+
+            ctx->f[12] = c.volume * gain;
+            SET_GPR_U32(ctx, 4, c.node);
+            SET_GPR_U32(ctx, 5, c.category);
+            if (c.channel < 0)
+            {
+                if (s_origStreamVolume1)
+                    s_origStreamVolume1(rdram, ctx, runtime);
+                if (rdram && c.node >= 0x100000u && c.node < 0x02000000u - 0x20u)
+                    std::memcpy(rdram + c.node + 0x14u, &c.volume, sizeof(c.volume));
+            }
+            else
+            {
+                SET_GPR_U32(ctx, 6, static_cast<uint32_t>(c.channel));
+                if (s_origStreamVolumeN)
+                    s_origStreamVolumeN(rdram, ctx, runtime);
+                if (rdram && c.node >= 0x100000u && c.node < 0x02000000u - 0x100u) {
+                    const uint32_t offset = 0x14u + static_cast<uint32_t>(c.channel >= 0 ? c.channel : 0) * 4u;
+                    std::memcpy(rdram + c.node + offset, &c.volume, sizeof(c.volume));
+                }
+            }
+
+            ctx->f[12] = keepF12;
+            SET_GPR_U64(ctx, 4, keepA0);
+            SET_GPR_U64(ctx, 5, keepA1);
+            SET_GPR_U64(ctx, 6, keepA2);
         }
     }
 
@@ -1275,28 +1394,90 @@ namespace godhand
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
                     kamite::markRouletteSeen();
                     uint32_t wheel = GPR_U32(ctx, 4); // a0 = cCockRoulette*
-                    uint16_t oldCursor = 0, count = 0;
-                    bool upPressed = false;
+                    uint16_t cur = 0, count = 0;
+                    uint64_t pressed = 0;
                     if (rdram && wheel >= 0x100000u && wheel < 0x02000000u - 0x1000u)
                     {
-                        std::memcpy(&oldCursor, rdram + wheel + 0x422u, sizeof(oldCursor));
+                        std::memcpy(&cur, rdram + wheel + 0x422u, sizeof(cur));
                         std::memcpy(&count, rdram + wheel + 0x3B2u, sizeof(count));
-                        uint64_t pressed = 0;
                         std::memcpy(&pressed, rdram + 0x7474A0u + 0x1A0u, sizeof(pressed));
-                        upPressed = (pressed & (1ull << 49)) != 0u;
+                    }
+
+                    constexpr uint64_t kStepMask = (1ull << 49) | (1ull << 48) | (1ull << 40);
+                    const bool isStepping = (pressed & kStepMask) != 0u;
+                    const bool upPressed = (pressed & (1ull << 49)) != 0u;
+
+                    // If stepping upwards and count > 1, pre-adjust cursor by -2 so the function's +1 steps backwards by 1!
+                    if (isStepping && upPressed && count > 1 && rdram && wheel >= 0x100000u && wheel < 0x02000000u - 0x1000u)
+                    {
+                        uint16_t preStepCursor = static_cast<uint16_t>((cur + count - 2) % count);
+                        std::memcpy(rdram + wheel + 0x422u, &preStepCursor, sizeof(preStepCursor));
                     }
 
                     if (s_origCockRouletteMove)
                         s_origCockRouletteMove(rdram, ctx, rt);
-
-                    if (upPressed && rdram && count > 1 && wheel >= 0x100000u && wheel < 0x02000000u - 0x1000u)
-                    {
-                        uint16_t newCursor = static_cast<uint16_t>((oldCursor + count - 1) % count);
-                        std::memcpy(rdram + wheel + 0x422u, &newCursor, sizeof(newCursor));
-                    }
                 },
                 ReplacementStatus::Native,
                 "cCockRoulette move with 2-way D-pad & stick navigation");
+        }
+
+        // CRI ADX Stream Volume Hook 1-channel (0x00373FF0)
+        if (runtime.hasFunction(kStreamVolume1))
+        {
+            s_origStreamVolume1 = runtime.lookupFunction(kStreamVolume1);
+            FunctionHooks::instance().replace(
+                kStreamVolume1,
+                "func_00373FF0_volume1",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    const uint32_t node = GPR_U32(ctx, 4);
+                    const uint32_t category = GPR_U32(ctx, 5);
+                    const float asked = ctx->f[12];
+                    recordStreamCall(node, category, -1, asked);
+
+                    const bool music = isMusicNode(rdram, node);
+                    const float gain = (music ? s_musicGain : s_voicesGain).load(std::memory_order_relaxed);
+
+                    ctx->f[12] = asked * gain;
+                    if (s_origStreamVolume1)
+                        s_origStreamVolume1(rdram, ctx, rt);
+
+                    if (rdram && node >= 0x100000u && node < 0x02000000u - 0x20u)
+                        std::memcpy(rdram + node + 0x14u, &asked, sizeof(asked));
+                    ctx->f[12] = asked;
+                },
+                ReplacementStatus::Native,
+                "CRI ADX 1-channel stream volume scaling");
+        }
+
+        // CRI ADX Stream Volume Hook multi-channel (0x003745C0)
+        if (runtime.hasFunction(kStreamVolumeN))
+        {
+            s_origStreamVolumeN = runtime.lookupFunction(kStreamVolumeN);
+            FunctionHooks::instance().replace(
+                kStreamVolumeN,
+                "func_003745C0_volumeN",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    const uint32_t node = GPR_U32(ctx, 4);
+                    const uint32_t category = GPR_U32(ctx, 5);
+                    const int32_t channel = static_cast<int32_t>(GPR_U32(ctx, 6));
+                    const float asked = ctx->f[12];
+                    recordStreamCall(node, category, channel, asked);
+
+                    const bool music = isMusicNode(rdram, node);
+                    const float gain = (music ? s_musicGain : s_voicesGain).load(std::memory_order_relaxed);
+
+                    ctx->f[12] = asked * gain;
+                    if (s_origStreamVolumeN)
+                        s_origStreamVolumeN(rdram, ctx, rt);
+
+                    if (rdram && node >= 0x100000u && node < 0x02000000u - 0x100u) {
+                        const uint32_t offset = 0x14u + static_cast<uint32_t>(channel >= 0 ? channel : 0) * 4u;
+                        std::memcpy(rdram + node + offset, &asked, sizeof(asked));
+                    }
+                    ctx->f[12] = asked;
+                },
+                ReplacementStatus::Native,
+                "CRI ADX multi-channel stream volume scaling");
         }
 
         constexpr uint32_t kGetCostumeNo = 0x001FC0A8u;

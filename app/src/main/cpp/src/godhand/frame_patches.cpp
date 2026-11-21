@@ -321,114 +321,28 @@ namespace kamite
             setRamF32(rdram, wheel + 0x2A4u, g_rouletteSavedA);
         }
 
-        static int s_targetSwitchCooldown = 0;
-
-        void cycleRouletteTargetInternal(uint8_t *rdram, int dir)
-        {
-            uint32_t gene = 0;
-            std::memcpy(&gene, &ram8(rdram, game::GameWork::address(game::GameWork::kPlayerObj)), sizeof(gene));
-            if (gene < 0x100000u || gene >= 0x02000000u - 0x1000u)
-                return;
-
-            std::vector<uint32_t> enemies;
-            uint32_t slot = 0;
-            std::memcpy(&slot, &ram8(rdram, 0x5864F0u + 0x500u), sizeof(slot));
-            for (int guard = 0; guard < 128 && slot >= 0x100000u && slot < 0x02000000u - 16u; ++guard)
-            {
-                uint32_t object = 0, next = 0;
-                std::memcpy(&object, &ram8(rdram, slot + 8u), sizeof(object));
-                std::memcpy(&next, &ram8(rdram, slot + 4u), sizeof(next));
-                if (object >= 0x100000u && object < 0x02000000u - 0x1000u)
-                {
-                    enemies.push_back(object);
-                }
-                slot = next;
-            }
-
-            if (enemies.empty())
-                return;
-
-            uint32_t currentTarget = 0;
-            std::memcpy(&currentTarget, &ram8(rdram, gene + 0x364u), sizeof(currentTarget));
-
-            int currentIndex = -1;
-            for (size_t i = 0; i < enemies.size(); ++i)
-            {
-                if (enemies[i] == currentTarget)
-                {
-                    currentIndex = static_cast<int>(i);
-                    break;
-                }
-            }
-
-            int nextIndex = 0;
-            if (currentIndex >= 0)
-            {
-                if (dir > 0)
-                    nextIndex = (currentIndex + 1) % static_cast<int>(enemies.size());
-                else
-                    nextIndex = (currentIndex - 1 + static_cast<int>(enemies.size())) % static_cast<int>(enemies.size());
-            }
-            else
-            {
-                nextIndex = (dir > 0) ? 0 : static_cast<int>(enemies.size()) - 1;
-            }
-
-            uint32_t newTarget = enemies[nextIndex];
-            std::memcpy(&ram8(rdram, gene + 0x364u), &newTarget, sizeof(newTarget));
-        }
-
         void rouletteDpad(uint8_t *rdram)
         {
             if (g_rouletteSeen == 0u || g_gameFrame - g_rouletteSeen > 2u)
-            {
-                s_targetSwitchCooldown = 0;
                 return;
-            }
 
-            const float hostRx = ps2_pad::getRx();
-            const float hostRy = ps2_pad::getRy();
-            const float hostLx = ps2_pad::getLx();
             const float hostLy = ps2_pad::getLy();
+            const float hostRy = ps2_pad::getRy();
             const uint32_t hostBtns = ps2_pad::getButtons();
 
-            const uint8_t guestRx = ram8(rdram, 0x5E8144u);
-            const uint8_t guestRy = ram8(rdram, 0x5E8145u);
-            const uint8_t guestLy = ram8(rdram, 0x5E8147u);
             uint16_t guestBtnsRaw = 0;
             std::memcpy(&guestBtnsRaw, &ram8(rdram, kPadButtons), sizeof(guestBtnsRaw));
             const uint16_t guestBtnsPressed = static_cast<uint16_t>(~guestBtnsRaw);
 
-            // 1. Built-in Roulette Target Selection: Right Stick flick Left / Right
-            const bool flickRight = (hostRx > 0.45f) || (guestRx > 185);
-            const bool flickLeft  = (hostRx < -0.45f) || (guestRx < 70);
-
-            if (flickRight != flickLeft)
-            {
-                if (s_targetSwitchCooldown == 0)
-                {
-                    cycleRouletteTargetInternal(rdram, flickRight ? 1 : -1);
-                    s_targetSwitchCooldown = 15;
-                }
-                else
-                {
-                    s_targetSwitchCooldown--;
-                }
-            }
-            else
-            {
-                s_targetSwitchCooldown = 0;
-            }
-
-            // 2. Built-in Roulette Wheel Navigation: D-Pad Up / Down OR Joystick (Left/Right) Up / Down
+            // Built-in Roulette Wheel Navigation: D-Pad Up / Down OR Joystick Up / Down
             const bool up = ((hostBtns & (1u << 4)) != 0u) || ((guestBtnsPressed & 0x0010u) != 0u) ||
-                            (hostLy < -0.45f) || (guestLy < 70) || (hostRy < -0.45f) || (guestRy < 70);
+                            (hostLy < -0.45f) || (hostRy < -0.45f);
             const bool down = ((hostBtns & (1u << 6)) != 0u) || ((guestBtnsPressed & 0x0040u) != 0u) ||
-                              (hostLy > 0.45f) || (guestLy > 185) || (hostRy > 0.45f) || (guestRy > 185);
+                              (hostLy > 0.45f) || (hostRy > 0.45f);
 
             if (up && !down)
             {
-                injectStick(rdram, 1, 0x00u); // Up
+                injectStick(rdram, 1, 0x00u); // Left stick Up
                 uint64_t pressed = 0;
                 std::memcpy(&pressed, &ram8(rdram, 0x7474A0u + 0x1A0u), sizeof(pressed));
                 pressed |= (1ull << 49);
@@ -437,7 +351,7 @@ namespace kamite
             }
             else if (down && !up)
             {
-                injectStick(rdram, 1, 0xFFu); // Down
+                injectStick(rdram, 1, 0xFFu); // Left stick Down
                 uint64_t pressed = 0;
                 std::memcpy(&pressed, &ram8(rdram, 0x7474A0u + 0x1A0u), sizeof(pressed));
                 pressed |= (1ull << 48);
@@ -1469,6 +1383,10 @@ namespace kamite
             // back, so the game ran at 60 with none of the mode's fixes ("the old broken 60 FPS", Thinso, Oct 27).
             rateChange(rdram, ram8(rdram, kFrameDivider), g_fps60 ? 1u : 2u);
             ram8(rdram, kFrameDivider) = g_fps60 ? 1u : 2u;
+            if (godhand::checkStreamVolumesDirty())
+            {
+                godhand::reapplyStreamVolumes(rdram, ctx, runtime);
+            }
             if (!g_fps60)
             {
                 restoreInjected(rdram);
@@ -1517,6 +1435,10 @@ namespace kamite
                 g_holds = g_staleRestores = 0u;
             l3Dash(rdram);
             rouletteDpad(rdram);
+            if (godhand::checkStreamVolumesDirty())
+            {
+                godhand::reapplyStreamVolumes(rdram, ctx, runtime);
+            }
         }
 
         // Replaces c.eq.s f0,f2 at 0x2C81C0: the condition is "same integer frame" (cvt.w.s of both).
@@ -2316,15 +2238,11 @@ namespace kamite
 
     void cycleRouletteTarget(int dir)
     {
-        PS2Runtime* rt = godhand::getActiveRuntime();
-        if (!rt) return;
-        uint8_t* rdram = rt->memory().getRDRAM();
-        if (!rdram) return;
-        cycleRouletteTargetInternal(rdram, dir);
+        (void)dir;
     }
 }
 
 extern "C" void godhand_cycle_roulette_target(int dir)
 {
-    kamite::cycleRouletteTarget(dir);
+    (void)dir;
 }

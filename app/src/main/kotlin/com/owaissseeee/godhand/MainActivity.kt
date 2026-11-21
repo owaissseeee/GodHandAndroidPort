@@ -71,12 +71,32 @@ class MainActivity : ComponentActivity() {
 
     private val textureFolderPickerLauncher = registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri: Uri? ->
         if (uri != null) {
+            try {
+                contentResolver.takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            } catch (_: Exception) {}
             val path = resolveRealPathFromUri(uri)
             if (path != null) {
                 settings.customTexturePath = path
                 settings.customTexturesEnabled = true
                 Toast.makeText(this, "HD Texture Folder: $path", Toast.LENGTH_LONG).show()
                 activeSettingsDialog?.refreshActiveTab()
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !Environment.isExternalStorageManager()) {
+                    Toast.makeText(this, "Please grant All Files Access to load custom textures directly", Toast.LENGTH_LONG).show()
+                    try {
+                        val intent = Intent(android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).apply {
+                            data = Uri.parse("package:$packageName")
+                        }
+                        startActivity(intent)
+                    } catch (_: Exception) {
+                        try {
+                            startActivity(Intent(android.provider.Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION))
+                        } catch (_: Exception) {}
+                    }
+                }
             }
         }
     }

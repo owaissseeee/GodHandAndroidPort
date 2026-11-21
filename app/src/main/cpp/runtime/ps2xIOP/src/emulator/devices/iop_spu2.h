@@ -7,6 +7,12 @@
 #include <span>
 #include <vector>
 
+namespace ps2x::iop
+{
+    void setVoiceGain(float gain);
+    float voiceGain();
+}
+
 namespace ps2x::iop::detail
 {
     class IopSpu2

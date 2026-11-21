@@ -8,6 +8,25 @@
 #include <algorithm>
 #include <cmath>
 #include <numbers>
+#include <atomic>
+
+namespace ps2x::iop
+{
+    namespace
+    {
+        std::atomic<float> g_voiceGain{1.0f};
+    }
+
+    void setVoiceGain(float gain)
+    {
+        g_voiceGain.store(std::clamp(gain, 0.0f, 1.0f), std::memory_order_relaxed);
+    }
+
+    float voiceGain()
+    {
+        return g_voiceGain.load(std::memory_order_relaxed);
+    }
+}
 
 namespace ps2x::iop::detail
 {
@@ -681,6 +700,14 @@ namespace ps2x::iop::detail
                 voiceWet[0] += left;
             if (rightWetMask & (1u << index))
                 voiceWet[1] += right;
+        }
+        if (const float gain = ps2x::iop::voiceGain(); gain < 1.0f)
+        {
+            for (size_t channel = 0; channel < 2; ++channel)
+            {
+                output[channel] = static_cast<int32_t>(static_cast<float>(output[channel]) * gain);
+                voiceWet[channel] = static_cast<int32_t>(static_cast<float>(voiceWet[channel]) * gain);
+            }
         }
         const uint16_t mixer = reg(base + 0x198u);
         const uint32_t shared = kSharedBase + core * 0x28u;
