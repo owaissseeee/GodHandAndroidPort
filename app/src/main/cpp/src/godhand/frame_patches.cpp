@@ -256,14 +256,33 @@ namespace kamite
             const float ly = ps2_pad::getLy();
             const uint32_t hostBtns = ps2_pad::getButtons();
 
-            // Pushing Left Stick UP or D-pad UP steps back one (spins wheel UP)
-            const bool up = (pressed & (1ull << 49)) != 0u ||
-                            ((guestPressed & 0x0010u) != 0u) ||
-                            ((hostBtns & (1u << 4)) != 0u) ||
-                            (ly < -0.45f);
+            // Down: Left Stick DOWN (ly > 0.35f), host D-pad DOWN (bit 6), guest D-pad DOWN (0x0040), or GameWork bit 48
+            const bool isDown = ((pressed & (1ull << 48)) != 0u) ||
+                                (ly > 0.35f) ||
+                                ((hostBtns & (1u << 6)) != 0u) ||
+                                ((guestPressed & 0x0040u) != 0u);
+
+            // Up: Left Stick UP (ly < -0.35f), host D-pad UP (bit 4), guest D-pad UP (0x0010), or GameWork bit 49
+            const bool isUp = ((pressed & (1ull << 49)) != 0u) ||
+                              (ly < -0.35f) ||
+                              ((hostBtns & (1u << 4)) != 0u) ||
+                              ((guestPressed & 0x0010u) != 0u);
+
+            // True back step only when UP is active and DOWN is NOT active
+            const bool up = isUp && !isDown;
 
             g_rouletteBack = up && count > 1;
-            SET_GPR_S32(ctx, 3, up && count > 0 ? (cursor + count - 1) % count : cursor + 1);
+            if (count > 0)
+            {
+                if (up)
+                    SET_GPR_S32(ctx, 3, (cursor + count - 1) % count);
+                else
+                    SET_GPR_S32(ctx, 3, (cursor + 1) % count);
+            }
+
+            // CRUCIAL: Clear BOTH trigger bits 48 & 49 from RDRAM so they never latch permanently!
+            pressed &= ~((1ull << 49) | (1ull << 48));
+            std::memcpy(&ram8(rdram, 0x7474A0u + 0x1A0u), &pressed, sizeof(pressed));
         }
 
         // The wheel's slide (the rest of that function: progress +0x338 from 1.0 to 0 and a 32.0 offset +0x2A4, both
@@ -360,7 +379,7 @@ namespace kamite
             {
                 shouldStep = true;
             }
-            else if (s_dpadHoldTimer >= 18 && ((s_dpadHoldTimer - 18) % 10 == 0))
+            else if (s_dpadHoldTimer >= 18 && ((s_dpadHoldTimer - 18) % 8 == 0))
             {
                 shouldStep = true;
             }

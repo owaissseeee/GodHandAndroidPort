@@ -818,11 +818,16 @@ extern "C" void godhand_set_explicit_cache_dir(const char* dir) {
         s_explicitCacheDir = dir;
     }
 }
+extern "C" const char* godhand_get_explicit_cache_dir() {
+    return s_explicitCacheDir.c_str();
+}
 
 void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererIdx, int resScaleIdx, int aspectIdx, int fpsIdx, int frameskipIdx) {
+    width = std::max(width, 1);
+    height = std::max(height, 1);
     // Frameskip forces multi-frame draw batching and latency spikes on Android; always run unbatched 60Hz/30Hz VSync!
     // frameskipIdx is active
-    __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "bootAndroidRuntime: initializing EE runtime (frameskip=%d)...", frameskipIdx);
+    __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "bootAndroidRuntime: initializing EE runtime (frameskip=%d, win=%p, %dx%d)...", frameskipIdx, win, width, height);
     godhand_set_frameskip_mode(frameskipIdx);
 
     // Internal resolution scale mapping from UI spinner index:

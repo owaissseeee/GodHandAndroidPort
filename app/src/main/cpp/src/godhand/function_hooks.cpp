@@ -1170,6 +1170,8 @@ namespace godhand
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
                     godhand_perf_record_game_frame();
                     godhand::notifyFrameHeartbeat();
+                    if (checkStreamVolumesDirty())
+                        reapplyStreamVolumes(rdram, ctx, rt);
                     if (rdram)
                     {
                         const uint32_t fullFlickerOff = 0x80u;
@@ -1184,6 +1186,22 @@ namespace godhand
                 },
                 ReplacementStatus::Native,
                 "lock-free combined flicker-off + dynamic 60/30 FPS frame counter + cheats engine");
+        }
+
+        constexpr uint32_t kCockRouletteMove = 0x00145810u;
+        if (runtime.hasFunction(kCockRouletteMove))
+        {
+            static GuestFunction s_origCockRouletteMove = runtime.lookupFunction(kCockRouletteMove);
+            FunctionHooks::instance().replace(
+                kCockRouletteMove,
+                "cCockRoulette_Move_hook",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    kamite::markRouletteSeen();
+                    if (s_origCockRouletteMove)
+                        s_origCockRouletteMove(rdram, ctx, rt);
+                },
+                ReplacementStatus::Native,
+                "keep roulette wheel seen flag alive while active");
         }
 
         // DevSeville 60 FPS GS Patches (sceGsResetGraph & sceGsSetDefDispEnv)

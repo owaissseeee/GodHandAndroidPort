@@ -98,44 +98,70 @@ class MainActivity : ComponentActivity() {
                         } catch (_: Exception) {}
                     }
                 }
+            } else {
+                Toast.makeText(this, "Could not auto-resolve path. Please use 'EDIT PATH' to enter path directly.", Toast.LENGTH_LONG).show()
             }
         }
     }
 
     private fun resolveRealPathFromUri(uri: Uri): String? {
         try {
-            val rawDocId = try {
-                if (DocumentsContract.isDocumentUri(this, uri)) {
-                    DocumentsContract.getDocumentId(uri)
-                } else {
-                    DocumentsContract.getTreeDocumentId(uri)
-                }
-            } catch (_: Throwable) {
-                uri.path ?: ""
-            }
-            val docId = Uri.decode(rawDocId ?: "")
-            val decodedUri = Uri.decode(uri.toString())
+            val uriStr = uri.toString()
+            val decodedUri = Uri.decode(uriStr)
 
-            if (docId.startsWith("raw:")) {
-                return docId.substring("raw:".length)
+            // 1. Direct file scheme
+            if (uri.scheme == "file") {
+                return uri.path
             }
-            if (docId.startsWith("primary:")) {
-                val rel = docId.substring("primary:".length).trimStart('/')
-                return if (rel.isEmpty()) {
-                    Environment.getExternalStorageDirectory().absolutePath
-                } else {
-                    File(Environment.getExternalStorageDirectory(), rel).absolutePath
+
+            // 2. Extract Document ID if possible
+            var docId: String? = null
+            try {
+                if (DocumentsContract.isDocumentUri(this, uri)) {
+                    docId = DocumentsContract.getDocumentId(uri)
+                }
+            } catch (_: Throwable) {}
+            if (docId == null) {
+                try {
+                    docId = DocumentsContract.getTreeDocumentId(uri)
+                } catch (_: Throwable) {}
+            }
+            if (docId == null) {
+                docId = uri.lastPathSegment
+            }
+            val rawDocId = Uri.decode(docId ?: "")
+
+            // Strip common tree/document prefixes: "/tree/", "tree/", "/document/", "document/"
+            var cleanId = rawDocId
+            val prefixes = listOf("/tree/", "tree/", "/document/", "document/")
+            for (p in prefixes) {
+                if (cleanId.startsWith(p)) {
+                    cleanId = cleanId.substring(p.length)
                 }
             }
-            if (docId.equals("download", ignoreCase = true) || docId.equals("downloads", ignoreCase = true)) {
+
+            // Check raw: prefix
+            if (cleanId.startsWith("raw:")) {
+                return cleanId.substring("raw:".length)
+            }
+
+            // Check primary: prefix
+            if (cleanId.contains("primary:")) {
+                val rel = cleanId.substringAfter("primary:").trimStart('/')
+                val extDir = Environment.getExternalStorageDirectory().absolutePath
+                return if (rel.isEmpty()) extDir else File(extDir, rel).absolutePath
+            }
+
+            // Check for downloads virtual id
+            if (cleanId.equals("download", ignoreCase = true) || cleanId.equals("downloads", ignoreCase = true)) {
                 return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).absolutePath
             }
 
-            // Check for SD Card or Volume UUID like "1234-5678:path"
-            val colonIdx = docId.indexOf(':')
+            // Check SD card / secondary volume UUID (e.g. 1234-5678:path or 1234-5678)
+            val colonIdx = cleanId.indexOf(':')
             if (colonIdx > 0) {
-                val vol = docId.substring(0, colonIdx)
-                val rel = docId.substring(colonIdx + 1).trimStart('/')
+                val vol = cleanId.substring(0, colonIdx)
+                val rel = cleanId.substring(colonIdx + 1).trimStart('/')
                 if (vol.matches(Regex("^[0-9A-Za-z]{4}-[0-9A-Za-z]{4}$"))) {
                     return "/storage/$vol/$rel"
                 }
@@ -145,36 +171,17 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
-            // Check ContentResolver query for MediaStore DATA column
-            try {
-                val proj = arrayOf(MediaStore.MediaColumns.DATA)
-                contentResolver.query(uri, proj, null, null, null)?.use { cursor ->
-                    val colIdx = cursor.getColumnIndex(MediaStore.MediaColumns.DATA)
-                    if (colIdx != -1 && cursor.moveToFirst()) {
-                        val path = cursor.getString(colIdx)
-                        if (!path.isNullOrBlank() && File(path).exists()) {
-                            return path
-                        }
-                    }
-                }
-            } catch (_: Throwable) {}
-
-            // Try decoded URI string inspection
+            // Check decoded URI string inspection
             if (decodedUri.contains("primary:")) {
                 val rel = decodedUri.substringAfter("primary:").substringBefore('?').substringBefore('&').trimStart('/')
-                return if (rel.isEmpty()) {
-                    Environment.getExternalStorageDirectory().absolutePath
-                } else {
-                    File(Environment.getExternalStorageDirectory(), rel).absolutePath
-                }
+                val extDir = Environment.getExternalStorageDirectory().absolutePath
+                return if (rel.isEmpty()) extDir else File(extDir, rel).absolutePath
             }
             if (decodedUri.contains("/storage/")) {
-                val full = "/storage/" + decodedUri.substringAfter("/storage/").substringBefore('?').substringBefore('&')
-                return full
+                return "/storage/" + decodedUri.substringAfter("/storage/").substringBefore('?').substringBefore('&')
             }
             if (decodedUri.contains("/sdcard/")) {
-                val full = "/sdcard/" + decodedUri.substringAfter("/sdcard/").substringBefore('?').substringBefore('&')
-                return full
+                return "/sdcard/" + decodedUri.substringAfter("/sdcard/").substringBefore('?').substringBefore('&')
             }
 
             val path = uri.path?.let { Uri.decode(it) }
@@ -189,7 +196,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         } catch (_: Throwable) {}
-        return "/storage/emulated/0/Download/GodHand_Textures/SLUS-21503"
+        return null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

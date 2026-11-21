@@ -30,6 +30,7 @@ void func_00145810_0x145810(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     }
 
     ctx->pc = 0x145810u;
+    kamite::markRouletteSeen();
 
     // 0x145810: 0x27bdff50  addiu       $sp, $sp, -0xB0
     ctx->pc = 0x145810u;

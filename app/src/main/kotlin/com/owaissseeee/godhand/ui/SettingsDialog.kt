@@ -492,6 +492,9 @@ class SettingsDialog(
                 textSize = 10.5f
                 setTextColor(0xFFCBD5E1.toInt())
                 setPadding(0, 3.dpToPx(), 0, 8.dpToPx())
+                setOnClickListener {
+                    showEditCustomTexturePathDialog()
+                }
             }
             pathCard.addView(tvPathHeader)
             pathCard.addView(tvPath)
@@ -500,8 +503,8 @@ class SettingsDialog(
                 orientation = LinearLayout.HORIZONTAL
             }
             val btnPick = Button(context).apply {
-                text = "📁 SELECT FOLDER"
-                textSize = 11.5f
+                text = "📁 BROWSE"
+                textSize = 11f
                 typeface = android.graphics.Typeface.DEFAULT_BOLD
                 setBackgroundResource(R.drawable.btn_god_hand_primary)
                 setTextColor(0xFFFFFFFF.toInt())
@@ -522,9 +525,19 @@ class SettingsDialog(
                     onPickTextureFolderRequested?.invoke()
                 }
             }
+            val btnEdit = Button(context).apply {
+                text = "✏️ EDIT PATH"
+                textSize = 11f
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
+                setBackgroundResource(R.drawable.btn_god_hand_secondary)
+                setTextColor(0xFF38BDF8.toInt())
+                setOnClickListener {
+                    showEditCustomTexturePathDialog()
+                }
+            }
             val btnReset = Button(context).apply {
-                text = "RESET PATH"
-                textSize = 11.5f
+                text = "RESET"
+                textSize = 11f
                 typeface = android.graphics.Typeface.DEFAULT_BOLD
                 setBackgroundResource(R.drawable.btn_god_hand_secondary)
                 setTextColor(0xFFFDE047.toInt())
@@ -534,14 +547,50 @@ class SettingsDialog(
                     buildTabContent()
                 }
             }
-            btnRow.addView(btnPick, LinearLayout.LayoutParams(0, 38.dpToPx(), 1.4f).apply { setMargins(0, 0, 6.dpToPx(), 0) })
-            btnRow.addView(btnReset, LinearLayout.LayoutParams(0, 38.dpToPx(), 1f))
+            btnRow.addView(btnPick, LinearLayout.LayoutParams(0, 38.dpToPx(), 1.1f).apply { setMargins(0, 0, 4.dpToPx(), 0) })
+            btnRow.addView(btnEdit, LinearLayout.LayoutParams(0, 38.dpToPx(), 1.2f).apply { setMargins(0, 0, 4.dpToPx(), 0) })
+            btnRow.addView(btnReset, LinearLayout.LayoutParams(0, 38.dpToPx(), 0.9f))
             pathCard.addView(btnRow)
 
             contentContainer.addView(pathCard, LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply { setMargins(0, 0, 0, 6.dpToPx()) })
         }
+    }
+
+    private fun showEditCustomTexturePathDialog() {
+        val input = android.widget.EditText(context).apply {
+            setText(settings.customTexturePath)
+            setTextColor(0xFFFFFFFF.toInt())
+            setHintTextColor(0xFF94A3B8.toInt())
+            hint = "/storage/emulated/0/.../SLUS-21503"
+            textSize = 12f
+            setBackgroundResource(R.drawable.card_god_hand)
+            setPadding(12.dpToPx(), 10.dpToPx(), 12.dpToPx(), 10.dpToPx())
+            setSingleLine(true)
+        }
+        val container = LinearLayout(context).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(16.dpToPx(), 8.dpToPx(), 16.dpToPx(), 8.dpToPx())
+            addView(input)
+        }
+
+        android.app.AlertDialog.Builder(context)
+            .setTitle("✏️ EDIT HD TEXTURE PATH")
+            .setMessage("Enter the absolute folder path containing your replacement textures:")
+            .setView(container)
+            .setPositiveButton("SAVE") { _, _ ->
+                val newPath = input.text.toString().trim()
+                if (newPath.isNotBlank()) {
+                    settings.customTexturePath = newPath
+                    settings.customTexturesEnabled = true
+                    NativeBridge.setCustomTextureDirectory(newPath)
+                    android.widget.Toast.makeText(context, "HD Texture Path Set: $newPath", android.widget.Toast.LENGTH_SHORT).show()
+                    buildTabContent()
+                }
+            }
+            .setNegativeButton("CANCEL", null)
+            .show()
     }
 
     // ==========================================

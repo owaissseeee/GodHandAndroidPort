@@ -71,44 +71,70 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                         } catch (_: Exception) {}
                     }
                 }
+            } else {
+                android.widget.Toast.makeText(this, "Could not auto-resolve path. Please use 'EDIT PATH' to enter path directly.", android.widget.Toast.LENGTH_LONG).show()
             }
         }
     }
 
     private fun resolveRealPathFromUri(uri: android.net.Uri): String? {
         try {
-            val rawDocId = try {
-                if (android.provider.DocumentsContract.isDocumentUri(this, uri)) {
-                    android.provider.DocumentsContract.getDocumentId(uri)
-                } else {
-                    android.provider.DocumentsContract.getTreeDocumentId(uri)
-                }
-            } catch (_: Throwable) {
-                uri.path ?: ""
-            }
-            val docId = android.net.Uri.decode(rawDocId ?: "")
-            val decodedUri = android.net.Uri.decode(uri.toString())
+            val uriStr = uri.toString()
+            val decodedUri = android.net.Uri.decode(uriStr)
 
-            if (docId.startsWith("raw:")) {
-                return docId.substring("raw:".length)
+            // 1. Direct file scheme
+            if (uri.scheme == "file") {
+                return uri.path
             }
-            if (docId.startsWith("primary:")) {
-                val rel = docId.substring("primary:".length).trimStart('/')
-                return if (rel.isEmpty()) {
-                    android.os.Environment.getExternalStorageDirectory().absolutePath
-                } else {
-                    java.io.File(android.os.Environment.getExternalStorageDirectory(), rel).absolutePath
+
+            // 2. Extract Document ID if possible
+            var docId: String? = null
+            try {
+                if (android.provider.DocumentsContract.isDocumentUri(this, uri)) {
+                    docId = android.provider.DocumentsContract.getDocumentId(uri)
+                }
+            } catch (_: Throwable) {}
+            if (docId == null) {
+                try {
+                    docId = android.provider.DocumentsContract.getTreeDocumentId(uri)
+                } catch (_: Throwable) {}
+            }
+            if (docId == null) {
+                docId = uri.lastPathSegment
+            }
+            val rawDocId = android.net.Uri.decode(docId ?: "")
+
+            // Strip common tree/document prefixes: "/tree/", "tree/", "/document/", "document/"
+            var cleanId = rawDocId
+            val prefixes = listOf("/tree/", "tree/", "/document/", "document/")
+            for (p in prefixes) {
+                if (cleanId.startsWith(p)) {
+                    cleanId = cleanId.substring(p.length)
                 }
             }
-            if (docId.equals("download", ignoreCase = true) || docId.equals("downloads", ignoreCase = true)) {
+
+            // Check raw: prefix
+            if (cleanId.startsWith("raw:")) {
+                return cleanId.substring("raw:".length)
+            }
+
+            // Check primary: prefix
+            if (cleanId.contains("primary:")) {
+                val rel = cleanId.substringAfter("primary:").trimStart('/')
+                val extDir = android.os.Environment.getExternalStorageDirectory().absolutePath
+                return if (rel.isEmpty()) extDir else java.io.File(extDir, rel).absolutePath
+            }
+
+            // Check for downloads virtual id
+            if (cleanId.equals("download", ignoreCase = true) || cleanId.equals("downloads", ignoreCase = true)) {
                 return android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS).absolutePath
             }
 
-            // Check for SD Card or Volume UUID like "1234-5678:path"
-            val colonIdx = docId.indexOf(':')
+            // Check SD card / secondary volume UUID (e.g. 1234-5678:path or 1234-5678)
+            val colonIdx = cleanId.indexOf(':')
             if (colonIdx > 0) {
-                val vol = docId.substring(0, colonIdx)
-                val rel = docId.substring(colonIdx + 1).trimStart('/')
+                val vol = cleanId.substring(0, colonIdx)
+                val rel = cleanId.substring(colonIdx + 1).trimStart('/')
                 if (vol.matches(Regex("^[0-9A-Za-z]{4}-[0-9A-Za-z]{4}$"))) {
                     return "/storage/$vol/$rel"
                 }
@@ -118,36 +144,17 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                 }
             }
 
-            // Check ContentResolver query for MediaStore DATA column
-            try {
-                val proj = arrayOf(android.provider.MediaStore.MediaColumns.DATA)
-                contentResolver.query(uri, proj, null, null, null)?.use { cursor ->
-                    val colIdx = cursor.getColumnIndex(android.provider.MediaStore.MediaColumns.DATA)
-                    if (colIdx != -1 && cursor.moveToFirst()) {
-                        val path = cursor.getString(colIdx)
-                        if (!path.isNullOrBlank() && java.io.File(path).exists()) {
-                            return path
-                        }
-                    }
-                }
-            } catch (_: Throwable) {}
-
-            // Try decoded URI string inspection
+            // Check decoded URI string inspection
             if (decodedUri.contains("primary:")) {
                 val rel = decodedUri.substringAfter("primary:").substringBefore('?').substringBefore('&').trimStart('/')
-                return if (rel.isEmpty()) {
-                    android.os.Environment.getExternalStorageDirectory().absolutePath
-                } else {
-                    java.io.File(android.os.Environment.getExternalStorageDirectory(), rel).absolutePath
-                }
+                val extDir = android.os.Environment.getExternalStorageDirectory().absolutePath
+                return if (rel.isEmpty()) extDir else java.io.File(extDir, rel).absolutePath
             }
             if (decodedUri.contains("/storage/")) {
-                val full = "/storage/" + decodedUri.substringAfter("/storage/").substringBefore('?').substringBefore('&')
-                return full
+                return "/storage/" + decodedUri.substringAfter("/storage/").substringBefore('?').substringBefore('&')
             }
             if (decodedUri.contains("/sdcard/")) {
-                val full = "/sdcard/" + decodedUri.substringAfter("/sdcard/").substringBefore('?').substringBefore('&')
-                return full
+                return "/sdcard/" + decodedUri.substringAfter("/sdcard/").substringBefore('?').substringBefore('&')
             }
 
             val path = uri.path?.let { android.net.Uri.decode(it) }
@@ -162,7 +169,7 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                 }
             }
         } catch (_: Throwable) {}
-        return "/storage/emulated/0/Download/GodHand_Textures/SLUS-21503"
+        return null
     }
 
     fun getSaveStatesDir(): java.io.File {
@@ -224,33 +231,35 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
     }
 
     private fun enforceSixtyHzDisplayMode() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val params = window.attributes
-            params.preferredRefreshRate = 60.0f
-            try {
-                val currentDisplay = display
-                val modes = currentDisplay?.supportedModes ?: emptyArray()
-                val mode60 = modes.firstOrNull { kotlin.math.abs(it.refreshRate - 60.0f) < 0.5f }
-                if (mode60 != null) {
-                    params.preferredDisplayModeId = mode60.modeId
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                val params = window.attributes
+                params.preferredRefreshRate = 60.0f
+                try {
+                    val currentDisplay = display
+                    val modes = currentDisplay?.supportedModes ?: emptyArray()
+                    val mode60 = modes.firstOrNull { kotlin.math.abs(it.refreshRate - 60.0f) < 0.5f }
+                    if (mode60 != null) {
+                        params.preferredDisplayModeId = mode60.modeId
+                    }
+                } catch (_: Throwable) {}
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    params.setFrameRateBoostOnTouchEnabled(false)
                 }
-            } catch (_: Throwable) {}
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                params.setFrameRateBoostOnTouchEnabled(false)
+                window.attributes = params
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                try {
+                    @Suppress("DEPRECATION")
+                    val modes = windowManager.defaultDisplay.supportedModes
+                    val mode60 = modes.firstOrNull { kotlin.math.abs(it.refreshRate - 60.0f) < 0.5f }
+                    if (mode60 != null) {
+                        val params = window.attributes
+                        params.preferredDisplayModeId = mode60.modeId
+                        window.attributes = params
+                    }
+                } catch (_: Throwable) {}
             }
-            window.attributes = params
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            try {
-                @Suppress("DEPRECATION")
-                val modes = windowManager.defaultDisplay.supportedModes
-                val mode60 = modes.firstOrNull { kotlin.math.abs(it.refreshRate - 60.0f) < 0.5f }
-                if (mode60 != null) {
-                    val params = window.attributes
-                    params.preferredDisplayModeId = mode60.modeId
-                    window.attributes = params
-                }
-            } catch (_: Throwable) {}
-        }
+        } catch (_: Throwable) {}
     }
 
     private var physicalPadMask = 0

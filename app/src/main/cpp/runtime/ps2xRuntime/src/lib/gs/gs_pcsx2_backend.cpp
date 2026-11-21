@@ -88,6 +88,8 @@ namespace
     uint64_t g_perfWindowStartGameFrames = 0;
     float g_perfWindowWorstMs = 0.0f;
 
+extern "C" const char* godhand_get_explicit_cache_dir();
+
     std::filesystem::path exeDirectory()
     {
 #if defined(_WIN32)
@@ -95,8 +97,15 @@ namespace
         const DWORD length = GetModuleFileNameW(nullptr, path, MAX_PATH);
         return length ? std::filesystem::path(path).parent_path() : std::filesystem::current_path();
 #else
-        std::filesystem::path cacheDir = "/data/data/com.owaissseeee.godhand/files/godhand_cache";
+        const char* explicitDir = godhand_get_explicit_cache_dir();
         std::error_code ec;
+        if (explicitDir && *explicitDir) {
+            std::filesystem::path p(explicitDir);
+            if (std::filesystem::exists(p, ec)) {
+                return p;
+            }
+        }
+        std::filesystem::path cacheDir = "/data/data/com.owaissseeee.godhand/files/godhand_cache";
         if (!std::filesystem::exists(cacheDir, ec)) {
             cacheDir = "/data/user/0/com.owaissseeee.godhand/files/godhand_cache";
         }
@@ -500,10 +509,13 @@ bool GSPcsx2Backend::EnsureOpen()
     if (envInt("PS2X_PCSX2_TEXTURES", 1) != 0)
     {
         const char *textureDir = std::getenv("PS2X_PCSX2_TEXTURE_DIR");
-        std::filesystem::path folder = (textureDir && *textureDir) ? std::filesystem::path(textureDir)
-                                                                 : dir / "textures" / "SLUS-21503";
-        if (!(textureDir && *textureDir))
+        if (textureDir && *textureDir)
         {
+            options += "texture_dir=" + std::string(textureDir) + ";";
+        }
+        else
+        {
+            std::filesystem::path folder = dir / "textures" / "SLUS-21503";
             std::filesystem::path base = dir;
             for (int up = 0; up < 4; ++up, base = base.parent_path())
             {
@@ -513,15 +525,13 @@ bool GSPcsx2Backend::EnsureOpen()
                     break;
                 }
             }
+            if (std::filesystem::is_directory(folder / "replacements", ec))
+                options += "texture_dir=" + utf8(folder) + ";";
+            else if (folder.filename() == "replacements" && std::filesystem::is_directory(folder, ec))
+                options += "texture_dir=" + utf8(folder.parent_path()) + ";";
+            else if (std::filesystem::is_directory(folder, ec))
+                options += "texture_dir=" + utf8(folder) + ";";
         }
-        if (std::filesystem::is_directory(folder / "replacements", ec))
-            options += "texture_dir=" + utf8(folder) + ";";
-        else if (folder.filename() == "replacements" && std::filesystem::is_directory(folder, ec))
-            options += "texture_dir=" + utf8(folder.parent_path()) + ";";
-        else if (std::filesystem::is_directory(folder, ec))
-            options += "texture_dir=" + utf8(folder) + ";";
-        else if (textureDir && *textureDir)
-            std::fprintf(stderr, "[gs] PS2X_PCSX2_TEXTURE_DIR: no replacements folder in %s\n", utf8(folder).c_str());
     }
     params.options = options.c_str();
 #if defined(__ANDROID__)
