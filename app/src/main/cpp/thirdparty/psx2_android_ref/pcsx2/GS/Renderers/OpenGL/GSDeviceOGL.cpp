@@ -49,12 +49,12 @@ namespace ReplaceGL
 
 	static void GLAPIENTRY MemoryBarrierAsTextureBarrier()
 	{
-		glMemoryBarrier(GL_TEXTURE_FETCH_BARRIER_BIT | GL_FRAMEBUFFER_BARRIER_BIT | GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+		glMemoryBarrier(GL_TEXTURE_FETCH_BARRIER_BIT | GL_FRAMEBUFFER_BARRIER_BIT | GL_ALL_BARRIER_BITS);
 	}
 
 	static void GLAPIENTRY TextureBarrier()
 	{
-
+		glMemoryBarrier(GL_TEXTURE_FETCH_BARRIER_BIT | GL_FRAMEBUFFER_BARRIER_BIT | GL_ALL_BARRIER_BITS);
 	}
 
 } // namespace ReplaceGL
@@ -890,13 +890,25 @@ bool GSDeviceOGL::CheckFeatures()
 	if (!GLAD_GL_ARB_texture_barrier)
 	{
 		// First try NV only barrier.
-		// If that doesn't work then switch to multidraw fb copy.
+		// If that doesn't work then switch to multidraw fb copy or dynamic/memory barrier.
 		if (GLAD_GL_NV_texture_barrier)
 			glTextureBarrier = glTextureBarrierNV;
 		else
 		{
-			glTextureBarrier = ReplaceGL::TextureBarrier;
-			m_features.multidraw_fb_copy = true;
+			using PFNGLTEXTUREBARRIERPROC = void (GLAPIENTRY *)(void);
+			PFNGLTEXTUREBARRIERPROC fn = (PFNGLTEXTUREBARRIERPROC)m_gl_context->GetProcAddress("glTextureBarrier");
+			if (!fn)
+				fn = (PFNGLTEXTUREBARRIERPROC)m_gl_context->GetProcAddress("glTextureBarrierKHR");
+			if (fn)
+			{
+				glTextureBarrier = fn;
+				m_features.multidraw_fb_copy = false;
+			}
+			else
+			{
+				glTextureBarrier = ReplaceGL::MemoryBarrierAsTextureBarrier;
+				m_features.multidraw_fb_copy = !m_is_gles;
+			}
 		}
 	}
 
@@ -947,23 +959,49 @@ bool GSDeviceOGL::CheckFeatures()
 	}
 	else if (GSConfig.OverrideTextureBarriers == 1)
 	{
-		// No texture barriers supported so try to use memory barrier.
-		// Not guaranteed to work so only enable it in Force Enabled mode.
-		if (!GLAD_GL_ARB_texture_barrier && !GLAD_GL_NV_texture_barrier && GLAD_GL_ARB_shader_image_load_store)
-			glTextureBarrier = ReplaceGL::MemoryBarrierAsTextureBarrier;
+		// No texture barriers supported so try to use memory barrier or dynamic eglGetProcAddress.
+		if (!GLAD_GL_ARB_texture_barrier && !GLAD_GL_NV_texture_barrier)
+		{
+			using PFNGLTEXTUREBARRIERPROC = void (GLAPIENTRY *)(void);
+			PFNGLTEXTUREBARRIERPROC fn = (PFNGLTEXTUREBARRIERPROC)m_gl_context->GetProcAddress("glTextureBarrier");
+			if (!fn)
+				fn = (PFNGLTEXTUREBARRIERPROC)m_gl_context->GetProcAddress("glTextureBarrierKHR");
+			if (fn)
+				glTextureBarrier = fn;
+			else
+				glTextureBarrier = ReplaceGL::MemoryBarrierAsTextureBarrier;
+		}
 
 		m_features.texture_barrier = true; // Force Enabled
 		m_features.multidraw_fb_copy = false;
 	}
 	else
-		m_features.texture_barrier = m_features.framebuffer_fetch || GLAD_GL_ARB_texture_barrier || GLAD_GL_NV_texture_barrier;
+	{
+		if (m_is_gles)
+		{
+			using PFNGLTEXTUREBARRIERPROC = void (GLAPIENTRY *)(void);
+			PFNGLTEXTUREBARRIERPROC fn = (PFNGLTEXTUREBARRIERPROC)m_gl_context->GetProcAddress("glTextureBarrier");
+			if (!fn)
+				fn = (PFNGLTEXTUREBARRIERPROC)m_gl_context->GetProcAddress("glTextureBarrierKHR");
+			if (fn)
+				glTextureBarrier = fn;
+			else
+				glTextureBarrier = ReplaceGL::MemoryBarrierAsTextureBarrier;
+			m_features.texture_barrier = true;
+			m_features.multidraw_fb_copy = false;
+		}
+		else
+		{
+			m_features.texture_barrier = m_features.framebuffer_fetch || GLAD_GL_ARB_texture_barrier || GLAD_GL_NV_texture_barrier;
+		}
+	}
 
 	m_features.provoking_vertex_last = true;
 	m_features.dxt_textures = GLAD_GL_EXT_texture_compression_s3tc;
 	m_features.bptc_textures =
 		GLAD_GL_VERSION_4_2 || GLAD_GL_ARB_texture_compression_bptc || GLAD_GL_EXT_texture_compression_bptc;
 	m_features.prefer_new_textures = m_is_gles || is_mali || is_adreno || is_powervr;
-	if (is_adreno)
+	if (m_is_gles || is_adreno)
 	{
 		m_features.stencil_buffer = false;
 		m_features.test_and_sample_depth = false;

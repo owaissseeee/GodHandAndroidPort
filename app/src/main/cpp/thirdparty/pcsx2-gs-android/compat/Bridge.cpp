@@ -211,13 +211,15 @@ namespace
             // blinking meshes, and FBO feedback blit stalls.
             options.DisableFramebufferFetch = false;
             options.EnableAdrenoFramebufferFetch = true;
-            options.OverrideTextureBarriers = -1; // Auto: clean barriers/FB fetch without tile hazards
+            options.OverrideTextureBarriers = 1; // Force Enabled: true hardware barrier or memory barrier
             options.AccurateBlendingUnit = AccBlendLevel::Minimum;
             options.UserHacks_DisableSafeFeatures = true;
             options.UserHacks_DisableDepthSupport = false;
             options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special;
             options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
             options.HWDownloadMode = GSHardwareDownloadMode::Disabled;
+            options.UserHacks_AutoFlush = GSHWAutoFlushLevel::Disabled;
+            options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
         }
         EmuConfig.GS = options;
         EmuConfig.CurrentAspectRatio = options.AspectRatio;
@@ -238,13 +240,15 @@ namespace
                 options.Renderer = GSRendererType::OGL;
                 options.DisableFramebufferFetch = false;
                 options.EnableAdrenoFramebufferFetch = true;
-                options.OverrideTextureBarriers = -1; // Auto: clean barriers/FB fetch without tile hazards
+                options.OverrideTextureBarriers = 1; // Force Enabled: true hardware barrier or memory barrier
                 options.AccurateBlendingUnit = AccBlendLevel::Minimum;
                 options.UserHacks_DisableSafeFeatures = true;
                 options.UserHacks_DisableDepthSupport = false;
                 options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special;
                 options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
                 options.HWDownloadMode = GSHardwareDownloadMode::Disabled;
+                options.UserHacks_AutoFlush = GSHWAutoFlushLevel::Disabled;
+                options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
                 EmuConfig.GS = options;
                 if (GSopen(options, options.Renderer, g_regs, vsync, false)) {
                     __android_log_print(ANDROID_LOG_INFO, "pcsx2-gs", "Bridge::Open: GSopen SUCCEEDED with OpenGL ES fallback!");

@@ -252,34 +252,41 @@ namespace kamite
 
             const float ly = ps2_pad::getLy();
             const uint32_t hostBtns = ps2_pad::getButtons();
-            const uint8_t stickY = ram8(rdram, kStickBytes[1]);
 
-            // Up: Left Stick UP (ly < -0.30f), host D-pad UP (bit 4), GameWork bit 49, or stick Y in RAM < 0x50
-            const bool isUp = (ly < -0.30f) ||
-                              ((hostBtns & (1u << 4)) != 0u) ||
-                              ((pressed & (1ull << 49)) != 0u) ||
-                              (stickY < 0x50u);
+            // Up: Left Stick UP (ly < -0.30f), host D-pad UP (bit 4), or GameWork bit 49
+            const bool wantsUp = (ly < -0.30f) ||
+                                 ((hostBtns & (1u << 4)) != 0u) ||
+                                 ((pressed & (1ull << 49)) != 0u);
 
-            // Down: Left Stick DOWN (ly > 0.30f), host D-pad DOWN (bit 6), GameWork bit 48, or stick Y in RAM > 0xB0
-            const bool isDown = (ly > 0.30f) ||
-                                ((hostBtns & (1u << 6)) != 0u) ||
-                                ((pressed & (1ull << 48)) != 0u) ||
-                                (stickY > 0xB0u);
+            // Down: Left Stick DOWN (ly > 0.30f), host D-pad DOWN (bit 6), or GameWork bit 48
+            const bool wantsDown = (ly > 0.30f) ||
+                                   ((hostBtns & (1u << 6)) != 0u) ||
+                                   ((pressed & (1ull << 48)) != 0u);
 
-            // Determine final direction: UP has priority if player triggered UP
             bool up = false;
-            if (isUp && !isDown)
+            if (wantsUp && !wantsDown)
             {
                 up = true;
             }
-            else if (isUp && isDown)
+            else if (wantsDown && !wantsUp)
             {
-                // If both are flagged (e.g. residual game work bit), use live inputs
-                up = (ly < -0.30f) || ((hostBtns & (1u << 4)) != 0u) || ((pressed & (1ull << 49)) != 0u);
+                up = false;
+            }
+            else if (wantsUp && wantsDown)
+            {
+                // Tie-breaker: live physical inputs take absolute priority over residual state
+                if (ly > 0.30f || ((hostBtns & (1u << 6)) != 0u))
+                    up = false; // Player is actively pushing DOWN
+                else if (ly < -0.30f || ((hostBtns & (1u << 4)) != 0u))
+                    up = true;  // Player is actively pushing UP
+                else if ((pressed & (1ull << 48)) != 0u)
+                    up = false; // GameWork bit 48 (DOWN)
+                else
+                    up = true;
             }
             else
             {
-                up = false;
+                up = false; // Default forward advance
             }
 
             g_rouletteBack = up && count > 1;
@@ -373,7 +380,11 @@ namespace kamite
             const uint32_t hostBtns = ps2_pad::getButtons();
             uint16_t guestBtnsRaw = 0;
             std::memcpy(&guestBtnsRaw, &ram8(rdram, kPadButtons), sizeof(guestBtnsRaw));
-            const uint16_t guestBtnsPressed = static_cast<uint16_t>(~guestBtnsRaw);
+            // In PS2 DualShock 2 protocol: 0xFFFF is unpressed, pressed bits are 0.
+            // If memory is zeroed (0x0000), it is uninitialized so treat as no guest buttons pressed.
+            const uint16_t guestBtnsPressed = (guestBtnsRaw != 0u && guestBtnsRaw != 0xFFFFu)
+                                                  ? static_cast<uint16_t>(~guestBtnsRaw)
+                                                  : 0u;
 
             // D-Pad Up / Down wheel navigation with edge-trigger & autorepeat (no right stick)
             const bool dpadUp = ((hostBtns & (1u << 4)) != 0u) || ((guestBtnsPressed & 0x0010u) != 0u);
