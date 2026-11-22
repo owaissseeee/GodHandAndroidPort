@@ -48,7 +48,7 @@ namespace GLState
 
 	u32 UpdateDrawBuffers()
 	{
-		draw_buffers = ds_as_rt ? 2 : 1;
+		draw_buffers = ds_as_rt ? 2 : (rt ? 1 : 0);
 		return draw_buffers;
 	}
 
