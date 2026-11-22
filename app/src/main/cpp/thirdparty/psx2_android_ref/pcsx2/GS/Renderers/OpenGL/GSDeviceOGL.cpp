@@ -815,9 +815,6 @@ bool GSDeviceOGL::CheckFeatures()
 	const char* const vendor = vendor_string ? vendor_string : "";
 	const char* const renderer = renderer_string ? renderer_string : "";
 	const bool is_mali = std::strstr(vendor, "ARM") || std::strstr(renderer, "Mali");
-	const bool is_adreno = std::strstr(vendor, "Qualcomm") || std::strstr(renderer, "Adreno");
-	m_is_mali = is_mali;
-	m_is_adreno = is_adreno;
 	if (std::strstr(vendor, "Advanced Micro Devices") || std::strstr(vendor, "ATI Technologies Inc.") ||
 		std::strstr(vendor, "ATI"))
 	{
@@ -838,10 +835,6 @@ bool GSDeviceOGL::CheckFeatures()
 	else if (is_mali)
 	{
 		Console.WriteLn(Color_Yellow, "GL: ARM Mali GPU detected.");
-	}
-	else if (is_adreno)
-	{
-		Console.WriteLn(Color_StrongCyan, "GL: Qualcomm Adreno GPU detected.");
 	}
 
 	GLint major_gl = 0;
@@ -1771,20 +1764,15 @@ std::string GSDeviceOGL::GenGlslHeader(const std::string_view entry, GLenum type
 			header += "#extension GL_EXT_blend_func_extended : require\n";
 		else if (GLAD_GL_ARB_blend_func_extended)
 			header += "#extension GL_ARB_blend_func_extended : require\n";
-		else
-			header += "#define DISABLE_DUAL_SOURCE 1\n";
 
 		if (m_features.framebuffer_fetch)
 		{
-			// ARMSX2 / PCSX2: On Mali, GL_EXT_shader_framebuffer_fetch inout path
-			// is broken on Mali drivers, resulting in corrupted destination reads.
-			// Only GL_ARM_shader_framebuffer_fetch with gl_LastFragColorARM reads back
-			// live tile memory correctly. On Adreno and other vendors, prefer EXT inout.
-			if (GLAD_GL_ARM_shader_framebuffer_fetch)
-				header += "#extension GL_ARM_shader_framebuffer_fetch : require\n";
-			if (GLAD_GL_EXT_shader_framebuffer_fetch &&
-				(!GLAD_GL_ARM_shader_framebuffer_fetch || !m_is_mali))
+			// Prefer EXT when both are advertised. The shader also checks EXT
+			// first, and unlike ARM it supports inout framebuffer attachments.
+			if (GLAD_GL_EXT_shader_framebuffer_fetch)
 				header += "#extension GL_EXT_shader_framebuffer_fetch : require\n";
+			else if (GLAD_GL_ARM_shader_framebuffer_fetch)
+				header += "#extension GL_ARM_shader_framebuffer_fetch : require\n";
 		}
 
 		header += "precision highp float;\n";
@@ -1818,11 +1806,6 @@ std::string GSDeviceOGL::GenGlslHeader(const std::string_view entry, GLenum type
 		header += "#define HAS_FRAMEBUFFER_FETCH 1\n";
 	else
 		header += "#define HAS_FRAMEBUFFER_FETCH 0\n";
-
-	header += fmt::format("#define HAS_EXT_SHADER_FRAMEBUFFER_FETCH {}\n", GLAD_GL_EXT_shader_framebuffer_fetch ? 1 : 0);
-	header += fmt::format("#define HAS_ARM_SHADER_FRAMEBUFFER_FETCH {}\n", GLAD_GL_ARM_shader_framebuffer_fetch ? 1 : 0);
-	header += fmt::format("#define GPU_PROFILE_MALI {}\n", m_is_mali ? 1 : 0);
-	header += fmt::format("#define GPU_PROFILE_ADRENO {}\n", m_is_adreno ? 1 : 0);
 
 	if (m_is_gles && GLAD_GL_EXT_conservative_depth)
 	{
