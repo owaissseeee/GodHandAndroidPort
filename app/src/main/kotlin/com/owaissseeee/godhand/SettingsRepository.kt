@@ -234,6 +234,14 @@ class SettingsRepository(context: Context) {
         get() = prefs.getBoolean("auto_hide_touch_gamepad", true)
         set(value) = putBoolean("auto_hide_touch_gamepad", value)
 
+    var menuDirectTouchEnabled: Boolean
+        get() = prefs.getBoolean("menu_direct_touch_enabled", true)
+        set(value) = putBoolean("menu_direct_touch_enabled", value)
+
+    var showMenuDebugBoxes: Boolean
+        get() = prefs.getBoolean("show_menu_debug_boxes", true)
+        set(value) = putBoolean("show_menu_debug_boxes", value)
+
     var leftStickSticky: Boolean
         get() = prefs.getBoolean("left_stick_sticky", true)
         set(value) = putBoolean("left_stick_sticky", value)

@@ -34,6 +34,7 @@
 #include "godhand/frame_patches.h"
 #include "godhand/function_hooks.h"
 #include "godhand/game_layout.h"
+#include "godhand/menu_touch_controller.h"
 #include "godhand_patches_mobile.h"
 #include "godhand/log.h"
 #include "ps2_runtime_macros.h"
@@ -1415,6 +1416,7 @@ namespace kamite
             }
 
             ++g_gameFrame;
+            godhand::menu_touch::frameStart(rdram);
             g_handlerDepth = 0; // no dispatcher's handler spans a frame (a load or a rate switch left one open)
             forgetStickAfterLoad();
             forgetRandAfterLoad(rdram);

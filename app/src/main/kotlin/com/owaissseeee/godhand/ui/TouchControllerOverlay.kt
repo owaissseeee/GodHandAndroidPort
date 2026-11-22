@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.DashPathEffect
 import android.graphics.Paint
+import android.graphics.PointF
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.RectF
@@ -93,6 +94,17 @@ class TouchControllerOverlay(context: Context) : View(context) {
     // Controller Configuration State
     var showTouchControls: Boolean = true
         set(value) { field = value; invalidate() }
+    val menuTouchHandler = MenuTouchHandler(context)
+    var isMenuTouchActive: Boolean = false
+        set(value) {
+            if (field != value) {
+                field = value
+                if (!value) {
+                    menuTouchHandler.stopFling()
+                }
+                postInvalidate()
+            }
+        }
     var leftStickSticky: Boolean = true
     var rightStickSticky: Boolean = true
     var dodgeMode: Int = DODGE_MODE_STICK
@@ -356,6 +368,49 @@ class TouchControllerOverlay(context: Context) : View(context) {
     private val graphLabel33Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = 0xBBF59E0B.toInt(); textSize = 7.5f * density; typeface = Typeface.MONOSPACE; textAlign = Paint.Align.LEFT }
     private val graphBarPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE; strokeWidth = 1.8f * density }
 
+    // Menu Direct Touch Visual Debug Overlay Paints
+    private val menuDebugBoxPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+        strokeWidth = 2f * density
+        color = 0xEE22C55E.toInt() // Emerald Green
+    }
+    private val menuDebugFillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = 0x2622C55E.toInt()
+    }
+    private val menuDebugActiveBoxPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+        strokeWidth = 2.5f * density
+        color = 0xFFF59E0B.toInt() // Amber Highlight
+    }
+    private val menuDebugActiveFillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = 0x55F59E0B.toInt()
+    }
+    private val menuDebugLabelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = 0xFFFFFFFF.toInt()
+        textSize = 10f * density
+        typeface = Typeface.MONOSPACE
+        isFakeBoldText = true
+        setShadowLayer(3f, 1f, 1f, 0xFF000000.toInt())
+    }
+    private val menuDebugHudBgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = 0xDD0F172A.toInt() // Deep slate
+    }
+    private val menuDebugHudBorderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+        strokeWidth = 1.5f * density
+        color = 0xFFF59E0B.toInt()
+    }
+    private val menuDebugHudTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = 0xFFF59E0B.toInt()
+        textSize = 10f * density
+        typeface = Typeface.MONOSPACE
+        isFakeBoldText = true
+    }
+    private val menuDebugInfoArray = IntArray(6)
+
     init {
         updatePaintsOpacity()
     }
@@ -494,6 +549,28 @@ class TouchControllerOverlay(context: Context) : View(context) {
         super.onDraw(canvas)
         val w = width.toFloat()
         val h = height.toFloat()
+
+        if (isMenuTouchActive) {
+            // Draw visual debug hitboxes and telemetry HUD if enabled
+            if (repo.showMenuDebugBoxes) {
+                drawMenuDebugOverlay(canvas, w, h)
+            }
+
+            // User requirement: Settings button must NEVER hide at any time, must be visible and pressable
+            for (btn in buttons) {
+                if (btn.id == "SETTINGS" || btn.id == "MENU") {
+                    val bx = w * btn.normX
+                    val by = h * btn.normY
+                    val br = btn.effectiveRadiusDp * density
+                    val isPressed = btn.activePointerId != -1
+                    drawButton(canvas, btn, bx, by, br, isPressed)
+                }
+            }
+            if (!isEditMode) {
+                drawFpsOverlay(canvas)
+            }
+            return
+        }
 
         // 1. Draw Touch Controls if enabled (or in Edit Mode)
         if (showTouchControls || isEditMode) {
@@ -707,6 +784,45 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
         if (isEditMode) {
             return handleEditModeTouch(event, w, h)
+        }
+
+        if (isMenuTouchActive) {
+            val x = event.getX(idx)
+            val y = event.getY(idx)
+
+            // User requirement: Settings button must ALWAYS be pressable even with direct menu touch active
+            for (btn in buttons) {
+                if (btn.id == "SETTINGS" || btn.id == "MENU") {
+                    if (btn.activePointerId == pid) {
+                        if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP || action == MotionEvent.ACTION_CANCEL) {
+                            btn.activePointerId = -1
+                            invalidate()
+                            return true
+                        }
+                        if (action == MotionEvent.ACTION_MOVE) {
+                            return true
+                        }
+                    }
+
+                    val bx = w * btn.normX
+                    val by = h * btn.normY
+                    val br = btn.effectiveRadiusDp * density * 1.35f
+                    if (hypot(x - bx, y - by) <= br) {
+                        if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN) {
+                            btn.activePointerId = pid
+                            hapticTick()
+                            invalidate()
+                            if (btn.id == "SETTINGS") {
+                                onSettingsClicked?.invoke()
+                            } else if (btn.id == "MENU") {
+                                onExitClicked?.invoke()
+                            }
+                            return true
+                        }
+                    }
+                }
+            }
+            return menuTouchHandler.onTouchEvent(event)
         }
 
         when (action) {
@@ -1140,6 +1256,163 @@ class TouchControllerOverlay(context: Context) : View(context) {
     private var lastHapticTimeMs = 0L
     private fun hapticTick() {
         // No-op during gameplay to prevent synchronous Vibrator Binder IPC stalls on UI/RenderThread
+    }
+
+    private data class DebugBox(val id: Int, val label: String, val x0: Float, val y0: Float, val x1: Float, val y1: Float)
+
+    private fun ps2ToScreen(ps2X: Float, ps2Y: Float, w: Float, h: Float): PointF {
+        val aspectMode = repo.aspectIdx
+        return when (aspectMode) {
+            2 -> { // Full Screen Stretch
+                PointF(ps2X * (w / 640f), ps2Y * (h / 448f))
+            }
+            0 -> { // 16:9 Widescreen
+                val targetAspect = 16f / 9f
+                val deviceAspect = w / h
+                if (deviceAspect >= targetAspect) {
+                    val vpWidth = h * targetAspect
+                    val vpLeft = (w - vpWidth) * 0.5f
+                    PointF(vpLeft + ps2X * (vpWidth / 640f), ps2Y * (h / 448f))
+                } else {
+                    val vpHeight = w / targetAspect
+                    val vpTop = (h - vpHeight) * 0.5f
+                    PointF(ps2X * (w / 640f), vpTop + ps2Y * (vpHeight / 448f))
+                }
+            }
+            else -> { // 4:3 Pillarbox
+                val targetAspect = 4f / 3f
+                val deviceAspect = w / h
+                if (deviceAspect >= targetAspect) {
+                    val vpWidth = h * targetAspect
+                    val vpLeft = (w - vpWidth) * 0.5f
+                    PointF(vpLeft + ps2X * (vpWidth / 640f), ps2Y * (h / 448f))
+                } else {
+                    val vpHeight = w / targetAspect
+                    val vpTop = (h - vpHeight) * 0.5f
+                    PointF(ps2X * (w / 640f), vpTop + ps2Y * (vpHeight / 448f))
+                }
+            }
+        }
+    }
+
+    private fun drawMenuDebugOverlay(canvas: Canvas, w: Float, h: Float) {
+        NativeBridge.getMenuDebugInfo(menuDebugInfoArray)
+        val screenId = menuDebugInfoArray[0]
+        val subState = menuDebugInfoArray[1]
+        val curIdx = menuDebugInfoArray[2]
+        val scrollTop = menuDebugInfoArray[3]
+        val lastTapId = menuDebugInfoArray[4]
+        val pendingTargetId = menuDebugInfoArray[5]
+
+        // 1. Draw Top-Left HUD
+        val screenName = when (screenId) {
+            1 -> "TITLE"
+            2 -> "PAUSE ROOT"
+            3 -> "TECHNIQUES"
+            4 -> "ROULETTE"
+            5 -> "OPTIONS"
+            7 -> "SAVELOAD"
+            8 -> "SHOP"
+            else -> "ID $screenId"
+        }
+        val hudLine1 = "MENU DIRECT TOUCH DEBUG"
+        val hudLine2 = "$screenName | SubState:$subState | Cur:$curIdx | Scroll:$scrollTop | LastTap:$lastTapId"
+        val hudX = 14f * density
+        val hudY = 14f * density
+        val hudW = (hudLine2.length * 6.5f * density) + 24f * density
+        val hudH = 38f * density
+        canvas.drawRoundRect(hudX, hudY, hudX + hudW, hudY + hudH, 6f * density, 6f * density, menuDebugHudBgPaint)
+        canvas.drawRoundRect(hudX, hudY, hudX + hudW, hudY + hudH, 6f * density, 6f * density, menuDebugHudBorderPaint)
+        canvas.drawText(hudLine1, hudX + 10f * density, hudY + 14f * density, menuDebugLabelPaint)
+        canvas.drawText(hudLine2, hudX + 10f * density, hudY + 29f * density, menuDebugHudTextPaint)
+
+        // 2. Build hitboxes for active screen
+        val boxes = mutableListOf<DebugBox>()
+
+        when (screenId) {
+            1 -> { // TITLE
+                if (subState <= 3) {
+                    boxes.add(DebugBox(99, "[PRESS ANYWHERE TO START]", 60f, 160f, 580f, 320f))
+                } else if (subState == 4) {
+                    boxes.add(DebugBox(0, "[0] NEW GAME", 140f, 250f, 500f, 295f))
+                    boxes.add(DebugBox(1, "[1] LOAD GAME", 140f, 300f, 500f, 345f))
+                    boxes.add(DebugBox(2, "[2] OPTIONS", 140f, 350f, 500f, 395f))
+                    boxes.add(DebugBox(-10, "[< LEFT]", 30f, 250f, 180f, 390f))
+                    boxes.add(DebugBox(-11, "[> RIGHT]", 460f, 250f, 610f, 390f))
+                    boxes.add(DebugBox(10, "[CONFIRM]", 200f, 240f, 440f, 390f))
+                } else if (subState == 5) {
+                    boxes.add(DebugBox(0, "[0] EASY", 180f, 210f, 460f, 260f))
+                    boxes.add(DebugBox(1, "[1] NORMAL", 180f, 265f, 460f, 315f))
+                    boxes.add(DebugBox(2, "[2] HARD", 180f, 320f, 460f, 370f))
+                    boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
+                }
+            }
+            2 -> { // PAUSE ROOT
+                boxes.add(DebugBox(0, "[0] TECHNIQUES", 140f, 115f, 500f, 160f))
+                boxes.add(DebugBox(1, "[1] ROULETTE", 140f, 165f, 500f, 210f))
+                boxes.add(DebugBox(2, "[2] MAP", 140f, 215f, 500f, 260f))
+                boxes.add(DebugBox(3, "[3] OPTIONS", 140f, 265f, 500f, 310f))
+                boxes.add(DebugBox(4, "[4] EXIT", 140f, 315f, 500f, 360f))
+                boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
+            }
+            3 -> { // TECHNIQUES
+                if (subState == 0) {
+                    for (i in 0 until 6) {
+                        val y0 = 100f + i * 46f
+                        boxes.add(DebugBox(i, "[SLOT $i]", 40f, y0, 260f, y0 + 42f))
+                    }
+                    boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
+                } else if (subState == 1) {
+                    boxes.add(DebugBox(-2, "[-2] TAB L", 280f, 42f, 440f, 78f))
+                    boxes.add(DebugBox(-3, "[-3] TAB R", 440f, 42f, 600f, 78f))
+                    for (r in 0 until 8) {
+                        val y0 = 80f + r * 34f
+                        boxes.add(DebugBox(r, "[ROW $r: #${scrollTop + r}]", 280f, y0, 600f, y0 + 32f))
+                    }
+                    boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
+                }
+            }
+            4 -> { // ROULETTE
+                if (subState == 0) {
+                    for (i in 0 until 5) {
+                        val y0 = 100f + i * 50f
+                        boxes.add(DebugBox(i, "[WHEEL $i]", 60f, y0, 260f, y0 + 45f))
+                    }
+                    boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
+                } else if (subState == 1) {
+                    for (r in 0 until 6) {
+                        val y0 = 80f + r * 44f
+                        boxes.add(DebugBox(r, "[ROULETTE $r]", 280f, y0, 600f, y0 + 40f))
+                    }
+                    boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
+                }
+            }
+            5 -> { // OPTIONS
+                boxes.add(DebugBox(-2, "[-2] GAME", 80f, 55f, 200f, 95f))
+                boxes.add(DebugBox(-3, "[-3] SOUND", 200f, 55f, 320f, 95f))
+                boxes.add(DebugBox(-4, "[-4] CAMERA", 320f, 55f, 440f, 95f))
+                boxes.add(DebugBox(-5, "[-5] PAD", 440f, 55f, 560f, 95f))
+                for (r in 0 until 6) {
+                    val y0 = 115f + r * 40f
+                    boxes.add(DebugBox(r, "[OPT $r]", 80f, y0, 580f, y0 + 36f))
+                }
+                boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
+            }
+        }
+
+        // 3. Render all boxes
+        for (b in boxes) {
+            val p0 = ps2ToScreen(b.x0, b.y0, w, h)
+            val p1 = ps2ToScreen(b.x1, b.y1, w, h)
+            val isActive = (b.id == curIdx) || (b.id == lastTapId) || (b.id == pendingTargetId)
+
+            val sPaint = if (isActive) menuDebugActiveBoxPaint else menuDebugBoxPaint
+            val fPaint = if (isActive) menuDebugActiveFillPaint else menuDebugFillPaint
+
+            canvas.drawRect(p0.x, p0.y, p1.x, p1.y, fPaint)
+            canvas.drawRect(p0.x, p0.y, p1.x, p1.y, sPaint)
+            canvas.drawText(b.label, p0.x + 4f * density, p0.y + 13f * density, menuDebugLabelPaint)
+        }
     }
 }
 

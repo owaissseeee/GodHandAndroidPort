@@ -51,5 +51,27 @@ object NativeBridge {
     external fun loadState(slot: Int, directoryPath: String): Boolean
     external fun getStateInfo(slot: Int, directoryPath: String): String?
     external fun captureGsDump(outDir: String = ""): String
+
+    // Direct Menu Touch System
+    const val MENU_NONE          = 0
+    const val MENU_TITLE         = 1
+    const val MENU_PAUSE_ROOT    = 2
+    const val MENU_TECHNIQUES    = 3
+    const val MENU_ROULETTE_EDIT = 4
+    const val MENU_OPTIONS       = 5
+    const val MENU_ITEMS         = 6
+    const val MENU_SAVELOAD      = 7
+    const val MENU_SHOP          = 8
+    const val MENU_DIALOG        = 9
+    const val MENU_MAP           = 10
+
+    const val FLAG_SCROLLABLE    = 1 shl 16
+    const val FLAG_LIVE_ROULETTE = 1 shl 17
+
+    external fun getActiveMenuState(): Int
+    external fun onMenuTouchEvent(action: Int, x: Float, y: Float, dx: Float, dy: Float)
+    external fun onMenuBackPressed(): Boolean
+    external fun setMenuTouchEnabled(enabled: Boolean)
+    external fun getMenuDebugInfo(outArray: IntArray)
 }
 

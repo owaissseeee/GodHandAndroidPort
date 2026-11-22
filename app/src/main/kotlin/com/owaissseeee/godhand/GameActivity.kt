@@ -33,6 +33,8 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
     private var adpfSession: PerformanceHintManager.Session? = null
     private var adpfInitialized = false
     private var inGameSettingsDialog: SettingsDialog? = null
+    private var lastBackPressTimeMs = 0L
+    private var backPressCount = 0
 
     private val importSaveLauncher = registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.OpenDocument()) { uri: android.net.Uri? ->
         if (uri != null) {
@@ -359,6 +361,13 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
     private val adpfFrameCallback = object : android.view.Choreographer.FrameCallback {
         override fun doFrame(frameTimeNanos: Long) {
             if (!isFinishing && !isDestroyed) {
+                // Direct Menu Touch state polling
+                val menuState = NativeBridge.getActiveMenuState()
+                val screenId = menuState and 0xFFFF
+                val isLiveRoulette = (menuState and NativeBridge.FLAG_LIVE_ROULETTE) != 0
+                val isMenuActive = settings.menuDirectTouchEnabled && (screenId != 0) && !isLiveRoulette
+                touchOverlay.isMenuTouchActive = isMenuActive
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     ensureAdpfSession()
                     val duration = NativeBridge.getLastFrameWorkDurationNanos()
@@ -466,6 +475,28 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             override fun handleOnBackPressed() {
                 if (touchOverlay.isEditMode) {
                     touchOverlay.exitEditMode(save = true)
+                    return
+                }
+
+                val now = System.currentTimeMillis()
+                if (now - lastBackPressTimeMs < 2500L) {
+                    backPressCount++
+                } else {
+                    backPressCount = 1
+                }
+                lastBackPressTimeMs = now
+
+                if (backPressCount >= 2) {
+                    // Double or triple back press within 2.5s -> immediately show quit menu!
+                    backPressCount = 0
+                    showQuitConfirmationDialog()
+                    return
+                }
+
+                if (touchOverlay.isMenuTouchActive) {
+                    if (!NativeBridge.onMenuBackPressed()) {
+                        showQuitConfirmationDialog()
+                    }
                 } else {
                     showQuitConfirmationDialog()
                 }
@@ -553,12 +584,19 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             android.app.Dialog(this).apply {
                 requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
                 window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT))
+                window?.setLayout(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT)
+                window?.setGravity(android.view.Gravity.CENTER)
+
+                val density = resources.displayMetrics.density
+                val dialogW = (resources.displayMetrics.widthPixels * 0.55f).toInt()
+                    .coerceIn((320 * density).toInt(), (520 * density).toInt())
+
                 val root = android.widget.LinearLayout(this@GameActivity).apply {
                     orientation = android.widget.LinearLayout.VERTICAL
                     setBackgroundResource(R.drawable.dialog_god_hand_bg)
-                    setPadding(32, 26, 32, 26)
+                    setPadding((24 * density).toInt(), (20 * density).toInt(), (24 * density).toInt(), (20 * density).toInt())
                     layoutParams = android.widget.LinearLayout.LayoutParams(
-                        (resources.displayMetrics.widthPixels * 0.55f).toInt().coerceAtMost(480),
+                        dialogW,
                         android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
                     )
                 }
@@ -572,7 +610,7 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                     text = "Are you sure you want to end your current fight and return to the main menu?"
                     textSize = 13.5f
                     setTextColor(0xFFE2E8F0.toInt())
-                    setPadding(0, 10, 0, 20)
+                    setPadding(0, (10 * density).toInt(), 0, (20 * density).toInt())
                 }
                 val row = android.widget.LinearLayout(this@GameActivity).apply {
                     orientation = android.widget.LinearLayout.HORIZONTAL
@@ -597,15 +635,15 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                         handleExitToMenu()
                     }
                 }
-                val btnH = (48 * resources.displayMetrics.density).toInt()
-                row.addView(btnCancel, android.widget.LinearLayout.LayoutParams(0, btnH, 1f).apply { setMargins(0, 0, 8, 0) })
-                row.addView(btnQuit, android.widget.LinearLayout.LayoutParams(0, btnH, 1.2f).apply { setMargins(8, 0, 0, 0) })
+                val btnH = (48 * density).toInt()
+                row.addView(btnCancel, android.widget.LinearLayout.LayoutParams(0, btnH, 1f).apply { setMargins(0, 0, (8 * density).toInt(), 0) })
+                row.addView(btnQuit, android.widget.LinearLayout.LayoutParams(0, btnH, 1.2f).apply { setMargins((8 * density).toInt(), 0, 0, 0) })
 
                 root.addView(title)
                 root.addView(msg)
                 root.addView(row)
                 setContentView(root)
-                setOnDismissListener { inGameSettingsDialog = null; hideSystemUI() }
+                setOnDismissListener { hideSystemUI() }
                 show()
             }
         }
@@ -666,6 +704,28 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (touchOverlay.isEditMode) {
                 touchOverlay.exitEditMode(save = true)
+                return true
+            }
+
+            val now = System.currentTimeMillis()
+            if (now - lastBackPressTimeMs < 2500L) {
+                backPressCount++
+            } else {
+                backPressCount = 1
+            }
+            lastBackPressTimeMs = now
+
+            if (backPressCount >= 2) {
+                // User pressed back 2-3 times in quick succession -> immediately show quit menu!
+                backPressCount = 0
+                showQuitConfirmationDialog()
+                return true
+            }
+
+            if (touchOverlay.isMenuTouchActive) {
+                if (!NativeBridge.onMenuBackPressed()) {
+                    showQuitConfirmationDialog()
+                }
             } else {
                 showQuitConfirmationDialog()
             }

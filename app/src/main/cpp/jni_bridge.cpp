@@ -21,6 +21,7 @@
 #include "src/godhand/cheats_engine.h"
 #include "src/godhand/save_state_manager.h"
 #include "src/godhand/frame_patches.h"
+#include "src/godhand/menu_touch_controller.h"
 #include "godhand_patches_mobile.h"
 #include "runtime/gs/gs_pcsx2_backend.h"
 
@@ -803,6 +804,57 @@ Java_com_owaissseeee_godhand_NativeBridge_captureGsDump(JNIEnv* env, jobject /*t
     }
     std::string path = GSPcsx2Backend::TriggerDump(outDir);
     return env->NewStringUTF(path.c_str());
+}
+
+// -------------------------------------------------------------
+// Direct Menu Touch JNI
+// -------------------------------------------------------------
+JNIEXPORT jint JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_getActiveMenuState(
+    JNIEnv* /*env*/, jobject /*thiz*/)
+{
+    return static_cast<jint>(godhand::menu_touch::getActiveMenuState());
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_onMenuTouchEvent(
+    JNIEnv* /*env*/, jobject /*thiz*/, jint action, jfloat x, jfloat y, jfloat dx, jfloat dy)
+{
+    godhand::menu_touch::queueTouchEvent(
+        static_cast<godhand::menu_touch::TouchAction>(action), x, y, dx, dy
+    );
+}
+
+JNIEXPORT jboolean JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_onMenuBackPressed(
+    JNIEnv* /*env*/, jobject /*thiz*/)
+{
+    return godhand::menu_touch::handleBackPressed() ? JNI_TRUE : JNI_FALSE;
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setMenuTouchEnabled(
+    JNIEnv* /*env*/, jobject /*thiz*/, jboolean enabled)
+{
+    godhand::menu_touch::setEnabled(enabled == JNI_TRUE);
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_getMenuDebugInfo(
+    JNIEnv* env, jobject /*thiz*/, jintArray outArray)
+{
+    if (!env || !outArray) return;
+    godhand::menu_touch::MenuDebugInfo info{};
+    godhand::menu_touch::getMenuDebugInfo(&info);
+    jint buf[6] = {
+        info.screenId,
+        info.subState,
+        info.curIdx,
+        info.scrollTop,
+        info.lastTapId,
+        info.pendingTargetId
+    };
+    env->SetIntArrayRegion(outArray, 0, 6, buf);
 }
 
 static void startStdoutStderrRedirect() {

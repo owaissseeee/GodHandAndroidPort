@@ -631,6 +631,25 @@ class SettingsDialog(
         }
 
         addSwitchRow(
+            "Direct Menu Touch",
+            "Direct touch & native finger-scrolling for all original PS2 menus (Title, Pause, Techniques, Shop, etc.).",
+            settings.menuDirectTouchEnabled
+        ) { checked ->
+            settings.menuDirectTouchEnabled = checked
+            com.owaissseeee.godhand.NativeBridge.setMenuTouchEnabled(checked)
+            onSettingsChanged?.invoke()
+        }
+
+        addSwitchRow(
+            "Show Menu Debug Boxes",
+            "Display visual hitboxes and state tracking overlay for PS2 menu direct touch navigation.",
+            settings.showMenuDebugBoxes
+        ) { checked ->
+            settings.showMenuDebugBoxes = checked
+            onSettingsChanged?.invoke()
+        }
+
+        addSwitchRow(
             "Sticky Left Stick (Walk/Run)",
             "Left analog stick holds direction when released near the outer edge.",
             settings.leftStickSticky

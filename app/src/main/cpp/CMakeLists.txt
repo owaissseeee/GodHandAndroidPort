@@ -70,6 +70,7 @@ add_library(godhand_android SHARED
     src/godhand/frame_patches.cpp
     src/godhand/freeze_watchdog.cpp
     src/godhand/save_state_manager.cpp
+    src/godhand/menu_touch_controller.cpp
     ${GODHAND_HOST_SOURCES}
     ${GODHAND_UNITY_SOURCES}
     ${GODHAND_MODULE_SOURCES}
