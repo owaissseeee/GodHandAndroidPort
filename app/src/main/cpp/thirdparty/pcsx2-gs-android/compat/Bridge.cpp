@@ -5,6 +5,7 @@
 #include "Config.h"
 #include "GS/GS.h"
 #include "GS/Renderers/Common/GSRenderer.h"
+#include "GS/Renderers/HW/GSTextureReplacements.h"
 #if defined(__ANDROID__)
 #include "GS/Renderers/Vulkan/GSDeviceVK.h"
 #include "GS/Renderers/OpenGL/GSDeviceOGL.h"
@@ -54,6 +55,7 @@ namespace
         options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
         options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special; // Special (2) as specified by PCSX2 GameIndex.yaml for God Hand texture alignment
         options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
+        options.HWDownloadMode = GSHardwareDownloadMode::Disabled; // Disable hardware readbacks on mobile: eliminates CPU/GPU pipeline flushes
         options.Mipmap = false;
         options.HWMipmap = false;
         options.UseDebugDevice = false;
@@ -203,14 +205,19 @@ namespace
         ApplyOptions(options, params->options);
         if (options.Renderer == GSRendererType::OGL)
         {
-            // OpenGL ES compatibility for PowerVR GE8320 (Redmi 10A) and Mali/Adreno GLES:
-            // Prevent FBO texture self-feedback loops & unsupported GLES framebuffer fetch extensions.
-            // (Vulkan GSRendererType::VK is 100% untouched.)
-            options.DisableFramebufferFetch = true;
-            options.EnableAdrenoFramebufferFetch = false;
-            options.OverrideTextureBarriers = 0;
+            // OpenGL ES 3.2 high-performance mobile TBDR configuration (Adreno / Mali / PowerVR):
+            // Enable framebuffer fetch (GL_EXT_shader_framebuffer_fetch / GL_ARM_shader_framebuffer_fetch)
+            // and hardware texture barriers (OverrideTextureBarriers = 1) to eliminate model distortion,
+            // blinking meshes, and FBO feedback blit stalls.
+            options.DisableFramebufferFetch = false;
+            options.EnableAdrenoFramebufferFetch = true;
+            options.OverrideTextureBarriers = 1;
             options.AccurateBlendingUnit = AccBlendLevel::Minimum;
-            options.UserHacks_DisableSafeFeatures = false;
+            options.UserHacks_DisableSafeFeatures = true;
+            options.UserHacks_DisableDepthSupport = false;
+            options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special;
+            options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
+            options.HWDownloadMode = GSHardwareDownloadMode::Disabled;
         }
         EmuConfig.GS = options;
         EmuConfig.CurrentAspectRatio = options.AspectRatio;
@@ -229,11 +236,15 @@ namespace
             if (options.Renderer == GSRendererType::VK) {
                 __android_log_print(ANDROID_LOG_WARN, "pcsx2-gs", "Bridge::Open: Vulkan failed, attempting OpenGL ES fallback...");
                 options.Renderer = GSRendererType::OGL;
-                options.DisableFramebufferFetch = true;
-                options.EnableAdrenoFramebufferFetch = false;
-                options.OverrideTextureBarriers = 0;
+                options.DisableFramebufferFetch = false;
+                options.EnableAdrenoFramebufferFetch = true;
+                options.OverrideTextureBarriers = 1;
                 options.AccurateBlendingUnit = AccBlendLevel::Minimum;
-                options.UserHacks_DisableSafeFeatures = false;
+                options.UserHacks_DisableSafeFeatures = true;
+                options.UserHacks_DisableDepthSupport = false;
+                options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special;
+                options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
+                options.HWDownloadMode = GSHardwareDownloadMode::Disabled;
                 EmuConfig.GS = options;
                 if (GSopen(options, options.Renderer, g_regs, vsync, false)) {
                     __android_log_print(ANDROID_LOG_INFO, "pcsx2-gs", "Bridge::Open: GSopen SUCCEEDED with OpenGL ES fallback!");
@@ -305,6 +316,10 @@ gs_open_success:
 #endif
     }
 
+    std::mutex g_texDirMutex;
+    std::string g_pendingTexDir;
+    std::atomic<bool> g_pendingTexDirChanged{false};
+
     void Vsync(const Pcsx2GsPrivRegs *regs)
     {
         if (!g_open || !regs)
@@ -317,6 +332,32 @@ gs_open_success:
         std::memcpy(g_regs + 0x1080, &regs->siglblid, 8);
         GSvsync((regs->csr & 0x2000u) ? 0u : 1u, true);
         WritePresentStats();
+
+        // Process pending texture pack folder changes safely on GSThread at frame boundary
+        if (g_pendingTexDirChanged.exchange(false, std::memory_order_acq_rel))
+        {
+            std::string dir;
+            {
+                std::lock_guard<std::mutex> lock(g_texDirMutex);
+                dir = g_pendingTexDir;
+            }
+            Pcsx2Config::GSOptions oldConfig = GSConfig;
+            if (!dir.empty()) {
+                pcsx2gs::SetTextureFolder(dir.c_str());
+                EmuConfig.GS.LoadTextureReplacements = true;
+                EmuConfig.GS.LoadTextureReplacementsAsync = true;
+            } else {
+                pcsx2gs::SetTextureFolder("");
+                EmuConfig.GS.LoadTextureReplacements = false;
+            }
+            GSUpdateConfig(EmuConfig.GS);
+            if (g_gs_renderer) {
+                GSTextureReplacements::UpdateConfig(oldConfig);
+                GSTextureReplacements::GameChanged();
+                GSTextureReplacements::ReloadReplacementMap();
+                g_gs_renderer->PurgeTextureCache(true, false, true);
+            }
+        }
     }
 
     void Reset()
@@ -368,8 +409,7 @@ gs_open_success:
     {
         if (!g_open || !dst || !g_gs_renderer)
             return 0;
-        g_gs_renderer->Flush(GSState::GSFlushReason::SAVESTATE);
-        g_gs_renderer->ReadbackTextureCache();
+        // Direct host VRAM copy: avoid calling Vulkan Flush/ReadbackTextureCache across threads on mobile
         const uint32_t bytes = std::min<uint32_t>(size, g_gs_renderer->m_mem.m_vmsize);
         std::memcpy(dst, g_gs_renderer->m_mem.m_vm8, bytes);
         return bytes;
@@ -469,6 +509,28 @@ extern "C" PCSX2GS_EXPORT const Pcsx2GsApi *pcsx2gs_get_api(uint32_t version)
 extern "C" PCSX2GS_EXPORT void pcsx2gs_set_aspect(uint32_t mode)
 {
     EmuConfig.CurrentAspectRatio = mode == 2u ? AspectRatioType::Stretch : mode == 1u ? AspectRatioType::R16_9 : AspectRatioType::R4_3;
+}
+
+extern "C" PCSX2GS_EXPORT void pcsx2gs_set_texture_folder(const char *dir)
+{
+    {
+        std::lock_guard<std::mutex> lock(g_texDirMutex);
+        g_pendingTexDir = dir ? dir : "";
+        g_pendingTexDirChanged.store(true, std::memory_order_release);
+    }
+    // If GS is not yet running or renderer not yet created, apply immediately
+    if (!g_open || !g_gs_renderer) {
+        if (dir && *dir) {
+            pcsx2gs::SetTextureFolder(dir);
+            EmuConfig.GS.LoadTextureReplacements = true;
+            EmuConfig.GS.LoadTextureReplacementsAsync = true;
+        } else {
+            pcsx2gs::SetTextureFolder("");
+            EmuConfig.GS.LoadTextureReplacements = false;
+        }
+        GSUpdateConfig(EmuConfig.GS);
+        g_pendingTexDirChanged.store(false, std::memory_order_relaxed);
+    }
 }
 
 extern "C" PCSX2GS_EXPORT void pcsx2gs_update_window(void *hwnd, uint32_t width, uint32_t height)

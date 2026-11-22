@@ -30,6 +30,9 @@ class SettingsDialog(
     private val isMidGame: Boolean = false,
     private val onEditControlsRequested: (() -> Unit)? = null,
     private val onImportSaveRequested: (() -> Unit)? = null,
+    private val onPickTextureFolderRequested: (() -> Unit)? = null,
+    private val onSaveStateRequested: ((slot: Int) -> Unit)? = null,
+    private val onLoadStateRequested: ((slot: Int) -> Unit)? = null,
     private val onSettingsChanged: (() -> Unit)? = null
 ) : Dialog(context) {
 
@@ -48,7 +51,7 @@ class SettingsDialog(
 
     init {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window?.setBackgroundDrawable(ColorDrawable(Color.argb(246, 11, 15, 25))) // Deep full-screen console dark slate
+        window?.setBackgroundDrawable(ColorDrawable(Color.argb(250, 22, 14, 9))) // Warm God Hand western leather & dark walnut
         window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
         // Root Console Split-View Layout (Horizontal)
@@ -67,8 +70,8 @@ class SettingsDialog(
         val sidebar = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
             val bg = GradientDrawable().apply {
-                setColor(0xFF0F172A.toInt()) // slate-900
-                setStroke(1.dpToPx(), 0xFF1E293B.toInt())
+                setColor(0xFF140D08.toInt()) // Deep walnut brown
+                setStroke(1.dpToPx(), 0xFF352014.toInt())
                 cornerRadius = 10f.dpToPx()
             }
             background = bg
@@ -97,7 +100,7 @@ class SettingsDialog(
         val appSub = TextView(context).apply {
             text = "SYSTEM SETTINGS"
             textSize = 9f
-            setTextColor(0xFF64748B.toInt()) // Slate-500
+            setTextColor(0xFFA89682.toInt()) // Warm tan
             letterSpacing = 0.12f
             typeface = android.graphics.Typeface.MONOSPACE
         }
@@ -154,8 +157,8 @@ class SettingsDialog(
         val rightPane = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
             val bg = GradientDrawable().apply {
-                setColor(0xFF0B0F19.toInt())
-                setStroke(1.dpToPx(), 0xFF1E293B.toInt())
+                setColor(0xFF1A110A.toInt()) // Dark saddle leather
+                setStroke(1.dpToPx(), 0xFF3D2717.toInt())
                 cornerRadius = 10f.dpToPx()
             }
             background = bg
@@ -179,14 +182,14 @@ class SettingsDialog(
         tabTitleTv = TextView(context).apply {
             text = "DISPLAY & RENDERING"
             textSize = 14f
-            setTextColor(0xFFF8FAFC.toInt())
+            setTextColor(0xFFF5EBE1.toInt())
             typeface = android.graphics.Typeface.DEFAULT_BOLD
             letterSpacing = 0.05f
         }
         tabSubtitleTv = TextView(context).apply {
             text = "Configure resolution, renderer, and frameskip engine"
             textSize = 10.5f
-            setTextColor(0xFF94A3B8.toInt())
+            setTextColor(0xFFA89682.toInt())
         }
         titleContainer.addView(tabTitleTv)
         titleContainer.addView(tabSubtitleTv)
@@ -194,11 +197,11 @@ class SettingsDialog(
         val btnCloseCross = TextView(context).apply {
             text = "✕"
             textSize = 16f
-            setTextColor(0xFFF8FAFC.toInt())
+            setTextColor(0xFFF5EBE1.toInt())
             gravity = Gravity.CENTER
             val bg = GradientDrawable().apply {
-                setColor(0xFF1E293B.toInt())
-                setStroke(1.dpToPx(), 0xFF334155.toInt())
+                setColor(0xFF2E1C11.toInt())
+                setStroke(1.dpToPx(), 0xFF4D301E.toInt())
                 cornerRadius = 16f.dpToPx()
             }
             background = bg
@@ -220,7 +223,7 @@ class SettingsDialog(
         ))
 
         val divider = View(context).apply {
-            setBackgroundColor(0xFF1E293B.toInt())
+            setBackgroundColor(0xFF382315.toInt())
         }
         headerLayout.addView(divider, LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT, 1.dpToPx()
@@ -330,7 +333,7 @@ class SettingsDialog(
             val b = tabButtons[i]
             if (i == activeTab) {
                 val activeBg = GradientDrawable().apply {
-                    setColor(0xFF1E293B.toInt())
+                    setColor(0xFF382417.toInt())
                     setStroke(2.dpToPx(), 0xFFF59E0B.toInt())
                     cornerRadius = 6f.dpToPx()
                 }
@@ -339,7 +342,7 @@ class SettingsDialog(
                 b.typeface = android.graphics.Typeface.DEFAULT_BOLD
             } else {
                 b.setBackgroundColor(Color.TRANSPARENT)
-                b.setTextColor(0xFF94A3B8.toInt())
+                b.setTextColor(0xFFA89682.toInt())
                 b.typeface = android.graphics.Typeface.DEFAULT
             }
         }
@@ -393,12 +396,15 @@ class SettingsDialog(
         addSectionHeader("GPU RENDERING ENGINE")
 
         addSpinnerRow(
-            "Graphics Renderer",
-            listOf("Vulkan (PCSX2-GS - High Performance)"),
-            0,
-            enabled = false
-        ) {
-            settings.rendererIdx = 0
+            if (isMidGame) "Graphics Renderer (Set in Main Menu)" else "Graphics Renderer",
+            listOf(
+                "Vulkan (PCSX2-GS - High Performance Default)",
+                "OpenGL ES (Safe Compatibility - Qualcomm & Mali)"
+            ),
+            settings.rendererIdx,
+            enabled = !isMidGame
+        ) { pos ->
+            settings.rendererIdx = pos
         }
 
         addSpinnerRow(
@@ -421,7 +427,7 @@ class SettingsDialog(
 
         addSpinnerRow(
             if (isMidGame) "Aspect Ratio (Set in Main Menu)" else "Aspect Ratio",
-            listOf("16:9 Widescreen (Native FOV)", "4:3 Original (Pillarboxed)", "Full Screen (Device Aspect - Edge-to-Edge)"),
+            listOf("16:9 Widescreen (Native FOV)", "4:3 Original (Pillarboxed)", "Full Screen (Device Aspect - Edge-to-Edge - Default)"),
             settings.aspectIdx,
             enabled = !isMidGame
         ) { pos ->
@@ -433,7 +439,7 @@ class SettingsDialog(
 
         addSpinnerRow(
             "Target Frame Rate",
-            listOf("60 FPS (Native Speed / Uncapped)", "30 FPS (Authentic PS2 / Potato Boost)"),
+            listOf("30 FPS (Authentic PS2 - Default)", "60 FPS (Experimental / Physics Uncapped)"),
             settings.fpsIdx
         ) { pos ->
             settings.fpsIdx = pos
@@ -445,11 +451,8 @@ class SettingsDialog(
         addSpinnerRow(
             "Frameskip Engine",
             listOf(
-                "Off (Render Every Frame - Recommended)",
-                "Auto (Skip on Lag/Hitch)",
-                "Skip 1 Frame (Light Boost)",
-                "Skip 2 Frames (Heavy Boost)",
-                "Skip 3 Frames (Max Throttle for Low-End Helio G35 / A53 Cores)"
+                "Off (Full 1:1 Rendering - Default)",
+                "Skip 1 Frame (Mild Potato Boost)"
             ),
             settings.frameskipIdx
         ) { pos ->
@@ -458,6 +461,142 @@ class SettingsDialog(
                 NativeBridge.setFrameskipMode(pos)
             }
         }
+
+        addSectionHeader("HD CUSTOM TEXTURE INJECTION")
+
+        addSwitchRow(
+            "Enable HD Custom Textures",
+            "Loads replacement textures at runtime (PCSX2 format: DDS & PNG). Zero performance overhead when not replacing.",
+            settings.customTexturesEnabled
+        ) { enabled ->
+            settings.customTexturesEnabled = enabled
+            if (enabled && settings.customTexturePath.isNotBlank()) {
+                NativeBridge.setCustomTextureDirectory(settings.customTexturePath)
+            } else {
+                NativeBridge.setCustomTextureDirectory("")
+            }
+            buildTabContent()
+        }
+
+        if (settings.customTexturesEnabled) {
+            val pathCard = LinearLayout(context).apply {
+                orientation = LinearLayout.VERTICAL
+                setBackgroundResource(R.drawable.card_god_hand)
+                setPadding(12.dpToPx(), 8.dpToPx(), 12.dpToPx(), 8.dpToPx())
+            }
+            val tvPathHeader = TextView(context).apply {
+                text = "TEXTURE PACK DIRECTORY"
+                textSize = 11f
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
+                setTextColor(0xFFF59E0B.toInt())
+            }
+            val tvPath = TextView(context).apply {
+                text = settings.customTexturePath
+                textSize = 10.5f
+                setTextColor(0xFFCBD5E1.toInt())
+                setPadding(0, 3.dpToPx(), 0, 8.dpToPx())
+                setOnClickListener {
+                    showEditCustomTexturePathDialog()
+                }
+            }
+            pathCard.addView(tvPathHeader)
+            pathCard.addView(tvPath)
+
+            val btnRow = LinearLayout(context).apply {
+                orientation = LinearLayout.HORIZONTAL
+            }
+            val btnPick = Button(context).apply {
+                text = "📁 BROWSE"
+                textSize = 11f
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
+                setBackgroundResource(R.drawable.btn_god_hand_primary)
+                setTextColor(0xFFFFFFFF.toInt())
+                setOnClickListener {
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R && !android.os.Environment.isExternalStorageManager()) {
+                        android.widget.Toast.makeText(context, "Please grant All Files Access so textures can be loaded", android.widget.Toast.LENGTH_LONG).show()
+                        try {
+                            val intent = android.content.Intent(android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).apply {
+                                data = android.net.Uri.parse("package:${context.packageName}")
+                            }
+                            context.startActivity(intent)
+                        } catch (_: Exception) {
+                            try {
+                                context.startActivity(android.content.Intent(android.provider.Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION))
+                            } catch (_: Exception) {}
+                        }
+                    }
+                    onPickTextureFolderRequested?.invoke()
+                }
+            }
+            val btnEdit = Button(context).apply {
+                text = "✏️ EDIT PATH"
+                textSize = 11f
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
+                setBackgroundResource(R.drawable.btn_god_hand_secondary)
+                setTextColor(0xFF38BDF8.toInt())
+                setOnClickListener {
+                    showEditCustomTexturePathDialog()
+                }
+            }
+            val btnReset = Button(context).apply {
+                text = "RESET"
+                textSize = 11f
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
+                setBackgroundResource(R.drawable.btn_god_hand_secondary)
+                setTextColor(0xFFFDE047.toInt())
+                setOnClickListener {
+                    settings.customTexturePath = "/storage/emulated/0/Download/GodHand_Textures/SLUS-21503"
+                    NativeBridge.setCustomTextureDirectory(settings.customTexturePath)
+                    buildTabContent()
+                }
+            }
+            btnRow.addView(btnPick, LinearLayout.LayoutParams(0, 38.dpToPx(), 1.1f).apply { setMargins(0, 0, 4.dpToPx(), 0) })
+            btnRow.addView(btnEdit, LinearLayout.LayoutParams(0, 38.dpToPx(), 1.2f).apply { setMargins(0, 0, 4.dpToPx(), 0) })
+            btnRow.addView(btnReset, LinearLayout.LayoutParams(0, 38.dpToPx(), 0.9f))
+            pathCard.addView(btnRow)
+
+            contentContainer.addView(pathCard, LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { setMargins(0, 0, 0, 6.dpToPx()) })
+        }
+    }
+
+    private fun showEditCustomTexturePathDialog() {
+        val input = android.widget.EditText(context).apply {
+            setText(settings.customTexturePath)
+            setTextColor(0xFFFFFFFF.toInt())
+            setHintTextColor(0xFF94A3B8.toInt())
+            hint = "/storage/emulated/0/.../SLUS-21503"
+            textSize = 12f
+            setBackgroundResource(R.drawable.card_god_hand)
+            setPadding(12.dpToPx(), 10.dpToPx(), 12.dpToPx(), 10.dpToPx())
+            setSingleLine(true)
+        }
+        val container = LinearLayout(context).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(16.dpToPx(), 8.dpToPx(), 16.dpToPx(), 8.dpToPx())
+            addView(input)
+        }
+
+        android.app.AlertDialog.Builder(context)
+            .setTitle("✏️ EDIT HD TEXTURE PATH")
+            .setMessage("Enter the absolute folder path containing your replacement textures:")
+            .setView(container)
+            .setPositiveButton("SAVE") { _, _ ->
+                var newPath = input.text.toString().trim()
+                if (newPath.isNotBlank()) {
+                    if (newPath.startsWith("/sdcard/")) {
+                        newPath = "/storage/emulated/0/" + newPath.substring("/sdcard/".length)
+                    }
+                    settings.customTexturePath = newPath
+                    settings.customTexturesEnabled = true
+                    NativeBridge.setCustomTextureDirectory(newPath)
+                    android.widget.Toast.makeText(context, "HD Texture Path Set: $newPath", android.widget.Toast.LENGTH_SHORT).show()
+                    buildTabContent()
+                }
+            }
+            .setNegativeButton("CANCEL", null)
+            .show()
     }
 
     // ==========================================
@@ -546,6 +685,65 @@ class SettingsDialog(
     // 2. SOUND TAB
     // ==========================================
     private fun buildSoundTab() {
+        addSectionHeader("SEPARATED AUDIO CHANNELS & MASTER VOLUME")
+
+        addSliderRow(
+            "Master Volume",
+            (settings.masterVolume * 100).toInt(),
+            min = 0,
+            max = 100,
+            unit = "%"
+        ) { pct ->
+            val vol = pct / 100.0f
+            settings.masterVolume = vol
+            settings.audioVolume = vol
+            if (isMidGame) {
+                NativeBridge.setAudioChannelVolumes(vol, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
+            }
+        }
+
+        addSliderRow(
+            "BGM & Music Volume",
+            (settings.bgmVolume * 100).toInt(),
+            min = 0,
+            max = 100,
+            unit = "%"
+        ) { pct ->
+            val vol = pct / 100.0f
+            settings.bgmVolume = vol
+            if (isMidGame) {
+                NativeBridge.setAudioChannelVolumes(settings.masterVolume, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
+            }
+        }
+
+        addSliderRow(
+            "Sound Effects (SFX) Volume",
+            (settings.sfxVolume * 100).toInt(),
+            min = 0,
+            max = 100,
+            unit = "%"
+        ) { pct ->
+            val vol = pct / 100.0f
+            settings.sfxVolume = vol
+            if (isMidGame) {
+                NativeBridge.setAudioChannelVolumes(settings.masterVolume, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
+            }
+        }
+
+        addSliderRow(
+            "Character Voice Volume",
+            (settings.voiceVolume * 100).toInt(),
+            min = 0,
+            max = 100,
+            unit = "%"
+        ) { pct ->
+            val vol = pct / 100.0f
+            settings.voiceVolume = vol
+            if (isMidGame) {
+                NativeBridge.setAudioChannelVolumes(settings.masterVolume, settings.bgmVolume, settings.sfxVolume, settings.voiceVolume)
+            }
+        }
+
         addSectionHeader("AUDIO LATENCY & SPU2 SCHEDULING")
 
         addSpinnerRow(
@@ -558,7 +756,9 @@ class SettingsDialog(
             settings.audioSchedulingIdx
         ) { pos ->
             settings.audioSchedulingIdx = pos
-            NativeBridge.setAudioConfig(pos, settings.audioBufferSizeIdx)
+            if (isMidGame) {
+                NativeBridge.setAudioConfig(pos, settings.audioBufferSizeIdx)
+            }
         }
 
         addSpinnerRow(
@@ -571,19 +771,9 @@ class SettingsDialog(
             settings.audioBufferSizeIdx
         ) { pos ->
             settings.audioBufferSizeIdx = pos
-            NativeBridge.setAudioConfig(settings.audioSchedulingIdx, pos)
-        }
-
-        addSliderRow(
-            "Master Volume",
-            (settings.audioVolume * 100).toInt(),
-            min = 0,
-            max = 100,
-            unit = "%"
-        ) { pct ->
-            val vol = pct / 100.0f
-            settings.audioVolume = vol
-            NativeBridge.setAudioVolume(vol)
+            if (isMidGame) {
+                NativeBridge.setAudioConfig(settings.audioSchedulingIdx, pos)
+            }
         }
     }
 
@@ -591,6 +781,111 @@ class SettingsDialog(
     // 3. SAVES TAB
     // ==========================================
     private fun buildSavesTab() {
+        addSectionHeader("INSTANT SAVE STATES (ZERO PERFORMANCE LOSS)")
+
+        val stateDir = (context.getExternalFilesDir("savestates") ?: File(context.filesDir, "savestates")).absolutePath
+        val activeSlot = settings.activeSaveStateSlot
+
+        // Slot Selector Buttons (1 to 5)
+        val slotButtonsRow = LinearLayout(context).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setPadding(0, 4.dpToPx(), 0, 6.dpToPx())
+        }
+
+        for (slot in 1..5) {
+            val btnSlot = Button(context).apply {
+                text = "SLOT $slot"
+                textSize = 11f
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
+                val isSelected = (slot == activeSlot)
+                val bg = GradientDrawable().apply {
+                    setColor(if (isSelected) 0xFF4D331E.toInt() else 0xFF2A1C12.toInt())
+                    setStroke(if (isSelected) 2.dpToPx() else 1.dpToPx(), if (isSelected) 0xFFF59E0B.toInt() else 0xFF472F1D.toInt())
+                    cornerRadius = 6f.dpToPx()
+                }
+                background = bg
+                setTextColor(if (isSelected) 0xFFF59E0B.toInt() else 0xFFA89682.toInt())
+                setOnClickListener {
+                    settings.activeSaveStateSlot = slot
+                    buildTabContent()
+                }
+            }
+            slotButtonsRow.addView(btnSlot, LinearLayout.LayoutParams(0, 36.dpToPx(), 1f).apply {
+                setMargins(if (slot > 1) 4.dpToPx() else 0, 0, 0, 0)
+            })
+        }
+        contentContainer.addView(slotButtonsRow)
+
+        // Slot Info Card
+        val slotInfoRaw = NativeBridge.getStateInfo(activeSlot, stateDir)
+        val stateCard = LinearLayout(context).apply {
+            orientation = LinearLayout.VERTICAL
+            setBackgroundResource(R.drawable.card_god_hand)
+            setPadding(14.dpToPx(), 10.dpToPx(), 14.dpToPx(), 10.dpToPx())
+        }
+        val tvStateTitle = TextView(context).apply {
+            text = if (!slotInfoRaw.isNullOrEmpty()) "✔ SLOT $activeSlot: ACTIVE SAVE STATE" else "⚪ SLOT $activeSlot: EMPTY"
+            textSize = 12.5f
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
+            setTextColor(if (!slotInfoRaw.isNullOrEmpty()) 0xFF4ADE80.toInt() else 0xFFA89682.toInt())
+        }
+        val tvStateDetails = TextView(context).apply {
+            if (!slotInfoRaw.isNullOrEmpty()) {
+                val parts = slotInfoRaw.split("|")
+                val timestamp = parts.getOrNull(0)?.toLongOrNull() ?: 0L
+                val stage = parts.getOrNull(1) ?: "Stage 1-1"
+                val hp = parts.getOrNull(2) ?: "100"
+                val dateStr = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date(timestamp))
+                text = "Location: $stage • Gene HP: $hp%\nTimestamp: $dateStr\nStorage: state_slot_$activeSlot.ghstate (~36 MB)"
+            } else {
+                text = "No save state stored in Slot $activeSlot.\nUse 'SAVE TO SLOT $activeSlot' or press Select + L1 in-game."
+            }
+            textSize = 11f
+            setTextColor(0xFFCBD5E1.toInt())
+            setPadding(0, 4.dpToPx(), 0, 0)
+        }
+        stateCard.addView(tvStateTitle)
+        stateCard.addView(tvStateDetails)
+        contentContainer.addView(stateCard)
+
+        // Save & Load Buttons
+        val stateActionsRow = LinearLayout(context).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setPadding(0, 8.dpToPx(), 0, 10.dpToPx())
+        }
+        val btnSaveState = Button(context).apply {
+            text = "⚡ SAVE TO SLOT $activeSlot"
+            textSize = 11.5f
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
+            setBackgroundResource(R.drawable.btn_god_hand_primary)
+            setTextColor(0xFFFFFFFF.toInt())
+            setOnClickListener {
+                tvStateTitle.text = "⏳ SAVING SLOT $activeSlot..."
+                tvStateDetails.text = "Capturing RDRAM, VRAM & EE hardware state..."
+                onSaveStateRequested?.invoke(activeSlot)
+                postDelayed({
+                    if (activeTab == 3) {
+                        buildTabContent()
+                    }
+                }, 200)
+            }
+        }
+        val btnLoadState = Button(context).apply {
+            text = "⚡ LOAD SLOT $activeSlot"
+            textSize = 11.5f
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
+            setBackgroundResource(R.drawable.btn_god_hand_secondary)
+            setTextColor(0xFFFDE047.toInt())
+            isEnabled = !slotInfoRaw.isNullOrEmpty()
+            alpha = if (isEnabled) 1.0f else 0.45f
+            setOnClickListener {
+                onLoadStateRequested?.invoke(activeSlot)
+            }
+        }
+        stateActionsRow.addView(btnSaveState, LinearLayout.LayoutParams(0, 42.dpToPx(), 1f).apply { setMargins(0, 0, 6.dpToPx(), 0) })
+        stateActionsRow.addView(btnLoadState, LinearLayout.LayoutParams(0, 42.dpToPx(), 1f).apply { setMargins(6.dpToPx(), 0, 0, 0) })
+        contentContainer.addView(stateActionsRow)
+
         addSectionHeader("PS2 MEMORY CARD STATUS")
 
         val saveInfo = SaveManager.getActiveSaveInfo(context)
@@ -922,27 +1217,27 @@ class SettingsDialog(
     // 5. LOGS TAB
     // ==========================================
     private fun buildLogsTab() {
-        addSectionHeader("PERFORMANCE SPIKE & ENGINE LOGS")
+        addSectionHeader("FREEZE DETECTOR & ENGINE LOGS")
 
-        // Switch to toggle spike logging (Zero overhead when turned off, default OFF)
+        // Switch to toggle spike logging (Zero overhead when turned off, default ON)
         var spikeLoggingOn = settings.perfSpikeLoggingEnabled
         addSwitchRow(
-            "Enable Frame Drop Logger",
-            "Zero-overhead telemetry. Captures hardware state on noticeable stutter.",
+            "Automatic Freeze & Frame Drop Logger",
+            "Zero-overhead telemetry. Captures hardware state on engine freezes (>=100ms) or stutter.",
             spikeLoggingOn
         ) { enabled ->
             spikeLoggingOn = enabled
             settings.perfSpikeLoggingEnabled = enabled
             NativeBridge.setSpikeLoggingEnabled(enabled)
-            val msg = if (enabled) "Spike detector ENABLED" else "Spike detector DISABLED (0 overhead)"
+            val msg = if (enabled) "Freeze & Spike detector ENABLED" else "Spike detector DISABLED (0 overhead)"
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
         }
 
         val logView = TextView(context).apply {
-            setTextColor(0xFF94A3B8.toInt())
+            setTextColor(0xFFA89682.toInt())
             textSize = 9.5f
             typeface = android.graphics.Typeface.MONOSPACE
-            setBackgroundColor(0xFF0F172A.toInt())
+            setBackgroundColor(0xFF100A06.toInt())
             setPadding(12.dpToPx(), 12.dpToPx(), 12.dpToPx(), 12.dpToPx())
         }
 
@@ -954,9 +1249,9 @@ class SettingsDialog(
         fun fetchSessionLogs() {
             val logs = NativeBridge.getSessionSpikeLog()
             if (logs.isNullOrBlank()) {
-                logView.text = "[SESSION SPIKE LOG]\nNo performance spikes or major frame drops recorded in this session.\nGod Hand engine is running at full console speed."
+                logView.text = "[SESSION FREEZE & SPIKE LOG]\nNo performance spikes or engine freezes recorded in this session.\nGod Hand engine is running at full console speed."
             } else {
-                logView.text = "[SESSION SPIKE LOG - PERSISTENT]\n" + logs
+                logView.text = "[SESSION FREEZE & SPIKE LOG - PERSISTENT]\n" + logs
             }
         }
 
@@ -1025,9 +1320,51 @@ class SettingsDialog(
         controlRow.addView(btnSysLogcat, LinearLayout.LayoutParams(0, 34.dpToPx(), 1f).apply { setMargins(3.dpToPx(), 0, 0, 0) })
         contentContainer.addView(controlRow)
 
+        val btnGsDump = Button(context).apply {
+            text = "📸 1-TAP CAPTURE GS DUMP (.gs)"
+            textSize = 11f
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
+            setBackgroundResource(R.drawable.btn_god_hand_primary)
+            setTextColor(0xFFFFFFFF.toInt())
+            setOnClickListener {
+                Toast.makeText(context, "Capturing GS Dump on next frame...", Toast.LENGTH_SHORT).show()
+                Thread {
+                    val exportDir = try {
+                        val d = File("/storage/emulated/0/Download/GodHand_GSDumps")
+                        if (!d.exists()) d.mkdirs()
+                        if (d.exists() && d.canWrite()) d else context.getExternalFilesDir("GSDumps") ?: context.filesDir
+                    } catch (e: Exception) {
+                        context.getExternalFilesDir("GSDumps") ?: context.filesDir
+                    }
+                    val dumpPath = NativeBridge.captureGsDump(exportDir.absolutePath)
+                    post {
+                        if (dumpPath.isNotBlank() && !dumpPath.startsWith("ERROR")) {
+                            val clip = ClipData.newPlainText("GSDumpPath", dumpPath)
+                            (context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager).setPrimaryClip(clip)
+                            Toast.makeText(context, "📸 GS Dump Captured!\nSaved to: $dumpPath\n(Copied to clipboard)", Toast.LENGTH_LONG).show()
+                            logView.text = "[GS DUMP CAPTURED SUCCESS]\nFile: $dumpPath\nTransfer this file to PC and open in PCSX2 Debugger.\n\n" + logView.text
+                        } else {
+                            Toast.makeText(context, "GS Dump: $dumpPath", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }.start()
+            }
+        }
+        contentContainer.addView(btnGsDump, LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, 38.dpToPx()
+        ).apply { setMargins(0, 4.dpToPx(), 0, 8.dpToPx()) })
+
         val logScroll = ScrollView(context).apply {
+            isNestedScrollingEnabled = true
+            setOnTouchListener { v, _ ->
+                v.parent?.requestDisallowInterceptTouchEvent(true)
+                false
+            }
+        }
+        val hScroll = HorizontalScrollView(context).apply {
             addView(logView)
         }
+        logScroll.addView(hScroll)
         contentContainer.addView(logScroll, LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT, 260.dpToPx()
         ))
@@ -1063,6 +1400,7 @@ class SettingsDialog(
             textSize = 12f
             typeface = android.graphics.Typeface.DEFAULT_BOLD
         }
+        var isInitial = true
         val sp = Spinner(context).apply {
             adapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, options)
             setSelection(currentIdx.coerceIn(0, options.size - 1))
@@ -1070,6 +1408,10 @@ class SettingsDialog(
             alpha = if (enabled) 1.0f else 0.45f
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(p: AdapterView<*>?, v: View?, pos: Int, id: Long) {
+                    if (isInitial) {
+                        isInitial = false
+                        return
+                    }
                     if (enabled) onSelect(pos)
                 }
                 override fun onNothingSelected(p: AdapterView<*>?) {}

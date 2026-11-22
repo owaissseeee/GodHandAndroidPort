@@ -42,6 +42,308 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         }
     }
 
+    val textureFolderPickerLauncher = registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.OpenDocumentTree()) { uri: android.net.Uri? ->
+        if (uri != null) {
+            try {
+                contentResolver.takePersistableUriPermission(
+                    uri,
+                    android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            } catch (_: Exception) {}
+            val path = resolveRealPathFromUri(uri)
+            if (path != null) {
+                settings.customTexturePath = path
+                settings.customTexturesEnabled = true
+                NativeBridge.setCustomTextureDirectory(path)
+                android.widget.Toast.makeText(this, "HD Texture Folder: $path", android.widget.Toast.LENGTH_LONG).show()
+                runOnUiThread {
+                    inGameSettingsDialog?.refreshActiveTab()
+                }
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R && !android.os.Environment.isExternalStorageManager()) {
+                    android.widget.Toast.makeText(this, "Please grant All Files Access to load custom textures directly", android.widget.Toast.LENGTH_LONG).show()
+                    try {
+                        val intent = android.content.Intent(android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).apply {
+                            data = android.net.Uri.parse("package:$packageName")
+                        }
+                        startActivity(intent)
+                    } catch (_: Exception) {
+                        try {
+                            startActivity(android.content.Intent(android.provider.Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION))
+                        } catch (_: Exception) {}
+                    }
+                }
+            } else {
+                android.widget.Toast.makeText(this, "Could not auto-resolve path. Please use 'EDIT PATH' to enter path directly.", android.widget.Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun resolveRealPathFromUri(uri: android.net.Uri): String? {
+        try {
+            val uriStr = uri.toString()
+            var decodedUri = uriStr
+            for (i in 0 until 3) {
+                val next = android.net.Uri.decode(decodedUri)
+                if (next == decodedUri) break
+                decodedUri = next
+            }
+
+            // 1. Direct file scheme
+            if (uri.scheme == "file") {
+                val p = uri.path
+                if (!p.isNullOrBlank()) return p
+            }
+
+            // 2. Extract Document ID or Tree Document ID
+            var docId: String? = null
+            try {
+                if (android.provider.DocumentsContract.isTreeUri(uri)) {
+                    docId = android.provider.DocumentsContract.getTreeDocumentId(uri)
+                }
+            } catch (_: Throwable) {}
+            if (docId == null) {
+                try {
+                    docId = android.provider.DocumentsContract.getDocumentId(uri)
+                } catch (_: Throwable) {}
+            }
+            if (docId == null) {
+                docId = uri.lastPathSegment
+            }
+
+            var cleanId = docId ?: ""
+            for (i in 0 until 3) {
+                val next = android.net.Uri.decode(cleanId)
+                if (next == cleanId) break
+                cleanId = next
+            }
+
+            // Strip common tree/document prefixes repeatedly
+            val prefixes = listOf("/tree/", "tree/", "/document/", "document/")
+            var changed = true
+            while (changed) {
+                changed = false
+                for (p in prefixes) {
+                    if (cleanId.startsWith(p)) {
+                        cleanId = cleanId.substring(p.length)
+                        changed = true
+                    }
+                }
+            }
+
+            // 3. Check raw: prefix
+            if (cleanId.contains("raw:")) {
+                val rawPath = cleanId.substringAfter("raw:")
+                if (rawPath.isNotBlank()) return rawPath
+            }
+            if (decodedUri.contains("raw:")) {
+                val rawPath = decodedUri.substringAfter("raw:").substringBefore('?').substringBefore('&')
+                if (rawPath.isNotBlank()) return rawPath
+            }
+
+            // 4. Check primary: prefix
+            val primaryTarget = when {
+                cleanId.contains("primary:") -> cleanId.substringAfter("primary:")
+                decodedUri.contains("primary:") -> decodedUri.substringAfter("primary:")
+                else -> null
+            }
+            if (primaryTarget != null) {
+                val rel = primaryTarget.substringBefore('?').substringBefore('&').trimStart('/')
+                val extDir = android.os.Environment.getExternalStorageDirectory().absolutePath
+                return if (rel.isEmpty()) extDir else java.io.File(extDir, rel).absolutePath
+            }
+
+            // 5. Check direct /storage/ or /sdcard/
+            if (decodedUri.contains("/storage/")) {
+                return "/storage/" + decodedUri.substringAfter("/storage/").substringBefore('?').substringBefore('&')
+            }
+            if (decodedUri.contains("/sdcard/")) {
+                return "/storage/emulated/0/" + decodedUri.substringAfter("/sdcard/").substringBefore('?').substringBefore('&').trimStart('/')
+            }
+            if (cleanId.startsWith("/storage/")) {
+                return cleanId
+            }
+            if (cleanId.startsWith("/sdcard/")) {
+                return "/storage/emulated/0/" + cleanId.substring("/sdcard/".length)
+            }
+
+            // 6. Base downloads checks
+            val downloadDir = android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS)
+            val extStorageDir = android.os.Environment.getExternalStorageDirectory()
+
+            if (cleanId.equals("download", ignoreCase = true) || cleanId.equals("downloads", ignoreCase = true)) {
+                return downloadDir.absolutePath
+            }
+            if (cleanId.matches(Regex("^(download|downloads)[:/].*", RegexOption.IGNORE_CASE))) {
+                val rel = cleanId.replaceFirst(Regex("^(download|downloads)[:/]", RegexOption.IGNORE_CASE), "").trimStart('/')
+                val candidate = java.io.File(downloadDir, rel)
+                if (candidate.exists()) return candidate.absolutePath
+                return candidate.absolutePath
+            }
+
+            // Helper to recursively find a directory by name (up to maxDepth)
+            fun findDirectoryByName(root: java.io.File, targetName: String, maxDepth: Int): java.io.File? {
+                if (!root.exists() || !root.isDirectory || maxDepth <= 0) return null
+                val direct = java.io.File(root, targetName)
+                if (direct.exists() && direct.isDirectory) return direct
+                val list = root.listFiles() ?: return null
+                for (item in list) {
+                    if (item.isDirectory) {
+                        if (item.name.equals(targetName, ignoreCase = true)) return item
+                        val subMatch = findDirectoryByName(item, targetName, maxDepth - 1)
+                        if (subMatch != null) return subMatch
+                    }
+                }
+                return null
+            }
+
+            // 7. Query DocumentsProvider for display name and data column using tree document URI
+            var displayName: String? = null
+            var dataFromDoc: String? = null
+            try {
+                val docUri = if (android.provider.DocumentsContract.isTreeUri(uri)) {
+                    val treeId = android.provider.DocumentsContract.getTreeDocumentId(uri)
+                    android.provider.DocumentsContract.buildDocumentUriUsingTree(uri, treeId)
+                } else uri
+                contentResolver.query(docUri, null, null, null, null)?.use { cursor ->
+                    if (cursor.moveToFirst()) {
+                        val nameCol = cursor.getColumnIndex(android.provider.DocumentsContract.Document.COLUMN_DISPLAY_NAME)
+                        if (nameCol != -1) displayName = cursor.getString(nameCol)
+                        val dataCol = cursor.getColumnIndex("_data")
+                        if (dataCol != -1) dataFromDoc = cursor.getString(dataCol)
+                    }
+                }
+            } catch (_: Throwable) {}
+
+            if (!dataFromDoc.isNullOrBlank()) {
+                val file = java.io.File(dataFromDoc)
+                if (file.exists()) return file.absolutePath
+            }
+
+            // 8. Query MediaStore for numeric ID / msf: ID
+            val msfIdStr = when {
+                cleanId.startsWith("msf:") -> cleanId.substring(4)
+                cleanId.all { it.isDigit() } -> cleanId
+                else -> null
+            }
+            val numericId = msfIdStr?.toLongOrNull()
+            if (numericId != null) {
+                val urisToQuery = mutableListOf<android.net.Uri>()
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                    urisToQuery.add(android.content.ContentUris.withAppendedId(android.provider.MediaStore.Downloads.EXTERNAL_CONTENT_URI, numericId))
+                }
+                urisToQuery.add(android.content.ContentUris.withAppendedId(android.provider.MediaStore.Files.getContentUri("external"), numericId))
+
+                for (queryUri in urisToQuery) {
+                    try {
+                        contentResolver.query(
+                            queryUri,
+                            arrayOf(android.provider.MediaStore.MediaColumns.DATA, android.provider.MediaStore.MediaColumns.DISPLAY_NAME),
+                            null,
+                            null,
+                            null
+                        )?.use { cursor ->
+                            if (cursor.moveToFirst()) {
+                                val dIdx = cursor.getColumnIndex(android.provider.MediaStore.MediaColumns.DATA)
+                                if (dIdx != -1) {
+                                    val p = cursor.getString(dIdx)
+                                    if (!p.isNullOrBlank()) {
+                                        val f = java.io.File(p)
+                                        if (f.exists()) return f.absolutePath
+                                    }
+                                }
+                                if (displayName.isNullOrBlank()) {
+                                    val nIdx = cursor.getColumnIndex(android.provider.MediaStore.MediaColumns.DISPLAY_NAME)
+                                    if (nIdx != -1) displayName = cursor.getString(nIdx)
+                                }
+                            }
+                        }
+                    } catch (_: Throwable) {}
+                }
+            }
+
+            // 9. Match directory by displayName across Download and external storage
+            val targetName = displayName ?: cleanId.substringAfterLast(':').substringAfterLast('/').trim()
+            if (targetName.isNotBlank() && targetName != "tree" && targetName != "document") {
+                // Check Download root directly
+                val directInDownloads = java.io.File(downloadDir, targetName)
+                if (directInDownloads.exists()) return directInDownloads.absolutePath
+
+                // Check external storage root directly
+                val directInExt = java.io.File(extStorageDir, targetName)
+                if (directInExt.exists()) return directInExt.absolutePath
+
+                // Check Documents directly
+                val docDir = android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOCUMENTS)
+                val directInDocs = java.io.File(docDir, targetName)
+                if (directInDocs.exists()) return directInDocs.absolutePath
+
+                // Recursive search in Download (up to 4 levels)
+                val recursiveInDownloads = findDirectoryByName(downloadDir, targetName, 4)
+                if (recursiveInDownloads != null) return recursiveInDownloads.absolutePath
+
+                // Recursive search in external storage root (up to 3 levels)
+                val recursiveInExt = findDirectoryByName(extStorageDir, targetName, 3)
+                if (recursiveInExt != null) return recursiveInExt.absolutePath
+            }
+
+            // 10. Secondary external storage UUID check
+            val colonIdx = cleanId.indexOf(':')
+            if (colonIdx > 0) {
+                val vol = cleanId.substring(0, colonIdx)
+                val rel = cleanId.substring(colonIdx + 1).trimStart('/')
+                if (vol.matches(Regex("^[0-9A-Za-z]{4}-[0-9A-Za-z]{4}$"))) {
+                    return "/storage/$vol/$rel"
+                }
+                val candidate = java.io.File("/storage/$vol/$rel")
+                if (candidate.exists()) {
+                    return candidate.absolutePath
+                }
+            }
+
+            val path = uri.path?.let { android.net.Uri.decode(it) }
+            if (path != null) {
+                val treeIdx = path.indexOf("/document/raw:")
+                if (treeIdx != -1) {
+                    return path.substring(treeIdx + "/document/raw:".length)
+                }
+                val file = java.io.File(path)
+                if (file.exists()) {
+                    return file.absolutePath
+                }
+            }
+        } catch (_: Throwable) {}
+        return null
+    }
+
+    fun getSaveStatesDir(): java.io.File {
+        val dir = getExternalFilesDir("savestates") ?: java.io.File(filesDir, "savestates")
+        if (!dir.exists()) dir.mkdirs()
+        return dir
+    }
+
+    fun performQuickSave(slot: Int = settings.activeSaveStateSlot) {
+        val dir = getSaveStatesDir().absolutePath
+        val ok = NativeBridge.saveState(slot, dir)
+        if (ok) {
+            android.widget.Toast.makeText(this, "⚡ Quick Saved (Slot $slot)", android.widget.Toast.LENGTH_SHORT).show()
+            inGameSettingsDialog?.refreshActiveTab()
+        } else {
+            android.widget.Toast.makeText(this, "❌ Quick Save Failed (Slot $slot)", android.widget.Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun performQuickLoad(slot: Int = settings.activeSaveStateSlot) {
+        val dir = getSaveStatesDir().absolutePath
+        val ok = NativeBridge.loadState(slot, dir)
+        if (ok) {
+            android.widget.Toast.makeText(this, "⚡ Quick Loaded (Slot $slot)", android.widget.Toast.LENGTH_SHORT).show()
+            inGameSettingsDialog?.dismiss()
+        } else {
+            android.widget.Toast.makeText(this, "❌ Load Failed: Slot $slot is empty", android.widget.Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private fun ensureAdpfSession() {
         if (adpfInitialized || Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return
         val tids = NativeBridge.getPerformanceThreadIds()
@@ -73,33 +375,35 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
     }
 
     private fun enforceSixtyHzDisplayMode() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val params = window.attributes
-            params.preferredRefreshRate = 60.0f
-            try {
-                val currentDisplay = display
-                val modes = currentDisplay?.supportedModes ?: emptyArray()
-                val mode60 = modes.firstOrNull { kotlin.math.abs(it.refreshRate - 60.0f) < 0.5f }
-                if (mode60 != null) {
-                    params.preferredDisplayModeId = mode60.modeId
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                val params = window.attributes
+                params.preferredRefreshRate = 60.0f
+                try {
+                    val currentDisplay = display
+                    val modes = currentDisplay?.supportedModes ?: emptyArray()
+                    val mode60 = modes.firstOrNull { kotlin.math.abs(it.refreshRate - 60.0f) < 0.5f }
+                    if (mode60 != null) {
+                        params.preferredDisplayModeId = mode60.modeId
+                    }
+                } catch (_: Throwable) {}
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    params.setFrameRateBoostOnTouchEnabled(false)
                 }
-            } catch (_: Throwable) {}
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                params.setFrameRateBoostOnTouchEnabled(false)
+                window.attributes = params
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                try {
+                    @Suppress("DEPRECATION")
+                    val modes = windowManager.defaultDisplay.supportedModes
+                    val mode60 = modes.firstOrNull { kotlin.math.abs(it.refreshRate - 60.0f) < 0.5f }
+                    if (mode60 != null) {
+                        val params = window.attributes
+                        params.preferredDisplayModeId = mode60.modeId
+                        window.attributes = params
+                    }
+                } catch (_: Throwable) {}
             }
-            window.attributes = params
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            try {
-                @Suppress("DEPRECATION")
-                val modes = windowManager.defaultDisplay.supportedModes
-                val mode60 = modes.firstOrNull { kotlin.math.abs(it.refreshRate - 60.0f) < 0.5f }
-                if (mode60 != null) {
-                    val params = window.attributes
-                    params.preferredDisplayModeId = mode60.modeId
-                    window.attributes = params
-                }
-            } catch (_: Throwable) {}
-        }
+        } catch (_: Throwable) {}
     }
 
     private var physicalPadMask = 0
@@ -136,6 +440,12 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             }
             onSettingsClicked = {
                 showInGameSettingsDialog()
+            }
+            onQuickSaveClicked = {
+                performQuickSave()
+            }
+            onQuickLoadClicked = {
+                performQuickLoad()
             }
             onSaveEditLayout = { map ->
                 settings.saveCustomButtonLayout(map)
@@ -204,9 +514,30 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                 onImportSaveRequested = {
                     importSaveLauncher.launch(arrayOf("*/*"))
                 },
+                onPickTextureFolderRequested = {
+                    textureFolderPickerLauncher.launch(null)
+                },
+                onSaveStateRequested = { slot ->
+                    performQuickSave(slot)
+                },
+                onLoadStateRequested = { slot ->
+                    performQuickLoad(slot)
+                },
                 onSettingsChanged = {
                     touchOverlay.applySettings(settings)
                     checkConnectedControllers()
+                    NativeBridge.setAudioChannelVolumes(
+                        settings.masterVolume,
+                        settings.bgmVolume,
+                        settings.sfxVolume,
+                        settings.voiceVolume
+                    )
+                    NativeBridge.setRouletteTimerDouble(settings.rouletteTimerDouble)
+                    if (settings.customTexturesEnabled && settings.customTexturePath.isNotBlank()) {
+                        NativeBridge.setCustomTextureDirectory(settings.customTexturePath)
+                    } else {
+                        NativeBridge.setCustomTextureDirectory("")
+                    }
                     hideSystemUI()
                 }
             ).apply {
@@ -341,6 +672,14 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             return true
         }
         if (event != null && isGamepadEvent(event.source)) {
+            if (keyCode == KeyEvent.KEYCODE_BUTTON_L1 && (physicalPadMask and TouchControllerOverlay.BTN_SELECT != 0)) {
+                performQuickSave()
+                return true
+            }
+            if (keyCode == KeyEvent.KEYCODE_BUTTON_R1 && (physicalPadMask and TouchControllerOverlay.BTN_SELECT != 0)) {
+                performQuickLoad()
+                return true
+            }
             val mask = mapKeyCodeToMask(keyCode)
             if (mask != 0) {
                 physicalPadMask = physicalPadMask or mask
@@ -353,6 +692,14 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
         if (event != null && isGamepadEvent(event.source)) {
+            if (keyCode == KeyEvent.KEYCODE_BUTTON_L1 && (physicalPadMask and TouchControllerOverlay.BTN_SELECT != 0)) {
+                performQuickSave()
+                return true
+            }
+            if (keyCode == KeyEvent.KEYCODE_BUTTON_R1 && (physicalPadMask and TouchControllerOverlay.BTN_SELECT != 0)) {
+                performQuickLoad()
+                return true
+            }
             val mask = mapKeyCodeToMask(keyCode)
             if (mask != 0) {
                 physicalPadMask = physicalPadMask and mask.inv()
@@ -473,9 +820,23 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         val fpsIdx = intent.getIntExtra("fpsIdx", settings.fpsIdx)
         val frameskipIdx = intent.getIntExtra("frameskipIdx", settings.frameskipIdx)
 
-        NativeBridge.setAudioVolume(settings.audioVolume)
+        val cachePath = java.io.File(filesDir, "godhand_cache").absolutePath
+        NativeBridge.setGameCacheDirectory(cachePath)
+
+        NativeBridge.setAudioChannelVolumes(
+            settings.masterVolume,
+            settings.bgmVolume,
+            settings.sfxVolume,
+            settings.voiceVolume
+        )
         NativeBridge.setAudioConfig(settings.audioSchedulingIdx, settings.audioBufferSizeIdx)
         NativeBridge.setSpikeLoggingEnabled(settings.perfSpikeLoggingEnabled)
+        NativeBridge.setRouletteTimerDouble(settings.rouletteTimerDouble)
+        if (settings.customTexturesEnabled && settings.customTexturePath.isNotBlank()) {
+            NativeBridge.setCustomTextureDirectory(settings.customTexturePath)
+        } else {
+            NativeBridge.setCustomTextureDirectory("")
+        }
 
         NativeBridge.onSurfaceCreated(
             holder.surface, width, height,

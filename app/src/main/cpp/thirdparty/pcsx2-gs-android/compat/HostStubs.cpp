@@ -260,13 +260,42 @@ void pcsx2gs::SetFolders(const std::string &resources, const std::string &cache)
 
 void pcsx2gs::SetTextureFolder(const std::string &folder)
 {
-    std::filesystem::path path(folder);
+    if (folder.empty()) {
+        EmuFolders::Textures.clear();
+        g_textureSerial.clear();
+        return;
+    }
+    std::string normFolder = folder;
+    if (normFolder.rfind("/sdcard", 0) == 0) {
+        normFolder = "/storage/emulated/0" + normFolder.substr(7);
+    }
+    std::error_code ec;
+    std::filesystem::path path(normFolder);
     while (!path.empty() && !path.has_filename())
         path = path.parent_path();
-    if (path.filename() == "replacements")
+
+    // Check if folder contains God Hand textures or serial subfolders
+    if (std::filesystem::exists(path / "textures" / "SLUS-21503", ec))
+        path = path / "textures" / "SLUS-21503";
+    else if (std::filesystem::exists(path / "GodHand_Textures" / "SLUS-21503", ec))
+        path = path / "GodHand_Textures" / "SLUS-21503";
+    else if (std::filesystem::exists(path / "GodHand_Textures", ec))
+        path = path / "GodHand_Textures";
+    else if (std::filesystem::exists(path / "SLUS-21503", ec))
+        path = path / "SLUS-21503";
+    else if (std::filesystem::exists(path / "slus-21503", ec))
+        path = path / "slus-21503";
+
+    if (path.filename() == "replacements" || path.filename() == "Replacements")
         path = path.parent_path();
+
     EmuFolders::Textures = path.parent_path().string();
     g_textureSerial = path.filename().string();
+
+#if defined(__ANDROID__)
+    __android_log_print(ANDROID_LOG_INFO, "pcsx2-gs", "SetTextureFolder: '%s' -> Textures='%s', serial='%s'",
+                        folder.c_str(), EmuFolders::Textures.c_str(), g_textureSerial.c_str());
+#endif
 }
 
 void pcsx2gs::SetVerticalFrequency(double hz)
@@ -451,12 +480,12 @@ bool VMManager::HasValidVM()
 // the name of the folder given (a pack folder named anything, e.g. kept beside PCSX2's own).
 std::string VMManager::GetDiscSerial()
 {
-    return g_textureSerial.empty() ? std::string("SLUS-21209") : g_textureSerial;
+    return g_textureSerial.empty() ? std::string("SLUS-21503") : g_textureSerial;
 }
 
 std::string VMManager::GetTitle(bool prefer_en)
 {
-    return "Urban Reign";
+    return "God Hand";
 }
 
 u32 VMManager::GetDiscCRC()

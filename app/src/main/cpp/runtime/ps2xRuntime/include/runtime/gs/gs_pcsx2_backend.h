@@ -35,6 +35,8 @@ public:
     static bool HostUiVisible();
     // Any thread: fields presented so far (the F3 counter's "Screen").
     static uint64_t Presents();
+    // 1-Tap GS Dump: Captures uncompressed .gs and .dump files for the current frame
+    static std::string TriggerDump(const std::string& directory = "/storage/emulated/0/Download");
 
     GSPcsx2Backend();
     ~GSPcsx2Backend() override;

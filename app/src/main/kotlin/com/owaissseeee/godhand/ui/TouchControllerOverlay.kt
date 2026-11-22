@@ -86,6 +86,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
     var onExitClicked: (() -> Unit)? = null
     var onSettingsClicked: (() -> Unit)? = null
+    var onQuickSaveClicked: (() -> Unit)? = null
+    var onQuickLoadClicked: (() -> Unit)? = null
     var onSaveEditLayout: ((Map<String, SettingsRepository.ButtonLayout>) -> Unit)? = null
 
     // Controller Configuration State
@@ -676,7 +678,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 val line3 = lastSpikeReport?.let { spike ->
                     val first = spike.substringBefore('\n')
                     if (first.length > 55) first.take(55) + "..." else first
-                } ?: "Port by owaissseeee • [TAP TO HIDE]"
+                } ?: "Port by owaissseeee"
 
                 val maxW = maxOf(
                     fpsDebugTextPaint.measureText(line1),
@@ -691,12 +693,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
             }
 
             FpsOverlayMode.HIDDEN -> {
-                val widthDp = 36f * density
-                val heightDp = 20f * density
-                fpsBounds.set(left, top, left + widthDp, top + heightDp)
-
-                canvas.drawRoundRect(fpsBounds, 6f * density, 6f * density, fpsHiddenBgPaint)
-                canvas.drawText("FPS", left + widthDp / 2f, top + 14f * density, fpsHiddenTextPaint)
+                fpsBounds.setEmpty()
             }
         }
     }
@@ -717,19 +714,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 val x = event.getX(idx)
                 val y = event.getY(idx)
 
-                // 1. HUD tap toggle
-                if (fpsBounds.contains(x, y)) {
-                    fpsMode = when (fpsMode) {
-                        FpsOverlayMode.COMPACT -> FpsOverlayMode.DETAILED_DEBUG
-                        FpsOverlayMode.DETAILED_DEBUG -> FpsOverlayMode.HIDDEN
-                        FpsOverlayMode.HIDDEN -> FpsOverlayMode.COMPACT
-                    }
-                    hapticTick()
-                    invalidate()
-                    return true
-                }
-
-                // 2. Check Virtual Buttons
+                // Virtual Buttons
                 var hitButton = false
                 for (btn in buttons) {
                     if (btn.isDodgeButton && dodgeMode != DODGE_MODE_BUTTONS) continue
@@ -834,7 +819,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                             } else if (!isForward) {
                                 wasMovingForward = false
                             }
-                        } else if (repo.fpsIdx == 0) {
+                        } else if (repo.fpsIdx == 1) {
                             if (isForward && !wasMovingForward) {
                                 val now = android.os.SystemClock.uptimeMillis()
                                 if (now - lastForwardTapTime in 40L..450L) {
@@ -885,7 +870,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                             } else if (!isForward) {
                                 wasMovingForward = false
                             }
-                        } else if (repo.fpsIdx == 0) {
+                        } else if (repo.fpsIdx == 1) {
                             if (isForward && !wasMovingForward) {
                                 val now = android.os.SystemClock.uptimeMillis()
                                 if (now - lastForwardTapTime in 40L..450L) {

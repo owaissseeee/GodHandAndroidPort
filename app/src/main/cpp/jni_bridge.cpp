@@ -19,7 +19,10 @@
 #include "godhand/game_disc.h"
 #include "godhand/godhand_perf.h"
 #include "src/godhand/cheats_engine.h"
+#include "src/godhand/save_state_manager.h"
+#include "src/godhand/frame_patches.h"
 #include "godhand_patches_mobile.h"
+#include "runtime/gs/gs_pcsx2_backend.h"
 
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, "GodHandRecomp", __VA_ARGS__)
@@ -385,15 +388,24 @@ Java_com_owaissseeee_godhand_NativeBridge_unpackImsArchive(
     return JNI_FALSE;
 }
 
+extern "C" void godhand_set_explicit_cache_dir(const char* dir);
+extern "C" void godhand_set_audio_channel_volumes(float master, float bgm, float sfx, float voice);
+
 JNIEXPORT void JNICALL
 Java_com_owaissseeee_godhand_NativeBridge_setAudioMuted(
     JNIEnv* /*env*/, jobject /*thiz*/, jboolean muted)
 {
     if (muted) {
-        SetMasterVolume(0.0f);
+        godhand_set_audio_channel_volumes(0.0f, 0.0f, 0.0f, 0.0f);
+        if (IsAudioDeviceReady()) {
+            SetMasterVolume(0.0f);
+        }
         LOGI("NativeBridge: audio muted (master volume 0.0)");
     } else {
-        SetMasterVolume(1.0f);
+        godhand_set_audio_channel_volumes(1.0f, 1.0f, 1.0f, 1.0f);
+        if (IsAudioDeviceReady()) {
+            SetMasterVolume(1.0f);
+        }
         LOGI("NativeBridge: audio unmuted (master volume 1.0)");
     }
 }
@@ -402,7 +414,10 @@ JNIEXPORT void JNICALL
 Java_com_owaissseeee_godhand_NativeBridge_setAudioVolume(
     JNIEnv* /*env*/, jobject /*thiz*/, jfloat volume)
 {
-    SetMasterVolume(volume);
+    godhand_set_audio_channel_volumes(volume, 1.0f, 1.0f, 1.0f);
+    if (IsAudioDeviceReady()) {
+        SetMasterVolume(volume);
+    }
     LOGI("NativeBridge: audio master volume set to %.2f", volume);
 }
 
@@ -415,8 +430,23 @@ Java_com_owaissseeee_godhand_NativeBridge_setAudioConfig(
     if (bufferSizeIdx >= 0 && bufferSizeIdx < 3) {
         bufSize = s_bufSizes[bufferSizeIdx];
     }
-    SetAudioStreamBufferSizeDefault(bufSize);
+    if (IsAudioDeviceReady()) {
+        SetAudioStreamBufferSizeDefault(bufSize);
+    }
     LOGI("NativeBridge: audio buffer size set to %d frames, scheduling=%d", bufSize, schedulingIdx);
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setGameCacheDirectory(
+    JNIEnv* env, jobject /*thiz*/, jstring pathStr)
+{
+    if (pathStr) {
+        const char* p = env->GetStringUTFChars(pathStr, nullptr);
+        if (p) {
+            godhand_set_explicit_cache_dir(p);
+            env->ReleaseStringUTFChars(pathStr, p);
+        }
+    }
 }
 
 
@@ -438,7 +468,7 @@ Java_com_owaissseeee_godhand_NativeBridge_onSurfaceCreated(
     godhand::mobile::setFpsMode(fpsIdx);
     godhand::mobile::setAspectMode(aspectIdx);
 
-    float target_hz = (fpsIdx == 0) ? 60.0f : 30.0f;
+    float target_hz = (fpsIdx == 1) ? 60.0f : 30.0f;
     using PFN_setFrameRate = int (*)(ANativeWindow*, float, int8_t);
     static auto pfn_setFrameRate = reinterpret_cast<PFN_setFrameRate>(dlsym(RTLD_DEFAULT, "ANativeWindow_setFrameRate"));
     if (pfn_setFrameRate && win) {
@@ -653,6 +683,119 @@ Java_com_owaissseeee_godhand_NativeBridge_clearSessionSpikeLog(
     JNIEnv* /*env*/, jobject /*thiz*/)
 {
     godhand_perf_clear_session_spike_log();
+}
+
+// -------------------------------------------------------------
+// Save States JNI
+// -------------------------------------------------------------
+JNIEXPORT jboolean JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_saveState(
+    JNIEnv* env, jobject /*thiz*/, jint slot, jstring dirStr)
+{
+    if (!dirStr) return JNI_FALSE;
+    const char* nativeDir = env->GetStringUTFChars(dirStr, nullptr);
+    std::string dir = nativeDir ? nativeDir : "";
+    if (nativeDir) env->ReleaseStringUTFChars(dirStr, nativeDir);
+    return godhand::savestate::saveState(slot, dir) ? JNI_TRUE : JNI_FALSE;
+}
+
+JNIEXPORT jboolean JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_loadState(
+    JNIEnv* env, jobject /*thiz*/, jint slot, jstring dirStr)
+{
+    if (!dirStr) return JNI_FALSE;
+    const char* nativeDir = env->GetStringUTFChars(dirStr, nullptr);
+    std::string dir = nativeDir ? nativeDir : "";
+    if (nativeDir) env->ReleaseStringUTFChars(dirStr, nativeDir);
+    return godhand::savestate::loadState(slot, dir) ? JNI_TRUE : JNI_FALSE;
+}
+
+JNIEXPORT jstring JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_getStateInfo(
+    JNIEnv* env, jobject /*thiz*/, jint slot, jstring dirStr)
+{
+    if (!dirStr) return nullptr;
+    const char* nativeDir = env->GetStringUTFChars(dirStr, nullptr);
+    std::string dir = nativeDir ? nativeDir : "";
+    if (nativeDir) env->ReleaseStringUTFChars(dirStr, nativeDir);
+    std::string info = godhand::savestate::getStateInfo(slot, dir);
+    if (info.empty()) return nullptr;
+    return env->NewStringUTF(info.c_str());
+}
+
+// -------------------------------------------------------------
+// Audio Channels JNI
+// -------------------------------------------------------------
+extern "C" void godhand_set_audio_channel_volumes(float master, float bgm, float sfx, float voice);
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setAudioChannelVolumes(
+    JNIEnv* /*env*/, jobject /*thiz*/, jfloat master, jfloat bgm, jfloat sfx, jfloat voice)
+{
+    godhand_set_audio_channel_volumes(master, bgm, sfx, voice);
+    if (IsAudioDeviceReady()) {
+        SetMasterVolume(master);
+    }
+}
+
+// -------------------------------------------------------------
+// Roulette & D-Pad Finesse JNI
+// -------------------------------------------------------------
+extern "C" void godhand_cycle_roulette_target(int dir);
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_cycleRouletteTarget(
+    JNIEnv* /*env*/, jobject /*thiz*/, jint direction)
+{
+    godhand_cycle_roulette_target(direction);
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setRouletteTimerDouble(
+    JNIEnv* /*env*/, jobject /*thiz*/, jboolean enabled)
+{
+    kamite::setRouletteTimerDouble(enabled);
+}
+
+JNIEXPORT jboolean JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_isRouletteUp(
+    JNIEnv* /*env*/, jobject /*thiz*/)
+{
+    return kamite::rouletteUp() ? JNI_TRUE : JNI_FALSE;
+}
+
+// -------------------------------------------------------------
+// Custom HD Texture Pack JNI
+// -------------------------------------------------------------
+extern "C" void godhand_set_texture_replacement_dir(const char* dir);
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setCustomTextureDirectory(
+    JNIEnv* env, jobject /*thiz*/, jstring pathStr)
+{
+    if (!pathStr) {
+        godhand_set_texture_replacement_dir("");
+        return;
+    }
+    const char* nativePath = env->GetStringUTFChars(pathStr, nullptr);
+    if (nativePath) {
+        godhand_set_texture_replacement_dir(nativePath);
+        env->ReleaseStringUTFChars(pathStr, nativePath);
+    }
+}
+
+JNIEXPORT jstring JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_captureGsDump(JNIEnv* env, jobject /*thiz*/, jstring outDirStr) {
+    std::string outDir = "/storage/emulated/0/Download";
+    if (outDirStr) {
+        const char* cstr = env->GetStringUTFChars(outDirStr, nullptr);
+        if (cstr && *cstr) {
+            outDir = cstr;
+        }
+        env->ReleaseStringUTFChars(outDirStr, cstr);
+    }
+    std::string path = GSPcsx2Backend::TriggerDump(outDir);
+    return env->NewStringUTF(path.c_str());
 }
 
 static void startStdoutStderrRedirect() {

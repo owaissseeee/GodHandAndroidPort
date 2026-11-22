@@ -11,6 +11,10 @@
 #include "ps2_log.h"
 #endif
 
+#if defined(__aarch64__) || defined(_M_ARM64)
+#include <arm_neon.h>
+#endif
+
 // Function: sceVu0MulMatrix
 // Address: 0x30a2e0 - 0x30a328
 void sceVu0MulMatrix_0x30a2e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
@@ -18,13 +22,59 @@ void sceVu0MulMatrix_0x30a2e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("sceVu0MulMatrix_0x30a2e0");
 #endif
 
+#if defined(__aarch64__) || defined(_M_ARM64)
+    ctx->pc = 0x30a2e0u;
+
+    uint32_t a0 = GPR_U32(ctx, 4);
+    const uint32_t a1 = GPR_U32(ctx, 5);
+    uint32_t a2 = GPR_U32(ctx, 6);
+
+    ctx->vu0_vf[4] = _mm_castsi128_ps(READ128(ADD32(a1, 0)));
+    ctx->vu0_vf[5] = _mm_castsi128_ps(READ128(ADD32(a1, 16)));
+    ctx->vu0_vf[6] = _mm_castsi128_ps(READ128(ADD32(a1, 32)));
+    ctx->vu0_vf[7] = _mm_castsi128_ps(READ128(ADD32(a1, 48)));
+
+    float32x4_t vf4 = vld1q_f32(reinterpret_cast<const float*>(&ctx->vu0_vf[4]));
+    float32x4_t vf5 = vld1q_f32(reinterpret_cast<const float*>(&ctx->vu0_vf[5]));
+    float32x4_t vf6 = vld1q_f32(reinterpret_cast<const float*>(&ctx->vu0_vf[6]));
+    float32x4_t vf7 = vld1q_f32(reinterpret_cast<const float*>(&ctx->vu0_vf[7]));
+
+    for (int i = 0; i < 4; ++i) {
+        ctx->vu0_vf[8] = _mm_castsi128_ps(READ128(ADD32(a2, 0)));
+        float32x4_t vf8 = vld1q_f32(reinterpret_cast<const float*>(&ctx->vu0_vf[8]));
+
+        float32x4_t acc = vmulq_laneq_f32(vf4, vf8, 0);
+        acc = vfmaq_laneq_f32(acc, vf5, vf8, 1);
+        acc = vfmaq_laneq_f32(acc, vf6, vf8, 2);
+        vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_acc), acc);
+
+        float32x4_t vf9 = vfmaq_laneq_f32(acc, vf7, vf8, 3);
+        vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_vf[9]), vf9);
+
+        WRITE128(ADD32(a0, 0), _mm_castps_si128(ctx->vu0_vf[9]));
+
+        a2 += 16;
+        a0 += 16;
+    }
+    SET_GPR_S32(ctx, 7, 0);
+    SET_GPR_S32(ctx, 6, (int32_t)a2);
+    SET_GPR_S32(ctx, 4, (int32_t)a0);
+
+    const uint32_t jumpTarget = GPR_U32(ctx, 31);
+    ctx->pc = jumpTarget;
+    #if defined(PS2X_STRICT_RETURN_DIAGNOSTICS) && PS2X_STRICT_RETURN_DIAGNOSTICS
+    (void)runtime->dispatchGuestBranch(rdram, ctx, jumpTarget, 0x30A320u, 0u, PS2Runtime::GuestBranchKind::Return, "JR $ra");
+    return;
+    #else
+    return;
+    #endif
+#else
     switch (ctx->pc) {
         case 0x30a2f4u: goto label_30a2f4;
         default: break;
     }
 
     ctx->pc = 0x30a2e0u;
-
     // 0x30a2e0: 0xd8a40000  lqc2        $vf4, 0x0($a1)
     ctx->pc = 0x30a2e0u;
     ctx->vu0_vf[4] = _mm_castsi128_ps(READ128(ADD32(GPR_U32(ctx, 5), 0)));
@@ -94,5 +144,6 @@ label_30a2f4:
         return;
         #endif
     }
+#endif
     ctx->pc = 0x30A328u;
 }

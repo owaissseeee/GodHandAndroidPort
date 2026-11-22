@@ -795,8 +795,11 @@ namespace godhand {
 
 void notifySurfaceChanged(ANativeWindow* win, int width, int height) {
     if (win) {
-        if (width > 0 && height > 0) {
-            ANativeWindow_setBuffersGeometry(win, width, height, WINDOW_FORMAT_RGBA_8888);
+        const char* ren = std::getenv("GODHAND_RENDERER");
+        if (ren && (std::strcmp(ren, "gles") == 0 || std::strcmp(ren, "opengl") == 0)) {
+            if (width > 0 && height > 0) {
+                ANativeWindow_setBuffersGeometry(win, width, height, WINDOW_FORMAT_RGBA_8888);
+            }
         }
         GSPcsx2Backend::AttachHostWindow(static_cast<void*>(win));
     }
@@ -809,10 +812,25 @@ void notifySurfaceDestroyed() {
 extern "C" int godhand_get_device_tier();
 extern "C" void godhand_set_frameskip_mode(int mode);
 
+static PS2Runtime* s_activeRuntime = nullptr;
+PS2Runtime* getActiveRuntime() { return s_activeRuntime; }
+
+static std::string s_explicitCacheDir;
+extern "C" void godhand_set_explicit_cache_dir(const char* dir) {
+    if (dir && *dir) {
+        s_explicitCacheDir = dir;
+    }
+}
+extern "C" const char* godhand_get_explicit_cache_dir() {
+    return s_explicitCacheDir.c_str();
+}
+
 void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererIdx, int resScaleIdx, int aspectIdx, int fpsIdx, int frameskipIdx) {
+    width = std::max(width, 1);
+    height = std::max(height, 1);
     // Frameskip forces multi-frame draw batching and latency spikes on Android; always run unbatched 60Hz/30Hz VSync!
     // frameskipIdx is active
-    __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "bootAndroidRuntime: initializing EE runtime (frameskip=%d)...", frameskipIdx);
+    __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "bootAndroidRuntime: initializing EE runtime (frameskip=%d, win=%p, %dx%d)...", frameskipIdx, win, width, height);
     godhand_set_frameskip_mode(frameskipIdx);
 
     // Internal resolution scale mapping from UI spinner index:
@@ -840,8 +858,8 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     }
     setEnv("GODHAND_SCREEN_ASPECT", std::to_string(screenAspect));
     setEnv("GODHAND_ASPECT_RATIO_IDX", std::to_string(aspectIdx));
-    setDefaultEnv("PS2X_PCSX2_VSYNC", "0"); // Mailbox / non-blocking present on Android Vulkan swapchain
-    setDefaultEnv("PS2X_VSYNC", "0");
+    setDefaultEnv("PS2X_PCSX2_VSYNC", "1"); // FIFO presentation: syncs with 60Hz display to eliminate LTPO 120Hz fence wait spikes
+    setDefaultEnv("PS2X_VSYNC", "1");
     setDefaultEnv("PS2X_VSYNC_LOCK", "0");
     setDefaultEnv("PS2X_EE_DEFER_CYCLES", "4096");
     setDefaultEnv("PS2X_EE_GS_POLL_CYCLES", "4096");
@@ -855,26 +873,35 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     setEnv("GODHAND_HEADLESS", "0");
 
     fs::path cacheDir;
-    static const char* const s_cacheCandidates[] = {
-        "/data/data/com.owaissseeee.godhand/files/godhand_cache",
-        "/data/user/0/com.owaissseeee.godhand/files/godhand_cache",
-        "/data/data/com.lasvola.godhand/files/godhand_cache",
-        "/data/user/0/com.lasvola.godhand/files/godhand_cache",
-        "/sdcard/Download/God Hand (USA)",
-        "/storage/emulated/0/Download/God Hand (USA)",
-        "/sdcard/godhand_cache",
-        "/storage/emulated/0/godhand_cache"
-    };
-    for (const char* cand : s_cacheCandidates) {
-        fs::path p(cand);
+    if (!s_explicitCacheDir.empty()) {
+        fs::path p(s_explicitCacheDir);
         std::error_code ec;
         if (fs::exists(p / "SLUS_215.03", ec)) {
             cacheDir = p;
-            break;
         }
     }
     if (cacheDir.empty()) {
-        cacheDir = "/data/data/com.owaissseeee.godhand/files/godhand_cache";
+        static const char* const s_cacheCandidates[] = {
+            "/data/data/com.owaissseeee.godhand/files/godhand_cache",
+            "/data/user/0/com.owaissseeee.godhand/files/godhand_cache",
+            "/data/data/com.lasvola.godhand/files/godhand_cache",
+            "/data/user/0/com.lasvola.godhand/files/godhand_cache",
+            "/sdcard/Download/God Hand (USA)",
+            "/storage/emulated/0/Download/God Hand (USA)",
+            "/sdcard/godhand_cache",
+            "/storage/emulated/0/godhand_cache"
+        };
+        for (const char* cand : s_cacheCandidates) {
+            fs::path p(cand);
+            std::error_code ec;
+            if (fs::exists(p / "SLUS_215.03", ec)) {
+                cacheDir = p;
+                break;
+            }
+        }
+    }
+    if (cacheDir.empty()) {
+        cacheDir = !s_explicitCacheDir.empty() ? fs::path(s_explicitCacheDir) : fs::path("/data/data/com.owaissseeee.godhand/files/godhand_cache");
     }
     fs::path bootElf = cacheDir / "SLUS_215.03";
     __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "Target cacheDir: %s, bootElf: %s", cacheDir.string().c_str(), bootElf.string().c_str());
@@ -906,7 +933,7 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     setEnv("PS2X_MTVU_STREAM", "0");
     setEnv("PS2X_MTVU_VBLANK_WAIT", "0");
     setDefaultEnv("PS2X_GS_ASYNC_PRESENT", "1");
-    setDefaultEnv("PS2X_GS_ASYNC_READBACK", "all");
+    setDefaultEnv("PS2X_GS_ASYNC_READBACK", "0"); // Disable hardware readbacks on mobile: God Hand flare depth is stubbed in function_hooks.cpp
     setDefaultEnv("PS2X_PGS_COALESCE", "1");
     setDefaultEnv("PS2X_VU0_LEAN", "1");
     setDefaultEnv("PS2X_PCSX2_TEXTURES", "0"); // Skip filesystem replacement texture directory scan on Android!
@@ -917,14 +944,13 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     GSThreadedBackend::SetEnabledByDefault(true);
     GSThreadedBackend::SetGpuByDefault(true);
 
-    if (win && width > 0 && height > 0) {
+    if (rendererIdx == 1 && win && width > 0 && height > 0) {
         ANativeWindow_setBuffersGeometry(win, width, height, WINDOW_FORMAT_RGBA_8888);
     }
     PS2Runtime runtime;
     GSPcsx2Backend::AttachHostWindow(static_cast<void*>(win));
     ps2_host_display::setStartFullscreen(true);
 
-    SetAudioStreamBufferSizeDefault(2048);
     __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "Attached host window, initializing runtime...");
     if (!runtime.initialize(godhand::kGameTitle)) {
         __android_log_print(ANDROID_LOG_ERROR, "GodHandRecomp", "runtime.initialize failed!");
@@ -963,7 +989,9 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     godhand::startFreezeAndPerfWatchdog(&runtime);
 
     __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", "Starting God Hand main loop on ARM64...");
+    s_activeRuntime = &runtime;
     runtime.run();
+    s_activeRuntime = nullptr;
 }
 
 } // namespace godhand

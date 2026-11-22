@@ -43,6 +43,18 @@
 
 #include <algorithm>
 #include <atomic>
+
+namespace godhand {
+    PS2Runtime* getActiveRuntime();
+}
+
+namespace ps2_pad {
+    uint32_t getButtons();
+    float getLx();
+    float getLy();
+    float getRx();
+    float getRy();
+}
 #include <cmath>
 #include <cstdlib>
 #include <cstring>
@@ -127,7 +139,7 @@ namespace kamite
     {
         constexpr uint32_t kFrameDivider = game::GameWork::address(game::GameWork::kVblankDivider); // GameWork.unk569: 1 = 60 frames/s
         constexpr uint32_t kStickBytes[4] = {0x5E8146u, 0x5E8147u, 0x5E81C6u, 0x5E81C7u}; // left stick X/Y, two pads
-        constexpr uint32_t kPadButtons = 0x5E8242u;                                        // 16-bit; 2 = L3
+        constexpr uint32_t kPadButtons = 0x5E8142u;                                        // 16-bit; 2 = L3 (Pad 1 data packet at 0x5E8140)
         bool g_fps60 = false;     // the mode in effect this frame (the patch flag, the divider)
         bool g_fps60User = false; // the player's choice (Fps60, F2); off for the frames of a cutscene (frameStart)
         std::atomic<int> g_fps60Request{-1};   // F2 menu: 0 / 1, applied at the next frame start (game thread)
@@ -235,13 +247,60 @@ namespace kamite
         void rouletteStep(uint8_t *rdram, R5900Context *ctx, PS2Runtime *)
         {
             const int32_t cursor = GPR_S32(ctx, 3), count = GPR_S32(ctx, 4);
-            uint16_t buttons = 0;
-            std::memcpy(&buttons, &ram8(rdram, kPadButtons), sizeof(buttons));
             uint64_t pressed = 0;
             std::memcpy(&pressed, &ram8(rdram, 0x7474A0u + 0x1A0u), sizeof(pressed));
-            const bool up = (pressed & (1ull << 49)) != 0u || ((pressed & (1ull << 48)) == 0u && (buttons & 0x10u) != 0u);
+
+            const float ly = ps2_pad::getLy();
+            const uint32_t hostBtns = ps2_pad::getButtons();
+
+            // Up: Left Stick UP (ly < -0.30f), host D-pad UP (bit 4), or GameWork bit 49
+            const bool wantsUp = (ly < -0.30f) ||
+                                 ((hostBtns & (1u << 4)) != 0u) ||
+                                 ((pressed & (1ull << 49)) != 0u);
+
+            // Down: Left Stick DOWN (ly > 0.30f), host D-pad DOWN (bit 6), or GameWork bit 48
+            const bool wantsDown = (ly > 0.30f) ||
+                                   ((hostBtns & (1u << 6)) != 0u) ||
+                                   ((pressed & (1ull << 48)) != 0u);
+
+            bool up = false;
+            if (wantsUp && !wantsDown)
+            {
+                up = true;
+            }
+            else if (wantsDown && !wantsUp)
+            {
+                up = false;
+            }
+            else if (wantsUp && wantsDown)
+            {
+                // Tie-breaker: live physical inputs take absolute priority over residual state
+                if (ly > 0.30f || ((hostBtns & (1u << 6)) != 0u))
+                    up = false; // Player is actively pushing DOWN
+                else if (ly < -0.30f || ((hostBtns & (1u << 4)) != 0u))
+                    up = true;  // Player is actively pushing UP
+                else if ((pressed & (1ull << 48)) != 0u)
+                    up = false; // GameWork bit 48 (DOWN)
+                else
+                    up = true;
+            }
+            else
+            {
+                up = false; // Default forward advance
+            }
+
             g_rouletteBack = up && count > 1;
-            SET_GPR_S32(ctx, 3, up && count > 0 ? (cursor + count - 1) % count : cursor + 1);
+            if (count > 0)
+            {
+                if (up)
+                    SET_GPR_S32(ctx, 3, (cursor + count - 1) % count);
+                else
+                    SET_GPR_S32(ctx, 3, (cursor + 1) % count);
+            }
+
+            // CRUCIAL: Clear BOTH trigger bits 48 & 49 from RDRAM so they never latch permanently!
+            pressed &= ~((1ull << 49) | (1ull << 48));
+            std::memcpy(&ram8(rdram, 0x7474A0u + 0x1A0u), &pressed, sizeof(pressed));
         }
 
         // The wheel's slide (the rest of that function: progress +0x338 from 1.0 to 0 and a 32.0 offset +0x2A4, both
@@ -309,50 +368,71 @@ namespace kamite
             setRamF32(rdram, wheel + 0x2A4u, g_rouletteSavedA);
         }
 
+        static uint32_t s_dpadHoldTimer = 0;
         void rouletteDpad(uint8_t *rdram)
         {
             if (g_rouletteSeen == 0u || g_gameFrame - g_rouletteSeen > 2u)
+            {
+                s_dpadHoldTimer = 0;
                 return;
-            uint16_t buttons = 0;
-            std::memcpy(&buttons, &ram8(rdram, kPadButtons), sizeof(buttons));
-            const bool up = (buttons & 0x10u) != 0u, down = (buttons & 0x40u) != 0u;
-            if (up == down)
+            }
+
+            const uint32_t hostBtns = ps2_pad::getButtons();
+            uint16_t guestBtnsRaw = 0;
+            std::memcpy(&guestBtnsRaw, &ram8(rdram, kPadButtons), sizeof(guestBtnsRaw));
+            // In PS2 DualShock 2 protocol: 0xFFFF is unpressed, pressed bits are 0.
+            // If memory is zeroed (0x0000), it is uninitialized so treat as no guest buttons pressed.
+            const uint16_t guestBtnsPressed = (guestBtnsRaw != 0u && guestBtnsRaw != 0xFFFFu)
+                                                  ? static_cast<uint16_t>(~guestBtnsRaw)
+                                                  : 0u;
+
+            // D-Pad Up / Down wheel navigation with edge-trigger & autorepeat (no right stick)
+            const bool dpadUp = ((hostBtns & (1u << 4)) != 0u) || ((guestBtnsPressed & 0x0010u) != 0u);
+            const bool dpadDown = ((hostBtns & (1u << 6)) != 0u) || ((guestBtnsPressed & 0x0040u) != 0u);
+
+            if (dpadUp == dpadDown)
+            {
+                s_dpadHoldTimer = 0;
                 return;
-            injectStick(rdram, 1, up ? 0x00u : 0xFFu);
-            injectStick(rdram, 3, up ? 0x00u : 0xFFu);
+            }
+
+            bool shouldStep = false;
+            if (s_dpadHoldTimer == 0)
+            {
+                shouldStep = true;
+            }
+            else if (s_dpadHoldTimer >= 18 && ((s_dpadHoldTimer - 18) % 8 == 0))
+            {
+                shouldStep = true;
+            }
+            ++s_dpadHoldTimer;
+
+            if (shouldStep)
+            {
+                // Inject stick deflection into both controller ports so God Hand's dial step function (0x145308) detects movement
+                injectStick(rdram, 1, dpadUp ? 0x00u : 0xFFu); // 0x00 = Up, 0xFF = Down
+                injectStick(rdram, 3, dpadUp ? 0x00u : 0xFFu);
+
+                uint64_t pressed = 0;
+                std::memcpy(&pressed, &ram8(rdram, 0x7474A0u + 0x1A0u), sizeof(pressed));
+                if (dpadUp)
+                {
+                    pressed |= (1ull << 49);
+                    pressed &= ~(1ull << 48);
+                }
+                else
+                {
+                    pressed |= (1ull << 48);
+                    pressed &= ~(1ull << 49);
+                }
+                std::memcpy(&ram8(rdram, 0x7474A0u + 0x1A0u), &pressed, sizeof(pressed));
+            }
         }
 
         void l3Dash(uint8_t *rdram)
         {
-            if (!g_l3Dash.load(std::memory_order_relaxed))
-                return;
-            uint16_t buttons = 0;
-            std::memcpy(&buttons, &ram8(rdram, kPadButtons), sizeof(buttons));
-            if ((buttons & 2u) == 0u)
-            {
-                g_dashFrames = 0;
-                g_dashArmed = false;
-                return;
-            }
-            const uint32_t perFrame = g_fps60 ? 2u : 1u; // game frames per 30 FPS frame
-            if (g_dashFrames++ == 0u)
-                g_dashArmed = true;
-            uint32_t gene = 0;
-            std::memcpy(&gene, &ram8(rdram, game::GameWork::address(game::GameWork::kPlayerObj)), sizeof(gene));
-            if (gene >= 0x100000u && gene < PS2_RAM_SIZE - 0x1000u && g_dashArmed)
-            {
-                if (ram8(rdram, gene + 0x2F5u) == 6u || g_dashFrames > 10u * perFrame)
-                    g_dashArmed = false;
-                else if (static_cast<int8_t>(ram8(rdram, gene + 0x627u)) < static_cast<int8_t>(2u * perFrame))
-                    ram8(rdram, gene + 0x627u) = static_cast<uint8_t>(2u * perFrame);
-            }
-            const uint8_t x = ram8(rdram, kStickBytes[0]), y = ram8(rdram, kStickBytes[1]);
-            const auto centred = [](uint8_t v) { return v >= 0x60u && v <= 0xA0u; };
-            if (centred(x) && centred(y))
-            {
-                injectStick(rdram, 1, 0x00u);
-                injectStick(rdram, 3, 0x00u);
-            }
+            (void)rdram;
+            return;
         }
 
         // The roulette's time: one count every g_roulettePeriod game frames. 1 at 30 frames/s, 2 at 60 (the PS2's
@@ -1313,6 +1393,7 @@ namespace kamite
             // Zero-overhead EE timing telemetry: measure compute wall time and idle VBlank wait
             static auto s_prevFrameStart = std::chrono::steady_clock::now();
             const auto now = std::chrono::steady_clock::now();
+            g_perfFrameStartNs.store(std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count(), std::memory_order_relaxed);
             const float wallMs = std::chrono::duration<float, std::milli>(now - s_prevFrameStart).count();
             s_prevFrameStart = now;
 
@@ -1984,7 +2065,7 @@ namespace kamite
         g_fps60Shown.store(is60);
         kamite::g_isFps60Active.store(is60, std::memory_order_relaxed);
         ps2xSetPatchFlag("fps60", is60);
-        g_l3Dash = true; // Enable single-press L3 dash on Android
+        g_l3Dash = false; // Disable single-press L3 dash (keep original analog controls)
         ps2xRegisterHostHook("km_frame_start", &frameStartInternal);
         ps2xRegisterHostHook("km_fps60_hitbox_compare", &hitboxCompareInternal);
         ps2xRegisterHostHook("km_fps60_roulette_timer", &rouletteTimer);
@@ -2201,6 +2282,11 @@ namespace kamite
         return g_rouletteSeen != 0u && g_gameFrame - g_rouletteSeen <= 2u;
     }
 
+    void markRouletteSeen()
+    {
+        g_rouletteSeen = g_gameFrame;
+    }
+
     bool rouletteTimerDouble()
     {
         return g_rouletteSlow.load(std::memory_order_relaxed);
@@ -2211,4 +2297,34 @@ namespace kamite
         g_rouletteSlow.store(on, std::memory_order_relaxed);
         g_rouletteRequest.store(1, std::memory_order_relaxed);
     }
+
+    void cycleRouletteTarget(int dir)
+    {
+        (void)dir;
+    }
+
+    void rouletteSeenHook(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime)
+    {
+        rouletteSeen(rdram, ctx, runtime);
+    }
+
+    void rouletteStepHook(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime)
+    {
+        rouletteStep(rdram, ctx, runtime);
+    }
+
+    void rouletteSlideBeginHook(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime)
+    {
+        rouletteSlideBegin(rdram, ctx, runtime);
+    }
+
+    void rouletteSlideEndHook(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime)
+    {
+        rouletteSlideEnd(rdram, ctx, runtime);
+    }
+}
+
+extern "C" void godhand_cycle_roulette_target(int dir)
+{
+    (void)dir;
 }

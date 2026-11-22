@@ -11,6 +11,10 @@
 #include "ps2_log.h"
 #endif
 
+#if defined(__aarch64__) || defined(_M_ARM64)
+#include <arm_neon.h>
+#endif
+
 // Function: sceVu0InnerProduct
 // Address: 0x30a348 - 0x30a370
 void sceVu0InnerProduct_0x30a348(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
@@ -20,6 +24,41 @@ void sceVu0InnerProduct_0x30a348(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
 
     ctx->pc = 0x30a348u;
 
+#if defined(__aarch64__) || defined(_M_ARM64)
+    const uint32_t a0 = GPR_U32(ctx, 4);
+    const uint32_t a1 = GPR_U32(ctx, 5);
+
+    ctx->vu0_vf[4] = _mm_castsi128_ps(READ128(ADD32(a0, 0)));
+    ctx->vu0_vf[5] = _mm_castsi128_ps(READ128(ADD32(a1, 0)));
+
+    float32x4_t vf4 = vld1q_f32(reinterpret_cast<const float*>(&ctx->vu0_vf[4]));
+    float32x4_t vf5 = vld1q_f32(reinterpret_cast<const float*>(&ctx->vu0_vf[5]));
+
+    float32x4_t prod = vmulq_f32(vf4, vf5);
+    float p0 = vgetq_lane_f32(prod, 0);
+    float p1 = vgetq_lane_f32(prod, 1);
+    float p2 = vgetq_lane_f32(prod, 2);
+    float dot = (p0 + p1) + p2;
+
+    float vf5_out[4] = {dot, p1, p2, vgetq_lane_f32(vf5, 3)};
+    float32x4_t res = vld1q_f32(vf5_out);
+    vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_vf[5]), res);
+
+    SET_GPR_VEC(ctx, 2, _mm_castps_si128(ctx->vu0_vf[5]));
+    uint32_t dotBits;
+    std::memcpy(&dotBits, &dot, sizeof(dotBits));
+    std::memcpy(&ctx->f[0], &dotBits, sizeof(dotBits));
+
+    const uint32_t jumpTarget = GPR_U32(ctx, 31);
+    ctx->pc = jumpTarget;
+    #if defined(PS2X_STRICT_RETURN_DIAGNOSTICS) && PS2X_STRICT_RETURN_DIAGNOSTICS
+    (void)runtime->dispatchGuestBranch(rdram, ctx, jumpTarget, 0x30A364u, 0u, PS2Runtime::GuestBranchKind::Return, "JR $ra");
+    return;
+    #else
+    ctx->pc = jumpTarget;
+    return;
+    #endif
+#else
     // 0x30a348: 0xd8840000  lqc2        $vf4, 0x0($a0)
     ctx->pc = 0x30a348u;
     ctx->vu0_vf[4] = _mm_castsi128_ps(READ128(ADD32(GPR_U32(ctx, 4), 0)));
@@ -59,4 +98,5 @@ void sceVu0InnerProduct_0x30a348(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     ctx->pc = 0x30a36cu;
     // NOP
     ctx->pc = 0x30a370u;
+#endif
 }

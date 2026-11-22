@@ -730,9 +730,17 @@ bool EeScheduler::serviceStateRequests()
 
     std::vector<uint8_t> bytes;
     {
-        std::ifstream file(path, std::ios::binary);
+        std::ifstream file(path, std::ios::binary | std::ios::ate);
         if (file)
-            bytes.assign(std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>());
+        {
+            const auto size = file.tellg();
+            if (size > 0)
+            {
+                bytes.resize(static_cast<size_t>(size));
+                file.seekg(0, std::ios::beg);
+                file.read(reinterpret_cast<char *>(bytes.data()), size);
+            }
+        }
     }
     finish();
     if (bytes.empty())

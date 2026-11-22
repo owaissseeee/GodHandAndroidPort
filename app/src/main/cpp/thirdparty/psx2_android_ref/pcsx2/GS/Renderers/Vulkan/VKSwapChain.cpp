@@ -540,8 +540,20 @@ bool VKSwapChain::SelectPresentMode(VkSurfaceKHR surface, GSVSyncMode* vsync_mod
 
 		case GSVSyncMode::FIFO:
 		{
+#if defined(__ANDROID__)
+			// On Android, prefer FIFO_RELAXED if supported to eliminate the 16.6ms missed-deadline penalty while preserving VSync.
+			if (CheckForMode(VK_PRESENT_MODE_FIFO_RELAXED_KHR))
+			{
+				*present_mode = VK_PRESENT_MODE_FIFO_RELAXED_KHR;
+			}
+			else
+			{
+				*present_mode = VK_PRESENT_MODE_FIFO_KHR;
+			}
+#else
 			// FIFO is always available.
 			*present_mode = VK_PRESENT_MODE_FIFO_KHR;
+#endif
 		}
 		break;
 
@@ -861,7 +873,7 @@ VkResult VKSwapChain::AcquireNextImage()
 	const bool stats = s_stats_enabled.load(std::memory_order_relaxed);
 	const Common::Timer::Value t_start = stats ? Common::Timer::GetCurrentValue() : 0;
 #if defined(__ANDROID__)
-	const uint64_t acquire_timeout = 100000000ULL; // 100ms timeout on Android prevents BLASTBufferQueue starvation
+	const uint64_t acquire_timeout = 16666667ULL; // 16.6ms (1 VSYNC tick at 60Hz) timeout on Android prevents 100ms compositor lockups
 #else
 	const uint64_t acquire_timeout = UINT64_MAX;
 #endif

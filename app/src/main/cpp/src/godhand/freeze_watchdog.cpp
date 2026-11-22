@@ -256,6 +256,21 @@ namespace godhand
                         LOG_FREEZE_WARN("Game remains FROZEN: Stalled for %lld ms (no EE frame progress)",
                                         static_cast<long long>(stallMs));
                     }
+
+                    // Spinlock Unstick Safeguard: If EE is spinning waiting for VBlank counter at 0x0030ADD8..0x0030ADF0
+                    PS2Runtime *rt = g_runtime.load(std::memory_order_relaxed);
+                    if (rt)
+                    {
+                        const R5900Context *ctx = rt->eeScheduler().currentContext();
+                        if (ctx && ctx->pc >= 0x0030ADD8u && ctx->pc <= 0x0030ADF0u)
+                        {
+                            uint32_t currentVblank = rt->memory().read32(0x753D80u);
+                            rt->memory().write32(0x753D80u, currentVblank + 2);
+                            LOG_FREEZE_WARN(">>> Watchdog auto-unsticking EE VBlank spinlock at 0x%08X (advanced vblank %u -> %u) <<<",
+                                            ctx->pc, currentVblank, currentVblank + 2);
+                            notifyFrameHeartbeat();
+                        }
+                    }
                 }
                 else if (isStalled)
                 {

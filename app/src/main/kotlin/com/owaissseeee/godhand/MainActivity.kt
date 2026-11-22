@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.provider.DocumentsContract
+import android.provider.MediaStore
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -68,6 +70,279 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private val textureFolderPickerLauncher = registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri: Uri? ->
+        if (uri != null) {
+            try {
+                contentResolver.takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            } catch (_: Exception) {}
+            val path = resolveRealPathFromUri(uri)
+            if (path != null) {
+                settings.customTexturePath = path
+                settings.customTexturesEnabled = true
+                Toast.makeText(this, "HD Texture Folder: $path", Toast.LENGTH_LONG).show()
+                runOnUiThread {
+                    activeSettingsDialog?.refreshActiveTab()
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !Environment.isExternalStorageManager()) {
+                    Toast.makeText(this, "Please grant All Files Access to load custom textures directly", Toast.LENGTH_LONG).show()
+                    try {
+                        val intent = Intent(android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).apply {
+                            data = Uri.parse("package:$packageName")
+                        }
+                        startActivity(intent)
+                    } catch (_: Exception) {
+                        try {
+                            startActivity(Intent(android.provider.Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION))
+                        } catch (_: Exception) {}
+                    }
+                }
+            } else {
+                Toast.makeText(this, "Could not auto-resolve path. Please use 'EDIT PATH' to enter path directly.", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun resolveRealPathFromUri(uri: Uri): String? {
+        try {
+            val uriStr = uri.toString()
+            var decodedUri = uriStr
+            for (i in 0 until 3) {
+                val next = Uri.decode(decodedUri)
+                if (next == decodedUri) break
+                decodedUri = next
+            }
+
+            // 1. Direct file scheme
+            if (uri.scheme == "file") {
+                val p = uri.path
+                if (!p.isNullOrBlank()) return p
+            }
+
+            // 2. Extract Document ID or Tree Document ID
+            var docId: String? = null
+            try {
+                if (DocumentsContract.isTreeUri(uri)) {
+                    docId = DocumentsContract.getTreeDocumentId(uri)
+                }
+            } catch (_: Throwable) {}
+            if (docId == null) {
+                try {
+                    docId = DocumentsContract.getDocumentId(uri)
+                } catch (_: Throwable) {}
+            }
+            if (docId == null) {
+                docId = uri.lastPathSegment
+            }
+
+            var cleanId = docId ?: ""
+            for (i in 0 until 3) {
+                val next = Uri.decode(cleanId)
+                if (next == cleanId) break
+                cleanId = next
+            }
+
+            // Strip common tree/document prefixes repeatedly
+            val prefixes = listOf("/tree/", "tree/", "/document/", "document/")
+            var changed = true
+            while (changed) {
+                changed = false
+                for (p in prefixes) {
+                    if (cleanId.startsWith(p)) {
+                        cleanId = cleanId.substring(p.length)
+                        changed = true
+                    }
+                }
+            }
+
+            // 3. Check raw: prefix
+            if (cleanId.contains("raw:")) {
+                val rawPath = cleanId.substringAfter("raw:")
+                if (rawPath.isNotBlank()) return rawPath
+            }
+            if (decodedUri.contains("raw:")) {
+                val rawPath = decodedUri.substringAfter("raw:").substringBefore('?').substringBefore('&')
+                if (rawPath.isNotBlank()) return rawPath
+            }
+
+            // 4. Check primary: prefix
+            val primaryTarget = when {
+                cleanId.contains("primary:") -> cleanId.substringAfter("primary:")
+                decodedUri.contains("primary:") -> decodedUri.substringAfter("primary:")
+                else -> null
+            }
+            if (primaryTarget != null) {
+                val rel = primaryTarget.substringBefore('?').substringBefore('&').trimStart('/')
+                val extDir = Environment.getExternalStorageDirectory().absolutePath
+                return if (rel.isEmpty()) extDir else File(extDir, rel).absolutePath
+            }
+
+            // 5. Check direct /storage/ or /sdcard/
+            if (decodedUri.contains("/storage/")) {
+                return "/storage/" + decodedUri.substringAfter("/storage/").substringBefore('?').substringBefore('&')
+            }
+            if (decodedUri.contains("/sdcard/")) {
+                return "/storage/emulated/0/" + decodedUri.substringAfter("/sdcard/").substringBefore('?').substringBefore('&').trimStart('/')
+            }
+            if (cleanId.startsWith("/storage/")) {
+                return cleanId
+            }
+            if (cleanId.startsWith("/sdcard/")) {
+                return "/storage/emulated/0/" + cleanId.substring("/sdcard/".length)
+            }
+
+            // 6. Base downloads checks
+            val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            val extStorageDir = Environment.getExternalStorageDirectory()
+
+            if (cleanId.equals("download", ignoreCase = true) || cleanId.equals("downloads", ignoreCase = true)) {
+                return downloadDir.absolutePath
+            }
+            if (cleanId.matches(Regex("^(download|downloads)[:/].*", RegexOption.IGNORE_CASE))) {
+                val rel = cleanId.replaceFirst(Regex("^(download|downloads)[:/]", RegexOption.IGNORE_CASE), "").trimStart('/')
+                val candidate = File(downloadDir, rel)
+                if (candidate.exists()) return candidate.absolutePath
+                return candidate.absolutePath
+            }
+
+            // Helper to recursively find a directory by name (up to maxDepth)
+            fun findDirectoryByName(root: File, targetName: String, maxDepth: Int): File? {
+                if (!root.exists() || !root.isDirectory || maxDepth <= 0) return null
+                val direct = File(root, targetName)
+                if (direct.exists() && direct.isDirectory) return direct
+                val list = root.listFiles() ?: return null
+                for (item in list) {
+                    if (item.isDirectory) {
+                        if (item.name.equals(targetName, ignoreCase = true)) return item
+                        val subMatch = findDirectoryByName(item, targetName, maxDepth - 1)
+                        if (subMatch != null) return subMatch
+                    }
+                }
+                return null
+            }
+
+            // 7. Query DocumentsProvider for display name and data column using tree document URI
+            var displayName: String? = null
+            var dataFromDoc: String? = null
+            try {
+                val docUri = if (DocumentsContract.isTreeUri(uri)) {
+                    val treeId = DocumentsContract.getTreeDocumentId(uri)
+                    DocumentsContract.buildDocumentUriUsingTree(uri, treeId)
+                } else uri
+                contentResolver.query(docUri, null, null, null, null)?.use { cursor ->
+                    if (cursor.moveToFirst()) {
+                        val nameCol = cursor.getColumnIndex(DocumentsContract.Document.COLUMN_DISPLAY_NAME)
+                        if (nameCol != -1) displayName = cursor.getString(nameCol)
+                        val dataCol = cursor.getColumnIndex("_data")
+                        if (dataCol != -1) dataFromDoc = cursor.getString(dataCol)
+                    }
+                }
+            } catch (_: Throwable) {}
+
+            if (!dataFromDoc.isNullOrBlank()) {
+                val file = File(dataFromDoc)
+                if (file.exists()) return file.absolutePath
+            }
+
+            // 8. Query MediaStore for numeric ID / msf: ID
+            val msfIdStr = when {
+                cleanId.startsWith("msf:") -> cleanId.substring(4)
+                cleanId.all { it.isDigit() } -> cleanId
+                else -> null
+            }
+            val numericId = msfIdStr?.toLongOrNull()
+            if (numericId != null) {
+                val urisToQuery = mutableListOf<Uri>()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    urisToQuery.add(android.content.ContentUris.withAppendedId(MediaStore.Downloads.EXTERNAL_CONTENT_URI, numericId))
+                }
+                urisToQuery.add(android.content.ContentUris.withAppendedId(MediaStore.Files.getContentUri("external"), numericId))
+
+                for (queryUri in urisToQuery) {
+                    try {
+                        contentResolver.query(
+                            queryUri,
+                            arrayOf(MediaStore.MediaColumns.DATA, MediaStore.MediaColumns.DISPLAY_NAME),
+                            null,
+                            null,
+                            null
+                        )?.use { cursor ->
+                            if (cursor.moveToFirst()) {
+                                val dIdx = cursor.getColumnIndex(MediaStore.MediaColumns.DATA)
+                                if (dIdx != -1) {
+                                    val p = cursor.getString(dIdx)
+                                    if (!p.isNullOrBlank()) {
+                                        val f = File(p)
+                                        if (f.exists()) return f.absolutePath
+                                    }
+                                }
+                                if (displayName.isNullOrBlank()) {
+                                    val nIdx = cursor.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME)
+                                    if (nIdx != -1) displayName = cursor.getString(nIdx)
+                                }
+                            }
+                        }
+                    } catch (_: Throwable) {}
+                }
+            }
+
+            // 9. Match directory by displayName across Download and external storage
+            val targetName = displayName ?: cleanId.substringAfterLast(':').substringAfterLast('/').trim()
+            if (targetName.isNotBlank() && targetName != "tree" && targetName != "document") {
+                // Check Download root directly
+                val directInDownloads = File(downloadDir, targetName)
+                if (directInDownloads.exists()) return directInDownloads.absolutePath
+
+                // Check external storage root directly
+                val directInExt = File(extStorageDir, targetName)
+                if (directInExt.exists()) return directInExt.absolutePath
+
+                // Check Documents directly
+                val docDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+                val directInDocs = File(docDir, targetName)
+                if (directInDocs.exists()) return directInDocs.absolutePath
+
+                // Recursive search in Download (up to 4 levels)
+                val recursiveInDownloads = findDirectoryByName(downloadDir, targetName, 4)
+                if (recursiveInDownloads != null) return recursiveInDownloads.absolutePath
+
+                // Recursive search in external storage root (up to 3 levels)
+                val recursiveInExt = findDirectoryByName(extStorageDir, targetName, 3)
+                if (recursiveInExt != null) return recursiveInExt.absolutePath
+            }
+
+            // 10. Secondary external storage UUID check
+            val colonIdx = cleanId.indexOf(':')
+            if (colonIdx > 0) {
+                val vol = cleanId.substring(0, colonIdx)
+                val rel = cleanId.substring(colonIdx + 1).trimStart('/')
+                if (vol.matches(Regex("^[0-9A-Za-z]{4}-[0-9A-Za-z]{4}$"))) {
+                    return "/storage/$vol/$rel"
+                }
+                val candidate = File("/storage/$vol/$rel")
+                if (candidate.exists()) {
+                    return candidate.absolutePath
+                }
+            }
+
+            val path = uri.path?.let { Uri.decode(it) }
+            if (path != null) {
+                val treeIdx = path.indexOf("/document/raw:")
+                if (treeIdx != -1) {
+                    return path.substring(treeIdx + "/document/raw:".length)
+                }
+                val file = File(path)
+                if (file.exists()) {
+                    return file.absolutePath
+                }
+            }
+        } catch (_: Throwable) {}
+        return null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -76,6 +351,7 @@ class MainActivity : ComponentActivity() {
         settings = SettingsRepository(this)
         processor = IsoCacheProcessor(this)
         processor.ensureResourcesCopied()
+        NativeBridge.setGameCacheDirectory(processor.cacheDir.absolutePath)
 
         loadCustomArtworkIfAvailable()
         setupMenuButtons()
@@ -227,6 +503,9 @@ class MainActivity : ComponentActivity() {
                 isMidGame = false,
                 onImportSaveRequested = {
                     importSaveLauncher.launch(arrayOf("*/*"))
+                },
+                onPickTextureFolderRequested = {
+                    textureFolderPickerLauncher.launch(null)
                 },
                 onSettingsChanged = {
                     // Applied immediately

@@ -3549,15 +3549,19 @@ void GSDeviceOGL::SendHWDraw(const GSHWDrawConfig& config,
 
 	if (one_barrier)
 	{
-		if (m_features.texture_barrier)
+		const bool is_feedback = config.IsFeedbackLoopRT(config.ps) || config.IsFeedbackLoopDepth(config.ps);
+		if (is_feedback)
 		{
-			g_perfmon.Put(GSPerfMon::Barriers, 1);
-			glTextureBarrier();
-		}
-		else
-		{
-			// Optimization: For alpha second pass we can reuse the copy snapshot from the first pass.
-			FeedbackCopyAndBind(config, draw_rt, draw_rt_clone, draw_ds, draw_ds_clone, config.drawarea, config.samplearea);
+			if (m_features.texture_barrier)
+			{
+				g_perfmon.Put(GSPerfMon::Barriers, 1);
+				glTextureBarrier();
+			}
+			else
+			{
+				// Optimization: For alpha second pass we can reuse the copy snapshot from the first pass.
+				FeedbackCopyAndBind(config, draw_rt, draw_rt_clone, draw_ds, draw_ds_clone, config.drawarea, config.samplearea);
+			}
 		}
 	}
 

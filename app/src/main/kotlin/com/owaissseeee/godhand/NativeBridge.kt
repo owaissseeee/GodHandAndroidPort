@@ -19,6 +19,7 @@ object NativeBridge {
     external fun buildAfsFastIndex(cacheDir: String)
     external fun unpackImsArchive(cacheDir: String): Boolean
     external fun setAudioMuted(muted: Boolean)
+    external fun setGameCacheDirectory(path: String)
     external fun setAudioVolume(volume: Float)
     external fun setAudioConfig(schedulingIdx: Int, bufferSizeIdx: Int)
     external fun onSurfaceCreated(surface: Surface, width: Int, height: Int, rendererIdx: Int, resScaleIdx: Int, aspectIdx: Int, fpsIdx: Int, frameskipIdx: Int)
@@ -38,5 +39,16 @@ object NativeBridge {
     external fun isSpikeLoggingEnabled(): Boolean
     external fun getSessionSpikeLog(): String?
     external fun clearSessionSpikeLog()
+
+    // Features: Audio, Roulette, HD Textures & Save States
+    external fun setAudioChannelVolumes(master: Float, bgm: Float, sfx: Float, voice: Float)
+    external fun cycleRouletteTarget(direction: Int)
+    external fun setRouletteTimerDouble(enabled: Boolean)
+    external fun isRouletteUp(): Boolean
+    external fun setCustomTextureDirectory(path: String)
+    external fun saveState(slot: Int, directoryPath: String): Boolean
+    external fun loadState(slot: Int, directoryPath: String): Boolean
+    external fun getStateInfo(slot: Int, directoryPath: String): String?
+    external fun captureGsDump(outDir: String = ""): String
 }
 

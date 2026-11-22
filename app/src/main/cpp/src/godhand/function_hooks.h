@@ -73,5 +73,10 @@ namespace godhand
 
     // Observes God Hand's flip-chain builder 0x30B870 to track accurate EE game logic ticks for the performance HUD.
     void installGameFrameCounter(PS2Runtime &runtime);
+
+    // Audio stream volume scaling for BGM and Character Voices
+    void setStreamVolumes(float bgm, float voice);
+    void reapplyStreamVolumes(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime);
+    bool checkStreamVolumesDirty();
 }
 

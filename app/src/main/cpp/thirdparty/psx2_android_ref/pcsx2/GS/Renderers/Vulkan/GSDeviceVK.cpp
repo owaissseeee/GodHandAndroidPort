@@ -723,7 +723,9 @@ bool GSDeviceVK::CreateDevice(VkSurfaceKHR surface, bool enable_validation_layer
 	VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT fragment_shader_interlock_ext_feature = {
 		VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_SHADER_INTERLOCK_FEATURES_EXT};
 
-	if (m_optional_extensions.vk_khr_synchronization2)
+	const bool is_vk12_or_higher = (m_device_properties.apiVersion >= VK_API_VERSION_1_2);
+
+	if (is_vk12_or_higher && m_optional_extensions.vk_khr_synchronization2)
 	{
 		sync2_features.synchronization2 = VK_TRUE;
 		Vulkan::AddPointerToChain(&device_info, &sync2_features);
@@ -743,23 +745,29 @@ bool GSDeviceVK::CreateDevice(VkSurfaceKHR surface, bool enable_validation_layer
 		rasterization_order_access_feature.rasterizationOrderColorAttachmentAccess = VK_TRUE;
 		Vulkan::AddPointerToChain(&device_info, &rasterization_order_access_feature);
 	}
-	if (m_optional_extensions.vk_ext_attachment_feedback_loop_layout)
+	if (is_vk12_or_higher && m_optional_extensions.vk_ext_attachment_feedback_loop_layout)
 	{
 		attachment_feedback_loop_feature.attachmentFeedbackLoopLayout = VK_TRUE;
 		Vulkan::AddPointerToChain(&device_info, &attachment_feedback_loop_feature);
 	}
-	if (m_optional_extensions.vk_swapchain_maintenance1)
+	if (is_vk12_or_higher && m_optional_extensions.vk_swapchain_maintenance1)
 	{
 		swapchain_maintenance1_feature.swapchainMaintenance1 = VK_TRUE;
 		Vulkan::AddPointerToChain(&device_info, &swapchain_maintenance1_feature);
 	}
-	if (m_optional_extensions.vk_ext_fragment_shader_interlock)
+	if (is_vk12_or_higher && m_optional_extensions.vk_ext_fragment_shader_interlock)
 	{
 		fragment_shader_interlock_ext_feature.fragmentShaderPixelInterlock = VK_TRUE;
 		Vulkan::AddPointerToChain(&device_info, &fragment_shader_interlock_ext_feature);
 	}
 
 	VkResult res = vkCreateDevice(m_physical_device, &device_info, nullptr, &m_device);
+	if (res != VK_SUCCESS && device_info.pNext != nullptr)
+	{
+		LOG_VULKAN_ERROR(res, "vkCreateDevice with extended features failed, retrying with core features only...");
+		device_info.pNext = nullptr;
+		res = vkCreateDevice(m_physical_device, &device_info, nullptr, &m_device);
+	}
 	if (res != VK_SUCCESS)
 	{
 		LOG_VULKAN_ERROR(res, "vkCreateDevice failed: ");
@@ -1649,10 +1657,12 @@ void GSDeviceVK::SubmitCommandBuffer(VKSwapChain* present_swap_chain)
 			return;
 		}
 
+#if !defined(__ANDROID__)
 		// Grab the next image as soon as possible, that way we spend less time blocked on the next
 		// submission. Don't care if it fails, we'll deal with that at the presentation call site.
 		// Credit to dxvk for the idea.
 		present_swap_chain->AcquireNextImage();
+#endif
 	}
 }
 
@@ -7331,8 +7341,12 @@ void GSDeviceVK::SendHWDraw(const GSHWDrawConfig& config, GSTextureVK* draw_rt, 
 
 	if (one_barrier)
 	{
-		g_perfmon.Put(GSPerfMon::Barriers, n_barriers);
-		FeedbackBarrier(draw_rt, draw_ds);
+		const bool is_feedback = config.IsFeedbackLoopRT(m_pipeline_selector.ps) || config.IsFeedbackLoopDepth(m_pipeline_selector.ps);
+		if (is_feedback)
+		{
+			g_perfmon.Put(GSPerfMon::Barriers, n_barriers);
+			FeedbackBarrier(draw_rt, draw_ds);
+		}
 	}
 
 	Draw(config);

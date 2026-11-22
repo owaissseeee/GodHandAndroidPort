@@ -11,6 +11,11 @@
 #include "ps2_log.h"
 #endif
 
+#if defined(__aarch64__) || defined(_M_ARM64)
+#include <arm_neon.h>
+#include <cmath>
+#endif
+
 // Function: sceVu0Normalize
 // Address: 0x30a370 - 0x30a3b0
 void sceVu0Normalize_0x30a370(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
@@ -20,6 +25,41 @@ void sceVu0Normalize_0x30a370(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
 
     ctx->pc = 0x30a370u;
 
+#if defined(__aarch64__) || defined(_M_ARM64)
+    const uint32_t a0 = GPR_U32(ctx, 4);
+    const uint32_t a1 = GPR_U32(ctx, 5);
+
+    ctx->vu0_vf[4] = _mm_castsi128_ps(READ128(ADD32(a1, 0)));
+    float32x4_t vf4 = vld1q_f32(reinterpret_cast<const float*>(&ctx->vu0_vf[4]));
+
+    float x = vgetq_lane_f32(vf4, 0);
+    float y = vgetq_lane_f32(vf4, 1);
+    float z = vgetq_lane_f32(vf4, 2);
+
+    float lenSq = (x * x + y * y) + z * z;
+    float invLen = (lenSq > 0.0f) ? (1.0f / std::sqrt(lenSq)) : 0.0f;
+
+    ctx->vu0_q = invLen;
+
+    float vf6_arr[4] = {x * invLen, y * invLen, z * invLen, 0.0f};
+    float32x4_t vf6 = vld1q_f32(vf6_arr);
+    vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_vf[6]), vf6);
+
+    float vf5_arr[4] = {std::sqrt(lenSq), y * y, z * z, 0.0f};
+    vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_vf[5]), vld1q_f32(vf5_arr));
+
+    WRITE128(ADD32(a0, 0), _mm_castps_si128(ctx->vu0_vf[6]));
+
+    const uint32_t jumpTarget = GPR_U32(ctx, 31);
+    ctx->pc = jumpTarget;
+    #if defined(PS2X_STRICT_RETURN_DIAGNOSTICS) && PS2X_STRICT_RETURN_DIAGNOSTICS
+    (void)runtime->dispatchGuestBranch(rdram, ctx, jumpTarget, 0x30A3A8u, 0u, PS2Runtime::GuestBranchKind::Return, "JR $ra");
+    return;
+    #else
+    ctx->pc = jumpTarget;
+    return;
+    #endif
+#else
     // 0x30a370: 0xd8a40000  lqc2        $vf4, 0x0($a1)
     ctx->pc = 0x30a370u;
     ctx->vu0_vf[4] = _mm_castsi128_ps(READ128(ADD32(GPR_U32(ctx, 5), 0)));
@@ -76,4 +116,5 @@ void sceVu0Normalize_0x30a370(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
         #endif
     }
     ctx->pc = 0x30A3B0u;
+#endif
 }

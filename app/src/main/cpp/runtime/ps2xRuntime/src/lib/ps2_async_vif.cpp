@@ -27,8 +27,8 @@ namespace ps2x::asyncvif
     namespace
     {
 #if defined(__ANDROID__)
-        constexpr size_t kMaxQueuedJobs = 16u;
-        constexpr size_t kMaxQueuedGifBytes = 512u * 1024u;
+        constexpr size_t kMaxQueuedJobs = 64u;
+        constexpr size_t kMaxQueuedGifBytes = 8u * 1024u * 1024u;
 #else
         constexpr size_t kMaxQueuedJobs = 64u;
         constexpr size_t kMaxQueuedGifBytes = 8u * 1024u * 1024u;
@@ -78,7 +78,7 @@ namespace ps2x::asyncvif
             GifChunk next;
             {
                 std::unique_lock<std::mutex> lock(stage.mutex);
-                stage.idleCv.wait_for(lock, std::chrono::milliseconds(100), [&]
+                stage.idleCv.wait_for(lock, std::chrono::milliseconds(20), [&]
                                   { return stage.queuedBytes < kMaxQueuedGifBytes; });
                 stage.queuedBytes += stage.current.data.size();
                 stage.chunks.push_back(std::move(stage.current));
@@ -285,7 +285,7 @@ namespace ps2x::asyncvif
                     std::lock_guard<std::mutex> lock(worker.mutex);
                     for (Item &item : job.items)
                     {
-                        if (worker.spare.size() < 32u && item.data.capacity() != 0u)
+                        if (worker.spare.size() < 64u && item.data.capacity() != 0u)
                         {
                             item.data.clear();
                             worker.spare.push_back(std::move(item.data));
@@ -468,8 +468,22 @@ namespace ps2x::asyncvif
         traceEvent('K', static_cast<uint32_t>(job.items.size()));
         {
             std::unique_lock<std::mutex> lock(worker->mutex);
-            worker->idleCv.wait_for(lock, std::chrono::milliseconds(100), [&]
-                                { return worker->jobs.size() < kMaxQueuedJobs; });
+            // Progressive micro-yield when queue depth reaches saturation threshold (28+ / 56+)
+            // Gives VUThread a microsecond window to drain without stalling EE in heavy OS thread sleep.
+            if (worker->jobs.size() >= (kMaxQueuedJobs * 7 / 8))
+            {
+                for (int spin = 0; spin < 4 && worker->jobs.size() >= kMaxQueuedJobs; ++spin)
+                {
+                    lock.unlock();
+                    std::this_thread::yield();
+                    lock.lock();
+                }
+            }
+            if (worker->jobs.size() >= kMaxQueuedJobs)
+            {
+                worker->idleCv.wait_for(lock, std::chrono::milliseconds(2), [&]
+                                    { return worker->jobs.size() < kMaxQueuedJobs; });
+            }
             worker->jobs.push_back(std::move(job));
         }
         worker->workCv.notify_one();

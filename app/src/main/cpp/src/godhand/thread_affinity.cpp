@@ -242,6 +242,13 @@ static ThreadRole classifyThread(const char* name, int primaryCore, int fallback
     return ThreadRole::DEFAULT;
 }
 
+struct RoleConfig {
+    cpu_set_t mask;
+    int targetNice;
+    bool valid;
+};
+static RoleConfig s_roleConfigs[static_cast<size_t>(ThreadRole::DEFAULT) + 1] = {};
+
 static void applyAffinity(ThreadRole role, const char* name, int requestedNice) {
     static const std::vector<CpuCoreInfo> sorted = detectSortedCores();
     if (sorted.empty()) return;
@@ -324,23 +331,18 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
                 break;
         }
     } else if (top_tier <= 1 || big_cores.size() >= 4) {
-        // Dedicated 1:1 Big Core assignment for zero preemption:
-        // - Big Core 0: 100% EXCLUSIVELY DEDICATED TO EE_MAIN (Nice -20)
-        // - Big Core 1: 100% EXCLUSIVELY DEDICATED TO VU1_WORKER (Nice -20)
-        // - Big Core 2: 100% EXCLUSIVELY DEDICATED TO GS_RENDERER (Nice -19)
-        // - Big Core 3 + Little Cores: GIF_WORKER, IOP_WORKER, AUDIO_SPU2, HOST_PUMP
+        // High-end multi-core & Snapdragon / Dimensity (4+ Big/Prime cores):
+        // Allow heavy threads (EE_MAIN, VU1_WORKER, GS_RENDERER) to use ALL Big/Prime performance cores.
+        // This enables Qualcomm EAS (Energy Aware Scheduler) to dynamically migrate threads between
+        // the Prime core and Big cores without thermal throttling traps, core downclocks, or preemption stalls!
         switch (role) {
             case ThreadRole::EE_MAIN:
-                CPU_SET(big_cores[0], &mask);
-                targetNice = -20;
-                break;
             case ThreadRole::VU1_WORKER:
-                CPU_SET(big_cores[1 % big_cores.size()], &mask);
-                targetNice = -20;
-                break;
             case ThreadRole::GS_RENDERER:
-                CPU_SET(big_cores[2 % big_cores.size()], &mask);
-                targetNice = -19;
+                for (int bc : big_cores)
+                    CPU_SET(bc, &mask);
+                targetNice = (role == ThreadRole::EE_MAIN) ? -20 :
+                             (role == ThreadRole::VU1_WORKER) ? -20 : -19;
                 break;
             case ThreadRole::GIF_WORKER:
             case ThreadRole::IOP_WORKER:
@@ -358,32 +360,21 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
         }
     } else if (big_cores.size() == 3) {
         // 3 Big cores (1 Prime + 2 Big, e.g. Snapdragon 855/865 1+3+4, or tri-cluster variants):
-        // Big Core 0: EE_MAIN (Nice -20)
-        // Big Core 1: VU1_WORKER (Nice -19)
-        // Big Core 2: GS_RENDERER (Nice -20) + IOP_WORKER (Nice -18)
-        // Little Cores: GIF_WORKER, AUDIO_SPU2, HOST_PUMP
+        // Allow EE, VU1, and GS to float across all 3 performance cores.
         switch (role) {
             case ThreadRole::EE_MAIN:
-                CPU_SET(big_cores[0], &mask);
-                targetNice = -20;
-                break;
             case ThreadRole::VU1_WORKER:
-                CPU_SET(big_cores[1], &mask);
-                targetNice = -19;
-                break;
             case ThreadRole::GS_RENDERER:
-            case ThreadRole::IOP_WORKER:
-                CPU_SET(big_cores[2], &mask);
-                targetNice = -18;
+                for (int bc : big_cores)
+                    CPU_SET(bc, &mask);
+                targetNice = (role == ThreadRole::EE_MAIN) ? -20 : -19;
                 break;
+            case ThreadRole::IOP_WORKER:
             case ThreadRole::GIF_WORKER:
             case ThreadRole::AUDIO_SPU2:
-                for (int lc : little_cores) CPU_SET(lc, &mask);
-                targetNice = -16;
-                break;
             default:
                 for (int lc : little_cores) CPU_SET(lc, &mask);
-                targetNice = -5;
+                targetNice = -16;
                 break;
         }
     } else {
@@ -425,6 +416,13 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
         for (const auto& c : sorted) {
             CPU_SET(c.id, &mask);
         }
+    }
+
+    const size_t rIdx = static_cast<size_t>(role);
+    if (rIdx < sizeof(s_roleConfigs) / sizeof(s_roleConfigs[0])) {
+        s_roleConfigs[rIdx].mask = mask;
+        s_roleConfigs[rIdx].targetNice = targetNice;
+        s_roleConfigs[rIdx].valid = true;
     }
 
     int rc = sched_setaffinity(0, sizeof(cpu_set_t), &mask);
@@ -507,8 +505,26 @@ extern "C" int godhand_get_device_tier() {
     }();
     return s_tier;
 }
+
+extern "C" void godhand_reassert_thread_affinities() {
+    auto reapply = [](int32_t tid, godhand::affinity::ThreadRole role) {
+        if (tid <= 0) return;
+        const size_t roleIdx = static_cast<size_t>(role);
+        if (roleIdx < sizeof(godhand::affinity::s_roleConfigs) / sizeof(godhand::affinity::s_roleConfigs[0]) &&
+            godhand::affinity::s_roleConfigs[roleIdx].valid) {
+            sched_setaffinity(tid, sizeof(cpu_set_t), &godhand::affinity::s_roleConfigs[roleIdx].mask);
+            setpriority(PRIO_PROCESS, tid, godhand::affinity::s_roleConfigs[roleIdx].targetNice);
+        }
+    };
+    reapply(g_tidEE.load(std::memory_order_relaxed), godhand::affinity::ThreadRole::EE_MAIN);
+    reapply(g_tidVU.load(std::memory_order_relaxed), godhand::affinity::ThreadRole::VU1_WORKER);
+    reapply(g_tidGS.load(std::memory_order_relaxed), godhand::affinity::ThreadRole::GS_RENDERER);
+    reapply(g_tidGIF.load(std::memory_order_relaxed), godhand::affinity::ThreadRole::GIF_WORKER);
+    reapply(g_tidIOP.load(std::memory_order_relaxed), godhand::affinity::ThreadRole::IOP_WORKER);
+}
 #else
 extern "C" void godhand_set_thread_affinity_and_priority(const char*, int, int, int) {}
+extern "C" void godhand_reassert_thread_affinities() {}
 extern "C" int godhand_get_device_tier() { return 1; }
 extern "C" void godhand_perf_record_work_duration(int64_t) {}
 extern "C" int64_t godhand_perf_get_last_work_duration() { return 16000000LL; }

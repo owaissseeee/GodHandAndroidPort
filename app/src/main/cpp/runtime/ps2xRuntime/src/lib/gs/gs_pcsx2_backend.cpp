@@ -3,6 +3,8 @@
 #include "runtime/performance_profiler.h"
 
 #include <cinttypes>
+#include <condition_variable>
+#include <ctime>
 #include <mutex>
 #include <algorithm>
 #include <atomic>
@@ -88,6 +90,8 @@ namespace
     uint64_t g_perfWindowStartGameFrames = 0;
     float g_perfWindowWorstMs = 0.0f;
 
+extern "C" const char* godhand_get_explicit_cache_dir();
+
     std::filesystem::path exeDirectory()
     {
 #if defined(_WIN32)
@@ -95,8 +99,15 @@ namespace
         const DWORD length = GetModuleFileNameW(nullptr, path, MAX_PATH);
         return length ? std::filesystem::path(path).parent_path() : std::filesystem::current_path();
 #else
-        std::filesystem::path cacheDir = "/data/data/com.owaissseeee.godhand/files/godhand_cache";
+        const char* explicitDir = godhand_get_explicit_cache_dir();
         std::error_code ec;
+        if (explicitDir && *explicitDir) {
+            std::filesystem::path p(explicitDir);
+            if (std::filesystem::exists(p, ec)) {
+                return p;
+            }
+        }
+        std::filesystem::path cacheDir = "/data/data/com.owaissseeee.godhand/files/godhand_cache";
         if (!std::filesystem::exists(cacheDir, ec)) {
             cacheDir = "/data/user/0/com.owaissseeee.godhand/files/godhand_cache";
         }
@@ -192,6 +203,36 @@ namespace
         default: return 32u;
         }
     }
+
+#pragma pack(push, 4)
+    struct GSDumpHeader
+    {
+        uint32_t state_version;
+        uint32_t state_size;
+        uint32_t serial_offset;
+        uint32_t serial_size;
+        uint32_t crc;
+        uint32_t screenshot_width;
+        uint32_t screenshot_height;
+        uint32_t screenshot_offset;
+        uint32_t screenshot_size;
+    };
+#pragma pack(pop)
+
+    struct OneTapGsDumpState
+    {
+        std::atomic<bool> requested{false};
+        std::string targetDir;
+        std::string savedGsPath;
+        std::mutex mutex;
+        std::condition_variable cv;
+        bool done = false;
+
+        std::FILE *gsFile = nullptr;
+        std::FILE *dumpFile = nullptr;
+        int framesLeft = 0;
+    };
+    static OneTapGsDumpState s_oneTapDump;
 }
 
 // PS2X_FRAME_TIMES with PCSX2's GS: one row per present (vsync), in the columns of the host loop's file (ps2_runtime.cpp)
@@ -460,7 +501,7 @@ bool GSPcsx2Backend::EnsureOpen()
     params.resources = resources.c_str();
     params.cache = cache.c_str();
     params.vsync = static_cast<uint32_t>(std::clamp(envInt("PS2X_PCSX2_VSYNC", 2), 0, 2)); // mailbox: no tearing, no wait
-    params.stretch = static_cast<uint32_t>(std::clamp(envInt("PS2X_PCSX2_STRETCH", 1), 0, 2));
+    params.stretch = static_cast<uint32_t>(std::clamp(envInt("PS2X_PCSX2_STRETCH", 2), 0, 2));
     // Image options (pcsx2gs_api.h): PS2X_PCSX2_<KEY> -> key=value.
     static constexpr struct
     {
@@ -500,24 +541,29 @@ bool GSPcsx2Backend::EnsureOpen()
     if (envInt("PS2X_PCSX2_TEXTURES", 1) != 0)
     {
         const char *textureDir = std::getenv("PS2X_PCSX2_TEXTURE_DIR");
-        std::filesystem::path folder = (textureDir && *textureDir) ? std::filesystem::path(textureDir)
-                                                                 : dir / "textures" / "SLUS-21209";
-        if (!(textureDir && *textureDir))
+        if (textureDir && *textureDir)
         {
+            options += "texture_dir=" + std::string(textureDir) + ";";
+        }
+        else
+        {
+            std::filesystem::path folder = dir / "textures" / "SLUS-21503";
             std::filesystem::path base = dir;
             for (int up = 0; up < 4; ++up, base = base.parent_path())
             {
-                if (std::filesystem::is_directory(base / "textures" / "SLUS-21209" / "replacements", ec))
+                if (std::filesystem::is_directory(base / "textures" / "SLUS-21503" / "replacements", ec))
                 {
-                    folder = base / "textures" / "SLUS-21209";
+                    folder = base / "textures" / "SLUS-21503";
                     break;
                 }
             }
+            if (std::filesystem::is_directory(folder / "replacements", ec))
+                options += "texture_dir=" + utf8(folder) + ";";
+            else if (folder.filename() == "replacements" && std::filesystem::is_directory(folder, ec))
+                options += "texture_dir=" + utf8(folder.parent_path()) + ";";
+            else if (std::filesystem::is_directory(folder, ec))
+                options += "texture_dir=" + utf8(folder) + ";";
         }
-        if (std::filesystem::is_directory(folder / "replacements", ec))
-            options += "texture_dir=" + utf8(folder) + ";";
-        else if (textureDir && *textureDir)
-            std::fprintf(stderr, "[gs] PS2X_PCSX2_TEXTURE_DIR: no replacements folder in %s\n", utf8(folder).c_str());
     }
     params.options = options.c_str();
 #if defined(__ANDROID__)
@@ -655,6 +701,28 @@ void GSPcsx2Backend::RawGif(const uint8_t *data, uint32_t sizeBytes)
         m_gifBytes += sizeBytes;
         if (gifDump().active)
             gifDumpRecord('G', data, sizeBytes & ~15u);
+
+        if (s_oneTapDump.framesLeft > 0)
+        {
+            if (s_oneTapDump.gsFile)
+            {
+                const uint8_t id = 0;
+                const uint8_t path_idx = 1;
+                const uint32_t sz = sizeBytes;
+                std::fwrite(&id, 1, 1, s_oneTapDump.gsFile);
+                std::fwrite(&path_idx, 1, 1, s_oneTapDump.gsFile);
+                std::fwrite(&sz, 4, 1, s_oneTapDump.gsFile);
+                std::fwrite(data, 1, sizeBytes, s_oneTapDump.gsFile);
+            }
+            if (s_oneTapDump.dumpFile)
+            {
+                const uint8_t type = 'G';
+                const uint32_t sz = sizeBytes;
+                std::fwrite(&type, 1, 1, s_oneTapDump.dumpFile);
+                std::fwrite(&sz, 4, 1, s_oneTapDump.dumpFile);
+                std::fwrite(data, 1, sizeBytes, s_oneTapDump.dumpFile);
+            }
+        }
     }
 }
 
@@ -719,6 +787,116 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
     g_api->vsync(reinterpret_cast<const Pcsx2GsPrivRegs *>(&regs));
     WriteFrameTime(presentStart);
     g_presents.fetch_add(1u, std::memory_order_relaxed);
+
+    // 1-Tap GS Dump capture handler
+    if (s_oneTapDump.requested.exchange(false, std::memory_order_acq_rel))
+    {
+        std::time_t t = std::time(nullptr);
+        std::tm tm{};
+#if defined(_WIN32)
+        localtime_s(&tm, &t);
+#else
+        localtime_r(&t, &tm);
+#endif
+        char timeBuf[64];
+        std::strftime(timeBuf, sizeof(timeBuf), "%Y%m%d_%H%M%S", &tm);
+        std::string base = s_oneTapDump.targetDir + "/godhand_dump_" + timeBuf;
+        std::string gsPath = base + ".gs";
+        std::string dumpPath = base + ".dump";
+
+        s_oneTapDump.gsFile = std::fopen(gsPath.c_str(), "wb");
+        s_oneTapDump.dumpFile = std::fopen(dumpPath.c_str(), "wb");
+
+        if (s_oneTapDump.gsFile)
+        {
+            const uint32_t fake_crc = 0xFFFFFFFFu;
+            std::fwrite(&fake_crc, 4, 1, s_oneTapDump.gsFile);
+            const std::string serial = "SLUS-21503";
+            const uint32_t hdr_sz = sizeof(GSDumpHeader) + static_cast<uint32_t>(serial.size());
+            std::fwrite(&hdr_sz, 4, 1, s_oneTapDump.gsFile);
+
+            std::vector<uint8_t> vram(m_vramSize, 0u);
+            if (g_api && g_api->save_vram)
+                vram.resize(g_api->save_vram(vram.data(), static_cast<uint32_t>(vram.size())));
+
+            GSDumpHeader hdr{};
+            hdr.state_version = 0x00010000u;
+            hdr.state_size = static_cast<uint32_t>(vram.size());
+            hdr.crc = 0x6FB69282u;
+            hdr.serial_offset = sizeof(hdr);
+            hdr.serial_size = static_cast<uint32_t>(serial.size());
+            hdr.screenshot_width = 0;
+            hdr.screenshot_height = 0;
+            hdr.screenshot_offset = hdr.serial_offset + hdr.serial_size;
+            hdr.screenshot_size = 0;
+
+            std::fwrite(&hdr, sizeof(hdr), 1, s_oneTapDump.gsFile);
+            std::fwrite(serial.data(), 1, serial.size(), s_oneTapDump.gsFile);
+            std::fwrite(vram.data(), 1, vram.size(), s_oneTapDump.gsFile);
+            std::fwrite(&regs, sizeof(regs), 1, s_oneTapDump.gsFile);
+
+            if (s_oneTapDump.dumpFile)
+            {
+                const uint8_t type = 'M';
+                const uint32_t sz = static_cast<uint32_t>(vram.size());
+                std::fwrite(&type, 1, 1, s_oneTapDump.dumpFile);
+                std::fwrite(&sz, 4, 1, s_oneTapDump.dumpFile);
+                std::fwrite(vram.data(), 1, vram.size(), s_oneTapDump.dumpFile);
+            }
+
+            s_oneTapDump.framesLeft = 2; // Capture 2 complete frames
+            s_oneTapDump.savedGsPath = gsPath;
+#if defined(__ANDROID__)
+            __android_log_print(ANDROID_LOG_INFO, "GodHandDump", "Started 1-tap GS dump to: %s", gsPath.c_str());
+#endif
+        }
+    }
+    else if (s_oneTapDump.framesLeft > 0)
+    {
+        if (s_oneTapDump.gsFile)
+        {
+            const uint8_t idRegs = 3;
+            std::fwrite(&idRegs, 1, 1, s_oneTapDump.gsFile);
+            std::fwrite(&regs, sizeof(regs), 1, s_oneTapDump.gsFile);
+            const uint8_t idVsync = 1;
+            const uint8_t field = (regs.csr & 0x2000u) ? 0u : 1u;
+            std::fwrite(&idVsync, 1, 1, s_oneTapDump.gsFile);
+            std::fwrite(&field, 1, 1, s_oneTapDump.gsFile);
+        }
+        if (s_oneTapDump.dumpFile)
+        {
+            const uint8_t type = 'V';
+            const uint32_t sz = sizeof(uint64_t) + sizeof(regs);
+            const uint64_t fld = (regs.csr & 0x2000u) ? 0u : 1u;
+            std::fwrite(&type, 1, 1, s_oneTapDump.dumpFile);
+            std::fwrite(&sz, 4, 1, s_oneTapDump.dumpFile);
+            std::fwrite(&fld, sizeof(fld), 1, s_oneTapDump.dumpFile);
+            std::fwrite(&regs, sizeof(regs), 1, s_oneTapDump.dumpFile);
+        }
+
+        s_oneTapDump.framesLeft--;
+        if (s_oneTapDump.framesLeft == 0)
+        {
+            if (s_oneTapDump.gsFile)
+            {
+                std::fclose(s_oneTapDump.gsFile);
+                s_oneTapDump.gsFile = nullptr;
+            }
+            if (s_oneTapDump.dumpFile)
+            {
+                std::fclose(s_oneTapDump.dumpFile);
+                s_oneTapDump.dumpFile = nullptr;
+            }
+            {
+                std::lock_guard<std::mutex> lk(s_oneTapDump.mutex);
+                s_oneTapDump.done = true;
+            }
+            s_oneTapDump.cv.notify_all();
+#if defined(__ANDROID__)
+            __android_log_print(ANDROID_LOG_INFO, "GodHandDump", "Completed 1-tap GS dump to: %s", s_oneTapDump.savedGsPath.c_str());
+#endif
+        }
+    }
 
     // Accurate, zero-overhead frametime & FPS recording at physical present boundary
     const auto presentEnd = std::chrono::steady_clock::now();
@@ -889,9 +1067,11 @@ bool godhand_perf_get_stats(float* outStats, int statsCount, float* outHistory, 
 }
 
 void godhand_set_frameskip_mode(int mode) {
-    g_frameskipMode.store(mode, std::memory_order_release);
+    // UI mapping: 0 = Off, 1 = Skip 1 Frame (maps to pcsx2gs mode 2)
+    const int actual_mode = (mode == 1) ? 2 : mode;
+    g_frameskipMode.store(actual_mode, std::memory_order_release);
     if (g_setFrameskip) {
-        g_setFrameskip(mode);
+        g_setFrameskip(actual_mode);
     }
 }
 
@@ -911,6 +1091,31 @@ void godhand_set_aspect_ratio(int aspectIdx) {
     g_pendingAspect.store(aspectIdx, std::memory_order_release);
 }
 
+extern "C" uint32_t godhand_save_gs_vram(uint8_t* dst, uint32_t size) {
+    if (g_api && g_api->save_vram && dst && size > 0) {
+        return g_api->save_vram(dst, size);
+    }
+    return 0;
+}
+
+extern "C" void godhand_load_gs_vram(const uint8_t* src, uint32_t size) {
+    if (g_api && g_api->load_vram && src && size > 0) {
+        g_api->load_vram(src, size);
+    }
+}
+
+extern "C" void pcsx2gs_set_texture_folder(const char* dir);
+
+extern "C" void godhand_set_texture_replacement_dir(const char* dir) {
+    if (dir && *dir) {
+        setenv("PS2X_PCSX2_TEXTURE_DIR", dir, 1);
+        setenv("PS2X_PCSX2_TEXTURES", "1", 1);
+    } else {
+        setenv("PS2X_PCSX2_TEXTURES", "0", 1);
+    }
+    pcsx2gs_set_texture_folder(dir);
+}
+
 void godhand_perf_set_logging_enabled(bool enabled) {
     g_perfSpikeLoggingEnabled.store(enabled, std::memory_order_release);
 }
@@ -924,14 +1129,15 @@ void godhand_perf_record_spike(
     float totalFrametimeMs,
     float gsPresentTimeMs
 ) {
-    if (!g_perfSpikeLoggingEnabled.load(std::memory_order_relaxed)) {
+    // Always record engine freezes (>= 100ms) even if general drop logger is off
+    if (!g_perfSpikeLoggingEnabled.load(std::memory_order_relaxed) && totalFrametimeMs < 100.0f) {
         return;
     }
 
-    // Rate-limit: at most 1 log per 400ms to avoid overhead during room transitions / hitching
+    // Rate-limit: at most 1 log per 400ms to avoid overhead during room transitions / hitching (freezes bypass rate limit)
     const auto now = std::chrono::steady_clock::now();
     const auto timeSinceLastMs = std::chrono::duration<float, std::milli>(now - g_lastSpikeLogTime).count();
-    if (g_lastSpikeLogTime.time_since_epoch().count() != 0 && timeSinceLastMs < 400.0f) {
+    if (totalFrametimeMs < 100.0f && g_lastSpikeLogTime.time_since_epoch().count() != 0 && timeSinceLastMs < 400.0f) {
         return;
     }
     g_lastSpikeLogTime = now;
@@ -948,7 +1154,10 @@ void godhand_perf_record_spike(
     ps2_audio_get_stats(&rec.audioBufferFillPct, &rec.audioUnderruns);
 
     // Classify primary bottleneck
-    if (rec.eeTimeMs >= 14.0f) {
+    if (totalFrametimeMs >= 100.0f) {
+        std::snprintf(rec.bottleneckReason, sizeof(rec.bottleneckReason),
+                      "ENGINE FREEZE / STALL (PC: 0x%08X)", rec.topGuestPc);
+    } else if (rec.eeTimeMs >= 14.0f) {
         std::snprintf(rec.bottleneckReason, sizeof(rec.bottleneckReason),
                       "EE CPU Compute Bound (PC: 0x%08X)", rec.topGuestPc);
     } else if (rec.vu1QueueDepth >= 2u) {
@@ -967,12 +1176,13 @@ void godhand_perf_record_spike(
 
 #if defined(__ANDROID__)
     __android_log_print(ANDROID_LOG_WARN, "GodHandPerf",
-        "[PERF SPIKE] Frame #%" PRIu64 ": %.1f ms (+%.1f ms drop)\n"
+        "[%s] Frame #%" PRIu64 ": %.1f ms (+%.1f ms drop)\n"
         "  EE: %.1f ms (Idle: %.1f ms) | PC: 0x%08X\n"
         "  VU1: Queue: %u\n"
         "  GS Present: %.1f ms\n"
         "  Audio: %u%% fill (%u underruns)\n"
         "  Bottleneck: %s",
+        (totalFrametimeMs >= 100.0f ? "ENGINE FREEZE" : "PERF SPIKE"),
         rec.frameNumber, rec.totalFrametimeMs, rec.totalFrametimeMs - 16.67f,
         rec.eeTimeMs, rec.eeIdleTimeMs, rec.topGuestPc,
         rec.vu1QueueDepth,
@@ -984,17 +1194,27 @@ void godhand_perf_record_spike(
     {
         std::lock_guard<std::mutex> lock(g_spikeMutex);
         std::snprintf(g_lastSpikeReport, sizeof(g_lastSpikeReport),
-            "SPIKE #%" PRIu64 ": %.1fms | EE: %.1fms (0x%08X) | VU1: Q%u | GS: %.1fms\n-> %s",
+            "%s #%" PRIu64 ": %.1fms | EE: %.1fms (0x%08X) | VU1: Q%u | GS: %.1fms\n-> %s",
+            (totalFrametimeMs >= 100.0f ? "FREEZE" : "SPIKE"),
             rec.frameNumber, rec.totalFrametimeMs, rec.eeTimeMs, rec.topGuestPc,
             rec.vu1QueueDepth, rec.gsPresentTimeMs, rec.bottleneckReason);
 
         char entry[384];
-        std::snprintf(entry, sizeof(entry),
-            "[%02llu:%02llu] Drop #%" PRIu64 ": %.1f ms (EE: %.1f ms | VU1: Q%u | GS: %.1f ms)\n -> %s\n",
-            static_cast<unsigned long long>((rec.frameNumber / 3600)),
-            static_cast<unsigned long long>((rec.frameNumber / 60) % 60),
-            rec.frameNumber, rec.totalFrametimeMs, rec.eeTimeMs,
-            rec.vu1QueueDepth, rec.gsPresentTimeMs, rec.bottleneckReason);
+        if (totalFrametimeMs >= 100.0f) {
+            std::snprintf(entry, sizeof(entry),
+                "[%02llu:%02llu] ⚠️ FREEZE #%" PRIu64 ": %.1f ms (EE: %.1f ms | VU1: Q%u | GS: %.1f ms)\n -> %s\n",
+                static_cast<unsigned long long>((rec.frameNumber / 3600)),
+                static_cast<unsigned long long>((rec.frameNumber / 60) % 60),
+                rec.frameNumber, rec.totalFrametimeMs, rec.eeTimeMs,
+                rec.vu1QueueDepth, rec.gsPresentTimeMs, rec.bottleneckReason);
+        } else {
+            std::snprintf(entry, sizeof(entry),
+                "[%02llu:%02llu] Drop #%" PRIu64 ": %.1f ms (EE: %.1f ms | VU1: Q%u | GS: %.1f ms)\n -> %s\n",
+                static_cast<unsigned long long>((rec.frameNumber / 3600)),
+                static_cast<unsigned long long>((rec.frameNumber / 60) % 60),
+                rec.frameNumber, rec.totalFrametimeMs, rec.eeTimeMs,
+                rec.vu1QueueDepth, rec.gsPresentTimeMs, rec.bottleneckReason);
+        }
 
         if (g_sessionSpikeLog.size() + sizeof(entry) > 65536) {
             g_sessionSpikeLog.erase(0, 16384);
@@ -1038,5 +1258,20 @@ void godhand_perf_clear_session_spike_log() {
 }
 
 } // extern "C"
+
+std::string GSPcsx2Backend::TriggerDump(const std::string& directory)
+{
+    {
+        std::lock_guard<std::mutex> lk(s_oneTapDump.mutex);
+        s_oneTapDump.targetDir = directory.empty() ? "/storage/emulated/0/Download" : directory;
+        s_oneTapDump.savedGsPath.clear();
+        s_oneTapDump.done = false;
+        s_oneTapDump.requested.store(true, std::memory_order_release);
+    }
+
+    std::unique_lock<std::mutex> lk(s_oneTapDump.mutex);
+    s_oneTapDump.cv.wait_for(lk, std::chrono::milliseconds(1500), [] { return s_oneTapDump.done; });
+    return s_oneTapDump.savedGsPath.empty() ? (s_oneTapDump.targetDir + "/godhand_dump_captured.gs") : s_oneTapDump.savedGsPath;
+}
 
 #endif // PS2X_HAS_PCSX2_GS

@@ -149,8 +149,33 @@ static void ConvertTexture_R8G8B8(u32 width, u32 height, std::vector<u8>& data, 
 #if defined(_WIN32)
 #include "PngWic.inl"
 #else
-static bool PNGLoader(GSTextureReplacements::File& /*file*/, const char* /*filename*/, GSTextureReplacements::ReplacementTexture* /*tex*/, bool /*only_base_image*/) {
-    return false;
+#define STBI_ONLY_PNG
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
+static bool PNGLoader(GSTextureReplacements::File& file, const char* /*filename*/, GSTextureReplacements::ReplacementTexture* tex, bool /*only_base_image*/) {
+    const size_t fileSize = file.Size();
+    if (fileSize == 0 || fileSize > 128u * 1024u * 1024u)
+        return false;
+
+    std::vector<u8> buffer(fileSize);
+    if (!file.Seek(0) || !file.Read(buffer.data(), fileSize))
+        return false;
+
+    int width = 0, height = 0, channels = 0;
+    stbi_uc* pixels = stbi_load_from_memory(buffer.data(), static_cast<int>(fileSize), &width, &height, &channels, 4);
+    if (!pixels || width <= 0 || height <= 0) {
+        if (pixels) stbi_image_free(pixels);
+        return false;
+    }
+
+    tex->format = GSTexture::Format::Color;
+    tex->width = static_cast<u32>(width);
+    tex->height = static_cast<u32>(height);
+    tex->pitch = static_cast<u32>(width * 4);
+    tex->data.assign(pixels, pixels + (width * height * 4));
+    stbi_image_free(pixels);
+    return true;
 }
 #endif
 
