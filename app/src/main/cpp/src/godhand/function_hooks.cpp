@@ -36,6 +36,7 @@
 #include <vector>
 
 extern "C" float godhand_get_bgm_volume();
+extern "C" void godhand_reassert_thread_affinities();
 
 namespace godhand
 {
@@ -1123,6 +1124,7 @@ namespace godhand
 }
 
 extern "C" float godhand_get_bgm_volume();
+extern "C" void godhand_reassert_thread_affinities();
 
 namespace godhand
 {
@@ -1173,7 +1175,6 @@ namespace godhand
                     static uint32_t s_affinityReassertCounter = 0;
                     if (++s_affinityReassertCounter >= 300) {
                         s_affinityReassertCounter = 0;
-                        extern "C" void godhand_reassert_thread_affinities();
                         godhand_reassert_thread_affinities();
                     }
                     if (checkStreamVolumesDirty())
