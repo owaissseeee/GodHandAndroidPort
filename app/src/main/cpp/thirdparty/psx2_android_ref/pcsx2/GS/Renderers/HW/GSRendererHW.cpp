@@ -6049,6 +6049,10 @@ bool GSRendererHW::EmulateDATEEarlyFail(DATEOptions& date, GSTextureCache::Targe
 	if (!date.enabled)
 		return false;
 
+	// On mobile OpenGL ES, do not prematurely drop draw calls (like Gene's hair or alpha effects)
+	if (g_gs_device->GetRenderAPI() == RenderAPI::OpenGL)
+		return false;
+
 	const bool is_overlap_alpha = m_prim_overlap != PRIM_OVERLAP_NO && !(m_cached_ctx.FRAME.FBMSK & 0x80000000);
 	if (m_cached_ctx.TEST.DATM == 0)
 	{
@@ -6098,9 +6102,9 @@ void GSRendererHW::EmulateDATESelectMethod(DATEOptions& date_options, GSTextureC
 
 	// It is way too complex to emulate texture shuffle with DATE, so use accurate path.
 	// No overlap should be triggered on gl/vk only as they support DATE_BARRIER.
-	if (features.framebuffer_fetch && g_gs_device->GetRenderAPI() != RenderAPI::OpenGL)
+	if (features.framebuffer_fetch)
 	{
-		// Full DATE is "free" with framebuffer fetch on Vulkan (subpassLoad).
+		// Full DATE is "free" with framebuffer fetch on both Vulkan (subpassLoad) and OpenGL ES (shader_framebuffer_fetch).
 		GL_PERF("DATE: Accurate with framebuffer fetch");
 		date_options.barrier = true;
 		m_conf.require_full_barrier = true;
@@ -6213,32 +6217,22 @@ void GSRendererHW::EmulateDATEGetConfig(DATEOptions& date_options, bool scale_rt
 
 	const GSDevice::FeatureSupport& features = g_gs_device->Features();
 
-	if (g_gs_device->GetRenderAPI() == RenderAPI::OpenGL)
-	{
-		date_options.barrier = false;
-		date_options.primid = false;
-		date_options.stencil_one = false;
+	// Always swap DATE with DATE_BARRIER if we have barriers on when alpha write is masked.
+	// This is always enabled on VK/GL/DX12 but not on DX11 as copies are slow so we can selectively enable it like now.
+	if (!m_conf.colormask.wa && (m_conf.require_one_barrier || (m_conf.require_full_barrier && features.feedback_loops())))
+		date_options.barrier = true;
+
+	if (m_conf.ps.scanmsk & 2)
+		date_options.primid = false; // to have discard in the shader work correctly
+
+	if (date_options.stencil_one)
+		m_conf.destination_alpha = GSHWDrawConfig::DestinationAlphaMode::StencilOne;
+	else if (date_options.primid)
+		m_conf.destination_alpha = GSHWDrawConfig::DestinationAlphaMode::PrimIDTracking;
+	else if (date_options.barrier)
+		m_conf.destination_alpha = GSHWDrawConfig::DestinationAlphaMode::Full;
+	else if (features.stencil_buffer)
 		m_conf.destination_alpha = GSHWDrawConfig::DestinationAlphaMode::Stencil;
-	}
-	else
-	{
-		// Always swap DATE with DATE_BARRIER if we have barriers on when alpha write is masked.
-		// This is always enabled on VK/GL/DX12 but not on DX11 as copies are slow so we can selectively enable it like now.
-		if (!m_conf.colormask.wa && (m_conf.require_one_barrier || (m_conf.require_full_barrier && features.feedback_loops())))
-			date_options.barrier = true;
-
-		if (m_conf.ps.scanmsk & 2)
-			date_options.primid = false; // to have discard in the shader work correctly
-
-		if (date_options.stencil_one)
-			m_conf.destination_alpha = GSHWDrawConfig::DestinationAlphaMode::StencilOne;
-		else if (date_options.primid)
-			m_conf.destination_alpha = GSHWDrawConfig::DestinationAlphaMode::PrimIDTracking;
-		else if (date_options.barrier)
-			m_conf.destination_alpha = GSHWDrawConfig::DestinationAlphaMode::Full;
-		else if (features.stencil_buffer)
-			m_conf.destination_alpha = GSHWDrawConfig::DestinationAlphaMode::Stencil;
-	}
 
 	if (scale_rt_alpha)
 		m_conf.datm = static_cast<SetDATM>(m_cached_ctx.TEST.DATM + 2);

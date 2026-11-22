@@ -1014,7 +1014,7 @@ bool GSDeviceOGL::CheckFeatures()
 	m_features.prefer_new_textures = m_is_gles || is_mali || is_adreno || is_powervr;
 	if (m_is_gles || is_adreno)
 	{
-		m_features.stencil_buffer = true;
+		m_features.stencil_buffer = !m_features.framebuffer_fetch;
 		m_features.test_and_sample_depth = false;
 	}
 	else
@@ -1626,8 +1626,7 @@ void GSDeviceOGL::CommitClear(GSTexture* t, bool use_write_fbo)
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_fbo_write);
 		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
 			t->IsRenderTarget() ? static_cast<GSTextureOGL*>(t)->GetID() : 0, 0);
-		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER,
-			(t && t->GetFormat() == GSTexture::Format::DepthStencil) ? GL_DEPTH_STENCIL_ATTACHMENT : GL_DEPTH_ATTACHMENT,
+		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, m_features.framebuffer_fetch ? GL_DEPTH_ATTACHMENT : GL_DEPTH_STENCIL_ATTACHMENT,
 			GL_TEXTURE_2D, t->IsDepthStencil() ? static_cast<GSTextureOGL*>(t)->GetID() : 0, 0);
 	}
 	else
@@ -1713,7 +1712,7 @@ void GSDeviceOGL::CommitClear(GSTexture* t, bool use_write_fbo)
 		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER,
 			t->IsRenderTarget() ?
 				GL_COLOR_ATTACHMENT0 :
-				((t && t->GetFormat() == GSTexture::Format::DepthStencil) ? GL_DEPTH_STENCIL_ATTACHMENT : GL_DEPTH_ATTACHMENT),
+				(m_features.framebuffer_fetch ? GL_DEPTH_ATTACHMENT : GL_DEPTH_STENCIL_ATTACHMENT),
 			GL_TEXTURE_2D, 0, 0);
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, GLState::fbo);
 	}
@@ -2589,7 +2588,7 @@ void GSDeviceOGL::SetupDATE(GSTexture* rt, GSTexture* ds, SetDATM datm, const GS
 
 	// sfex3 (after the capcom logo), vf4 (first menu fading in), ffxii shadows, rumble roses shadows, persona4 shadows
 
-	OMSetRenderTargets(nullptr, nullptr, ds, &bbox);
+	OMSetRenderTargets(nullptr, nullptr, ds, &GLState::scissor);
 	{
 		constexpr GLint clear_color = 0;
 		glClearBufferiv(GL_STENCIL, 0, &clear_color);
@@ -2960,16 +2959,8 @@ void GSDeviceOGL::OMAttachDs(GSTexture* ds)
 
 	GLState::ds = static_cast<GSTextureOGL*>(ds);
 
-	if (ds)
-	{
-		const GLenum target = (ds->GetFormat() == GSTexture::Format::DepthStencil) ? GL_DEPTH_STENCIL_ATTACHMENT : GL_DEPTH_ATTACHMENT;
-		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, target, GL_TEXTURE_2D, static_cast<GSTextureOGL*>(ds)->GetID(), 0);
-	}
-	else
-	{
-		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, 0, 0);
-		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, 0, 0);
-	}
+	const GLenum target = m_features.framebuffer_fetch ? GL_DEPTH_ATTACHMENT : GL_DEPTH_STENCIL_ATTACHMENT;
+	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, target, GL_TEXTURE_2D, ds ? static_cast<GSTextureOGL*>(ds)->GetID() : 0, 0);
 }
 
 void GSDeviceOGL::OMSetFBO(GLuint fbo)
@@ -3109,11 +3100,7 @@ void GSDeviceOGL::OMSetRenderTargets(GSTexture* rt, GSTexture* ds_as_rt, GSTextu
 	{
 		// Always write to the first and second buffer
 		static constexpr GLenum target[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
-		static constexpr GLenum none = GL_NONE;
-		if (GLState::draw_buffers > 0)
-			glDrawBuffers(GLState::draw_buffers, target);
-		else
-			glDrawBuffers(1, &none);
+		glDrawBuffers(GLState::draw_buffers, target);
 	}
 }
 

@@ -325,7 +325,6 @@ public:
 	static std::vector<GSAdapterInfo> GetAdapterInfo();
 
 	__fi static GSDeviceOGL* GetInstance() { return static_cast<GSDeviceOGL*>(g_gs_device.get()); }
-	__fi bool IsGLES() const { return m_is_gles; }
 
 	// Used by OpenGL, so the same calling convention is required.
 	static void GLAPIENTRY DebugMessageCallback(GLenum gl_source, GLenum gl_type, GLuint id, GLenum gl_severity, GLsizei gl_length, const GLchar* gl_message, const void* userParam);

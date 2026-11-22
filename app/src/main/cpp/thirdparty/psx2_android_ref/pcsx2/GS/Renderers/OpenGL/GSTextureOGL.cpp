@@ -105,14 +105,7 @@ GSTextureOGL::GSTextureOGL(Usage usage, int width, int height, int levels, Forma
 		// Depth buffer
 		case Format::DepthStencil:
 		{
-			if (GSDeviceOGL::GetInstance()->IsGLES())
-			{
-				m_gl_format = GL_DEPTH24_STENCIL8;
-				m_int_format = GL_DEPTH_STENCIL;
-				m_int_type = GL_UNSIGNED_INT_24_8;
-				m_int_shift = 2; // 3 bytes depth + 1 byte stencil = 4 bytes per texel
-			}
-			else if (!g_gs_device->Features().framebuffer_fetch)
+			if (!g_gs_device->Features().framebuffer_fetch)
 			{
 				m_gl_format = GL_DEPTH32F_STENCIL8;
 				m_int_format = GL_DEPTH_STENCIL;
