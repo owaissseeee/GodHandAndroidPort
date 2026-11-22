@@ -1170,6 +1170,12 @@ namespace godhand
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
                     godhand_perf_record_game_frame();
                     godhand::notifyFrameHeartbeat();
+                    static uint32_t s_affinityReassertCounter = 0;
+                    if (++s_affinityReassertCounter >= 300) {
+                        s_affinityReassertCounter = 0;
+                        extern "C" void godhand_reassert_thread_affinities();
+                        godhand_reassert_thread_affinities();
+                    }
                     if (checkStreamVolumesDirty())
                         reapplyStreamVolumes(rdram, ctx, rt);
                     if (rdram)

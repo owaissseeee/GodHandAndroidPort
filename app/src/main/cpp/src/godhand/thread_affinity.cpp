@@ -242,6 +242,13 @@ static ThreadRole classifyThread(const char* name, int primaryCore, int fallback
     return ThreadRole::DEFAULT;
 }
 
+struct RoleConfig {
+    cpu_set_t mask;
+    int targetNice;
+    bool valid;
+};
+static RoleConfig s_roleConfigs[static_cast<size_t>(ThreadRole::DEFAULT) + 1] = {};
+
 static void applyAffinity(ThreadRole role, const char* name, int requestedNice) {
     static const std::vector<CpuCoreInfo> sorted = detectSortedCores();
     if (sorted.empty()) return;
@@ -427,6 +434,13 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
         }
     }
 
+    const size_t rIdx = static_cast<size_t>(role);
+    if (rIdx < sizeof(s_roleConfigs) / sizeof(s_roleConfigs[0])) {
+        s_roleConfigs[rIdx].mask = mask;
+        s_roleConfigs[rIdx].targetNice = targetNice;
+        s_roleConfigs[rIdx].valid = true;
+    }
+
     int rc = sched_setaffinity(0, sizeof(cpu_set_t), &mask);
     int pr = setpriority(PRIO_PROCESS, 0, targetNice);
 
@@ -507,8 +521,26 @@ extern "C" int godhand_get_device_tier() {
     }();
     return s_tier;
 }
+
+extern "C" void godhand_reassert_thread_affinities() {
+    auto reapply = [](int32_t tid, godhand::affinity::ThreadRole role) {
+        if (tid <= 0) return;
+        const size_t roleIdx = static_cast<size_t>(role);
+        if (roleIdx < sizeof(godhand::affinity::s_roleConfigs) / sizeof(godhand::affinity::s_roleConfigs[0]) &&
+            godhand::affinity::s_roleConfigs[roleIdx].valid) {
+            sched_setaffinity(tid, sizeof(cpu_set_t), &godhand::affinity::s_roleConfigs[roleIdx].mask);
+            setpriority(PRIO_PROCESS, tid, godhand::affinity::s_roleConfigs[roleIdx].targetNice);
+        }
+    };
+    reapply(g_tidEE.load(std::memory_order_relaxed), godhand::affinity::ThreadRole::EE_MAIN);
+    reapply(g_tidVU.load(std::memory_order_relaxed), godhand::affinity::ThreadRole::VU1_WORKER);
+    reapply(g_tidGS.load(std::memory_order_relaxed), godhand::affinity::ThreadRole::GS_RENDERER);
+    reapply(g_tidGIF.load(std::memory_order_relaxed), godhand::affinity::ThreadRole::GIF_WORKER);
+    reapply(g_tidIOP.load(std::memory_order_relaxed), godhand::affinity::ThreadRole::IOP_WORKER);
+}
 #else
 extern "C" void godhand_set_thread_affinity_and_priority(const char*, int, int, int) {}
+extern "C" void godhand_reassert_thread_affinities() {}
 extern "C" int godhand_get_device_tier() { return 1; }
 extern "C" void godhand_perf_record_work_duration(int64_t) {}
 extern "C" int64_t godhand_perf_get_last_work_duration() { return 16000000LL; }

@@ -737,8 +737,15 @@ void EeScheduler::run()
                 (currentPc >= 0x0030AD98u && currentPc <= 0x0030ADACu))
             {
                 const uint8_t reqVb = m_rdram[0x00747A09u] != 0u ? m_rdram[0x00747A09u] : 2u;
-                const uint32_t curVb = *reinterpret_cast<const uint32_t*>(m_rdram + 0x00753D80u);
-                if (curVb < reqVb)
+                uint32_t curVb = *reinterpret_cast<const uint32_t*>(m_rdram + 0x00753D80u);
+                // Dynamic Adaptive Frame Pacing (Removing the 15 FPS Cliff):
+                // If real CPU work already consumed a full 33+ ms frame duration and at least 1 VBlank
+                // has passed, satisfy the wait immediately to prevent dropping from 30 FPS to 15 FPS!
+                if (curVb >= 1u && curVb < reqVb && g_perfLastEeWorkMs.load(std::memory_order_relaxed) >= 33.0f)
+                {
+                    *reinterpret_cast<uint32_t*>(m_rdram + 0x00753D80u) = reqVb;
+                }
+                else if (curVb < reqVb)
                 {
                     skipIdleCycles();
                 }
@@ -825,7 +832,13 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
             if (((pc >= 0x0030ADD8u && pc <= 0x0030ADECu) || pc == 0x002B4BC0u ||
                  (pc >= 0x0030AD98u && pc <= 0x0030ADACu)))
             {
-                if (*reinterpret_cast<const uint32_t*>(m_rdram + 0x00753D80u) < m_rdram[0x00747A09u])
+                const uint8_t reqVb = m_rdram[0x00747A09u] != 0u ? m_rdram[0x00747A09u] : 2u;
+                uint32_t curVb = *reinterpret_cast<const uint32_t*>(m_rdram + 0x00753D80u);
+                if (curVb >= 1u && curVb < reqVb && g_perfLastEeWorkMs.load(std::memory_order_relaxed) >= 33.0f)
+                {
+                    *reinterpret_cast<uint32_t*>(m_rdram + 0x00753D80u) = reqVb;
+                }
+                else if (curVb < reqVb)
                 {
                     skipIdleCycles();
                 }
