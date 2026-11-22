@@ -1657,10 +1657,12 @@ void GSDeviceVK::SubmitCommandBuffer(VKSwapChain* present_swap_chain)
 			return;
 		}
 
+#if !defined(__ANDROID__)
 		// Grab the next image as soon as possible, that way we spend less time blocked on the next
 		// submission. Don't care if it fails, we'll deal with that at the presentation call site.
 		// Credit to dxvk for the idea.
 		present_swap_chain->AcquireNextImage();
+#endif
 	}
 }
 
@@ -7339,8 +7341,12 @@ void GSDeviceVK::SendHWDraw(const GSHWDrawConfig& config, GSTextureVK* draw_rt, 
 
 	if (one_barrier)
 	{
-		g_perfmon.Put(GSPerfMon::Barriers, n_barriers);
-		FeedbackBarrier(draw_rt, draw_ds);
+		const bool is_feedback = config.IsFeedbackLoopRT(m_pipeline_selector.ps) || config.IsFeedbackLoopDepth(m_pipeline_selector.ps);
+		if (is_feedback)
+		{
+			g_perfmon.Put(GSPerfMon::Barriers, n_barriers);
+			FeedbackBarrier(draw_rt, draw_ds);
+		}
 	}
 
 	Draw(config);
