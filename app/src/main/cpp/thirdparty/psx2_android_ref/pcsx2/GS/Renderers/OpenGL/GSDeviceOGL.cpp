@@ -49,12 +49,12 @@ namespace ReplaceGL
 
 	static void GLAPIENTRY MemoryBarrierAsTextureBarrier()
 	{
-		glMemoryBarrier(GL_TEXTURE_FETCH_BARRIER_BIT | GL_FRAMEBUFFER_BARRIER_BIT | GL_ALL_BARRIER_BITS);
+		glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
 	}
 
 	static void GLAPIENTRY TextureBarrier()
 	{
-		glMemoryBarrier(GL_TEXTURE_FETCH_BARRIER_BIT | GL_FRAMEBUFFER_BARRIER_BIT | GL_ALL_BARRIER_BITS);
+
 	}
 
 } // namespace ReplaceGL
@@ -815,8 +815,6 @@ bool GSDeviceOGL::CheckFeatures()
 	const char* const vendor = vendor_string ? vendor_string : "";
 	const char* const renderer = renderer_string ? renderer_string : "";
 	const bool is_mali = std::strstr(vendor, "ARM") || std::strstr(renderer, "Mali");
-	const bool is_adreno = std::strstr(vendor, "Qualcomm") || std::strstr(renderer, "Adreno");
-	const bool is_powervr = std::strstr(vendor, "Imagination") || std::strstr(renderer, "PowerVR");
 	if (std::strstr(vendor, "Advanced Micro Devices") || std::strstr(vendor, "ATI Technologies Inc.") ||
 		std::strstr(vendor, "ATI"))
 	{
@@ -837,10 +835,6 @@ bool GSDeviceOGL::CheckFeatures()
 	else if (is_mali)
 	{
 		Console.WriteLn(Color_Yellow, "GL: ARM Mali GPU detected.");
-	}
-	else if (is_adreno)
-	{
-		Console.WriteLn(Color_Magenta, "GL: Qualcomm Adreno GPU detected.");
 	}
 
 	GLint major_gl = 0;
@@ -890,25 +884,13 @@ bool GSDeviceOGL::CheckFeatures()
 	if (!GLAD_GL_ARB_texture_barrier)
 	{
 		// First try NV only barrier.
-		// If that doesn't work then switch to multidraw fb copy or dynamic/memory barrier.
+		// If that doesn't work then switch to multidraw fb copy.
 		if (GLAD_GL_NV_texture_barrier)
 			glTextureBarrier = glTextureBarrierNV;
 		else
 		{
-			using PFNGLTEXTUREBARRIERPROC = void (GLAPIENTRY *)(void);
-			PFNGLTEXTUREBARRIERPROC fn = (PFNGLTEXTUREBARRIERPROC)m_gl_context->GetProcAddress("glTextureBarrier");
-			if (!fn)
-				fn = (PFNGLTEXTUREBARRIERPROC)m_gl_context->GetProcAddress("glTextureBarrierKHR");
-			if (fn)
-			{
-				glTextureBarrier = fn;
-				m_features.multidraw_fb_copy = false;
-			}
-			else
-			{
-				glTextureBarrier = ReplaceGL::MemoryBarrierAsTextureBarrier;
-				m_features.multidraw_fb_copy = !m_is_gles;
-			}
+			glTextureBarrier = ReplaceGL::TextureBarrier;
+			m_features.multidraw_fb_copy = true;
 		}
 	}
 
@@ -942,10 +924,7 @@ bool GSDeviceOGL::CheckFeatures()
 	}
 
 	m_features.framebuffer_fetch =
-		GLAD_GL_EXT_shader_framebuffer_fetch ||
-		(m_is_gles && (GLAD_GL_ARM_shader_framebuffer_fetch ||
-		               GLAD_GL_EXT_shader_framebuffer_fetch_non_coherent ||
-		               GLAD_GL_QCOM_shader_framebuffer_fetch_noncoherent));
+		GLAD_GL_EXT_shader_framebuffer_fetch || (m_is_gles && GLAD_GL_ARM_shader_framebuffer_fetch);
 	if (m_features.framebuffer_fetch && GSConfig.DisableFramebufferFetch)
 	{
 		Host::AddOSDMessage(
@@ -962,66 +941,26 @@ bool GSDeviceOGL::CheckFeatures()
 	}
 	else if (GSConfig.OverrideTextureBarriers == 1)
 	{
-		// No texture barriers supported so try to use memory barrier or dynamic eglGetProcAddress.
-		if (!GLAD_GL_ARB_texture_barrier && !GLAD_GL_NV_texture_barrier)
-		{
-			using PFNGLTEXTUREBARRIERPROC = void (GLAPIENTRY *)(void);
-			PFNGLTEXTUREBARRIERPROC fn = (PFNGLTEXTUREBARRIERPROC)m_gl_context->GetProcAddress("glTextureBarrier");
-			if (!fn)
-				fn = (PFNGLTEXTUREBARRIERPROC)m_gl_context->GetProcAddress("glTextureBarrierKHR");
-			if (fn)
-				glTextureBarrier = fn;
-			else if (GLAD_GL_EXT_shader_framebuffer_fetch_non_coherent && glFramebufferFetchBarrierEXT)
-				glTextureBarrier = glFramebufferFetchBarrierEXT;
-			else if (GLAD_GL_QCOM_shader_framebuffer_fetch_noncoherent && glFramebufferFetchBarrierQCOM)
-				glTextureBarrier = glFramebufferFetchBarrierQCOM;
-			else
-				glTextureBarrier = ReplaceGL::MemoryBarrierAsTextureBarrier;
-		}
+		// No texture barriers supported so try to use memory barrier.
+		// Not guaranteed to work so only enable it in Force Enabled mode.
+		if (!GLAD_GL_ARB_texture_barrier && !GLAD_GL_NV_texture_barrier && GLAD_GL_ARB_shader_image_load_store)
+			glTextureBarrier = ReplaceGL::MemoryBarrierAsTextureBarrier;
 
 		m_features.texture_barrier = true; // Force Enabled
 		m_features.multidraw_fb_copy = false;
 	}
 	else
-	{
-		if (m_is_gles)
-		{
-			using PFNGLTEXTUREBARRIERPROC = void (GLAPIENTRY *)(void);
-			PFNGLTEXTUREBARRIERPROC fn = (PFNGLTEXTUREBARRIERPROC)m_gl_context->GetProcAddress("glTextureBarrier");
-			if (!fn)
-				fn = (PFNGLTEXTUREBARRIERPROC)m_gl_context->GetProcAddress("glTextureBarrierKHR");
-			if (fn)
-				glTextureBarrier = fn;
-			else if (GLAD_GL_EXT_shader_framebuffer_fetch_non_coherent && glFramebufferFetchBarrierEXT)
-				glTextureBarrier = glFramebufferFetchBarrierEXT;
-			else if (GLAD_GL_QCOM_shader_framebuffer_fetch_noncoherent && glFramebufferFetchBarrierQCOM)
-				glTextureBarrier = glFramebufferFetchBarrierQCOM;
-			else
-				glTextureBarrier = ReplaceGL::MemoryBarrierAsTextureBarrier;
-			m_features.texture_barrier = true;
-			m_features.multidraw_fb_copy = false;
-		}
-		else
-		{
-			m_features.texture_barrier = m_features.framebuffer_fetch || GLAD_GL_ARB_texture_barrier || GLAD_GL_NV_texture_barrier;
-		}
-	}
+		m_features.texture_barrier = m_features.framebuffer_fetch || GLAD_GL_ARB_texture_barrier || GLAD_GL_NV_texture_barrier;
 
 	m_features.provoking_vertex_last = true;
 	m_features.dxt_textures = GLAD_GL_EXT_texture_compression_s3tc;
 	m_features.bptc_textures =
 		GLAD_GL_VERSION_4_2 || GLAD_GL_ARB_texture_compression_bptc || GLAD_GL_EXT_texture_compression_bptc;
-	m_features.prefer_new_textures = m_is_gles || is_mali || is_adreno || is_powervr;
-	if (m_is_gles || is_adreno)
-	{
-		m_features.stencil_buffer = !m_features.framebuffer_fetch;
-		m_features.test_and_sample_depth = false;
-	}
-	else
-	{
-		m_features.stencil_buffer = !m_features.framebuffer_fetch;
-		m_features.test_and_sample_depth = true;
-	}
+	m_features.prefer_new_textures = false;
+	if (is_mali)
+		m_features.prefer_new_textures = true;
+	m_features.stencil_buffer = true;
+	m_features.test_and_sample_depth = true;
 	// Auto select chooses depth-as-rt as it appears to be more compatible across hardware.
 	m_features.depth_feedback = GSConfig.DepthFeedbackMode == GSDepthFeedbackMode::Depth;
 	if (!m_features.texture_barrier && m_features.multidraw_fb_copy)
@@ -1831,25 +1770,9 @@ std::string GSDeviceOGL::GenGlslHeader(const std::string_view entry, GLenum type
 			// Prefer EXT when both are advertised. The shader also checks EXT
 			// first, and unlike ARM it supports inout framebuffer attachments.
 			if (GLAD_GL_EXT_shader_framebuffer_fetch)
-			{
-				header += "#extension GL_EXT_shader_framebuffer_fetch : enable\n";
-				header += "#define HAS_FB_FETCH_EXT 1\n";
-			}
-			else if (GLAD_GL_EXT_shader_framebuffer_fetch_non_coherent)
-			{
-				header += "#extension GL_EXT_shader_framebuffer_fetch_non_coherent : enable\n";
-				header += "#define HAS_FB_FETCH_EXT 1\n";
-			}
-			else if (GLAD_GL_QCOM_shader_framebuffer_fetch_noncoherent)
-			{
-				header += "#extension GL_QCOM_shader_framebuffer_fetch_noncoherent : enable\n";
-				header += "#define HAS_FB_FETCH_EXT 1\n";
-			}
+				header += "#extension GL_EXT_shader_framebuffer_fetch : require\n";
 			else if (GLAD_GL_ARM_shader_framebuffer_fetch)
-			{
-				header += "#extension GL_ARM_shader_framebuffer_fetch : enable\n";
-				header += "#define HAS_FB_FETCH_ARM 1\n";
-			}
+				header += "#extension GL_ARM_shader_framebuffer_fetch : require\n";
 		}
 
 		header += "precision highp float;\n";
@@ -1907,9 +1830,9 @@ std::string GSDeviceOGL::GenGlslHeader(const std::string_view entry, GLenum type
 		header += "#define PS_HAS_CONSERVATIVE_DEPTH 0\n";
 	}
 
-	if (m_is_gles || (!m_features.texture_barrier && !m_features.multidraw_fb_copy))
+	if (!m_features.texture_barrier && !m_features.multidraw_fb_copy)
 	{
-		header += "#define DEPTH_FEEDBACK_SUPPORT 0\n"; // None on mobile GLES: prevents invalid location 1 inout o_col1 green quad!
+		header += "#define DEPTH_FEEDBACK_SUPPORT 0\n"; // None
 	}
 	else if (m_features.depth_feedback)
 	{

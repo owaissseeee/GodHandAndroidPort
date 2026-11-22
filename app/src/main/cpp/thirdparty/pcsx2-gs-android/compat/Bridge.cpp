@@ -42,7 +42,7 @@ namespace
         options.ManualUserHacks = true; // Enforce manual user hacks so PCSX2 MaskUserHacks does not wipe SkipDraw or HalfPixelOffset
         // Mobile TBDR (Mali / Adreno / Xclipse / PowerVR) High-Performance Configuration:
         options.AccurateBlendingUnit = AccBlendLevel::Minimum; // Maximum hardware TBDR fillrate: disables slow shader sw_blending & pipeline barriers
-        options.OverrideTextureBarriers = -1;                 // -1 = Auto: uses real driver texture barriers or framebuffer fetch without force-overriding broken dummy barriers
+        options.OverrideTextureBarriers = 1;                  // 1 = Enabled: keeps texture_barrier true, preventing expensive RT clone allocations & render pass breaks
         options.DisableFramebufferFetch = false;
         options.EnableAdrenoFramebufferFetch = true;
         options.PreloadFrameWithGSData = false;
@@ -205,19 +205,19 @@ namespace
         ApplyOptions(options, params->options);
         if (options.Renderer == GSRendererType::OGL)
         {
-            // OpenGL ES 3.2 mobile TBDR configuration (Adreno / Mali / PowerVR):
-            // Keep framebuffer fetch ENABLED for high-speed tile rendering, eliminating black screen.
+            // OpenGL ES 3.2 high-performance mobile TBDR configuration (Adreno / Mali / PowerVR):
+            // Enable framebuffer fetch (GL_EXT_shader_framebuffer_fetch / GL_ARM_shader_framebuffer_fetch)
+            // and hardware texture barriers (OverrideTextureBarriers = 1) to eliminate model distortion,
+            // blinking meshes, and FBO feedback blit stalls.
             options.DisableFramebufferFetch = false;
             options.EnableAdrenoFramebufferFetch = true;
-            options.OverrideTextureBarriers = -1; // Auto: real driver barriers or framebuffer fetch
-            options.AccurateBlendingUnit = AccBlendLevel::Minimum; // Matches Vulkan, prevents pipeline stalls & blend artifacts
-            options.UserHacks_DisableSafeFeatures = true; // Prevents ground shadow clear heuristics bug!
+            options.OverrideTextureBarriers = 1;
+            options.AccurateBlendingUnit = AccBlendLevel::Minimum;
+            options.UserHacks_DisableSafeFeatures = true;
             options.UserHacks_DisableDepthSupport = false;
             options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special;
-            options.UserHacks_NativeScaling = GSNativeScaling::Aggressive; // GameIndex.yaml fix for God Hand post-effects & blur alignment!
+            options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
             options.HWDownloadMode = GSHardwareDownloadMode::Disabled;
-            options.UserHacks_AutoFlush = GSHWAutoFlushLevel::Disabled;
-            options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
         }
         EmuConfig.GS = options;
         EmuConfig.CurrentAspectRatio = options.AspectRatio;
@@ -238,15 +238,13 @@ namespace
                 options.Renderer = GSRendererType::OGL;
                 options.DisableFramebufferFetch = false;
                 options.EnableAdrenoFramebufferFetch = true;
-                options.OverrideTextureBarriers = -1;
+                options.OverrideTextureBarriers = 1;
                 options.AccurateBlendingUnit = AccBlendLevel::Minimum;
                 options.UserHacks_DisableSafeFeatures = true;
                 options.UserHacks_DisableDepthSupport = false;
                 options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special;
                 options.UserHacks_NativeScaling = GSNativeScaling::Aggressive;
                 options.HWDownloadMode = GSHardwareDownloadMode::Disabled;
-                options.UserHacks_AutoFlush = GSHWAutoFlushLevel::Disabled;
-                options.UserHacks_TextureInsideRt = GSTextureInRtMode::Disabled;
                 EmuConfig.GS = options;
                 if (GSopen(options, options.Renderer, g_regs, vsync, false)) {
                     __android_log_print(ANDROID_LOG_INFO, "pcsx2-gs", "Bridge::Open: GSopen SUCCEEDED with OpenGL ES fallback!");

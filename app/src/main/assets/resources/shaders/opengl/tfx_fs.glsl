@@ -61,11 +61,7 @@
 
 #define NEEDS_RT (NEEDS_RT_EARLY || NEEDS_RT_FOR_AFAIL || (!PS_PRIMID_INIT && (PS_FBMASK || SW_BLEND_NEEDS_RT || SW_AD_TO_HW)))
 #define NEEDS_TEX (PS_TFX != 4)
-#if (DEPTH_FEEDBACK_SUPPORT != 0)
 #define SW_DEPTH (NEEDS_DEPTH_FOR_AFAIL || NEEDS_DEPTH_FOR_ZTST || NEEDS_DEPTH_FOR_AA1)
-#else
-#define SW_DEPTH 0
-#endif
 #define ZWRITE (SW_DEPTH || PS_ZCLAMP || PS_ZFLOOR)
 
 layout(std140, binding = 0) uniform cb21
@@ -129,16 +125,12 @@ in SHADER
 	// Basically the only scenario where this'll happen is RGBA masked and DATE is active.
 	#undef PS_NO_COLOR
 	#define PS_NO_COLOR 0
-	#if defined(HAS_FB_FETCH_EXT) || defined(GL_EXT_shader_framebuffer_fetch) || defined(GL_EXT_shader_framebuffer_fetch_non_coherent) || defined(GL_QCOM_shader_framebuffer_fetch_noncoherent)
+	#if defined(GL_EXT_shader_framebuffer_fetch)
 		#undef TARGET_0_QUALIFIER
 		#define TARGET_0_QUALIFIER inout
 		#define LAST_FRAG_COLOR o_col0
-	#elif defined(HAS_FB_FETCH_ARM) || defined(GL_ARM_shader_framebuffer_fetch)
+	#elif defined(GL_ARM_shader_framebuffer_fetch)
 		#define LAST_FRAG_COLOR gl_LastFragColorARM
-	#else
-		#undef TARGET_0_QUALIFIER
-		#define TARGET_0_QUALIFIER inout
-		#define LAST_FRAG_COLOR o_col0
 	#endif
 #endif
 
@@ -198,13 +190,11 @@ vec4 sample_from_rt()
 float sample_from_depth()
 {
 #if !SW_DEPTH
-	return gl_FragCoord.z;
+	return 0.0f;
 #elif HAS_FRAMEBUFFER_FETCH && (DEPTH_FEEDBACK_SUPPORT == 2)
 	return o_col1;
-#elif (DEPTH_FEEDBACK_SUPPORT == 1 || (DEPTH_FEEDBACK_SUPPORT == 2 && !HAS_FRAMEBUFFER_FETCH))
-	return texelFetch(DepthSampler, ivec2(gl_FragCoord.xy), 0).r;
 #else
-	return gl_FragCoord.z;
+	return texelFetch(DepthSampler, ivec2(gl_FragCoord.xy), 0).r;
 #endif
 }
 

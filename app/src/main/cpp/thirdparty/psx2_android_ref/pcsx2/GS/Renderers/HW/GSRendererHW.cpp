@@ -6049,10 +6049,6 @@ bool GSRendererHW::EmulateDATEEarlyFail(DATEOptions& date, GSTextureCache::Targe
 	if (!date.enabled)
 		return false;
 
-	// On mobile OpenGL ES, do not prematurely drop draw calls (like Gene's hair or alpha effects)
-	if (g_gs_device->GetRenderAPI() == RenderAPI::OpenGL)
-		return false;
-
 	const bool is_overlap_alpha = m_prim_overlap != PRIM_OVERLAP_NO && !(m_cached_ctx.FRAME.FBMSK & 0x80000000);
 	if (m_cached_ctx.TEST.DATM == 0)
 	{
@@ -6104,7 +6100,7 @@ void GSRendererHW::EmulateDATESelectMethod(DATEOptions& date_options, GSTextureC
 	// No overlap should be triggered on gl/vk only as they support DATE_BARRIER.
 	if (features.framebuffer_fetch)
 	{
-		// Full DATE is "free" with framebuffer fetch on both Vulkan (subpassLoad) and OpenGL ES (shader_framebuffer_fetch).
+		// Full DATE is "free" with framebuffer fetch. The barrier gets cleared below.
 		GL_PERF("DATE: Accurate with framebuffer fetch");
 		date_options.barrier = true;
 		m_conf.require_full_barrier = true;
@@ -9132,7 +9128,7 @@ void GSRendererHW::EmulateAlphaTest(DATEOptions& date_options)
 	const bool free_fbfetch_feedback = features.framebuffer_fetch && !afail_needs_depth;
 
 	// Determine if we have the correct features for depth feedback.
-	const bool depth_feedback_supported = features.depth_feedback;
+	const bool depth_feedback_supported = features.feedback_loops();
 
 	// We need depth feedback but do not have the correct features.
 	const bool avoid_feedback = afail_needs_depth && !depth_feedback_supported;
