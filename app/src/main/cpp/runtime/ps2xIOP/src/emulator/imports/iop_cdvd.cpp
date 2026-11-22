@@ -681,6 +681,104 @@ namespace ps2x::iop::detail
             return enabled;
         }
 
+        // 16 MB In-Memory Sector Cache (8192 sectors of 2048 bytes) with 16-sector read-ahead.
+        // Completely eliminates flash storage read stalls in cDvd_pollJob (0x00201718).
+        static constexpr size_t kSectorCacheEntries = 8192u;
+        static constexpr uint32_t kReadAheadSectors = 16u;
+        struct SectorCacheEntry
+        {
+            uint32_t lsn = ~0u;
+            std::array<uint8_t, kSectorSize> data{};
+        };
+        std::vector<SectorCacheEntry> sectorCache;
+
+        bool readCachedSector(uint32_t lsn, uint8_t *destination)
+        {
+            if (sectorCache.empty())
+                sectorCache.resize(kSectorCacheEntries);
+
+            const size_t slot = lsn % kSectorCacheEntries;
+            if (sectorCache[slot].lsn == lsn)
+            {
+                std::memcpy(destination, sectorCache[slot].data.data(), kSectorSize);
+                return true;
+            }
+
+            // Cache miss: prefetch a chunk of contiguous sectors starting at lsn
+            const std::string imagePath = host.hostPath(HostPathKind::CdImage);
+            if (!imagePath.empty())
+            {
+                if (imageHandle == 0u)
+                    imageHandle = host.openHostFile(imagePath);
+                if (imageHandle != 0u)
+                {
+                    uint64_t imageSize = 0u;
+                    uint32_t fetchCount = kReadAheadSectors;
+                    if (host.hostFileSize(imageHandle, imageSize))
+                    {
+                        const uint64_t startOffset = static_cast<uint64_t>(lsn) * kSectorSize;
+                        if (startOffset + static_cast<uint64_t>(fetchCount) * kSectorSize > imageSize)
+                        {
+                            if (startOffset < imageSize)
+                                fetchCount = static_cast<uint32_t>((imageSize - startOffset) / kSectorSize);
+                            else
+                                fetchCount = 1u;
+                            if (fetchCount == 0u)
+                                fetchCount = 1u;
+                        }
+                    }
+
+                    std::vector<uint8_t> block(static_cast<size_t>(fetchCount) * kSectorSize);
+                    size_t bytesRead = 0u;
+                    if (host.readHostFile(imageHandle,
+                                         static_cast<uint64_t>(lsn) * kSectorSize,
+                                         block.data(),
+                                         block.size(),
+                                         bytesRead) &&
+                        bytesRead >= kSectorSize)
+                    {
+                        const uint32_t actualSectors = static_cast<uint32_t>(bytesRead / kSectorSize);
+                        for (uint32_t s = 0u; s < actualSectors; ++s)
+                        {
+                            const uint32_t curLsn = lsn + s;
+                            const size_t curSlot = curLsn % kSectorCacheEntries;
+                            sectorCache[curSlot].lsn = curLsn;
+                            std::memcpy(sectorCache[curSlot].data.data(), block.data() + static_cast<size_t>(s) * kSectorSize, kSectorSize);
+                        }
+                        std::memcpy(destination, sectorCache[slot].data.data(), kSectorSize);
+                        return true;
+                    }
+                }
+            }
+
+            // Fallback for virtual ISO mode
+            if (buildVirtualIso())
+            {
+                if (readVirtualSector(lsn, destination))
+                {
+                    sectorCache[slot].lsn = lsn;
+                    std::memcpy(sectorCache[slot].data.data(), destination, kSectorSize);
+
+                    // Prefetch a few upcoming virtual sectors as well
+                    for (uint32_t s = 1u; s < 4u; ++s)
+                    {
+                        const uint32_t nextLsn = lsn + s;
+                        const size_t nextSlot = nextLsn % kSectorCacheEntries;
+                        if (sectorCache[nextSlot].lsn != nextLsn)
+                        {
+                            if (readVirtualSector(nextLsn, sectorCache[nextSlot].data.data()))
+                                sectorCache[nextSlot].lsn = nextLsn;
+                            else
+                                break;
+                        }
+                    }
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         bool readSectors(uint32_t lsn, uint32_t sectors, uint32_t destination)
         {
             if (cdLogEnabled())
@@ -699,34 +797,13 @@ namespace ps2x::iop::detail
             const size_t byteCount = static_cast<size_t>(byteCount64);
             std::vector<uint8_t> bytes(byteCount, 0u);
 
-            bool read = false;
-            const std::string imagePath = host.hostPath(HostPathKind::CdImage);
-            if (!imagePath.empty())
+            bool read = true;
+            for (uint32_t sector = 0u; sector < sectors; ++sector)
             {
-                if (imageHandle == 0u)
-                    imageHandle = host.openHostFile(imagePath);
-                if (imageHandle != 0u)
+                if (!readCachedSector(lsn + sector, bytes.data() + static_cast<size_t>(sector) * kSectorSize))
                 {
-                    size_t bytesRead = 0u;
-                    read = host.readHostFile(imageHandle,
-                                             static_cast<uint64_t>(lsn) * kSectorSize,
-                                             bytes.data(),
-                                             byteCount,
-                                             bytesRead) &&
-                           bytesRead == byteCount;
-                }
-            }
-
-            if (!read && buildVirtualIso())
-            {
-                read = true;
-                for (uint32_t sector = 0u; sector < sectors; ++sector)
-                {
-                    if (!readVirtualSector(lsn + sector, bytes.data() + static_cast<size_t>(sector) * kSectorSize))
-                    {
-                        read = false;
-                        break;
-                    }
+                    read = false;
+                    break;
                 }
             }
 

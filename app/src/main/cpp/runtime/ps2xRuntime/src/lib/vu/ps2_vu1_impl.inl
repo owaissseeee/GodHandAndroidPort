@@ -110,6 +110,37 @@ VU1_FORCE_INLINE float VU1Interpreter::normalizeOperand(float value) const
 
 VU1_FORCE_INLINE float VU1Interpreter::normalizeResult(float value, uint32_t &laneFlags) const
 {
+#if defined(__aarch64__) || defined(_M_ARM64)
+    uint32_t bits = 0;
+    std::memcpy(&bits, &value, sizeof(bits));
+    const uint32_t exponent = (bits >> 23) & 0xFFu;
+    // Fast path: 99.9% of vertices in God Hand are normal finite non-zero floats
+    if (__builtin_expect(exponent != 0u && exponent != 0xFFu, 1))
+    {
+        laneFlags = (bits & 0x80000000u) != 0u ? 0x2u : 0u;
+        return value;
+    }
+    const uint32_t sign = bits & 0x80000000u;
+    const uint32_t magnitude = bits & 0x7FFFFFFFu;
+    laneFlags = sign != 0u ? 0x2u : 0u;
+    if (__builtin_expect(magnitude == 0u, 0))
+    {
+        laneFlags |= 0x1u;
+    }
+    else if (__builtin_expect(exponent == 0u, 0))
+    {
+        laneFlags |= 0x5u;
+        bits = sign;
+        std::memcpy(&value, &bits, sizeof(value));
+    }
+    else if (__builtin_expect(exponent == 0xFFu, 0))
+    {
+        laneFlags |= 0x8u;
+        bits = sign | 0x7F7FFFFFu;
+        std::memcpy(&value, &bits, sizeof(value));
+    }
+    return value;
+#else
     uint32_t bits = 0;
     std::memcpy(&bits, &value, sizeof(bits));
     const uint32_t sign = bits & 0x80000000u;
@@ -135,6 +166,7 @@ VU1_FORCE_INLINE float VU1Interpreter::normalizeResult(float value, uint32_t &la
     }
 
     return value;
+#endif
 }
 
 VU1_FORCE_INLINE uint32_t VU1Interpreter::microAddressMask() const
