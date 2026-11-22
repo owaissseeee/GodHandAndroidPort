@@ -11,8 +11,8 @@ android {
         applicationId = "com.owaissseeee.godhand"
         minSdk = 26
         targetSdk = 35
-        versionCode = 4
-        versionName = "1.0.0-godhand-recomp"
+        versionCode = 5
+        versionName = "2.2"
 
         ndk {
             abiFilters.clear()

@@ -132,7 +132,7 @@
         android:layout_marginBottom="8dp"
         android:alpha="0.75"
         android:letterSpacing="0.05"
-        android:text="Port by owaissseeee • Vulkan PCSX2-GS Engine"
+        android:text="Port by owaissseeee • v2.2 • Vulkan PCSX2-GS Engine"
         android:textColor="#94A3B8"
         android:textSize="10sp" />
 
