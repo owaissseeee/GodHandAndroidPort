@@ -119,18 +119,34 @@ in SHADER
 
 #define TARGET_0_QUALIFIER out
 
+// When dual source blending is unavailable (GLES without GL_EXT_blend_func_extended),
+// treat the second color output as disabled so no 'index' layout qualifiers are emitted.
+#if defined(DISABLE_DUAL_SOURCE) && !PS_NO_COLOR1
+#undef PS_NO_COLOR1
+#define PS_NO_COLOR1 1
+#endif
+
 // Only enable framebuffer fetch when we actually need it.
 #if HAS_FRAMEBUFFER_FETCH && NEEDS_RT
 	// We need to force the colour to be defined here, to read from it.
 	// Basically the only scenario where this'll happen is RGBA masked and DATE is active.
 	#undef PS_NO_COLOR
 	#define PS_NO_COLOR 0
-	#if defined(GL_EXT_shader_framebuffer_fetch)
-		#undef TARGET_0_QUALIFIER
-		#define TARGET_0_QUALIFIER inout
-		#define LAST_FRAG_COLOR o_col0
-	#elif defined(GL_ARM_shader_framebuffer_fetch)
-		#define LAST_FRAG_COLOR gl_LastFragColorARM
+	// ARMSX2 / PCSX2: Mali devices use ARM_shader_framebuffer_fetch (gl_LastFragColorARM)
+	// because the EXT inout path is broken across Mali drivers and reads back stale tile data.
+	// Adreno / Generic devices use EXT inout (o_col0).
+	#if GPU_PROFILE_MALI
+		#if HAS_ARM_SHADER_FRAMEBUFFER_FETCH
+			#define LAST_FRAG_COLOR gl_LastFragColorARM
+		#endif
+	#else
+		#if HAS_EXT_SHADER_FRAMEBUFFER_FETCH
+			#undef TARGET_0_QUALIFIER
+			#define TARGET_0_QUALIFIER inout
+			#define LAST_FRAG_COLOR o_col0
+		#elif HAS_ARM_SHADER_FRAMEBUFFER_FETCH
+			#define LAST_FRAG_COLOR gl_LastFragColorARM
+		#endif
 	#endif
 #endif
 

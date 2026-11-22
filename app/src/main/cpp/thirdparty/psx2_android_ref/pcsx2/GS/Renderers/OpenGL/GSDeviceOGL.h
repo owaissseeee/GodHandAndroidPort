@@ -152,6 +152,8 @@ private:
 
 	std::unique_ptr<GLContext> m_gl_context;
 	bool m_is_gles = false;
+	bool m_is_mali = false;
+	bool m_is_adreno = false;
 
 	struct
 	{

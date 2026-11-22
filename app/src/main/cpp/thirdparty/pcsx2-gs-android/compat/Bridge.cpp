@@ -212,7 +212,7 @@ namespace
             options.DisableFramebufferFetch = false;
             options.EnableAdrenoFramebufferFetch = true;
             options.OverrideTextureBarriers = 1;
-            options.AccurateBlendingUnit = AccBlendLevel::Minimum;
+            options.AccurateBlendingUnit = AccBlendLevel::Basic;
             options.UserHacks_DisableSafeFeatures = true;
             options.UserHacks_DisableDepthSupport = false;
             options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special;
@@ -239,7 +239,7 @@ namespace
                 options.DisableFramebufferFetch = false;
                 options.EnableAdrenoFramebufferFetch = true;
                 options.OverrideTextureBarriers = 1;
-                options.AccurateBlendingUnit = AccBlendLevel::Minimum;
+                options.AccurateBlendingUnit = AccBlendLevel::Basic;
                 options.UserHacks_DisableSafeFeatures = true;
                 options.UserHacks_DisableDepthSupport = false;
                 options.UserHacks_HalfPixelOffset = GSHalfPixelOffset::Special;
