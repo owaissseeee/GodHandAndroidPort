@@ -1393,6 +1393,7 @@ namespace kamite
             // Zero-overhead EE timing telemetry: measure compute wall time and idle VBlank wait
             static auto s_prevFrameStart = std::chrono::steady_clock::now();
             const auto now = std::chrono::steady_clock::now();
+            g_perfFrameStartNs.store(std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count(), std::memory_order_relaxed);
             const float wallMs = std::chrono::duration<float, std::milli>(now - s_prevFrameStart).count();
             s_prevFrameStart = now;
 

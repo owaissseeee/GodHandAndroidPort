@@ -331,23 +331,18 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
                 break;
         }
     } else if (top_tier <= 1 || big_cores.size() >= 4) {
-        // Dedicated 1:1 Big Core assignment for zero preemption:
-        // - Big Core 0: 100% EXCLUSIVELY DEDICATED TO EE_MAIN (Nice -20)
-        // - Big Core 1: 100% EXCLUSIVELY DEDICATED TO VU1_WORKER (Nice -20)
-        // - Big Core 2: 100% EXCLUSIVELY DEDICATED TO GS_RENDERER (Nice -19)
-        // - Big Core 3 + Little Cores: GIF_WORKER, IOP_WORKER, AUDIO_SPU2, HOST_PUMP
+        // High-end multi-core & Snapdragon / Dimensity (4+ Big/Prime cores):
+        // Allow heavy threads (EE_MAIN, VU1_WORKER, GS_RENDERER) to use ALL Big/Prime performance cores.
+        // This enables Qualcomm EAS (Energy Aware Scheduler) to dynamically migrate threads between
+        // the Prime core and Big cores without thermal throttling traps, core downclocks, or preemption stalls!
         switch (role) {
             case ThreadRole::EE_MAIN:
-                CPU_SET(big_cores[0], &mask);
-                targetNice = -20;
-                break;
             case ThreadRole::VU1_WORKER:
-                CPU_SET(big_cores[1 % big_cores.size()], &mask);
-                targetNice = -20;
-                break;
             case ThreadRole::GS_RENDERER:
-                CPU_SET(big_cores[2 % big_cores.size()], &mask);
-                targetNice = -19;
+                for (int bc : big_cores)
+                    CPU_SET(bc, &mask);
+                targetNice = (role == ThreadRole::EE_MAIN) ? -20 :
+                             (role == ThreadRole::VU1_WORKER) ? -20 : -19;
                 break;
             case ThreadRole::GIF_WORKER:
             case ThreadRole::IOP_WORKER:
@@ -365,32 +360,21 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
         }
     } else if (big_cores.size() == 3) {
         // 3 Big cores (1 Prime + 2 Big, e.g. Snapdragon 855/865 1+3+4, or tri-cluster variants):
-        // Big Core 0: EE_MAIN (Nice -20)
-        // Big Core 1: VU1_WORKER (Nice -19)
-        // Big Core 2: GS_RENDERER (Nice -20) + IOP_WORKER (Nice -18)
-        // Little Cores: GIF_WORKER, AUDIO_SPU2, HOST_PUMP
+        // Allow EE, VU1, and GS to float across all 3 performance cores.
         switch (role) {
             case ThreadRole::EE_MAIN:
-                CPU_SET(big_cores[0], &mask);
-                targetNice = -20;
-                break;
             case ThreadRole::VU1_WORKER:
-                CPU_SET(big_cores[1], &mask);
-                targetNice = -19;
-                break;
             case ThreadRole::GS_RENDERER:
-            case ThreadRole::IOP_WORKER:
-                CPU_SET(big_cores[2], &mask);
-                targetNice = -18;
+                for (int bc : big_cores)
+                    CPU_SET(bc, &mask);
+                targetNice = (role == ThreadRole::EE_MAIN) ? -20 : -19;
                 break;
+            case ThreadRole::IOP_WORKER:
             case ThreadRole::GIF_WORKER:
             case ThreadRole::AUDIO_SPU2:
-                for (int lc : little_cores) CPU_SET(lc, &mask);
-                targetNice = -16;
-                break;
             default:
                 for (int lc : little_cores) CPU_SET(lc, &mask);
-                targetNice = -5;
+                targetNice = -16;
                 break;
         }
     } else {

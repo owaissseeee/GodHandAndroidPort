@@ -6,6 +6,7 @@ std::atomic<uint32_t> g_perfLastActiveGuestPc{0u};
 std::atomic<uint64_t> g_perfAccumEeIdleCycles{0u};
 std::atomic<float> g_perfLastEeWorkMs{0.0f};
 std::atomic<float> g_perfLastEeIdleMs{0.0f};
+std::atomic<int64_t> g_perfFrameStartNs{0};
 std::atomic<bool> g_perfSpikeLoggingEnabled{false};
 
 #include "ps2_log.h"
@@ -22,6 +23,7 @@ bool ps2xIpuActiveRecently() noexcept; // ps2_memory.cpp
 uint32_t ps2xGsFinishSerial() noexcept;
 const std::atomic<uint32_t> *ps2xGsSignalSerialAddress() noexcept;
 const std::atomic<uint32_t> *ps2xGsFinishSerialAddress() noexcept;
+extern "C" int godhand_get_device_tier();
 // host_vsync.cpp: the host display's last vblank and refresh period.
 bool ps2xHostVsync(std::chrono::steady_clock::time_point &lastVblank, std::chrono::nanoseconds &period) noexcept;
 // host_vsync.cpp (round 10 diagnostics): efficiency class of the current logical processor (-1 unknown) and the
@@ -739,9 +741,12 @@ void EeScheduler::run()
                 const uint8_t reqVb = m_rdram[0x00747A09u] != 0u ? m_rdram[0x00747A09u] : 2u;
                 uint32_t curVb = *reinterpret_cast<const uint32_t*>(m_rdram + 0x00753D80u);
                 // Dynamic Adaptive Frame Pacing (Removing the 15 FPS Cliff):
-                // If real CPU work already consumed a full 33+ ms frame duration and at least 1 VBlank
-                // has passed, satisfy the wait immediately to prevent dropping from 30 FPS to 15 FPS!
-                if (curVb >= 1u && curVb < reqVb && g_perfLastEeWorkMs.load(std::memory_order_relaxed) >= 33.0f)
+                // If real CPU work or real frame elapsed time has reached 27.5 ms and at least 1 VBlank
+                // has passed, satisfy the wait immediately to lock framerate at 28-30 FPS instead of dropping to 15 FPS!
+                const int64_t frameStartNs = g_perfFrameStartNs.load(std::memory_order_relaxed);
+                const int64_t nowNs = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+                const float elapsedCurFrameMs = (frameStartNs > 0 && nowNs > frameStartNs) ? static_cast<float>(nowNs - frameStartNs) * 1e-6f : 0.0f;
+                if (curVb >= 1u && curVb < reqVb && (elapsedCurFrameMs >= 27.5f || g_perfLastEeWorkMs.load(std::memory_order_relaxed) >= 27.5f))
                 {
                     *reinterpret_cast<uint32_t*>(m_rdram + 0x00753D80u) = reqVb;
                 }
@@ -834,7 +839,10 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
             {
                 const uint8_t reqVb = m_rdram[0x00747A09u] != 0u ? m_rdram[0x00747A09u] : 2u;
                 uint32_t curVb = *reinterpret_cast<const uint32_t*>(m_rdram + 0x00753D80u);
-                if (curVb >= 1u && curVb < reqVb && g_perfLastEeWorkMs.load(std::memory_order_relaxed) >= 33.0f)
+                const int64_t frameStartNs = g_perfFrameStartNs.load(std::memory_order_relaxed);
+                const int64_t nowNs = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now().time_since_epoch()).count();
+                const float elapsedCurFrameMs = (frameStartNs > 0 && nowNs > frameStartNs) ? static_cast<float>(nowNs - frameStartNs) * 1e-6f : 0.0f;
+                if (curVb >= 1u && curVb < reqVb && (elapsedCurFrameMs >= 27.5f || g_perfLastEeWorkMs.load(std::memory_order_relaxed) >= 27.5f))
                 {
                     *reinterpret_cast<uint32_t*>(m_rdram + 0x00753D80u) = reqVb;
                 }
@@ -927,9 +935,16 @@ void EeScheduler::accountCycles(uint32_t cycles) noexcept
     elapsed += g_ps2xEeDeferred;
     g_ps2xEeDeferred = 0u;
 
-    // Active game code charges 25% EE cycles (so heavy combat frames never trigger mid-frame VBlanks on Cortex-A53),
-    // while skipIdleCycles() charges 100% to reach the exact VBlank deadline immediately upon hitting func_0030B148.
-    const uint64_t eeCharge = t_inIdleSkip ? elapsed : std::max<uint64_t>(1u, elapsed >> 2);
+    // Active game code charges EE cycles:
+    // On Tier 2/3 performance devices (Snapdragon 7/8 series, Dimensity, Tensor), charge 50% (elapsed >> 1)
+    // so active instruction execution finishes smoothly within the 16.6ms VBlank window without 4x cycle inflation.
+    // On budget Cortex-A53 devices (Tier 1), charge 25% (elapsed >> 2) so weak cores don't miss mid-frame deadlines.
+    static const int s_cycleShift = [] {
+        const char *v = std::getenv("PS2X_EE_CYCLE_SHIFT");
+        if (v && *v) return std::clamp(std::atoi(v), 0, 3);
+        return (godhand_get_device_tier() >= 2) ? 1 : 2;
+    }();
+    const uint64_t eeCharge = t_inIdleSkip ? elapsed : std::max<uint64_t>(1u, elapsed >> s_cycleShift);
     m_eeCycle += eeCharge;
     g_ps2xEeDeferBudget.store(0u, std::memory_order_relaxed);
 

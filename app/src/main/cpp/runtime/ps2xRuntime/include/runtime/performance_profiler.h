@@ -27,6 +27,7 @@ extern std::atomic<uint32_t> g_perfLastActiveGuestPc;
 extern std::atomic<uint64_t> g_perfAccumEeIdleCycles;
 extern std::atomic<float> g_perfLastEeWorkMs;
 extern std::atomic<float> g_perfLastEeIdleMs;
+extern std::atomic<int64_t> g_perfFrameStartNs;
 extern std::atomic<bool> g_perfSpikeLoggingEnabled;
 
 // Subsystem telemetry query hooks
