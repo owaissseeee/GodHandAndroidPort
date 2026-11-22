@@ -21,6 +21,7 @@ static constexpr float kAspect4x3  = 0.93333334f;
 
 static std::atomic<int> s_fpsIdx{0}; // 0 = 30 FPS (Default), 1 = 60 FPS (Experimental)
 static std::atomic<int> s_aspectIdx{2}; // 0 = 16:9, 1 = 4:3, 2 = Full Screen
+static std::atomic<int> s_hudLayoutIdx{0}; // 0 = 16:9 Widescreen (Default), 1 = 4:3 Original
 static std::atomic<uint32_t> s_screenWidth{1600u};
 static std::atomic<uint32_t> s_screenHeight{720u};
 
@@ -39,6 +40,14 @@ void setAspectMode(int aspectIdx) {
 
 int getAspectMode() {
     return s_aspectIdx.load(std::memory_order_relaxed);
+}
+
+void setHudLayout(int mode) {
+    s_hudLayoutIdx.store(mode, std::memory_order_relaxed);
+}
+
+int getHudLayout() {
+    return s_hudLayoutIdx.load(std::memory_order_relaxed);
 }
 
 void setScreenDimensions(uint32_t width, uint32_t height) {
@@ -93,6 +102,49 @@ void applyPatches(uint8_t* rdram, int fpsIdx, int aspectIdx, float /*customScale
 
     // Widescreen patch:
     applyWidescreenPatch(rdram, aspectIdx);
+    applyWidescreenHudAndConePatches(rdram, aspectIdx, s_hudLayoutIdx.load(std::memory_order_relaxed));
+}
+
+void applyWidescreenHudAndConePatches(uint8_t* rdram, int aspectIdx, int hudLayout) {
+    if (!rdram) return;
+
+    // 1. Minigame aspect ratio guard (Fighting ring, Casino Blackjack, Slots):
+    // Reassert widescreen FOV so minigame entry functions do not force 4:3
+    applyWidescreenPatch(rdram, aspectIdx);
+
+    // 2. 21:9+ Screen-Fade Coverage Fix:
+    // When a fade is active at 0x00160C48 / 0x00747A28, ensure full viewport coverage
+    // so ultrawide 19.5:9 / 20:9 / 21:9 phone displays never leave the top or sides bright
+    if (aspectIdx != 1) { // 16:9 or Full Screen
+        uint32_t fadeFlags = 0;
+        std::memcpy(&fadeFlags, rdram + 0x00747A28u, sizeof(fadeFlags));
+        if (fadeFlags & 0x01u) {
+            const float fullCover = 2.0f;
+            std::memcpy(rdram + 0x0079B0E0u, &fullCover, sizeof(fullCover));
+        }
+    }
+
+    // 3. Widescreen HUD Layout (Boss portraits & Throw Prompt):
+    if (hudLayout == 0 && aspectIdx != 1) {
+        // Shift boss portrait alignment offset so it stays centered inside the circular health bar ring
+        const float bossPortraitXOffset = 0.0f; // Centered inside circular HUD ring
+        std::memcpy(rdram + 0x005CB040u, &bossPortraitXOffset, sizeof(bossPortraitXOffset));
+
+        // Adjust top-left action prompt ("Throw") positioning to widescreen safe-zone:
+        const float throwPromptX = 48.0f;
+        std::memcpy(rdram + 0x005CB060u, &throwPromptX, sizeof(throwPromptX));
+    }
+
+    // 4. "Enemies Follow the View" - Attack Cone Widening:
+    // At 16:9 and 20:9 ultrawide FOV, widen the enemy view frustum threshold in cEmManage
+    // from 0.819f (4:3 70 deg) to 0.642f (wide 100 deg) so visible edge enemies remain active!
+    if (aspectIdx != 1) {
+        const float wideConeCos = 0.642f; // cos(50 degrees)
+        std::memcpy(rdram + 0x005864F0u + 0x550u, &wideConeCos, sizeof(wideConeCos));
+    } else {
+        const float standardConeCos = 0.819f; // cos(35 degrees)
+        std::memcpy(rdram + 0x005864F0u + 0x550u, &standardConeCos, sizeof(standardConeCos));
+    }
 }
 
 void updateFrameTiming(uint8_t* rdram, int fpsIdx) {

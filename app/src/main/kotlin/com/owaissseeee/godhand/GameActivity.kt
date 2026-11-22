@@ -819,6 +819,8 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         val aspectIdx = intent.getIntExtra("aspectIdx", settings.aspectIdx)
         val fpsIdx = intent.getIntExtra("fpsIdx", settings.fpsIdx)
         val frameskipIdx = intent.getIntExtra("frameskipIdx", settings.frameskipIdx)
+        val hudLayoutIdx = intent.getIntExtra("hudLayoutIdx", settings.hudLayoutIdx)
+        NativeBridge.setHudLayout(hudLayoutIdx)
 
         val cachePath = java.io.File(filesDir, "godhand_cache").absolutePath
         NativeBridge.setGameCacheDirectory(cachePath)

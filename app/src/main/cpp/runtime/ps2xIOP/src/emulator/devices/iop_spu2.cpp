@@ -416,6 +416,7 @@ namespace ps2x::iop::detail
         adma.source = source;
         adma.bytes = bytes & ~static_cast<size_t>(0x3FFu);
         adma.position = 0u;
+        adma.index = 256u; // Force fetch of block 0 so left/right channels are perfectly aligned from start
         const AdmaRead mode = admaReadMode();
         if (mode == AdmaRead::All && source && adma.bytes != 0u)
         {

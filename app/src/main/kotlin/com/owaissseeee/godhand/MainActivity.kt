@@ -527,6 +527,7 @@ class MainActivity : ComponentActivity() {
             putExtra("rendererIdx", settings.rendererIdx)
             putExtra("resolutionIdx", settings.resolutionIdx)
             putExtra("aspectIdx", settings.aspectIdx)
+            putExtra("hudLayoutIdx", settings.hudLayoutIdx)
             putExtra("fpsIdx", settings.fpsIdx)
             putExtra("frameskipIdx", settings.frameskipIdx)
         }

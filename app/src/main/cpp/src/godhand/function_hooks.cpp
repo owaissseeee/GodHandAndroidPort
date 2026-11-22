@@ -1184,8 +1184,9 @@ namespace godhand
                         const uint32_t fullFlickerOff = 0x80u;
                         std::memcpy(rdram + 0x003C3CCCu, &fullFlickerOff, sizeof(fullFlickerOff));
 // Frame divider & rates are now dynamically managed by kamite::frameStart
-                        // Enforce non-stretched widescreen / ultrawide FOV every frame
+                        // Enforce non-stretched widescreen / ultrawide FOV, HUD layout, screen fade, and attack cone every frame
                         godhand::mobile::applyWidescreenPatch(rdram, godhand::mobile::getAspectMode());
+                        godhand::mobile::applyWidescreenHudAndConePatches(rdram, godhand::mobile::getAspectMode(), godhand::mobile::getHudLayout());
                         CheatsEngine::instance().applyFrameCheats(rdram);
                     }
                     if (s_origFlipBuilder)

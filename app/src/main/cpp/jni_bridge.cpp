@@ -579,6 +579,13 @@ Java_com_owaissseeee_godhand_NativeBridge_setAspectRatio(
 }
 
 JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setHudLayout(
+    JNIEnv* /*env*/, jobject /*thiz*/, jint mode)
+{
+    godhand::mobile::setHudLayout(mode);
+}
+
+JNIEXPORT void JNICALL
 Java_com_owaissseeee_godhand_NativeBridge_setFpsMode(
     JNIEnv* /*env*/, jobject /*thiz*/, jint fpsIdx)
 {

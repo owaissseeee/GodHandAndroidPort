@@ -152,6 +152,10 @@ class SettingsRepository(context: Context) {
         }
         set(value) = putInt("aspect_idx_v3", value.coerceIn(0, 2))
 
+    var hudLayoutIdx: Int
+        get() = getSafeInt("hud_layout_idx", 0).coerceIn(0, 1) // 0: 16:9 Widescreen (Default), 1: 4:3 Original
+        set(value) = putInt("hud_layout_idx", value.coerceIn(0, 1))
+
     var fpsIdx: Int
         get() {
             if (!prefs.contains("fps_idx_v6")) {

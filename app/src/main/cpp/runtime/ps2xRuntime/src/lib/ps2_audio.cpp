@@ -318,11 +318,11 @@ struct PS2AudioBackend::Impl
         // Prevents buffer starvation and underrun crackle when Game EE dips to 20-25 FPS.
         static const bool rateControl = [] { const char *v = std::getenv("PS2X_AUDIO_RATE_CONTROL"); return !(v && *v == '0'); }();
         const double fill = (static_cast<double>(owner->queued) - static_cast<double>(kRateTargetSamples)) / static_cast<double>(kRateTargetSamples);
-        // Transparent micro-rate control: clamped strictly to [0.990, 1.010] (+/-1.0%).
-        // Preserves crystal-clear authentic musical pitch and tempo during any frame pacing dips,
-        // while the 65,536-sample (~682 ms) ring buffer absorbs transient frame stalls.
-        // Strictly cap upper ratio at 1.005 so audio NEVER speeds up or shifts pitch high!
-        const double ratio = std::clamp(1.0 + fill * 0.04, 0.94, 1.005);
+        // Adaptive rate control: tracks SPU2 production rate and display pacing.
+        // On VRR / LTPO displays or during thermal dips, smoothly adjust consumption ratio:
+        // When buffer is high (fill > 0), consume slightly faster (up to 1.025x) to prevent buffer overflows without sudden drops.
+        // When buffer is low (fill < 0), consume slightly slower (down to 0.75x) to smoothly time-stretch and prevent underruns.
+        const double ratio = std::clamp(1.0 + fill * 0.12, 0.75, 1.025);
         for (size_t frame = 0u; frame < frames; ++frame)
         {
             if (owner->primed && owner->queued < 4u)
@@ -571,8 +571,8 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
             }
             d.rateFrames = 0u;
             d.rateStart = now;
-            // On only after two slow windows in a row (1 s): a real slowdown, not a single dip.
-            if (!d.stretching && d.speed < 0.97 && d.slowWindows >= 2u)
+            // On when speed drops: activate immediately if heavily slowed (speed < 0.90) or after two slow windows (speed < 0.98).
+            if (!d.stretching && ((d.speed < 0.90) || (d.speed < 0.98 && d.slowWindows >= 2u)))
             {
                 d.stretching = true;
                 d.stretch.reset();
@@ -615,8 +615,11 @@ void PS2AudioBackend::submitPcm(std::span<const int16_t> samples)
         samples = samples.last(Impl::kRingSamples);
     if (m_impl->queued + samples.size() > Impl::kRingSamples)
     {
-        const size_t drop = std::min(m_impl->queued, std::max(m_impl->queued + samples.size() - Impl::kRingSamples,
-                                                          m_impl->queued > 4096u ? m_impl->queued - 4096u : 0u));
+        // VRR / Refresh Rate Skip Fix:
+        // Only drop the minimum overflow excess, rather than dumping thousands of samples,
+        // preventing the audible ~15-second music skip on LTPO / variable-rate screens.
+        const size_t excess = (m_impl->queued + samples.size()) - Impl::kRingSamples;
+        const size_t drop = std::min(m_impl->queued, excess);
         m_impl->read = (m_impl->read + drop) % Impl::kRingSamples;
         m_impl->queued -= drop;
         m_impl->droppedFrames += drop / 2u;

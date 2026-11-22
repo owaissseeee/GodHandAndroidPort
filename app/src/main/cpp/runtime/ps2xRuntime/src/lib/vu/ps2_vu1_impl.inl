@@ -2057,6 +2057,11 @@ inline void VU1Interpreter::execLower(uint32_t instr, uint8_t *vuData, uint32_t 
     case 0x12: // FCAND
     {
         uint32_t imm24 = instr & 0xFFFFFF;
+        // Near-camera object pop / casino geometry fix (kamite near_geometry.cpp):
+        // Mask out near-plane -Z rejection bit when testing 0x03FFFF so GPU rasterizer
+        // clips the polygon smoothly rather than discarding the entire mesh.
+        if (imm24 == 0x03FFFFu)
+            imm24 = 0x010410u;
         if (1 != 0)
             m_state.vi[1] = ((m_state.clip & imm24) != 0) ? 1 : 0;
         return;
