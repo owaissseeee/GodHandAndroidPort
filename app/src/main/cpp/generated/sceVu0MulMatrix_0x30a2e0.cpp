@@ -22,14 +22,9 @@ void sceVu0MulMatrix_0x30a2e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("sceVu0MulMatrix_0x30a2e0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x30a2f4u: goto label_30a2f4;
-        default: break;
-    }
-
+#if defined(__aarch64__) || defined(_M_ARM64)
     ctx->pc = 0x30a2e0u;
 
-#if defined(__aarch64__) || defined(_M_ARM64)
     uint32_t a0 = GPR_U32(ctx, 4);
     const uint32_t a1 = GPR_U32(ctx, 5);
     uint32_t a2 = GPR_U32(ctx, 6);
@@ -71,10 +66,15 @@ void sceVu0MulMatrix_0x30a2e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     (void)runtime->dispatchGuestBranch(rdram, ctx, jumpTarget, 0x30A320u, 0u, PS2Runtime::GuestBranchKind::Return, "JR $ra");
     return;
     #else
-    ctx->pc = jumpTarget;
     return;
     #endif
 #else
+    switch (ctx->pc) {
+        case 0x30a2f4u: goto label_30a2f4;
+        default: break;
+    }
+
+    ctx->pc = 0x30a2e0u;
     // 0x30a2e0: 0xd8a40000  lqc2        $vf4, 0x0($a1)
     ctx->pc = 0x30a2e0u;
     ctx->vu0_vf[4] = _mm_castsi128_ps(READ128(ADD32(GPR_U32(ctx, 5), 0)));
