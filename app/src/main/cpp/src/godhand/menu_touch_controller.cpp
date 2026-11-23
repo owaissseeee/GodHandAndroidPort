@@ -80,6 +80,7 @@ static int      s_framesSinceInject = 0;
 static float    s_accumulatedScrollX = 0.0f;
 static float    s_accumulatedScrollY = 0.0f;
 static uint32_t s_lastActiveMenuState = MENU_NONE;
+static uint16_t s_followUpBtnMask = 0;
 
 // Read-back verification state machine
 enum class VerifyType : uint8_t {
@@ -101,7 +102,46 @@ static int32_t     s_pendingTargetId = -999;
 static uint32_t    s_pendingSubMgr = 0;
 static int         s_verifyWaitFrames = 0;
 
+// Hitbox overrides from real-time crop editor
+struct HitboxOverride {
+    int32_t screenId;
+    int32_t buttonId;
+    Rect2D rect;
+};
+static std::vector<HitboxOverride> s_hitboxOverrides;
+static std::mutex s_overrideMutex;
+
+bool checkHitbox(int32_t screenId, int32_t buttonId, const Rect2D& defRect, float ps2X, float ps2Y) {
+    Rect2D r = defRect;
+    {
+        std::lock_guard<std::mutex> lock(s_overrideMutex);
+        for (const auto& item : s_hitboxOverrides) {
+            if (item.screenId == screenId && item.buttonId == buttonId) {
+                r = item.rect;
+                break;
+            }
+        }
+    }
+    return r.contains(ps2X, ps2Y);
+}
+
 } // namespace
+
+void setHitboxOverride(int32_t screenId, int32_t buttonId, float x0, float y0, float x1, float y1) {
+    std::lock_guard<std::mutex> lock(s_overrideMutex);
+    for (auto& item : s_hitboxOverrides) {
+        if (item.screenId == screenId && item.buttonId == buttonId) {
+            item.rect = {x0, y0, x1, y1};
+            return;
+        }
+    }
+    s_hitboxOverrides.push_back({screenId, buttonId, {x0, y0, x1, y1}});
+}
+
+void clearHitboxOverrides() {
+    std::lock_guard<std::mutex> lock(s_overrideMutex);
+    s_hitboxOverrides.clear();
+}
 
 void setEnabled(bool enabled) {
     s_enabled.store(enabled, std::memory_order_relaxed);
@@ -234,17 +274,30 @@ static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
     outMenuMgrPtr = 0;
     if (!rdram) return MENU_NONE;
 
-    // RULE 1: STRICT EXCLUSION - NEVER touch live combat roulette (R1 during gameplay)
-    if (kamite::rouletteUp()) {
+    // RULE 1: STRICT EXCLUSION - NEVER touch live combat roulette (R2 during gameplay)
+    // Only active during normal gameplay when subscreen is NOT active!
+    uint32_t flags5E4 = 0;
+    std::memcpy(&flags5E4, rdram + (kFlags5E4Addr & 0x01FFFFFFu), sizeof(flags5E4));
+    if (!(flags5E4 & kStaSubScrBit) && kamite::rouletteUp()) {
         return MENU_NONE | MENU_FLAG_LIVE_ROULETTE;
     }
 
-    // RULE 2: Check Memory Card Save/Load screen active via GameWork + 0x584 (0x00747A24u & 0x04000000u)
+    // RULE 2: Check Memory Card Save/Load screen active via GameWork + 0x5E8 (0x00747A88u & 0x40000000u)
+    // Verified in cSaveLoad_openSave_0x2bf1a0.cpp:205-207 and cSaveLoad_openLoad_0x2bf268.cpp:105-107
+    uint32_t flags7A88 = 0;
+    std::memcpy(&flags7A88, rdram + (0x00747A88u & 0x01FFFFFFu), sizeof(flags7A88));
+    if (flags7A88 & 0x40000000u) {
+        uint32_t saveMgr = 0;
+        std::memcpy(&saveMgr, rdram + (0x003C2648u & 0x01FFFFFFu), sizeof(saveMgr));
+        outMenuMgrPtr = saveMgr;
+        return MENU_SAVELOAD | MENU_FLAG_SCROLLABLE;
+    }
+
     uint32_t flags584 = 0;
     std::memcpy(&flags584, rdram + (0x00747A24u & 0x01FFFFFFu), sizeof(flags584));
     if (flags584 & 0x04000000u) {
         uint32_t saveMgr = 0;
-        std::memcpy(&saveMgr, rdram + (0x003C264Cu & 0x01FFFFFFu), sizeof(saveMgr));
+        std::memcpy(&saveMgr, rdram + (0x003C2648u & 0x01FFFFFFu), sizeof(saveMgr));
         outMenuMgrPtr = saveMgr;
         return MENU_SAVELOAD | MENU_FLAG_SCROLLABLE;
     }
@@ -302,10 +355,8 @@ static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
         }
     }
 
-    // RULE 4: Title Screen State check via flags5E4 and Room ID == 0 (NEVER false trigger in shops or rooms)
-    uint32_t room = 0;
-    std::memcpy(&room, rdram + (kRoomAddr & 0x01FFFFFFu), sizeof(room));
-    if ((flags5E4 & kStaTitleBit) && (room == 0)) {
+    // RULE 4: Title Screen State check via flags5E4 kStaTitleBit
+    if (flags5E4 & kStaTitleBit) {
         uint32_t titleObj = findTitleObj(rdram);
         outMenuMgrPtr = titleObj;
         return MENU_TITLE;
@@ -326,6 +377,15 @@ void frameStart(uint8_t* rdram) {
             s_singleFrameInject = false;
             s_framesSinceInject = 0;
             s_injectedBtnMask = 0;
+
+            // If there is a follow-up button to inject (e.g. Cross after Left in Yes/No dialogs):
+            if (s_followUpBtnMask != 0) {
+                s_injectedBtnMask = s_followUpBtnMask;
+                s_followUpBtnMask = 0;
+                s_singleFrameInject = true;
+                s_framesSinceInject = 0;
+                ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+            }
         }
     }
 
@@ -401,8 +461,9 @@ void frameStart(uint8_t* rdram) {
             const uint8_t subState = rdram[(subMgr + kRouletteSubStateOffset) & 0x01FFFFFFu];
             s_dbgSubState.store(subState, std::memory_order_relaxed);
             if (subState == 0) {
-                const uint8_t slot = rdram[(subMgr + kRouletteSlotCursorOffset) & 0x01FFFFFFu];
-                s_dbgCurIdx.store(slot, std::memory_order_relaxed);
+                const uint8_t row = rdram[(subMgr + kRouletteSlotCursorOffset) & 0x01FFFFFFu];
+                const uint8_t col = rdram[(subMgr + kRouletteColumnOffset) & 0x01FFFFFFu];
+                s_dbgCurIdx.store(static_cast<int32_t>((col * 5) + row), std::memory_order_relaxed);
                 s_dbgScrollTop.store(0, std::memory_order_relaxed);
             } else {
                 const uint8_t row = rdram[(subMgr + kRouletteListCursorOffset) & 0x01FFFFFFu];
@@ -481,7 +542,9 @@ void frameStart(uint8_t* rdram) {
                 }
                 case VerifyType::ROULETTE_SLOT: {
                     if (s_pendingSubMgr != 0) {
-                        readBackVal = rdram[(s_pendingSubMgr + kRouletteSlotCursorOffset) & 0x01FFFFFFu];
+                        const uint8_t row = rdram[(s_pendingSubMgr + kRouletteSlotCursorOffset) & 0x01FFFFFFu];
+                        const uint8_t col = rdram[(s_pendingSubMgr + kRouletteColumnOffset) & 0x01FFFFFFu];
+                        readBackVal = (col * 5) + row;
                     }
                     break;
                 }
@@ -578,58 +641,93 @@ void frameStart(uint8_t* rdram) {
                         } else {
                             bool hit = false;
                             for (const auto& btn : kTitleCarouselHitboxes) {
-                                if (btn.rect.contains(ps2X, ps2Y)) {
+                                if (checkHitbox(screenId, btn.id, btn.rect, ps2X, ps2Y)) {
                                     s_pressedButtonId = btn.id;
                                     hit = true;
                                     break;
                                 }
                             }
-                            if (!hit && kTitleCenterConfirm.contains(ps2X, ps2Y)) {
-                                s_pressedButtonId = 10; // Center confirm
+                            if (!hit && checkHitbox(screenId, -100, kTitleCenterConfirm, ps2X, ps2Y)) {
+                                s_pressedButtonId = -100; // Center confirm
                             }
                         }
                     } else if (titleState == 5) {
                         // Difficulty Selection Menu (Easy: 0, Normal: 1, Hard: 2):
                         for (const auto& btn : kDifficultyHitboxes) {
-                            if (btn.rect.contains(ps2X, ps2Y)) {
+                            if (checkHitbox(screenId, btn.id, btn.rect, ps2X, ps2Y)) {
                                 s_pressedButtonId = btn.id;
                                 break;
+                            }
+                        }
+                    } else if (titleState == 6) {
+                        // Title Options Menu:
+                        if (ps2Y >= kOptionsRowTopY) {
+                            const int row = static_cast<int>((ps2Y - kOptionsRowTopY) / kOptionsRowStepY);
+                            if (row >= 0 && row < 8) {
+                                if (row <= 3 && ps2X >= 350.0f) {
+                                    s_pressedButtonId = (ps2X < kOptionsSliderMidX) ? -10 : -11;
+                                } else {
+                                    s_pressedButtonId = row;
+                                }
                             }
                         }
                     }
                 } else if (screenId == MENU_PAUSE_ROOT) {
                     for (const auto& btn : kPauseRootHitboxes) {
-                        if (btn.rect.contains(ps2X, ps2Y)) {
+                        if (checkHitbox(screenId, btn.id, btn.rect, ps2X, ps2Y)) {
                             s_pressedButtonId = btn.id;
                             break;
                         }
                     }
                 } else if (screenId == MENU_SAVELOAD) {
                     for (const auto& btn : kSaveLoadHitboxes) {
-                        if (btn.rect.contains(ps2X, ps2Y)) {
+                        if (checkHitbox(screenId, btn.id, btn.rect, ps2X, ps2Y)) {
                             s_pressedButtonId = btn.id;
                             break;
                         }
                     }
                 } else if (screenId == MENU_DIALOG) {
                     for (const auto& btn : kDialogHitboxes) {
-                        if (btn.rect.contains(ps2X, ps2Y)) {
+                        if (checkHitbox(screenId, btn.id, btn.rect, ps2X, ps2Y)) {
                             s_pressedButtonId = btn.id;
                             break;
                         }
                     }
                 } else if (screenId == MENU_STAGE_MAP || screenId == MENU_MAP) {
                     for (const auto& btn : kStageMapHitboxes) {
-                        if (btn.rect.contains(ps2X, ps2Y)) {
+                        if (checkHitbox(screenId, btn.id, btn.rect, ps2X, ps2Y)) {
                             s_pressedButtonId = btn.id;
                             break;
                         }
                     }
                 } else if (screenId == MENU_SHOP) {
-                    for (const auto& btn : kShopHitboxes) {
-                        if (btn.rect.contains(ps2X, ps2Y)) {
-                            s_pressedButtonId = btn.id;
+                    bool hitTab = false;
+                    for (int t = 0; t < 4; ++t) {
+                        if (checkHitbox(screenId, 20 + t, kShopTabsHitboxes[t].rect, ps2X, ps2Y)) {
+                            s_pressedButtonId = 20 + t;
+                            hitTab = true;
                             break;
+                        }
+                    }
+                    if (!hitTab) {
+                        if (ps2Y >= 385.0f) {
+                            if (ps2X >= 350.0f && ps2X < 460.0f) {
+                                s_pressedButtonId = 10; // YES (Confirm buy)
+                            } else if (ps2X >= 460.0f && ps2X <= 580.0f) {
+                                s_pressedButtonId = 11; // NO (Cancel buy)
+                            }
+                        } else if (ps2Y >= 85.0f && ps2Y <= 320.0f && ps2X <= 450.0f) {
+                            const int row = static_cast<int>((ps2Y - 85.0f) / 38.0f);
+                            if (row >= 0 && row < 6) {
+                                s_pressedButtonId = row;
+                            }
+                        } else {
+                            for (const auto& btn : kShopHitboxes) {
+                                if (checkHitbox(screenId, btn.id, btn.rect, ps2X, ps2Y)) {
+                                    s_pressedButtonId = btn.id;
+                                    break;
+                                }
+                            }
                         }
                     }
                 } else if (screenId == MENU_TECHNIQUES) {
@@ -639,15 +737,15 @@ void frameStart(uint8_t* rdram) {
                         const uint8_t col = rdram[(subMgr + kTechColumnOffset) & 0x01FFFFFFu];
                         if (subState == 0) {
                             // Left Column (Combo Slots 0..5):
-                            if (kTechLeftColumnArea.contains(ps2X, ps2Y)) {
+                            if (checkHitbox(screenId, 998, kTechLeftColumnArea, ps2X, ps2Y)) {
                                 const int slot = static_cast<int>((ps2Y - kTechSlotTopY) / kTechSlotStepY);
                                 if (slot >= 0 && slot < 6) {
                                     s_pressedButtonId = slot; // 0..5
                                 }
                             }
-                            // Right Column (Individual Slots 0..4):
-                            else if (kTechRightColumnArea.contains(ps2X, ps2Y)) {
-                                const int slot = static_cast<int>((ps2Y - kTechSlotTopY) / kTechSlotStepY);
+                            // Right Column (Individual Slots 0..4 starting at Y: 148):
+                            else if (checkHitbox(screenId, 999, kTechRightColumnArea, ps2X, ps2Y)) {
+                                const int slot = static_cast<int>((ps2Y - kTechRightSlotTopY) / kTechSlotStepY);
                                 if (slot >= 0 && slot < 5) {
                                     s_pressedButtonId = 10 + slot; // 10..14
                                 }
@@ -656,11 +754,11 @@ void frameStart(uint8_t* rdram) {
                             // Move List Popup (8 visible rows):
                             if (col == 1) {
                                 // Popup is on LEFT side
-                                if (kTechLeftTabLHitbox.contains(ps2X, ps2Y)) {
+                                if (checkHitbox(screenId, -2, kTechLeftTabLHitbox, ps2X, ps2Y)) {
                                     s_pressedButtonId = -2; // Tab L (L1)
-                                } else if (kTechLeftTabRHitbox.contains(ps2X, ps2Y)) {
+                                } else if (checkHitbox(screenId, -3, kTechLeftTabRHitbox, ps2X, ps2Y)) {
                                     s_pressedButtonId = -3; // Tab R (R1)
-                                } else if (kTechLeftTableArea.contains(ps2X, ps2Y)) {
+                                } else if (checkHitbox(screenId, 997, kTechLeftTableArea, ps2X, ps2Y)) {
                                     const int row = static_cast<int>((ps2Y - kTechListTopY) / kTechListStepY);
                                     if (row >= 0 && row < 8) {
                                         s_pressedButtonId = row; // 0..7
@@ -668,11 +766,11 @@ void frameStart(uint8_t* rdram) {
                                 }
                             } else {
                                 // Popup is on RIGHT side
-                                if (kTechRightTabLHitbox.contains(ps2X, ps2Y)) {
+                                if (checkHitbox(screenId, -2, kTechRightTabLHitbox, ps2X, ps2Y)) {
                                     s_pressedButtonId = -2; // Tab L (L1)
-                                } else if (kTechRightTabRHitbox.contains(ps2X, ps2Y)) {
+                                } else if (checkHitbox(screenId, -3, kTechRightTabRHitbox, ps2X, ps2Y)) {
                                     s_pressedButtonId = -3; // Tab R (R1)
-                                } else if (kTechRightTableArea.contains(ps2X, ps2Y)) {
+                                } else if (checkHitbox(screenId, 996, kTechRightTableArea, ps2X, ps2Y)) {
                                     const int row = static_cast<int>((ps2Y - kTechListTopY) / kTechListStepY);
                                     if (row >= 0 && row < 8) {
                                         s_pressedButtonId = row; // 0..7
@@ -687,12 +785,12 @@ void frameStart(uint8_t* rdram) {
                         const uint8_t subState = rdram[(subMgr + kRouletteSubStateOffset) & 0x01FFFFFFu];
                         if (subState == 0) {
                             // 10 Roulette Wheel Slots (5 left, 5 right)
-                            if (kRouletteLeftSlotArea.contains(ps2X, ps2Y)) {
+                            if (checkHitbox(screenId, 995, kRouletteLeftSlotArea, ps2X, ps2Y)) {
                                 const int slot = static_cast<int>((ps2Y - kRouletteSlotTopY) / kRouletteSlotStepY);
                                 if (slot >= 0 && slot < 5) {
                                     s_pressedButtonId = slot;
                                 }
-                            } else if (kRouletteRightSlotArea.contains(ps2X, ps2Y)) {
+                            } else if (checkHitbox(screenId, 994, kRouletteRightSlotArea, ps2X, ps2Y)) {
                                 const int slot = static_cast<int>((ps2Y - kRouletteSlotTopY) / kRouletteSlotStepY);
                                 if (slot >= 0 && slot < 5) {
                                     s_pressedButtonId = 5 + slot;
@@ -700,7 +798,7 @@ void frameStart(uint8_t* rdram) {
                             }
                         } else if (subState == 1) {
                             // Roulette Move List Popup (6 rows on right)
-                            if (kRouletteListArea.contains(ps2X, ps2Y)) {
+                            if (checkHitbox(screenId, 993, kRouletteListArea, ps2X, ps2Y)) {
                                 const int row = static_cast<int>((ps2Y - kRouletteListTopY) / kRouletteListStepY);
                                 if (row >= 0 && row < 6) {
                                     s_pressedButtonId = row;
@@ -709,7 +807,13 @@ void frameStart(uint8_t* rdram) {
                         }
                     }
                 } else if (screenId == MENU_OPTIONS) {
-                    if (ps2Y >= kOptionsRowTopY) {
+                    if (ps2Y >= 385.0f) {
+                        if (ps2X >= 350.0f && ps2X < 460.0f) {
+                            s_pressedButtonId = 10; // YES (Reset Game confirm)
+                        } else if (ps2X >= 460.0f && ps2X <= 580.0f) {
+                            s_pressedButtonId = 11; // NO (Reset Game cancel)
+                        }
+                    } else if (ps2Y >= kOptionsRowTopY) {
                         const int row = static_cast<int>((ps2Y - kOptionsRowTopY) / kOptionsRowStepY);
                         if (row >= 0 && row < 8) {
                             if (row <= 3 && ps2X >= 350.0f) {
@@ -827,7 +931,7 @@ void frameStart(uint8_t* rdram) {
                         s_singleFrameInject = true;
                         s_framesSinceInject = 0;
                         ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
-                    } else if (s_pressedButtonId == 10) {
+                    } else if (s_pressedButtonId == -100) {
                         // Title Center Confirm
                         s_injectedBtnMask = kPadCross;
                         s_singleFrameInject = true;
@@ -837,12 +941,17 @@ void frameStart(uint8_t* rdram) {
                     // 2. Save / Load Screen
                     else if (screenId == MENU_SAVELOAD) {
                         if (s_pressedButtonId >= 0 && s_pressedButtonId <= 2) {
+                            if (menuMgr != 0) {
+                                uint8_t targetSlot = static_cast<uint8_t>(s_pressedButtonId);
+                                rdram[(menuMgr + 0x02u) & 0x01FFFFFFu] = targetSlot;
+                            }
                             s_injectedBtnMask = kPadCross;
                         } else if (s_pressedButtonId == 10) {
-                            // Yes: inject Cross
-                            s_injectedBtnMask = kPadCross;
+                            // Yes: inject Left then Cross to confirm
+                            s_injectedBtnMask = kPadLeft;
+                            s_followUpBtnMask = kPadCross;
                         } else if (s_pressedButtonId == 11) {
-                            // No: inject Triangle
+                            // No: inject Triangle to cancel
                             s_injectedBtnMask = kPadTriangle;
                         }
                         s_singleFrameInject = true;
@@ -852,8 +961,9 @@ void frameStart(uint8_t* rdram) {
                     // 3. Dialog Actions
                     else if (screenId == MENU_DIALOG) {
                         if (s_pressedButtonId == 0) {
-                            // Yes: inject Cross
-                            s_injectedBtnMask = kPadCross;
+                            // Yes: inject Left then Cross
+                            s_injectedBtnMask = kPadLeft;
+                            s_followUpBtnMask = kPadCross;
                         } else {
                             // No: inject Triangle
                             s_injectedBtnMask = kPadTriangle;
@@ -864,7 +974,23 @@ void frameStart(uint8_t* rdram) {
                     }
                     // 4. Shop Actions
                     else if (screenId == MENU_SHOP) {
-                        if (s_pressedButtonId == 0) {
+                        if (s_pressedButtonId >= 20 && s_pressedButtonId <= 23) {
+                            const int tabIdx = s_pressedButtonId - 20;
+                            if (tabIdx == 3) {
+                                s_injectedBtnMask = kPadTriangle; // Exit
+                            } else {
+                                s_injectedBtnMask = (tabIdx > 0) ? kPadR1 : kPadL1;
+                            }
+                        } else if (s_pressedButtonId >= 0 && s_pressedButtonId < 6) {
+                            s_injectedBtnMask = kPadCross; // Item select
+                        } else if (s_pressedButtonId == 10) {
+                            // Yes: inject Left then Cross
+                            s_injectedBtnMask = kPadLeft;
+                            s_followUpBtnMask = kPadCross;
+                        } else if (s_pressedButtonId == 11) {
+                            // No: inject Triangle
+                            s_injectedBtnMask = kPadTriangle;
+                        } else if (s_pressedButtonId == 0) {
                             s_injectedBtnMask = kPadCross; // Buy
                         } else if (s_pressedButtonId == 1) {
                             s_injectedBtnMask = kPadRight; // Sell
@@ -877,15 +1003,20 @@ void frameStart(uint8_t* rdram) {
                     }
                     // 5. Stage Map Actions
                     else if (screenId == MENU_STAGE_MAP || screenId == MENU_MAP) {
-                        if (menuMgr != 0 && s_pressedButtonId >= 0 && s_pressedButtonId <= 3) {
+                        const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 3);
+                        if (subMgr != 0 && s_pressedButtonId >= 0 && s_pressedButtonId <= 3) {
                             uint8_t targetCur = static_cast<uint8_t>(s_pressedButtonId);
-                            rdram[(menuMgr + kStageMapCursorOffset) & 0x01FFFFFFu] = targetCur;
+                            rdram[(subMgr + kStageMapCursorOffset) & 0x01FFFFFFu] = targetCur;
                             s_pendingVerify = true;
                             s_pendingVerifyType = VerifyType::STAGE_MAP_BTN;
                             s_pendingTargetId = targetCur;
-                            s_pendingSubMgr = menuMgr;
+                            s_pendingSubMgr = subMgr;
                             s_verifyWaitFrames = 1;
                             s_dbgPendingTargetId.store(targetCur, std::memory_order_relaxed);
+                            s_injectedBtnMask = kPadCross;
+                            s_singleFrameInject = true;
+                            s_framesSinceInject = 0;
+                            ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
                         }
                     }
                     // 6. Title Screen Options
@@ -900,6 +1031,13 @@ void frameStart(uint8_t* rdram) {
                             s_pendingSubMgr = menuMgr;
                             s_verifyWaitFrames = 1;
                             s_dbgPendingTargetId.store(targetCur, std::memory_order_relaxed);
+                        } else if (titleState == 6) {
+                            if (s_pressedButtonId >= 0 && s_pressedButtonId < 8) {
+                                s_injectedBtnMask = kPadCross;
+                                s_singleFrameInject = true;
+                                s_framesSinceInject = 0;
+                                ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                            }
                         }
                     }
                     // 7. Pause Root Options
@@ -958,14 +1096,20 @@ void frameStart(uint8_t* rdram) {
                             }
                         }
                     }
-                    // 9. Roulette Wheel Edit (10 slots)
+                    // 9. Roulette Wheel Edit (10 slots: 5 left, 5 right)
                     else if (screenId == MENU_ROULETTE_EDIT) {
                         const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 2);
                         if (subMgr != 0) {
                             const uint8_t subState = rdram[(subMgr + kRouletteSubStateOffset) & 0x01FFFFFFu];
                             if (subState == 0 && s_pressedButtonId >= 0 && s_pressedButtonId < 10) {
                                 uint8_t targetSlot = static_cast<uint8_t>(s_pressedButtonId);
-                                rdram[(subMgr + kRouletteSlotCursorOffset) & 0x01FFFFFFu] = targetSlot;
+                                if (targetSlot < 5) {
+                                    rdram[(subMgr + kRouletteColumnOffset) & 0x01FFFFFFu] = 0;
+                                    rdram[(subMgr + kRouletteSlotCursorOffset) & 0x01FFFFFFu] = targetSlot;
+                                } else {
+                                    rdram[(subMgr + kRouletteColumnOffset) & 0x01FFFFFFu] = 1;
+                                    rdram[(subMgr + kRouletteSlotCursorOffset) & 0x01FFFFFFu] = targetSlot - 5;
+                                }
                                 s_pendingVerify = true;
                                 s_pendingVerifyType = VerifyType::ROULETTE_SLOT;
                                 s_pendingTargetId = targetSlot;
@@ -986,16 +1130,31 @@ void frameStart(uint8_t* rdram) {
                     }
                     // 10. Options Screen (8 rows, NO TABS)
                     else if (screenId == MENU_OPTIONS) {
-                        const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 4);
-                        if (subMgr != 0 && s_pressedButtonId >= 0 && s_pressedButtonId < 8) {
-                            uint8_t targetRow = static_cast<uint8_t>(s_pressedButtonId);
-                            rdram[(subMgr + kOptionsCursorOffset) & 0x01FFFFFFu] = targetRow;
-                            s_pendingVerify = true;
-                            s_pendingVerifyType = VerifyType::OPTIONS_ROW;
-                            s_pendingTargetId = targetRow;
-                            s_pendingSubMgr = subMgr;
-                            s_verifyWaitFrames = 1;
-                            s_dbgPendingTargetId.store(targetRow, std::memory_order_relaxed);
+                        if (s_pressedButtonId == 10) {
+                            // YES (Reset Game confirm)
+                            s_injectedBtnMask = kPadLeft;
+                            s_followUpBtnMask = kPadCross;
+                            s_singleFrameInject = true;
+                            s_framesSinceInject = 0;
+                            ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                        } else if (s_pressedButtonId == 11) {
+                            // NO (Reset Game cancel)
+                            s_injectedBtnMask = kPadTriangle;
+                            s_singleFrameInject = true;
+                            s_framesSinceInject = 0;
+                            ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                        } else {
+                            const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 4);
+                            if (subMgr != 0 && s_pressedButtonId >= 0 && s_pressedButtonId < 8) {
+                                uint8_t targetRow = static_cast<uint8_t>(s_pressedButtonId);
+                                rdram[(subMgr + kOptionsCursorOffset) & 0x01FFFFFFu] = targetRow;
+                                s_pendingVerify = true;
+                                s_pendingVerifyType = VerifyType::OPTIONS_ROW;
+                                s_pendingTargetId = targetRow;
+                                s_pendingSubMgr = subMgr;
+                                s_verifyWaitFrames = 1;
+                                s_dbgPendingTargetId.store(targetRow, std::memory_order_relaxed);
+                            }
                         }
                     }
                 }

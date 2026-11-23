@@ -74,5 +74,7 @@ object NativeBridge {
     external fun onMenuBackPressed(): Boolean
     external fun setMenuTouchEnabled(enabled: Boolean)
     external fun getMenuDebugInfo(outArray: IntArray)
+    external fun setHitboxOverride(screenId: Int, buttonId: Int, x0: Float, y0: Float, x1: Float, y1: Float)
+    external fun clearHitboxOverrides()
 }
 

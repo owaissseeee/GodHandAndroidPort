@@ -466,7 +466,7 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                 performQuickLoad()
             }
             onBackTriggered = {
-                handleGlobalBackPressed()
+                NativeBridge.onMenuBackPressed()
             }
             onSaveEditLayout = { map ->
                 settings.saveCustomButtonLayout(map)

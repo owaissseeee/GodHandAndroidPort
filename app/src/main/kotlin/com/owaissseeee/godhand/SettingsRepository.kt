@@ -412,4 +412,51 @@ class SettingsRepository(context: Context) {
         prefs.edit().remove("custom_btn_layout").commit()
         saveAllToJsonFile()
     }
+
+    data class HitboxOverrideData(val screenId: Int, val buttonId: Int, val x0: Float, val y0: Float, val x1: Float, val y1: Float)
+
+    fun saveHitboxOverride(screenId: Int, buttonId: Int, x0: Float, y0: Float, x1: Float, y1: Float) {
+        prefs.edit()
+            .putString("hitbox_override_${screenId}_${buttonId}", "$x0,$y0,$x1,$y1")
+            .apply()
+        saveAllToJsonFile()
+    }
+
+    fun removeHitboxOverride(screenId: Int, buttonId: Int) {
+        prefs.edit().remove("hitbox_override_${screenId}_${buttonId}").apply()
+        saveAllToJsonFile()
+    }
+
+    fun clearHitboxOverrides() {
+        val editor = prefs.edit()
+        for (key in prefs.all.keys) {
+            if (key.startsWith("hitbox_override_")) {
+                editor.remove(key)
+            }
+        }
+        editor.apply()
+        saveAllToJsonFile()
+    }
+
+    fun getAllHitboxOverrides(): List<HitboxOverrideData> {
+        val list = mutableListOf<HitboxOverrideData>()
+        for ((key, value) in prefs.all) {
+            if (key.startsWith("hitbox_override_") && value is String) {
+                val parts = key.removePrefix("hitbox_override_").split("_")
+                if (parts.size >= 2) {
+                    val sId = parts[0].toIntOrNull() ?: continue
+                    val bId = parts[1].toIntOrNull() ?: continue
+                    val coords = value.split(",")
+                    if (coords.size == 4) {
+                        val x0 = coords[0].toFloatOrNull() ?: continue
+                        val y0 = coords[1].toFloatOrNull() ?: continue
+                        val x1 = coords[2].toFloatOrNull() ?: continue
+                        val y1 = coords[3].toFloatOrNull() ?: continue
+                        list.add(HitboxOverrideData(sId, bId, x0, y0, x1, y1))
+                    }
+                }
+            }
+        }
+        return list
+    }
 }

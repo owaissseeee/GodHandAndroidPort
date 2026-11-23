@@ -1,6 +1,8 @@
 // app/src/main/kotlin/com/lasvola/godhand/ui/TouchControllerOverlay.kt
 package com.owaissseeee.godhand.ui
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -18,6 +20,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 import com.owaissseeee.godhand.NativeBridge
 import com.owaissseeee.godhand.SettingsRepository
 import java.io.File
@@ -117,12 +120,20 @@ class TouchControllerOverlay(context: Context) : View(context) {
         leftStickPointerId = -1
         leftStickX = 0f
         leftStickY = 0f
+        leftCenterX = 0f
+        leftCenterY = 0f
+        leftCurrX = 0f
+        leftCurrY = 0f
         wasMovingForward = false
         isAutoRunPulsing = false
         runPulseHandler.removeCallbacksAndMessages(null)
         rightStickPointerId = -1
         rightStickX = 0f
         rightStickY = 0f
+        rightCenterX = 0f
+        rightCenterY = 0f
+        rightCurrX = 0f
+        rightCurrY = 0f
         swipePointerId = -1
         backButtonPointerId = -1
         NativeBridge.updatePadState(0, 0f, 0f, 0f, 0f)
@@ -433,6 +444,72 @@ class TouchControllerOverlay(context: Context) : View(context) {
     }
     private val menuDebugInfoArray = IntArray(6)
 
+    enum class CropHandle {
+        TOP_LEFT, TOP, TOP_RIGHT, RIGHT, BOTTOM_RIGHT, BOTTOM, BOTTOM_LEFT, LEFT, BODY
+    }
+
+    var isHitboxEditMode: Boolean = false
+    var selectedBoxId: Int? = null
+    private var selectedScreenId: Int = 0
+    private var cropDragPointerId: Int = -1
+    private var activeCropHandle: CropHandle? = null
+    private var cropTouchStartX: Float = 0f
+    private var cropTouchStartY: Float = 0f
+    private var origBoxPs2 = RectF()
+    private val activeOverrides = mutableMapOf<Pair<Int, Int>, RectF>()
+    private val currentScreenBoxes = mutableListOf<DebugBox>()
+
+    private val cropHandlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = 0xFF06B6D4.toInt() // Bright Cyan Handle
+    }
+    private val cropHandleBorderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+        strokeWidth = 2f * density
+        color = 0xFFFFFFFF.toInt()
+    }
+    private val cropSelectedBoxPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+        strokeWidth = 3f * density
+        color = 0xFF06B6D4.toInt()
+    }
+    private val cropSelectedFillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = 0x3306B6D4.toInt()
+    }
+    private val cropToolbarBgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = 0xF00F172A.toInt() // Dark Glass Toolbar
+    }
+    private val cropToolbarBorderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+        strokeWidth = 1.5f * density
+        color = 0xFF06B6D4.toInt()
+    }
+    private val cropToolbarBtnPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = 0xFF1E293B.toInt()
+    }
+    private val cropToolbarBtnBorderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+        strokeWidth = 1.2f * density
+        color = 0xFF475569.toInt()
+    }
+    private val cropToolbarBtnTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = 0xFFF8FAFC.toInt()
+        textSize = 8f * density
+        typeface = Typeface.MONOSPACE
+        isFakeBoldText = true
+        textAlign = Paint.Align.CENTER
+    }
+    private val cropToolbarTitlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = 0xFFF59E0B.toInt()
+        textSize = 8f * density
+        typeface = Typeface.MONOSPACE
+        isFakeBoldText = true
+        textAlign = Paint.Align.LEFT
+    }
+
     private var backButtonPointerId = -1
     private val backCirclePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
@@ -467,6 +544,11 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
     init {
         updatePaintsOpacity()
+        // Load saved hitbox overrides from SharedPreferences on startup
+        for (o in repo.getAllHitboxOverrides()) {
+            activeOverrides[Pair(o.screenId, o.buttonId)] = RectF(o.x0, o.y0, o.x1, o.y1)
+            NativeBridge.setHitboxOverride(o.screenId, o.buttonId, o.x0, o.y0, o.x1, o.y1)
+        }
     }
 
     private fun updatePaintsOpacity() {
@@ -883,7 +965,31 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 }
             }
 
-            // 2. Circular Back Button at bottom-right
+            // 2. Check [✏️ EDIT] button tap
+            val editBtnText = if (isHitboxEditMode) "✓ DONE" else "✏️ EDIT"
+            val editBtnW = menuDebugHudTextPaint.measureText(editBtnText) + 16f * density
+            val editBtnH = 18f * density
+            val editBtnX = w - (180f * density) - editBtnW - 6f * density
+            val editBtnY = 8f * density
+
+            if (x >= editBtnX && x <= editBtnX + editBtnW && y >= editBtnY && y <= editBtnY + editBtnH) {
+                if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN) {
+                    isHitboxEditMode = !isHitboxEditMode
+                    if (!isHitboxEditMode) {
+                        cropDragPointerId = -1
+                        activeCropHandle = null
+                    }
+                    invalidate()
+                    return true
+                }
+            }
+
+            // 3. If in Hitbox Edit Mode, intercept touch events for resizing/moving/saving:
+            if (isHitboxEditMode) {
+                return handleHitboxEditTouch(event, w, h)
+            }
+
+            // 4. Circular Back Button at bottom-right
             val backRadius = 22f * density
             val backCx = w - 38f * density
             val backCy = h - 36f * density
@@ -1389,6 +1495,41 @@ class TouchControllerOverlay(context: Context) : View(context) {
         }
     }
 
+    private fun screenToPs2(sx: Float, sy: Float, w: Float, h: Float): PointF {
+        val aspectMode = repo.aspectIdx
+        return when (aspectMode) {
+            2 -> { // Full Screen Stretch
+                PointF(sx * (640f / w), sy * (448f / h))
+            }
+            0 -> { // 16:9 Widescreen
+                val targetAspect = 16f / 9f
+                val deviceAspect = w / h
+                if (deviceAspect >= targetAspect) {
+                    val vpWidth = h * targetAspect
+                    val vpLeft = (w - vpWidth) * 0.5f
+                    PointF((sx - vpLeft) * (640f / vpWidth), sy * (448f / h))
+                } else {
+                    val vpHeight = w / targetAspect
+                    val vpTop = (h - vpHeight) * 0.5f
+                    PointF(sx * (640f / w), (sy - vpTop) * (448f / vpHeight))
+                }
+            }
+            else -> { // 4:3 Pillarbox
+                val targetAspect = 4f / 3f
+                val deviceAspect = w / h
+                if (deviceAspect >= targetAspect) {
+                    val vpWidth = h * targetAspect
+                    val vpLeft = (w - vpWidth) * 0.5f
+                    PointF((sx - vpLeft) * (640f / vpWidth), sy * (448f / h))
+                } else {
+                    val vpHeight = w / targetAspect
+                    val vpTop = (h - vpHeight) * 0.5f
+                    PointF(sx * (640f / w), (sy - vpTop) * (448f / vpHeight))
+                }
+            }
+        }
+    }
+
     private fun drawMenuDebugOverlay(canvas: Canvas, w: Float, h: Float) {
         NativeBridge.getMenuDebugInfo(menuDebugInfoArray)
         val screenId = menuDebugInfoArray[0]
@@ -1422,7 +1563,17 @@ class TouchControllerOverlay(context: Context) : View(context) {
         canvas.drawRoundRect(hudX, hudY, hudX + hudW, hudY + hudH, 4f * density, 4f * density, menuDebugHudBorderPaint)
         canvas.drawText(hudLine, hudX + 7f * density, hudY + 12f * density, menuDebugHudTextPaint)
 
-        // 2. Build hitboxes for active screen
+        // 2. Draw [✏️ EDIT] / [✓ DONE] button next to Mini HUD
+        val editBtnText = if (isHitboxEditMode) "✓ DONE" else "✏️ EDIT"
+        val editBtnW = menuDebugHudTextPaint.measureText(editBtnText) + 16f * density
+        val editBtnH = 18f * density
+        val editBtnX = hudX - editBtnW - 6f * density
+        val editBtnY = 8f * density
+        canvas.drawRoundRect(editBtnX, editBtnY, editBtnX + editBtnW, editBtnY + editBtnH, 4f * density, 4f * density, menuDebugHudBgPaint)
+        canvas.drawRoundRect(editBtnX, editBtnY, editBtnX + editBtnW, editBtnY + editBtnH, 4f * density, 4f * density, if (isHitboxEditMode) cropSelectedBoxPaint else menuDebugHudBorderPaint)
+        canvas.drawText(editBtnText, editBtnX + editBtnW * 0.5f, editBtnY + 12f * density, cropToolbarBtnTextPaint)
+
+        // 3. Build hitboxes for active screen
         val boxes = mutableListOf<DebugBox>()
 
         when (screenId) {
@@ -1435,18 +1586,25 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     boxes.add(DebugBox(1, "[1] LOAD GAME", 430f, 360f, 620f, 420f))
                     boxes.add(DebugBox(-10, "◀", 15f, 220f, 95f, 300f))
                     boxes.add(DebugBox(-11, "▶", 545f, 220f, 625f, 300f))
+                    boxes.add(DebugBox(-100, "[CONFIRM]", 220f, 250f, 420f, 350f))
                 } else if (subState == 5) {
                     boxes.add(DebugBox(0, "[0] EASY", 40f, 360f, 200f, 420f))
                     boxes.add(DebugBox(1, "[1] NORMAL", 220f, 360f, 420f, 420f))
                     boxes.add(DebugBox(2, "[2] HARD", 440f, 360f, 600f, 420f))
+                } else if (subState == 6) {
+                    val titleOptLabels = arrayOf("GAME SETTING", "SOUND", "CAMERA", "PAD", "RESTORE DEFAULTS", "EXIT")
+                    for (i in titleOptLabels.indices) {
+                        val y0 = 120f + i * 40f
+                        boxes.add(DebugBox(i, "[$i] ${titleOptLabels[i]}", 140f, y0, 500f, y0 + 35f))
+                    }
                 }
             }
             2 -> { // PAUSE ROOT
-                boxes.add(DebugBox(0, "[0] TECHNIQUES", 20f,  95f, 315f, 161f))
-                boxes.add(DebugBox(1, "[1] ROULETTE",   20f, 161f, 315f, 227f))
-                boxes.add(DebugBox(2, "[2] MAP",        20f, 227f, 315f, 293f))
-                boxes.add(DebugBox(3, "[3] OPTIONS",    20f, 293f, 315f, 359f))
-                boxes.add(DebugBox(4, "[4] EXIT",       20f, 359f, 315f, 425f))
+                boxes.add(DebugBox(0, "[0] TECHNIQUES", 20f,  34f, 315f,  98f))
+                boxes.add(DebugBox(1, "[1] ROULETTE",   20f,  98f, 315f, 162f))
+                boxes.add(DebugBox(2, "[2] MAP",        20f, 162f, 315f, 226f))
+                boxes.add(DebugBox(3, "[3] OPTIONS",    20f, 226f, 315f, 290f))
+                boxes.add(DebugBox(4, "[4] EXIT",       20f, 290f, 315f, 354f))
             }
             3 -> { // TECHNIQUES
                 if (subState == 0) {
@@ -1458,26 +1616,18 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     // Right Column (Individual Button Slots 0..4)
                     val rLabels = arrayOf("△", "✕", "↓+□", "↓+△", "↓+✕")
                     for (i in 0 until 5) {
-                        val y0 = 106f + i * 42f
+                        val y0 = 148f + i * 42f
                         boxes.add(DebugBox(10 + i, "[R$i: ${rLabels[i]}]", 275f, y0, 435f, y0 + 34f))
                     }
                 } else if (subState == 1) {
-                    // Dynamic table placement based on which column was tapped (stored in scrollTop: 1 = Left, 0 = Right)
-                    val isTableOnLeft = (scrollTop == 1)
-                    val tableLeft = if (isTableOnLeft) 18f else 235f
-                    val tableRight = if (isTableOnLeft) 218f else 435f
-                    val tabLLeft = if (isTableOnLeft) 18f else 235f
-                    val tabLRight = if (isTableOnLeft) 65f else 282f
-                    val tabRLeft = if (isTableOnLeft) 170f else 388f
-                    val tabRRight = if (isTableOnLeft) 218f else 435f
+                    // Move List Popup is ALWAYS on the LEFT (Gene character preview on right)
+                    boxes.add(DebugBox(-2, "[L1] TAB L", 18f, 50f, 90f, 85f))
+                    boxes.add(DebugBox(-3, "[R1] TAB R", 240f, 50f, 315f, 85f))
 
-                    boxes.add(DebugBox(-2, "[L1] TAB L", tabLLeft, 60f, tabLRight, 88f))
-                    boxes.add(DebugBox(-3, "[R1] TAB R", tabRLeft, 60f, tabRRight, 88f))
-
-                    // 8 visible rows starting at Y: 114f (with title text gap)
+                    // 8 visible rows starting at Y: 98f (with title text gap)
                     for (r in 0 until 8) {
-                        val y0 = 114f + r * 28f
-                        boxes.add(DebugBox(r, "[ROW $r]", tableLeft, y0, tableRight, y0 + 26f))
+                        val y0 = 98f + r * 28.5f
+                        boxes.add(DebugBox(r, "[ROW $r]", 18f, y0, 330f, y0 + 26f))
                     }
                 }
             }
@@ -1508,6 +1658,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     val y0 = 88f + r * 34f
                     boxes.add(DebugBox(r, "[OPT $r: ${optLabels[r]}]", 40f, y0, 600f, y0 + 30f))
                 }
+                boxes.add(DebugBox(10, "[YES]", 370f, 395f, 450f, 435f))
+                boxes.add(DebugBox(11, "[NO]", 480f, 395f, 560f, 435f))
             }
             7 -> { // SAVELOAD
                 boxes.add(DebugBox(0, "[SLOT 1]", 38f,  65f, 602f, 130f))
@@ -1520,6 +1672,16 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 boxes.add(DebugBox(0, "[0] BUY", 160f, 180f, 300f, 240f))
                 boxes.add(DebugBox(1, "[1] SELL", 330f, 180f, 470f, 240f))
                 boxes.add(DebugBox(2, "[2] LEAVE SHOP", 120f, 255f, 240f, 300f))
+                boxes.add(DebugBox(20, "[TECH]", 30f, 45f, 280f, 88f))
+                boxes.add(DebugBox(21, "[ROULETTE]", 290f, 45f, 520f, 88f))
+                boxes.add(DebugBox(22, "[POWER UP]", 530f, 45f, 790f, 88f))
+                boxes.add(DebugBox(23, "[EXIT]", 800f, 45f, 960f, 88f))
+                for (r in 0 until 6) {
+                    val y0 = 95f + r * 38f
+                    boxes.add(DebugBox(30 + r, "[ITEM $r]", 20f, y0, 450f, y0 + 34f))
+                }
+                boxes.add(DebugBox(10, "[BUY YES]", 350f, 385f, 450f, 430f))
+                boxes.add(DebugBox(11, "[BUY NO]", 470f, 385f, 570f, 430f))
             }
             9, 11 -> { // STAGE MAP & PAUSE MAP
                 val mapLabels = arrayOf("SAVE", "CONTINUE", "ENTER SHOP", "ENTER CASINO")
@@ -1534,19 +1696,289 @@ class TouchControllerOverlay(context: Context) : View(context) {
             }
         }
 
-        // 3. Render all boxes
-        for (b in boxes) {
+        // 4. Apply active hitbox overrides
+        val resolvedBoxes = boxes.map { b ->
+            val override = activeOverrides[Pair(screenId, b.id)]
+            if (override != null) {
+                DebugBox(b.id, b.label, override.left, override.top, override.right, override.bottom)
+            } else {
+                b
+            }
+        }
+        currentScreenBoxes.clear()
+        currentScreenBoxes.addAll(resolvedBoxes)
+        selectedScreenId = screenId
+
+        // 5. Render all boxes
+        for (b in resolvedBoxes) {
             val p0 = ps2ToScreen(b.x0, b.y0, w, h)
             val p1 = ps2ToScreen(b.x1, b.y1, w, h)
+            val isSelectedInEdit = isHitboxEditMode && (b.id == selectedBoxId)
             val isActive = (b.id == curIdx) || (b.id == lastTapId) || (b.id == pendingTargetId)
 
-            val sPaint = if (isActive) menuDebugActiveBoxPaint else menuDebugBoxPaint
-            val fPaint = if (isActive) menuDebugActiveFillPaint else menuDebugFillPaint
+            if (isSelectedInEdit) {
+                // High-visibility cyan fill & thick border for selected box in edit mode
+                canvas.drawRect(p0.x, p0.y, p1.x, p1.y, cropSelectedFillPaint)
+                canvas.drawRect(p0.x, p0.y, p1.x, p1.y, cropSelectedBoxPaint)
+                canvas.drawText("${b.label} [ACTIVE]", p0.x + 4f * density, p0.y + 13f * density, menuDebugLabelPaint)
 
-            canvas.drawRect(p0.x, p0.y, p1.x, p1.y, fPaint)
-            canvas.drawRect(p0.x, p0.y, p1.x, p1.y, sPaint)
-            canvas.drawText(b.label, p0.x + 4f * density, p0.y + 13f * density, menuDebugLabelPaint)
+                // Draw 8 Resize Handles (4 corners + 4 edge midpoints)
+                val handlePts = arrayOf(
+                    PointF(p0.x, p0.y), PointF(p1.x, p0.y), PointF(p0.x, p1.y), PointF(p1.x, p1.y),
+                    PointF((p0.x + p1.x) * 0.5f, p0.y), PointF((p0.x + p1.x) * 0.5f, p1.y),
+                    PointF(p0.x, (p0.y + p1.y) * 0.5f), PointF(p1.x, (p0.y + p1.y) * 0.5f)
+                )
+                val handleR = 6.5f * density
+                for (pt in handlePts) {
+                    canvas.drawCircle(pt.x, pt.y, handleR, cropHandlePaint)
+                    canvas.drawCircle(pt.x, pt.y, handleR, cropHandleBorderPaint)
+                }
+            } else {
+                val sPaint = if (isActive) menuDebugActiveBoxPaint else menuDebugBoxPaint
+                val fPaint = if (isActive) menuDebugActiveFillPaint else menuDebugFillPaint
+
+                canvas.drawRect(p0.x, p0.y, p1.x, p1.y, fPaint)
+                canvas.drawRect(p0.x, p0.y, p1.x, p1.y, sPaint)
+                canvas.drawText(b.label, p0.x + 4f * density, p0.y + 13f * density, menuDebugLabelPaint)
+            }
         }
+
+        // 6. Draw Top Floating Toolbar when in Hitbox Edit Mode
+        if (isHitboxEditMode) {
+            val tbX = 10f * density
+            val tbY = 6f * density
+            val tbW = editBtnX - 16f * density
+            val tbH = 22f * density
+
+            canvas.drawRoundRect(tbX, tbY, tbX + tbW, tbY + tbH, 4f * density, 4f * density, cropToolbarBgPaint)
+            canvas.drawRoundRect(tbX, tbY, tbX + tbW, tbY + tbH, 4f * density, 4f * density, cropToolbarBorderPaint)
+
+            val selBox = currentScreenBoxes.firstOrNull { it.id == selectedBoxId }
+            val titleText = if (selBox != null) {
+                "${selBox.label}: [${selBox.x0.toInt()},${selBox.y0.toInt()}..${selBox.x1.toInt()},${selBox.y1.toInt()}]"
+            } else {
+                "Tap any box to select & resize"
+            }
+            canvas.drawText(titleText, tbX + 8f * density, tbY + 15f * density, cropToolbarTitlePaint)
+
+            if (selBox != null) {
+                val btnH = 16f * density
+                val btnY = tbY + 3f * density
+
+                // [💾 SAVE]
+                val saveBtnW = 44f * density
+                val saveBtnX = tbX + tbW - saveBtnW - 4f * density
+                canvas.drawRoundRect(saveBtnX, btnY, saveBtnX + saveBtnW, btnY + btnH, 3f * density, 3f * density, cropToolbarBtnPaint)
+                canvas.drawRoundRect(saveBtnX, btnY, saveBtnX + saveBtnW, btnY + btnH, 3f * density, 3f * density, cropToolbarBtnBorderPaint)
+                canvas.drawText("SAVE", saveBtnX + saveBtnW * 0.5f, btnY + 11.5f * density, cropToolbarBtnTextPaint)
+
+                // [📋 COPY]
+                val copyBtnW = 44f * density
+                val copyBtnX = saveBtnX - copyBtnW - 4f * density
+                canvas.drawRoundRect(copyBtnX, btnY, copyBtnX + copyBtnW, btnY + btnH, 3f * density, 3f * density, cropToolbarBtnPaint)
+                canvas.drawRoundRect(copyBtnX, btnY, copyBtnX + copyBtnW, btnY + btnH, 3f * density, 3f * density, cropToolbarBtnBorderPaint)
+                canvas.drawText("COPY", copyBtnX + copyBtnW * 0.5f, btnY + 11.5f * density, cropToolbarBtnTextPaint)
+
+                // [↺ RESET]
+                val resetBtnW = 48f * density
+                val resetBtnX = copyBtnX - resetBtnW - 4f * density
+                canvas.drawRoundRect(resetBtnX, btnY, resetBtnX + resetBtnW, btnY + btnH, 3f * density, 3f * density, cropToolbarBtnPaint)
+                canvas.drawRoundRect(resetBtnX, btnY, resetBtnX + resetBtnW, btnY + btnH, 3f * density, 3f * density, cropToolbarBtnBorderPaint)
+                canvas.drawText("RESET", resetBtnX + resetBtnW * 0.5f, btnY + 11.5f * density, cropToolbarBtnTextPaint)
+            }
+        }
+    }
+
+    private fun handleHitboxEditTouch(event: MotionEvent, w: Float, h: Float): Boolean {
+        val action = event.actionMasked
+        val idx = event.actionIndex
+        val pid = event.getPointerId(idx)
+        val x = event.getX(idx)
+        val y = event.getY(idx)
+
+        val selBox = currentScreenBoxes.firstOrNull { it.id == selectedBoxId }
+
+        when (action) {
+            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> {
+                // Check toolbar buttons if a box is selected:
+                if (selBox != null) {
+                    val tbX = 10f * density
+                    val tbY = 6f * density
+                    val hudLine = "ID $selectedScreenId | Tap"
+                    val hudW = menuDebugHudTextPaint.measureText(hudLine) + 14f * density
+                    val hudX = w - hudW - 10f * density
+                    val editBtnW = menuDebugHudTextPaint.measureText("✓ DONE") + 16f * density
+                    val editBtnX = hudX - editBtnW - 6f * density
+                    val tbW = editBtnX - 16f * density
+                    val tbH = 22f * density
+
+                    if (y in tbY..(tbY + tbH)) {
+                        val saveBtnW = 44f * density
+                        val saveBtnX = tbX + tbW - saveBtnW - 4f * density
+                        val copyBtnW = 44f * density
+                        val copyBtnX = saveBtnX - copyBtnW - 4f * density
+                        val resetBtnW = 48f * density
+                        val resetBtnX = copyBtnX - resetBtnW - 4f * density
+
+                        if (x in saveBtnX..(saveBtnX + saveBtnW)) {
+                            repo.saveHitboxOverride(selectedScreenId, selBox.id, selBox.x0, selBox.y0, selBox.x1, selBox.y1)
+                            NativeBridge.setHitboxOverride(selectedScreenId, selBox.id, selBox.x0, selBox.y0, selBox.x1, selBox.y1)
+                            Toast.makeText(context, "Saved & Applied: [${selBox.x0.toInt()}, ${selBox.y0.toInt()}..${selBox.x1.toInt()}, ${selBox.y1.toInt()}]", Toast.LENGTH_SHORT).show()
+                            invalidate()
+                            return true
+                        }
+                        if (x in copyBtnX..(copyBtnX + copyBtnW)) {
+                            val text = "{ ${selBox.id}, { ${selBox.x0}f, ${selBox.y0}f, ${selBox.x1}f, ${selBox.y1}f } }, // ${selBox.label}"
+                            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                            val clip = ClipData.newPlainText("Hitbox", text)
+                            clipboard.setPrimaryClip(clip)
+                            Toast.makeText(context, "Copied: $text", Toast.LENGTH_SHORT).show()
+                            return true
+                        }
+                        if (x in resetBtnX..(resetBtnX + resetBtnW)) {
+                            activeOverrides.remove(Pair(selectedScreenId, selBox.id))
+                            repo.removeHitboxOverride(selectedScreenId, selBox.id)
+                            NativeBridge.clearHitboxOverrides()
+                            for ((pair, rect) in activeOverrides) {
+                                NativeBridge.setHitboxOverride(pair.first, pair.second, rect.left, rect.top, rect.right, rect.bottom)
+                            }
+                            Toast.makeText(context, "Reset to default!", Toast.LENGTH_SHORT).show()
+                            invalidate()
+                            return true
+                        }
+                    }
+                }
+
+                // Check handles of selected box
+                if (selBox != null) {
+                    val p0 = ps2ToScreen(selBox.x0, selBox.y0, w, h)
+                    val p1 = ps2ToScreen(selBox.x1, selBox.y1, w, h)
+                    val handleRadius = 18f * density
+
+                    val handles = listOf(
+                        Pair(CropHandle.TOP_LEFT, PointF(p0.x, p0.y)),
+                        Pair(CropHandle.TOP_RIGHT, PointF(p1.x, p0.y)),
+                        Pair(CropHandle.BOTTOM_LEFT, PointF(p0.x, p1.y)),
+                        Pair(CropHandle.BOTTOM_RIGHT, PointF(p1.x, p1.y)),
+                        Pair(CropHandle.TOP, PointF((p0.x + p1.x) * 0.5f, p0.y)),
+                        Pair(CropHandle.BOTTOM, PointF((p0.x + p1.x) * 0.5f, p1.y)),
+                        Pair(CropHandle.LEFT, PointF(p0.x, (p0.y + p1.y) * 0.5f)),
+                        Pair(CropHandle.RIGHT, PointF(p1.x, (p0.y + p1.y) * 0.5f))
+                    )
+
+                    for ((handle, pt) in handles) {
+                        if (hypot(x - pt.x, y - pt.y) <= handleRadius) {
+                            cropDragPointerId = pid
+                            activeCropHandle = handle
+                            cropTouchStartX = x
+                            cropTouchStartY = y
+                            origBoxPs2.set(selBox.x0, selBox.y0, selBox.x1, selBox.y1)
+                            invalidate()
+                            return true
+                        }
+                    }
+
+                    // Check if touching inside selected box to move BODY
+                    if (x in p0.x..p1.x && y in p0.y..p1.y) {
+                        cropDragPointerId = pid
+                        activeCropHandle = CropHandle.BODY
+                        cropTouchStartX = x
+                        cropTouchStartY = y
+                        origBoxPs2.set(selBox.x0, selBox.y0, selBox.x1, selBox.y1)
+                        invalidate()
+                        return true
+                    }
+                }
+
+                // Check if tapping any other box on screen to select it
+                for (b in currentScreenBoxes) {
+                    val p0 = ps2ToScreen(b.x0, b.y0, w, h)
+                    val p1 = ps2ToScreen(b.x1, b.y1, w, h)
+                    if (x in p0.x..p1.x && y in p0.y..p1.y) {
+                        selectedBoxId = b.id
+                        cropDragPointerId = -1
+                        activeCropHandle = null
+                        invalidate()
+                        return true
+                    }
+                }
+
+                // Tapped outside
+                selectedBoxId = null
+                invalidate()
+                return true
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                if (cropDragPointerId == pid && activeCropHandle != null && selBox != null) {
+                    val curPs2 = screenToPs2(x, y, w, h)
+                    val startPs2 = screenToPs2(cropTouchStartX, cropTouchStartY, w, h)
+                    val dx = curPs2.x - startPs2.x
+                    val dy = curPs2.y - startPs2.y
+
+                    var nX0 = origBoxPs2.left
+                    var nY0 = origBoxPs2.top
+                    var nX1 = origBoxPs2.right
+                    var nY1 = origBoxPs2.bottom
+
+                    when (activeCropHandle) {
+                        CropHandle.TOP_LEFT -> {
+                            nX0 = (origBoxPs2.left + dx).coerceAtMost(origBoxPs2.right - 10f)
+                            nY0 = (origBoxPs2.top + dy).coerceAtMost(origBoxPs2.bottom - 10f)
+                        }
+                        CropHandle.TOP_RIGHT -> {
+                            nX1 = (origBoxPs2.right + dx).coerceAtLeast(origBoxPs2.left + 10f)
+                            nY0 = (origBoxPs2.top + dy).coerceAtMost(origBoxPs2.bottom - 10f)
+                        }
+                        CropHandle.BOTTOM_LEFT -> {
+                            nX0 = (origBoxPs2.left + dx).coerceAtMost(origBoxPs2.right - 10f)
+                            nY1 = (origBoxPs2.bottom + dy).coerceAtLeast(origBoxPs2.top + 10f)
+                        }
+                        CropHandle.BOTTOM_RIGHT -> {
+                            nX1 = (origBoxPs2.right + dx).coerceAtLeast(origBoxPs2.left + 10f)
+                            nY1 = (origBoxPs2.bottom + dy).coerceAtLeast(origBoxPs2.top + 10f)
+                        }
+                        CropHandle.TOP -> {
+                            nY0 = (origBoxPs2.top + dy).coerceAtMost(origBoxPs2.bottom - 10f)
+                        }
+                        CropHandle.BOTTOM -> {
+                            nY1 = (origBoxPs2.bottom + dy).coerceAtLeast(origBoxPs2.top + 10f)
+                        }
+                        CropHandle.LEFT -> {
+                            nX0 = (origBoxPs2.left + dx).coerceAtMost(origBoxPs2.right - 10f)
+                        }
+                        CropHandle.RIGHT -> {
+                            nX1 = (origBoxPs2.right + dx).coerceAtLeast(origBoxPs2.left + 10f)
+                        }
+                        CropHandle.BODY -> {
+                            val bw = origBoxPs2.width()
+                            val bh = origBoxPs2.height()
+                            nX0 = (origBoxPs2.left + dx).coerceIn(0f, 640f - bw)
+                            nY0 = (origBoxPs2.top + dy).coerceIn(0f, 448f - bh)
+                            nX1 = nX0 + bw
+                            nY1 = nY0 + bh
+                        }
+                        null -> {}
+                    }
+
+                    activeOverrides[Pair(selectedScreenId, selBox.id)] = RectF(nX0, nY0, nX1, nY1)
+                    NativeBridge.setHitboxOverride(selectedScreenId, selBox.id, nX0, nY0, nX1, nY1)
+                    invalidate()
+                    return true
+                }
+            }
+
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_POINTER_UP, MotionEvent.ACTION_CANCEL -> {
+                if (cropDragPointerId == pid) {
+                    cropDragPointerId = -1
+                    activeCropHandle = null
+                    invalidate()
+                    return true
+                }
+            }
+        }
+        return true
+    }
     }
 }
 

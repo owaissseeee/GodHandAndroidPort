@@ -177,8 +177,11 @@ constexpr uint32_t kTechListScrollOffset   = 0x260u;
 constexpr uint32_t kRouletteSubStateOffset   = 0x5Au;
 
 // In Sub-state 0 (Wheel slots):
-// Wheel slot cursor is uint8_t at +0xEC (range 0..9)
+// Wheel slot cursor row is uint8_t at +0xEC (range 0..4, or -1 for return)
 constexpr uint32_t kRouletteSlotCursorOffset = 0xECu;
+// Wheel slot column is uint8_t at +0xED (0 = Left 5 slots, 1 = Right 5 slots)
+// Verified in func_00162298_0x162298.cpp:360-368: lbu $v1, 0xED($s0) / xori $v1, $v1, 1 / sb $v1, 0xED($s0)
+constexpr uint32_t kRouletteColumnOffset     = 0xEDu;
 
 // In Sub-state 1 (Roulette move list popup):
 // Visible row cursor is uint8_t at +0xEE (range 0..5)
@@ -279,34 +282,34 @@ constexpr MenuButtonHitbox kDifficultyHitboxes[] = {
 // Pause Menu Root (640x448 space, LEFT-ALIGNED text column on wooden plank):
 // Techniques (0), Roulette (1), Map (2), Options (3), Exit (4)
 constexpr MenuButtonHitbox kPauseRootHitboxes[] = {
-    { 0, { 20.0f,  95.0f, 315.0f, 161.0f } }, // Techniques
-    { 1, { 20.0f, 161.0f, 315.0f, 227.0f } }, // Roulette
-    { 2, { 20.0f, 227.0f, 315.0f, 293.0f } }, // Map
-    { 3, { 20.0f, 293.0f, 315.0f, 359.0f } }, // Options
-    { 4, { 20.0f, 359.0f, 315.0f, 425.0f } }, // Exit / Resume
-    { -1, kCommonBackHitbox                 }, // Cancel / Back
+    { 0, { 20.0f,  34.0f, 315.0f,  98.0f } }, // Techniques
+    { 1, { 20.0f,  98.0f, 315.0f, 162.0f } }, // Roulette
+    { 2, { 20.0f, 162.0f, 315.0f, 226.0f } }, // Map
+    { 3, { 20.0f, 226.0f, 315.0f, 290.0f } }, // Options
+    { 4, { 20.0f, 290.0f, 315.0f, 354.0f } }, // Exit / Resume
 };
 
 // Techniques Screen Layout Constants:
-// Left Column: Combo Slots (0..5)
+// Left Column: Combo Slots (0..5) starting at Y: 106
 constexpr Rect2D kTechLeftColumnArea   = { 35.0f, 106.0f, 245.0f, 358.0f };
-// Right Column: Individual Button Slots (0..4)
-constexpr Rect2D kTechRightColumnArea  = { 275.0f, 106.0f, 435.0f, 320.0f };
+// Right Column: Individual Button Slots (0..4) starting at Y: 148 (aligned with L1)
+constexpr Rect2D kTechRightColumnArea  = { 275.0f, 148.0f, 435.0f, 360.0f };
 constexpr float  kTechSlotTopY         = 106.0f;
+constexpr float  kTechRightSlotTopY    = 148.0f;
 constexpr float  kTechSlotStepY        = 42.0f;
 constexpr float  kTechSlotHeight       = 34.0f;
 
-// Techniques Move List Popup on LEFT (when editing Right Column, col == 1):
-constexpr Rect2D kTechLeftTableArea    = { 18.0f, 114.0f, 218.0f, 338.0f };
-constexpr Rect2D kTechLeftTabLHitbox   = { 18.0f,  60.0f,  65.0f,  88.0f };
-constexpr Rect2D kTechLeftTabRHitbox   = { 170.0f, 60.0f, 218.0f,  88.0f };
+// Techniques Move List Popup is ALWAYS on the LEFT (Gene character preview is on the right):
+constexpr Rect2D kTechLeftTableArea    = { 18.0f,  98.0f, 330.0f, 326.0f };
+constexpr Rect2D kTechLeftTabLHitbox   = { 18.0f,  50.0f,  90.0f,  85.0f };
+constexpr Rect2D kTechLeftTabRHitbox   = { 240.0f, 50.0f, 315.0f,  85.0f };
 
-// Techniques Move List Popup on RIGHT (when editing Left Column, col == 0):
+// Techniques Move List Popup on RIGHT (fallback):
 constexpr Rect2D kTechRightTableArea   = { 235.0f, 114.0f, 435.0f, 338.0f };
 constexpr Rect2D kTechRightTabLHitbox  = { 235.0f,  60.0f, 282.0f,  88.0f };
 constexpr Rect2D kTechRightTabRHitbox  = { 388.0f,  60.0f, 435.0f,  88.0f };
 
-constexpr float  kTechListTopY         = 114.0f;
+constexpr float  kTechListTopY         = 98.0f;
 constexpr float  kTechListStepY        = 28.0f;
 constexpr float  kTechListRowHeight    = 26.0f;
 
@@ -354,6 +357,14 @@ constexpr MenuButtonHitbox kShopHitboxes[] = {
     { 1, { 330.0f, 180.0f, 470.0f, 240.0f } }, // SELL
     { 2, { 120.0f, 255.0f, 240.0f, 300.0f } }, // LEAVE SHOP
     { -1, kCommonBackHitbox                 }, // Back
+};
+
+// Shop Subscreen (Kind 7) Category Tabs:
+constexpr MenuButtonHitbox kShopTabsHitboxes[] = {
+    { 0, {  20.0f, 18.0f, 150.0f, 46.0f } }, // TECHNIQUES
+    { 1, { 160.0f, 18.0f, 300.0f, 46.0f } }, // ROULETTE
+    { 2, { 310.0f, 18.0f, 470.0f, 46.0f } }, // POWER UP
+    { 3, { 480.0f, 18.0f, 610.0f, 46.0f } }, // EXIT
 };
 
 // Modal Yes/No Confirmation Dialog (Kind 10 / MENU_DIALOG):
