@@ -1757,36 +1757,258 @@ class TouchControllerOverlay(context: Context) : View(context) {
             val titleText = if (selBox != null) {
                 "${selBox.label}: [${selBox.x0.toInt()},${selBox.y0.toInt()}..${selBox.x1.toInt()},${selBox.y1.toInt()}]"
             } else {
-                "Tap any box to select & resize"
+                "Edit Mode | Drag handles or tap EXPORT"
             }
             canvas.drawText(titleText, tbX + 8f * density, tbY + 15f * density, cropToolbarTitlePaint)
 
-            if (selBox != null) {
-                val btnH = 16f * density
-                val btnY = tbY + 3f * density
+            val btnH = 16f * density
+            val btnY = tbY + 3f * density
 
+            // [📤 EXPORT] - Always visible so user can export all coordinates across all menus at any time!
+            val exportBtnW = 54f * density
+            val exportBtnX = tbX + tbW - exportBtnW - 4f * density
+            canvas.drawRoundRect(exportBtnX, btnY, exportBtnX + exportBtnW, btnY + btnH, 3f * density, 3f * density, cropToolbarBtnPaint)
+            canvas.drawRoundRect(exportBtnX, btnY, exportBtnX + exportBtnW, btnY + btnH, 3f * density, 3f * density, cropToolbarBtnBorderPaint)
+            canvas.drawText("EXPORT", exportBtnX + exportBtnW * 0.5f, btnY + 11.5f * density, cropToolbarBtnTextPaint)
+
+            if (selBox != null) {
                 // [💾 SAVE]
-                val saveBtnW = 44f * density
-                val saveBtnX = tbX + tbW - saveBtnW - 4f * density
+                val saveBtnW = 40f * density
+                val saveBtnX = exportBtnX - saveBtnW - 4f * density
                 canvas.drawRoundRect(saveBtnX, btnY, saveBtnX + saveBtnW, btnY + btnH, 3f * density, 3f * density, cropToolbarBtnPaint)
                 canvas.drawRoundRect(saveBtnX, btnY, saveBtnX + saveBtnW, btnY + btnH, 3f * density, 3f * density, cropToolbarBtnBorderPaint)
                 canvas.drawText("SAVE", saveBtnX + saveBtnW * 0.5f, btnY + 11.5f * density, cropToolbarBtnTextPaint)
 
                 // [📋 COPY]
-                val copyBtnW = 44f * density
+                val copyBtnW = 40f * density
                 val copyBtnX = saveBtnX - copyBtnW - 4f * density
                 canvas.drawRoundRect(copyBtnX, btnY, copyBtnX + copyBtnW, btnY + btnH, 3f * density, 3f * density, cropToolbarBtnPaint)
                 canvas.drawRoundRect(copyBtnX, btnY, copyBtnX + copyBtnW, btnY + btnH, 3f * density, 3f * density, cropToolbarBtnBorderPaint)
                 canvas.drawText("COPY", copyBtnX + copyBtnW * 0.5f, btnY + 11.5f * density, cropToolbarBtnTextPaint)
 
                 // [↺ RESET]
-                val resetBtnW = 48f * density
+                val resetBtnW = 44f * density
                 val resetBtnX = copyBtnX - resetBtnW - 4f * density
                 canvas.drawRoundRect(resetBtnX, btnY, resetBtnX + resetBtnW, btnY + btnH, 3f * density, 3f * density, cropToolbarBtnPaint)
                 canvas.drawRoundRect(resetBtnX, btnY, resetBtnX + resetBtnW, btnY + btnH, 3f * density, 3f * density, cropToolbarBtnBorderPaint)
                 canvas.drawText("RESET", resetBtnX + resetBtnW * 0.5f, btnY + 11.5f * density, cropToolbarBtnTextPaint)
             }
         }
+    }
+
+    fun exportAllHitboxes(): String {
+        val sb = StringBuilder()
+        sb.append("// ====================================================================\n")
+        sb.append("// GOD HAND ANDROID RECOMP - MENU HITBOX EXPORT\n")
+        val timeStr = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(java.util.Date())
+        sb.append("// Generated at: ").append(timeStr).append("\n")
+        sb.append("// ====================================================================\n\n")
+
+        val savedOverrides = repo.getAllHitboxOverrides()
+        sb.append("// Total Active/Saved Custom Overrides: ${savedOverrides.size}\n")
+        if (savedOverrides.isNotEmpty()) {
+            sb.append("// ---------------- CUSTOM OVERRIDES SUMMARY ----------------\n")
+            for (ov in savedOverrides) {
+                sb.append("// Screen ${ov.screenId}, Button ${ov.buttonId}: [ ${ov.x0.toInt()}f, ${ov.y0.toInt()}f, ${ov.x1.toInt()}f, ${ov.y1.toInt()}f ]\n")
+            }
+            sb.append("// -----------------------------------------------------------\n\n")
+        }
+
+        fun getResolved(sId: Int, bId: Int, defX0: Float, defY0: Float, defX1: Float, defY1: Float): RectF {
+            val inMem = activeOverrides[Pair(sId, bId)]
+            if (inMem != null) return inMem
+            val fromRepo = savedOverrides.firstOrNull { it.screenId == sId && it.buttonId == bId }
+            if (fromRepo != null) return RectF(fromRepo.x0, fromRepo.y0, fromRepo.x1, fromRepo.y1)
+            return RectF(defX0, defY0, defX1, defY1)
+        }
+
+        // 1. Title Screen
+        sb.append("// ==================== TITLE SCREEN (Screen 1) ====================\n")
+        sb.append("// SubState 4: Main Menu (NEW GAME, LOAD GAME, OPTIONS)\n")
+        val titleBoxes = listOf(
+            Triple(0, "[0] NEW GAME", RectF(220f, 360f, 420f, 420f)),
+            Triple(1, "[1] LOAD GAME", RectF(430f, 360f, 620f, 420f)),
+            Triple(2, "[2] OPTIONS", RectF(20f, 360f, 210f, 420f)),
+            Triple(-10, "◀ PREV", RectF(15f, 220f, 95f, 300f)),
+            Triple(-11, "▶ NEXT", RectF(545f, 220f, 625f, 300f)),
+            Triple(-100, "[CONFIRM]", RectF(220f, 250f, 420f, 350f))
+        )
+        for ((id, lbl, def) in titleBoxes) {
+            val r = getResolved(1, id, def.left, def.top, def.right, def.bottom)
+            val isCustom = (r.left != def.left || r.top != def.top || r.right != def.right || r.bottom != def.bottom)
+            val tag = if (isCustom) "/* CUSTOM */" else ""
+            sb.append("    { $id, { ${r.left}f, ${r.top}f, ${r.right}f, ${r.bottom}f } }, $tag // $lbl\n")
+        }
+
+        sb.append("\n// SubState 5: Difficulty Select (EASY, NORMAL, HARD)\n")
+        val diffBoxes = listOf(
+            Triple(0, "[0] EASY", RectF(40f, 360f, 200f, 420f)),
+            Triple(1, "[1] NORMAL", RectF(220f, 360f, 420f, 420f)),
+            Triple(2, "[2] HARD", RectF(440f, 360f, 600f, 420f))
+        )
+        for ((id, lbl, def) in diffBoxes) {
+            val r = getResolved(1, id, def.left, def.top, def.right, def.bottom)
+            val isCustom = (r.left != def.left || r.top != def.top || r.right != def.right || r.bottom != def.bottom)
+            val tag = if (isCustom) "/* CUSTOM */" else ""
+            sb.append("    { $id, { ${r.left}f, ${r.top}f, ${r.right}f, ${r.bottom}f } }, $tag // $lbl\n")
+        }
+
+        // 2. Pause Root
+        sb.append("\n// ==================== PAUSE ROOT (Screen 2) ====================\n")
+        sb.append("constexpr TouchButtonDef kPauseRootHitboxes[5] = {\n")
+        val pauseRootDefs = listOf(
+            Triple(0, "TECHNIQUES", RectF(20.0f,  34.0f, 315.0f,  98.0f)),
+            Triple(1, "ROULETTE",   RectF(20.0f,  98.0f, 315.0f, 162.0f)),
+            Triple(2, "MAP",        RectF(20.0f, 162.0f, 315.0f, 226.0f)),
+            Triple(3, "OPTIONS",    RectF(20.0f, 226.0f, 315.0f, 290.0f)),
+            Triple(4, "EXIT",       RectF(20.0f, 290.0f, 315.0f, 354.0f))
+        )
+        for ((id, lbl, def) in pauseRootDefs) {
+            val r = getResolved(2, id, def.left, def.top, def.right, def.bottom)
+            val isCustom = (r.left != def.left || r.top != def.top || r.right != def.right || r.bottom != def.bottom)
+            val tag = if (isCustom) "/* CUSTOM */" else ""
+            sb.append("    { $id, { ${r.left}f, ${r.top}f, ${r.right}f, ${r.bottom}f } }, $tag // [$id] $lbl\n")
+        }
+        sb.append("};\n")
+
+        // 3. Techniques (Screen 3)
+        sb.append("\n// ==================== TECHNIQUES SLOTS (Screen 3, SubState 0) ====================\n")
+        sb.append("// Left Combo Slots (L0..L5)\n")
+        for (i in 0 until 6) {
+            val defY = 106f + i * 42f
+            val r = getResolved(3, i, 35f, defY, 245f, defY + 34f)
+            val isCustom = (r.left != 35f || r.top != defY || r.right != 245f || r.bottom != defY + 34f)
+            val tag = if (isCustom) "/* CUSTOM */" else ""
+            sb.append("    { $i, { ${r.left}f, ${r.top}f, ${r.right}f, ${r.bottom}f } }, $tag // [L$i]\n")
+        }
+        sb.append("// Right Individual Button Slots (R0..R4)\n")
+        val rLabels = arrayOf("△", "✕", "↓+□", "↓+△", "↓+✕")
+        for (i in 0 until 5) {
+            val id = 10 + i
+            val defY = 148f + i * 42f
+            val r = getResolved(3, id, 275f, defY, 435f, defY + 34f)
+            val isCustom = (r.left != 275f || r.top != defY || r.right != 435f || r.bottom != defY + 34f)
+            val tag = if (isCustom) "/* CUSTOM */" else ""
+            sb.append("    { $id, { ${r.left}f, ${r.top}f, ${r.right}f, ${r.bottom}f } }, $tag // [R$i: ${rLabels[i]}]\n")
+        }
+
+        sb.append("\n// ==================== TECHNIQUES MOVE-LIST POPUP (Screen 3, SubState 1) ====================\n")
+        val tabL = getResolved(3, -2, 18f, 50f, 90f, 85f)
+        val tabR = getResolved(3, -3, 240f, 50f, 315f, 85f)
+        sb.append("    { -2, { ${tabL.left}f, ${tabL.top}f, ${tabL.right}f, ${tabL.bottom}f } }, // [L1] TAB L\n")
+        sb.append("    { -3, { ${tabR.left}f, ${tabR.top}f, ${tabR.right}f, ${tabR.bottom}f } }, // [R1] TAB R\n")
+        for (row in 0 until 8) {
+            val defY = 98f + row * 28.5f
+            val r = getResolved(3, row, 18f, defY, 330f, defY + 26f)
+            val isCustom = (r.left != 18f || r.top != defY || r.right != 330f || r.bottom != defY + 26f)
+            val tag = if (isCustom) "/* CUSTOM */" else ""
+            sb.append("    { $row, { ${r.left}f, ${r.top}f, ${r.right}f, ${r.bottom}f } }, $tag // [ROW $row]\n")
+        }
+
+        // 4. Roulette (Screen 4)
+        sb.append("\n// ==================== ROULETTE SLOTS (Screen 4, SubState 0) ====================\n")
+        for (i in 0 until 5) {
+            val defY = 95f + i * 48f
+            val r = getResolved(4, i, 25f, defY, 235f, defY + 44f)
+            val isCustom = (r.left != 25f || r.top != defY || r.right != 235f || r.bottom != defY + 44f)
+            val tag = if (isCustom) "/* CUSTOM */" else ""
+            sb.append("    { $i, { ${r.left}f, ${r.top}f, ${r.right}f, ${r.bottom}f } }, $tag // [SLOT $i Left]\n")
+        }
+        for (i in 5 until 10) {
+            val defY = 95f + (i - 5) * 48f
+            val r = getResolved(4, i, 245f, defY, 455f, defY + 44f)
+            val isCustom = (r.left != 245f || r.top != defY || r.right != 455f || r.bottom != defY + 44f)
+            val tag = if (isCustom) "/* CUSTOM */" else ""
+            sb.append("    { $i, { ${r.left}f, ${r.top}f, ${r.right}f, ${r.bottom}f } }, $tag // [SLOT $i Right]\n")
+        }
+        sb.append("// Roulette Move-List (SubState 1)\n")
+        for (r in 0 until 6) {
+            val defY = 85f + r * 38f
+            val res = getResolved(4, r, 275f, defY, 500f, defY + 34f)
+            val isCustom = (res.left != 275f || res.top != defY || res.right != 500f || res.bottom != defY + 34f)
+            val tag = if (isCustom) "/* CUSTOM */" else ""
+            sb.append("    { $r, { ${res.left}f, ${res.top}f, ${res.right}f, ${res.bottom}f } }, $tag // [ROULETTE $r]\n")
+        }
+
+        // 5. Options (Screen 5)
+        sb.append("\n// ==================== OPTIONS (Screen 5) ====================\n")
+        val optLabels = arrayOf(
+            "CONTROLS", "LIFE GAUGE", "SOUND", "VIBRATION",
+            "LOAD GAME", "RESET GAME", "RESTORE DEFAULTS", "EXIT"
+        )
+        for (r in 0 until 8) {
+            val defY = 88f + r * 34f
+            val res = getResolved(5, r, 40f, defY, 600f, defY + 30f)
+            val isCustom = (res.left != 40f || res.top != defY || res.right != 600f || res.bottom != defY + 30f)
+            val tag = if (isCustom) "/* CUSTOM */" else ""
+            sb.append("    { $r, { ${res.left}f, ${res.top}f, ${res.right}f, ${res.bottom}f } }, $tag // [OPT $r: ${optLabels[r]}]\n")
+        }
+        val optYes = getResolved(5, 10, 370f, 395f, 450f, 435f)
+        val optNo = getResolved(5, 11, 480f, 395f, 560f, 435f)
+        sb.append("    { 10, { ${optYes.left}f, ${optYes.top}f, ${optYes.right}f, ${optYes.bottom}f } }, // [YES]\n")
+        sb.append("    { 11, { ${optNo.left}f, ${optNo.top}f, ${optNo.right}f, ${optNo.bottom}f } }, // [NO]\n")
+
+        // 6. Save/Load (Screen 7)
+        sb.append("\n// ==================== SAVE / LOAD (Screen 7) ====================\n")
+        for (s in 0..2) {
+            val defY = 65f + s * 70f
+            val res = getResolved(7, s, 38f, defY, 602f, defY + 65f)
+            val isCustom = (res.left != 38f || res.top != defY || res.right != 602f || res.bottom != defY + 65f)
+            val tag = if (isCustom) "/* CUSTOM */" else ""
+            sb.append("    { $s, { ${res.left}f, ${res.top}f, ${res.right}f, ${res.bottom}f } }, $tag // [SLOT ${s + 1}]\n")
+        }
+        val saveYes = getResolved(7, 10, 370f, 395f, 450f, 435f)
+        val saveNo = getResolved(7, 11, 480f, 395f, 560f, 435f)
+        sb.append("    { 10, { ${saveYes.left}f, ${saveYes.top}f, ${saveYes.right}f, ${saveYes.bottom}f } }, // [YES]\n")
+        sb.append("    { 11, { ${saveNo.left}f, ${saveNo.top}f, ${saveNo.right}f, ${saveNo.bottom}f } }, // [NO]\n")
+
+        // 7. Shop (Screen 8)
+        sb.append("\n// ==================== SHOP (Screen 8) ====================\n")
+        val shopBuy = getResolved(8, 0, 160f, 180f, 300f, 240f)
+        val shopSell = getResolved(8, 1, 330f, 180f, 470f, 240f)
+        val shopLeave = getResolved(8, 2, 120f, 255f, 240f, 300f)
+        sb.append("    { 0, { ${shopBuy.left}f, ${shopBuy.top}f, ${shopBuy.right}f, ${shopBuy.bottom}f } }, // [0] BUY\n")
+        sb.append("    { 1, { ${shopSell.left}f, ${shopSell.top}f, ${shopSell.right}f, ${shopSell.bottom}f } }, // [1] SELL\n")
+        sb.append("    { 2, { ${shopLeave.left}f, ${shopLeave.top}f, ${shopLeave.right}f, ${shopLeave.bottom}f } }, // [2] LEAVE SHOP\n")
+        val tabTech = getResolved(8, 20, 30f, 45f, 280f, 88f)
+        val tabRoul = getResolved(8, 21, 290f, 45f, 520f, 88f)
+        val tabPower = getResolved(8, 22, 530f, 45f, 790f, 88f)
+        val tabExit = getResolved(8, 23, 800f, 45f, 960f, 88f)
+        sb.append("    { 20, { ${tabTech.left}f, ${tabTech.top}f, ${tabTech.right}f, ${tabTech.bottom}f } }, // [TAB TECH]\n")
+        sb.append("    { 21, { ${tabRoul.left}f, ${tabRoul.top}f, ${tabRoul.right}f, ${tabRoul.bottom}f } }, // [TAB ROULETTE]\n")
+        sb.append("    { 22, { ${tabPower.left}f, ${tabPower.top}f, ${tabPower.right}f, ${tabPower.bottom}f } }, // [TAB POWER UP]\n")
+        sb.append("    { 23, { ${tabExit.left}f, ${tabExit.top}f, ${tabExit.right}f, ${tabExit.bottom}f } }, // [TAB EXIT]\n")
+        for (r in 0 until 6) {
+            val defY = 95f + r * 38f
+            val res = getResolved(8, 30 + r, 20f, defY, 450f, defY + 34f)
+            val isCustom = (res.left != 20f || res.top != defY || res.right != 450f || res.bottom != defY + 34f)
+            val tag = if (isCustom) "/* CUSTOM */" else ""
+            sb.append("    { ${30 + r}, { ${res.left}f, ${res.top}f, ${res.right}f, ${res.bottom}f } }, $tag // [ITEM $r]\n")
+        }
+        val shopYes = getResolved(8, 10, 350f, 385f, 450f, 430f)
+        val shopNo = getResolved(8, 11, 470f, 385f, 570f, 430f)
+        sb.append("    { 10, { ${shopYes.left}f, ${shopYes.top}f, ${shopYes.right}f, ${shopYes.bottom}f } }, // [BUY YES]\n")
+        sb.append("    { 11, { ${shopNo.left}f, ${shopNo.top}f, ${shopNo.right}f, ${shopNo.bottom}f } }, // [BUY NO]\n")
+
+        // 8. Stage Map (Screen 9)
+        sb.append("\n// ==================== STAGE MAP (Screen 9) ====================\n")
+        val mapLabels = arrayOf("SAVE", "CONTINUE", "ENTER SHOP", "ENTER CASINO")
+        for (i in 0 until 4) {
+            val defY = 155f + i * 45f
+            val res = getResolved(9, i, 385f, defY, 580f, defY + 40f)
+            val isCustom = (res.left != 385f || res.top != defY || res.right != 580f || res.bottom != defY + 40f)
+            val tag = if (isCustom) "/* CUSTOM */" else ""
+            sb.append("    { $i, { ${res.left}f, ${res.top}f, ${res.right}f, ${res.bottom}f } }, $tag // [$i] ${mapLabels[i]}\n")
+        }
+
+        // 9. Modal Confirm Dialog (Screen 10)
+        sb.append("\n// ==================== MODAL CONFIRM DIALOG (Screen 10) ====================\n")
+        val modYes = getResolved(10, 0, 340f, 390f, 430f, 435f)
+        val modNo = getResolved(10, 1, 470f, 390f, 560f, 435f)
+        sb.append("    { 0, { ${modYes.left}f, ${modYes.top}f, ${modYes.right}f, ${modYes.bottom}f } }, // [YES]\n")
+        sb.append("    { 1, { ${modNo.left}f, ${modNo.top}f, ${modNo.right}f, ${modNo.bottom}f } }, // [NO]\n")
+
+        return sb.toString()
     }
 
     private fun handleHitboxEditTouch(event: MotionEvent, w: Float, h: Float): Boolean {
@@ -1800,30 +2022,50 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
         when (action) {
             MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> {
-                // Check toolbar buttons if a box is selected:
-                if (selBox != null) {
-                    val tbX = 10f * density
-                    val tbY = 6f * density
-                    val hudLine = "ID $selectedScreenId | Tap"
-                    val hudW = menuDebugHudTextPaint.measureText(hudLine) + 14f * density
-                    val hudX = w - hudW - 10f * density
-                    val editBtnW = menuDebugHudTextPaint.measureText("✓ DONE") + 16f * density
-                    val editBtnX = hudX - editBtnW - 6f * density
-                    val tbW = editBtnX - 16f * density
-                    val tbH = 22f * density
+                val tbX = 10f * density
+                val tbY = 6f * density
+                val hudLine = "ID $selectedScreenId | Tap"
+                val hudW = menuDebugHudTextPaint.measureText(hudLine) + 14f * density
+                val hudX = w - hudW - 10f * density
+                val editBtnW = menuDebugHudTextPaint.measureText("✓ DONE") + 16f * density
+                val editBtnX = hudX - editBtnW - 6f * density
+                val tbW = editBtnX - 16f * density
+                val tbH = 22f * density
 
-                    if (y in tbY..(tbY + tbH)) {
-                        val saveBtnW = 44f * density
-                        val saveBtnX = tbX + tbW - saveBtnW - 4f * density
-                        val copyBtnW = 44f * density
+                // Check toolbar touches
+                if (y in tbY..(tbY + tbH)) {
+                    // [EXPORT] button - Always available on toolbar
+                    val exportBtnW = 54f * density
+                    val exportBtnX = tbX + tbW - exportBtnW - 4f * density
+                    if (x in exportBtnX..(exportBtnX + exportBtnW)) {
+                        val exportText = exportAllHitboxes()
+                        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                        val clip = ClipData.newPlainText("GodHandHitboxes", exportText)
+                        clipboard.setPrimaryClip(clip)
+
+                        val exportFile = File(context.getExternalFilesDir(null), "hitbox_export.txt")
+                        try {
+                            exportFile.writeText(exportText)
+                        } catch (e: Exception) {
+                            android.util.Log.e("TouchOverlay", "Failed to write export file", e)
+                        }
+                        Toast.makeText(context, "Exported! Copied to clipboard & saved to hitbox_export.txt", Toast.LENGTH_LONG).show()
+                        return true
+                    }
+
+                    // Check actions for selected box
+                    if (selBox != null) {
+                        val saveBtnW = 40f * density
+                        val saveBtnX = exportBtnX - saveBtnW - 4f * density
+                        val copyBtnW = 40f * density
                         val copyBtnX = saveBtnX - copyBtnW - 4f * density
-                        val resetBtnW = 48f * density
+                        val resetBtnW = 44f * density
                         val resetBtnX = copyBtnX - resetBtnW - 4f * density
 
                         if (x in saveBtnX..(saveBtnX + saveBtnW)) {
                             repo.saveHitboxOverride(selectedScreenId, selBox.id, selBox.x0, selBox.y0, selBox.x1, selBox.y1)
                             NativeBridge.setHitboxOverride(selectedScreenId, selBox.id, selBox.x0, selBox.y0, selBox.x1, selBox.y1)
-                            Toast.makeText(context, "Saved & Applied: [${selBox.x0.toInt()}, ${selBox.y0.toInt()}..${selBox.x1.toInt()}, ${selBox.y1.toInt()}]", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Saved: [${selBox.x0.toInt()}, ${selBox.y0.toInt()}..${selBox.x1.toInt()}, ${selBox.y1.toInt()}]", Toast.LENGTH_SHORT).show()
                             invalidate()
                             return true
                         }
@@ -1972,13 +2214,18 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 if (cropDragPointerId == pid) {
                     cropDragPointerId = -1
                     activeCropHandle = null
+                    if (selBox != null) {
+                        val cur = activeOverrides[Pair(selectedScreenId, selBox.id)]
+                        if (cur != null) {
+                            repo.saveHitboxOverride(selectedScreenId, selBox.id, cur.left, cur.top, cur.right, cur.bottom)
+                        }
+                    }
                     invalidate()
                     return true
                 }
             }
         }
         return true
-    }
     }
 }
 

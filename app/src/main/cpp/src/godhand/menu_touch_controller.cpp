@@ -313,7 +313,6 @@ static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
         }
     }
 
-    uint32_t flags5E4 = 0;
     std::memcpy(&flags5E4, rdram + (kFlags5E4Addr & 0x01FFFFFFu), sizeof(flags5E4));
 
     // RULE 3: Subscreen (pause / techniques / options / shop / stage map) check:
