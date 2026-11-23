@@ -496,6 +496,13 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             return
         }
 
+        if (touchOverlay.isMenuTouchActive) {
+            if (!NativeBridge.onMenuBackPressed()) {
+                showQuitConfirmationDialog()
+            }
+            return
+        }
+
         val now = System.currentTimeMillis()
         if (now - lastBackPressTimeMs < 2500L) {
             backPressCount++
@@ -511,13 +518,7 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             return
         }
 
-        if (touchOverlay.isMenuTouchActive) {
-            if (!NativeBridge.onMenuBackPressed()) {
-                showQuitConfirmationDialog()
-            }
-        } else {
-            showQuitConfirmationDialog()
-        }
+        showQuitConfirmationDialog()
     }
 
     private fun checkConnectedControllers() {

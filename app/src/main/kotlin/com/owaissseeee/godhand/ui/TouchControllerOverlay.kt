@@ -99,6 +99,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
     var showTouchControls: Boolean = true
         set(value) { field = value; invalidate() }
     val menuTouchHandler = MenuTouchHandler(context)
+    private var menuExitTimestamp = 0L
     var isMenuTouchActive: Boolean = false
         set(value) {
             if (field != value) {
@@ -106,6 +107,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 resetVirtualControlsState()
                 if (!value) {
                     menuTouchHandler.stopFling()
+                    menuExitTimestamp = android.os.SystemClock.uptimeMillis()
                 }
                 postInvalidate()
             }
@@ -1025,6 +1027,10 @@ class TouchControllerOverlay(context: Context) : View(context) {
             return menuTouchHandler.onTouchEvent(event)
         }
 
+        if (android.os.SystemClock.uptimeMillis() - menuExitTimestamp < 250L) {
+            return true
+        }
+
         when (action) {
             MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> {
                 val x = event.getX(idx)
@@ -1600,11 +1606,11 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 }
             }
             2 -> { // PAUSE ROOT
-                boxes.add(DebugBox(0, "[0] TECHNIQUES", 20f,  34f, 315f,  98f))
-                boxes.add(DebugBox(1, "[1] ROULETTE",   20f,  98f, 315f, 162f))
-                boxes.add(DebugBox(2, "[2] MAP",        20f, 162f, 315f, 226f))
-                boxes.add(DebugBox(3, "[3] OPTIONS",    20f, 226f, 315f, 290f))
-                boxes.add(DebugBox(4, "[4] EXIT",       20f, 290f, 315f, 354f))
+                boxes.add(DebugBox(0, "[0] TECHNIQUES", 20f, 100f, 510f, 155f))
+                boxes.add(DebugBox(1, "[1] ROULETTE",   20f, 155f, 510f, 208f))
+                boxes.add(DebugBox(2, "[2] MAP",        20f, 208f, 510f, 258f))
+                boxes.add(DebugBox(3, "[3] OPTIONS",    20f, 258f, 510f, 308f))
+                boxes.add(DebugBox(4, "[4] EXIT",       20f, 308f, 510f, 365f))
             }
             3 -> { // TECHNIQUES
                 if (subState == 0) {
@@ -1620,28 +1626,34 @@ class TouchControllerOverlay(context: Context) : View(context) {
                         boxes.add(DebugBox(10 + i, "[R$i: ${rLabels[i]}]", 275f, y0, 435f, y0 + 34f))
                     }
                 } else if (subState == 1) {
-                    // Move List Popup is ALWAYS on the LEFT (Gene character preview on right)
-                    boxes.add(DebugBox(-2, "[L1] TAB L", 18f, 50f, 90f, 85f))
-                    boxes.add(DebugBox(-3, "[R1] TAB R", 240f, 50f, 315f, 85f))
-
-                    // 8 visible rows starting at Y: 98f (with title text gap)
-                    for (r in 0 until 8) {
-                        val y0 = 98f + r * 28.5f
-                        boxes.add(DebugBox(r, "[ROW $r]", 18f, y0, 330f, y0 + 26f))
+                    // scrollTop stores active column: 0 = Left slot selected (popup on RIGHT), 1 = Right slot selected (popup on LEFT)
+                    if (scrollTop == 1) {
+                        // Move List Popup on LEFT (Gene preview on right)
+                        boxes.add(DebugBox(-2, "[L1] TAB L", 18f, 50f, 90f, 85f))
+                        boxes.add(DebugBox(-3, "[R1] TAB R", 240f, 50f, 315f, 85f))
+                        for (r in 0 until 8) {
+                            val y0 = 98f + r * 28.5f
+                            boxes.add(DebugBox(r, "[ROW $r]", 18f, y0, 330f, y0 + 26f))
+                        }
+                    } else {
+                        // Move List Popup on RIGHT
+                        boxes.add(DebugBox(-2, "[L1] TAB L", 235f, 50f, 305f, 85f))
+                        boxes.add(DebugBox(-3, "[R1] TAB R", 365f, 50f, 435f, 85f))
+                        for (r in 0 until 8) {
+                            val y0 = 98f + r * 28.5f
+                            boxes.add(DebugBox(r, "[ROW $r]", 235f, y0, 435f, y0 + 26f))
+                        }
                     }
                 }
             }
             4 -> { // ROULETTE
                 if (subState == 0) {
-                    // 10 slots (5 left, 5 right)
+                    // Only 5 equipped slots on the left, plus RETURN button at bottom left
                     for (i in 0 until 5) {
                         val y0 = 95f + i * 48f
                         boxes.add(DebugBox(i, "[SLOT $i]", 25f, y0, 235f, y0 + 44f))
                     }
-                    for (i in 5 until 10) {
-                        val y0 = 95f + (i - 5) * 48f
-                        boxes.add(DebugBox(i, "[SLOT $i]", 245f, y0, 455f, y0 + 44f))
-                    }
+                    boxes.add(DebugBox(-1, "[RETURN]", 20f, 385f, 215f, 435f))
                 } else if (subState == 1) {
                     for (r in 0 until 6) {
                         val y0 = 85f + r * 38f
@@ -1669,19 +1681,24 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 boxes.add(DebugBox(11, "[NO]", 480f, 395f, 560f, 435f))
             }
             8 -> { // SHOP
-                boxes.add(DebugBox(0, "[0] BUY", 160f, 180f, 300f, 240f))
-                boxes.add(DebugBox(1, "[1] SELL", 330f, 180f, 470f, 240f))
-                boxes.add(DebugBox(2, "[2] LEAVE SHOP", 120f, 255f, 240f, 300f))
-                boxes.add(DebugBox(20, "[TECH]", 30f, 45f, 280f, 88f))
-                boxes.add(DebugBox(21, "[ROULETTE]", 290f, 45f, 520f, 88f))
-                boxes.add(DebugBox(22, "[POWER UP]", 530f, 45f, 790f, 88f))
-                boxes.add(DebugBox(23, "[EXIT]", 800f, 45f, 960f, 88f))
-                for (r in 0 until 6) {
-                    val y0 = 95f + r * 38f
-                    boxes.add(DebugBox(30 + r, "[ITEM $r]", 20f, y0, 450f, y0 + 34f))
+                if (subState == 0) {
+                    // Category Selection: BUY, SELL, LEAVE SHOP
+                    boxes.add(DebugBox(0, "[0] BUY", 120f, 160f, 280f, 230f))
+                    boxes.add(DebugBox(1, "[1] SELL", 340f, 160f, 500f, 230f))
+                    boxes.add(DebugBox(2, "[2] LEAVE SHOP", 20f, 250f, 220f, 310f))
+                } else {
+                    // Item List Browsing (SubState 1)
+                    boxes.add(DebugBox(20, "[TECH]", 20f, 18f, 160f, 55f))
+                    boxes.add(DebugBox(21, "[ROULETTE]", 170f, 18f, 330f, 55f))
+                    boxes.add(DebugBox(22, "[POWER UP]", 340f, 18f, 490f, 55f))
+                    boxes.add(DebugBox(23, "[EXIT]", 500f, 18f, 620f, 55f))
+                    for (r in 0 until 6) {
+                        val y0 = 145f + r * 38f
+                        boxes.add(DebugBox(r, "[ITEM $r]", 20f, y0, 395f, y0 + 34f))
+                    }
+                    boxes.add(DebugBox(10, "[BUY YES]", 340f, 385f, 440f, 430f))
+                    boxes.add(DebugBox(11, "[BUY NO]", 460f, 385f, 560f, 430f))
                 }
-                boxes.add(DebugBox(10, "[BUY YES]", 350f, 385f, 450f, 430f))
-                boxes.add(DebugBox(11, "[BUY NO]", 470f, 385f, 570f, 430f))
             }
             9, 11 -> { // STAGE MAP & PAUSE MAP
                 val mapLabels = arrayOf("SAVE", "CONTINUE", "ENTER SHOP", "ENTER CASINO")
@@ -1857,11 +1874,11 @@ class TouchControllerOverlay(context: Context) : View(context) {
         sb.append("\n// ==================== PAUSE ROOT (Screen 2) ====================\n")
         sb.append("constexpr TouchButtonDef kPauseRootHitboxes[5] = {\n")
         val pauseRootDefs = listOf(
-            Triple(0, "TECHNIQUES", RectF(20.0f,  34.0f, 315.0f,  98.0f)),
-            Triple(1, "ROULETTE",   RectF(20.0f,  98.0f, 315.0f, 162.0f)),
-            Triple(2, "MAP",        RectF(20.0f, 162.0f, 315.0f, 226.0f)),
-            Triple(3, "OPTIONS",    RectF(20.0f, 226.0f, 315.0f, 290.0f)),
-            Triple(4, "EXIT",       RectF(20.0f, 290.0f, 315.0f, 354.0f))
+            Triple(0, "TECHNIQUES", RectF(20.0f, 100.0f, 510.0f, 155.0f)),
+            Triple(1, "ROULETTE",   RectF(20.0f, 155.0f, 510.0f, 208.0f)),
+            Triple(2, "MAP",        RectF(20.0f, 208.0f, 510.0f, 258.0f)),
+            Triple(3, "OPTIONS",    RectF(20.0f, 258.0f, 510.0f, 308.0f)),
+            Triple(4, "EXIT",       RectF(20.0f, 308.0f, 510.0f, 365.0f))
         )
         for ((id, lbl, def) in pauseRootDefs) {
             val r = getResolved(2, id, def.left, def.top, def.right, def.bottom)

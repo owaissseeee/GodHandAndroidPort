@@ -194,7 +194,26 @@ constexpr uint32_t kRouletteListScrollOffset = 0xEFu;
 constexpr uint32_t kOptionsCursorOffset     = 0x130u;
 
 // E. Stage Clear Map Screen (kind=3 or 10, update=func_00168560):
-constexpr uint32_t kStageMapCursorOffset    = 0x5Au;
+// Verified in func_00167908_0x167908.cpp:1416: lbu $v1, 0x110($s1)
+constexpr uint32_t kStageMapCursorOffset    = 0x110u;
+
+// F. Shop Screen (cSubScrShop, kind=7, update=func_0016AE38 & func_0016B1F8):
+// Sub-state is uint8_t at +0x5A (0=Category select BUY/SELL/LEAVE, 1=Item/Technique list)
+constexpr uint32_t kShopSubStateOffset        = 0x5Au;
+// Category cursor in Sub-state 0: uint8_t at +0x1B4 (0=BUY, 1=SELL, 2=LEAVE SHOP)
+constexpr uint32_t kShopCategoryCursorOffset  = 0x1B4u;
+// Item list row cursor in Sub-state 1: uint16_t at +0x1D2 (range 0..5)
+constexpr uint32_t kShopCursorOffset          = 0x1D2u;
+// Item list scroll top in Sub-state 1: uint16_t at +0x1D0
+constexpr uint32_t kShopScrollOffset          = 0x1D0u;
+// Active tab/column in Sub-state 1: uint8_t at +0x1D4 (0=TECHNIQUES, 1=ROULETTE, 2=POWER UP, 3=EXIT)
+constexpr uint32_t kShopColumnOffset          = 0x1D4u;
+
+// G. Save / Load Screen:
+// Current selected slot index (0..2 visible, up to 20 total): int32_t at 0x00747A0Cu
+constexpr uint32_t kSaveLoadCurSlotAddr       = 0x00747A0Cu;
+// cSaveLoad instance singleton pointer in RDRAM: 0x003C264Cu
+constexpr uint32_t kSaveLoadInstancePtr       = 0x003C264Cu;
 
 // -----------------------------------------------------------------------------
 // 4. PS2 Controller Button Bitmasks
@@ -279,14 +298,15 @@ constexpr MenuButtonHitbox kDifficultyHitboxes[] = {
     { -1, kCommonBackHitbox                  }, // Cancel / Back (Triangle)
 };
 
-// Pause Menu Root (640x448 space, LEFT-ALIGNED text column on wooden plank):
+// Pause Menu Root (640x448 space):
+// Row hitboxes span from left carved buttons (X=20) through status display (X=510)
 // Techniques (0), Roulette (1), Map (2), Options (3), Exit (4)
 constexpr MenuButtonHitbox kPauseRootHitboxes[] = {
-    { 0, { 20.0f,  34.0f, 315.0f,  98.0f } }, // Techniques
-    { 1, { 20.0f,  98.0f, 315.0f, 162.0f } }, // Roulette
-    { 2, { 20.0f, 162.0f, 315.0f, 226.0f } }, // Map
-    { 3, { 20.0f, 226.0f, 315.0f, 290.0f } }, // Options
-    { 4, { 20.0f, 290.0f, 315.0f, 354.0f } }, // Exit / Resume
+    { 0, { 20.0f, 100.0f, 510.0f, 155.0f } }, // Techniques
+    { 1, { 20.0f, 155.0f, 510.0f, 208.0f } }, // Roulette
+    { 2, { 20.0f, 208.0f, 510.0f, 258.0f } }, // Map
+    { 3, { 20.0f, 258.0f, 510.0f, 308.0f } }, // Options
+    { 4, { 20.0f, 308.0f, 510.0f, 365.0f } }, // Exit / Resume
 };
 
 // Techniques Screen Layout Constants:
@@ -313,9 +333,9 @@ constexpr float  kTechListTopY         = 98.0f;
 constexpr float  kTechListStepY        = 28.0f;
 constexpr float  kTechListRowHeight    = 26.0f;
 
-// Roulette Edit Layout Constants (10 slots in grid mode: 5 left, 5 right):
+// Roulette Edit Layout Constants (5 equipped slots on the left, RETURN at bottom left):
 constexpr Rect2D kRouletteLeftSlotArea  = { 25.0f,  95.0f, 235.0f, 335.0f };
-constexpr Rect2D kRouletteRightSlotArea = { 245.0f, 95.0f, 455.0f, 335.0f };
+constexpr Rect2D kRouletteReturnHitbox  = { 20.0f, 385.0f, 215.0f, 435.0f };
 constexpr Rect2D kRouletteListArea      = { 275.0f, 85.0f, 500.0f, 335.0f };
 constexpr float  kRouletteSlotTopY      = 95.0f;
 constexpr float  kRouletteSlotStepY     = 48.0f;
@@ -351,20 +371,20 @@ constexpr MenuButtonHitbox kSaveLoadHitboxes[] = {
     { -1, kCommonBackHitbox                  }, // Back
 };
 
-// Shop Screen (Kind 7 / MENU_SHOP) Buttons:
+// Shop Screen (Kind 7 / MENU_SHOP) Category Selection Buttons:
 constexpr MenuButtonHitbox kShopHitboxes[] = {
-    { 0, { 160.0f, 180.0f, 300.0f, 240.0f } }, // BUY
-    { 1, { 330.0f, 180.0f, 470.0f, 240.0f } }, // SELL
-    { 2, { 120.0f, 255.0f, 240.0f, 300.0f } }, // LEAVE SHOP
+    { 0, { 120.0f, 160.0f, 280.0f, 230.0f } }, // BUY
+    { 1, { 340.0f, 160.0f, 500.0f, 230.0f } }, // SELL
+    { 2, {  20.0f, 250.0f, 220.0f, 310.0f } }, // LEAVE SHOP
     { -1, kCommonBackHitbox                 }, // Back
 };
 
 // Shop Subscreen (Kind 7) Category Tabs:
 constexpr MenuButtonHitbox kShopTabsHitboxes[] = {
-    { 0, {  20.0f, 18.0f, 150.0f, 46.0f } }, // TECHNIQUES
-    { 1, { 160.0f, 18.0f, 300.0f, 46.0f } }, // ROULETTE
-    { 2, { 310.0f, 18.0f, 470.0f, 46.0f } }, // POWER UP
-    { 3, { 480.0f, 18.0f, 610.0f, 46.0f } }, // EXIT
+    { 0, {  20.0f, 18.0f, 160.0f, 55.0f } }, // TECHNIQUES
+    { 1, { 170.0f, 18.0f, 330.0f, 55.0f } }, // ROULETTE
+    { 2, { 340.0f, 18.0f, 490.0f, 55.0f } }, // POWER UP
+    { 3, { 500.0f, 18.0f, 620.0f, 55.0f } }, // EXIT
 };
 
 // Modal Yes/No Confirmation Dialog (Kind 10 / MENU_DIALOG):

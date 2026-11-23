@@ -74,13 +74,29 @@ static int32_t  s_pressedButtonId = -999;
 static float    s_downPs2X = 0.0f;
 static float    s_downPs2Y = 0.0f;
 static bool     s_isDragging = false;
-static uint16_t s_injectedBtnMask = 0;
-static bool     s_singleFrameInject = false;
-static int      s_framesSinceInject = 0;
 static float    s_accumulatedScrollX = 0.0f;
 static float    s_accumulatedScrollY = 0.0f;
 static uint32_t s_lastActiveMenuState = MENU_NONE;
-static uint16_t s_followUpBtnMask = 0;
+
+// Frame-accurate multi-step button sequence engine
+struct ButtonStep {
+    uint16_t mask;
+    int durationFrames;
+};
+static std::vector<ButtonStep> s_buttonQueue;
+static int s_currentStepFrame = 0;
+
+inline void queueButtonSequence(const std::vector<ButtonStep>& steps) {
+    s_buttonQueue = steps;
+    s_currentStepFrame = 0;
+    if (!s_buttonQueue.empty()) {
+        ps2_pad::setHostTouchInputState(s_buttonQueue[0].mask, 0.0f, 0.0f, 0.0f, 0.0f);
+    }
+}
+
+inline void queueSingleButton(uint16_t mask, int durationFrames = 2) {
+    queueButtonSequence({ {mask, durationFrames}, {0, 1} });
+}
 
 // Read-back verification state machine
 enum class VerifyType : uint8_t {
@@ -282,24 +298,15 @@ static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
         return MENU_NONE | MENU_FLAG_LIVE_ROULETTE;
     }
 
-    // RULE 2: Check Memory Card Save/Load screen active via GameWork + 0x5E8 (0x00747A88u & 0x40000000u)
-    // Verified in cSaveLoad_openSave_0x2bf1a0.cpp:205-207 and cSaveLoad_openLoad_0x2bf268.cpp:105-107
-    uint32_t flags7A88 = 0;
-    std::memcpy(&flags7A88, rdram + (0x00747A88u & 0x01FFFFFFu), sizeof(flags7A88));
-    if (flags7A88 & 0x40000000u) {
-        uint32_t saveMgr = 0;
-        std::memcpy(&saveMgr, rdram + (0x003C2648u & 0x01FFFFFFu), sizeof(saveMgr));
-        outMenuMgrPtr = saveMgr;
-        return MENU_SAVELOAD | MENU_FLAG_SCROLLABLE;
-    }
-
-    uint32_t flags584 = 0;
-    std::memcpy(&flags584, rdram + (0x00747A24u & 0x01FFFFFFu), sizeof(flags584));
-    if (flags584 & 0x04000000u) {
-        uint32_t saveMgr = 0;
-        std::memcpy(&saveMgr, rdram + (0x003C2648u & 0x01FFFFFFu), sizeof(saveMgr));
-        outMenuMgrPtr = saveMgr;
-        return MENU_SAVELOAD | MENU_FLAG_SCROLLABLE;
+    // RULE 2: Check Memory Card Save/Load screen active
+    uint32_t saveInst = 0;
+    std::memcpy(&saveInst, rdram + (kSaveLoadInstancePtr & 0x01FFFFFFu), sizeof(saveInst));
+    if (saveInst >= 0x00100000u && saveInst < 0x02000000u) {
+        const uint8_t saveMode = rdram[saveInst & 0x01FFFFFFu];
+        if (saveMode >= 1 && saveMode <= 5) {
+            outMenuMgrPtr = saveInst;
+            return MENU_SAVELOAD | MENU_FLAG_SCROLLABLE;
+        }
     }
 
     uint32_t coreSavePtr = 0;
@@ -311,6 +318,20 @@ static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
             outMenuMgrPtr = coreSavePtr;
             return MENU_SAVELOAD | MENU_FLAG_SCROLLABLE;
         }
+    }
+
+    uint32_t flags7A88 = 0;
+    std::memcpy(&flags7A88, rdram + (0x00747A88u & 0x01FFFFFFu), sizeof(flags7A88));
+    if (flags7A88 & 0xC0000000u) {
+        outMenuMgrPtr = saveInst;
+        return MENU_SAVELOAD | MENU_FLAG_SCROLLABLE;
+    }
+
+    uint32_t flags584 = 0;
+    std::memcpy(&flags584, rdram + (0x00747A24u & 0x01FFFFFFu), sizeof(flags584));
+    if (flags584 & 0x04000000u) {
+        outMenuMgrPtr = saveInst;
+        return MENU_SAVELOAD | MENU_FLAG_SCROLLABLE;
     }
 
     std::memcpy(&flags5E4, rdram + (kFlags5E4Addr & 0x01FFFFFFu), sizeof(flags5E4));
@@ -331,11 +352,10 @@ static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
                     case 0: {
                         // Check if a modal confirmation dialog is open inside cSubScrMenu
                         const uint32_t subMgr = getSubManagerPtr(rdram, subScr, 0);
-                        if (subMgr != 0) {
-                            const uint8_t mode = rdram[(subMgr + kPauseRootDialogOffset) & 0x01FFFFFFu];
-                            if (mode != 0) {
-                                return MENU_DIALOG;
-                            }
+                        if (subMgr == 0) return MENU_NONE;
+                        const uint8_t mode = rdram[(subMgr + kPauseRootDialogOffset) & 0x01FFFFFFu];
+                        if (mode != 0) {
+                            return MENU_DIALOG;
                         }
                         return MENU_PAUSE_ROOT;
                     }
@@ -346,7 +366,7 @@ static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
                     case 5: return MENU_ITEMS;
                     case 6: return MENU_SAVELOAD | MENU_FLAG_SCROLLABLE;
                     case 7: return MENU_SHOP | MENU_FLAG_SCROLLABLE;
-                    default: return MENU_PAUSE_ROOT;
+                    default: return MENU_NONE; // CRITICAL: NEVER default to PAUSE_ROOT!
                 }
             } else {
                 return MENU_NONE;
@@ -357,8 +377,13 @@ static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
     // RULE 4: Title Screen State check via flags5E4 kStaTitleBit
     if (flags5E4 & kStaTitleBit) {
         uint32_t titleObj = findTitleObj(rdram);
-        outMenuMgrPtr = titleObj;
-        return MENU_TITLE;
+        if (titleObj >= 0x00100000u && titleObj < 0x02000000u) {
+            const uint8_t titleState = rdram[(titleObj + kTitleStateOffset) & 0x01FFFFFFu];
+            if (titleState >= 3 && titleState <= 6) {
+                outMenuMgrPtr = titleObj;
+                return MENU_TITLE;
+            }
+        }
     }
 
     return MENU_NONE;
@@ -368,22 +393,16 @@ void frameStart(uint8_t* rdram) {
     if (!rdram) return;
     s_rdram = rdram;
 
-    // Handle auto-release of injected buttons after 3 frames (~50ms)
-    if (s_singleFrameInject) {
-        s_framesSinceInject++;
-        if (s_framesSinceInject >= 3) {
-            ps2_pad::setHostTouchInputState(0, 0.0f, 0.0f, 0.0f, 0.0f);
-            s_singleFrameInject = false;
-            s_framesSinceInject = 0;
-            s_injectedBtnMask = 0;
-
-            // If there is a follow-up button to inject (e.g. Cross after Left in Yes/No dialogs):
-            if (s_followUpBtnMask != 0) {
-                s_injectedBtnMask = s_followUpBtnMask;
-                s_followUpBtnMask = 0;
-                s_singleFrameInject = true;
-                s_framesSinceInject = 0;
-                ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+    // Step through the active button sequence frame-by-frame
+    if (!s_buttonQueue.empty()) {
+        s_currentStepFrame++;
+        if (s_currentStepFrame >= s_buttonQueue[0].durationFrames) {
+            s_buttonQueue.erase(s_buttonQueue.begin());
+            s_currentStepFrame = 0;
+            if (!s_buttonQueue.empty()) {
+                ps2_pad::setHostTouchInputState(s_buttonQueue[0].mask, 0.0f, 0.0f, 0.0f, 0.0f);
+            } else {
+                ps2_pad::setHostTouchInputState(0, 0.0f, 0.0f, 0.0f, 0.0f);
             }
         }
     }
@@ -399,9 +418,8 @@ void frameStart(uint8_t* rdram) {
     if (activeState != s_lastActiveMenuState) {
         if (screenId == MENU_NONE || (activeState & MENU_FLAG_LIVE_ROULETTE)) {
             ps2_pad::setHostTouchInputState(0, 0.0f, 0.0f, 0.0f, 0.0f);
-            s_injectedBtnMask = 0;
-            s_singleFrameInject = false;
-            s_framesSinceInject = 0;
+            s_buttonQueue.clear();
+            s_currentStepFrame = 0;
             s_pendingVerify = false;
             s_pendingVerifyType = VerifyType::NONE;
             s_pendingTargetId = -999;
@@ -480,17 +498,50 @@ void frameStart(uint8_t* rdram) {
             s_dbgScrollTop.store(0, std::memory_order_relaxed);
         }
     } else if (screenId == MENU_STAGE_MAP || screenId == MENU_MAP) {
-        s_dbgSubState.store(0, std::memory_order_relaxed);
-        s_dbgCurIdx.store(0, std::memory_order_relaxed);
-        s_dbgScrollTop.store(0, std::memory_order_relaxed);
+        if (menuMgr != 0) {
+            const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 3);
+            if (subMgr != 0) {
+                const uint8_t mapCur = rdram[(subMgr + kStageMapCursorOffset) & 0x01FFFFFFu];
+                s_dbgSubState.store(0, std::memory_order_relaxed);
+                s_dbgCurIdx.store(mapCur, std::memory_order_relaxed);
+                s_dbgScrollTop.store(0, std::memory_order_relaxed);
+            }
+        }
     } else if (screenId == MENU_SAVELOAD) {
-        s_dbgSubState.store(0, std::memory_order_relaxed);
-        s_dbgCurIdx.store(0, std::memory_order_relaxed);
+        int32_t curSlot = 0;
+        std::memcpy(&curSlot, rdram + (kSaveLoadCurSlotAddr & 0x01FFFFFFu), sizeof(curSlot));
+        if (curSlot < 0 || curSlot > 20) curSlot = 0;
+        uint8_t saveMode = 0;
+        if (menuMgr != 0) {
+            saveMode = rdram[menuMgr & 0x01FFFFFFu];
+        }
+        s_dbgSubState.store(saveMode, std::memory_order_relaxed);
+        s_dbgCurIdx.store(curSlot, std::memory_order_relaxed);
         s_dbgScrollTop.store(0, std::memory_order_relaxed);
     } else if (screenId == MENU_SHOP) {
-        s_dbgSubState.store(0, std::memory_order_relaxed);
-        s_dbgCurIdx.store(0, std::memory_order_relaxed);
-        s_dbgScrollTop.store(0, std::memory_order_relaxed);
+        if (menuMgr != 0) {
+            const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 7);
+            if (subMgr != 0) {
+                const uint8_t shopSubState = rdram[(subMgr + kShopSubStateOffset) & 0x01FFFFFFu];
+                s_dbgSubState.store(shopSubState, std::memory_order_relaxed);
+                if (shopSubState == 0) {
+                    const uint8_t catCur = rdram[(subMgr + kShopCategoryCursorOffset) & 0x01FFFFFFu];
+                    s_dbgCurIdx.store(catCur, std::memory_order_relaxed);
+                    s_dbgScrollTop.store(0, std::memory_order_relaxed);
+                } else {
+                    uint16_t itemCur = 0;
+                    uint16_t itemScr = 0;
+                    std::memcpy(&itemCur, rdram + ((subMgr + kShopCursorOffset) & 0x01FFFFFFu), sizeof(itemCur));
+                    std::memcpy(&itemScr, rdram + ((subMgr + kShopScrollOffset) & 0x01FFFFFFu), sizeof(itemScr));
+                    s_dbgCurIdx.store(itemCur, std::memory_order_relaxed);
+                    s_dbgScrollTop.store(itemScr, std::memory_order_relaxed);
+                }
+            } else {
+                s_dbgSubState.store(0, std::memory_order_relaxed);
+                s_dbgCurIdx.store(0, std::memory_order_relaxed);
+                s_dbgScrollTop.store(0, std::memory_order_relaxed);
+            }
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -565,10 +616,7 @@ void frameStart(uint8_t* rdram) {
             if (readBackVal == s_pendingTargetId) {
                 LOGI("Read-back VERIFIED: Target %d == RDRAM %d (Type %d) -> Injecting Cross",
                      s_pendingTargetId, readBackVal, static_cast<int>(s_pendingVerifyType));
-                s_injectedBtnMask = kPadCross;
-                s_singleFrameInject = true;
-                s_framesSinceInject = 0;
-                ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                queueSingleButton(kPadCross, 2);
             } else {
                 LOGW("Read-back ABORT: Target %d != RDRAM %d (Type %d) -> Skipping Cross injection",
                      s_pendingTargetId, readBackVal, static_cast<int>(s_pendingVerifyType));
@@ -594,14 +642,8 @@ void frameStart(uint8_t* rdram) {
     // Check system Back request:
     // CRITICAL: In God Hand, Triangle is Cancel / Exit. Start resumes from pause root.
     if (s_pendingBack.exchange(false, std::memory_order_relaxed)) {
-        uint16_t cancelMask = kPadTriangle;
-        if (screenId == MENU_PAUSE_ROOT) {
-            cancelMask = kPadStart; // Resume gameplay from pause root
-        }
-        s_injectedBtnMask = cancelMask;
-        s_singleFrameInject = true;
-        s_framesSinceInject = 0;
-        ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+        uint16_t cancelMask = (screenId == MENU_PAUSE_ROOT) ? kPadStart : kPadTriangle;
+        queueSingleButton(cancelMask, (screenId == MENU_PAUSE_ROOT) ? 1 : 2);
     }
 
     // Process queued touch events on EE emulation thread:
@@ -783,17 +825,14 @@ void frameStart(uint8_t* rdram) {
                     if (subMgr != 0) {
                         const uint8_t subState = rdram[(subMgr + kRouletteSubStateOffset) & 0x01FFFFFFu];
                         if (subState == 0) {
-                            // 10 Roulette Wheel Slots (5 left, 5 right)
+                            // 5 equipped slots on the left, plus RETURN button at bottom left
                             if (checkHitbox(screenId, 995, kRouletteLeftSlotArea, ps2X, ps2Y)) {
                                 const int slot = static_cast<int>((ps2Y - kRouletteSlotTopY) / kRouletteSlotStepY);
                                 if (slot >= 0 && slot < 5) {
                                     s_pressedButtonId = slot;
                                 }
-                            } else if (checkHitbox(screenId, 994, kRouletteRightSlotArea, ps2X, ps2Y)) {
-                                const int slot = static_cast<int>((ps2Y - kRouletteSlotTopY) / kRouletteSlotStepY);
-                                if (slot >= 0 && slot < 5) {
-                                    s_pressedButtonId = 5 + slot;
-                                }
+                            } else if (checkHitbox(screenId, -1, kRouletteReturnHitbox, ps2X, ps2Y)) {
+                                s_pressedButtonId = -1; // Return
                             }
                         } else if (subState == 1) {
                             // Roulette Move List Popup (6 rows on right)
@@ -857,16 +896,10 @@ void frameStart(uint8_t* rdram) {
                         s_accumulatedScrollX += ev.scrollDeltaX;
                         if (s_accumulatedScrollX < -25.0f) {
                             s_accumulatedScrollX = 0.0f;
-                            s_injectedBtnMask = kPadRight;
-                            s_singleFrameInject = true;
-                            s_framesSinceInject = 0;
-                            ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                            queueSingleButton(kPadRight, 2);
                         } else if (s_accumulatedScrollX > 25.0f) {
                             s_accumulatedScrollX = 0.0f;
-                            s_injectedBtnMask = kPadLeft;
-                            s_singleFrameInject = true;
-                            s_framesSinceInject = 0;
-                            ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                            queueSingleButton(kPadLeft, 2);
                         }
                     }
                 }
@@ -876,16 +909,10 @@ void frameStart(uint8_t* rdram) {
                     s_accumulatedScrollY += ev.scrollDeltaY;
                     if (s_accumulatedScrollY <= -30.0f) {
                         s_accumulatedScrollY = 0.0f;
-                        s_injectedBtnMask = kPadDown;
-                        s_singleFrameInject = true;
-                        s_framesSinceInject = 0;
-                        ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                        queueSingleButton(kPadDown, 2);
                     } else if (s_accumulatedScrollY >= 30.0f) {
                         s_accumulatedScrollY = 0.0f;
-                        s_injectedBtnMask = kPadUp;
-                        s_singleFrameInject = true;
-                        s_framesSinceInject = 0;
-                        ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                        queueSingleButton(kPadUp, 2);
                     }
                 }
                 break;
@@ -898,107 +925,99 @@ void frameStart(uint8_t* rdram) {
                     // 0. Cancel / Back button (-1):
                     if (s_pressedButtonId == -1) {
                         uint16_t cancelMask = (screenId == MENU_PAUSE_ROOT) ? kPadStart : kPadTriangle;
-                        s_injectedBtnMask = cancelMask;
-                        s_singleFrameInject = true;
-                        s_framesSinceInject = 0;
-                        ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                        queueSingleButton(cancelMask, (screenId == MENU_PAUSE_ROOT) ? 1 : 2);
                     }
                     // 1. Direct button actions
                     else if (s_pressedButtonId == -10) {
-                        s_injectedBtnMask = kPadLeft;
-                        s_singleFrameInject = true;
-                        s_framesSinceInject = 0;
-                        ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                        queueSingleButton(kPadLeft, 2);
                     } else if (s_pressedButtonId == -11) {
-                        s_injectedBtnMask = kPadRight;
-                        s_singleFrameInject = true;
-                        s_framesSinceInject = 0;
-                        ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                        queueSingleButton(kPadRight, 2);
                     } else if (s_pressedButtonId == -2) {
-                        s_injectedBtnMask = kPadL1;
-                        s_singleFrameInject = true;
-                        s_framesSinceInject = 0;
-                        ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                        queueSingleButton(kPadL1, 2);
                     } else if (s_pressedButtonId == -3) {
-                        s_injectedBtnMask = kPadR1;
-                        s_singleFrameInject = true;
-                        s_framesSinceInject = 0;
-                        ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                        queueSingleButton(kPadR1, 2);
                     } else if (s_pressedButtonId == 99) {
                         // Title Press Start
-                        s_injectedBtnMask = kPadStart;
-                        s_singleFrameInject = true;
-                        s_framesSinceInject = 0;
-                        ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                        queueSingleButton(kPadStart, 2);
                     } else if (s_pressedButtonId == -100) {
                         // Title Center Confirm
-                        s_injectedBtnMask = kPadCross;
-                        s_singleFrameInject = true;
-                        s_framesSinceInject = 0;
-                        ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                        queueSingleButton(kPadCross, 2);
                     }
                     // 2. Save / Load Screen
                     else if (screenId == MENU_SAVELOAD) {
                         if (s_pressedButtonId >= 0 && s_pressedButtonId <= 2) {
-                            if (menuMgr != 0) {
-                                uint8_t targetSlot = static_cast<uint8_t>(s_pressedButtonId);
-                                rdram[(menuMgr + 0x02u) & 0x01FFFFFFu] = targetSlot;
+                            int32_t curSlot = 0;
+                            std::memcpy(&curSlot, rdram + (kSaveLoadCurSlotAddr & 0x01FFFFFFu), sizeof(curSlot));
+                            if (curSlot < 0 || curSlot > 20) curSlot = 0;
+                            int32_t targetSlot = s_pressedButtonId;
+                            std::memcpy(rdram + (kSaveLoadCurSlotAddr & 0x01FFFFFFu), &targetSlot, sizeof(targetSlot));
+
+                            std::vector<ButtonStep> steps;
+                            if (targetSlot > curSlot) {
+                                for (int s = 0; s < (targetSlot - curSlot); ++s) {
+                                    steps.push_back({ kPadDown, 2 });
+                                    steps.push_back({ 0, 1 });
+                                }
+                            } else if (targetSlot < curSlot) {
+                                for (int s = 0; s < (curSlot - targetSlot); ++s) {
+                                    steps.push_back({ kPadUp, 2 });
+                                    steps.push_back({ 0, 1 });
+                                }
                             }
-                            s_injectedBtnMask = kPadCross;
+                            steps.push_back({ kPadCross, 3 });
+                            queueButtonSequence(steps);
                         } else if (s_pressedButtonId == 10) {
-                            // Yes: inject Left then Cross to confirm
-                            s_injectedBtnMask = kPadLeft;
-                            s_followUpBtnMask = kPadCross;
+                            // Yes: Move Left to Yes, neutral release, then Confirm Cross
+                            queueButtonSequence({ {kPadLeft, 3}, {0, 2}, {kPadCross, 3} });
                         } else if (s_pressedButtonId == 11) {
-                            // No: inject Triangle to cancel
-                            s_injectedBtnMask = kPadTriangle;
+                            // No: Cursor is already on No, confirm with Cross
+                            queueSingleButton(kPadCross, 3);
                         }
-                        s_singleFrameInject = true;
-                        s_framesSinceInject = 0;
-                        ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
                     }
                     // 3. Dialog Actions
                     else if (screenId == MENU_DIALOG) {
                         if (s_pressedButtonId == 0) {
-                            // Yes: inject Left then Cross
-                            s_injectedBtnMask = kPadLeft;
-                            s_followUpBtnMask = kPadCross;
+                            // Yes: Move Left to Yes, neutral release, then Confirm Cross
+                            queueButtonSequence({ {kPadLeft, 3}, {0, 2}, {kPadCross, 3} });
                         } else {
-                            // No: inject Triangle
-                            s_injectedBtnMask = kPadTriangle;
+                            // No: Confirm with Cross
+                            queueSingleButton(kPadCross, 3);
                         }
-                        s_singleFrameInject = true;
-                        s_framesSinceInject = 0;
-                        ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
                     }
                     // 4. Shop Actions
                     else if (screenId == MENU_SHOP) {
                         if (s_pressedButtonId >= 20 && s_pressedButtonId <= 23) {
                             const int tabIdx = s_pressedButtonId - 20;
                             if (tabIdx == 3) {
-                                s_injectedBtnMask = kPadTriangle; // Exit
+                                queueSingleButton(kPadTriangle, 2); // Exit
                             } else {
-                                s_injectedBtnMask = (tabIdx > 0) ? kPadR1 : kPadL1;
+                                queueSingleButton((tabIdx > 0) ? kPadR1 : kPadL1, 2);
                             }
-                        } else if (s_pressedButtonId >= 0 && s_pressedButtonId < 6) {
-                            s_injectedBtnMask = kPadCross; // Item select
                         } else if (s_pressedButtonId == 10) {
-                            // Yes: inject Left then Cross
-                            s_injectedBtnMask = kPadLeft;
-                            s_followUpBtnMask = kPadCross;
+                            // Buy confirm Yes: Left then Cross
+                            queueButtonSequence({ {kPadLeft, 3}, {0, 2}, {kPadCross, 3} });
                         } else if (s_pressedButtonId == 11) {
-                            // No: inject Triangle
-                            s_injectedBtnMask = kPadTriangle;
-                        } else if (s_pressedButtonId == 0) {
-                            s_injectedBtnMask = kPadCross; // Buy
-                        } else if (s_pressedButtonId == 1) {
-                            s_injectedBtnMask = kPadRight; // Sell
-                        } else if (s_pressedButtonId == 2) {
-                            s_injectedBtnMask = kPadTriangle; // Leave Shop
+                            // Buy confirm No: Confirm with Cross
+                            queueSingleButton(kPadCross, 3);
+                        } else {
+                            const uint32_t subMgr = (menuMgr != 0) ? getSubManagerPtr(rdram, menuMgr, 7) : 0;
+                            const uint8_t shopSubState = (subMgr != 0) ? rdram[(subMgr + kShopSubStateOffset) & 0x01FFFFFFu] : 0;
+                            if (shopSubState == 0) {
+                                if (s_pressedButtonId == 0) {
+                                    queueSingleButton(kPadCross, 2); // Buy
+                                } else if (s_pressedButtonId == 1) {
+                                    queueButtonSequence({ {kPadRight, 2}, {0, 1}, {kPadCross, 2} }); // Sell
+                                } else if (s_pressedButtonId == 2) {
+                                    queueSingleButton(kPadTriangle, 2); // Leave Shop
+                                }
+                            } else {
+                                if (subMgr != 0 && s_pressedButtonId >= 0 && s_pressedButtonId < 6) {
+                                    uint16_t targetRow = static_cast<uint16_t>(s_pressedButtonId);
+                                    std::memcpy(rdram + ((subMgr + kShopCursorOffset) & 0x01FFFFFFu), &targetRow, sizeof(targetRow));
+                                    queueSingleButton(kPadCross, 2);
+                                }
+                            }
                         }
-                        s_singleFrameInject = true;
-                        s_framesSinceInject = 0;
-                        ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
                     }
                     // 5. Stage Map Actions
                     else if (screenId == MENU_STAGE_MAP || screenId == MENU_MAP) {
@@ -1012,30 +1031,33 @@ void frameStart(uint8_t* rdram) {
                             s_pendingSubMgr = subMgr;
                             s_verifyWaitFrames = 1;
                             s_dbgPendingTargetId.store(targetCur, std::memory_order_relaxed);
-                            s_injectedBtnMask = kPadCross;
-                            s_singleFrameInject = true;
-                            s_framesSinceInject = 0;
-                            ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                            // CRITICAL: DO NOT inject kPadCross on Frame 0! Wait for read-back verification!
                         }
                     }
                     // 6. Title Screen Options
                     else if (screenId == MENU_TITLE && menuMgr != 0) {
                         const uint8_t titleState = rdram[(menuMgr + kTitleStateOffset) & 0x01FFFFFFu];
-                        if (titleState == 4 || titleState == 5) {
+                        if (titleState == 4) {
                             int16_t targetCur = static_cast<int16_t>(s_pressedButtonId);
-                            std::memcpy(rdram + ((menuMgr + kTitleCursorOffset) & 0x01FFFFFFu), &targetCur, sizeof(targetCur));
-                            s_pendingVerify = true;
-                            s_pendingVerifyType = (titleState == 4) ? VerifyType::TITLE_CAROUSEL : VerifyType::TITLE_DIFFICULTY;
-                            s_pendingTargetId = targetCur;
-                            s_pendingSubMgr = menuMgr;
-                            s_verifyWaitFrames = 1;
-                            s_dbgPendingTargetId.store(targetCur, std::memory_order_relaxed);
+                            if (targetCur == 0) {
+                                queueSingleButton(kPadCross, 2);
+                            } else if (targetCur == 1) {
+                                queueButtonSequence({ {kPadRight, 3}, {0, 2}, {kPadCross, 3} });
+                            } else if (targetCur == 2) {
+                                queueButtonSequence({ {kPadLeft, 3}, {0, 2}, {kPadCross, 3} });
+                            }
+                        } else if (titleState == 5) {
+                            int16_t targetCur = static_cast<int16_t>(s_pressedButtonId);
+                            if (targetCur == 0) {
+                                queueButtonSequence({ {kPadLeft, 3}, {0, 2}, {kPadCross, 3} });
+                            } else if (targetCur == 1) {
+                                queueSingleButton(kPadCross, 2);
+                            } else if (targetCur == 2) {
+                                queueButtonSequence({ {kPadRight, 3}, {0, 2}, {kPadCross, 3} });
+                            }
                         } else if (titleState == 6) {
                             if (s_pressedButtonId >= 0 && s_pressedButtonId < 8) {
-                                s_injectedBtnMask = kPadCross;
-                                s_singleFrameInject = true;
-                                s_framesSinceInject = 0;
-                                ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                                queueSingleButton(kPadCross, 2);
                             }
                         }
                     }
@@ -1095,26 +1117,23 @@ void frameStart(uint8_t* rdram) {
                             }
                         }
                     }
-                    // 9. Roulette Wheel Edit (10 slots: 5 left, 5 right)
+                    // 9. Roulette Wheel Edit (5 equipped slots on left + RETURN at -1)
                     else if (screenId == MENU_ROULETTE_EDIT) {
                         const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 2);
                         if (subMgr != 0) {
                             const uint8_t subState = rdram[(subMgr + kRouletteSubStateOffset) & 0x01FFFFFFu];
-                            if (subState == 0 && s_pressedButtonId >= 0 && s_pressedButtonId < 10) {
-                                uint8_t targetSlot = static_cast<uint8_t>(s_pressedButtonId);
-                                if (targetSlot < 5) {
+                            if (subState == 0) {
+                                if (s_pressedButtonId >= 0 && s_pressedButtonId < 5) {
+                                    uint8_t targetSlot = static_cast<uint8_t>(s_pressedButtonId);
                                     rdram[(subMgr + kRouletteColumnOffset) & 0x01FFFFFFu] = 0;
                                     rdram[(subMgr + kRouletteSlotCursorOffset) & 0x01FFFFFFu] = targetSlot;
-                                } else {
-                                    rdram[(subMgr + kRouletteColumnOffset) & 0x01FFFFFFu] = 1;
-                                    rdram[(subMgr + kRouletteSlotCursorOffset) & 0x01FFFFFFu] = targetSlot - 5;
+                                    s_pendingVerify = true;
+                                    s_pendingVerifyType = VerifyType::ROULETTE_SLOT;
+                                    s_pendingTargetId = targetSlot;
+                                    s_pendingSubMgr = subMgr;
+                                    s_verifyWaitFrames = 1;
+                                    s_dbgPendingTargetId.store(targetSlot, std::memory_order_relaxed);
                                 }
-                                s_pendingVerify = true;
-                                s_pendingVerifyType = VerifyType::ROULETTE_SLOT;
-                                s_pendingTargetId = targetSlot;
-                                s_pendingSubMgr = subMgr;
-                                s_verifyWaitFrames = 1;
-                                s_dbgPendingTargetId.store(targetSlot, std::memory_order_relaxed);
                             } else if (subState == 1 && s_pressedButtonId >= 0 && s_pressedButtonId < 6) {
                                 uint8_t targetRow = static_cast<uint8_t>(s_pressedButtonId);
                                 rdram[(subMgr + kRouletteListCursorOffset) & 0x01FFFFFFu] = targetRow;
@@ -1131,17 +1150,10 @@ void frameStart(uint8_t* rdram) {
                     else if (screenId == MENU_OPTIONS) {
                         if (s_pressedButtonId == 10) {
                             // YES (Reset Game confirm)
-                            s_injectedBtnMask = kPadLeft;
-                            s_followUpBtnMask = kPadCross;
-                            s_singleFrameInject = true;
-                            s_framesSinceInject = 0;
-                            ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                            queueButtonSequence({ {kPadLeft, 3}, {0, 2}, {kPadCross, 3} });
                         } else if (s_pressedButtonId == 11) {
                             // NO (Reset Game cancel)
-                            s_injectedBtnMask = kPadTriangle;
-                            s_singleFrameInject = true;
-                            s_framesSinceInject = 0;
-                            ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                            queueSingleButton(kPadCross, 3);
                         } else {
                             const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 4);
                             if (subMgr != 0 && s_pressedButtonId >= 0 && s_pressedButtonId < 8) {
