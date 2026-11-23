@@ -90,7 +90,8 @@ enum class VerifyType : uint8_t {
     TECH_ROW,
     ROULETTE_SLOT,
     ROULETTE_ROW,
-    OPTIONS_ROW
+    OPTIONS_ROW,
+    STAGE_MAP_BTN
 };
 
 static bool        s_pendingVerify = false;
@@ -132,8 +133,18 @@ bool handleBackPressed() {
     // If on Title Screen and at root (Press Start: 3 or Carousel: 4),
     // cannot go back further in the PS2 game -> return false so Android shows Quit dialog!
     if (screenId == MENU_TITLE && s_rdram) {
-        const uint8_t titleState = s_rdram[(kTitleBaseAddr + kTitleStateOffset) & 0x01FFFFFFu];
-        if (titleState <= 4) {
+        uint32_t sceneMgr = 0;
+        std::memcpy(&sceneMgr, s_rdram + (kTitleSceneMgrPtr & 0x01FFFFFFu), sizeof(sceneMgr));
+        if (sceneMgr >= 0x00100000u && sceneMgr < 0x02000000u) {
+            uint32_t titleObj = 0;
+            std::memcpy(&titleObj, s_rdram + ((sceneMgr + 0x10u) & 0x01FFFFFFu), sizeof(titleObj));
+            if (titleObj >= 0x00100000u && titleObj < 0x02000000u) {
+                const uint8_t titleState = s_rdram[(titleObj + kTitleStateOffset) & 0x01FFFFFFu];
+                if (titleState <= 4) {
+                    return false;
+                }
+            }
+        } else {
             return false;
         }
     }
@@ -232,19 +243,26 @@ static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
         return MENU_NONE | MENU_FLAG_LIVE_ROULETTE;
     }
 
-    // RULE 2: Title Screen Room (r000) check
-    // Room ID at 0x00747A50 is 0 exclusively when on Title Screen
-    uint16_t room = 0;
-    std::memcpy(&room, rdram + (kRoomAddr & 0x01FFFFFFu), sizeof(room));
-    if (room == 0) {
-        outMenuMgrPtr = kTitleBaseAddr;
-        return MENU_TITLE;
-    }
-
     uint32_t flags5E4 = 0;
     std::memcpy(&flags5E4, rdram + (kFlags5E4Addr & 0x01FFFFFFu), sizeof(flags5E4));
 
-    // Check if subscreen (pause/techniques/options/shop/etc.) is active:
+    // RULE 2: Title Screen State check via flags5E4 (NEVER false trigger in shops or rooms)
+    if (flags5E4 & (kStaTitleBit | kStaTitleLoopBit)) {
+        uint32_t sceneMgr = 0;
+        std::memcpy(&sceneMgr, rdram + (kTitleSceneMgrPtr & 0x01FFFFFFu), sizeof(sceneMgr));
+        if (sceneMgr >= 0x00100000u && sceneMgr < 0x02000000u) {
+            uint32_t titleObj = 0;
+            std::memcpy(&titleObj, rdram + ((sceneMgr + 0x10u) & 0x01FFFFFFu), sizeof(titleObj));
+            if (titleObj >= 0x00100000u && titleObj < 0x02000000u) {
+                outMenuMgrPtr = titleObj;
+                return MENU_TITLE;
+            }
+        }
+        outMenuMgrPtr = 0;
+        return MENU_TITLE;
+    }
+
+    // RULE 3: Subscreen (pause / techniques / options / shop / stage map) check:
     if (flags5E4 & kStaSubScrBit) {
         uint32_t subScr = 0;
         std::memcpy(&subScr, rdram + (kSubScrSingletonPtr & 0x01FFFFFFu), sizeof(subScr));
@@ -258,7 +276,17 @@ static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
             // Subscreen is active while open > 0:
             if (open > 0) {
                 switch (kind) {
-                    case 0: return MENU_PAUSE_ROOT;
+                    case 0: {
+                        // Check if a modal confirmation dialog is open inside cSubScrMenu
+                        const uint32_t subMgr = getSubManagerPtr(rdram, subScr, 0);
+                        if (subMgr != 0) {
+                            const uint8_t mode = rdram[(subMgr + kPauseRootDialogOffset) & 0x01FFFFFFu];
+                            if (mode != 0) {
+                                return MENU_DIALOG;
+                            }
+                        }
+                        return MENU_PAUSE_ROOT;
+                    }
                     case 1: return MENU_TECHNIQUES | MENU_FLAG_SCROLLABLE;
                     case 2: return MENU_ROULETTE_EDIT | MENU_FLAG_SCROLLABLE;
                     case 3: return MENU_MAP;
@@ -266,6 +294,7 @@ static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
                     case 5: return MENU_ITEMS;
                     case 6: return MENU_SAVELOAD;
                     case 7: return MENU_SHOP | MENU_FLAG_SCROLLABLE;
+                    case 10: return MENU_STAGE_MAP;
                     default: return MENU_PAUSE_ROOT;
                 }
             } else {
@@ -300,13 +329,20 @@ void frameStart(uint8_t* rdram) {
     s_dbgScreenId.store(screenId, std::memory_order_relaxed);
 
     // Update real-time debug telemetry from RDRAM for Kotlin overlay HUD
-    if (screenId == MENU_TITLE && menuMgr != 0) {
-        const uint8_t state = rdram[(menuMgr + kTitleStateOffset) & 0x01FFFFFFu];
-        int16_t cur = 0;
-        std::memcpy(&cur, rdram + ((menuMgr + kTitleCursorOffset) & 0x01FFFFFFu), sizeof(cur));
-        s_dbgSubState.store(state, std::memory_order_relaxed);
-        s_dbgCurIdx.store(cur, std::memory_order_relaxed);
-        s_dbgScrollTop.store(0, std::memory_order_relaxed);
+    if (screenId == MENU_TITLE) {
+        if (menuMgr != 0) {
+            uint8_t state = rdram[(menuMgr + kTitleStateOffset) & 0x01FFFFFFu];
+            int16_t cur = 0;
+            std::memcpy(&cur, rdram + ((menuMgr + kTitleCursorOffset) & 0x01FFFFFFu), sizeof(cur));
+            if (state == 0 || state > 6) state = 3;
+            s_dbgSubState.store(state, std::memory_order_relaxed);
+            s_dbgCurIdx.store(cur, std::memory_order_relaxed);
+            s_dbgScrollTop.store(0, std::memory_order_relaxed);
+        } else {
+            s_dbgSubState.store(3, std::memory_order_relaxed);
+            s_dbgCurIdx.store(0, std::memory_order_relaxed);
+            s_dbgScrollTop.store(0, std::memory_order_relaxed);
+        }
     } else if (screenId == MENU_PAUSE_ROOT && menuMgr != 0) {
         const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 0);
         if (subMgr != 0) {
@@ -315,15 +351,20 @@ void frameStart(uint8_t* rdram) {
             s_dbgCurIdx.store(cur, std::memory_order_relaxed);
             s_dbgScrollTop.store(0, std::memory_order_relaxed);
         }
+    } else if (screenId == MENU_DIALOG && menuMgr != 0) {
+        s_dbgSubState.store(0, std::memory_order_relaxed);
+        s_dbgCurIdx.store(0, std::memory_order_relaxed);
+        s_dbgScrollTop.store(0, std::memory_order_relaxed);
     } else if (screenId == MENU_TECHNIQUES && menuMgr != 0) {
         const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 1);
         if (subMgr != 0) {
             const uint8_t subState = rdram[(subMgr + kTechSubStateOffset) & 0x01FFFFFFu];
             s_dbgSubState.store(subState, std::memory_order_relaxed);
             if (subState == 0) {
+                const uint8_t col = rdram[(subMgr + kTechColumnOffset) & 0x01FFFFFFu];
                 const uint8_t slot = rdram[(subMgr + kTechSlotCursorOffset) & 0x01FFFFFFu];
-                s_dbgCurIdx.store(slot, std::memory_order_relaxed);
-                s_dbgScrollTop.store(0, std::memory_order_relaxed);
+                s_dbgCurIdx.store(col == 0 ? slot : (10 + slot), std::memory_order_relaxed);
+                s_dbgScrollTop.store(col, std::memory_order_relaxed);
             } else {
                 int16_t row = 0, scroll = 0;
                 std::memcpy(&row, rdram + ((subMgr + kTechListCursorOffset) & 0x01FFFFFFu), sizeof(row));
@@ -352,11 +393,22 @@ void frameStart(uint8_t* rdram) {
         const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 4);
         if (subMgr != 0) {
             const uint8_t cur = rdram[(subMgr + kOptionsCursorOffset) & 0x01FFFFFFu];
-            const uint8_t tab = rdram[(subMgr + kOptionsSubStateOffset) & 0x01FFFFFFu];
-            s_dbgSubState.store(tab, std::memory_order_relaxed);
+            s_dbgSubState.store(0, std::memory_order_relaxed);
             s_dbgCurIdx.store(cur, std::memory_order_relaxed);
             s_dbgScrollTop.store(0, std::memory_order_relaxed);
         }
+    } else if (screenId == MENU_STAGE_MAP && menuMgr != 0) {
+        const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 10);
+        if (subMgr != 0) {
+            const uint8_t cur = rdram[(subMgr + kStageMapCursorOffset) & 0x01FFFFFFu];
+            s_dbgSubState.store(0, std::memory_order_relaxed);
+            s_dbgCurIdx.store(cur, std::memory_order_relaxed);
+            s_dbgScrollTop.store(0, std::memory_order_relaxed);
+        }
+    } else if (screenId == MENU_SHOP) {
+        s_dbgSubState.store(0, std::memory_order_relaxed);
+        s_dbgCurIdx.store(0, std::memory_order_relaxed);
+        s_dbgScrollTop.store(0, std::memory_order_relaxed);
     }
 
     // -------------------------------------------------------------------------
@@ -372,14 +424,22 @@ void frameStart(uint8_t* rdram) {
             switch (s_pendingVerifyType) {
                 case VerifyType::TITLE_CAROUSEL:
                 case VerifyType::TITLE_DIFFICULTY: {
-                    int16_t v = 0;
-                    std::memcpy(&v, rdram + ((kTitleBaseAddr + kTitleCursorOffset) & 0x01FFFFFFu), sizeof(v));
-                    readBackVal = v;
+                    if (s_pendingSubMgr != 0) {
+                        int16_t v = 0;
+                        std::memcpy(&v, rdram + ((s_pendingSubMgr + kTitleCursorOffset) & 0x01FFFFFFu), sizeof(v));
+                        readBackVal = v;
+                    }
                     break;
                 }
                 case VerifyType::PAUSE_ROOT: {
                     if (s_pendingSubMgr != 0) {
                         readBackVal = rdram[(s_pendingSubMgr + kPauseRootCursorOffset) & 0x01FFFFFFu];
+                    }
+                    break;
+                }
+                case VerifyType::STAGE_MAP_BTN: {
+                    if (s_pendingSubMgr != 0) {
+                        readBackVal = rdram[(s_pendingSubMgr + kStageMapCursorOffset) & 0x01FFFFFFu];
                     }
                     break;
                 }
@@ -448,12 +508,11 @@ void frameStart(uint8_t* rdram) {
     }
 
     // Check system Back request:
+    // CRITICAL: In God Hand, Triangle is Cancel / Exit. Circle is Confirm.
     if (s_pendingBack.exchange(false, std::memory_order_relaxed)) {
-        uint16_t cancelMask = kPadCircle;
-        if (screenId == MENU_TITLE) {
-            cancelMask = kPadTriangle;
-        } else if (screenId == MENU_PAUSE_ROOT) {
-            cancelMask = kPadStart; // Resume gameplay
+        uint16_t cancelMask = kPadTriangle;
+        if (screenId == MENU_PAUSE_ROOT) {
+            cancelMask = kPadStart; // Resume gameplay from pause root
         }
         s_injectedBtnMask = cancelMask;
         s_singleFrameInject = true;
@@ -479,7 +538,12 @@ void frameStart(uint8_t* rdram) {
                 s_pressedButtonId = -999;
 
                 if (screenId == MENU_TITLE) {
-                    const uint8_t titleState = rdram[(kTitleBaseAddr + kTitleStateOffset) & 0x01FFFFFFu];
+                    uint8_t titleState = 3;
+                    if (menuMgr != 0) {
+                        titleState = rdram[(menuMgr + kTitleStateOffset) & 0x01FFFFFFu];
+                        if (titleState == 0 || titleState > 6) titleState = 3;
+                    }
+
                     if (titleState <= 3) {
                         // Title screen "Press Start": ANY screen tap triggers START
                         s_pressedButtonId = 99; // kPadStart
@@ -493,17 +557,15 @@ void frameStart(uint8_t* rdram) {
                             s_pressedButtonId = -11; // Right arrow
                         } else {
                             bool hit = false;
-                            for (const auto& btn : kTitleHitboxes) {
+                            for (const auto& btn : kTitleCarouselHitboxes) {
                                 if (btn.rect.contains(ps2X, ps2Y)) {
                                     s_pressedButtonId = btn.id;
                                     hit = true;
                                     break;
                                 }
                             }
-                            if (!hit) {
-                                if (ps2X >= 200.0f && ps2X <= 440.0f && ps2Y >= 240.0f && ps2Y <= 390.0f) {
-                                    s_pressedButtonId = 10; // Center confirm
-                                }
+                            if (!hit && kTitleCenterConfirm.contains(ps2X, ps2Y)) {
+                                s_pressedButtonId = 10; // Center confirm
                             }
                         }
                     } else if (titleState == 5) {
@@ -530,34 +592,70 @@ void frameStart(uint8_t* rdram) {
                             }
                         }
                     }
+                } else if (screenId == MENU_DIALOG) {
+                    if (kCommonBackHitbox.contains(ps2X, ps2Y)) {
+                        s_pressedButtonId = -1; // Cancel
+                    } else {
+                        for (const auto& btn : kDialogHitboxes) {
+                            if (btn.rect.contains(ps2X, ps2Y)) {
+                                s_pressedButtonId = btn.id;
+                                break;
+                            }
+                        }
+                    }
+                } else if (screenId == MENU_STAGE_MAP) {
+                    if (kCommonBackHitbox.contains(ps2X, ps2Y)) {
+                        s_pressedButtonId = -1; // Back
+                    } else {
+                        for (const auto& btn : kStageMapHitboxes) {
+                            if (btn.rect.contains(ps2X, ps2Y)) {
+                                s_pressedButtonId = btn.id;
+                                break;
+                            }
+                        }
+                    }
+                } else if (screenId == MENU_SHOP) {
+                    if (kCommonBackHitbox.contains(ps2X, ps2Y)) {
+                        s_pressedButtonId = -1; // Back
+                    } else {
+                        for (const auto& btn : kShopHitboxes) {
+                            if (btn.rect.contains(ps2X, ps2Y)) {
+                                s_pressedButtonId = btn.id;
+                                break;
+                            }
+                        }
+                    }
                 } else if (screenId == MENU_TECHNIQUES) {
                     const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 1);
                     if (subMgr != 0) {
                         const uint8_t subState = rdram[(subMgr + kTechSubStateOffset) & 0x01FFFFFFu];
                         if (kCommonBackHitbox.contains(ps2X, ps2Y)) {
-                            s_pressedButtonId = -1; // Circle / Back
+                            s_pressedButtonId = -1; // Triangle / Back
                         } else if (subState == 0) {
-                            // Slot Grid Selection (6 combo slots in left column)
+                            // Left Column (Combo Slots 0..5):
                             if (kTechLeftColumnArea.contains(ps2X, ps2Y)) {
-                                const float topY = 100.0f;
-                                const float rowH = 46.0f;
-                                const int slot = static_cast<int>((ps2Y - topY) / rowH);
+                                const int slot = static_cast<int>((ps2Y - kTechSlotTopY) / kTechSlotStepY);
                                 if (slot >= 0 && slot < 6) {
-                                    s_pressedButtonId = slot;
+                                    s_pressedButtonId = slot; // 0..5
+                                }
+                            }
+                            // Right Column (Individual Slots 0..4):
+                            else if (kTechRightColumnArea.contains(ps2X, ps2Y)) {
+                                const int slot = static_cast<int>((ps2Y - kTechSlotTopY) / kTechSlotStepY);
+                                if (slot >= 0 && slot < 5) {
+                                    s_pressedButtonId = 10 + slot; // 10..14
                                 }
                             }
                         } else if (subState == 1) {
-                            // Move List Popup (8 visible rows in right column)
+                            // Move List Popup (8 visible rows in center table)
                             if (kTechTabLHitbox.contains(ps2X, ps2Y)) {
                                 s_pressedButtonId = -2; // Tab L (L1)
                             } else if (kTechTabRHitbox.contains(ps2X, ps2Y)) {
                                 s_pressedButtonId = -3; // Tab R (R1)
-                            } else if (kTechRightColumnArea.contains(ps2X, ps2Y)) {
-                                const float topY = kTechListTopY;
-                                const float rowH = kTechListRowHeight;
-                                const int row = static_cast<int>((ps2Y - topY) / rowH);
+                            } else if (kTechListTableArea.contains(ps2X, ps2Y)) {
+                                const int row = static_cast<int>((ps2Y - kTechListTopY) / kTechListStepY);
                                 if (row >= 0 && row < 8) {
-                                    s_pressedButtonId = row;
+                                    s_pressedButtonId = row; // 0..7
                                 }
                             }
                         }
@@ -567,13 +665,11 @@ void frameStart(uint8_t* rdram) {
                     if (subMgr != 0) {
                         const uint8_t subState = rdram[(subMgr + kRouletteSubStateOffset) & 0x01FFFFFFu];
                         if (kCommonBackHitbox.contains(ps2X, ps2Y)) {
-                            s_pressedButtonId = -1; // Circle / Back
+                            s_pressedButtonId = -1; // Triangle / Back
                         } else if (subState == 0) {
                             // Roulette Wheel Slots (5 slots on left)
                             if (kRouletteSlotArea.contains(ps2X, ps2Y)) {
-                                const float topY = 100.0f;
-                                const float rowH = 50.0f;
-                                const int slot = static_cast<int>((ps2Y - topY) / rowH);
+                                const int slot = static_cast<int>((ps2Y - 100.0f) / 50.0f);
                                 if (slot >= 0 && slot < 5) {
                                     s_pressedButtonId = slot;
                                 }
@@ -581,9 +677,7 @@ void frameStart(uint8_t* rdram) {
                         } else if (subState == 1) {
                             // Roulette Move List Popup (6 rows on right)
                             if (kRouletteListArea.contains(ps2X, ps2Y)) {
-                                const float topY = kRouletteListTopY;
-                                const float rowH = kRouletteRowHeight;
-                                const int row = static_cast<int>((ps2Y - topY) / rowH);
+                                const int row = static_cast<int>((ps2Y - kRouletteListTopY) / kRouletteRowHeight);
                                 if (row >= 0 && row < 6) {
                                     s_pressedButtonId = row;
                                 }
@@ -592,26 +686,18 @@ void frameStart(uint8_t* rdram) {
                     }
                 } else if (screenId == MENU_OPTIONS) {
                     if (kCommonBackHitbox.contains(ps2X, ps2Y)) {
-                        s_pressedButtonId = -1; // Circle / Back
-                    } else {
-                        bool hitTab = false;
-                        for (const auto& tab : kOptionsTabHitboxes) {
-                            if (tab.rect.contains(ps2X, ps2Y)) {
-                                s_pressedButtonId = tab.id;
-                                hitTab = true;
-                                break;
-                            }
-                        }
-                        if (!hitTab && ps2Y >= kOptionsRowTopY) {
-                            const int row = static_cast<int>((ps2Y - kOptionsRowTopY) / kOptionsRowHeight);
-                            if (row >= 0 && row < 6) {
-                                if (ps2X >= kOptionsSliderMinX && ps2X < (kOptionsSliderMinX + kOptionsSliderMaxX) * 0.5f) {
+                        s_pressedButtonId = -1; // Triangle / Back
+                    } else if (ps2Y >= kOptionsRowTopY) {
+                        const int row = static_cast<int>((ps2Y - kOptionsRowTopY) / kOptionsRowHeight);
+                        if (row >= 0 && row < 8) {
+                            if (row >= 1 && row <= 3 && ps2X >= 350.0f) {
+                                if (ps2X < kOptionsSliderMidX) {
                                     s_pressedButtonId = -10; // Left
-                                } else if (ps2X >= (kOptionsSliderMinX + kOptionsSliderMaxX) * 0.5f && ps2X <= kOptionsSliderMaxX) {
-                                    s_pressedButtonId = -11; // Right
                                 } else {
-                                    s_pressedButtonId = row;
+                                    s_pressedButtonId = -11; // Right
                                 }
+                            } else {
+                                s_pressedButtonId = row;
                             }
                         }
                     }
@@ -636,8 +722,8 @@ void frameStart(uint8_t* rdram) {
                 s_pressedButtonId = -999;
 
                 // Support horizontal swiping to rotate Title Carousel (state 4)
-                if (screenId == MENU_TITLE) {
-                    const uint8_t titleState = rdram[(kTitleBaseAddr + kTitleStateOffset) & 0x01FFFFFFu];
+                if (screenId == MENU_TITLE && menuMgr != 0) {
+                    const uint8_t titleState = rdram[(menuMgr + kTitleStateOffset) & 0x01FFFFFFu];
                     if (titleState == 4) {
                         s_accumulatedScrollX += ev.scrollDeltaX;
                         if (s_accumulatedScrollX < -25.0f) {
@@ -659,13 +745,13 @@ void frameStart(uint8_t* rdram) {
                 // Vertical finger scrolling for list popups via DPAD inject (Safe against memory corruption)
                 if (screenId == MENU_TECHNIQUES || screenId == MENU_ROULETTE_EDIT || screenId == MENU_SHOP) {
                     s_accumulatedScrollY += ev.scrollDeltaY;
-                    if (s_accumulatedScrollY <= -32.0f) {
+                    if (s_accumulatedScrollY <= -30.0f) {
                         s_accumulatedScrollY = 0.0f;
                         s_injectedBtnMask = kPadDown;
                         s_singleFrameInject = true;
                         s_framesSinceInject = 0;
                         ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
-                    } else if (s_accumulatedScrollY >= 32.0f) {
+                    } else if (s_accumulatedScrollY >= 30.0f) {
                         s_accumulatedScrollY = 0.0f;
                         s_injectedBtnMask = kPadUp;
                         s_singleFrameInject = true;
@@ -682,11 +768,9 @@ void frameStart(uint8_t* rdram) {
 
                     // 1. Direct button actions
                     if (s_pressedButtonId == -1) {
-                        // Cancel / Back
-                        uint16_t mask = kPadCircle;
-                        if (screenId == MENU_TITLE) {
-                            mask = kPadTriangle;
-                        } else if (screenId == MENU_PAUSE_ROOT) {
+                        // Cancel / Back: ALWAYS Triangle (or Start for pause root)
+                        uint16_t mask = kPadTriangle;
+                        if (screenId == MENU_PAUSE_ROOT) {
                             mask = kPadStart; // Resume gameplay
                         }
                         s_injectedBtnMask = mask;
@@ -726,20 +810,65 @@ void frameStart(uint8_t* rdram) {
                         s_framesSinceInject = 0;
                         ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
                     }
-                    // 2. Verified cursor selection targets
-                    else if (screenId == MENU_TITLE) {
-                        const uint8_t titleState = rdram[(kTitleBaseAddr + kTitleStateOffset) & 0x01FFFFFFu];
-                        if (titleState == 4 || titleState == 5) {
-                            int16_t targetCur = static_cast<int16_t>(s_pressedButtonId);
-                            std::memcpy(rdram + ((kTitleBaseAddr + kTitleCursorOffset) & 0x01FFFFFFu), &targetCur, sizeof(targetCur));
+                    // 2. Dialog Actions
+                    else if (screenId == MENU_DIALOG) {
+                        if (s_pressedButtonId == 0) {
+                            // Yes: inject Cross
+                            s_injectedBtnMask = kPadCross;
+                        } else {
+                            // No: inject Triangle
+                            s_injectedBtnMask = kPadTriangle;
+                        }
+                        s_singleFrameInject = true;
+                        s_framesSinceInject = 0;
+                        ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                    }
+                    // 3. Shop Actions
+                    else if (screenId == MENU_SHOP) {
+                        if (s_pressedButtonId == 0) {
+                            // Buy
+                            s_injectedBtnMask = kPadCross;
+                        } else if (s_pressedButtonId == 1) {
+                            // Sell
+                            s_injectedBtnMask = kPadRight; // or Cross if already selected
+                        } else if (s_pressedButtonId == 2) {
+                            // Leave Shop
+                            s_injectedBtnMask = kPadTriangle;
+                        }
+                        s_singleFrameInject = true;
+                        s_framesSinceInject = 0;
+                        ps2_pad::setHostTouchInputState(s_injectedBtnMask, 0.0f, 0.0f, 0.0f, 0.0f);
+                    }
+                    // 4. Stage Map Actions
+                    else if (screenId == MENU_STAGE_MAP) {
+                        const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 10);
+                        if (subMgr != 0 && s_pressedButtonId >= 0 && s_pressedButtonId <= 3) {
+                            uint8_t targetCur = static_cast<uint8_t>(s_pressedButtonId);
+                            rdram[(subMgr + kStageMapCursorOffset) & 0x01FFFFFFu] = targetCur;
                             s_pendingVerify = true;
-                            s_pendingVerifyType = (titleState == 4) ? VerifyType::TITLE_CAROUSEL : VerifyType::TITLE_DIFFICULTY;
+                            s_pendingVerifyType = VerifyType::STAGE_MAP_BTN;
                             s_pendingTargetId = targetCur;
-                            s_pendingSubMgr = kTitleBaseAddr;
+                            s_pendingSubMgr = subMgr;
                             s_verifyWaitFrames = 1;
                             s_dbgPendingTargetId.store(targetCur, std::memory_order_relaxed);
                         }
-                    } else if (screenId == MENU_PAUSE_ROOT) {
+                    }
+                    // 5. Title Screen Options
+                    else if (screenId == MENU_TITLE && menuMgr != 0) {
+                        const uint8_t titleState = rdram[(menuMgr + kTitleStateOffset) & 0x01FFFFFFu];
+                        if (titleState == 4 || titleState == 5) {
+                            int16_t targetCur = static_cast<int16_t>(s_pressedButtonId);
+                            std::memcpy(rdram + ((menuMgr + kTitleCursorOffset) & 0x01FFFFFFu), &targetCur, sizeof(targetCur));
+                            s_pendingVerify = true;
+                            s_pendingVerifyType = (titleState == 4) ? VerifyType::TITLE_CAROUSEL : VerifyType::TITLE_DIFFICULTY;
+                            s_pendingTargetId = targetCur;
+                            s_pendingSubMgr = menuMgr;
+                            s_verifyWaitFrames = 1;
+                            s_dbgPendingTargetId.store(targetCur, std::memory_order_relaxed);
+                        }
+                    }
+                    // 6. Pause Root Options
+                    else if (screenId == MENU_PAUSE_ROOT) {
                         const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 0);
                         if (subMgr != 0 && s_pressedButtonId >= 0 && s_pressedButtonId <= 4) {
                             uint8_t targetCur = static_cast<uint8_t>(s_pressedButtonId);
@@ -751,20 +880,38 @@ void frameStart(uint8_t* rdram) {
                             s_verifyWaitFrames = 1;
                             s_dbgPendingTargetId.store(targetCur, std::memory_order_relaxed);
                         }
-                    } else if (screenId == MENU_TECHNIQUES) {
+                    }
+                    // 7. Techniques Screen (Both Left and Right Columns + Move List Popup)
+                    else if (screenId == MENU_TECHNIQUES) {
                         const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 1);
                         if (subMgr != 0) {
                             const uint8_t subState = rdram[(subMgr + kTechSubStateOffset) & 0x01FFFFFFu];
-                            if (subState == 0 && s_pressedButtonId >= 0 && s_pressedButtonId < 6) {
-                                uint8_t targetSlot = static_cast<uint8_t>(s_pressedButtonId);
-                                rdram[(subMgr + kTechSlotCursorOffset) & 0x01FFFFFFu] = targetSlot;
-                                s_pendingVerify = true;
-                                s_pendingVerifyType = VerifyType::TECH_SLOT;
-                                s_pendingTargetId = targetSlot;
-                                s_pendingSubMgr = subMgr;
-                                s_verifyWaitFrames = 1;
-                                s_dbgPendingTargetId.store(targetSlot, std::memory_order_relaxed);
+                            if (subState == 0) {
+                                if (s_pressedButtonId >= 0 && s_pressedButtonId < 6) {
+                                    // Left Column: Combo Slots (0..5)
+                                    uint8_t targetSlot = static_cast<uint8_t>(s_pressedButtonId);
+                                    rdram[(subMgr + kTechColumnOffset) & 0x01FFFFFFu] = 0; // Left column
+                                    rdram[(subMgr + kTechSlotCursorOffset) & 0x01FFFFFFu] = targetSlot;
+                                    s_pendingVerify = true;
+                                    s_pendingVerifyType = VerifyType::TECH_SLOT;
+                                    s_pendingTargetId = targetSlot;
+                                    s_pendingSubMgr = subMgr;
+                                    s_verifyWaitFrames = 1;
+                                    s_dbgPendingTargetId.store(targetSlot, std::memory_order_relaxed);
+                                } else if (s_pressedButtonId >= 10 && s_pressedButtonId < 15) {
+                                    // Right Column: Individual Button Slots (0..4)
+                                    uint8_t targetSlot = static_cast<uint8_t>(s_pressedButtonId - 10);
+                                    rdram[(subMgr + kTechColumnOffset) & 0x01FFFFFFu] = 1; // Right column
+                                    rdram[(subMgr + kTechSlotCursorOffset) & 0x01FFFFFFu] = targetSlot;
+                                    s_pendingVerify = true;
+                                    s_pendingVerifyType = VerifyType::TECH_SLOT;
+                                    s_pendingTargetId = targetSlot;
+                                    s_pendingSubMgr = subMgr;
+                                    s_verifyWaitFrames = 1;
+                                    s_dbgPendingTargetId.store(10 + targetSlot, std::memory_order_relaxed);
+                                }
                             } else if (subState == 1 && s_pressedButtonId >= 0 && s_pressedButtonId < 8) {
+                                // Move list row selection
                                 int16_t targetRow = static_cast<int16_t>(s_pressedButtonId);
                                 std::memcpy(rdram + ((subMgr + kTechListCursorOffset) & 0x01FFFFFFu), &targetRow, sizeof(targetRow));
                                 s_pendingVerify = true;
@@ -775,7 +922,9 @@ void frameStart(uint8_t* rdram) {
                                 s_dbgPendingTargetId.store(targetRow, std::memory_order_relaxed);
                             }
                         }
-                    } else if (screenId == MENU_ROULETTE_EDIT) {
+                    }
+                    // 8. Roulette Wheel Edit
+                    else if (screenId == MENU_ROULETTE_EDIT) {
                         const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 2);
                         if (subMgr != 0) {
                             const uint8_t subState = rdram[(subMgr + kRouletteSubStateOffset) & 0x01FFFFFFu];
@@ -799,9 +948,11 @@ void frameStart(uint8_t* rdram) {
                                 s_dbgPendingTargetId.store(targetRow, std::memory_order_relaxed);
                             }
                         }
-                    } else if (screenId == MENU_OPTIONS) {
+                    }
+                    // 9. Options Screen (8 rows, NO TABS)
+                    else if (screenId == MENU_OPTIONS) {
                         const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 4);
-                        if (subMgr != 0 && s_pressedButtonId >= 0 && s_pressedButtonId < 6) {
+                        if (subMgr != 0 && s_pressedButtonId >= 0 && s_pressedButtonId < 8) {
                             uint8_t targetRow = static_cast<uint8_t>(s_pressedButtonId);
                             rdram[(subMgr + kOptionsCursorOffset) & 0x01FFFFFFu] = targetRow;
                             s_pendingVerify = true;

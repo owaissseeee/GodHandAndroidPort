@@ -1311,8 +1311,12 @@ class TouchControllerOverlay(context: Context) : View(context) {
             3 -> "TECHNIQUES"
             4 -> "ROULETTE"
             5 -> "OPTIONS"
+            6 -> "ITEMS"
             7 -> "SAVELOAD"
             8 -> "SHOP"
+            9 -> "STAGE MAP"
+            10 -> "DIALOG"
+            11 -> "MAP"
             else -> "ID $screenId"
         }
         val hudLine1 = "MENU DIRECT TOUCH DEBUG"
@@ -1332,42 +1336,50 @@ class TouchControllerOverlay(context: Context) : View(context) {
         when (screenId) {
             1 -> { // TITLE
                 if (subState <= 3) {
-                    boxes.add(DebugBox(99, "[PRESS ANYWHERE TO START]", 60f, 160f, 580f, 320f))
+                    boxes.add(DebugBox(99, "[PRESS ANYWHERE TO START]", 60f, 160f, 580f, 380f))
                 } else if (subState == 4) {
-                    boxes.add(DebugBox(0, "[0] NEW GAME", 140f, 250f, 500f, 295f))
-                    boxes.add(DebugBox(1, "[1] LOAD GAME", 140f, 300f, 500f, 345f))
-                    boxes.add(DebugBox(2, "[2] OPTIONS", 140f, 350f, 500f, 395f))
-                    boxes.add(DebugBox(-10, "[< LEFT]", 30f, 250f, 180f, 390f))
-                    boxes.add(DebugBox(-11, "[> RIGHT]", 460f, 250f, 610f, 390f))
-                    boxes.add(DebugBox(10, "[CONFIRM]", 200f, 240f, 440f, 390f))
+                    boxes.add(DebugBox(0, "[0] NEW GAME", 230f, 360f, 410f, 420f))
+                    boxes.add(DebugBox(1, "[1] LOAD GAME", 420f, 360f, 600f, 420f))
+                    boxes.add(DebugBox(2, "[2] OPTIONS", 40f, 360f, 220f, 420f))
+                    boxes.add(DebugBox(-10, "[< LEFT]", 20f, 250f, 140f, 360f))
+                    boxes.add(DebugBox(-11, "[> RIGHT]", 500f, 250f, 620f, 360f))
+                    boxes.add(DebugBox(10, "[CONFIRM]", 220f, 250f, 420f, 360f))
+                    boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
                 } else if (subState == 5) {
-                    boxes.add(DebugBox(0, "[0] EASY", 180f, 210f, 460f, 260f))
-                    boxes.add(DebugBox(1, "[1] NORMAL", 180f, 265f, 460f, 315f))
-                    boxes.add(DebugBox(2, "[2] HARD", 180f, 320f, 460f, 370f))
+                    boxes.add(DebugBox(0, "[0] EASY", 180f, 210f, 460f, 255f))
+                    boxes.add(DebugBox(1, "[1] NORMAL", 180f, 260f, 460f, 305f))
+                    boxes.add(DebugBox(2, "[2] HARD", 180f, 310f, 460f, 355f))
                     boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
                 }
             }
             2 -> { // PAUSE ROOT
-                boxes.add(DebugBox(0, "[0] TECHNIQUES", 140f, 115f, 500f, 160f))
-                boxes.add(DebugBox(1, "[1] ROULETTE", 140f, 165f, 500f, 210f))
-                boxes.add(DebugBox(2, "[2] MAP", 140f, 215f, 500f, 260f))
-                boxes.add(DebugBox(3, "[3] OPTIONS", 140f, 265f, 500f, 310f))
-                boxes.add(DebugBox(4, "[4] EXIT", 140f, 315f, 500f, 360f))
+                boxes.add(DebugBox(0, "[0] TECHNIQUES", 20f, 60f, 195f, 105f))
+                boxes.add(DebugBox(1, "[1] ROULETTE", 20f, 105f, 195f, 150f))
+                boxes.add(DebugBox(2, "[2] MAP", 20f, 150f, 195f, 195f))
+                boxes.add(DebugBox(3, "[3] OPTIONS", 20f, 195f, 195f, 240f))
+                boxes.add(DebugBox(4, "[4] EXIT", 20f, 240f, 195f, 285f))
                 boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
             }
             3 -> { // TECHNIQUES
                 if (subState == 0) {
+                    // Left Column (Combo Slots 0..5)
                     for (i in 0 until 6) {
-                        val y0 = 100f + i * 46f
-                        boxes.add(DebugBox(i, "[SLOT $i]", 40f, y0, 260f, y0 + 42f))
+                        val y0 = 110f + i * 40f
+                        boxes.add(DebugBox(i, "[L$i]", 25f, y0, 255f, y0 + 36f))
+                    }
+                    // Right Column (Individual Button Slots 0..4)
+                    val rLabels = arrayOf("△", "✕", "↓+□", "↓+△", "↓+✕")
+                    for (i in 0 until 5) {
+                        val y0 = 110f + i * 40f
+                        boxes.add(DebugBox(10 + i, "[R$i: ${rLabels[i]}]", 270f, y0, 440f, y0 + 36f))
                     }
                     boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
                 } else if (subState == 1) {
-                    boxes.add(DebugBox(-2, "[-2] TAB L", 280f, 42f, 440f, 78f))
-                    boxes.add(DebugBox(-3, "[-3] TAB R", 440f, 42f, 600f, 78f))
+                    boxes.add(DebugBox(-2, "[-2] TAB L", 215f, 55f, 265f, 90f))
+                    boxes.add(DebugBox(-3, "[-3] TAB R", 385f, 55f, 435f, 90f))
                     for (r in 0 until 8) {
-                        val y0 = 80f + r * 34f
-                        boxes.add(DebugBox(r, "[ROW $r: #${scrollTop + r}]", 280f, y0, 600f, y0 + 32f))
+                        val y0 = 98f + r * 30f
+                        boxes.add(DebugBox(r, "[ROW $r: #${scrollTop + r}]", 215f, y0, 435f, y0 + 28f))
                     }
                     boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
                 }
@@ -1376,26 +1388,45 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 if (subState == 0) {
                     for (i in 0 until 5) {
                         val y0 = 100f + i * 50f
-                        boxes.add(DebugBox(i, "[WHEEL $i]", 60f, y0, 260f, y0 + 45f))
+                        boxes.add(DebugBox(i, "[WHEEL $i]", 50f, y0, 260f, y0 + 45f))
                     }
                     boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
                 } else if (subState == 1) {
                     for (r in 0 until 6) {
                         val y0 = 80f + r * 44f
-                        boxes.add(DebugBox(r, "[ROULETTE $r]", 280f, y0, 600f, y0 + 40f))
+                        boxes.add(DebugBox(r, "[ROULETTE $r]", 280f, y0, 580f, y0 + 40f))
                     }
                     boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
                 }
             }
-            5 -> { // OPTIONS
-                boxes.add(DebugBox(-2, "[-2] GAME", 80f, 55f, 200f, 95f))
-                boxes.add(DebugBox(-3, "[-3] SOUND", 200f, 55f, 320f, 95f))
-                boxes.add(DebugBox(-4, "[-4] CAMERA", 320f, 55f, 440f, 95f))
-                boxes.add(DebugBox(-5, "[-5] PAD", 440f, 55f, 560f, 95f))
-                for (r in 0 until 6) {
-                    val y0 = 115f + r * 40f
-                    boxes.add(DebugBox(r, "[OPT $r]", 80f, y0, 580f, y0 + 36f))
+            5 -> { // OPTIONS (Exactly 8 rows, NO TABS)
+                val optLabels = arrayOf(
+                    "CONTROLS", "LIFE GAUGE", "SOUND", "VIBRATION",
+                    "LOAD GAME", "RESET GAME", "RESTORE DEFAULTS", "EXIT"
+                )
+                for (r in 0 until 8) {
+                    val y0 = 95f + r * 30f
+                    boxes.add(DebugBox(r, "[OPT $r: ${optLabels[r]}]", 20f, y0, 620f, y0 + 28f))
                 }
+                boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
+            }
+            8 -> { // SHOP
+                boxes.add(DebugBox(0, "[0] BUY", 160f, 180f, 300f, 240f))
+                boxes.add(DebugBox(1, "[1] SELL", 330f, 180f, 470f, 240f))
+                boxes.add(DebugBox(2, "[2] LEAVE SHOP", 120f, 255f, 240f, 300f))
+                boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
+            }
+            9 -> { // STAGE MAP
+                val mapLabels = arrayOf("SAVE", "CONTINUE", "ENTER SHOP", "ENTER CASINO")
+                for (i in 0 until 4) {
+                    val y0 = 170f + i * 43f
+                    boxes.add(DebugBox(i, "[$i] ${mapLabels[i]}", 385f, y0, 495f, y0 + 40f))
+                }
+                boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
+            }
+            10 -> { // MODAL CONFIRMATION DIALOG
+                boxes.add(DebugBox(0, "[0] YES", 340f, 390f, 430f, 435f))
+                boxes.add(DebugBox(1, "[1] NO", 470f, 390f, 560f, 435f))
                 boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
             }
         }

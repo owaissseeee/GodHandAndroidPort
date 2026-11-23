@@ -62,8 +62,9 @@ object NativeBridge {
     const val MENU_ITEMS         = 6
     const val MENU_SAVELOAD      = 7
     const val MENU_SHOP          = 8
-    const val MENU_DIALOG        = 9
-    const val MENU_MAP           = 10
+    const val MENU_STAGE_MAP     = 9
+    const val MENU_DIALOG        = 10
+    const val MENU_MAP           = 11
 
     const val FLAG_SCROLLABLE    = 1 shl 16
     const val FLAG_LIVE_ROULETTE = 1 shl 17

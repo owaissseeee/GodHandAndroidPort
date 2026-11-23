@@ -367,6 +367,9 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                 val isLiveRoulette = (menuState and NativeBridge.FLAG_LIVE_ROULETTE) != 0
                 val isMenuActive = settings.menuDirectTouchEnabled && (screenId != 0) && !isLiveRoulette
                 touchOverlay.isMenuTouchActive = isMenuActive
+                if (isMenuActive) {
+                    touchOverlay.postInvalidate()
+                }
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     ensureAdpfSession()
