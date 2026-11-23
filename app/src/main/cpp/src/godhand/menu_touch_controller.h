@@ -53,7 +53,7 @@ bool isEnabled();
 bool screenToPs2(float screenX, float screenY, float& outPs2X, float& outPs2Y);
 
 // Hitbox overrides from real-time crop editor
-void setHitboxOverride(int32_t screenId, int32_t buttonId, float x0, float y0, float x1, float y1);
+void setHitboxOverride(int32_t screenId, int32_t subState, int32_t buttonId, float x0, float y0, float x1, float y1);
 void clearHitboxOverrides();
 
 } // namespace godhand::menu_touch

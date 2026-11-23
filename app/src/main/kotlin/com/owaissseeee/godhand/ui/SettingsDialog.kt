@@ -438,15 +438,6 @@ class SettingsDialog(
         }
 
         addSpinnerRow(
-            "HUD Layout",
-            listOf("16:9 Widescreen (Adjusted Anchors)", "4:3 Original"),
-            settings.hudLayoutIdx
-        ) { pos ->
-            settings.hudLayoutIdx = pos
-            NativeBridge.setHudLayout(pos)
-        }
-
-        addSpinnerRow(
             "Target Frame Rate",
             listOf("30 FPS (Authentic PS2 - Default)", "60 FPS (Experimental / Physics Uncapped)"),
             settings.fpsIdx

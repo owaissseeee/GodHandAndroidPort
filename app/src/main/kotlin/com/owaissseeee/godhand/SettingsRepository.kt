@@ -413,17 +413,17 @@ class SettingsRepository(context: Context) {
         saveAllToJsonFile()
     }
 
-    data class HitboxOverrideData(val screenId: Int, val buttonId: Int, val x0: Float, val y0: Float, val x1: Float, val y1: Float)
+    data class HitboxOverrideData(val screenId: Int, val subState: Int, val buttonId: Int, val x0: Float, val y0: Float, val x1: Float, val y1: Float)
 
-    fun saveHitboxOverride(screenId: Int, buttonId: Int, x0: Float, y0: Float, x1: Float, y1: Float) {
+    fun saveHitboxOverride(screenId: Int, subState: Int, buttonId: Int, x0: Float, y0: Float, x1: Float, y1: Float) {
         prefs.edit()
-            .putString("hitbox_override_${screenId}_${buttonId}", "$x0,$y0,$x1,$y1")
+            .putString("hitbox_override_${screenId}_${subState}_${buttonId}", "$x0,$y0,$x1,$y1")
             .apply()
         saveAllToJsonFile()
     }
 
-    fun removeHitboxOverride(screenId: Int, buttonId: Int) {
-        prefs.edit().remove("hitbox_override_${screenId}_${buttonId}").apply()
+    fun removeHitboxOverride(screenId: Int, subState: Int, buttonId: Int) {
+        prefs.edit().remove("hitbox_override_${screenId}_${subState}_${buttonId}").apply()
         saveAllToJsonFile()
     }
 
@@ -443,17 +443,18 @@ class SettingsRepository(context: Context) {
         for ((key, value) in prefs.all) {
             if (key.startsWith("hitbox_override_") && value is String) {
                 val parts = key.removePrefix("hitbox_override_").split("_")
-                if (parts.size >= 2) {
-                    val sId = parts[0].toIntOrNull() ?: continue
-                    val bId = parts[1].toIntOrNull() ?: continue
-                    val coords = value.split(",")
-                    if (coords.size == 4) {
-                        val x0 = coords[0].toFloatOrNull() ?: continue
-                        val y0 = coords[1].toFloatOrNull() ?: continue
-                        val x1 = coords[2].toFloatOrNull() ?: continue
-                        val y1 = coords[3].toFloatOrNull() ?: continue
-                        list.add(HitboxOverrideData(sId, bId, x0, y0, x1, y1))
-                    }
+                val (sId, subSt, bId) = when (parts.size) {
+                    3 -> Triple(parts[0].toIntOrNull() ?: continue, parts[1].toIntOrNull() ?: continue, parts[2].toIntOrNull() ?: continue)
+                    2 -> Triple(parts[0].toIntOrNull() ?: continue, 0, parts[1].toIntOrNull() ?: continue)
+                    else -> continue
+                }
+                val coords = value.split(",")
+                if (coords.size == 4) {
+                    val x0 = coords[0].toFloatOrNull() ?: continue
+                    val y0 = coords[1].toFloatOrNull() ?: continue
+                    val x1 = coords[2].toFloatOrNull() ?: continue
+                    val y1 = coords[3].toFloatOrNull() ?: continue
+                    list.add(HitboxOverrideData(sId, subSt, bId, x0, y0, x1, y1))
                 }
             }
         }

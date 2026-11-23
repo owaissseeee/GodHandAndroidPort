@@ -859,9 +859,9 @@ Java_com_owaissseeee_godhand_NativeBridge_getMenuDebugInfo(
 
 JNIEXPORT void JNICALL
 Java_com_owaissseeee_godhand_NativeBridge_setHitboxOverride(
-    JNIEnv* /*env*/, jobject /*thiz*/, jint screenId, jint buttonId, jfloat x0, jfloat y0, jfloat x1, jfloat y1)
+    JNIEnv* /*env*/, jobject /*thiz*/, jint screenId, jint subState, jint buttonId, jfloat x0, jfloat y0, jfloat x1, jfloat y1)
 {
-    godhand::menu_touch::setHitboxOverride(screenId, buttonId, x0, y0, x1, y1);
+    godhand::menu_touch::setHitboxOverride(screenId, subState, buttonId, x0, y0, x1, y1);
 }
 
 JNIEXPORT void JNICALL

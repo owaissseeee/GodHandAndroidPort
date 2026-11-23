@@ -210,10 +210,11 @@ constexpr uint32_t kShopScrollOffset          = 0x1D0u;
 constexpr uint32_t kShopColumnOffset          = 0x1D4u;
 
 // G. Save / Load Screen:
-// Current selected slot index (0..2 visible, up to 20 total): int32_t at 0x00747A0Cu
-constexpr uint32_t kSaveLoadCurSlotAddr       = 0x00747A0Cu;
-// cSaveLoad instance singleton pointer in RDRAM: 0x003C264Cu
-constexpr uint32_t kSaveLoadInstancePtr       = 0x003C264Cu;
+// cSaveLoad instance singleton pointer in RDRAM: 0x003C2648u (verified in func_00160E78_0x160e78.cpp:182 and func_00160F38_0x160f38.cpp:179)
+constexpr uint32_t kSaveLoadInstancePtr       = 0x003C2648u;
+// Active Save/Load flag in RDRAM: 0x00747A88u, bit 30 (0x40000000u) set in cSaveLoad_openSave/openLoad and cleared in func_002BF568
+constexpr uint32_t kSaveLoadActiveFlagAddr    = 0x00747A88u;
+constexpr uint32_t kSaveLoadActiveBit         = 0x40000000u;
 
 // -----------------------------------------------------------------------------
 // 4. PS2 Controller Button Bitmasks
@@ -299,14 +300,13 @@ constexpr MenuButtonHitbox kDifficultyHitboxes[] = {
 };
 
 // Pause Menu Root (640x448 space):
-// Row hitboxes span from left carved buttons (X=20) through status display (X=510)
-// Techniques (0), Roulette (1), Map (2), Options (3), Exit (4)
+// Techniques (0), Roulette (1), Map (2), Options (3), Exit (4) - Exported Custom Verified Bounds
 constexpr MenuButtonHitbox kPauseRootHitboxes[] = {
-    { 0, { 20.0f, 100.0f, 510.0f, 155.0f } }, // Techniques
-    { 1, { 20.0f, 155.0f, 510.0f, 208.0f } }, // Roulette
-    { 2, { 20.0f, 208.0f, 510.0f, 258.0f } }, // Map
-    { 3, { 20.0f, 258.0f, 510.0f, 308.0f } }, // Options
-    { 4, { 20.0f, 308.0f, 510.0f, 365.0f } }, // Exit / Resume
+    { 0, { 17.740303f, 20.977776f, 200.79257f, 75.977776f } }, // [0] TECHNIQUES
+    { 1, { 16.627320f, 80.177770f, 200.62396f, 129.444430f } }, // [1] ROULETTE
+    { 2, { 15.885330f, 129.91112f, 200.62396f, 178.096310f } }, // [2] MAP
+    { 3, { 15.851593f, 181.00000f, 200.99496f, 231.259260f } }, // [3] OPTIONS
+    { 4, { 18.043839f, 232.14073f, 201.26477f, 282.814820f } }, // [4] EXIT
 };
 
 // Techniques Screen Layout Constants:
@@ -319,79 +319,67 @@ constexpr float  kTechRightSlotTopY    = 148.0f;
 constexpr float  kTechSlotStepY        = 42.0f;
 constexpr float  kTechSlotHeight       = 34.0f;
 
-// Techniques Move List Popup is ALWAYS on the LEFT (Gene character preview is on the right):
+// Techniques Move List Popup on LEFT (Gene character preview is on the right, editing Right slots):
 constexpr Rect2D kTechLeftTableArea    = { 18.0f,  98.0f, 330.0f, 326.0f };
 constexpr Rect2D kTechLeftTabLHitbox   = { 18.0f,  50.0f,  90.0f,  85.0f };
 constexpr Rect2D kTechLeftTabRHitbox   = { 240.0f, 50.0f, 315.0f,  85.0f };
 
-// Techniques Move List Popup on RIGHT (fallback):
-constexpr Rect2D kTechRightTableArea   = { 235.0f, 114.0f, 435.0f, 338.0f };
-constexpr Rect2D kTechRightTabLHitbox  = { 235.0f,  60.0f, 282.0f,  88.0f };
-constexpr Rect2D kTechRightTabRHitbox  = { 388.0f,  60.0f, 435.0f,  88.0f };
+// Techniques Move List Popup on RIGHT (editing Left combo slots):
+constexpr Rect2D kTechRightTableArea   = { 235.0f, 98.0f, 435.0f, 326.0f };
+constexpr Rect2D kTechRightTabLHitbox  = { 235.0f, 50.0f, 305.0f, 85.0f };
+constexpr Rect2D kTechRightTabRHitbox  = { 365.0f, 50.0f, 435.0f, 85.0f };
 
 constexpr float  kTechListTopY         = 98.0f;
-constexpr float  kTechListStepY        = 28.0f;
+constexpr float  kTechListStepY        = 28.5f;
 constexpr float  kTechListRowHeight    = 26.0f;
 
-// Roulette Edit Layout Constants (5 equipped slots on the left, RETURN at bottom left):
-constexpr Rect2D kRouletteLeftSlotArea  = { 25.0f,  95.0f, 235.0f, 335.0f };
-constexpr Rect2D kRouletteReturnHitbox  = { 20.0f, 385.0f, 215.0f, 435.0f };
-constexpr Rect2D kRouletteListArea      = { 275.0f, 85.0f, 500.0f, 335.0f };
-constexpr float  kRouletteSlotTopY      = 95.0f;
-constexpr float  kRouletteSlotStepY     = 48.0f;
-constexpr float  kRouletteSlotHeight    = 44.0f;
-constexpr float  kRouletteListTopY      = 85.0f;
-constexpr float  kRouletteListStepY     = 38.0f;
-constexpr float  kRouletteListRowHeight = 34.0f;
+// Roulette Edit Layout Constants (10 equipped slots: 5 left, 5 right, RETURN at bottom left):
+constexpr Rect2D kRouletteLeftSlotArea   = { 25.0f,  95.0f, 235.0f, 335.0f };
+constexpr Rect2D kRouletteRightSlotArea  = { 245.0f, 95.0f, 455.0f, 335.0f };
+constexpr Rect2D kRouletteReturnHitbox   = { 20.0f, 385.0f, 215.0f, 435.0f };
+constexpr Rect2D kRouletteListArea       = { 275.0f, 85.0f, 500.0f, 335.0f };
+constexpr float  kRouletteSlotTopY       = 95.0f;
+constexpr float  kRouletteSlotStepY      = 48.0f;
+constexpr float  kRouletteSlotHeight     = 44.0f;
+constexpr float  kRouletteListTopY       = 85.0f;
+constexpr float  kRouletteListStepY      = 38.0f;
+constexpr float  kRouletteListRowHeight  = 34.0f;
 
-// Options Menu Layout Constants (Exactly 8 rows, NO TABS):
-constexpr float kOptionsRowTopY        = 88.0f;
-constexpr float kOptionsRowHeight      = 30.0f;
-constexpr float kOptionsRowStepY       = 34.0f;
-constexpr float kOptionsRowLeftX       = 40.0f;
-constexpr float kOptionsRowRightX      = 600.0f;
-constexpr float kOptionsSliderMidX     = 470.0f;
+// Options Menu Layout Constants (Exactly 8 rows, NO TABS - Exported Custom Verified Bounds):
+constexpr MenuButtonHitbox kOptionsHitboxes[] = {
+    { 0, { 41.214172f, 90.488884f, 601.21420f, 120.488884f } }, // [OPT 0: CONTROLS]
+    { 1, { 39.460390f, 123.399994f, 599.46040f, 153.400000f } }, // [OPT 1: LIFE GAUGE]
+    { 2, { 40.101196f, 158.800000f, 600.10120f, 188.800000f } }, // [OPT 2: SOUND]
+    { 3, { 39.797638f, 193.214810f, 599.79760f, 223.214810f } }, // [OPT 3: VIBRATION]
+    { 4, { 39.123108f, 227.474080f, 599.12310f, 257.474060f } }, // [OPT 4: LOAD GAME]
+    { 5, { 39.359190f, 261.162960f, 599.35920f, 291.162960f } }, // [OPT 5: RESET GAME]
+    { 6, { 40.033722f, 295.422240f, 600.03370f, 325.422240f } }, // [OPT 6: RESTORE DEFAULTS]
+    { 7, { 39.325470f, 331.600000f, 599.32544f, 361.600000f } }, // [OPT 7: EXIT]
+    { 10, { 370.0f, 395.0f, 450.0f, 435.0f } },                  // [YES]
+    { 11, { 480.0f, 395.0f, 560.0f, 435.0f } },                  // [NO]
+};
 
-// Stage Clear Map (Kind 3 or 9 or 11) Buttons (Right column):
+// Stage Clear Map (Kind 3 or 9 or 11) Buttons (Exported Custom Verified Bounds):
 constexpr MenuButtonHitbox kStageMapHitboxes[] = {
-    { 0, { 385.0f, 155.0f, 580.0f, 195.0f } }, // SAVE
-    { 1, { 385.0f, 200.0f, 580.0f, 240.0f } }, // CONTINUE
-    { 2, { 385.0f, 245.0f, 580.0f, 285.0f } }, // ENTER SHOP
-    { 3, { 385.0f, 290.0f, 580.0f, 330.0f } }, // ENTER CASINO
-    { -1, kCommonBackHitbox                 }, // Back
+    { 0, { 432.35242f, 177.55557f, 604.92410f, 217.19261f } }, // [0] SAVE
+    { 1, { 432.25125f, 224.94072f, 602.09106f, 262.60742f } }, // [1] CONTINUE
+    { 2, { 432.72340f, 267.29630f, 601.85500f, 305.58520f } }, // [2] ENTER SHOP
+    { 3, { 431.27320f, 312.03705f, 603.00165f, 348.77040f } }, // [3] ENTER CASINO
 };
 
-// Memory Card Save / Load (Kind 7 / MENU_SAVELOAD):
+// Memory Card Save / Load (Kind 7 / MENU_SAVELOAD - Exported Custom Verified Bounds):
 constexpr MenuButtonHitbox kSaveLoadHitboxes[] = {
-    { 0, { 38.0f,  65.0f, 602.0f, 130.0f } }, // Slot 1
-    { 1, { 38.0f, 135.0f, 602.0f, 200.0f } }, // Slot 2
-    { 2, { 38.0f, 205.0f, 602.0f, 270.0f } }, // Slot 3
-    { 10, { 370.0f, 395.0f, 450.0f, 435.0f } }, // YES (Confirm dialog)
-    { 11, { 480.0f, 395.0f, 560.0f, 435.0f } }, // NO (Cancel dialog)
-    { -1, kCommonBackHitbox                  }, // Back
-};
-
-// Shop Screen (Kind 7 / MENU_SHOP) Category Selection Buttons:
-constexpr MenuButtonHitbox kShopHitboxes[] = {
-    { 0, { 120.0f, 160.0f, 280.0f, 230.0f } }, // BUY
-    { 1, { 340.0f, 160.0f, 500.0f, 230.0f } }, // SELL
-    { 2, {  20.0f, 250.0f, 220.0f, 310.0f } }, // LEAVE SHOP
-    { -1, kCommonBackHitbox                 }, // Back
-};
-
-// Shop Subscreen (Kind 7) Category Tabs:
-constexpr MenuButtonHitbox kShopTabsHitboxes[] = {
-    { 0, {  20.0f, 18.0f, 160.0f, 55.0f } }, // TECHNIQUES
-    { 1, { 170.0f, 18.0f, 330.0f, 55.0f } }, // ROULETTE
-    { 2, { 340.0f, 18.0f, 490.0f, 55.0f } }, // POWER UP
-    { 3, { 500.0f, 18.0f, 620.0f, 55.0f } }, // EXIT
+    { 0, { 36.583496f,  97.511116f, 600.58350f, 162.51111f } }, // [SLOT 1]
+    { 1, { 38.741974f, 176.429630f, 602.74194f, 241.42963f } }, // [SLOT 2]
+    { 2, { 39.315340f, 257.162960f, 603.31530f, 322.16296f } }, // [SLOT 3]
+    { 10, { 370.0f, 395.0f, 450.0f, 435.0f } },                  // [YES]
+    { 11, { 480.0f, 395.0f, 560.0f, 435.0f } },                  // [NO]
 };
 
 // Modal Yes/No Confirmation Dialog (Kind 10 / MENU_DIALOG):
 constexpr MenuButtonHitbox kDialogHitboxes[] = {
     { 0, { 340.0f, 390.0f, 430.0f, 435.0f } }, // Yes (Index 0)
     { 1, { 470.0f, 390.0f, 560.0f, 435.0f } }, // No (Index 1)
-    { -1, kCommonBackHitbox                 }, // Cancel
 };
 
 } // namespace godhand::menu_touch
