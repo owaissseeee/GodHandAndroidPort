@@ -361,27 +361,33 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
     private val adpfFrameCallback = object : android.view.Choreographer.FrameCallback {
         override fun doFrame(frameTimeNanos: Long) {
             if (!isFinishing && !isDestroyed) {
-                // Direct Menu Touch state polling
-                val menuState = NativeBridge.getActiveMenuState()
-                val screenId = menuState and 0xFFFF
-                val isLiveRoulette = (menuState and NativeBridge.FLAG_LIVE_ROULETTE) != 0
-                val isMenuActive = settings.menuDirectTouchEnabled && (screenId != 0) && !isLiveRoulette
-                touchOverlay.isMenuTouchActive = isMenuActive
-                if (isMenuActive) {
-                    touchOverlay.postInvalidate()
-                }
+                try {
+                    // Direct Menu Touch state polling
+                    val menuState = NativeBridge.getActiveMenuState()
+                    val screenId = menuState and 0xFFFF
+                    val isLiveRoulette = (menuState and NativeBridge.FLAG_LIVE_ROULETTE) != 0
+                    val isMenuActive = settings.menuDirectTouchEnabled && (screenId != 0) && !isLiveRoulette
+                    touchOverlay.isMenuTouchActive = isMenuActive
+                    if (isMenuActive) {
+                        touchOverlay.postInvalidate()
+                    }
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    ensureAdpfSession()
-                    val duration = NativeBridge.getLastFrameWorkDurationNanos()
-                    if (duration > 0L) {
-                        val reported = maxOf(duration, 30_000_000L)
-                        try {
-                            adpfSession?.reportActualWorkDuration(reported)
-                        } catch (_: Throwable) {}
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        ensureAdpfSession()
+                        val duration = NativeBridge.getLastFrameWorkDurationNanos()
+                        if (duration > 0L) {
+                            val reported = maxOf(duration, 30_000_000L)
+                            try {
+                                adpfSession?.reportActualWorkDuration(reported)
+                            } catch (_: Throwable) {}
+                        }
+                    }
+                } catch (_: Throwable) {
+                } finally {
+                    if (!isFinishing && !isDestroyed) {
+                        android.view.Choreographer.getInstance().postFrameCallback(this)
                     }
                 }
-                android.view.Choreographer.getInstance().postFrameCallback(this)
             }
         }
     }
@@ -459,6 +465,9 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             onQuickLoadClicked = {
                 performQuickLoad()
             }
+            onBackTriggered = {
+                handleGlobalBackPressed()
+            }
             onSaveEditLayout = { map ->
                 settings.saveCustomButtonLayout(map)
             }
@@ -476,35 +485,39 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (touchOverlay.isEditMode) {
-                    touchOverlay.exitEditMode(save = true)
-                    return
-                }
-
-                val now = System.currentTimeMillis()
-                if (now - lastBackPressTimeMs < 2500L) {
-                    backPressCount++
-                } else {
-                    backPressCount = 1
-                }
-                lastBackPressTimeMs = now
-
-                if (backPressCount >= 2) {
-                    // Double or triple back press within 2.5s -> immediately show quit menu!
-                    backPressCount = 0
-                    showQuitConfirmationDialog()
-                    return
-                }
-
-                if (touchOverlay.isMenuTouchActive) {
-                    if (!NativeBridge.onMenuBackPressed()) {
-                        showQuitConfirmationDialog()
-                    }
-                } else {
-                    showQuitConfirmationDialog()
-                }
+                handleGlobalBackPressed()
             }
         })
+    }
+
+    private fun handleGlobalBackPressed() {
+        if (touchOverlay.isEditMode) {
+            touchOverlay.exitEditMode(save = true)
+            return
+        }
+
+        val now = System.currentTimeMillis()
+        if (now - lastBackPressTimeMs < 2500L) {
+            backPressCount++
+        } else {
+            backPressCount = 1
+        }
+        lastBackPressTimeMs = now
+
+        if (backPressCount >= 2) {
+            // User pressed back 2-3 times in quick succession -> immediately show quit menu!
+            backPressCount = 0
+            showQuitConfirmationDialog()
+            return
+        }
+
+        if (touchOverlay.isMenuTouchActive) {
+            if (!NativeBridge.onMenuBackPressed()) {
+                showQuitConfirmationDialog()
+            }
+        } else {
+            showQuitConfirmationDialog()
+        }
     }
 
     private fun checkConnectedControllers() {
@@ -705,33 +718,7 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (touchOverlay.isEditMode) {
-                touchOverlay.exitEditMode(save = true)
-                return true
-            }
-
-            val now = System.currentTimeMillis()
-            if (now - lastBackPressTimeMs < 2500L) {
-                backPressCount++
-            } else {
-                backPressCount = 1
-            }
-            lastBackPressTimeMs = now
-
-            if (backPressCount >= 2) {
-                // User pressed back 2-3 times in quick succession -> immediately show quit menu!
-                backPressCount = 0
-                showQuitConfirmationDialog()
-                return true
-            }
-
-            if (touchOverlay.isMenuTouchActive) {
-                if (!NativeBridge.onMenuBackPressed()) {
-                    showQuitConfirmationDialog()
-                }
-            } else {
-                showQuitConfirmationDialog()
-            }
+            handleGlobalBackPressed()
             return true
         }
         if (event != null && isGamepadEvent(event.source)) {

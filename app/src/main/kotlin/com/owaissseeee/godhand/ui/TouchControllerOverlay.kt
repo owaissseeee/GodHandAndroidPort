@@ -90,6 +90,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
     var onQuickSaveClicked: (() -> Unit)? = null
     var onQuickLoadClicked: (() -> Unit)? = null
     var onSaveEditLayout: ((Map<String, SettingsRepository.ButtonLayout>) -> Unit)? = null
+    var onBackTriggered: (() -> Unit)? = null
 
     // Controller Configuration State
     var showTouchControls: Boolean = true
@@ -99,12 +100,33 @@ class TouchControllerOverlay(context: Context) : View(context) {
         set(value) {
             if (field != value) {
                 field = value
+                resetVirtualControlsState()
                 if (!value) {
                     menuTouchHandler.stopFling()
                 }
                 postInvalidate()
             }
         }
+
+    fun resetVirtualControlsState() {
+        for (btn in buttons) {
+            btn.activePointerId = -1
+        }
+        buttonMask = 0
+        lastRenderedButtonMask = 0
+        leftStickPointerId = -1
+        leftStickX = 0f
+        leftStickY = 0f
+        wasMovingForward = false
+        isAutoRunPulsing = false
+        runPulseHandler.removeCallbacksAndMessages(null)
+        rightStickPointerId = -1
+        rightStickX = 0f
+        rightStickY = 0f
+        swipePointerId = -1
+        backButtonPointerId = -1
+        NativeBridge.updatePadState(0, 0f, 0f, 0f, 0f)
+    }
     var leftStickSticky: Boolean = true
     var rightStickSticky: Boolean = true
     var dodgeMode: Int = DODGE_MODE_STICK
@@ -405,11 +427,43 @@ class TouchControllerOverlay(context: Context) : View(context) {
     }
     private val menuDebugHudTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = 0xFFF59E0B.toInt()
-        textSize = 10f * density
+        textSize = 7.5f * density
         typeface = Typeface.MONOSPACE
         isFakeBoldText = true
     }
     private val menuDebugInfoArray = IntArray(6)
+
+    private var backButtonPointerId = -1
+    private val backCirclePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+        color = 0xDD1C1917.toInt()
+    }
+    private val backBorderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+        strokeWidth = 2f * density
+        color = 0xFFF59E0B.toInt()
+    }
+    private val backCrossPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+        strokeWidth = 2.5f * density
+        strokeCap = Paint.Cap.ROUND
+        color = 0xFFF8FAFC.toInt()
+    }
+
+    private fun drawCircularBackButton(canvas: Canvas, w: Float, h: Float) {
+        val radius = 22f * density
+        val cx = w - 38f * density
+        val cy = h - 36f * density
+
+        val isPressed = (backButtonPointerId != -1)
+        backCirclePaint.color = if (isPressed) 0xFFB45309.toInt() else 0xDD1C1917.toInt()
+        canvas.drawCircle(cx, cy, radius, backCirclePaint)
+        canvas.drawCircle(cx, cy, radius, backBorderPaint)
+
+        val arm = radius * 0.40f
+        canvas.drawLine(cx - arm, cy - arm, cx + arm, cy + arm, backCrossPaint)
+        canvas.drawLine(cx + arm, cy - arm, cx - arm, cy + arm, backCrossPaint)
+    }
 
     init {
         updatePaintsOpacity()
@@ -551,6 +605,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
         val h = height.toFloat()
 
         if (isMenuTouchActive) {
+            postInvalidateOnAnimation()
+
             // Draw visual debug hitboxes and telemetry HUD if enabled
             if (repo.showMenuDebugBoxes) {
                 drawMenuDebugOverlay(canvas, w, h)
@@ -566,6 +622,10 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     drawButton(canvas, btn, bx, by, br, isPressed)
                 }
             }
+
+            // Circular back button with '✕' permanently rendered when menu touch is active
+            drawCircularBackButton(canvas, w, h)
+
             if (!isEditMode) {
                 drawFpsOverlay(canvas)
             }
@@ -822,6 +882,40 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     }
                 }
             }
+
+            // 2. Circular Back Button at bottom-right
+            val backRadius = 22f * density
+            val backCx = w - 38f * density
+            val backCy = h - 36f * density
+            val distBack = hypot(x - backCx, y - backCy)
+
+            if (backButtonPointerId == pid) {
+                if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP) {
+                    backButtonPointerId = -1
+                    hapticTick()
+                    invalidate()
+                    onBackTriggered?.invoke()
+                    return true
+                }
+                if (action == MotionEvent.ACTION_CANCEL) {
+                    backButtonPointerId = -1
+                    invalidate()
+                    return true
+                }
+                if (action == MotionEvent.ACTION_MOVE) {
+                    return true
+                }
+            }
+
+            if (distBack <= backRadius * 1.5f) {
+                if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN) {
+                    backButtonPointerId = pid
+                    hapticTick()
+                    invalidate()
+                    return true
+                }
+            }
+
             return menuTouchHandler.onTouchEvent(event)
         }
 
@@ -1304,7 +1398,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
         val lastTapId = menuDebugInfoArray[4]
         val pendingTargetId = menuDebugInfoArray[5]
 
-        // 1. Draw Top-Left HUD
+        // 1. Draw Top-Right Mini HUD
         val screenName = when (screenId) {
             1 -> "TITLE"
             2 -> "PAUSE ROOT"
@@ -1319,16 +1413,14 @@ class TouchControllerOverlay(context: Context) : View(context) {
             11 -> "MAP"
             else -> "ID $screenId"
         }
-        val hudLine1 = "MENU DIRECT TOUCH DEBUG"
-        val hudLine2 = "$screenName | SubState:$subState | Cur:$curIdx | Scroll:$scrollTop | LastTap:$lastTapId"
-        val hudX = 14f * density
-        val hudY = 14f * density
-        val hudW = (hudLine2.length * 6.5f * density) + 24f * density
-        val hudH = 38f * density
-        canvas.drawRoundRect(hudX, hudY, hudX + hudW, hudY + hudH, 6f * density, 6f * density, menuDebugHudBgPaint)
-        canvas.drawRoundRect(hudX, hudY, hudX + hudW, hudY + hudH, 6f * density, 6f * density, menuDebugHudBorderPaint)
-        canvas.drawText(hudLine1, hudX + 10f * density, hudY + 14f * density, menuDebugLabelPaint)
-        canvas.drawText(hudLine2, hudX + 10f * density, hudY + 29f * density, menuDebugHudTextPaint)
+        val hudLine = "$screenName | S:$subState C:$curIdx Scr:$scrollTop Tap:$lastTapId"
+        val hudW = menuDebugHudTextPaint.measureText(hudLine) + 14f * density
+        val hudH = 18f * density
+        val hudX = w - hudW - 10f * density
+        val hudY = 8f * density
+        canvas.drawRoundRect(hudX, hudY, hudX + hudW, hudY + hudH, 4f * density, 4f * density, menuDebugHudBgPaint)
+        canvas.drawRoundRect(hudX, hudY, hudX + hudW, hudY + hudH, 4f * density, 4f * density, menuDebugHudBorderPaint)
+        canvas.drawText(hudLine, hudX + 7f * density, hudY + 12f * density, menuDebugHudTextPaint)
 
         // 2. Build hitboxes for active screen
         val boxes = mutableListOf<DebugBox>()
@@ -1338,65 +1430,73 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 if (subState <= 3) {
                     boxes.add(DebugBox(99, "[PRESS ANYWHERE TO START]", 60f, 160f, 580f, 380f))
                 } else if (subState == 4) {
-                    boxes.add(DebugBox(0, "[0] NEW GAME", 230f, 360f, 410f, 420f))
-                    boxes.add(DebugBox(1, "[1] LOAD GAME", 420f, 360f, 600f, 420f))
-                    boxes.add(DebugBox(2, "[2] OPTIONS", 40f, 360f, 220f, 420f))
-                    boxes.add(DebugBox(-10, "[< LEFT]", 20f, 250f, 140f, 360f))
-                    boxes.add(DebugBox(-11, "[> RIGHT]", 500f, 250f, 620f, 360f))
-                    boxes.add(DebugBox(10, "[CONFIRM]", 220f, 250f, 420f, 360f))
-                    boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
+                    boxes.add(DebugBox(2, "[2] OPTIONS", 20f, 360f, 210f, 420f))
+                    boxes.add(DebugBox(0, "[0] NEW GAME", 220f, 360f, 420f, 420f))
+                    boxes.add(DebugBox(1, "[1] LOAD GAME", 430f, 360f, 620f, 420f))
+                    boxes.add(DebugBox(-10, "◀", 15f, 220f, 95f, 300f))
+                    boxes.add(DebugBox(-11, "▶", 545f, 220f, 625f, 300f))
                 } else if (subState == 5) {
-                    boxes.add(DebugBox(0, "[0] EASY", 180f, 210f, 460f, 255f))
-                    boxes.add(DebugBox(1, "[1] NORMAL", 180f, 260f, 460f, 305f))
-                    boxes.add(DebugBox(2, "[2] HARD", 180f, 310f, 460f, 355f))
-                    boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
+                    boxes.add(DebugBox(0, "[0] EASY", 40f, 360f, 200f, 420f))
+                    boxes.add(DebugBox(1, "[1] NORMAL", 220f, 360f, 420f, 420f))
+                    boxes.add(DebugBox(2, "[2] HARD", 440f, 360f, 600f, 420f))
                 }
             }
             2 -> { // PAUSE ROOT
-                boxes.add(DebugBox(0, "[0] TECHNIQUES", 20f, 60f, 195f, 105f))
-                boxes.add(DebugBox(1, "[1] ROULETTE", 20f, 105f, 195f, 150f))
-                boxes.add(DebugBox(2, "[2] MAP", 20f, 150f, 195f, 195f))
-                boxes.add(DebugBox(3, "[3] OPTIONS", 20f, 195f, 195f, 240f))
-                boxes.add(DebugBox(4, "[4] EXIT", 20f, 240f, 195f, 285f))
-                boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
+                boxes.add(DebugBox(0, "[0] TECHNIQUES", 20f,  95f, 315f, 161f))
+                boxes.add(DebugBox(1, "[1] ROULETTE",   20f, 161f, 315f, 227f))
+                boxes.add(DebugBox(2, "[2] MAP",        20f, 227f, 315f, 293f))
+                boxes.add(DebugBox(3, "[3] OPTIONS",    20f, 293f, 315f, 359f))
+                boxes.add(DebugBox(4, "[4] EXIT",       20f, 359f, 315f, 425f))
             }
             3 -> { // TECHNIQUES
                 if (subState == 0) {
                     // Left Column (Combo Slots 0..5)
                     for (i in 0 until 6) {
-                        val y0 = 110f + i * 40f
-                        boxes.add(DebugBox(i, "[L$i]", 25f, y0, 255f, y0 + 36f))
+                        val y0 = 106f + i * 42f
+                        boxes.add(DebugBox(i, "[L$i]", 35f, y0, 245f, y0 + 34f))
                     }
                     // Right Column (Individual Button Slots 0..4)
                     val rLabels = arrayOf("△", "✕", "↓+□", "↓+△", "↓+✕")
                     for (i in 0 until 5) {
-                        val y0 = 110f + i * 40f
-                        boxes.add(DebugBox(10 + i, "[R$i: ${rLabels[i]}]", 270f, y0, 440f, y0 + 36f))
+                        val y0 = 106f + i * 42f
+                        boxes.add(DebugBox(10 + i, "[R$i: ${rLabels[i]}]", 275f, y0, 435f, y0 + 34f))
                     }
-                    boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
                 } else if (subState == 1) {
-                    boxes.add(DebugBox(-2, "[-2] TAB L", 215f, 55f, 265f, 90f))
-                    boxes.add(DebugBox(-3, "[-3] TAB R", 385f, 55f, 435f, 90f))
+                    // Dynamic table placement based on which column was tapped (stored in scrollTop: 1 = Left, 0 = Right)
+                    val isTableOnLeft = (scrollTop == 1)
+                    val tableLeft = if (isTableOnLeft) 18f else 235f
+                    val tableRight = if (isTableOnLeft) 218f else 435f
+                    val tabLLeft = if (isTableOnLeft) 18f else 235f
+                    val tabLRight = if (isTableOnLeft) 65f else 282f
+                    val tabRLeft = if (isTableOnLeft) 170f else 388f
+                    val tabRRight = if (isTableOnLeft) 218f else 435f
+
+                    boxes.add(DebugBox(-2, "[L1] TAB L", tabLLeft, 60f, tabLRight, 88f))
+                    boxes.add(DebugBox(-3, "[R1] TAB R", tabRLeft, 60f, tabRRight, 88f))
+
+                    // 8 visible rows starting at Y: 114f (with title text gap)
                     for (r in 0 until 8) {
-                        val y0 = 98f + r * 30f
-                        boxes.add(DebugBox(r, "[ROW $r: #${scrollTop + r}]", 215f, y0, 435f, y0 + 28f))
+                        val y0 = 114f + r * 28f
+                        boxes.add(DebugBox(r, "[ROW $r]", tableLeft, y0, tableRight, y0 + 26f))
                     }
-                    boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
                 }
             }
             4 -> { // ROULETTE
                 if (subState == 0) {
+                    // 10 slots (5 left, 5 right)
                     for (i in 0 until 5) {
-                        val y0 = 100f + i * 50f
-                        boxes.add(DebugBox(i, "[WHEEL $i]", 50f, y0, 260f, y0 + 45f))
+                        val y0 = 95f + i * 48f
+                        boxes.add(DebugBox(i, "[SLOT $i]", 25f, y0, 235f, y0 + 44f))
                     }
-                    boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
+                    for (i in 5 until 10) {
+                        val y0 = 95f + (i - 5) * 48f
+                        boxes.add(DebugBox(i, "[SLOT $i]", 245f, y0, 455f, y0 + 44f))
+                    }
                 } else if (subState == 1) {
                     for (r in 0 until 6) {
-                        val y0 = 80f + r * 44f
-                        boxes.add(DebugBox(r, "[ROULETTE $r]", 280f, y0, 580f, y0 + 40f))
+                        val y0 = 85f + r * 38f
+                        boxes.add(DebugBox(r, "[ROULETTE $r]", 275f, y0, 500f, y0 + 34f))
                     }
-                    boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
                 }
             }
             5 -> { // OPTIONS (Exactly 8 rows, NO TABS)
@@ -1405,29 +1505,32 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     "LOAD GAME", "RESET GAME", "RESTORE DEFAULTS", "EXIT"
                 )
                 for (r in 0 until 8) {
-                    val y0 = 95f + r * 30f
-                    boxes.add(DebugBox(r, "[OPT $r: ${optLabels[r]}]", 20f, y0, 620f, y0 + 28f))
+                    val y0 = 88f + r * 34f
+                    boxes.add(DebugBox(r, "[OPT $r: ${optLabels[r]}]", 40f, y0, 600f, y0 + 30f))
                 }
-                boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
+            }
+            7 -> { // SAVELOAD
+                boxes.add(DebugBox(0, "[SLOT 1]", 38f,  65f, 602f, 130f))
+                boxes.add(DebugBox(1, "[SLOT 2]", 38f, 135f, 602f, 200f))
+                boxes.add(DebugBox(2, "[SLOT 3]", 38f, 205f, 602f, 270f))
+                boxes.add(DebugBox(10, "[YES]", 370f, 395f, 450f, 435f))
+                boxes.add(DebugBox(11, "[NO]", 480f, 395f, 560f, 435f))
             }
             8 -> { // SHOP
                 boxes.add(DebugBox(0, "[0] BUY", 160f, 180f, 300f, 240f))
                 boxes.add(DebugBox(1, "[1] SELL", 330f, 180f, 470f, 240f))
                 boxes.add(DebugBox(2, "[2] LEAVE SHOP", 120f, 255f, 240f, 300f))
-                boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
             }
-            9 -> { // STAGE MAP
+            9, 11 -> { // STAGE MAP & PAUSE MAP
                 val mapLabels = arrayOf("SAVE", "CONTINUE", "ENTER SHOP", "ENTER CASINO")
                 for (i in 0 until 4) {
-                    val y0 = 170f + i * 43f
-                    boxes.add(DebugBox(i, "[$i] ${mapLabels[i]}", 385f, y0, 495f, y0 + 40f))
+                    val y0 = 155f + i * 45f
+                    boxes.add(DebugBox(i, "[$i] ${mapLabels[i]}", 385f, y0, 580f, y0 + 40f))
                 }
-                boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
             }
             10 -> { // MODAL CONFIRMATION DIALOG
                 boxes.add(DebugBox(0, "[0] YES", 340f, 390f, 430f, 435f))
                 boxes.add(DebugBox(1, "[1] NO", 470f, 390f, 560f, 435f))
-                boxes.add(DebugBox(-1, "[-1] BACK", 490f, 395f, 635f, 445f))
             }
         }
 
