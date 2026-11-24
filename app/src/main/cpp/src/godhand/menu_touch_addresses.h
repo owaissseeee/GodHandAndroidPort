@@ -178,11 +178,17 @@ constexpr uint32_t kRouletteListScrollOffset = 0xEFu;
 
 // D. Options Screen (cSubScrOption, kind=4, update=func_00166BB8):
 // Row cursor is uint8_t at +0x130 (range 0..7, exactly 8 rows, NO TABS)
-constexpr uint32_t kOptionsCursorOffset     = 0x130u;
+constexpr uint32_t kOptionsCursorOffset       = 0x130u;
+// Sub-state in cSubScrOption: uint8_t at +0x5A (3 = Reset Game Yes/No dialog)
+constexpr uint32_t kOptionsStateOffset        = 0x5Au;
+// Reset Game Yes/No choice in cSubScrOption: uint8_t at +0x131 (0 = YES, 1 = NO)
+constexpr uint32_t kOptionsResetChoiceOffset  = 0x131u;
 
-// E. Stage Clear Map Screen (kind=3 or 10, update=func_00168560):
-// Verified in func_00167908_0x167908.cpp:1416: lbu $v1, 0x110($s1)
-constexpr uint32_t kStageMapCursorOffset    = 0x110u;
+// E. Stage Clear Map Screen (kind=3, init=func_00168560, update=func_00168AB8 / func_0016AE38):
+// Verified in func_00168560:571, func_00168AB8:1132, func_0016AE38:211: 0x1B4($s0)
+constexpr uint32_t kStageMapCursorOffset    = 0x1B4u;
+// Save-hidden / pause-map flag inside cSubScr: uint8_t at +0xEDD (0 = 4 options with Save, 1 = Save hidden)
+constexpr uint32_t kSubScrMapNoSaveOffset   = 0x0EDDu;
 
 // F. Shop Screen (cSubScrShop, kind=7, update=func_0016AE38 & func_0016B1F8):
 // Sub-state is uint8_t at +0x5A (0=Category select BUY/SELL/LEAVE, 1=Item/Technique list)
@@ -203,10 +209,14 @@ constexpr uint32_t kSaveLoadInstancePtr       = 0x003C2648u;
 constexpr uint32_t kSaveLoadActiveFlagAddr    = 0x00747A88u;
 constexpr uint32_t kSaveLoadActiveBit         = (0x40000000u | 0x80000000u);
 
-// cMcLoad and cMcSave pointers in RDRAM:
+// cMcLoad and cMcSave objects and pointers in RDRAM:
 constexpr uint32_t kMcLoadPtrAddr             = 0x007D16ECu;
 constexpr uint32_t kMcSavePtrAddr             = 0x007D18ECu;
-constexpr uint32_t kMcBaseAddr                = 0x007D14B0u;
+constexpr uint32_t kMcBaseAddr                = 0x007D14B0u; // cMcSys
+constexpr uint32_t kMcLoadBaseAddr            = 0x007D1600u; // cMcLoad (loadMenu / readChoise / errorProc)
+constexpr uint32_t kMcSaveBaseAddr            = 0x007D1800u; // cMcSave (saveMenu / writeChoise / overWriteChoise)
+constexpr uint32_t kMcLoadModeInitOffset      = 0x100u;
+constexpr uint32_t kMcSaveModeInitOffset      = 0x118u;
 // Inside cMc (cMcLoad / cMcSave):
 constexpr uint32_t kMcChoiceOffset            = 0x0Cu; // uint8_t: 0 = YES, 1 = NO
 constexpr uint32_t kMcSlotBaseOffset          = 0xD4u; // int32_t: slot scroll base (0..19)

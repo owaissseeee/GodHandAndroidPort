@@ -1771,10 +1771,16 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 }
             }
             9, 11 -> { // STAGE MAP & PAUSE MAP (Custom Exported Bounds)
-                boxes.add(DebugBox(0, "[0] SAVE",         432.35242f, 177.55557f, 604.92410f, 217.19261f))
-                boxes.add(DebugBox(1, "[1] CONTINUE",     432.25125f, 224.94072f, 602.09106f, 262.60742f))
-                boxes.add(DebugBox(2, "[2] ENTER SHOP",   432.72340f, 267.29630f, 601.85500f, 305.58520f))
-                boxes.add(DebugBox(3, "[3] ENTER CASINO", 431.27320f, 312.03705f, 603.00165f, 348.77040f))
+                if (subState == 1) {
+                    boxes.add(DebugBox(0, "[0] CONTINUE",     432.35242f, 177.55557f, 604.92410f, 217.19261f))
+                    boxes.add(DebugBox(1, "[1] ENTER SHOP",   432.25125f, 224.94072f, 602.09106f, 262.60742f))
+                    boxes.add(DebugBox(2, "[2] ENTER CASINO", 432.72340f, 267.29630f, 601.85500f, 305.58520f))
+                } else {
+                    boxes.add(DebugBox(0, "[0] SAVE",         432.35242f, 177.55557f, 604.92410f, 217.19261f))
+                    boxes.add(DebugBox(1, "[1] CONTINUE",     432.25125f, 224.94072f, 602.09106f, 262.60742f))
+                    boxes.add(DebugBox(2, "[2] ENTER SHOP",   432.72340f, 267.29630f, 601.85500f, 305.58520f))
+                    boxes.add(DebugBox(3, "[3] ENTER CASINO", 431.27320f, 312.03705f, 603.00165f, 348.77040f))
+                }
             }
             10 -> { // MODAL CONFIRMATION DIALOG
                 boxes.add(DebugBox(0, "[0] YES", 340f, 385f, 460f, 445f))

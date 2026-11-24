@@ -192,13 +192,13 @@ bool handleBackPressed() {
     if (screenId == MENU_NONE || (state & MENU_FLAG_LIVE_ROULETTE)) {
         return false;
     }
-    // If on Title Screen and at root (Press Start: 3 or Carousel: 4),
+    // If on Title Screen and at root (Press Start: 1 or Main Menu: 2),
     // cannot go back further in the PS2 game -> return false so Android shows Quit dialog!
     if (screenId == MENU_TITLE && s_rdram) {
         uint32_t titleObj = findTitleObj(s_rdram);
         if (titleObj != 0) {
-            const uint8_t titleState = s_rdram[(titleObj + kTitleStateOffset) & 0x01FFFFFFu];
-            if (titleState <= 4) {
+            const uint8_t titlePhase = s_rdram[(titleObj + kTitlePhaseOffset) & 0x01FFFFFFu];
+            if (titlePhase <= 2) {
                 return false;
             }
         } else {
@@ -291,6 +291,40 @@ bool screenToPs2(float screenX, float screenY, float& outPs2X, float& outPs2Y) {
     }
 }
 
+static uint32_t resolveActiveMcBase(const uint8_t* rdram, uint32_t menuMgr) {
+    if (!rdram) return kMcLoadBaseAddr;
+
+    // Primary: cSaveLoad instance mode (+0x00: 1/3 = Save, 2/4 = Load)
+    uint32_t saveInst = 0;
+    std::memcpy(&saveInst, rdram + (kSaveLoadInstancePtr & 0x01FFFFFFu), sizeof(saveInst));
+    if (saveInst >= 0x00100000u && saveInst < 0x02000000u) {
+        const uint8_t mode = rdram[saveInst & 0x01FFFFFFu];
+        if (mode == 1u || mode == 3u) return kMcSaveBaseAddr;
+        if (mode == 2u || mode == 4u) return kMcLoadBaseAddr;
+    }
+    if (menuMgr >= 0x00100000u && menuMgr < 0x02000000u && menuMgr != kMcBaseAddr) {
+        const uint8_t mode = rdram[menuMgr & 0x01FFFFFFu];
+        if (mode == 1u || mode == 3u) return kMcSaveBaseAddr;
+        if (mode == 2u || mode == 4u) return kMcLoadBaseAddr;
+    }
+
+    // Secondary: non-zero subStep (+0xF4) in cMcSave vs cMcLoad
+    int32_t saveStep = 0;
+    int32_t loadStep = 0;
+    std::memcpy(&saveStep, rdram + ((kMcSaveBaseAddr + kMcSubStepOffset) & 0x01FFFFFFu), sizeof(saveStep));
+    std::memcpy(&loadStep, rdram + ((kMcLoadBaseAddr + kMcSubStepOffset) & 0x01FFFFFFu), sizeof(loadStep));
+    if (saveStep != 0 && loadStep == 0) return kMcSaveBaseAddr;
+    if (loadStep != 0 && saveStep == 0) return kMcLoadBaseAddr;
+
+    // Tertiary: initialized cMcSys backpointer at +0xEC (0x007D18EC / 0x007D16EC)
+    uint32_t saveBackPtr = 0;
+    uint32_t loadBackPtr = 0;
+    std::memcpy(&saveBackPtr, rdram + (kMcSavePtrAddr & 0x01FFFFFFu), sizeof(saveBackPtr));
+    std::memcpy(&loadBackPtr, rdram + (kMcLoadPtrAddr & 0x01FFFFFFu), sizeof(loadBackPtr));
+    if (saveBackPtr == kMcBaseAddr && loadBackPtr != kMcBaseAddr) return kMcSaveBaseAddr;
+    return kMcLoadBaseAddr;
+}
+
 static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
     outMenuMgrPtr = 0;
     if (!rdram) return MENU_NONE;
@@ -306,24 +340,31 @@ static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
     // Room ID
     uint16_t room = 0;
     std::memcpy(&room, rdram + (kRoomAddr & 0x01FFFFFFu), sizeof(room));
+    const bool isTitleRoom = (room == 20 || room == 0x14);
+    const bool hasTitleFlag = ((flags5E4 & kStaTitleBit) != 0);
 
     // RULE 2: CASINO & SHOP EXCLUSION - User requested regular virtual controller in casino and shop
-    if ((flags5E4 & kStaSoftEventBit) || room == 22 || room == 23 || room == 0x16 || room == 0x17) {
+    // (Never exclude the Title screen via kStaSoftEventBit)
+    if (room == 22 || room == 23 || room == 0x16 || room == 0x17 ||
+        (!isTitleRoom && !hasTitleFlag && (flags5E4 & kStaSoftEventBit))) {
         return MENU_NONE;
     }
 
     // RULE 3: Check Memory Card Save/Load screen active
-    // Priority check BEFORE Title: McPort loaded (0x007C0008 != 0) OR Active Save/Load flag bit in RDRAM (0x00747A88u bit 30/31) OR active cSaveLoad
-    const bool mcPortLoaded = (*reinterpret_cast<const uint32_t*>(rdram + (0x007C0008u & 0x01FFFFFFu)) != 0);
+    // Priority check BEFORE Title: Active Save/Load flag bit in RDRAM (0x00747A88u bit 30/31) OR active cSaveLoad
     uint32_t flags7A88 = 0;
     std::memcpy(&flags7A88, rdram + (kSaveLoadActiveFlagAddr & 0x01FFFFFFu), sizeof(flags7A88));
     uint32_t saveInst = 0;
     std::memcpy(&saveInst, rdram + (kSaveLoadInstancePtr & 0x01FFFFFFu), sizeof(saveInst));
     const bool saveInstValid = (saveInst >= 0x00100000u && saveInst < 0x02000000u);
     const uint8_t saveMode = saveInstValid ? rdram[saveInst & 0x01FFFFFFu] : 0;
+    int32_t loadSubStep = 0;
+    int32_t saveSubStep = 0;
+    std::memcpy(&loadSubStep, rdram + ((kMcLoadBaseAddr + kMcSubStepOffset) & 0x01FFFFFFu), sizeof(loadSubStep));
+    std::memcpy(&saveSubStep, rdram + ((kMcSaveBaseAddr + kMcSubStepOffset) & 0x01FFFFFFu), sizeof(saveSubStep));
 
-    if (mcPortLoaded || (flags7A88 & kSaveLoadActiveBit) || (saveInstValid && saveMode != 0)) {
-        outMenuMgrPtr = mcPortLoaded ? kMcBaseAddr : (saveInstValid ? saveInst : 0);
+    if ((flags7A88 & kSaveLoadActiveBit) || (saveInstValid && saveMode != 0) || loadSubStep != 0 || saveSubStep != 0) {
+        outMenuMgrPtr = saveInstValid ? saveInst : 0;
         return MENU_SAVELOAD | MENU_FLAG_SCROLLABLE;
     }
 
@@ -359,13 +400,9 @@ static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
             if (open > 0) {
                 switch (kind) {
                     case 0: {
-                        // Check if a modal confirmation dialog is open inside cSubScrMenu
+                        // Pause Root (subMgr + 0x2A0 is L1/R1 Status panel page, NOT a Yes/No dialog)
                         const uint32_t subMgr = getSubManagerPtr(rdram, subScr, 0);
                         if (subMgr == 0) return MENU_NONE;
-                        const uint8_t mode = rdram[(subMgr + kPauseRootDialogOffset) & 0x01FFFFFFu];
-                        if (mode != 0) {
-                            return MENU_DIALOG;
-                        }
                         return MENU_PAUSE_ROOT;
                     }
                     case 1: return MENU_TECHNIQUES | MENU_FLAG_SCROLLABLE;
@@ -375,18 +412,18 @@ static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
                     case 5: return MENU_OPTIONS; // Title Options uses the same Options layout
                     case 6: return MENU_SAVELOAD | MENU_FLAG_SCROLLABLE;
                     case 7: return MENU_NONE; // SHOP EXCLUSION: User requested regular virtual controller in shop
-                    default: return MENU_NONE; // CRITICAL: NEVER default to PAUSE_ROOT!
+                    default: break;
                 }
-            } else {
+            }
+            if (!isTitleRoom && !hasTitleFlag) {
                 return MENU_NONE;
             }
         }
     }
 
-    // RULE 5: Title Screen State check via cR020 or flags5E4 kStaTitleBit (ONLY in title room 20)
-    const bool isTitleRoom = (room == 20 || room == 0x14);
+    // RULE 5: Title Screen State check via cR020 or flags5E4 kStaTitleBit
     uint32_t r020 = findTitleObj(rdram);
-    if (isTitleRoom && (r020 != 0 || (flags5E4 & kStaTitleBit))) {
+    if ((isTitleRoom || hasTitleFlag) && (r020 != 0 || hasTitleFlag)) {
         outMenuMgrPtr = r020;
         return MENU_TITLE;
     }
@@ -514,7 +551,8 @@ void frameStart(uint8_t* rdram) {
             }
         }
     } else if (screenId == MENU_OPTIONS && menuMgr != 0) {
-        const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 4);
+        uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 4);
+        if (subMgr == 0) subMgr = getSubManagerPtr(rdram, menuMgr, 5);
         if (subMgr != 0) {
             const uint8_t cur = rdram[(subMgr + kOptionsCursorOffset) & 0x01FFFFFFu];
             s_dbgSubState.store(0, std::memory_order_relaxed);
@@ -526,16 +564,7 @@ void frameStart(uint8_t* rdram) {
             const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 3);
             if (subMgr != 0) {
                 const uint8_t mapCur = rdram[(subMgr + kStageMapCursorOffset) & 0x01FFFFFFu];
-                bool isSaveHidden = false;
-                uint32_t btn0 = 0;
-                std::memcpy(&btn0, rdram + ((subMgr + 0x80u) & 0x01FFFFFFu), sizeof(btn0));
-                if (btn0 >= 0x00100000u && btn0 < 0x02000000u) {
-                    uint32_t flags2C = 0;
-                    std::memcpy(&flags2C, rdram + ((btn0 + 0x2Cu) & 0x01FFFFFFu), sizeof(flags2C));
-                    if (flags2C & 0x08000000u) {
-                        isSaveHidden = true;
-                    }
-                }
+                const bool isSaveHidden = (rdram[(menuMgr + kSubScrMapNoSaveOffset) & 0x01FFFFFFu] != 0);
                 const int32_t effSubState = isSaveHidden ? 1 : 0;
                 s_dbgSubState.store(effSubState, std::memory_order_relaxed);
                 s_dbgCurIdx.store(mapCur, std::memory_order_relaxed);
@@ -548,11 +577,12 @@ void frameStart(uint8_t* rdram) {
         if (menuMgr != 0) {
             saveMode = rdram[menuMgr & 0x01FFFFFFu];
         }
+        const uint32_t mcBase = resolveActiveMcBase(rdram, menuMgr);
         int32_t liveRow = 0;
         int32_t liveScroll = 0;
-        std::memcpy(&liveRow, rdram + (0x007D1588u & 0x01FFFFFFu), sizeof(liveRow));
-        std::memcpy(&liveScroll, rdram + (0x007D1584u & 0x01FFFFFFu), sizeof(liveScroll));
-        const uint8_t liveChoice = rdram[0x007D14BCu & 0x01FFFFFFu];
+        std::memcpy(&liveRow, rdram + ((mcBase + kMcSlotRowOffset) & 0x01FFFFFFu), sizeof(liveRow));
+        std::memcpy(&liveScroll, rdram + ((mcBase + kMcSlotBaseOffset) & 0x01FFFFFFu), sizeof(liveScroll));
+        const uint8_t liveChoice = rdram[(mcBase + kMcChoiceOffset) & 0x01FFFFFFu];
         s_dbgSubState.store(saveMode, std::memory_order_relaxed);
         s_dbgCurIdx.store(liveRow, std::memory_order_relaxed);
         s_dbgScrollTop.store(liveScroll, std::memory_order_relaxed);
@@ -681,12 +711,9 @@ void frameStart(uint8_t* rdram) {
                 s_accumulatedScrollX = 0.0f;
                 s_accumulatedScrollY = 0.0f;
 
-                // Check Common Back Touch Target (kCommonBackHitbox) across all menus (except Pause Root & Techniques)
+                // Screen-specific hitboxes FIRST (so [NO] is never hijacked by kCommonBackHitbox!)
                 const int32_t curSubState = s_dbgSubState.load(std::memory_order_relaxed);
-                if (screenId != MENU_PAUSE_ROOT && screenId != MENU_TECHNIQUES &&
-                    checkHitbox(screenId, curSubState, -1, kCommonBackHitbox, ps2X, ps2Y)) {
-                    s_pressedButtonId = -1;
-                } else if (screenId == MENU_TITLE) {
+                if (screenId == MENU_TITLE) {
                     if (curSubState <= 1) {
                         // Title screen "Press Start": 3 buttons (Middle START: 99, Left ◀: -10, Right ▶: -11)
                         constexpr Rect2D kTitleMiddleStart = { 60.0f, 160.0f, 580.0f, 380.0f };
@@ -835,6 +862,13 @@ void frameStart(uint8_t* rdram) {
                     }
                 }
 
+                // Common Back Touch Target fallback (only when no screen-specific button matched)
+                if (s_pressedButtonId == -999 &&
+                    screenId != MENU_PAUSE_ROOT && screenId != MENU_TECHNIQUES &&
+                    checkHitbox(screenId, curSubState, -1, kCommonBackHitbox, ps2X, ps2Y)) {
+                    s_pressedButtonId = -1;
+                }
+
                 s_dbgLastTapId.store(s_pressedButtonId, std::memory_order_relaxed);
                 break;
             }
@@ -853,10 +887,10 @@ void frameStart(uint8_t* rdram) {
                 s_isDragging = true;
                 s_pressedButtonId = -999;
 
-                // Support horizontal swiping to rotate Title Carousel (state 4)
+                // Support horizontal swiping to rotate Title Carousel (phase 2)
                 if (screenId == MENU_TITLE && menuMgr != 0) {
-                    const uint8_t titleState = rdram[(menuMgr + kTitleStateOffset) & 0x01FFFFFFu];
-                    if (titleState == 4) {
+                    const uint8_t titlePhase = rdram[(menuMgr + kTitlePhaseOffset) & 0x01FFFFFFu];
+                    if (titlePhase == 2) {
                         s_accumulatedScrollX += ev.scrollDeltaX;
                         if (s_accumulatedScrollX < -25.0f) {
                             s_accumulatedScrollX = 0.0f;
@@ -909,30 +943,23 @@ void frameStart(uint8_t* rdram) {
                     }
                     // 2. Save / Load Screen
                     else if (screenId == MENU_SAVELOAD) {
+                        const uint32_t mcBase = resolveActiveMcBase(rdram, menuMgr);
                         if (s_pressedButtonId >= 0 && s_pressedButtonId <= 2) {
                             int32_t targetSlot = s_pressedButtonId;
-                            // Set target slot directly in RDRAM to eliminate double-jump!
-                            *reinterpret_cast<int32_t*>(rdram + (0x007D1588u & 0x01FFFFFFu)) = targetSlot;
-                            uint32_t saveInst = 0;
-                            std::memcpy(&saveInst, rdram + (kSaveLoadInstancePtr & 0x01FFFFFFu), sizeof(saveInst));
-                            if (saveInst >= 0x00100000u && saveInst < 0x02000000u) {
-                                rdram[(saveInst + 0x02u) & 0x01FFFFFFu] = static_cast<uint8_t>(targetSlot);
-                            }
+                            std::memcpy(rdram + ((mcBase + kMcSlotRowOffset) & 0x01FFFFFFu), &targetSlot, sizeof(targetSlot));
                             s_saveLoadSlot = targetSlot;
                             queueSingleButton(kPadCross, 6);
                         } else if (s_pressedButtonId == 10) {
-                            // YES: check live choice in RDRAM (0 = YES, 1 = NO)
-                            // DO NOT overwrite 0x007D14BCu! Game's errorProc toggles choice via xori $v1, 1 on D-pad input.
-                            const uint8_t curChoice = rdram[0x007D14BCu & 0x01FFFFFFu];
-                            if (curChoice == 1) {
+                            // YES: check live choice in active cMc (0 = YES, 1 = NO)
+                            const uint8_t curChoice = rdram[(mcBase + kMcChoiceOffset) & 0x01FFFFFFu];
+                            if (curChoice != 0) {
                                 queueButtonSequence({ {kPadLeft, 5}, {0, 4}, {kPadCross, 6} });
                             } else {
                                 queueSingleButton(kPadCross, 6);
                             }
                         } else if (s_pressedButtonId == 11) {
-                            // NO: check live choice in RDRAM (0 = YES, 1 = NO)
-                            // DO NOT overwrite 0x007D14BCu!
-                            const uint8_t curChoice = rdram[0x007D14BCu & 0x01FFFFFFu];
+                            // NO: check live choice in active cMc (0 = YES, 1 = NO)
+                            const uint8_t curChoice = rdram[(mcBase + kMcChoiceOffset) & 0x01FFFFFFu];
                             if (curChoice == 0) {
                                 queueButtonSequence({ {kPadRight, 5}, {0, 4}, {kPadCross, 6} });
                             } else {
@@ -950,13 +977,11 @@ void frameStart(uint8_t* rdram) {
                             queueSingleButton(kPadTriangle, 6);
                         }
                     }
-                    // 4. Stage Map Actions (Navigate cursor directly to eliminate double-jump)
+                    // 4. Stage Map Actions (0-based cursor at subMgr + 0x1B4)
                     else if (screenId == MENU_STAGE_MAP || screenId == MENU_MAP) {
                         if (s_pressedButtonId >= 0 && s_pressedButtonId <= 3) {
                             const uint32_t subMgr = (menuMgr != 0) ? getSubManagerPtr(rdram, menuMgr, 3) : 0;
-                            const int32_t curSubState = s_dbgSubState.load(std::memory_order_relaxed);
-                            const uint8_t targetAction = (curSubState == 1) ? static_cast<uint8_t>(s_pressedButtonId + 1)
-                                                                            : static_cast<uint8_t>(s_pressedButtonId);
+                            const uint8_t targetAction = static_cast<uint8_t>(s_pressedButtonId);
                             if (subMgr != 0) {
                                 rdram[(subMgr + kStageMapCursorOffset) & 0x01FFFFFFu] = targetAction;
                             }
@@ -966,27 +991,43 @@ void frameStart(uint8_t* rdram) {
                     }
                     // 5. Title Screen Options
                     else if (screenId == MENU_TITLE) {
+                        const int32_t curSubState = s_dbgSubState.load(std::memory_order_relaxed);
                         if (curSubState <= 1) {
                             if (s_pressedButtonId == 99) {
                                 queueSingleButton(kPadStart, 5);
                             }
                         } else if (curSubState == 4) {
-                            int16_t targetCur = static_cast<int16_t>(s_pressedButtonId);
-                            if (targetCur == 0) {
+                            int32_t curCarousel = 0;
+                            if (menuMgr != 0) {
+                                std::memcpy(&curCarousel, rdram + ((menuMgr + kTitleCarouselOffset) & 0x01FFFFFFu), sizeof(curCarousel));
+                            }
+                            int32_t targetCur = s_pressedButtonId;
+                            if (targetCur == curCarousel || targetCur < 0 || targetCur > 2) {
                                 queueSingleButton(kPadCross, 5);
-                            } else if (targetCur == 1) {
-                                queueButtonSequence({ {kPadRight, 5}, {0, 4}, {kPadCross, 5} });
-                            } else if (targetCur == 2) {
-                                queueButtonSequence({ {kPadLeft, 5}, {0, 4}, {kPadCross, 5} });
+                            } else {
+                                int32_t diff = (targetCur - curCarousel + 3) % 3;
+                                uint16_t dir = (diff == 1) ? kPadRight : kPadLeft;
+                                queueButtonSequence({ {dir, 5}, {0, 4}, {kPadCross, 5} });
                             }
                         } else if (curSubState == 5) {
-                            int16_t targetCur = static_cast<int16_t>(s_pressedButtonId);
-                            if (targetCur == 0) {
-                                queueButtonSequence({ {kPadLeft, 5}, {0, 4}, {kPadCross, 5} });
-                            } else if (targetCur == 1) {
+                            int32_t curLevel = 1;
+                            if (menuMgr != 0) {
+                                std::memcpy(&curLevel, rdram + ((menuMgr + kTitleLevelOffset) & 0x01FFFFFFu), sizeof(curLevel));
+                            }
+                            int32_t targetCur = s_pressedButtonId;
+                            if (targetCur == curLevel) {
                                 queueSingleButton(kPadCross, 5);
-                            } else if (targetCur == 2) {
-                                queueButtonSequence({ {kPadRight, 5}, {0, 4}, {kPadCross, 5} });
+                            } else if (targetCur >= 0 && targetCur <= 2) {
+                                int32_t diff = targetCur - curLevel;
+                                uint16_t dir = (diff > 0) ? kPadRight : kPadLeft;
+                                int steps = std::abs(diff);
+                                std::vector<ButtonStep> seq;
+                                for (int s = 0; s < steps; ++s) {
+                                    seq.push_back({dir, 5});
+                                    seq.push_back({0, 4});
+                                }
+                                seq.push_back({kPadCross, 5});
+                                queueButtonSequence(seq);
                             }
                         }
                     }
@@ -1053,14 +1094,25 @@ void frameStart(uint8_t* rdram) {
                     }
                     // 9. Options Screen (8 rows, NO TABS)
                     else if (screenId == MENU_OPTIONS) {
+                        uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 4);
+                        if (subMgr == 0) subMgr = getSubManagerPtr(rdram, menuMgr, 5);
                         if (s_pressedButtonId == 10) {
-                            // YES (Reset Game confirm): defaults to NO -> Move Left to Yes, then Confirm Cross
-                            queueButtonSequence({ {kPadLeft, 8}, {0, 8}, {kPadCross, 8} });
+                            // YES (Reset Game confirm: 0=YES, 1=NO at subMgr + 0x131)
+                            const uint8_t curChoice = (subMgr != 0) ? rdram[(subMgr + kOptionsResetChoiceOffset) & 0x01FFFFFFu] : 1u;
+                            if (curChoice != 0) {
+                                queueButtonSequence({ {kPadLeft, 6}, {0, 5}, {kPadCross, 6} });
+                            } else {
+                                queueSingleButton(kPadCross, 6);
+                            }
                         } else if (s_pressedButtonId == 11) {
-                            // NO (Reset Game cancel): Triangle cancels dialog
-                            queueSingleButton(kPadTriangle, 8);
+                            // NO (Reset Game cancel: 0=YES, 1=NO at subMgr + 0x131)
+                            const uint8_t curChoice = (subMgr != 0) ? rdram[(subMgr + kOptionsResetChoiceOffset) & 0x01FFFFFFu] : 1u;
+                            if (curChoice == 0) {
+                                queueButtonSequence({ {kPadRight, 6}, {0, 5}, {kPadCross, 6} });
+                            } else {
+                                queueSingleButton(kPadCross, 6);
+                            }
                         } else {
-                            const uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 4);
                             if (subMgr != 0 && s_pressedButtonId >= 0 && s_pressedButtonId < 8) {
                                 int32_t targetRow = s_pressedButtonId;
                                 rdram[(subMgr + kOptionsCursorOffset) & 0x01FFFFFFu] = static_cast<uint8_t>(targetRow);
