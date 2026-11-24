@@ -358,6 +358,15 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         }
     }
 
+    private val adpfMenuDebugArray = IntArray(6)
+    private var lastAdpfDebugBoxesVisible = false
+    private var lastAdpfMenu0 = -1
+    private var lastAdpfMenu1 = -1
+    private var lastAdpfMenu2 = -1
+    private var lastAdpfMenu3 = -1
+    private var lastAdpfMenu4 = -1
+    private var lastAdpfMenu5 = -1
+
     private val adpfFrameCallback = object : android.view.Choreographer.FrameCallback {
         override fun doFrame(frameTimeNanos: Long) {
             if (!isFinishing && !isDestroyed) {
@@ -367,9 +376,36 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                     val screenId = menuState and 0xFFFF
                     val isLiveRoulette = (menuState and NativeBridge.FLAG_LIVE_ROULETTE) != 0
                     val isMenuActive = settings.menuDirectTouchEnabled && (screenId != 0) && !isLiveRoulette
+                    val wasMenuActive = touchOverlay.isMenuTouchActive
                     touchOverlay.isMenuTouchActive = isMenuActive
                     if (isMenuActive) {
-                        touchOverlay.postInvalidate()
+                        NativeBridge.getMenuDebugInfo(adpfMenuDebugArray)
+                        val showDebug = settings.showMenuDebugBoxes
+                        val cur0 = adpfMenuDebugArray[0]
+                        val cur1 = adpfMenuDebugArray[1]
+                        val cur2 = adpfMenuDebugArray[2]
+                        val cur3 = adpfMenuDebugArray[3]
+                        val cur4 = adpfMenuDebugArray[4]
+                        val cur5 = adpfMenuDebugArray[5]
+                        val stateChanged = if (showDebug) {
+                            !lastAdpfDebugBoxesVisible ||
+                                cur0 != lastAdpfMenu0 || cur1 != lastAdpfMenu1 || cur2 != lastAdpfMenu2 ||
+                                cur3 != lastAdpfMenu3 || cur4 != lastAdpfMenu4 || cur5 != lastAdpfMenu5
+                        } else {
+                            lastAdpfDebugBoxesVisible || ((cur0 == 2) != (lastAdpfMenu0 == 2))
+                        }
+                        lastAdpfDebugBoxesVisible = showDebug
+                        lastAdpfMenu0 = cur0
+                        lastAdpfMenu1 = cur1
+                        lastAdpfMenu2 = cur2
+                        lastAdpfMenu3 = cur3
+                        lastAdpfMenu4 = cur4
+                        lastAdpfMenu5 = cur5
+                        if (wasMenuActive && stateChanged) {
+                            touchOverlay.postInvalidate()
+                        }
+                    } else if (wasMenuActive) {
+                        lastAdpfMenu0 = -1
                     }
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {

@@ -220,8 +220,10 @@ constexpr uint32_t kMcLoadModeInitOffset      = 0x100u;
 constexpr uint32_t kMcSaveModeInitOffset      = 0x118u;
 // Inside cMc (cMcLoad / cMcSave):
 constexpr uint32_t kMcChoiceOffset            = 0x0Cu; // uint8_t: 1 = YES, 0 = NO (readChoise/overWriteChoise)
+constexpr uint32_t kMcDispModeOffset          = 0x78u; // int32_t: cMcSys SetDisp mode (0=slots, 6/7/8/9/16/17/21/22=YES/NO)
 constexpr uint32_t kMcSlotBaseOffset          = 0xD4u; // int32_t: slot scroll base (0..19)
 constexpr uint32_t kMcSlotRowOffset           = 0xD8u; // int32_t: highlighted visible row (0..2)
+constexpr uint32_t kMcStepOffset              = 0xF0u; // int32_t: main step (Load: 3=menu,4=readChoise,7=err; Save: 3=fmt,6=menu,7=writeChoise,8=overWriteChoise,15=err)
 constexpr uint32_t kMcSubStepOffset           = 0xF4u; // int32_t: subStep
 
 // -----------------------------------------------------------------------------
@@ -420,7 +422,7 @@ constexpr float  kRouletteListTopY       = 106.0f;
 constexpr float  kRouletteListStepY      = 40.0f;
 constexpr float  kRouletteListRowHeight  = 36.0f;
 
-// Options Menu Layout Constants (Exactly 8 rows, NO TABS - Exported Custom Verified Bounds):
+// Options Menu Layout Constants (SubState 0: 8 rows; SubState 1: Yes/No confirmation):
 constexpr MenuButtonHitbox kOptionsHitboxes[] = {
     { 0, { 41.214172f, 90.488884f, 601.21420f, 120.488884f } }, // [OPT 0: CONTROLS]
     { 1, { 39.460390f, 123.399994f, 599.46040f, 153.400000f } }, // [OPT 1: LIFE GAUGE]
@@ -430,8 +432,11 @@ constexpr MenuButtonHitbox kOptionsHitboxes[] = {
     { 5, { 39.359190f, 261.162960f, 599.35920f, 291.162960f } }, // [OPT 5: RESET GAME]
     { 6, { 40.033722f, 295.422240f, 600.03370f, 325.422240f } }, // [OPT 6: RESTORE DEFAULTS]
     { 7, { 39.325470f, 331.600000f, 599.32544f, 361.600000f } }, // [OPT 7: EXIT]
-    { 10, { 340.0f, 385.0f, 460.0f, 445.0f } },                  // [YES]
-    { 11, { 460.0f, 385.0f, 580.0f, 445.0f } },                  // [NO]
+};
+
+constexpr MenuButtonHitbox kOptionsDialogHitboxes[] = {
+    { 10, {  47.0f, 397.0f, 111.0f, 439.0f } }, // [YES]
+    { 11, { 154.0f, 397.0f, 211.0f, 441.0f } }, // [NO]
 };
 
 // Stage Clear Map (Kind 3 or 9 or 11) Buttons (Exported Custom Verified Bounds):
@@ -451,12 +456,17 @@ constexpr MenuButtonHitbox kStageMapHiddenSaveHitboxes[] = {
 };
 
 // Memory Card Save / Load (Kind 7 / MENU_SAVELOAD - Exported Custom Verified Bounds):
+// SubState 0: Slot Selection (Slots 1..3)
 constexpr MenuButtonHitbox kSaveLoadHitboxes[] = {
     { 0, { 36.583496f,  97.511116f, 600.58350f, 162.51111f } }, // [SLOT 1]
     { 1, { 38.741974f, 176.429630f, 602.74194f, 241.42963f } }, // [SLOT 2]
     { 2, { 39.315340f, 257.162960f, 603.31530f, 322.16296f } }, // [SLOT 3]
-    { 10, { 340.0f, 385.0f, 460.0f, 445.0f } },                  // [YES]
-    { 11, { 460.0f, 385.0f, 580.0f, 445.0f } },                  // [NO]
+};
+
+// SubState 1: Conditional Confirmation Dialog (YES/NO only when confirmation active)
+constexpr MenuButtonHitbox kSaveLoadDialogHitboxes[] = {
+    { 10, { 340.0f, 385.0f, 460.0f, 445.0f } }, // [YES]
+    { 11, { 460.0f, 385.0f, 580.0f, 445.0f } }, // [NO]
 };
 
 // Modal Yes/No Confirmation Dialog (Kind 10 / MENU_DIALOG):

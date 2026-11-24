@@ -131,15 +131,28 @@ struct HitboxOverride {
 };
 static std::vector<HitboxOverride> s_hitboxOverrides;
 static std::mutex s_overrideMutex;
+static std::atomic<bool> s_hasOverrides{false};
 
 bool checkHitbox(int32_t screenId, int32_t subState, int32_t buttonId, const Rect2D& defRect, float ps2X, float ps2Y) {
     Rect2D r = defRect;
-    {
+    if (s_hasOverrides.load(std::memory_order_acquire)) {
         std::lock_guard<std::mutex> lock(s_overrideMutex);
+        bool found = false;
         for (const auto& item : s_hitboxOverrides) {
             if (item.screenId == screenId && item.subState == subState && item.buttonId == buttonId) {
                 r = item.rect;
+                found = true;
                 break;
+            }
+        }
+        // Backward-compatible fallback for SubState 1 dialog overrides saved previously under SubState 0
+        if (!found && subState == 1 && (buttonId == 10 || buttonId == 11) &&
+            (screenId == MENU_OPTIONS || screenId == MENU_SAVELOAD)) {
+            for (const auto& item : s_hitboxOverrides) {
+                if (item.screenId == screenId && item.subState == 0 && item.buttonId == buttonId) {
+                    r = item.rect;
+                    break;
+                }
             }
         }
     }
@@ -153,15 +166,18 @@ void setHitboxOverride(int32_t screenId, int32_t subState, int32_t buttonId, flo
     for (auto& item : s_hitboxOverrides) {
         if (item.screenId == screenId && item.subState == subState && item.buttonId == buttonId) {
             item.rect = {x0, y0, x1, y1};
+            s_hasOverrides.store(true, std::memory_order_release);
             return;
         }
     }
     s_hitboxOverrides.push_back({screenId, subState, buttonId, {x0, y0, x1, y1}});
+    s_hasOverrides.store(true, std::memory_order_release);
 }
 
 void clearHitboxOverrides() {
     std::lock_guard<std::mutex> lock(s_overrideMutex);
     s_hitboxOverrides.clear();
+    s_hasOverrides.store(false, std::memory_order_release);
 }
 
 void setEnabled(bool enabled) {
@@ -550,9 +566,17 @@ void frameStart(uint8_t* rdram) {
         uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 4);
         if (subMgr == 0) subMgr = getSubManagerPtr(rdram, menuMgr, 5);
         if (subMgr != 0) {
-            const uint8_t cur = rdram[(subMgr + kOptionsCursorOffset) & 0x01FFFFFFu];
-            s_dbgSubState.store(0, std::memory_order_relaxed);
-            s_dbgCurIdx.store(cur, std::memory_order_relaxed);
+            const uint8_t optState = rdram[(subMgr + kOptionsStateOffset) & 0x01FFFFFFu];
+            const bool isOptDialog = (optState == 4u);
+            if (isOptDialog) {
+                const uint8_t choice = rdram[(subMgr + kOptionsResetChoiceOffset) & 0x01FFFFFFu];
+                s_dbgSubState.store(1, std::memory_order_relaxed);
+                s_dbgCurIdx.store(choice == 0 ? 10 : 11, std::memory_order_relaxed);
+            } else {
+                const uint8_t cur = rdram[(subMgr + kOptionsCursorOffset) & 0x01FFFFFFu];
+                s_dbgSubState.store(0, std::memory_order_relaxed);
+                s_dbgCurIdx.store(cur, std::memory_order_relaxed);
+            }
             s_dbgScrollTop.store(0, std::memory_order_relaxed);
         }
     } else if (screenId == MENU_STAGE_MAP || screenId == MENU_MAP) {
@@ -574,18 +598,27 @@ void frameStart(uint8_t* rdram) {
             }
         }
     } else if (screenId == MENU_SAVELOAD) {
-        uint8_t saveMode = 0;
-        if (menuMgr != 0) {
-            saveMode = rdram[menuMgr & 0x01FFFFFFu];
-        }
         const uint32_t mcBase = resolveActiveMcBase(rdram, menuMgr);
         int32_t liveRow = 0;
         int32_t liveScroll = 0;
+        int32_t dispMode = 0;
+        int32_t mcStep = 0;
+        int32_t mcSubStep = 0;
         std::memcpy(&liveRow, rdram + ((mcBase + kMcSlotRowOffset) & 0x01FFFFFFu), sizeof(liveRow));
         std::memcpy(&liveScroll, rdram + ((mcBase + kMcSlotBaseOffset) & 0x01FFFFFFu), sizeof(liveScroll));
+        std::memcpy(&dispMode, rdram + ((mcBase + kMcDispModeOffset) & 0x01FFFFFFu), sizeof(dispMode));
+        std::memcpy(&mcStep, rdram + ((mcBase + kMcStepOffset) & 0x01FFFFFFu), sizeof(mcStep));
+        std::memcpy(&mcSubStep, rdram + ((mcBase + kMcSubStepOffset) & 0x01FFFFFFu), sizeof(mcSubStep));
         const uint8_t liveChoice = rdram[(mcBase + kMcChoiceOffset) & 0x01FFFFFFu];
-        s_dbgSubState.store(saveMode, std::memory_order_relaxed);
-        s_dbgCurIdx.store(liveRow, std::memory_order_relaxed);
+        const bool isSaveBase = (mcBase == kMcSaveBaseAddr);
+        const bool isDialogYesNo =
+            (dispMode == 6 || dispMode == 7 || dispMode == 8 || dispMode == 9 ||
+             dispMode == 16 || dispMode == 17 || dispMode == 21 || dispMode == 22) ||
+            (isSaveBase ? (mcStep == 3 || mcStep == 7 || mcStep == 8 || (mcStep == 15 && mcSubStep == 2))
+                        : (mcStep == 4 || (mcStep == 7 && mcSubStep == 2)));
+        const int32_t saveSubState = isDialogYesNo ? 1 : ((dispMode != 0) ? 2 : 0);
+        s_dbgSubState.store(saveSubState, std::memory_order_relaxed);
+        s_dbgCurIdx.store(isDialogYesNo ? (liveChoice == 1 ? 10 : 11) : liveRow, std::memory_order_relaxed);
         s_dbgScrollTop.store(liveScroll, std::memory_order_relaxed);
         s_saveLoadSlot = liveRow;
         s_dialogArrowState = liveChoice;
@@ -717,15 +750,15 @@ void frameStart(uint8_t* rdram) {
                 if (screenId == MENU_TITLE) {
                     if (curSubState <= 1) {
                         // Title screen "Press Start": 3 buttons (Middle START: 99, Left ◀: -10, Right ▶: -11)
-                        constexpr Rect2D kTitleMiddleStart = { 60.0f, 160.0f, 580.0f, 380.0f };
-                        constexpr Rect2D kTitleLeftBtn     = { 15.0f, 220.0f,  95.0f, 300.0f };
-                        constexpr Rect2D kTitleRightBtn    = { 545.0f, 220.0f, 625.0f, 300.0f };
+                        constexpr Rect2D kTitleMiddleStart = {  4.0f, 40.0f, 632.0f, 421.0f };
+                        constexpr Rect2D kTitleLeftBtn     = { 14.0f, 34.0f,  24.0f,  44.0f };
+                        constexpr Rect2D kTitleRightBtn    = { 617.0f, 55.0f, 627.0f, 65.0f };
                         if (checkHitbox(screenId, curSubState, -10, kTitleLeftBtn, ps2X, ps2Y)) {
                             s_pressedButtonId = -10;
                         } else if (checkHitbox(screenId, curSubState, -11, kTitleRightBtn, ps2X, ps2Y)) {
                             s_pressedButtonId = -11;
-                        } else {
-                            s_pressedButtonId = 99; // Anywhere on screen taps START
+                        } else if (checkHitbox(screenId, curSubState, 99, kTitleMiddleStart, ps2X, ps2Y)) {
+                            s_pressedButtonId = 99;
                         }
                     } else if (curSubState == 4) {
                         // Main Title Menu: 3 buttons only (Left D-Pad, Start, Right D-Pad)
@@ -762,10 +795,19 @@ void frameStart(uint8_t* rdram) {
                         }
                     }
                 } else if (screenId == MENU_SAVELOAD) {
-                    for (const auto& btn : kSaveLoadHitboxes) {
-                        if (checkHitbox(screenId, 0, btn.id, btn.rect, ps2X, ps2Y)) {
-                            s_pressedButtonId = btn.id;
-                            break;
+                    if (curSubState == 0) {
+                        for (const auto& btn : kSaveLoadHitboxes) {
+                            if (checkHitbox(screenId, 0, btn.id, btn.rect, ps2X, ps2Y)) {
+                                s_pressedButtonId = btn.id;
+                                break;
+                            }
+                        }
+                    } else if (curSubState == 1) {
+                        for (const auto& btn : kSaveLoadDialogHitboxes) {
+                            if (checkHitbox(screenId, 1, btn.id, btn.rect, ps2X, ps2Y)) {
+                                s_pressedButtonId = btn.id;
+                                break;
+                            }
                         }
                     }
                 } else if (screenId == MENU_DIALOG) {
@@ -847,10 +889,19 @@ void frameStart(uint8_t* rdram) {
                         }
                     }
                 } else if (screenId == MENU_OPTIONS) {
-                    for (const auto& btn : kOptionsHitboxes) {
-                        if (checkHitbox(screenId, 0, btn.id, btn.rect, ps2X, ps2Y)) {
-                            s_pressedButtonId = btn.id;
-                            break;
+                    if (curSubState == 1) {
+                        for (const auto& btn : kOptionsDialogHitboxes) {
+                            if (checkHitbox(screenId, 1, btn.id, btn.rect, ps2X, ps2Y)) {
+                                s_pressedButtonId = btn.id;
+                                break;
+                            }
+                        }
+                    } else {
+                        for (const auto& btn : kOptionsHitboxes) {
+                            if (checkHitbox(screenId, 0, btn.id, btn.rect, ps2X, ps2Y)) {
+                                s_pressedButtonId = btn.id;
+                                break;
+                            }
                         }
                     }
                 }
@@ -937,12 +988,13 @@ void frameStart(uint8_t* rdram) {
                     // 2. Save / Load Screen
                     else if (screenId == MENU_SAVELOAD) {
                         const uint32_t mcBase = resolveActiveMcBase(rdram, menuMgr);
-                        if (s_pressedButtonId >= 0 && s_pressedButtonId <= 2) {
+                        const int32_t curSubState = s_dbgSubState.load(std::memory_order_relaxed);
+                        if (curSubState == 0 && s_pressedButtonId >= 0 && s_pressedButtonId <= 2) {
                             int32_t targetSlot = s_pressedButtonId;
                             std::memcpy(rdram + ((mcBase + kMcSlotRowOffset) & 0x01FFFFFFu), &targetSlot, sizeof(targetSlot));
                             s_saveLoadSlot = targetSlot;
                             queueSingleButton(kPadCross, 6);
-                        } else if (s_pressedButtonId == 10) {
+                        } else if (curSubState == 1 && s_pressedButtonId == 10) {
                             // YES: check live choice in active cMc (1 = YES, 0 = NO)
                             const uint8_t curChoice = rdram[(mcBase + kMcChoiceOffset) & 0x01FFFFFFu];
                             if (curChoice != 1) {
@@ -950,7 +1002,7 @@ void frameStart(uint8_t* rdram) {
                             } else {
                                 queueSingleButton(kPadCross, 6);
                             }
-                        } else if (s_pressedButtonId == 11) {
+                        } else if (curSubState == 1 && s_pressedButtonId == 11) {
                             // NO: check live choice in active cMc (1 = YES, 0 = NO)
                             const uint8_t curChoice = rdram[(mcBase + kMcChoiceOffset) & 0x01FFFFFFu];
                             if (curChoice == 1) {
@@ -1083,32 +1135,31 @@ void frameStart(uint8_t* rdram) {
                             }
                         }
                     }
-                    // 9. Options Screen (8 rows, NO TABS)
+                    // 9. Options Screen (8 rows in SubState 0; conditional YES/NO in SubState 1)
                     else if (screenId == MENU_OPTIONS) {
                         uint32_t subMgr = getSubManagerPtr(rdram, menuMgr, 4);
                         if (subMgr == 0) subMgr = getSubManagerPtr(rdram, menuMgr, 5);
-                        if (s_pressedButtonId == 10) {
-                            // YES (Reset Game confirm: 0=YES, 1=NO at subMgr + 0x131)
-                            const uint8_t curChoice = (subMgr != 0) ? rdram[(subMgr + kOptionsResetChoiceOffset) & 0x01FFFFFFu] : 1u;
+                        const uint8_t optState = (subMgr != 0) ? rdram[(subMgr + kOptionsStateOffset) & 0x01FFFFFFu] : 0u;
+                        if (optState == 4u && s_pressedButtonId == 10) {
+                            // YES (Reset / Restore Defaults confirm: 0=YES, 1=NO at subMgr + 0x131)
+                            const uint8_t curChoice = rdram[(subMgr + kOptionsResetChoiceOffset) & 0x01FFFFFFu];
                             if (curChoice != 0) {
                                 queueButtonSequence({ {kPadLeft, 6}, {0, 5}, {kPadCross, 6} });
                             } else {
                                 queueSingleButton(kPadCross, 6);
                             }
-                        } else if (s_pressedButtonId == 11) {
-                            // NO (Reset Game cancel: 0=YES, 1=NO at subMgr + 0x131)
-                            const uint8_t curChoice = (subMgr != 0) ? rdram[(subMgr + kOptionsResetChoiceOffset) & 0x01FFFFFFu] : 1u;
+                        } else if (optState == 4u && s_pressedButtonId == 11) {
+                            // NO (Reset / Restore Defaults cancel: 0=YES, 1=NO at subMgr + 0x131)
+                            const uint8_t curChoice = rdram[(subMgr + kOptionsResetChoiceOffset) & 0x01FFFFFFu];
                             if (curChoice == 0) {
                                 queueButtonSequence({ {kPadRight, 6}, {0, 5}, {kPadCross, 6} });
                             } else {
                                 queueSingleButton(kPadCross, 6);
                             }
-                        } else {
-                            if (subMgr != 0 && s_pressedButtonId >= 0 && s_pressedButtonId < 8) {
-                                int32_t targetRow = s_pressedButtonId;
-                                rdram[(subMgr + kOptionsCursorOffset) & 0x01FFFFFFu] = static_cast<uint8_t>(targetRow);
-                                queueSingleButton(kPadCross, 8);
-                            }
+                        } else if (optState != 4u && subMgr != 0 && s_pressedButtonId >= 0 && s_pressedButtonId < 8) {
+                            int32_t targetRow = s_pressedButtonId;
+                            rdram[(subMgr + kOptionsCursorOffset) & 0x01FFFFFFu] = static_cast<uint8_t>(targetRow);
+                            queueSingleButton(kPadCross, 8);
                         }
                     }
                 }

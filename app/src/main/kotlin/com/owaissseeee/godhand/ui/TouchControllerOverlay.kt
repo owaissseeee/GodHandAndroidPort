@@ -98,7 +98,12 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
     // Controller Configuration State
     var showTouchControls: Boolean = true
-        set(value) { field = value; invalidate() }
+        set(value) {
+            if (field != value) {
+                field = value
+                invalidate()
+            }
+        }
     val menuTouchHandler = MenuTouchHandler(context)
     private var menuExitTimestamp = 0L
     private var requireFreshTouchAfterMenu = false
@@ -151,7 +156,13 @@ class TouchControllerOverlay(context: Context) : View(context) {
     var rightStickSticky: Boolean = true
     var dodgeMode: Int = DODGE_MODE_STICK
     var controlsOpacity: Float = 0.75f
-        set(value) { field = value; updatePaintsOpacity(); invalidate() }
+        set(value) {
+            if (field != value) {
+                field = value
+                updatePaintsOpacity()
+                invalidate()
+            }
+        }
 
     // Stick Base Coordinates (Normalized)
     var leftBaseNormX = 0.16f
@@ -453,10 +464,37 @@ class TouchControllerOverlay(context: Context) : View(context) {
     }
     private val menuDebugInfoArray = IntArray(6)
     private var lastHudW: Float = 160f
+    private var cachedHudScreenId: Int = -999
+    private var cachedHudSubState: Int = -999
+    private var cachedHudCurIdx: Int = -999
+    private var cachedHudScrollTop: Int = -999
+    private var cachedHudLastTapId: Int = -999
+    private var cachedHudLine: String = ""
+    private val editBtnWEdit: Float by lazy { menuDebugHudTextPaint.measureText("✏️ EDIT") + 16f * density }
+    private val editBtnWDone: Float by lazy { menuDebugHudTextPaint.measureText("✓ DONE") + 16f * density }
+
+    // Preallocated scratch geometry & FPS string cache to avoid per-frame allocations in onDraw
+    private val scratchRect = RectF()
+    private val scratchP0 = PointF()
+    private val scratchP1 = PointF()
+    private val scratchHandles = FloatArray(16)
+    private var cachedFpsCompactText: String = "60.0 FPS | 16.7 ms | 100%"
+    private var cachedFpsLine1: String = "PRESENT: 60.0 FPS | 16.7 ms | Worst: 16.7 ms"
+    private var cachedFpsLine2: String = "GAME EE: 60.0 FPS | 100% | Presents: 0"
+    private var cachedFpsLine3: String = "Port by owaissseeee"
+    private var cachedFpsTextW: Float = 140f * density
+    private var cachedFpsDetailedW: Float = 220f * density
 
     enum class CropHandle {
         TOP_LEFT, TOP, TOP_RIGHT, RIGHT, BOTTOM_RIGHT, BOTTOM, BOTTOM_LEFT, LEFT, BODY
     }
+
+    private data class OverrideEntry(
+        val screenId: Int,
+        val subState: Int,
+        val buttonId: Int,
+        val rect: RectF
+    )
 
     var isHitboxEditMode: Boolean = false
     var selectedBoxId: Int? = null
@@ -467,8 +505,48 @@ class TouchControllerOverlay(context: Context) : View(context) {
     private var cropTouchStartX: Float = 0f
     private var cropTouchStartY: Float = 0f
     private var origBoxPs2 = RectF()
-    private val activeOverrides = mutableMapOf<Triple<Int, Int, Int>, RectF>()
-    private val currentScreenBoxes = mutableListOf<DebugBox>()
+    private val activeOverrides = mutableListOf<OverrideEntry>()
+    private val currentScreenBoxes = ArrayList<DebugBox>(24)
+    private val debugBoxPool = ArrayList<DebugBox>(24)
+    private var pooledBoxCount = 0
+
+    private fun findOverride(screenId: Int, subState: Int, buttonId: Int): RectF? {
+        for (i in 0 until activeOverrides.size) {
+            val e = activeOverrides[i]
+            if (e.screenId == screenId && e.subState == subState && e.buttonId == buttonId) {
+                return e.rect
+            }
+        }
+        if (subState == 1 && (buttonId == 10 || buttonId == 11) && (screenId == 5 || screenId == 7)) {
+            for (i in 0 until activeOverrides.size) {
+                val e = activeOverrides[i]
+                if (e.screenId == screenId && e.subState == 0 && e.buttonId == buttonId) {
+                    return e.rect
+                }
+            }
+        }
+        return null
+    }
+
+    private fun setOverride(screenId: Int, subState: Int, buttonId: Int, x0: Float, y0: Float, x1: Float, y1: Float) {
+        for (i in 0 until activeOverrides.size) {
+            val e = activeOverrides[i]
+            if (e.screenId == screenId && e.subState == subState && e.buttonId == buttonId) {
+                e.rect.set(x0, y0, x1, y1)
+                return
+            }
+        }
+        activeOverrides.add(OverrideEntry(screenId, subState, buttonId, RectF(x0, y0, x1, y1)))
+    }
+
+    private fun removeOverride(screenId: Int, subState: Int, buttonId: Int) {
+        for (i in activeOverrides.size - 1 downTo 0) {
+            val e = activeOverrides[i]
+            if (e.screenId == screenId && e.subState == subState && e.buttonId == buttonId) {
+                activeOverrides.removeAt(i)
+            }
+        }
+    }
 
     private val cropHandlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
@@ -549,9 +627,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
     private val backHeadPath = Path()
     private val backArcRect = RectF()
 
-    private fun drawCircularBackButton(canvas: Canvas, w: Float, h: Float) {
-        NativeBridge.getMenuDebugInfo(menuDebugInfoArray)
-        val screenId = menuDebugInfoArray[0]
+    private fun drawCircularBackButton(canvas: Canvas, w: Float, h: Float, screenId: Int) {
         if (screenId == 2) return // User requirement: REMOVE circular back button from PAUSE ROOT (screen 2)
 
         val radius = 22f * density
@@ -591,7 +667,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
         updatePaintsOpacity()
         // Load saved hitbox overrides from SharedPreferences on startup
         for (o in repo.getAllHitboxOverrides()) {
-            activeOverrides[Triple(o.screenId, o.subState, o.buttonId)] = RectF(o.x0, o.y0, o.x1, o.y1)
+            setOverride(o.screenId, o.subState, o.buttonId, o.x0, o.y0, o.x1, o.y1)
             NativeBridge.setHitboxOverride(o.screenId, o.subState, o.buttonId, o.x0, o.y0, o.x1, o.y1)
         }
     }
@@ -657,6 +733,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
             else -> FpsOverlayMode.COMPACT
         }
         updatePaintsOpacity()
+        updateCachedFpsStrings()
         invalidate()
     }
 
@@ -689,6 +766,33 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
     private var lastDrawnFps = 0
 
+    private fun updateCachedFpsStrings() {
+        when (fpsMode) {
+            FpsOverlayMode.COMPACT -> {
+                val info = String.format(Locale.US, "%.1f FPS | %.1f ms | %.0f%%", gameFps, avgFrametimeMs, gameSpeed)
+                cachedFpsCompactText = info
+                cachedFpsTextW = fpsTextPaint.measureText(info)
+            }
+            FpsOverlayMode.DETAILED_DEBUG -> {
+                val l1 = String.format(Locale.US, "PRESENT: %.1f FPS | %.1f ms | Worst: %.1f ms", screenFps, avgFrametimeMs, worstFrametimeMs)
+                val l2 = String.format(Locale.US, "GAME EE: %.1f FPS | %.0f%% | Presents: %d", gameFps, gameSpeed, totalPresents)
+                val l3 = lastSpikeReport?.let { spike ->
+                    val first = spike.substringBefore('\n')
+                    if (first.length > 55) first.take(55) + "..." else first
+                } ?: "Port by owaissseeee"
+                cachedFpsLine1 = l1
+                cachedFpsLine2 = l2
+                cachedFpsLine3 = l3
+                cachedFpsDetailedW = maxOf(
+                    fpsDebugTextPaint.measureText(l1),
+                    fpsDebugSubTextPaint.measureText(l2),
+                    fpsHintPaint.measureText(l3)
+                )
+            }
+            FpsOverlayMode.HIDDEN -> {}
+        }
+    }
+
     private val fpsUpdateRunnable = object : Runnable {
         override fun run() {
             val hasHistory = (fpsMode == FpsOverlayMode.DETAILED_DEBUG)
@@ -707,6 +811,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 val curFpsInt = if (fpsMode == FpsOverlayMode.COMPACT) gameFps.toInt() else screenFps.toInt()
                 if (fpsMode == FpsOverlayMode.DETAILED_DEBUG || kotlin.math.abs(curFpsInt - lastDrawnFps) >= 1 || lastDrawnFps == 0) {
                     lastDrawnFps = curFpsInt
+                    updateCachedFpsStrings()
                     invalidate()
                 }
             }
@@ -732,7 +837,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
         val h = height.toFloat()
 
         if (isMenuTouchActive) {
-            postInvalidateOnAnimation()
+            NativeBridge.getMenuDebugInfo(menuDebugInfoArray)
+            val screenId = menuDebugInfoArray[0]
 
             // Draw visual debug hitboxes and telemetry HUD if enabled
             if (repo.showMenuDebugBoxes) {
@@ -750,8 +856,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 }
             }
 
-            // Circular back button with '✕' permanently rendered when menu touch is active
-            drawCircularBackButton(canvas, w, h)
+            // Circular back button permanently rendered when menu touch is active (except Pause Root)
+            drawCircularBackButton(canvas, w, h, screenId)
 
             if (!isEditMode) {
                 drawFpsOverlay(canvas)
@@ -810,8 +916,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
     private fun drawButton(canvas: Canvas, btn: VirtualButton, bx: Float, by: Float, br: Float, isPressed: Boolean) {
         val customTex = textureManager.getTexture(btn.id)
         if (customTex != null) {
-            val destRect = RectF(bx - br, by - br, bx + br, by + br)
-            canvas.drawBitmap(customTex, null, destRect, if (isPressed) textureActivePaint else texturePaint)
+            scratchRect.set(bx - br, by - br, bx + br, by + br)
+            canvas.drawBitmap(customTex, null, scratchRect, if (isPressed) textureActivePaint else texturePaint)
         } else {
             // God Hand Martial Arts Themed Vector Button:
             // Dark obsidian leather core + dual burnished gold metallic rings
@@ -831,8 +937,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
         val baseTex = textureManager.getTexture("STICK_BASE")
         if (baseTex != null) {
-            val rect = RectF(lx - stickRadius, ly - stickRadius, lx + stickRadius, ly + stickRadius)
-            canvas.drawBitmap(baseTex, null, rect, texturePaint)
+            scratchRect.set(lx - stickRadius, ly - stickRadius, lx + stickRadius, ly + stickRadius)
+            canvas.drawBitmap(baseTex, null, scratchRect, texturePaint)
         } else {
             // Outer Compass Rim & Core
             canvas.drawCircle(lx, ly, stickRadius, coreDiskPaint)
@@ -849,8 +955,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
         val knobTex = textureManager.getTexture("STICK_KNOB")
         if (knobTex != null) {
-            val rect = RectF(lKnobX - knobRadius, lKnobY - knobRadius, lKnobX + knobRadius, lKnobY + knobRadius)
-            canvas.drawBitmap(knobTex, null, rect, if (leftStickPointerId != -1) textureActivePaint else texturePaint)
+            scratchRect.set(lKnobX - knobRadius, lKnobY - knobRadius, lKnobX + knobRadius, lKnobY + knobRadius)
+            canvas.drawBitmap(knobTex, null, scratchRect, if (leftStickPointerId != -1) textureActivePaint else texturePaint)
         } else {
             canvas.drawCircle(lKnobX, lKnobY, knobRadius, if (leftStickPointerId != -1) activeGlowPaint else outerGoldRingPaint)
             canvas.drawCircle(lKnobX, lKnobY, knobRadius * 0.82f, coreDiskPaint)
@@ -868,8 +974,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
         val baseTex = textureManager.getTexture("RIGHT_STICK_BASE") ?: textureManager.getTexture("STICK_BASE")
         if (baseTex != null) {
-            val rect = RectF(rx - rRadius, ry - rRadius, rx + rRadius, ry + rRadius)
-            canvas.drawBitmap(baseTex, null, rect, texturePaint)
+            scratchRect.set(rx - rRadius, ry - rRadius, rx + rRadius, ry + rRadius)
+            canvas.drawBitmap(baseTex, null, scratchRect, texturePaint)
         } else {
             // God Hand Dodge Roulette Rim & Core
             canvas.drawCircle(rx, ry, rRadius, coreDiskPaint)
@@ -883,8 +989,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
         val knobTex = textureManager.getTexture("RIGHT_STICK_KNOB") ?: textureManager.getTexture("STICK_KNOB")
         if (knobTex != null) {
-            val rect = RectF(rKnobX - knobRadius, rKnobY - knobRadius, rKnobX + knobRadius, rKnobY + knobRadius)
-            canvas.drawBitmap(knobTex, null, rect, if (rightStickPointerId != -1) textureActivePaint else texturePaint)
+            scratchRect.set(rKnobX - knobRadius, rKnobY - knobRadius, rKnobX + knobRadius, rKnobY + knobRadius)
+            canvas.drawBitmap(knobTex, null, scratchRect, if (rightStickPointerId != -1) textureActivePaint else texturePaint)
         } else {
             canvas.drawCircle(rKnobX, rKnobY, knobRadius, if (rightStickPointerId != -1) activeGlowPaint else outerGoldRingPaint)
             canvas.drawCircle(rKnobX, rKnobY, knobRadius * 0.82f, coreDiskPaint)
@@ -899,9 +1005,9 @@ class TouchControllerOverlay(context: Context) : View(context) {
         // Bottom toolbar card
         val barH = 50f * density
         val barTop = h - barH - 8f * density
-        val barRect = RectF(16f * density, barTop, w - 16f * density, h - 8f * density)
-        canvas.drawRoundRect(barRect, 10f * density, 10f * density, editToolbarBgPaint)
-        canvas.drawRoundRect(barRect, 10f * density, 10f * density, editToolbarBorderPaint)
+        scratchRect.set(16f * density, barTop, w - 16f * density, h - 8f * density)
+        canvas.drawRoundRect(scratchRect, 10f * density, 10f * density, editToolbarBgPaint)
+        canvas.drawRoundRect(scratchRect, 10f * density, 10f * density, editToolbarBorderPaint)
 
         val title = "EDIT CONTROLS: " + (selectedElementId ?: "Tap any button to select & drag")
         canvas.drawText(title, w / 2f, barTop + 18f * density, editTitlePaint)
@@ -914,9 +1020,9 @@ class TouchControllerOverlay(context: Context) : View(context) {
     }
 
     private fun drawToolbarButton(canvas: Canvas, label: String, cx: Float, cy: Float, halfW: Float, halfH: Float) {
-        val rect = RectF(cx - halfW, cy - halfH, cx + halfW, cy + halfH)
-        canvas.drawRoundRect(rect, 4f * density, 4f * density, editBtnPaint)
-        canvas.drawRoundRect(rect, 4f * density, 4f * density, editToolbarBorderPaint)
+        scratchRect.set(cx - halfW, cy - halfH, cx + halfW, cy + halfH)
+        canvas.drawRoundRect(scratchRect, 4f * density, 4f * density, editBtnPaint)
+        canvas.drawRoundRect(scratchRect, 4f * density, 4f * density, editToolbarBorderPaint)
         canvas.drawText(label, cx, cy + 4f * density, editBtnTextPaint)
     }
 
@@ -926,34 +1032,16 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
         when (fpsMode) {
             FpsOverlayMode.COMPACT -> {
-                // User requirement: "fps | frametime | %", no dot, no blue background
-                val info = String.format(Locale.US, "%.1f FPS | %.1f ms | %.0f%%", gameFps, avgFrametimeMs, gameSpeed)
-                val textW = fpsTextPaint.measureText(info)
                 val textH = 22f * density
-                fpsBounds.set(left, top, left + textW + 12f * density, top + textH)
-
-                canvas.drawText(info, left, top + 15f * density, fpsTextPaint)
+                fpsBounds.set(left, top, left + cachedFpsTextW + 12f * density, top + textH)
+                canvas.drawText(cachedFpsCompactText, left, top + 15f * density, fpsTextPaint)
             }
 
             FpsOverlayMode.DETAILED_DEBUG -> {
-                // User requirement: detailed version without the graph and without the blue background
-                val line1 = String.format(Locale.US, "PRESENT: %.1f FPS | %.1f ms | Worst: %.1f ms", screenFps, avgFrametimeMs, worstFrametimeMs)
-                val line2 = String.format(Locale.US, "GAME EE: %.1f FPS | %.0f%% | Presents: %d", gameFps, gameSpeed, totalPresents)
-                val line3 = lastSpikeReport?.let { spike ->
-                    val first = spike.substringBefore('\n')
-                    if (first.length > 55) first.take(55) + "..." else first
-                } ?: "Port by owaissseeee"
-
-                val maxW = maxOf(
-                    fpsDebugTextPaint.measureText(line1),
-                    fpsDebugSubTextPaint.measureText(line2),
-                    fpsHintPaint.measureText(line3)
-                )
-                fpsBounds.set(left, top, left + maxW + 12f * density, top + 50f * density)
-
-                canvas.drawText(line1, left, top + 13f * density, fpsDebugTextPaint)
-                canvas.drawText(line2, left, top + 27f * density, fpsDebugSubTextPaint)
-                canvas.drawText(line3, left, top + 42f * density, fpsHintPaint)
+                fpsBounds.set(left, top, left + cachedFpsDetailedW + 12f * density, top + 50f * density)
+                canvas.drawText(cachedFpsLine1, left, top + 13f * density, fpsDebugTextPaint)
+                canvas.drawText(cachedFpsLine2, left, top + 27f * density, fpsDebugSubTextPaint)
+                canvas.drawText(cachedFpsLine3, left, top + 42f * density, fpsHintPaint)
             }
 
             FpsOverlayMode.HIDDEN -> {
@@ -1011,8 +1099,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
             }
 
             // 2. Check [✏️ EDIT] button tap
-            val editBtnText = if (isHitboxEditMode) "✓ DONE" else "✏️ EDIT"
-            val editBtnW = menuDebugHudTextPaint.measureText(editBtnText) + 16f * density
+            val editBtnW = if (isHitboxEditMode) editBtnWDone else editBtnWEdit
             val editBtnH = 22f * density
             val hudX = w - lastHudW - 10f * density
             val editBtnX = hudX - editBtnW - 6f * density
@@ -1512,13 +1599,19 @@ class TouchControllerOverlay(context: Context) : View(context) {
         // No-op during gameplay to prevent synchronous Vibrator Binder IPC stalls on UI/RenderThread
     }
 
-    private data class DebugBox(val id: Int, val label: String, val x0: Float, val y0: Float, val x1: Float, val y1: Float)
+    private class DebugBox(
+        var id: Int,
+        var label: String,
+        var x0: Float,
+        var y0: Float,
+        var x1: Float,
+        var y1: Float
+    )
 
-    private fun ps2ToScreen(ps2X: Float, ps2Y: Float, w: Float, h: Float): PointF {
-        val aspectMode = repo.aspectIdx
-        return when (aspectMode) {
+    private fun ps2ToScreenInto(ps2X: Float, ps2Y: Float, w: Float, h: Float, aspectMode: Int, outPt: PointF) {
+        when (aspectMode) {
             2 -> { // Full Screen Stretch
-                PointF(ps2X * (w / 640f), ps2Y * (h / 448f))
+                outPt.set(ps2X * (w / 640f), ps2Y * (h / 448f))
             }
             0 -> { // 16:9 Widescreen
                 val targetAspect = 16f / 9f
@@ -1526,11 +1619,11 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 if (deviceAspect >= targetAspect) {
                     val vpWidth = h * targetAspect
                     val vpLeft = (w - vpWidth) * 0.5f
-                    PointF(vpLeft + ps2X * (vpWidth / 640f), ps2Y * (h / 448f))
+                    outPt.set(vpLeft + ps2X * (vpWidth / 640f), ps2Y * (h / 448f))
                 } else {
                     val vpHeight = w / targetAspect
                     val vpTop = (h - vpHeight) * 0.5f
-                    PointF(ps2X * (w / 640f), vpTop + ps2Y * (vpHeight / 448f))
+                    outPt.set(ps2X * (w / 640f), vpTop + ps2Y * (vpHeight / 448f))
                 }
             }
             else -> { // 4:3 Pillarbox
@@ -1539,14 +1632,20 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 if (deviceAspect >= targetAspect) {
                     val vpWidth = h * targetAspect
                     val vpLeft = (w - vpWidth) * 0.5f
-                    PointF(vpLeft + ps2X * (vpWidth / 640f), ps2Y * (h / 448f))
+                    outPt.set(vpLeft + ps2X * (vpWidth / 640f), ps2Y * (h / 448f))
                 } else {
                     val vpHeight = w / targetAspect
                     val vpTop = (h - vpHeight) * 0.5f
-                    PointF(ps2X * (w / 640f), vpTop + ps2Y * (vpHeight / 448f))
+                    outPt.set(ps2X * (w / 640f), vpTop + ps2Y * (vpHeight / 448f))
                 }
             }
         }
+    }
+
+    private fun ps2ToScreen(ps2X: Float, ps2Y: Float, w: Float, h: Float): PointF {
+        val pt = PointF()
+        ps2ToScreenInto(ps2X, ps2Y, w, h, repo.aspectIdx, pt)
+        return pt
     }
 
     private fun screenToPs2(sx: Float, sy: Float, w: Float, h: Float): PointF {
@@ -1584,8 +1683,29 @@ class TouchControllerOverlay(context: Context) : View(context) {
         }
     }
 
+    private fun addPooledBox(screenId: Int, subState: Int, id: Int, label: String, x0: Float, y0: Float, x1: Float, y1: Float) {
+        val ov = findOverride(screenId, subState, id)
+        val rx0 = ov?.left ?: x0
+        val ry0 = ov?.top ?: y0
+        val rx1 = ov?.right ?: x1
+        val ry1 = ov?.bottom ?: y1
+        val idx = pooledBoxCount++
+        val box = if (idx < debugBoxPool.size) {
+            debugBoxPool[idx].also {
+                it.id = id
+                it.label = label
+                it.x0 = rx0
+                it.y0 = ry0
+                it.x1 = rx1
+                it.y1 = ry1
+            }
+        } else {
+            DebugBox(id, label, rx0, ry0, rx1, ry1).also { debugBoxPool.add(it) }
+        }
+        currentScreenBoxes.add(box)
+    }
+
     private fun drawMenuDebugOverlay(canvas: Canvas, w: Float, h: Float) {
-        NativeBridge.getMenuDebugInfo(menuDebugInfoArray)
         val screenId = menuDebugInfoArray[0]
         val subState = menuDebugInfoArray[1]
         val curIdx = menuDebugInfoArray[2]
@@ -1593,23 +1713,32 @@ class TouchControllerOverlay(context: Context) : View(context) {
         val lastTapId = menuDebugInfoArray[4]
         val pendingTargetId = menuDebugInfoArray[5]
 
-        // 1. Draw Top-Right Mini HUD
-        val screenName = when (screenId) {
-            1 -> "TITLE"
-            2 -> "PAUSE ROOT"
-            3 -> "TECHNIQUES"
-            4 -> "ROULETTE"
-            5 -> "OPTIONS"
-            6 -> "ITEMS"
-            7 -> "SAVELOAD"
-            8 -> "SHOP"
-            9 -> "STAGE MAP"
-            10 -> "DIALOG"
-            11 -> "MAP"
-            else -> "ID $screenId"
+        // 1. Draw Top-Right Mini HUD (cached until telemetry values change)
+        if (screenId != cachedHudScreenId || subState != cachedHudSubState ||
+            curIdx != cachedHudCurIdx || scrollTop != cachedHudScrollTop || lastTapId != cachedHudLastTapId) {
+            cachedHudScreenId = screenId
+            cachedHudSubState = subState
+            cachedHudCurIdx = curIdx
+            cachedHudScrollTop = scrollTop
+            cachedHudLastTapId = lastTapId
+            val screenName = when (screenId) {
+                1 -> "TITLE"
+                2 -> "PAUSE ROOT"
+                3 -> "TECHNIQUES"
+                4 -> "ROULETTE"
+                5 -> "OPTIONS"
+                6 -> "ITEMS"
+                7 -> "SAVELOAD"
+                8 -> "SHOP"
+                9 -> "STAGE MAP"
+                10 -> "DIALOG"
+                11 -> "MAP"
+                else -> "ID $screenId"
+            }
+            cachedHudLine = "$screenName | S:$subState C:$curIdx Scr:$scrollTop Tap:$lastTapId"
+            lastHudW = menuDebugHudTextPaint.measureText(cachedHudLine) + 14f * density
         }
-        val hudLine = "$screenName | S:$subState C:$curIdx Scr:$scrollTop Tap:$lastTapId"
-        lastHudW = menuDebugHudTextPaint.measureText(hudLine) + 14f * density
+        val hudLine = cachedHudLine
         val hudW = lastHudW
         val hudH = 18f * density
         val hudX = w - hudW - 10f * density
@@ -1620,7 +1749,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
         // 2. Draw [✏️ EDIT] / [✓ DONE] button next to Mini HUD
         val editBtnText = if (isHitboxEditMode) "✓ DONE" else "✏️ EDIT"
-        val editBtnW = menuDebugHudTextPaint.measureText(editBtnText) + 16f * density
+        val editBtnW = if (isHitboxEditMode) editBtnWDone else editBtnWEdit
         val editBtnH = 18f * density
         val editBtnX = hudX - editBtnW - 6f * density
         val editBtnY = 8f * density
@@ -1628,239 +1757,214 @@ class TouchControllerOverlay(context: Context) : View(context) {
         canvas.drawRoundRect(editBtnX, editBtnY, editBtnX + editBtnW, editBtnY + editBtnH, 4f * density, 4f * density, if (isHitboxEditMode) cropSelectedBoxPaint else menuDebugHudBorderPaint)
         canvas.drawText(editBtnText, editBtnX + editBtnW * 0.5f, editBtnY + 12f * density, cropToolbarBtnTextPaint)
 
-        // 3. Build hitboxes for active screen
-        val boxes = mutableListOf<DebugBox>()
+        // 3. Populate hitboxes directly into pooled currentScreenBoxes (0 allocations)
+        currentScreenBoxes.clear()
+        pooledBoxCount = 0
 
         when (screenId) {
             1 -> { // TITLE
                 if (subState <= 2) {
-                    boxes.add(DebugBox(99, "[START]", 60f, 160f, 580f, 380f))
-                    boxes.add(DebugBox(-10, "◀", 15f, 220f, 95f, 300f))
-                    boxes.add(DebugBox(-11, "▶", 545f, 220f, 625f, 300f))
+                    addPooledBox(screenId, subState, 99, "[START]", 4f, 40f, 632f, 421f)
+                    addPooledBox(screenId, subState, -10, "◀", 14f, 34f, 24f, 44f)
+                    addPooledBox(screenId, subState, -11, "▶", 617f, 55f, 627f, 65f)
                 } else if (subState == 3) {
-                    // Title Memory Card Load / Checking Screen (Custom Exported Bounds)
-                    boxes.add(DebugBox(0, "[SLOT 1]", 36.583496f,  97.511116f, 600.58350f, 162.51111f))
-                    boxes.add(DebugBox(1, "[SLOT 2]", 38.741974f, 176.429630f, 602.74194f, 241.42963f))
-                    boxes.add(DebugBox(2, "[SLOT 3]", 39.315340f, 257.162960f, 603.31530f, 322.16296f))
-                    boxes.add(DebugBox(10, "[YES]", 340f, 385f, 460f, 445f))
-                    boxes.add(DebugBox(11, "[NO]",  460f, 385f, 580f, 445f))
-                    boxes.add(DebugBox(99, "[START]", 60f, 160f, 580f, 380f))
+                    addPooledBox(screenId, subState, 0, "[SLOT 1]", 36.583496f,  97.511116f, 600.58350f, 162.51111f)
+                    addPooledBox(screenId, subState, 1, "[SLOT 2]", 38.741974f, 176.429630f, 602.74194f, 241.42963f)
+                    addPooledBox(screenId, subState, 2, "[SLOT 3]", 39.315340f, 257.162960f, 603.31530f, 322.16296f)
+                    addPooledBox(screenId, subState, 10, "[YES]", 340f, 385f, 460f, 445f)
+                    addPooledBox(screenId, subState, 11, "[NO]",  460f, 385f, 580f, 445f)
+                    addPooledBox(screenId, subState, 99, "[START]", 60f, 160f, 580f, 380f)
                 } else if (subState == 4) {
-                    boxes.add(DebugBox(-10, "[LEFT]",  20f, 360f, 210f, 420f))
-                    boxes.add(DebugBox( 99, "[START]", 220f, 360f, 420f, 420f))
-                    boxes.add(DebugBox(-11, "[RIGHT]", 430f, 360f, 620f, 420f))
+                    addPooledBox(screenId, subState, -10, "[LEFT]",  20f, 360f, 210f, 420f)
+                    addPooledBox(screenId, subState,  99, "[START]", 220f, 360f, 420f, 420f)
+                    addPooledBox(screenId, subState, -11, "[RIGHT]", 430f, 360f, 620f, 420f)
                 } else if (subState == 5) {
-                    boxes.add(DebugBox(0, "[0] EASY", 40f, 360f, 200f, 420f))
-                    boxes.add(DebugBox(1, "[1] NORMAL", 220f, 360f, 420f, 420f))
-                    boxes.add(DebugBox(2, "[2] HARD", 440f, 360f, 600f, 420f))
+                    addPooledBox(screenId, subState, 0, "[0] EASY", 40f, 360f, 200f, 420f)
+                    addPooledBox(screenId, subState, 1, "[1] NORMAL", 220f, 360f, 420f, 420f)
+                    addPooledBox(screenId, subState, 2, "[2] HARD", 440f, 360f, 600f, 420f)
                 } else if (subState == 6) {
-                    // Title Options has the EXACT same 8 rows as in-game Options (Screen 5)
-                    val optBounds = arrayOf(
-                        RectF(41.214172f, 90.488884f, 601.21420f, 120.488884f),
-                        RectF(39.460390f, 123.399994f, 599.46040f, 153.400000f),
-                        RectF(40.101196f, 158.800000f, 600.10120f, 188.800000f),
-                        RectF(39.797638f, 193.214810f, 599.79760f, 223.214810f),
-                        RectF(39.123108f, 227.474080f, 599.12310f, 257.474060f),
-                        RectF(39.359190f, 261.162960f, 599.35920f, 291.162960f),
-                        RectF(40.033722f, 295.422240f, 600.03370f, 325.422240f),
-                        RectF(39.325470f, 331.600000f, 599.32544f, 361.600000f)
-                    )
-                    val optLabels = arrayOf(
-                        "CONTROLS", "LIFE GAUGE", "SOUND", "VIBRATION",
-                        "LOAD GAME", "RESET GAME", "RESTORE DEFAULTS", "EXIT"
-                    )
-                    for (r in 0 until 8) {
-                        val b = optBounds[r]
-                        boxes.add(DebugBox(r, "[OPT $r: ${optLabels[r]}]", b.left, b.top, b.right, b.bottom))
-                    }
-                    boxes.add(DebugBox(10, "[YES]", 340f, 385f, 460f, 445f))
-                    boxes.add(DebugBox(11, "[NO]", 460f, 385f, 580f, 445f))
+                    addPooledBox(screenId, subState, 0, "[OPT 0: CONTROLS]",         41.214172f, 90.488884f, 601.21420f, 120.488884f)
+                    addPooledBox(screenId, subState, 1, "[OPT 1: LIFE GAUGE]",       39.460390f, 123.399994f, 599.46040f, 153.400000f)
+                    addPooledBox(screenId, subState, 2, "[OPT 2: SOUND]",            40.101196f, 158.800000f, 600.10120f, 188.800000f)
+                    addPooledBox(screenId, subState, 3, "[OPT 3: VIBRATION]",        39.797638f, 193.214810f, 599.79760f, 223.214810f)
+                    addPooledBox(screenId, subState, 4, "[OPT 4: LOAD GAME]",        39.123108f, 227.474080f, 599.12310f, 257.474060f)
+                    addPooledBox(screenId, subState, 5, "[OPT 5: RESET GAME]",       39.359190f, 261.162960f, 599.35920f, 291.162960f)
+                    addPooledBox(screenId, subState, 6, "[OPT 6: RESTORE DEFAULTS]", 40.033722f, 295.422240f, 600.03370f, 325.422240f)
+                    addPooledBox(screenId, subState, 7, "[OPT 7: EXIT]",             39.325470f, 331.600000f, 599.32544f, 361.600000f)
                 }
             }
             2 -> { // PAUSE ROOT (Custom Exported Bounds)
-                boxes.add(DebugBox(0, "[0] TECHNIQUES", 17.740303f, 20.977776f, 200.79257f, 75.977776f))
-                boxes.add(DebugBox(1, "[1] ROULETTE",   16.627320f, 80.177770f, 200.62396f, 129.444430f))
-                boxes.add(DebugBox(2, "[2] MAP",        15.885330f, 129.91112f, 200.62396f, 178.096310f))
-                boxes.add(DebugBox(3, "[3] OPTIONS",    15.851593f, 181.00000f, 200.99496f, 231.259260f))
-                boxes.add(DebugBox(4, "[4] EXIT",       18.043839f, 232.14073f, 201.26477f, 282.814820f))
+                addPooledBox(screenId, subState, 0, "[0] TECHNIQUES", 17.740303f, 20.977776f, 200.79257f, 75.977776f)
+                addPooledBox(screenId, subState, 1, "[1] ROULETTE",   16.627320f, 80.177770f, 200.62396f, 129.444430f)
+                addPooledBox(screenId, subState, 2, "[2] MAP",        15.885330f, 129.91112f, 200.62396f, 178.096310f)
+                addPooledBox(screenId, subState, 3, "[3] OPTIONS",    15.851593f, 181.00000f, 200.99496f, 231.259260f)
+                addPooledBox(screenId, subState, 4, "[4] EXIT",       18.043839f, 232.14073f, 201.26477f, 282.814820f)
             }
             3 -> { // TECHNIQUES (Custom Exported Bounds)
                 if (subState == 0) {
-                    // Left Column (Combo Slots L0..L5)
-                    boxes.add(DebugBox(0, "[L0]", 8.119743f, 118.91112f, 218.11975f, 152.91112f))
-                    boxes.add(DebugBox(1, "[L1]", 8.996628f, 158.94075f, 218.99663f, 192.94075f))
-                    boxes.add(DebugBox(2, "[L2]", 7.883644f, 200.73332f, 217.88364f, 234.21481f))
-                    boxes.add(DebugBox(3, "[L3]", 8.794262f, 240.39998f, 218.79427f, 269.94073f))
-                    boxes.add(DebugBox(4, "[L4]", 8.625633f, 274.31110f, 218.62564f, 306.80740f))
-                    boxes.add(DebugBox(5, "[L5]", 8.794281f, 312.57780f, 218.79428f, 341.60000f))
+                    addPooledBox(screenId, subState, 0, "[L0]", 8.119743f, 118.91112f, 218.11975f, 152.91112f)
+                    addPooledBox(screenId, subState, 1, "[L1]", 8.996628f, 158.94075f, 218.99663f, 192.94075f)
+                    addPooledBox(screenId, subState, 2, "[L2]", 7.883644f, 200.73332f, 217.88364f, 234.21481f)
+                    addPooledBox(screenId, subState, 3, "[L3]", 8.794262f, 240.39998f, 218.79427f, 269.94073f)
+                    addPooledBox(screenId, subState, 4, "[L4]", 8.625633f, 274.31110f, 218.62564f, 306.80740f)
+                    addPooledBox(screenId, subState, 5, "[L5]", 8.794281f, 312.57780f, 218.79428f, 341.60000f)
 
-                    // Right Column (Individual Button Slots R0..R4 starting aligned at Y=118f)
-                    boxes.add(DebugBox(10, "[R0: △]",   258.63140f, 118.59999f, 446.08505f, 153.53333f))
-                    boxes.add(DebugBox(11, "[R1: ✕]",   257.76562f, 157.54074f, 445.42160f, 191.74817f))
-                    boxes.add(DebugBox(12, "[R2: ↓+□]", 258.64252f, 199.15184f, 445.48904f, 234.24074f))
-                    boxes.add(DebugBox(13, "[R3: ↓+△]", 257.79930f, 238.48146f, 445.01685f, 274.45184f))
-                    boxes.add(DebugBox(14, "[R4: ↓+✕]", 259.08093f, 279.44446f, 444.44350f, 314.58520f))
+                    addPooledBox(screenId, subState, 10, "[R0: △]",   258.63140f, 118.59999f, 446.08505f, 153.53333f)
+                    addPooledBox(screenId, subState, 11, "[R1: ✕]",   257.76562f, 157.54074f, 445.42160f, 191.74817f)
+                    addPooledBox(screenId, subState, 12, "[R2: ↓+□]", 258.64252f, 199.15184f, 445.48904f, 234.24074f)
+                    addPooledBox(screenId, subState, 13, "[R3: ↓+△]", 257.79930f, 238.48146f, 445.01685f, 274.45184f)
+                    addPooledBox(screenId, subState, 14, "[R4: ↓+✕]", 259.08093f, 279.44446f, 444.44350f, 314.58520f)
+                    addPooledBox(screenId, subState, -1, "[RETURN]",  13.085999f, 379.86667f, 140.59865f, 423.95557f)
                 } else if (subState == 1) {
-                    // Move List Popup on RIGHT (editing Left combo slots)
-                    boxes.add(DebugBox(-2, "[L1] TAB L", 209.50253f, 47.56296f, 266.18042f, 81.888885f))
-                    boxes.add(DebugBox(-3, "[R1] TAB R", 387.63070f, 44.71111f, 452.09950f, 83.807400f))
-                    boxes.add(DebugBox(0, "[ROW 0]", 219.99155f, 110.59999f, 420.49744f, 141.83702f))
-                    boxes.add(DebugBox(1, "[ROW 1]", 219.38449f, 143.45555f, 421.13828f, 175.93703f))
-                    boxes.add(DebugBox(2, "[ROW 2]", 218.94604f, 175.58519f, 422.48737f, 206.71852f))
-                    boxes.add(DebugBox(3, "[ROW 3]", 220.19391f, 209.73703f, 421.10452f, 242.06296f))
-                    boxes.add(DebugBox(4, "[ROW 4]", 220.12650f, 242.02222f, 421.91403f, 274.55557f))
-                    boxes.add(DebugBox(5, "[ROW 5]", 217.93423f, 276.74445f, 421.27320f, 306.06296f))
-                    boxes.add(DebugBox(6, "[ROW 6]", 217.49576f, 311.25928f, 423.19556f, 339.22964f))
-                    boxes.add(DebugBox(7, "[ROW 7]", 218.47388f, 345.33334f, 423.93762f, 375.22223f))
+                    addPooledBox(screenId, subState, -2, "[L1] TAB L", 209.50253f, 47.56296f, 266.18042f, 81.888885f)
+                    addPooledBox(screenId, subState, -3, "[R1] TAB R", 387.63070f, 44.71111f, 452.09950f, 83.807400f)
+                    addPooledBox(screenId, subState, 0, "[ROW 0]", 219.99155f, 110.59999f, 420.49744f, 141.83702f)
+                    addPooledBox(screenId, subState, 1, "[ROW 1]", 219.38449f, 143.45555f, 421.13828f, 175.93703f)
+                    addPooledBox(screenId, subState, 2, "[ROW 2]", 218.94604f, 175.58519f, 422.48737f, 206.71852f)
+                    addPooledBox(screenId, subState, 3, "[ROW 3]", 220.19391f, 209.73703f, 421.10452f, 242.06296f)
+                    addPooledBox(screenId, subState, 4, "[ROW 4]", 220.12650f, 242.02222f, 421.91403f, 274.55557f)
+                    addPooledBox(screenId, subState, 5, "[ROW 5]", 217.93423f, 276.74445f, 421.27320f, 306.06296f)
+                    addPooledBox(screenId, subState, 6, "[ROW 6]", 217.49576f, 311.25928f, 423.19556f, 339.22964f)
+                    addPooledBox(screenId, subState, 7, "[ROW 7]", 218.47388f, 345.33334f, 423.93762f, 375.22223f)
                 } else if (subState == 2) {
-                    // Move List Popup on LEFT (editing Right button slots)
-                    boxes.add(DebugBox(-2, "[L1] TAB L", 8.927486f, 46.68148f, 51.88870f, 84.94812f))
-                    boxes.add(DebugBox(-3, "[R1] TAB R", 188.76897f, 45.95555f, 239.72176f, 85.15554f))
-                    boxes.add(DebugBox(0, "[ROW 0]", 14.190567f, 109.21482f, 216.39967f, 142.43703f))
-                    boxes.add(DebugBox(1, "[ROW 1]", 12.435059f, 145.01111f, 217.99326f, 176.50742f))
-                    boxes.add(DebugBox(2, "[ROW 2]", 12.165283f, 175.94815f, 217.04893f, 210.60740f))
-                    boxes.add(DebugBox(3, "[ROW 3]", 11.861725f, 211.13704f, 218.09444f, 241.95926f))
-                    boxes.add(DebugBox(4, "[ROW 4]", 11.254639f, 243.05928f, 216.40811f, 276.16296f))
-                    boxes.add(DebugBox(5, "[ROW 5]", 11.220917f, 277.36667f, 218.36426f, 307.87778f))
-                    boxes.add(DebugBox(6, "[ROW 6]", 12.502518f, 309.08148f, 216.94770f, 342.28888f))
-                    boxes.add(DebugBox(7, "[ROW 7]", 13.514328f, 343.18146f, 220.55652f, 374.78146f))
+                    addPooledBox(screenId, subState, -2, "[L1] TAB L", 8.927486f, 46.68148f, 51.88870f, 84.94812f)
+                    addPooledBox(screenId, subState, -3, "[R1] TAB R", 188.76897f, 45.95555f, 239.72176f, 85.15554f)
+                    addPooledBox(screenId, subState, 0, "[ROW 0]", 14.190567f, 109.21482f, 216.39967f, 142.43703f)
+                    addPooledBox(screenId, subState, 1, "[ROW 1]", 12.435059f, 145.01111f, 217.99326f, 176.50742f)
+                    addPooledBox(screenId, subState, 2, "[ROW 2]", 12.165283f, 175.94815f, 217.04893f, 210.60740f)
+                    addPooledBox(screenId, subState, 3, "[ROW 3]", 11.861725f, 211.13704f, 218.09444f, 241.95926f)
+                    addPooledBox(screenId, subState, 4, "[ROW 4]", 11.254639f, 243.05928f, 216.40811f, 276.16296f)
+                    addPooledBox(screenId, subState, 5, "[ROW 5]", 11.220917f, 277.36667f, 218.36426f, 307.87778f)
+                    addPooledBox(screenId, subState, 6, "[ROW 6]", 12.502518f, 309.08148f, 216.94770f, 342.28888f)
+                    addPooledBox(screenId, subState, 7, "[ROW 7]", 13.514328f, 343.18146f, 220.55652f, 374.78146f)
                 }
             }
             4 -> { // ROULETTE (Custom Exported Bounds)
                 if (subState == 0) {
-                    // 10 equipped slots (5 left, 5 right) + RETURN button at bottom left
-                    boxes.add(DebugBox(0, "[SLOT 0]", 18.000000f, 105.00000f, 219.00000f, 153.00000f))
-                    boxes.add(DebugBox(1, "[SLOT 1]", 18.000000f, 156.00000f, 217.00000f, 199.00000f))
-                    boxes.add(DebugBox(2, "[SLOT 2]", 19.000000f, 203.00000f, 217.00000f, 246.00000f))
-                    boxes.add(DebugBox(3, "[SLOT 3]", 20.000000f, 248.00000f, 220.00000f, 293.00000f))
-                    boxes.add(DebugBox(4, "[SLOT 4]", 20.000000f, 296.00000f, 219.00000f, 343.00000f))
+                    addPooledBox(screenId, subState, 0, "[SLOT 0]", 18.490723f, 105.21481f, 219.89040f, 153.25926f)
+                    addPooledBox(screenId, subState, 1, "[SLOT 1]", 18.760544f, 156.68889f, 217.93423f, 199.49629f)
+                    addPooledBox(screenId, subState, 2, "[SLOT 2]", 19.603714f, 203.28890f, 217.05736f, 246.45926f)
+                    addPooledBox(screenId, subState, 3, "[SLOT 3]", 20.143326f, 248.22964f, 220.69983f, 293.05930f)
+                    addPooledBox(screenId, subState, 4, "[SLOT 4]", 20.075882f, 296.28146f, 219.89038f, 343.80737f)
 
-                    boxes.add(DebugBox(5, "[SLOT 5]", 219.00000f, 107.00000f, 420.00000f, 151.00000f))
-                    boxes.add(DebugBox(6, "[SLOT 6]", 222.00000f, 154.00000f, 418.00000f, 199.00000f))
-                    boxes.add(DebugBox(7, "[SLOT 7]", 219.00000f, 200.00000f, 419.00000f, 247.00000f))
-                    boxes.add(DebugBox(8, "[SLOT 8]", 219.00000f, 248.00000f, 418.00000f, 295.00000f))
-                    boxes.add(DebugBox(9, "[SLOT 9]", 219.00000f, 295.00000f, 418.00000f, 343.00000f))
+                    addPooledBox(screenId, subState, 5, "[SLOT 5]", 219.40134f, 107.34074f, 420.36252f, 151.49628f)
+                    addPooledBox(screenId, subState, 6, "[SLOT 6]", 222.03204f, 154.87408f, 418.10284f, 199.02965f)
+                    addPooledBox(screenId, subState, 7, "[SLOT 7]", 219.56998f, 200.43704f, 419.41820f, 247.13335f)
+                    addPooledBox(screenId, subState, 8, "[SLOT 8]", 219.23270f, 248.95557f, 418.17032f, 295.02966f)
+                    addPooledBox(screenId, subState, 9, "[SLOT 9]", 219.87354f, 295.50370f, 418.98135f, 343.49628f)
 
-                    boxes.add(DebugBox(-1, "[RETURN]", 13.085999f, 379.86667f, 140.59865f, 423.95557f))
+                    addPooledBox(screenId, subState, -1, "[RETURN]", 13.085999f, 379.86667f, 140.59865f, 423.95557f)
                 } else if (subState == 1) {
-                    boxes.add(DebugBox(0, "[ROULETTE 0]", 430.07587f, 106.20740f, 612.34400f, 141.50371f))
-                    boxes.add(DebugBox(1, "[ROULETTE 1]", 427.88367f, 146.22963f, 612.17540f, 182.71852f))
-                    boxes.add(DebugBox(2, "[ROULETTE 2]", 428.28836f, 188.48148f, 612.81616f, 223.31111f))
-                    boxes.add(DebugBox(3, "[ROULETTE 3]", 428.05228f, 229.74654f, 610.99493f, 262.76135f))
-                    boxes.add(DebugBox(4, "[ROULETTE 4]", 428.18720f, 270.18518f, 608.97130f, 302.52590f))
-                    boxes.add(DebugBox(5, "[ROULETTE 5]", 427.04047f, 310.05185f, 610.96120f, 342.96295f))
+                    addPooledBox(screenId, subState, 0, "[ROULETTE 0]", 430.07587f, 106.20740f, 612.34400f, 141.50371f)
+                    addPooledBox(screenId, subState, 1, "[ROULETTE 1]", 427.88367f, 146.22963f, 612.17540f, 182.71852f)
+                    addPooledBox(screenId, subState, 2, "[ROULETTE 2]", 428.28836f, 188.48148f, 612.81616f, 223.31111f)
+                    addPooledBox(screenId, subState, 3, "[ROULETTE 3]", 428.05228f, 229.74654f, 610.99493f, 262.76135f)
+                    addPooledBox(screenId, subState, 4, "[ROULETTE 4]", 428.18720f, 270.18518f, 608.97130f, 302.52590f)
+                    addPooledBox(screenId, subState, 5, "[ROULETTE 5]", 427.04047f, 310.05185f, 610.96120f, 342.96295f)
                 }
             }
-            5 -> { // OPTIONS (Exactly 8 rows, NO TABS - Custom Exported Bounds)
-                val optBounds = arrayOf(
-                    RectF(41.214172f, 90.488884f, 601.21420f, 120.488884f),
-                    RectF(39.460390f, 123.399994f, 599.46040f, 153.400000f),
-                    RectF(40.101196f, 158.800000f, 600.10120f, 188.800000f),
-                    RectF(39.797638f, 193.214810f, 599.79760f, 223.214810f),
-                    RectF(39.123108f, 227.474080f, 599.12310f, 257.474060f),
-                    RectF(39.359190f, 261.162960f, 599.35920f, 291.162960f),
-                    RectF(40.033722f, 295.422240f, 600.03370f, 325.422240f),
-                    RectF(39.325470f, 331.600000f, 599.32544f, 361.600000f)
-                )
-                val optLabels = arrayOf(
-                    "CONTROLS", "LIFE GAUGE", "SOUND", "VIBRATION",
-                    "LOAD GAME", "RESET GAME", "RESTORE DEFAULTS", "EXIT"
-                )
-                for (r in 0 until 8) {
-                    val b = optBounds[r]
-                    boxes.add(DebugBox(r, "[OPT $r: ${optLabels[r]}]", b.left, b.top, b.right, b.bottom))
+            5 -> { // OPTIONS (SubState 0: 8 rows, SubState 1: Conditional YES/NO)
+                if (subState == 1) {
+                    addPooledBox(screenId, subState, 10, "[YES]", 47f, 397f, 111f, 439f)
+                    addPooledBox(screenId, subState, 11, "[NO]", 154f, 397f, 211f, 441f)
+                } else {
+                    addPooledBox(screenId, subState, 0, "[OPT 0: CONTROLS]",         41.214172f, 90.488884f, 601.21420f, 120.488884f)
+                    addPooledBox(screenId, subState, 1, "[OPT 1: LIFE GAUGE]",       39.460390f, 123.399994f, 599.46040f, 153.400000f)
+                    addPooledBox(screenId, subState, 2, "[OPT 2: SOUND]",            40.101196f, 158.800000f, 600.10120f, 188.800000f)
+                    addPooledBox(screenId, subState, 3, "[OPT 3: VIBRATION]",        39.797638f, 193.214810f, 599.79760f, 223.214810f)
+                    addPooledBox(screenId, subState, 4, "[OPT 4: LOAD GAME]",        39.123108f, 227.474080f, 599.12310f, 257.474060f)
+                    addPooledBox(screenId, subState, 5, "[OPT 5: RESET GAME]",       39.359190f, 261.162960f, 599.35920f, 291.162960f)
+                    addPooledBox(screenId, subState, 6, "[OPT 6: RESTORE DEFAULTS]", 40.033722f, 295.422240f, 600.03370f, 325.422240f)
+                    addPooledBox(screenId, subState, 7, "[OPT 7: EXIT]",             39.325470f, 331.600000f, 599.32544f, 361.600000f)
                 }
-                boxes.add(DebugBox(10, "[YES]", 340f, 385f, 460f, 445f))
-                boxes.add(DebugBox(11, "[NO]", 460f, 385f, 580f, 445f))
             }
-            7 -> { // SAVELOAD (Custom Exported Bounds)
-                boxes.add(DebugBox(0, "[SLOT 1]", 36.583496f,  97.511116f, 600.58350f, 162.51111f))
-                boxes.add(DebugBox(1, "[SLOT 2]", 38.741974f, 176.429630f, 602.74194f, 241.42963f))
-                boxes.add(DebugBox(2, "[SLOT 3]", 39.315340f, 257.162960f, 603.31530f, 322.16296f))
-                boxes.add(DebugBox(10, "[YES]", 340f, 385f, 460f, 445f))
-                boxes.add(DebugBox(11, "[NO]", 460f, 385f, 580f, 445f))
+            7 -> { // SAVELOAD (SubState 0: Slots 1..3, SubState 1: Conditional YES/NO, SubState 2: Busy/Notice)
+                if (subState == 0) {
+                    addPooledBox(screenId, subState, 0, "[SLOT 1]", 36.583496f,  97.511116f, 600.58350f, 162.51111f)
+                    addPooledBox(screenId, subState, 1, "[SLOT 2]", 38.741974f, 176.429630f, 602.74194f, 241.42963f)
+                    addPooledBox(screenId, subState, 2, "[SLOT 3]", 39.315340f, 257.162960f, 603.31530f, 322.16296f)
+                } else if (subState == 1) {
+                    addPooledBox(screenId, subState, 10, "[YES]", 340f, 385f, 460f, 445f)
+                    addPooledBox(screenId, subState, 11, "[NO]", 460f, 385f, 580f, 445f)
+                }
             }
             8 -> { // SHOP (Custom Exported Bounds)
                 if (subState == 0) {
-                    // Category Selection in 3D Shop (BUY, SELL, LEAVE SHOP)
-                    boxes.add(DebugBox(0, "[0] BUY",        75.00000f, 210.000000f, 295.00000f, 275.00000f))
-                    boxes.add(DebugBox(1, "[1] SELL",       345.00000f, 210.000000f, 565.00000f, 275.00000f))
-                    boxes.add(DebugBox(2, "[2] LEAVE SHOP", 15.00000f, 295.000000f, 205.00000f, 350.00000f))
+                    addPooledBox(screenId, subState, 0, "[0] BUY",        75.00000f, 210.000000f, 295.00000f, 275.00000f)
+                    addPooledBox(screenId, subState, 1, "[1] SELL",       345.00000f, 210.000000f, 565.00000f, 275.00000f)
+                    addPooledBox(screenId, subState, 2, "[2] LEAVE SHOP", 15.00000f, 295.000000f, 205.00000f, 350.00000f)
                 } else {
-                    // SubState 1: Buy/Sell Item List (6 rows + YES/NO dialog, calibrated by user)
-                    boxes.add(DebugBox(0, "[ITEM 0]", 20.000000f, 148.000000f, 395.00000f, 179.00000f))
-                    boxes.add(DebugBox(1, "[ITEM 1]", 20.000000f, 183.000000f, 395.00000f, 213.00000f))
-                    boxes.add(DebugBox(2, "[ITEM 2]", 20.000000f, 216.000000f, 395.00000f, 246.00000f))
-                    boxes.add(DebugBox(3, "[ITEM 3]", 20.000000f, 251.000000f, 395.00000f, 279.00000f))
-                    boxes.add(DebugBox(4, "[ITEM 4]", 20.000000f, 285.000000f, 395.00000f, 312.00000f))
-                    boxes.add(DebugBox(5, "[ITEM 5]", 20.000000f, 319.000000f, 395.00000f, 346.00000f))
-                    boxes.add(DebugBox(10, "[BUY YES]", 60.000000f, 396.000000f, 157.00000f, 433.00000f))
-                    boxes.add(DebugBox(11, "[BUY NO]",  212.00000f, 395.000000f, 291.00000f, 437.00000f))
+                    addPooledBox(screenId, subState, 0, "[ITEM 0]", 20.000000f, 148.000000f, 395.00000f, 179.00000f)
+                    addPooledBox(screenId, subState, 1, "[ITEM 1]", 20.000000f, 183.000000f, 395.00000f, 213.00000f)
+                    addPooledBox(screenId, subState, 2, "[ITEM 2]", 20.000000f, 216.000000f, 395.00000f, 246.00000f)
+                    addPooledBox(screenId, subState, 3, "[ITEM 3]", 20.000000f, 251.000000f, 395.00000f, 279.00000f)
+                    addPooledBox(screenId, subState, 4, "[ITEM 4]", 20.000000f, 285.000000f, 395.00000f, 312.00000f)
+                    addPooledBox(screenId, subState, 5, "[ITEM 5]", 20.000000f, 319.000000f, 395.00000f, 346.00000f)
+                    addPooledBox(screenId, subState, 10, "[BUY YES]", 60.000000f, 396.000000f, 157.00000f, 433.00000f)
+                    addPooledBox(screenId, subState, 11, "[BUY NO]",  212.00000f, 395.000000f, 291.00000f, 437.00000f)
                 }
             }
             9, 11 -> { // STAGE MAP & PAUSE MAP (Custom Exported Bounds)
                 if (subState == 1) {
-                    boxes.add(DebugBox(0, "[0] CONTINUE",     432.35242f, 177.55557f, 604.92410f, 217.19261f))
-                    boxes.add(DebugBox(1, "[1] ENTER SHOP",   432.25125f, 224.94072f, 602.09106f, 262.60742f))
-                    boxes.add(DebugBox(2, "[2] ENTER CASINO", 432.72340f, 267.29630f, 601.85500f, 305.58520f))
+                    addPooledBox(screenId, subState, 0, "[0] CONTINUE",     432.35242f, 177.55557f, 604.92410f, 217.19261f)
+                    addPooledBox(screenId, subState, 1, "[1] ENTER SHOP",   432.25125f, 224.94072f, 602.09106f, 262.60742f)
+                    addPooledBox(screenId, subState, 2, "[2] ENTER CASINO", 432.72340f, 267.29630f, 601.85500f, 305.58520f)
                 } else {
-                    boxes.add(DebugBox(0, "[0] SAVE",         432.35242f, 177.55557f, 604.92410f, 217.19261f))
-                    boxes.add(DebugBox(1, "[1] CONTINUE",     432.25125f, 224.94072f, 602.09106f, 262.60742f))
-                    boxes.add(DebugBox(2, "[2] ENTER SHOP",   432.72340f, 267.29630f, 601.85500f, 305.58520f))
-                    boxes.add(DebugBox(3, "[3] ENTER CASINO", 431.27320f, 312.03705f, 603.00165f, 348.77040f))
+                    addPooledBox(screenId, subState, 0, "[0] SAVE",         432.35242f, 177.55557f, 604.92410f, 217.19261f)
+                    addPooledBox(screenId, subState, 1, "[1] CONTINUE",     432.25125f, 224.94072f, 602.09106f, 262.60742f)
+                    addPooledBox(screenId, subState, 2, "[2] ENTER SHOP",   432.72340f, 267.29630f, 601.85500f, 305.58520f)
+                    addPooledBox(screenId, subState, 3, "[3] ENTER CASINO", 431.27320f, 312.03705f, 603.00165f, 348.77040f)
                 }
             }
             10 -> { // MODAL CONFIRMATION DIALOG
-                boxes.add(DebugBox(0, "[0] YES", 340f, 385f, 460f, 445f))
-                boxes.add(DebugBox(1, "[1] NO", 460f, 385f, 580f, 445f))
+                addPooledBox(screenId, subState, 0, "[0] YES", 340f, 385f, 460f, 445f)
+                addPooledBox(screenId, subState, 1, "[1] NO", 460f, 385f, 580f, 445f)
             }
         }
 
-        // 4. Apply active hitbox overrides keyed by (screenId, subState, buttonId)
-        val resolvedBoxes = boxes.map { b ->
-            val override = activeOverrides[Triple(screenId, subState, b.id)]
-            if (override != null) {
-                DebugBox(b.id, b.label, override.left, override.top, override.right, override.bottom)
-            } else {
-                b
-            }
-        }
-        currentScreenBoxes.clear()
-        currentScreenBoxes.addAll(resolvedBoxes)
         selectedScreenId = screenId
         selectedSubState = subState
+        val aspectMode = repo.aspectIdx
 
-        // 5. Render all boxes
-        for (b in resolvedBoxes) {
-            val p0 = ps2ToScreen(b.x0, b.y0, w, h)
-            val p1 = ps2ToScreen(b.x1, b.y1, w, h)
+        // 4. Render all boxes (0 allocations)
+        for (i in 0 until currentScreenBoxes.size) {
+            val b = currentScreenBoxes[i]
+            ps2ToScreenInto(b.x0, b.y0, w, h, aspectMode, scratchP0)
+            ps2ToScreenInto(b.x1, b.y1, w, h, aspectMode, scratchP1)
             val isSelectedInEdit = isHitboxEditMode && (b.id == selectedBoxId)
             val isActive = (b.id == curIdx) || (b.id == lastTapId) || (b.id == pendingTargetId)
 
             if (isSelectedInEdit) {
-                // High-visibility cyan fill & thick border for selected box in edit mode
-                canvas.drawRect(p0.x, p0.y, p1.x, p1.y, cropSelectedFillPaint)
-                canvas.drawRect(p0.x, p0.y, p1.x, p1.y, cropSelectedBoxPaint)
-                canvas.drawText("${b.label} [ACTIVE]", p0.x + 4f * density, p0.y + 13f * density, menuDebugLabelPaint)
+                canvas.drawRect(scratchP0.x, scratchP0.y, scratchP1.x, scratchP1.y, cropSelectedFillPaint)
+                canvas.drawRect(scratchP0.x, scratchP0.y, scratchP1.x, scratchP1.y, cropSelectedBoxPaint)
+                canvas.drawText(b.label + " [ACTIVE]", scratchP0.x + 4f * density, scratchP0.y + 13f * density, menuDebugLabelPaint)
 
-                // Draw 8 Resize Handles (4 corners + 4 edge midpoints)
-                val handlePts = arrayOf(
-                    PointF(p0.x, p0.y), PointF(p1.x, p0.y), PointF(p0.x, p1.y), PointF(p1.x, p1.y),
-                    PointF((p0.x + p1.x) * 0.5f, p0.y), PointF((p0.x + p1.x) * 0.5f, p1.y),
-                    PointF(p0.x, (p0.y + p1.y) * 0.5f), PointF(p1.x, (p0.y + p1.y) * 0.5f)
-                )
+                val mx = (scratchP0.x + scratchP1.x) * 0.5f
+                val my = (scratchP0.y + scratchP1.y) * 0.5f
+                scratchHandles[0] = scratchP0.x; scratchHandles[1] = scratchP0.y
+                scratchHandles[2] = scratchP1.x; scratchHandles[3] = scratchP0.y
+                scratchHandles[4] = scratchP0.x; scratchHandles[5] = scratchP1.y
+                scratchHandles[6] = scratchP1.x; scratchHandles[7] = scratchP1.y
+                scratchHandles[8] = mx;          scratchHandles[9] = scratchP0.y
+                scratchHandles[10] = mx;         scratchHandles[11] = scratchP1.y
+                scratchHandles[12] = scratchP0.x; scratchHandles[13] = my
+                scratchHandles[14] = scratchP1.x; scratchHandles[15] = my
                 val handleR = 6.5f * density
-                for (pt in handlePts) {
-                    canvas.drawCircle(pt.x, pt.y, handleR, cropHandlePaint)
-                    canvas.drawCircle(pt.x, pt.y, handleR, cropHandleBorderPaint)
+                var hi = 0
+                while (hi < 16) {
+                    val hx = scratchHandles[hi]
+                    val hy = scratchHandles[hi + 1]
+                    canvas.drawCircle(hx, hy, handleR, cropHandlePaint)
+                    canvas.drawCircle(hx, hy, handleR, cropHandleBorderPaint)
+                    hi += 2
                 }
             } else {
                 val sPaint = if (isActive) menuDebugActiveBoxPaint else menuDebugBoxPaint
                 val fPaint = if (isActive) menuDebugActiveFillPaint else menuDebugFillPaint
 
-                canvas.drawRect(p0.x, p0.y, p1.x, p1.y, fPaint)
-                canvas.drawRect(p0.x, p0.y, p1.x, p1.y, sPaint)
-                canvas.drawText(b.label, p0.x + 4f * density, p0.y + 13f * density, menuDebugLabelPaint)
+                canvas.drawRect(scratchP0.x, scratchP0.y, scratchP1.x, scratchP1.y, fPaint)
+                canvas.drawRect(scratchP0.x, scratchP0.y, scratchP1.x, scratchP1.y, sPaint)
+                canvas.drawText(b.label, scratchP0.x + 4f * density, scratchP0.y + 13f * density, menuDebugLabelPaint)
             }
         }
 
@@ -1936,7 +2040,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
         }
 
         fun getResolved(sId: Int, subSt: Int, bId: Int, defX0: Float, defY0: Float, defX1: Float, defY1: Float): RectF {
-            val inMem = activeOverrides[Triple(sId, subSt, bId)]
+            val inMem = findOverride(sId, subSt, bId)
             if (inMem != null) return inMem
             val fromRepo = savedOverrides.firstOrNull { it.screenId == sId && it.subState == subSt && it.buttonId == bId }
             if (fromRepo != null) return RectF(fromRepo.x0, fromRepo.y0, fromRepo.x1, fromRepo.y1)
@@ -1945,6 +2049,18 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
         // 1. Title Screen
         sb.append("// ==================== TITLE SCREEN (Screen 1) ====================\n")
+        sb.append("// SubState 0: Press Start Screen\n")
+        val pressStartBoxes = listOf(
+            Triple(-10, "[LEFT]",  RectF(14f, 34f, 24f, 44f)),
+            Triple( 99, "[START]", RectF(4f, 40f, 632f, 421f)),
+            Triple(-11, "[RIGHT]", RectF(617f, 55f, 627f, 65f))
+        )
+        for ((id, lbl, def) in pressStartBoxes) {
+            val r = getResolved(1, 0, id, def.left, def.top, def.right, def.bottom)
+            val isCustom = (r.left != def.left || r.top != def.top || r.right != def.right || r.bottom != def.bottom)
+            val tag = if (isCustom) "/* CUSTOM */" else ""
+            sb.append("    { $id, { ${r.left}f, ${r.top}f, ${r.right}f, ${r.bottom}f } }, $tag // $lbl\n")
+        }
         sb.append("// SubState 4: Main Menu (LEFT D-PAD, START, RIGHT D-PAD)\n")
         val titleBoxes = listOf(
             Triple(-10, "[LEFT]",  RectF(20f, 360f, 210f, 420f)),
@@ -1992,78 +2108,125 @@ class TouchControllerOverlay(context: Context) : View(context) {
         // 3. Techniques (Screen 3)
         sb.append("\n// ==================== TECHNIQUES SLOTS (Screen 3, SubState 0) ====================\n")
         sb.append("// Left Combo Slots (L0..L5)\n")
+        val techLeftDefs = arrayOf(
+            RectF(8.119743f, 118.91112f, 218.11975f, 152.91112f),
+            RectF(8.996628f, 158.94075f, 218.99663f, 192.94075f),
+            RectF(7.883644f, 200.73332f, 217.88364f, 234.21481f),
+            RectF(8.794262f, 240.39998f, 218.79427f, 269.94073f),
+            RectF(8.625633f, 274.31110f, 218.62564f, 306.80740f),
+            RectF(8.794281f, 312.57780f, 218.79428f, 341.60000f)
+        )
         for (i in 0 until 6) {
-            val defY = 106f + i * 42f
-            val r = getResolved(3, 0, i, 35f, defY, 245f, defY + 34f)
-            val isCustom = (r.left != 35f || r.top != defY || r.right != 245f || r.bottom != defY + 34f)
+            val def = techLeftDefs[i]
+            val r = getResolved(3, 0, i, def.left, def.top, def.right, def.bottom)
+            val isCustom = (r.left != def.left || r.top != def.top || r.right != def.right || r.bottom != def.bottom)
             val tag = if (isCustom) "/* CUSTOM */" else ""
             sb.append("    { $i, { ${r.left}f, ${r.top}f, ${r.right}f, ${r.bottom}f } }, $tag // [L$i]\n")
         }
         sb.append("// Right Individual Button Slots (R0..R4)\n")
+        val techRightDefs = arrayOf(
+            RectF(258.63140f, 118.59999f, 446.08505f, 153.53333f),
+            RectF(257.76562f, 157.54074f, 445.42160f, 191.74817f),
+            RectF(258.64252f, 199.15184f, 445.48904f, 234.24074f),
+            RectF(257.79930f, 238.48146f, 445.01685f, 274.45184f),
+            RectF(259.08093f, 279.44446f, 444.44350f, 314.58520f)
+        )
         val rLabels = arrayOf("△", "✕", "↓+□", "↓+△", "↓+✕")
         for (i in 0 until 5) {
             val id = 10 + i
-            val defY = 148f + i * 42f
-            val r = getResolved(3, 0, id, 275f, defY, 435f, defY + 34f)
-            val isCustom = (r.left != 275f || r.top != defY || r.right != 435f || r.bottom != defY + 34f)
+            val def = techRightDefs[i]
+            val r = getResolved(3, 0, id, def.left, def.top, def.right, def.bottom)
+            val isCustom = (r.left != def.left || r.top != def.top || r.right != def.right || r.bottom != def.bottom)
             val tag = if (isCustom) "/* CUSTOM */" else ""
             sb.append("    { $id, { ${r.left}f, ${r.top}f, ${r.right}f, ${r.bottom}f } }, $tag // [R$i: ${rLabels[i]}]\n")
         }
+        val techRet = getResolved(3, 0, -1, 13.085999f, 379.86667f, 140.59865f, 423.95557f)
+        sb.append("    { -1, { ${techRet.left}f, ${techRet.top}f, ${techRet.right}f, ${techRet.bottom}f } }, // [RETURN]\n")
 
         sb.append("\n// ==================== TECHNIQUES MOVE-LIST POPUP (Screen 3, SubState 1 Right) ====================\n")
-        val tabL1 = getResolved(3, 1, -2, 235f, 50f, 305f, 85f)
-        val tabR1 = getResolved(3, 1, -3, 365f, 50f, 435f, 85f)
+        val tabL1 = getResolved(3, 1, -2, 209.50253f, 47.56296f, 266.18042f, 81.888885f)
+        val tabR1 = getResolved(3, 1, -3, 387.63070f, 44.71111f, 452.09950f, 83.807400f)
         sb.append("    { -2, { ${tabL1.left}f, ${tabL1.top}f, ${tabL1.right}f, ${tabL1.bottom}f } }, // [L1] TAB L\n")
         sb.append("    { -3, { ${tabR1.left}f, ${tabR1.top}f, ${tabR1.right}f, ${tabR1.bottom}f } }, // [R1] TAB R\n")
+        val techListRightDefs = arrayOf(
+            RectF(219.99155f, 110.59999f, 420.49744f, 141.83702f),
+            RectF(219.38449f, 143.45555f, 421.13828f, 175.93703f),
+            RectF(218.94604f, 175.58519f, 422.48737f, 206.71852f),
+            RectF(220.19391f, 209.73703f, 421.10452f, 242.06296f),
+            RectF(220.12650f, 242.02222f, 421.91403f, 274.55557f),
+            RectF(217.93423f, 276.74445f, 421.27320f, 306.06296f),
+            RectF(217.49576f, 311.25928f, 423.19556f, 339.22964f),
+            RectF(218.47388f, 345.33334f, 423.93762f, 375.22223f)
+        )
         for (row in 0 until 8) {
-            val defY = 98f + row * 28.5f
-            val r = getResolved(3, 1, row, 235f, defY, 435f, defY + 26f)
-            val isCustom = (r.left != 235f || r.top != defY || r.right != 435f || r.bottom != defY + 26f)
+            val def = techListRightDefs[row]
+            val r = getResolved(3, 1, row, def.left, def.top, def.right, def.bottom)
+            val isCustom = (r.left != def.left || r.top != def.top || r.right != def.right || r.bottom != def.bottom)
             val tag = if (isCustom) "/* CUSTOM */" else ""
             sb.append("    { $row, { ${r.left}f, ${r.top}f, ${r.right}f, ${r.bottom}f } }, $tag // [ROW $row]\n")
         }
 
         sb.append("\n// ==================== TECHNIQUES MOVE-LIST POPUP (Screen 3, SubState 2 Left) ====================\n")
-        val tabL2 = getResolved(3, 2, -2, 18f, 50f, 90f, 85f)
-        val tabR2 = getResolved(3, 2, -3, 240f, 50f, 315f, 85f)
+        val tabL2 = getResolved(3, 2, -2, 8.927486f, 46.68148f, 51.88870f, 84.94812f)
+        val tabR2 = getResolved(3, 2, -3, 188.76897f, 45.95555f, 239.72176f, 85.15554f)
         sb.append("    { -2, { ${tabL2.left}f, ${tabL2.top}f, ${tabL2.right}f, ${tabL2.bottom}f } }, // [L1] TAB L\n")
         sb.append("    { -3, { ${tabR2.left}f, ${tabR2.top}f, ${tabR2.right}f, ${tabR2.bottom}f } }, // [R1] TAB R\n")
+        val techListLeftDefs = arrayOf(
+            RectF(14.190567f, 109.21482f, 216.39967f, 142.43703f),
+            RectF(12.435059f, 145.01111f, 217.99326f, 176.50742f),
+            RectF(12.165283f, 175.94815f, 217.04893f, 210.60740f),
+            RectF(11.861725f, 211.13704f, 218.09444f, 241.95926f),
+            RectF(11.254639f, 243.05928f, 216.40811f, 276.16296f),
+            RectF(11.220917f, 277.36667f, 218.36426f, 307.87778f),
+            RectF(12.502518f, 309.08148f, 216.94770f, 342.28888f),
+            RectF(13.514328f, 343.18146f, 220.55652f, 374.78146f)
+        )
         for (row in 0 until 8) {
-            val defY = 98f + row * 28.5f
-            val defX0 = if (row == 0) 35f else 18f
-            val defX1 = if (row == 0) 245f else 330f
-            val defH  = if (row == 0) 140f else (defY + 26f)
-            val defTop = if (row == 0) 106f else defY
-            val r = getResolved(3, 2, row, defX0, defTop, defX1, defH)
-            val isCustom = (r.left != defX0 || r.top != defTop || r.right != defX1 || r.bottom != defH)
+            val def = techListLeftDefs[row]
+            val r = getResolved(3, 2, row, def.left, def.top, def.right, def.bottom)
+            val isCustom = (r.left != def.left || r.top != def.top || r.right != def.right || r.bottom != def.bottom)
             val tag = if (isCustom) "/* CUSTOM */" else ""
             sb.append("    { $row, { ${r.left}f, ${r.top}f, ${r.right}f, ${r.bottom}f } }, $tag // [ROW $row]\n")
         }
 
         // 4. Roulette (Screen 4)
         sb.append("\n// ==================== ROULETTE SLOTS (Screen 4, SubState 0) ====================\n")
-        for (i in 0 until 5) {
-            val defY = 95f + i * 48f
-            val r = getResolved(4, 0, i, 25f, defY, 235f, defY + 44f)
-            val isCustom = (r.left != 25f || r.top != defY || r.right != 235f || r.bottom != defY + 44f)
+        val roulSlotDefs = arrayOf(
+            RectF(18.490723f, 105.21481f, 219.89040f, 153.25926f),
+            RectF(18.760544f, 156.68889f, 217.93423f, 199.49629f),
+            RectF(19.603714f, 203.28890f, 217.05736f, 246.45926f),
+            RectF(20.143326f, 248.22964f, 220.69983f, 293.05930f),
+            RectF(20.075882f, 296.28146f, 219.89038f, 343.80737f),
+            RectF(219.40134f, 107.34074f, 420.36252f, 151.49628f),
+            RectF(222.03204f, 154.87408f, 418.10284f, 199.02965f),
+            RectF(219.56998f, 200.43704f, 419.41820f, 247.13335f),
+            RectF(219.23270f, 248.95557f, 418.17032f, 295.02966f),
+            RectF(219.87354f, 295.50370f, 418.98135f, 343.49628f)
+        )
+        for (i in 0 until 10) {
+            val def = roulSlotDefs[i]
+            val r = getResolved(4, 0, i, def.left, def.top, def.right, def.bottom)
+            val isCustom = (r.left != def.left || r.top != def.top || r.right != def.right || r.bottom != def.bottom)
             val tag = if (isCustom) "/* CUSTOM */" else ""
-            sb.append("    { $i, { ${r.left}f, ${r.top}f, ${r.right}f, ${r.bottom}f } }, $tag // [SLOT $i Left]\n")
+            val side = if (i < 5) "Left" else "Right"
+            sb.append("    { $i, { ${r.left}f, ${r.top}f, ${r.right}f, ${r.bottom}f } }, $tag // [SLOT $i $side]\n")
         }
-        for (i in 5 until 10) {
-            val defY = 95f + (i - 5) * 48f
-            val r = getResolved(4, 0, i, 245f, defY, 455f, defY + 44f)
-            val isCustom = (r.left != 245f || r.top != defY || r.right != 455f || r.bottom != defY + 44f)
-            val tag = if (isCustom) "/* CUSTOM */" else ""
-            sb.append("    { $i, { ${r.left}f, ${r.top}f, ${r.right}f, ${r.bottom}f } }, $tag // [SLOT $i Right]\n")
-        }
-        val roulRet = getResolved(4, 0, -1, 20f, 385f, 215f, 435f)
+        val roulRet = getResolved(4, 0, -1, 13.085999f, 379.86667f, 140.59865f, 423.95557f)
         sb.append("    { -1, { ${roulRet.left}f, ${roulRet.top}f, ${roulRet.right}f, ${roulRet.bottom}f } }, // [RETURN]\n")
 
         sb.append("// Roulette Move-List (SubState 1)\n")
+        val roulListDefs = arrayOf(
+            RectF(430.07587f, 106.20740f, 612.34400f, 141.50371f),
+            RectF(427.88367f, 146.22963f, 612.17540f, 182.71852f),
+            RectF(428.28836f, 188.48148f, 612.81616f, 223.31111f),
+            RectF(428.05228f, 229.74654f, 610.99493f, 262.76135f),
+            RectF(428.18720f, 270.18518f, 608.97130f, 302.52590f),
+            RectF(427.04047f, 310.05185f, 610.96120f, 342.96295f)
+        )
         for (r in 0 until 6) {
-            val defY = 85f + r * 38f
-            val res = getResolved(4, 1, r, 275f, defY, 500f, defY + 34f)
-            val isCustom = (res.left != 275f || res.top != defY || res.right != 500f || res.bottom != defY + 34f)
+            val def = roulListDefs[r]
+            val res = getResolved(4, 1, r, def.left, def.top, def.right, def.bottom)
+            val isCustom = (res.left != def.left || res.top != def.top || res.right != def.right || res.bottom != def.bottom)
             val tag = if (isCustom) "/* CUSTOM */" else ""
             sb.append("    { $r, { ${res.left}f, ${res.top}f, ${res.right}f, ${res.bottom}f } }, $tag // [ROULETTE $r]\n")
         }
@@ -2091,8 +2254,9 @@ class TouchControllerOverlay(context: Context) : View(context) {
             val tag = if (isCustom) "/* CUSTOM */" else ""
             sb.append("    { $r, { ${res.left}f, ${res.top}f, ${res.right}f, ${res.bottom}f } }, $tag // [OPT $r: ${optLabels[r]}]\n")
         }
-        val optYes = getResolved(5, 0, 10, 370f, 395f, 450f, 435f)
-        val optNo = getResolved(5, 0, 11, 480f, 395f, 560f, 435f)
+        sb.append("// SubState 1: Conditional Confirmation Dialog (YES/NO)\n")
+        val optYes = getResolved(5, 1, 10, 47f, 397f, 111f, 439f)
+        val optNo = getResolved(5, 1, 11, 154f, 397f, 211f, 441f)
         sb.append("    { 10, { ${optYes.left}f, ${optYes.top}f, ${optYes.right}f, ${optYes.bottom}f } }, // [YES]\n")
         sb.append("    { 11, { ${optNo.left}f, ${optNo.top}f, ${optNo.right}f, ${optNo.bottom}f } }, // [NO]\n")
 
@@ -2110,8 +2274,9 @@ class TouchControllerOverlay(context: Context) : View(context) {
             val tag = if (isCustom) "/* CUSTOM */" else ""
             sb.append("    { $s, { ${res.left}f, ${res.top}f, ${res.right}f, ${res.bottom}f } }, $tag // [SLOT ${s + 1}]\n")
         }
-        val saveYes = getResolved(7, 0, 10, 370f, 395f, 450f, 435f)
-        val saveNo = getResolved(7, 0, 11, 480f, 395f, 560f, 435f)
+        sb.append("// SubState 1: Conditional Confirmation Dialog (YES/NO)\n")
+        val saveYes = getResolved(7, 1, 10, 340f, 385f, 460f, 445f)
+        val saveNo = getResolved(7, 1, 11, 460f, 385f, 580f, 445f)
         sb.append("    { 10, { ${saveYes.left}f, ${saveYes.top}f, ${saveYes.right}f, ${saveYes.bottom}f } }, // [YES]\n")
         sb.append("    { 11, { ${saveNo.left}f, ${saveNo.top}f, ${saveNo.right}f, ${saveNo.bottom}f } }, // [NO]\n")
 
@@ -2184,7 +2349,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 val tbX = 10f * density
                 val tbY = 6f * density
                 val hudX = w - lastHudW - 10f * density
-                val editBtnW = menuDebugHudTextPaint.measureText("✓ DONE") + 16f * density
+                val editBtnW = editBtnWDone
                 val editBtnX = hudX - editBtnW - 6f * density
                 val tbW = editBtnX - 16f * density
                 val tbH = 22f * density
@@ -2235,11 +2400,14 @@ class TouchControllerOverlay(context: Context) : View(context) {
                             return true
                         }
                         if (x in resetBtnX..(resetBtnX + resetBtnW)) {
-                            activeOverrides.remove(Triple(selectedScreenId, selectedSubState, selBox.id))
+                            removeOverride(selectedScreenId, selectedSubState, selBox.id)
                             repo.removeHitboxOverride(selectedScreenId, selectedSubState, selBox.id)
                             NativeBridge.clearHitboxOverrides()
-                            for ((triple, rect) in activeOverrides) {
-                                NativeBridge.setHitboxOverride(triple.first, triple.second, triple.third, rect.left, rect.top, rect.right, rect.bottom)
+                            for (entry in activeOverrides) {
+                                NativeBridge.setHitboxOverride(
+                                    entry.screenId, entry.subState, entry.buttonId,
+                                    entry.rect.left, entry.rect.top, entry.rect.right, entry.rect.bottom
+                                )
                             }
                             Toast.makeText(context, "Reset to default!", Toast.LENGTH_SHORT).show()
                             invalidate()
@@ -2360,7 +2528,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                         else -> {}
                     }
 
-                    activeOverrides[Triple(selectedScreenId, selectedSubState, selBox.id)] = RectF(nX0, nY0, nX1, nY1)
+                    setOverride(selectedScreenId, selectedSubState, selBox.id, nX0, nY0, nX1, nY1)
                     NativeBridge.setHitboxOverride(selectedScreenId, selectedSubState, selBox.id, nX0, nY0, nX1, nY1)
                     invalidate()
                     return true
@@ -2372,7 +2540,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     cropDragPointerId = -1
                     activeCropHandle = null
                     if (selBox != null) {
-                        val cur = activeOverrides[Triple(selectedScreenId, selectedSubState, selBox.id)]
+                        val cur = findOverride(selectedScreenId, selectedSubState, selBox.id)
                         if (cur != null) {
                             repo.saveHitboxOverride(selectedScreenId, selectedSubState, selBox.id, cur.left, cur.top, cur.right, cur.bottom)
                         }
