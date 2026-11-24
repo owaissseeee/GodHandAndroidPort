@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.DashPathEffect
 import android.graphics.Paint
+import android.graphics.Path
 import android.graphics.PointF
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
@@ -532,10 +533,21 @@ class TouchControllerOverlay(context: Context) : View(context) {
     }
     private val backCrossPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
-        strokeWidth = 2.5f * density
+        strokeWidth = 3.5f * density
         strokeCap = Paint.Cap.ROUND
+        strokeJoin = Paint.Join.ROUND
         color = 0xFFF8FAFC.toInt()
     }
+    private val backHeadPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL_AND_STROKE
+        strokeWidth = 1.6f * density
+        strokeCap = Paint.Cap.ROUND
+        strokeJoin = Paint.Join.ROUND
+        color = 0xFFF8FAFC.toInt()
+    }
+    private val backStemPath = Path()
+    private val backHeadPath = Path()
+    private val backArcRect = RectF()
 
     private fun drawCircularBackButton(canvas: Canvas, w: Float, h: Float) {
         NativeBridge.getMenuDebugInfo(menuDebugInfoArray)
@@ -551,9 +563,28 @@ class TouchControllerOverlay(context: Context) : View(context) {
         canvas.drawCircle(cx, cy, radius, backCirclePaint)
         canvas.drawCircle(cx, cy, radius, backBorderPaint)
 
-        val arm = radius * 0.40f
-        canvas.drawLine(cx - arm, cy - arm, cx + arm, cy + arm, backCrossPaint)
-        canvas.drawLine(cx + arm, cy - arm, cx - arm, cy + arm, backCrossPaint)
+        // Rounded U-turn left-pointing return arrow icon
+        val uTopY = cy - radius * 0.30f
+        val uBotY = cy + radius * 0.20f
+        val arcR = (uBotY - uTopY) * 0.5f
+        val arcCx = cx + radius * 0.18f
+        val headBaseX = cx - radius * 0.16f
+        val tipX = cx - radius * 0.48f
+
+        backArcRect.set(arcCx - arcR, uTopY, arcCx + arcR, uBotY)
+        backStemPath.reset()
+        backStemPath.moveTo(cx - radius * 0.08f, uTopY)
+        backStemPath.lineTo(arcCx, uTopY)
+        backStemPath.arcTo(backArcRect, -90f, 180f, false)
+        backStemPath.lineTo(headBaseX, uBotY)
+        canvas.drawPath(backStemPath, backCrossPaint)
+
+        backHeadPath.reset()
+        backHeadPath.moveTo(tipX, uBotY)
+        backHeadPath.lineTo(headBaseX, uBotY - radius * 0.23f)
+        backHeadPath.lineTo(headBaseX, uBotY + radius * 0.23f)
+        backHeadPath.close()
+        canvas.drawPath(backHeadPath, backHeadPaint)
     }
 
     init {
@@ -1615,12 +1646,9 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     boxes.add(DebugBox(11, "[NO]",  460f, 385f, 580f, 445f))
                     boxes.add(DebugBox(99, "[START]", 60f, 160f, 580f, 380f))
                 } else if (subState == 4) {
-                    boxes.add(DebugBox(2, "[2] OPTIONS", 20f, 360f, 210f, 420f))
-                    boxes.add(DebugBox(0, "[0] NEW GAME", 220f, 360f, 420f, 420f))
-                    boxes.add(DebugBox(1, "[1] LOAD GAME", 430f, 360f, 620f, 420f))
-                    boxes.add(DebugBox(-10, "◀", 15f, 220f, 95f, 300f))
-                    boxes.add(DebugBox(-11, "▶", 545f, 220f, 625f, 300f))
-                    boxes.add(DebugBox(-100, "[CONFIRM]", 220f, 250f, 420f, 350f))
+                    boxes.add(DebugBox(-10, "[LEFT]",  20f, 360f, 210f, 420f))
+                    boxes.add(DebugBox( 99, "[START]", 220f, 360f, 420f, 420f))
+                    boxes.add(DebugBox(-11, "[RIGHT]", 430f, 360f, 620f, 420f))
                 } else if (subState == 5) {
                     boxes.add(DebugBox(0, "[0] EASY", 40f, 360f, 200f, 420f))
                     boxes.add(DebugBox(1, "[1] NORMAL", 220f, 360f, 420f, 420f))
@@ -1917,14 +1945,11 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
         // 1. Title Screen
         sb.append("// ==================== TITLE SCREEN (Screen 1) ====================\n")
-        sb.append("// SubState 4: Main Menu (NEW GAME, LOAD GAME, OPTIONS)\n")
+        sb.append("// SubState 4: Main Menu (LEFT D-PAD, START, RIGHT D-PAD)\n")
         val titleBoxes = listOf(
-            Triple(0, "[0] NEW GAME", RectF(220f, 360f, 420f, 420f)),
-            Triple(1, "[1] LOAD GAME", RectF(430f, 360f, 620f, 420f)),
-            Triple(2, "[2] OPTIONS", RectF(20f, 360f, 210f, 420f)),
-            Triple(-10, "◀ PREV", RectF(15f, 220f, 95f, 300f)),
-            Triple(-11, "▶ NEXT", RectF(545f, 220f, 625f, 300f)),
-            Triple(-100, "[CONFIRM]", RectF(220f, 250f, 420f, 350f))
+            Triple(-10, "[LEFT]",  RectF(20f, 360f, 210f, 420f)),
+            Triple( 99, "[START]", RectF(220f, 360f, 420f, 420f)),
+            Triple(-11, "[RIGHT]", RectF(430f, 360f, 620f, 420f))
         )
         for ((id, lbl, def) in titleBoxes) {
             val r = getResolved(1, 4, id, def.left, def.top, def.right, def.bottom)

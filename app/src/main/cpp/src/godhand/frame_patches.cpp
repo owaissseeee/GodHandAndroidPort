@@ -1413,6 +1413,15 @@ namespace kamite
                 std::memcpy(&dspFlags, rdram + (dspAddr & (PS2_RAM_SIZE - 1u)), sizeof(dspFlags));
                 dspFlags |= game::Dsp::kFilter;
                 std::memcpy(rdram + (dspAddr & (PS2_RAM_SIZE - 1u)), &dspFlags, sizeof(dspFlags));
+
+                // Permanently unlock Hard Mode (GameWork::kSaveFlags bit 0x00200000u)
+                uint32_t saveFlags = 0;
+                const uint32_t saveFlagsAddr = game::GameWork::address(game::GameWork::kSaveFlags);
+                std::memcpy(&saveFlags, rdram + (saveFlagsAddr & (PS2_RAM_SIZE - 1u)), sizeof(saveFlags));
+                if ((saveFlags & 0x00200000u) == 0u) {
+                    saveFlags |= 0x00200000u;
+                    std::memcpy(rdram + (saveFlagsAddr & (PS2_RAM_SIZE - 1u)), &saveFlags, sizeof(saveFlags));
+                }
             }
 
             ++g_gameFrame;

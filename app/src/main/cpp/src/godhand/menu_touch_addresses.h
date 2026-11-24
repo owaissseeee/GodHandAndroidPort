@@ -184,9 +184,10 @@ constexpr uint32_t kOptionsStateOffset        = 0x5Au;
 // Reset Game Yes/No choice in cSubScrOption: uint8_t at +0x131 (0 = YES, 1 = NO)
 constexpr uint32_t kOptionsResetChoiceOffset  = 0x131u;
 
-// E. Stage Clear Map Screen (kind=3, init=func_00168560, update=func_00168AB8 / func_0016AE38):
-// Verified in func_00168560:571, func_00168AB8:1132, func_0016AE38:211: 0x1B4($s0)
-constexpr uint32_t kStageMapCursorOffset    = 0x1B4u;
+// E. Stage Clear Map Screen (cSubScrMap, kind=3, init=func_001627D8, move=func_00163840, ctrl=func_00164140):
+// Cursor index is int16_t at +0x130 (0=Save, 1=Continue, 2=Enter Shop, 3=Enter Casino)
+// Verified in func_001627D8:813, func_00163840:474, func_00164238:253, func_001643F8:228: lh/sh 0x130($s0)
+constexpr uint32_t kStageMapCursorOffset    = 0x130u;
 // Save-hidden / pause-map flag inside cSubScr: uint8_t at +0xEDD (0 = 4 options with Save, 1 = Save hidden)
 constexpr uint32_t kSubScrMapNoSaveOffset   = 0x0EDDu;
 
@@ -218,7 +219,7 @@ constexpr uint32_t kMcSaveBaseAddr            = 0x007D1800u; // cMcSave (saveMen
 constexpr uint32_t kMcLoadModeInitOffset      = 0x100u;
 constexpr uint32_t kMcSaveModeInitOffset      = 0x118u;
 // Inside cMc (cMcLoad / cMcSave):
-constexpr uint32_t kMcChoiceOffset            = 0x0Cu; // uint8_t: 0 = YES, 1 = NO
+constexpr uint32_t kMcChoiceOffset            = 0x0Cu; // uint8_t: 1 = YES, 0 = NO (readChoise/overWriteChoise)
 constexpr uint32_t kMcSlotBaseOffset          = 0xD4u; // int32_t: slot scroll base (0..19)
 constexpr uint32_t kMcSlotRowOffset           = 0xD8u; // int32_t: highlighted visible row (0..2)
 constexpr uint32_t kMcSubStepOffset           = 0xF4u; // int32_t: subStep
@@ -284,12 +285,12 @@ struct MenuButtonHitbox {
 // Common on-screen Back / Cancel button touch target (bottom-right prompt)
 constexpr Rect2D kCommonBackHitbox = { 490.0f, 395.0f, 635.0f, 445.0f };
 
-// Title Screen (640x448 space, bottom horizontal options):
-// New Game (0), Load Game (1), Options (2)
+// Title Screen Main Menu (640x448 space, bottom horizontal controls):
+// Left D-Pad (-10), Start (99), Right D-Pad (-11)
 constexpr MenuButtonHitbox kTitleCarouselHitboxes[] = {
-    { 0, { 220.0f, 360.0f, 420.0f, 420.0f } }, // NEW GAME (center)
-    { 1, { 430.0f, 360.0f, 620.0f, 420.0f } }, // LOAD GAME (right)
-    { 2, { 20.0f,  360.0f, 210.0f, 420.0f } }, // OPTIONS (left)
+    { 99,  { 220.0f, 360.0f, 420.0f, 420.0f } }, // START (center)
+    { -11, { 430.0f, 360.0f, 620.0f, 420.0f } }, // RIGHT D-PAD (right)
+    { -10, { 20.0f,  360.0f, 210.0f, 420.0f } }, // LEFT D-PAD (left)
 };
 
 // Title Screen Carousel Navigation Arrows & Confirm area:
