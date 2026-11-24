@@ -497,9 +497,7 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         }
 
         if (touchOverlay.isMenuTouchActive) {
-            if (!NativeBridge.onMenuBackPressed()) {
-                showQuitConfirmationDialog()
-            }
+            NativeBridge.onMenuBackPressed()
             return
         }
 

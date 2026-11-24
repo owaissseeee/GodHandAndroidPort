@@ -100,6 +100,9 @@ class TouchControllerOverlay(context: Context) : View(context) {
         set(value) { field = value; invalidate() }
     val menuTouchHandler = MenuTouchHandler(context)
     private var menuExitTimestamp = 0L
+    private var requireFreshTouchAfterMenu = false
+    private var titleLeftNavPointerId = -1
+    private var titleRightNavPointerId = -1
     var isMenuTouchActive: Boolean = false
         set(value) {
             if (field != value) {
@@ -108,6 +111,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 if (!value) {
                     menuTouchHandler.stopFling()
                     menuExitTimestamp = android.os.SystemClock.uptimeMillis()
+                    requireFreshTouchAfterMenu = true
                 }
                 postInvalidate()
             }
@@ -138,6 +142,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
         rightCurrY = 0f
         swipePointerId = -1
         backButtonPointerId = -1
+        titleLeftNavPointerId = -1
+        titleRightNavPointerId = -1
         NativeBridge.updatePadState(0, 0f, 0f, 0f, 0f)
     }
     var leftStickSticky: Boolean = true
@@ -532,6 +538,10 @@ class TouchControllerOverlay(context: Context) : View(context) {
     }
 
     private fun drawCircularBackButton(canvas: Canvas, w: Float, h: Float) {
+        NativeBridge.getMenuDebugInfo(menuDebugInfoArray)
+        val screenId = menuDebugInfoArray[0]
+        if (screenId == 2) return // User requirement: REMOVE circular back button from PAUSE ROOT (screen 2)
+
         val radius = 22f * density
         val cx = w - 38f * density
         val cy = h - 36f * density
@@ -994,36 +1004,40 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 return handleHitboxEditTouch(event, w, h)
             }
 
-            // 4. Circular Back Button at bottom-right
-            val backRadius = 22f * density
-            val backCx = w - 38f * density
-            val backCy = h - 36f * density
-            val distBack = hypot(x - backCx, y - backCy)
+            // 4. Circular Back Button at bottom-right (except Screen 2: PAUSE ROOT)
+            NativeBridge.getMenuDebugInfo(menuDebugInfoArray)
+            val screenId = menuDebugInfoArray[0]
+            if (screenId != 2) {
+                val backRadius = 22f * density
+                val backCx = w - 38f * density
+                val backCy = h - 36f * density
+                val distBack = hypot(x - backCx, y - backCy)
 
-            if (backButtonPointerId == pid) {
-                if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP) {
-                    backButtonPointerId = -1
-                    hapticTick()
-                    invalidate()
-                    onBackTriggered?.invoke()
-                    return true
+                if (backButtonPointerId == pid) {
+                    if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP) {
+                        backButtonPointerId = -1
+                        hapticTick()
+                        invalidate()
+                        onBackTriggered?.invoke()
+                        return true
+                    }
+                    if (action == MotionEvent.ACTION_CANCEL) {
+                        backButtonPointerId = -1
+                        invalidate()
+                        return true
+                    }
+                    if (action == MotionEvent.ACTION_MOVE) {
+                        return true
+                    }
                 }
-                if (action == MotionEvent.ACTION_CANCEL) {
-                    backButtonPointerId = -1
-                    invalidate()
-                    return true
-                }
-                if (action == MotionEvent.ACTION_MOVE) {
-                    return true
-                }
-            }
 
-            if (distBack <= backRadius * 1.5f) {
-                if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN) {
-                    backButtonPointerId = pid
-                    hapticTick()
-                    invalidate()
-                    return true
+                if (distBack <= backRadius * 1.5f) {
+                    if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN) {
+                        backButtonPointerId = pid
+                        hapticTick()
+                        invalidate()
+                        return true
+                    }
                 }
             }
 
@@ -1588,10 +1602,18 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
         when (screenId) {
             1 -> { // TITLE
-                if (subState <= 3) {
+                if (subState <= 2) {
                     boxes.add(DebugBox(99, "[START]", 60f, 160f, 580f, 380f))
                     boxes.add(DebugBox(-10, "◀", 15f, 220f, 95f, 300f))
                     boxes.add(DebugBox(-11, "▶", 545f, 220f, 625f, 300f))
+                } else if (subState == 3) {
+                    // Title Memory Card Load / Checking Screen (Custom Exported Bounds)
+                    boxes.add(DebugBox(0, "[SLOT 1]", 36.583496f,  97.511116f, 600.58350f, 162.51111f))
+                    boxes.add(DebugBox(1, "[SLOT 2]", 38.741974f, 176.429630f, 602.74194f, 241.42963f))
+                    boxes.add(DebugBox(2, "[SLOT 3]", 39.315340f, 257.162960f, 603.31530f, 322.16296f))
+                    boxes.add(DebugBox(10, "[YES]", 340f, 385f, 460f, 445f))
+                    boxes.add(DebugBox(11, "[NO]",  460f, 385f, 580f, 445f))
+                    boxes.add(DebugBox(99, "[START]", 60f, 160f, 580f, 380f))
                 } else if (subState == 4) {
                     boxes.add(DebugBox(2, "[2] OPTIONS", 20f, 360f, 210f, 420f))
                     boxes.add(DebugBox(0, "[0] NEW GAME", 220f, 360f, 420f, 420f))
@@ -1604,11 +1626,27 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     boxes.add(DebugBox(1, "[1] NORMAL", 220f, 360f, 420f, 420f))
                     boxes.add(DebugBox(2, "[2] HARD", 440f, 360f, 600f, 420f))
                 } else if (subState == 6) {
-                    val titleOptLabels = arrayOf("GAME SETTING", "SOUND", "CAMERA", "PAD", "RESTORE DEFAULTS", "EXIT")
-                    for (i in titleOptLabels.indices) {
-                        val y0 = 120f + i * 40f
-                        boxes.add(DebugBox(i, "[$i] ${titleOptLabels[i]}", 140f, y0, 500f, y0 + 35f))
+                    // Title Options has the EXACT same 8 rows as in-game Options (Screen 5)
+                    val optBounds = arrayOf(
+                        RectF(41.214172f, 90.488884f, 601.21420f, 120.488884f),
+                        RectF(39.460390f, 123.399994f, 599.46040f, 153.400000f),
+                        RectF(40.101196f, 158.800000f, 600.10120f, 188.800000f),
+                        RectF(39.797638f, 193.214810f, 599.79760f, 223.214810f),
+                        RectF(39.123108f, 227.474080f, 599.12310f, 257.474060f),
+                        RectF(39.359190f, 261.162960f, 599.35920f, 291.162960f),
+                        RectF(40.033722f, 295.422240f, 600.03370f, 325.422240f),
+                        RectF(39.325470f, 331.600000f, 599.32544f, 361.600000f)
+                    )
+                    val optLabels = arrayOf(
+                        "CONTROLS", "LIFE GAUGE", "SOUND", "VIBRATION",
+                        "LOAD GAME", "RESET GAME", "RESTORE DEFAULTS", "EXIT"
+                    )
+                    for (r in 0 until 8) {
+                        val b = optBounds[r]
+                        boxes.add(DebugBox(r, "[OPT $r: ${optLabels[r]}]", b.left, b.top, b.right, b.bottom))
                     }
+                    boxes.add(DebugBox(10, "[YES]", 340f, 385f, 460f, 445f))
+                    boxes.add(DebugBox(11, "[NO]", 460f, 385f, 580f, 445f))
                 }
             }
             2 -> { // PAUSE ROOT (Custom Exported Bounds)
@@ -1618,55 +1656,71 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 boxes.add(DebugBox(3, "[3] OPTIONS",    15.851593f, 181.00000f, 200.99496f, 231.259260f))
                 boxes.add(DebugBox(4, "[4] EXIT",       18.043839f, 232.14073f, 201.26477f, 282.814820f))
             }
-            3 -> { // TECHNIQUES
+            3 -> { // TECHNIQUES (Custom Exported Bounds)
                 if (subState == 0) {
-                    // Left Column (Combo Slots 0..5)
-                    for (i in 0 until 6) {
-                        val y0 = 106f + i * 42f
-                        boxes.add(DebugBox(i, "[L$i]", 35f, y0, 245f, y0 + 34f))
-                    }
-                    // Right Column (Individual Button Slots 0..4)
-                    val rLabels = arrayOf("△", "✕", "↓+□", "↓+△", "↓+✕")
-                    for (i in 0 until 5) {
-                        val y0 = 148f + i * 42f
-                        boxes.add(DebugBox(10 + i, "[R$i: ${rLabels[i]}]", 275f, y0, 435f, y0 + 34f))
-                    }
+                    // Left Column (Combo Slots L0..L5)
+                    boxes.add(DebugBox(0, "[L0]", 8.119743f, 118.91112f, 218.11975f, 152.91112f))
+                    boxes.add(DebugBox(1, "[L1]", 8.996628f, 158.94075f, 218.99663f, 192.94075f))
+                    boxes.add(DebugBox(2, "[L2]", 7.883644f, 200.73332f, 217.88364f, 234.21481f))
+                    boxes.add(DebugBox(3, "[L3]", 8.794262f, 240.39998f, 218.79427f, 269.94073f))
+                    boxes.add(DebugBox(4, "[L4]", 8.625633f, 274.31110f, 218.62564f, 306.80740f))
+                    boxes.add(DebugBox(5, "[L5]", 8.794281f, 312.57780f, 218.79428f, 341.60000f))
+
+                    // Right Column (Individual Button Slots R0..R4 starting aligned at Y=118f)
+                    boxes.add(DebugBox(10, "[R0: △]",   258.63140f, 118.59999f, 446.08505f, 153.53333f))
+                    boxes.add(DebugBox(11, "[R1: ✕]",   257.76562f, 157.54074f, 445.42160f, 191.74817f))
+                    boxes.add(DebugBox(12, "[R2: ↓+□]", 258.64252f, 199.15184f, 445.48904f, 234.24074f))
+                    boxes.add(DebugBox(13, "[R3: ↓+△]", 257.79930f, 238.48146f, 445.01685f, 274.45184f))
+                    boxes.add(DebugBox(14, "[R4: ↓+✕]", 259.08093f, 279.44446f, 444.44350f, 314.58520f))
                 } else if (subState == 1) {
                     // Move List Popup on RIGHT (editing Left combo slots)
-                    boxes.add(DebugBox(-2, "[L1] TAB L", 235f, 50f, 305f, 85f))
-                    boxes.add(DebugBox(-3, "[R1] TAB R", 365f, 50f, 435f, 85f))
-                    for (r in 0 until 8) {
-                        val y0 = 98f + r * 28.5f
-                        boxes.add(DebugBox(r, "[ROW $r]", 235f, y0, 435f, y0 + 26f))
-                    }
+                    boxes.add(DebugBox(-2, "[L1] TAB L", 209.50253f, 47.56296f, 266.18042f, 81.888885f))
+                    boxes.add(DebugBox(-3, "[R1] TAB R", 387.63070f, 44.71111f, 452.09950f, 83.807400f))
+                    boxes.add(DebugBox(0, "[ROW 0]", 219.99155f, 110.59999f, 420.49744f, 141.83702f))
+                    boxes.add(DebugBox(1, "[ROW 1]", 219.38449f, 143.45555f, 421.13828f, 175.93703f))
+                    boxes.add(DebugBox(2, "[ROW 2]", 218.94604f, 175.58519f, 422.48737f, 206.71852f))
+                    boxes.add(DebugBox(3, "[ROW 3]", 220.19391f, 209.73703f, 421.10452f, 242.06296f))
+                    boxes.add(DebugBox(4, "[ROW 4]", 220.12650f, 242.02222f, 421.91403f, 274.55557f))
+                    boxes.add(DebugBox(5, "[ROW 5]", 217.93423f, 276.74445f, 421.27320f, 306.06296f))
+                    boxes.add(DebugBox(6, "[ROW 6]", 217.49576f, 311.25928f, 423.19556f, 339.22964f))
+                    boxes.add(DebugBox(7, "[ROW 7]", 218.47388f, 345.33334f, 423.93762f, 375.22223f))
                 } else if (subState == 2) {
                     // Move List Popup on LEFT (editing Right button slots)
-                    boxes.add(DebugBox(-2, "[L1] TAB L", 18f, 50f, 90f, 85f))
-                    boxes.add(DebugBox(-3, "[R1] TAB R", 240f, 50f, 315f, 85f))
-                    for (r in 0 until 8) {
-                        val y0 = 98f + r * 28.5f
-                        val defRect = if (r == 0) RectF(35f, 106f, 245f, 140f) else RectF(18f, y0, 330f, y0 + 26f)
-                        boxes.add(DebugBox(r, "[ROW $r]", defRect.left, defRect.top, defRect.right, defRect.bottom))
-                    }
+                    boxes.add(DebugBox(-2, "[L1] TAB L", 8.927486f, 46.68148f, 51.88870f, 84.94812f))
+                    boxes.add(DebugBox(-3, "[R1] TAB R", 188.76897f, 45.95555f, 239.72176f, 85.15554f))
+                    boxes.add(DebugBox(0, "[ROW 0]", 14.190567f, 109.21482f, 216.39967f, 142.43703f))
+                    boxes.add(DebugBox(1, "[ROW 1]", 12.435059f, 145.01111f, 217.99326f, 176.50742f))
+                    boxes.add(DebugBox(2, "[ROW 2]", 12.165283f, 175.94815f, 217.04893f, 210.60740f))
+                    boxes.add(DebugBox(3, "[ROW 3]", 11.861725f, 211.13704f, 218.09444f, 241.95926f))
+                    boxes.add(DebugBox(4, "[ROW 4]", 11.254639f, 243.05928f, 216.40811f, 276.16296f))
+                    boxes.add(DebugBox(5, "[ROW 5]", 11.220917f, 277.36667f, 218.36426f, 307.87778f))
+                    boxes.add(DebugBox(6, "[ROW 6]", 12.502518f, 309.08148f, 216.94770f, 342.28888f))
+                    boxes.add(DebugBox(7, "[ROW 7]", 13.514328f, 343.18146f, 220.55652f, 374.78146f))
                 }
             }
-            4 -> { // ROULETTE
+            4 -> { // ROULETTE (Custom Exported Bounds)
                 if (subState == 0) {
                     // 10 equipped slots (5 left, 5 right) + RETURN button at bottom left
-                    for (i in 0 until 5) {
-                        val y0 = 95f + i * 48f
-                        boxes.add(DebugBox(i, "[SLOT $i]", 25f, y0, 235f, y0 + 44f))
-                    }
-                    for (i in 0 until 5) {
-                        val y0 = 95f + i * 48f
-                        boxes.add(DebugBox(5 + i, "[SLOT ${5+i}]", 245f, y0, 455f, y0 + 44f))
-                    }
-                    boxes.add(DebugBox(-1, "[RETURN]", 20f, 385f, 215f, 435f))
+                    boxes.add(DebugBox(0, "[SLOT 0]", 18.000000f, 105.00000f, 219.00000f, 153.00000f))
+                    boxes.add(DebugBox(1, "[SLOT 1]", 18.000000f, 156.00000f, 217.00000f, 199.00000f))
+                    boxes.add(DebugBox(2, "[SLOT 2]", 19.000000f, 203.00000f, 217.00000f, 246.00000f))
+                    boxes.add(DebugBox(3, "[SLOT 3]", 20.000000f, 248.00000f, 220.00000f, 293.00000f))
+                    boxes.add(DebugBox(4, "[SLOT 4]", 20.000000f, 296.00000f, 219.00000f, 343.00000f))
+
+                    boxes.add(DebugBox(5, "[SLOT 5]", 219.00000f, 107.00000f, 420.00000f, 151.00000f))
+                    boxes.add(DebugBox(6, "[SLOT 6]", 222.00000f, 154.00000f, 418.00000f, 199.00000f))
+                    boxes.add(DebugBox(7, "[SLOT 7]", 219.00000f, 200.00000f, 419.00000f, 247.00000f))
+                    boxes.add(DebugBox(8, "[SLOT 8]", 219.00000f, 248.00000f, 418.00000f, 295.00000f))
+                    boxes.add(DebugBox(9, "[SLOT 9]", 219.00000f, 295.00000f, 418.00000f, 343.00000f))
+
+                    boxes.add(DebugBox(-1, "[RETURN]", 13.085999f, 379.86667f, 140.59865f, 423.95557f))
                 } else if (subState == 1) {
-                    for (r in 0 until 6) {
-                        val y0 = 85f + r * 38f
-                        boxes.add(DebugBox(r, "[ROULETTE $r]", 275f, y0, 500f, y0 + 34f))
-                    }
+                    boxes.add(DebugBox(0, "[ROULETTE 0]", 430.07587f, 106.20740f, 612.34400f, 141.50371f))
+                    boxes.add(DebugBox(1, "[ROULETTE 1]", 427.88367f, 146.22963f, 612.17540f, 182.71852f))
+                    boxes.add(DebugBox(2, "[ROULETTE 2]", 428.28836f, 188.48148f, 612.81616f, 223.31111f))
+                    boxes.add(DebugBox(3, "[ROULETTE 3]", 428.05228f, 229.74654f, 610.99493f, 262.76135f))
+                    boxes.add(DebugBox(4, "[ROULETTE 4]", 428.18720f, 270.18518f, 608.97130f, 302.52590f))
+                    boxes.add(DebugBox(5, "[ROULETTE 5]", 427.04047f, 310.05185f, 610.96120f, 342.96295f))
                 }
             }
             5 -> { // OPTIONS (Exactly 8 rows, NO TABS - Custom Exported Bounds)
@@ -1688,17 +1742,33 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     val b = optBounds[r]
                     boxes.add(DebugBox(r, "[OPT $r: ${optLabels[r]}]", b.left, b.top, b.right, b.bottom))
                 }
-                boxes.add(DebugBox(10, "[YES]", 370f, 395f, 450f, 435f))
-                boxes.add(DebugBox(11, "[NO]", 480f, 395f, 560f, 435f))
+                boxes.add(DebugBox(10, "[YES]", 340f, 385f, 460f, 445f))
+                boxes.add(DebugBox(11, "[NO]", 460f, 385f, 580f, 445f))
             }
             7 -> { // SAVELOAD (Custom Exported Bounds)
                 boxes.add(DebugBox(0, "[SLOT 1]", 36.583496f,  97.511116f, 600.58350f, 162.51111f))
                 boxes.add(DebugBox(1, "[SLOT 2]", 38.741974f, 176.429630f, 602.74194f, 241.42963f))
                 boxes.add(DebugBox(2, "[SLOT 3]", 39.315340f, 257.162960f, 603.31530f, 322.16296f))
-                boxes.add(DebugBox(10, "[YES]", 370f, 395f, 450f, 435f))
-                boxes.add(DebugBox(11, "[NO]", 480f, 395f, 560f, 435f))
+                boxes.add(DebugBox(10, "[YES]", 340f, 385f, 460f, 445f))
+                boxes.add(DebugBox(11, "[NO]", 460f, 385f, 580f, 445f))
             }
-            8 -> { // SHOP - No direct touch overlay (virtual controls active)
+            8 -> { // SHOP (Custom Exported Bounds)
+                if (subState == 0) {
+                    // Category Selection in 3D Shop (BUY, SELL, LEAVE SHOP)
+                    boxes.add(DebugBox(0, "[0] BUY",        75.00000f, 210.000000f, 295.00000f, 275.00000f))
+                    boxes.add(DebugBox(1, "[1] SELL",       345.00000f, 210.000000f, 565.00000f, 275.00000f))
+                    boxes.add(DebugBox(2, "[2] LEAVE SHOP", 15.00000f, 295.000000f, 205.00000f, 350.00000f))
+                } else {
+                    // SubState 1: Buy/Sell Item List (6 rows + YES/NO dialog, calibrated by user)
+                    boxes.add(DebugBox(0, "[ITEM 0]", 20.000000f, 148.000000f, 395.00000f, 179.00000f))
+                    boxes.add(DebugBox(1, "[ITEM 1]", 20.000000f, 183.000000f, 395.00000f, 213.00000f))
+                    boxes.add(DebugBox(2, "[ITEM 2]", 20.000000f, 216.000000f, 395.00000f, 246.00000f))
+                    boxes.add(DebugBox(3, "[ITEM 3]", 20.000000f, 251.000000f, 395.00000f, 279.00000f))
+                    boxes.add(DebugBox(4, "[ITEM 4]", 20.000000f, 285.000000f, 395.00000f, 312.00000f))
+                    boxes.add(DebugBox(5, "[ITEM 5]", 20.000000f, 319.000000f, 395.00000f, 346.00000f))
+                    boxes.add(DebugBox(10, "[BUY YES]", 60.000000f, 396.000000f, 157.00000f, 433.00000f))
+                    boxes.add(DebugBox(11, "[BUY NO]",  212.00000f, 395.000000f, 291.00000f, 437.00000f))
+                }
             }
             9, 11 -> { // STAGE MAP & PAUSE MAP (Custom Exported Bounds)
                 boxes.add(DebugBox(0, "[0] SAVE",         432.35242f, 177.55557f, 604.92410f, 217.19261f))
@@ -1707,8 +1777,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 boxes.add(DebugBox(3, "[3] ENTER CASINO", 431.27320f, 312.03705f, 603.00165f, 348.77040f))
             }
             10 -> { // MODAL CONFIRMATION DIALOG
-                boxes.add(DebugBox(0, "[0] YES", 340f, 390f, 430f, 435f))
-                boxes.add(DebugBox(1, "[1] NO", 470f, 390f, 560f, 435f))
+                boxes.add(DebugBox(0, "[0] YES", 340f, 385f, 460f, 445f))
+                boxes.add(DebugBox(1, "[1] NO", 460f, 385f, 580f, 445f))
             }
         }
 
@@ -2014,7 +2084,35 @@ class TouchControllerOverlay(context: Context) : View(context) {
         sb.append("    { 10, { ${saveYes.left}f, ${saveYes.top}f, ${saveYes.right}f, ${saveYes.bottom}f } }, // [YES]\n")
         sb.append("    { 11, { ${saveNo.left}f, ${saveNo.top}f, ${saveNo.right}f, ${saveNo.bottom}f } }, // [NO]\n")
 
-        // 7. Stage Map (Screen 9 & 11)
+        // 7. Shop (Screen 8)
+        sb.append("\n// ==================== SHOP (Screen 8) ====================\n")
+        sb.append("// SubState 0: Category Select (BUY, SELL, LEAVE SHOP)\n")
+        val shopBuy = getResolved(8, 0, 0, 75f, 210f, 295f, 275f)
+        val shopSell = getResolved(8, 0, 1, 345f, 210f, 565f, 275f)
+        val shopLeave = getResolved(8, 0, 2, 15f, 295f, 205f, 350f)
+        sb.append("    { 0, { ${shopBuy.left}f, ${shopBuy.top}f, ${shopBuy.right}f, ${shopBuy.bottom}f } }, // [0] BUY\n")
+        sb.append("    { 1, { ${shopSell.left}f, ${shopSell.top}f, ${shopSell.right}f, ${shopSell.bottom}f } }, // [1] SELL\n")
+        sb.append("    { 2, { ${shopLeave.left}f, ${shopLeave.top}f, ${shopLeave.right}f, ${shopLeave.bottom}f } }, // [2] LEAVE SHOP\n")
+        sb.append("// SubState 1: Buy/Sell Item List\n")
+        val shopItems = arrayOf(
+            RectF(20f, 148f, 395f, 179f),
+            RectF(20f, 183f, 395f, 213f),
+            RectF(20f, 216f, 395f, 246f),
+            RectF(20f, 251f, 395f, 279f),
+            RectF(20f, 285f, 395f, 312f),
+            RectF(20f, 319f, 395f, 346f)
+        )
+        for (r in 0 until 6) {
+            val def = shopItems[r]
+            val res = getResolved(8, 1, r, def.left, def.top, def.right, def.bottom)
+            sb.append("    { $r, { ${res.left}f, ${res.top}f, ${res.right}f, ${res.bottom}f } }, // [ITEM $r]\n")
+        }
+        val shopYes = getResolved(8, 1, 10, 60f, 396f, 157f, 433f)
+        val shopNo = getResolved(8, 1, 11, 212f, 395f, 291f, 437f)
+        sb.append("    { 10, { ${shopYes.left}f, ${shopYes.top}f, ${shopYes.right}f, ${shopYes.bottom}f } }, // [BUY YES]\n")
+        sb.append("    { 11, { ${shopNo.left}f, ${shopNo.top}f, ${shopNo.right}f, ${shopNo.bottom}f } }, // [BUY NO]\n")
+
+        // 8. Stage Map (Screen 9 & 11)
         sb.append("\n// ==================== STAGE MAP (Screen 9 & 11) ====================\n")
         val stageMapDefs = arrayOf(
             RectF(432.35242f, 177.55557f, 604.92410f, 217.19261f),

@@ -125,6 +125,12 @@ class MenuTouchHandler(context: Context) {
                 val y = if (ptrIdx >= 0) event.getY(ptrIdx) else lastY
 
                 if (isDragging) {
+                    val totalDx = x - downX
+                    if (abs(totalDx) > touchSlop * 2f) {
+                        // Send accumulated swipe delta for Title Carousel rotation
+                        NativeBridge.onMenuTouchEvent(ACTION_SCROLL_DELTA, x, y, totalDx * 0.5f, 0f)
+                    }
+
                     // Compute fling velocity
                     velocityTracker?.computeCurrentVelocity(1000, maxFlingVelocity)
                     val vy = velocityTracker?.getYVelocity(activePointerId) ?: 0f
