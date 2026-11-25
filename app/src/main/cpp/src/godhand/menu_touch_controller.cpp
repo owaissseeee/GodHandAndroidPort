@@ -78,24 +78,42 @@ static float    s_accumulatedScrollX = 0.0f;
 static float    s_accumulatedScrollY = 0.0f;
 static uint32_t s_lastActiveMenuState = MENU_NONE;
 
-// Frame-accurate multi-step button sequence engine
+// Frame-accurate multi-step button sequence engine (zero-alloc fixed buffer)
 struct ButtonStep {
     uint16_t mask;
     int durationFrames;
 };
-static std::vector<ButtonStep> s_buttonQueue;
+constexpr size_t kMaxButtonSteps = 16;
+static ButtonStep s_buttonQueue[kMaxButtonSteps];
+static size_t s_buttonQueueIdx = 0;
+static size_t s_buttonQueueCount = 0;
 static int s_currentStepFrame = 0;
 
-inline void queueButtonSequence(const std::vector<ButtonStep>& steps) {
-    s_buttonQueue = steps;
+inline void clearButtonSequence() {
+    s_buttonQueueIdx = 0;
+    s_buttonQueueCount = 0;
     s_currentStepFrame = 0;
-    if (!s_buttonQueue.empty()) {
+}
+
+inline void queueButtonSteps(const ButtonStep* steps, size_t count) {
+    clearButtonSequence();
+    const size_t n = std::min(count, kMaxButtonSteps);
+    for (size_t i = 0; i < n; ++i) {
+        s_buttonQueue[i] = steps[i];
+    }
+    s_buttonQueueCount = n;
+    if (n > 0) {
         ps2_pad::setHostTouchInputState(s_buttonQueue[0].mask, 0.0f, 0.0f, 0.0f, 0.0f);
     }
 }
 
+inline void queueButtonSteps(std::initializer_list<ButtonStep> steps) {
+    queueButtonSteps(steps.begin(), steps.size());
+}
+
 inline void queueSingleButton(uint16_t mask, int durationFrames = 2) {
-    queueButtonSequence({ {mask, durationFrames}, {0, 1} });
+    const ButtonStep steps[2] = { {mask, durationFrames}, {0, 1} };
+    queueButtonSteps(steps, 2);
 }
 
 // Read-back verification state machine
@@ -122,7 +140,7 @@ static int32_t     s_stageMapCursor = 0;
 static int32_t     s_lastTechSlotTapped = 0;
 static int32_t     s_dialogArrowState = 1; // 0 = YES, 1 = NO (God Hand confirmation dialogs default to NO)
 
-// Hitbox overrides from real-time crop editor
+// Hitbox overrides from real-time crop editor (EE-thread lock-free snapshot)
 struct HitboxOverride {
     int32_t screenId;
     int32_t subState;
@@ -130,15 +148,25 @@ struct HitboxOverride {
     Rect2D rect;
 };
 static std::vector<HitboxOverride> s_hitboxOverrides;
+static std::vector<HitboxOverride> s_eeOverrides;
 static std::mutex s_overrideMutex;
-static std::atomic<bool> s_hasOverrides{false};
+static std::atomic<uint32_t> s_overrideVersion{1u};
+static uint32_t s_eeOverrideVersion = 0u;
+
+inline void syncEeOverridesIfNeeded() {
+    const uint32_t curVer = s_overrideVersion.load(std::memory_order_acquire);
+    if (curVer != s_eeOverrideVersion) {
+        std::lock_guard<std::mutex> lock(s_overrideMutex);
+        s_eeOverrides = s_hitboxOverrides;
+        s_eeOverrideVersion = s_overrideVersion.load(std::memory_order_relaxed);
+    }
+}
 
 bool checkHitbox(int32_t screenId, int32_t subState, int32_t buttonId, const Rect2D& defRect, float ps2X, float ps2Y) {
     Rect2D r = defRect;
-    if (s_hasOverrides.load(std::memory_order_acquire)) {
-        std::lock_guard<std::mutex> lock(s_overrideMutex);
+    if (!s_eeOverrides.empty()) {
         bool found = false;
-        for (const auto& item : s_hitboxOverrides) {
+        for (const auto& item : s_eeOverrides) {
             if (item.screenId == screenId && item.subState == subState && item.buttonId == buttonId) {
                 r = item.rect;
                 found = true;
@@ -148,7 +176,7 @@ bool checkHitbox(int32_t screenId, int32_t subState, int32_t buttonId, const Rec
         // Backward-compatible fallback for SubState 1 dialog overrides saved previously under SubState 0
         if (!found && subState == 1 && (buttonId == 10 || buttonId == 11) &&
             (screenId == MENU_OPTIONS || screenId == MENU_SAVELOAD)) {
-            for (const auto& item : s_hitboxOverrides) {
+            for (const auto& item : s_eeOverrides) {
                 if (item.screenId == screenId && item.subState == 0 && item.buttonId == buttonId) {
                     r = item.rect;
                     break;
@@ -166,18 +194,18 @@ void setHitboxOverride(int32_t screenId, int32_t subState, int32_t buttonId, flo
     for (auto& item : s_hitboxOverrides) {
         if (item.screenId == screenId && item.subState == subState && item.buttonId == buttonId) {
             item.rect = {x0, y0, x1, y1};
-            s_hasOverrides.store(true, std::memory_order_release);
+            s_overrideVersion.fetch_add(1u, std::memory_order_release);
             return;
         }
     }
     s_hitboxOverrides.push_back({screenId, subState, buttonId, {x0, y0, x1, y1}});
-    s_hasOverrides.store(true, std::memory_order_release);
+    s_overrideVersion.fetch_add(1u, std::memory_order_release);
 }
 
 void clearHitboxOverrides() {
     std::lock_guard<std::mutex> lock(s_overrideMutex);
     s_hitboxOverrides.clear();
-    s_hasOverrides.store(false, std::memory_order_release);
+    s_overrideVersion.fetch_add(1u, std::memory_order_release);
 }
 
 void setEnabled(bool enabled) {
@@ -238,7 +266,26 @@ void queueTouchEvent(TouchAction action, float screenX, float screenY, float dx,
     s_queue.push(ev);
 }
 
-bool screenToPs2(float screenX, float screenY, float& outPs2X, float& outPs2Y) {
+struct ScreenMapping {
+    bool valid = false;
+    float minX = 0.0f;
+    float maxX = 0.0f;
+    float minY = 0.0f;
+    float maxY = 0.0f;
+    float scaleX = 0.0f;
+    float scaleY = 0.0f;
+
+    bool map(float screenX, float screenY, float& outPs2X, float& outPs2Y) const {
+        if (!valid || screenX < minX || screenX > maxX || screenY < minY || screenY > maxY) {
+            return false;
+        }
+        outPs2X = std::clamp((screenX - minX) * scaleX, 0.0f, 640.0f);
+        outPs2Y = std::clamp((screenY - minY) * scaleY, 0.0f, 448.0f);
+        return true;
+    }
+};
+
+static ScreenMapping computeScreenMapping() {
     uint32_t screenW = 1600u, screenH = 720u;
     godhand::mobile::getScreenDimensions(&screenW, &screenH);
     const int aspectMode = godhand::mobile::getAspectMode();
@@ -246,65 +293,42 @@ bool screenToPs2(float screenX, float screenY, float& outPs2X, float& outPs2Y) {
     const float W = static_cast<float>(screenW);
     const float H = static_cast<float>(screenH);
     if (W <= 0.0f || H <= 0.0f) {
-        return false;
+        return {};
     }
 
+    ScreenMapping m;
+    m.valid = true;
     if (aspectMode == 2) {
         // Full Screen Stretch
-        outPs2X = std::clamp(screenX * (640.0f / W), 0.0f, 640.0f);
-        outPs2Y = std::clamp(screenY * (448.0f / H), 0.0f, 448.0f);
-        return true;
-    } else if (aspectMode == 0) {
-        // 16:9 Standard Widescreen box
-        constexpr float targetAspect = 16.0f / 9.0f;
-        const float deviceAspect = W / H;
-        if (deviceAspect >= targetAspect) {
-            const float vpHeight = H;
-            const float vpWidth = H * targetAspect;
-            const float vpLeft = (W - vpWidth) * 0.5f;
-            if (screenX < vpLeft || screenX > vpLeft + vpWidth) {
-                return false;
-            }
-            outPs2X = std::clamp((screenX - vpLeft) * (640.0f / vpWidth), 0.0f, 640.0f);
-            outPs2Y = std::clamp(screenY * (448.0f / vpHeight), 0.0f, 448.0f);
-            return true;
-        } else {
-            const float vpWidth = W;
-            const float vpHeight = W / targetAspect;
-            const float vpTop = (H - vpHeight) * 0.5f;
-            if (screenY < vpTop || screenY > vpTop + vpHeight) {
-                return false;
-            }
-            outPs2X = std::clamp(screenX * (640.0f / vpWidth), 0.0f, 640.0f);
-            outPs2Y = std::clamp((screenY - vpTop) * (448.0f / vpHeight), 0.0f, 448.0f);
-            return true;
-        }
-    } else {
-        // 4:3 Standard PS2 Pillarbox
-        constexpr float targetAspect = 4.0f / 3.0f;
-        const float deviceAspect = W / H;
-        if (deviceAspect >= targetAspect) {
-            const float vpHeight = H;
-            const float vpWidth = H * targetAspect;
-            const float vpLeft = (W - vpWidth) * 0.5f;
-            if (screenX < vpLeft || screenX > vpLeft + vpWidth) {
-                return false;
-            }
-            outPs2X = std::clamp((screenX - vpLeft) * (640.0f / vpWidth), 0.0f, 640.0f);
-            outPs2Y = std::clamp(screenY * (448.0f / vpHeight), 0.0f, 448.0f);
-            return true;
-        } else {
-            const float vpWidth = W;
-            const float vpHeight = W / targetAspect;
-            const float vpTop = (H - vpHeight) * 0.5f;
-            if (screenY < vpTop || screenY > vpTop + vpHeight) {
-                return false;
-            }
-            outPs2X = std::clamp(screenX * (640.0f / vpWidth), 0.0f, 640.0f);
-            outPs2Y = std::clamp((screenY - vpTop) * (448.0f / vpHeight), 0.0f, 448.0f);
-            return true;
-        }
+        m.minX = 0.0f; m.maxX = W;
+        m.minY = 0.0f; m.maxY = H;
+        m.scaleX = 640.0f / W;
+        m.scaleY = 448.0f / H;
+        return m;
     }
+
+    const float targetAspect = (aspectMode == 0) ? (16.0f / 9.0f) : (4.0f / 3.0f);
+    const float deviceAspect = W / H;
+    if (deviceAspect >= targetAspect) {
+        const float vpWidth = H * targetAspect;
+        const float vpLeft = (W - vpWidth) * 0.5f;
+        m.minX = vpLeft; m.maxX = vpLeft + vpWidth;
+        m.minY = 0.0f;   m.maxY = H;
+        m.scaleX = 640.0f / vpWidth;
+        m.scaleY = 448.0f / H;
+    } else {
+        const float vpHeight = W / targetAspect;
+        const float vpTop = (H - vpHeight) * 0.5f;
+        m.minX = 0.0f;  m.maxX = W;
+        m.minY = vpTop; m.maxY = vpTop + vpHeight;
+        m.scaleX = 640.0f / W;
+        m.scaleY = 448.0f / vpHeight;
+    }
+    return m;
+}
+
+bool screenToPs2(float screenX, float screenY, float& outPs2X, float& outPs2Y) {
+    return computeScreenMapping().map(screenX, screenY, outPs2X, outPs2Y);
 }
 
 static uint32_t resolveActiveMcBase(const uint8_t* rdram, uint32_t menuMgr) {
@@ -446,16 +470,18 @@ static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
 void frameStart(uint8_t* rdram) {
     if (!rdram) return;
     s_rdram = rdram;
+    syncEeOverridesIfNeeded();
 
     // Step through the active button sequence frame-by-frame
-    if (!s_buttonQueue.empty()) {
+    if (s_buttonQueueIdx < s_buttonQueueCount) {
         s_currentStepFrame++;
-        if (s_currentStepFrame >= s_buttonQueue[0].durationFrames) {
-            s_buttonQueue.erase(s_buttonQueue.begin());
+        if (s_currentStepFrame >= s_buttonQueue[s_buttonQueueIdx].durationFrames) {
+            s_buttonQueueIdx++;
             s_currentStepFrame = 0;
-            if (!s_buttonQueue.empty()) {
-                ps2_pad::setHostTouchInputState(s_buttonQueue[0].mask, 0.0f, 0.0f, 0.0f, 0.0f);
+            if (s_buttonQueueIdx < s_buttonQueueCount) {
+                ps2_pad::setHostTouchInputState(s_buttonQueue[s_buttonQueueIdx].mask, 0.0f, 0.0f, 0.0f, 0.0f);
             } else {
+                clearButtonSequence();
                 ps2_pad::setHostTouchInputState(0, 0.0f, 0.0f, 0.0f, 0.0f);
             }
         }
@@ -471,8 +497,7 @@ void frameStart(uint8_t* rdram) {
     // If state changed or exited to gameplay, reset all host touch inputs immediately
     if (activeState != s_lastActiveMenuState) {
         ps2_pad::setHostTouchInputState(0, 0.0f, 0.0f, 0.0f, 0.0f);
-        s_buttonQueue.clear();
-        s_currentStepFrame = 0;
+        clearButtonSequence();
         s_pendingVerify = false;
         s_pendingVerifyType = VerifyType::NONE;
         s_pendingTargetId = -999;
@@ -726,11 +751,59 @@ void frameStart(uint8_t* rdram) {
         queueSingleButton(cancelMask, 5);
     }
 
-    // Process queued touch events on EE emulation thread:
+    // Process queued touch events on EE emulation thread (precompute mapping once per batch):
+    const ScreenMapping mapping = computeScreenMapping();
     MenuTouchEvent ev;
     while (s_queue.pop(ev)) {
+        // Coalesce consecutive ScrollDelta events within the same frame batch
+        if (ev.action == TouchAction::ScrollDelta) {
+            float batchDx = ev.scrollDeltaX;
+            float batchDy = ev.scrollDeltaY;
+            MenuTouchEvent nextEv;
+            bool hasNext = false;
+            while (s_queue.pop(nextEv)) {
+                if (nextEv.action == TouchAction::ScrollDelta) {
+                    batchDx += nextEv.scrollDeltaX;
+                    batchDy += nextEv.scrollDeltaY;
+                } else {
+                    hasNext = true;
+                    break;
+                }
+            }
+            s_isDragging = true;
+            s_pressedButtonId = -999;
+
+            if (screenId == MENU_TITLE && menuMgr != 0) {
+                const uint8_t titlePhase = rdram[(menuMgr + kTitlePhaseOffset) & 0x01FFFFFFu];
+                if (titlePhase == 2) {
+                    s_accumulatedScrollX += batchDx;
+                    if (s_accumulatedScrollX < -25.0f) {
+                        s_accumulatedScrollX = 0.0f;
+                        queueSingleButton(kPadRight, 5);
+                    } else if (s_accumulatedScrollX > 25.0f) {
+                        s_accumulatedScrollX = 0.0f;
+                        queueSingleButton(kPadLeft, 5);
+                    }
+                }
+            }
+            if (screenId == MENU_TECHNIQUES || screenId == MENU_ROULETTE_EDIT || screenId == MENU_SAVELOAD) {
+                s_accumulatedScrollY += batchDy;
+                if (s_accumulatedScrollY <= -30.0f) {
+                    s_accumulatedScrollY = 0.0f;
+                    queueSingleButton(kPadDown, 5);
+                } else if (s_accumulatedScrollY >= 30.0f) {
+                    s_accumulatedScrollY = 0.0f;
+                    queueSingleButton(kPadUp, 5);
+                }
+            }
+            if (!hasNext) {
+                break;
+            }
+            ev = nextEv;
+        }
+
         float ps2X = 0.0f, ps2Y = 0.0f;
-        const bool validCoords = screenToPs2(ev.screenX, ev.screenY, ps2X, ps2Y);
+        const bool validCoords = mapping.map(ev.screenX, ev.screenY, ps2X, ps2Y);
 
         switch (ev.action) {
             case TouchAction::Down: {
@@ -998,7 +1071,7 @@ void frameStart(uint8_t* rdram) {
                             // YES: check live choice in active cMc (1 = YES, 0 = NO)
                             const uint8_t curChoice = rdram[(mcBase + kMcChoiceOffset) & 0x01FFFFFFu];
                             if (curChoice != 1) {
-                                queueButtonSequence({ {kPadLeft, 5}, {0, 4}, {kPadCross, 6} });
+                                queueButtonSteps({ {kPadLeft, 5}, {0, 4}, {kPadCross, 6} });
                             } else {
                                 queueSingleButton(kPadCross, 6);
                             }
@@ -1006,7 +1079,7 @@ void frameStart(uint8_t* rdram) {
                             // NO: check live choice in active cMc (1 = YES, 0 = NO)
                             const uint8_t curChoice = rdram[(mcBase + kMcChoiceOffset) & 0x01FFFFFFu];
                             if (curChoice == 1) {
-                                queueButtonSequence({ {kPadRight, 5}, {0, 4}, {kPadCross, 6} });
+                                queueButtonSteps({ {kPadRight, 5}, {0, 4}, {kPadCross, 6} });
                             } else {
                                 queueSingleButton(kPadCross, 6);
                             }
@@ -1016,7 +1089,7 @@ void frameStart(uint8_t* rdram) {
                     else if (screenId == MENU_DIALOG) {
                         if (s_pressedButtonId == 0) {
                             // Yes: Move Left to Yes, neutral release, then Confirm Cross
-                            queueButtonSequence({ {kPadLeft, 5}, {0, 4}, {kPadCross, 6} });
+                            queueButtonSteps({ {kPadLeft, 5}, {0, 4}, {kPadCross, 6} });
                         } else {
                             // No: Triangle cancels dialog immediately
                             queueSingleButton(kPadTriangle, 6);
@@ -1037,7 +1110,7 @@ void frameStart(uint8_t* rdram) {
                                 std::memcpy(rdram + ((subMgr + kStageMapCursorOffset) & 0x01FFFFFFu), &targetAction, sizeof(targetAction));
                             }
                             s_stageMapCursor = targetAction;
-                            queueButtonSequence({ {0, 1}, {kPadCross, 6}, {0, 1} });
+                            queueButtonSteps({ {0, 1}, {kPadCross, 6}, {0, 1} });
                         }
                     }
                     // 5. Title Screen Options
@@ -1061,16 +1134,17 @@ void frameStart(uint8_t* rdram) {
                             if (targetCur == curLevel) {
                                 queueSingleButton(kPadCross, 5);
                             } else if (targetCur >= 0 && targetCur <= 2) {
-                                int32_t diff = targetCur - curLevel;
-                                uint16_t dir = (diff > 0) ? kPadRight : kPadLeft;
-                                int steps = std::abs(diff);
-                                std::vector<ButtonStep> seq;
+                                const int32_t diff = targetCur - curLevel;
+                                const uint16_t dir = (diff > 0) ? kPadRight : kPadLeft;
+                                const int steps = std::min(std::abs(diff), 4);
+                                ButtonStep seq[kMaxButtonSteps];
+                                size_t n = 0;
                                 for (int s = 0; s < steps; ++s) {
-                                    seq.push_back({dir, 5});
-                                    seq.push_back({0, 4});
+                                    seq[n++] = {dir, 5};
+                                    seq[n++] = {0, 4};
                                 }
-                                seq.push_back({kPadCross, 5});
-                                queueButtonSequence(seq);
+                                seq[n++] = {kPadCross, 5};
+                                queueButtonSteps(seq, n);
                             }
                         }
                     }
@@ -1144,7 +1218,7 @@ void frameStart(uint8_t* rdram) {
                             // YES (Reset / Restore Defaults confirm: 0=YES, 1=NO at subMgr + 0x131)
                             const uint8_t curChoice = rdram[(subMgr + kOptionsResetChoiceOffset) & 0x01FFFFFFu];
                             if (curChoice != 0) {
-                                queueButtonSequence({ {kPadLeft, 6}, {0, 5}, {kPadCross, 6} });
+                                queueButtonSteps({ {kPadLeft, 6}, {0, 5}, {kPadCross, 6} });
                             } else {
                                 queueSingleButton(kPadCross, 6);
                             }
@@ -1152,7 +1226,7 @@ void frameStart(uint8_t* rdram) {
                             // NO (Reset / Restore Defaults cancel: 0=YES, 1=NO at subMgr + 0x131)
                             const uint8_t curChoice = rdram[(subMgr + kOptionsResetChoiceOffset) & 0x01FFFFFFu];
                             if (curChoice == 0) {
-                                queueButtonSequence({ {kPadRight, 6}, {0, 5}, {kPadCross, 6} });
+                                queueButtonSteps({ {kPadRight, 6}, {0, 5}, {kPadCross, 6} });
                             } else {
                                 queueSingleButton(kPadCross, 6);
                             }

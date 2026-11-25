@@ -903,7 +903,9 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
     const float presentDurationMs = std::chrono::duration<float, std::milli>(presentEnd - presentStart).count();
     if (g_perfLastPresent.time_since_epoch().count() != 0) {
         const double deltaUs = std::chrono::duration<double, std::micro>(presentEnd - g_perfLastPresent).count();
-        godhand_perf_record_work_duration(static_cast<int64_t>(deltaUs * 1000.0));
+        if (g_perfGameFrames.load(std::memory_order_relaxed) == 0u) {
+            godhand_perf_record_work_duration(static_cast<int64_t>(deltaUs * 1000.0));
+        }
         const float deltaMs = static_cast<float>(deltaUs / 1000.0);
         // Exclude pauses/resumes (> 250ms or < 0.1ms) from skewing hitch metrics
         if (deltaMs >= 0.1f && deltaMs <= 250.0f) {
@@ -1153,11 +1155,12 @@ void godhand_perf_record_spike(
 
     ps2_audio_get_stats(&rec.audioBufferFillPct, &rec.audioUnderruns);
 
-    // Classify primary bottleneck
+    // Classify primary bottleneck accurately using target cadence
+    const float eeComputeThresh = (g_statGameFps.load(std::memory_order_relaxed) >= 45.0f) ? 14.0f : 26.0f;
     if (totalFrametimeMs >= 100.0f) {
         std::snprintf(rec.bottleneckReason, sizeof(rec.bottleneckReason),
                       "ENGINE FREEZE / STALL (PC: 0x%08X)", rec.topGuestPc);
-    } else if (rec.eeTimeMs >= 14.0f) {
+    } else if (rec.eeTimeMs >= eeComputeThresh) {
         std::snprintf(rec.bottleneckReason, sizeof(rec.bottleneckReason),
                       "EE CPU Compute Bound (PC: 0x%08X)", rec.topGuestPc);
     } else if (rec.vu1QueueDepth >= 2u) {
@@ -1171,7 +1174,7 @@ void godhand_perf_record_spike(
                       "Audio Buffer Starvation (Fill: %u%%)", rec.audioBufferFillPct);
     } else {
         std::snprintf(rec.bottleneckReason, sizeof(rec.bottleneckReason),
-                      "GPU Fragment / Rasterization Load");
+                      "GS / Swapchain Pacing Stall");
     }
 
 #if defined(__ANDROID__)

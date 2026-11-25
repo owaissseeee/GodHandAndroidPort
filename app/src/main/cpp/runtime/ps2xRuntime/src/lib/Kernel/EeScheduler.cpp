@@ -4,6 +4,7 @@
 // Global lock-free telemetry primitives for the spike detector
 std::atomic<uint32_t> g_perfLastActiveGuestPc{0u};
 std::atomic<uint64_t> g_perfAccumEeIdleCycles{0u};
+std::atomic<uint64_t> g_perfEeTotalHostSleepNs{0u};
 std::atomic<float> g_perfLastEeWorkMs{0.0f};
 std::atomic<float> g_perfLastEeIdleMs{0.0f};
 std::atomic<int64_t> g_perfFrameStartNs{0};
@@ -755,6 +756,28 @@ void EeScheduler::run()
                     skipIdleCycles();
                 }
             }
+            else if ((currentPc >= 0x003B0170u && currentPc <= 0x003B0184u) ||
+                     (currentPc >= 0x003B0210u && currentPc <= 0x003B0224u))
+            {
+                // VSync / VSync2 INTC_STAT(0x1000F000) bit 2 & $sp[0] busy-wait spin fast-forward
+                bool waiting = (m_runtime.memory().readIORegister(0x1000F000u) & 4u) == 0u;
+                if (waiting && currentPc >= 0x003B0210u)
+                {
+                    const uint32_t sp = getRegU32(&context, 29);
+                    const uint32_t spPhys = sp & 0x1FFFFFFFu;
+                    if (spPhys + 4u <= PS2_RAM_SIZE)
+                    {
+                        uint32_t spFlag = 0u;
+                        std::memcpy(&spFlag, m_rdram + (spPhys & 0x01FFFFFFu), sizeof(spFlag));
+                        if (spFlag != 0u)
+                            waiting = false;
+                    }
+                }
+                if (waiting)
+                {
+                    skipIdleCycles();
+                }
+            }
         }
 
         processPendingEvents();
@@ -847,6 +870,27 @@ bool EeScheduler::checkpointDue(uint32_t cycles) noexcept
                     *reinterpret_cast<uint32_t*>(m_rdram + 0x00753D80u) = reqVb;
                 }
                 else if (curVb < reqVb)
+                {
+                    skipIdleCycles();
+                }
+            }
+            else if ((pc >= 0x003B0170u && pc <= 0x003B0184u) ||
+                     (pc >= 0x003B0210u && pc <= 0x003B0224u))
+            {
+                bool waiting = (m_runtime.memory().readIORegister(0x1000F000u) & 4u) == 0u;
+                if (waiting && pc >= 0x003B0210u)
+                {
+                    const uint32_t sp = getRegU32(&running->activeContext(), 29);
+                    const uint32_t spPhys = sp & 0x1FFFFFFFu;
+                    if (spPhys + 4u <= PS2_RAM_SIZE)
+                    {
+                        uint32_t spFlag = 0u;
+                        std::memcpy(&spFlag, m_rdram + (spPhys & 0x01FFFFFFu), sizeof(spFlag));
+                        if (spFlag != 0u)
+                            waiting = false;
+                    }
+                }
+                if (waiting)
                 {
                     skipIdleCycles();
                 }
@@ -2682,6 +2726,10 @@ void EeScheduler::processDueDeadlines()
 #endif
                     ps2x::asyncvif::waitPipelineIdle(m_runtime.memory(), std::chrono::microseconds(250));
                 }
+                const auto waitEnd = std::chrono::steady_clock::now();
+                const int64_t waitNs = std::chrono::duration_cast<std::chrono::nanoseconds>(waitEnd - waitStart).count();
+                if (waitNs > 0)
+                    g_perfEeTotalHostSleepNs.fetch_add(static_cast<uint64_t>(waitNs), std::memory_order_relaxed);
                 lock.lock();
                 if (deferred)
                 {
@@ -2689,7 +2737,7 @@ void EeScheduler::processDueDeadlines()
                     m_nextDeadlineCycle.store(0u, std::memory_order_release);
                     return;
                 }
-                now = std::chrono::steady_clock::now();
+                now = waitEnd;
             }
 
             if (pacingDeadline == std::chrono::steady_clock::time_point{})
@@ -2729,13 +2777,16 @@ void EeScheduler::processDueDeadlines()
                                      { return !m_events.empty() || gsInterruptUnseen() ||
                                               m_stopRequested.load(std::memory_order_acquire); });
                 ps2x::asyncvif::traceEvent('p', gsInterruptUnseen() ? 1u : 0u);
+                const auto wokeAt = std::chrono::steady_clock::now();
+                const int64_t sleptNs = std::chrono::duration_cast<std::chrono::nanoseconds>(wokeAt - sleepStart).count();
+                if (sleptNs > 0)
+                    g_perfEeTotalHostSleepNs.fetch_add(static_cast<uint64_t>(sleptNs), std::memory_order_relaxed);
                 if (pacingStats)
                 {
                     static uint64_t waits = 0, gsWakes = 0, gsAtEntry = 0, idleWaits = 0;
                     static double sleptMs = 0.0, idleSleptMs = 0.0;
                     static auto windowStart = std::chrono::steady_clock::now();
-                    const auto wokeAt = std::chrono::steady_clock::now();
-                    const double ms = std::chrono::duration<double, std::milli>(wokeAt - sleepStart).count();
+                    const double ms = static_cast<double>(sleptNs) * 1e-6;
                     ++waits;
                     sleptMs += ms;
                     g_vbSleptMs += ms;
@@ -3054,9 +3105,13 @@ void EeScheduler::waitForEvent()
         }
     }
 
+    const auto sleepStart = std::chrono::steady_clock::now();
     const bool signaled = m_eventCv.wait_until(lock, hostDeadline, [this]()
                                                { return !m_events.empty() ||
                                                         m_stopRequested.load(std::memory_order_acquire); });
+    const int64_t sleptNs = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now() - sleepStart).count();
+    if (sleptNs > 0)
+        g_perfEeTotalHostSleepNs.fetch_add(static_cast<uint64_t>(sleptNs), std::memory_order_relaxed);
     if (!signaled)
     {
         const uint64_t elapsed = deadlineCycle > m_eeCycle ? deadlineCycle - m_eeCycle : 0u;

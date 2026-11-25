@@ -379,27 +379,27 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
         }
     } else {
         // 2 Big cores + 4/6 Little cores (Dimensity 1080/920/700, Snapdragon 695, 480, Dimensity 7050 dual-A78):
-        // Big Core 0: 100% EXCLUSIVELY DEDICATED TO EE_MAIN (Zero thread preemption -> locked 30 EE FPS!)
-        // Big Core 1: SHARED BY GS_RENDERER + VU1_WORKER + IOP_WORKER (~65% combined load on Big Core 1)
-        // Little Cores: GIF_WORKER, AUDIO_SPU2, and HOST_PUMP
+        // Big Core 0: Dedicated primary core for EE_MAIN (Nice -20 guarantees zero preemption by VU1/GS).
+        // {Big Core 0, Big Core 1}: Shared by VU1_WORKER (Nice -19) and GS_RENDERER (Nice -18) so when EE sleeps
+        // in VSync/wait, GS and VU1 execute in parallel across both Big cores instead of colliding on Big Core 1.
+        // Little Cores: IOP_WORKER, GIF_WORKER, AUDIO_SPU2, and HOST_PUMP (prevents IOP/ADX from starving VU1!).
         switch (role) {
             case ThreadRole::EE_MAIN:
                 CPU_SET(big_cores[0], &mask);
                 targetNice = -20;
                 break;
             case ThreadRole::VU1_WORKER:
+                CPU_SET(big_cores[0], &mask);
                 CPU_SET(big_cores[1], &mask);
-                targetNice = -18;
+                targetNice = -19;
                 break;
             case ThreadRole::GS_RENDERER:
-            case ThreadRole::IOP_WORKER:
+                CPU_SET(big_cores[0], &mask);
                 CPU_SET(big_cores[1], &mask);
                 targetNice = -18;
                 break;
+            case ThreadRole::IOP_WORKER:
             case ThreadRole::GIF_WORKER:
-                for (int lc : little_cores) CPU_SET(lc, &mask);
-                targetNice = -16;
-                break;
             case ThreadRole::AUDIO_SPU2:
                 for (int lc : little_cores) CPU_SET(lc, &mask);
                 targetNice = -16;

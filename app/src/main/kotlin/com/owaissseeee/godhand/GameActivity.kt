@@ -346,14 +346,24 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         }
     }
 
+    private var adpfTidCount = 0
+    private var lastReportedAdpfNanos = -1L
+
     private fun ensureAdpfSession() {
-        if (adpfInitialized || Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return
+        if (adpfInitialized && adpfTidCount >= 4) return
         val tids = NativeBridge.getPerformanceThreadIds()
-        if (tids.isNotEmpty()) {
+        if (tids.isNotEmpty() && (!adpfInitialized || tids.size > adpfTidCount)) {
             try {
                 val phm = getSystemService(PerformanceHintManager::class.java)
-                adpfSession = phm?.createHintSession(tids, 33_333_333L)
-                adpfInitialized = true
+                val newSession = phm?.createHintSession(tids, 33_333_333L)
+                if (newSession != null) {
+                    try { adpfSession?.close() } catch (_: Throwable) {}
+                    adpfSession = newSession
+                    adpfTidCount = tids.size
+                    adpfInitialized = true
+                    lastReportedAdpfNanos = -1L
+                }
             } catch (_: Throwable) {}
         }
     }
@@ -412,10 +422,15 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                         ensureAdpfSession()
                         val duration = NativeBridge.getLastFrameWorkDurationNanos()
                         if (duration > 0L) {
-                            val reported = maxOf(duration, 30_000_000L)
-                            try {
-                                adpfSession?.reportActualWorkDuration(reported)
-                            } catch (_: Throwable) {}
+                            // Clamp gently within PowerHAL hint bounds without the old >=30ms floor
+                            // so real heavy frames above target trigger immediate CPU/GPU boosts.
+                            val reported = duration.coerceIn(2_000_000L, 66_000_000L)
+                            if (reported != lastReportedAdpfNanos) {
+                                lastReportedAdpfNanos = reported
+                                try {
+                                    adpfSession?.reportActualWorkDuration(reported)
+                                } catch (_: Throwable) {}
+                            }
                         }
                     }
                 } catch (_: Throwable) {
