@@ -450,9 +450,9 @@ constexpr MenuButtonHitbox kStageMapHitboxes[] = {
 
 // SubState 1: 3 options (Save hidden - Continue is at top)
 constexpr MenuButtonHitbox kStageMapHiddenSaveHitboxes[] = {
-    { 0, { 432.35242f, 177.55557f, 604.92410f, 217.19261f } }, // [0] CONTINUE
-    { 1, { 432.25125f, 224.94072f, 602.09106f, 262.60742f } }, // [1] ENTER SHOP
-    { 2, { 432.72340f, 267.29630f, 601.85500f, 305.58520f } }, // [2] ENTER CASINO
+    { 0, { 429.0f, 224.0f, 602.0f, 263.0f } }, // [0] CONTINUE
+    { 1, { 432.0f, 266.0f, 602.0f, 303.0f } }, // [1] ENTER SHOP
+    { 2, { 432.0f, 312.0f, 601.0f, 350.0f } }, // [2] ENTER CASINO
 };
 
 // Memory Card Save / Load (Kind 7 / MENU_SAVELOAD - Exported Custom Verified Bounds):

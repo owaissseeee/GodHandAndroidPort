@@ -1486,10 +1486,10 @@ private:
 protected:
 	static constexpr int NUM_INTERLACE_SHADERS = 5;
 	static constexpr float MAD_SENSITIVITY = 0.08f;
-	static constexpr u32 MAX_POOLED_TARGETS = 300;
-	static constexpr u32 MAX_TARGET_AGE = 20;
-	static constexpr u32 MAX_POOLED_TEXTURES = 300;
-	static constexpr u32 MAX_TEXTURE_AGE = 10;
+	static constexpr u32 MAX_POOLED_TARGETS = 384;
+	static constexpr u32 MAX_TARGET_AGE = 180;
+	static constexpr u32 MAX_POOLED_TEXTURES = 512;
+	static constexpr u32 MAX_TEXTURE_AGE = 180;
 	static constexpr u32 NUM_CAS_CONSTANTS = 12; // 8 plus src offset x/y, 16 byte alignment
 	static constexpr u32 EXPAND_BUFFER_SIZE = sizeof(u16) * 16383 * 6;
 

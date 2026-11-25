@@ -737,6 +737,18 @@ namespace godhand
             uint32_t base;
         };
 
+        bool hasRegistryEntryInRange(const uint8_t *rdram, uint32_t begin, uint32_t end)
+        {
+            for (uint32_t i = 0; i < kSnr2RegistryEntries; ++i)
+            {
+                const uint32_t entry = kSnr2Registry + 8u + 12u * i;
+                const uint32_t base = ramU32(rdram, entry + 4u);
+                if (base != 0u && (base & 0x01FFFFFFu) >= begin && (base & 0x01FFFFFFu) < end)
+                    return true;
+            }
+            return false;
+        }
+
         std::vector<RegistryEntry> registryEntries(const uint8_t *rdram, uint32_t begin = 0u, uint32_t end = 0xFFFFFFFFu)
         {
             std::vector<RegistryEntry> out;
@@ -903,7 +915,7 @@ namespace godhand
                 const bool wasBusy = slotBusy(rdram, slot);
                 if (heap == kMcHeap)
                 {
-                    if (!registryEntries(rdram, slot.heapBase, slot.heapBase + slot.heapSize).empty())
+                    if (hasRegistryEntryInRange(rdram, slot.heapBase, slot.heapBase + slot.heapSize))
                     {
                         warnLeakedLocked(rdram, slot, when);
                         GH_WARN(Dll, "slot " << slot.cls << " kept at " << when << " (ra " << hex32(getRegU32(ctx, 31))

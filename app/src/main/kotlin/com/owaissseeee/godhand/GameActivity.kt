@@ -346,24 +346,17 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         }
     }
 
-    private var adpfTidCount = 0
     private var lastReportedAdpfNanos = -1L
+    private var lastAdpfReportTimeNanos = 0L
 
     private fun ensureAdpfSession() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return
-        if (adpfInitialized && adpfTidCount >= 4) return
+        if (adpfInitialized || Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return
         val tids = NativeBridge.getPerformanceThreadIds()
-        if (tids.isNotEmpty() && (!adpfInitialized || tids.size > adpfTidCount)) {
+        if (tids.isNotEmpty()) {
             try {
                 val phm = getSystemService(PerformanceHintManager::class.java)
-                val newSession = phm?.createHintSession(tids, 33_333_333L)
-                if (newSession != null) {
-                    try { adpfSession?.close() } catch (_: Throwable) {}
-                    adpfSession = newSession
-                    adpfTidCount = tids.size
-                    adpfInitialized = true
-                    lastReportedAdpfNanos = -1L
-                }
+                adpfSession = phm?.createHintSession(tids, 33_333_333L)
+                adpfInitialized = true
             } catch (_: Throwable) {}
         }
     }
@@ -422,11 +415,10 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                         ensureAdpfSession()
                         val duration = NativeBridge.getLastFrameWorkDurationNanos()
                         if (duration > 0L) {
-                            // Clamp gently within PowerHAL hint bounds without the old >=30ms floor
-                            // so real heavy frames above target trigger immediate CPU/GPU boosts.
-                            val reported = duration.coerceIn(2_000_000L, 66_000_000L)
-                            if (reported != lastReportedAdpfNanos) {
+                            val reported = maxOf(duration, 30_000_000L)
+                            if (reported != lastReportedAdpfNanos || (frameTimeNanos - lastAdpfReportTimeNanos) >= 250_000_000L) {
                                 lastReportedAdpfNanos = reported
+                                lastAdpfReportTimeNanos = frameTimeNanos
                                 try {
                                     adpfSession?.reportActualWorkDuration(reported)
                                 } catch (_: Throwable) {}

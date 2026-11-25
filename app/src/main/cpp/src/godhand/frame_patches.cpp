@@ -56,8 +56,6 @@ namespace ps2_pad {
     float getRx();
     float getRy();
 }
-extern std::atomic<uint64_t> g_perfEeTotalHostSleepNs;
-extern "C" void godhand_perf_record_work_duration(int64_t ns);
 #include <cmath>
 #include <cstdlib>
 #include <cstring>
@@ -1393,33 +1391,19 @@ namespace kamite
 
         void frameStartInternal(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime)
         {
-            // Zero-overhead EE timing telemetry: measure true host active compute time (excluding host sleeps)
+            // Zero-overhead EE timing telemetry: measure compute wall time and idle VBlank wait
             static auto s_prevFrameStart = std::chrono::steady_clock::now();
-            static uint64_t s_prevHostSleepNs = 0u;
             const auto now = std::chrono::steady_clock::now();
             g_perfFrameStartNs.store(std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count(), std::memory_order_relaxed);
-            const uint64_t wallNs = static_cast<uint64_t>(std::max<int64_t>(0, std::chrono::duration_cast<std::chrono::nanoseconds>(now - s_prevFrameStart).count()));
+            const float wallMs = std::chrono::duration<float, std::milli>(now - s_prevFrameStart).count();
             s_prevFrameStart = now;
 
-            const uint64_t curSleepNs = g_perfEeTotalHostSleepNs.load(std::memory_order_relaxed);
-            const uint64_t sleepDeltaNs = (curSleepNs >= s_prevHostSleepNs) ? (curSleepNs - s_prevHostSleepNs) : 0u;
-            s_prevHostSleepNs = curSleepNs;
-
-            g_perfAccumEeIdleCycles.store(0u, std::memory_order_relaxed);
-            const uint64_t workNs = (wallNs > sleepDeltaNs) ? (wallNs - sleepDeltaNs) : 0u;
-            const float workMs = static_cast<float>(workNs) * 1e-6f;
-            const float sleepMs = static_cast<float>(sleepDeltaNs) * 1e-6f;
+            const uint64_t idleCycles = g_perfAccumEeIdleCycles.exchange(0u, std::memory_order_relaxed);
+            // PS2 EE clock is 294.912 MHz -> 294912 cycles per millisecond
+            const float idleMs = static_cast<float>(idleCycles) / 294912.0f;
+            const float workMs = (wallMs > idleMs) ? (wallMs - idleMs) : 0.0f;
             g_perfLastEeWorkMs.store(workMs, std::memory_order_relaxed);
-            g_perfLastEeIdleMs.store(sleepMs, std::memory_order_relaxed);
-
-            if (rdram)
-            {
-                const uint8_t reqVb = rdram[0x00747A09u & (PS2_RAM_SIZE - 1u)] != 0u ? rdram[0x00747A09u & (PS2_RAM_SIZE - 1u)] : 2u;
-                const int64_t adpfWorkNs = static_cast<int64_t>(reqVb <= 1u ? (workNs * 2u) : workNs);
-                if (adpfWorkNs > 0) {
-                    godhand_perf_record_work_duration(adpfWorkNs);
-                }
-            }
+            g_perfLastEeIdleMs.store(idleMs, std::memory_order_relaxed);
 
             // Option A: Set Dsp::kFilter (0x04000000u) to keep screen filters off at the engine level
             if (rdram)

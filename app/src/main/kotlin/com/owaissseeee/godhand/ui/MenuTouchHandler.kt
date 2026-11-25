@@ -35,20 +35,10 @@ class MenuTouchHandler(context: Context) {
     private var downY = 0f
     private var lastX = 0f
     private var lastY = 0f
-    private var pendingScrollX = 0f
-    private var pendingScrollY = 0f
-    private var lastHoverSentX = 0f
-    private var lastHoverSentY = 0f
     private var isDragging = false
     private var activePointerId = MotionEvent.INVALID_POINTER_ID
     private var isFlingActive = false
     private var lastFlingY = 0
-
-    fun release() {
-        stopFling()
-        velocityTracker?.recycle()
-        velocityTracker = null
-    }
 
     private val flingCallback = object : Choreographer.FrameCallback {
         override fun doFrame(frameTimeNanos: Long) {
@@ -79,23 +69,21 @@ class MenuTouchHandler(context: Context) {
     }
 
     fun onTouchEvent(event: MotionEvent): Boolean {
+        if (velocityTracker == null) {
+            velocityTracker = VelocityTracker.obtain()
+        }
+        velocityTracker?.addMovement(event)
+
         val action = event.actionMasked
-        val tracker = velocityTracker ?: VelocityTracker.obtain().also { velocityTracker = it }
 
         when (action) {
             MotionEvent.ACTION_DOWN -> {
                 stopFling()
-                tracker.clear()
-                tracker.addMovement(event)
                 activePointerId = event.getPointerId(0)
                 downX = event.x
                 downY = event.y
                 lastX = downX
                 lastY = downY
-                lastHoverSentX = downX
-                lastHoverSentY = downY
-                pendingScrollX = 0f
-                pendingScrollY = 0f
                 isDragging = false
 
                 NativeBridge.onMenuTouchEvent(ACTION_DOWN, downX, downY, 0f, 0f)
@@ -103,7 +91,6 @@ class MenuTouchHandler(context: Context) {
             }
 
             MotionEvent.ACTION_MOVE -> {
-                tracker.addMovement(event)
                 val ptrIdx = event.findPointerIndex(activePointerId)
                 if (ptrIdx < 0) return false
 
@@ -116,25 +103,15 @@ class MenuTouchHandler(context: Context) {
                     val dist = hypot(x - downX, y - downY)
                     if (dist > touchSlop) {
                         isDragging = true
-                        pendingScrollX += (x - lastHoverSentX)
-                        pendingScrollY += (y - lastHoverSentY)
                     }
-                } else {
-                    pendingScrollX += dx
-                    pendingScrollY += dy
                 }
 
                 if (isDragging) {
-                    // Coalesce sub-pixel drag deltas to cut per-move JNI chatter
-                    if (abs(pendingScrollX) >= 4f || abs(pendingScrollY) >= 4f) {
-                        NativeBridge.onMenuTouchEvent(ACTION_SCROLL_DELTA, x, y, pendingScrollX, pendingScrollY)
-                        pendingScrollX = 0f
-                        pendingScrollY = 0f
-                    }
-                } else if (abs(x - lastHoverSentX) >= 2f || abs(y - lastHoverSentY) >= 2f) {
-                    NativeBridge.onMenuTouchEvent(ACTION_MOVE, x, y, x - lastHoverSentX, y - lastHoverSentY)
-                    lastHoverSentX = x
-                    lastHoverSentY = y
+                    // List scroll / drag
+                    NativeBridge.onMenuTouchEvent(ACTION_SCROLL_DELTA, x, y, dx, dy)
+                } else {
+                    // Hover / slider tracking
+                    NativeBridge.onMenuTouchEvent(ACTION_MOVE, x, y, dx, dy)
                 }
 
                 lastX = x
@@ -143,17 +120,11 @@ class MenuTouchHandler(context: Context) {
             }
 
             MotionEvent.ACTION_UP -> {
-                tracker.addMovement(event)
                 val ptrIdx = event.findPointerIndex(activePointerId)
                 val x = if (ptrIdx >= 0) event.getX(ptrIdx) else lastX
                 val y = if (ptrIdx >= 0) event.getY(ptrIdx) else lastY
 
                 if (isDragging) {
-                    if (abs(pendingScrollX) > 0.5f || abs(pendingScrollY) > 0.5f) {
-                        NativeBridge.onMenuTouchEvent(ACTION_SCROLL_DELTA, x, y, pendingScrollX, pendingScrollY)
-                        pendingScrollX = 0f
-                        pendingScrollY = 0f
-                    }
                     val totalDx = x - downX
                     if (abs(totalDx) > touchSlop * 2f) {
                         // Send accumulated swipe delta for Title Carousel rotation
@@ -161,8 +132,8 @@ class MenuTouchHandler(context: Context) {
                     }
 
                     // Compute fling velocity
-                    tracker.computeCurrentVelocity(1000, maxFlingVelocity)
-                    val vy = tracker.getYVelocity(activePointerId)
+                    velocityTracker?.computeCurrentVelocity(1000, maxFlingVelocity)
+                    val vy = velocityTracker?.getYVelocity(activePointerId) ?: 0f
 
                     if (abs(vy) >= minFlingVelocity) {
                         lastFlingY = 0
@@ -183,7 +154,8 @@ class MenuTouchHandler(context: Context) {
                     NativeBridge.onMenuTouchEvent(ACTION_UP, x, y, 0f, 0f)
                 }
 
-                tracker.clear()
+                velocityTracker?.recycle()
+                velocityTracker = null
                 activePointerId = MotionEvent.INVALID_POINTER_ID
                 isDragging = false
                 return true
@@ -192,9 +164,8 @@ class MenuTouchHandler(context: Context) {
             MotionEvent.ACTION_CANCEL -> {
                 NativeBridge.onMenuTouchEvent(ACTION_CANCEL, lastX, lastY, 0f, 0f)
                 stopFling()
-                tracker.clear()
-                pendingScrollX = 0f
-                pendingScrollY = 0f
+                velocityTracker?.recycle()
+                velocityTracker = null
                 activePointerId = MotionEvent.INVALID_POINTER_ID
                 isDragging = false
                 return true

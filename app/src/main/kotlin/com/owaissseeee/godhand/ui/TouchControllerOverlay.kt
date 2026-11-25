@@ -75,74 +75,9 @@ class TouchControllerOverlay(context: Context) : View(context) {
         var isDodgeButton: Boolean = false,
         var dodgeAxisX: Float = 0f,
         var dodgeAxisY: Float = 0f,
-        var activePointerId: Int = -1,
-        var cachedBitmap: android.graphics.Bitmap? = null,
-        var bitmapResolved: Boolean = false
+        var activePointerId: Int = -1
     ) {
         val effectiveRadiusDp: Float get() = baseRadiusDp * scale
-    }
-
-    private var lastSentButtonMask = -1
-    private var lastSentLx = Float.NaN
-    private var lastSentLy = Float.NaN
-    private var lastSentRx = Float.NaN
-    private var lastSentRy = Float.NaN
-    private var lastKnownMenuScreenId = -1
-    private var leftBaseTex: android.graphics.Bitmap? = null
-    private var leftKnobTex: android.graphics.Bitmap? = null
-    private var rightBaseTex: android.graphics.Bitmap? = null
-    private var rightKnobTex: android.graphics.Bitmap? = null
-    private var stickTexturesResolved = false
-    private val scratchPoint1 = PointF()
-    private val scratchPoint2 = PointF()
-
-    private fun sendPadStateIfChanged(mask: Int, lx: Float, ly: Float, rx: Float, ry: Float, force: Boolean = false) {
-        if (!force &&
-            mask == lastSentButtonMask &&
-            lx == lastSentLx &&
-            ly == lastSentLy &&
-            rx == lastSentRx &&
-            ry == lastSentRy) {
-            return
-        }
-        lastSentButtonMask = mask
-        lastSentLx = lx
-        lastSentLy = ly
-        lastSentRx = rx
-        lastSentRy = ry
-        NativeBridge.updatePadState(mask, lx, ly, rx, ry)
-    }
-
-    private fun screenToPs2Into(sx: Float, sy: Float, w: Float, h: Float, outPt: PointF) {
-        when (repo.aspectIdx) {
-            2 -> outPt.set(sx * (640f / w), sy * (448f / h))
-            0 -> {
-                val targetAspect = 16f / 9f
-                val deviceAspect = w / h
-                if (deviceAspect >= targetAspect) {
-                    val vpWidth = h * targetAspect
-                    val vpLeft = (w - vpWidth) * 0.5f
-                    outPt.set((sx - vpLeft) * (640f / vpWidth), sy * (448f / h))
-                } else {
-                    val vpHeight = w / targetAspect
-                    val vpTop = (h - vpHeight) * 0.5f
-                    outPt.set(sx * (640f / w), (sy - vpTop) * (448f / vpHeight))
-                }
-            }
-            else -> {
-                val targetAspect = 4f / 3f
-                val deviceAspect = w / h
-                if (deviceAspect >= targetAspect) {
-                    val vpWidth = h * targetAspect
-                    val vpLeft = (w - vpWidth) * 0.5f
-                    outPt.set((sx - vpLeft) * (640f / vpWidth), sy * (448f / h))
-                } else {
-                    val vpHeight = w / targetAspect
-                    val vpTop = (h - vpHeight) * 0.5f
-                    outPt.set(sx * (640f / w), (sy - vpTop) * (448f / vpHeight))
-                }
-            }
-        }
     }
 
     private val density = resources.displayMetrics.density
@@ -506,11 +441,10 @@ class TouchControllerOverlay(context: Context) : View(context) {
         color = 0x55F59E0B.toInt()
     }
     private val menuDebugLabelPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = 0xFFFFFFFF.toInt()
+        color = 0xFFF8FAFC.toInt()
         textSize = 10f * density
         typeface = Typeface.MONOSPACE
         isFakeBoldText = true
-        setShadowLayer(3f, 1f, 1f, 0xFF000000.toInt())
     }
     private val menuDebugHudBgPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
@@ -799,8 +733,6 @@ class TouchControllerOverlay(context: Context) : View(context) {
         }
         updatePaintsOpacity()
         updateCachedFpsStrings()
-        removeCallbacks(fpsUpdateRunnable)
-        post(fpsUpdateRunnable)
         invalidate()
     }
 
@@ -862,19 +794,19 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
     private val fpsUpdateRunnable = object : Runnable {
         override fun run() {
+            val hasHistory = (fpsMode == FpsOverlayMode.DETAILED_DEBUG)
+            if (NativeBridge.getPerformanceStats(perfStats, if (hasHistory) perfHistory else null)) {
+                screenFps = perfStats[0]
+                avgFrametimeMs = perfStats[1]
+                worstFrametimeMs = perfStats[2]
+                gameFps = perfStats[3]
+                gameSpeed = perfStats[4]
+                totalPresents = perfStats[5].toLong()
+            }
+            if (hasHistory) {
+                lastSpikeReport = NativeBridge.getLastSpikeReport()
+            }
             if (fpsMode != FpsOverlayMode.HIDDEN) {
-                val hasHistory = (fpsMode == FpsOverlayMode.DETAILED_DEBUG)
-                if (NativeBridge.getPerformanceStats(perfStats, if (hasHistory) perfHistory else null)) {
-                    screenFps = perfStats[0]
-                    avgFrametimeMs = perfStats[1]
-                    worstFrametimeMs = perfStats[2]
-                    gameFps = perfStats[3]
-                    gameSpeed = perfStats[4]
-                    totalPresents = perfStats[5].toLong()
-                }
-                if (hasHistory) {
-                    lastSpikeReport = NativeBridge.getLastSpikeReport()
-                }
                 val curFpsInt = if (fpsMode == FpsOverlayMode.COMPACT) gameFps.toInt() else screenFps.toInt()
                 if (fpsMode == FpsOverlayMode.DETAILED_DEBUG || kotlin.math.abs(curFpsInt - lastDrawnFps) >= 1 || lastDrawnFps == 0) {
                     lastDrawnFps = curFpsInt
@@ -896,7 +828,6 @@ class TouchControllerOverlay(context: Context) : View(context) {
         super.onDetachedFromWindow()
         removeCallbacks(fpsUpdateRunnable)
         handler.removeCallbacks(swipeResetRunnable)
-        menuTouchHandler.release()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -907,7 +838,6 @@ class TouchControllerOverlay(context: Context) : View(context) {
         if (isMenuTouchActive) {
             NativeBridge.getMenuDebugInfo(menuDebugInfoArray)
             val screenId = menuDebugInfoArray[0]
-            lastKnownMenuScreenId = screenId
 
             // Draw visual debug hitboxes and telemetry HUD if enabled
             if (repo.showMenuDebugBoxes) {
@@ -982,24 +912,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
         }
     }
 
-    private fun resolveStickTexturesIfNeeded() {
-        if (!stickTexturesResolved) {
-            val base = textureManager.getTexture("STICK_BASE")
-            val knob = textureManager.getTexture("STICK_KNOB")
-            leftBaseTex = base
-            leftKnobTex = knob
-            rightBaseTex = textureManager.getTexture("RIGHT_STICK_BASE") ?: base
-            rightKnobTex = textureManager.getTexture("RIGHT_STICK_KNOB") ?: knob
-            stickTexturesResolved = true
-        }
-    }
-
     private fun drawButton(canvas: Canvas, btn: VirtualButton, bx: Float, by: Float, br: Float, isPressed: Boolean) {
-        if (!btn.bitmapResolved) {
-            btn.cachedBitmap = textureManager.getTexture(btn.id)
-            btn.bitmapResolved = true
-        }
-        val customTex = btn.cachedBitmap
+        val customTex = textureManager.getTexture(btn.id)
         if (customTex != null) {
             scratchRect.set(bx - br, by - br, bx + br, by + br)
             canvas.drawBitmap(customTex, null, scratchRect, if (isPressed) textureActivePaint else texturePaint)
@@ -1016,12 +930,11 @@ class TouchControllerOverlay(context: Context) : View(context) {
     }
 
     private fun drawLeftStick(canvas: Canvas, w: Float, h: Float) {
-        resolveStickTexturesIfNeeded()
         val lx = if (leftStickSticky || leftStickPointerId == -1) (w * leftBaseNormX) else leftCenterX
         val ly = if (leftStickSticky || leftStickPointerId == -1) (h * leftBaseNormY) else leftCenterY
         val stickRadius = 56f * density * leftStickScale
 
-        val baseTex = leftBaseTex
+        val baseTex = textureManager.getTexture("STICK_BASE")
         if (baseTex != null) {
             scratchRect.set(lx - stickRadius, ly - stickRadius, lx + stickRadius, ly + stickRadius)
             canvas.drawBitmap(baseTex, null, scratchRect, texturePaint)
@@ -1039,7 +952,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
         val lKnobY = if (leftStickPointerId != -1) leftCurrY else ly
         val knobRadius = 26f * density * leftStickScale
 
-        val knobTex = leftKnobTex
+        val knobTex = textureManager.getTexture("STICK_KNOB")
         if (knobTex != null) {
             scratchRect.set(lKnobX - knobRadius, lKnobY - knobRadius, lKnobX + knobRadius, lKnobY + knobRadius)
             canvas.drawBitmap(knobTex, null, scratchRect, if (leftStickPointerId != -1) textureActivePaint else texturePaint)
@@ -1054,12 +967,11 @@ class TouchControllerOverlay(context: Context) : View(context) {
     }
 
     private fun drawRightStick(canvas: Canvas, w: Float, h: Float) {
-        resolveStickTexturesIfNeeded()
         val rx = if (rightStickSticky || rightStickPointerId == -1) (w * rightBaseNormX) else rightCenterX
         val ry = if (rightStickSticky || rightStickPointerId == -1) (h * rightBaseNormY) else rightCenterY
         val rRadius = 48f * density * rightStickScale
 
-        val baseTex = rightBaseTex
+        val baseTex = textureManager.getTexture("RIGHT_STICK_BASE") ?: textureManager.getTexture("STICK_BASE")
         if (baseTex != null) {
             scratchRect.set(rx - rRadius, ry - rRadius, rx + rRadius, ry + rRadius)
             canvas.drawBitmap(baseTex, null, scratchRect, texturePaint)
@@ -1074,7 +986,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
         val rKnobY = if (rightStickPointerId != -1) rightCurrY else ry
         val knobRadius = 22f * density * rightStickScale
 
-        val knobTex = rightKnobTex
+        val knobTex = textureManager.getTexture("RIGHT_STICK_KNOB") ?: textureManager.getTexture("STICK_KNOB")
         if (knobTex != null) {
             scratchRect.set(rKnobX - knobRadius, rKnobY - knobRadius, rKnobX + knobRadius, rKnobY + knobRadius)
             canvas.drawBitmap(knobTex, null, scratchRect, if (rightStickPointerId != -1) textureActivePaint else texturePaint)
@@ -1210,11 +1122,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
             }
 
             // 4. Circular Back Button at bottom-right (except Screen 2: PAUSE ROOT)
-            if (lastKnownMenuScreenId < 0 || action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN) {
-                NativeBridge.getMenuDebugInfo(menuDebugInfoArray)
-                lastKnownMenuScreenId = menuDebugInfoArray[0]
-            }
-            val screenId = lastKnownMenuScreenId
+            NativeBridge.getMenuDebugInfo(menuDebugInfoArray)
+            val screenId = menuDebugInfoArray[0]
             if (screenId != 2) {
                 val backRadius = 22f * density
                 val backCx = w - 38f * density
@@ -1307,9 +1216,10 @@ class TouchControllerOverlay(context: Context) : View(context) {
                             val dx = x - rightCenterX
                             val dy = y - rightCenterY
                             val dist = hypot(dx, dy)
-                            val scale = if (dist > maxR && dist > 0.001f) maxR / dist else 1f
-                            rightCurrX = rightCenterX + dx * scale
-                            rightCurrY = rightCenterY + dy * scale
+                            val clamped = min(dist, maxR)
+                            val angle = atan2(dy, dx)
+                            rightCurrX = rightCenterX + cos(angle) * clamped
+                            rightCurrY = rightCenterY + sin(angle) * clamped
                             rightStickX = (dx / maxR).coerceIn(-1f, 1f)
                             rightStickY = (dy / maxR).coerceIn(-1f, 1f)
                             hapticTick()
@@ -1341,9 +1251,10 @@ class TouchControllerOverlay(context: Context) : View(context) {
                         val dx = x - leftCenterX
                         val dy = y - leftCenterY
                         val dist = hypot(dx, dy)
-                        val scale = if (dist > maxR && dist > 0.001f) maxR / dist else 1f
-                        leftCurrX = leftCenterX + dx * scale
-                        leftCurrY = leftCenterY + dy * scale
+                        val clamped = min(dist, maxR)
+                        val angle = atan2(dy, dx)
+                        leftCurrX = leftCenterX + cos(angle) * clamped
+                        leftCurrY = leftCenterY + sin(angle) * clamped
                         val rawY = (dy / maxR).coerceIn(-1f, 1f)
                         leftStickX = (dx / maxR).coerceIn(-1f, 1f)
                         leftStickY = rawY
@@ -1353,12 +1264,12 @@ class TouchControllerOverlay(context: Context) : View(context) {
                             if (isForward && !wasMovingForward && !isAutoRunPulsing) {
                                 wasMovingForward = true
                                 isAutoRunPulsing = true
-                                sendPadStateIfChanged(buttonMask, leftStickX, -1.0f, rightStickX, rightStickY, force = true)
+                                NativeBridge.updatePadState(buttonMask, leftStickX, -1.0f, rightStickX, rightStickY)
                                 runPulseHandler.postDelayed({
-                                    sendPadStateIfChanged(buttonMask, leftStickX, 0.0f, rightStickX, rightStickY, force = true)
+                                    NativeBridge.updatePadState(buttonMask, leftStickX, 0.0f, rightStickX, rightStickY)
                                     runPulseHandler.postDelayed({
                                         isAutoRunPulsing = false
-                                        sendPadStateIfChanged(buttonMask, leftStickX, leftStickY, rightStickX, rightStickY, force = true)
+                                        NativeBridge.updatePadState(buttonMask, leftStickX, leftStickY, rightStickX, rightStickY)
                                     }, 25L)
                                 }, 25L)
                             } else if (!isForward) {
@@ -1391,9 +1302,10 @@ class TouchControllerOverlay(context: Context) : View(context) {
                         val dx = x - leftCenterX
                         val dy = y - leftCenterY
                         val dist = hypot(dx, dy)
-                        val scale = if (dist > maxR && dist > 0.001f) maxR / dist else 1f
-                        leftCurrX = leftCenterX + dx * scale
-                        leftCurrY = leftCenterY + dy * scale
+                        val clamped = min(dist, maxR)
+                        val angle = atan2(dy, dx)
+                        leftCurrX = leftCenterX + cos(angle) * clamped
+                        leftCurrY = leftCenterY + sin(angle) * clamped
                         val rawY = (dy / maxR).coerceIn(-1f, 1f)
                         leftStickX = (dx / maxR).coerceIn(-1f, 1f)
                         leftStickY = rawY
@@ -1403,12 +1315,12 @@ class TouchControllerOverlay(context: Context) : View(context) {
                             if (isForward && !wasMovingForward && !isAutoRunPulsing) {
                                 wasMovingForward = true
                                 isAutoRunPulsing = true
-                                sendPadStateIfChanged(buttonMask, leftStickX, -1.0f, rightStickX, rightStickY, force = true)
+                                NativeBridge.updatePadState(buttonMask, leftStickX, -1.0f, rightStickX, rightStickY)
                                 runPulseHandler.postDelayed({
-                                    sendPadStateIfChanged(buttonMask, leftStickX, 0.0f, rightStickX, rightStickY, force = true)
+                                    NativeBridge.updatePadState(buttonMask, leftStickX, 0.0f, rightStickX, rightStickY)
                                     runPulseHandler.postDelayed({
                                         isAutoRunPulsing = false
-                                        sendPadStateIfChanged(buttonMask, leftStickX, leftStickY, rightStickX, rightStickY, force = true)
+                                        NativeBridge.updatePadState(buttonMask, leftStickX, leftStickY, rightStickX, rightStickY)
                                     }, 25L)
                                 }, 25L)
                             } else if (!isForward) {
@@ -1431,9 +1343,10 @@ class TouchControllerOverlay(context: Context) : View(context) {
                         val dx = x - rightCenterX
                         val dy = y - rightCenterY
                         val dist = hypot(dx, dy)
-                        val scale = if (dist > maxR && dist > 0.001f) maxR / dist else 1f
-                        rightCurrX = rightCenterX + dx * scale
-                        rightCurrY = rightCenterY + dy * scale
+                        val clamped = min(dist, maxR)
+                        val angle = atan2(dy, dx)
+                        rightCurrX = rightCenterX + cos(angle) * clamped
+                        rightCurrY = rightCenterY + sin(angle) * clamped
                         rightStickX = (dx / maxR).coerceIn(-1f, 1f)
                         rightStickY = (dy / maxR).coerceIn(-1f, 1f)
                     } else if (p == swipePointerId && dodgeMode == DODGE_MODE_SWIPE) {
@@ -1496,7 +1409,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
         val prevMask = buttonMask
         buttonMask = mask
         if (!isAutoRunPulsing) {
-            sendPadStateIfChanged(buttonMask, leftStickX, leftStickY, rightStickX, rightStickY)
+            NativeBridge.updatePadState(buttonMask, leftStickX, leftStickY, rightStickX, rightStickY)
         }
 
         val nowMs = android.os.SystemClock.uptimeMillis()
@@ -1992,9 +1905,9 @@ class TouchControllerOverlay(context: Context) : View(context) {
             }
             9, 11 -> { // STAGE MAP & PAUSE MAP (Custom Exported Bounds)
                 if (subState == 1) {
-                    addPooledBox(screenId, subState, 0, "[0] CONTINUE",     432.35242f, 177.55557f, 604.92410f, 217.19261f)
-                    addPooledBox(screenId, subState, 1, "[1] ENTER SHOP",   432.25125f, 224.94072f, 602.09106f, 262.60742f)
-                    addPooledBox(screenId, subState, 2, "[2] ENTER CASINO", 432.72340f, 267.29630f, 601.85500f, 305.58520f)
+                    addPooledBox(screenId, subState, 0, "[0] CONTINUE",     429.00000f, 224.00000f, 602.00000f, 263.00000f)
+                    addPooledBox(screenId, subState, 1, "[1] ENTER SHOP",   432.00000f, 266.00000f, 602.00000f, 303.00000f)
+                    addPooledBox(screenId, subState, 2, "[2] ENTER CASINO", 432.00000f, 312.00000f, 601.00000f, 350.00000f)
                 } else {
                     addPooledBox(screenId, subState, 0, "[0] SAVE",         432.35242f, 177.55557f, 604.92410f, 217.19261f)
                     addPooledBox(screenId, subState, 1, "[1] CONTINUE",     432.25125f, 224.94072f, 602.09106f, 262.60742f)
@@ -2410,6 +2323,20 @@ class TouchControllerOverlay(context: Context) : View(context) {
             val tag = if (isCustom) "/* CUSTOM */" else ""
             sb.append("    { $i, { ${res.left}f, ${res.top}f, ${res.right}f, ${res.bottom}f } }, $tag // [$i] ${mapLabels[i]}\n")
         }
+        sb.append("// SubState 1: Save Hidden\n")
+        val stageMapHiddenDefs = arrayOf(
+            RectF(429.0f, 224.0f, 602.0f, 263.0f),
+            RectF(432.0f, 266.0f, 602.0f, 303.0f),
+            RectF(432.0f, 312.0f, 601.0f, 350.0f)
+        )
+        val mapHiddenLabels = arrayOf("CONTINUE", "ENTER SHOP", "ENTER CASINO")
+        for (i in 0 until 3) {
+            val def = stageMapHiddenDefs[i]
+            val res = getResolved(9, 1, i, def.left, def.top, def.right, def.bottom)
+            val isCustom = (res.left != def.left || res.top != def.top || res.right != def.right || res.bottom != def.bottom)
+            val tag = if (isCustom) "/* CUSTOM */" else ""
+            sb.append("    { $i, { ${res.left}f, ${res.top}f, ${res.right}f, ${res.bottom}f } }, $tag // [$i] ${mapHiddenLabels[i]}\n")
+        }
 
         // 8. Modal Confirm Dialog (Screen 10)
         sb.append("\n// ==================== MODAL CONFIRM DIALOG (Screen 10) ====================\n")
@@ -2503,33 +2430,38 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 }
 
                 // Check handles of selected box
-                val aspectMode = repo.aspectIdx
                 if (selBox != null) {
-                    ps2ToScreenInto(selBox.x0, selBox.y0, w, h, aspectMode, scratchPoint1)
-                    ps2ToScreenInto(selBox.x1, selBox.y1, w, h, aspectMode, scratchPoint2)
-                    val p0x = scratchPoint1.x
-                    val p0y = scratchPoint1.y
-                    val p1x = scratchPoint2.x
-                    val p1y = scratchPoint2.y
-                    val mx = (p0x + p1x) * 0.5f
-                    val my = (p0y + p1y) * 0.5f
+                    val p0 = ps2ToScreen(selBox.x0, selBox.y0, w, h)
+                    val p1 = ps2ToScreen(selBox.x1, selBox.y1, w, h)
                     val handleRadius = 18f * density
 
-                    val matchedHandle = when {
-                        hypot(x - p0x, y - p0y) <= handleRadius -> CropHandle.TOP_LEFT
-                        hypot(x - p1x, y - p0y) <= handleRadius -> CropHandle.TOP_RIGHT
-                        hypot(x - p0x, y - p1y) <= handleRadius -> CropHandle.BOTTOM_LEFT
-                        hypot(x - p1x, y - p1y) <= handleRadius -> CropHandle.BOTTOM_RIGHT
-                        hypot(x - mx,  y - p0y) <= handleRadius -> CropHandle.TOP
-                        hypot(x - mx,  y - p1y) <= handleRadius -> CropHandle.BOTTOM
-                        hypot(x - p0x, y - my)  <= handleRadius -> CropHandle.LEFT
-                        hypot(x - p1x, y - my)  <= handleRadius -> CropHandle.RIGHT
-                        x in p0x..p1x && y in p0y..p1y -> CropHandle.BODY
-                        else -> null
+                    val handles = listOf(
+                        Pair(CropHandle.TOP_LEFT, PointF(p0.x, p0.y)),
+                        Pair(CropHandle.TOP_RIGHT, PointF(p1.x, p0.y)),
+                        Pair(CropHandle.BOTTOM_LEFT, PointF(p0.x, p1.y)),
+                        Pair(CropHandle.BOTTOM_RIGHT, PointF(p1.x, p1.y)),
+                        Pair(CropHandle.TOP, PointF((p0.x + p1.x) * 0.5f, p0.y)),
+                        Pair(CropHandle.BOTTOM, PointF((p0.x + p1.x) * 0.5f, p1.y)),
+                        Pair(CropHandle.LEFT, PointF(p0.x, (p0.y + p1.y) * 0.5f)),
+                        Pair(CropHandle.RIGHT, PointF(p1.x, (p0.y + p1.y) * 0.5f))
+                    )
+
+                    for ((handle, pt) in handles) {
+                        if (hypot(x - pt.x, y - pt.y) <= handleRadius) {
+                            cropDragPointerId = pid
+                            activeCropHandle = handle
+                            cropTouchStartX = x
+                            cropTouchStartY = y
+                            origBoxPs2.set(selBox.x0, selBox.y0, selBox.x1, selBox.y1)
+                            invalidate()
+                            return true
+                        }
                     }
-                    if (matchedHandle != null) {
+
+                    // Check if touching inside selected box to move BODY
+                    if (x in p0.x..p1.x && y in p0.y..p1.y) {
                         cropDragPointerId = pid
-                        activeCropHandle = matchedHandle
+                        activeCropHandle = CropHandle.BODY
                         cropTouchStartX = x
                         cropTouchStartY = y
                         origBoxPs2.set(selBox.x0, selBox.y0, selBox.x1, selBox.y1)
@@ -2540,9 +2472,9 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
                 // Check if tapping any other box on screen to select it
                 for (b in currentScreenBoxes) {
-                    ps2ToScreenInto(b.x0, b.y0, w, h, aspectMode, scratchPoint1)
-                    ps2ToScreenInto(b.x1, b.y1, w, h, aspectMode, scratchPoint2)
-                    if (x in scratchPoint1.x..scratchPoint2.x && y in scratchPoint1.y..scratchPoint2.y) {
+                    val p0 = ps2ToScreen(b.x0, b.y0, w, h)
+                    val p1 = ps2ToScreen(b.x1, b.y1, w, h)
+                    if (x in p0.x..p1.x && y in p0.y..p1.y) {
                         selectedBoxId = b.id
                         cropDragPointerId = -1
                         activeCropHandle = null
@@ -2559,10 +2491,10 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
             MotionEvent.ACTION_MOVE -> {
                 if (cropDragPointerId == pid && activeCropHandle != null && selBox != null) {
-                    screenToPs2Into(x, y, w, h, scratchPoint1)
-                    screenToPs2Into(cropTouchStartX, cropTouchStartY, w, h, scratchPoint2)
-                    val dx = scratchPoint1.x - scratchPoint2.x
-                    val dy = scratchPoint1.y - scratchPoint2.y
+                    val curPs2 = screenToPs2(x, y, w, h)
+                    val startPs2 = screenToPs2(cropTouchStartX, cropTouchStartY, w, h)
+                    val dx = curPs2.x - startPs2.x
+                    val dy = curPs2.y - startPs2.y
 
                     var nX0 = origBoxPs2.left
                     var nY0 = origBoxPs2.top

@@ -6064,7 +6064,7 @@ void GSTextureCache::ReplaceSourceTexture(Source* s, GSTexture* new_texture, flo
 void GSTextureCache::IncAge()
 {
 	static constexpr int max_age = 3;
-	static constexpr int max_preload_age = 30;
+	static constexpr int max_preload_age = 180;
 
 	// You can't use m_map[page] because Source* are duplicated on several pages.
 	for (auto i = m_src.m_surfaces.begin(); i != m_src.m_surfaces.end();)
@@ -7231,8 +7231,8 @@ void GSTextureCache::AgeHashCache()
 	// A game called Corvette draws its background FMVs with a ton of 17x17 tiles, which ends up
 	// being about 600 texture uploads per frame. We'll use 800 as an upper bound for a bit of
 	// a buffer, hopefully nothing's going to end up with more textures than that.
-	constexpr u32 MAX_HASH_CACHE_SIZE = 800;
-	constexpr u32 MAX_HASH_CACHE_AGE = 30;
+	constexpr u32 MAX_HASH_CACHE_SIZE = 1600;
+	constexpr u32 MAX_HASH_CACHE_AGE = 180;
 
 	bool might_need_cache_purge = (m_hash_cache.size() > MAX_HASH_CACHE_SIZE);
 	if (might_need_cache_purge)
