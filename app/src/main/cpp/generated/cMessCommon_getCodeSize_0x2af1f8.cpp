@@ -18,13 +18,10 @@ void cMessCommon_getCodeSize_0x2af1f8(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("cMessCommon_getCodeSize_0x2af1f8");
 #endif
 
-    ctx->pc = 0x2af1f8u;
 
     // 0x2af1f8: 0x3084ffff  andi        $a0, $a0, 0xFFFF
-    ctx->pc = 0x2af1f8u;
     SET_GPR_U64(ctx, 4, GPR_U64(ctx, 4) & (uint64_t)(uint16_t)65535);
     // 0x2af1fc: 0x413c2  srl         $v0, $a0, 15
-    ctx->pc = 0x2af1fcu;
     SET_GPR_S32(ctx, 2, (int32_t)SRL32(GPR_U32(ctx, 4), 15));
     // 0x2af200: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x2AF200u;
@@ -41,7 +38,6 @@ void cMessCommon_getCodeSize_0x2af1f8(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_2af210;
         }
     }
-    ctx->pc = 0x2AF208u;
     // 0x2af208: 0x3e00008  jr          $ra
     ctx->pc = 0x2AF208u;
     {

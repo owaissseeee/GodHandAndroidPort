@@ -18,10 +18,8 @@ void func_002813F0_0x2813f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002813F0_0x2813f0");
 #endif
 
-    ctx->pc = 0x2813f0u;
 
     // 0x2813f0: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2813f0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2813f4: 0x10a2000d  beq         $a1, $v0, . + 4 + (0xD << 2)
     ctx->pc = 0x2813F4u;
@@ -38,7 +36,6 @@ void func_002813F0_0x2813f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_28142c;
         }
     }
-    ctx->pc = 0x2813FCu;
     // 0x2813fc: 0x10a00005  beqz        $a1, . + 4 + (0x5 << 2)
     ctx->pc = 0x2813FCu;
     {
@@ -54,7 +51,6 @@ void func_002813F0_0x2813f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_281414;
         }
     }
-    ctx->pc = 0x281404u;
     // 0x281404: 0x10a2000b  beq         $a1, $v0, . + 4 + (0xB << 2)
     ctx->pc = 0x281404u;
     {
@@ -70,7 +66,6 @@ void func_002813F0_0x2813f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_281434;
         }
     }
-    ctx->pc = 0x28140Cu;
     // 0x28140c: 0x10a2000c  beq         $a1, $v0, . + 4 + (0xC << 2)
     ctx->pc = 0x28140Cu;
     {
@@ -89,7 +84,6 @@ void func_002813F0_0x2813f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x281414u;
 label_281414:
     // 0x281414: 0x2402000a  addiu       $v0, $zero, 0xA
-    ctx->pc = 0x281414u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 10));
     // 0x281418: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x281418u;
@@ -139,7 +133,6 @@ label_28142c:
     ctx->pc = 0x281434u;
 label_281434:
     // 0x281434: 0x2402000a  addiu       $v0, $zero, 0xA
-    ctx->pc = 0x281434u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 10));
     // 0x281438: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x281438u;

@@ -18,19 +18,14 @@ void PushGlobalD8478History_331C78_0x331c78(uint8_t* rdram, R5900Context* ctx, P
     PS_LOG_ENTRY("PushGlobalD8478History_331C78_0x331c78");
 #endif
 
-    ctx->pc = 0x331c78u;
 
     // 0x331c78: 0x3c03003e  lui         $v1, 0x3E
-    ctx->pc = 0x331c78u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)62 << 16));
     // 0x331c7c: 0x3c02003e  lui         $v0, 0x3E
-    ctx->pc = 0x331c7cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)62 << 16));
     // 0x331c80: 0x2463847c  addiu       $v1, $v1, -0x7B84
-    ctx->pc = 0x331c80u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294935676));
     // 0x331c84: 0x24428478  addiu       $v0, $v0, -0x7B88
-    ctx->pc = 0x331c84u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294935672));
     // 0x331c88: 0x8c650000  lw          $a1, 0x0($v1)
     ctx->pc = 0x331c88u;

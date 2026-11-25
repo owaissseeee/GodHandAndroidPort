@@ -18,7 +18,6 @@ void cOl2c_isFire_0x1815d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("cOl2c_isFire_0x1815d8");
 #endif
 
-    ctx->pc = 0x1815d8u;
 
     // 0x1815d8: 0x3e00008  jr          $ra
     ctx->pc = 0x1815D8u;

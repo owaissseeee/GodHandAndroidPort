@@ -18,16 +18,13 @@ void func_0027DD10_0x27dd10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0027DD10_0x27dd10");
 #endif
 
-    ctx->pc = 0x27dd10u;
 
     // 0x27dd10: 0xc48015b4  lwc1        $f0, 0x15B4($a0)
     ctx->pc = 0x27dd10u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 5556)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x27dd14: 0x460c0034  c.lt.s      $f0, $f12
-    ctx->pc = 0x27dd14u;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[0], ctx->f[12])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x27dd18: 0x0  nop
-    ctx->pc = 0x27dd18u;
     // NOP
     // 0x27dd1c: 0x45030001  bc1tl       . + 4 + (0x1 << 2)
     ctx->pc = 0x27DD1Cu;
@@ -59,15 +56,11 @@ label_27dd24:
         return;
         #endif
     }
-    ctx->pc = 0x27DD2Cu;
     // 0x27dd2c: 0x0  nop
-    ctx->pc = 0x27dd2cu;
     // NOP
     // 0x27dd30: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x27dd30u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x27dd34: 0x0  nop
-    ctx->pc = 0x27dd34u;
     // NOP
     ctx->pc = 0x27dd38u;
 }

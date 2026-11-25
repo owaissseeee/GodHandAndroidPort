@@ -18,10 +18,8 @@ void func_0032ABB0_0x32abb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0032ABB0_0x32abb0");
 #endif
 
-    ctx->pc = 0x32abb0u;
 
     // 0x32abb0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x32abb0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x32abb4: 0x14800006  bnez        $a0, . + 4 + (0x6 << 2)
     ctx->pc = 0x32ABB4u;
@@ -38,19 +36,14 @@ void func_0032ABB0_0x32abb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_32abd0;
         }
     }
-    ctx->pc = 0x32ABBCu;
     // 0x32abbc: 0x3c040045  lui         $a0, 0x45
-    ctx->pc = 0x32abbcu;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)69 << 16));
     // 0x32abc0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x32abc0u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x32abc4: 0x24842318  addiu       $a0, $a0, 0x2318
-    ctx->pc = 0x32abc4u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 8984));
     // 0x32abc8: 0x80cfc4c  j           func_33F130
-    ctx->pc = 0x32ABC8u;
-    ctx->pc = 0x32ABCCu;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x32ABC8u;
     // 0x32abcc: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)
@@ -66,7 +59,6 @@ label_32abd0:
     ctx->pc = 0x32abd0u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x32abd4: 0x3c02003d  lui         $v0, 0x3D
-    ctx->pc = 0x32abd4u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)61 << 16));
     // 0x32abd8: 0xac850038  sw          $a1, 0x38($a0)
     ctx->pc = 0x32abd8u;

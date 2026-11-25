@@ -18,7 +18,6 @@ void cParts_setRotationOrder_0x150128(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("cParts_setRotationOrder_0x150128");
 #endif
 
-    ctx->pc = 0x150128u;
 
     // 0x150128: 0x3e00008  jr          $ra
     ctx->pc = 0x150128u;
@@ -39,12 +38,9 @@ void cParts_setRotationOrder_0x150128(uint8_t* rdram, R5900Context* ctx, PS2Runt
         return;
         #endif
     }
-    ctx->pc = 0x150130u;
     // 0x150130: 0x27bd0050  addiu       $sp, $sp, 0x50
-    ctx->pc = 0x150130u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 80));
     // 0x150134: 0x0  nop
-    ctx->pc = 0x150134u;
     // NOP
     ctx->pc = 0x150138u;
 }

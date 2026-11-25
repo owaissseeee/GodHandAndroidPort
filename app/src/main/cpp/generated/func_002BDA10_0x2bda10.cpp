@@ -18,7 +18,6 @@ void func_002BDA10_0x2bda10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002BDA10_0x2bda10");
 #endif
 
-    ctx->pc = 0x2bda10u;
 
     // 0x2bda10: 0x3e00008  jr          $ra
     ctx->pc = 0x2BDA10u;
@@ -39,12 +38,9 @@ void func_002BDA10_0x2bda10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2BDA18u;
     // 0x2bda18: 0x27bd00e0  addiu       $sp, $sp, 0xE0
-    ctx->pc = 0x2bda18u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 224));
     // 0x2bda1c: 0x0  nop
-    ctx->pc = 0x2bda1cu;
     // NOP
     ctx->pc = 0x2bda20u;
 }

@@ -18,15 +18,15 @@ void cAreaCamManager_SetData_0x137ae8(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("cAreaCamManager_SetData_0x137ae8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x137ba4u: goto label_137ba4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x137ae8u, 0)) {
+        switch (ctx->pc) {
+            case 0x137ba4u: goto label_137ba4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x137ae8u;
 
     // 0x137ae8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x137ae8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x137aec: 0x10a0002b  beqz        $a1, . + 4 + (0x2B << 2)
     ctx->pc = 0x137AECu;
@@ -43,7 +43,6 @@ void cAreaCamManager_SetData_0x137ae8(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_137b9c;
         }
     }
-    ctx->pc = 0x137AF4u;
     // 0x137af4: 0x68a20007  ldl         $v0, 0x7($a1)
     ctx->pc = 0x137af4u;
     { uint32_t addr = ADD32(GPR_U32(ctx, 5), 7); uint32_t aligned_addr = addr & ~7u; uint32_t offset = addr & 7u; uint64_t mem = READ64(aligned_addr); uint32_t shift = (7u - offset) << 3; uint64_t keepMask = (shift == 0) ? 0ull : ((1ull << shift) - 1ull); SET_GPR_U64(ctx, 2, (GPR_U64(ctx, 2) & keepMask) | (mem << shift)); }
@@ -117,13 +116,11 @@ void cAreaCamManager_SetData_0x137ae8(uint8_t* rdram, R5900Context* ctx, PS2Runt
     ctx->pc = 0x137b50u;
     { uint32_t addr = ADD32(GPR_U32(ctx, 4), 44); uint32_t aligned_addr = addr & ~3u; uint32_t offset = addr & 3u; uint32_t shift = offset << 3; uint32_t mask = 0xFFFFFFFFu << shift; uint32_t old_data = READ32(aligned_addr); uint32_t val = GPR_U32(ctx, 3); uint32_t new_data = (old_data & ~mask) | ((val << shift) & mask); WRITE32(aligned_addr, new_data); }
     // 0x137b54: 0x3c020044  lui         $v0, 0x44
-    ctx->pc = 0x137b54u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)68 << 16));
     // 0x137b58: 0x8c830004  lw          $v1, 0x4($a0)
     ctx->pc = 0x137b58u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4)));
     // 0x137b5c: 0x34424341  ori         $v0, $v0, 0x4341
-    ctx->pc = 0x137b5cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)17217);
     // 0x137b60: 0x1462000e  bne         $v1, $v0, . + 4 + (0xE << 2)
     ctx->pc = 0x137B60u;
@@ -140,7 +137,6 @@ void cAreaCamManager_SetData_0x137ae8(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_137b9c;
         }
     }
-    ctx->pc = 0x137B68u;
     // 0x137b68: 0x8c830008  lw          $v1, 0x8($a0)
     ctx->pc = 0x137b68u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 8)));
@@ -159,18 +155,13 @@ void cAreaCamManager_SetData_0x137ae8(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_137b90;
         }
     }
-    ctx->pc = 0x137B74u;
     // 0x137b74: 0x3c013f87  lui         $at, 0x3F87
-    ctx->pc = 0x137b74u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16263 << 16));
     // 0x137b78: 0x3421ae14  ori         $at, $at, 0xAE14
-    ctx->pc = 0x137b78u;
     SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)44564);
     // 0x137b7c: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x137b7cu;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x137b80: 0x24a20018  addiu       $v0, $a1, 0x18
-    ctx->pc = 0x137b80u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 5), 24));
     // 0x137b84: 0xac820000  sw          $v0, 0x0($a0)
     ctx->pc = 0x137b84u;
@@ -216,8 +207,7 @@ label_137b9c:
     // 0x137b9c: 0xc04dea8  jal         func_137AA0
     ctx->pc = 0x137B9Cu;
     SET_GPR_U32(ctx, 31, 0x137BA4u);
-    ctx->pc = 0x137AA0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x137AA0u, 0x137B9Cu, 0x137BA4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &InitStructDefaults_137AA0_0x137aa0, 0x137aa0u, 0x137ba4u)) {
         return;
     }
     ctx->pc = 0x137BA4u;
@@ -248,9 +238,7 @@ label_137ba8:
         return;
         #endif
     }
-    ctx->pc = 0x137BB4u;
     // 0x137bb4: 0x0  nop
-    ctx->pc = 0x137bb4u;
     // NOP
     ctx->pc = 0x137bb8u;
 }

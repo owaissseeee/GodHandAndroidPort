@@ -18,7 +18,6 @@ void cMessDrawFont_setBodyData_0x2af628(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("cMessDrawFont_setBodyData_0x2af628");
 #endif
 
-    ctx->pc = 0x2af628u;
 
     // 0x2af628: 0xac870010  sw          $a3, 0x10($a0)
     ctx->pc = 0x2af628u;

@@ -18,10 +18,8 @@ void func_002BE550_0x2be550(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002BE550_0x2be550");
 #endif
 
-    ctx->pc = 0x2be550u;
 
     // 0x2be550: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x2be550u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2be554: 0xac800000  sw          $zero, 0x0($a0)
     ctx->pc = 0x2be554u;

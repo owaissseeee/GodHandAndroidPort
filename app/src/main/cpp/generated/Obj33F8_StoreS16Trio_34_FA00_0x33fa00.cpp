@@ -18,7 +18,6 @@ void Obj33F8_StoreS16Trio_34_FA00_0x33fa00(uint8_t* rdram, R5900Context* ctx, PS
     PS_LOG_ENTRY("Obj33F8_StoreS16Trio_34_FA00_0x33fa00");
 #endif
 
-    ctx->pc = 0x33fa00u;
 
     // 0x33fa00: 0xa4870038  sh          $a3, 0x38($a0)
     ctx->pc = 0x33fa00u;

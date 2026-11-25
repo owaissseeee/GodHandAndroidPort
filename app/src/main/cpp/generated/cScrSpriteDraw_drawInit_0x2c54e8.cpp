@@ -18,22 +18,16 @@ void cScrSpriteDraw_drawInit_0x2c54e8(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("cScrSpriteDraw_drawInit_0x2c54e8");
 #endif
 
-    ctx->pc = 0x2c54e8u;
 
     // 0x2c54e8: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x2c54e8u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
     // 0x2c54ec: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x2c54ecu;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x2c54f0: 0x24030005  addiu       $v1, $zero, 0x5
-    ctx->pc = 0x2c54f0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 5));
     // 0x2c54f4: 0x24050006  addiu       $a1, $zero, 0x6
-    ctx->pc = 0x2c54f4u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
     // 0x2c54f8: 0x3402ffff  ori         $v0, $zero, 0xFFFF
-    ctx->pc = 0x2c54f8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     // 0x2c54fc: 0xe4800008  swc1        $f0, 0x8($a0)
     ctx->pc = 0x2c54fcu;
@@ -84,27 +78,20 @@ void cScrSpriteDraw_drawInit_0x2c54e8(uint8_t* rdram, R5900Context* ctx, PS2Runt
         return;
         #endif
     }
-    ctx->pc = 0x2C552Cu;
     // 0x2c552c: 0x0  nop
-    ctx->pc = 0x2c552cu;
     // NOP
     // 0x2c5530: 0xac850000  sw          $a1, 0x0($a0)
     ctx->pc = 0x2c5530u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 0), GPR_U32(ctx, 5));
     // 0x2c5534: 0x0  nop
-    ctx->pc = 0x2c5534u;
     // NOP
     // 0x2c5538: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x2c5538u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x2c553c: 0x0  nop
-    ctx->pc = 0x2c553cu;
     // NOP
     // 0x2c5540: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x2c5540u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x2c5544: 0x0  nop
-    ctx->pc = 0x2c5544u;
     // NOP
     ctx->pc = 0x2c5548u;
 }

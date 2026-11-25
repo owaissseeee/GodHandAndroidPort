@@ -18,7 +18,6 @@ void func_002FBE10_0x2fbe10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002FBE10_0x2fbe10");
 #endif
 
-    ctx->pc = 0x2fbe10u;
 
     // 0x2fbe10: 0x3e00008  jr          $ra
     ctx->pc = 0x2FBE10u;

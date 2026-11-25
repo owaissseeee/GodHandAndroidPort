@@ -18,18 +18,20 @@ void ps2___terminate_0x320280(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("ps2___terminate_0x320280");
 #endif
 
-    switch (ctx->pc) {
-        case 0x320280u: goto label_320280;
-        case 0x320284u: goto label_320284;
-        case 0x320288u: goto label_320288;
-        case 0x32028cu: goto label_32028c;
-        case 0x320290u: goto label_320290;
-        case 0x320294u: goto label_320294;
-        case 0x320298u: goto label_320298;
-        case 0x32029cu: goto label_32029c;
-        case 0x3202a0u: goto label_3202a0;
-        case 0x3202a4u: goto label_3202a4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x320280u, 0)) {
+        switch (ctx->pc) {
+            case 0x320280u: goto label_320280;
+            case 0x320284u: goto label_320284;
+            case 0x320288u: goto label_320288;
+            case 0x32028cu: goto label_32028c;
+            case 0x320290u: goto label_320290;
+            case 0x320294u: goto label_320294;
+            case 0x320298u: goto label_320298;
+            case 0x32029cu: goto label_32029c;
+            case 0x3202a0u: goto label_3202a0;
+            case 0x3202a4u: goto label_3202a4;
+            default: break;
+        }
     }
 
     ctx->pc = 0x320280u;
@@ -105,7 +107,6 @@ label_3202a0:
     ctx->pc = 0x3202A4u;
 label_3202a4:
     // 0x3202a4: 0x0  nop
-    ctx->pc = 0x3202a4u;
     // NOP
     ctx->pc = 0x3202a8u;
 }

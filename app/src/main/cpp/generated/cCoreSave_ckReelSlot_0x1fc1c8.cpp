@@ -18,13 +18,14 @@ void cCoreSave_ckReelSlot_0x1fc1c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("cCoreSave_ckReelSlot_0x1fc1c8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1fc1dcu: goto label_1fc1dc;
-        case 0x1fc1f0u: goto label_1fc1f0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1fc1c8u, 0)) {
+        switch (ctx->pc) {
+            case 0x1fc1dcu: goto label_1fc1dc;
+            case 0x1fc1f0u: goto label_1fc1f0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1fc1c8u;
 
     // 0x1fc1c8: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x1fc1c8u;
@@ -44,7 +45,6 @@ void cCoreSave_ckReelSlot_0x1fc1c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_1fc1e4;
         }
     }
-    ctx->pc = 0x1FC1D4u;
     // 0x1fc1d4: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC1D4u;
     {
@@ -88,10 +88,8 @@ label_1fc1dc:
     ctx->pc = 0x1FC1E4u;
 label_1fc1e4:
     // 0x1fc1e4: 0x302d  daddu       $a2, $zero, $zero
-    ctx->pc = 0x1fc1e4u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1fc1e8: 0x861021  addu        $v0, $a0, $a2
-    ctx->pc = 0x1fc1e8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 6)));
     // 0x1fc1ec: 0x0  nop
     ctx->pc = 0x1fc1ecu;
@@ -118,9 +116,7 @@ label_1fc1f0:
             goto label_1fc1dc;
         }
     }
-    ctx->pc = 0x1FC1FCu;
     // 0x1fc1fc: 0x2cc2000a  sltiu       $v0, $a2, 0xA
-    ctx->pc = 0x1fc1fcu;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 6) < (uint64_t)(int64_t)(int32_t)10) ? 1 : 0);
     // 0x1fc200: 0x1440fffb  bnez        $v0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x1FC200u;
@@ -140,7 +136,6 @@ label_1fc1f0:
             goto label_1fc1f0;
         }
     }
-    ctx->pc = 0x1FC208u;
     // 0x1fc208: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC208u;
     {

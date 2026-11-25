@@ -18,11 +18,8 @@ void func_003A0F80_0x3a0f80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_003A0F80_0x3a0f80");
 #endif
 
-    ctx->pc = 0x3a0f80u;
 
     // 0x3a0f80: 0x80e8388  j           func_3A0E20
-    ctx->pc = 0x3A0F80u;
-    ctx->pc = 0x3A0F84u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x3A0F80u;
     // 0x3a0f84: 0x24050020  addiu       $a1, $zero, 0x20 (Delay Slot)

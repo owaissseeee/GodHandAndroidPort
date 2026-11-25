@@ -18,15 +18,15 @@ void pl00_CannonGameMode_0x10bcc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("pl00_CannonGameMode_0x10bcc0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x10bcf8u: goto label_10bcf8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x10bcc0u, 0)) {
+        switch (ctx->pc) {
+            case 0x10bcf8u: goto label_10bcf8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x10bcc0u;
 
     // 0x10bcc0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x10bcc0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x10bcc4: 0x10a0000a  beqz        $a1, . + 4 + (0xA << 2)
     ctx->pc = 0x10BCC4u;
@@ -43,15 +43,11 @@ void pl00_CannonGameMode_0x10bcc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_10bcf0;
         }
     }
-    ctx->pc = 0x10BCCCu;
     // 0x10bccc: 0x3c0140a0  lui         $at, 0x40A0
-    ctx->pc = 0x10bcccu;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16544 << 16));
     // 0x10bcd0: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x10bcd0u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x10bcd4: 0x24020006  addiu       $v0, $zero, 0x6
-    ctx->pc = 0x10bcd4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
     // 0x10bcd8: 0xa08202f4  sb          $v0, 0x2F4($a0)
     ctx->pc = 0x10bcd8u;
@@ -85,8 +81,7 @@ label_10bcf0:
     // 0x10bcf0: 0xc04b106  jal         func_12C418
     ctx->pc = 0x10BCF0u;
     SET_GPR_U32(ctx, 31, 0x10BCF8u);
-    ctx->pc = 0x12C418u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x12C418u, 0x10BCF0u, 0x10BCF8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &pl00_reset_0x12c418, 0x12c418u, 0x10bcf8u)) {
         return;
     }
     ctx->pc = 0x10BCF8u;
@@ -113,9 +108,7 @@ label_10bcf8:
         return;
         #endif
     }
-    ctx->pc = 0x10BD04u;
     // 0x10bd04: 0x0  nop
-    ctx->pc = 0x10bd04u;
     // NOP
     ctx->pc = 0x10bd08u;
 }

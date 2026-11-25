@@ -18,22 +18,18 @@ void ClearStateAndFlag_1C7E08_0x1c7e08(uint8_t* rdram, R5900Context* ctx, PS2Run
     PS_LOG_ENTRY("ClearStateAndFlag_1C7E08_0x1c7e08");
 #endif
 
-    ctx->pc = 0x1c7e08u;
 
     // 0x1c7e08: 0x8c8305b8  lw          $v1, 0x5B8($a0)
     ctx->pc = 0x1c7e08u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 1464)));
     // 0x1c7e0c: 0x2405ffbf  addiu       $a1, $zero, -0x41
-    ctx->pc = 0x1c7e0cu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967231));
     // 0x1c7e10: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1c7e10u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1c7e14: 0xa08002f4  sb          $zero, 0x2F4($a0)
     ctx->pc = 0x1c7e14u;
     WRITE8(ADD32(GPR_U32(ctx, 4), 756), (uint8_t)GPR_U32(ctx, 0));
     // 0x1c7e18: 0x651824  and         $v1, $v1, $a1
-    ctx->pc = 0x1c7e18u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 5));
     // 0x1c7e1c: 0xa08002f5  sb          $zero, 0x2F5($a0)
     ctx->pc = 0x1c7e1cu;

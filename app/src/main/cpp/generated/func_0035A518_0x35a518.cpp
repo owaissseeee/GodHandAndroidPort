@@ -18,7 +18,6 @@ void func_0035A518_0x35a518(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0035A518_0x35a518");
 #endif
 
-    ctx->pc = 0x35a518u;
 
     // 0x35a518: 0xa480001e  sh          $zero, 0x1E($a0)
     ctx->pc = 0x35a518u;

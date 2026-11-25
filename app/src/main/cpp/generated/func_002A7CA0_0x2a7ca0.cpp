@@ -18,10 +18,8 @@ void func_002A7CA0_0x2a7ca0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002A7CA0_0x2a7ca0");
 #endif
 
-    ctx->pc = 0x2a7ca0u;
 
     // 0x2a7ca0: 0x24820520  addiu       $v0, $a0, 0x520
-    ctx->pc = 0x2a7ca0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 1312));
     // 0x2a7ca4: 0x10a20007  beq         $a1, $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x2A7CA4u;
@@ -32,7 +30,6 @@ void func_002A7CA0_0x2a7ca0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2a7cc4;
         }
     }
-    ctx->pc = 0x2A7CACu;
     // 0x2a7cac: 0xc4800520  lwc1        $f0, 0x520($a0)
     ctx->pc = 0x2a7cacu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 1312)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -71,9 +68,7 @@ label_2a7cc4:
         return;
         #endif
     }
-    ctx->pc = 0x2A7CCCu;
     // 0x2a7ccc: 0x0  nop
-    ctx->pc = 0x2a7cccu;
     // NOP
     ctx->pc = 0x2a7cd0u;
 }

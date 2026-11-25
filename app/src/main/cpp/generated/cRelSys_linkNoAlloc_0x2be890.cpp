@@ -18,24 +18,22 @@ void cRelSys_linkNoAlloc_0x2be890(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("cRelSys_linkNoAlloc_0x2be890");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2be8a4u: goto label_2be8a4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2be890u, 0)) {
+        switch (ctx->pc) {
+            case 0x2be8a4u: goto label_2be8a4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2be890u;
 
     // 0x2be890: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2be890u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2be894: 0x738c0  sll         $a3, $a3, 3
-    ctx->pc = 0x2be894u;
     SET_GPR_S32(ctx, 7, (int32_t)SLL32(GPR_U32(ctx, 7), 3));
     // 0x2be898: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2be898u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2be89c: 0xc0af98c  jal         func_2BE630
-    ctx->pc = 0x2BE89Cu;
     SET_GPR_U32(ctx, 31, 0x2BE8A4u);
     ctx->pc = 0x2BE8A0u;
     ctx->in_delay_slot = true;
@@ -43,8 +41,7 @@ void cRelSys_linkNoAlloc_0x2be890(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     // 0x2be8a0: 0x872021  addu        $a0, $a0, $a3 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 7)));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2BE630u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2BE630u, 0x2BE89Cu, 0x2BE8A4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &SetValueAndValidate_2BE630_0x2be630, 0x2be630u, 0x2be8a4u)) {
         return;
     }
     ctx->pc = 0x2BE8A4u;

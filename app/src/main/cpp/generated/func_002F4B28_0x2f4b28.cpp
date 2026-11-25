@@ -18,7 +18,6 @@ void func_002F4B28_0x2f4b28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002F4B28_0x2f4b28");
 #endif
 
-    ctx->pc = 0x2f4b28u;
 
     // 0x2f4b28: 0x3e00008  jr          $ra
     ctx->pc = 0x2F4B28u;

@@ -18,7 +18,6 @@ void SetField_104_13E3F8_0x13e3f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("SetField_104_13E3F8_0x13e3f8");
 #endif
 
-    ctx->pc = 0x13e3f8u;
 
     // 0x13e3f8: 0x3e00008  jr          $ra
     ctx->pc = 0x13E3F8u;

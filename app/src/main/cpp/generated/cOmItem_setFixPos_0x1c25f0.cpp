@@ -18,24 +18,26 @@ void cOmItem_setFixPos_0x1c25f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("cOmItem_setFixPos_0x1c25f0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1c25f0u: goto label_1c25f0;
-        case 0x1c25f4u: goto label_1c25f4;
-        case 0x1c25f8u: goto label_1c25f8;
-        case 0x1c25fcu: goto label_1c25fc;
-        case 0x1c2600u: goto label_1c2600;
-        case 0x1c2604u: goto label_1c2604;
-        case 0x1c2608u: goto label_1c2608;
-        case 0x1c260cu: goto label_1c260c;
-        case 0x1c2610u: goto label_1c2610;
-        case 0x1c2614u: goto label_1c2614;
-        case 0x1c2618u: goto label_1c2618;
-        case 0x1c261cu: goto label_1c261c;
-        case 0x1c2620u: goto label_1c2620;
-        case 0x1c2624u: goto label_1c2624;
-        case 0x1c2628u: goto label_1c2628;
-        case 0x1c262cu: goto label_1c262c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1c25f0u, 0)) {
+        switch (ctx->pc) {
+            case 0x1c25f0u: goto label_1c25f0;
+            case 0x1c25f4u: goto label_1c25f4;
+            case 0x1c25f8u: goto label_1c25f8;
+            case 0x1c25fcu: goto label_1c25fc;
+            case 0x1c2600u: goto label_1c2600;
+            case 0x1c2604u: goto label_1c2604;
+            case 0x1c2608u: goto label_1c2608;
+            case 0x1c260cu: goto label_1c260c;
+            case 0x1c2610u: goto label_1c2610;
+            case 0x1c2614u: goto label_1c2614;
+            case 0x1c2618u: goto label_1c2618;
+            case 0x1c261cu: goto label_1c261c;
+            case 0x1c2620u: goto label_1c2620;
+            case 0x1c2624u: goto label_1c2624;
+            case 0x1c2628u: goto label_1c2628;
+            case 0x1c262cu: goto label_1c262c;
+            default: break;
+        }
     }
 
     ctx->pc = 0x1c25f0u;

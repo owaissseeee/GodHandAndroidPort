@@ -18,18 +18,20 @@ void sputn__9streambufPCcl_0x38ba88(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("sputn__9streambufPCcl_0x38ba88");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38ba88u: goto label_38ba88;
-        case 0x38ba8cu: goto label_38ba8c;
-        case 0x38ba90u: goto label_38ba90;
-        case 0x38ba94u: goto label_38ba94;
-        case 0x38ba98u: goto label_38ba98;
-        case 0x38ba9cu: goto label_38ba9c;
-        case 0x38baa0u: goto label_38baa0;
-        case 0x38baa4u: goto label_38baa4;
-        case 0x38baa8u: goto label_38baa8;
-        case 0x38baacu: goto label_38baac;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38ba88u, 0)) {
+        switch (ctx->pc) {
+            case 0x38ba88u: goto label_38ba88;
+            case 0x38ba8cu: goto label_38ba8c;
+            case 0x38ba90u: goto label_38ba90;
+            case 0x38ba94u: goto label_38ba94;
+            case 0x38ba98u: goto label_38ba98;
+            case 0x38ba9cu: goto label_38ba9c;
+            case 0x38baa0u: goto label_38baa0;
+            case 0x38baa4u: goto label_38baa4;
+            case 0x38baa8u: goto label_38baa8;
+            case 0x38baacu: goto label_38baac;
+            default: break;
+        }
     }
 
     ctx->pc = 0x38ba88u;

@@ -18,15 +18,15 @@ void cCoreSave_loadWorldToggle_0x1f9e68(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("cCoreSave_loadWorldToggle_0x1f9e68");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1f9e84u: goto label_1f9e84;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1f9e68u, 0)) {
+        switch (ctx->pc) {
+            case 0x1f9e84u: goto label_1f9e84;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1f9e68u;
 
     // 0x1f9e68: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1f9e68u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1f9e6c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1f9e6cu;
@@ -49,9 +49,7 @@ void cCoreSave_loadWorldToggle_0x1f9e68(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_1f9e88;
         }
     }
-    ctx->pc = 0x1F9E7Cu;
     // 0x1f9e7c: 0xc0dd5c0  jal         func_375700
-    ctx->pc = 0x1F9E7Cu;
     SET_GPR_U32(ctx, 31, 0x1F9E84u);
     ctx->pc = 0x1F9E80u;
     ctx->in_delay_slot = true;
@@ -59,8 +57,7 @@ void cCoreSave_loadWorldToggle_0x1f9e68(uint8_t* rdram, R5900Context* ctx, PS2Ru
     // 0x1f9e80: 0x8c840170  lw          $a0, 0x170($a0) (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 368)));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x375700u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x375700u, 0x1F9E7Cu, 0x1F9E84u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &SetGlobalToggle_375700_0x375700, 0x375700u, 0x1f9e84u)) {
         return;
     }
     ctx->pc = 0x1F9E84u;

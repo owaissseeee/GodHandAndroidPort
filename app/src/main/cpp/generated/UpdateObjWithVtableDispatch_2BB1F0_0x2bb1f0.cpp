@@ -18,34 +18,36 @@ void UpdateObjWithVtableDispatch_2BB1F0_0x2bb1f0(uint8_t* rdram, R5900Context* c
     PS_LOG_ENTRY("UpdateObjWithVtableDispatch_2BB1F0_0x2bb1f0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2bb1f0u: goto label_2bb1f0;
-        case 0x2bb1f4u: goto label_2bb1f4;
-        case 0x2bb1f8u: goto label_2bb1f8;
-        case 0x2bb1fcu: goto label_2bb1fc;
-        case 0x2bb200u: goto label_2bb200;
-        case 0x2bb204u: goto label_2bb204;
-        case 0x2bb208u: goto label_2bb208;
-        case 0x2bb20cu: goto label_2bb20c;
-        case 0x2bb210u: goto label_2bb210;
-        case 0x2bb214u: goto label_2bb214;
-        case 0x2bb218u: goto label_2bb218;
-        case 0x2bb21cu: goto label_2bb21c;
-        case 0x2bb220u: goto label_2bb220;
-        case 0x2bb224u: goto label_2bb224;
-        case 0x2bb228u: goto label_2bb228;
-        case 0x2bb22cu: goto label_2bb22c;
-        case 0x2bb230u: goto label_2bb230;
-        case 0x2bb234u: goto label_2bb234;
-        case 0x2bb238u: goto label_2bb238;
-        case 0x2bb23cu: goto label_2bb23c;
-        case 0x2bb240u: goto label_2bb240;
-        case 0x2bb244u: goto label_2bb244;
-        case 0x2bb248u: goto label_2bb248;
-        case 0x2bb24cu: goto label_2bb24c;
-        case 0x2bb250u: goto label_2bb250;
-        case 0x2bb254u: goto label_2bb254;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2bb1f0u, 0)) {
+        switch (ctx->pc) {
+            case 0x2bb1f0u: goto label_2bb1f0;
+            case 0x2bb1f4u: goto label_2bb1f4;
+            case 0x2bb1f8u: goto label_2bb1f8;
+            case 0x2bb1fcu: goto label_2bb1fc;
+            case 0x2bb200u: goto label_2bb200;
+            case 0x2bb204u: goto label_2bb204;
+            case 0x2bb208u: goto label_2bb208;
+            case 0x2bb20cu: goto label_2bb20c;
+            case 0x2bb210u: goto label_2bb210;
+            case 0x2bb214u: goto label_2bb214;
+            case 0x2bb218u: goto label_2bb218;
+            case 0x2bb21cu: goto label_2bb21c;
+            case 0x2bb220u: goto label_2bb220;
+            case 0x2bb224u: goto label_2bb224;
+            case 0x2bb228u: goto label_2bb228;
+            case 0x2bb22cu: goto label_2bb22c;
+            case 0x2bb230u: goto label_2bb230;
+            case 0x2bb234u: goto label_2bb234;
+            case 0x2bb238u: goto label_2bb238;
+            case 0x2bb23cu: goto label_2bb23c;
+            case 0x2bb240u: goto label_2bb240;
+            case 0x2bb244u: goto label_2bb244;
+            case 0x2bb248u: goto label_2bb248;
+            case 0x2bb24cu: goto label_2bb24c;
+            case 0x2bb250u: goto label_2bb250;
+            case 0x2bb254u: goto label_2bb254;
+            default: break;
+        }
     }
 
     ctx->pc = 0x2bb1f0u;
@@ -163,7 +165,6 @@ label_2bb230:
         ctx->pc = 0x2BB234u;
         goto label_2bb234;
     }
-    ctx->pc = 0x2BB22Cu;
     SET_GPR_U32(ctx, 31, 0x2BB234u);
     ctx->pc = 0x2BB230u;
     ctx->in_delay_slot = true;
@@ -171,8 +172,7 @@ label_2bb230:
     // 0x2bb230: 0x26060010  addiu       $a2, $s0, 0x10 (Delay Slot)
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 16), 16));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x147548u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x147548u, 0x2BB22Cu, 0x2BB234u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &MtxMultiply_0x147548, 0x147548u, 0x2bb234u)) {
         return;
     }
     ctx->pc = 0x2BB234u;

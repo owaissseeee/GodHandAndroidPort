@@ -18,18 +18,17 @@ void InitZeroAndSetup_12E800_0x12e800(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("InitZeroAndSetup_12E800_0x12e800");
 #endif
 
-    switch (ctx->pc) {
-        case 0x12e834u: goto label_12e834;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x12e800u, 0)) {
+        switch (ctx->pc) {
+            case 0x12e834u: goto label_12e834;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x12e800u;
 
     // 0x12e800: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x12e800u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x12e804: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x12e804u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x12e808: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x12e808u;
@@ -59,7 +58,6 @@ void InitZeroAndSetup_12E800_0x12e800(uint8_t* rdram, R5900Context* ctx, PS2Runt
     ctx->pc = 0x12e828u;
     WRITE32(ADD32(GPR_U32(ctx, 2), 28), GPR_U32(ctx, 0));
     // 0x12e82c: 0xc04bb3c  jal         func_12ECF0
-    ctx->pc = 0x12E82Cu;
     SET_GPR_U32(ctx, 31, 0x12E834u);
     ctx->pc = 0x12E830u;
     ctx->in_delay_slot = true;
@@ -67,8 +65,7 @@ void InitZeroAndSetup_12E800_0x12e800(uint8_t* rdram, R5900Context* ctx, PS2Runt
     // 0x12e830: 0xac400020  sw          $zero, 0x20($v0) (Delay Slot)
     WRITE32(ADD32(GPR_U32(ctx, 2), 32), GPR_U32(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x12ECF0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x12ECF0u, 0x12E82Cu, 0x12E834u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ClearLinkedNodeList_12ECF0_0x12ecf0, 0x12ecf0u, 0x12e834u)) {
         return;
     }
     ctx->pc = 0x12E834u;

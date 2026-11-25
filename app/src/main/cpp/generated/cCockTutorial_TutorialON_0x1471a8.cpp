@@ -18,7 +18,6 @@ void cCockTutorial_TutorialON_0x1471a8(uint8_t* rdram, R5900Context* ctx, PS2Run
     PS_LOG_ENTRY("cCockTutorial_TutorialON_0x1471a8");
 #endif
 
-    ctx->pc = 0x1471a8u;
 
     // 0x1471a8: 0x8c8200b0  lw          $v0, 0xB0($a0)
     ctx->pc = 0x1471a8u;
@@ -38,9 +37,7 @@ void cCockTutorial_TutorialON_0x1471a8(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_1471e4;
         }
     }
-    ctx->pc = 0x1471B4u;
     // 0x1471b4: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1471b4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1471b8: 0xa48500ac  sh          $a1, 0xAC($a0)
     ctx->pc = 0x1471b8u;
@@ -49,7 +46,6 @@ void cCockTutorial_TutorialON_0x1471a8(uint8_t* rdram, R5900Context* ctx, PS2Run
     ctx->pc = 0x1471bcu;
     WRITE8(ADD32(GPR_U32(ctx, 4), 184), (uint8_t)GPR_U32(ctx, 2));
     // 0x1471c0: 0x3c050800  lui         $a1, 0x800
-    ctx->pc = 0x1471c0u;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)2048 << 16));
     // 0x1471c4: 0x8c8300a4  lw          $v1, 0xA4($a0)
     ctx->pc = 0x1471c4u;
@@ -58,7 +54,6 @@ void cCockTutorial_TutorialON_0x1471a8(uint8_t* rdram, R5900Context* ctx, PS2Run
     ctx->pc = 0x1471c8u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 44)));
     // 0x1471cc: 0x451025  or          $v0, $v0, $a1
-    ctx->pc = 0x1471ccu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | GPR_U64(ctx, 5));
     // 0x1471d0: 0xac62002c  sw          $v0, 0x2C($v1)
     ctx->pc = 0x1471d0u;
@@ -70,7 +65,6 @@ void cCockTutorial_TutorialON_0x1471a8(uint8_t* rdram, R5900Context* ctx, PS2Run
     ctx->pc = 0x1471d8u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 44)));
     // 0x1471dc: 0x451025  or          $v0, $v0, $a1
-    ctx->pc = 0x1471dcu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | GPR_U64(ctx, 5));
     // 0x1471e0: 0xac82002c  sw          $v0, 0x2C($a0)
     ctx->pc = 0x1471e0u;
@@ -89,9 +83,7 @@ label_1471e4:
         return;
         #endif
     }
-    ctx->pc = 0x1471ECu;
     // 0x1471ec: 0x0  nop
-    ctx->pc = 0x1471ecu;
     // NOP
     ctx->pc = 0x1471f0u;
 }

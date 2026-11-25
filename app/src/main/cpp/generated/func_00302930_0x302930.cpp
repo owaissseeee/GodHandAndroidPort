@@ -18,10 +18,8 @@ void func_00302930_0x302930(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00302930_0x302930");
 #endif
 
-    ctx->pc = 0x302930u;
 
     // 0x302930: 0x80382d  daddu       $a3, $a0, $zero
-    ctx->pc = 0x302930u;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x302934: 0x94e20224  lhu         $v0, 0x224($a3)
     ctx->pc = 0x302934u;
@@ -41,7 +39,6 @@ void func_00302930_0x302930(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_302948;
         }
     }
-    ctx->pc = 0x302940u;
     // 0x302940: 0x3e00008  jr          $ra
     ctx->pc = 0x302940u;
     {
@@ -67,19 +64,15 @@ label_302948:
     ctx->pc = 0x302948u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 7), 552)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x30294c: 0x24040001  addiu       $a0, $zero, 0x1
-    ctx->pc = 0x30294cu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x302950: 0x94e30224  lhu         $v1, 0x224($a3)
     ctx->pc = 0x302950u;
     SET_GPR_ZE32(ctx, 3, (uint16_t)READ16(ADD32(GPR_U32(ctx, 7), 548)));
     // 0x302954: 0x46000064  .word       0x46000064                   # cvt.w.s     $f1, $f0 # 00000000 <InstrIdType: CPU_COP1_FPUS>
-    ctx->pc = 0x302954u;
     { int32_t tmp = FPU_CVT_W_S(ctx->f[0]); std::memcpy(&ctx->f[1], &tmp, sizeof(tmp)); }
     // 0x302958: 0x44080800  mfc1        $t0, $f1
-    ctx->pc = 0x302958u;
     { uint32_t bits; std::memcpy(&bits, &ctx->f[1], sizeof(bits)); SET_GPR_U32(ctx, 8, bits); }
     // 0x30295c: 0x3102ffff  andi        $v0, $t0, 0xFFFF
-    ctx->pc = 0x30295cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 8) & (uint64_t)(uint16_t)65535);
     // 0x302960: 0x10c40005  beq         $a2, $a0, . + 4 + (0x5 << 2)
     ctx->pc = 0x302960u;
@@ -96,7 +89,6 @@ label_302948:
             goto label_302978;
         }
     }
-    ctx->pc = 0x302968u;
     // 0x302968: 0x14c00005  bnez        $a2, . + 4 + (0x5 << 2)
     ctx->pc = 0x302968u;
     {
@@ -112,7 +104,6 @@ label_302948:
             goto label_302980;
         }
     }
-    ctx->pc = 0x302970u;
     // 0x302970: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x302970u;
     {
@@ -125,7 +116,6 @@ label_302948:
     ctx->pc = 0x302978u;
 label_302978:
     // 0x302978: 0xa81021  addu        $v0, $a1, $t0
-    ctx->pc = 0x302978u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 5), GPR_U32(ctx, 8)));
     // 0x30297c: 0xa4e20224  sh          $v0, 0x224($a3)
     ctx->pc = 0x30297cu;

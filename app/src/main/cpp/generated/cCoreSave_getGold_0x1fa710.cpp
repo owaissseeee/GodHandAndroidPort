@@ -18,10 +18,8 @@ void cCoreSave_getGold_0x1fa710(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("cCoreSave_getGold_0x1fa710");
 #endif
 
-    ctx->pc = 0x1fa710u;
 
     // 0x1fa710: 0x80302d  daddu       $a2, $a0, $zero
-    ctx->pc = 0x1fa710u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1fa714: 0x8cc50000  lw          $a1, 0x0($a2)
     ctx->pc = 0x1fa714u;
@@ -41,7 +39,6 @@ void cCoreSave_getGold_0x1fa710(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_1fa728;
         }
     }
-    ctx->pc = 0x1FA720u;
     // 0x1fa720: 0x3e00008  jr          $ra
     ctx->pc = 0x1FA720u;
     {
@@ -64,13 +61,11 @@ void cCoreSave_getGold_0x1fa710(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     ctx->pc = 0x1FA728u;
 label_1fa728:
     // 0x1fa728: 0x3c040200  lui         $a0, 0x200
-    ctx->pc = 0x1fa728u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)512 << 16));
     // 0x1fa72c: 0x8c437a34  lw          $v1, 0x7A34($v0)
     ctx->pc = 0x1fa72cu;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 31284)));
     // 0x1fa730: 0x641824  and         $v1, $v1, $a0
-    ctx->pc = 0x1fa730u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 4));
     // 0x1fa734: 0x10600003  beqz        $v1, . + 4 + (0x3 << 2)
     ctx->pc = 0x1FA734u;
@@ -87,9 +82,7 @@ label_1fa728:
             goto label_1fa744;
         }
     }
-    ctx->pc = 0x1FA73Cu;
     // 0x1fa73c: 0x3442423f  ori         $v0, $v0, 0x423F
-    ctx->pc = 0x1fa73cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)16959);
     // 0x1fa740: 0xaca20020  sw          $v0, 0x20($a1)
     ctx->pc = 0x1fa740u;

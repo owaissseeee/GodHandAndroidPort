@@ -18,32 +18,34 @@ void ps2__IO_seekpos_0x38e490(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("ps2__IO_seekpos_0x38e490");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38e490u: goto label_38e490;
-        case 0x38e494u: goto label_38e494;
-        case 0x38e498u: goto label_38e498;
-        case 0x38e49cu: goto label_38e49c;
-        case 0x38e4a0u: goto label_38e4a0;
-        case 0x38e4a4u: goto label_38e4a4;
-        case 0x38e4a8u: goto label_38e4a8;
-        case 0x38e4acu: goto label_38e4ac;
-        case 0x38e4b0u: goto label_38e4b0;
-        case 0x38e4b4u: goto label_38e4b4;
-        case 0x38e4b8u: goto label_38e4b8;
-        case 0x38e4bcu: goto label_38e4bc;
-        case 0x38e4c0u: goto label_38e4c0;
-        case 0x38e4c4u: goto label_38e4c4;
-        case 0x38e4c8u: goto label_38e4c8;
-        case 0x38e4ccu: goto label_38e4cc;
-        case 0x38e4d0u: goto label_38e4d0;
-        case 0x38e4d4u: goto label_38e4d4;
-        case 0x38e4d8u: goto label_38e4d8;
-        case 0x38e4dcu: goto label_38e4dc;
-        case 0x38e4e0u: goto label_38e4e0;
-        case 0x38e4e4u: goto label_38e4e4;
-        case 0x38e4e8u: goto label_38e4e8;
-        case 0x38e4ecu: goto label_38e4ec;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38e490u, 0)) {
+        switch (ctx->pc) {
+            case 0x38e490u: goto label_38e490;
+            case 0x38e494u: goto label_38e494;
+            case 0x38e498u: goto label_38e498;
+            case 0x38e49cu: goto label_38e49c;
+            case 0x38e4a0u: goto label_38e4a0;
+            case 0x38e4a4u: goto label_38e4a4;
+            case 0x38e4a8u: goto label_38e4a8;
+            case 0x38e4acu: goto label_38e4ac;
+            case 0x38e4b0u: goto label_38e4b0;
+            case 0x38e4b4u: goto label_38e4b4;
+            case 0x38e4b8u: goto label_38e4b8;
+            case 0x38e4bcu: goto label_38e4bc;
+            case 0x38e4c0u: goto label_38e4c0;
+            case 0x38e4c4u: goto label_38e4c4;
+            case 0x38e4c8u: goto label_38e4c8;
+            case 0x38e4ccu: goto label_38e4cc;
+            case 0x38e4d0u: goto label_38e4d0;
+            case 0x38e4d4u: goto label_38e4d4;
+            case 0x38e4d8u: goto label_38e4d8;
+            case 0x38e4dcu: goto label_38e4dc;
+            case 0x38e4e0u: goto label_38e4e0;
+            case 0x38e4e4u: goto label_38e4e4;
+            case 0x38e4e8u: goto label_38e4e8;
+            case 0x38e4ecu: goto label_38e4ec;
+            default: break;
+        }
     }
 
     ctx->pc = 0x38e490u;
@@ -117,8 +119,7 @@ label_38e4bc:
     }
     ctx->pc = 0x38E4B8u;
     SET_GPR_U32(ctx, 31, 0x38E4C0u);
-    ctx->pc = 0x38C3A0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x38C3A0u, 0x38E4B8u, 0x38E4C0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_free_backup_area_0x38c3a0, 0x38c3a0u, 0x38e4c0u)) {
         return;
     }
     ctx->pc = 0x38E4C0u;

@@ -18,13 +18,11 @@ void cBgmData_AddLoadBits_0x2d0350(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("cBgmData_AddLoadBits_0x2d0350");
 #endif
 
-    ctx->pc = 0x2d0350u;
 
     // 0x2d0350: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2d0350u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4)));
     // 0x2d0354: 0x451025  or          $v0, $v0, $a1
-    ctx->pc = 0x2d0354u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | GPR_U64(ctx, 5));
     // 0x2d0358: 0x3e00008  jr          $ra
     ctx->pc = 0x2D0358u;

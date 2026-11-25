@@ -18,7 +18,6 @@ void CustomIDWork_SetScaleAnimSin_0x2d69f0(uint8_t* rdram, R5900Context* ctx, PS
     PS_LOG_ENTRY("CustomIDWork_SetScaleAnimSin_0x2d69f0");
 #endif
 
-    ctx->pc = 0x2d69f0u;
 
     // 0x2d69f0: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2d69f0u;
@@ -38,9 +37,7 @@ void CustomIDWork_SetScaleAnimSin_0x2d69f0(uint8_t* rdram, R5900Context* ctx, PS
             goto label_2d6a28;
         }
     }
-    ctx->pc = 0x2D69FCu;
     // 0x2d69fc: 0x24020005  addiu       $v0, $zero, 0x5
-    ctx->pc = 0x2d69fcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 5));
     // 0x2d6a00: 0xe48c006c  swc1        $f12, 0x6C($a0)
     ctx->pc = 0x2d6a00u;
@@ -72,9 +69,7 @@ void CustomIDWork_SetScaleAnimSin_0x2d69f0(uint8_t* rdram, R5900Context* ctx, PS
             goto label_2d6a24;
         }
     }
-    ctx->pc = 0x2D6A1Cu;
     // 0x2d6a1c: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2d6a1cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2d6a20: 0xa4820074  sh          $v0, 0x74($a0)
     ctx->pc = 0x2d6a20u;

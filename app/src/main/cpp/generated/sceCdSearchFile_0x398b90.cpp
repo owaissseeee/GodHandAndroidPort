@@ -18,23 +18,21 @@ void sceCdSearchFile_0x398b90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("sceCdSearchFile_0x398b90");
 #endif
 
-    switch (ctx->pc) {
-        case 0x398ba0u: goto label_398ba0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x398b90u, 0)) {
+        switch (ctx->pc) {
+            case 0x398ba0u: goto label_398ba0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x398b90u;
 
     // 0x398b90: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x398b90u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x398b94: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x398b94u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x398b98: 0xc0e6224  jal         func_398890
-    ctx->pc = 0x398B98u;
     SET_GPR_U32(ctx, 31, 0x398BA0u);
-    ctx->pc = 0x398B9Cu;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x398B98u;
     // 0x398b9c: 0x302d  daddu       $a2, $zero, $zero (Delay Slot)
@@ -68,9 +66,7 @@ label_398ba0:
         return;
         #endif
     }
-    ctx->pc = 0x398BACu;
     // 0x398bac: 0x0  nop
-    ctx->pc = 0x398bacu;
     // NOP
     ctx->pc = 0x398bb0u;
 }

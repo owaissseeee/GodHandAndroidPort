@@ -18,18 +18,17 @@ void iChangeThreadPriority_0x3afb40(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("iChangeThreadPriority_0x3afb40");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afb48u: goto label_3afb48;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afb40u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afb48u: goto label_3afb48;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afb40u;
 
     // 0x3afb40: 0x2403ffd6  addiu       $v1, $zero, -0x2A
-    ctx->pc = 0x3afb40u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967254));
     // 0x3afb44: 0xc  syscall     0
-    ctx->pc = 0x3afb44u;
     ctx->pc = 0x3AFB48u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

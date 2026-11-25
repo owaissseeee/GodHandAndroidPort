@@ -18,18 +18,17 @@ void cEvent_startPlayFade_0x296738(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("cEvent_startPlayFade_0x296738");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2967a0u: goto label_2967a0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x296738u, 0)) {
+        switch (ctx->pc) {
+            case 0x2967a0u: goto label_2967a0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x296738u;
 
     // 0x296738: 0x3c020074  lui         $v0, 0x74
-    ctx->pc = 0x296738u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
     // 0x29673c: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x29673cu;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x296740: 0x8c437a2c  lw          $v1, 0x7A2C($v0)
     ctx->pc = 0x296740u;
@@ -49,18 +48,14 @@ void cEvent_startPlayFade_0x296738(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_2967a0;
         }
     }
-    ctx->pc = 0x29674Cu;
     // 0x29674c: 0x3c030058  lui         $v1, 0x58
-    ctx->pc = 0x29674cu;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)88 << 16));
     // 0x296750: 0x8c636b34  lw          $v1, 0x6B34($v1)
     ctx->pc = 0x296750u;
     SET_GPR_S32(ctx, 3, (int32_t)FAST_READ32(0x586B34u));
     // 0x296754: 0x3107a  dsrl        $v0, $v1, 1
-    ctx->pc = 0x296754u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) >> 1);
     // 0x296758: 0x30420001  andi        $v0, $v0, 0x1
-    ctx->pc = 0x296758u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
     // 0x29675c: 0x14400011  bnez        $v0, . + 4 + (0x11 << 2)
     ctx->pc = 0x29675Cu;
@@ -77,12 +72,9 @@ void cEvent_startPlayFade_0x296738(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_2967a4;
         }
     }
-    ctx->pc = 0x296764u;
     // 0x296764: 0x310ba  dsrl        $v0, $v1, 2
-    ctx->pc = 0x296764u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) >> 2);
     // 0x296768: 0x30420001  andi        $v0, $v0, 0x1
-    ctx->pc = 0x296768u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
     // 0x29676c: 0x1440000d  bnez        $v0, . + 4 + (0xD << 2)
     ctx->pc = 0x29676Cu;
@@ -99,9 +91,7 @@ void cEvent_startPlayFade_0x296738(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_2967a4;
         }
     }
-    ctx->pc = 0x296774u;
     // 0x296774: 0x30420001  andi        $v0, $v0, 0x1
-    ctx->pc = 0x296774u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
     // 0x296778: 0x1440000a  bnez        $v0, . + 4 + (0xA << 2)
     ctx->pc = 0x296778u;
@@ -118,27 +108,19 @@ void cEvent_startPlayFade_0x296738(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_2967a4;
         }
     }
-    ctx->pc = 0x296780u;
     // 0x296780: 0x282d  daddu       $a1, $zero, $zero
-    ctx->pc = 0x296780u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x296784: 0x24847470  addiu       $a0, $a0, 0x7470
-    ctx->pc = 0x296784u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 29808));
     // 0x296788: 0x2406000a  addiu       $a2, $zero, 0xA
-    ctx->pc = 0x296788u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 10));
     // 0x29678c: 0x382d  daddu       $a3, $zero, $zero
-    ctx->pc = 0x29678cu;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x296790: 0x402d  daddu       $t0, $zero, $zero
-    ctx->pc = 0x296790u;
     SET_GPR_U64(ctx, 8, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x296794: 0x3c09ff00  lui         $t1, 0xFF00
-    ctx->pc = 0x296794u;
     SET_GPR_S32(ctx, 9, (int32_t)((uint32_t)65280 << 16));
     // 0x296798: 0xc0c1c82  jal         func_307208
-    ctx->pc = 0x296798u;
     SET_GPR_U32(ctx, 31, 0x2967A0u);
     ctx->pc = 0x29679Cu;
     ctx->in_delay_slot = true;
@@ -146,8 +128,7 @@ void cEvent_startPlayFade_0x296738(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     // 0x29679c: 0x240a000f  addiu       $t2, $zero, 0xF (Delay Slot)
     SET_GPR_S32(ctx, 10, (int32_t)ADD32(GPR_U32(ctx, 0), 15));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x307208u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x307208u, 0x296798u, 0x2967A0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &classFADE_start_0x307208, 0x307208u, 0x2967a0u)) {
         return;
     }
     ctx->pc = 0x2967A0u;
@@ -175,9 +156,7 @@ label_2967a4:
         return;
         #endif
     }
-    ctx->pc = 0x2967ACu;
     // 0x2967ac: 0x0  nop
-    ctx->pc = 0x2967acu;
     // NOP
     ctx->pc = 0x2967b0u;
 }

@@ -18,7 +18,6 @@ void cCoreSave_setEventFlag_0x1fc338(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("cCoreSave_setEventFlag_0x1fc338");
 #endif
 
-    ctx->pc = 0x1fc338u;
 
     // 0x1fc338: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc338u;
@@ -38,15 +37,12 @@ void cCoreSave_setEventFlag_0x1fc338(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_1fc354;
         }
     }
-    ctx->pc = 0x1FC344u;
     // 0x1fc344: 0x8c830b90  lw          $v1, 0xB90($a0)
     ctx->pc = 0x1fc344u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 2960)));
     // 0x1fc348: 0xa21004  sllv        $v0, $v0, $a1
-    ctx->pc = 0x1fc348u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), GPR_U32(ctx, 5) & 0x1F));
     // 0x1fc34c: 0x621825  or          $v1, $v1, $v0
-    ctx->pc = 0x1fc34cu;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) | GPR_U64(ctx, 2));
     // 0x1fc350: 0xac830b90  sw          $v1, 0xB90($a0)
     ctx->pc = 0x1fc350u;
@@ -65,9 +61,7 @@ label_1fc354:
         return;
         #endif
     }
-    ctx->pc = 0x1FC35Cu;
     // 0x1fc35c: 0x0  nop
-    ctx->pc = 0x1fc35cu;
     // NOP
     ctx->pc = 0x1fc360u;
 }

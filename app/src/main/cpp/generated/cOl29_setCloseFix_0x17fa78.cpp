@@ -18,38 +18,40 @@ void cOl29_setCloseFix_0x17fa78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("cOl29_setCloseFix_0x17fa78");
 #endif
 
-    switch (ctx->pc) {
-        case 0x17fa78u: goto label_17fa78;
-        case 0x17fa7cu: goto label_17fa7c;
-        case 0x17fa80u: goto label_17fa80;
-        case 0x17fa84u: goto label_17fa84;
-        case 0x17fa88u: goto label_17fa88;
-        case 0x17fa8cu: goto label_17fa8c;
-        case 0x17fa90u: goto label_17fa90;
-        case 0x17fa94u: goto label_17fa94;
-        case 0x17fa98u: goto label_17fa98;
-        case 0x17fa9cu: goto label_17fa9c;
-        case 0x17faa0u: goto label_17faa0;
-        case 0x17faa4u: goto label_17faa4;
-        case 0x17faa8u: goto label_17faa8;
-        case 0x17faacu: goto label_17faac;
-        case 0x17fab0u: goto label_17fab0;
-        case 0x17fab4u: goto label_17fab4;
-        case 0x17fab8u: goto label_17fab8;
-        case 0x17fabcu: goto label_17fabc;
-        case 0x17fac0u: goto label_17fac0;
-        case 0x17fac4u: goto label_17fac4;
-        case 0x17fac8u: goto label_17fac8;
-        case 0x17faccu: goto label_17facc;
-        case 0x17fad0u: goto label_17fad0;
-        case 0x17fad4u: goto label_17fad4;
-        case 0x17fad8u: goto label_17fad8;
-        case 0x17fadcu: goto label_17fadc;
-        case 0x17fae0u: goto label_17fae0;
-        case 0x17fae4u: goto label_17fae4;
-        case 0x17fae8u: goto label_17fae8;
-        case 0x17faecu: goto label_17faec;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x17fa78u, 0)) {
+        switch (ctx->pc) {
+            case 0x17fa78u: goto label_17fa78;
+            case 0x17fa7cu: goto label_17fa7c;
+            case 0x17fa80u: goto label_17fa80;
+            case 0x17fa84u: goto label_17fa84;
+            case 0x17fa88u: goto label_17fa88;
+            case 0x17fa8cu: goto label_17fa8c;
+            case 0x17fa90u: goto label_17fa90;
+            case 0x17fa94u: goto label_17fa94;
+            case 0x17fa98u: goto label_17fa98;
+            case 0x17fa9cu: goto label_17fa9c;
+            case 0x17faa0u: goto label_17faa0;
+            case 0x17faa4u: goto label_17faa4;
+            case 0x17faa8u: goto label_17faa8;
+            case 0x17faacu: goto label_17faac;
+            case 0x17fab0u: goto label_17fab0;
+            case 0x17fab4u: goto label_17fab4;
+            case 0x17fab8u: goto label_17fab8;
+            case 0x17fabcu: goto label_17fabc;
+            case 0x17fac0u: goto label_17fac0;
+            case 0x17fac4u: goto label_17fac4;
+            case 0x17fac8u: goto label_17fac8;
+            case 0x17faccu: goto label_17facc;
+            case 0x17fad0u: goto label_17fad0;
+            case 0x17fad4u: goto label_17fad4;
+            case 0x17fad8u: goto label_17fad8;
+            case 0x17fadcu: goto label_17fadc;
+            case 0x17fae0u: goto label_17fae0;
+            case 0x17fae4u: goto label_17fae4;
+            case 0x17fae8u: goto label_17fae8;
+            case 0x17faecu: goto label_17faec;
+            default: break;
+        }
     }
 
     ctx->pc = 0x17fa78u;

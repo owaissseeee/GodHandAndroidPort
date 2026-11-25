@@ -18,21 +18,19 @@ void cMotCamera_setMotion_0x1390b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("cMotCamera_setMotion_0x1390b8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x139150u: goto label_139150;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1390b8u, 0)) {
+        switch (ctx->pc) {
+            case 0x139150u: goto label_139150;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1390b8u;
 
     // 0x1390b8: 0x27bdffc0  addiu       $sp, $sp, -0x40
-    ctx->pc = 0x1390b8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967232));
     // 0x1390bc: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x1390bcu;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
     // 0x1390c0: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x1390c0u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x1390c4: 0x7fb00030  sq          $s0, 0x30($sp)
     ctx->pc = 0x1390c4u;
@@ -41,13 +39,11 @@ void cMotCamera_setMotion_0x1390b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x1390c8u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 32), GPR_VEC(ctx, 17));
     // 0x1390cc: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x1390ccu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1390d0: 0xffbf0010  sd          $ra, 0x10($sp)
     ctx->pc = 0x1390d0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 16), GPR_U64(ctx, 31));
     // 0x1390d4: 0x120882d  daddu       $s1, $t1, $zero
-    ctx->pc = 0x1390d4u;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 9) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1390d8: 0xae0503a4  sw          $a1, 0x3A4($s0)
     ctx->pc = 0x1390d8u;
@@ -73,7 +69,6 @@ void cMotCamera_setMotion_0x1390b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_1390fc;
         }
     }
-    ctx->pc = 0x1390ECu;
     // 0x1390ec: 0xd8e40000  lqc2        $vf4, 0x0($a3)
     ctx->pc = 0x1390ecu;
     ctx->vu0_vf[4] = _mm_castsi128_ps(READ128(ADD32(GPR_U32(ctx, 7), 0)));
@@ -128,7 +123,6 @@ label_139110:
             goto label_13912c;
         }
     }
-    ctx->pc = 0x139118u;
     // 0x139118: 0xc7a10004  lwc1        $f1, 0x4($sp)
     ctx->pc = 0x139118u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 29), 4)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
@@ -149,25 +143,21 @@ label_13912c:
     ctx->pc = 0x13912cu;
     WRITE16(ADD32(GPR_U32(ctx, 16), 634), (uint16_t)GPR_U32(ctx, 8));
     // 0x139130: 0x260203c0  addiu       $v0, $s0, 0x3C0
-    ctx->pc = 0x139130u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 960));
     // 0x139134: 0xae0003e4  sw          $zero, 0x3E4($s0)
     ctx->pc = 0x139134u;
     WRITE32(ADD32(GPR_U32(ctx, 16), 996), GPR_U32(ctx, 0));
     // 0x139138: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x139138u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x13913c: 0xae0003c0  sw          $zero, 0x3C0($s0)
     ctx->pc = 0x13913cu;
     WRITE32(ADD32(GPR_U32(ctx, 16), 960), GPR_U32(ctx, 0));
     // 0x139140: 0x24050003  addiu       $a1, $zero, 0x3
-    ctx->pc = 0x139140u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
     // 0x139144: 0xe44c0004  swc1        $f12, 0x4($v0)
     ctx->pc = 0x139144u;
     { float f = ctx->f[12]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 2), 4), bits); }
     // 0x139148: 0xc04e08e  jal         func_138238
-    ctx->pc = 0x139148u;
     SET_GPR_U32(ctx, 31, 0x139150u);
     ctx->pc = 0x13914Cu;
     ctx->in_delay_slot = true;
@@ -175,8 +165,7 @@ label_13912c:
     // 0x13914c: 0xac400008  sw          $zero, 0x8($v0) (Delay Slot)
     WRITE32(ADD32(GPR_U32(ctx, 2), 8), GPR_U32(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x138238u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x138238u, 0x139148u, 0x139150u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cCamera_setMode_0x138238, 0x138238u, 0x139150u)) {
         return;
     }
     ctx->pc = 0x139150u;
@@ -196,12 +185,10 @@ label_139150:
             goto label_139168;
         }
     }
-    ctx->pc = 0x139158u;
     // 0x139158: 0x8e0203e4  lw          $v0, 0x3E4($s0)
     ctx->pc = 0x139158u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 996)));
     // 0x13915c: 0x34420001  ori         $v0, $v0, 0x1
-    ctx->pc = 0x13915cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)1);
     // 0x139160: 0xae0203e4  sw          $v0, 0x3E4($s0)
     ctx->pc = 0x139160u;
@@ -235,12 +222,9 @@ label_139168:
         return;
         #endif
     }
-    ctx->pc = 0x139178u;
     // 0x139178: 0x0  nop
-    ctx->pc = 0x139178u;
     // NOP
     // 0x13917c: 0x0  nop
-    ctx->pc = 0x13917cu;
     // NOP
     ctx->pc = 0x139180u;
 }

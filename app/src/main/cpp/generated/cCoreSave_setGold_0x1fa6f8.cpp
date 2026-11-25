@@ -18,7 +18,6 @@ void cCoreSave_setGold_0x1fa6f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("cCoreSave_setGold_0x1fa6f8");
 #endif
 
-    ctx->pc = 0x1fa6f8u;
 
     // 0x1fa6f8: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fa6f8u;
@@ -53,9 +52,7 @@ label_1fa704:
         return;
         #endif
     }
-    ctx->pc = 0x1FA70Cu;
     // 0x1fa70c: 0x0  nop
-    ctx->pc = 0x1fa70cu;
     // NOP
     ctx->pc = 0x1fa710u;
 }

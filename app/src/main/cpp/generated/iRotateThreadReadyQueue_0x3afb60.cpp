@@ -18,18 +18,17 @@ void iRotateThreadReadyQueue_0x3afb60(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("iRotateThreadReadyQueue_0x3afb60");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afb68u: goto label_3afb68;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afb60u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afb68u: goto label_3afb68;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afb60u;
 
     // 0x3afb60: 0x2403ffd4  addiu       $v1, $zero, -0x2C
-    ctx->pc = 0x3afb60u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967252));
     // 0x3afb64: 0xc  syscall     0
-    ctx->pc = 0x3afb64u;
     ctx->pc = 0x3AFB68u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

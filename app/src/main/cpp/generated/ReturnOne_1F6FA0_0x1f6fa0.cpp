@@ -18,7 +18,6 @@ void ReturnOne_1F6FA0_0x1f6fa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("ReturnOne_1F6FA0_0x1f6fa0");
 #endif
 
-    ctx->pc = 0x1f6fa0u;
 
     // 0x1f6fa0: 0x3e00008  jr          $ra
     ctx->pc = 0x1F6FA0u;

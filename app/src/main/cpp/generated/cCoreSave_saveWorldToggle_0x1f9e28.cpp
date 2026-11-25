@@ -18,15 +18,15 @@ void cCoreSave_saveWorldToggle_0x1f9e28(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("cCoreSave_saveWorldToggle_0x1f9e28");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1f9e4cu: goto label_1f9e4c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1f9e28u, 0)) {
+        switch (ctx->pc) {
+            case 0x1f9e4cu: goto label_1f9e4c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1f9e28u;
 
     // 0x1f9e28: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x1f9e28u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x1f9e2c: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x1f9e2cu;
@@ -35,7 +35,6 @@ void cCoreSave_saveWorldToggle_0x1f9e28(uint8_t* rdram, R5900Context* ctx, PS2Ru
     ctx->pc = 0x1f9e30u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1f9e34: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x1f9e34u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1f9e38: 0x8e020000  lw          $v0, 0x0($s0)
     ctx->pc = 0x1f9e38u;
@@ -55,12 +54,10 @@ void cCoreSave_saveWorldToggle_0x1f9e28(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_1f9e58;
         }
     }
-    ctx->pc = 0x1F9E44u;
     // 0x1f9e44: 0xc0dd5bc  jal         func_3756F0
     ctx->pc = 0x1F9E44u;
     SET_GPR_U32(ctx, 31, 0x1F9E4Cu);
-    ctx->pc = 0x3756F0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3756F0u, 0x1F9E44u, 0x1F9E4Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Get_D_0076A7A4_3756F0_0x3756f0, 0x3756f0u, 0x1f9e4cu)) {
         return;
     }
     ctx->pc = 0x1F9E4Cu;
@@ -97,9 +94,7 @@ label_1f9e58:
         return;
         #endif
     }
-    ctx->pc = 0x1F9E64u;
     // 0x1f9e64: 0x0  nop
-    ctx->pc = 0x1f9e64u;
     // NOP
     ctx->pc = 0x1f9e68u;
 }

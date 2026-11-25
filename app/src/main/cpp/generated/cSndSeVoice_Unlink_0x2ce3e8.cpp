@@ -18,7 +18,6 @@ void cSndSeVoice_Unlink_0x2ce3e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("cSndSeVoice_Unlink_0x2ce3e8");
 #endif
 
-    ctx->pc = 0x2ce3e8u;
 
     // 0x2ce3e8: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x2ce3e8u;
@@ -38,7 +37,6 @@ void cSndSeVoice_Unlink_0x2ce3e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_2ce400;
         }
     }
-    ctx->pc = 0x2CE3F4u;
     // 0x2ce3f4: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2ce3f4u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4)));
@@ -60,7 +58,6 @@ void cSndSeVoice_Unlink_0x2ce3e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     ctx->pc = 0x2CE400u;
 label_2ce400:
     // 0x2ce400: 0x3c020060  lui         $v0, 0x60
-    ctx->pc = 0x2ce400u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)96 << 16));
     // 0x2ce404: 0xac43ee1c  sw          $v1, -0x11E4($v0)
     ctx->pc = 0x2ce404u;
@@ -84,7 +81,6 @@ label_2ce408:
             goto label_2ce420;
         }
     }
-    ctx->pc = 0x2CE414u;
     // 0x2ce414: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x2ce414u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
@@ -117,9 +113,7 @@ label_2ce420:
         return;
         #endif
     }
-    ctx->pc = 0x2CE42Cu;
     // 0x2ce42c: 0x0  nop
-    ctx->pc = 0x2ce42cu;
     // NOP
     ctx->pc = 0x2ce430u;
 }

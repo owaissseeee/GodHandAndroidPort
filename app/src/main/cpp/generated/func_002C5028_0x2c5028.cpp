@@ -18,24 +18,22 @@ void func_002C5028_0x2c5028(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002C5028_0x2c5028");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2c5040u: goto label_2c5040;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2c5028u, 0)) {
+        switch (ctx->pc) {
+            case 0x2c5040u: goto label_2c5040;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2c5028u;
 
     // 0x2c5028: 0x3c02003c  lui         $v0, 0x3C
-    ctx->pc = 0x2c5028u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
     // 0x2c502c: 0x30a5ffff  andi        $a1, $a1, 0xFFFF
-    ctx->pc = 0x2c502cu;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)65535);
     // 0x2c5030: 0x944426c0  lhu         $a0, 0x26C0($v0)
     ctx->pc = 0x2c5030u;
     SET_GPR_ZE32(ctx, 4, (uint16_t)FAST_READ16(0x3C26C0u));
     // 0x2c5034: 0x3403ffff  ori         $v1, $zero, 0xFFFF
-    ctx->pc = 0x2c5034u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     // 0x2c5038: 0x10830009  beq         $a0, $v1, . + 4 + (0x9 << 2)
     ctx->pc = 0x2C5038u;
@@ -72,7 +70,6 @@ label_2c5040:
             goto label_2c5054;
         }
     }
-    ctx->pc = 0x2C504Cu;
     // 0x2c504c: 0x3e00008  jr          $ra
     ctx->pc = 0x2C504Cu;
     {

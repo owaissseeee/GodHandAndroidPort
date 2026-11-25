@@ -18,7 +18,6 @@ void Obj1F20_NoOp_2420_0x1f2420(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("Obj1F20_NoOp_2420_0x1f2420");
 #endif
 
-    ctx->pc = 0x1f2420u;
 
     // 0x1f2420: 0x3e00008  jr          $ra
     ctx->pc = 0x1F2420u;

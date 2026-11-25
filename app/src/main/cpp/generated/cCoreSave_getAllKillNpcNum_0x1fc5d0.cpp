@@ -18,7 +18,6 @@ void cCoreSave_getAllKillNpcNum_0x1fc5d0(uint8_t* rdram, R5900Context* ctx, PS2R
     PS_LOG_ENTRY("cCoreSave_getAllKillNpcNum_0x1fc5d0");
 #endif
 
-    ctx->pc = 0x1fc5d0u;
 
     // 0x1fc5d0: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc5d0u;
@@ -38,7 +37,6 @@ void cCoreSave_getAllKillNpcNum_0x1fc5d0(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_1fc5e0;
         }
     }
-    ctx->pc = 0x1FC5DCu;
     // 0x1fc5dc: 0x94820bb6  lhu         $v0, 0xBB6($a0)
     ctx->pc = 0x1fc5dcu;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 4), 2998)));

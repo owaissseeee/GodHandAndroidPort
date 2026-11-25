@@ -18,15 +18,15 @@ void func_002D4FC0_0x2d4fc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002D4FC0_0x2d4fc0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2d4fe0u: goto label_2d4fe0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2d4fc0u, 0)) {
+        switch (ctx->pc) {
+            case 0x2d4fe0u: goto label_2d4fe0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2d4fc0u;
 
     // 0x2d4fc0: 0x3402ffff  ori         $v0, $zero, 0xFFFF
-    ctx->pc = 0x2d4fc0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     // 0x2d4fc4: 0x14a2000c  bne         $a1, $v0, . + 4 + (0xC << 2)
     ctx->pc = 0x2D4FC4u;
@@ -37,7 +37,6 @@ void func_002D4FC0_0x2d4fc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2d4ff8;
         }
     }
-    ctx->pc = 0x2D4FCCu;
     // 0x2d4fcc: 0x1080000a  beqz        $a0, . + 4 + (0xA << 2)
     ctx->pc = 0x2D4FCCu;
     {
@@ -53,12 +52,9 @@ void func_002D4FC0_0x2d4fc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2d4ff8;
         }
     }
-    ctx->pc = 0x2D4FD4u;
     // 0x2d4fd4: 0x24030003  addiu       $v1, $zero, 0x3
-    ctx->pc = 0x2d4fd4u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
     // 0x2d4fd8: 0x244246c0  addiu       $v0, $v0, 0x46C0
-    ctx->pc = 0x2d4fd8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 18112));
     // 0x2d4fdc: 0x2404ffff  addiu       $a0, $zero, -0x1
     ctx->pc = 0x2d4fdcu;
@@ -68,13 +64,10 @@ label_2d4fe0:
     ctx->pc = 0x2d4fe0u;
     WRITE128(ADD32(GPR_U32(ctx, 2), 0), _mm_castps_si128(ctx->vu0_vf[0]));
     // 0x2d4fe4: 0x2463ffff  addiu       $v1, $v1, -0x1
-    ctx->pc = 0x2d4fe4u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294967295));
     // 0x2d4fe8: 0x0  nop
-    ctx->pc = 0x2d4fe8u;
     // NOP
     // 0x2d4fec: 0x0  nop
-    ctx->pc = 0x2d4fecu;
     // NOP
     // 0x2d4ff0: 0x1464fffb  bne         $v1, $a0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x2D4FF0u;

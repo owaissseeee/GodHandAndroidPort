@@ -18,18 +18,17 @@ void func_003B6678_0x3b6678(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_003B6678_0x3b6678");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b6680u: goto label_3b6680;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b6678u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b6680u: goto label_3b6680;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b6678u;
 
     // 0x3b6678: 0x2403005a  addiu       $v1, $zero, 0x5A
-    ctx->pc = 0x3b6678u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 90));
     // 0x3b667c: 0xc  syscall     0
-    ctx->pc = 0x3b667cu;
     ctx->pc = 0x3B6680u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

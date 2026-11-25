@@ -18,7 +18,6 @@ void cCoreSave_getAddGold_0x1fa838(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("cCoreSave_getAddGold_0x1fa838");
 #endif
 
-    ctx->pc = 0x1fa838u;
 
     // 0x1fa838: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fa838u;
@@ -38,9 +37,7 @@ void cCoreSave_getAddGold_0x1fa838(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_1fa850;
         }
     }
-    ctx->pc = 0x1FA844u;
     // 0x1fa844: 0x831821  addu        $v1, $a0, $v1
-    ctx->pc = 0x1fa844u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 3)));
     // 0x1fa848: 0x3e00008  jr          $ra
     ctx->pc = 0x1FA848u;

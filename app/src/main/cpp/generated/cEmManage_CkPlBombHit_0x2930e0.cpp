@@ -18,7 +18,6 @@ void cEmManage_CkPlBombHit_0x2930e0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("cEmManage_CkPlBombHit_0x2930e0");
 #endif
 
-    ctx->pc = 0x2930e0u;
 
     // 0x2930e0: 0x8082053b  lb          $v0, 0x53B($a0)
     ctx->pc = 0x2930e0u;
@@ -42,9 +41,7 @@ void cEmManage_CkPlBombHit_0x2930e0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         return;
         #endif
     }
-    ctx->pc = 0x2930ECu;
     // 0x2930ec: 0x0  nop
-    ctx->pc = 0x2930ecu;
     // NOP
     ctx->pc = 0x2930f0u;
 }

@@ -18,18 +18,20 @@ void cCockPlBar_initData_0x1434a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("cCockPlBar_initData_0x1434a8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1434a8u: goto label_1434a8;
-        case 0x1434acu: goto label_1434ac;
-        case 0x1434b0u: goto label_1434b0;
-        case 0x1434b4u: goto label_1434b4;
-        case 0x1434b8u: goto label_1434b8;
-        case 0x1434bcu: goto label_1434bc;
-        case 0x1434c0u: goto label_1434c0;
-        case 0x1434c4u: goto label_1434c4;
-        case 0x1434c8u: goto label_1434c8;
-        case 0x1434ccu: goto label_1434cc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1434a8u, 0)) {
+        switch (ctx->pc) {
+            case 0x1434a8u: goto label_1434a8;
+            case 0x1434acu: goto label_1434ac;
+            case 0x1434b0u: goto label_1434b0;
+            case 0x1434b4u: goto label_1434b4;
+            case 0x1434b8u: goto label_1434b8;
+            case 0x1434bcu: goto label_1434bc;
+            case 0x1434c0u: goto label_1434c0;
+            case 0x1434c4u: goto label_1434c4;
+            case 0x1434c8u: goto label_1434c8;
+            case 0x1434ccu: goto label_1434cc;
+            default: break;
+        }
     }
 
     ctx->pc = 0x1434a8u;

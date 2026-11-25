@@ -18,13 +18,11 @@ void cEm00_setR302Switch_0x2751c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("cEm00_setR302Switch_0x2751c8");
 #endif
 
-    ctx->pc = 0x2751c8u;
 
     // 0x2751c8: 0x8c820564  lw          $v0, 0x564($a0)
     ctx->pc = 0x2751c8u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 1380)));
     // 0x2751cc: 0x38420252  xori        $v0, $v0, 0x252
-    ctx->pc = 0x2751ccu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)594);
     // 0x2751d0: 0x14400005  bnez        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x2751D0u;
@@ -41,7 +39,6 @@ void cEm00_setR302Switch_0x2751c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_2751e8;
         }
     }
-    ctx->pc = 0x2751D8u;
     // 0x2751d8: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x2751d8u;
     WRITE8(ADD32(GPR_U32(ctx, 4), 759), (uint8_t)GPR_U32(ctx, 0));

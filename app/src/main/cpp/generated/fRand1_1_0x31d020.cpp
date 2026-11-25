@@ -19,15 +19,15 @@ void fRand1_1_0x31d020(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     PS_LOG_ENTRY("fRand1_1_0x31d020");
 #endif
 
-    switch (ctx->pc) {
-        case 0x31d030u: goto label_31d030;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x31d020u, 0)) {
+        switch (ctx->pc) {
+            case 0x31d030u: goto label_31d030;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x31d020u;
 
     // 0x31d020: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x31d020u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x31d024: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x31d024u;
@@ -35,8 +35,7 @@ void fRand1_1_0x31d020(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     // 0x31d028: 0xc0c3d46  jal         func_30F518
     ctx->pc = 0x31D028u;
     SET_GPR_U32(ctx, 31, 0x31D030u);
-    ctx->pc = 0x30F518u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x30F518u, 0x31D028u, 0x31D030u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_0030F518_0x30f518, 0x30f518u, 0x31d030u)) {
         return;
     }
     ctx->pc = 0x31D030u;
@@ -52,16 +51,13 @@ label_31d030:
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16128 << 16));
     }
     // 0x31d034: 0x44810800  mtc1        $at, $f1
-    ctx->pc = 0x31d034u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }
     // 0x31d038: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x31d038u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x31d03c: 0x46010001  sub.s       $f0, $f0, $f1
-    ctx->pc = 0x31d03cu;
     ctx->f[0] = FPU_SUB_S(ctx->f[0], ctx->f[1]);
     // 0x31d040: 0x46000000  add.s       $f0, $f0, $f0
-    ctx->pc = 0x31d040u;
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[0]);
     // 0x31d044: 0x3e00008  jr          $ra
     ctx->pc = 0x31D044u;
@@ -82,9 +78,7 @@ label_31d030:
         return;
         #endif
     }
-    ctx->pc = 0x31D04Cu;
     // 0x31d04c: 0x0  nop
-    ctx->pc = 0x31d04cu;
     // NOP
     ctx->pc = 0x31d050u;
 }

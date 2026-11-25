@@ -18,7 +18,6 @@ void cObj_Release_0x14e928(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("cObj_Release_0x14e928");
 #endif
 
-    ctx->pc = 0x14e928u;
 
     // 0x14e928: 0x3e00008  jr          $ra
     ctx->pc = 0x14E928u;

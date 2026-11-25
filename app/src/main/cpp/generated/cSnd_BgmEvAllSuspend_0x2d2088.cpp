@@ -18,16 +18,16 @@ void cSnd_BgmEvAllSuspend_0x2d2088(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("cSnd_BgmEvAllSuspend_0x2d2088");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2d20a8u: goto label_2d20a8;
-        case 0x2d20bcu: goto label_2d20bc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2d2088u, 0)) {
+        switch (ctx->pc) {
+            case 0x2d20a8u: goto label_2d20a8;
+            case 0x2d20bcu: goto label_2d20bc;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2d2088u;
 
     // 0x2d2088: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x2d2088u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x2d208c: 0xe7b40020  swc1        $f20, 0x20($sp)
     ctx->pc = 0x2d208cu;
@@ -56,22 +56,17 @@ void cSnd_BgmEvAllSuspend_0x2d2088(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_2d20c8;
         }
     }
-    ctx->pc = 0x2D20A4u;
     // 0x2d20a4: 0x8e020098  lw          $v0, 0x98($s0)
     ctx->pc = 0x2d20a4u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 152)));
 label_2d20a8:
     // 0x2d20a8: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x2d20a8u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2d20ac: 0x4600a306  mov.s       $f12, $f20
-    ctx->pc = 0x2d20acu;
     ctx->f[12] = FPU_MOV_S(ctx->f[20]);
     // 0x2d20b0: 0x34420800  ori         $v0, $v0, 0x800
-    ctx->pc = 0x2d20b0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)2048);
     // 0x2d20b4: 0xc0b352a  jal         func_2CD4A8
-    ctx->pc = 0x2D20B4u;
     SET_GPR_U32(ctx, 31, 0x2D20BCu);
     ctx->pc = 0x2D20B8u;
     ctx->in_delay_slot = true;
@@ -79,8 +74,7 @@ label_2d20a8:
     // 0x2d20b8: 0xae020098  sw          $v0, 0x98($s0) (Delay Slot)
     WRITE32(ADD32(GPR_U32(ctx, 16), 152), GPR_U32(ctx, 2));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2CD4A8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2CD4A8u, 0x2D20B4u, 0x2D20BCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_FadeOut_0x2cd4a8, 0x2cd4a8u, 0x2d20bcu)) {
         return;
     }
     ctx->pc = 0x2D20BCu;
@@ -136,9 +130,7 @@ label_2d20c8:
         return;
         #endif
     }
-    ctx->pc = 0x2D20DCu;
     // 0x2d20dc: 0x0  nop
-    ctx->pc = 0x2d20dcu;
     // NOP
     ctx->pc = 0x2d20e0u;
 }

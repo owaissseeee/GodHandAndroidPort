@@ -18,18 +18,17 @@ void DeleteEventFlag_0x3afdb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("DeleteEventFlag_0x3afdb0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afdb8u: goto label_3afdb8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afdb0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afdb8u: goto label_3afdb8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afdb0u;
 
     // 0x3afdb0: 0x24030051  addiu       $v1, $zero, 0x51
-    ctx->pc = 0x3afdb0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 81));
     // 0x3afdb4: 0xc  syscall     0
-    ctx->pc = 0x3afdb4u;
     ctx->pc = 0x3AFDB8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

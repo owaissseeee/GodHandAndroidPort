@@ -18,10 +18,8 @@ void MPSLIB_CheckHn_0x368fc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("MPSLIB_CheckHn_0x368fc0");
 #endif
 
-    ctx->pc = 0x368fc0u;
 
     // 0x368fc0: 0x3c020076  lui         $v0, 0x76
-    ctx->pc = 0x368fc0u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)118 << 16));
     // 0x368fc4: 0xac446cd8  sw          $a0, 0x6CD8($v0)
     ctx->pc = 0x368fc4u;
@@ -41,12 +39,10 @@ void MPSLIB_CheckHn_0x368fc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_368fdc;
         }
     }
-    ctx->pc = 0x368FD0u;
     // 0x368fd0: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x368fd0u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x368fd4: 0x38630001  xori        $v1, $v1, 0x1
-    ctx->pc = 0x368fd4u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) ^ (uint64_t)(uint16_t)1);
     // 0x368fd8: 0x3100b  movn        $v0, $zero, $v1
     ctx->pc = 0x368fd8u;
@@ -65,9 +61,7 @@ label_368fdc:
         return;
         #endif
     }
-    ctx->pc = 0x368FE4u;
     // 0x368fe4: 0x0  nop
-    ctx->pc = 0x368fe4u;
     // NOP
     ctx->pc = 0x368fe8u;
 }

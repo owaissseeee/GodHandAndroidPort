@@ -18,7 +18,6 @@ void cCamManager_isCk_CamClass_0x138f88(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("cCamManager_isCk_CamClass_0x138f88");
 #endif
 
-    ctx->pc = 0x138f88u;
 
     // 0x138f88: 0x8c821028  lw          $v0, 0x1028($a0)
     ctx->pc = 0x138f88u;
@@ -42,9 +41,7 @@ void cCamManager_isCk_CamClass_0x138f88(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x138F94u;
     // 0x138f94: 0x0  nop
-    ctx->pc = 0x138f94u;
     // NOP
     ctx->pc = 0x138f98u;
 }

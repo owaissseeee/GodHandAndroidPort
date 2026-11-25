@@ -18,18 +18,17 @@ void EESyscall_0x00_0x3af880(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("EESyscall_0x00_0x3af880");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3af888u: goto label_3af888;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3af880u, 0)) {
+        switch (ctx->pc) {
+            case 0x3af888u: goto label_3af888;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3af880u;
 
     // 0x3af880: 0x24030000  addiu       $v1, $zero, 0x0
-    ctx->pc = 0x3af880u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 0));
     // 0x3af884: 0xc  syscall     0
-    ctx->pc = 0x3af884u;
     ctx->pc = 0x3AF888u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

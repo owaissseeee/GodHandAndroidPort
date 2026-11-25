@@ -18,7 +18,6 @@ void Obj35D0_SetFields_a1_Clear4_a2_D718_0x35d718(uint8_t* rdram, R5900Context* 
     PS_LOG_ENTRY("Obj35D0_SetFields_a1_Clear4_a2_D718_0x35d718");
 #endif
 
-    ctx->pc = 0x35d718u;
 
     // 0x35d718: 0xac860008  sw          $a2, 0x8($a0)
     ctx->pc = 0x35d718u;

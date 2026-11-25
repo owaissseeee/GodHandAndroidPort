@@ -18,7 +18,6 @@ void SetField_56_1DEBE8_0x1debe8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("SetField_56_1DEBE8_0x1debe8");
 #endif
 
-    ctx->pc = 0x1debe8u;
 
     // 0x1debe8: 0x3e00008  jr          $ra
     ctx->pc = 0x1DEBE8u;

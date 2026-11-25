@@ -18,13 +18,10 @@ void Obj2B28_SetField34_To2_ReturnZero_0x2b2d18(uint8_t* rdram, R5900Context* ct
     PS_LOG_ENTRY("Obj2B28_SetField34_To2_ReturnZero_0x2b2d18");
 #endif
 
-    ctx->pc = 0x2b2d18u;
 
     // 0x2b2d18: 0x24030002  addiu       $v1, $zero, 0x2
-    ctx->pc = 0x2b2d18u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x2b2d1c: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2b2d1cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2b2d20: 0x3e00008  jr          $ra
     ctx->pc = 0x2B2D20u;

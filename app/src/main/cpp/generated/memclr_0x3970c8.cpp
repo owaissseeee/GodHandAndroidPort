@@ -18,12 +18,13 @@ void memclr_0x3970c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     PS_LOG_ENTRY("memclr_0x3970c8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3970d8u: goto label_3970d8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3970c8u, 0)) {
+        switch (ctx->pc) {
+            case 0x3970d8u: goto label_3970d8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3970c8u;
 
     // 0x3970c8: 0x10a0000a  beqz        $a1, . + 4 + (0xA << 2)
     ctx->pc = 0x3970C8u;
@@ -40,9 +41,7 @@ void memclr_0x3970c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             goto label_3970f4;
         }
     }
-    ctx->pc = 0x3970D0u;
     // 0x3970d0: 0x2403ffff  addiu       $v1, $zero, -0x1
-    ctx->pc = 0x3970d0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x3970d4: 0x0  nop
     ctx->pc = 0x3970d4u;
@@ -52,16 +51,12 @@ label_3970d8:
     ctx->pc = 0x3970d8u;
     WRITE8(ADD32(GPR_U32(ctx, 4), 0), (uint8_t)GPR_U32(ctx, 0));
     // 0x3970dc: 0x2442ffff  addiu       $v0, $v0, -0x1
-    ctx->pc = 0x3970dcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));
     // 0x3970e0: 0x24840001  addiu       $a0, $a0, 0x1
-    ctx->pc = 0x3970e0u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 1));
     // 0x3970e4: 0x0  nop
-    ctx->pc = 0x3970e4u;
     // NOP
     // 0x3970e8: 0x0  nop
-    ctx->pc = 0x3970e8u;
     // NOP
     // 0x3970ec: 0x1443fffa  bne         $v0, $v1, . + 4 + (-0x6 << 2)
     ctx->pc = 0x3970ECu;
@@ -90,9 +85,7 @@ label_3970f4:
         return;
         #endif
     }
-    ctx->pc = 0x3970FCu;
     // 0x3970fc: 0x0  nop
-    ctx->pc = 0x3970fcu;
     // NOP
     ctx->pc = 0x397100u;
 }

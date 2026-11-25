@@ -18,13 +18,10 @@ void Forward327D00_349AA0_0x349aa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("Forward327D00_349AA0_0x349aa0");
 #endif
 
-    ctx->pc = 0x349aa0u;
 
     // 0x349aa0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x349aa0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x349aa4: 0x282d  daddu       $a1, $zero, $zero
-    ctx->pc = 0x349aa4u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x349aa8: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x349aa8u;
@@ -33,8 +30,6 @@ void Forward327D00_349AA0_0x349aa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x349aacu;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x349ab0: 0x80c9f40  j           func_327D00
-    ctx->pc = 0x349AB0u;
-    ctx->pc = 0x349AB4u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x349AB0u;
     // 0x349ab4: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)

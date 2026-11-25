@@ -18,16 +18,16 @@ void cSnd_SeDetachObj_0x2cbe18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("cSnd_SeDetachObj_0x2cbe18");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2cbe38u: goto label_2cbe38;
-        case 0x2cbe40u: goto label_2cbe40;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2cbe18u, 0)) {
+        switch (ctx->pc) {
+            case 0x2cbe38u: goto label_2cbe38;
+            case 0x2cbe40u: goto label_2cbe40;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2cbe18u;
 
     // 0x2cbe18: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x2cbe18u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x2cbe1c: 0x7fb10010  sq          $s1, 0x10($sp)
     ctx->pc = 0x2cbe1cu;
@@ -56,13 +56,11 @@ void cSnd_SeDetachObj_0x2cbe18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_2cbe50;
         }
     }
-    ctx->pc = 0x2CBE34u;
     // 0x2cbe34: 0x200202d  daddu       $a0, $s0, $zero
     ctx->pc = 0x2cbe34u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_2cbe38:
     // 0x2cbe38: 0xc0b3922  jal         func_2CE488
-    ctx->pc = 0x2CBE38u;
     SET_GPR_U32(ctx, 31, 0x2CBE40u);
     ctx->pc = 0x2CBE3Cu;
     ctx->in_delay_slot = true;
@@ -70,8 +68,7 @@ label_2cbe38:
     // 0x2cbe3c: 0x220282d  daddu       $a1, $s1, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2CE488u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2CE488u, 0x2CBE38u, 0x2CBE40u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cSndSeVoice_Detach_0x2ce488, 0x2ce488u, 0x2cbe40u)) {
         return;
     }
     ctx->pc = 0x2CBE40u;
@@ -80,7 +77,6 @@ label_2cbe40:
     ctx->pc = 0x2cbe40u;
     SET_GPR_S32(ctx, 16, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 4)));
     // 0x2cbe44: 0x0  nop
-    ctx->pc = 0x2cbe44u;
     // NOP
     // 0x2cbe48: 0x1600fffb  bnez        $s0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x2CBE48u;
@@ -130,9 +126,7 @@ label_2cbe50:
         return;
         #endif
     }
-    ctx->pc = 0x2CBE64u;
     // 0x2cbe64: 0x0  nop
-    ctx->pc = 0x2cbe64u;
     // NOP
     ctx->pc = 0x2cbe68u;
 }

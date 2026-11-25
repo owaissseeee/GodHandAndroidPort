@@ -18,30 +18,27 @@ void cSceAtManager_clearCursor_0x2c14f8(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("cSceAtManager_clearCursor_0x2c14f8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2c1530u: goto label_2c1530;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2c14f8u, 0)) {
+        switch (ctx->pc) {
+            case 0x2c1530u: goto label_2c1530;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2c14f8u;
 
     // 0x2c14f8: 0x3c020074  lui         $v0, 0x74
-    ctx->pc = 0x2c14f8u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
     // 0x2c14fc: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2c14fcu;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2c1500: 0x8c437a78  lw          $v1, 0x7A78($v0)
     ctx->pc = 0x2c1500u;
     SET_GPR_S32(ctx, 3, (int32_t)FAST_READ32(0x747A78u));
     // 0x2c1504: 0x3c050010  lui         $a1, 0x10
-    ctx->pc = 0x2c1504u;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)16 << 16));
     // 0x2c1508: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2c1508u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2c150c: 0x651824  and         $v1, $v1, $a1
-    ctx->pc = 0x2c150cu;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 5));
     // 0x2c1510: 0x14600007  bnez        $v1, . + 4 + (0x7 << 2)
     ctx->pc = 0x2C1510u;
@@ -58,7 +55,6 @@ void cSceAtManager_clearCursor_0x2c14f8(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_2c1530;
         }
     }
-    ctx->pc = 0x2C1518u;
     // 0x2c1518: 0xac400060  sw          $zero, 0x60($v0)
     ctx->pc = 0x2c1518u;
     WRITE32(ADD32(GPR_U32(ctx, 2), 96), GPR_U32(ctx, 0));
@@ -72,7 +68,6 @@ void cSceAtManager_clearCursor_0x2c14f8(uint8_t* rdram, R5900Context* ctx, PS2Ru
     ctx->pc = 0x2c1524u;
     WRITE32(ADD32(GPR_U32(ctx, 2), 112), GPR_U32(ctx, 0));
     // 0x2c1528: 0xc0b0586  jal         func_2C1618
-    ctx->pc = 0x2C1528u;
     SET_GPR_U32(ctx, 31, 0x2C1530u);
     ctx->pc = 0x2C152Cu;
     ctx->in_delay_slot = true;
@@ -80,8 +75,7 @@ void cSceAtManager_clearCursor_0x2c14f8(uint8_t* rdram, R5900Context* ctx, PS2Ru
     // 0x2c152c: 0xa0400064  sb          $zero, 0x64($v0) (Delay Slot)
     WRITE8(ADD32(GPR_U32(ctx, 2), 100), (uint8_t)GPR_U32(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2C1618u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2C1618u, 0x2C1528u, 0x2C1530u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002C1618_0x2c1618, 0x2c1618u, 0x2c1530u)) {
         return;
     }
     ctx->pc = 0x2C1530u;
@@ -108,9 +102,7 @@ label_2c1530:
         return;
         #endif
     }
-    ctx->pc = 0x2C153Cu;
     // 0x2c153c: 0x0  nop
-    ctx->pc = 0x2c153cu;
     // NOP
     ctx->pc = 0x2c1540u;
 }

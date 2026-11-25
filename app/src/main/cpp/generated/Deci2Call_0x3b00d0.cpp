@@ -18,18 +18,17 @@ void Deci2Call_0x3b00d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
     PS_LOG_ENTRY("Deci2Call_0x3b00d0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b00d8u: goto label_3b00d8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b00d0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b00d8u: goto label_3b00d8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b00d0u;
 
     // 0x3b00d0: 0x2403007c  addiu       $v1, $zero, 0x7C
-    ctx->pc = 0x3b00d0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 124));
     // 0x3b00d4: 0xc  syscall     0
-    ctx->pc = 0x3b00d4u;
     ctx->pc = 0x3B00D8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

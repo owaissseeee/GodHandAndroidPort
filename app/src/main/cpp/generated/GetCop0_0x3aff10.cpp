@@ -18,18 +18,17 @@ void GetCop0_0x3aff10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     PS_LOG_ENTRY("GetCop0_0x3aff10");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3aff18u: goto label_3aff18;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3aff10u, 0)) {
+        switch (ctx->pc) {
+            case 0x3aff18u: goto label_3aff18;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3aff10u;
 
     // 0x3aff10: 0x24030063  addiu       $v1, $zero, 0x63
-    ctx->pc = 0x3aff10u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 99));
     // 0x3aff14: 0xc  syscall     0
-    ctx->pc = 0x3aff14u;
     ctx->pc = 0x3AFF18u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

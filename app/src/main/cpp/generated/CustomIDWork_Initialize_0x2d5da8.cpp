@@ -18,7 +18,6 @@ void CustomIDWork_Initialize_0x2d5da8(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("CustomIDWork_Initialize_0x2d5da8");
 #endif
 
-    ctx->pc = 0x2d5da8u;
 
     // 0x2d5da8: 0x10a0000a  beqz        $a1, . + 4 + (0xA << 2)
     ctx->pc = 0x2D5DA8u;
@@ -29,7 +28,6 @@ void CustomIDWork_Initialize_0x2d5da8(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_2d5dd4;
         }
     }
-    ctx->pc = 0x2D5DB0u;
     // 0x2d5db0: 0xac850004  sw          $a1, 0x4($a0)
     ctx->pc = 0x2d5db0u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 4), GPR_U32(ctx, 5));
@@ -71,9 +69,7 @@ label_2d5dd4:
         return;
         #endif
     }
-    ctx->pc = 0x2D5DDCu;
     // 0x2d5ddc: 0x0  nop
-    ctx->pc = 0x2d5ddcu;
     // NOP
     ctx->pc = 0x2d5de0u;
 }

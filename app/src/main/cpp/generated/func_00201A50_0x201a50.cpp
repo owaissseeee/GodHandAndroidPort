@@ -18,23 +18,21 @@ void func_00201A50_0x201a50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00201A50_0x201a50");
 #endif
 
-    switch (ctx->pc) {
-        case 0x201a60u: goto label_201a60;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x201a50u, 0)) {
+        switch (ctx->pc) {
+            case 0x201a60u: goto label_201a60;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x201a50u;
 
     // 0x201a50: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x201a50u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x201a54: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x201a54u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x201a58: 0xc0e6542  jal         func_399508
-    ctx->pc = 0x201A58u;
     SET_GPR_U32(ctx, 31, 0x201A60u);
-    ctx->pc = 0x201A5Cu;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x201A58u;
     // 0x201a5c: 0x24040001  addiu       $a0, $zero, 0x1 (Delay Slot)
@@ -47,13 +45,11 @@ void func_00201A50_0x201a50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x201A60u;
 label_201a60:
     // 0x201a60: 0x38420002  xori        $v0, $v0, 0x2
-    ctx->pc = 0x201a60u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)2);
     // 0x201a64: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x201a64u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x201a68: 0x2c420001  sltiu       $v0, $v0, 0x1
-    ctx->pc = 0x201a68u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1) ? 1 : 0);
     // 0x201a6c: 0x3e00008  jr          $ra
     ctx->pc = 0x201A6Cu;
@@ -74,15 +70,11 @@ label_201a60:
         return;
         #endif
     }
-    ctx->pc = 0x201A74u;
     // 0x201a74: 0x0  nop
-    ctx->pc = 0x201a74u;
     // NOP
     // 0x201a78: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x201a78u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x201a7c: 0x0  nop
-    ctx->pc = 0x201a7cu;
     // NOP
     ctx->pc = 0x201a80u;
 }

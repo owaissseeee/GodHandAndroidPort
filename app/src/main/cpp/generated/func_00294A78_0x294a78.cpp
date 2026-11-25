@@ -18,7 +18,6 @@ void func_00294A78_0x294a78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00294A78_0x294a78");
 #endif
 
-    ctx->pc = 0x294a78u;
 
     // 0x294a78: 0x80820541  lb          $v0, 0x541($a0)
     ctx->pc = 0x294a78u;
@@ -42,9 +41,7 @@ void func_00294A78_0x294a78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x294A84u;
     // 0x294a84: 0x0  nop
-    ctx->pc = 0x294a84u;
     // NOP
     ctx->pc = 0x294a88u;
 }

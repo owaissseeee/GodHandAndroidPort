@@ -18,7 +18,6 @@ void func_00350040_0x350040(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00350040_0x350040");
 #endif
 
-    ctx->pc = 0x350040u;
 
     // 0x350040: 0x3e00008  jr          $ra
     ctx->pc = 0x350040u;

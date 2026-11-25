@@ -18,7 +18,6 @@ void ClearField90_13E400_0x13e400(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("ClearField90_13E400_0x13e400");
 #endif
 
-    ctx->pc = 0x13e400u;
 
     // 0x13e400: 0x8c820090  lw          $v0, 0x90($a0)
     ctx->pc = 0x13e400u;
@@ -53,9 +52,7 @@ label_13e40c:
         return;
         #endif
     }
-    ctx->pc = 0x13E414u;
     // 0x13e414: 0x0  nop
-    ctx->pc = 0x13e414u;
     // NOP
     ctx->pc = 0x13e418u;
 }

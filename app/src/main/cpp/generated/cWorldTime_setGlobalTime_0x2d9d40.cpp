@@ -18,7 +18,6 @@ void cWorldTime_setGlobalTime_0x2d9d40(uint8_t* rdram, R5900Context* ctx, PS2Run
     PS_LOG_ENTRY("cWorldTime_setGlobalTime_0x2d9d40");
 #endif
 
-    ctx->pc = 0x2d9d40u;
 
     // 0x2d9d40: 0x3e00008  jr          $ra
     ctx->pc = 0x2D9D40u;

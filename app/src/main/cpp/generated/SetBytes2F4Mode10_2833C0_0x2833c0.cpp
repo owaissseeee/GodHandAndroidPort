@@ -18,10 +18,8 @@ void SetBytes2F4Mode10_2833C0_0x2833c0(uint8_t* rdram, R5900Context* ctx, PS2Run
     PS_LOG_ENTRY("SetBytes2F4Mode10_2833C0_0x2833c0");
 #endif
 
-    ctx->pc = 0x2833c0u;
 
     // 0x2833c0: 0x2402000a  addiu       $v0, $zero, 0xA
-    ctx->pc = 0x2833c0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 10));
     // 0x2833c4: 0xa08502f7  sb          $a1, 0x2F7($a0)
     ctx->pc = 0x2833c4u;

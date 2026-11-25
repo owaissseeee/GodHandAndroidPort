@@ -18,55 +18,44 @@ void func_0031B410_0x31b410(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0031B410_0x31b410");
 #endif
 
-    ctx->pc = 0x31b410u;
 
     // 0x31b410: 0xdca40040  ld          $a0, 0x40($a1)
     ctx->pc = 0x31b410u;
     SET_GPR_U64(ctx, 4, READ64(ADD32(GPR_U32(ctx, 5), 64)));
     // 0x31b414: 0x3403f008  ori         $v1, $zero, 0xF008
-    ctx->pc = 0x31b414u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)61448);
     // 0x31b418: 0x31d78  dsll        $v1, $v1, 21
-    ctx->pc = 0x31b418u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) << 21);
     // 0x31b41c: 0x3463ffe0  ori         $v1, $v1, 0xFFE0
-    ctx->pc = 0x31b41cu;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) | (uint64_t)(uint16_t)65504);
     // 0x31b420: 0x31bf8  dsll        $v1, $v1, 15
-    ctx->pc = 0x31b420u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) << 15);
     // 0x31b424: 0xdca60038  ld          $a2, 0x38($a1)
     ctx->pc = 0x31b424u;
     SET_GPR_U64(ctx, 6, READ64(ADD32(GPR_U32(ctx, 5), 56)));
     // 0x31b428: 0x24090080  addiu       $t1, $zero, 0x80
-    ctx->pc = 0x31b428u;
     SET_GPR_S32(ctx, 9, (int32_t)ADD32(GPR_U32(ctx, 0), 128));
     // 0x31b42c: 0xdca80028  ld          $t0, 0x28($a1)
     ctx->pc = 0x31b42cu;
     SET_GPR_U64(ctx, 8, READ64(ADD32(GPR_U32(ctx, 5), 40)));
     // 0x31b430: 0x832024  and         $a0, $a0, $v1
-    ctx->pc = 0x31b430u;
     SET_GPR_U64(ctx, 4, GPR_U64(ctx, 4) & GPR_U64(ctx, 3));
     // 0x31b434: 0xdca70030  ld          $a3, 0x30($a1)
     ctx->pc = 0x31b434u;
     SET_GPR_U64(ctx, 7, READ64(ADD32(GPR_U32(ctx, 5), 48)));
     // 0x31b438: 0xc33024  and         $a2, $a2, $v1
-    ctx->pc = 0x31b438u;
     SET_GPR_U64(ctx, 6, GPR_U64(ctx, 6) & GPR_U64(ctx, 3));
     // 0x31b43c: 0xdca20018  ld          $v0, 0x18($a1)
     ctx->pc = 0x31b43cu;
     SET_GPR_U64(ctx, 2, READ64(ADD32(GPR_U32(ctx, 5), 24)));
     // 0x31b440: 0x1034024  and         $t0, $t0, $v1
-    ctx->pc = 0x31b440u;
     SET_GPR_U64(ctx, 8, GPR_U64(ctx, 8) & GPR_U64(ctx, 3));
     // 0x31b444: 0xe33824  and         $a3, $a3, $v1
-    ctx->pc = 0x31b444u;
     SET_GPR_U64(ctx, 7, GPR_U64(ctx, 7) & GPR_U64(ctx, 3));
     // 0x31b448: 0xfca40040  sd          $a0, 0x40($a1)
     ctx->pc = 0x31b448u;
     WRITE64(ADD32(GPR_U32(ctx, 5), 64), GPR_U64(ctx, 4));
     // 0x31b44c: 0x431024  and         $v0, $v0, $v1
-    ctx->pc = 0x31b44cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 3));
     // 0x31b450: 0xfca60038  sd          $a2, 0x38($a1)
     ctx->pc = 0x31b450u;
@@ -156,9 +145,7 @@ void func_0031B410_0x31b410(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x31B4B4u;
     // 0x31b4b4: 0x0  nop
-    ctx->pc = 0x31b4b4u;
     // NOP
     ctx->pc = 0x31b4b8u;
 }

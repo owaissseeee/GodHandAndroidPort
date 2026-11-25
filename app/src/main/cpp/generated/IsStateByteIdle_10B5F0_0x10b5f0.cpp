@@ -18,7 +18,6 @@ void IsStateByteIdle_10B5F0_0x10b5f0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("IsStateByteIdle_10B5F0_0x10b5f0");
 #endif
 
-    ctx->pc = 0x10b5f0u;
 
     // 0x10b5f0: 0x908202f4  lbu         $v0, 0x2F4($a0)
     ctx->pc = 0x10b5f0u;
@@ -38,7 +37,6 @@ void IsStateByteIdle_10B5F0_0x10b5f0(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_10b604;
         }
     }
-    ctx->pc = 0x10B5FCu;
     // 0x10b5fc: 0x3e00008  jr          $ra
     ctx->pc = 0x10B5FCu;
     {
@@ -75,7 +73,6 @@ label_10b604:
             goto label_10b614;
         }
     }
-    ctx->pc = 0x10B60Cu;
     // 0x10b60c: 0x14830002  bne         $a0, $v1, . + 4 + (0x2 << 2)
     ctx->pc = 0x10B60Cu;
     {

@@ -18,7 +18,6 @@ void NoOp_282E48_0x282e48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("NoOp_282E48_0x282e48");
 #endif
 
-    ctx->pc = 0x282e48u;
 
     // 0x282e48: 0x3e00008  jr          $ra
     ctx->pc = 0x282E48u;

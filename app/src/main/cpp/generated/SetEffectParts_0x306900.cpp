@@ -18,21 +18,19 @@ void SetEffectParts_0x306900(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("SetEffectParts_0x306900");
 #endif
 
-    switch (ctx->pc) {
-        case 0x30699cu: goto label_30699c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x306900u, 0)) {
+        switch (ctx->pc) {
+            case 0x30699cu: goto label_30699c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x306900u;
 
     // 0x306900: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x306900u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
     // 0x306904: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x306904u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x306908: 0x27bdff70  addiu       $sp, $sp, -0x90
-    ctx->pc = 0x306908u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967152));
     // 0x30690c: 0xffbf0080  sd          $ra, 0x80($sp)
     ctx->pc = 0x30690cu;
@@ -59,19 +57,16 @@ void SetEffectParts_0x306900(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     ctx->pc = 0x306928u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 29), 48), bits); }
     // 0x30692c: 0x27a20030  addiu       $v0, $sp, 0x30
-    ctx->pc = 0x30692cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 29), 48));
     // 0x306930: 0xe440000c  swc1        $f0, 0xC($v0)
     ctx->pc = 0x306930u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 2), 12), bits); }
     // 0x306934: 0x2409ffff  addiu       $t1, $zero, -0x1
-    ctx->pc = 0x306934u;
     SET_GPR_S32(ctx, 9, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x306938: 0xe4400004  swc1        $f0, 0x4($v0)
     ctx->pc = 0x306938u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 2), 4), bits); }
     // 0x30693c: 0x240300ff  addiu       $v1, $zero, 0xFF
-    ctx->pc = 0x30693cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 255));
     // 0x306940: 0xe4400008  swc1        $f0, 0x8($v0)
     ctx->pc = 0x306940u;
@@ -107,19 +102,16 @@ void SetEffectParts_0x306900(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     ctx->pc = 0x306968u;
     WRITE8(ADD32(GPR_U32(ctx, 29), 76), (uint8_t)GPR_U32(ctx, 7));
     // 0x30696c: 0x3c09ffff  lui         $t1, 0xFFFF
-    ctx->pc = 0x30696cu;
     SET_GPR_S32(ctx, 9, (int32_t)((uint32_t)65535 << 16));
     // 0x306970: 0xe7ac0020  swc1        $f12, 0x20($sp)
     ctx->pc = 0x306970u;
     { float f = ctx->f[12]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 29), 32), bits); }
     // 0x306974: 0x3a0382d  daddu       $a3, $sp, $zero
-    ctx->pc = 0x306974u;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
     // 0x306978: 0xe7ad0024  swc1        $f13, 0x24($sp)
     ctx->pc = 0x306978u;
     { float f = ctx->f[13]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 29), 36), bits); }
     // 0x30697c: 0x3529ffff  ori         $t1, $t1, 0xFFFF
-    ctx->pc = 0x30697cu;
     SET_GPR_U64(ctx, 9, GPR_U64(ctx, 9) | (uint64_t)(uint16_t)65535);
     // 0x306980: 0xe7ae0028  swc1        $f14, 0x28($sp)
     ctx->pc = 0x306980u;
@@ -137,7 +129,6 @@ void SetEffectParts_0x306900(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     ctx->pc = 0x306990u;
     WRITE8(ADD32(GPR_U32(ctx, 29), 116), (uint8_t)GPR_U32(ctx, 0));
     // 0x306994: 0xc0c194a  jal         func_306528
-    ctx->pc = 0x306994u;
     SET_GPR_U32(ctx, 31, 0x30699Cu);
     ctx->pc = 0x306998u;
     ctx->in_delay_slot = true;
@@ -145,8 +136,7 @@ void SetEffectParts_0x306900(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     // 0x306998: 0xafa00078  sw          $zero, 0x78($sp) (Delay Slot)
     WRITE32(ADD32(GPR_U32(ctx, 29), 120), GPR_U32(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x306528u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x306528u, 0x306994u, 0x30699Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x30699cu)) {
         return;
     }
     ctx->pc = 0x30699Cu;

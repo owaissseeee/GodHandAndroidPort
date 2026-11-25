@@ -18,15 +18,15 @@ void func_00292048_0x292048(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00292048_0x292048");
 #endif
 
-    switch (ctx->pc) {
-        case 0x292054u: goto label_292054;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x292048u, 0)) {
+        switch (ctx->pc) {
+            case 0x292054u: goto label_292054;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x292048u;
 
     // 0x292048: 0x28a20900  slti        $v0, $a1, 0x900
-    ctx->pc = 0x292048u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 5) < (int64_t)(int32_t)2304) ? 1 : 0);
     // 0x29204c: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x29204Cu;
@@ -81,7 +81,6 @@ label_29205c:
             goto label_29206c;
         }
     }
-    ctx->pc = 0x292064u;
     // 0x292064: 0x3e00008  jr          $ra
     ctx->pc = 0x292064u;
     {
@@ -118,9 +117,7 @@ label_29206c:
             goto label_2920a0;
         }
     }
-    ctx->pc = 0x292074u;
     // 0x292074: 0x240209c0  addiu       $v0, $zero, 0x9C0
-    ctx->pc = 0x292074u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2496));
     // 0x292078: 0x10a20005  beq         $a1, $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x292078u;
@@ -137,7 +134,6 @@ label_29206c:
             goto label_292090;
         }
     }
-    ctx->pc = 0x292080u;
     // 0x292080: 0x10a20005  beq         $a1, $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x292080u;
     {
@@ -147,7 +143,6 @@ label_29206c:
             goto label_292098;
         }
     }
-    ctx->pc = 0x292088u;
     // 0x292088: 0x1000fff2  b           . + 4 + (-0xE << 2)
     ctx->pc = 0x292088u;
     {
@@ -205,10 +200,8 @@ label_292098:
     ctx->pc = 0x2920A0u;
 label_2920a0:
     // 0x2920a0: 0x240303db  addiu       $v1, $zero, 0x3DB
-    ctx->pc = 0x2920a0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 987));
     // 0x2920a4: 0x3402ffff  ori         $v0, $zero, 0xFFFF
-    ctx->pc = 0x2920a4u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     // 0x2920a8: 0x3e00008  jr          $ra
     ctx->pc = 0x2920A8u;

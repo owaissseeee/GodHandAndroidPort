@@ -18,15 +18,15 @@ void FindResolveActor_295978_0x295978(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("FindResolveActor_295978_0x295978");
 #endif
 
-    switch (ctx->pc) {
-        case 0x295998u: goto label_295998;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x295978u, 0)) {
+        switch (ctx->pc) {
+            case 0x295998u: goto label_295998;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x295978u;
 
     // 0x295978: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x295978u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x29597c: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x29597cu;
@@ -35,16 +35,13 @@ void FindResolveActor_295978_0x295978(uint8_t* rdram, R5900Context* ctx, PS2Runt
     ctx->pc = 0x295980u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x295984: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x295984u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x295988: 0x3c040058  lui         $a0, 0x58
-    ctx->pc = 0x295988u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)88 << 16));
     // 0x29598c: 0x92050000  lbu         $a1, 0x0($s0)
     ctx->pc = 0x29598cu;
     SET_GPR_ZE32(ctx, 5, (uint8_t)READ8(ADD32(GPR_U32(ctx, 16), 0)));
     // 0x295990: 0xc0a421a  jal         func_290868
-    ctx->pc = 0x295990u;
     SET_GPR_U32(ctx, 31, 0x295998u);
     ctx->pc = 0x295994u;
     ctx->in_delay_slot = true;
@@ -52,8 +49,7 @@ void FindResolveActor_295978_0x295978(uint8_t* rdram, R5900Context* ctx, PS2Runt
     // 0x295994: 0x248464f0  addiu       $a0, $a0, 0x64F0 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 25840));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x290868u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x290868u, 0x295990u, 0x295998u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_GetEm_0x290868, 0x290868u, 0x295998u)) {
         return;
     }
     ctx->pc = 0x295998u;
@@ -65,7 +61,6 @@ label_295998:
     ctx->pc = 0x29599cu;
     SET_GPR_VEC(ctx, 16, READ128(ADD32(GPR_U32(ctx, 29), 16)));
     // 0x2959a0: 0x2102b  sltu        $v0, $zero, $v0
-    ctx->pc = 0x2959a0u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 0) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
     // 0x2959a4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2959a4u;

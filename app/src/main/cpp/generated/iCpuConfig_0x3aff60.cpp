@@ -18,18 +18,17 @@ void iCpuConfig_0x3aff60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     PS_LOG_ENTRY("iCpuConfig_0x3aff60");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3aff68u: goto label_3aff68;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3aff60u, 0)) {
+        switch (ctx->pc) {
+            case 0x3aff68u: goto label_3aff68;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3aff60u;
 
     // 0x3aff60: 0x2403ff96  addiu       $v1, $zero, -0x6A
-    ctx->pc = 0x3aff60u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967190));
     // 0x3aff64: 0xc  syscall     0
-    ctx->pc = 0x3aff64u;
     ctx->pc = 0x3AFF68u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

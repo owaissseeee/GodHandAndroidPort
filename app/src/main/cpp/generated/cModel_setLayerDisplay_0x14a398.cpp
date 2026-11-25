@@ -18,12 +18,13 @@ void cModel_setLayerDisplay_0x14a398(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("cModel_setLayerDisplay_0x14a398");
 #endif
 
-    switch (ctx->pc) {
-        case 0x14a3b0u: goto label_14a3b0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x14a398u, 0)) {
+        switch (ctx->pc) {
+            case 0x14a3b0u: goto label_14a3b0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x14a398u;
 
     // 0x14a398: 0x8c83025c  lw          $v1, 0x25C($a0)
     ctx->pc = 0x14a398u;
@@ -37,12 +38,9 @@ void cModel_setLayerDisplay_0x14a398(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_14a3dc;
         }
     }
-    ctx->pc = 0x14A3A4u;
     // 0x14a3a4: 0x3c04ffff  lui         $a0, 0xFFFF
-    ctx->pc = 0x14a3a4u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)65535 << 16));
     // 0x14a3a8: 0x3484fffe  ori         $a0, $a0, 0xFFFE
-    ctx->pc = 0x14a3a8u;
     SET_GPR_U64(ctx, 4, GPR_U64(ctx, 4) | (uint64_t)(uint16_t)65534);
     // 0x14a3ac: 0x9062040c  lbu         $v0, 0x40C($v1)
     ctx->pc = 0x14a3acu;
@@ -63,7 +61,6 @@ label_14a3b0:
             goto label_14a3d4;
         }
     }
-    ctx->pc = 0x14A3B8u;
     // 0x14a3b8: 0x10c00003  beqz        $a2, . + 4 + (0x3 << 2)
     ctx->pc = 0x14A3B8u;
     {
@@ -79,7 +76,6 @@ label_14a3b0:
             goto label_14a3c8;
         }
     }
-    ctx->pc = 0x14A3C0u;
     // 0x14a3c0: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x14A3C0u;
     {
@@ -141,9 +137,7 @@ label_14a3dc:
         return;
         #endif
     }
-    ctx->pc = 0x14A3E4u;
     // 0x14a3e4: 0x0  nop
-    ctx->pc = 0x14a3e4u;
     // NOP
     ctx->pc = 0x14a3e8u;
 }

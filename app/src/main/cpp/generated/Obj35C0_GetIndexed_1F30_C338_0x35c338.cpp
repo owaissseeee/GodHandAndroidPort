@@ -18,19 +18,14 @@ void Obj35C0_GetIndexed_1F30_C338_0x35c338(uint8_t* rdram, R5900Context* ctx, PS
     PS_LOG_ENTRY("Obj35C0_GetIndexed_1F30_C338_0x35c338");
 #endif
 
-    ctx->pc = 0x35c338u;
 
     // 0x35c338: 0x51100  sll         $v0, $a1, 4
-    ctx->pc = 0x35c338u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 5), 4));
     // 0x35c33c: 0x451021  addu        $v0, $v0, $a1
-    ctx->pc = 0x35c33cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 5)));
     // 0x35c340: 0x21080  sll         $v0, $v0, 2
-    ctx->pc = 0x35c340u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 2));
     // 0x35c344: 0x822021  addu        $a0, $a0, $v0
-    ctx->pc = 0x35c344u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 2)));
     // 0x35c348: 0x3e00008  jr          $ra
     ctx->pc = 0x35C348u;

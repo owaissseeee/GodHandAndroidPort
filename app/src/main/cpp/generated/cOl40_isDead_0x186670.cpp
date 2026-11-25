@@ -18,7 +18,6 @@ void cOl40_isDead_0x186670(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("cOl40_isDead_0x186670");
 #endif
 
-    ctx->pc = 0x186670u;
 
     // 0x186670: 0x3e00008  jr          $ra
     ctx->pc = 0x186670u;

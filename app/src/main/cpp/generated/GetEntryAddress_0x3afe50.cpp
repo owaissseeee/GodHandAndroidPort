@@ -18,18 +18,17 @@ void GetEntryAddress_0x3afe50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("GetEntryAddress_0x3afe50");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afe58u: goto label_3afe58;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afe50u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afe58u: goto label_3afe58;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afe50u;
 
     // 0x3afe50: 0x2403005b  addiu       $v1, $zero, 0x5B
-    ctx->pc = 0x3afe50u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 91));
     // 0x3afe54: 0xc  syscall     0
-    ctx->pc = 0x3afe54u;
     ctx->pc = 0x3AFE58u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

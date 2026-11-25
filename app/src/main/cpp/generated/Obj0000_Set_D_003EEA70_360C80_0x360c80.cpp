@@ -18,10 +18,8 @@ void Obj0000_Set_D_003EEA70_360C80_0x360c80(uint8_t* rdram, R5900Context* ctx, P
     PS_LOG_ENTRY("Obj0000_Set_D_003EEA70_360C80_0x360c80");
 #endif
 
-    ctx->pc = 0x360c80u;
 
     // 0x360c80: 0x3c02003f  lui         $v0, 0x3F
-    ctx->pc = 0x360c80u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)63 << 16));
     // 0x360c84: 0x3e00008  jr          $ra
     ctx->pc = 0x360C84u;
@@ -42,21 +40,17 @@ void Obj0000_Set_D_003EEA70_360C80_0x360c80(uint8_t* rdram, R5900Context* ctx, P
         return;
         #endif
     }
-    ctx->pc = 0x360C8Cu;
     // 0x360c8c: 0x0  nop
-    ctx->pc = 0x360c8cu;
     // NOP
     // 0x360c90: 0xfc800010  sd          $zero, 0x10($a0)
     ctx->pc = 0x360c90u;
     WRITE64(ADD32(GPR_U32(ctx, 4), 16), GPR_U64(ctx, 0));
     // 0x360c94: 0x0  nop
-    ctx->pc = 0x360c94u;
     // NOP
     // 0x360c98: 0xfc880010  sd          $t0, 0x10($a0)
     ctx->pc = 0x360c98u;
     WRITE64(ADD32(GPR_U32(ctx, 4), 16), GPR_U64(ctx, 8));
     // 0x360c9c: 0x0  nop
-    ctx->pc = 0x360c9cu;
     // NOP
     ctx->pc = 0x360ca0u;
 }

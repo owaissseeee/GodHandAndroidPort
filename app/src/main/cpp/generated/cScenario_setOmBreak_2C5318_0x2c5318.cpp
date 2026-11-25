@@ -18,24 +18,22 @@ void cScenario_setOmBreak_2C5318_0x2c5318(uint8_t* rdram, R5900Context* ctx, PS2
     PS_LOG_ENTRY("cScenario_setOmBreak_2C5318_0x2c5318");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2c532cu: goto label_2c532c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2c5318u, 0)) {
+        switch (ctx->pc) {
+            case 0x2c532cu: goto label_2c532c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2c5318u;
 
     // 0x2c5318: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2c5318u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2c531c: 0x3c04005f  lui         $a0, 0x5F
-    ctx->pc = 0x2c531cu;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)95 << 16));
     // 0x2c5320: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2c5320u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2c5324: 0xc0afb2c  jal         func_2BECB0
-    ctx->pc = 0x2C5324u;
     SET_GPR_U32(ctx, 31, 0x2C532Cu);
     ctx->pc = 0x2C5328u;
     ctx->in_delay_slot = true;
@@ -43,8 +41,7 @@ void cScenario_setOmBreak_2C5318_0x2c5318(uint8_t* rdram, R5900Context* ctx, PS2
     // 0x2c5328: 0x24848658  addiu       $a0, $a0, -0x79A8 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 4294936152));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2BECB0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2BECB0u, 0x2C5324u, 0x2C532Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002BECB0_0x2becb0, 0x2becb0u, 0x2c532cu)) {
         return;
     }
     ctx->pc = 0x2C532Cu;

@@ -18,31 +18,23 @@ void func_0034E988_0x34e988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0034E988_0x34e988");
 #endif
 
-    ctx->pc = 0x34e988u;
 
     // 0x34e988: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x34e988u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x34e98c: 0x8c441f84  lw          $a0, 0x1F84($v0)
     ctx->pc = 0x34e98cu;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 8068)));
     // 0x34e990: 0x418c0  sll         $v1, $a0, 3
-    ctx->pc = 0x34e990u;
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 4), 3));
     // 0x34e994: 0x641823  subu        $v1, $v1, $a0
-    ctx->pc = 0x34e994u;
     SET_GPR_S32(ctx, 3, (int32_t)SUB32(GPR_U32(ctx, 3), GPR_U32(ctx, 4)));
     // 0x34e998: 0x31880  sll         $v1, $v1, 2
-    ctx->pc = 0x34e998u;
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 3), 2));
     // 0x34e99c: 0x641821  addu        $v1, $v1, $a0
-    ctx->pc = 0x34e99cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 4)));
     // 0x34e9a0: 0x31880  sll         $v1, $v1, 2
-    ctx->pc = 0x34e9a0u;
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 3), 2));
     // 0x34e9a4: 0x431021  addu        $v0, $v0, $v1
-    ctx->pc = 0x34e9a4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
     // 0x34e9a8: 0x3e00008  jr          $ra
     ctx->pc = 0x34E9A8u;

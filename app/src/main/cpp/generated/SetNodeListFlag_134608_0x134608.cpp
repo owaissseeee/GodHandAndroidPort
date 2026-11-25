@@ -18,12 +18,13 @@ void SetNodeListFlag_134608_0x134608(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("SetNodeListFlag_134608_0x134608");
 #endif
 
-    switch (ctx->pc) {
-        case 0x134618u: goto label_134618;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x134608u, 0)) {
+        switch (ctx->pc) {
+            case 0x134618u: goto label_134618;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x134608u;
 
     // 0x134608: 0x8c830004  lw          $v1, 0x4($a0)
     ctx->pc = 0x134608u;
@@ -43,7 +44,6 @@ void SetNodeListFlag_134608_0x134608(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_13463c;
         }
     }
-    ctx->pc = 0x134614u;
     // 0x134614: 0x2404fffe  addiu       $a0, $zero, -0x2
     ctx->pc = 0x134614u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967294));
@@ -63,7 +63,6 @@ label_134618:
             goto label_134628;
         }
     }
-    ctx->pc = 0x134620u;
     // 0x134620: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x134620u;
     {
@@ -118,9 +117,7 @@ label_13463c:
         return;
         #endif
     }
-    ctx->pc = 0x134644u;
     // 0x134644: 0x0  nop
-    ctx->pc = 0x134644u;
     // NOP
     ctx->pc = 0x134648u;
 }

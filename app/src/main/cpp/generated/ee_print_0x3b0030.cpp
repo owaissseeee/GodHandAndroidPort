@@ -18,18 +18,17 @@ void ee_print_0x3b0030(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     PS_LOG_ENTRY("ee_print_0x3b0030");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b0038u: goto label_3b0038;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b0030u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b0038u: goto label_3b0038;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b0030u;
 
     // 0x3b0030: 0x24030075  addiu       $v1, $zero, 0x75
-    ctx->pc = 0x3b0030u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 117));
     // 0x3b0034: 0xc  syscall     0
-    ctx->pc = 0x3b0034u;
     ctx->pc = 0x3B0038u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

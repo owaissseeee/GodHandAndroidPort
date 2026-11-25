@@ -18,27 +18,25 @@ void mwPlySetMallocFn_0x344520(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("mwPlySetMallocFn_0x344520");
 #endif
 
-    switch (ctx->pc) {
-        case 0x344544u: goto label_344544;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x344520u, 0)) {
+        switch (ctx->pc) {
+            case 0x344544u: goto label_344544;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x344520u;
 
     // 0x344520: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x344520u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x344524: 0xffb00000  sd          $s0, 0x0($sp)
     ctx->pc = 0x344524u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 16));
     // 0x344528: 0xc0802d  daddu       $s0, $a2, $zero
-    ctx->pc = 0x344528u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
     // 0x34452c: 0xffb10008  sd          $s1, 0x8($sp)
     ctx->pc = 0x34452cu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 8), GPR_U64(ctx, 17));
     // 0x344530: 0x80882d  daddu       $s1, $a0, $zero
-    ctx->pc = 0x344530u;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x344534: 0xffb20010  sd          $s2, 0x10($sp)
     ctx->pc = 0x344534u;
@@ -47,7 +45,6 @@ void mwPlySetMallocFn_0x344520(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     ctx->pc = 0x344538u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 24), GPR_U64(ctx, 31));
     // 0x34453c: 0xc0d14ac  jal         func_3452B0
-    ctx->pc = 0x34453Cu;
     SET_GPR_U32(ctx, 31, 0x344544u);
     ctx->pc = 0x344540u;
     ctx->in_delay_slot = true;
@@ -55,8 +52,7 @@ void mwPlySetMallocFn_0x344520(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     // 0x344540: 0xa0902d  daddu       $s2, $a1, $zero (Delay Slot)
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x3452B0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3452B0u, 0x34453Cu, 0x344544u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &GetD003EC7E0_3452B0_0x3452b0, 0x3452b0u, 0x344544u)) {
         return;
     }
     ctx->pc = 0x344544u;

@@ -18,42 +18,44 @@ void cOmSub_move_0x1c3f38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("cOmSub_move_0x1c3f38");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1c3f38u: goto label_1c3f38;
-        case 0x1c3f3cu: goto label_1c3f3c;
-        case 0x1c3f40u: goto label_1c3f40;
-        case 0x1c3f44u: goto label_1c3f44;
-        case 0x1c3f48u: goto label_1c3f48;
-        case 0x1c3f4cu: goto label_1c3f4c;
-        case 0x1c3f50u: goto label_1c3f50;
-        case 0x1c3f54u: goto label_1c3f54;
-        case 0x1c3f58u: goto label_1c3f58;
-        case 0x1c3f5cu: goto label_1c3f5c;
-        case 0x1c3f60u: goto label_1c3f60;
-        case 0x1c3f64u: goto label_1c3f64;
-        case 0x1c3f68u: goto label_1c3f68;
-        case 0x1c3f6cu: goto label_1c3f6c;
-        case 0x1c3f70u: goto label_1c3f70;
-        case 0x1c3f74u: goto label_1c3f74;
-        case 0x1c3f78u: goto label_1c3f78;
-        case 0x1c3f7cu: goto label_1c3f7c;
-        case 0x1c3f80u: goto label_1c3f80;
-        case 0x1c3f84u: goto label_1c3f84;
-        case 0x1c3f88u: goto label_1c3f88;
-        case 0x1c3f8cu: goto label_1c3f8c;
-        case 0x1c3f90u: goto label_1c3f90;
-        case 0x1c3f94u: goto label_1c3f94;
-        case 0x1c3f98u: goto label_1c3f98;
-        case 0x1c3f9cu: goto label_1c3f9c;
-        case 0x1c3fa0u: goto label_1c3fa0;
-        case 0x1c3fa4u: goto label_1c3fa4;
-        case 0x1c3fa8u: goto label_1c3fa8;
-        case 0x1c3facu: goto label_1c3fac;
-        case 0x1c3fb0u: goto label_1c3fb0;
-        case 0x1c3fb4u: goto label_1c3fb4;
-        case 0x1c3fb8u: goto label_1c3fb8;
-        case 0x1c3fbcu: goto label_1c3fbc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1c3f38u, 0)) {
+        switch (ctx->pc) {
+            case 0x1c3f38u: goto label_1c3f38;
+            case 0x1c3f3cu: goto label_1c3f3c;
+            case 0x1c3f40u: goto label_1c3f40;
+            case 0x1c3f44u: goto label_1c3f44;
+            case 0x1c3f48u: goto label_1c3f48;
+            case 0x1c3f4cu: goto label_1c3f4c;
+            case 0x1c3f50u: goto label_1c3f50;
+            case 0x1c3f54u: goto label_1c3f54;
+            case 0x1c3f58u: goto label_1c3f58;
+            case 0x1c3f5cu: goto label_1c3f5c;
+            case 0x1c3f60u: goto label_1c3f60;
+            case 0x1c3f64u: goto label_1c3f64;
+            case 0x1c3f68u: goto label_1c3f68;
+            case 0x1c3f6cu: goto label_1c3f6c;
+            case 0x1c3f70u: goto label_1c3f70;
+            case 0x1c3f74u: goto label_1c3f74;
+            case 0x1c3f78u: goto label_1c3f78;
+            case 0x1c3f7cu: goto label_1c3f7c;
+            case 0x1c3f80u: goto label_1c3f80;
+            case 0x1c3f84u: goto label_1c3f84;
+            case 0x1c3f88u: goto label_1c3f88;
+            case 0x1c3f8cu: goto label_1c3f8c;
+            case 0x1c3f90u: goto label_1c3f90;
+            case 0x1c3f94u: goto label_1c3f94;
+            case 0x1c3f98u: goto label_1c3f98;
+            case 0x1c3f9cu: goto label_1c3f9c;
+            case 0x1c3fa0u: goto label_1c3fa0;
+            case 0x1c3fa4u: goto label_1c3fa4;
+            case 0x1c3fa8u: goto label_1c3fa8;
+            case 0x1c3facu: goto label_1c3fac;
+            case 0x1c3fb0u: goto label_1c3fb0;
+            case 0x1c3fb4u: goto label_1c3fb4;
+            case 0x1c3fb8u: goto label_1c3fb8;
+            case 0x1c3fbcu: goto label_1c3fbc;
+            default: break;
+        }
     }
 
     ctx->pc = 0x1c3f38u;

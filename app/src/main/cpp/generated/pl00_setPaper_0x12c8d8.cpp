@@ -18,100 +18,102 @@ void pl00_setPaper_0x12c8d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("pl00_setPaper_0x12c8d8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x12c8d8u: goto label_12c8d8;
-        case 0x12c8dcu: goto label_12c8dc;
-        case 0x12c8e0u: goto label_12c8e0;
-        case 0x12c8e4u: goto label_12c8e4;
-        case 0x12c8e8u: goto label_12c8e8;
-        case 0x12c8ecu: goto label_12c8ec;
-        case 0x12c8f0u: goto label_12c8f0;
-        case 0x12c8f4u: goto label_12c8f4;
-        case 0x12c8f8u: goto label_12c8f8;
-        case 0x12c8fcu: goto label_12c8fc;
-        case 0x12c900u: goto label_12c900;
-        case 0x12c904u: goto label_12c904;
-        case 0x12c908u: goto label_12c908;
-        case 0x12c90cu: goto label_12c90c;
-        case 0x12c910u: goto label_12c910;
-        case 0x12c914u: goto label_12c914;
-        case 0x12c918u: goto label_12c918;
-        case 0x12c91cu: goto label_12c91c;
-        case 0x12c920u: goto label_12c920;
-        case 0x12c924u: goto label_12c924;
-        case 0x12c928u: goto label_12c928;
-        case 0x12c92cu: goto label_12c92c;
-        case 0x12c930u: goto label_12c930;
-        case 0x12c934u: goto label_12c934;
-        case 0x12c938u: goto label_12c938;
-        case 0x12c93cu: goto label_12c93c;
-        case 0x12c940u: goto label_12c940;
-        case 0x12c944u: goto label_12c944;
-        case 0x12c948u: goto label_12c948;
-        case 0x12c94cu: goto label_12c94c;
-        case 0x12c950u: goto label_12c950;
-        case 0x12c954u: goto label_12c954;
-        case 0x12c958u: goto label_12c958;
-        case 0x12c95cu: goto label_12c95c;
-        case 0x12c960u: goto label_12c960;
-        case 0x12c964u: goto label_12c964;
-        case 0x12c968u: goto label_12c968;
-        case 0x12c96cu: goto label_12c96c;
-        case 0x12c970u: goto label_12c970;
-        case 0x12c974u: goto label_12c974;
-        case 0x12c978u: goto label_12c978;
-        case 0x12c97cu: goto label_12c97c;
-        case 0x12c980u: goto label_12c980;
-        case 0x12c984u: goto label_12c984;
-        case 0x12c988u: goto label_12c988;
-        case 0x12c98cu: goto label_12c98c;
-        case 0x12c990u: goto label_12c990;
-        case 0x12c994u: goto label_12c994;
-        case 0x12c998u: goto label_12c998;
-        case 0x12c99cu: goto label_12c99c;
-        case 0x12c9a0u: goto label_12c9a0;
-        case 0x12c9a4u: goto label_12c9a4;
-        case 0x12c9a8u: goto label_12c9a8;
-        case 0x12c9acu: goto label_12c9ac;
-        case 0x12c9b0u: goto label_12c9b0;
-        case 0x12c9b4u: goto label_12c9b4;
-        case 0x12c9b8u: goto label_12c9b8;
-        case 0x12c9bcu: goto label_12c9bc;
-        case 0x12c9c0u: goto label_12c9c0;
-        case 0x12c9c4u: goto label_12c9c4;
-        case 0x12c9c8u: goto label_12c9c8;
-        case 0x12c9ccu: goto label_12c9cc;
-        case 0x12c9d0u: goto label_12c9d0;
-        case 0x12c9d4u: goto label_12c9d4;
-        case 0x12c9d8u: goto label_12c9d8;
-        case 0x12c9dcu: goto label_12c9dc;
-        case 0x12c9e0u: goto label_12c9e0;
-        case 0x12c9e4u: goto label_12c9e4;
-        case 0x12c9e8u: goto label_12c9e8;
-        case 0x12c9ecu: goto label_12c9ec;
-        case 0x12c9f0u: goto label_12c9f0;
-        case 0x12c9f4u: goto label_12c9f4;
-        case 0x12c9f8u: goto label_12c9f8;
-        case 0x12c9fcu: goto label_12c9fc;
-        case 0x12ca00u: goto label_12ca00;
-        case 0x12ca04u: goto label_12ca04;
-        case 0x12ca08u: goto label_12ca08;
-        case 0x12ca0cu: goto label_12ca0c;
-        case 0x12ca10u: goto label_12ca10;
-        case 0x12ca14u: goto label_12ca14;
-        case 0x12ca18u: goto label_12ca18;
-        case 0x12ca1cu: goto label_12ca1c;
-        case 0x12ca20u: goto label_12ca20;
-        case 0x12ca24u: goto label_12ca24;
-        case 0x12ca28u: goto label_12ca28;
-        case 0x12ca2cu: goto label_12ca2c;
-        case 0x12ca30u: goto label_12ca30;
-        case 0x12ca34u: goto label_12ca34;
-        case 0x12ca38u: goto label_12ca38;
-        case 0x12ca3cu: goto label_12ca3c;
-        case 0x12ca40u: goto label_12ca40;
-        case 0x12ca44u: goto label_12ca44;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x12c8d8u, 0)) {
+        switch (ctx->pc) {
+            case 0x12c8d8u: goto label_12c8d8;
+            case 0x12c8dcu: goto label_12c8dc;
+            case 0x12c8e0u: goto label_12c8e0;
+            case 0x12c8e4u: goto label_12c8e4;
+            case 0x12c8e8u: goto label_12c8e8;
+            case 0x12c8ecu: goto label_12c8ec;
+            case 0x12c8f0u: goto label_12c8f0;
+            case 0x12c8f4u: goto label_12c8f4;
+            case 0x12c8f8u: goto label_12c8f8;
+            case 0x12c8fcu: goto label_12c8fc;
+            case 0x12c900u: goto label_12c900;
+            case 0x12c904u: goto label_12c904;
+            case 0x12c908u: goto label_12c908;
+            case 0x12c90cu: goto label_12c90c;
+            case 0x12c910u: goto label_12c910;
+            case 0x12c914u: goto label_12c914;
+            case 0x12c918u: goto label_12c918;
+            case 0x12c91cu: goto label_12c91c;
+            case 0x12c920u: goto label_12c920;
+            case 0x12c924u: goto label_12c924;
+            case 0x12c928u: goto label_12c928;
+            case 0x12c92cu: goto label_12c92c;
+            case 0x12c930u: goto label_12c930;
+            case 0x12c934u: goto label_12c934;
+            case 0x12c938u: goto label_12c938;
+            case 0x12c93cu: goto label_12c93c;
+            case 0x12c940u: goto label_12c940;
+            case 0x12c944u: goto label_12c944;
+            case 0x12c948u: goto label_12c948;
+            case 0x12c94cu: goto label_12c94c;
+            case 0x12c950u: goto label_12c950;
+            case 0x12c954u: goto label_12c954;
+            case 0x12c958u: goto label_12c958;
+            case 0x12c95cu: goto label_12c95c;
+            case 0x12c960u: goto label_12c960;
+            case 0x12c964u: goto label_12c964;
+            case 0x12c968u: goto label_12c968;
+            case 0x12c96cu: goto label_12c96c;
+            case 0x12c970u: goto label_12c970;
+            case 0x12c974u: goto label_12c974;
+            case 0x12c978u: goto label_12c978;
+            case 0x12c97cu: goto label_12c97c;
+            case 0x12c980u: goto label_12c980;
+            case 0x12c984u: goto label_12c984;
+            case 0x12c988u: goto label_12c988;
+            case 0x12c98cu: goto label_12c98c;
+            case 0x12c990u: goto label_12c990;
+            case 0x12c994u: goto label_12c994;
+            case 0x12c998u: goto label_12c998;
+            case 0x12c99cu: goto label_12c99c;
+            case 0x12c9a0u: goto label_12c9a0;
+            case 0x12c9a4u: goto label_12c9a4;
+            case 0x12c9a8u: goto label_12c9a8;
+            case 0x12c9acu: goto label_12c9ac;
+            case 0x12c9b0u: goto label_12c9b0;
+            case 0x12c9b4u: goto label_12c9b4;
+            case 0x12c9b8u: goto label_12c9b8;
+            case 0x12c9bcu: goto label_12c9bc;
+            case 0x12c9c0u: goto label_12c9c0;
+            case 0x12c9c4u: goto label_12c9c4;
+            case 0x12c9c8u: goto label_12c9c8;
+            case 0x12c9ccu: goto label_12c9cc;
+            case 0x12c9d0u: goto label_12c9d0;
+            case 0x12c9d4u: goto label_12c9d4;
+            case 0x12c9d8u: goto label_12c9d8;
+            case 0x12c9dcu: goto label_12c9dc;
+            case 0x12c9e0u: goto label_12c9e0;
+            case 0x12c9e4u: goto label_12c9e4;
+            case 0x12c9e8u: goto label_12c9e8;
+            case 0x12c9ecu: goto label_12c9ec;
+            case 0x12c9f0u: goto label_12c9f0;
+            case 0x12c9f4u: goto label_12c9f4;
+            case 0x12c9f8u: goto label_12c9f8;
+            case 0x12c9fcu: goto label_12c9fc;
+            case 0x12ca00u: goto label_12ca00;
+            case 0x12ca04u: goto label_12ca04;
+            case 0x12ca08u: goto label_12ca08;
+            case 0x12ca0cu: goto label_12ca0c;
+            case 0x12ca10u: goto label_12ca10;
+            case 0x12ca14u: goto label_12ca14;
+            case 0x12ca18u: goto label_12ca18;
+            case 0x12ca1cu: goto label_12ca1c;
+            case 0x12ca20u: goto label_12ca20;
+            case 0x12ca24u: goto label_12ca24;
+            case 0x12ca28u: goto label_12ca28;
+            case 0x12ca2cu: goto label_12ca2c;
+            case 0x12ca30u: goto label_12ca30;
+            case 0x12ca34u: goto label_12ca34;
+            case 0x12ca38u: goto label_12ca38;
+            case 0x12ca3cu: goto label_12ca3c;
+            case 0x12ca40u: goto label_12ca40;
+            case 0x12ca44u: goto label_12ca44;
+            default: break;
+        }
     }
 
     ctx->pc = 0x12c8d8u;
@@ -189,7 +191,6 @@ label_12c904:
         ctx->pc = 0x12C908u;
         goto label_12c908;
     }
-    ctx->pc = 0x12C900u;
     SET_GPR_U32(ctx, 31, 0x12C908u);
     ctx->pc = 0x12C904u;
     ctx->in_delay_slot = true;
@@ -197,8 +198,7 @@ label_12c904:
     // 0x12c904: 0x220202d  daddu       $a0, $s1, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1FC120u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1FC120u, 0x12C900u, 0x12C908u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_setPaper_0x1fc120, 0x1fc120u, 0x12c908u)) {
         return;
     }
     ctx->pc = 0x12C908u;
@@ -219,7 +219,6 @@ label_12c910:
         ctx->pc = 0x12C914u;
         goto label_12c914;
     }
-    ctx->pc = 0x12C90Cu;
     SET_GPR_U32(ctx, 31, 0x12C914u);
     ctx->pc = 0x12C910u;
     ctx->in_delay_slot = true;
@@ -227,8 +226,7 @@ label_12c910:
     // 0x12c910: 0x24040376  addiu       $a0, $zero, 0x376 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 886));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x30FA98u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x30FA98u, 0x12C90Cu, 0x12C914u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &CreateObj_0x30fa98, 0x30fa98u, 0x12c914u)) {
         return;
     }
     ctx->pc = 0x12C914u;
@@ -510,7 +508,6 @@ label_12c9d0:
         ctx->pc = 0x12C9D4u;
         goto label_12c9d4;
     }
-    ctx->pc = 0x12C9CCu;
     SET_GPR_U32(ctx, 31, 0x12C9D4u);
     ctx->pc = 0x12C9D0u;
     ctx->in_delay_slot = true;
@@ -657,7 +654,6 @@ label_12ca30:
         ctx->pc = 0x12CA34u;
         goto label_12ca34;
     }
-    ctx->pc = 0x12CA2Cu;
     SET_GPR_U32(ctx, 31, 0x12CA34u);
     ctx->pc = 0x12CA30u;
     ctx->in_delay_slot = true;
@@ -665,8 +661,7 @@ label_12ca30:
     // 0x12ca30: 0x27a80010  addiu       $t0, $sp, 0x10 (Delay Slot)
     SET_GPR_S32(ctx, 8, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1CF160u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1CF160u, 0x12CA2Cu, 0x12CA34u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cOmWeapon_setParent_0x1cf160, 0x1cf160u, 0x12ca34u)) {
         return;
     }
     ctx->pc = 0x12CA34u;

@@ -18,7 +18,6 @@ void ReturnZero_20D138_0x20d138(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("ReturnZero_20D138_0x20d138");
 #endif
 
-    ctx->pc = 0x20d138u;
 
     // 0x20d138: 0x3e00008  jr          $ra
     ctx->pc = 0x20D138u;

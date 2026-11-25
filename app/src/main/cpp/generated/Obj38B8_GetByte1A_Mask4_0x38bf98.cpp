@@ -18,7 +18,6 @@ void Obj38B8_GetByte1A_Mask4_0x38bf98(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("Obj38B8_GetByte1A_Mask4_0x38bf98");
 #endif
 
-    ctx->pc = 0x38bf98u;
 
     // 0x38bf98: 0x9082001a  lbu         $v0, 0x1A($a0)
     ctx->pc = 0x38bf98u;
@@ -42,9 +41,7 @@ void Obj38B8_GetByte1A_Mask4_0x38bf98(uint8_t* rdram, R5900Context* ctx, PS2Runt
         return;
         #endif
     }
-    ctx->pc = 0x38BFA4u;
     // 0x38bfa4: 0x0  nop
-    ctx->pc = 0x38bfa4u;
     // NOP
     ctx->pc = 0x38bfa8u;
 }

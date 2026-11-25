@@ -18,18 +18,17 @@ void DeleteThread_0x3afab0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("DeleteThread_0x3afab0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afab8u: goto label_3afab8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afab0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afab8u: goto label_3afab8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afab0u;
 
     // 0x3afab0: 0x24030021  addiu       $v1, $zero, 0x21
-    ctx->pc = 0x3afab0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 33));
     // 0x3afab4: 0xc  syscall     0
-    ctx->pc = 0x3afab4u;
     ctx->pc = 0x3AFAB8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

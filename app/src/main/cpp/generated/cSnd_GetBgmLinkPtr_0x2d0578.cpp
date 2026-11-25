@@ -18,7 +18,6 @@ void cSnd_GetBgmLinkPtr_0x2d0578(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("cSnd_GetBgmLinkPtr_0x2d0578");
 #endif
 
-    ctx->pc = 0x2d0578u;
 
     // 0x2d0578: 0x8c830030  lw          $v1, 0x30($a0)
     ctx->pc = 0x2d0578u;
@@ -38,7 +37,6 @@ void cSnd_GetBgmLinkPtr_0x2d0578(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_2d0590;
         }
     }
-    ctx->pc = 0x2D0584u;
     // 0x2d0584: 0x8c630010  lw          $v1, 0x10($v1)
     ctx->pc = 0x2d0584u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 16)));

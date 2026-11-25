@@ -18,15 +18,15 @@ void func_003A6130_0x3a6130(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_003A6130_0x3a6130");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3a6174u: goto label_3a6174;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3a6130u, 0)) {
+        switch (ctx->pc) {
+            case 0x3a6174u: goto label_3a6174;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3a6130u;
 
     // 0x3a6130: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x3a6130u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x3a6134: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x3a6134u;
@@ -35,7 +35,6 @@ void func_003A6130_0x3a6130(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x3a6138u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x3a613c: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x3a613cu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x3a6140: 0x8e020054  lw          $v0, 0x54($s0)
     ctx->pc = 0x3a6140u;
@@ -55,9 +54,7 @@ void func_003A6130_0x3a6130(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_3a6160;
         }
     }
-    ctx->pc = 0x3A614Cu;
     // 0x3a614c: 0x3c020040  lui         $v0, 0x40
-    ctx->pc = 0x3a614cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)64 << 16));
     // 0x3a6150: 0x8c43a62c  lw          $v1, -0x59D4($v0)
     ctx->pc = 0x3a6150u;
@@ -90,12 +87,10 @@ label_3a6160:
             goto label_3a6178;
         }
     }
-    ctx->pc = 0x3A616Cu;
     // 0x3a616c: 0xc0e987c  jal         func_3A61F0
     ctx->pc = 0x3A616Cu;
     SET_GPR_U32(ctx, 31, 0x3A6174u);
-    ctx->pc = 0x3A61F0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3A61F0u, 0x3A616Cu, 0x3A6174u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_003A61F0_0x3a61f0, 0x3a61f0u, 0x3a6174u)) {
         return;
     }
     ctx->pc = 0x3A6174u;

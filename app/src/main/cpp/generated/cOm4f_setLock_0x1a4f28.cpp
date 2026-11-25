@@ -18,7 +18,6 @@ void cOm4f_setLock_0x1a4f28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("cOm4f_setLock_0x1a4f28");
 #endif
 
-    ctx->pc = 0x1a4f28u;
 
     // 0x1a4f28: 0x3e00008  jr          $ra
     ctx->pc = 0x1A4F28u;

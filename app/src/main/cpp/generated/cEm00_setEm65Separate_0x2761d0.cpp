@@ -18,16 +18,12 @@ void cEm00_setEm65Separate_0x2761d0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("cEm00_setEm65Separate_0x2761d0");
 #endif
 
-    ctx->pc = 0x2761d0u;
 
     // 0x2761d0: 0x3c014040  lui         $at, 0x4040
-    ctx->pc = 0x2761d0u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16448 << 16));
     // 0x2761d4: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x2761d4u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x2761d8: 0x2402009a  addiu       $v0, $zero, 0x9A
-    ctx->pc = 0x2761d8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 154));
     // 0x2761dc: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x2761dcu;
@@ -60,9 +56,7 @@ void cEm00_setEm65Separate_0x2761d0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         return;
         #endif
     }
-    ctx->pc = 0x2761F4u;
     // 0x2761f4: 0x0  nop
-    ctx->pc = 0x2761f4u;
     // NOP
     ctx->pc = 0x2761f8u;
 }

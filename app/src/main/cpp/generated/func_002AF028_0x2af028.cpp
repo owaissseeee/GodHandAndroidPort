@@ -18,16 +18,16 @@ void func_002AF028_0x2af028(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002AF028_0x2af028");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2af040u: goto label_2af040;
-        case 0x2af048u: goto label_2af048;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2af028u, 0)) {
+        switch (ctx->pc) {
+            case 0x2af040u: goto label_2af040;
+            case 0x2af048u: goto label_2af048;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2af028u;
 
     // 0x2af028: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x2af028u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x2af02c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2af02cu;
@@ -56,7 +56,6 @@ void func_002AF028_0x2af028(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x2AF040u;
 label_2af040:
     // 0x2af040: 0xc0ac5bc  jal         func_2B16F0
-    ctx->pc = 0x2AF040u;
     SET_GPR_U32(ctx, 31, 0x2AF048u);
     ctx->pc = 0x2AF044u;
     ctx->in_delay_slot = true;
@@ -64,8 +63,7 @@ label_2af040:
     // 0x2af044: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2B16F0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2B16F0u, 0x2AF040u, 0x2AF048u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002B16F0_0x2b16f0, 0x2b16f0u, 0x2af048u)) {
         return;
     }
     ctx->pc = 0x2AF048u;
@@ -74,7 +72,6 @@ label_2af048:
     ctx->pc = 0x2af048u;
     SET_GPR_S32(ctx, 16, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 8)));
     // 0x2af04c: 0x0  nop
-    ctx->pc = 0x2af04cu;
     // NOP
     // 0x2af050: 0x1600fffb  bnez        $s0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x2AF050u;
@@ -88,7 +85,6 @@ label_2af048:
             goto label_2af040;
         }
     }
-    ctx->pc = 0x2AF058u;
     // 0x2af058: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2af058u;
     SET_GPR_VEC(ctx, 16, READ128(ADD32(GPR_U32(ctx, 29), 16)));

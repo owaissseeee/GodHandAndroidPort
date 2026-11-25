@@ -18,7 +18,6 @@ void SetField_162C_1ED488_0x1ed488(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("SetField_162C_1ED488_0x1ed488");
 #endif
 
-    ctx->pc = 0x1ed488u;
 
     // 0x1ed488: 0x3e00008  jr          $ra
     ctx->pc = 0x1ED488u;

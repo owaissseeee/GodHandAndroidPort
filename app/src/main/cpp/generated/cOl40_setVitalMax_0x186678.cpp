@@ -18,7 +18,6 @@ void cOl40_setVitalMax_0x186678(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("cOl40_setVitalMax_0x186678");
 #endif
 
-    ctx->pc = 0x186678u;
 
     // 0x186678: 0xa4850624  sh          $a1, 0x624($a0)
     ctx->pc = 0x186678u;
@@ -60,9 +59,7 @@ void cOl40_setVitalMax_0x186678(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
         return;
         #endif
     }
-    ctx->pc = 0x18669Cu;
     // 0x18669c: 0x0  nop
-    ctx->pc = 0x18669cu;
     // NOP
     ctx->pc = 0x1866a0u;
 }

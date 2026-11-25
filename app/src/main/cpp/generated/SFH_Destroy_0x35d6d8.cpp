@@ -18,15 +18,15 @@ void SFH_Destroy_0x35d6d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("SFH_Destroy_0x35d6d8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x35d6e8u: goto label_35d6e8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x35d6d8u, 0)) {
+        switch (ctx->pc) {
+            case 0x35d6e8u: goto label_35d6e8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x35d6d8u;
 
     // 0x35d6d8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x35d6d8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x35d6dc: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x35d6dcu;
@@ -34,26 +34,22 @@ void SFH_Destroy_0x35d6d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     // 0x35d6e0: 0xc0d75ca  jal         func_35D728
     ctx->pc = 0x35D6E0u;
     SET_GPR_U32(ctx, 31, 0x35D6E8u);
-    ctx->pc = 0x35D728u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x35D728u, 0x35D6E0u, 0x35D6E8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &Obj35D0_ClearFields_0_4_8_C_D728_0x35d728, 0x35d728u, 0x35d6e8u)) {
         return;
     }
     ctx->pc = 0x35D6E8u;
 label_35d6e8:
     // 0x35d6e8: 0x3c030076  lui         $v1, 0x76
-    ctx->pc = 0x35d6e8u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)118 << 16));
     // 0x35d6ec: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x35d6ecu;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x35d6f0: 0x24636c90  addiu       $v1, $v1, 0x6C90
-    ctx->pc = 0x35d6f0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 27792));
     // 0x35d6f4: 0x8c620004  lw          $v0, 0x4($v1)
     ctx->pc = 0x35d6f4u;
     SET_GPR_S32(ctx, 2, (int32_t)FAST_READ32(0x766C94u));
     // 0x35d6f8: 0x2442ffff  addiu       $v0, $v0, -0x1
-    ctx->pc = 0x35d6f8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));
     // 0x35d6fc: 0xac620004  sw          $v0, 0x4($v1)
     ctx->pc = 0x35d6fcu;

@@ -18,16 +18,16 @@ void cEm_breakHeldWeapons_0x26bb70(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("cEm_breakHeldWeapons_0x26bb70");
 #endif
 
-    switch (ctx->pc) {
-        case 0x26bb98u: goto label_26bb98;
-        case 0x26bbacu: goto label_26bbac;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x26bb70u, 0)) {
+        switch (ctx->pc) {
+            case 0x26bb98u: goto label_26bb98;
+            case 0x26bbacu: goto label_26bbac;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x26bb70u;
 
     // 0x26bb70: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x26bb70u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x26bb74: 0x7fb00020  sq          $s0, 0x20($sp)
     ctx->pc = 0x26bb74u;
@@ -42,7 +42,6 @@ void cEm_breakHeldWeapons_0x26bb70(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x26bb80u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 1380)));
     // 0x26bb84: 0x38420211  xori        $v0, $v0, 0x211
-    ctx->pc = 0x26bb84u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)529);
     // 0x26bb88: 0x1440000d  bnez        $v0, . + 4 + (0xD << 2)
     ctx->pc = 0x26BB88u;
@@ -59,9 +58,7 @@ void cEm_breakHeldWeapons_0x26bb70(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_26bbc0;
         }
     }
-    ctx->pc = 0x26BB90u;
     // 0x26bb90: 0x24900710  addiu       $s0, $a0, 0x710
-    ctx->pc = 0x26bb90u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 4), 1808));
     // 0x26bb94: 0x882d  daddu       $s1, $zero, $zero
     ctx->pc = 0x26bb94u;
@@ -85,12 +82,10 @@ label_26bb98:
             goto label_26bbb0;
         }
     }
-    ctx->pc = 0x26BBA4u;
     // 0x26bba4: 0xc074206  jal         func_1D0818
     ctx->pc = 0x26BBA4u;
     SET_GPR_U32(ctx, 31, 0x26BBACu);
-    ctx->pc = 0x1D0818u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1D0818u, 0x26BBA4u, 0x26BBACu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cOmWeapon_SetBreak_0x1d0818, 0x1d0818u, 0x26bbacu)) {
         return;
     }
     ctx->pc = 0x26BBACu;
@@ -100,7 +95,6 @@ label_26bbac:
     WRITE32(ADD32(GPR_U32(ctx, 16), 0), GPR_U32(ctx, 0));
 label_26bbb0:
     // 0x26bbb0: 0x2e220008  sltiu       $v0, $s1, 0x8
-    ctx->pc = 0x26bbb0u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 17) < (uint64_t)(int64_t)(int32_t)8) ? 1 : 0);
     // 0x26bbb4: 0x1440fff8  bnez        $v0, . + 4 + (-0x8 << 2)
     ctx->pc = 0x26BBB4u;
@@ -120,7 +114,6 @@ label_26bbb0:
             goto label_26bb98;
         }
     }
-    ctx->pc = 0x26BBBCu;
     // 0x26bbbc: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x26bbbcu;
     SET_GPR_VEC(ctx, 16, READ128(ADD32(GPR_U32(ctx, 29), 32)));

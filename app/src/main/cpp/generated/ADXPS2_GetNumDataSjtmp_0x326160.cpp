@@ -18,26 +18,28 @@ void ADXPS2_GetNumDataSjtmp_0x326160(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("ADXPS2_GetNumDataSjtmp_0x326160");
 #endif
 
-    switch (ctx->pc) {
-        case 0x326160u: goto label_326160;
-        case 0x326164u: goto label_326164;
-        case 0x326168u: goto label_326168;
-        case 0x32616cu: goto label_32616c;
-        case 0x326170u: goto label_326170;
-        case 0x326174u: goto label_326174;
-        case 0x326178u: goto label_326178;
-        case 0x32617cu: goto label_32617c;
-        case 0x326180u: goto label_326180;
-        case 0x326184u: goto label_326184;
-        case 0x326188u: goto label_326188;
-        case 0x32618cu: goto label_32618c;
-        case 0x326190u: goto label_326190;
-        case 0x326194u: goto label_326194;
-        case 0x326198u: goto label_326198;
-        case 0x32619cu: goto label_32619c;
-        case 0x3261a0u: goto label_3261a0;
-        case 0x3261a4u: goto label_3261a4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x326160u, 0)) {
+        switch (ctx->pc) {
+            case 0x326160u: goto label_326160;
+            case 0x326164u: goto label_326164;
+            case 0x326168u: goto label_326168;
+            case 0x32616cu: goto label_32616c;
+            case 0x326170u: goto label_326170;
+            case 0x326174u: goto label_326174;
+            case 0x326178u: goto label_326178;
+            case 0x32617cu: goto label_32617c;
+            case 0x326180u: goto label_326180;
+            case 0x326184u: goto label_326184;
+            case 0x326188u: goto label_326188;
+            case 0x32618cu: goto label_32618c;
+            case 0x326190u: goto label_326190;
+            case 0x326194u: goto label_326194;
+            case 0x326198u: goto label_326198;
+            case 0x32619cu: goto label_32619c;
+            case 0x3261a0u: goto label_3261a0;
+            case 0x3261a4u: goto label_3261a4;
+            default: break;
+        }
     }
 
     ctx->pc = 0x326160u;
@@ -157,7 +159,6 @@ label_3261a0:
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
 label_3261a4:
     // 0x3261a4: 0x0  nop
-    ctx->pc = 0x3261a4u;
     // NOP
     ctx->pc = 0x3261a8u;
 }

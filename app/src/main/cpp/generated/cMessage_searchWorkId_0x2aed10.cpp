@@ -18,12 +18,13 @@ void cMessage_searchWorkId_0x2aed10(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("cMessage_searchWorkId_0x2aed10");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2aed20u: goto label_2aed20;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2aed10u, 0)) {
+        switch (ctx->pc) {
+            case 0x2aed20u: goto label_2aed20;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2aed10u;
 
     // 0x2aed10: 0x8c830010  lw          $v1, 0x10($a0)
     ctx->pc = 0x2aed10u;
@@ -43,7 +44,6 @@ void cMessage_searchWorkId_0x2aed10(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_2aed38;
         }
     }
-    ctx->pc = 0x2AED1Cu;
     // 0x2aed1c: 0x94620000  lhu         $v0, 0x0($v1)
     ctx->pc = 0x2aed1cu;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 3), 0)));
@@ -63,7 +63,6 @@ label_2aed20:
             goto label_2aed30;
         }
     }
-    ctx->pc = 0x2AED28u;
     // 0x2aed28: 0x3e00008  jr          $ra
     ctx->pc = 0x2AED28u;
     {

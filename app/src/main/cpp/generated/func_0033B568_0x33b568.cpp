@@ -18,32 +18,34 @@ void func_0033B568_0x33b568(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0033B568_0x33b568");
 #endif
 
-    switch (ctx->pc) {
-        case 0x33b568u: goto label_33b568;
-        case 0x33b56cu: goto label_33b56c;
-        case 0x33b570u: goto label_33b570;
-        case 0x33b574u: goto label_33b574;
-        case 0x33b578u: goto label_33b578;
-        case 0x33b57cu: goto label_33b57c;
-        case 0x33b580u: goto label_33b580;
-        case 0x33b584u: goto label_33b584;
-        case 0x33b588u: goto label_33b588;
-        case 0x33b58cu: goto label_33b58c;
-        case 0x33b590u: goto label_33b590;
-        case 0x33b594u: goto label_33b594;
-        case 0x33b598u: goto label_33b598;
-        case 0x33b59cu: goto label_33b59c;
-        case 0x33b5a0u: goto label_33b5a0;
-        case 0x33b5a4u: goto label_33b5a4;
-        case 0x33b5a8u: goto label_33b5a8;
-        case 0x33b5acu: goto label_33b5ac;
-        case 0x33b5b0u: goto label_33b5b0;
-        case 0x33b5b4u: goto label_33b5b4;
-        case 0x33b5b8u: goto label_33b5b8;
-        case 0x33b5bcu: goto label_33b5bc;
-        case 0x33b5c0u: goto label_33b5c0;
-        case 0x33b5c4u: goto label_33b5c4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x33b568u, 0)) {
+        switch (ctx->pc) {
+            case 0x33b568u: goto label_33b568;
+            case 0x33b56cu: goto label_33b56c;
+            case 0x33b570u: goto label_33b570;
+            case 0x33b574u: goto label_33b574;
+            case 0x33b578u: goto label_33b578;
+            case 0x33b57cu: goto label_33b57c;
+            case 0x33b580u: goto label_33b580;
+            case 0x33b584u: goto label_33b584;
+            case 0x33b588u: goto label_33b588;
+            case 0x33b58cu: goto label_33b58c;
+            case 0x33b590u: goto label_33b590;
+            case 0x33b594u: goto label_33b594;
+            case 0x33b598u: goto label_33b598;
+            case 0x33b59cu: goto label_33b59c;
+            case 0x33b5a0u: goto label_33b5a0;
+            case 0x33b5a4u: goto label_33b5a4;
+            case 0x33b5a8u: goto label_33b5a8;
+            case 0x33b5acu: goto label_33b5ac;
+            case 0x33b5b0u: goto label_33b5b0;
+            case 0x33b5b4u: goto label_33b5b4;
+            case 0x33b5b8u: goto label_33b5b8;
+            case 0x33b5bcu: goto label_33b5bc;
+            case 0x33b5c0u: goto label_33b5c0;
+            case 0x33b5c4u: goto label_33b5c4;
+            default: break;
+        }
     }
 
     ctx->pc = 0x33b568u;

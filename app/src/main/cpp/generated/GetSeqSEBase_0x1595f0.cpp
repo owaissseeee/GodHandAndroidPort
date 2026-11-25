@@ -18,7 +18,6 @@ void GetSeqSEBase_0x1595f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("GetSeqSEBase_0x1595f0");
 #endif
 
-    ctx->pc = 0x1595f0u;
 
     // 0x1595f0: 0x3e00008  jr          $ra
     ctx->pc = 0x1595F0u;

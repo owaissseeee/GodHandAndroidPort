@@ -18,10 +18,8 @@ void LSC_ResetEntry_0x335878(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("LSC_ResetEntry_0x335878");
 #endif
 
-    ctx->pc = 0x335878u;
 
     // 0x335878: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x335878u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x33587c: 0x14800006  bnez        $a0, . + 4 + (0x6 << 2)
     ctx->pc = 0x33587Cu;
@@ -38,19 +36,14 @@ void LSC_ResetEntry_0x335878(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_335898;
         }
     }
-    ctx->pc = 0x335884u;
     // 0x335884: 0x3c040045  lui         $a0, 0x45
-    ctx->pc = 0x335884u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)69 << 16));
     // 0x335888: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x335888u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x33588c: 0x24844c78  addiu       $a0, $a0, 0x4C78
-    ctx->pc = 0x33588cu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 19576));
     // 0x335890: 0x80cd750  j           func_335D40
-    ctx->pc = 0x335890u;
-    ctx->pc = 0x335894u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x335890u;
     // 0x335894: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)
@@ -80,7 +73,6 @@ label_335898:
             goto label_3358b0;
         }
     }
-    ctx->pc = 0x3358A4u;
     // 0x3358a4: 0xac800024  sw          $zero, 0x24($a0)
     ctx->pc = 0x3358a4u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 36), GPR_U32(ctx, 0));

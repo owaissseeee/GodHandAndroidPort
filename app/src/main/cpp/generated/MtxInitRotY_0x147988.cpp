@@ -1,3 +1,5 @@
+#include <cmath>
+#include <cstring>
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -11,6 +13,10 @@
 #include "ps2_log.h"
 #endif
 
+#if defined(__aarch64__) || defined(_M_ARM64)
+#include <arm_neon.h>
+#endif
+
 // Function: MtxInitRotY
 // Address: 0x147988 - 0x1479c8
 void MtxInitRotY_0x147988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
@@ -18,30 +24,50 @@ void MtxInitRotY_0x147988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("MtxInitRotY_0x147988");
 #endif
 
+#if defined(__aarch64__) || defined(_M_ARM64)
+    ctx->pc = 0x147988u;
+    const uint32_t a0 = GPR_U32(ctx, 4);
+    const float th = ctx->f[12];
+    const float s = std::sinf(th);
+    const float c = std::cosf(th);
+    const float32x4_t row0 = { c, 0.0f, -s, 0.0f };
+    const float32x4_t row1 = { 0.0f, 1.0f, 0.0f, 0.0f };
+    const float32x4_t row2 = { s, 0.0f, c, 0.0f };
+    const float32x4_t row3 = { 0.0f, 0.0f, 0.0f, 1.0f };
+    __m128i q;
+    vst1q_f32(reinterpret_cast<float*>(&q), row0); WRITE128(ADD32(a0, 0),  q);
+    vst1q_f32(reinterpret_cast<float*>(&q), row1); WRITE128(ADD32(a0, 16), q);
+    vst1q_f32(reinterpret_cast<float*>(&q), row2); WRITE128(ADD32(a0, 32), q);
+    vst1q_f32(reinterpret_cast<float*>(&q), row3); WRITE128(ADD32(a0, 48), q);
+
+    const uint32_t jumpTarget = GPR_U32(ctx, 31);
+    ctx->pc = jumpTarget;
+    #if defined(PS2X_STRICT_RETURN_DIAGNOSTICS) && PS2X_STRICT_RETURN_DIAGNOSTICS
+    (void)runtime->dispatchGuestBranch(rdram, ctx, jumpTarget, 0x1479BCu, 0u, PS2Runtime::GuestBranchKind::Return, "JR $ra");
+    return;
+    #else
+    return;
+    #endif
+#else
+
     switch (ctx->pc) {
         case 0x1479b8u: goto label_1479b8;
         default: break;
     }
 
-    ctx->pc = 0x147988u;
 
     // 0x147988: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x147988u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x14798c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x14798cu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x147990: 0x4be4033c  vmove.xyzw  $vf4, $vf0
-    ctx->pc = 0x147990u;
     { __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[4] = _mm_blendv_ps(ctx->vu0_vf[4], ctx->vu0_vf[0], _mm_castsi128_ps(mask)); }
     // 0x147994: 0x4be5233d  vmr32.xyzw  $vf5, $vf4
-    ctx->pc = 0x147994u;
     { __m128 res = _mm_shuffle_ps(ctx->vu0_vf[4], ctx->vu0_vf[4], _MM_SHUFFLE(0,3,2,1)); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[5] = _mm_blendv_ps(ctx->vu0_vf[5], res, _mm_castsi128_ps(mask)); }
     // 0x147998: 0x4be62b3d  vmr32.xyzw  $vf6, $vf5
-    ctx->pc = 0x147998u;
     { __m128 res = _mm_shuffle_ps(ctx->vu0_vf[5], ctx->vu0_vf[5], _MM_SHUFFLE(0,3,2,1)); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[6] = _mm_blendv_ps(ctx->vu0_vf[6], res, _mm_castsi128_ps(mask)); }
     // 0x14799c: 0x4be7333d  vmr32.xyzw  $vf7, $vf6
-    ctx->pc = 0x14799cu;
     { __m128 res = _mm_shuffle_ps(ctx->vu0_vf[6], ctx->vu0_vf[6], _MM_SHUFFLE(0,3,2,1)); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[7] = _mm_blendv_ps(ctx->vu0_vf[7], res, _mm_castsi128_ps(mask)); }
     // 0x1479a0: 0xf8840030  sqc2        $vf4, 0x30($a0)
     ctx->pc = 0x1479a0u;
@@ -56,7 +82,6 @@ void MtxInitRotY_0x147988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     ctx->pc = 0x1479acu;
     WRITE128(ADD32(GPR_U32(ctx, 4), 0), _mm_castps_si128(ctx->vu0_vf[7]));
     // 0x1479b0: 0xc0c29ee  jal         func_30A7B8
-    ctx->pc = 0x1479B0u;
     SET_GPR_U32(ctx, 31, 0x1479B8u);
     ctx->pc = 0x1479B4u;
     ctx->in_delay_slot = true;
@@ -64,8 +89,7 @@ void MtxInitRotY_0x147988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     // 0x1479b4: 0x80282d  daddu       $a1, $a0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x30A7B8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x30A7B8u, 0x1479B0u, 0x1479B8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &sceVu0RotMatrixY_0x30a7b8, 0x30a7b8u, 0x1479b8u)) {
         return;
     }
     ctx->pc = 0x1479B8u;
@@ -92,9 +116,8 @@ label_1479b8:
         return;
         #endif
     }
-    ctx->pc = 0x1479C4u;
     // 0x1479c4: 0x0  nop
-    ctx->pc = 0x1479c4u;
     // NOP
     ctx->pc = 0x1479c8u;
+#endif
 }

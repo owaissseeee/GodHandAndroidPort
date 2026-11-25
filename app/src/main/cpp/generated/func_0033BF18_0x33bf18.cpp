@@ -18,36 +18,38 @@ void func_0033BF18_0x33bf18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0033BF18_0x33bf18");
 #endif
 
-    switch (ctx->pc) {
-        case 0x33bf18u: goto label_33bf18;
-        case 0x33bf1cu: goto label_33bf1c;
-        case 0x33bf20u: goto label_33bf20;
-        case 0x33bf24u: goto label_33bf24;
-        case 0x33bf28u: goto label_33bf28;
-        case 0x33bf2cu: goto label_33bf2c;
-        case 0x33bf30u: goto label_33bf30;
-        case 0x33bf34u: goto label_33bf34;
-        case 0x33bf38u: goto label_33bf38;
-        case 0x33bf3cu: goto label_33bf3c;
-        case 0x33bf40u: goto label_33bf40;
-        case 0x33bf44u: goto label_33bf44;
-        case 0x33bf48u: goto label_33bf48;
-        case 0x33bf4cu: goto label_33bf4c;
-        case 0x33bf50u: goto label_33bf50;
-        case 0x33bf54u: goto label_33bf54;
-        case 0x33bf58u: goto label_33bf58;
-        case 0x33bf5cu: goto label_33bf5c;
-        case 0x33bf60u: goto label_33bf60;
-        case 0x33bf64u: goto label_33bf64;
-        case 0x33bf68u: goto label_33bf68;
-        case 0x33bf6cu: goto label_33bf6c;
-        case 0x33bf70u: goto label_33bf70;
-        case 0x33bf74u: goto label_33bf74;
-        case 0x33bf78u: goto label_33bf78;
-        case 0x33bf7cu: goto label_33bf7c;
-        case 0x33bf80u: goto label_33bf80;
-        case 0x33bf84u: goto label_33bf84;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x33bf18u, 0)) {
+        switch (ctx->pc) {
+            case 0x33bf18u: goto label_33bf18;
+            case 0x33bf1cu: goto label_33bf1c;
+            case 0x33bf20u: goto label_33bf20;
+            case 0x33bf24u: goto label_33bf24;
+            case 0x33bf28u: goto label_33bf28;
+            case 0x33bf2cu: goto label_33bf2c;
+            case 0x33bf30u: goto label_33bf30;
+            case 0x33bf34u: goto label_33bf34;
+            case 0x33bf38u: goto label_33bf38;
+            case 0x33bf3cu: goto label_33bf3c;
+            case 0x33bf40u: goto label_33bf40;
+            case 0x33bf44u: goto label_33bf44;
+            case 0x33bf48u: goto label_33bf48;
+            case 0x33bf4cu: goto label_33bf4c;
+            case 0x33bf50u: goto label_33bf50;
+            case 0x33bf54u: goto label_33bf54;
+            case 0x33bf58u: goto label_33bf58;
+            case 0x33bf5cu: goto label_33bf5c;
+            case 0x33bf60u: goto label_33bf60;
+            case 0x33bf64u: goto label_33bf64;
+            case 0x33bf68u: goto label_33bf68;
+            case 0x33bf6cu: goto label_33bf6c;
+            case 0x33bf70u: goto label_33bf70;
+            case 0x33bf74u: goto label_33bf74;
+            case 0x33bf78u: goto label_33bf78;
+            case 0x33bf7cu: goto label_33bf7c;
+            case 0x33bf80u: goto label_33bf80;
+            case 0x33bf84u: goto label_33bf84;
+            default: break;
+        }
     }
 
     ctx->pc = 0x33bf18u;
@@ -158,8 +160,7 @@ label_33bf4c:
     }
     ctx->pc = 0x33BF48u;
     SET_GPR_U32(ctx, 31, 0x33BF50u);
-    ctx->pc = 0x33B658u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x33B658u, 0x33BF48u, 0x33BF50u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &Forward33B568_33B658_0x33b658, 0x33b658u, 0x33bf50u)) {
         return;
     }
     ctx->pc = 0x33BF50u;
@@ -192,7 +193,6 @@ label_33bf64:
         ctx->pc = 0x33BF68u;
         goto label_33bf68;
     }
-    ctx->pc = 0x33BF60u;
     SET_GPR_U32(ctx, 31, 0x33BF68u);
     ctx->pc = 0x33BF64u;
     ctx->in_delay_slot = true;
@@ -200,8 +200,7 @@ label_33bf64:
     // 0x33bf64: 0x2802b  sltu        $s0, $zero, $v0 (Delay Slot)
     SET_GPR_U64(ctx, 16, ((uint64_t)GPR_U64(ctx, 0) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
     ctx->in_delay_slot = false;
-    ctx->pc = 0x33B670u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x33B670u, 0x33BF60u, 0x33BF68u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &Forward33B5C8_33B670_0x33b670, 0x33b670u, 0x33bf68u)) {
         return;
     }
     ctx->pc = 0x33BF68u;
@@ -259,7 +258,6 @@ label_33bf80:
     // NOP
 label_33bf84:
     // 0x33bf84: 0x0  nop
-    ctx->pc = 0x33bf84u;
     // NOP
     ctx->pc = 0x33bf88u;
 }

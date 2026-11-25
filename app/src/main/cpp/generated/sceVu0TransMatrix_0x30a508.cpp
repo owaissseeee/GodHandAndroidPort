@@ -18,7 +18,6 @@ void sceVu0TransMatrix_0x30a508(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("sceVu0TransMatrix_0x30a508");
 #endif
 
-    ctx->pc = 0x30a508u;
 
     // 0x30a508: 0xd8c40000  lqc2        $vf4, 0x0($a2)
     ctx->pc = 0x30a508u;
@@ -36,7 +35,6 @@ void sceVu0TransMatrix_0x30a508(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     ctx->pc = 0x30a518u;
     SET_GPR_VEC(ctx, 9, READ128(ADD32(GPR_U32(ctx, 5), 32)));
     // 0x30a51c: 0x4bc42968  vadd.xyz    $vf5, $vf5, $vf4
-    ctx->pc = 0x30a51cu;
     { __m128 res = PS2_VADD(ctx->vu0_vf[5], ctx->vu0_vf[4]); __m128i mask = _mm_set_epi32(0, -1, -1, -1); ctx->vu0_vf[5] = PS2_VBLEND(ctx->vu0_vf[5], res, _mm_castsi128_ps(mask)); }
     // 0x30a520: 0x7c870000  sq          $a3, 0x0($a0)
     ctx->pc = 0x30a520u;

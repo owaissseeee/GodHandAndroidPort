@@ -18,13 +18,11 @@ void cSnd_AddBgmAttr_0x2d0748(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("cSnd_AddBgmAttr_0x2d0748");
 #endif
 
-    ctx->pc = 0x2d0748u;
 
     // 0x2d0748: 0x8c820050  lw          $v0, 0x50($a0)
     ctx->pc = 0x2d0748u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 80)));
     // 0x2d074c: 0x451025  or          $v0, $v0, $a1
-    ctx->pc = 0x2d074cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | GPR_U64(ctx, 5));
     // 0x2d0750: 0x3e00008  jr          $ra
     ctx->pc = 0x2D0750u;

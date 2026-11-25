@@ -18,7 +18,6 @@ void Set_Fields_1884_1894_2609F8_0x2609f8(uint8_t* rdram, R5900Context* ctx, PS2
     PS_LOG_ENTRY("Set_Fields_1884_1894_2609F8_0x2609f8");
 #endif
 
-    ctx->pc = 0x2609f8u;
 
     // 0x2609f8: 0xa4891894  sh          $t1, 0x1894($a0)
     ctx->pc = 0x2609f8u;

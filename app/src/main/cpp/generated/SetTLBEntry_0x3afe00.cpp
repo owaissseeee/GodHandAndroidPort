@@ -18,18 +18,17 @@ void SetTLBEntry_0x3afe00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("SetTLBEntry_0x3afe00");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afe08u: goto label_3afe08;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afe00u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afe08u: goto label_3afe08;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afe00u;
 
     // 0x3afe00: 0x24030056  addiu       $v1, $zero, 0x56
-    ctx->pc = 0x3afe00u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 86));
     // 0x3afe04: 0xc  syscall     0
-    ctx->pc = 0x3afe04u;
     ctx->pc = 0x3AFE08u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

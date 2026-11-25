@@ -18,7 +18,6 @@ void cMessDrawFont_setDrawPos_0x2af658(uint8_t* rdram, R5900Context* ctx, PS2Run
     PS_LOG_ENTRY("cMessDrawFont_setDrawPos_0x2af658");
 #endif
 
-    ctx->pc = 0x2af658u;
 
     // 0x2af658: 0xac850028  sw          $a1, 0x28($a0)
     ctx->pc = 0x2af658u;

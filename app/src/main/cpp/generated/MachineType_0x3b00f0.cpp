@@ -18,18 +18,17 @@ void MachineType_0x3b00f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("MachineType_0x3b00f0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b00f8u: goto label_3b00f8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b00f0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b00f8u: goto label_3b00f8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b00f0u;
 
     // 0x3b00f0: 0x2403007e  addiu       $v1, $zero, 0x7E
-    ctx->pc = 0x3b00f0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 126));
     // 0x3b00f4: 0xc  syscall     0
-    ctx->pc = 0x3b00f4u;
     ctx->pc = 0x3B00F8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

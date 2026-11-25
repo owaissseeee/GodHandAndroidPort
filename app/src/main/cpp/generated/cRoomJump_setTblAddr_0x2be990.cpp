@@ -18,7 +18,6 @@ void cRoomJump_setTblAddr_0x2be990(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("cRoomJump_setTblAddr_0x2be990");
 #endif
 
-    ctx->pc = 0x2be990u;
 
     // 0x2be990: 0x3e00008  jr          $ra
     ctx->pc = 0x2BE990u;

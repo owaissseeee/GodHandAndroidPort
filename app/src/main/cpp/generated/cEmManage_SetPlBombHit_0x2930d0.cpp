@@ -18,10 +18,8 @@ void cEmManage_SetPlBombHit_0x2930d0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("cEmManage_SetPlBombHit_0x2930d0");
 #endif
 
-    ctx->pc = 0x2930d0u;
 
     // 0x2930d0: 0x2402003c  addiu       $v0, $zero, 0x3C
-    ctx->pc = 0x2930d0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 60));
     // 0x2930d4: 0x3e00008  jr          $ra
     ctx->pc = 0x2930D4u;
@@ -42,9 +40,7 @@ void cEmManage_SetPlBombHit_0x2930d0(uint8_t* rdram, R5900Context* ctx, PS2Runti
         return;
         #endif
     }
-    ctx->pc = 0x2930DCu;
     // 0x2930dc: 0x0  nop
-    ctx->pc = 0x2930dcu;
     // NOP
     ctx->pc = 0x2930e0u;
 }

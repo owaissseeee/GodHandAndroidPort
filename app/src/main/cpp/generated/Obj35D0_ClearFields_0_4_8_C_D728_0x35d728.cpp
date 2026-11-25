@@ -18,7 +18,6 @@ void Obj35D0_ClearFields_0_4_8_C_D728_0x35d728(uint8_t* rdram, R5900Context* ctx
     PS_LOG_ENTRY("Obj35D0_ClearFields_0_4_8_C_D728_0x35d728");
 #endif
 
-    ctx->pc = 0x35d728u;
 
     // 0x35d728: 0xac80000c  sw          $zero, 0xC($a0)
     ctx->pc = 0x35d728u;
@@ -48,9 +47,7 @@ void Obj35D0_ClearFields_0_4_8_C_D728_0x35d728(uint8_t* rdram, R5900Context* ctx
         return;
         #endif
     }
-    ctx->pc = 0x35D73Cu;
     // 0x35d73c: 0x0  nop
-    ctx->pc = 0x35d73cu;
     // NOP
     ctx->pc = 0x35d740u;
 }

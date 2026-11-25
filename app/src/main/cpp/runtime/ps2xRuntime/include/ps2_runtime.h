@@ -345,6 +345,35 @@ public:
                              uint32_t fallthroughPc,
                              GuestBranchKind kind,
                              const char *debugName);
+
+    PS2_FORCEINLINE bool callDirectStatic(uint8_t *rdram,
+                                          R5900Context *ctx,
+                                          RecompiledFunction targetFn,
+                                          uint32_t targetPc,
+                                          uint32_t fallthroughPc) noexcept
+    {
+        ctx->pc = targetPc;
+        if (__builtin_expect(eeCheckpointDue(8u), 0))
+        {
+            return false;
+        }
+        targetFn(rdram, ctx, this);
+        if (__builtin_expect(ctx->pc != fallthroughPc ||
+                             (m_schedulerTransferPtr && *m_schedulerTransferPtr) ||
+                             (m_schedulerUnwindingPtr && *m_schedulerUnwindingPtr) ||
+                             isStopRequested(), 0))
+        {
+            if (ctx->pc == targetPc)
+            {
+                ctx->pc = fallthroughPc;
+                return !((m_schedulerTransferPtr && *m_schedulerTransferPtr) ||
+                         (m_schedulerUnwindingPtr && *m_schedulerUnwindingPtr) ||
+                         isStopRequested());
+            }
+            return false;
+        }
+        return true;
+    }
     void reportMissingFunction(uint8_t *rdram,
                                R5900Context *ctx,
                                uint32_t targetPc,
@@ -503,6 +532,8 @@ private:
     VU1Interpreter m_vu1{VU1Interpreter::Unit::VU1};
     R5900Context m_cpuContext;
     std::unique_ptr<EeScheduler> m_eeScheduler;
+    const bool *m_schedulerTransferPtr = nullptr;
+    const bool *m_schedulerUnwindingPtr = nullptr;
     mutable std::mutex m_eeKernelStateMutex;
     std::unordered_map<int, std::vector<EeExitHandlerRegistration>> m_eeExitHandlers;
     std::unordered_map<uint32_t, uint32_t> m_eeSyscallOverrides;

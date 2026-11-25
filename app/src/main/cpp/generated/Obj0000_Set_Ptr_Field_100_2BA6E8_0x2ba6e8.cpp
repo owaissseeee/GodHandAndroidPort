@@ -18,13 +18,10 @@ void Obj0000_Set_Ptr_Field_100_2BA6E8_0x2ba6e8(uint8_t* rdram, R5900Context* ctx
     PS_LOG_ENTRY("Obj0000_Set_Ptr_Field_100_2BA6E8_0x2ba6e8");
 #endif
 
-    ctx->pc = 0x2ba6e8u;
 
     // 0x2ba6e8: 0x3c020045  lui         $v0, 0x45
-    ctx->pc = 0x2ba6e8u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)69 << 16));
     // 0x2ba6ec: 0x2442bed0  addiu       $v0, $v0, -0x4130
-    ctx->pc = 0x2ba6ecu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294950608));
     // 0x2ba6f0: 0x3e00008  jr          $ra
     ctx->pc = 0x2BA6F0u;

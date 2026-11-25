@@ -18,10 +18,8 @@ void Obj1D00_ClearState_8_0x1d0798(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("Obj1D00_ClearState_8_0x1d0798");
 #endif
 
-    ctx->pc = 0x1d0798u;
 
     // 0x1d0798: 0x24020008  addiu       $v0, $zero, 0x8
-    ctx->pc = 0x1d0798u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 8));
     // 0x1d079c: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x1d079cu;

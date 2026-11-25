@@ -18,16 +18,16 @@ void GetTimerSystemTime_0x3b7180(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("GetTimerSystemTime_0x3b7180");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b7194u: goto label_3b7194;
-        case 0x3b71e8u: goto label_3b71e8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b7180u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b7194u: goto label_3b7194;
+            case 0x3b71e8u: goto label_3b71e8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b7180u;
 
     // 0x3b7180: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x3b7180u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x3b7184: 0xffb00000  sd          $s0, 0x0($sp)
     ctx->pc = 0x3b7184u;
@@ -38,20 +38,16 @@ void GetTimerSystemTime_0x3b7180(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     // 0x3b718c: 0xc0ed8e8  jal         func_3B63A0
     ctx->pc = 0x3B718Cu;
     SET_GPR_U32(ctx, 31, 0x3B7194u);
-    ctx->pc = 0x3B63A0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B63A0u, 0x3B718Cu, 0x3B7194u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x3b7194u)) {
         return;
     }
     ctx->pc = 0x3B7194u;
 label_3b7194:
     // 0x3b7194: 0x3c031000  lui         $v1, 0x1000
-    ctx->pc = 0x3b7194u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)4096 << 16));
     // 0x3b7198: 0x3c040040  lui         $a0, 0x40
-    ctx->pc = 0x3b7198u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)64 << 16));
     // 0x3b719c: 0x34631000  ori         $v1, $v1, 0x1000
-    ctx->pc = 0x3b719cu;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) | (uint64_t)(uint16_t)4096);
     // 0x3b71a0: 0x9c700000  lwu         $s0, 0x0($v1)
     ctx->pc = 0x3b71a0u;
@@ -63,7 +59,6 @@ label_3b7194:
     ctx->pc = 0x3b71a8u;
     SET_GPR_U64(ctx, 10, FAST_READ64(0x3FBE90u));
     // 0x3b71ac: 0x31090800  andi        $t1, $t0, 0x800
-    ctx->pc = 0x3b71acu;
     SET_GPR_U64(ctx, 9, GPR_U64(ctx, 8) & (uint64_t)(uint16_t)2048);
     // 0x3b71b0: 0x11200003  beqz        $t1, . + 4 + (0x3 << 2)
     ctx->pc = 0x3B71B0u;
@@ -80,7 +75,6 @@ label_3b7194:
             goto label_3b71c0;
         }
     }
-    ctx->pc = 0x3B71B8u;
     // 0x3b71b8: 0x9c700000  lwu         $s0, 0x0($v1)
     ctx->pc = 0x3b71b8u;
     SET_GPR_ZE32(ctx, 16, READ32(ADD32(GPR_U32(ctx, 3), 0)));
@@ -89,22 +83,17 @@ label_3b7194:
     SET_GPR_S64(ctx, 10, (int64_t)GPR_S64(ctx, 10) + (int64_t)(int32_t)1);
 label_3b71c0:
     // 0x3b71c0: 0x31080003  andi        $t0, $t0, 0x3
-    ctx->pc = 0x3b71c0u;
     SET_GPR_U64(ctx, 8, GPR_U64(ctx, 8) & (uint64_t)(uint16_t)3);
     // 0x3b71c4: 0xa5438  dsll        $t2, $t2, 16
-    ctx->pc = 0x3b71c4u;
     SET_GPR_U64(ctx, 10, GPR_U64(ctx, 10) << 16);
     // 0x3b71c8: 0x8480a  movz        $t1, $zero, $t0
     ctx->pc = 0x3b71c8u;
     if (GPR_U64(ctx, 8) == 0) SET_GPR_VEC(ctx, 9, GPR_VEC(ctx, 0));
     // 0x3b71cc: 0x20a8025  or          $s0, $s0, $t2
-    ctx->pc = 0x3b71ccu;
     SET_GPR_U64(ctx, 16, GPR_U64(ctx, 16) | GPR_U64(ctx, 10));
     // 0x3b71d0: 0x1094814  dsllv       $t1, $t1, $t0
-    ctx->pc = 0x3b71d0u;
     SET_GPR_U64(ctx, 9, GPR_U64(ctx, 9) << (GPR_U32(ctx, 8) & 0x3F));
     // 0x3b71d4: 0x1308014  dsllv       $s0, $s0, $t1
-    ctx->pc = 0x3b71d4u;
     SET_GPR_U64(ctx, 16, GPR_U64(ctx, 16) << (GPR_U32(ctx, 9) & 0x3F));
     // 0x3b71d8: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x3B71D8u;
@@ -121,12 +110,10 @@ label_3b71c0:
             goto label_3b71ec;
         }
     }
-    ctx->pc = 0x3B71E0u;
     // 0x3b71e0: 0xc0ed8fc  jal         func_3B63F0
     ctx->pc = 0x3B71E0u;
     SET_GPR_U32(ctx, 31, 0x3B71E8u);
-    ctx->pc = 0x3B63F0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B63F0u, 0x3B71E0u, 0x3B71E8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x3b71e8u)) {
         return;
     }
     ctx->pc = 0x3B71E8u;
@@ -160,9 +147,7 @@ label_3b71ec:
         return;
         #endif
     }
-    ctx->pc = 0x3B71FCu;
     // 0x3b71fc: 0x0  nop
-    ctx->pc = 0x3b71fcu;
     // NOP
     ctx->pc = 0x3b7200u;
 }

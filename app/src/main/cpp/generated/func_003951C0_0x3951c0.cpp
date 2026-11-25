@@ -18,10 +18,8 @@ void func_003951C0_0x3951c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_003951C0_0x3951c0");
 #endif
 
-    ctx->pc = 0x3951c0u;
 
     // 0x3951c0: 0x0  nop
-    ctx->pc = 0x3951c0u;
     // NOP
     // 0x3951c4: 0x3e00008  jr          $ra
     ctx->pc = 0x3951C4u;
@@ -36,9 +34,7 @@ void func_003951C0_0x3951c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x3951CCu;
     // 0x3951cc: 0x0  nop
-    ctx->pc = 0x3951ccu;
     // NOP
     ctx->pc = 0x3951d0u;
 }

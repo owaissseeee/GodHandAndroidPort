@@ -18,7 +18,6 @@ void Obj33F8_GetWord_C_FA68_0x33fa68(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("Obj33F8_GetWord_C_FA68_0x33fa68");
 #endif
 
-    ctx->pc = 0x33fa68u;
 
     // 0x33fa68: 0x3e00008  jr          $ra
     ctx->pc = 0x33FA68u;

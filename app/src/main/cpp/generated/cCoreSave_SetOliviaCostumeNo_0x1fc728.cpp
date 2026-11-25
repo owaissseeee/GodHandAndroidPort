@@ -18,7 +18,6 @@ void cCoreSave_SetOliviaCostumeNo_0x1fc728(uint8_t* rdram, R5900Context* ctx, PS
     PS_LOG_ENTRY("cCoreSave_SetOliviaCostumeNo_0x1fc728");
 #endif
 
-    ctx->pc = 0x1fc728u;
 
     // 0x1fc728: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc728u;
@@ -53,9 +52,7 @@ label_1fc734:
         return;
         #endif
     }
-    ctx->pc = 0x1FC73Cu;
     // 0x1fc73c: 0x0  nop
-    ctx->pc = 0x1fc73cu;
     // NOP
     ctx->pc = 0x1fc740u;
 }

@@ -18,7 +18,6 @@ void cOmbb_ckBomb_0x1b8718(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("cOmbb_ckBomb_0x1b8718");
 #endif
 
-    ctx->pc = 0x1b8718u;
 
     // 0x1b8718: 0x3e00008  jr          $ra
     ctx->pc = 0x1B8718u;

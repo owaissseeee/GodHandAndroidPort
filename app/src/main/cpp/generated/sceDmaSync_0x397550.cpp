@@ -18,18 +18,17 @@ void sceDmaSync_0x397550(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     PS_LOG_ENTRY("sceDmaSync_0x397550");
 #endif
 
-    switch (ctx->pc) {
-        case 0x397578u: goto label_397578;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x397550u, 0)) {
+        switch (ctx->pc) {
+            case 0x397578u: goto label_397578;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x397550u;
 
     // 0x397550: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x397550u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x397554: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x397554u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x397558: 0x14a20005  bne         $a1, $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x397558u;
@@ -46,12 +45,10 @@ void sceDmaSync_0x397550(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
             goto label_397570;
         }
     }
-    ctx->pc = 0x397560u;
     // 0x397560: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x397560u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x397564: 0x21202  srl         $v0, $v0, 8
-    ctx->pc = 0x397564u;
     SET_GPR_S32(ctx, 2, (int32_t)SRL32(GPR_U32(ctx, 2), 8));
     // 0x397568: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x397568u;
@@ -73,8 +70,7 @@ label_397570:
     // 0x397570: 0xc0e5c0a  jal         func_397028
     ctx->pc = 0x397570u;
     SET_GPR_U32(ctx, 31, 0x397578u);
-    ctx->pc = 0x397028u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x397028u, 0x397570u, 0x397578u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &WaitDma_0x397028, 0x397028u, 0x397578u)) {
         return;
     }
     ctx->pc = 0x397578u;
@@ -105,12 +101,9 @@ label_39757c:
         return;
         #endif
     }
-    ctx->pc = 0x397588u;
     // 0x397588: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x397588u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x39758c: 0x0  nop
-    ctx->pc = 0x39758cu;
     // NOP
     ctx->pc = 0x397590u;
 }

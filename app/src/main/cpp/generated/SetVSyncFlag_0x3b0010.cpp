@@ -18,18 +18,17 @@ void SetVSyncFlag_0x3b0010(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("SetVSyncFlag_0x3b0010");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b0018u: goto label_3b0018;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b0010u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b0018u: goto label_3b0018;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b0010u;
 
     // 0x3b0010: 0x24030073  addiu       $v1, $zero, 0x73
-    ctx->pc = 0x3b0010u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 115));
     // 0x3b0014: 0xc  syscall     0
-    ctx->pc = 0x3b0014u;
     ctx->pc = 0x3B0018u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

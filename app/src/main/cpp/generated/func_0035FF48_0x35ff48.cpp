@@ -18,21 +18,19 @@ void func_0035FF48_0x35ff48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0035FF48_0x35ff48");
 #endif
 
-    switch (ctx->pc) {
-        case 0x35ff68u: goto label_35ff68;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x35ff48u, 0)) {
+        switch (ctx->pc) {
+            case 0x35ff68u: goto label_35ff68;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x35ff48u;
 
     // 0x35ff48: 0x3c02003f  lui         $v0, 0x3F
-    ctx->pc = 0x35ff48u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)63 << 16));
     // 0x35ff4c: 0x302d  daddu       $a2, $zero, $zero
-    ctx->pc = 0x35ff4cu;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x35ff50: 0x2442e800  addiu       $v0, $v0, -0x1800
-    ctx->pc = 0x35ff50u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294961152));
     // 0x35ff54: 0x8c450008  lw          $a1, 0x8($v0)
     ctx->pc = 0x35ff54u;
@@ -52,9 +50,7 @@ void func_0035FF48_0x35ff48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_35ff8c;
         }
     }
-    ctx->pc = 0x35FF60u;
     // 0x35ff60: 0x40202d  daddu       $a0, $v0, $zero
-    ctx->pc = 0x35ff60u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     // 0x35ff64: 0x0  nop
     ctx->pc = 0x35ff64u;
@@ -64,7 +60,6 @@ label_35ff68:
     ctx->pc = 0x35ff68u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x35ff6c: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x35ff6cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x35ff70: 0x10600007  beqz        $v1, . + 4 + (0x7 << 2)
     ctx->pc = 0x35FF70u;
@@ -81,15 +76,11 @@ label_35ff68:
             goto label_35ff90;
         }
     }
-    ctx->pc = 0x35FF78u;
     // 0x35ff78: 0x24c60001  addiu       $a2, $a2, 0x1
-    ctx->pc = 0x35ff78u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 6), 1));
     // 0x35ff7c: 0xc5102a  slt         $v0, $a2, $a1
-    ctx->pc = 0x35ff7cu;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 6) < (int64_t)GPR_S64(ctx, 5)) ? 1 : 0);
     // 0x35ff80: 0x0  nop
-    ctx->pc = 0x35ff80u;
     // NOP
     // 0x35ff84: 0x1440fff8  bnez        $v0, . + 4 + (-0x8 << 2)
     ctx->pc = 0x35FF84u;

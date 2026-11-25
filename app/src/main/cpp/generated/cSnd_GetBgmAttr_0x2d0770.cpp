@@ -18,7 +18,6 @@ void cSnd_GetBgmAttr_0x2d0770(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("cSnd_GetBgmAttr_0x2d0770");
 #endif
 
-    ctx->pc = 0x2d0770u;
 
     // 0x2d0770: 0x3e00008  jr          $ra
     ctx->pc = 0x2D0770u;
@@ -39,12 +38,9 @@ void cSnd_GetBgmAttr_0x2d0770(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
         return;
         #endif
     }
-    ctx->pc = 0x2D0778u;
     // 0x2d0778: 0x2c420001  sltiu       $v0, $v0, 0x1
-    ctx->pc = 0x2d0778u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1) ? 1 : 0);
     // 0x2d077c: 0x0  nop
-    ctx->pc = 0x2d077cu;
     // NOP
     ctx->pc = 0x2d0780u;
 }

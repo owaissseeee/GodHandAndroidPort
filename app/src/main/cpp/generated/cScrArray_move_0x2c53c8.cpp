@@ -18,7 +18,6 @@ void cScrArray_move_0x2c53c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("cScrArray_move_0x2c53c8");
 #endif
 
-    ctx->pc = 0x2c53c8u;
 
     // 0x2c53c8: 0x8c830008  lw          $v1, 0x8($a0)
     ctx->pc = 0x2c53c8u;
@@ -32,7 +31,6 @@ void cScrArray_move_0x2c53c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_2c540c;
         }
     }
-    ctx->pc = 0x2C53D4u;
     // 0x2c53d4: 0x90820004  lbu         $v0, 0x4($a0)
     ctx->pc = 0x2c53d4u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 4)));
@@ -51,12 +49,9 @@ void cScrArray_move_0x2c53c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_2c53f8;
         }
     }
-    ctx->pc = 0x2C53E0u;
     // 0x2c53e0: 0x24420001  addiu       $v0, $v0, 0x1
-    ctx->pc = 0x2c53e0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 1));
     // 0x2c53e4: 0x43182a  slt         $v1, $v0, $v1
-    ctx->pc = 0x2c53e4u;
     SET_GPR_U64(ctx, 3, ((int64_t)GPR_S64(ctx, 2) < (int64_t)GPR_S64(ctx, 3)) ? 1 : 0);
     // 0x2c53e8: 0x14600008  bnez        $v1, . + 4 + (0x8 << 2)
     ctx->pc = 0x2C53E8u;
@@ -73,7 +68,6 @@ void cScrArray_move_0x2c53c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_2c540c;
         }
     }
-    ctx->pc = 0x2C53F0u;
     // 0x2c53f0: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x2C53F0u;
     {
@@ -92,7 +86,6 @@ void cScrArray_move_0x2c53c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     ctx->pc = 0x2C53F8u;
 label_2c53f8:
     // 0x2c53f8: 0x2442ffff  addiu       $v0, $v0, -0x1
-    ctx->pc = 0x2c53f8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));
     // 0x2c53fc: 0x4410003  bgez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x2C53FCu;
@@ -109,7 +102,6 @@ label_2c53f8:
             goto label_2c540c;
         }
     }
-    ctx->pc = 0x2C5404u;
     // 0x2c5404: 0xac80000c  sw          $zero, 0xC($a0)
     ctx->pc = 0x2c5404u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 12), GPR_U32(ctx, 0));
@@ -131,15 +123,11 @@ label_2c540c:
         return;
         #endif
     }
-    ctx->pc = 0x2C5414u;
     // 0x2c5414: 0x0  nop
-    ctx->pc = 0x2c5414u;
     // NOP
     // 0x2c5418: 0x0  nop
-    ctx->pc = 0x2c5418u;
     // NOP
     // 0x2c541c: 0x0  nop
-    ctx->pc = 0x2c541cu;
     // NOP
     ctx->pc = 0x2c5420u;
 }

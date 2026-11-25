@@ -18,7 +18,6 @@ void cPartsCamera_SetParts_0x139b68(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("cPartsCamera_SetParts_0x139b68");
 #endif
 
-    ctx->pc = 0x139b68u;
 
     // 0x139b68: 0xac870368  sw          $a3, 0x368($a0)
     ctx->pc = 0x139b68u;

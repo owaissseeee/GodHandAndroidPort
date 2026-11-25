@@ -18,7 +18,6 @@ void NoOp_1B80A8_0x1b80a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("NoOp_1B80A8_0x1b80a8");
 #endif
 
-    ctx->pc = 0x1b80a8u;
 
     // 0x1b80a8: 0x3e00008  jr          $ra
     ctx->pc = 0x1B80A8u;
@@ -33,18 +32,15 @@ void NoOp_1B80A8_0x1b80a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
         return;
         #endif
     }
-    ctx->pc = 0x1B80B0u;
     // 0x1b80b0: 0xac8505e8  sw          $a1, 0x5E8($a0)
     ctx->pc = 0x1b80b0u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 1512), GPR_U32(ctx, 5));
     // 0x1b80b4: 0x0  nop
-    ctx->pc = 0x1b80b4u;
     // NOP
     // 0x1b80b8: 0xac8505f0  sw          $a1, 0x5F0($a0)
     ctx->pc = 0x1b80b8u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 1520), GPR_U32(ctx, 5));
     // 0x1b80bc: 0x0  nop
-    ctx->pc = 0x1b80bcu;
     // NOP
     ctx->pc = 0x1b80c0u;
 }

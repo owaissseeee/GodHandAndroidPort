@@ -18,13 +18,10 @@ void ADXT_IsEndcode_0x32b7f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("ADXT_IsEndcode_0x32b7f0");
 #endif
 
-    ctx->pc = 0x32b7f0u;
 
     // 0x32b7f0: 0xa0382d  daddu       $a3, $a1, $zero
-    ctx->pc = 0x32b7f0u;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     // 0x32b7f4: 0x28e30002  slti        $v1, $a3, 0x2
-    ctx->pc = 0x32b7f4u;
     SET_GPR_U64(ctx, 3, ((int64_t)GPR_S64(ctx, 7) < (int64_t)(int32_t)2) ? 1 : 0);
     // 0x32b7f8: 0x1460000b  bnez        $v1, . + 4 + (0xB << 2)
     ctx->pc = 0x32B7F8u;
@@ -41,24 +38,18 @@ void ADXT_IsEndcode_0x32b7f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_32b828;
         }
     }
-    ctx->pc = 0x32B800u;
     // 0x32b800: 0x94830000  lhu         $v1, 0x0($a0)
     ctx->pc = 0x32b800u;
     SET_GPR_ZE32(ctx, 3, (uint16_t)READ16(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x32b804: 0x34058001  ori         $a1, $zero, 0x8001
-    ctx->pc = 0x32b804u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)32769);
     // 0x32b808: 0x32200  sll         $a0, $v1, 8
-    ctx->pc = 0x32b808u;
     SET_GPR_S32(ctx, 4, (int32_t)SLL32(GPR_U32(ctx, 3), 8));
     // 0x32b80c: 0x31a02  srl         $v1, $v1, 8
-    ctx->pc = 0x32b80cu;
     SET_GPR_S32(ctx, 3, (int32_t)SRL32(GPR_U32(ctx, 3), 8));
     // 0x32b810: 0x641825  or          $v1, $v1, $a0
-    ctx->pc = 0x32b810u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) | GPR_U64(ctx, 4));
     // 0x32b814: 0x3063ffff  andi        $v1, $v1, 0xFFFF
-    ctx->pc = 0x32b814u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & (uint64_t)(uint16_t)65535);
     // 0x32b818: 0x14650003  bne         $v1, $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x32B818u;
@@ -69,7 +60,6 @@ void ADXT_IsEndcode_0x32b7f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_32b828;
         }
     }
-    ctx->pc = 0x32B820u;
     // 0x32b820: 0xacc70000  sw          $a3, 0x0($a2)
     ctx->pc = 0x32b820u;
     WRITE32(ADD32(GPR_U32(ctx, 6), 0), GPR_U32(ctx, 7));

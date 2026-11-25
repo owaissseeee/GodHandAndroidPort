@@ -18,22 +18,24 @@ void cScenario_runRoomExitFunc_0x2c3820(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("cScenario_runRoomExitFunc_0x2c3820");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2c3820u: goto label_2c3820;
-        case 0x2c3824u: goto label_2c3824;
-        case 0x2c3828u: goto label_2c3828;
-        case 0x2c382cu: goto label_2c382c;
-        case 0x2c3830u: goto label_2c3830;
-        case 0x2c3834u: goto label_2c3834;
-        case 0x2c3838u: goto label_2c3838;
-        case 0x2c383cu: goto label_2c383c;
-        case 0x2c3840u: goto label_2c3840;
-        case 0x2c3844u: goto label_2c3844;
-        case 0x2c3848u: goto label_2c3848;
-        case 0x2c384cu: goto label_2c384c;
-        case 0x2c3850u: goto label_2c3850;
-        case 0x2c3854u: goto label_2c3854;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2c3820u, 0)) {
+        switch (ctx->pc) {
+            case 0x2c3820u: goto label_2c3820;
+            case 0x2c3824u: goto label_2c3824;
+            case 0x2c3828u: goto label_2c3828;
+            case 0x2c382cu: goto label_2c382c;
+            case 0x2c3830u: goto label_2c3830;
+            case 0x2c3834u: goto label_2c3834;
+            case 0x2c3838u: goto label_2c3838;
+            case 0x2c383cu: goto label_2c383c;
+            case 0x2c3840u: goto label_2c3840;
+            case 0x2c3844u: goto label_2c3844;
+            case 0x2c3848u: goto label_2c3848;
+            case 0x2c384cu: goto label_2c384c;
+            case 0x2c3850u: goto label_2c3850;
+            case 0x2c3854u: goto label_2c3854;
+            default: break;
+        }
     }
 
     ctx->pc = 0x2c3820u;

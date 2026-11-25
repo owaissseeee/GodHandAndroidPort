@@ -18,18 +18,17 @@ void SetGsVParam_0x3afd90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("SetGsVParam_0x3afd90");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afd98u: goto label_3afd98;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afd90u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afd98u: goto label_3afd98;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afd90u;
 
     // 0x3afd90: 0x2403004f  addiu       $v1, $zero, 0x4F
-    ctx->pc = 0x3afd90u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 79));
     // 0x3afd94: 0xc  syscall     0
-    ctx->pc = 0x3afd94u;
     ctx->pc = 0x3AFD98u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

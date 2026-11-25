@@ -18,7 +18,6 @@ void cPlBase_Initialize_0x100320(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("cPlBase_Initialize_0x100320");
 #endif
 
-    ctx->pc = 0x100320u;
 
     // 0x100320: 0x3e00008  jr          $ra
     ctx->pc = 0x100320u;

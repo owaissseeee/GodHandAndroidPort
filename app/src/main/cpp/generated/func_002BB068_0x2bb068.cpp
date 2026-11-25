@@ -18,15 +18,15 @@ void func_002BB068_0x2bb068(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002BB068_0x2bb068");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2bb070u: goto label_2bb070;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2bb068u, 0)) {
+        switch (ctx->pc) {
+            case 0x2bb070u: goto label_2bb070;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2bb068u;
 
     // 0x2bb068: 0x182d  daddu       $v1, $zero, $zero
-    ctx->pc = 0x2bb068u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2bb06c: 0x0  nop
     ctx->pc = 0x2bb06cu;
@@ -50,7 +50,6 @@ label_2bb070:
             goto label_2bb084;
         }
     }
-    ctx->pc = 0x2BB07Cu;
     // 0x2bb07c: 0x3e00008  jr          $ra
     ctx->pc = 0x2BB07Cu;
     {
@@ -73,7 +72,6 @@ label_2bb070:
     ctx->pc = 0x2BB084u;
 label_2bb084:
     // 0x2bb084: 0x2c620004  sltiu       $v0, $v1, 0x4
-    ctx->pc = 0x2bb084u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 3) < (uint64_t)(int64_t)(int32_t)4) ? 1 : 0);
     // 0x2bb088: 0x1440fff9  bnez        $v0, . + 4 + (-0x7 << 2)
     ctx->pc = 0x2BB088u;
@@ -93,7 +91,6 @@ label_2bb084:
             goto label_2bb070;
         }
     }
-    ctx->pc = 0x2BB090u;
     // 0x2bb090: 0x3e00008  jr          $ra
     ctx->pc = 0x2BB090u;
     {

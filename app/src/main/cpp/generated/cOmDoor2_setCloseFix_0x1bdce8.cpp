@@ -18,48 +18,50 @@ void cOmDoor2_setCloseFix_0x1bdce8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("cOmDoor2_setCloseFix_0x1bdce8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1bdce8u: goto label_1bdce8;
-        case 0x1bdcecu: goto label_1bdcec;
-        case 0x1bdcf0u: goto label_1bdcf0;
-        case 0x1bdcf4u: goto label_1bdcf4;
-        case 0x1bdcf8u: goto label_1bdcf8;
-        case 0x1bdcfcu: goto label_1bdcfc;
-        case 0x1bdd00u: goto label_1bdd00;
-        case 0x1bdd04u: goto label_1bdd04;
-        case 0x1bdd08u: goto label_1bdd08;
-        case 0x1bdd0cu: goto label_1bdd0c;
-        case 0x1bdd10u: goto label_1bdd10;
-        case 0x1bdd14u: goto label_1bdd14;
-        case 0x1bdd18u: goto label_1bdd18;
-        case 0x1bdd1cu: goto label_1bdd1c;
-        case 0x1bdd20u: goto label_1bdd20;
-        case 0x1bdd24u: goto label_1bdd24;
-        case 0x1bdd28u: goto label_1bdd28;
-        case 0x1bdd2cu: goto label_1bdd2c;
-        case 0x1bdd30u: goto label_1bdd30;
-        case 0x1bdd34u: goto label_1bdd34;
-        case 0x1bdd38u: goto label_1bdd38;
-        case 0x1bdd3cu: goto label_1bdd3c;
-        case 0x1bdd40u: goto label_1bdd40;
-        case 0x1bdd44u: goto label_1bdd44;
-        case 0x1bdd48u: goto label_1bdd48;
-        case 0x1bdd4cu: goto label_1bdd4c;
-        case 0x1bdd50u: goto label_1bdd50;
-        case 0x1bdd54u: goto label_1bdd54;
-        case 0x1bdd58u: goto label_1bdd58;
-        case 0x1bdd5cu: goto label_1bdd5c;
-        case 0x1bdd60u: goto label_1bdd60;
-        case 0x1bdd64u: goto label_1bdd64;
-        case 0x1bdd68u: goto label_1bdd68;
-        case 0x1bdd6cu: goto label_1bdd6c;
-        case 0x1bdd70u: goto label_1bdd70;
-        case 0x1bdd74u: goto label_1bdd74;
-        case 0x1bdd78u: goto label_1bdd78;
-        case 0x1bdd7cu: goto label_1bdd7c;
-        case 0x1bdd80u: goto label_1bdd80;
-        case 0x1bdd84u: goto label_1bdd84;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1bdce8u, 0)) {
+        switch (ctx->pc) {
+            case 0x1bdce8u: goto label_1bdce8;
+            case 0x1bdcecu: goto label_1bdcec;
+            case 0x1bdcf0u: goto label_1bdcf0;
+            case 0x1bdcf4u: goto label_1bdcf4;
+            case 0x1bdcf8u: goto label_1bdcf8;
+            case 0x1bdcfcu: goto label_1bdcfc;
+            case 0x1bdd00u: goto label_1bdd00;
+            case 0x1bdd04u: goto label_1bdd04;
+            case 0x1bdd08u: goto label_1bdd08;
+            case 0x1bdd0cu: goto label_1bdd0c;
+            case 0x1bdd10u: goto label_1bdd10;
+            case 0x1bdd14u: goto label_1bdd14;
+            case 0x1bdd18u: goto label_1bdd18;
+            case 0x1bdd1cu: goto label_1bdd1c;
+            case 0x1bdd20u: goto label_1bdd20;
+            case 0x1bdd24u: goto label_1bdd24;
+            case 0x1bdd28u: goto label_1bdd28;
+            case 0x1bdd2cu: goto label_1bdd2c;
+            case 0x1bdd30u: goto label_1bdd30;
+            case 0x1bdd34u: goto label_1bdd34;
+            case 0x1bdd38u: goto label_1bdd38;
+            case 0x1bdd3cu: goto label_1bdd3c;
+            case 0x1bdd40u: goto label_1bdd40;
+            case 0x1bdd44u: goto label_1bdd44;
+            case 0x1bdd48u: goto label_1bdd48;
+            case 0x1bdd4cu: goto label_1bdd4c;
+            case 0x1bdd50u: goto label_1bdd50;
+            case 0x1bdd54u: goto label_1bdd54;
+            case 0x1bdd58u: goto label_1bdd58;
+            case 0x1bdd5cu: goto label_1bdd5c;
+            case 0x1bdd60u: goto label_1bdd60;
+            case 0x1bdd64u: goto label_1bdd64;
+            case 0x1bdd68u: goto label_1bdd68;
+            case 0x1bdd6cu: goto label_1bdd6c;
+            case 0x1bdd70u: goto label_1bdd70;
+            case 0x1bdd74u: goto label_1bdd74;
+            case 0x1bdd78u: goto label_1bdd78;
+            case 0x1bdd7cu: goto label_1bdd7c;
+            case 0x1bdd80u: goto label_1bdd80;
+            case 0x1bdd84u: goto label_1bdd84;
+            default: break;
+        }
     }
 
     ctx->pc = 0x1bdce8u;
@@ -348,7 +350,6 @@ label_1bdd80:
     ctx->pc = 0x1BDD84u;
 label_1bdd84:
     // 0x1bdd84: 0x0  nop
-    ctx->pc = 0x1bdd84u;
     // NOP
     ctx->pc = 0x1bdd88u;
 }

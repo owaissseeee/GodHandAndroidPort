@@ -18,24 +18,26 @@ void Slot2_UpdatePayout_0x1e58b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("Slot2_UpdatePayout_0x1e58b8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1e58b8u: goto label_1e58b8;
-        case 0x1e58bcu: goto label_1e58bc;
-        case 0x1e58c0u: goto label_1e58c0;
-        case 0x1e58c4u: goto label_1e58c4;
-        case 0x1e58c8u: goto label_1e58c8;
-        case 0x1e58ccu: goto label_1e58cc;
-        case 0x1e58d0u: goto label_1e58d0;
-        case 0x1e58d4u: goto label_1e58d4;
-        case 0x1e58d8u: goto label_1e58d8;
-        case 0x1e58dcu: goto label_1e58dc;
-        case 0x1e58e0u: goto label_1e58e0;
-        case 0x1e58e4u: goto label_1e58e4;
-        case 0x1e58e8u: goto label_1e58e8;
-        case 0x1e58ecu: goto label_1e58ec;
-        case 0x1e58f0u: goto label_1e58f0;
-        case 0x1e58f4u: goto label_1e58f4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1e58b8u, 0)) {
+        switch (ctx->pc) {
+            case 0x1e58b8u: goto label_1e58b8;
+            case 0x1e58bcu: goto label_1e58bc;
+            case 0x1e58c0u: goto label_1e58c0;
+            case 0x1e58c4u: goto label_1e58c4;
+            case 0x1e58c8u: goto label_1e58c8;
+            case 0x1e58ccu: goto label_1e58cc;
+            case 0x1e58d0u: goto label_1e58d0;
+            case 0x1e58d4u: goto label_1e58d4;
+            case 0x1e58d8u: goto label_1e58d8;
+            case 0x1e58dcu: goto label_1e58dc;
+            case 0x1e58e0u: goto label_1e58e0;
+            case 0x1e58e4u: goto label_1e58e4;
+            case 0x1e58e8u: goto label_1e58e8;
+            case 0x1e58ecu: goto label_1e58ec;
+            case 0x1e58f0u: goto label_1e58f0;
+            case 0x1e58f4u: goto label_1e58f4;
+            default: break;
+        }
     }
 
     ctx->pc = 0x1e58b8u;
@@ -147,7 +149,6 @@ label_1e58f0:
     ctx->pc = 0x1E58F4u;
 label_1e58f4:
     // 0x1e58f4: 0x0  nop
-    ctx->pc = 0x1e58f4u;
     // NOP
     ctx->pc = 0x1e58f8u;
 }

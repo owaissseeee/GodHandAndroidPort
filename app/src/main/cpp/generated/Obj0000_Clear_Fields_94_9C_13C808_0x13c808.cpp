@@ -18,7 +18,6 @@ void Obj0000_Clear_Fields_94_9C_13C808_0x13c808(uint8_t* rdram, R5900Context* ct
     PS_LOG_ENTRY("Obj0000_Clear_Fields_94_9C_13C808_0x13c808");
 #endif
 
-    ctx->pc = 0x13c808u;
 
     // 0x13c808: 0xac80009c  sw          $zero, 0x9C($a0)
     ctx->pc = 0x13c808u;
@@ -42,9 +41,7 @@ void Obj0000_Clear_Fields_94_9C_13C808_0x13c808(uint8_t* rdram, R5900Context* ct
         return;
         #endif
     }
-    ctx->pc = 0x13C814u;
     // 0x13c814: 0x0  nop
-    ctx->pc = 0x13c814u;
     // NOP
     ctx->pc = 0x13c818u;
 }

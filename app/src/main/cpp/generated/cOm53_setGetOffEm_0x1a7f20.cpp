@@ -18,7 +18,6 @@ void cOm53_setGetOffEm_0x1a7f20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("cOm53_setGetOffEm_0x1a7f20");
 #endif
 
-    ctx->pc = 0x1a7f20u;
 
     // 0x1a7f20: 0x90820612  lbu         $v0, 0x612($a0)
     ctx->pc = 0x1a7f20u;
@@ -38,7 +37,6 @@ void cOm53_setGetOffEm_0x1a7f20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_1a7f4c;
         }
     }
-    ctx->pc = 0x1A7F2Cu;
     // 0x1a7f2c: 0x10a00005  beqz        $a1, . + 4 + (0x5 << 2)
     ctx->pc = 0x1A7F2Cu;
     {
@@ -54,12 +52,10 @@ void cOm53_setGetOffEm_0x1a7f20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_1a7f44;
         }
     }
-    ctx->pc = 0x1A7F34u;
     // 0x1a7f34: 0x90830615  lbu         $v1, 0x615($a0)
     ctx->pc = 0x1a7f34u;
     SET_GPR_ZE32(ctx, 3, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 1557)));
     // 0x1a7f38: 0x651821  addu        $v1, $v1, $a1
-    ctx->pc = 0x1a7f38u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 5)));
     // 0x1a7f3c: 0x3e00008  jr          $ra
     ctx->pc = 0x1A7F3Cu;
@@ -116,9 +112,7 @@ label_1a7f4c:
         return;
         #endif
     }
-    ctx->pc = 0x1A7F54u;
     // 0x1a7f54: 0x0  nop
-    ctx->pc = 0x1a7f54u;
     // NOP
     ctx->pc = 0x1a7f58u;
 }

@@ -18,10 +18,8 @@ void GetField_BEE_2B1290_0x2b1290(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("GetField_BEE_2B1290_0x2b1290");
 #endif
 
-    ctx->pc = 0x2b1290u;
 
     // 0x2b1290: 0x3c02003c  lui         $v0, 0x3C
-    ctx->pc = 0x2b1290u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
     // 0x2b1294: 0x8c4323a4  lw          $v1, 0x23A4($v0)
     ctx->pc = 0x2b1294u;

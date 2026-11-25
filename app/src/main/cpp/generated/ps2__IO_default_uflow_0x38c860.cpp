@@ -18,28 +18,30 @@ void ps2__IO_default_uflow_0x38c860(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("ps2__IO_default_uflow_0x38c860");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38c860u: goto label_38c860;
-        case 0x38c864u: goto label_38c864;
-        case 0x38c868u: goto label_38c868;
-        case 0x38c86cu: goto label_38c86c;
-        case 0x38c870u: goto label_38c870;
-        case 0x38c874u: goto label_38c874;
-        case 0x38c878u: goto label_38c878;
-        case 0x38c87cu: goto label_38c87c;
-        case 0x38c880u: goto label_38c880;
-        case 0x38c884u: goto label_38c884;
-        case 0x38c888u: goto label_38c888;
-        case 0x38c88cu: goto label_38c88c;
-        case 0x38c890u: goto label_38c890;
-        case 0x38c894u: goto label_38c894;
-        case 0x38c898u: goto label_38c898;
-        case 0x38c89cu: goto label_38c89c;
-        case 0x38c8a0u: goto label_38c8a0;
-        case 0x38c8a4u: goto label_38c8a4;
-        case 0x38c8a8u: goto label_38c8a8;
-        case 0x38c8acu: goto label_38c8ac;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38c860u, 0)) {
+        switch (ctx->pc) {
+            case 0x38c860u: goto label_38c860;
+            case 0x38c864u: goto label_38c864;
+            case 0x38c868u: goto label_38c868;
+            case 0x38c86cu: goto label_38c86c;
+            case 0x38c870u: goto label_38c870;
+            case 0x38c874u: goto label_38c874;
+            case 0x38c878u: goto label_38c878;
+            case 0x38c87cu: goto label_38c87c;
+            case 0x38c880u: goto label_38c880;
+            case 0x38c884u: goto label_38c884;
+            case 0x38c888u: goto label_38c888;
+            case 0x38c88cu: goto label_38c88c;
+            case 0x38c890u: goto label_38c890;
+            case 0x38c894u: goto label_38c894;
+            case 0x38c898u: goto label_38c898;
+            case 0x38c89cu: goto label_38c89c;
+            case 0x38c8a0u: goto label_38c8a0;
+            case 0x38c8a4u: goto label_38c8a4;
+            case 0x38c8a8u: goto label_38c8a8;
+            case 0x38c8acu: goto label_38c8ac;
+            default: break;
+        }
     }
 
     ctx->pc = 0x38c860u;

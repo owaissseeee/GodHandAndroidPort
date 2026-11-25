@@ -18,7 +18,6 @@ void Circle_line2_0x15f2a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("Circle_line2_0x15f2a8");
 #endif
 
-    ctx->pc = 0x15f2a8u;
 
     // 0x15f2a8: 0x3e00008  jr          $ra
     ctx->pc = 0x15F2A8u;

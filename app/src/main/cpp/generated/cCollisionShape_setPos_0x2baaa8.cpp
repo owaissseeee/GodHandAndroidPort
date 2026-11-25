@@ -18,28 +18,30 @@ void cCollisionShape_setPos_0x2baaa8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("cCollisionShape_setPos_0x2baaa8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2baaa8u: goto label_2baaa8;
-        case 0x2baaacu: goto label_2baaac;
-        case 0x2baab0u: goto label_2baab0;
-        case 0x2baab4u: goto label_2baab4;
-        case 0x2baab8u: goto label_2baab8;
-        case 0x2baabcu: goto label_2baabc;
-        case 0x2baac0u: goto label_2baac0;
-        case 0x2baac4u: goto label_2baac4;
-        case 0x2baac8u: goto label_2baac8;
-        case 0x2baaccu: goto label_2baacc;
-        case 0x2baad0u: goto label_2baad0;
-        case 0x2baad4u: goto label_2baad4;
-        case 0x2baad8u: goto label_2baad8;
-        case 0x2baadcu: goto label_2baadc;
-        case 0x2baae0u: goto label_2baae0;
-        case 0x2baae4u: goto label_2baae4;
-        case 0x2baae8u: goto label_2baae8;
-        case 0x2baaecu: goto label_2baaec;
-        case 0x2baaf0u: goto label_2baaf0;
-        case 0x2baaf4u: goto label_2baaf4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2baaa8u, 0)) {
+        switch (ctx->pc) {
+            case 0x2baaa8u: goto label_2baaa8;
+            case 0x2baaacu: goto label_2baaac;
+            case 0x2baab0u: goto label_2baab0;
+            case 0x2baab4u: goto label_2baab4;
+            case 0x2baab8u: goto label_2baab8;
+            case 0x2baabcu: goto label_2baabc;
+            case 0x2baac0u: goto label_2baac0;
+            case 0x2baac4u: goto label_2baac4;
+            case 0x2baac8u: goto label_2baac8;
+            case 0x2baaccu: goto label_2baacc;
+            case 0x2baad0u: goto label_2baad0;
+            case 0x2baad4u: goto label_2baad4;
+            case 0x2baad8u: goto label_2baad8;
+            case 0x2baadcu: goto label_2baadc;
+            case 0x2baae0u: goto label_2baae0;
+            case 0x2baae4u: goto label_2baae4;
+            case 0x2baae8u: goto label_2baae8;
+            case 0x2baaecu: goto label_2baaec;
+            case 0x2baaf0u: goto label_2baaf0;
+            case 0x2baaf4u: goto label_2baaf4;
+            default: break;
+        }
     }
 
     ctx->pc = 0x2baaa8u;
@@ -187,7 +189,6 @@ label_2baaf0:
     ctx->pc = 0x2BAAF4u;
 label_2baaf4:
     // 0x2baaf4: 0x0  nop
-    ctx->pc = 0x2baaf4u;
     // NOP
     ctx->pc = 0x2baaf8u;
 }

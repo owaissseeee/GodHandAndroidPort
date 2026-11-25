@@ -18,36 +18,38 @@ void ClearLinkedNodeList_12ECF0_0x12ecf0(uint8_t* rdram, R5900Context* ctx, PS2R
     PS_LOG_ENTRY("ClearLinkedNodeList_12ECF0_0x12ecf0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x12ecf0u: goto label_12ecf0;
-        case 0x12ecf4u: goto label_12ecf4;
-        case 0x12ecf8u: goto label_12ecf8;
-        case 0x12ecfcu: goto label_12ecfc;
-        case 0x12ed00u: goto label_12ed00;
-        case 0x12ed04u: goto label_12ed04;
-        case 0x12ed08u: goto label_12ed08;
-        case 0x12ed0cu: goto label_12ed0c;
-        case 0x12ed10u: goto label_12ed10;
-        case 0x12ed14u: goto label_12ed14;
-        case 0x12ed18u: goto label_12ed18;
-        case 0x12ed1cu: goto label_12ed1c;
-        case 0x12ed20u: goto label_12ed20;
-        case 0x12ed24u: goto label_12ed24;
-        case 0x12ed28u: goto label_12ed28;
-        case 0x12ed2cu: goto label_12ed2c;
-        case 0x12ed30u: goto label_12ed30;
-        case 0x12ed34u: goto label_12ed34;
-        case 0x12ed38u: goto label_12ed38;
-        case 0x12ed3cu: goto label_12ed3c;
-        case 0x12ed40u: goto label_12ed40;
-        case 0x12ed44u: goto label_12ed44;
-        case 0x12ed48u: goto label_12ed48;
-        case 0x12ed4cu: goto label_12ed4c;
-        case 0x12ed50u: goto label_12ed50;
-        case 0x12ed54u: goto label_12ed54;
-        case 0x12ed58u: goto label_12ed58;
-        case 0x12ed5cu: goto label_12ed5c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x12ecf0u, 0)) {
+        switch (ctx->pc) {
+            case 0x12ecf0u: goto label_12ecf0;
+            case 0x12ecf4u: goto label_12ecf4;
+            case 0x12ecf8u: goto label_12ecf8;
+            case 0x12ecfcu: goto label_12ecfc;
+            case 0x12ed00u: goto label_12ed00;
+            case 0x12ed04u: goto label_12ed04;
+            case 0x12ed08u: goto label_12ed08;
+            case 0x12ed0cu: goto label_12ed0c;
+            case 0x12ed10u: goto label_12ed10;
+            case 0x12ed14u: goto label_12ed14;
+            case 0x12ed18u: goto label_12ed18;
+            case 0x12ed1cu: goto label_12ed1c;
+            case 0x12ed20u: goto label_12ed20;
+            case 0x12ed24u: goto label_12ed24;
+            case 0x12ed28u: goto label_12ed28;
+            case 0x12ed2cu: goto label_12ed2c;
+            case 0x12ed30u: goto label_12ed30;
+            case 0x12ed34u: goto label_12ed34;
+            case 0x12ed38u: goto label_12ed38;
+            case 0x12ed3cu: goto label_12ed3c;
+            case 0x12ed40u: goto label_12ed40;
+            case 0x12ed44u: goto label_12ed44;
+            case 0x12ed48u: goto label_12ed48;
+            case 0x12ed4cu: goto label_12ed4c;
+            case 0x12ed50u: goto label_12ed50;
+            case 0x12ed54u: goto label_12ed54;
+            case 0x12ed58u: goto label_12ed58;
+            case 0x12ed5cu: goto label_12ed5c;
+            default: break;
+        }
     }
 
     ctx->pc = 0x12ecf0u;
@@ -270,7 +272,6 @@ label_12ed58:
     ctx->pc = 0x12ED5Cu;
 label_12ed5c:
     // 0x12ed5c: 0x0  nop
-    ctx->pc = 0x12ed5cu;
     // NOP
     ctx->pc = 0x12ed60u;
 }

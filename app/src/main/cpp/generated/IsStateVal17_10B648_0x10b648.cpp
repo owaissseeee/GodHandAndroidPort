@@ -18,7 +18,6 @@ void IsStateVal17_10B648_0x10b648(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("IsStateVal17_10B648_0x10b648");
 #endif
 
-    ctx->pc = 0x10b648u;
 
     // 0x10b648: 0x908202f4  lbu         $v0, 0x2F4($a0)
     ctx->pc = 0x10b648u;
@@ -32,12 +31,10 @@ void IsStateVal17_10B648_0x10b648(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_10b664;
         }
     }
-    ctx->pc = 0x10B654u;
     // 0x10b654: 0x908202f5  lbu         $v0, 0x2F5($a0)
     ctx->pc = 0x10b654u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 757)));
     // 0x10b658: 0x38420011  xori        $v0, $v0, 0x11
-    ctx->pc = 0x10b658u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)17);
     // 0x10b65c: 0x3e00008  jr          $ra
     ctx->pc = 0x10B65Cu;
@@ -79,9 +76,7 @@ label_10b664:
         return;
         #endif
     }
-    ctx->pc = 0x10B66Cu;
     // 0x10b66c: 0x0  nop
-    ctx->pc = 0x10b66cu;
     // NOP
     ctx->pc = 0x10b670u;
 }

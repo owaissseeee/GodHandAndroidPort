@@ -18,24 +18,26 @@ void SFXLIB_Error_0x35fbd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("SFXLIB_Error_0x35fbd8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x35fbd8u: goto label_35fbd8;
-        case 0x35fbdcu: goto label_35fbdc;
-        case 0x35fbe0u: goto label_35fbe0;
-        case 0x35fbe4u: goto label_35fbe4;
-        case 0x35fbe8u: goto label_35fbe8;
-        case 0x35fbecu: goto label_35fbec;
-        case 0x35fbf0u: goto label_35fbf0;
-        case 0x35fbf4u: goto label_35fbf4;
-        case 0x35fbf8u: goto label_35fbf8;
-        case 0x35fbfcu: goto label_35fbfc;
-        case 0x35fc00u: goto label_35fc00;
-        case 0x35fc04u: goto label_35fc04;
-        case 0x35fc08u: goto label_35fc08;
-        case 0x35fc0cu: goto label_35fc0c;
-        case 0x35fc10u: goto label_35fc10;
-        case 0x35fc14u: goto label_35fc14;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x35fbd8u, 0)) {
+        switch (ctx->pc) {
+            case 0x35fbd8u: goto label_35fbd8;
+            case 0x35fbdcu: goto label_35fbdc;
+            case 0x35fbe0u: goto label_35fbe0;
+            case 0x35fbe4u: goto label_35fbe4;
+            case 0x35fbe8u: goto label_35fbe8;
+            case 0x35fbecu: goto label_35fbec;
+            case 0x35fbf0u: goto label_35fbf0;
+            case 0x35fbf4u: goto label_35fbf4;
+            case 0x35fbf8u: goto label_35fbf8;
+            case 0x35fbfcu: goto label_35fbfc;
+            case 0x35fc00u: goto label_35fc00;
+            case 0x35fc04u: goto label_35fc04;
+            case 0x35fc08u: goto label_35fc08;
+            case 0x35fc0cu: goto label_35fc0c;
+            case 0x35fc10u: goto label_35fc10;
+            case 0x35fc14u: goto label_35fc14;
+            default: break;
+        }
     }
 
     ctx->pc = 0x35fbd8u;

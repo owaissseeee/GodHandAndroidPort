@@ -18,26 +18,28 @@ void ps2___eh_rtime_match_0x3206d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("ps2___eh_rtime_match_0x3206d0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3206d0u: goto label_3206d0;
-        case 0x3206d4u: goto label_3206d4;
-        case 0x3206d8u: goto label_3206d8;
-        case 0x3206dcu: goto label_3206dc;
-        case 0x3206e0u: goto label_3206e0;
-        case 0x3206e4u: goto label_3206e4;
-        case 0x3206e8u: goto label_3206e8;
-        case 0x3206ecu: goto label_3206ec;
-        case 0x3206f0u: goto label_3206f0;
-        case 0x3206f4u: goto label_3206f4;
-        case 0x3206f8u: goto label_3206f8;
-        case 0x3206fcu: goto label_3206fc;
-        case 0x320700u: goto label_320700;
-        case 0x320704u: goto label_320704;
-        case 0x320708u: goto label_320708;
-        case 0x32070cu: goto label_32070c;
-        case 0x320710u: goto label_320710;
-        case 0x320714u: goto label_320714;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3206d0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3206d0u: goto label_3206d0;
+            case 0x3206d4u: goto label_3206d4;
+            case 0x3206d8u: goto label_3206d8;
+            case 0x3206dcu: goto label_3206dc;
+            case 0x3206e0u: goto label_3206e0;
+            case 0x3206e4u: goto label_3206e4;
+            case 0x3206e8u: goto label_3206e8;
+            case 0x3206ecu: goto label_3206ec;
+            case 0x3206f0u: goto label_3206f0;
+            case 0x3206f4u: goto label_3206f4;
+            case 0x3206f8u: goto label_3206f8;
+            case 0x3206fcu: goto label_3206fc;
+            case 0x320700u: goto label_320700;
+            case 0x320704u: goto label_320704;
+            case 0x320708u: goto label_320708;
+            case 0x32070cu: goto label_32070c;
+            case 0x320710u: goto label_320710;
+            case 0x320714u: goto label_320714;
+            default: break;
+        }
     }
 
     ctx->pc = 0x3206d0u;
@@ -67,7 +69,6 @@ label_3206e0:
         ctx->pc = 0x3206E4u;
         goto label_3206e4;
     }
-    ctx->pc = 0x3206DCu;
     SET_GPR_U32(ctx, 31, 0x3206E4u);
     ctx->pc = 0x3206E0u;
     ctx->in_delay_slot = true;
@@ -75,8 +76,7 @@ label_3206e0:
     // 0x3206e0: 0x80802d  daddu       $s0, $a0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x320360u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x320360u, 0x3206DCu, 0x3206E4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ps2___get_eh_info_0x320360, 0x320360u, 0x3206e4u)) {
         return;
     }
     ctx->pc = 0x3206E4u;

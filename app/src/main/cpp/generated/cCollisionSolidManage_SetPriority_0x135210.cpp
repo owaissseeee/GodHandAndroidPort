@@ -18,16 +18,16 @@ void cCollisionSolidManage_SetPriority_0x135210(uint8_t* rdram, R5900Context* ct
     PS_LOG_ENTRY("cCollisionSolidManage_SetPriority_0x135210");
 #endif
 
-    switch (ctx->pc) {
-        case 0x135224u: goto label_135224;
-        case 0x135234u: goto label_135234;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x135210u, 0)) {
+        switch (ctx->pc) {
+            case 0x135224u: goto label_135224;
+            case 0x135234u: goto label_135234;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x135210u;
 
     // 0x135210: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x135210u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x135214: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x135214u;
@@ -36,7 +36,6 @@ void cCollisionSolidManage_SetPriority_0x135210(uint8_t* rdram, R5900Context* ct
     ctx->pc = 0x135218u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x13521c: 0xc04d1b2  jal         func_1346C8
-    ctx->pc = 0x13521Cu;
     SET_GPR_U32(ctx, 31, 0x135224u);
     ctx->pc = 0x135220u;
     ctx->in_delay_slot = true;
@@ -44,8 +43,7 @@ void cCollisionSolidManage_SetPriority_0x135210(uint8_t* rdram, R5900Context* ct
     // 0x135220: 0xc0802d  daddu       $s0, $a2, $zero (Delay Slot)
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1346C8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1346C8u, 0x13521Cu, 0x135224u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_001346C8_0x1346c8, 0x1346c8u, 0x135224u)) {
         return;
     }
     ctx->pc = 0x135224u;
@@ -65,9 +63,7 @@ label_135224:
             goto label_135234;
         }
     }
-    ctx->pc = 0x13522Cu;
     // 0x13522c: 0xc04d192  jal         func_134648
-    ctx->pc = 0x13522Cu;
     SET_GPR_U32(ctx, 31, 0x135234u);
     ctx->pc = 0x135230u;
     ctx->in_delay_slot = true;
@@ -75,8 +71,7 @@ label_135224:
     // 0x135230: 0x200282d  daddu       $a1, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x134648u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x134648u, 0x13522Cu, 0x135234u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Set_Field_8_134648_0x134648, 0x134648u, 0x135234u)) {
         return;
     }
     ctx->pc = 0x135234u;
@@ -106,15 +101,11 @@ label_135234:
         return;
         #endif
     }
-    ctx->pc = 0x135244u;
     // 0x135244: 0x0  nop
-    ctx->pc = 0x135244u;
     // NOP
     // 0x135248: 0x27bd01d0  addiu       $sp, $sp, 0x1D0
-    ctx->pc = 0x135248u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 464));
     // 0x13524c: 0x0  nop
-    ctx->pc = 0x13524cu;
     // NOP
     ctx->pc = 0x135250u;
 }

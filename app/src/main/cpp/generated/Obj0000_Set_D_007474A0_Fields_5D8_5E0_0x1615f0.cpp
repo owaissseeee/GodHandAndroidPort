@@ -18,16 +18,13 @@ void Obj0000_Set_D_007474A0_Fields_5D8_5E0_0x1615f0(uint8_t* rdram, R5900Context
     PS_LOG_ENTRY("Obj0000_Set_D_007474A0_Fields_5D8_5E0_0x1615f0");
 #endif
 
-    ctx->pc = 0x1615f0u;
 
     // 0x1615f0: 0x8c850068  lw          $a1, 0x68($a0)
     ctx->pc = 0x1615f0u;
     SET_GPR_S32(ctx, 5, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 104)));
     // 0x1615f4: 0x3c020074  lui         $v0, 0x74
-    ctx->pc = 0x1615f4u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
     // 0x1615f8: 0x244274a0  addiu       $v0, $v0, 0x74A0
-    ctx->pc = 0x1615f8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 29856));
     // 0x1615fc: 0xac4505d8  sw          $a1, 0x5D8($v0)
     ctx->pc = 0x1615fcu;
@@ -54,9 +51,7 @@ void Obj0000_Set_D_007474A0_Fields_5D8_5E0_0x1615f0(uint8_t* rdram, R5900Context
         return;
         #endif
     }
-    ctx->pc = 0x16160Cu;
     // 0x16160c: 0x0  nop
-    ctx->pc = 0x16160cu;
     // NOP
     ctx->pc = 0x161610u;
 }

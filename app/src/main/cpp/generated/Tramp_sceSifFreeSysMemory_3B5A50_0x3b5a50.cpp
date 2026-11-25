@@ -18,21 +18,20 @@ void Tramp_sceSifFreeSysMemory_3B5A50_0x3b5a50(uint8_t* rdram, R5900Context* ctx
     PS_LOG_ENTRY("Tramp_sceSifFreeSysMemory_3B5A50_0x3b5a50");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b5a60u: goto label_3b5a60;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b5a50u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b5a60u: goto label_3b5a60;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b5a50u;
 
     // 0x3b5a50: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x3b5a50u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x3b5a54: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x3b5a54u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x3b5a58: 0xc0ed676  jal         func_3B59D8
-    ctx->pc = 0x3B5A58u;
     SET_GPR_U32(ctx, 31, 0x3B5A60u);
     ctx->pc = 0x3B59D8u;
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B59D8u, 0x3B5A58u, 0x3B5A60u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
@@ -62,21 +61,15 @@ label_3b5a60:
         return;
         #endif
     }
-    ctx->pc = 0x3B5A6Cu;
     // 0x3b5a6c: 0x0  nop
-    ctx->pc = 0x3b5a6cu;
     // NOP
     // 0x3b5a70: 0x27bd0030  addiu       $sp, $sp, 0x30
-    ctx->pc = 0x3b5a70u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 48));
     // 0x3b5a74: 0x0  nop
-    ctx->pc = 0x3b5a74u;
     // NOP
     // 0x3b5a78: 0x27bd0030  addiu       $sp, $sp, 0x30
-    ctx->pc = 0x3b5a78u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 48));
     // 0x3b5a7c: 0x0  nop
-    ctx->pc = 0x3b5a7cu;
     // NOP
     ctx->pc = 0x3b5a80u;
 }

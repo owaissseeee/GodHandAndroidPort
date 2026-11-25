@@ -18,7 +18,6 @@ void clear__3iosi_0x38bff8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("clear__3iosi_0x38bff8");
 #endif
 
-    ctx->pc = 0x38bff8u;
 
     // 0x38bff8: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x38bff8u;
@@ -59,9 +58,7 @@ label_38c004:
         return;
         #endif
     }
-    ctx->pc = 0x38C00Cu;
     // 0x38c00c: 0x0  nop
-    ctx->pc = 0x38c00cu;
     // NOP
     ctx->pc = 0x38c010u;
 }

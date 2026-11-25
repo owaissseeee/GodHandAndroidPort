@@ -18,7 +18,6 @@ void NoOp_279670_0x279670(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("NoOp_279670_0x279670");
 #endif
 
-    ctx->pc = 0x279670u;
 
     // 0x279670: 0x3e00008  jr          $ra
     ctx->pc = 0x279670u;

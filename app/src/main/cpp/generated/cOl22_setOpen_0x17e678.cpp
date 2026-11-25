@@ -18,7 +18,6 @@ void cOl22_setOpen_0x17e678(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("cOl22_setOpen_0x17e678");
 #endif
 
-    ctx->pc = 0x17e678u;
 
     // 0x17e678: 0x90820601  lbu         $v0, 0x601($a0)
     ctx->pc = 0x17e678u;
@@ -38,7 +37,6 @@ void cOl22_setOpen_0x17e678(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_17e698;
         }
     }
-    ctx->pc = 0x17E684u;
     // 0x17e684: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x17e684u;
     WRITE8(ADD32(GPR_U32(ctx, 4), 759), (uint8_t)GPR_U32(ctx, 0));

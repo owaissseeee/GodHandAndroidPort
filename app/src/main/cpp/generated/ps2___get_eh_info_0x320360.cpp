@@ -18,18 +18,20 @@ void ps2___get_eh_info_0x320360(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("ps2___get_eh_info_0x320360");
 #endif
 
-    switch (ctx->pc) {
-        case 0x320360u: goto label_320360;
-        case 0x320364u: goto label_320364;
-        case 0x320368u: goto label_320368;
-        case 0x32036cu: goto label_32036c;
-        case 0x320370u: goto label_320370;
-        case 0x320374u: goto label_320374;
-        case 0x320378u: goto label_320378;
-        case 0x32037cu: goto label_32037c;
-        case 0x320380u: goto label_320380;
-        case 0x320384u: goto label_320384;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x320360u, 0)) {
+        switch (ctx->pc) {
+            case 0x320360u: goto label_320360;
+            case 0x320364u: goto label_320364;
+            case 0x320368u: goto label_320368;
+            case 0x32036cu: goto label_32036c;
+            case 0x320370u: goto label_320370;
+            case 0x320374u: goto label_320374;
+            case 0x320378u: goto label_320378;
+            case 0x32037cu: goto label_32037c;
+            case 0x320380u: goto label_320380;
+            case 0x320384u: goto label_320384;
+            default: break;
+        }
     }
 
     ctx->pc = 0x320360u;

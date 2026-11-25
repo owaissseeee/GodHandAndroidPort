@@ -18,20 +18,22 @@ void func_00349408_0x349408(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00349408_0x349408");
 #endif
 
-    switch (ctx->pc) {
-        case 0x349408u: goto label_349408;
-        case 0x34940cu: goto label_34940c;
-        case 0x349410u: goto label_349410;
-        case 0x349414u: goto label_349414;
-        case 0x349418u: goto label_349418;
-        case 0x34941cu: goto label_34941c;
-        case 0x349420u: goto label_349420;
-        case 0x349424u: goto label_349424;
-        case 0x349428u: goto label_349428;
-        case 0x34942cu: goto label_34942c;
-        case 0x349430u: goto label_349430;
-        case 0x349434u: goto label_349434;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x349408u, 0)) {
+        switch (ctx->pc) {
+            case 0x349408u: goto label_349408;
+            case 0x34940cu: goto label_34940c;
+            case 0x349410u: goto label_349410;
+            case 0x349414u: goto label_349414;
+            case 0x349418u: goto label_349418;
+            case 0x34941cu: goto label_34941c;
+            case 0x349420u: goto label_349420;
+            case 0x349424u: goto label_349424;
+            case 0x349428u: goto label_349428;
+            case 0x34942cu: goto label_34942c;
+            case 0x349430u: goto label_349430;
+            case 0x349434u: goto label_349434;
+            default: break;
+        }
     }
 
     ctx->pc = 0x349408u;
@@ -53,8 +55,7 @@ label_349414:
     }
     ctx->pc = 0x349410u;
     SET_GPR_U32(ctx, 31, 0x349418u);
-    ctx->pc = 0x3452B0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3452B0u, 0x349410u, 0x349418u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &GetD003EC7E0_3452B0_0x3452b0, 0x3452b0u, 0x349418u)) {
         return;
     }
     ctx->pc = 0x349418u;

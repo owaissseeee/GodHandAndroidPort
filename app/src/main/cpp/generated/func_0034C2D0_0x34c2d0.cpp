@@ -18,45 +18,37 @@ void func_0034C2D0_0x34c2d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0034C2D0_0x34c2d0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x34c340u: goto label_34c340;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x34c2d0u, 0)) {
+        switch (ctx->pc) {
+            case 0x34c340u: goto label_34c340;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x34c2d0u;
 
     // 0x34c2d0: 0x510c0  sll         $v0, $a1, 3
-    ctx->pc = 0x34c2d0u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 5), 3));
     // 0x34c2d4: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x34c2d4u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x34c2d8: 0x451023  subu        $v0, $v0, $a1
-    ctx->pc = 0x34c2d8u;
     SET_GPR_S32(ctx, 2, (int32_t)SUB32(GPR_U32(ctx, 2), GPR_U32(ctx, 5)));
     // 0x34c2dc: 0xffb00020  sd          $s0, 0x20($sp)
     ctx->pc = 0x34c2dcu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 32), GPR_U64(ctx, 16));
     // 0x34c2e0: 0x21080  sll         $v0, $v0, 2
-    ctx->pc = 0x34c2e0u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 2));
     // 0x34c2e4: 0xc0802d  daddu       $s0, $a2, $zero
-    ctx->pc = 0x34c2e4u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
     // 0x34c2e8: 0x451021  addu        $v0, $v0, $a1
-    ctx->pc = 0x34c2e8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 5)));
     // 0x34c2ec: 0xe0282d  daddu       $a1, $a3, $zero
-    ctx->pc = 0x34c2ecu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 7) + (uint64_t)GPR_U64(ctx, 0));
     // 0x34c2f0: 0xffbf0028  sd          $ra, 0x28($sp)
     ctx->pc = 0x34c2f0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 40), GPR_U64(ctx, 31));
     // 0x34c2f4: 0x21080  sll         $v0, $v0, 2
-    ctx->pc = 0x34c2f4u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 2));
     // 0x34c2f8: 0x24841310  addiu       $a0, $a0, 0x1310
-    ctx->pc = 0x34c2f8u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 4880));
     // 0x34c2fc: 0xae000004  sw          $zero, 0x4($s0)
     ctx->pc = 0x34c2fcu;
@@ -65,7 +57,6 @@ void func_0034C2D0_0x34c2d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x34c300u;
     WRITE32(ADD32(GPR_U32(ctx, 16), 12), GPR_U32(ctx, 0));
     // 0x34c304: 0x822021  addu        $a0, $a0, $v0
-    ctx->pc = 0x34c304u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 2)));
     // 0x34c308: 0xae000014  sw          $zero, 0x14($s0)
     ctx->pc = 0x34c308u;
@@ -100,7 +91,6 @@ void func_0034C2D0_0x34c2d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_34c330;
         }
     }
-    ctx->pc = 0x34C328u;
     // 0x34c328: 0x14800003  bnez        $a0, . + 4 + (0x3 << 2)
     ctx->pc = 0x34C328u;
     {
@@ -136,7 +126,6 @@ label_34c330:
     ctx->pc = 0x34C338u;
 label_34c338:
     // 0x34c338: 0xc0d3162  jal         func_34C588
-    ctx->pc = 0x34C338u;
     SET_GPR_U32(ctx, 31, 0x34C340u);
     ctx->pc = 0x34C33Cu;
     ctx->in_delay_slot = true;
@@ -144,14 +133,12 @@ label_34c338:
     // 0x34c33c: 0x27a70010  addiu       $a3, $sp, 0x10 (Delay Slot)
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x34C588u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x34C588u, 0x34C338u, 0x34C340u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &sfbuf_PeekChunk_0x34c588, 0x34c588u, 0x34c340u)) {
         return;
     }
     ctx->pc = 0x34C340u;
 label_34c340:
     // 0x34c340: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x34c340u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x34c344: 0x8fa40000  lw          $a0, 0x0($sp)
     ctx->pc = 0x34c344u;
@@ -203,9 +190,7 @@ label_34c364:
         return;
         #endif
     }
-    ctx->pc = 0x34C374u;
     // 0x34c374: 0x0  nop
-    ctx->pc = 0x34c374u;
     // NOP
     ctx->pc = 0x34c378u;
 }

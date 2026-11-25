@@ -18,7 +18,6 @@ void CustomIDWork_SetOffsetPosXY_0x2d6720(uint8_t* rdram, R5900Context* ctx, PS2
     PS_LOG_ENTRY("CustomIDWork_SetOffsetPosXY_0x2d6720");
 #endif
 
-    ctx->pc = 0x2d6720u;
 
     // 0x2d6720: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2d6720u;
@@ -32,27 +31,20 @@ void CustomIDWork_SetOffsetPosXY_0x2d6720(uint8_t* rdram, R5900Context* ctx, PS2
             goto label_2d6754;
         }
     }
-    ctx->pc = 0x2D672Cu;
     // 0x2d672c: 0x44850000  mtc1        $a1, $f0
-    ctx->pc = 0x2d672cu;
     { uint32_t bits = GPR_U32(ctx, 5); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x2d6730: 0x0  nop
-    ctx->pc = 0x2d6730u;
     // NOP
     // 0x2d6734: 0x46800020  cvt.s.w     $f0, $f0
-    ctx->pc = 0x2d6734u;
     { int32_t tmp; std::memcpy(&tmp, &ctx->f[0], sizeof(tmp)); ctx->f[0] = FPU_CVT_S_W(tmp); }
     // 0x2d6738: 0xac800028  sw          $zero, 0x28($a0)
     ctx->pc = 0x2d6738u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 40), GPR_U32(ctx, 0));
     // 0x2d673c: 0x44860800  mtc1        $a2, $f1
-    ctx->pc = 0x2d673cu;
     { uint32_t bits = GPR_U32(ctx, 6); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }
     // 0x2d6740: 0x0  nop
-    ctx->pc = 0x2d6740u;
     // NOP
     // 0x2d6744: 0x46800860  cvt.s.w     $f1, $f1
-    ctx->pc = 0x2d6744u;
     { int32_t tmp; std::memcpy(&tmp, &ctx->f[1], sizeof(tmp)); ctx->f[1] = FPU_CVT_S_W(tmp); }
     // 0x2d6748: 0xe4400030  swc1        $f0, 0x30($v0)
     ctx->pc = 0x2d6748u;
@@ -77,15 +69,11 @@ label_2d6754:
         return;
         #endif
     }
-    ctx->pc = 0x2D675Cu;
     // 0x2d675c: 0x0  nop
-    ctx->pc = 0x2d675cu;
     // NOP
     // 0x2d6760: 0x0  nop
-    ctx->pc = 0x2d6760u;
     // NOP
     // 0x2d6764: 0x0  nop
-    ctx->pc = 0x2d6764u;
     // NOP
     ctx->pc = 0x2d6768u;
 }

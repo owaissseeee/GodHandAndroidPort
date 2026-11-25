@@ -18,7 +18,6 @@ void cCoreSave_getAllContinueNum_0x1fc600(uint8_t* rdram, R5900Context* ctx, PS2
     PS_LOG_ENTRY("cCoreSave_getAllContinueNum_0x1fc600");
 #endif
 
-    ctx->pc = 0x1fc600u;
 
     // 0x1fc600: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc600u;
@@ -38,7 +37,6 @@ void cCoreSave_getAllContinueNum_0x1fc600(uint8_t* rdram, R5900Context* ctx, PS2
             goto label_1fc610;
         }
     }
-    ctx->pc = 0x1FC60Cu;
     // 0x1fc60c: 0x94820bb8  lhu         $v0, 0xBB8($a0)
     ctx->pc = 0x1fc60cu;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 4), 3000)));

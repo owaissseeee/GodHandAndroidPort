@@ -18,10 +18,8 @@ void cEmManage_constructSlot_0x290000(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("cEmManage_constructSlot_0x290000");
 #endif
 
-    ctx->pc = 0x290000u;
 
     // 0x290000: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x290000u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x290004: 0xac800000  sw          $zero, 0x0($a0)
     ctx->pc = 0x290004u;
@@ -30,7 +28,6 @@ void cEmManage_constructSlot_0x290000(uint8_t* rdram, R5900Context* ctx, PS2Runt
     ctx->pc = 0x290008u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 12), GPR_U32(ctx, 2));
     // 0x29000c: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x29000cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x290010: 0xac800004  sw          $zero, 0x4($a0)
     ctx->pc = 0x290010u;
@@ -57,12 +54,9 @@ void cEmManage_constructSlot_0x290000(uint8_t* rdram, R5900Context* ctx, PS2Runt
         return;
         #endif
     }
-    ctx->pc = 0x290020u;
     // 0x290020: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x290020u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x290024: 0x0  nop
-    ctx->pc = 0x290024u;
     // NOP
     ctx->pc = 0x290028u;
 }

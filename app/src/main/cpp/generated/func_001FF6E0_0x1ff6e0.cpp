@@ -18,15 +18,15 @@ void func_001FF6E0_0x1ff6e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_001FF6E0_0x1ff6e0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1ff6e8u: goto label_1ff6e8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1ff6e0u, 0)) {
+        switch (ctx->pc) {
+            case 0x1ff6e8u: goto label_1ff6e8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1ff6e0u;
 
     // 0x1ff6e0: 0x2484004c  addiu       $a0, $a0, 0x4C
-    ctx->pc = 0x1ff6e0u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 76));
     // 0x1ff6e4: 0x182d  daddu       $v1, $zero, $zero
     ctx->pc = 0x1ff6e4u;
@@ -50,7 +50,6 @@ label_1ff6e8:
             goto label_1ff6fc;
         }
     }
-    ctx->pc = 0x1FF6F4u;
     // 0x1ff6f4: 0x3e00008  jr          $ra
     ctx->pc = 0x1FF6F4u;
     {
@@ -73,7 +72,6 @@ label_1ff6e8:
     ctx->pc = 0x1FF6FCu;
 label_1ff6fc:
     // 0x1ff6fc: 0x2c620004  sltiu       $v0, $v1, 0x4
-    ctx->pc = 0x1ff6fcu;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 3) < (uint64_t)(int64_t)(int32_t)4) ? 1 : 0);
     // 0x1ff700: 0x1440fff9  bnez        $v0, . + 4 + (-0x7 << 2)
     ctx->pc = 0x1FF700u;
@@ -93,7 +91,6 @@ label_1ff6fc:
             goto label_1ff6e8;
         }
     }
-    ctx->pc = 0x1FF708u;
     // 0x1ff708: 0x3e00008  jr          $ra
     ctx->pc = 0x1FF708u;
     {

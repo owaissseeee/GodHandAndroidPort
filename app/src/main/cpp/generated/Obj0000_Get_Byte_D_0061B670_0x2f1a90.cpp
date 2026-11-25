@@ -18,10 +18,8 @@ void Obj0000_Get_Byte_D_0061B670_0x2f1a90(uint8_t* rdram, R5900Context* ctx, PS2
     PS_LOG_ENTRY("Obj0000_Get_Byte_D_0061B670_0x2f1a90");
 #endif
 
-    ctx->pc = 0x2f1a90u;
 
     // 0x2f1a90: 0x3c030062  lui         $v1, 0x62
-    ctx->pc = 0x2f1a90u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)98 << 16));
     // 0x2f1a94: 0x3e00008  jr          $ra
     ctx->pc = 0x2F1A94u;
@@ -42,9 +40,7 @@ void Obj0000_Get_Byte_D_0061B670_0x2f1a90(uint8_t* rdram, R5900Context* ctx, PS2
         return;
         #endif
     }
-    ctx->pc = 0x2F1A9Cu;
     // 0x2f1a9c: 0x0  nop
-    ctx->pc = 0x2f1a9cu;
     // NOP
     ctx->pc = 0x2f1aa0u;
 }

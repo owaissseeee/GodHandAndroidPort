@@ -18,7 +18,6 @@ void cSceAtManager_AtDataSetExec_0x2c2750(uint8_t* rdram, R5900Context* ctx, PS2
     PS_LOG_ENTRY("cSceAtManager_AtDataSetExec_0x2c2750");
 #endif
 
-    ctx->pc = 0x2c2750u;
 
     // 0x2c2750: 0x10a0000c  beqz        $a1, . + 4 + (0xC << 2)
     ctx->pc = 0x2C2750u;
@@ -29,7 +28,6 @@ void cSceAtManager_AtDataSetExec_0x2c2750(uint8_t* rdram, R5900Context* ctx, PS2
             goto label_2c2784;
         }
     }
-    ctx->pc = 0x2C2758u;
     // 0x2c2758: 0x51200008  beql        $t1, $zero, . + 4 + (0x8 << 2)
     ctx->pc = 0x2C2758u;
     {
@@ -45,7 +43,6 @@ void cSceAtManager_AtDataSetExec_0x2c2750(uint8_t* rdram, R5900Context* ctx, PS2
             goto label_2c277c;
         }
     }
-    ctx->pc = 0x2C2760u;
     // 0x2c2760: 0x90a2004e  lbu         $v0, 0x4E($a1)
     ctx->pc = 0x2c2760u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 5), 78)));
@@ -64,7 +61,6 @@ void cSceAtManager_AtDataSetExec_0x2c2750(uint8_t* rdram, R5900Context* ctx, PS2
             goto label_2c2778;
         }
     }
-    ctx->pc = 0x2C276Cu;
     // 0x2c276c: 0x90a2003b  lbu         $v0, 0x3B($a1)
     ctx->pc = 0x2c276cu;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 5), 59)));
@@ -99,9 +95,7 @@ label_2c2784:
         return;
         #endif
     }
-    ctx->pc = 0x2C278Cu;
     // 0x2c278c: 0x0  nop
-    ctx->pc = 0x2c278cu;
     // NOP
     ctx->pc = 0x2c2790u;
 }

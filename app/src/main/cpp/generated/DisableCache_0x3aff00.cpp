@@ -18,18 +18,17 @@ void DisableCache_0x3aff00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("DisableCache_0x3aff00");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3aff08u: goto label_3aff08;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3aff00u, 0)) {
+        switch (ctx->pc) {
+            case 0x3aff08u: goto label_3aff08;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3aff00u;
 
     // 0x3aff00: 0x24030062  addiu       $v1, $zero, 0x62
-    ctx->pc = 0x3aff00u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 98));
     // 0x3aff04: 0xc  syscall     0
-    ctx->pc = 0x3aff04u;
     ctx->pc = 0x3AFF08u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

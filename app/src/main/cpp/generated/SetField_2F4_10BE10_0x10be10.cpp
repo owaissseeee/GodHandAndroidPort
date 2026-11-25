@@ -18,7 +18,6 @@ void SetField_2F4_10BE10_0x10be10(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("SetField_2F4_10BE10_0x10be10");
 #endif
 
-    ctx->pc = 0x10be10u;
 
     // 0x10be10: 0x3e00008  jr          $ra
     ctx->pc = 0x10BE10u;

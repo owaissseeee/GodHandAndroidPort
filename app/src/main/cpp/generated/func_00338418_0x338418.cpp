@@ -18,32 +18,34 @@ void func_00338418_0x338418(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00338418_0x338418");
 #endif
 
-    switch (ctx->pc) {
-        case 0x338418u: goto label_338418;
-        case 0x33841cu: goto label_33841c;
-        case 0x338420u: goto label_338420;
-        case 0x338424u: goto label_338424;
-        case 0x338428u: goto label_338428;
-        case 0x33842cu: goto label_33842c;
-        case 0x338430u: goto label_338430;
-        case 0x338434u: goto label_338434;
-        case 0x338438u: goto label_338438;
-        case 0x33843cu: goto label_33843c;
-        case 0x338440u: goto label_338440;
-        case 0x338444u: goto label_338444;
-        case 0x338448u: goto label_338448;
-        case 0x33844cu: goto label_33844c;
-        case 0x338450u: goto label_338450;
-        case 0x338454u: goto label_338454;
-        case 0x338458u: goto label_338458;
-        case 0x33845cu: goto label_33845c;
-        case 0x338460u: goto label_338460;
-        case 0x338464u: goto label_338464;
-        case 0x338468u: goto label_338468;
-        case 0x33846cu: goto label_33846c;
-        case 0x338470u: goto label_338470;
-        case 0x338474u: goto label_338474;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x338418u, 0)) {
+        switch (ctx->pc) {
+            case 0x338418u: goto label_338418;
+            case 0x33841cu: goto label_33841c;
+            case 0x338420u: goto label_338420;
+            case 0x338424u: goto label_338424;
+            case 0x338428u: goto label_338428;
+            case 0x33842cu: goto label_33842c;
+            case 0x338430u: goto label_338430;
+            case 0x338434u: goto label_338434;
+            case 0x338438u: goto label_338438;
+            case 0x33843cu: goto label_33843c;
+            case 0x338440u: goto label_338440;
+            case 0x338444u: goto label_338444;
+            case 0x338448u: goto label_338448;
+            case 0x33844cu: goto label_33844c;
+            case 0x338450u: goto label_338450;
+            case 0x338454u: goto label_338454;
+            case 0x338458u: goto label_338458;
+            case 0x33845cu: goto label_33845c;
+            case 0x338460u: goto label_338460;
+            case 0x338464u: goto label_338464;
+            case 0x338468u: goto label_338468;
+            case 0x33846cu: goto label_33846c;
+            case 0x338470u: goto label_338470;
+            case 0x338474u: goto label_338474;
+            default: break;
+        }
     }
 
     ctx->pc = 0x338418u;
@@ -227,7 +229,6 @@ label_338470:
     ctx->pc = 0x338474u;
 label_338474:
     // 0x338474: 0x0  nop
-    ctx->pc = 0x338474u;
     // NOP
     ctx->pc = 0x338478u;
 }

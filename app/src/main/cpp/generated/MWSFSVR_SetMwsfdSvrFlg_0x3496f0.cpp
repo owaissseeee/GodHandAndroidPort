@@ -18,15 +18,15 @@ void MWSFSVR_SetMwsfdSvrFlg_0x3496f0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("MWSFSVR_SetMwsfdSvrFlg_0x3496f0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x349704u: goto label_349704;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3496f0u, 0)) {
+        switch (ctx->pc) {
+            case 0x349704u: goto label_349704;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3496f0u;
 
     // 0x3496f0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x3496f0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x3496f4: 0xffb00000  sd          $s0, 0x0($sp)
     ctx->pc = 0x3496f4u;
@@ -35,7 +35,6 @@ void MWSFSVR_SetMwsfdSvrFlg_0x3496f0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     ctx->pc = 0x3496f8u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 8), GPR_U64(ctx, 31));
     // 0x3496fc: 0xc0d14ac  jal         func_3452B0
-    ctx->pc = 0x3496FCu;
     SET_GPR_U32(ctx, 31, 0x349704u);
     ctx->pc = 0x349700u;
     ctx->in_delay_slot = true;
@@ -43,8 +42,7 @@ void MWSFSVR_SetMwsfdSvrFlg_0x3496f0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     // 0x349700: 0x80802d  daddu       $s0, $a0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x3452B0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3452B0u, 0x3496FCu, 0x349704u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &GetD003EC7E0_3452B0_0x3452b0, 0x3452b0u, 0x349704u)) {
         return;
     }
     ctx->pc = 0x349704u;

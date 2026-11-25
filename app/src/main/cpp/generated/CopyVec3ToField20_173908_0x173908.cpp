@@ -18,10 +18,8 @@ void CopyVec3ToField20_173908_0x173908(uint8_t* rdram, R5900Context* ctx, PS2Run
     PS_LOG_ENTRY("CopyVec3ToField20_173908_0x173908");
 #endif
 
-    ctx->pc = 0x173908u;
 
     // 0x173908: 0x24820020  addiu       $v0, $a0, 0x20
-    ctx->pc = 0x173908u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 32));
     // 0x17390c: 0x10450007  beq         $v0, $a1, . + 4 + (0x7 << 2)
     ctx->pc = 0x17390Cu;
@@ -32,7 +30,6 @@ void CopyVec3ToField20_173908_0x173908(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_17392c;
         }
     }
-    ctx->pc = 0x173914u;
     // 0x173914: 0xc4a00000  lwc1        $f0, 0x0($a1)
     ctx->pc = 0x173914u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -65,9 +62,7 @@ label_17392c:
         return;
         #endif
     }
-    ctx->pc = 0x173934u;
     // 0x173934: 0x0  nop
-    ctx->pc = 0x173934u;
     // NOP
     ctx->pc = 0x173938u;
 }

@@ -18,7 +18,6 @@ void sfbuf_ChkSupSj_0x34c0a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("sfbuf_ChkSupSj_0x34c0a0");
 #endif
 
-    ctx->pc = 0x34c0a0u;
 
     // 0x34c0a0: 0x8c830004  lw          $v1, 0x4($a0)
     ctx->pc = 0x34c0a0u;
@@ -38,7 +37,6 @@ void sfbuf_ChkSupSj_0x34c0a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_34c0dc;
         }
     }
-    ctx->pc = 0x34C0ACu;
     // 0x34c0ac: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x34c0acu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
@@ -57,7 +55,6 @@ void sfbuf_ChkSupSj_0x34c0a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_34c0dc;
         }
     }
-    ctx->pc = 0x34C0B8u;
     // 0x34c0b8: 0x8c830008  lw          $v1, 0x8($a0)
     ctx->pc = 0x34c0b8u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 8)));
@@ -76,7 +73,6 @@ void sfbuf_ChkSupSj_0x34c0a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_34c0dc;
         }
     }
-    ctx->pc = 0x34C0C4u;
     // 0x34c0c4: 0x8c83000c  lw          $v1, 0xC($a0)
     ctx->pc = 0x34c0c4u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 12)));
@@ -89,7 +85,6 @@ void sfbuf_ChkSupSj_0x34c0a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_34c0dc;
         }
     }
-    ctx->pc = 0x34C0D0u;
     // 0x34c0d0: 0x8c830014  lw          $v1, 0x14($a0)
     ctx->pc = 0x34c0d0u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 20)));
@@ -123,9 +118,7 @@ label_34c0dc:
         return;
         #endif
     }
-    ctx->pc = 0x34C0E4u;
     // 0x34c0e4: 0x0  nop
-    ctx->pc = 0x34c0e4u;
     // NOP
     ctx->pc = 0x34c0e8u;
 }

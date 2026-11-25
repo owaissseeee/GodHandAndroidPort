@@ -18,21 +18,20 @@ void cMessage_ckMessage_0x2aeda0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("cMessage_ckMessage_0x2aeda0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2aedb0u: goto label_2aedb0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2aeda0u, 0)) {
+        switch (ctx->pc) {
+            case 0x2aedb0u: goto label_2aedb0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2aeda0u;
 
     // 0x2aeda0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2aeda0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2aeda4: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2aeda4u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2aeda8: 0xc0abb50  jal         func_2AED40
-    ctx->pc = 0x2AEDA8u;
     SET_GPR_U32(ctx, 31, 0x2AEDB0u);
     ctx->pc = 0x2AEDACu;
     ctx->in_delay_slot = true;
@@ -40,8 +39,7 @@ void cMessage_ckMessage_0x2aeda0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     // 0x2aedac: 0x30a5ffff  andi        $a1, $a1, 0xFFFF (Delay Slot)
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)65535);
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2AED40u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2AED40u, 0x2AEDA8u, 0x2AEDB0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002AED40_0x2aed40, 0x2aed40u, 0x2aedb0u)) {
         return;
     }
     ctx->pc = 0x2AEDB0u;
@@ -50,7 +48,6 @@ label_2aedb0:
     ctx->pc = 0x2aedb0u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x2aedb4: 0x2102b  sltu        $v0, $zero, $v0
-    ctx->pc = 0x2aedb4u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 0) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
     // 0x2aedb8: 0x3e00008  jr          $ra
     ctx->pc = 0x2AEDB8u;

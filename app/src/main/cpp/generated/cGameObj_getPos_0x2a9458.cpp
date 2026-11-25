@@ -18,7 +18,6 @@ void cGameObj_getPos_0x2a9458(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("cGameObj_getPos_0x2a9458");
 #endif
 
-    ctx->pc = 0x2a9458u;
 
     // 0x2a9458: 0x3e00008  jr          $ra
     ctx->pc = 0x2A9458u;

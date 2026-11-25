@@ -18,15 +18,15 @@ void ps2___eq__C9type_infoRC9type_info_0x31ee40(uint8_t* rdram, R5900Context* ct
     PS_LOG_ENTRY("ps2___eq__C9type_infoRC9type_info_0x31ee40");
 #endif
 
-    switch (ctx->pc) {
-        case 0x31ee60u: goto label_31ee60;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x31ee40u, 0)) {
+        switch (ctx->pc) {
+            case 0x31ee60u: goto label_31ee60;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x31ee40u;
 
     // 0x31ee40: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x31ee40u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x31ee44: 0xffb00000  sd          $s0, 0x0($sp)
     ctx->pc = 0x31ee44u;
@@ -49,12 +49,10 @@ void ps2___eq__C9type_infoRC9type_info_0x31ee40(uint8_t* rdram, R5900Context* ct
             goto label_31ee68;
         }
     }
-    ctx->pc = 0x31EE54u;
     // 0x31ee54: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x31ee54u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x31ee58: 0xc0e959e  jal         func_3A5678
-    ctx->pc = 0x31EE58u;
     SET_GPR_U32(ctx, 31, 0x31EE60u);
     ctx->pc = 0x31EE5Cu;
     ctx->in_delay_slot = true;
@@ -62,8 +60,7 @@ void ps2___eq__C9type_infoRC9type_info_0x31ee40(uint8_t* rdram, R5900Context* ct
     // 0x31ee5c: 0x8ca50000  lw          $a1, 0x0($a1) (Delay Slot)
     SET_GPR_S32(ctx, 5, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 0)));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x3A5678u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3A5678u, 0x31EE58u, 0x31EE60u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &strcmp_0x3a5678, 0x3a5678u, 0x31ee60u)) {
         return;
     }
     ctx->pc = 0x31EE60u;
@@ -86,7 +83,6 @@ label_31ee60:
     ctx->pc = 0x31EE68u;
 label_31ee68:
     // 0x31ee68: 0x24100001  addiu       $s0, $zero, 0x1
-    ctx->pc = 0x31ee68u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x31ee6c: 0x200102d  daddu       $v0, $s0, $zero
     ctx->pc = 0x31ee6cu;

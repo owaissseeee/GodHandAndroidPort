@@ -18,16 +18,13 @@ void Obj38B8_AndNotByte1A_0x38bf00(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("Obj38B8_AndNotByte1A_0x38bf00");
 #endif
 
-    ctx->pc = 0x38bf00u;
 
     // 0x38bf00: 0x9082001a  lbu         $v0, 0x1A($a0)
     ctx->pc = 0x38bf00u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 26)));
     // 0x38bf04: 0x52827  nor         $a1, $zero, $a1
-    ctx->pc = 0x38bf04u;
     SET_GPR_U64(ctx, 5, ~(GPR_U64(ctx, 0) | GPR_U64(ctx, 5)));
     // 0x38bf08: 0x451024  and         $v0, $v0, $a1
-    ctx->pc = 0x38bf08u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 5));
     // 0x38bf0c: 0x3e00008  jr          $ra
     ctx->pc = 0x38BF0Cu;
@@ -48,9 +45,7 @@ void Obj38B8_AndNotByte1A_0x38bf00(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         return;
         #endif
     }
-    ctx->pc = 0x38BF14u;
     // 0x38bf14: 0x0  nop
-    ctx->pc = 0x38bf14u;
     // NOP
     ctx->pc = 0x38bf18u;
 }

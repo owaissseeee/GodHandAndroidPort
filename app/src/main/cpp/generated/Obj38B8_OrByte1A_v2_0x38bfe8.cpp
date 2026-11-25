@@ -18,13 +18,11 @@ void Obj38B8_OrByte1A_v2_0x38bfe8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("Obj38B8_OrByte1A_v2_0x38bfe8");
 #endif
 
-    ctx->pc = 0x38bfe8u;
 
     // 0x38bfe8: 0x9082001a  lbu         $v0, 0x1A($a0)
     ctx->pc = 0x38bfe8u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 26)));
     // 0x38bfec: 0x451025  or          $v0, $v0, $a1
-    ctx->pc = 0x38bfecu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | GPR_U64(ctx, 5));
     // 0x38bff0: 0x3e00008  jr          $ra
     ctx->pc = 0x38BFF0u;

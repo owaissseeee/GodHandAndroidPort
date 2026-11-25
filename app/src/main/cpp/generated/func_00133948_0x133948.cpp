@@ -18,7 +18,6 @@ void func_00133948_0x133948(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00133948_0x133948");
 #endif
 
-    ctx->pc = 0x133948u;
 
     // 0x133948: 0xd8a40000  lqc2        $vf4, 0x0($a1)
     ctx->pc = 0x133948u;
@@ -27,10 +26,8 @@ void func_00133948_0x133948(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x13394cu;
     ctx->vu0_vf[5] = _mm_castsi128_ps(READ128(ADD32(GPR_U32(ctx, 6), 0)));
     // 0x133950: 0x4be521af  vmini.xyzw  $vf6, $vf4, $vf5
-    ctx->pc = 0x133950u;
     { __m128 res = _mm_min_ps(ctx->vu0_vf[4], ctx->vu0_vf[5]); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[6] = _mm_blendv_ps(ctx->vu0_vf[6], res, _mm_castsi128_ps(mask)); }
     // 0x133954: 0x4be521eb  vmax.xyzw   $vf7, $vf4, $vf5
-    ctx->pc = 0x133954u;
     { __m128 res = _mm_max_ps(ctx->vu0_vf[4], ctx->vu0_vf[5]); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[7] = _mm_blendv_ps(ctx->vu0_vf[7], res, _mm_castsi128_ps(mask)); }
     // 0x133958: 0xf8a60000  sqc2        $vf6, 0x0($a1)
     ctx->pc = 0x133958u;

@@ -18,7 +18,6 @@ void Obj38B8_ExchangeField0_0x38bdc0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("Obj38B8_ExchangeField0_0x38bdc0");
 #endif
 
-    ctx->pc = 0x38bdc0u;
 
     // 0x38bdc0: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x38bdc0u;
@@ -42,9 +41,7 @@ void Obj38B8_ExchangeField0_0x38bdc0(uint8_t* rdram, R5900Context* ctx, PS2Runti
         return;
         #endif
     }
-    ctx->pc = 0x38BDCCu;
     // 0x38bdcc: 0x0  nop
-    ctx->pc = 0x38bdccu;
     // NOP
     ctx->pc = 0x38bdd0u;
 }

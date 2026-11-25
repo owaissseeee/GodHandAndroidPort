@@ -18,10 +18,8 @@ void Obj0000_Set_Bytes_2F4_2F7_2F5_2F6_27DCD0_0x27dcd0(uint8_t* rdram, R5900Cont
     PS_LOG_ENTRY("Obj0000_Set_Bytes_2F4_2F7_2F5_2F6_27DCD0_0x27dcd0");
 #endif
 
-    ctx->pc = 0x27dcd0u;
 
     // 0x27dcd0: 0x2402000a  addiu       $v0, $zero, 0xA
-    ctx->pc = 0x27dcd0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 10));
     // 0x27dcd4: 0xa08502f7  sb          $a1, 0x2F7($a0)
     ctx->pc = 0x27dcd4u;

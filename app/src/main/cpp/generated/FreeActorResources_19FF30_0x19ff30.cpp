@@ -18,31 +18,28 @@ void FreeActorResources_19FF30_0x19ff30(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("FreeActorResources_19FF30_0x19ff30");
 #endif
 
-    switch (ctx->pc) {
-        case 0x19ff6cu: goto label_19ff6c;
-        case 0x19ff7cu: goto label_19ff7c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x19ff30u, 0)) {
+        switch (ctx->pc) {
+            case 0x19ff6cu: goto label_19ff6c;
+            case 0x19ff7cu: goto label_19ff7c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x19ff30u;
 
     // 0x19ff30: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x19ff30u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x19ff34: 0x3c020042  lui         $v0, 0x42
-    ctx->pc = 0x19ff34u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)66 << 16));
     // 0x19ff38: 0x7fb00020  sq          $s0, 0x20($sp)
     ctx->pc = 0x19ff38u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 32), GPR_VEC(ctx, 16));
     // 0x19ff3c: 0x244268c8  addiu       $v0, $v0, 0x68C8
-    ctx->pc = 0x19ff3cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 26824));
     // 0x19ff40: 0x7fb10010  sq          $s1, 0x10($sp)
     ctx->pc = 0x19ff40u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 17));
     // 0x19ff44: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x19ff44u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x19ff48: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x19ff48u;
@@ -68,15 +65,11 @@ void FreeActorResources_19FF30_0x19ff30(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_19ff70;
         }
     }
-    ctx->pc = 0x19FF5Cu;
     // 0x19ff5c: 0x3c040057  lui         $a0, 0x57
-    ctx->pc = 0x19ff5cu;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)87 << 16));
     // 0x19ff60: 0x60282d  daddu       $a1, $v1, $zero
-    ctx->pc = 0x19ff60u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
     // 0x19ff64: 0xc07f89e  jal         func_1FE278
-    ctx->pc = 0x19FF64u;
     SET_GPR_U32(ctx, 31, 0x19FF6Cu);
     ctx->pc = 0x19FF68u;
     ctx->in_delay_slot = true;
@@ -84,8 +77,7 @@ void FreeActorResources_19FF30_0x19ff30(uint8_t* rdram, R5900Context* ctx, PS2Ru
     // 0x19ff68: 0x24844380  addiu       $a0, $a0, 0x4380 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 17280));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1FE278u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1FE278u, 0x19FF64u, 0x19FF6Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x19ff6cu)) {
         return;
     }
     ctx->pc = 0x19FF6Cu;
@@ -95,10 +87,8 @@ label_19ff6c:
     WRITE32(ADD32(GPR_U32(ctx, 16), 1536), GPR_U32(ctx, 0));
 label_19ff70:
     // 0x19ff70: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x19ff70u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x19ff74: 0xc070a08  jal         func_1C2820
-    ctx->pc = 0x19FF74u;
     SET_GPR_U32(ctx, 31, 0x19FF7Cu);
     ctx->pc = 0x19FF78u;
     ctx->in_delay_slot = true;
@@ -106,8 +96,7 @@ label_19ff70:
     // 0x19ff78: 0x220282d  daddu       $a1, $s1, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1C2820u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1C2820u, 0x19FF74u, 0x19FF7Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ResetField214FreeField180_1C2820_0x1c2820, 0x1c2820u, 0x19ff7cu)) {
         return;
     }
     ctx->pc = 0x19FF7Cu;

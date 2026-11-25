@@ -18,7 +18,6 @@ void cCoreSave_getSkill_0x1faf58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("cCoreSave_getSkill_0x1faf58");
 #endif
 
-    ctx->pc = 0x1faf58u;
 
     // 0x1faf58: 0x8c860000  lw          $a2, 0x0($a0)
     ctx->pc = 0x1faf58u;
@@ -38,7 +37,6 @@ void cCoreSave_getSkill_0x1faf58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_1faf74;
         }
     }
-    ctx->pc = 0x1FAF64u;
     // 0x1faf64: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x1FAF64u;
     {
@@ -54,7 +52,6 @@ void cCoreSave_getSkill_0x1faf58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_1faf74;
         }
     }
-    ctx->pc = 0x1FAF6Cu;
     // 0x1faf6c: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x1FAF6Cu;
     {
@@ -94,13 +91,11 @@ label_1faf74:
     ctx->pc = 0x1FAF7Cu;
 label_1faf7c:
     // 0x1faf7c: 0x3c040080  lui         $a0, 0x80
-    ctx->pc = 0x1faf7cu;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)128 << 16));
     // 0x1faf80: 0x8c437a34  lw          $v1, 0x7A34($v0)
     ctx->pc = 0x1faf80u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 31284)));
     // 0x1faf84: 0x641824  and         $v1, $v1, $a0
-    ctx->pc = 0x1faf84u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 4));
     // 0x1faf88: 0x14600003  bnez        $v1, . + 4 + (0x3 << 2)
     ctx->pc = 0x1FAF88u;
@@ -117,7 +112,6 @@ label_1faf7c:
             goto label_1faf98;
         }
     }
-    ctx->pc = 0x1FAF90u;
     // 0x1faf90: 0x3e00008  jr          $ra
     ctx->pc = 0x1FAF90u;
     {
@@ -158,12 +152,9 @@ label_1faf98:
         return;
         #endif
     }
-    ctx->pc = 0x1FAFA0u;
     // 0x1fafa0: 0xc0102d  daddu       $v0, $a2, $zero
-    ctx->pc = 0x1fafa0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1fafa4: 0x0  nop
-    ctx->pc = 0x1fafa4u;
     // NOP
     ctx->pc = 0x1fafa8u;
 }

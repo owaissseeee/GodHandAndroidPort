@@ -18,7 +18,6 @@ void func_002DF938_0x2df938(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002DF938_0x2df938");
 #endif
 
-    ctx->pc = 0x2df938u;
 
     // 0x2df938: 0x10800003  beqz        $a0, . + 4 + (0x3 << 2)
     ctx->pc = 0x2DF938u;
@@ -29,7 +28,6 @@ void func_002DF938_0x2df938(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2df948;
         }
     }
-    ctx->pc = 0x2DF940u;
     // 0x2df940: 0x54a00001  bnel        $a1, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x2DF940u;
     {

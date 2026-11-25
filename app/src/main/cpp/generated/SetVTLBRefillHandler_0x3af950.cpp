@@ -18,18 +18,17 @@ void SetVTLBRefillHandler_0x3af950(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("SetVTLBRefillHandler_0x3af950");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3af958u: goto label_3af958;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3af950u, 0)) {
+        switch (ctx->pc) {
+            case 0x3af958u: goto label_3af958;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3af950u;
 
     // 0x3af950: 0x2403000d  addiu       $v1, $zero, 0xD
-    ctx->pc = 0x3af950u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 13));
     // 0x3af954: 0xc  syscall     0
-    ctx->pc = 0x3af954u;
     ctx->pc = 0x3AF958u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

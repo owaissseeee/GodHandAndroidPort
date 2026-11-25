@@ -18,19 +18,15 @@ void cEm00_setNeckMoveOn_0x276210(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("cEm00_setNeckMoveOn_0x276210");
 #endif
 
-    ctx->pc = 0x276210u;
 
     // 0x276210: 0x8c8316d4  lw          $v1, 0x16D4($a0)
     ctx->pc = 0x276210u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 5844)));
     // 0x276214: 0x3c027fff  lui         $v0, 0x7FFF
-    ctx->pc = 0x276214u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)32767 << 16));
     // 0x276218: 0x3442ffff  ori         $v0, $v0, 0xFFFF
-    ctx->pc = 0x276218u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)65535);
     // 0x27621c: 0x621824  and         $v1, $v1, $v0
-    ctx->pc = 0x27621cu;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 2));
     // 0x276220: 0x3e00008  jr          $ra
     ctx->pc = 0x276220u;

@@ -18,18 +18,17 @@ void ReleaseWaitThread_0x3afb70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("ReleaseWaitThread_0x3afb70");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afb78u: goto label_3afb78;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afb70u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afb78u: goto label_3afb78;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afb70u;
 
     // 0x3afb70: 0x2403002d  addiu       $v1, $zero, 0x2D
-    ctx->pc = 0x3afb70u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 45));
     // 0x3afb74: 0xc  syscall     0
-    ctx->pc = 0x3afb74u;
     ctx->pc = 0x3AFB78u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

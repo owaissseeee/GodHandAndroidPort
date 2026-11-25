@@ -18,7 +18,6 @@ void Obj33F8_LoadU16Trio_34_FA10_0x33fa10(uint8_t* rdram, R5900Context* ctx, PS2
     PS_LOG_ENTRY("Obj33F8_LoadU16Trio_34_FA10_0x33fa10");
 #endif
 
-    ctx->pc = 0x33fa10u;
 
     // 0x33fa10: 0x94820034  lhu         $v0, 0x34($a0)
     ctx->pc = 0x33fa10u;
@@ -54,9 +53,7 @@ void Obj33F8_LoadU16Trio_34_FA10_0x33fa10(uint8_t* rdram, R5900Context* ctx, PS2
         return;
         #endif
     }
-    ctx->pc = 0x33FA2Cu;
     // 0x33fa2c: 0x0  nop
-    ctx->pc = 0x33fa2cu;
     // NOP
     ctx->pc = 0x33fa30u;
 }

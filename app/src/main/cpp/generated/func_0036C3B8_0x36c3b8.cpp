@@ -18,10 +18,8 @@ void func_0036C3B8_0x36c3b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0036C3B8_0x36c3b8");
 #endif
 
-    ctx->pc = 0x36c3b8u;
 
     // 0x36c3b8: 0x24840078  addiu       $a0, $a0, 0x78
-    ctx->pc = 0x36c3b8u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 120));
     // 0x36c3bc: 0x8c820018  lw          $v0, 0x18($a0)
     ctx->pc = 0x36c3bcu;

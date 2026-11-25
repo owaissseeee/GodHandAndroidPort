@@ -18,15 +18,15 @@ void cEvent_isEndCreateWork_0x297a68(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("cEvent_isEndCreateWork_0x297a68");
 #endif
 
-    switch (ctx->pc) {
-        case 0x297a7cu: goto label_297a7c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x297a68u, 0)) {
+        switch (ctx->pc) {
+            case 0x297a7cu: goto label_297a7c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x297a68u;
 
     // 0x297a68: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x297a68u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x297a6c: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x297a6cu;

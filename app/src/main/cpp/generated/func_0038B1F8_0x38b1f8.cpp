@@ -18,15 +18,15 @@ void func_0038B1F8_0x38b1f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0038B1F8_0x38b1f8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38b208u: goto label_38b208;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38b1f8u, 0)) {
+        switch (ctx->pc) {
+            case 0x38b208u: goto label_38b208;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x38b1f8u;
 
     // 0x38b1f8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x38b1f8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x38b1fc: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x38b1fcu;
@@ -34,8 +34,7 @@ void func_0038B1F8_0x38b1f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x38b200: 0xc0e345a  jal         func_38D168
     ctx->pc = 0x38B200u;
     SET_GPR_U32(ctx, 31, 0x38B208u);
-    ctx->pc = 0x38D168u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x38D168u, 0x38B200u, 0x38B208u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_0038D168_0x38d168, 0x38d168u, 0x38b208u)) {
         return;
     }
     ctx->pc = 0x38B208u;
@@ -62,9 +61,7 @@ label_38b208:
         return;
         #endif
     }
-    ctx->pc = 0x38B214u;
     // 0x38b214: 0x0  nop
-    ctx->pc = 0x38b214u;
     // NOP
     ctx->pc = 0x38b218u;
 }

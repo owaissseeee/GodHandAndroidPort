@@ -18,7 +18,6 @@ void SetField_775_1BD778_0x1bd778(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("SetField_775_1BD778_0x1bd778");
 #endif
 
-    ctx->pc = 0x1bd778u;
 
     // 0x1bd778: 0x3e00008  jr          $ra
     ctx->pc = 0x1BD778u;

@@ -18,15 +18,15 @@ void ps2__IO_file_setbuf_0x392a30(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("ps2__IO_file_setbuf_0x392a30");
 #endif
 
-    switch (ctx->pc) {
-        case 0x392a44u: goto label_392a44;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x392a30u, 0)) {
+        switch (ctx->pc) {
+            case 0x392a44u: goto label_392a44;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x392a30u;
 
     // 0x392a30: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x392a30u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x392a34: 0xffb00000  sd          $s0, 0x0($sp)
     ctx->pc = 0x392a34u;
@@ -35,7 +35,6 @@ void ps2__IO_file_setbuf_0x392a30(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     ctx->pc = 0x392a38u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 16), GPR_U64(ctx, 31));
     // 0x392a3c: 0xc0e32ca  jal         func_38CB28
-    ctx->pc = 0x392A3Cu;
     SET_GPR_U32(ctx, 31, 0x392A44u);
     ctx->pc = 0x392A40u;
     ctx->in_delay_slot = true;
@@ -43,8 +42,7 @@ void ps2__IO_file_setbuf_0x392a30(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     // 0x392a40: 0x80802d  daddu       $s0, $a0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x38CB28u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x38CB28u, 0x392A3Cu, 0x392A44u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_default_setbuf_0x38cb28, 0x38cb28u, 0x392a44u)) {
         return;
     }
     ctx->pc = 0x392A44u;
@@ -64,7 +62,6 @@ label_392a44:
             goto label_392a54;
         }
     }
-    ctx->pc = 0x392A4Cu;
     // 0x392a4c: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x392A4Cu;
     {
@@ -83,7 +80,6 @@ label_392a44:
     ctx->pc = 0x392A54u;
 label_392a54:
     // 0x392a54: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x392a54u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x392a58: 0xae030008  sw          $v1, 0x8($s0)
     ctx->pc = 0x392a58u;

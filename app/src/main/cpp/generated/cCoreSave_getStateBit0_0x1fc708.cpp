@@ -18,7 +18,6 @@ void cCoreSave_getStateBit0_0x1fc708(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("cCoreSave_getStateBit0_0x1fc708");
 #endif
 
-    ctx->pc = 0x1fc708u;
 
     // 0x1fc708: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc708u;
@@ -32,7 +31,6 @@ void cCoreSave_getStateBit0_0x1fc708(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_1fc720;
         }
     }
-    ctx->pc = 0x1FC714u;
     // 0x1fc714: 0x94820bba  lhu         $v0, 0xBBA($a0)
     ctx->pc = 0x1fc714u;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 4), 3002)));

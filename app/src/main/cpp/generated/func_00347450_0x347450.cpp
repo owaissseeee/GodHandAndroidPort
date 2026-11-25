@@ -18,21 +18,20 @@ void func_00347450_0x347450(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00347450_0x347450");
 #endif
 
-    switch (ctx->pc) {
-        case 0x347474u: goto label_347474;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x347450u, 0)) {
+        switch (ctx->pc) {
+            case 0x347474u: goto label_347474;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x347450u;
 
     // 0x347450: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x347450u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x347454: 0xffb00000  sd          $s0, 0x0($sp)
     ctx->pc = 0x347454u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 16));
     // 0x347458: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x347458u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x34745c: 0xffbf0008  sd          $ra, 0x8($sp)
     ctx->pc = 0x34745cu;
@@ -55,18 +54,15 @@ void func_00347450_0x347450(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_347488;
         }
     }
-    ctx->pc = 0x34746Cu;
     // 0x34746c: 0xc0d1d26  jal         func_347498
     ctx->pc = 0x34746Cu;
     SET_GPR_U32(ctx, 31, 0x347474u);
-    ctx->pc = 0x347498u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x347498u, 0x34746Cu, 0x347474u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00347498_0x347498, 0x347498u, 0x347474u)) {
         return;
     }
     ctx->pc = 0x347474u;
 label_347474:
     // 0x347474: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x347474u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x347478: 0xdfbf0008  ld          $ra, 0x8($sp)
     ctx->pc = 0x347478u;
@@ -75,8 +71,6 @@ label_347474:
     ctx->pc = 0x34747cu;
     SET_GPR_U64(ctx, 16, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x347480: 0x80d1d7c  j           func_3475F0
-    ctx->pc = 0x347480u;
-    ctx->pc = 0x347484u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x347480u;
     // 0x347484: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)
@@ -110,9 +104,7 @@ label_347488:
         return;
         #endif
     }
-    ctx->pc = 0x347494u;
     // 0x347494: 0x0  nop
-    ctx->pc = 0x347494u;
     // NOP
     ctx->pc = 0x347498u;
 }

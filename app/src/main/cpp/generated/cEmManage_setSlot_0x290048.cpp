@@ -18,7 +18,6 @@ void cEmManage_setSlot_0x290048(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("cEmManage_setSlot_0x290048");
 #endif
 
-    ctx->pc = 0x290048u;
 
     // 0x290048: 0x10a0000f  beqz        $a1, . + 4 + (0xF << 2)
     ctx->pc = 0x290048u;
@@ -35,7 +34,6 @@ void cEmManage_setSlot_0x290048(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_290088;
         }
     }
-    ctx->pc = 0x290050u;
     // 0x290050: 0x1440000d  bnez        $v0, . + 4 + (0xD << 2)
     ctx->pc = 0x290050u;
     {
@@ -45,7 +43,6 @@ void cEmManage_setSlot_0x290048(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_290088;
         }
     }
-    ctx->pc = 0x290058u;
     // 0x290058: 0x8c820008  lw          $v0, 0x8($a0)
     ctx->pc = 0x290058u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 8)));
@@ -64,7 +61,6 @@ void cEmManage_setSlot_0x290048(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_290088;
         }
     }
-    ctx->pc = 0x290064u;
     // 0x290064: 0x8c83000c  lw          $v1, 0xC($a0)
     ctx->pc = 0x290064u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 12)));
@@ -83,7 +79,6 @@ void cEmManage_setSlot_0x290048(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_290088;
         }
     }
-    ctx->pc = 0x290070u;
     // 0x290070: 0x90820010  lbu         $v0, 0x10($a0)
     ctx->pc = 0x290070u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 16)));
@@ -96,7 +91,6 @@ void cEmManage_setSlot_0x290048(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_290088;
         }
     }
-    ctx->pc = 0x29007Cu;
     // 0x29007c: 0xa0830010  sb          $v1, 0x10($a0)
     ctx->pc = 0x29007cu;
     WRITE8(ADD32(GPR_U32(ctx, 4), 16), (uint8_t)GPR_U32(ctx, 3));

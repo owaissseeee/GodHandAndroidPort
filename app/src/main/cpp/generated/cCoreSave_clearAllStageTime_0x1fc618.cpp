@@ -18,7 +18,6 @@ void cCoreSave_clearAllStageTime_0x1fc618(uint8_t* rdram, R5900Context* ctx, PS2
     PS_LOG_ENTRY("cCoreSave_clearAllStageTime_0x1fc618");
 #endif
 
-    ctx->pc = 0x1fc618u;
 
     // 0x1fc618: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc618u;
@@ -53,9 +52,7 @@ label_1fc624:
         return;
         #endif
     }
-    ctx->pc = 0x1FC62Cu;
     // 0x1fc62c: 0x0  nop
-    ctx->pc = 0x1fc62cu;
     // NOP
     ctx->pc = 0x1fc630u;
 }

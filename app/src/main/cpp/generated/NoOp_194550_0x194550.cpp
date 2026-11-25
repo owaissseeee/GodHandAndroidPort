@@ -18,7 +18,6 @@ void NoOp_194550_0x194550(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("NoOp_194550_0x194550");
 #endif
 
-    ctx->pc = 0x194550u;
 
     // 0x194550: 0x3e00008  jr          $ra
     ctx->pc = 0x194550u;

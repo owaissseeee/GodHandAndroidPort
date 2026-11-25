@@ -18,7 +18,6 @@ void cGameObj_getRot_0x2a9460(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("cGameObj_getRot_0x2a9460");
 #endif
 
-    ctx->pc = 0x2a9460u;
 
     // 0x2a9460: 0x3e00008  jr          $ra
     ctx->pc = 0x2A9460u;

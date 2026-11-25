@@ -18,13 +18,14 @@ void _search_svdata_0x3b2de8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("_search_svdata_0x3b2de8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b2df8u: goto label_3b2df8;
-        case 0x3b2e08u: goto label_3b2e08;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b2de8u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b2df8u: goto label_3b2df8;
+            case 0x3b2e08u: goto label_3b2e08;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b2de8u;
 
     // 0x3b2de8: 0x8ca50028  lw          $a1, 0x28($a1)
     ctx->pc = 0x3b2de8u;
@@ -38,7 +39,6 @@ void _search_svdata_0x3b2de8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_3b2e2c;
         }
     }
-    ctx->pc = 0x3B2DF4u;
     // 0x3b2df4: 0x8ca30008  lw          $v1, 0x8($a1)
     ctx->pc = 0x3b2df4u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 8)));
@@ -58,7 +58,6 @@ label_3b2df8:
             goto label_3b2e24;
         }
     }
-    ctx->pc = 0x3B2E00u;
     // 0x3b2e00: 0x8c620000  lw          $v0, 0x0($v1)
     ctx->pc = 0x3b2e00u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 0)));
@@ -81,7 +80,6 @@ label_3b2e08:
             goto label_3b2e18;
         }
     }
-    ctx->pc = 0x3B2E10u;
     // 0x3b2e10: 0x3e00008  jr          $ra
     ctx->pc = 0x3B2E10u;
     {
@@ -121,7 +119,6 @@ label_3b2e18:
             goto label_3b2e08;
         }
     }
-    ctx->pc = 0x3B2E20u;
     // 0x3b2e20: 0x8ca50014  lw          $a1, 0x14($a1)
     ctx->pc = 0x3b2e20u;
     SET_GPR_S32(ctx, 5, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 20)));
@@ -165,9 +162,7 @@ label_3b2e2c:
         return;
         #endif
     }
-    ctx->pc = 0x3B2E34u;
     // 0x3b2e34: 0x0  nop
-    ctx->pc = 0x3b2e34u;
     // NOP
     ctx->pc = 0x3b2e38u;
 }

@@ -18,21 +18,20 @@ void sceSifExitRpc_0x3b2aa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("sceSifExitRpc_0x3b2aa0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b2ab0u: goto label_3b2ab0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b2aa0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b2ab0u: goto label_3b2ab0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b2aa0u;
 
     // 0x3b2aa0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x3b2aa0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x3b2aa4: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x3b2aa4u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x3b2aa8: 0xc0ec914  jal         func_3B2450
-    ctx->pc = 0x3B2AA8u;
     SET_GPR_U32(ctx, 31, 0x3B2AB0u);
     ctx->pc = 0x3B2450u;
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B2450u, 0x3B2AA8u, 0x3B2AB0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
@@ -41,7 +40,6 @@ void sceSifExitRpc_0x3b2aa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x3B2AB0u;
 label_3b2ab0:
     // 0x3b2ab0: 0x3c020040  lui         $v0, 0x40
-    ctx->pc = 0x3b2ab0u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)64 << 16));
     // 0x3b2ab4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3b2ab4u;
@@ -68,9 +66,7 @@ label_3b2ab0:
         return;
         #endif
     }
-    ctx->pc = 0x3B2AC4u;
     // 0x3b2ac4: 0x0  nop
-    ctx->pc = 0x3b2ac4u;
     // NOP
     ctx->pc = 0x3b2ac8u;
 }

@@ -18,7 +18,6 @@ void cCoreSave_getStock_0x1fad38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("cCoreSave_getStock_0x1fad38");
 #endif
 
-    ctx->pc = 0x1fad38u;
 
     // 0x1fad38: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x1fad38u;
@@ -38,7 +37,6 @@ void cCoreSave_getStock_0x1fad38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_1fad4c;
         }
     }
-    ctx->pc = 0x1FAD44u;
     // 0x1fad44: 0x3e00008  jr          $ra
     ctx->pc = 0x1FAD44u;
     {
@@ -79,9 +77,7 @@ label_1fad4c:
         return;
         #endif
     }
-    ctx->pc = 0x1FAD54u;
     // 0x1fad54: 0x0  nop
-    ctx->pc = 0x1fad54u;
     // NOP
     ctx->pc = 0x1fad58u;
 }

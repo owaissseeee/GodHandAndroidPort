@@ -18,7 +18,6 @@ void cCoreSave_setState154_0x1fad58(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("cCoreSave_setState154_0x1fad58");
 #endif
 
-    ctx->pc = 0x1fad58u;
 
     // 0x1fad58: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x1fad58u;
@@ -38,7 +37,6 @@ void cCoreSave_setState154_0x1fad58(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1fad80;
         }
     }
-    ctx->pc = 0x1FAD64u;
     // 0x1fad64: 0xa0450154  sb          $a1, 0x154($v0)
     ctx->pc = 0x1fad64u;
     WRITE8(ADD32(GPR_U32(ctx, 2), 340), (uint8_t)GPR_U32(ctx, 5));
@@ -49,7 +47,6 @@ void cCoreSave_setState154_0x1fad58(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     ctx->pc = 0x1fad6cu;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 340)));
     // 0x1fad70: 0x2c42000e  sltiu       $v0, $v0, 0xE
-    ctx->pc = 0x1fad70u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)14) ? 1 : 0);
     // 0x1fad74: 0x14400002  bnez        $v0, . + 4 + (0x2 << 2)
     ctx->pc = 0x1FAD74u;
@@ -66,7 +63,6 @@ void cCoreSave_setState154_0x1fad58(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1fad80;
         }
     }
-    ctx->pc = 0x1FAD7Cu;
     // 0x1fad7c: 0xa0820154  sb          $v0, 0x154($a0)
     ctx->pc = 0x1fad7cu;
     WRITE8(ADD32(GPR_U32(ctx, 4), 340), (uint8_t)GPR_U32(ctx, 2));

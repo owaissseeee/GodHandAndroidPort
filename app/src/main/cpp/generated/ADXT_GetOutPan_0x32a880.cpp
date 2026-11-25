@@ -18,18 +18,17 @@ void ADXT_GetOutPan_0x32a880(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("ADXT_GetOutPan_0x32a880");
 #endif
 
-    switch (ctx->pc) {
-        case 0x32a89cu: goto label_32a89c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x32a880u, 0)) {
+        switch (ctx->pc) {
+            case 0x32a89cu: goto label_32a89c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x32a880u;
 
     // 0x32a880: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x32a880u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x32a884: 0x51840  sll         $v1, $a1, 1
-    ctx->pc = 0x32a884u;
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 5), 1));
     // 0x32a888: 0x14800007  bnez        $a0, . + 4 + (0x7 << 2)
     ctx->pc = 0x32A888u;
@@ -46,12 +45,9 @@ void ADXT_GetOutPan_0x32a880(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_32a8a8;
         }
     }
-    ctx->pc = 0x32A890u;
     // 0x32a890: 0x3c040045  lui         $a0, 0x45
-    ctx->pc = 0x32a890u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)69 << 16));
     // 0x32a894: 0xc0cfc4c  jal         func_33F130
-    ctx->pc = 0x32A894u;
     SET_GPR_U32(ctx, 31, 0x32A89Cu);
     ctx->pc = 0x32A898u;
     ctx->in_delay_slot = true;
@@ -59,8 +55,7 @@ void ADXT_GetOutPan_0x32a880(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     // 0x32a898: 0x24842228  addiu       $a0, $a0, 0x2228 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 8744));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x33F130u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x33F130u, 0x32A894u, 0x32A89Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_0033F130_0x33f130, 0x33f130u, 0x32a89cu)) {
         return;
     }
     ctx->pc = 0x32A89Cu;
@@ -80,13 +75,11 @@ label_32a89c:
             goto label_32a8b0;
         }
     }
-    ctx->pc = 0x32A8A4u;
     // 0x32a8a4: 0x0  nop
     ctx->pc = 0x32a8a4u;
     // NOP
 label_32a8a8:
     // 0x32a8a8: 0x641821  addu        $v1, $v1, $a0
-    ctx->pc = 0x32a8a8u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 4)));
     // 0x32a8ac: 0x84620042  lh          $v0, 0x42($v1)
     ctx->pc = 0x32a8acu;
@@ -114,9 +107,7 @@ label_32a8b0:
         return;
         #endif
     }
-    ctx->pc = 0x32A8BCu;
     // 0x32a8bc: 0x0  nop
-    ctx->pc = 0x32a8bcu;
     // NOP
     ctx->pc = 0x32a8c0u;
 }

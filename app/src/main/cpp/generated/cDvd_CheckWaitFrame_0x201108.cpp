@@ -18,18 +18,18 @@ void cDvd_CheckWaitFrame_0x201108(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("cDvd_CheckWaitFrame_0x201108");
 #endif
 
-    switch (ctx->pc) {
-        case 0x201128u: goto label_201128;
-        case 0x201130u: goto label_201130;
-        case 0x20113cu: goto label_20113c;
-        case 0x20114cu: goto label_20114c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x201108u, 0)) {
+        switch (ctx->pc) {
+            case 0x201128u: goto label_201128;
+            case 0x201130u: goto label_201130;
+            case 0x20113cu: goto label_20113c;
+            case 0x20114cu: goto label_20114c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x201108u;
 
     // 0x201108: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x201108u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x20110c: 0x7fb00020  sq          $s0, 0x20($sp)
     ctx->pc = 0x20110cu;
@@ -38,7 +38,6 @@ void cDvd_CheckWaitFrame_0x201108(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     ctx->pc = 0x201110u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 17));
     // 0x201114: 0xa0802d  daddu       $s0, $a1, $zero
-    ctx->pc = 0x201114u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     // 0x201118: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x201118u;
@@ -58,13 +57,11 @@ void cDvd_CheckWaitFrame_0x201108(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_201130;
         }
     }
-    ctx->pc = 0x201124u;
     // 0x201124: 0x0  nop
     ctx->pc = 0x201124u;
     // NOP
 label_201128:
     // 0x201128: 0xc0b5494  jal         func_2D5250
-    ctx->pc = 0x201128u;
     SET_GPR_U32(ctx, 31, 0x201130u);
     ctx->pc = 0x20112Cu;
     ctx->in_delay_slot = true;
@@ -72,17 +69,14 @@ label_201128:
     // 0x20112c: 0x24040001  addiu       $a0, $zero, 0x1 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2D5250u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D5250u, 0x201128u, 0x201130u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002D5250_0x2d5250, 0x2d5250u, 0x201130u)) {
         return;
     }
     ctx->pc = 0x201130u;
 label_201130:
     // 0x201130: 0x220202d  daddu       $a0, $s1, $zero
-    ctx->pc = 0x201130u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     // 0x201134: 0xc080426  jal         func_201098
-    ctx->pc = 0x201134u;
     SET_GPR_U32(ctx, 31, 0x20113Cu);
     ctx->pc = 0x201138u;
     ctx->in_delay_slot = true;
@@ -90,8 +84,7 @@ label_201130:
     // 0x201138: 0x200282d  daddu       $a1, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x201098u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x201098u, 0x201134u, 0x20113Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cDvd_Check_0x201098, 0x201098u, 0x20113cu)) {
         return;
     }
     ctx->pc = 0x20113Cu;
@@ -108,9 +101,7 @@ label_20113c:
             goto label_201128;
         }
     }
-    ctx->pc = 0x201144u;
     // 0x201144: 0xc0b5494  jal         func_2D5250
-    ctx->pc = 0x201144u;
     SET_GPR_U32(ctx, 31, 0x20114Cu);
     ctx->pc = 0x201148u;
     ctx->in_delay_slot = true;
@@ -118,8 +109,7 @@ label_20113c:
     // 0x201148: 0x24040001  addiu       $a0, $zero, 0x1 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2D5250u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D5250u, 0x201144u, 0x20114Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002D5250_0x2d5250, 0x2d5250u, 0x20114cu)) {
         return;
     }
     ctx->pc = 0x20114Cu;

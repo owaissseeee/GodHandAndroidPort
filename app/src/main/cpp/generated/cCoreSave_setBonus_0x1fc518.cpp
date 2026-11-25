@@ -18,7 +18,6 @@ void cCoreSave_setBonus_0x1fc518(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("cCoreSave_setBonus_0x1fc518");
 #endif
 
-    ctx->pc = 0x1fc518u;
 
     // 0x1fc518: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc518u;
@@ -53,9 +52,7 @@ label_1fc524:
         return;
         #endif
     }
-    ctx->pc = 0x1FC52Cu;
     // 0x1fc52c: 0x0  nop
-    ctx->pc = 0x1fc52cu;
     // NOP
     ctx->pc = 0x1fc530u;
 }

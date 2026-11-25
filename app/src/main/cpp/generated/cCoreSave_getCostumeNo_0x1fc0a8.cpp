@@ -18,7 +18,6 @@ void cCoreSave_getCostumeNo_0x1fc0a8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("cCoreSave_getCostumeNo_0x1fc0a8");
 #endif
 
-    ctx->pc = 0x1fc0a8u;
 
     // 0x1fc0a8: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc0a8u;
@@ -38,7 +37,6 @@ void cCoreSave_getCostumeNo_0x1fc0a8(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_1fc0b8;
         }
     }
-    ctx->pc = 0x1FC0B4u;
     // 0x1fc0b4: 0x908200ae  lbu         $v0, 0xAE($a0)
     ctx->pc = 0x1fc0b4u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 174)));

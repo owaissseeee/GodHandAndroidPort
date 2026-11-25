@@ -18,13 +18,10 @@ void func_00341458_0x341458(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00341458_0x341458");
 #endif
 
-    ctx->pc = 0x341458u;
 
     // 0x341458: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x341458u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x34145c: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x34145cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x341460: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x341460u;
@@ -47,10 +44,7 @@ void func_00341458_0x341458(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_341478;
         }
     }
-    ctx->pc = 0x341470u;
     // 0x341470: 0x80d04b6  j           func_3412D8
-    ctx->pc = 0x341470u;
-    ctx->pc = 0x341474u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x341470u;
     // 0x341474: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)
@@ -63,8 +57,6 @@ void func_00341458_0x341458(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x341478u;
 label_341478:
     // 0x341478: 0x80d0448  j           func_341120
-    ctx->pc = 0x341478u;
-    ctx->pc = 0x34147Cu;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x341478u;
     // 0x34147c: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)

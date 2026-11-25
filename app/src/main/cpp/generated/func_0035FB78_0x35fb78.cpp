@@ -18,10 +18,8 @@ void func_0035FB78_0x35fb78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0035FB78_0x35fb78");
 #endif
 
-    ctx->pc = 0x35fb78u;
 
     // 0x35fb78: 0x2882181f  slti        $v0, $a0, 0x181F
-    ctx->pc = 0x35fb78u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 4) < (int64_t)(int32_t)6175) ? 1 : 0);
     // 0x35fb7c: 0x3e00008  jr          $ra
     ctx->pc = 0x35FB7Cu;
@@ -42,9 +40,7 @@ void func_0035FB78_0x35fb78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x35FB84u;
     // 0x35fb84: 0x0  nop
-    ctx->pc = 0x35fb84u;
     // NOP
     ctx->pc = 0x35fb88u;
 }

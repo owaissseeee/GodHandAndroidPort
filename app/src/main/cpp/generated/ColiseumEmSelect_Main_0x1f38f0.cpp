@@ -18,24 +18,26 @@ void ColiseumEmSelect_Main_0x1f38f0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("ColiseumEmSelect_Main_0x1f38f0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1f38f0u: goto label_1f38f0;
-        case 0x1f38f4u: goto label_1f38f4;
-        case 0x1f38f8u: goto label_1f38f8;
-        case 0x1f38fcu: goto label_1f38fc;
-        case 0x1f3900u: goto label_1f3900;
-        case 0x1f3904u: goto label_1f3904;
-        case 0x1f3908u: goto label_1f3908;
-        case 0x1f390cu: goto label_1f390c;
-        case 0x1f3910u: goto label_1f3910;
-        case 0x1f3914u: goto label_1f3914;
-        case 0x1f3918u: goto label_1f3918;
-        case 0x1f391cu: goto label_1f391c;
-        case 0x1f3920u: goto label_1f3920;
-        case 0x1f3924u: goto label_1f3924;
-        case 0x1f3928u: goto label_1f3928;
-        case 0x1f392cu: goto label_1f392c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1f38f0u, 0)) {
+        switch (ctx->pc) {
+            case 0x1f38f0u: goto label_1f38f0;
+            case 0x1f38f4u: goto label_1f38f4;
+            case 0x1f38f8u: goto label_1f38f8;
+            case 0x1f38fcu: goto label_1f38fc;
+            case 0x1f3900u: goto label_1f3900;
+            case 0x1f3904u: goto label_1f3904;
+            case 0x1f3908u: goto label_1f3908;
+            case 0x1f390cu: goto label_1f390c;
+            case 0x1f3910u: goto label_1f3910;
+            case 0x1f3914u: goto label_1f3914;
+            case 0x1f3918u: goto label_1f3918;
+            case 0x1f391cu: goto label_1f391c;
+            case 0x1f3920u: goto label_1f3920;
+            case 0x1f3924u: goto label_1f3924;
+            case 0x1f3928u: goto label_1f3928;
+            case 0x1f392cu: goto label_1f392c;
+            default: break;
+        }
     }
 
     ctx->pc = 0x1f38f0u;
@@ -147,7 +149,6 @@ label_1f3928:
     ctx->pc = 0x1F392Cu;
 label_1f392c:
     // 0x1f392c: 0x0  nop
-    ctx->pc = 0x1f392cu;
     // NOP
     ctx->pc = 0x1f3930u;
 }

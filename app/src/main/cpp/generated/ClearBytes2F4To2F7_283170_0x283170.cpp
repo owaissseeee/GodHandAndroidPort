@@ -18,7 +18,6 @@ void ClearBytes2F4To2F7_283170_0x283170(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("ClearBytes2F4To2F7_283170_0x283170");
 #endif
 
-    ctx->pc = 0x283170u;
 
     // 0x283170: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x283170u;
@@ -48,9 +47,7 @@ void ClearBytes2F4To2F7_283170_0x283170(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x283184u;
     // 0x283184: 0x0  nop
-    ctx->pc = 0x283184u;
     // NOP
     ctx->pc = 0x283188u;
 }

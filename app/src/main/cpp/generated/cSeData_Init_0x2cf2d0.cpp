@@ -18,13 +18,10 @@ void cSeData_Init_0x2cf2d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("cSeData_Init_0x2cf2d0");
 #endif
 
-    ctx->pc = 0x2cf2d0u;
 
     // 0x2cf2d0: 0x2403ffff  addiu       $v1, $zero, -0x1
-    ctx->pc = 0x2cf2d0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x2cf2d4: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x2cf2d4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2cf2d8: 0xac83003c  sw          $v1, 0x3C($a0)
     ctx->pc = 0x2cf2d8u;
@@ -72,15 +69,11 @@ void cSeData_Init_0x2cf2d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
         return;
         #endif
     }
-    ctx->pc = 0x2CF304u;
     // 0x2cf304: 0x0  nop
-    ctx->pc = 0x2cf304u;
     // NOP
     // 0x2cf308: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x2cf308u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x2cf30c: 0x0  nop
-    ctx->pc = 0x2cf30cu;
     // NOP
     ctx->pc = 0x2cf310u;
 }

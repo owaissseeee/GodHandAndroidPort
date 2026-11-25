@@ -18,34 +18,36 @@ void ColiseumBattle_Main_0x1eec98(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("ColiseumBattle_Main_0x1eec98");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1eec98u: goto label_1eec98;
-        case 0x1eec9cu: goto label_1eec9c;
-        case 0x1eeca0u: goto label_1eeca0;
-        case 0x1eeca4u: goto label_1eeca4;
-        case 0x1eeca8u: goto label_1eeca8;
-        case 0x1eecacu: goto label_1eecac;
-        case 0x1eecb0u: goto label_1eecb0;
-        case 0x1eecb4u: goto label_1eecb4;
-        case 0x1eecb8u: goto label_1eecb8;
-        case 0x1eecbcu: goto label_1eecbc;
-        case 0x1eecc0u: goto label_1eecc0;
-        case 0x1eecc4u: goto label_1eecc4;
-        case 0x1eecc8u: goto label_1eecc8;
-        case 0x1eecccu: goto label_1eeccc;
-        case 0x1eecd0u: goto label_1eecd0;
-        case 0x1eecd4u: goto label_1eecd4;
-        case 0x1eecd8u: goto label_1eecd8;
-        case 0x1eecdcu: goto label_1eecdc;
-        case 0x1eece0u: goto label_1eece0;
-        case 0x1eece4u: goto label_1eece4;
-        case 0x1eece8u: goto label_1eece8;
-        case 0x1eececu: goto label_1eecec;
-        case 0x1eecf0u: goto label_1eecf0;
-        case 0x1eecf4u: goto label_1eecf4;
-        case 0x1eecf8u: goto label_1eecf8;
-        case 0x1eecfcu: goto label_1eecfc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1eec98u, 0)) {
+        switch (ctx->pc) {
+            case 0x1eec98u: goto label_1eec98;
+            case 0x1eec9cu: goto label_1eec9c;
+            case 0x1eeca0u: goto label_1eeca0;
+            case 0x1eeca4u: goto label_1eeca4;
+            case 0x1eeca8u: goto label_1eeca8;
+            case 0x1eecacu: goto label_1eecac;
+            case 0x1eecb0u: goto label_1eecb0;
+            case 0x1eecb4u: goto label_1eecb4;
+            case 0x1eecb8u: goto label_1eecb8;
+            case 0x1eecbcu: goto label_1eecbc;
+            case 0x1eecc0u: goto label_1eecc0;
+            case 0x1eecc4u: goto label_1eecc4;
+            case 0x1eecc8u: goto label_1eecc8;
+            case 0x1eecccu: goto label_1eeccc;
+            case 0x1eecd0u: goto label_1eecd0;
+            case 0x1eecd4u: goto label_1eecd4;
+            case 0x1eecd8u: goto label_1eecd8;
+            case 0x1eecdcu: goto label_1eecdc;
+            case 0x1eece0u: goto label_1eece0;
+            case 0x1eece4u: goto label_1eece4;
+            case 0x1eece8u: goto label_1eece8;
+            case 0x1eececu: goto label_1eecec;
+            case 0x1eecf0u: goto label_1eecf0;
+            case 0x1eecf4u: goto label_1eecf4;
+            case 0x1eecf8u: goto label_1eecf8;
+            case 0x1eecfcu: goto label_1eecfc;
+            default: break;
+        }
     }
 
     ctx->pc = 0x1eec98u;
@@ -217,7 +219,6 @@ label_1eecf8:
     ctx->pc = 0x1EECFCu;
 label_1eecfc:
     // 0x1eecfc: 0x0  nop
-    ctx->pc = 0x1eecfcu;
     // NOP
     ctx->pc = 0x1eed00u;
 }

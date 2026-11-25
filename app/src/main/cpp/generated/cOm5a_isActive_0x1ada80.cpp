@@ -18,7 +18,6 @@ void cOm5a_isActive_0x1ada80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("cOm5a_isActive_0x1ada80");
 #endif
 
-    ctx->pc = 0x1ada80u;
 
     // 0x1ada80: 0x3e00008  jr          $ra
     ctx->pc = 0x1ADA80u;

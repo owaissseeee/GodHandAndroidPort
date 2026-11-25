@@ -18,16 +18,13 @@ void cEm00_setNeckMoveOff_0x2761f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("cEm00_setNeckMoveOff_0x2761f8");
 #endif
 
-    ctx->pc = 0x2761f8u;
 
     // 0x2761f8: 0x8c8216d4  lw          $v0, 0x16D4($a0)
     ctx->pc = 0x2761f8u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 5844)));
     // 0x2761fc: 0x3c038000  lui         $v1, 0x8000
-    ctx->pc = 0x2761fcu;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)32768 << 16));
     // 0x276200: 0x431025  or          $v0, $v0, $v1
-    ctx->pc = 0x276200u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | GPR_U64(ctx, 3));
     // 0x276204: 0x3e00008  jr          $ra
     ctx->pc = 0x276204u;
@@ -48,9 +45,7 @@ void cEm00_setNeckMoveOff_0x2761f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         return;
         #endif
     }
-    ctx->pc = 0x27620Cu;
     // 0x27620c: 0x0  nop
-    ctx->pc = 0x27620cu;
     // NOP
     ctx->pc = 0x276210u;
 }

@@ -18,7 +18,6 @@ void func_00355630_0x355630(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00355630_0x355630");
 #endif
 
-    ctx->pc = 0x355630u;
 
     // 0x355630: 0x54800001  bnel        $a0, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x355630u;

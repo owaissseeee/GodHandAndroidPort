@@ -18,7 +18,6 @@ void Obj38B8_IsField24_NonZero_0x38bc18(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("Obj38B8_IsField24_NonZero_0x38bc18");
 #endif
 
-    ctx->pc = 0x38bc18u;
 
     // 0x38bc18: 0x8c820024  lw          $v0, 0x24($a0)
     ctx->pc = 0x38bc18u;
@@ -42,9 +41,7 @@ void Obj38B8_IsField24_NonZero_0x38bc18(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x38BC24u;
     // 0x38bc24: 0x0  nop
-    ctx->pc = 0x38bc24u;
     // NOP
     ctx->pc = 0x38bc28u;
 }

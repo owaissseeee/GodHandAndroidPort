@@ -18,7 +18,6 @@ void cCoreSave_setVital_0x1fac98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("cCoreSave_setVital_0x1fac98");
 #endif
 
-    ctx->pc = 0x1fac98u;
 
     // 0x1fac98: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fac98u;
@@ -53,9 +52,7 @@ label_1faca4:
         return;
         #endif
     }
-    ctx->pc = 0x1FACACu;
     // 0x1facac: 0x0  nop
-    ctx->pc = 0x1facacu;
     // NOP
     ctx->pc = 0x1facb0u;
 }

@@ -18,16 +18,12 @@ void Obj0000_Get_Ptr_D_003EE088_Scaled_8_348920_0x348920(uint8_t* rdram, R5900Co
     PS_LOG_ENTRY("Obj0000_Get_Ptr_D_003EE088_Scaled_8_348920_0x348920");
 #endif
 
-    ctx->pc = 0x348920u;
 
     // 0x348920: 0x410c0  sll         $v0, $a0, 3
-    ctx->pc = 0x348920u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 4), 3));
     // 0x348924: 0x3c01003f  lui         $at, 0x3F
-    ctx->pc = 0x348924u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)63 << 16));
     // 0x348928: 0x2421e088  addiu       $at, $at, -0x1F78
-    ctx->pc = 0x348928u;
     SET_GPR_S32(ctx, 1, (int32_t)ADD32(GPR_U32(ctx, 1), 4294959240));
     // 0x34892c: 0x3e00008  jr          $ra
     ctx->pc = 0x34892Cu;
@@ -48,9 +44,7 @@ void Obj0000_Get_Ptr_D_003EE088_Scaled_8_348920_0x348920(uint8_t* rdram, R5900Co
         return;
         #endif
     }
-    ctx->pc = 0x348934u;
     // 0x348934: 0x0  nop
-    ctx->pc = 0x348934u;
     // NOP
     ctx->pc = 0x348938u;
 }

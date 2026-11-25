@@ -18,7 +18,6 @@ void _sceRpcGetFPacket_0x3b2b90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("_sceRpcGetFPacket_0x3b2b90");
 #endif
 
-    ctx->pc = 0x3b2b90u;
 
     // 0x3b2b90: 0x8c850024  lw          $a1, 0x24($a0)
     ctx->pc = 0x3b2b90u;
@@ -27,7 +26,6 @@ void _sceRpcGetFPacket_0x3b2b90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     ctx->pc = 0x3b2b94u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 24)));
     // 0x3b2b98: 0xa3001a  div         $zero, $a1, $v1
-    ctx->pc = 0x3b2b98u;
     { int32_t divisor = GPR_S32(ctx, 3);    int32_t dividend = GPR_S32(ctx, 5);    if (divisor != 0) {        if (divisor == -1 && dividend == INT32_MIN) {            ctx->lo = (uint64_t)(int64_t)INT32_MIN; ctx->hi = 0;        } else {            ctx->lo = (uint64_t)(int64_t)(dividend / divisor);            ctx->hi = (uint64_t)(int64_t)(dividend % divisor);        }    } else {        ctx->lo = (dividend < 0) ? 1ull : 0xFFFFFFFFFFFFFFFFull; ctx->hi = (uint64_t)(int64_t)dividend;    } }
     // 0x3b2b9c: 0x50600001  beql        $v1, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x3B2B9Cu;
@@ -50,13 +48,10 @@ label_3b2ba4:
     ctx->pc = 0x3b2ba4u;
     SET_GPR_S32(ctx, 5, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 20)));
     // 0x3b2ba8: 0x1010  mfhi        $v0
-    ctx->pc = 0x3b2ba8u;
     SET_GPR_U64(ctx, 2, ctx->hi);
     // 0x3b2bac: 0x24430001  addiu       $v1, $v0, 0x1
-    ctx->pc = 0x3b2bacu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 1));
     // 0x3b2bb0: 0x21180  sll         $v0, $v0, 6
-    ctx->pc = 0x3b2bb0u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 6));
     // 0x3b2bb4: 0xac830024  sw          $v1, 0x24($a0)
     ctx->pc = 0x3b2bb4u;

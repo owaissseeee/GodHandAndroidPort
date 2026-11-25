@@ -18,24 +18,22 @@ void func_002B2058_0x2b2058(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002B2058_0x2b2058");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2b206cu: goto label_2b206c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2b2058u, 0)) {
+        switch (ctx->pc) {
+            case 0x2b206cu: goto label_2b206c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2b2058u;
 
     // 0x2b2058: 0x460e6380  add.s       $f14, $f12, $f14
-    ctx->pc = 0x2b2058u;
     ctx->f[14] = FPU_ADD_S(ctx->f[12], ctx->f[14]);
     // 0x2b205c: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2b205cu;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2b2060: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2b2060u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2b2064: 0xc0ac7e0  jal         func_2B1F80
-    ctx->pc = 0x2B2064u;
     SET_GPR_U32(ctx, 31, 0x2B206Cu);
     ctx->pc = 0x2B2068u;
     ctx->in_delay_slot = true;
@@ -43,8 +41,7 @@ void func_002B2058_0x2b2058(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x2b2068: 0x460f6bc0  add.s       $f15, $f13, $f15 (Delay Slot)
     ctx->f[15] = FPU_ADD_S(ctx->f[13], ctx->f[15]);
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2B1F80u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2B1F80u, 0x2B2064u, 0x2B206Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002B1F80_0x2b1f80, 0x2b1f80u, 0x2b206cu)) {
         return;
     }
     ctx->pc = 0x2B206Cu;
@@ -71,12 +68,10 @@ label_2b206c:
         return;
         #endif
     }
-    ctx->pc = 0x2B2078u;
     // 0x2b2078: 0xac820000  sw          $v0, 0x0($a0)
     ctx->pc = 0x2b2078u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 0), GPR_U32(ctx, 2));
     // 0x2b207c: 0x0  nop
-    ctx->pc = 0x2b207cu;
     // NOP
     ctx->pc = 0x2b2080u;
 }

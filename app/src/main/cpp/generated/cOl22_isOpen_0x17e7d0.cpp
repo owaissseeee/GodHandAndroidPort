@@ -18,7 +18,6 @@ void cOl22_isOpen_0x17e7d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("cOl22_isOpen_0x17e7d0");
 #endif
 
-    ctx->pc = 0x17e7d0u;
 
     // 0x17e7d0: 0x3e00008  jr          $ra
     ctx->pc = 0x17E7D0u;

@@ -18,7 +18,6 @@ void NoOp_280AF0_0x280af0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("NoOp_280AF0_0x280af0");
 #endif
 
-    ctx->pc = 0x280af0u;
 
     // 0x280af0: 0x3e00008  jr          $ra
     ctx->pc = 0x280AF0u;

@@ -18,7 +18,6 @@ void Obj0000_Get_Field_1580_27A128_0x27a128(uint8_t* rdram, R5900Context* ctx, P
     PS_LOG_ENTRY("Obj0000_Get_Field_1580_27A128_0x27a128");
 #endif
 
-    ctx->pc = 0x27a128u;
 
     // 0x27a128: 0x3e00008  jr          $ra
     ctx->pc = 0x27A128u;

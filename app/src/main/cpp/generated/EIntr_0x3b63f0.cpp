@@ -18,19 +18,14 @@ void EIntr_0x3b63f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     PS_LOG_ENTRY("EIntr_0x3b63f0");
 #endif
 
-    ctx->pc = 0x3b63f0u;
 
     // 0x3b63f0: 0x40026000  mfc0        $v0, Status
-    ctx->pc = 0x3b63f0u;
     SET_GPR_S32(ctx, 2, (int32_t)ctx->cop0_status);
     // 0x3b63f4: 0x3c030001  lui         $v1, 0x1
-    ctx->pc = 0x3b63f4u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)1 << 16));
     // 0x3b63f8: 0x431024  and         $v0, $v0, $v1
-    ctx->pc = 0x3b63f8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 3));
     // 0x3b63fc: 0x42000038  ei
-    ctx->pc = 0x3b63fcu;
     ctx->cop0_status |= 0x10000; // Enable interrupts
     // 0x3b6400: 0x3e00008  jr          $ra
     ctx->pc = 0x3B6400u;

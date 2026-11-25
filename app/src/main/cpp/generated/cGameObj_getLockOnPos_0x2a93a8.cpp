@@ -18,18 +18,20 @@ void cGameObj_getLockOnPos_0x2a93a8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("cGameObj_getLockOnPos_0x2a93a8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2a93a8u: goto label_2a93a8;
-        case 0x2a93acu: goto label_2a93ac;
-        case 0x2a93b0u: goto label_2a93b0;
-        case 0x2a93b4u: goto label_2a93b4;
-        case 0x2a93b8u: goto label_2a93b8;
-        case 0x2a93bcu: goto label_2a93bc;
-        case 0x2a93c0u: goto label_2a93c0;
-        case 0x2a93c4u: goto label_2a93c4;
-        case 0x2a93c8u: goto label_2a93c8;
-        case 0x2a93ccu: goto label_2a93cc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2a93a8u, 0)) {
+        switch (ctx->pc) {
+            case 0x2a93a8u: goto label_2a93a8;
+            case 0x2a93acu: goto label_2a93ac;
+            case 0x2a93b0u: goto label_2a93b0;
+            case 0x2a93b4u: goto label_2a93b4;
+            case 0x2a93b8u: goto label_2a93b8;
+            case 0x2a93bcu: goto label_2a93bc;
+            case 0x2a93c0u: goto label_2a93c0;
+            case 0x2a93c4u: goto label_2a93c4;
+            case 0x2a93c8u: goto label_2a93c8;
+            case 0x2a93ccu: goto label_2a93cc;
+            default: break;
+        }
     }
 
     ctx->pc = 0x2a93a8u;

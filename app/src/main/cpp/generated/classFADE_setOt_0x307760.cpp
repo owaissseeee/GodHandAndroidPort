@@ -18,19 +18,15 @@ void classFADE_setOt_0x307760(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("classFADE_setOt_0x307760");
 #endif
 
-    ctx->pc = 0x307760u;
 
     // 0x307760: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x307760u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x307764: 0x7fbe0010  sq          $fp, 0x10($sp)
     ctx->pc = 0x307764u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 30));
     // 0x307768: 0x3a0f02d  daddu       $fp, $sp, $zero
-    ctx->pc = 0x307768u;
     SET_GPR_U64(ctx, 30, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
     // 0x30776c: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x30776cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x307770: 0xafc50000  sw          $a1, 0x0($fp)
     ctx->pc = 0x307770u;
@@ -59,7 +55,6 @@ void classFADE_setOt_0x307760(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_307798;
         }
     }
-    ctx->pc = 0x307790u;
     // 0x307790: 0x10000001  b           . + 4 + (0x1 << 2)
     ctx->pc = 0x307790u;
     {
@@ -72,13 +67,11 @@ void classFADE_setOt_0x307760(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     ctx->pc = 0x307798u;
 label_307798:
     // 0x307798: 0x3c0e82d  daddu       $sp, $fp, $zero
-    ctx->pc = 0x307798u;
     SET_GPR_U64(ctx, 29, (uint64_t)GPR_U64(ctx, 30) + (uint64_t)GPR_U64(ctx, 0));
     // 0x30779c: 0x7bbe0010  lq          $fp, 0x10($sp)
     ctx->pc = 0x30779cu;
     SET_GPR_VEC(ctx, 30, READ128(ADD32(GPR_U32(ctx, 29), 16)));
     // 0x3077a0: 0x27bd0020  addiu       $sp, $sp, 0x20
-    ctx->pc = 0x3077a0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 32));
     // 0x3077a4: 0x3e00008  jr          $ra
     ctx->pc = 0x3077A4u;
@@ -93,9 +86,7 @@ label_307798:
         return;
         #endif
     }
-    ctx->pc = 0x3077ACu;
     // 0x3077ac: 0x0  nop
-    ctx->pc = 0x3077acu;
     // NOP
     ctx->pc = 0x3077b0u;
 }

@@ -18,7 +18,6 @@ void sceVu0CopyVector_0x30a538(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("sceVu0CopyVector_0x30a538");
 #endif
 
-    ctx->pc = 0x30a538u;
 
     // 0x30a538: 0x78a60000  lq          $a2, 0x0($a1)
     ctx->pc = 0x30a538u;

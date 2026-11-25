@@ -18,10 +18,8 @@ void func_0031DB50_0x31db50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0031DB50_0x31db50");
 #endif
 
-    ctx->pc = 0x31db50u;
 
     // 0x31db50: 0x3c030075  lui         $v1, 0x75
-    ctx->pc = 0x31db50u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)117 << 16));
     // 0x31db54: 0x8c625bc8  lw          $v0, 0x5BC8($v1)
     ctx->pc = 0x31db54u;
@@ -41,9 +39,7 @@ void func_0031DB50_0x31db50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_31db68;
         }
     }
-    ctx->pc = 0x31DB60u;
     // 0x31db60: 0x80c76a8  j           func_31DAA0
-    ctx->pc = 0x31DB60u;
     ctx->pc = 0x31DB64u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x31DB60u;

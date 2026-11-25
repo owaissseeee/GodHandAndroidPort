@@ -18,7 +18,6 @@ void GetField_110C_2019F8_0x2019f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("GetField_110C_2019F8_0x2019f8");
 #endif
 
-    ctx->pc = 0x2019f8u;
 
     // 0x2019f8: 0x3e00008  jr          $ra
     ctx->pc = 0x2019F8u;

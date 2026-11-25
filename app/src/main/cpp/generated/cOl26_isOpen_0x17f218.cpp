@@ -18,7 +18,6 @@ void cOl26_isOpen_0x17f218(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("cOl26_isOpen_0x17f218");
 #endif
 
-    ctx->pc = 0x17f218u;
 
     // 0x17f218: 0x3e00008  jr          $ra
     ctx->pc = 0x17F218u;

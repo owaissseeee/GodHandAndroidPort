@@ -18,13 +18,11 @@ void cOl2b_setClose_0x180338(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("cOl2b_setClose_0x180338");
 #endif
 
-    ctx->pc = 0x180338u;
 
     // 0x180338: 0x8c820a24  lw          $v0, 0xA24($a0)
     ctx->pc = 0x180338u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 2596)));
     // 0x18033c: 0x24030002  addiu       $v1, $zero, 0x2
-    ctx->pc = 0x18033cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x180340: 0x10430005  beq         $v0, $v1, . + 4 + (0x5 << 2)
     ctx->pc = 0x180340u;
@@ -35,7 +33,6 @@ void cOl2b_setClose_0x180338(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_180358;
         }
     }
-    ctx->pc = 0x180348u;
     // 0x180348: 0xa08302f4  sb          $v1, 0x2F4($a0)
     ctx->pc = 0x180348u;
     WRITE8(ADD32(GPR_U32(ctx, 4), 756), (uint8_t)GPR_U32(ctx, 3));

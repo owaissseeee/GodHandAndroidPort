@@ -18,22 +18,16 @@ void func_00346450_0x346450(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00346450_0x346450");
 #endif
 
-    ctx->pc = 0x346450u;
 
     // 0x346450: 0x3c06003f  lui         $a2, 0x3F
-    ctx->pc = 0x346450u;
     SET_GPR_S32(ctx, 6, (int32_t)((uint32_t)63 << 16));
     // 0x346454: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x346454u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x346458: 0x3c03003f  lui         $v1, 0x3F
-    ctx->pc = 0x346458u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)63 << 16));
     // 0x34645c: 0x3c04003f  lui         $a0, 0x3F
-    ctx->pc = 0x34645cu;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)63 << 16));
     // 0x346460: 0x3c05003f  lui         $a1, 0x3F
-    ctx->pc = 0x346460u;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)63 << 16));
     // 0x346464: 0xacc2e078  sw          $v0, -0x1F88($a2)
     ctx->pc = 0x346464u;

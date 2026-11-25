@@ -18,38 +18,40 @@ void cGameObj_getRaisedLockOnPos_0x17b568(uint8_t* rdram, R5900Context* ctx, PS2
     PS_LOG_ENTRY("cGameObj_getRaisedLockOnPos_0x17b568");
 #endif
 
-    switch (ctx->pc) {
-        case 0x17b568u: goto label_17b568;
-        case 0x17b56cu: goto label_17b56c;
-        case 0x17b570u: goto label_17b570;
-        case 0x17b574u: goto label_17b574;
-        case 0x17b578u: goto label_17b578;
-        case 0x17b57cu: goto label_17b57c;
-        case 0x17b580u: goto label_17b580;
-        case 0x17b584u: goto label_17b584;
-        case 0x17b588u: goto label_17b588;
-        case 0x17b58cu: goto label_17b58c;
-        case 0x17b590u: goto label_17b590;
-        case 0x17b594u: goto label_17b594;
-        case 0x17b598u: goto label_17b598;
-        case 0x17b59cu: goto label_17b59c;
-        case 0x17b5a0u: goto label_17b5a0;
-        case 0x17b5a4u: goto label_17b5a4;
-        case 0x17b5a8u: goto label_17b5a8;
-        case 0x17b5acu: goto label_17b5ac;
-        case 0x17b5b0u: goto label_17b5b0;
-        case 0x17b5b4u: goto label_17b5b4;
-        case 0x17b5b8u: goto label_17b5b8;
-        case 0x17b5bcu: goto label_17b5bc;
-        case 0x17b5c0u: goto label_17b5c0;
-        case 0x17b5c4u: goto label_17b5c4;
-        case 0x17b5c8u: goto label_17b5c8;
-        case 0x17b5ccu: goto label_17b5cc;
-        case 0x17b5d0u: goto label_17b5d0;
-        case 0x17b5d4u: goto label_17b5d4;
-        case 0x17b5d8u: goto label_17b5d8;
-        case 0x17b5dcu: goto label_17b5dc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x17b568u, 0)) {
+        switch (ctx->pc) {
+            case 0x17b568u: goto label_17b568;
+            case 0x17b56cu: goto label_17b56c;
+            case 0x17b570u: goto label_17b570;
+            case 0x17b574u: goto label_17b574;
+            case 0x17b578u: goto label_17b578;
+            case 0x17b57cu: goto label_17b57c;
+            case 0x17b580u: goto label_17b580;
+            case 0x17b584u: goto label_17b584;
+            case 0x17b588u: goto label_17b588;
+            case 0x17b58cu: goto label_17b58c;
+            case 0x17b590u: goto label_17b590;
+            case 0x17b594u: goto label_17b594;
+            case 0x17b598u: goto label_17b598;
+            case 0x17b59cu: goto label_17b59c;
+            case 0x17b5a0u: goto label_17b5a0;
+            case 0x17b5a4u: goto label_17b5a4;
+            case 0x17b5a8u: goto label_17b5a8;
+            case 0x17b5acu: goto label_17b5ac;
+            case 0x17b5b0u: goto label_17b5b0;
+            case 0x17b5b4u: goto label_17b5b4;
+            case 0x17b5b8u: goto label_17b5b8;
+            case 0x17b5bcu: goto label_17b5bc;
+            case 0x17b5c0u: goto label_17b5c0;
+            case 0x17b5c4u: goto label_17b5c4;
+            case 0x17b5c8u: goto label_17b5c8;
+            case 0x17b5ccu: goto label_17b5cc;
+            case 0x17b5d0u: goto label_17b5d0;
+            case 0x17b5d4u: goto label_17b5d4;
+            case 0x17b5d8u: goto label_17b5d8;
+            case 0x17b5dcu: goto label_17b5dc;
+            default: break;
+        }
     }
 
     ctx->pc = 0x17b568u;
@@ -237,7 +239,6 @@ label_17b5d8:
     ctx->pc = 0x17B5DCu;
 label_17b5dc:
     // 0x17b5dc: 0x0  nop
-    ctx->pc = 0x17b5dcu;
     // NOP
     ctx->pc = 0x17b5e0u;
 }

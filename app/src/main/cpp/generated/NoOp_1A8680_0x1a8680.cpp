@@ -18,7 +18,6 @@ void NoOp_1A8680_0x1a8680(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("NoOp_1A8680_0x1a8680");
 #endif
 
-    ctx->pc = 0x1a8680u;
 
     // 0x1a8680: 0x3e00008  jr          $ra
     ctx->pc = 0x1A8680u;

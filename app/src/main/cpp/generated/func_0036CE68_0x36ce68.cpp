@@ -18,18 +18,20 @@ void func_0036CE68_0x36ce68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0036CE68_0x36ce68");
 #endif
 
-    switch (ctx->pc) {
-        case 0x36ce68u: goto label_36ce68;
-        case 0x36ce6cu: goto label_36ce6c;
-        case 0x36ce70u: goto label_36ce70;
-        case 0x36ce74u: goto label_36ce74;
-        case 0x36ce78u: goto label_36ce78;
-        case 0x36ce7cu: goto label_36ce7c;
-        case 0x36ce80u: goto label_36ce80;
-        case 0x36ce84u: goto label_36ce84;
-        case 0x36ce88u: goto label_36ce88;
-        case 0x36ce8cu: goto label_36ce8c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x36ce68u, 0)) {
+        switch (ctx->pc) {
+            case 0x36ce68u: goto label_36ce68;
+            case 0x36ce6cu: goto label_36ce6c;
+            case 0x36ce70u: goto label_36ce70;
+            case 0x36ce74u: goto label_36ce74;
+            case 0x36ce78u: goto label_36ce78;
+            case 0x36ce7cu: goto label_36ce7c;
+            case 0x36ce80u: goto label_36ce80;
+            case 0x36ce84u: goto label_36ce84;
+            case 0x36ce88u: goto label_36ce88;
+            case 0x36ce8cu: goto label_36ce8c;
+            default: break;
+        }
     }
 
     ctx->pc = 0x36ce68u;

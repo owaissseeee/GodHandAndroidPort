@@ -18,10 +18,8 @@ void func_002B3B40_0x2b3b40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002B3B40_0x2b3b40");
 #endif
 
-    ctx->pc = 0x2b3b40u;
 
     // 0x2b3b40: 0x80282d  daddu       $a1, $a0, $zero
-    ctx->pc = 0x2b3b40u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2b3b44: 0x8ca4008c  lw          $a0, 0x8C($a1)
     ctx->pc = 0x2b3b44u;
@@ -33,16 +31,12 @@ void func_002B3B40_0x2b3b40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x2b3b4cu;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 4), 2)));
     // 0x2b3b50: 0x24420001  addiu       $v0, $v0, 0x1
-    ctx->pc = 0x2b3b50u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 1));
     // 0x2b3b54: 0x21400  sll         $v0, $v0, 16
-    ctx->pc = 0x2b3b54u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 16));
     // 0x2b3b58: 0x21403  sra         $v0, $v0, 16
-    ctx->pc = 0x2b3b58u;
     SET_GPR_S32(ctx, 2, SRA32(GPR_S32(ctx, 2), 16));
     // 0x2b3b5c: 0x62182a  slt         $v1, $v1, $v0
-    ctx->pc = 0x2b3b5cu;
     SET_GPR_U64(ctx, 3, ((int64_t)GPR_S64(ctx, 3) < (int64_t)GPR_S64(ctx, 2)) ? 1 : 0);
     // 0x2b3b60: 0x54600001  bnel        $v1, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x2B3B60u;

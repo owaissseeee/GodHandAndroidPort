@@ -18,18 +18,17 @@ void SetVCommonHandler_0x3af960(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("SetVCommonHandler_0x3af960");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3af968u: goto label_3af968;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3af960u, 0)) {
+        switch (ctx->pc) {
+            case 0x3af968u: goto label_3af968;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3af960u;
 
     // 0x3af960: 0x2403000e  addiu       $v1, $zero, 0xE
-    ctx->pc = 0x3af960u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 14));
     // 0x3af964: 0xc  syscall     0
-    ctx->pc = 0x3af964u;
     ctx->pc = 0x3AF968u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

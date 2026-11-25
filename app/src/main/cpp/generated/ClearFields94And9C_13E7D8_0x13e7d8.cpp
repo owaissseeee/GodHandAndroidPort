@@ -18,7 +18,6 @@ void ClearFields94And9C_13E7D8_0x13e7d8(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("ClearFields94And9C_13E7D8_0x13e7d8");
 #endif
 
-    ctx->pc = 0x13e7d8u;
 
     // 0x13e7d8: 0xac80009c  sw          $zero, 0x9C($a0)
     ctx->pc = 0x13e7d8u;
@@ -42,9 +41,7 @@ void ClearFields94And9C_13E7D8_0x13e7d8(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x13E7E4u;
     // 0x13e7e4: 0x0  nop
-    ctx->pc = 0x13e7e4u;
     // NOP
     ctx->pc = 0x13e7e8u;
 }

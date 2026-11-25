@@ -18,18 +18,17 @@ void DeleteSema_0x3afcb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     PS_LOG_ENTRY("DeleteSema_0x3afcb0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afcb8u: goto label_3afcb8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afcb0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afcb8u: goto label_3afcb8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afcb0u;
 
     // 0x3afcb0: 0x24030041  addiu       $v1, $zero, 0x41
-    ctx->pc = 0x3afcb0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 65));
     // 0x3afcb4: 0xc  syscall     0
-    ctx->pc = 0x3afcb4u;
     ctx->pc = 0x3AFCB8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

@@ -18,10 +18,8 @@ void Obj0000_Set_D_00766D44_Check_Field_188_NE_2_0x36c5f8(uint8_t* rdram, R5900C
     PS_LOG_ENTRY("Obj0000_Set_D_00766D44_Check_Field_188_NE_2_0x36c5f8");
 #endif
 
-    ctx->pc = 0x36c5f8u;
 
     // 0x36c5f8: 0x3c020076  lui         $v0, 0x76
-    ctx->pc = 0x36c5f8u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)118 << 16));
     // 0x36c5fc: 0xac446d44  sw          $a0, 0x6D44($v0)
     ctx->pc = 0x36c5fcu;
@@ -41,12 +39,10 @@ void Obj0000_Set_D_00766D44_Check_Field_188_NE_2_0x36c5f8(uint8_t* rdram, R5900C
             goto label_36c614;
         }
     }
-    ctx->pc = 0x36C608u;
     // 0x36c608: 0x8c830188  lw          $v1, 0x188($a0)
     ctx->pc = 0x36c608u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 392)));
     // 0x36c60c: 0x38630002  xori        $v1, $v1, 0x2
-    ctx->pc = 0x36c60cu;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) ^ (uint64_t)(uint16_t)2);
     // 0x36c610: 0x3100a  movz        $v0, $zero, $v1
     ctx->pc = 0x36c610u;
@@ -65,15 +61,11 @@ label_36c614:
         return;
         #endif
     }
-    ctx->pc = 0x36C61Cu;
     // 0x36c61c: 0x0  nop
-    ctx->pc = 0x36c61cu;
     // NOP
     // 0x36c620: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x36c620u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x36c624: 0x0  nop
-    ctx->pc = 0x36c624u;
     // NOP
     ctx->pc = 0x36c628u;
 }

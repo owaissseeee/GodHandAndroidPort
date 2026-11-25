@@ -18,17 +18,17 @@ void cEvent_releaseWork_0x297ad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("cEvent_releaseWork_0x297ad0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x297af8u: goto label_297af8;
-        case 0x297b00u: goto label_297b00;
-        case 0x297b0cu: goto label_297b0c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x297ad0u, 0)) {
+        switch (ctx->pc) {
+            case 0x297af8u: goto label_297af8;
+            case 0x297b00u: goto label_297b00;
+            case 0x297b0cu: goto label_297b0c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x297ad0u;
 
     // 0x297ad0: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x297ad0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x297ad4: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x297ad4u;
@@ -40,7 +40,6 @@ void cEvent_releaseWork_0x297ad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     ctx->pc = 0x297adcu;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 9)));
     // 0x297ae0: 0x30420001  andi        $v0, $v0, 0x1
-    ctx->pc = 0x297ae0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
     // 0x297ae4: 0x10400009  beqz        $v0, . + 4 + (0x9 << 2)
     ctx->pc = 0x297AE4u;
@@ -57,7 +56,6 @@ void cEvent_releaseWork_0x297ad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_297b0c;
         }
     }
-    ctx->pc = 0x297AECu;
     // 0x297aec: 0x26100000  addiu       $s0, $s0, 0x0
     ctx->pc = 0x297aecu;
     /* runtime-relocated */ SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), ((uint32_t)(int32_t)(int16_t)(FAST_READ32(0x297AECu) & 0xFFFFu))));
@@ -143,9 +141,7 @@ label_297b0c:
         return;
         #endif
     }
-    ctx->pc = 0x297B1Cu;
     // 0x297b1c: 0x0  nop
-    ctx->pc = 0x297b1cu;
     // NOP
     ctx->pc = 0x297b20u;
 }

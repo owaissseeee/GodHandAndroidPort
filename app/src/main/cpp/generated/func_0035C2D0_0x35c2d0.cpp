@@ -18,28 +18,30 @@ void func_0035C2D0_0x35c2d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0035C2D0_0x35c2d0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x35c2d0u: goto label_35c2d0;
-        case 0x35c2d4u: goto label_35c2d4;
-        case 0x35c2d8u: goto label_35c2d8;
-        case 0x35c2dcu: goto label_35c2dc;
-        case 0x35c2e0u: goto label_35c2e0;
-        case 0x35c2e4u: goto label_35c2e4;
-        case 0x35c2e8u: goto label_35c2e8;
-        case 0x35c2ecu: goto label_35c2ec;
-        case 0x35c2f0u: goto label_35c2f0;
-        case 0x35c2f4u: goto label_35c2f4;
-        case 0x35c2f8u: goto label_35c2f8;
-        case 0x35c2fcu: goto label_35c2fc;
-        case 0x35c300u: goto label_35c300;
-        case 0x35c304u: goto label_35c304;
-        case 0x35c308u: goto label_35c308;
-        case 0x35c30cu: goto label_35c30c;
-        case 0x35c310u: goto label_35c310;
-        case 0x35c314u: goto label_35c314;
-        case 0x35c318u: goto label_35c318;
-        case 0x35c31cu: goto label_35c31c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x35c2d0u, 0)) {
+        switch (ctx->pc) {
+            case 0x35c2d0u: goto label_35c2d0;
+            case 0x35c2d4u: goto label_35c2d4;
+            case 0x35c2d8u: goto label_35c2d8;
+            case 0x35c2dcu: goto label_35c2dc;
+            case 0x35c2e0u: goto label_35c2e0;
+            case 0x35c2e4u: goto label_35c2e4;
+            case 0x35c2e8u: goto label_35c2e8;
+            case 0x35c2ecu: goto label_35c2ec;
+            case 0x35c2f0u: goto label_35c2f0;
+            case 0x35c2f4u: goto label_35c2f4;
+            case 0x35c2f8u: goto label_35c2f8;
+            case 0x35c2fcu: goto label_35c2fc;
+            case 0x35c300u: goto label_35c300;
+            case 0x35c304u: goto label_35c304;
+            case 0x35c308u: goto label_35c308;
+            case 0x35c30cu: goto label_35c30c;
+            case 0x35c310u: goto label_35c310;
+            case 0x35c314u: goto label_35c314;
+            case 0x35c318u: goto label_35c318;
+            case 0x35c31cu: goto label_35c31c;
+            default: break;
+        }
     }
 
     ctx->pc = 0x35c2d0u;

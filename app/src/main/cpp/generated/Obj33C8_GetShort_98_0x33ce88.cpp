@@ -18,7 +18,6 @@ void Obj33C8_GetShort_98_0x33ce88(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("Obj33C8_GetShort_98_0x33ce88");
 #endif
 
-    ctx->pc = 0x33ce88u;
 
     // 0x33ce88: 0x3e00008  jr          $ra
     ctx->pc = 0x33CE88u;

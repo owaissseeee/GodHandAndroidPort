@@ -18,7 +18,6 @@ void ps2___rtti_class_0x31ee80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("ps2___rtti_class_0x31ee80");
 #endif
 
-    ctx->pc = 0x31ee80u;
 
     // 0x31ee80: 0x10800006  beqz        $a0, . + 4 + (0x6 << 2)
     ctx->pc = 0x31EE80u;
@@ -35,12 +34,10 @@ void ps2___rtti_class_0x31ee80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_31ee9c;
         }
     }
-    ctx->pc = 0x31EE88u;
     // 0x31ee88: 0xac87000c  sw          $a3, 0xC($a0)
     ctx->pc = 0x31ee88u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 12), GPR_U32(ctx, 7));
     // 0x31ee8c: 0x24420fc0  addiu       $v0, $v0, 0xFC0
-    ctx->pc = 0x31ee8cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4032));
     // 0x31ee90: 0xac850000  sw          $a1, 0x0($a0)
     ctx->pc = 0x31ee90u;
@@ -65,9 +62,7 @@ label_31ee9c:
         return;
         #endif
     }
-    ctx->pc = 0x31EEA4u;
     // 0x31eea4: 0x0  nop
-    ctx->pc = 0x31eea4u;
     // NOP
     ctx->pc = 0x31eea8u;
 }

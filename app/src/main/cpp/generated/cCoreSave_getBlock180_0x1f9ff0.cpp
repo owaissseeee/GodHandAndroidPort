@@ -18,7 +18,6 @@ void cCoreSave_getBlock180_0x1f9ff0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("cCoreSave_getBlock180_0x1f9ff0");
 #endif
 
-    ctx->pc = 0x1f9ff0u;
 
     // 0x1f9ff0: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x1f9ff0u;
@@ -38,7 +37,6 @@ void cCoreSave_getBlock180_0x1f9ff0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1fa004;
         }
     }
-    ctx->pc = 0x1F9FFCu;
     // 0x1f9ffc: 0x3e00008  jr          $ra
     ctx->pc = 0x1F9FFCu;
     {
@@ -73,9 +71,7 @@ label_1fa004:
         return;
         #endif
     }
-    ctx->pc = 0x1FA00Cu;
     // 0x1fa00c: 0x0  nop
-    ctx->pc = 0x1fa00cu;
     // NOP
     ctx->pc = 0x1fa010u;
 }

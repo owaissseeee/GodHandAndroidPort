@@ -18,7 +18,6 @@ void Obj38B8_ReturnOne_0x38bee8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("Obj38B8_ReturnOne_0x38bee8");
 #endif
 
-    ctx->pc = 0x38bee8u;
 
     // 0x38bee8: 0x3e00008  jr          $ra
     ctx->pc = 0x38BEE8u;

@@ -18,15 +18,15 @@ void matherr_0x3a4ac8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     PS_LOG_ENTRY("matherr_0x3a4ac8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3a4adcu: goto label_3a4adc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3a4ac8u, 0)) {
+        switch (ctx->pc) {
+            case 0x3a4adcu: goto label_3a4adc;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3a4ac8u;
 
     // 0x3a4ac8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x3a4ac8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x3a4acc: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x3a4accu;
@@ -35,7 +35,6 @@ void matherr_0x3a4ac8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     ctx->pc = 0x3a4ad0u;
     SET_GPR_U64(ctx, 4, READ64(ADD32(GPR_U32(ctx, 4), 8)));
     // 0x3a4ad4: 0xc0c7a1c  jal         func_31E870
-    ctx->pc = 0x3A4AD4u;
     SET_GPR_U32(ctx, 31, 0x3A4ADCu);
     ctx->pc = 0x3A4AD8u;
     ctx->in_delay_slot = true;
@@ -43,8 +42,7 @@ void matherr_0x3a4ac8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     // 0x3a4ad8: 0x80282d  daddu       $a1, $a0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x31E870u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31E870u, 0x3A4AD4u, 0x3A4ADCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &dpcmp_0x31e870, 0x31e870u, 0x3a4adcu)) {
         return;
     }
     ctx->pc = 0x3A4ADCu;
@@ -53,7 +51,6 @@ label_3a4adc:
     ctx->pc = 0x3a4adcu;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x3a4ae0: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x3a4ae0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x3a4ae4: 0x3e00008  jr          $ra
     ctx->pc = 0x3A4AE4u;
@@ -74,9 +71,7 @@ label_3a4adc:
         return;
         #endif
     }
-    ctx->pc = 0x3A4AECu;
     // 0x3a4aec: 0x0  nop
-    ctx->pc = 0x3a4aecu;
     // NOP
     ctx->pc = 0x3a4af0u;
 }

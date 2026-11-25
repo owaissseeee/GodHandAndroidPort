@@ -18,18 +18,17 @@ void KSeg0_0x3afee0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     PS_LOG_ENTRY("KSeg0_0x3afee0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afee8u: goto label_3afee8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afee0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afee8u: goto label_3afee8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afee0u;
 
     // 0x3afee0: 0x24030060  addiu       $v1, $zero, 0x60
-    ctx->pc = 0x3afee0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 96));
     // 0x3afee4: 0xc  syscall     0
-    ctx->pc = 0x3afee4u;
     ctx->pc = 0x3AFEE8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

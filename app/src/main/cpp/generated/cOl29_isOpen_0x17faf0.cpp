@@ -18,7 +18,6 @@ void cOl29_isOpen_0x17faf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("cOl29_isOpen_0x17faf0");
 #endif
 
-    ctx->pc = 0x17faf0u;
 
     // 0x17faf0: 0x3e00008  jr          $ra
     ctx->pc = 0x17FAF0u;

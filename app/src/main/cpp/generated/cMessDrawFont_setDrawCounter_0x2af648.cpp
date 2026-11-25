@@ -18,7 +18,6 @@ void cMessDrawFont_setDrawCounter_0x2af648(uint8_t* rdram, R5900Context* ctx, PS
     PS_LOG_ENTRY("cMessDrawFont_setDrawCounter_0x2af648");
 #endif
 
-    ctx->pc = 0x2af648u;
 
     // 0x2af648: 0xac86001c  sw          $a2, 0x1C($a0)
     ctx->pc = 0x2af648u;
@@ -42,9 +41,7 @@ void cMessDrawFont_setDrawCounter_0x2af648(uint8_t* rdram, R5900Context* ctx, PS
         return;
         #endif
     }
-    ctx->pc = 0x2AF654u;
     // 0x2af654: 0x0  nop
-    ctx->pc = 0x2af654u;
     // NOP
     ctx->pc = 0x2af658u;
 }

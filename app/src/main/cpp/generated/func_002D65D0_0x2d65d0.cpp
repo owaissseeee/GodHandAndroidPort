@@ -18,7 +18,6 @@ void func_002D65D0_0x2d65d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002D65D0_0x2d65d0");
 #endif
 
-    ctx->pc = 0x2d65d0u;
 
     // 0x2d65d0: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2d65d0u;
@@ -32,7 +31,6 @@ void func_002D65D0_0x2d65d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2d65ec;
         }
     }
-    ctx->pc = 0x2D65DCu;
     // 0x2d65dc: 0x10a00003  beqz        $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x2D65DCu;
     {
@@ -42,7 +40,6 @@ void func_002D65D0_0x2d65d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2d65ec;
         }
     }
-    ctx->pc = 0x2D65E4u;
     // 0x2d65e4: 0xc440006c  lwc1        $f0, 0x6C($v0)
     ctx->pc = 0x2d65e4u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 2), 108)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -63,9 +60,7 @@ label_2d65ec:
         return;
         #endif
     }
-    ctx->pc = 0x2D65F4u;
     // 0x2d65f4: 0x0  nop
-    ctx->pc = 0x2d65f4u;
     // NOP
     ctx->pc = 0x2d65f8u;
 }

@@ -18,7 +18,6 @@ void ReturnZero_DFD8_0x34dfd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("ReturnZero_DFD8_0x34dfd8");
 #endif
 
-    ctx->pc = 0x34dfd8u;
 
     // 0x34dfd8: 0x3e00008  jr          $ra
     ctx->pc = 0x34DFD8u;

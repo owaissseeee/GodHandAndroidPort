@@ -18,7 +18,6 @@ void ps2__IO_marker_delta_0x38d080(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("ps2__IO_marker_delta_0x38d080");
 #endif
 
-    ctx->pc = 0x38d080u;
 
     // 0x38d080: 0x8c850004  lw          $a1, 0x4($a0)
     ctx->pc = 0x38d080u;
@@ -38,7 +37,6 @@ void ps2__IO_marker_delta_0x38d080(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_38d094;
         }
     }
-    ctx->pc = 0x38D08Cu;
     // 0x38d08c: 0x3e00008  jr          $ra
     ctx->pc = 0x38D08Cu;
     {
@@ -61,7 +59,6 @@ void ps2__IO_marker_delta_0x38d080(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x38D094u;
 label_38d094:
     // 0x38d094: 0x30420100  andi        $v0, $v0, 0x100
-    ctx->pc = 0x38d094u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)256);
     // 0x38d098: 0x50400002  beql        $v0, $zero, . + 4 + (0x2 << 2)
     ctx->pc = 0x38D098u;
@@ -78,7 +75,6 @@ label_38d094:
             goto label_38d0a4;
         }
     }
-    ctx->pc = 0x38D0A0u;
     // 0x38d0a0: 0x8ca30008  lw          $v1, 0x8($a1)
     ctx->pc = 0x38d0a0u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 8)));
@@ -87,7 +83,6 @@ label_38d0a4:
     ctx->pc = 0x38d0a4u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 4)));
     // 0x38d0a8: 0x431823  subu        $v1, $v0, $v1
-    ctx->pc = 0x38d0a8u;
     SET_GPR_S32(ctx, 3, (int32_t)SUB32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
     // 0x38d0ac: 0x8c820008  lw          $v0, 0x8($a0)
     ctx->pc = 0x38d0acu;

@@ -18,13 +18,10 @@ void Obj0000_Set_D_005FEAC0_2C23E0_0x2c23e0(uint8_t* rdram, R5900Context* ctx, P
     PS_LOG_ENTRY("Obj0000_Set_D_005FEAC0_2C23E0_0x2c23e0");
 #endif
 
-    ctx->pc = 0x2c23e0u;
 
     // 0x2c23e0: 0x3c030060  lui         $v1, 0x60
-    ctx->pc = 0x2c23e0u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)96 << 16));
     // 0x2c23e4: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2c23e4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2c23e8: 0x3e00008  jr          $ra
     ctx->pc = 0x2C23E8u;

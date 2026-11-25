@@ -18,15 +18,15 @@ void CallWithAndClearField698_12AC28_0x12ac28(uint8_t* rdram, R5900Context* ctx,
     PS_LOG_ENTRY("CallWithAndClearField698_12AC28_0x12ac28");
 #endif
 
-    switch (ctx->pc) {
-        case 0x12ac4cu: goto label_12ac4c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x12ac28u, 0)) {
+        switch (ctx->pc) {
+            case 0x12ac4cu: goto label_12ac4c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x12ac28u;
 
     // 0x12ac28: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x12ac28u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x12ac2c: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x12ac2cu;
@@ -35,7 +35,6 @@ void CallWithAndClearField698_12AC28_0x12ac28(uint8_t* rdram, R5900Context* ctx,
     ctx->pc = 0x12ac30u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x12ac34: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x12ac34u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x12ac38: 0x8e040698  lw          $a0, 0x698($s0)
     ctx->pc = 0x12ac38u;
@@ -55,12 +54,10 @@ void CallWithAndClearField698_12AC28_0x12ac28(uint8_t* rdram, R5900Context* ctx,
             goto label_12ac54;
         }
     }
-    ctx->pc = 0x12AC44u;
     // 0x12ac44: 0xc073d2a  jal         func_1CF4A8
     ctx->pc = 0x12AC44u;
     SET_GPR_U32(ctx, 31, 0x12AC4Cu);
-    ctx->pc = 0x1CF4A8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1CF4A8u, 0x12AC44u, 0x12AC4Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cOmWeapon_setFall_0x1cf4a8, 0x1cf4a8u, 0x12ac4cu)) {
         return;
     }
     ctx->pc = 0x12AC4Cu;

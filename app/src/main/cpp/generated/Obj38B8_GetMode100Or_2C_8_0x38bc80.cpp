@@ -18,13 +18,11 @@ void Obj38B8_GetMode100Or_2C_8_0x38bc80(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("Obj38B8_GetMode100Or_2C_8_0x38bc80");
 #endif
 
-    ctx->pc = 0x38bc80u;
 
     // 0x38bc80: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x38bc80u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x38bc84: 0x30420100  andi        $v0, $v0, 0x100
-    ctx->pc = 0x38bc84u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)256);
     // 0x38bc88: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x38BC88u;
@@ -35,7 +33,6 @@ void Obj38B8_GetMode100Or_2C_8_0x38bc80(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_38bc98;
         }
     }
-    ctx->pc = 0x38BC90u;
     // 0x38bc90: 0x3e00008  jr          $ra
     ctx->pc = 0x38BC90u;
     {

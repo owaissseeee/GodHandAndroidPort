@@ -18,7 +18,6 @@ void cOmDoor2_setOpen_0x1bdbf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("cOmDoor2_setOpen_0x1bdbf8");
 #endif
 
-    ctx->pc = 0x1bdbf8u;
 
     // 0x1bdbf8: 0x90820774  lbu         $v0, 0x774($a0)
     ctx->pc = 0x1bdbf8u;
@@ -38,7 +37,6 @@ void cOmDoor2_setOpen_0x1bdbf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_1bdc14;
         }
     }
-    ctx->pc = 0x1BDC04u;
     // 0x1bdc04: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x1bdc04u;
     WRITE8(ADD32(GPR_U32(ctx, 4), 759), (uint8_t)GPR_U32(ctx, 0));
@@ -65,9 +63,7 @@ label_1bdc14:
         return;
         #endif
     }
-    ctx->pc = 0x1BDC1Cu;
     // 0x1bdc1c: 0x0  nop
-    ctx->pc = 0x1bdc1cu;
     // NOP
     ctx->pc = 0x1bdc20u;
 }

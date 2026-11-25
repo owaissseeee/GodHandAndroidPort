@@ -18,20 +18,22 @@ void func_0033C2C0_0x33c2c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0033C2C0_0x33c2c0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x33c2c0u: goto label_33c2c0;
-        case 0x33c2c4u: goto label_33c2c4;
-        case 0x33c2c8u: goto label_33c2c8;
-        case 0x33c2ccu: goto label_33c2cc;
-        case 0x33c2d0u: goto label_33c2d0;
-        case 0x33c2d4u: goto label_33c2d4;
-        case 0x33c2d8u: goto label_33c2d8;
-        case 0x33c2dcu: goto label_33c2dc;
-        case 0x33c2e0u: goto label_33c2e0;
-        case 0x33c2e4u: goto label_33c2e4;
-        case 0x33c2e8u: goto label_33c2e8;
-        case 0x33c2ecu: goto label_33c2ec;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x33c2c0u, 0)) {
+        switch (ctx->pc) {
+            case 0x33c2c0u: goto label_33c2c0;
+            case 0x33c2c4u: goto label_33c2c4;
+            case 0x33c2c8u: goto label_33c2c8;
+            case 0x33c2ccu: goto label_33c2cc;
+            case 0x33c2d0u: goto label_33c2d0;
+            case 0x33c2d4u: goto label_33c2d4;
+            case 0x33c2d8u: goto label_33c2d8;
+            case 0x33c2dcu: goto label_33c2dc;
+            case 0x33c2e0u: goto label_33c2e0;
+            case 0x33c2e4u: goto label_33c2e4;
+            case 0x33c2e8u: goto label_33c2e8;
+            case 0x33c2ecu: goto label_33c2ec;
+            default: break;
+        }
     }
 
     ctx->pc = 0x33c2c0u;
@@ -135,7 +137,6 @@ label_33c2e8:
     ctx->pc = 0x33C2ECu;
 label_33c2ec:
     // 0x33c2ec: 0x0  nop
-    ctx->pc = 0x33c2ecu;
     // NOP
     ctx->pc = 0x33c2f0u;
 }

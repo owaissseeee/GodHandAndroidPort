@@ -18,21 +18,20 @@ void isUnload__12cDataManager6eObjId_0x1fefd0(uint8_t* rdram, R5900Context* ctx,
     PS_LOG_ENTRY("isUnload__12cDataManager6eObjId_0x1fefd0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1feff8u: goto label_1feff8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1fefd0u, 0)) {
+        switch (ctx->pc) {
+            case 0x1feff8u: goto label_1feff8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1fefd0u;
 
     // 0x1fefd0: 0x8c860004  lw          $a2, 0x4($a0)
     ctx->pc = 0x1fefd0u;
     SET_GPR_S32(ctx, 6, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4)));
     // 0x1fefd4: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x1fefd4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x1fefd8: 0x24c6ffff  addiu       $a2, $a2, -0x1
-    ctx->pc = 0x1fefd8u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 6), 4294967295));
     // 0x1fefdc: 0x10c2000e  beq         $a2, $v0, . + 4 + (0xE << 2)
     ctx->pc = 0x1FEFDCu;
@@ -49,18 +48,14 @@ void isUnload__12cDataManager6eObjId_0x1fefd0(uint8_t* rdram, R5900Context* ctx,
             goto label_1ff018;
         }
     }
-    ctx->pc = 0x1FEFE4u;
     // 0x1fefe4: 0x8c830008  lw          $v1, 0x8($a0)
     ctx->pc = 0x1fefe4u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 8)));
     // 0x1fefe8: 0xc21018  mult        $v0, $a2, $v0
-    ctx->pc = 0x1fefe8u;
     { int64_t result = (int64_t)GPR_S32(ctx, 6) * (int64_t)GPR_S32(ctx, 2); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 2, (int32_t)result); }
     // 0x1fefec: 0x24080008  addiu       $t0, $zero, 0x8
-    ctx->pc = 0x1fefecu;
     SET_GPR_S32(ctx, 8, (int32_t)ADD32(GPR_U32(ctx, 0), 8));
     // 0x1feff0: 0x2407ffff  addiu       $a3, $zero, -0x1
-    ctx->pc = 0x1feff0u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x1feff4: 0x432021  addu        $a0, $v0, $v1
     ctx->pc = 0x1feff4u;
@@ -84,7 +79,6 @@ label_1feff8:
             goto label_1ff010;
         }
     }
-    ctx->pc = 0x1FF004u;
     // 0x1ff004: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x1ff004u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));

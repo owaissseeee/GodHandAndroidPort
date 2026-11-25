@@ -18,52 +18,54 @@ void ps2___dynamic_cast_0x31fae8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("ps2___dynamic_cast_0x31fae8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x31fae8u: goto label_31fae8;
-        case 0x31faecu: goto label_31faec;
-        case 0x31faf0u: goto label_31faf0;
-        case 0x31faf4u: goto label_31faf4;
-        case 0x31faf8u: goto label_31faf8;
-        case 0x31fafcu: goto label_31fafc;
-        case 0x31fb00u: goto label_31fb00;
-        case 0x31fb04u: goto label_31fb04;
-        case 0x31fb08u: goto label_31fb08;
-        case 0x31fb0cu: goto label_31fb0c;
-        case 0x31fb10u: goto label_31fb10;
-        case 0x31fb14u: goto label_31fb14;
-        case 0x31fb18u: goto label_31fb18;
-        case 0x31fb1cu: goto label_31fb1c;
-        case 0x31fb20u: goto label_31fb20;
-        case 0x31fb24u: goto label_31fb24;
-        case 0x31fb28u: goto label_31fb28;
-        case 0x31fb2cu: goto label_31fb2c;
-        case 0x31fb30u: goto label_31fb30;
-        case 0x31fb34u: goto label_31fb34;
-        case 0x31fb38u: goto label_31fb38;
-        case 0x31fb3cu: goto label_31fb3c;
-        case 0x31fb40u: goto label_31fb40;
-        case 0x31fb44u: goto label_31fb44;
-        case 0x31fb48u: goto label_31fb48;
-        case 0x31fb4cu: goto label_31fb4c;
-        case 0x31fb50u: goto label_31fb50;
-        case 0x31fb54u: goto label_31fb54;
-        case 0x31fb58u: goto label_31fb58;
-        case 0x31fb5cu: goto label_31fb5c;
-        case 0x31fb60u: goto label_31fb60;
-        case 0x31fb64u: goto label_31fb64;
-        case 0x31fb68u: goto label_31fb68;
-        case 0x31fb6cu: goto label_31fb6c;
-        case 0x31fb70u: goto label_31fb70;
-        case 0x31fb74u: goto label_31fb74;
-        case 0x31fb78u: goto label_31fb78;
-        case 0x31fb7cu: goto label_31fb7c;
-        case 0x31fb80u: goto label_31fb80;
-        case 0x31fb84u: goto label_31fb84;
-        case 0x31fb88u: goto label_31fb88;
-        case 0x31fb8cu: goto label_31fb8c;
-        case 0x31fb90u: goto label_31fb90;
-        case 0x31fb94u: goto label_31fb94;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x31fae8u, 0)) {
+        switch (ctx->pc) {
+            case 0x31fae8u: goto label_31fae8;
+            case 0x31faecu: goto label_31faec;
+            case 0x31faf0u: goto label_31faf0;
+            case 0x31faf4u: goto label_31faf4;
+            case 0x31faf8u: goto label_31faf8;
+            case 0x31fafcu: goto label_31fafc;
+            case 0x31fb00u: goto label_31fb00;
+            case 0x31fb04u: goto label_31fb04;
+            case 0x31fb08u: goto label_31fb08;
+            case 0x31fb0cu: goto label_31fb0c;
+            case 0x31fb10u: goto label_31fb10;
+            case 0x31fb14u: goto label_31fb14;
+            case 0x31fb18u: goto label_31fb18;
+            case 0x31fb1cu: goto label_31fb1c;
+            case 0x31fb20u: goto label_31fb20;
+            case 0x31fb24u: goto label_31fb24;
+            case 0x31fb28u: goto label_31fb28;
+            case 0x31fb2cu: goto label_31fb2c;
+            case 0x31fb30u: goto label_31fb30;
+            case 0x31fb34u: goto label_31fb34;
+            case 0x31fb38u: goto label_31fb38;
+            case 0x31fb3cu: goto label_31fb3c;
+            case 0x31fb40u: goto label_31fb40;
+            case 0x31fb44u: goto label_31fb44;
+            case 0x31fb48u: goto label_31fb48;
+            case 0x31fb4cu: goto label_31fb4c;
+            case 0x31fb50u: goto label_31fb50;
+            case 0x31fb54u: goto label_31fb54;
+            case 0x31fb58u: goto label_31fb58;
+            case 0x31fb5cu: goto label_31fb5c;
+            case 0x31fb60u: goto label_31fb60;
+            case 0x31fb64u: goto label_31fb64;
+            case 0x31fb68u: goto label_31fb68;
+            case 0x31fb6cu: goto label_31fb6c;
+            case 0x31fb70u: goto label_31fb70;
+            case 0x31fb74u: goto label_31fb74;
+            case 0x31fb78u: goto label_31fb78;
+            case 0x31fb7cu: goto label_31fb7c;
+            case 0x31fb80u: goto label_31fb80;
+            case 0x31fb84u: goto label_31fb84;
+            case 0x31fb88u: goto label_31fb88;
+            case 0x31fb8cu: goto label_31fb8c;
+            case 0x31fb90u: goto label_31fb90;
+            case 0x31fb94u: goto label_31fb94;
+            default: break;
+        }
     }
 
     ctx->pc = 0x31fae8u;
@@ -350,7 +352,6 @@ label_31fb90:
     ctx->pc = 0x31FB94u;
 label_31fb94:
     // 0x31fb94: 0x0  nop
-    ctx->pc = 0x31fb94u;
     // NOP
     ctx->pc = 0x31fb98u;
 }

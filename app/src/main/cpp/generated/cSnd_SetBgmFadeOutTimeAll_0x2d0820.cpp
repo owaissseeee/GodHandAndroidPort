@@ -18,12 +18,13 @@ void cSnd_SetBgmFadeOutTimeAll_0x2d0820(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("cSnd_SetBgmFadeOutTimeAll_0x2d0820");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2d0830u: goto label_2d0830;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2d0820u, 0)) {
+        switch (ctx->pc) {
+            case 0x2d0830u: goto label_2d0830;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2d0820u;
 
     // 0x2d0820: 0x8c830018  lw          $v1, 0x18($a0)
     ctx->pc = 0x2d0820u;
@@ -37,7 +38,6 @@ void cSnd_SetBgmFadeOutTimeAll_0x2d0820(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_2d0848;
         }
     }
-    ctx->pc = 0x2D082Cu;
     // 0x2d082c: 0x8c620098  lw          $v0, 0x98($v1)
     ctx->pc = 0x2d082cu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 152)));
@@ -46,7 +46,6 @@ label_2d0830:
     ctx->pc = 0x2d0830u;
     { float f = ctx->f[12]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 3), 196), bits); }
     // 0x2d0834: 0x34420004  ori         $v0, $v0, 0x4
-    ctx->pc = 0x2d0834u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)4);
     // 0x2d0838: 0xac620098  sw          $v0, 0x98($v1)
     ctx->pc = 0x2d0838u;

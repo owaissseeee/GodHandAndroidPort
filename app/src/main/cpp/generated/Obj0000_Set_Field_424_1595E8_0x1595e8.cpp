@@ -18,7 +18,6 @@ void Obj0000_Set_Field_424_1595E8_0x1595e8(uint8_t* rdram, R5900Context* ctx, PS
     PS_LOG_ENTRY("Obj0000_Set_Field_424_1595E8_0x1595e8");
 #endif
 
-    ctx->pc = 0x1595e8u;
 
     // 0x1595e8: 0x3e00008  jr          $ra
     ctx->pc = 0x1595E8u;

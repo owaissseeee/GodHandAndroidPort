@@ -18,15 +18,15 @@ void Arena_init_0x2a9498(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     PS_LOG_ENTRY("Arena_init_0x2a9498");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2a94d4u: goto label_2a94d4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2a9498u, 0)) {
+        switch (ctx->pc) {
+            case 0x2a94d4u: goto label_2a94d4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2a9498u;
 
     // 0x2a9498: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x2a9498u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x2a949c: 0x7fb00020  sq          $s0, 0x20($sp)
     ctx->pc = 0x2a949cu;
@@ -35,7 +35,6 @@ void Arena_init_0x2a9498(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     ctx->pc = 0x2a94a0u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 17));
     // 0x2a94a4: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x2a94a4u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2a94a8: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2a94a8u;
@@ -55,7 +54,6 @@ void Arena_init_0x2a9498(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
             goto label_2a94bc;
         }
     }
-    ctx->pc = 0x2A94B4u;
     // 0x2a94b4: 0x54c00004  bnel        $a2, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x2A94B4u;
     {
@@ -94,10 +92,8 @@ label_2a94bc:
     ctx->pc = 0x2A94C8u;
 label_2a94c8:
     // 0x2a94c8: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x2a94c8u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2a94cc: 0xc0aa53c  jal         func_2A94F0
-    ctx->pc = 0x2A94CCu;
     SET_GPR_U32(ctx, 31, 0x2A94D4u);
     ctx->pc = 0x2A94D0u;
     ctx->in_delay_slot = true;
@@ -142,9 +138,7 @@ label_2a94d4:
         return;
         #endif
     }
-    ctx->pc = 0x2A94ECu;
     // 0x2a94ec: 0x0  nop
-    ctx->pc = 0x2a94ecu;
     // NOP
     ctx->pc = 0x2a94f0u;
 }

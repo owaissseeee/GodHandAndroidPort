@@ -18,18 +18,17 @@ void func_003367C0_0x3367c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_003367C0_0x3367c0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3367dcu: goto label_3367dc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3367c0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3367dcu: goto label_3367dc;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3367c0u;
 
     // 0x3367c0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x3367c0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x3367c4: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x3367c4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x3367c8: 0x14400007  bnez        $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x3367C8u;
@@ -46,12 +45,9 @@ void func_003367C0_0x3367c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_3367e8;
         }
     }
-    ctx->pc = 0x3367D0u;
     // 0x3367d0: 0x3c050045  lui         $a1, 0x45
-    ctx->pc = 0x3367d0u;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)69 << 16));
     // 0x3367d4: 0xc0cd8cc  jal         func_336330
-    ctx->pc = 0x3367D4u;
     SET_GPR_U32(ctx, 31, 0x3367DCu);
     ctx->pc = 0x3367D8u;
     ctx->in_delay_slot = true;
@@ -59,8 +55,7 @@ void func_003367C0_0x3367c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x3367d8: 0x24a55130  addiu       $a1, $a1, 0x5130 (Delay Slot)
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 20784));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x336330u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x336330u, 0x3367D4u, 0x3367DCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00336330_0x336330, 0x336330u, 0x3367dcu)) {
         return;
     }
     ctx->pc = 0x3367DCu;
@@ -80,7 +75,6 @@ label_3367dc:
             goto label_3367ec;
         }
     }
-    ctx->pc = 0x3367E4u;
     // 0x3367e4: 0x0  nop
     ctx->pc = 0x3367e4u;
     // NOP

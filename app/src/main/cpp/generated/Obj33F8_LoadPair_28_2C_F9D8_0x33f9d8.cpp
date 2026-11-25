@@ -18,7 +18,6 @@ void Obj33F8_LoadPair_28_2C_F9D8_0x33f9d8(uint8_t* rdram, R5900Context* ctx, PS2
     PS_LOG_ENTRY("Obj33F8_LoadPair_28_2C_F9D8_0x33f9d8");
 #endif
 
-    ctx->pc = 0x33f9d8u;
 
     // 0x33f9d8: 0x94830028  lhu         $v1, 0x28($a0)
     ctx->pc = 0x33f9d8u;
@@ -60,9 +59,7 @@ void Obj33F8_LoadPair_28_2C_F9D8_0x33f9d8(uint8_t* rdram, R5900Context* ctx, PS2
         return;
         #endif
     }
-    ctx->pc = 0x33F9FCu;
     // 0x33f9fc: 0x0  nop
-    ctx->pc = 0x33f9fcu;
     // NOP
     ctx->pc = 0x33fa00u;
 }

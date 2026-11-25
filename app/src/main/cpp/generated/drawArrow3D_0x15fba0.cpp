@@ -18,7 +18,6 @@ void drawArrow3D_0x15fba0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("drawArrow3D_0x15fba0");
 #endif
 
-    ctx->pc = 0x15fba0u;
 
     // 0x15fba0: 0x3e00008  jr          $ra
     ctx->pc = 0x15FBA0u;

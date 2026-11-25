@@ -18,18 +18,17 @@ void SetOsdConfigParam2_0x3affa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("SetOsdConfigParam2_0x3affa0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3affa8u: goto label_3affa8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3affa0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3affa8u: goto label_3affa8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3affa0u;
 
     // 0x3affa0: 0x2403006e  addiu       $v1, $zero, 0x6E
-    ctx->pc = 0x3affa0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 110));
     // 0x3affa4: 0xc  syscall     0
-    ctx->pc = 0x3affa4u;
     ctx->pc = 0x3AFFA8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

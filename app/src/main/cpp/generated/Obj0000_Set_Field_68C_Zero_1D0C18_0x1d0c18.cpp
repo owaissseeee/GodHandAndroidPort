@@ -18,7 +18,6 @@ void Obj0000_Set_Field_68C_Zero_1D0C18_0x1d0c18(uint8_t* rdram, R5900Context* ct
     PS_LOG_ENTRY("Obj0000_Set_Field_68C_Zero_1D0C18_0x1d0c18");
 #endif
 
-    ctx->pc = 0x1d0c18u;
 
     // 0x1d0c18: 0x3e00008  jr          $ra
     ctx->pc = 0x1D0C18u;
@@ -39,12 +38,9 @@ void Obj0000_Set_Field_68C_Zero_1D0C18_0x1d0c18(uint8_t* rdram, R5900Context* ct
         return;
         #endif
     }
-    ctx->pc = 0x1D0C20u;
     // 0x1d0c20: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x1d0c20u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x1d0c24: 0x0  nop
-    ctx->pc = 0x1d0c24u;
     // NOP
     ctx->pc = 0x1d0c28u;
 }

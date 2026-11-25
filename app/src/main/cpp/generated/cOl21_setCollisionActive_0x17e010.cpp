@@ -18,21 +18,19 @@ void cOl21_setCollisionActive_0x17e010(uint8_t* rdram, R5900Context* ctx, PS2Run
     PS_LOG_ENTRY("cOl21_setCollisionActive_0x17e010");
 #endif
 
-    switch (ctx->pc) {
-        case 0x17e020u: goto label_17e020;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x17e010u, 0)) {
+        switch (ctx->pc) {
+            case 0x17e020u: goto label_17e020;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x17e010u;
 
     // 0x17e010: 0x24090001  addiu       $t1, $zero, 0x1
-    ctx->pc = 0x17e010u;
     SET_GPR_S32(ctx, 9, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x17e014: 0x2408fffe  addiu       $t0, $zero, -0x2
-    ctx->pc = 0x17e014u;
     SET_GPR_S32(ctx, 8, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967294));
     // 0x17e018: 0x24860654  addiu       $a2, $a0, 0x654
-    ctx->pc = 0x17e018u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 4), 1620));
     // 0x17e01c: 0x24070007  addiu       $a3, $zero, 0x7
     ctx->pc = 0x17e01cu;
@@ -53,7 +51,6 @@ label_17e020:
             goto label_17e034;
         }
     }
-    ctx->pc = 0x17E028u;
     // 0x17e028: 0x8c620008  lw          $v0, 0x8($v1)
     ctx->pc = 0x17e028u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 8)));
@@ -85,7 +82,6 @@ label_17e03c:
     ctx->pc = 0x17e03cu;
     WRITE32(ADD32(GPR_U32(ctx, 3), 8), GPR_U32(ctx, 2));
     // 0x17e040: 0x24e7ffff  addiu       $a3, $a3, -0x1
-    ctx->pc = 0x17e040u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 7), 4294967295));
     // 0x17e044: 0x4e1fff6  bgez        $a3, . + 4 + (-0xA << 2)
     ctx->pc = 0x17E044u;
@@ -105,7 +101,6 @@ label_17e03c:
             goto label_17e020;
         }
     }
-    ctx->pc = 0x17E04Cu;
     // 0x17e04c: 0x3e00008  jr          $ra
     ctx->pc = 0x17E04Cu;
     {
@@ -125,9 +120,7 @@ label_17e03c:
         return;
         #endif
     }
-    ctx->pc = 0x17E054u;
     // 0x17e054: 0x0  nop
-    ctx->pc = 0x17e054u;
     // NOP
     ctx->pc = 0x17e058u;
 }

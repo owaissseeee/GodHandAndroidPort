@@ -18,12 +18,13 @@ void func_002AED40_0x2aed40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002AED40_0x2aed40");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2aed50u: goto label_2aed50;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2aed40u, 0)) {
+        switch (ctx->pc) {
+            case 0x2aed50u: goto label_2aed50;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2aed40u;
 
     // 0x2aed40: 0x8c830010  lw          $v1, 0x10($a0)
     ctx->pc = 0x2aed40u;
@@ -43,7 +44,6 @@ void func_002AED40_0x2aed40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2aed68;
         }
     }
-    ctx->pc = 0x2AED4Cu;
     // 0x2aed4c: 0x94620064  lhu         $v0, 0x64($v1)
     ctx->pc = 0x2aed4cu;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 3), 100)));
@@ -63,7 +63,6 @@ label_2aed50:
             goto label_2aed60;
         }
     }
-    ctx->pc = 0x2AED58u;
     // 0x2aed58: 0x3e00008  jr          $ra
     ctx->pc = 0x2AED58u;
     {

@@ -18,7 +18,6 @@ void GetField_54_173900_0x173900(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("GetField_54_173900_0x173900");
 #endif
 
-    ctx->pc = 0x173900u;
 
     // 0x173900: 0x3e00008  jr          $ra
     ctx->pc = 0x173900u;

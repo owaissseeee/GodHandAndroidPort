@@ -18,7 +18,6 @@ void Obj38B8_GetField8MinusField4_0x38bac0(uint8_t* rdram, R5900Context* ctx, PS
     PS_LOG_ENTRY("Obj38B8_GetField8MinusField4_0x38bac0");
 #endif
 
-    ctx->pc = 0x38bac0u;
 
     // 0x38bac0: 0x8c830004  lw          $v1, 0x4($a0)
     ctx->pc = 0x38bac0u;

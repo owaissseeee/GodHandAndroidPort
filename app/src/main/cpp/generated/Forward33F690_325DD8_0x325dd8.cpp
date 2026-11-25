@@ -18,10 +18,8 @@ void Forward33F690_325DD8_0x325dd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("Forward33F690_325DD8_0x325dd8");
 #endif
 
-    ctx->pc = 0x325dd8u;
 
     // 0x325dd8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x325dd8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x325ddc: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x325ddcu;
@@ -30,8 +28,6 @@ void Forward33F690_325DD8_0x325dd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x325de0u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x325de4: 0x80cfda4  j           func_33F690
-    ctx->pc = 0x325DE4u;
-    ctx->pc = 0x325DE8u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x325DE4u;
     // 0x325de8: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)
@@ -41,9 +37,7 @@ void Forward33F690_325DD8_0x325dd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x33F690u, 0x325DE4u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x325DECu;
     // 0x325dec: 0x0  nop
-    ctx->pc = 0x325decu;
     // NOP
     ctx->pc = 0x325df0u;
 }

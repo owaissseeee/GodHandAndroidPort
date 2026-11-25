@@ -18,18 +18,17 @@ void ResetEE_0x3af890(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     PS_LOG_ENTRY("ResetEE_0x3af890");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3af898u: goto label_3af898;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3af890u, 0)) {
+        switch (ctx->pc) {
+            case 0x3af898u: goto label_3af898;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3af890u;
 
     // 0x3af890: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x3af890u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x3af894: 0xc  syscall     0
-    ctx->pc = 0x3af894u;
     ctx->pc = 0x3AF898u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

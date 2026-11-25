@@ -18,7 +18,6 @@ void cOl2b_setInit_0x180360(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("cOl2b_setInit_0x180360");
 #endif
 
-    ctx->pc = 0x180360u;
 
     // 0x180360: 0x8c820a24  lw          $v0, 0xA24($a0)
     ctx->pc = 0x180360u;
@@ -38,7 +37,6 @@ void cOl2b_setInit_0x180360(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_18037c;
         }
     }
-    ctx->pc = 0x18036Cu;
     // 0x18036c: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x18036cu;
     WRITE8(ADD32(GPR_U32(ctx, 4), 759), (uint8_t)GPR_U32(ctx, 0));
@@ -65,9 +63,7 @@ label_18037c:
         return;
         #endif
     }
-    ctx->pc = 0x180384u;
     // 0x180384: 0x0  nop
-    ctx->pc = 0x180384u;
     // NOP
     ctx->pc = 0x180388u;
 }

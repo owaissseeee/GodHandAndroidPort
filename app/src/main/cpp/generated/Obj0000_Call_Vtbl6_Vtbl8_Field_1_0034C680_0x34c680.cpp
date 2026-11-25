@@ -18,30 +18,32 @@ void Obj0000_Call_Vtbl6_Vtbl8_Field_1_0034C680_0x34c680(uint8_t* rdram, R5900Con
     PS_LOG_ENTRY("Obj0000_Call_Vtbl6_Vtbl8_Field_1_0034C680_0x34c680");
 #endif
 
-    switch (ctx->pc) {
-        case 0x34c680u: goto label_34c680;
-        case 0x34c684u: goto label_34c684;
-        case 0x34c688u: goto label_34c688;
-        case 0x34c68cu: goto label_34c68c;
-        case 0x34c690u: goto label_34c690;
-        case 0x34c694u: goto label_34c694;
-        case 0x34c698u: goto label_34c698;
-        case 0x34c69cu: goto label_34c69c;
-        case 0x34c6a0u: goto label_34c6a0;
-        case 0x34c6a4u: goto label_34c6a4;
-        case 0x34c6a8u: goto label_34c6a8;
-        case 0x34c6acu: goto label_34c6ac;
-        case 0x34c6b0u: goto label_34c6b0;
-        case 0x34c6b4u: goto label_34c6b4;
-        case 0x34c6b8u: goto label_34c6b8;
-        case 0x34c6bcu: goto label_34c6bc;
-        case 0x34c6c0u: goto label_34c6c0;
-        case 0x34c6c4u: goto label_34c6c4;
-        case 0x34c6c8u: goto label_34c6c8;
-        case 0x34c6ccu: goto label_34c6cc;
-        case 0x34c6d0u: goto label_34c6d0;
-        case 0x34c6d4u: goto label_34c6d4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x34c680u, 0)) {
+        switch (ctx->pc) {
+            case 0x34c680u: goto label_34c680;
+            case 0x34c684u: goto label_34c684;
+            case 0x34c688u: goto label_34c688;
+            case 0x34c68cu: goto label_34c68c;
+            case 0x34c690u: goto label_34c690;
+            case 0x34c694u: goto label_34c694;
+            case 0x34c698u: goto label_34c698;
+            case 0x34c69cu: goto label_34c69c;
+            case 0x34c6a0u: goto label_34c6a0;
+            case 0x34c6a4u: goto label_34c6a4;
+            case 0x34c6a8u: goto label_34c6a8;
+            case 0x34c6acu: goto label_34c6ac;
+            case 0x34c6b0u: goto label_34c6b0;
+            case 0x34c6b4u: goto label_34c6b4;
+            case 0x34c6b8u: goto label_34c6b8;
+            case 0x34c6bcu: goto label_34c6bc;
+            case 0x34c6c0u: goto label_34c6c0;
+            case 0x34c6c4u: goto label_34c6c4;
+            case 0x34c6c8u: goto label_34c6c8;
+            case 0x34c6ccu: goto label_34c6cc;
+            case 0x34c6d0u: goto label_34c6d0;
+            case 0x34c6d4u: goto label_34c6d4;
+            default: break;
+        }
     }
 
     ctx->pc = 0x34c680u;

@@ -18,7 +18,6 @@ void cHeatSys_GetHeatLv_0x2a9bc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("cHeatSys_GetHeatLv_0x2a9bc0");
 #endif
 
-    ctx->pc = 0x2a9bc0u;
 
     // 0x2a9bc0: 0xc4810004  lwc1        $f1, 0x4($a0)
     ctx->pc = 0x2a9bc0u;
@@ -27,10 +26,8 @@ void cHeatSys_GetHeatLv_0x2a9bc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     ctx->pc = 0x2a9bc4u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 12)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x2a9bc8: 0x46000834  c.lt.s      $f1, $f0
-    ctx->pc = 0x2a9bc8u;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[1], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x2a9bcc: 0x0  nop
-    ctx->pc = 0x2a9bccu;
     // NOP
     // 0x2a9bd0: 0x45000003  bc1f        . + 4 + (0x3 << 2)
     ctx->pc = 0x2A9BD0u;
@@ -47,7 +44,6 @@ void cHeatSys_GetHeatLv_0x2a9bc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_2a9be0;
         }
     }
-    ctx->pc = 0x2A9BD8u;
     // 0x2a9bd8: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x2A9BD8u;
     {
@@ -88,9 +84,7 @@ label_2a9be4:
         return;
         #endif
     }
-    ctx->pc = 0x2A9BECu;
     // 0x2a9bec: 0x0  nop
-    ctx->pc = 0x2a9becu;
     // NOP
     ctx->pc = 0x2a9bf0u;
 }

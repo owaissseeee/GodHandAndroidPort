@@ -18,15 +18,15 @@ void ipfx1__7istream_0x389fe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("ipfx1__7istream_0x389fe0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38a02cu: goto label_38a02c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x389fe0u, 0)) {
+        switch (ctx->pc) {
+            case 0x38a02cu: goto label_38a02c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x389fe0u;
 
     // 0x389fe0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x389fe0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x389fe4: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x389fe4u;
@@ -52,9 +52,7 @@ void ipfx1__7istream_0x389fe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_38a004;
         }
     }
-    ctx->pc = 0x389FF8u;
     // 0x389ff8: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x389ff8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x389ffc: 0x1000000c  b           . + 4 + (0xC << 2)
     ctx->pc = 0x389FFCu;
@@ -91,7 +89,6 @@ label_38a004:
             goto label_38a030;
         }
     }
-    ctx->pc = 0x38A010u;
     // 0x38a010: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x38a010u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
@@ -116,9 +113,7 @@ label_38a004:
             goto label_38a030;
         }
     }
-    ctx->pc = 0x38A024u;
     // 0x38a024: 0xc0e249a  jal         func_389268
-    ctx->pc = 0x38A024u;
     SET_GPR_U32(ctx, 31, 0x38A02Cu);
     ctx->pc = 0x38A028u;
     ctx->in_delay_slot = true;
@@ -126,8 +121,7 @@ label_38a004:
     // 0x38a028: 0xa0202d  daddu       $a0, $a1, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x389268u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x389268u, 0x38A024u, 0x38A02Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &flush__7ostream_0x389268, 0x389268u, 0x38a02cu)) {
         return;
     }
     ctx->pc = 0x38A02Cu;
@@ -158,9 +152,7 @@ label_38a030:
         return;
         #endif
     }
-    ctx->pc = 0x38A03Cu;
     // 0x38a03c: 0x0  nop
-    ctx->pc = 0x38a03cu;
     // NOP
     ctx->pc = 0x38a040u;
 }

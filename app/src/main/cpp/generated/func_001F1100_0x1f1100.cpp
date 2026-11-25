@@ -18,15 +18,15 @@ void func_001F1100_0x1f1100(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_001F1100_0x1f1100");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1f1124u: goto label_1f1124;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1f1100u, 0)) {
+        switch (ctx->pc) {
+            case 0x1f1124u: goto label_1f1124;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1f1100u;
 
     // 0x1f1100: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x1f1100u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x1f1104: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x1f1104u;
@@ -35,7 +35,6 @@ void func_001F1100_0x1f1100(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x1f1108u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1f110c: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x1f110cu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1f1110: 0x8e020b94  lw          $v0, 0xB94($s0)
     ctx->pc = 0x1f1110u;
@@ -55,12 +54,10 @@ void func_001F1100_0x1f1100(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1f1134;
         }
     }
-    ctx->pc = 0x1F111Cu;
     // 0x1f111c: 0xc07be5e  jal         func_1EF978
     ctx->pc = 0x1F111Cu;
     SET_GPR_U32(ctx, 31, 0x1F1124u);
-    ctx->pc = 0x1EF978u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1EF978u, 0x1F111Cu, 0x1F1124u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ColiseumBattle_DefeatAllEnemies_0x1ef978, 0x1ef978u, 0x1f1124u)) {
         return;
     }
     ctx->pc = 0x1F1124u;
@@ -69,7 +66,6 @@ label_1f1124:
     ctx->pc = 0x1f1124u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 2964)));
     // 0x1f1128: 0x24420001  addiu       $v0, $v0, 0x1
-    ctx->pc = 0x1f1128u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 1));
     // 0x1f112c: 0xae020b94  sw          $v0, 0xB94($s0)
     ctx->pc = 0x1f112cu;

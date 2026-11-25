@@ -18,18 +18,17 @@ void cOmBase_setScrSollEnable_0x1b7680(uint8_t* rdram, R5900Context* ctx, PS2Run
     PS_LOG_ENTRY("cOmBase_setScrSollEnable_0x1b7680");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1b76a0u: goto label_1b76a0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1b7680u, 0)) {
+        switch (ctx->pc) {
+            case 0x1b76a0u: goto label_1b76a0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1b7680u;
 
     // 0x1b7680: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1b7680u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1b7684: 0xa0302d  daddu       $a2, $a1, $zero
-    ctx->pc = 0x1b7684u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1b7688: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1b7688u;
@@ -38,13 +37,10 @@ void cOmBase_setScrSollEnable_0x1b7680(uint8_t* rdram, R5900Context* ctx, PS2Run
     ctx->pc = 0x1b768cu;
     SET_GPR_U64(ctx, 2, READ64(ADD32(GPR_U32(ctx, 4), 1344)));
     // 0x1b7690: 0x3c04005d  lui         $a0, 0x5D
-    ctx->pc = 0x1b7690u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)93 << 16));
     // 0x1b7694: 0x2484ae50  addiu       $a0, $a0, -0x51B0
-    ctx->pc = 0x1b7694u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 4294946384));
     // 0x1b7698: 0xc04cc6e  jal         func_1331B8
-    ctx->pc = 0x1B7698u;
     SET_GPR_U32(ctx, 31, 0x1B76A0u);
     ctx->pc = 0x1B769Cu;
     ctx->in_delay_slot = true;
@@ -52,8 +48,7 @@ void cOmBase_setScrSollEnable_0x1b7680(uint8_t* rdram, R5900Context* ctx, PS2Run
     // 0x1b769c: 0x40282d  daddu       $a1, $v0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1331B8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1331B8u, 0x1B7698u, 0x1B76A0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_001331B8_0x1331b8, 0x1331b8u, 0x1b76a0u)) {
         return;
     }
     ctx->pc = 0x1B76A0u;
@@ -80,9 +75,7 @@ label_1b76a0:
         return;
         #endif
     }
-    ctx->pc = 0x1B76ACu;
     // 0x1b76ac: 0x0  nop
-    ctx->pc = 0x1b76acu;
     // NOP
     ctx->pc = 0x1b76b0u;
 }

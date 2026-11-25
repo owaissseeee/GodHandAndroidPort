@@ -18,7 +18,6 @@ void Obj3260_GetByte_1_D778_0x326778(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("Obj3260_GetByte_1_D778_0x326778");
 #endif
 
-    ctx->pc = 0x326778u;
 
     // 0x326778: 0x3e00008  jr          $ra
     ctx->pc = 0x326778u;

@@ -18,7 +18,6 @@ void CustomIDWork_SetMessNo_0x2d6560(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("CustomIDWork_SetMessNo_0x2d6560");
 #endif
 
-    ctx->pc = 0x2d6560u;
 
     // 0x2d6560: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2d6560u;
@@ -53,9 +52,7 @@ label_2d656c:
         return;
         #endif
     }
-    ctx->pc = 0x2D6574u;
     // 0x2d6574: 0x0  nop
-    ctx->pc = 0x2d6574u;
     // NOP
     ctx->pc = 0x2d6578u;
 }

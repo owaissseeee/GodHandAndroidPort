@@ -18,7 +18,6 @@ void Obj38B8_GetSelfPtr_0x38bef8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("Obj38B8_GetSelfPtr_0x38bef8");
 #endif
 
-    ctx->pc = 0x38bef8u;
 
     // 0x38bef8: 0x3e00008  jr          $ra
     ctx->pc = 0x38BEF8u;

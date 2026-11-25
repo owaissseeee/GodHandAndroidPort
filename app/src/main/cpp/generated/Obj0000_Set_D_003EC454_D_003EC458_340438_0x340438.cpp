@@ -18,13 +18,10 @@ void Obj0000_Set_D_003EC454_D_003EC458_340438_0x340438(uint8_t* rdram, R5900Cont
     PS_LOG_ENTRY("Obj0000_Set_D_003EC454_D_003EC458_340438_0x340438");
 #endif
 
-    ctx->pc = 0x340438u;
 
     // 0x340438: 0x3c02003f  lui         $v0, 0x3F
-    ctx->pc = 0x340438u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)63 << 16));
     // 0x34043c: 0x3c03003f  lui         $v1, 0x3F
-    ctx->pc = 0x34043cu;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)63 << 16));
     // 0x340440: 0xac44c454  sw          $a0, -0x3BAC($v0)
     ctx->pc = 0x340440u;
@@ -48,9 +45,7 @@ void Obj0000_Set_D_003EC454_D_003EC458_340438_0x340438(uint8_t* rdram, R5900Cont
         return;
         #endif
     }
-    ctx->pc = 0x34044Cu;
     // 0x34044c: 0x0  nop
-    ctx->pc = 0x34044cu;
     // NOP
     ctx->pc = 0x340450u;
 }

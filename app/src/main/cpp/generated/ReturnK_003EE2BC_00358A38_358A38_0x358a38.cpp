@@ -18,10 +18,8 @@ void ReturnK_003EE2BC_00358A38_358A38_0x358a38(uint8_t* rdram, R5900Context* ctx
     PS_LOG_ENTRY("ReturnK_003EE2BC_00358A38_358A38_0x358a38");
 #endif
 
-    ctx->pc = 0x358a38u;
 
     // 0x358a38: 0x3c03003f  lui         $v1, 0x3F
-    ctx->pc = 0x358a38u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)63 << 16));
     // 0x358a3c: 0x3e00008  jr          $ra
     ctx->pc = 0x358A3Cu;
@@ -42,9 +40,7 @@ void ReturnK_003EE2BC_00358A38_358A38_0x358a38(uint8_t* rdram, R5900Context* ctx
         return;
         #endif
     }
-    ctx->pc = 0x358A44u;
     // 0x358a44: 0x0  nop
-    ctx->pc = 0x358a44u;
     // NOP
     ctx->pc = 0x358a48u;
 }

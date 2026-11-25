@@ -18,48 +18,50 @@ void PhaseDispatch_callRowB_0x1b2708(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("PhaseDispatch_callRowB_0x1b2708");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1b2708u: goto label_1b2708;
-        case 0x1b270cu: goto label_1b270c;
-        case 0x1b2710u: goto label_1b2710;
-        case 0x1b2714u: goto label_1b2714;
-        case 0x1b2718u: goto label_1b2718;
-        case 0x1b271cu: goto label_1b271c;
-        case 0x1b2720u: goto label_1b2720;
-        case 0x1b2724u: goto label_1b2724;
-        case 0x1b2728u: goto label_1b2728;
-        case 0x1b272cu: goto label_1b272c;
-        case 0x1b2730u: goto label_1b2730;
-        case 0x1b2734u: goto label_1b2734;
-        case 0x1b2738u: goto label_1b2738;
-        case 0x1b273cu: goto label_1b273c;
-        case 0x1b2740u: goto label_1b2740;
-        case 0x1b2744u: goto label_1b2744;
-        case 0x1b2748u: goto label_1b2748;
-        case 0x1b274cu: goto label_1b274c;
-        case 0x1b2750u: goto label_1b2750;
-        case 0x1b2754u: goto label_1b2754;
-        case 0x1b2758u: goto label_1b2758;
-        case 0x1b275cu: goto label_1b275c;
-        case 0x1b2760u: goto label_1b2760;
-        case 0x1b2764u: goto label_1b2764;
-        case 0x1b2768u: goto label_1b2768;
-        case 0x1b276cu: goto label_1b276c;
-        case 0x1b2770u: goto label_1b2770;
-        case 0x1b2774u: goto label_1b2774;
-        case 0x1b2778u: goto label_1b2778;
-        case 0x1b277cu: goto label_1b277c;
-        case 0x1b2780u: goto label_1b2780;
-        case 0x1b2784u: goto label_1b2784;
-        case 0x1b2788u: goto label_1b2788;
-        case 0x1b278cu: goto label_1b278c;
-        case 0x1b2790u: goto label_1b2790;
-        case 0x1b2794u: goto label_1b2794;
-        case 0x1b2798u: goto label_1b2798;
-        case 0x1b279cu: goto label_1b279c;
-        case 0x1b27a0u: goto label_1b27a0;
-        case 0x1b27a4u: goto label_1b27a4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1b2708u, 0)) {
+        switch (ctx->pc) {
+            case 0x1b2708u: goto label_1b2708;
+            case 0x1b270cu: goto label_1b270c;
+            case 0x1b2710u: goto label_1b2710;
+            case 0x1b2714u: goto label_1b2714;
+            case 0x1b2718u: goto label_1b2718;
+            case 0x1b271cu: goto label_1b271c;
+            case 0x1b2720u: goto label_1b2720;
+            case 0x1b2724u: goto label_1b2724;
+            case 0x1b2728u: goto label_1b2728;
+            case 0x1b272cu: goto label_1b272c;
+            case 0x1b2730u: goto label_1b2730;
+            case 0x1b2734u: goto label_1b2734;
+            case 0x1b2738u: goto label_1b2738;
+            case 0x1b273cu: goto label_1b273c;
+            case 0x1b2740u: goto label_1b2740;
+            case 0x1b2744u: goto label_1b2744;
+            case 0x1b2748u: goto label_1b2748;
+            case 0x1b274cu: goto label_1b274c;
+            case 0x1b2750u: goto label_1b2750;
+            case 0x1b2754u: goto label_1b2754;
+            case 0x1b2758u: goto label_1b2758;
+            case 0x1b275cu: goto label_1b275c;
+            case 0x1b2760u: goto label_1b2760;
+            case 0x1b2764u: goto label_1b2764;
+            case 0x1b2768u: goto label_1b2768;
+            case 0x1b276cu: goto label_1b276c;
+            case 0x1b2770u: goto label_1b2770;
+            case 0x1b2774u: goto label_1b2774;
+            case 0x1b2778u: goto label_1b2778;
+            case 0x1b277cu: goto label_1b277c;
+            case 0x1b2780u: goto label_1b2780;
+            case 0x1b2784u: goto label_1b2784;
+            case 0x1b2788u: goto label_1b2788;
+            case 0x1b278cu: goto label_1b278c;
+            case 0x1b2790u: goto label_1b2790;
+            case 0x1b2794u: goto label_1b2794;
+            case 0x1b2798u: goto label_1b2798;
+            case 0x1b279cu: goto label_1b279c;
+            case 0x1b27a0u: goto label_1b27a0;
+            case 0x1b27a4u: goto label_1b27a4;
+            default: break;
+        }
     }
 
     ctx->pc = 0x1b2708u;
@@ -347,7 +349,6 @@ label_1b27a0:
     ctx->pc = 0x1B27A4u;
 label_1b27a4:
     // 0x1b27a4: 0x0  nop
-    ctx->pc = 0x1b27a4u;
     // NOP
     ctx->pc = 0x1b27a8u;
 }

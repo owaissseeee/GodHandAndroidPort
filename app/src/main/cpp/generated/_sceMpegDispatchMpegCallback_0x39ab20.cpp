@@ -18,38 +18,40 @@ void _sceMpegDispatchMpegCallback_0x39ab20(uint8_t* rdram, R5900Context* ctx, PS
     PS_LOG_ENTRY("_sceMpegDispatchMpegCallback_0x39ab20");
 #endif
 
-    switch (ctx->pc) {
-        case 0x39ab20u: goto label_39ab20;
-        case 0x39ab24u: goto label_39ab24;
-        case 0x39ab28u: goto label_39ab28;
-        case 0x39ab2cu: goto label_39ab2c;
-        case 0x39ab30u: goto label_39ab30;
-        case 0x39ab34u: goto label_39ab34;
-        case 0x39ab38u: goto label_39ab38;
-        case 0x39ab3cu: goto label_39ab3c;
-        case 0x39ab40u: goto label_39ab40;
-        case 0x39ab44u: goto label_39ab44;
-        case 0x39ab48u: goto label_39ab48;
-        case 0x39ab4cu: goto label_39ab4c;
-        case 0x39ab50u: goto label_39ab50;
-        case 0x39ab54u: goto label_39ab54;
-        case 0x39ab58u: goto label_39ab58;
-        case 0x39ab5cu: goto label_39ab5c;
-        case 0x39ab60u: goto label_39ab60;
-        case 0x39ab64u: goto label_39ab64;
-        case 0x39ab68u: goto label_39ab68;
-        case 0x39ab6cu: goto label_39ab6c;
-        case 0x39ab70u: goto label_39ab70;
-        case 0x39ab74u: goto label_39ab74;
-        case 0x39ab78u: goto label_39ab78;
-        case 0x39ab7cu: goto label_39ab7c;
-        case 0x39ab80u: goto label_39ab80;
-        case 0x39ab84u: goto label_39ab84;
-        case 0x39ab88u: goto label_39ab88;
-        case 0x39ab8cu: goto label_39ab8c;
-        case 0x39ab90u: goto label_39ab90;
-        case 0x39ab94u: goto label_39ab94;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x39ab20u, 0)) {
+        switch (ctx->pc) {
+            case 0x39ab20u: goto label_39ab20;
+            case 0x39ab24u: goto label_39ab24;
+            case 0x39ab28u: goto label_39ab28;
+            case 0x39ab2cu: goto label_39ab2c;
+            case 0x39ab30u: goto label_39ab30;
+            case 0x39ab34u: goto label_39ab34;
+            case 0x39ab38u: goto label_39ab38;
+            case 0x39ab3cu: goto label_39ab3c;
+            case 0x39ab40u: goto label_39ab40;
+            case 0x39ab44u: goto label_39ab44;
+            case 0x39ab48u: goto label_39ab48;
+            case 0x39ab4cu: goto label_39ab4c;
+            case 0x39ab50u: goto label_39ab50;
+            case 0x39ab54u: goto label_39ab54;
+            case 0x39ab58u: goto label_39ab58;
+            case 0x39ab5cu: goto label_39ab5c;
+            case 0x39ab60u: goto label_39ab60;
+            case 0x39ab64u: goto label_39ab64;
+            case 0x39ab68u: goto label_39ab68;
+            case 0x39ab6cu: goto label_39ab6c;
+            case 0x39ab70u: goto label_39ab70;
+            case 0x39ab74u: goto label_39ab74;
+            case 0x39ab78u: goto label_39ab78;
+            case 0x39ab7cu: goto label_39ab7c;
+            case 0x39ab80u: goto label_39ab80;
+            case 0x39ab84u: goto label_39ab84;
+            case 0x39ab88u: goto label_39ab88;
+            case 0x39ab8cu: goto label_39ab8c;
+            case 0x39ab90u: goto label_39ab90;
+            case 0x39ab94u: goto label_39ab94;
+            default: break;
+        }
     }
 
     ctx->pc = 0x39ab20u;

@@ -18,16 +18,16 @@ void func_001808E8_0x1808e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_001808E8_0x1808e8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1808fcu: goto label_1808fc;
-        case 0x180980u: goto label_180980;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1808e8u, 0)) {
+        switch (ctx->pc) {
+            case 0x1808fcu: goto label_1808fc;
+            case 0x180980u: goto label_180980;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1808e8u;
 
     // 0x1808e8: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x1808e8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x1808ec: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x1808ecu;
@@ -36,7 +36,6 @@ void func_001808E8_0x1808e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x1808f0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1808f4: 0xc06dba4  jal         func_1B6E90
-    ctx->pc = 0x1808F4u;
     SET_GPR_U32(ctx, 31, 0x1808FCu);
     ctx->pc = 0x1808F8u;
     ctx->in_delay_slot = true;
@@ -44,20 +43,16 @@ void func_001808E8_0x1808e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x1808f8: 0x80802d  daddu       $s0, $a0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1B6E90u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1B6E90u, 0x1808F4u, 0x1808FCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &InitFields_1B6E90_0x1b6e90, 0x1b6e90u, 0x1808fcu)) {
         return;
     }
     ctx->pc = 0x1808FCu;
 label_1808fc:
     // 0x1808fc: 0x3c030042  lui         $v1, 0x42
-    ctx->pc = 0x1808fcu;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)66 << 16));
     // 0x180900: 0x26020610  addiu       $v0, $s0, 0x610
-    ctx->pc = 0x180900u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 1552));
     // 0x180904: 0x246326a8  addiu       $v1, $v1, 0x26A8
-    ctx->pc = 0x180904u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 9896));
     // 0x180908: 0xae030214  sw          $v1, 0x214($s0)
     ctx->pc = 0x180908u;
@@ -108,13 +103,11 @@ label_1808fc:
     ctx->pc = 0x180944u;
     WRITE8(ADD32(GPR_U32(ctx, 16), 1552), (uint8_t)GPR_U32(ctx, 0));
     // 0x180948: 0x202d  daddu       $a0, $zero, $zero
-    ctx->pc = 0x180948u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x18094c: 0xac40013c  sw          $zero, 0x13C($v0)
     ctx->pc = 0x18094cu;
     WRITE32(ADD32(GPR_U32(ctx, 2), 316), GPR_U32(ctx, 0));
     // 0x180950: 0x2603061c  addiu       $v1, $s0, 0x61C
-    ctx->pc = 0x180950u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 16), 1564));
     // 0x180954: 0xa0400001  sb          $zero, 0x1($v0)
     ctx->pc = 0x180954u;
@@ -154,13 +147,10 @@ label_180980:
     ctx->pc = 0x180980u;
     WRITE32(ADD32(GPR_U32(ctx, 3), 0), GPR_U32(ctx, 0));
     // 0x180984: 0x24840001  addiu       $a0, $a0, 0x1
-    ctx->pc = 0x180984u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 1));
     // 0x180988: 0x2c820008  sltiu       $v0, $a0, 0x8
-    ctx->pc = 0x180988u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 4) < (uint64_t)(int64_t)(int32_t)8) ? 1 : 0);
     // 0x18098c: 0x0  nop
-    ctx->pc = 0x18098cu;
     // NOP
     // 0x180990: 0x1440fffb  bnez        $v0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x180990u;
@@ -180,9 +170,7 @@ label_180980:
             goto label_180980;
         }
     }
-    ctx->pc = 0x180998u;
     // 0x180998: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x180998u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x18099c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x18099cu;
@@ -209,9 +197,7 @@ label_180980:
         return;
         #endif
     }
-    ctx->pc = 0x1809ACu;
     // 0x1809ac: 0x0  nop
-    ctx->pc = 0x1809acu;
     // NOP
     ctx->pc = 0x1809b0u;
 }

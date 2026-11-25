@@ -18,18 +18,17 @@ void func_001832A8_0x1832a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_001832A8_0x1832a8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1832d8u: goto label_1832d8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1832a8u, 0)) {
+        switch (ctx->pc) {
+            case 0x1832d8u: goto label_1832d8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1832a8u;
 
     // 0x1832a8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1832a8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1832ac: 0x24860100  addiu       $a2, $a0, 0x100
-    ctx->pc = 0x1832acu;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 4), 256));
     // 0x1832b0: 0x10c50007  beq         $a2, $a1, . + 4 + (0x7 << 2)
     ctx->pc = 0x1832B0u;
@@ -46,7 +45,6 @@ void func_001832A8_0x1832a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1832d0;
         }
     }
-    ctx->pc = 0x1832B8u;
     // 0x1832b8: 0xc4a00000  lwc1        $f0, 0x0($a1)
     ctx->pc = 0x1832b8u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -67,7 +65,6 @@ void func_001832A8_0x1832a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 6), 8), bits); }
 label_1832d0:
     // 0x1832d0: 0xc060bfe  jal         func_182FF8
-    ctx->pc = 0x1832D0u;
     SET_GPR_U32(ctx, 31, 0x1832D8u);
     ctx->pc = 0x1832D4u;
     ctx->in_delay_slot = true;
@@ -75,8 +72,7 @@ label_1832d0:
     // 0x1832d4: 0x8c8500f0  lw          $a1, 0xF0($a0) (Delay Slot)
     SET_GPR_S32(ctx, 5, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 240)));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x182FF8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x182FF8u, 0x1832D0u, 0x1832D8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cOl30_SetInitialPosition_0x182ff8, 0x182ff8u, 0x1832d8u)) {
         return;
     }
     ctx->pc = 0x1832D8u;
@@ -103,15 +99,11 @@ label_1832d8:
         return;
         #endif
     }
-    ctx->pc = 0x1832E4u;
     // 0x1832e4: 0x0  nop
-    ctx->pc = 0x1832e4u;
     // NOP
     // 0x1832e8: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x1832e8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x1832ec: 0x0  nop
-    ctx->pc = 0x1832ecu;
     // NOP
     ctx->pc = 0x1832f0u;
 }

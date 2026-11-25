@@ -18,7 +18,6 @@ void Obj33C8_SetFields_78_7C_0x33ce68(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("Obj33C8_SetFields_78_7C_0x33ce68");
 #endif
 
-    ctx->pc = 0x33ce68u;
 
     // 0x33ce68: 0xac86007c  sw          $a2, 0x7C($a0)
     ctx->pc = 0x33ce68u;
@@ -42,15 +41,12 @@ void Obj33C8_SetFields_78_7C_0x33ce68(uint8_t* rdram, R5900Context* ctx, PS2Runt
         return;
         #endif
     }
-    ctx->pc = 0x33CE74u;
     // 0x33ce74: 0x0  nop
-    ctx->pc = 0x33ce74u;
     // NOP
     // 0x33ce78: 0xac850080  sw          $a1, 0x80($a0)
     ctx->pc = 0x33ce78u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 128), GPR_U32(ctx, 5));
     // 0x33ce7c: 0x0  nop
-    ctx->pc = 0x33ce7cu;
     // NOP
     ctx->pc = 0x33ce80u;
 }

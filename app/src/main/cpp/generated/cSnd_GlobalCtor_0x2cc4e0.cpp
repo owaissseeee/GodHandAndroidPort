@@ -18,24 +18,22 @@ void cSnd_GlobalCtor_0x2cc4e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("cSnd_GlobalCtor_0x2cc4e0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2cc4f4u: goto label_2cc4f4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2cc4e0u, 0)) {
+        switch (ctx->pc) {
+            case 0x2cc4f4u: goto label_2cc4f4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2cc4e0u;
 
     // 0x2cc4e0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2cc4e0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2cc4e4: 0x24040001  addiu       $a0, $zero, 0x1
-    ctx->pc = 0x2cc4e4u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2cc4e8: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2cc4e8u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2cc4ec: 0xc0b30ee  jal         func_2CC3B8
-    ctx->pc = 0x2CC4ECu;
     SET_GPR_U32(ctx, 31, 0x2CC4F4u);
     ctx->pc = 0x2CC4F0u;
     ctx->in_delay_slot = true;
@@ -43,8 +41,7 @@ void cSnd_GlobalCtor_0x2cc4e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     // 0x2cc4f0: 0x3405ffff  ori         $a1, $zero, 0xFFFF (Delay Slot)
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2CC3B8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2CC3B8u, 0x2CC4ECu, 0x2CC4F4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cSnd_StaticInit_0x2cc3b8, 0x2cc3b8u, 0x2cc4f4u)) {
         return;
     }
     ctx->pc = 0x2CC4F4u;

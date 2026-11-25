@@ -18,10 +18,8 @@ void func_00201F20_0x201f20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00201F20_0x201f20");
 #endif
 
-    ctx->pc = 0x201f20u;
 
     // 0x201f20: 0x3402ffff  ori         $v0, $zero, 0xFFFF
-    ctx->pc = 0x201f20u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     // 0x201f24: 0x14a20005  bne         $a1, $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x201F24u;
@@ -32,7 +30,6 @@ void func_00201F20_0x201f20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_201f3c;
         }
     }
-    ctx->pc = 0x201F2Cu;
     // 0x201f2c: 0x10800003  beqz        $a0, . + 4 + (0x3 << 2)
     ctx->pc = 0x201F2Cu;
     {
@@ -48,9 +45,7 @@ void func_00201F20_0x201f20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_201f3c;
         }
     }
-    ctx->pc = 0x201F34u;
     // 0x201f34: 0x2402000f  addiu       $v0, $zero, 0xF
-    ctx->pc = 0x201f34u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 15));
     // 0x201f38: 0xa062503a  sb          $v0, 0x503A($v1)
     ctx->pc = 0x201f38u;
@@ -69,9 +64,7 @@ label_201f3c:
         return;
         #endif
     }
-    ctx->pc = 0x201F44u;
     // 0x201f44: 0x0  nop
-    ctx->pc = 0x201f44u;
     // NOP
     ctx->pc = 0x201f48u;
 }

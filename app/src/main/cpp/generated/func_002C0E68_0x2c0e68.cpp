@@ -18,7 +18,6 @@ void func_002C0E68_0x2c0e68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002C0E68_0x2c0e68");
 #endif
 
-    ctx->pc = 0x2c0e68u;
 
     // 0x2c0e68: 0x90820034  lbu         $v0, 0x34($a0)
     ctx->pc = 0x2c0e68u;
@@ -42,9 +41,7 @@ void func_002C0E68_0x2c0e68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2C0E74u;
     // 0x2c0e74: 0x0  nop
-    ctx->pc = 0x2c0e74u;
     // NOP
     ctx->pc = 0x2c0e78u;
 }

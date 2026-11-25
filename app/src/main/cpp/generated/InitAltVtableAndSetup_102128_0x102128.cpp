@@ -18,30 +18,26 @@ void InitAltVtableAndSetup_102128_0x102128(uint8_t* rdram, R5900Context* ctx, PS
     PS_LOG_ENTRY("InitAltVtableAndSetup_102128_0x102128");
 #endif
 
-    switch (ctx->pc) {
-        case 0x102144u: goto label_102144;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x102128u, 0)) {
+        switch (ctx->pc) {
+            case 0x102144u: goto label_102144;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x102128u;
 
     // 0x102128: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x102128u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x10212c: 0x3c020042  lui         $v0, 0x42
-    ctx->pc = 0x10212cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)66 << 16));
     // 0x102130: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x102130u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x102134: 0x80182d  daddu       $v1, $a0, $zero
-    ctx->pc = 0x102134u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x102138: 0x2442b730  addiu       $v0, $v0, -0x48D0
-    ctx->pc = 0x102138u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294948656));
     // 0x10213c: 0xc0400b0  jal         func_1002C0
-    ctx->pc = 0x10213Cu;
     SET_GPR_U32(ctx, 31, 0x102144u);
     ctx->pc = 0x102140u;
     ctx->in_delay_slot = true;
@@ -49,8 +45,7 @@ void InitAltVtableAndSetup_102128_0x102128(uint8_t* rdram, R5900Context* ctx, PS
     // 0x102140: 0xac620214  sw          $v0, 0x214($v1) (Delay Slot)
     WRITE32(ADD32(GPR_U32(ctx, 3), 532), GPR_U32(ctx, 2));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1002C0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1002C0u, 0x10213Cu, 0x102144u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &InitObjectVtableAndRegister_1002C0_0x1002c0, 0x1002c0u, 0x102144u)) {
         return;
     }
     ctx->pc = 0x102144u;

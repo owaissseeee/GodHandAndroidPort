@@ -18,16 +18,16 @@ void ps2___uncatch_exception_0x3214d0(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("ps2___uncatch_exception_0x3214d0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3214e0u: goto label_3214e0;
-        case 0x3214f4u: goto label_3214f4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3214d0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3214e0u: goto label_3214e0;
+            case 0x3214f4u: goto label_3214f4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3214d0u;
 
     // 0x3214d0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x3214d0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x3214d4: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x3214d4u;
@@ -35,8 +35,7 @@ void ps2___uncatch_exception_0x3214d0(uint8_t* rdram, R5900Context* ctx, PS2Runt
     // 0x3214d8: 0xc0c80d8  jal         func_320360
     ctx->pc = 0x3214D8u;
     SET_GPR_U32(ctx, 31, 0x3214E0u);
-    ctx->pc = 0x320360u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x320360u, 0x3214D8u, 0x3214E0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ps2___get_eh_info_0x320360, 0x320360u, 0x3214e0u)) {
         return;
     }
     ctx->pc = 0x3214E0u;
@@ -59,12 +58,10 @@ label_3214e0:
             goto label_3214f4;
         }
     }
-    ctx->pc = 0x3214ECu;
     // 0x3214ec: 0xc0c8478  jal         func_3211E0
     ctx->pc = 0x3214ECu;
     SET_GPR_U32(ctx, 31, 0x3214F4u);
-    ctx->pc = 0x3211E0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3211E0u, 0x3214ECu, 0x3214F4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &terminate_0x3211e0, 0x3211e0u, 0x3214f4u)) {
         return;
     }
     ctx->pc = 0x3214F4u;

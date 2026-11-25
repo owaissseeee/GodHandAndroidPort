@@ -18,7 +18,6 @@ void Obj0000_Get_Field_5FC_NE_Zero_12C748_0x12c748(uint8_t* rdram, R5900Context*
     PS_LOG_ENTRY("Obj0000_Get_Field_5FC_NE_Zero_12C748_0x12c748");
 #endif
 
-    ctx->pc = 0x12c748u;
 
     // 0x12c748: 0x8c8205fc  lw          $v0, 0x5FC($a0)
     ctx->pc = 0x12c748u;
@@ -42,9 +41,7 @@ void Obj0000_Get_Field_5FC_NE_Zero_12C748_0x12c748(uint8_t* rdram, R5900Context*
         return;
         #endif
     }
-    ctx->pc = 0x12C754u;
     // 0x12c754: 0x0  nop
-    ctx->pc = 0x12c754u;
     // NOP
     ctx->pc = 0x12c758u;
 }

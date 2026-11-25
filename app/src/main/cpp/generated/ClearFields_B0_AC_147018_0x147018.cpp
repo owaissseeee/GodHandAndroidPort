@@ -18,10 +18,8 @@ void ClearFields_B0_AC_147018_0x147018(uint8_t* rdram, R5900Context* ctx, PS2Run
     PS_LOG_ENTRY("ClearFields_B0_AC_147018_0x147018");
 #endif
 
-    ctx->pc = 0x147018u;
 
     // 0x147018: 0x3402ffff  ori         $v0, $zero, 0xFFFF
-    ctx->pc = 0x147018u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     // 0x14701c: 0xac8000b0  sw          $zero, 0xB0($a0)
     ctx->pc = 0x14701cu;

@@ -18,7 +18,6 @@ void cSeData_IsFree_0x2cfc78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("cSeData_IsFree_0x2cfc78");
 #endif
 
-    ctx->pc = 0x2cfc78u;
 
     // 0x2cfc78: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x2cfc78u;
@@ -42,9 +41,7 @@ void cSeData_IsFree_0x2cfc78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
         return;
         #endif
     }
-    ctx->pc = 0x2CFC84u;
     // 0x2cfc84: 0x0  nop
-    ctx->pc = 0x2cfc84u;
     // NOP
     ctx->pc = 0x2cfc88u;
 }

@@ -18,7 +18,6 @@ void cWorldTime_gameInit_0x2d9bc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("cWorldTime_gameInit_0x2d9bc0");
 #endif
 
-    ctx->pc = 0x2d9bc0u;
 
     // 0x2d9bc0: 0x3e00008  jr          $ra
     ctx->pc = 0x2D9BC0u;

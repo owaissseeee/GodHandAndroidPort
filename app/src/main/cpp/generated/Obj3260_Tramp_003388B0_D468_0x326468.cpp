@@ -18,10 +18,8 @@ void Obj3260_Tramp_003388B0_D468_0x326468(uint8_t* rdram, R5900Context* ctx, PS2
     PS_LOG_ENTRY("Obj3260_Tramp_003388B0_D468_0x326468");
 #endif
 
-    ctx->pc = 0x326468u;
 
     // 0x326468: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x326468u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x32646c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x32646cu;
@@ -30,8 +28,6 @@ void Obj3260_Tramp_003388B0_D468_0x326468(uint8_t* rdram, R5900Context* ctx, PS2
     ctx->pc = 0x326470u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x326474: 0x80ce22c  j           func_3388B0
-    ctx->pc = 0x326474u;
-    ctx->pc = 0x326478u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x326474u;
     // 0x326478: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)
@@ -41,21 +37,15 @@ void Obj3260_Tramp_003388B0_D468_0x326468(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3388B0u, 0x326474u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x32647Cu;
     // 0x32647c: 0x0  nop
-    ctx->pc = 0x32647cu;
     // NOP
     // 0x326480: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x326480u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x326484: 0x0  nop
-    ctx->pc = 0x326484u;
     // NOP
     // 0x326488: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x326488u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x32648c: 0x0  nop
-    ctx->pc = 0x32648cu;
     // NOP
     ctx->pc = 0x326490u;
 }

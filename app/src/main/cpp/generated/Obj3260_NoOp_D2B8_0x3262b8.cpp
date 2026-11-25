@@ -18,7 +18,6 @@ void Obj3260_NoOp_D2B8_0x3262b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("Obj3260_NoOp_D2B8_0x3262b8");
 #endif
 
-    ctx->pc = 0x3262b8u;
 
     // 0x3262b8: 0x3e00008  jr          $ra
     ctx->pc = 0x3262B8u;

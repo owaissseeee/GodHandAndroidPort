@@ -18,16 +18,12 @@ void func_00148358_0x148358(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00148358_0x148358");
 #endif
 
-    ctx->pc = 0x148358u;
 
     // 0x148358: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x148358u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
     // 0x14835c: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x14835cu;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x148360: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x148360u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x148364: 0xac80038c  sw          $zero, 0x38C($a0)
     ctx->pc = 0x148364u;
@@ -114,9 +110,7 @@ void func_00148358_0x148358(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x1483C4u;
     // 0x1483c4: 0x0  nop
-    ctx->pc = 0x1483c4u;
     // NOP
     ctx->pc = 0x1483c8u;
 }

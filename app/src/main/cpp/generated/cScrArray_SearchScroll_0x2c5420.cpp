@@ -18,15 +18,15 @@ void cScrArray_SearchScroll_0x2c5420(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("cScrArray_SearchScroll_0x2c5420");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2c5440u: goto label_2c5440;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2c5420u, 0)) {
+        switch (ctx->pc) {
+            case 0x2c5440u: goto label_2c5440;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2c5420u;
 
     // 0x2c5420: 0x3c020075  lui         $v0, 0x75
-    ctx->pc = 0x2c5420u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)117 << 16));
     // 0x2c5424: 0x8c434c38  lw          $v1, 0x4C38($v0)
     ctx->pc = 0x2c5424u;
@@ -38,7 +38,6 @@ void cScrArray_SearchScroll_0x2c5420(uint8_t* rdram, R5900Context* ctx, PS2Runti
     ctx->pc = 0x2c542cu;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 4)));
     // 0x2c5430: 0x86102b  sltu        $v0, $a0, $a2
-    ctx->pc = 0x2c5430u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 4) < (uint64_t)GPR_U64(ctx, 6)) ? 1 : 0);
     // 0x2c5434: 0x1040000b  beqz        $v0, . + 4 + (0xB << 2)
     ctx->pc = 0x2C5434u;
@@ -55,7 +54,6 @@ void cScrArray_SearchScroll_0x2c5420(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_2c5464;
         }
     }
-    ctx->pc = 0x2C543Cu;
     // 0x2c543c: 0x8c860000  lw          $a2, 0x0($a0)
     ctx->pc = 0x2c543cu;
     SET_GPR_S32(ctx, 6, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
@@ -81,7 +79,6 @@ label_2c5440:
             goto label_2c5458;
         }
     }
-    ctx->pc = 0x2C5450u;
     // 0x2c5450: 0x3e00008  jr          $ra
     ctx->pc = 0x2C5450u;
     {
@@ -104,7 +101,6 @@ label_2c5440:
     ctx->pc = 0x2C5458u;
 label_2c5458:
     // 0x2c5458: 0x87102b  sltu        $v0, $a0, $a3
-    ctx->pc = 0x2c5458u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 4) < (uint64_t)GPR_U64(ctx, 7)) ? 1 : 0);
     // 0x2c545c: 0x5440fff8  bnel        $v0, $zero, . + 4 + (-0x8 << 2)
     ctx->pc = 0x2C545Cu;
@@ -145,9 +141,7 @@ label_2c5464:
         return;
         #endif
     }
-    ctx->pc = 0x2C546Cu;
     // 0x2c546c: 0x0  nop
-    ctx->pc = 0x2c546cu;
     // NOP
     ctx->pc = 0x2c5470u;
 }

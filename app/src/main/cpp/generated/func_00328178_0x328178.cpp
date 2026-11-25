@@ -18,7 +18,6 @@ void func_00328178_0x328178(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00328178_0x328178");
 #endif
 
-    ctx->pc = 0x328178u;
 
     // 0x328178: 0x8c830008  lw          $v1, 0x8($a0)
     ctx->pc = 0x328178u;
@@ -38,7 +37,6 @@ void func_00328178_0x328178(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_328188;
         }
     }
-    ctx->pc = 0x328184u;
     // 0x328184: 0x8c820058  lw          $v0, 0x58($a0)
     ctx->pc = 0x328184u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 88)));

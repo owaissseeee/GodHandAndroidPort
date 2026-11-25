@@ -18,7 +18,6 @@ void cCoreSave_initContinueNum_0x1fbf60(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("cCoreSave_initContinueNum_0x1fbf60");
 #endif
 
-    ctx->pc = 0x1fbf60u;
 
     // 0x1fbf60: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fbf60u;
@@ -53,9 +52,7 @@ label_1fbf6c:
         return;
         #endif
     }
-    ctx->pc = 0x1FBF74u;
     // 0x1fbf74: 0x0  nop
-    ctx->pc = 0x1fbf74u;
     // NOP
     ctx->pc = 0x1fbf78u;
 }

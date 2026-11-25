@@ -18,18 +18,20 @@ void eh_context_initialize_0x320388(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("eh_context_initialize_0x320388");
 #endif
 
-    switch (ctx->pc) {
-        case 0x320388u: goto label_320388;
-        case 0x32038cu: goto label_32038c;
-        case 0x320390u: goto label_320390;
-        case 0x320394u: goto label_320394;
-        case 0x320398u: goto label_320398;
-        case 0x32039cu: goto label_32039c;
-        case 0x3203a0u: goto label_3203a0;
-        case 0x3203a4u: goto label_3203a4;
-        case 0x3203a8u: goto label_3203a8;
-        case 0x3203acu: goto label_3203ac;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x320388u, 0)) {
+        switch (ctx->pc) {
+            case 0x320388u: goto label_320388;
+            case 0x32038cu: goto label_32038c;
+            case 0x320390u: goto label_320390;
+            case 0x320394u: goto label_320394;
+            case 0x320398u: goto label_320398;
+            case 0x32039cu: goto label_32039c;
+            case 0x3203a0u: goto label_3203a0;
+            case 0x3203a4u: goto label_3203a4;
+            case 0x3203a8u: goto label_3203a8;
+            case 0x3203acu: goto label_3203ac;
+            default: break;
+        }
     }
 
     ctx->pc = 0x320388u;

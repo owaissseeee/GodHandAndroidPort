@@ -18,18 +18,17 @@ void cOm5a_setFaceClose_0x1adaf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("cOm5a_setFaceClose_0x1adaf8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1adb20u: goto label_1adb20;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1adaf8u, 0)) {
+        switch (ctx->pc) {
+            case 0x1adb20u: goto label_1adb20;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1adaf8u;
 
     // 0x1adaf8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1adaf8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1adafc: 0x24020002  addiu       $v0, $zero, 0x2
-    ctx->pc = 0x1adafcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x1adb00: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1adb00u;
@@ -55,12 +54,9 @@ void cOm5a_setFaceClose_0x1adaf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_1adb20;
         }
     }
-    ctx->pc = 0x1ADB14u;
     // 0x1adb14: 0x60202d  daddu       $a0, $v1, $zero
-    ctx->pc = 0x1adb14u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1adb18: 0xc07f59a  jal         func_1FD668
-    ctx->pc = 0x1ADB18u;
     SET_GPR_U32(ctx, 31, 0x1ADB20u);
     ctx->pc = 0x1ADB1Cu;
     ctx->in_delay_slot = true;
@@ -68,8 +64,7 @@ void cOm5a_setFaceClose_0x1adaf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     // 0x1adb1c: 0x282d  daddu       $a1, $zero, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1FD668u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1FD668u, 0x1ADB18u, 0x1ADB20u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x1adb20u)) {
         return;
     }
     ctx->pc = 0x1ADB20u;
@@ -96,9 +91,7 @@ label_1adb20:
         return;
         #endif
     }
-    ctx->pc = 0x1ADB2Cu;
     // 0x1adb2c: 0x0  nop
-    ctx->pc = 0x1adb2cu;
     // NOP
     ctx->pc = 0x1adb30u;
 }

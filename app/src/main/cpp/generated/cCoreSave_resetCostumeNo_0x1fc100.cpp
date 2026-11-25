@@ -18,7 +18,6 @@ void cCoreSave_resetCostumeNo_0x1fc100(uint8_t* rdram, R5900Context* ctx, PS2Run
     PS_LOG_ENTRY("cCoreSave_resetCostumeNo_0x1fc100");
 #endif
 
-    ctx->pc = 0x1fc100u;
 
     // 0x1fc100: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x1fc100u;
@@ -38,7 +37,6 @@ void cCoreSave_resetCostumeNo_0x1fc100(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_1fc118;
         }
     }
-    ctx->pc = 0x1FC10Cu;
     // 0x1fc10c: 0xa06500ae  sb          $a1, 0xAE($v1)
     ctx->pc = 0x1fc10cu;
     WRITE8(ADD32(GPR_U32(ctx, 3), 174), (uint8_t)GPR_U32(ctx, 5));

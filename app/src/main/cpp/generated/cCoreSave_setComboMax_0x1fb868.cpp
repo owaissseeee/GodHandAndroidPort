@@ -18,7 +18,6 @@ void cCoreSave_setComboMax_0x1fb868(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("cCoreSave_setComboMax_0x1fb868");
 #endif
 
-    ctx->pc = 0x1fb868u;
 
     // 0x1fb868: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fb868u;
@@ -38,9 +37,7 @@ void cCoreSave_setComboMax_0x1fb868(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1fb8a8;
         }
     }
-    ctx->pc = 0x1FB874u;
     // 0x1fb874: 0x2ca20006  sltiu       $v0, $a1, 0x6
-    ctx->pc = 0x1fb874u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 5) < (uint64_t)(int64_t)(int32_t)6) ? 1 : 0);
     // 0x1fb878: 0x1040000b  beqz        $v0, . + 4 + (0xB << 2)
     ctx->pc = 0x1FB878u;
@@ -57,30 +54,22 @@ void cCoreSave_setComboMax_0x1fb868(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1fb8a8;
         }
     }
-    ctx->pc = 0x1FB880u;
     // 0x1fb880: 0x24030024  addiu       $v1, $zero, 0x24
-    ctx->pc = 0x1fb880u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 36));
     // 0x1fb884: 0x47102a  slt         $v0, $v0, $a3
-    ctx->pc = 0x1fb884u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 2) < (int64_t)GPR_S64(ctx, 7)) ? 1 : 0);
     // 0x1fb888: 0xa33818  mult        $a3, $a1, $v1
-    ctx->pc = 0x1fb888u;
     { int64_t result = (int64_t)GPR_S32(ctx, 5) * (int64_t)GPR_S32(ctx, 3); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 7, (int32_t)result); }
     // 0x1fb88c: 0xe41821  addu        $v1, $a3, $a0
-    ctx->pc = 0x1fb88cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 7), GPR_U32(ctx, 4)));
     // 0x1fb890: 0x382d  daddu       $a3, $zero, $zero
-    ctx->pc = 0x1fb890u;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1fb894: 0x24040006  addiu       $a0, $zero, 0x6
-    ctx->pc = 0x1fb894u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
     // 0x1fb898: 0xc2380b  movn        $a3, $a2, $v0
     ctx->pc = 0x1fb898u;
     if (GPR_U64(ctx, 2) != 0) SET_GPR_VEC(ctx, 7, GPR_VEC(ctx, 6));
     // 0x1fb89c: 0x28e20007  slti        $v0, $a3, 0x7
-    ctx->pc = 0x1fb89cu;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 7) < (int64_t)(int32_t)7) ? 1 : 0);
     // 0x1fb8a0: 0x82380a  movz        $a3, $a0, $v0
     ctx->pc = 0x1fb8a0u;
@@ -102,12 +91,9 @@ label_1fb8a8:
         return;
         #endif
     }
-    ctx->pc = 0x1FB8B0u;
     // 0x1fb8b0: 0x0  nop
-    ctx->pc = 0x1fb8b0u;
     // NOP
     // 0x1fb8b4: 0x0  nop
-    ctx->pc = 0x1fb8b4u;
     // NOP
     ctx->pc = 0x1fb8b8u;
 }

@@ -18,13 +18,10 @@ void MtxInitTransVec_0x1476d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("MtxInitTransVec_0x1476d0");
 #endif
 
-    ctx->pc = 0x1476d0u;
 
     // 0x1476d0: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x1476d0u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
     // 0x1476d4: 0x44811000  mtc1        $at, $f2
-    ctx->pc = 0x1476d4u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[2], &bits, sizeof(bits)); }
     // 0x1476d8: 0xac800004  sw          $zero, 0x4($a0)
     ctx->pc = 0x1476d8u;

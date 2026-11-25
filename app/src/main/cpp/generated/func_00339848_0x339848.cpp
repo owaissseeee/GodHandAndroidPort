@@ -18,28 +18,30 @@ void func_00339848_0x339848(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00339848_0x339848");
 #endif
 
-    switch (ctx->pc) {
-        case 0x339848u: goto label_339848;
-        case 0x33984cu: goto label_33984c;
-        case 0x339850u: goto label_339850;
-        case 0x339854u: goto label_339854;
-        case 0x339858u: goto label_339858;
-        case 0x33985cu: goto label_33985c;
-        case 0x339860u: goto label_339860;
-        case 0x339864u: goto label_339864;
-        case 0x339868u: goto label_339868;
-        case 0x33986cu: goto label_33986c;
-        case 0x339870u: goto label_339870;
-        case 0x339874u: goto label_339874;
-        case 0x339878u: goto label_339878;
-        case 0x33987cu: goto label_33987c;
-        case 0x339880u: goto label_339880;
-        case 0x339884u: goto label_339884;
-        case 0x339888u: goto label_339888;
-        case 0x33988cu: goto label_33988c;
-        case 0x339890u: goto label_339890;
-        case 0x339894u: goto label_339894;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x339848u, 0)) {
+        switch (ctx->pc) {
+            case 0x339848u: goto label_339848;
+            case 0x33984cu: goto label_33984c;
+            case 0x339850u: goto label_339850;
+            case 0x339854u: goto label_339854;
+            case 0x339858u: goto label_339858;
+            case 0x33985cu: goto label_33985c;
+            case 0x339860u: goto label_339860;
+            case 0x339864u: goto label_339864;
+            case 0x339868u: goto label_339868;
+            case 0x33986cu: goto label_33986c;
+            case 0x339870u: goto label_339870;
+            case 0x339874u: goto label_339874;
+            case 0x339878u: goto label_339878;
+            case 0x33987cu: goto label_33987c;
+            case 0x339880u: goto label_339880;
+            case 0x339884u: goto label_339884;
+            case 0x339888u: goto label_339888;
+            case 0x33988cu: goto label_33988c;
+            case 0x339890u: goto label_339890;
+            case 0x339894u: goto label_339894;
+            default: break;
+        }
     }
 
     ctx->pc = 0x339848u;
@@ -267,7 +269,6 @@ label_339890:
     ctx->pc = 0x339894u;
 label_339894:
     // 0x339894: 0x0  nop
-    ctx->pc = 0x339894u;
     // NOP
     ctx->pc = 0x339898u;
 }

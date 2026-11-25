@@ -18,7 +18,6 @@ void GetField_68C_1D0C10_0x1d0c10(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("GetField_68C_1D0C10_0x1d0c10");
 #endif
 
-    ctx->pc = 0x1d0c10u;
 
     // 0x1d0c10: 0x3e00008  jr          $ra
     ctx->pc = 0x1D0C10u;

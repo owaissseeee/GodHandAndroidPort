@@ -18,10 +18,8 @@ void func_0035EDC8_0x35edc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0035EDC8_0x35edc8");
 #endif
 
-    ctx->pc = 0x35edc8u;
 
     // 0x35edc8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x35edc8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x35edcc: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x35edccu;
@@ -33,8 +31,6 @@ void func_0035EDC8_0x35edc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x35edd4u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x35edd8: 0x80d7b78  j           func_35EDE0
-    ctx->pc = 0x35EDD8u;
-    ctx->pc = 0x35EDDCu;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x35EDD8u;
     // 0x35eddc: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)

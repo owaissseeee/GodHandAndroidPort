@@ -18,7 +18,6 @@ void sceSifCheckStatRpc_0x3b3328(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("sceSifCheckStatRpc_0x3b3328");
 #endif
 
-    ctx->pc = 0x3b3328u;
 
     // 0x3b3328: 0x8c850000  lw          $a1, 0x0($a0)
     ctx->pc = 0x3b3328u;
@@ -32,7 +31,6 @@ void sceSifCheckStatRpc_0x3b3328(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_3b3354;
         }
     }
-    ctx->pc = 0x3B3334u;
     // 0x3b3334: 0x8c830004  lw          $v1, 0x4($a0)
     ctx->pc = 0x3b3334u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4)));
@@ -48,12 +46,10 @@ void sceSifCheckStatRpc_0x3b3328(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_3b3354;
         }
     }
-    ctx->pc = 0x3B3344u;
     // 0x3b3344: 0x8ca20010  lw          $v0, 0x10($a1)
     ctx->pc = 0x3b3344u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 16)));
     // 0x3b3348: 0x30420001  andi        $v0, $v0, 0x1
-    ctx->pc = 0x3b3348u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
     // 0x3b334c: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x3B334Cu;
@@ -106,9 +102,7 @@ label_3b335c:
         return;
         #endif
     }
-    ctx->pc = 0x3B3364u;
     // 0x3b3364: 0x0  nop
-    ctx->pc = 0x3b3364u;
     // NOP
     ctx->pc = 0x3b3368u;
 }

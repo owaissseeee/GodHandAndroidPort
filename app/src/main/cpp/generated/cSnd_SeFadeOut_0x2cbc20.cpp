@@ -18,21 +18,19 @@ void cSnd_SeFadeOut_0x2cbc20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("cSnd_SeFadeOut_0x2cbc20");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2cbc40u: goto label_2cbc40;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2cbc20u, 0)) {
+        switch (ctx->pc) {
+            case 0x2cbc40u: goto label_2cbc40;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2cbc20u;
 
     // 0x2cbc20: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2cbc20u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2cbc24: 0x63400  sll         $a2, $a2, 16
-    ctx->pc = 0x2cbc24u;
     SET_GPR_S32(ctx, 6, (int32_t)SLL32(GPR_U32(ctx, 6), 16));
     // 0x2cbc28: 0xa0202d  daddu       $a0, $a1, $zero
-    ctx->pc = 0x2cbc28u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2cbc2c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2cbc2cu;
@@ -52,12 +50,10 @@ void cSnd_SeFadeOut_0x2cbc20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_2cbc48;
         }
     }
-    ctx->pc = 0x2CBC38u;
     // 0x2cbc38: 0xc0dd414  jal         func_375050
     ctx->pc = 0x2CBC38u;
     SET_GPR_U32(ctx, 31, 0x2CBC40u);
-    ctx->pc = 0x375050u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x375050u, 0x2CBC38u, 0x2CBC40u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00375050_0x375050, 0x375050u, 0x2cbc40u)) {
         return;
     }
     ctx->pc = 0x2CBC40u;
@@ -80,7 +76,6 @@ label_2cbc40:
     ctx->pc = 0x2CBC48u;
 label_2cbc48:
     // 0x2cbc48: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x2cbc48u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x2cbc4c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2cbc4cu;

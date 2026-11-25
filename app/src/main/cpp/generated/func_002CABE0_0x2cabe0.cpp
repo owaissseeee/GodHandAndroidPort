@@ -18,7 +18,6 @@ void func_002CABE0_0x2cabe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002CABE0_0x2cabe0");
 #endif
 
-    ctx->pc = 0x2cabe0u;
 
     // 0x2cabe0: 0x3e00008  jr          $ra
     ctx->pc = 0x2CABE0u;

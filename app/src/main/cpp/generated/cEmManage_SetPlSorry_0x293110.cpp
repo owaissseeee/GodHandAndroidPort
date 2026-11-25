@@ -18,10 +18,8 @@ void cEmManage_SetPlSorry_0x293110(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("cEmManage_SetPlSorry_0x293110");
 #endif
 
-    ctx->pc = 0x293110u;
 
     // 0x293110: 0x24020002  addiu       $v0, $zero, 0x2
-    ctx->pc = 0x293110u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x293114: 0x3e00008  jr          $ra
     ctx->pc = 0x293114u;
@@ -42,9 +40,7 @@ void cEmManage_SetPlSorry_0x293110(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         return;
         #endif
     }
-    ctx->pc = 0x29311Cu;
     // 0x29311c: 0x0  nop
-    ctx->pc = 0x29311cu;
     // NOP
     ctx->pc = 0x293120u;
 }

@@ -18,7 +18,6 @@ void Obj35E8_SetField_6C_0x35ef38(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("Obj35E8_SetField_6C_0x35ef38");
 #endif
 
-    ctx->pc = 0x35ef38u;
 
     // 0x35ef38: 0x3e00008  jr          $ra
     ctx->pc = 0x35EF38u;

@@ -18,7 +18,6 @@ void sceVu0AddVector_0x30a4a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("sceVu0AddVector_0x30a4a0");
 #endif
 
-    ctx->pc = 0x30a4a0u;
 
     // 0x30a4a0: 0xd8a40000  lqc2        $vf4, 0x0($a1)
     ctx->pc = 0x30a4a0u;
@@ -27,7 +26,6 @@ void sceVu0AddVector_0x30a4a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     ctx->pc = 0x30a4a4u;
     ctx->vu0_vf[5] = _mm_castsi128_ps(READ128(ADD32(GPR_U32(ctx, 6), 0)));
     // 0x30a4a8: 0x4be521a8  vadd.xyzw   $vf6, $vf4, $vf5
-    ctx->pc = 0x30a4a8u;
     { __m128 res = PS2_VADD(ctx->vu0_vf[4], ctx->vu0_vf[5]); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[6] = PS2_VBLEND(ctx->vu0_vf[6], res, _mm_castsi128_ps(mask)); }
     // 0x30a4ac: 0xf8860000  sqc2        $vf6, 0x0($a0)
     ctx->pc = 0x30a4acu;

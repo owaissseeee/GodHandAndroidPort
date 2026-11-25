@@ -18,18 +18,17 @@ void DisableIntc_0x3af9f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("DisableIntc_0x3af9f0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3af9f8u: goto label_3af9f8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3af9f0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3af9f8u: goto label_3af9f8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3af9f0u;
 
     // 0x3af9f0: 0x24030015  addiu       $v1, $zero, 0x15
-    ctx->pc = 0x3af9f0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 21));
     // 0x3af9f4: 0xc  syscall     0
-    ctx->pc = 0x3af9f4u;
     ctx->pc = 0x3AF9F8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

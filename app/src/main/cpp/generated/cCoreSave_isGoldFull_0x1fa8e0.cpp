@@ -18,7 +18,6 @@ void cCoreSave_isGoldFull_0x1fa8e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("cCoreSave_isGoldFull_0x1fa8e0");
 #endif
 
-    ctx->pc = 0x1fa8e0u;
 
     // 0x1fa8e0: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fa8e0u;
@@ -38,12 +37,10 @@ void cCoreSave_isGoldFull_0x1fa8e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_1fa8fc;
         }
     }
-    ctx->pc = 0x1FA8ECu;
     // 0x1fa8ec: 0x8c830020  lw          $v1, 0x20($a0)
     ctx->pc = 0x1fa8ecu;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 32)));
     // 0x1fa8f0: 0x3442423e  ori         $v0, $v0, 0x423E
-    ctx->pc = 0x1fa8f0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)16958);
     // 0x1fa8f4: 0x3e00008  jr          $ra
     ctx->pc = 0x1FA8F4u;
@@ -85,9 +82,7 @@ label_1fa8fc:
         return;
         #endif
     }
-    ctx->pc = 0x1FA904u;
     // 0x1fa904: 0x0  nop
-    ctx->pc = 0x1fa904u;
     // NOP
     ctx->pc = 0x1fa908u;
 }

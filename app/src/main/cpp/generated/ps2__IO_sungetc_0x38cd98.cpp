@@ -18,38 +18,40 @@ void ps2__IO_sungetc_0x38cd98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("ps2__IO_sungetc_0x38cd98");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38cd98u: goto label_38cd98;
-        case 0x38cd9cu: goto label_38cd9c;
-        case 0x38cda0u: goto label_38cda0;
-        case 0x38cda4u: goto label_38cda4;
-        case 0x38cda8u: goto label_38cda8;
-        case 0x38cdacu: goto label_38cdac;
-        case 0x38cdb0u: goto label_38cdb0;
-        case 0x38cdb4u: goto label_38cdb4;
-        case 0x38cdb8u: goto label_38cdb8;
-        case 0x38cdbcu: goto label_38cdbc;
-        case 0x38cdc0u: goto label_38cdc0;
-        case 0x38cdc4u: goto label_38cdc4;
-        case 0x38cdc8u: goto label_38cdc8;
-        case 0x38cdccu: goto label_38cdcc;
-        case 0x38cdd0u: goto label_38cdd0;
-        case 0x38cdd4u: goto label_38cdd4;
-        case 0x38cdd8u: goto label_38cdd8;
-        case 0x38cddcu: goto label_38cddc;
-        case 0x38cde0u: goto label_38cde0;
-        case 0x38cde4u: goto label_38cde4;
-        case 0x38cde8u: goto label_38cde8;
-        case 0x38cdecu: goto label_38cdec;
-        case 0x38cdf0u: goto label_38cdf0;
-        case 0x38cdf4u: goto label_38cdf4;
-        case 0x38cdf8u: goto label_38cdf8;
-        case 0x38cdfcu: goto label_38cdfc;
-        case 0x38ce00u: goto label_38ce00;
-        case 0x38ce04u: goto label_38ce04;
-        case 0x38ce08u: goto label_38ce08;
-        case 0x38ce0cu: goto label_38ce0c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38cd98u, 0)) {
+        switch (ctx->pc) {
+            case 0x38cd98u: goto label_38cd98;
+            case 0x38cd9cu: goto label_38cd9c;
+            case 0x38cda0u: goto label_38cda0;
+            case 0x38cda4u: goto label_38cda4;
+            case 0x38cda8u: goto label_38cda8;
+            case 0x38cdacu: goto label_38cdac;
+            case 0x38cdb0u: goto label_38cdb0;
+            case 0x38cdb4u: goto label_38cdb4;
+            case 0x38cdb8u: goto label_38cdb8;
+            case 0x38cdbcu: goto label_38cdbc;
+            case 0x38cdc0u: goto label_38cdc0;
+            case 0x38cdc4u: goto label_38cdc4;
+            case 0x38cdc8u: goto label_38cdc8;
+            case 0x38cdccu: goto label_38cdcc;
+            case 0x38cdd0u: goto label_38cdd0;
+            case 0x38cdd4u: goto label_38cdd4;
+            case 0x38cdd8u: goto label_38cdd8;
+            case 0x38cddcu: goto label_38cddc;
+            case 0x38cde0u: goto label_38cde0;
+            case 0x38cde4u: goto label_38cde4;
+            case 0x38cde8u: goto label_38cde8;
+            case 0x38cdecu: goto label_38cdec;
+            case 0x38cdf0u: goto label_38cdf0;
+            case 0x38cdf4u: goto label_38cdf4;
+            case 0x38cdf8u: goto label_38cdf8;
+            case 0x38cdfcu: goto label_38cdfc;
+            case 0x38ce00u: goto label_38ce00;
+            case 0x38ce04u: goto label_38ce04;
+            case 0x38ce08u: goto label_38ce08;
+            case 0x38ce0cu: goto label_38ce0c;
+            default: break;
+        }
     }
 
     ctx->pc = 0x38cd98u;
@@ -277,7 +279,6 @@ label_38ce08:
     ctx->pc = 0x38CE0Cu;
 label_38ce0c:
     // 0x38ce0c: 0x0  nop
-    ctx->pc = 0x38ce0cu;
     // NOP
     ctx->pc = 0x38ce10u;
 }

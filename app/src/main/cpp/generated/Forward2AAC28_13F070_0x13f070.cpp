@@ -18,15 +18,15 @@ void Forward2AAC28_13F070_0x13f070(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("Forward2AAC28_13F070_0x13f070");
 #endif
 
-    switch (ctx->pc) {
-        case 0x13f080u: goto label_13f080;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x13f070u, 0)) {
+        switch (ctx->pc) {
+            case 0x13f080u: goto label_13f080;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x13f070u;
 
     // 0x13f070: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x13f070u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x13f074: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x13f074u;
@@ -34,8 +34,7 @@ void Forward2AAC28_13F070_0x13f070(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     // 0x13f078: 0xc0aab0a  jal         func_2AAC28
     ctx->pc = 0x13F078u;
     SET_GPR_U32(ctx, 31, 0x13F080u);
-    ctx->pc = 0x2AAC28u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2AAC28u, 0x13F078u, 0x13F080u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_trans_0x2aac28, 0x2aac28u, 0x13f080u)) {
         return;
     }
     ctx->pc = 0x13F080u;
@@ -62,9 +61,7 @@ label_13f080:
         return;
         #endif
     }
-    ctx->pc = 0x13F08Cu;
     // 0x13f08c: 0x0  nop
-    ctx->pc = 0x13f08cu;
     // NOP
     ctx->pc = 0x13f090u;
 }

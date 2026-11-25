@@ -18,7 +18,6 @@ void cCoreSave_ckPaper_0x1fc150(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("cCoreSave_ckPaper_0x1fc150");
 #endif
 
-    ctx->pc = 0x1fc150u;
 
     // 0x1fc150: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc150u;
@@ -32,7 +31,6 @@ void cCoreSave_ckPaper_0x1fc150(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_1fc168;
         }
     }
-    ctx->pc = 0x1FC15Cu;
     // 0x1fc15c: 0x90820157  lbu         $v0, 0x157($a0)
     ctx->pc = 0x1fc15cu;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 343)));

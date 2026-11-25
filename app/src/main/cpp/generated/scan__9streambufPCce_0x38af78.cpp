@@ -18,15 +18,15 @@ void scan__9streambufPCce_0x38af78(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("scan__9streambufPCce_0x38af78");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38afa4u: goto label_38afa4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38af78u, 0)) {
+        switch (ctx->pc) {
+            case 0x38afa4u: goto label_38afa4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x38af78u;
 
     // 0x38af78: 0x27bdff80  addiu       $sp, $sp, -0x80
-    ctx->pc = 0x38af78u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967168));
     // 0x38af7c: 0xffa60050  sd          $a2, 0x50($sp)
     ctx->pc = 0x38af7cu;
@@ -35,13 +35,11 @@ void scan__9streambufPCce_0x38af78(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x38af80u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 88), GPR_U64(ctx, 7));
     // 0x38af84: 0x27a60050  addiu       $a2, $sp, 0x50
-    ctx->pc = 0x38af84u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 29), 80));
     // 0x38af88: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x38af88u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x38af8c: 0x382d  daddu       $a3, $zero, $zero
-    ctx->pc = 0x38af8cu;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x38af90: 0xffa80060  sd          $t0, 0x60($sp)
     ctx->pc = 0x38af90u;
@@ -53,7 +51,6 @@ void scan__9streambufPCce_0x38af78(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x38af98u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 112), GPR_U64(ctx, 10));
     // 0x38af9c: 0xc0e34ae  jal         func_38D2B8
-    ctx->pc = 0x38AF9Cu;
     SET_GPR_U32(ctx, 31, 0x38AFA4u);
     ctx->pc = 0x38AFA0u;
     ctx->in_delay_slot = true;
@@ -61,8 +58,7 @@ void scan__9streambufPCce_0x38af78(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     // 0x38afa0: 0xffab0078  sd          $t3, 0x78($sp) (Delay Slot)
     WRITE64(ADD32(GPR_U32(ctx, 29), 120), GPR_U64(ctx, 11));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x38D2B8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x38D2B8u, 0x38AF9Cu, 0x38AFA4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_vfscanf_0x38d2b8, 0x38d2b8u, 0x38afa4u)) {
         return;
     }
     ctx->pc = 0x38AFA4u;

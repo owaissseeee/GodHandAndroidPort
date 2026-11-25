@@ -18,16 +18,13 @@ void cCockMess_SetMessNo_0x13f238(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("cCockMess_SetMessNo_0x13f238");
 #endif
 
-    ctx->pc = 0x13f238u;
 
     // 0x13f238: 0x8c83009c  lw          $v1, 0x9C($a0)
     ctx->pc = 0x13f238u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 156)));
     // 0x13f23c: 0x30a5ffff  andi        $a1, $a1, 0xFFFF
-    ctx->pc = 0x13f23cu;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)65535);
     // 0x13f240: 0x3402ffff  ori         $v0, $zero, 0xFFFF
-    ctx->pc = 0x13f240u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     // 0x13f244: 0x14620008  bne         $v1, $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x13F244u;
@@ -44,7 +41,6 @@ void cCockMess_SetMessNo_0x13f238(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_13f268;
         }
     }
-    ctx->pc = 0x13F24Cu;
     // 0x13f24c: 0x8c820090  lw          $v0, 0x90($a0)
     ctx->pc = 0x13f24cu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 144)));

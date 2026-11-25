@@ -18,22 +18,17 @@ void func_00273EE0_0x273ee0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00273EE0_0x273ee0");
 #endif
 
-    ctx->pc = 0x273ee0u;
 
     // 0x273ee0: 0xc4811724  lwc1        $f1, 0x1724($a0)
     ctx->pc = 0x273ee0u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 5924)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x273ee4: 0x44800000  mtc1        $zero, $f0
-    ctx->pc = 0x273ee4u;
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x273ee8: 0x0  nop
-    ctx->pc = 0x273ee8u;
     // NOP
     // 0x273eec: 0x46010034  c.lt.s      $f0, $f1
-    ctx->pc = 0x273eecu;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[0], ctx->f[1])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x273ef0: 0x0  nop
-    ctx->pc = 0x273ef0u;
     // NOP
     // 0x273ef4: 0x45010002  bc1t        . + 4 + (0x2 << 2)
     ctx->pc = 0x273EF4u;
@@ -50,7 +45,6 @@ void func_00273EE0_0x273ee0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_273f00;
         }
     }
-    ctx->pc = 0x273EFCu;
     // 0x273efc: 0x24020001  addiu       $v0, $zero, 0x1
     ctx->pc = 0x273efcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));

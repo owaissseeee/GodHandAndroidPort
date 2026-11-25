@@ -18,16 +18,16 @@ void ps2__InitSys_0x33f590(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("ps2__InitSys_0x33f590");
 #endif
 
-    switch (ctx->pc) {
-        case 0x33f5a0u: goto label_33f5a0;
-        case 0x33f5a8u: goto label_33f5a8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x33f590u, 0)) {
+        switch (ctx->pc) {
+            case 0x33f5a0u: goto label_33f5a0;
+            case 0x33f5a8u: goto label_33f5a8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x33f590u;
 
     // 0x33f590: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x33f590u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x33f594: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x33f594u;
@@ -35,8 +35,7 @@ void ps2__InitSys_0x33f590(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     // 0x33f598: 0xc0cf9aa  jal         func_33E6A8
     ctx->pc = 0x33F598u;
     SET_GPR_U32(ctx, 31, 0x33F5A0u);
-    ctx->pc = 0x33E6A8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x33E6A8u, 0x33F598u, 0x33F5A0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &NoOp_33E6A8_0x33e6a8, 0x33e6a8u, 0x33f5a0u)) {
         return;
     }
     ctx->pc = 0x33F5A0u;
@@ -44,8 +43,7 @@ label_33f5a0:
     // 0x33f5a0: 0xc0cfd6e  jal         func_33F5B8
     ctx->pc = 0x33F5A0u;
     SET_GPR_U32(ctx, 31, 0x33F5A8u);
-    ctx->pc = 0x33F5B8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x33F5B8u, 0x33F5A0u, 0x33F5A8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_0033F5B8_0x33f5b8, 0x33f5b8u, 0x33f5a8u)) {
         return;
     }
     ctx->pc = 0x33F5A8u;
@@ -54,8 +52,6 @@ label_33f5a8:
     ctx->pc = 0x33f5a8u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x33f5ac: 0x80cf9ac  j           func_33E6B0
-    ctx->pc = 0x33F5ACu;
-    ctx->pc = 0x33F5B0u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x33F5ACu;
     // 0x33f5b0: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)
@@ -65,9 +61,7 @@ label_33f5a8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x33E6B0u, 0x33F5ACu, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x33F5B4u;
     // 0x33f5b4: 0x0  nop
-    ctx->pc = 0x33f5b4u;
     // NOP
     ctx->pc = 0x33f5b8u;
 }

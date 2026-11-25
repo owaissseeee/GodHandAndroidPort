@@ -18,13 +18,11 @@ void cEmManage_SetBigHitEffWait_0x292ef0(uint8_t* rdram, R5900Context* ctx, PS2R
     PS_LOG_ENTRY("cEmManage_SetBigHitEffWait_0x292ef0");
 #endif
 
-    ctx->pc = 0x292ef0u;
 
     // 0x292ef0: 0x80820538  lb          $v0, 0x538($a0)
     ctx->pc = 0x292ef0u;
     SET_GPR_S32(ctx, 2, (int8_t)READ8(ADD32(GPR_U32(ctx, 4), 1336)));
     // 0x292ef4: 0x45102a  slt         $v0, $v0, $a1
-    ctx->pc = 0x292ef4u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 2) < (int64_t)GPR_S64(ctx, 5)) ? 1 : 0);
     // 0x292ef8: 0x54400001  bnel        $v0, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x292EF8u;

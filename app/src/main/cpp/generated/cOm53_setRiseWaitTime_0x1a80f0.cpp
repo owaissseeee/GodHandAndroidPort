@@ -18,7 +18,6 @@ void cOm53_setRiseWaitTime_0x1a80f0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("cOm53_setRiseWaitTime_0x1a80f0");
 #endif
 
-    ctx->pc = 0x1a80f0u;
 
     // 0x1a80f0: 0x3e00008  jr          $ra
     ctx->pc = 0x1A80F0u;

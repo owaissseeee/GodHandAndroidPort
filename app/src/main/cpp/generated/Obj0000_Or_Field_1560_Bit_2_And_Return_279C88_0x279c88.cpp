@@ -18,13 +18,11 @@ void Obj0000_Or_Field_1560_Bit_2_And_Return_279C88_0x279c88(uint8_t* rdram, R590
     PS_LOG_ENTRY("Obj0000_Or_Field_1560_Bit_2_And_Return_279C88_0x279c88");
 #endif
 
-    ctx->pc = 0x279c88u;
 
     // 0x279c88: 0x8c821560  lw          $v0, 0x1560($a0)
     ctx->pc = 0x279c88u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 5472)));
     // 0x279c8c: 0x34420004  ori         $v0, $v0, 0x4
-    ctx->pc = 0x279c8cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)4);
     // 0x279c90: 0x3e00008  jr          $ra
     ctx->pc = 0x279C90u;

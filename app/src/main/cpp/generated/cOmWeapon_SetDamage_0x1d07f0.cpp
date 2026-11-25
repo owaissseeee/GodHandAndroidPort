@@ -18,13 +18,11 @@ void cOmWeapon_SetDamage_0x1d07f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("cOmWeapon_SetDamage_0x1d07f0");
 #endif
 
-    ctx->pc = 0x1d07f0u;
 
     // 0x1d07f0: 0x8c820668  lw          $v0, 0x668($a0)
     ctx->pc = 0x1d07f0u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 1640)));
     // 0x1d07f4: 0x451023  subu        $v0, $v0, $a1
-    ctx->pc = 0x1d07f4u;
     SET_GPR_S32(ctx, 2, (int32_t)SUB32(GPR_U32(ctx, 2), GPR_U32(ctx, 5)));
     // 0x1d07f8: 0x18400003  blez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x1D07F8u;
@@ -41,7 +39,6 @@ void cOmWeapon_SetDamage_0x1d07f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_1d0808;
         }
     }
-    ctx->pc = 0x1D0800u;
     // 0x1d0800: 0x3e00008  jr          $ra
     ctx->pc = 0x1D0800u;
     {
@@ -85,9 +82,7 @@ label_1d0808:
         return;
         #endif
     }
-    ctx->pc = 0x1D0814u;
     // 0x1d0814: 0x0  nop
-    ctx->pc = 0x1d0814u;
     // NOP
     ctx->pc = 0x1d0818u;
 }

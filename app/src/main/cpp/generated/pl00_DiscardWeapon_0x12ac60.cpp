@@ -18,15 +18,15 @@ void pl00_DiscardWeapon_0x12ac60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("pl00_DiscardWeapon_0x12ac60");
 #endif
 
-    switch (ctx->pc) {
-        case 0x12ac84u: goto label_12ac84;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x12ac60u, 0)) {
+        switch (ctx->pc) {
+            case 0x12ac84u: goto label_12ac84;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x12ac60u;
 
     // 0x12ac60: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x12ac60u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x12ac64: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x12ac64u;
@@ -35,7 +35,6 @@ void pl00_DiscardWeapon_0x12ac60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     ctx->pc = 0x12ac68u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x12ac6c: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x12ac6cu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x12ac70: 0x8e040698  lw          $a0, 0x698($s0)
     ctx->pc = 0x12ac70u;
@@ -55,12 +54,10 @@ void pl00_DiscardWeapon_0x12ac60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_12ac8c;
         }
     }
-    ctx->pc = 0x12AC7Cu;
     // 0x12ac7c: 0xc073e2c  jal         func_1CF8B0
     ctx->pc = 0x12AC7Cu;
     SET_GPR_U32(ctx, 31, 0x12AC84u);
-    ctx->pc = 0x1CF8B0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1CF8B0u, 0x12AC7Cu, 0x12AC84u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cOmWeapon_dropToGround_0x1cf8b0, 0x1cf8b0u, 0x12ac84u)) {
         return;
     }
     ctx->pc = 0x12AC84u;

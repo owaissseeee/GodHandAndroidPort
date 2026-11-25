@@ -18,7 +18,6 @@ void Obj35D0_ReturnOne_D048_0x35d048(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("Obj35D0_ReturnOne_D048_0x35d048");
 #endif
 
-    ctx->pc = 0x35d048u;
 
     // 0x35d048: 0x3e00008  jr          $ra
     ctx->pc = 0x35D048u;

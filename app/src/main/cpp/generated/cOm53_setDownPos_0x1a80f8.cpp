@@ -18,7 +18,6 @@ void cOm53_setDownPos_0x1a80f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("cOm53_setDownPos_0x1a80f8");
 #endif
 
-    ctx->pc = 0x1a80f8u;
 
     // 0x1a80f8: 0x3e00008  jr          $ra
     ctx->pc = 0x1A80F8u;

@@ -18,13 +18,10 @@ void func_003B06C8_0x3b06c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_003B06C8_0x3b06c8");
 #endif
 
-    ctx->pc = 0x3b06c8u;
 
     // 0x3b06c8: 0x40026000  mfc0        $v0, Status
-    ctx->pc = 0x3b06c8u;
     SET_GPR_S32(ctx, 2, (int32_t)ctx->cop0_status);
     // 0x3b06cc: 0x38420001  xori        $v0, $v0, 0x1
-    ctx->pc = 0x3b06ccu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)1);
     // 0x3b06d0: 0x3e00008  jr          $ra
     ctx->pc = 0x3B06D0u;

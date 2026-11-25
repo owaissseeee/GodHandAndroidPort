@@ -18,10 +18,8 @@ void SetEventFrame_0x30d168(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("SetEventFrame_0x30d168");
 #endif
 
-    ctx->pc = 0x30d168u;
 
     // 0x30d168: 0x28820002  slti        $v0, $a0, 0x2
-    ctx->pc = 0x30d168u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 4) < (int64_t)(int32_t)2) ? 1 : 0);
     // 0x30d16c: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x30D16Cu;
@@ -38,12 +36,9 @@ void SetEventFrame_0x30d168(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_30d184;
         }
     }
-    ctx->pc = 0x30D174u;
     // 0x30d174: 0x3c030074  lui         $v1, 0x74
-    ctx->pc = 0x30d174u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
     // 0x30d178: 0x24020002  addiu       $v0, $zero, 0x2
-    ctx->pc = 0x30d178u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x30d17c: 0x3e00008  jr          $ra
     ctx->pc = 0x30D17Cu;
@@ -85,9 +80,7 @@ label_30d184:
         return;
         #endif
     }
-    ctx->pc = 0x30D18Cu;
     // 0x30d18c: 0x0  nop
-    ctx->pc = 0x30d18cu;
     // NOP
     ctx->pc = 0x30d190u;
 }

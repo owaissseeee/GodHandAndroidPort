@@ -18,7 +18,6 @@ void UnlinkAlarm_0x3b6e40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("UnlinkAlarm_0x3b6e40");
 #endif
 
-    ctx->pc = 0x3b6e40u;
 
     // 0x3b6e40: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x3b6e40u;
@@ -38,7 +37,6 @@ void UnlinkAlarm_0x3b6e40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
             goto label_3b6e54;
         }
     }
-    ctx->pc = 0x3B6E4Cu;
     // 0x3b6e4c: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x3B6E4Cu;
     {
@@ -57,7 +55,6 @@ void UnlinkAlarm_0x3b6e40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     ctx->pc = 0x3B6E54u;
 label_3b6e54:
     // 0x3b6e54: 0x3c020040  lui         $v0, 0x40
-    ctx->pc = 0x3b6e54u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)64 << 16));
     // 0x3b6e58: 0xac43bea8  sw          $v1, -0x4158($v0)
     ctx->pc = 0x3b6e58u;
@@ -78,7 +75,6 @@ label_3b6e5c:
             goto label_3b6e70;
         }
     }
-    ctx->pc = 0x3B6E64u;
     // 0x3b6e64: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x3b6e64u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4)));

@@ -18,7 +18,6 @@ void Obj35C0_CopyPair_158_C4F8_0x35c4f8(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("Obj35C0_CopyPair_158_C4F8_0x35c4f8");
 #endif
 
-    ctx->pc = 0x35c4f8u;
 
     // 0x35c4f8: 0xdca20000  ld          $v0, 0x0($a1)
     ctx->pc = 0x35c4f8u;
@@ -48,9 +47,7 @@ void Obj35C0_CopyPair_158_C4F8_0x35c4f8(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x35C50Cu;
     // 0x35c50c: 0x0  nop
-    ctx->pc = 0x35c50cu;
     // NOP
     ctx->pc = 0x35c510u;
 }

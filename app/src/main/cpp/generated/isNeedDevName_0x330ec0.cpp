@@ -18,28 +18,30 @@ void isNeedDevName_0x330ec0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("isNeedDevName_0x330ec0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x330ec0u: goto label_330ec0;
-        case 0x330ec4u: goto label_330ec4;
-        case 0x330ec8u: goto label_330ec8;
-        case 0x330eccu: goto label_330ecc;
-        case 0x330ed0u: goto label_330ed0;
-        case 0x330ed4u: goto label_330ed4;
-        case 0x330ed8u: goto label_330ed8;
-        case 0x330edcu: goto label_330edc;
-        case 0x330ee0u: goto label_330ee0;
-        case 0x330ee4u: goto label_330ee4;
-        case 0x330ee8u: goto label_330ee8;
-        case 0x330eecu: goto label_330eec;
-        case 0x330ef0u: goto label_330ef0;
-        case 0x330ef4u: goto label_330ef4;
-        case 0x330ef8u: goto label_330ef8;
-        case 0x330efcu: goto label_330efc;
-        case 0x330f00u: goto label_330f00;
-        case 0x330f04u: goto label_330f04;
-        case 0x330f08u: goto label_330f08;
-        case 0x330f0cu: goto label_330f0c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x330ec0u, 0)) {
+        switch (ctx->pc) {
+            case 0x330ec0u: goto label_330ec0;
+            case 0x330ec4u: goto label_330ec4;
+            case 0x330ec8u: goto label_330ec8;
+            case 0x330eccu: goto label_330ecc;
+            case 0x330ed0u: goto label_330ed0;
+            case 0x330ed4u: goto label_330ed4;
+            case 0x330ed8u: goto label_330ed8;
+            case 0x330edcu: goto label_330edc;
+            case 0x330ee0u: goto label_330ee0;
+            case 0x330ee4u: goto label_330ee4;
+            case 0x330ee8u: goto label_330ee8;
+            case 0x330eecu: goto label_330eec;
+            case 0x330ef0u: goto label_330ef0;
+            case 0x330ef4u: goto label_330ef4;
+            case 0x330ef8u: goto label_330ef8;
+            case 0x330efcu: goto label_330efc;
+            case 0x330f00u: goto label_330f00;
+            case 0x330f04u: goto label_330f04;
+            case 0x330f08u: goto label_330f08;
+            case 0x330f0cu: goto label_330f0c;
+            default: break;
+        }
     }
 
     ctx->pc = 0x330ec0u;
@@ -61,8 +63,7 @@ label_330ecc:
     }
     ctx->pc = 0x330EC8u;
     SET_GPR_U32(ctx, 31, 0x330ED0u);
-    ctx->pc = 0x330480u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x330480u, 0x330EC8u, 0x330ED0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &getDevice_0x330480, 0x330480u, 0x330ed0u)) {
         return;
     }
     ctx->pc = 0x330ED0u;

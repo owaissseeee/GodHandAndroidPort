@@ -18,15 +18,15 @@ void Obj3260_CallReturn0_003388F8_D498_0x326498(uint8_t* rdram, R5900Context* ct
     PS_LOG_ENTRY("Obj3260_CallReturn0_003388F8_D498_0x326498");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3264a8u: goto label_3264a8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x326498u, 0)) {
+        switch (ctx->pc) {
+            case 0x3264a8u: goto label_3264a8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x326498u;
 
     // 0x326498: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x326498u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x32649c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x32649cu;
@@ -34,8 +34,7 @@ void Obj3260_CallReturn0_003388F8_D498_0x326498(uint8_t* rdram, R5900Context* ct
     // 0x3264a0: 0xc0ce23e  jal         func_3388F8
     ctx->pc = 0x3264A0u;
     SET_GPR_U32(ctx, 31, 0x3264A8u);
-    ctx->pc = 0x3388F8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3388F8u, 0x3264A0u, 0x3264A8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &RefreshEntryIfActive_0x3388f8, 0x3388f8u, 0x3264a8u)) {
         return;
     }
     ctx->pc = 0x3264A8u;
@@ -44,7 +43,6 @@ label_3264a8:
     ctx->pc = 0x3264a8u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x3264ac: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x3264acu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x3264b0: 0x3e00008  jr          $ra
     ctx->pc = 0x3264B0u;
@@ -65,18 +63,13 @@ label_3264a8:
         return;
         #endif
     }
-    ctx->pc = 0x3264B8u;
     // 0x3264b8: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x3264b8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x3264bc: 0x0  nop
-    ctx->pc = 0x3264bcu;
     // NOP
     // 0x3264c0: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x3264c0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x3264c4: 0x0  nop
-    ctx->pc = 0x3264c4u;
     // NOP
     ctx->pc = 0x3264c8u;
 }

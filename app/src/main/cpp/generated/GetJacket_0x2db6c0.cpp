@@ -18,10 +18,8 @@ void GetJacket_0x2db6c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
     PS_LOG_ENTRY("GetJacket_0x2db6c0");
 #endif
 
-    ctx->pc = 0x2db6c0u;
 
     // 0x2db6c0: 0x3c030074  lui         $v1, 0x74
-    ctx->pc = 0x2db6c0u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
     // 0x2db6c4: 0x3e00008  jr          $ra
     ctx->pc = 0x2DB6C4u;
@@ -42,9 +40,7 @@ void GetJacket_0x2db6c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
         return;
         #endif
     }
-    ctx->pc = 0x2DB6CCu;
     // 0x2db6cc: 0x0  nop
-    ctx->pc = 0x2db6ccu;
     // NOP
     ctx->pc = 0x2db6d0u;
 }

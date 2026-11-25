@@ -18,7 +18,6 @@ void Obj2B28_ReturnZero_FA8_0x2b2fa8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("Obj2B28_ReturnZero_FA8_0x2b2fa8");
 #endif
 
-    ctx->pc = 0x2b2fa8u;
 
     // 0x2b2fa8: 0x3e00008  jr          $ra
     ctx->pc = 0x2B2FA8u;

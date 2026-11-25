@@ -18,10 +18,8 @@ void cEma2_gotoSwitch_0x289480(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("cEma2_gotoSwitch_0x289480");
 #endif
 
-    ctx->pc = 0x289480u;
 
     // 0x289480: 0x248215a0  addiu       $v0, $a0, 0x15A0
-    ctx->pc = 0x289480u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 5536));
     // 0x289484: 0x50450008  beql        $v0, $a1, . + 4 + (0x8 << 2)
     ctx->pc = 0x289484u;
@@ -38,7 +36,6 @@ void cEma2_gotoSwitch_0x289480(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_2894a8;
         }
     }
-    ctx->pc = 0x28948Cu;
     // 0x28948c: 0xc4a00000  lwc1        $f0, 0x0($a1)
     ctx->pc = 0x28948cu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -62,7 +59,6 @@ void cEma2_gotoSwitch_0x289480(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 5552)));
 label_2894a8:
     // 0x2894a8: 0x34420080  ori         $v0, $v0, 0x80
-    ctx->pc = 0x2894a8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)128);
     // 0x2894ac: 0x3e00008  jr          $ra
     ctx->pc = 0x2894ACu;
@@ -83,9 +79,7 @@ label_2894a8:
         return;
         #endif
     }
-    ctx->pc = 0x2894B4u;
     // 0x2894b4: 0x0  nop
-    ctx->pc = 0x2894b4u;
     // NOP
     ctx->pc = 0x2894b8u;
 }

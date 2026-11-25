@@ -18,10 +18,8 @@ void Getplayer_0x2db6b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
     PS_LOG_ENTRY("Getplayer_0x2db6b0");
 #endif
 
-    ctx->pc = 0x2db6b0u;
 
     // 0x2db6b0: 0x3c030074  lui         $v1, 0x74
-    ctx->pc = 0x2db6b0u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
     // 0x2db6b4: 0x3e00008  jr          $ra
     ctx->pc = 0x2DB6B4u;
@@ -42,9 +40,7 @@ void Getplayer_0x2db6b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
         return;
         #endif
     }
-    ctx->pc = 0x2DB6BCu;
     // 0x2db6bc: 0x0  nop
-    ctx->pc = 0x2db6bcu;
     // NOP
     ctx->pc = 0x2db6c0u;
 }

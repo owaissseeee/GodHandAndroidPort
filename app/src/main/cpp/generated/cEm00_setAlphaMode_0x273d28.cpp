@@ -18,7 +18,6 @@ void cEm00_setAlphaMode_0x273d28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("cEm00_setAlphaMode_0x273d28");
 #endif
 
-    ctx->pc = 0x273d28u;
 
     // 0x273d28: 0x3e00008  jr          $ra
     ctx->pc = 0x273D28u;

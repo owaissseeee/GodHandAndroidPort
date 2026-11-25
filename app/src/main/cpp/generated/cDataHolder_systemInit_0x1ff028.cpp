@@ -18,36 +18,32 @@ void cDataHolder_systemInit_0x1ff028(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("cDataHolder_systemInit_0x1ff028");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1ff070u: goto label_1ff070;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1ff028u, 0)) {
+        switch (ctx->pc) {
+            case 0x1ff070u: goto label_1ff070;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1ff028u;
 
     // 0x1ff028: 0x3403ffff  ori         $v1, $zero, 0xFFFF
-    ctx->pc = 0x1ff028u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     // 0x1ff02c: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x1ff02cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x1ff030: 0xac82000c  sw          $v0, 0xC($a0)
     ctx->pc = 0x1ff030u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 12), GPR_U32(ctx, 2));
     // 0x1ff034: 0x2406ffff  addiu       $a2, $zero, -0x1
-    ctx->pc = 0x1ff034u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x1ff038: 0xac830058  sw          $v1, 0x58($a0)
     ctx->pc = 0x1ff038u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 88), GPR_U32(ctx, 3));
     // 0x1ff03c: 0x24050009  addiu       $a1, $zero, 0x9
-    ctx->pc = 0x1ff03cu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 9));
     // 0x1ff040: 0xac800000  sw          $zero, 0x0($a0)
     ctx->pc = 0x1ff040u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 0), GPR_U32(ctx, 0));
     // 0x1ff044: 0x24820048  addiu       $v0, $a0, 0x48
-    ctx->pc = 0x1ff044u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 72));
     // 0x1ff048: 0xac800004  sw          $zero, 0x4($a0)
     ctx->pc = 0x1ff048u;
@@ -84,13 +80,10 @@ label_1ff070:
     ctx->pc = 0x1ff070u;
     WRITE32(ADD32(GPR_U32(ctx, 2), 0), GPR_U32(ctx, 6));
     // 0x1ff074: 0x24a5ffff  addiu       $a1, $a1, -0x1
-    ctx->pc = 0x1ff074u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 4294967295));
     // 0x1ff078: 0x0  nop
-    ctx->pc = 0x1ff078u;
     // NOP
     // 0x1ff07c: 0x0  nop
-    ctx->pc = 0x1ff07cu;
     // NOP
     // 0x1ff080: 0x4a1fffb  bgez        $a1, . + 4 + (-0x5 << 2)
     ctx->pc = 0x1FF080u;
@@ -110,7 +103,6 @@ label_1ff070:
             goto label_1ff070;
         }
     }
-    ctx->pc = 0x1FF088u;
     // 0x1ff088: 0x3e00008  jr          $ra
     ctx->pc = 0x1FF088u;
     {

@@ -18,7 +18,6 @@ void cObjSimple_SetRingFlag_0x2b84f8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("cObjSimple_SetRingFlag_0x2b84f8");
 #endif
 
-    ctx->pc = 0x2b84f8u;
 
     // 0x2b84f8: 0x3e00008  jr          $ra
     ctx->pc = 0x2B84F8u;

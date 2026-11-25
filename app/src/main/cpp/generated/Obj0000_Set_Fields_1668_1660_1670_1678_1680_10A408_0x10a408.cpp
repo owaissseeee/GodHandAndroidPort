@@ -18,7 +18,6 @@ void Obj0000_Set_Fields_1668_1660_1670_1678_1680_10A408_0x10a408(uint8_t* rdram,
     PS_LOG_ENTRY("Obj0000_Set_Fields_1668_1660_1670_1678_1680_10A408_0x10a408");
 #endif
 
-    ctx->pc = 0x10a408u;
 
     // 0x10a408: 0xa4891680  sh          $t1, 0x1680($a0)
     ctx->pc = 0x10a408u;

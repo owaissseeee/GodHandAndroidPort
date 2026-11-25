@@ -18,18 +18,17 @@ void GsPutIMR_0x3affe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     PS_LOG_ENTRY("GsPutIMR_0x3affe0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3affe8u: goto label_3affe8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3affe0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3affe8u: goto label_3affe8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3affe0u;
 
     // 0x3affe0: 0x24030071  addiu       $v1, $zero, 0x71
-    ctx->pc = 0x3affe0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 113));
     // 0x3affe4: 0xc  syscall     0
-    ctx->pc = 0x3affe4u;
     ctx->pc = 0x3AFFE8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

@@ -18,7 +18,6 @@ void cSnd_SetBgmState_0x2d0ab8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("cSnd_SetBgmState_0x2d0ab8");
 #endif
 
-    ctx->pc = 0x2d0ab8u;
 
     // 0x2d0ab8: 0x3e00008  jr          $ra
     ctx->pc = 0x2D0AB8u;

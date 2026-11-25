@@ -18,7 +18,6 @@ void Obj35D0_ClearFields_0_4_8_D708_0x35d708(uint8_t* rdram, R5900Context* ctx, 
     PS_LOG_ENTRY("Obj35D0_ClearFields_0_4_8_D708_0x35d708");
 #endif
 
-    ctx->pc = 0x35d708u;
 
     // 0x35d708: 0xac800008  sw          $zero, 0x8($a0)
     ctx->pc = 0x35d708u;

@@ -18,10 +18,8 @@ void func_001D0090_0x1d0090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_001D0090_0x1d0090");
 #endif
 
-    ctx->pc = 0x1d0090u;
 
     // 0x1d0090: 0x80302d  daddu       $a2, $a0, $zero
-    ctx->pc = 0x1d0090u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1d0094: 0x8cc20600  lw          $v0, 0x600($a2)
     ctx->pc = 0x1d0094u;
@@ -41,7 +39,6 @@ void func_001D0090_0x1d0090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1d00c4;
         }
     }
-    ctx->pc = 0x1D00A0u;
     // 0x1d00a0: 0x8c4200f0  lw          $v0, 0xF0($v0)
     ctx->pc = 0x1d00a0u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 240)));
@@ -60,7 +57,6 @@ void func_001D0090_0x1d0090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1d00c8;
         }
     }
-    ctx->pc = 0x1D00ACu;
     // 0x1d00ac: 0xc4400000  lwc1        $f0, 0x0($v0)
     ctx->pc = 0x1d00acu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 2), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -85,22 +81,16 @@ label_1d00c4:
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 6), 592)));
 label_1d00c8:
     // 0x1d00c8: 0x3c02ffff  lui         $v0, 0xFFFF
-    ctx->pc = 0x1d00c8u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)65535 << 16));
     // 0x1d00cc: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x1d00ccu;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
     // 0x1d00d0: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x1d00d0u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x1d00d4: 0x3442ffef  ori         $v0, $v0, 0xFFEF
-    ctx->pc = 0x1d00d4u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)65519);
     // 0x1d00d8: 0x621824  and         $v1, $v1, $v0
-    ctx->pc = 0x1d00d8u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 2));
     // 0x1d00dc: 0x2404000f  addiu       $a0, $zero, 0xF
-    ctx->pc = 0x1d00dcu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 15));
     // 0x1d00e0: 0xe4c0024c  swc1        $f0, 0x24C($a2)
     ctx->pc = 0x1d00e0u;

@@ -18,7 +18,6 @@ void cCoreSave_GetOliviaCostumeNo_0x1fc740(uint8_t* rdram, R5900Context* ctx, PS
     PS_LOG_ENTRY("cCoreSave_GetOliviaCostumeNo_0x1fc740");
 #endif
 
-    ctx->pc = 0x1fc740u;
 
     // 0x1fc740: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc740u;
@@ -38,7 +37,6 @@ void cCoreSave_GetOliviaCostumeNo_0x1fc740(uint8_t* rdram, R5900Context* ctx, PS
             goto label_1fc750;
         }
     }
-    ctx->pc = 0x1FC74Cu;
     // 0x1fc74c: 0x8c820bc0  lw          $v0, 0xBC0($a0)
     ctx->pc = 0x1fc74cu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 3008)));

@@ -18,7 +18,6 @@ void Obj0000_Clear_Fields_50_To_7C_13C5C8_0x13c5c8(uint8_t* rdram, R5900Context*
     PS_LOG_ENTRY("Obj0000_Clear_Fields_50_To_7C_13C5C8_0x13c5c8");
 #endif
 
-    ctx->pc = 0x13c5c8u;
 
     // 0x13c5c8: 0xa080007c  sb          $zero, 0x7C($a0)
     ctx->pc = 0x13c5c8u;

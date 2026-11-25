@@ -18,19 +18,15 @@ void Obj0000_PostInc_D_003E3A80_338960_0x338960(uint8_t* rdram, R5900Context* ct
     PS_LOG_ENTRY("Obj0000_PostInc_D_003E3A80_338960_0x338960");
 #endif
 
-    ctx->pc = 0x338960u;
 
     // 0x338960: 0x3c03003e  lui         $v1, 0x3E
-    ctx->pc = 0x338960u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)62 << 16));
     // 0x338964: 0x24633a80  addiu       $v1, $v1, 0x3A80
-    ctx->pc = 0x338964u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 14976));
     // 0x338968: 0x8c620000  lw          $v0, 0x0($v1)
     ctx->pc = 0x338968u;
     SET_GPR_S32(ctx, 2, (int32_t)FAST_READ32(0x3E3A80u));
     // 0x33896c: 0x24420001  addiu       $v0, $v0, 0x1
-    ctx->pc = 0x33896cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 1));
     // 0x338970: 0x3e00008  jr          $ra
     ctx->pc = 0x338970u;

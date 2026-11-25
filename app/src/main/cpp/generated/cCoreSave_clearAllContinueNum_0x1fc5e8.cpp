@@ -18,7 +18,6 @@ void cCoreSave_clearAllContinueNum_0x1fc5e8(uint8_t* rdram, R5900Context* ctx, P
     PS_LOG_ENTRY("cCoreSave_clearAllContinueNum_0x1fc5e8");
 #endif
 
-    ctx->pc = 0x1fc5e8u;
 
     // 0x1fc5e8: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc5e8u;
@@ -53,9 +52,7 @@ label_1fc5f4:
         return;
         #endif
     }
-    ctx->pc = 0x1FC5FCu;
     // 0x1fc5fc: 0x0  nop
-    ctx->pc = 0x1fc5fcu;
     // NOP
     ctx->pc = 0x1fc600u;
 }

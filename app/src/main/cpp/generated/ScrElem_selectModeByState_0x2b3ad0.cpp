@@ -18,16 +18,13 @@ void ScrElem_selectModeByState_0x2b3ad0(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("ScrElem_selectModeByState_0x2b3ad0");
 #endif
 
-    ctx->pc = 0x2b3ad0u;
 
     // 0x2b3ad0: 0x80282d  daddu       $a1, $a0, $zero
-    ctx->pc = 0x2b3ad0u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2b3ad4: 0x90a300a4  lbu         $v1, 0xA4($a1)
     ctx->pc = 0x2b3ad4u;
     SET_GPR_ZE32(ctx, 3, (uint8_t)READ8(ADD32(GPR_U32(ctx, 5), 164)));
     // 0x2b3ad8: 0x2c620006  sltiu       $v0, $v1, 0x6
-    ctx->pc = 0x2b3ad8u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 3) < (uint64_t)(int64_t)(int32_t)6) ? 1 : 0);
     // 0x2b3adc: 0x10400007  beqz        $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x2B3ADCu;
@@ -44,15 +41,11 @@ void ScrElem_selectModeByState_0x2b3ad0(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_2b3afc;
         }
     }
-    ctx->pc = 0x2B3AE4u;
     // 0x2b3ae4: 0x3c020045  lui         $v0, 0x45
-    ctx->pc = 0x2b3ae4u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)69 << 16));
     // 0x2b3ae8: 0x2442b230  addiu       $v0, $v0, -0x4DD0
-    ctx->pc = 0x2b3ae8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294947376));
     // 0x2b3aec: 0x621821  addu        $v1, $v1, $v0
-    ctx->pc = 0x2b3aecu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 2)));
     // 0x2b3af0: 0x8c640000  lw          $a0, 0x0($v1)
     ctx->pc = 0x2b3af0u;

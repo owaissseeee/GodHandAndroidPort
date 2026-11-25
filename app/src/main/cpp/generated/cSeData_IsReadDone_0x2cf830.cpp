@@ -18,15 +18,15 @@ void cSeData_IsReadDone_0x2cf830(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("cSeData_IsReadDone_0x2cf830");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2cf84cu: goto label_2cf84c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2cf830u, 0)) {
+        switch (ctx->pc) {
+            case 0x2cf84cu: goto label_2cf84c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2cf830u;
 
     // 0x2cf830: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2cf830u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2cf834: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2cf834u;
@@ -49,9 +49,7 @@ void cSeData_IsReadDone_0x2cf830(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_2cf854;
         }
     }
-    ctx->pc = 0x2CF844u;
     // 0x2cf844: 0xc080426  jal         func_201098
-    ctx->pc = 0x2CF844u;
     SET_GPR_U32(ctx, 31, 0x2CF84Cu);
     ctx->pc = 0x2CF848u;
     ctx->in_delay_slot = true;
@@ -59,8 +57,7 @@ void cSeData_IsReadDone_0x2cf830(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     // 0x2cf848: 0x24843f20  addiu       $a0, $a0, 0x3F20 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 16160));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x201098u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x201098u, 0x2CF844u, 0x2CF84Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cDvd_Check_0x201098, 0x201098u, 0x2cf84cu)) {
         return;
     }
     ctx->pc = 0x2CF84Cu;
@@ -108,9 +105,7 @@ label_2cf858:
         return;
         #endif
     }
-    ctx->pc = 0x2CF864u;
     // 0x2cf864: 0x0  nop
-    ctx->pc = 0x2cf864u;
     // NOP
     ctx->pc = 0x2cf868u;
 }

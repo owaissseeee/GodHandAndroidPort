@@ -18,10 +18,8 @@ void cCoreSave_setLevelPoint_0x1fa638(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("cCoreSave_setLevelPoint_0x1fa638");
 #endif
 
-    ctx->pc = 0x1fa638u;
 
     // 0x1fa638: 0x52c00  sll         $a1, $a1, 16
-    ctx->pc = 0x1fa638u;
     SET_GPR_S32(ctx, 5, (int32_t)SLL32(GPR_U32(ctx, 5), 16));
     // 0x1fa63c: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fa63cu;
@@ -41,7 +39,6 @@ void cCoreSave_setLevelPoint_0x1fa638(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_1fa64c;
         }
     }
-    ctx->pc = 0x1FA648u;
     // 0x1fa648: 0xa485001c  sh          $a1, 0x1C($a0)
     ctx->pc = 0x1fa648u;
     WRITE16(ADD32(GPR_U32(ctx, 4), 28), (uint16_t)GPR_U32(ctx, 5));
@@ -59,9 +56,7 @@ label_1fa64c:
         return;
         #endif
     }
-    ctx->pc = 0x1FA654u;
     // 0x1fa654: 0x0  nop
-    ctx->pc = 0x1fa654u;
     // NOP
     ctx->pc = 0x1fa658u;
 }

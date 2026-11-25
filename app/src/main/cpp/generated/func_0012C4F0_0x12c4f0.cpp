@@ -18,25 +18,19 @@ void func_0012C4F0_0x12c4f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0012C4F0_0x12c4f0");
 #endif
 
-    ctx->pc = 0x12c4f0u;
 
     // 0x12c4f0: 0xdc8202f0  ld          $v0, 0x2F0($a0)
     ctx->pc = 0x12c4f0u;
     SET_GPR_U64(ctx, 2, READ64(ADD32(GPR_U32(ctx, 4), 752)));
     // 0x12c4f4: 0x3403ffff  ori         $v1, $zero, 0xFFFF
-    ctx->pc = 0x12c4f4u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     // 0x12c4f8: 0x3183c  dsll32      $v1, $v1, 0
-    ctx->pc = 0x12c4f8u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) << (32 + 0));
     // 0x12c4fc: 0x3404c020  ori         $a0, $zero, 0xC020
-    ctx->pc = 0x12c4fcu;
     SET_GPR_U64(ctx, 4, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)49184);
     // 0x12c500: 0x426f8  dsll        $a0, $a0, 27
-    ctx->pc = 0x12c500u;
     SET_GPR_U64(ctx, 4, GPR_U64(ctx, 4) << 27);
     // 0x12c504: 0x432824  and         $a1, $v0, $v1
-    ctx->pc = 0x12c504u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 2) & GPR_U64(ctx, 3));
     // 0x12c508: 0x10a40006  beq         $a1, $a0, . + 4 + (0x6 << 2)
     ctx->pc = 0x12C508u;
@@ -53,15 +47,11 @@ void func_0012C4F0_0x12c4f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_12c524;
         }
     }
-    ctx->pc = 0x12C510u;
     // 0x12c510: 0x3403a020  ori         $v1, $zero, 0xA020
-    ctx->pc = 0x12c510u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)40992);
     // 0x12c514: 0x31ef8  dsll        $v1, $v1, 27
-    ctx->pc = 0x12c514u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) << 27);
     // 0x12c518: 0xa31826  xor         $v1, $a1, $v1
-    ctx->pc = 0x12c518u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 5) ^ GPR_U64(ctx, 3));
     // 0x12c51c: 0x3e00008  jr          $ra
     ctx->pc = 0x12C51Cu;
@@ -97,9 +87,7 @@ label_12c524:
         return;
         #endif
     }
-    ctx->pc = 0x12C52Cu;
     // 0x12c52c: 0x0  nop
-    ctx->pc = 0x12c52cu;
     // NOP
     ctx->pc = 0x12c530u;
 }

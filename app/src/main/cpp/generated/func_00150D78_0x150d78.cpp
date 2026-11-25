@@ -18,15 +18,15 @@ void func_00150D78_0x150d78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00150D78_0x150d78");
 #endif
 
-    switch (ctx->pc) {
-        case 0x150d98u: goto label_150d98;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x150d78u, 0)) {
+        switch (ctx->pc) {
+            case 0x150d98u: goto label_150d98;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x150d78u;
 
     // 0x150d78: 0x24040100  addiu       $a0, $zero, 0x100
-    ctx->pc = 0x150d78u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 256));
     // 0x150d7c: 0x14a00003  bnez        $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x150D7Cu;
@@ -43,7 +43,6 @@ void func_00150D78_0x150d78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_150d8c;
         }
     }
-    ctx->pc = 0x150D84u;
     // 0x150d84: 0x3e00008  jr          $ra
     ctx->pc = 0x150D84u;
     {
@@ -66,10 +65,8 @@ void func_00150D78_0x150d78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x150D8Cu;
 label_150d8c:
     // 0x150d8c: 0x3c020074  lui         $v0, 0x74
-    ctx->pc = 0x150d8cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
     // 0x150d90: 0x24427ba0  addiu       $v0, $v0, 0x7BA0
-    ctx->pc = 0x150d90u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 31648));
     // 0x150d94: 0x24430014  addiu       $v1, $v0, 0x14
     ctx->pc = 0x150d94u;
@@ -93,9 +90,7 @@ label_150d98:
             goto label_150db8;
         }
     }
-    ctx->pc = 0x150DA4u;
     // 0x150da4: 0x2484ffff  addiu       $a0, $a0, -0x1
-    ctx->pc = 0x150da4u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 4294967295));
     // 0x150da8: 0x1480fffb  bnez        $a0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x150DA8u;
@@ -115,7 +110,6 @@ label_150d98:
             goto label_150d98;
         }
     }
-    ctx->pc = 0x150DB0u;
     // 0x150db0: 0x3e00008  jr          $ra
     ctx->pc = 0x150DB0u;
     {
@@ -138,7 +132,6 @@ label_150d98:
     ctx->pc = 0x150DB8u;
 label_150db8:
     // 0x150db8: 0x61400  sll         $v0, $a2, 16
-    ctx->pc = 0x150db8u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 6), 16));
     // 0x150dbc: 0x3e00008  jr          $ra
     ctx->pc = 0x150DBCu;
@@ -159,9 +152,7 @@ label_150db8:
         return;
         #endif
     }
-    ctx->pc = 0x150DC4u;
     // 0x150dc4: 0x0  nop
-    ctx->pc = 0x150dc4u;
     // NOP
     ctx->pc = 0x150dc8u;
 }

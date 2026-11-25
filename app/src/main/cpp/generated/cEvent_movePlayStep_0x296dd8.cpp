@@ -18,33 +18,33 @@ void cEvent_movePlayStep_0x296dd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("cEvent_movePlayStep_0x296dd8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x296e04u: goto label_296e04;
-        case 0x296e0cu: goto label_296e0c;
-        case 0x296e14u: goto label_296e14;
-        case 0x296e20u: goto label_296e20;
-        case 0x296e2cu: goto label_296e2c;
-        case 0x296e38u: goto label_296e38;
-        case 0x296e44u: goto label_296e44;
-        case 0x296e50u: goto label_296e50;
-        case 0x296e5cu: goto label_296e5c;
-        case 0x296e68u: goto label_296e68;
-        case 0x296e74u: goto label_296e74;
-        case 0x296e80u: goto label_296e80;
-        case 0x296e8cu: goto label_296e8c;
-        case 0x296e98u: goto label_296e98;
-        case 0x296ea4u: goto label_296ea4;
-        case 0x296eb0u: goto label_296eb0;
-        case 0x296ebcu: goto label_296ebc;
-        case 0x296ec8u: goto label_296ec8;
-        case 0x296ed0u: goto label_296ed0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x296dd8u, 0)) {
+        switch (ctx->pc) {
+            case 0x296e04u: goto label_296e04;
+            case 0x296e0cu: goto label_296e0c;
+            case 0x296e14u: goto label_296e14;
+            case 0x296e20u: goto label_296e20;
+            case 0x296e2cu: goto label_296e2c;
+            case 0x296e38u: goto label_296e38;
+            case 0x296e44u: goto label_296e44;
+            case 0x296e50u: goto label_296e50;
+            case 0x296e5cu: goto label_296e5c;
+            case 0x296e68u: goto label_296e68;
+            case 0x296e74u: goto label_296e74;
+            case 0x296e80u: goto label_296e80;
+            case 0x296e8cu: goto label_296e8c;
+            case 0x296e98u: goto label_296e98;
+            case 0x296ea4u: goto label_296ea4;
+            case 0x296eb0u: goto label_296eb0;
+            case 0x296ebcu: goto label_296ebc;
+            case 0x296ec8u: goto label_296ec8;
+            case 0x296ed0u: goto label_296ed0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x296dd8u;
 
     // 0x296dd8: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x296dd8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x296ddc: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x296ddcu;
@@ -56,10 +56,8 @@ void cEvent_movePlayStep_0x296dd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     ctx->pc = 0x296de4u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 8)));
     // 0x296de8: 0x210ba  dsrl        $v0, $v0, 2
-    ctx->pc = 0x296de8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) >> 2);
     // 0x296dec: 0x30420001  andi        $v0, $v0, 0x1
-    ctx->pc = 0x296decu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
     // 0x296df0: 0x10400039  beqz        $v0, . + 4 + (0x39 << 2)
     ctx->pc = 0x296DF0u;
@@ -76,7 +74,6 @@ void cEvent_movePlayStep_0x296dd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_296ed8;
         }
     }
-    ctx->pc = 0x296DF8u;
     // 0x296df8: 0x26100000  addiu       $s0, $s0, 0x0
     ctx->pc = 0x296df8u;
     /* runtime-relocated */ SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), ((uint32_t)(int32_t)(int16_t)(FAST_READ32(0x296DF8u) & 0xFFFFu))));
@@ -485,7 +482,6 @@ label_296ed0:
     ctx->pc = 0x296ED8u;
 label_296ed8:
     // 0x296ed8: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x296ed8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x296edc: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x296edcu;
@@ -513,9 +509,7 @@ label_296ee0:
         return;
         #endif
     }
-    ctx->pc = 0x296EECu;
     // 0x296eec: 0x0  nop
-    ctx->pc = 0x296eecu;
     // NOP
     ctx->pc = 0x296ef0u;
 }

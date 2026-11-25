@@ -18,7 +18,6 @@ void cCoreSave_addVitalItem_0x1fad88(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("cCoreSave_addVitalItem_0x1fad88");
 #endif
 
-    ctx->pc = 0x1fad88u;
 
     // 0x1fad88: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x1fad88u;
@@ -38,12 +37,10 @@ void cCoreSave_addVitalItem_0x1fad88(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_1fadb8;
         }
     }
-    ctx->pc = 0x1FAD94u;
     // 0x1fad94: 0x90620154  lbu         $v0, 0x154($v1)
     ctx->pc = 0x1fad94u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 3), 340)));
     // 0x1fad98: 0xa21021  addu        $v0, $a1, $v0
-    ctx->pc = 0x1fad98u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 5), GPR_U32(ctx, 2)));
     // 0x1fad9c: 0xa0620154  sb          $v0, 0x154($v1)
     ctx->pc = 0x1fad9cu;
@@ -55,7 +52,6 @@ void cCoreSave_addVitalItem_0x1fad88(uint8_t* rdram, R5900Context* ctx, PS2Runti
     ctx->pc = 0x1fada4u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 340)));
     // 0x1fada8: 0x2c42000e  sltiu       $v0, $v0, 0xE
-    ctx->pc = 0x1fada8u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)14) ? 1 : 0);
     // 0x1fadac: 0x14400002  bnez        $v0, . + 4 + (0x2 << 2)
     ctx->pc = 0x1FADACu;
@@ -72,7 +68,6 @@ void cCoreSave_addVitalItem_0x1fad88(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_1fadb8;
         }
     }
-    ctx->pc = 0x1FADB4u;
     // 0x1fadb4: 0xa0820154  sb          $v0, 0x154($a0)
     ctx->pc = 0x1fadb4u;
     WRITE8(ADD32(GPR_U32(ctx, 4), 340), (uint8_t)GPR_U32(ctx, 2));

@@ -18,30 +18,32 @@ void flush__7ostream_0x389268(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("flush__7ostream_0x389268");
 #endif
 
-    switch (ctx->pc) {
-        case 0x389268u: goto label_389268;
-        case 0x38926cu: goto label_38926c;
-        case 0x389270u: goto label_389270;
-        case 0x389274u: goto label_389274;
-        case 0x389278u: goto label_389278;
-        case 0x38927cu: goto label_38927c;
-        case 0x389280u: goto label_389280;
-        case 0x389284u: goto label_389284;
-        case 0x389288u: goto label_389288;
-        case 0x38928cu: goto label_38928c;
-        case 0x389290u: goto label_389290;
-        case 0x389294u: goto label_389294;
-        case 0x389298u: goto label_389298;
-        case 0x38929cu: goto label_38929c;
-        case 0x3892a0u: goto label_3892a0;
-        case 0x3892a4u: goto label_3892a4;
-        case 0x3892a8u: goto label_3892a8;
-        case 0x3892acu: goto label_3892ac;
-        case 0x3892b0u: goto label_3892b0;
-        case 0x3892b4u: goto label_3892b4;
-        case 0x3892b8u: goto label_3892b8;
-        case 0x3892bcu: goto label_3892bc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x389268u, 0)) {
+        switch (ctx->pc) {
+            case 0x389268u: goto label_389268;
+            case 0x38926cu: goto label_38926c;
+            case 0x389270u: goto label_389270;
+            case 0x389274u: goto label_389274;
+            case 0x389278u: goto label_389278;
+            case 0x38927cu: goto label_38927c;
+            case 0x389280u: goto label_389280;
+            case 0x389284u: goto label_389284;
+            case 0x389288u: goto label_389288;
+            case 0x38928cu: goto label_38928c;
+            case 0x389290u: goto label_389290;
+            case 0x389294u: goto label_389294;
+            case 0x389298u: goto label_389298;
+            case 0x38929cu: goto label_38929c;
+            case 0x3892a0u: goto label_3892a0;
+            case 0x3892a4u: goto label_3892a4;
+            case 0x3892a8u: goto label_3892a8;
+            case 0x3892acu: goto label_3892ac;
+            case 0x3892b0u: goto label_3892b0;
+            case 0x3892b4u: goto label_3892b4;
+            case 0x3892b8u: goto label_3892b8;
+            case 0x3892bcu: goto label_3892bc;
+            default: break;
+        }
     }
 
     ctx->pc = 0x389268u;

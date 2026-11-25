@@ -18,7 +18,6 @@ void cCoreSave_ckEventFlag_0x1fc360(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("cCoreSave_ckEventFlag_0x1fc360");
 #endif
 
-    ctx->pc = 0x1fc360u;
 
     // 0x1fc360: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc360u;
@@ -38,15 +37,12 @@ void cCoreSave_ckEventFlag_0x1fc360(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1fc380;
         }
     }
-    ctx->pc = 0x1FC36Cu;
     // 0x1fc36c: 0x8c830b90  lw          $v1, 0xB90($a0)
     ctx->pc = 0x1fc36cu;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 2960)));
     // 0x1fc370: 0xa22004  sllv        $a0, $v0, $a1
-    ctx->pc = 0x1fc370u;
     SET_GPR_S32(ctx, 4, (int32_t)SLL32(GPR_U32(ctx, 2), GPR_U32(ctx, 5) & 0x1F));
     // 0x1fc374: 0x641824  and         $v1, $v1, $a0
-    ctx->pc = 0x1fc374u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 4));
     // 0x1fc378: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC378u;

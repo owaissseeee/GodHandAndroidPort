@@ -18,18 +18,17 @@ void SuspendThread_0x3afc10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("SuspendThread_0x3afc10");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afc18u: goto label_3afc18;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afc10u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afc18u: goto label_3afc18;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afc10u;
 
     // 0x3afc10: 0x24030037  addiu       $v1, $zero, 0x37
-    ctx->pc = 0x3afc10u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 55));
     // 0x3afc14: 0xc  syscall     0
-    ctx->pc = 0x3afc14u;
     ctx->pc = 0x3AFC18u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

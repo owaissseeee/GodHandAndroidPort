@@ -18,18 +18,17 @@ void ForwardIfSentinel_141AC8_0x141ac8(uint8_t* rdram, R5900Context* ctx, PS2Run
     PS_LOG_ENTRY("ForwardIfSentinel_141AC8_0x141ac8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x141aecu: goto label_141aec;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x141ac8u, 0)) {
+        switch (ctx->pc) {
+            case 0x141aecu: goto label_141aec;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x141ac8u;
 
     // 0x141ac8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x141ac8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x141acc: 0x3402ffff  ori         $v0, $zero, 0xFFFF
-    ctx->pc = 0x141accu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     // 0x141ad0: 0x14a20006  bne         $a1, $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x141AD0u;
@@ -46,7 +45,6 @@ void ForwardIfSentinel_141AC8_0x141ac8(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_141aec;
         }
     }
-    ctx->pc = 0x141AD8u;
     // 0x141ad8: 0x10800005  beqz        $a0, . + 4 + (0x5 << 2)
     ctx->pc = 0x141AD8u;
     {
@@ -62,12 +60,9 @@ void ForwardIfSentinel_141AC8_0x141ac8(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_141af0;
         }
     }
-    ctx->pc = 0x141AE0u;
     // 0x141ae0: 0x3c040046  lui         $a0, 0x46
-    ctx->pc = 0x141ae0u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)70 << 16));
     // 0x141ae4: 0xc05059e  jal         func_141678
-    ctx->pc = 0x141AE4u;
     SET_GPR_U32(ctx, 31, 0x141AECu);
     ctx->pc = 0x141AE8u;
     ctx->in_delay_slot = true;
@@ -75,8 +70,7 @@ void ForwardIfSentinel_141AC8_0x141ac8(uint8_t* rdram, R5900Context* ctx, PS2Run
     // 0x141ae8: 0x24844080  addiu       $a0, $a0, 0x4080 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 16512));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x141678u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x141678u, 0x141AE4u, 0x141AECu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00141678_0x141678, 0x141678u, 0x141aecu)) {
         return;
     }
     ctx->pc = 0x141AECu;

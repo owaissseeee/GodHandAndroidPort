@@ -18,7 +18,6 @@ void ClearActiveSlot_147188_0x147188(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("ClearActiveSlot_147188_0x147188");
 #endif
 
-    ctx->pc = 0x147188u;
 
     // 0x147188: 0x8c8200b0  lw          $v0, 0xB0($a0)
     ctx->pc = 0x147188u;
@@ -38,7 +37,6 @@ void ClearActiveSlot_147188_0x147188(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_1471a0;
         }
     }
-    ctx->pc = 0x147194u;
     // 0x147194: 0xa08000b8  sb          $zero, 0xB8($a0)
     ctx->pc = 0x147194u;
     WRITE8(ADD32(GPR_U32(ctx, 4), 184), (uint8_t)GPR_U32(ctx, 0));

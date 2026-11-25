@@ -18,18 +18,17 @@ void func_00378B58_0x378b58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00378B58_0x378b58");
 #endif
 
-    switch (ctx->pc) {
-        case 0x378bc8u: goto label_378bc8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x378b58u, 0)) {
+        switch (ctx->pc) {
+            case 0x378bc8u: goto label_378bc8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x378b58u;
 
     // 0x378b58: 0x27bdffc0  addiu       $sp, $sp, -0x40
-    ctx->pc = 0x378b58u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967232));
     // 0x378b5c: 0x3c030f00  lui         $v1, 0xF00
-    ctx->pc = 0x378b5cu;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)3840 << 16));
     // 0x378b60: 0x7fb00030  sq          $s0, 0x30($sp)
     ctx->pc = 0x378b60u;
@@ -38,7 +37,6 @@ void func_00378B58_0x378b58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x378b64u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 32), GPR_VEC(ctx, 17));
     // 0x378b68: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x378b68u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x378b6c: 0x7fb20010  sq          $s2, 0x10($sp)
     ctx->pc = 0x378b6cu;
@@ -50,7 +48,6 @@ void func_00378B58_0x378b58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x378b74u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 52)));
     // 0x378b78: 0x431024  and         $v0, $v0, $v1
-    ctx->pc = 0x378b78u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 3));
     // 0x378b7c: 0x54400003  bnel        $v0, $zero, . + 4 + (0x3 << 2)
     ctx->pc = 0x378B7Cu;
@@ -67,7 +64,6 @@ void func_00378B58_0x378b58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_378b8c;
         }
     }
-    ctx->pc = 0x378B84u;
     // 0x378b84: 0x10000015  b           . + 4 + (0x15 << 2)
     ctx->pc = 0x378B84u;
     {
@@ -100,9 +96,7 @@ label_378b8c:
             goto label_378ba4;
         }
     }
-    ctx->pc = 0x378B94u;
     // 0x378b94: 0x24020002  addiu       $v0, $zero, 0x2
-    ctx->pc = 0x378b94u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x378b98: 0xa2020007  sb          $v0, 0x7($s0)
     ctx->pc = 0x378b98u;
@@ -135,19 +129,14 @@ label_378bac:
     ctx->pc = 0x378bacu;
     SET_GPR_S32(ctx, 2, (int8_t)READ8(ADD32(GPR_U32(ctx, 16), 7)));
     // 0x378bb0: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x378bb0u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x378bb4: 0x24060001  addiu       $a2, $zero, 0x1
-    ctx->pc = 0x378bb4u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x378bb8: 0x21040  sll         $v0, $v0, 1
-    ctx->pc = 0x378bb8u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 1));
     // 0x378bbc: 0x2021021  addu        $v0, $s0, $v0
-    ctx->pc = 0x378bbcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), GPR_U32(ctx, 2)));
     // 0x378bc0: 0xc0de83c  jal         func_37A0F0
-    ctx->pc = 0x378BC0u;
     SET_GPR_U32(ctx, 31, 0x378BC8u);
     ctx->pc = 0x378BC4u;
     ctx->in_delay_slot = true;
@@ -155,8 +144,7 @@ label_378bac:
     // 0x378bc4: 0x84450016  lh          $a1, 0x16($v0) (Delay Slot)
     SET_GPR_S32(ctx, 5, (int16_t)READ16(ADD32(GPR_U32(ctx, 2), 22)));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x37A0F0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x37A0F0u, 0x378BC0u, 0x378BC8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_0037A0F0_0x37a0f0, 0x37a0f0u, 0x378bc8u)) {
         return;
     }
     ctx->pc = 0x378BC8u;
@@ -176,12 +164,10 @@ label_378bc8:
             goto label_378bdc;
         }
     }
-    ctx->pc = 0x378BD0u;
     // 0x378bd0: 0xa2120007  sb          $s2, 0x7($s0)
     ctx->pc = 0x378bd0u;
     WRITE8(ADD32(GPR_U32(ctx, 16), 7), (uint8_t)GPR_U32(ctx, 18));
     // 0x378bd4: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x378bd4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x378bd8: 0xa2110005  sb          $s1, 0x5($s0)
     ctx->pc = 0x378bd8u;
@@ -218,9 +204,7 @@ label_378bdc:
         return;
         #endif
     }
-    ctx->pc = 0x378BF4u;
     // 0x378bf4: 0x0  nop
-    ctx->pc = 0x378bf4u;
     // NOP
     ctx->pc = 0x378bf8u;
 }

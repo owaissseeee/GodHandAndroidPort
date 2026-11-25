@@ -18,7 +18,6 @@ void Obj1F20_NoOp_2538_0x1f2538(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("Obj1F20_NoOp_2538_0x1f2538");
 #endif
 
-    ctx->pc = 0x1f2538u;
 
     // 0x1f2538: 0x3e00008  jr          $ra
     ctx->pc = 0x1F2538u;

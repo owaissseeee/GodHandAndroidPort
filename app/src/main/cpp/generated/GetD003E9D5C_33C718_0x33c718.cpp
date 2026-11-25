@@ -18,10 +18,8 @@ void GetD003E9D5C_33C718_0x33c718(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("GetD003E9D5C_33C718_0x33c718");
 #endif
 
-    ctx->pc = 0x33c718u;
 
     // 0x33c718: 0x3c03003f  lui         $v1, 0x3F
-    ctx->pc = 0x33c718u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)63 << 16));
     // 0x33c71c: 0x3e00008  jr          $ra
     ctx->pc = 0x33C71Cu;
@@ -42,9 +40,7 @@ void GetD003E9D5C_33C718_0x33c718(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         return;
         #endif
     }
-    ctx->pc = 0x33C724u;
     // 0x33c724: 0x0  nop
-    ctx->pc = 0x33c724u;
     // NOP
     ctx->pc = 0x33c728u;
 }

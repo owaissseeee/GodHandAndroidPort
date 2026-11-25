@@ -18,16 +18,13 @@ void cOmb3_SetNextPoint_0x1b5190(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("cOmb3_SetNextPoint_0x1b5190");
 #endif
 
-    ctx->pc = 0x1b5190u;
 
     // 0x1b5190: 0x94820608  lhu         $v0, 0x608($a0)
     ctx->pc = 0x1b5190u;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 4), 1544)));
     // 0x1b5194: 0x30a5ffff  andi        $a1, $a1, 0xFFFF
-    ctx->pc = 0x1b5194u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)65535);
     // 0x1b5198: 0xa2102b  sltu        $v0, $a1, $v0
-    ctx->pc = 0x1b5198u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 5) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
     // 0x1b519c: 0x54400001  bnel        $v0, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x1B519Cu;
@@ -59,9 +56,7 @@ label_1b51a4:
         return;
         #endif
     }
-    ctx->pc = 0x1B51ACu;
     // 0x1b51ac: 0x0  nop
-    ctx->pc = 0x1b51acu;
     // NOP
     ctx->pc = 0x1b51b0u;
 }

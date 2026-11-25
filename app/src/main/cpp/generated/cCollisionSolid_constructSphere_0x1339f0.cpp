@@ -18,21 +18,20 @@ void cCollisionSolid_constructSphere_0x1339f0(uint8_t* rdram, R5900Context* ctx,
     PS_LOG_ENTRY("cCollisionSolid_constructSphere_0x1339f0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x133a1cu: goto label_133a1c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1339f0u, 0)) {
+        switch (ctx->pc) {
+            case 0x133a1cu: goto label_133a1c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1339f0u;
 
     // 0x1339f0: 0x27bdffb0  addiu       $sp, $sp, -0x50
-    ctx->pc = 0x1339f0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967216));
     // 0x1339f4: 0x7fb10020  sq          $s1, 0x20($sp)
     ctx->pc = 0x1339f4u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 32), GPR_VEC(ctx, 17));
     // 0x1339f8: 0x80882d  daddu       $s1, $a0, $zero
-    ctx->pc = 0x1339f8u;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1339fc: 0x7fb00030  sq          $s0, 0x30($sp)
     ctx->pc = 0x1339fcu;
@@ -41,19 +40,16 @@ void cCollisionSolid_constructSphere_0x1339f0(uint8_t* rdram, R5900Context* ctx,
     ctx->pc = 0x133a00u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 18));
     // 0x133a04: 0xa0802d  daddu       $s0, $a1, $zero
-    ctx->pc = 0x133a04u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     // 0x133a08: 0xe7b40040  swc1        $f20, 0x40($sp)
     ctx->pc = 0x133a08u;
     { float f = ctx->f[20]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 29), 64), bits); }
     // 0x133a0c: 0xc0902d  daddu       $s2, $a2, $zero
-    ctx->pc = 0x133a0cu;
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
     // 0x133a10: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x133a10u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x133a14: 0xc04ce62  jal         func_133988
-    ctx->pc = 0x133A14u;
     SET_GPR_U32(ctx, 31, 0x133A1Cu);
     ctx->pc = 0x133A18u;
     ctx->in_delay_slot = true;
@@ -61,20 +57,16 @@ void cCollisionSolid_constructSphere_0x1339f0(uint8_t* rdram, R5900Context* ctx,
     // 0x133a18: 0x46006506  mov.s       $f20, $f12 (Delay Slot)
     ctx->f[20] = FPU_MOV_S(ctx->f[12]);
     ctx->in_delay_slot = false;
-    ctx->pc = 0x133988u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x133988u, 0x133A14u, 0x133A1Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cCollisionSolid_0x133988, 0x133988u, 0x133a1cu)) {
         return;
     }
     ctx->pc = 0x133A1Cu;
 label_133a1c:
     // 0x133a1c: 0x3c020042  lui         $v0, 0x42
-    ctx->pc = 0x133a1cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)66 << 16));
     // 0x133a20: 0x26230050  addiu       $v1, $s1, 0x50
-    ctx->pc = 0x133a20u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 17), 80));
     // 0x133a24: 0x2442d7e0  addiu       $v0, $v0, -0x2820
-    ctx->pc = 0x133a24u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294957024));
     // 0x133a28: 0xae300040  sw          $s0, 0x40($s1)
     ctx->pc = 0x133a28u;
@@ -89,7 +81,6 @@ label_133a1c:
     ctx->pc = 0x133a34u;
     WRITE128(ADD32(GPR_U32(ctx, 17), 96), _mm_castps_si128(ctx->vu0_vf[0]));
     // 0x133a38: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x133a38u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x133a3c: 0x10720007  beq         $v1, $s2, . + 4 + (0x7 << 2)
     ctx->pc = 0x133A3Cu;
@@ -106,7 +97,6 @@ label_133a1c:
             goto label_133a5c;
         }
     }
-    ctx->pc = 0x133A44u;
     // 0x133a44: 0xc6400000  lwc1        $f0, 0x0($s2)
     ctx->pc = 0x133a44u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 18), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -130,7 +120,6 @@ label_133a5c:
     ctx->pc = 0x133a5cu;
     { float f = ctx->f[20]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 17), 112), bits); }
     // 0x133a60: 0x220102d  daddu       $v0, $s1, $zero
-    ctx->pc = 0x133a60u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     // 0x133a64: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x133a64u;

@@ -18,27 +18,25 @@ void _i2b_0x38f980(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     PS_LOG_ENTRY("_i2b_0x38f980");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38f998u: goto label_38f998;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38f980u, 0)) {
+        switch (ctx->pc) {
+            case 0x38f998u: goto label_38f998;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x38f980u;
 
     // 0x38f980: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x38f980u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x38f984: 0xffb00000  sd          $s0, 0x0($sp)
     ctx->pc = 0x38f984u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 16));
     // 0x38f988: 0xa0802d  daddu       $s0, $a1, $zero
-    ctx->pc = 0x38f988u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     // 0x38f98c: 0xffbf0010  sd          $ra, 0x10($sp)
     ctx->pc = 0x38f98cu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 16), GPR_U64(ctx, 31));
     // 0x38f990: 0xc0e3d6e  jal         func_38F5B8
-    ctx->pc = 0x38F990u;
     SET_GPR_U32(ctx, 31, 0x38F998u);
     ctx->pc = 0x38F994u;
     ctx->in_delay_slot = true;
@@ -46,17 +44,14 @@ void _i2b_0x38f980(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     // 0x38f994: 0x24050001  addiu       $a1, $zero, 0x1 (Delay Slot)
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x38F5B8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x38F5B8u, 0x38F990u, 0x38F998u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &Brealloc_0x38f5b8, 0x38f5b8u, 0x38f998u)) {
         return;
     }
     ctx->pc = 0x38F998u;
 label_38f998:
     // 0x38f998: 0x40182d  daddu       $v1, $v0, $zero
-    ctx->pc = 0x38f998u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     // 0x38f99c: 0x24040001  addiu       $a0, $zero, 0x1
-    ctx->pc = 0x38f99cu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x38f9a0: 0xac700014  sw          $s0, 0x14($v1)
     ctx->pc = 0x38f9a0u;

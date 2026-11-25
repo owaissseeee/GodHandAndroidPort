@@ -18,18 +18,17 @@ void ps2___builtin_delete_0x30f5a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("ps2___builtin_delete_0x30f5a0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x30f5b8u: goto label_30f5b8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x30f5a0u, 0)) {
+        switch (ctx->pc) {
+            case 0x30f5b8u: goto label_30f5b8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x30f5a0u;
 
     // 0x30f5a0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x30f5a0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x30f5a4: 0x80282d  daddu       $a1, $a0, $zero
-    ctx->pc = 0x30f5a4u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x30f5a8: 0x10a00003  beqz        $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x30F5A8u;
@@ -46,9 +45,7 @@ void ps2___builtin_delete_0x30f5a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_30f5b8;
         }
     }
-    ctx->pc = 0x30F5B0u;
     // 0x30f5b0: 0xc0aa5a0  jal         func_2A9680
-    ctx->pc = 0x30F5B0u;
     SET_GPR_U32(ctx, 31, 0x30F5B8u);
     ctx->pc = 0x30F5B4u;
     ctx->in_delay_slot = true;
@@ -84,9 +81,7 @@ label_30f5b8:
         return;
         #endif
     }
-    ctx->pc = 0x30F5C4u;
     // 0x30f5c4: 0x0  nop
-    ctx->pc = 0x30f5c4u;
     // NOP
     ctx->pc = 0x30f5c8u;
 }

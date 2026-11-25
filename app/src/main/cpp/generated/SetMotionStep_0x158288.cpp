@@ -19,7 +19,6 @@ void SetMotionStep_0x158288(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("SetMotionStep_0x158288");
 #endif
 
-    ctx->pc = 0x158288u;
 
     // 0x158288: 0x94820434  lhu         $v0, 0x434($a0)
     ctx->pc = 0x158288u;
@@ -32,7 +31,6 @@ void SetMotionStep_0x158288(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 4), 1076)));
     }
     // 0x15828c: 0x30420004  andi        $v0, $v0, 0x4
-    ctx->pc = 0x15828cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)4);
     // 0x158290: 0x54400001  bnel        $v0, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x158290u;

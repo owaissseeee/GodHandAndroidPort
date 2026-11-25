@@ -18,12 +18,13 @@ void cCoreSave_ckGodReel_0x1fb928(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("cCoreSave_ckGodReel_0x1fb928");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1fb934u: goto label_1fb934;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1fb928u, 0)) {
+        switch (ctx->pc) {
+            case 0x1fb934u: goto label_1fb934;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1fb928u;
 
     // 0x1fb928: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fb928u;
@@ -67,10 +68,8 @@ label_1fb934:
     ctx->pc = 0x1FB93Cu;
 label_1fb93c:
     // 0x1fb93c: 0x0  nop
-    ctx->pc = 0x1fb93cu;
     // NOP
     // 0x1fb940: 0x0  nop
-    ctx->pc = 0x1fb940u;
     // NOP
     // 0x1fb944: 0x1040fffb  beqz        $v0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x1FB944u;
@@ -90,15 +89,12 @@ label_1fb93c:
             goto label_1fb934;
         }
     }
-    ctx->pc = 0x1FB94Cu;
     // 0x1fb94c: 0x8c627a34  lw          $v0, 0x7A34($v1)
     ctx->pc = 0x1fb94cu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 31284)));
     // 0x1fb950: 0x2107a  dsrl        $v0, $v0, 1
-    ctx->pc = 0x1fb950u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) >> 1);
     // 0x1fb954: 0x30420001  andi        $v0, $v0, 0x1
-    ctx->pc = 0x1fb954u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
     // 0x1fb958: 0x14400006  bnez        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x1FB958u;
@@ -115,15 +111,12 @@ label_1fb93c:
             goto label_1fb974;
         }
     }
-    ctx->pc = 0x1FB960u;
     // 0x1fb960: 0x8c830130  lw          $v1, 0x130($a0)
     ctx->pc = 0x1fb960u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 304)));
     // 0x1fb964: 0xa22004  sllv        $a0, $v0, $a1
-    ctx->pc = 0x1fb964u;
     SET_GPR_S32(ctx, 4, (int32_t)SLL32(GPR_U32(ctx, 2), GPR_U32(ctx, 5) & 0x1F));
     // 0x1fb968: 0x641824  and         $v1, $v1, $a0
-    ctx->pc = 0x1fb968u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 4));
     // 0x1fb96c: 0x3e00008  jr          $ra
     ctx->pc = 0x1FB96Cu;
@@ -159,9 +152,7 @@ label_1fb974:
         return;
         #endif
     }
-    ctx->pc = 0x1FB97Cu;
     // 0x1fb97c: 0x0  nop
-    ctx->pc = 0x1fb97cu;
     // NOP
     ctx->pc = 0x1fb980u;
 }

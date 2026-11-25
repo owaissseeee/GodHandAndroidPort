@@ -18,22 +18,24 @@ void sfhds_CallS_0x34da88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("sfhds_CallS_0x34da88");
 #endif
 
-    switch (ctx->pc) {
-        case 0x34da88u: goto label_34da88;
-        case 0x34da8cu: goto label_34da8c;
-        case 0x34da90u: goto label_34da90;
-        case 0x34da94u: goto label_34da94;
-        case 0x34da98u: goto label_34da98;
-        case 0x34da9cu: goto label_34da9c;
-        case 0x34daa0u: goto label_34daa0;
-        case 0x34daa4u: goto label_34daa4;
-        case 0x34daa8u: goto label_34daa8;
-        case 0x34daacu: goto label_34daac;
-        case 0x34dab0u: goto label_34dab0;
-        case 0x34dab4u: goto label_34dab4;
-        case 0x34dab8u: goto label_34dab8;
-        case 0x34dabcu: goto label_34dabc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x34da88u, 0)) {
+        switch (ctx->pc) {
+            case 0x34da88u: goto label_34da88;
+            case 0x34da8cu: goto label_34da8c;
+            case 0x34da90u: goto label_34da90;
+            case 0x34da94u: goto label_34da94;
+            case 0x34da98u: goto label_34da98;
+            case 0x34da9cu: goto label_34da9c;
+            case 0x34daa0u: goto label_34daa0;
+            case 0x34daa4u: goto label_34daa4;
+            case 0x34daa8u: goto label_34daa8;
+            case 0x34daacu: goto label_34daac;
+            case 0x34dab0u: goto label_34dab0;
+            case 0x34dab4u: goto label_34dab4;
+            case 0x34dab8u: goto label_34dab8;
+            case 0x34dabcu: goto label_34dabc;
+            default: break;
+        }
     }
 
     ctx->pc = 0x34da88u;

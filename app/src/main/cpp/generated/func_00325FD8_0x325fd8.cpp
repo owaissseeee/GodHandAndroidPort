@@ -18,26 +18,28 @@ void func_00325FD8_0x325fd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00325FD8_0x325fd8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x325fd8u: goto label_325fd8;
-        case 0x325fdcu: goto label_325fdc;
-        case 0x325fe0u: goto label_325fe0;
-        case 0x325fe4u: goto label_325fe4;
-        case 0x325fe8u: goto label_325fe8;
-        case 0x325fecu: goto label_325fec;
-        case 0x325ff0u: goto label_325ff0;
-        case 0x325ff4u: goto label_325ff4;
-        case 0x325ff8u: goto label_325ff8;
-        case 0x325ffcu: goto label_325ffc;
-        case 0x326000u: goto label_326000;
-        case 0x326004u: goto label_326004;
-        case 0x326008u: goto label_326008;
-        case 0x32600cu: goto label_32600c;
-        case 0x326010u: goto label_326010;
-        case 0x326014u: goto label_326014;
-        case 0x326018u: goto label_326018;
-        case 0x32601cu: goto label_32601c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x325fd8u, 0)) {
+        switch (ctx->pc) {
+            case 0x325fd8u: goto label_325fd8;
+            case 0x325fdcu: goto label_325fdc;
+            case 0x325fe0u: goto label_325fe0;
+            case 0x325fe4u: goto label_325fe4;
+            case 0x325fe8u: goto label_325fe8;
+            case 0x325fecu: goto label_325fec;
+            case 0x325ff0u: goto label_325ff0;
+            case 0x325ff4u: goto label_325ff4;
+            case 0x325ff8u: goto label_325ff8;
+            case 0x325ffcu: goto label_325ffc;
+            case 0x326000u: goto label_326000;
+            case 0x326004u: goto label_326004;
+            case 0x326008u: goto label_326008;
+            case 0x32600cu: goto label_32600c;
+            case 0x326010u: goto label_326010;
+            case 0x326014u: goto label_326014;
+            case 0x326018u: goto label_326018;
+            case 0x32601cu: goto label_32601c;
+            default: break;
+        }
     }
 
     ctx->pc = 0x325fd8u;
@@ -177,7 +179,6 @@ label_326018:
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 0)));
 label_32601c:
     // 0x32601c: 0x0  nop
-    ctx->pc = 0x32601cu;
     // NOP
     ctx->pc = 0x326020u;
 }

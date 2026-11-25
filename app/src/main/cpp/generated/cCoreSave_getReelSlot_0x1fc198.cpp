@@ -18,7 +18,6 @@ void cCoreSave_getReelSlot_0x1fc198(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("cCoreSave_getReelSlot_0x1fc198");
 #endif
 
-    ctx->pc = 0x1fc198u;
 
     // 0x1fc198: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc198u;
@@ -38,7 +37,6 @@ void cCoreSave_getReelSlot_0x1fc198(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1fc1ac;
         }
     }
-    ctx->pc = 0x1FC1A4u;
     // 0x1fc1a4: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC1A4u;
     {
@@ -61,7 +59,6 @@ void cCoreSave_getReelSlot_0x1fc198(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     ctx->pc = 0x1FC1ACu;
 label_1fc1ac:
     // 0x1fc1ac: 0x2c62000a  sltiu       $v0, $v1, 0xA
-    ctx->pc = 0x1fc1acu;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 3) < (uint64_t)(int64_t)(int32_t)10) ? 1 : 0);
     // 0x1fc1b0: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x1FC1B0u;
@@ -78,7 +75,6 @@ label_1fc1ac:
             goto label_1fc1c0;
         }
     }
-    ctx->pc = 0x1FC1B8u;
     // 0x1fc1b8: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC1B8u;
     {

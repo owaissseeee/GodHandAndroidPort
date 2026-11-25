@@ -18,7 +18,6 @@ void func_002F1750_0x2f1750(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002F1750_0x2f1750");
 #endif
 
-    ctx->pc = 0x2f1750u;
 
     // 0x2f1750: 0x3e00008  jr          $ra
     ctx->pc = 0x2F1750u;

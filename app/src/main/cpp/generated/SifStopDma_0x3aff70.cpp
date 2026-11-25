@@ -18,18 +18,17 @@ void SifStopDma_0x3aff70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     PS_LOG_ENTRY("SifStopDma_0x3aff70");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3aff78u: goto label_3aff78;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3aff70u, 0)) {
+        switch (ctx->pc) {
+            case 0x3aff78u: goto label_3aff78;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3aff70u;
 
     // 0x3aff70: 0x2403006b  addiu       $v1, $zero, 0x6B
-    ctx->pc = 0x3aff70u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 107));
     // 0x3aff74: 0xc  syscall     0
-    ctx->pc = 0x3aff74u;
     ctx->pc = 0x3AFF78u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

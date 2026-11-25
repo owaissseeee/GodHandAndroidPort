@@ -18,7 +18,6 @@ void func_0032AB20_0x32ab20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0032AB20_0x32ab20");
 #endif
 
-    ctx->pc = 0x32ab20u;
 
     // 0x32ab20: 0x3e00008  jr          $ra
     ctx->pc = 0x32AB20u;

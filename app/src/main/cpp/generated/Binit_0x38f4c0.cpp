@@ -18,22 +18,17 @@ void Binit_0x38f4c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     PS_LOG_ENTRY("Binit_0x38f4c0");
 #endif
 
-    ctx->pc = 0x38f4c0u;
 
     // 0x38f4c0: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x38f4c0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x38f4c4: 0x24030003  addiu       $v1, $zero, 0x3
-    ctx->pc = 0x38f4c4u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
     // 0x38f4c8: 0x24050008  addiu       $a1, $zero, 0x8
-    ctx->pc = 0x38f4c8u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 8));
     // 0x38f4cc: 0xa482000c  sh          $v0, 0xC($a0)
     ctx->pc = 0x38f4ccu;
     WRITE16(ADD32(GPR_U32(ctx, 4), 12), (uint16_t)GPR_U32(ctx, 2));
     // 0x38f4d0: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x38f4d0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x38f4d4: 0xac830004  sw          $v1, 0x4($a0)
     ctx->pc = 0x38f4d4u;

@@ -18,18 +18,17 @@ void CreateThread_0x3afaa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("CreateThread_0x3afaa0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afaa8u: goto label_3afaa8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afaa0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afaa8u: goto label_3afaa8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afaa0u;
 
     // 0x3afaa0: 0x24030020  addiu       $v1, $zero, 0x20
-    ctx->pc = 0x3afaa0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 32));
     // 0x3afaa4: 0xc  syscall     0
-    ctx->pc = 0x3afaa4u;
     ctx->pc = 0x3AFAA8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

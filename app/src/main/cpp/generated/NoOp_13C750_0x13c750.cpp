@@ -18,7 +18,6 @@ void NoOp_13C750_0x13c750(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("NoOp_13C750_0x13c750");
 #endif
 
-    ctx->pc = 0x13c750u;
 
     // 0x13c750: 0x3e00008  jr          $ra
     ctx->pc = 0x13C750u;

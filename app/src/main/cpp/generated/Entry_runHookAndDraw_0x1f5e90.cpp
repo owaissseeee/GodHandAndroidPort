@@ -18,34 +18,36 @@ void Entry_runHookAndDraw_0x1f5e90(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("Entry_runHookAndDraw_0x1f5e90");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1f5e90u: goto label_1f5e90;
-        case 0x1f5e94u: goto label_1f5e94;
-        case 0x1f5e98u: goto label_1f5e98;
-        case 0x1f5e9cu: goto label_1f5e9c;
-        case 0x1f5ea0u: goto label_1f5ea0;
-        case 0x1f5ea4u: goto label_1f5ea4;
-        case 0x1f5ea8u: goto label_1f5ea8;
-        case 0x1f5eacu: goto label_1f5eac;
-        case 0x1f5eb0u: goto label_1f5eb0;
-        case 0x1f5eb4u: goto label_1f5eb4;
-        case 0x1f5eb8u: goto label_1f5eb8;
-        case 0x1f5ebcu: goto label_1f5ebc;
-        case 0x1f5ec0u: goto label_1f5ec0;
-        case 0x1f5ec4u: goto label_1f5ec4;
-        case 0x1f5ec8u: goto label_1f5ec8;
-        case 0x1f5eccu: goto label_1f5ecc;
-        case 0x1f5ed0u: goto label_1f5ed0;
-        case 0x1f5ed4u: goto label_1f5ed4;
-        case 0x1f5ed8u: goto label_1f5ed8;
-        case 0x1f5edcu: goto label_1f5edc;
-        case 0x1f5ee0u: goto label_1f5ee0;
-        case 0x1f5ee4u: goto label_1f5ee4;
-        case 0x1f5ee8u: goto label_1f5ee8;
-        case 0x1f5eecu: goto label_1f5eec;
-        case 0x1f5ef0u: goto label_1f5ef0;
-        case 0x1f5ef4u: goto label_1f5ef4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1f5e90u, 0)) {
+        switch (ctx->pc) {
+            case 0x1f5e90u: goto label_1f5e90;
+            case 0x1f5e94u: goto label_1f5e94;
+            case 0x1f5e98u: goto label_1f5e98;
+            case 0x1f5e9cu: goto label_1f5e9c;
+            case 0x1f5ea0u: goto label_1f5ea0;
+            case 0x1f5ea4u: goto label_1f5ea4;
+            case 0x1f5ea8u: goto label_1f5ea8;
+            case 0x1f5eacu: goto label_1f5eac;
+            case 0x1f5eb0u: goto label_1f5eb0;
+            case 0x1f5eb4u: goto label_1f5eb4;
+            case 0x1f5eb8u: goto label_1f5eb8;
+            case 0x1f5ebcu: goto label_1f5ebc;
+            case 0x1f5ec0u: goto label_1f5ec0;
+            case 0x1f5ec4u: goto label_1f5ec4;
+            case 0x1f5ec8u: goto label_1f5ec8;
+            case 0x1f5eccu: goto label_1f5ecc;
+            case 0x1f5ed0u: goto label_1f5ed0;
+            case 0x1f5ed4u: goto label_1f5ed4;
+            case 0x1f5ed8u: goto label_1f5ed8;
+            case 0x1f5edcu: goto label_1f5edc;
+            case 0x1f5ee0u: goto label_1f5ee0;
+            case 0x1f5ee4u: goto label_1f5ee4;
+            case 0x1f5ee8u: goto label_1f5ee8;
+            case 0x1f5eecu: goto label_1f5eec;
+            case 0x1f5ef0u: goto label_1f5ef0;
+            case 0x1f5ef4u: goto label_1f5ef4;
+            default: break;
+        }
     }
 
     ctx->pc = 0x1f5e90u;
@@ -152,7 +154,6 @@ label_1f5ed8:
         ctx->pc = 0x1F5EDCu;
         goto label_1f5edc;
     }
-    ctx->pc = 0x1F5ED4u;
     SET_GPR_U32(ctx, 31, 0x1F5EDCu);
     ctx->pc = 0x1F5ED8u;
     ctx->in_delay_slot = true;
@@ -160,8 +161,7 @@ label_1f5ed8:
     // 0x1f5ed8: 0xa462ae40  sh          $v0, -0x51C0($v1) (Delay Slot)
     WRITE16(ADD32(GPR_U32(ctx, 3), 4294946368), (uint16_t)GPR_U32(ctx, 2));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2AAA40u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2AAA40u, 0x1F5ED4u, 0x1F5EDCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_move_0x2aaa40, 0x2aaa40u, 0x1f5edcu)) {
         return;
     }
     ctx->pc = 0x1F5EDCu;
@@ -178,7 +178,6 @@ label_1f5ee0:
         ctx->pc = 0x1F5EE4u;
         goto label_1f5ee4;
     }
-    ctx->pc = 0x1F5EDCu;
     SET_GPR_U32(ctx, 31, 0x1F5EE4u);
     ctx->pc = 0x1F5EE0u;
     ctx->in_delay_slot = true;
@@ -186,8 +185,7 @@ label_1f5ee0:
     // 0x1f5ee0: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2AAC28u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2AAC28u, 0x1F5EDCu, 0x1F5EE4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_trans_0x2aac28, 0x2aac28u, 0x1f5ee4u)) {
         return;
     }
     ctx->pc = 0x1F5EE4u;
@@ -233,7 +231,6 @@ label_1f5ef0:
     ctx->pc = 0x1F5EF4u;
 label_1f5ef4:
     // 0x1f5ef4: 0x0  nop
-    ctx->pc = 0x1f5ef4u;
     // NOP
     ctx->pc = 0x1f5ef8u;
 }

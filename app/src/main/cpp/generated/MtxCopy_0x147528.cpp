@@ -18,15 +18,15 @@ void MtxCopy_0x147528(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     PS_LOG_ENTRY("MtxCopy_0x147528");
 #endif
 
-    switch (ctx->pc) {
-        case 0x147538u: goto label_147538;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x147528u, 0)) {
+        switch (ctx->pc) {
+            case 0x147538u: goto label_147538;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x147528u;
 
     // 0x147528: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x147528u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x14752c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x14752cu;
@@ -34,8 +34,7 @@ void MtxCopy_0x147528(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     // 0x147530: 0xc0c2952  jal         func_30A548
     ctx->pc = 0x147530u;
     SET_GPR_U32(ctx, 31, 0x147538u);
-    ctx->pc = 0x30A548u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x30A548u, 0x147530u, 0x147538u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &sceVu0CopyMatrix_0x30a548, 0x30a548u, 0x147538u)) {
         return;
     }
     ctx->pc = 0x147538u;
@@ -62,9 +61,7 @@ label_147538:
         return;
         #endif
     }
-    ctx->pc = 0x147544u;
     // 0x147544: 0x0  nop
-    ctx->pc = 0x147544u;
     // NOP
     ctx->pc = 0x147548u;
 }

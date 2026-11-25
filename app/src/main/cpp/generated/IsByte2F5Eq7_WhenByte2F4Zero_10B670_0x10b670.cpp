@@ -18,7 +18,6 @@ void IsByte2F5Eq7_WhenByte2F4Zero_10B670_0x10b670(uint8_t* rdram, R5900Context* 
     PS_LOG_ENTRY("IsByte2F5Eq7_WhenByte2F4Zero_10B670_0x10b670");
 #endif
 
-    ctx->pc = 0x10b670u;
 
     // 0x10b670: 0x908202f4  lbu         $v0, 0x2F4($a0)
     ctx->pc = 0x10b670u;
@@ -32,12 +31,10 @@ void IsByte2F5Eq7_WhenByte2F4Zero_10B670_0x10b670(uint8_t* rdram, R5900Context* 
             goto label_10b68c;
         }
     }
-    ctx->pc = 0x10B67Cu;
     // 0x10b67c: 0x908202f5  lbu         $v0, 0x2F5($a0)
     ctx->pc = 0x10b67cu;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 757)));
     // 0x10b680: 0x38420007  xori        $v0, $v0, 0x7
-    ctx->pc = 0x10b680u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)7);
     // 0x10b684: 0x3e00008  jr          $ra
     ctx->pc = 0x10B684u;
@@ -79,9 +76,7 @@ label_10b68c:
         return;
         #endif
     }
-    ctx->pc = 0x10B694u;
     // 0x10b694: 0x0  nop
-    ctx->pc = 0x10b694u;
     // NOP
     ctx->pc = 0x10b698u;
 }

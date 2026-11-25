@@ -18,27 +18,24 @@ void SetField35CAndForward_139C58_0x139c58(uint8_t* rdram, R5900Context* ctx, PS
     PS_LOG_ENTRY("SetField35CAndForward_139C58_0x139c58");
 #endif
 
-    switch (ctx->pc) {
-        case 0x139c7cu: goto label_139c7c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x139c58u, 0)) {
+        switch (ctx->pc) {
+            case 0x139c7cu: goto label_139c7c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x139c58u;
 
     // 0x139c58: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x139c58u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x139c5c: 0x3c020042  lui         $v0, 0x42
-    ctx->pc = 0x139c5cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)66 << 16));
     // 0x139c60: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x139c60u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x139c64: 0x2442d8f8  addiu       $v0, $v0, -0x2708
-    ctx->pc = 0x139c64u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294957304));
     // 0x139c68: 0x30a50001  andi        $a1, $a1, 0x1
-    ctx->pc = 0x139c68u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)1);
     // 0x139c6c: 0x10a00003  beqz        $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x139C6Cu;
@@ -55,12 +52,10 @@ void SetField35CAndForward_139C58_0x139c58(uint8_t* rdram, R5900Context* ctx, PS
             goto label_139c7c;
         }
     }
-    ctx->pc = 0x139C74u;
     // 0x139c74: 0xc0c3d68  jal         func_30F5A0
     ctx->pc = 0x139C74u;
     SET_GPR_U32(ctx, 31, 0x139C7Cu);
-    ctx->pc = 0x30F5A0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x30F5A0u, 0x139C74u, 0x139C7Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x139c7cu)) {
         return;
     }
     ctx->pc = 0x139C7Cu;

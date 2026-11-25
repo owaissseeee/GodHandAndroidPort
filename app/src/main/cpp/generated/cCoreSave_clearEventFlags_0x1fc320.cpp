@@ -18,7 +18,6 @@ void cCoreSave_clearEventFlags_0x1fc320(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("cCoreSave_clearEventFlags_0x1fc320");
 #endif
 
-    ctx->pc = 0x1fc320u;
 
     // 0x1fc320: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc320u;
@@ -53,9 +52,7 @@ label_1fc32c:
         return;
         #endif
     }
-    ctx->pc = 0x1FC334u;
     // 0x1fc334: 0x0  nop
-    ctx->pc = 0x1fc334u;
     // NOP
     ctx->pc = 0x1fc338u;
 }

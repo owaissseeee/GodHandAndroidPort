@@ -18,7 +18,6 @@ void cObj_R0_scenario_0x14e768(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("cObj_R0_scenario_0x14e768");
 #endif
 
-    ctx->pc = 0x14e768u;
 
     // 0x14e768: 0x3e00008  jr          $ra
     ctx->pc = 0x14E768u;
@@ -33,12 +32,9 @@ void cObj_R0_scenario_0x14e768(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
         return;
         #endif
     }
-    ctx->pc = 0x14E770u;
     // 0x14e770: 0x27bd0060  addiu       $sp, $sp, 0x60
-    ctx->pc = 0x14e770u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 96));
     // 0x14e774: 0x0  nop
-    ctx->pc = 0x14e774u;
     // NOP
     ctx->pc = 0x14e778u;
 }

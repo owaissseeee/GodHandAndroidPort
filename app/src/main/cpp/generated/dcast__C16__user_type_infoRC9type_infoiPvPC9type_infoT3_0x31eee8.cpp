@@ -18,15 +18,15 @@ void dcast__C16__user_type_infoRC9type_infoiPvPC9type_infoT3_0x31eee8(uint8_t* r
     PS_LOG_ENTRY("dcast__C16__user_type_infoRC9type_infoiPvPC9type_infoT3_0x31eee8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x31eefcu: goto label_31eefc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x31eee8u, 0)) {
+        switch (ctx->pc) {
+            case 0x31eefcu: goto label_31eefc;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x31eee8u;
 
     // 0x31eee8: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x31eee8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x31eeec: 0xffb00000  sd          $s0, 0x0($sp)
     ctx->pc = 0x31eeecu;
@@ -35,7 +35,6 @@ void dcast__C16__user_type_infoRC9type_infoiPvPC9type_infoT3_0x31eee8(uint8_t* r
     ctx->pc = 0x31eef0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 16), GPR_U64(ctx, 31));
     // 0x31eef4: 0xc0c7b90  jal         func_31EE40
-    ctx->pc = 0x31EEF4u;
     SET_GPR_U32(ctx, 31, 0x31EEFCu);
     ctx->pc = 0x31EEF8u;
     ctx->in_delay_slot = true;
@@ -43,8 +42,7 @@ void dcast__C16__user_type_infoRC9type_infoiPvPC9type_infoT3_0x31eee8(uint8_t* r
     // 0x31eef8: 0xe0802d  daddu       $s0, $a3, $zero (Delay Slot)
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 7) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x31EE40u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31EE40u, 0x31EEF4u, 0x31EEFCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ps2___eq__C9type_infoRC9type_info_0x31ee40, 0x31ee40u, 0x31eefcu)) {
         return;
     }
     ctx->pc = 0x31EEFCu;
@@ -56,7 +54,6 @@ label_31eefc:
     ctx->pc = 0x31ef00u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 16)));
     // 0x31ef04: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x31ef04u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x31ef08: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x31ef08u;
@@ -80,9 +77,7 @@ label_31eefc:
         return;
         #endif
     }
-    ctx->pc = 0x31EF14u;
     // 0x31ef14: 0x0  nop
-    ctx->pc = 0x31ef14u;
     // NOP
     ctx->pc = 0x31ef18u;
 }

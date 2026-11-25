@@ -18,7 +18,6 @@ void cGame_isReleaseActiveHeap_0x2a6c50(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("cGame_isReleaseActiveHeap_0x2a6c50");
 #endif
 
-    ctx->pc = 0x2a6c50u;
 
     // 0x2a6c50: 0x848201b2  lh          $v0, 0x1B2($a0)
     ctx->pc = 0x2a6c50u;
@@ -38,7 +37,6 @@ void cGame_isReleaseActiveHeap_0x2a6c50(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_2a6c64;
         }
     }
-    ctx->pc = 0x2A6C5Cu;
     // 0x2a6c5c: 0x3e00008  jr          $ra
     ctx->pc = 0x2A6C5Cu;
     {
@@ -61,10 +59,8 @@ void cGame_isReleaseActiveHeap_0x2a6c50(uint8_t* rdram, R5900Context* ctx, PS2Ru
     ctx->pc = 0x2A6C64u;
 label_2a6c64:
     // 0x2a6c64: 0x2463ffff  addiu       $v1, $v1, -0x1
-    ctx->pc = 0x2a6c64u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294967295));
     // 0x2a6c68: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2a6c68u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2a6c6c: 0x3e00008  jr          $ra
     ctx->pc = 0x2A6C6Cu;
@@ -85,9 +81,7 @@ label_2a6c64:
         return;
         #endif
     }
-    ctx->pc = 0x2A6C74u;
     // 0x2a6c74: 0x0  nop
-    ctx->pc = 0x2a6c74u;
     // NOP
     ctx->pc = 0x2a6c78u;
 }

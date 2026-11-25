@@ -18,7 +18,6 @@ void Obj38B8_GetField20MinusField1C_0x38bdf0(uint8_t* rdram, R5900Context* ctx, 
     PS_LOG_ENTRY("Obj38B8_GetField20MinusField1C_0x38bdf0");
 #endif
 
-    ctx->pc = 0x38bdf0u;
 
     // 0x38bdf0: 0x8c83001c  lw          $v1, 0x1C($a0)
     ctx->pc = 0x38bdf0u;

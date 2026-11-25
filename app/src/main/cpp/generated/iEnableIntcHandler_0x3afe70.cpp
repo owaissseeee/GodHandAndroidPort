@@ -18,18 +18,17 @@ void iEnableIntcHandler_0x3afe70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("iEnableIntcHandler_0x3afe70");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afe78u: goto label_3afe78;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afe70u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afe78u: goto label_3afe78;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afe70u;
 
     // 0x3afe70: 0x2403ffa4  addiu       $v1, $zero, -0x5C
-    ctx->pc = 0x3afe70u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967204));
     // 0x3afe74: 0xc  syscall     0
-    ctx->pc = 0x3afe74u;
     ctx->pc = 0x3AFE78u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

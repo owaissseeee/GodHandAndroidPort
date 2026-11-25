@@ -18,13 +18,11 @@ void Obj0000_Get_Byte_17C3_NZ_2_276468_0x276468(uint8_t* rdram, R5900Context* ct
     PS_LOG_ENTRY("Obj0000_Get_Byte_17C3_NZ_2_276468_0x276468");
 #endif
 
-    ctx->pc = 0x276468u;
 
     // 0x276468: 0x908317c3  lbu         $v1, 0x17C3($a0)
     ctx->pc = 0x276468u;
     SET_GPR_ZE32(ctx, 3, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 6083)));
     // 0x27646c: 0x24020002  addiu       $v0, $zero, 0x2
-    ctx->pc = 0x27646cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x276470: 0x3e00008  jr          $ra
     ctx->pc = 0x276470u;

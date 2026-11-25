@@ -18,13 +18,10 @@ void func_001491D0_0x1491d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_001491D0_0x1491d0");
 #endif
 
-    ctx->pc = 0x1491d0u;
 
     // 0x1491d0: 0x3c030074  lui         $v1, 0x74
-    ctx->pc = 0x1491d0u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
     // 0x1491d4: 0x240600d0  addiu       $a2, $zero, 0xD0
-    ctx->pc = 0x1491d4u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 208));
     // 0x1491d8: 0x906276b0  lbu         $v0, 0x76B0($v1)
     ctx->pc = 0x1491d8u;
@@ -33,13 +30,10 @@ void func_001491D0_0x1491d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x1491dcu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x1491e0: 0x30420001  andi        $v0, $v0, 0x1
-    ctx->pc = 0x1491e0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
     // 0x1491e4: 0x461818  mult        $v1, $v0, $a2
-    ctx->pc = 0x1491e4u;
     { int64_t result = (int64_t)GPR_S32(ctx, 2) * (int64_t)GPR_S32(ctx, 6); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 3, (int32_t)result); }
     // 0x1491e8: 0x641021  addu        $v0, $v1, $a0
-    ctx->pc = 0x1491e8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 4)));
     // 0x1491ec: 0xe44101b0  swc1        $f1, 0x1B0($v0)
     ctx->pc = 0x1491ecu;
@@ -90,9 +84,7 @@ void func_001491D0_0x1491d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x14921Cu;
     // 0x14921c: 0x0  nop
-    ctx->pc = 0x14921cu;
     // NOP
     ctx->pc = 0x149220u;
 }

@@ -18,15 +18,15 @@ void cIDBase_restartAnim_0x2abbe8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("cIDBase_restartAnim_0x2abbe8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2abbfcu: goto label_2abbfc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2abbe8u, 0)) {
+        switch (ctx->pc) {
+            case 0x2abbfcu: goto label_2abbfc;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2abbe8u;
 
     // 0x2abbe8: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x2abbe8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x2abbec: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x2abbecu;
@@ -35,7 +35,6 @@ void cIDBase_restartAnim_0x2abbe8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     ctx->pc = 0x2abbf0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2abbf4: 0xc0aae9e  jal         func_2ABA78
-    ctx->pc = 0x2ABBF4u;
     SET_GPR_U32(ctx, 31, 0x2ABBFCu);
     ctx->pc = 0x2ABBF8u;
     ctx->in_delay_slot = true;
@@ -43,14 +42,12 @@ void cIDBase_restartAnim_0x2abbe8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     // 0x2abbf8: 0x80802d  daddu       $s0, $a0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2ABA78u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2ABA78u, 0x2ABBF4u, 0x2ABBFCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_resetAnim_0x2aba78, 0x2aba78u, 0x2abbfcu)) {
         return;
     }
     ctx->pc = 0x2ABBFCu;
 label_2abbfc:
     // 0x2abbfc: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2abbfcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2abc00: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2abc00u;
@@ -80,9 +77,7 @@ label_2abbfc:
         return;
         #endif
     }
-    ctx->pc = 0x2ABC14u;
     // 0x2abc14: 0x0  nop
-    ctx->pc = 0x2abc14u;
     // NOP
     ctx->pc = 0x2abc18u;
 }

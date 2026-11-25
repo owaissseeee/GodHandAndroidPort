@@ -18,13 +18,11 @@ void Obj0000_IsSet_Field_16D0_Bit_1_26ECC0_0x26ecc0(uint8_t* rdram, R5900Context
     PS_LOG_ENTRY("Obj0000_IsSet_Field_16D0_Bit_1_26ECC0_0x26ecc0");
 #endif
 
-    ctx->pc = 0x26ecc0u;
 
     // 0x26ecc0: 0x8c8216d0  lw          $v0, 0x16D0($a0)
     ctx->pc = 0x26ecc0u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 5840)));
     // 0x26ecc4: 0x30420002  andi        $v0, $v0, 0x2
-    ctx->pc = 0x26ecc4u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)2);
     // 0x26ecc8: 0x3e00008  jr          $ra
     ctx->pc = 0x26ECC8u;

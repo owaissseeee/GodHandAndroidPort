@@ -18,10 +18,8 @@ void Cmp_a1_Eq_0x37B0_0x34db50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("Cmp_a1_Eq_0x37B0_0x34db50");
 #endif
 
-    ctx->pc = 0x34db50u;
 
     // 0x34db50: 0x38a237b0  xori        $v0, $a1, 0x37B0
-    ctx->pc = 0x34db50u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 5) ^ (uint64_t)(uint16_t)14256);
     // 0x34db54: 0x3e00008  jr          $ra
     ctx->pc = 0x34DB54u;
@@ -42,9 +40,7 @@ void Cmp_a1_Eq_0x37B0_0x34db50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
         return;
         #endif
     }
-    ctx->pc = 0x34DB5Cu;
     // 0x34db5c: 0x0  nop
-    ctx->pc = 0x34db5cu;
     // NOP
     ctx->pc = 0x34db60u;
 }

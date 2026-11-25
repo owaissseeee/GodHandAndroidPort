@@ -18,10 +18,8 @@ void Obj3270_GetVia4_Obj33C8_14_7788_0x327788(uint8_t* rdram, R5900Context* ctx,
     PS_LOG_ENTRY("Obj3270_GetVia4_Obj33C8_14_7788_0x327788");
 #endif
 
-    ctx->pc = 0x327788u;
 
     // 0x327788: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x327788u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x32778c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x32778cu;
@@ -33,8 +31,6 @@ void Obj3270_GetVia4_Obj33C8_14_7788_0x327788(uint8_t* rdram, R5900Context* ctx,
     ctx->pc = 0x327794u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x327798: 0x80cf3a4  j           func_33CE90
-    ctx->pc = 0x327798u;
-    ctx->pc = 0x32779Cu;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x327798u;
     // 0x32779c: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)

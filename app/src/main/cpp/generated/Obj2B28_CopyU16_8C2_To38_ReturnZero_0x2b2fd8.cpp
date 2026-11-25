@@ -18,13 +18,11 @@ void Obj2B28_CopyU16_8C2_To38_ReturnZero_0x2b2fd8(uint8_t* rdram, R5900Context* 
     PS_LOG_ENTRY("Obj2B28_CopyU16_8C2_To38_ReturnZero_0x2b2fd8");
 #endif
 
-    ctx->pc = 0x2b2fd8u;
 
     // 0x2b2fd8: 0x8c83008c  lw          $v1, 0x8C($a0)
     ctx->pc = 0x2b2fd8u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 140)));
     // 0x2b2fdc: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2b2fdcu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2b2fe0: 0x94650002  lhu         $a1, 0x2($v1)
     ctx->pc = 0x2b2fe0u;
@@ -48,9 +46,7 @@ void Obj2B28_CopyU16_8C2_To38_ReturnZero_0x2b2fd8(uint8_t* rdram, R5900Context* 
         return;
         #endif
     }
-    ctx->pc = 0x2B2FECu;
     // 0x2b2fec: 0x0  nop
-    ctx->pc = 0x2b2fecu;
     // NOP
     ctx->pc = 0x2b2ff0u;
 }

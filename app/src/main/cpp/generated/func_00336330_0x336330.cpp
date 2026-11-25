@@ -18,20 +18,22 @@ void func_00336330_0x336330(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00336330_0x336330");
 #endif
 
-    switch (ctx->pc) {
-        case 0x336330u: goto label_336330;
-        case 0x336334u: goto label_336334;
-        case 0x336338u: goto label_336338;
-        case 0x33633cu: goto label_33633c;
-        case 0x336340u: goto label_336340;
-        case 0x336344u: goto label_336344;
-        case 0x336348u: goto label_336348;
-        case 0x33634cu: goto label_33634c;
-        case 0x336350u: goto label_336350;
-        case 0x336354u: goto label_336354;
-        case 0x336358u: goto label_336358;
-        case 0x33635cu: goto label_33635c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x336330u, 0)) {
+        switch (ctx->pc) {
+            case 0x336330u: goto label_336330;
+            case 0x336334u: goto label_336334;
+            case 0x336338u: goto label_336338;
+            case 0x33633cu: goto label_33633c;
+            case 0x336340u: goto label_336340;
+            case 0x336344u: goto label_336344;
+            case 0x336348u: goto label_336348;
+            case 0x33634cu: goto label_33634c;
+            case 0x336350u: goto label_336350;
+            case 0x336354u: goto label_336354;
+            case 0x336358u: goto label_336358;
+            case 0x33635cu: goto label_33635c;
+            default: break;
+        }
     }
 
     ctx->pc = 0x336330u;

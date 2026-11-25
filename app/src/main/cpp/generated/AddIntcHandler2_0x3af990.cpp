@@ -18,18 +18,17 @@ void AddIntcHandler2_0x3af990(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("AddIntcHandler2_0x3af990");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3af998u: goto label_3af998;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3af990u, 0)) {
+        switch (ctx->pc) {
+            case 0x3af998u: goto label_3af998;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3af990u;
 
     // 0x3af990: 0x24030010  addiu       $v1, $zero, 0x10
-    ctx->pc = 0x3af990u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 16));
     // 0x3af994: 0xc  syscall     0
-    ctx->pc = 0x3af994u;
     ctx->pc = 0x3AF998u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

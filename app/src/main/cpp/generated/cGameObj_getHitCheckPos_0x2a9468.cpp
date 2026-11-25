@@ -18,20 +18,22 @@ void cGameObj_getHitCheckPos_0x2a9468(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("cGameObj_getHitCheckPos_0x2a9468");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2a9468u: goto label_2a9468;
-        case 0x2a946cu: goto label_2a946c;
-        case 0x2a9470u: goto label_2a9470;
-        case 0x2a9474u: goto label_2a9474;
-        case 0x2a9478u: goto label_2a9478;
-        case 0x2a947cu: goto label_2a947c;
-        case 0x2a9480u: goto label_2a9480;
-        case 0x2a9484u: goto label_2a9484;
-        case 0x2a9488u: goto label_2a9488;
-        case 0x2a948cu: goto label_2a948c;
-        case 0x2a9490u: goto label_2a9490;
-        case 0x2a9494u: goto label_2a9494;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2a9468u, 0)) {
+        switch (ctx->pc) {
+            case 0x2a9468u: goto label_2a9468;
+            case 0x2a946cu: goto label_2a946c;
+            case 0x2a9470u: goto label_2a9470;
+            case 0x2a9474u: goto label_2a9474;
+            case 0x2a9478u: goto label_2a9478;
+            case 0x2a947cu: goto label_2a947c;
+            case 0x2a9480u: goto label_2a9480;
+            case 0x2a9484u: goto label_2a9484;
+            case 0x2a9488u: goto label_2a9488;
+            case 0x2a948cu: goto label_2a948c;
+            case 0x2a9490u: goto label_2a9490;
+            case 0x2a9494u: goto label_2a9494;
+            default: break;
+        }
     }
 
     ctx->pc = 0x2a9468u;
@@ -127,7 +129,6 @@ label_2a9490:
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1) ? 1 : 0);
 label_2a9494:
     // 0x2a9494: 0x0  nop
-    ctx->pc = 0x2a9494u;
     // NOP
     ctx->pc = 0x2a9498u;
 }

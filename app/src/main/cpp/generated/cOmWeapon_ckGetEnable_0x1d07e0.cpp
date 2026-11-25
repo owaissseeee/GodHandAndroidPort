@@ -18,7 +18,6 @@ void cOmWeapon_ckGetEnable_0x1d07e0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("cOmWeapon_ckGetEnable_0x1d07e0");
 #endif
 
-    ctx->pc = 0x1d07e0u;
 
     // 0x1d07e0: 0x3e00008  jr          $ra
     ctx->pc = 0x1D07E0u;

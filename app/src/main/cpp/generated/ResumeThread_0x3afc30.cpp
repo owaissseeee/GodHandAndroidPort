@@ -18,18 +18,17 @@ void ResumeThread_0x3afc30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("ResumeThread_0x3afc30");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afc38u: goto label_3afc38;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afc30u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afc38u: goto label_3afc38;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afc30u;
 
     // 0x3afc30: 0x24030039  addiu       $v1, $zero, 0x39
-    ctx->pc = 0x3afc30u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 57));
     // 0x3afc34: 0xc  syscall     0
-    ctx->pc = 0x3afc34u;
     ctx->pc = 0x3AFC38u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

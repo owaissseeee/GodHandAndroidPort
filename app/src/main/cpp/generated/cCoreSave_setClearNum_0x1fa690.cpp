@@ -18,7 +18,6 @@ void cCoreSave_setClearNum_0x1fa690(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("cCoreSave_setClearNum_0x1fa690");
 #endif
 
-    ctx->pc = 0x1fa690u;
 
     // 0x1fa690: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x1fa690u;
@@ -38,7 +37,6 @@ void cCoreSave_setClearNum_0x1fa690(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1fa6b8;
         }
     }
-    ctx->pc = 0x1FA69Cu;
     // 0x1fa69c: 0xa4450010  sh          $a1, 0x10($v0)
     ctx->pc = 0x1fa69cu;
     WRITE16(ADD32(GPR_U32(ctx, 2), 16), (uint16_t)GPR_U32(ctx, 5));
@@ -49,7 +47,6 @@ void cCoreSave_setClearNum_0x1fa690(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     ctx->pc = 0x1fa6a4u;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 4), 16)));
     // 0x1fa6a8: 0x2c420064  sltiu       $v0, $v0, 0x64
-    ctx->pc = 0x1fa6a8u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)100) ? 1 : 0);
     // 0x1fa6ac: 0x14400002  bnez        $v0, . + 4 + (0x2 << 2)
     ctx->pc = 0x1FA6ACu;
@@ -66,7 +63,6 @@ void cCoreSave_setClearNum_0x1fa690(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1fa6b8;
         }
     }
-    ctx->pc = 0x1FA6B4u;
     // 0x1fa6b4: 0xa4820010  sh          $v0, 0x10($a0)
     ctx->pc = 0x1fa6b4u;
     WRITE16(ADD32(GPR_U32(ctx, 4), 16), (uint16_t)GPR_U32(ctx, 2));

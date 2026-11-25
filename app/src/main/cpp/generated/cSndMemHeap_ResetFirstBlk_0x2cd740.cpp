@@ -18,7 +18,6 @@ void cSndMemHeap_ResetFirstBlk_0x2cd740(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("cSndMemHeap_ResetFirstBlk_0x2cd740");
 #endif
 
-    ctx->pc = 0x2cd740u;
 
     // 0x2cd740: 0x8c820380  lw          $v0, 0x380($a0)
     ctx->pc = 0x2cd740u;

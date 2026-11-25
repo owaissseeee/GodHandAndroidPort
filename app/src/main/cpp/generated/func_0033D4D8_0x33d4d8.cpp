@@ -18,12 +18,13 @@ void func_0033D4D8_0x33d4d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0033D4D8_0x33d4d8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x33d4e0u: goto label_33d4e0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x33d4d8u, 0)) {
+        switch (ctx->pc) {
+            case 0x33d4e0u: goto label_33d4e0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x33d4d8u;
 
     // 0x33d4d8: 0x18c00008  blez        $a2, . + 4 + (0x8 << 2)
     ctx->pc = 0x33D4D8u;
@@ -40,16 +41,13 @@ label_33d4e0:
     ctx->pc = 0x33d4e0u;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 5), 0)));
     // 0x33d4e4: 0x24a50002  addiu       $a1, $a1, 0x2
-    ctx->pc = 0x33d4e4u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 2));
     // 0x33d4e8: 0x24c6ffff  addiu       $a2, $a2, -0x1
-    ctx->pc = 0x33d4e8u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 6), 4294967295));
     // 0x33d4ec: 0xa4820000  sh          $v0, 0x0($a0)
     ctx->pc = 0x33d4ecu;
     WRITE16(ADD32(GPR_U32(ctx, 4), 0), (uint16_t)GPR_U32(ctx, 2));
     // 0x33d4f0: 0x0  nop
-    ctx->pc = 0x33d4f0u;
     // NOP
     // 0x33d4f4: 0x1cc0fffa  bgtz        $a2, . + 4 + (-0x6 << 2)
     ctx->pc = 0x33D4F4u;
@@ -84,9 +82,7 @@ label_33d4fc:
         return;
         #endif
     }
-    ctx->pc = 0x33D504u;
     // 0x33d504: 0x0  nop
-    ctx->pc = 0x33d504u;
     // NOP
     ctx->pc = 0x33d508u;
 }

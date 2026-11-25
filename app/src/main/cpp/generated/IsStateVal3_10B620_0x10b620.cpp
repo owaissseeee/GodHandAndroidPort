@@ -18,7 +18,6 @@ void IsStateVal3_10B620_0x10b620(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("IsStateVal3_10B620_0x10b620");
 #endif
 
-    ctx->pc = 0x10b620u;
 
     // 0x10b620: 0x908202f4  lbu         $v0, 0x2F4($a0)
     ctx->pc = 0x10b620u;
@@ -32,12 +31,10 @@ void IsStateVal3_10B620_0x10b620(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_10b63c;
         }
     }
-    ctx->pc = 0x10B62Cu;
     // 0x10b62c: 0x908202f5  lbu         $v0, 0x2F5($a0)
     ctx->pc = 0x10b62cu;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 757)));
     // 0x10b630: 0x38420003  xori        $v0, $v0, 0x3
-    ctx->pc = 0x10b630u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)3);
     // 0x10b634: 0x3e00008  jr          $ra
     ctx->pc = 0x10B634u;
@@ -79,9 +76,7 @@ label_10b63c:
         return;
         #endif
     }
-    ctx->pc = 0x10B644u;
     // 0x10b644: 0x0  nop
-    ctx->pc = 0x10b644u;
     // NOP
     ctx->pc = 0x10b648u;
 }

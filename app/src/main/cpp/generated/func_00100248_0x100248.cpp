@@ -18,10 +18,8 @@ void func_00100248_0x100248(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00100248_0x100248");
 #endif
 
-    ctx->pc = 0x100248u;
 
     // 0x100248: 0x80eda08  j           func_3B6820
-    ctx->pc = 0x100248u;
     ctx->pc = 0x3B6820u;
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B6820u, 0x100248u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;

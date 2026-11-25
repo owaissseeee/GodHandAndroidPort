@@ -18,18 +18,17 @@ void cEmWrap_SetRaderType_0x295ee0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("cEmWrap_SetRaderType_0x295ee0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x295f00u: goto label_295f00;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x295ee0u, 0)) {
+        switch (ctx->pc) {
+            case 0x295f00u: goto label_295f00;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x295ee0u;
 
     // 0x295ee0: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x295ee0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x295ee4: 0x52e00  sll         $a1, $a1, 24
-    ctx->pc = 0x295ee4u;
     SET_GPR_S32(ctx, 5, (int32_t)SLL32(GPR_U32(ctx, 5), 24));
     // 0x295ee8: 0x7fb00020  sq          $s0, 0x20($sp)
     ctx->pc = 0x295ee8u;
@@ -38,13 +37,11 @@ void cEmWrap_SetRaderType_0x295ee0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x295eecu;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 17));
     // 0x295ef0: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x295ef0u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x295ef4: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x295ef4u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x295ef8: 0xc0a565e  jal         func_295978
-    ctx->pc = 0x295EF8u;
     SET_GPR_U32(ctx, 31, 0x295F00u);
     ctx->pc = 0x295EFCu;
     ctx->in_delay_slot = true;
@@ -52,8 +49,7 @@ void cEmWrap_SetRaderType_0x295ee0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     // 0x295efc: 0x58e03  sra         $s1, $a1, 24 (Delay Slot)
     SET_GPR_S32(ctx, 17, SRA32(GPR_S32(ctx, 5), 24));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x295978u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x295978u, 0x295EF8u, 0x295F00u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &FindResolveActor_295978_0x295978, 0x295978u, 0x295f00u)) {
         return;
     }
     ctx->pc = 0x295F00u;
@@ -73,7 +69,6 @@ label_295f00:
             goto label_295f14;
         }
     }
-    ctx->pc = 0x295F08u;
     // 0x295f08: 0x8e020004  lw          $v0, 0x4($s0)
     ctx->pc = 0x295f08u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 4)));
@@ -109,9 +104,7 @@ label_295f14:
         return;
         #endif
     }
-    ctx->pc = 0x295F24u;
     // 0x295f24: 0x0  nop
-    ctx->pc = 0x295f24u;
     // NOP
     ctx->pc = 0x295f28u;
 }

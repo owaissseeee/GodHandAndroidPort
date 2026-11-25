@@ -18,7 +18,6 @@ void cWorldLight_Get_LightNum_0x2d8ff8(uint8_t* rdram, R5900Context* ctx, PS2Run
     PS_LOG_ENTRY("cWorldLight_Get_LightNum_0x2d8ff8");
 #endif
 
-    ctx->pc = 0x2d8ff8u;
 
     // 0x2d8ff8: 0x3e00008  jr          $ra
     ctx->pc = 0x2D8FF8u;

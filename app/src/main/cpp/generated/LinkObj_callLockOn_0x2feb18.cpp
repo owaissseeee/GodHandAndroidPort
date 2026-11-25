@@ -18,34 +18,36 @@ void LinkObj_callLockOn_0x2feb18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("LinkObj_callLockOn_0x2feb18");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2feb18u: goto label_2feb18;
-        case 0x2feb1cu: goto label_2feb1c;
-        case 0x2feb20u: goto label_2feb20;
-        case 0x2feb24u: goto label_2feb24;
-        case 0x2feb28u: goto label_2feb28;
-        case 0x2feb2cu: goto label_2feb2c;
-        case 0x2feb30u: goto label_2feb30;
-        case 0x2feb34u: goto label_2feb34;
-        case 0x2feb38u: goto label_2feb38;
-        case 0x2feb3cu: goto label_2feb3c;
-        case 0x2feb40u: goto label_2feb40;
-        case 0x2feb44u: goto label_2feb44;
-        case 0x2feb48u: goto label_2feb48;
-        case 0x2feb4cu: goto label_2feb4c;
-        case 0x2feb50u: goto label_2feb50;
-        case 0x2feb54u: goto label_2feb54;
-        case 0x2feb58u: goto label_2feb58;
-        case 0x2feb5cu: goto label_2feb5c;
-        case 0x2feb60u: goto label_2feb60;
-        case 0x2feb64u: goto label_2feb64;
-        case 0x2feb68u: goto label_2feb68;
-        case 0x2feb6cu: goto label_2feb6c;
-        case 0x2feb70u: goto label_2feb70;
-        case 0x2feb74u: goto label_2feb74;
-        case 0x2feb78u: goto label_2feb78;
-        case 0x2feb7cu: goto label_2feb7c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2feb18u, 0)) {
+        switch (ctx->pc) {
+            case 0x2feb18u: goto label_2feb18;
+            case 0x2feb1cu: goto label_2feb1c;
+            case 0x2feb20u: goto label_2feb20;
+            case 0x2feb24u: goto label_2feb24;
+            case 0x2feb28u: goto label_2feb28;
+            case 0x2feb2cu: goto label_2feb2c;
+            case 0x2feb30u: goto label_2feb30;
+            case 0x2feb34u: goto label_2feb34;
+            case 0x2feb38u: goto label_2feb38;
+            case 0x2feb3cu: goto label_2feb3c;
+            case 0x2feb40u: goto label_2feb40;
+            case 0x2feb44u: goto label_2feb44;
+            case 0x2feb48u: goto label_2feb48;
+            case 0x2feb4cu: goto label_2feb4c;
+            case 0x2feb50u: goto label_2feb50;
+            case 0x2feb54u: goto label_2feb54;
+            case 0x2feb58u: goto label_2feb58;
+            case 0x2feb5cu: goto label_2feb5c;
+            case 0x2feb60u: goto label_2feb60;
+            case 0x2feb64u: goto label_2feb64;
+            case 0x2feb68u: goto label_2feb68;
+            case 0x2feb6cu: goto label_2feb6c;
+            case 0x2feb70u: goto label_2feb70;
+            case 0x2feb74u: goto label_2feb74;
+            case 0x2feb78u: goto label_2feb78;
+            case 0x2feb7cu: goto label_2feb7c;
+            default: break;
+        }
     }
 
     ctx->pc = 0x2feb18u;

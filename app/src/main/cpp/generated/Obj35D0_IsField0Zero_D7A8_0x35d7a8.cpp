@@ -18,7 +18,6 @@ void Obj35D0_IsField0Zero_D7A8_0x35d7a8(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("Obj35D0_IsField0Zero_D7A8_0x35d7a8");
 #endif
 
-    ctx->pc = 0x35d7a8u;
 
     // 0x35d7a8: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x35d7a8u;
@@ -42,9 +41,7 @@ void Obj35D0_IsField0Zero_D7A8_0x35d7a8(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x35D7B4u;
     // 0x35d7b4: 0x0  nop
-    ctx->pc = 0x35d7b4u;
     // NOP
     ctx->pc = 0x35d7b8u;
 }

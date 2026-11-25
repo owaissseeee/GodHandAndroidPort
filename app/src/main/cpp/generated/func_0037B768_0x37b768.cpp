@@ -18,15 +18,15 @@ void func_0037B768_0x37b768(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0037B768_0x37b768");
 #endif
 
-    switch (ctx->pc) {
-        case 0x37b78cu: goto label_37b78c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x37b768u, 0)) {
+        switch (ctx->pc) {
+            case 0x37b78cu: goto label_37b78c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x37b768u;
 
     // 0x37b768: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x37b768u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x37b76c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x37b76cu;
@@ -35,19 +35,15 @@ void func_0037B768_0x37b768(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x37b770u;
     SET_GPR_S32(ctx, 5, (int8_t)READ8(ADD32(GPR_U32(ctx, 4), 39)));
     // 0x37b774: 0x52940  sll         $a1, $a1, 5
-    ctx->pc = 0x37b774u;
     SET_GPR_S32(ctx, 5, (int32_t)SLL32(GPR_U32(ctx, 5), 5));
     // 0x37b778: 0x24a5016c  addiu       $a1, $a1, 0x16C
-    ctx->pc = 0x37b778u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 364));
     // 0x37b77c: 0x852821  addu        $a1, $a0, $a1
-    ctx->pc = 0x37b77cu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 5)));
     // 0x37b780: 0xa4a00000  sh          $zero, 0x0($a1)
     ctx->pc = 0x37b780u;
     WRITE16(ADD32(GPR_U32(ctx, 5), 0), (uint16_t)GPR_U32(ctx, 0));
     // 0x37b784: 0xc0dd276  jal         func_3749D8
-    ctx->pc = 0x37B784u;
     SET_GPR_U32(ctx, 31, 0x37B78Cu);
     ctx->pc = 0x37B788u;
     ctx->in_delay_slot = true;
@@ -55,8 +51,7 @@ void func_0037B768_0x37b768(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x37b788: 0x80840027  lb          $a0, 0x27($a0) (Delay Slot)
     SET_GPR_S32(ctx, 4, (int8_t)READ8(ADD32(GPR_U32(ctx, 4), 39)));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x3749D8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3749D8u, 0x37B784u, 0x37B78Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &StoreSoundEntry_3749D8_0x3749d8, 0x3749d8u, 0x37b78cu)) {
         return;
     }
     ctx->pc = 0x37B78Cu;

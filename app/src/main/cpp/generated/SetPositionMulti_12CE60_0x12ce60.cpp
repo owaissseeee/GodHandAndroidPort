@@ -18,7 +18,6 @@ void SetPositionMulti_12CE60_0x12ce60(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("SetPositionMulti_12CE60_0x12ce60");
 #endif
 
-    ctx->pc = 0x12ce60u;
 
     // 0x12ce60: 0x8c8200f0  lw          $v0, 0xF0($a0)
     ctx->pc = 0x12ce60u;
@@ -38,7 +37,6 @@ void SetPositionMulti_12CE60_0x12ce60(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_12ce88;
         }
     }
-    ctx->pc = 0x12CE6Cu;
     // 0x12ce6c: 0xc4a00000  lwc1        $f0, 0x0($a1)
     ctx->pc = 0x12ce6cu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -76,7 +74,6 @@ label_12ce88:
             goto label_12cea8;
         }
     }
-    ctx->pc = 0x12CE90u;
     // 0x12ce90: 0xe4800490  swc1        $f0, 0x490($a0)
     ctx->pc = 0x12ce90u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 4), 1168), bits); }
@@ -126,12 +123,10 @@ label_12cea8:
             goto label_12ced0;
         }
     }
-    ctx->pc = 0x12CEC4u;
     // 0x12cec4: 0x8c6202f0  lw          $v0, 0x2F0($v1)
     ctx->pc = 0x12cec4u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 752)));
     // 0x12cec8: 0x34420001  ori         $v0, $v0, 0x1
-    ctx->pc = 0x12cec8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)1);
     // 0x12cecc: 0xac6202f0  sw          $v0, 0x2F0($v1)
     ctx->pc = 0x12ceccu;

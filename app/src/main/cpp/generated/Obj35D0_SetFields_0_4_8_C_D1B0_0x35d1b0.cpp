@@ -18,7 +18,6 @@ void Obj35D0_SetFields_0_4_8_C_D1B0_0x35d1b0(uint8_t* rdram, R5900Context* ctx, 
     PS_LOG_ENTRY("Obj35D0_SetFields_0_4_8_C_D1B0_0x35d1b0");
 #endif
 
-    ctx->pc = 0x35d1b0u;
 
     // 0x35d1b0: 0xac88000c  sw          $t0, 0xC($a0)
     ctx->pc = 0x35d1b0u;
@@ -48,9 +47,7 @@ void Obj35D0_SetFields_0_4_8_C_D1B0_0x35d1b0(uint8_t* rdram, R5900Context* ctx, 
         return;
         #endif
     }
-    ctx->pc = 0x35D1C4u;
     // 0x35d1c4: 0x0  nop
-    ctx->pc = 0x35d1c4u;
     // NOP
     ctx->pc = 0x35d1c8u;
 }

@@ -18,7 +18,6 @@ void CustomIDWork_SetScaleAnimNormal_0x2d6968(uint8_t* rdram, R5900Context* ctx,
     PS_LOG_ENTRY("CustomIDWork_SetScaleAnimNormal_0x2d6968");
 #endif
 
-    ctx->pc = 0x2d6968u;
 
     // 0x2d6968: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2d6968u;
@@ -38,9 +37,7 @@ void CustomIDWork_SetScaleAnimNormal_0x2d6968(uint8_t* rdram, R5900Context* ctx,
             goto label_2d69a0;
         }
     }
-    ctx->pc = 0x2D6974u;
     // 0x2d6974: 0x24020003  addiu       $v0, $zero, 0x3
-    ctx->pc = 0x2d6974u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
     // 0x2d6978: 0xe48c006c  swc1        $f12, 0x6C($a0)
     ctx->pc = 0x2d6978u;
@@ -72,9 +69,7 @@ void CustomIDWork_SetScaleAnimNormal_0x2d6968(uint8_t* rdram, R5900Context* ctx,
             goto label_2d699c;
         }
     }
-    ctx->pc = 0x2D6994u;
     // 0x2d6994: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2d6994u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2d6998: 0xa4820074  sh          $v0, 0x74($a0)
     ctx->pc = 0x2d6998u;

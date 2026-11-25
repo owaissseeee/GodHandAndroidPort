@@ -18,7 +18,6 @@ void ClearFields_20_24_28_30_1FC7F8_0x1fc7f8(uint8_t* rdram, R5900Context* ctx, 
     PS_LOG_ENTRY("ClearFields_20_24_28_30_1FC7F8_0x1fc7f8");
 #endif
 
-    ctx->pc = 0x1fc7f8u;
 
     // 0x1fc7f8: 0xac800024  sw          $zero, 0x24($a0)
     ctx->pc = 0x1fc7f8u;
@@ -48,9 +47,7 @@ void ClearFields_20_24_28_30_1FC7F8_0x1fc7f8(uint8_t* rdram, R5900Context* ctx, 
         return;
         #endif
     }
-    ctx->pc = 0x1FC80Cu;
     // 0x1fc80c: 0x0  nop
-    ctx->pc = 0x1fc80cu;
     // NOP
     ctx->pc = 0x1fc810u;
 }

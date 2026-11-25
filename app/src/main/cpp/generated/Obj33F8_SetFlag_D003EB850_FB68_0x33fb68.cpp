@@ -18,13 +18,10 @@ void Obj33F8_SetFlag_D003EB850_FB68_0x33fb68(uint8_t* rdram, R5900Context* ctx, 
     PS_LOG_ENTRY("Obj33F8_SetFlag_D003EB850_FB68_0x33fb68");
 #endif
 
-    ctx->pc = 0x33fb68u;
 
     // 0x33fb68: 0x3c03003f  lui         $v1, 0x3F
-    ctx->pc = 0x33fb68u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)63 << 16));
     // 0x33fb6c: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x33fb6cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x33fb70: 0x3e00008  jr          $ra
     ctx->pc = 0x33FB70u;

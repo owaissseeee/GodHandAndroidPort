@@ -18,10 +18,8 @@ void SetField_9E0_1AA500_0x1aa500(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("SetField_9E0_1AA500_0x1aa500");
 #endif
 
-    ctx->pc = 0x1aa500u;
 
     // 0x1aa500: 0x24020008  addiu       $v0, $zero, 0x8
-    ctx->pc = 0x1aa500u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 8));
     // 0x1aa504: 0x3e00008  jr          $ra
     ctx->pc = 0x1AA504u;
@@ -42,9 +40,7 @@ void SetField_9E0_1AA500_0x1aa500(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         return;
         #endif
     }
-    ctx->pc = 0x1AA50Cu;
     // 0x1aa50c: 0x0  nop
-    ctx->pc = 0x1aa50cu;
     // NOP
     ctx->pc = 0x1aa510u;
 }

@@ -18,13 +18,11 @@ void func_003553C8_0x3553c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_003553C8_0x3553c8");
 #endif
 
-    ctx->pc = 0x3553c8u;
 
     // 0x3553c8: 0x8c8336b0  lw          $v1, 0x36B0($a0)
     ctx->pc = 0x3553c8u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 14000)));
     // 0x3553cc: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x3553ccu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x3553d0: 0x8c841fc0  lw          $a0, 0x1FC0($a0)
     ctx->pc = 0x3553d0u;
@@ -44,18 +42,14 @@ void func_003553C8_0x3553c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_3553f0;
         }
     }
-    ctx->pc = 0x3553DCu;
     // 0x3553dc: 0x8c820088  lw          $v0, 0x88($a0)
     ctx->pc = 0x3553dcu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 136)));
     // 0x3553e0: 0x182d  daddu       $v1, $zero, $zero
-    ctx->pc = 0x3553e0u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x3553e4: 0x62182a  slt         $v1, $v1, $v0
-    ctx->pc = 0x3553e4u;
     SET_GPR_U64(ctx, 3, ((int64_t)GPR_S64(ctx, 3) < (int64_t)GPR_S64(ctx, 2)) ? 1 : 0);
     // 0x3553e8: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x3553e8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x3553ec: 0xa3100a  movz        $v0, $a1, $v1
     ctx->pc = 0x3553ecu;
@@ -74,18 +68,13 @@ label_3553f0:
         return;
         #endif
     }
-    ctx->pc = 0x3553F8u;
     // 0x3553f8: 0x27bd0020  addiu       $sp, $sp, 0x20
-    ctx->pc = 0x3553f8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 32));
     // 0x3553fc: 0x0  nop
-    ctx->pc = 0x3553fcu;
     // NOP
     // 0x355400: 0x27bd0020  addiu       $sp, $sp, 0x20
-    ctx->pc = 0x355400u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 32));
     // 0x355404: 0x0  nop
-    ctx->pc = 0x355404u;
     // NOP
     ctx->pc = 0x355408u;
 }

@@ -18,7 +18,6 @@ void func_00292F18_0x292f18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00292F18_0x292f18");
 #endif
 
-    ctx->pc = 0x292f18u;
 
     // 0x292f18: 0x80820539  lb          $v0, 0x539($a0)
     ctx->pc = 0x292f18u;
@@ -38,9 +37,7 @@ void func_00292F18_0x292f18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_292f30;
         }
     }
-    ctx->pc = 0x292F24u;
     // 0x292f24: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x292f24u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x292f28: 0x3e00008  jr          $ra
     ctx->pc = 0x292F28u;

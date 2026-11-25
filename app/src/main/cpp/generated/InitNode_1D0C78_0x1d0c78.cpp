@@ -18,10 +18,8 @@ void InitNode_1D0C78_0x1d0c78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("InitNode_1D0C78_0x1d0c78");
 #endif
 
-    ctx->pc = 0x1d0c78u;
 
     // 0x1d0c78: 0x24020002  addiu       $v0, $zero, 0x2
-    ctx->pc = 0x1d0c78u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x1d0c7c: 0xac800000  sw          $zero, 0x0($a0)
     ctx->pc = 0x1d0c7cu;
@@ -48,15 +46,11 @@ void InitNode_1D0C78_0x1d0c78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
         return;
         #endif
     }
-    ctx->pc = 0x1D0C8Cu;
     // 0x1d0c8c: 0x0  nop
-    ctx->pc = 0x1d0c8cu;
     // NOP
     // 0x1d0c90: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x1d0c90u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x1d0c94: 0x0  nop
-    ctx->pc = 0x1d0c94u;
     // NOP
     ctx->pc = 0x1d0c98u;
 }

@@ -18,27 +18,25 @@ void func_002A5AD0_0x2a5ad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002A5AD0_0x2a5ad0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2a5ae8u: goto label_2a5ae8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2a5ad0u, 0)) {
+        switch (ctx->pc) {
+            case 0x2a5ae8u: goto label_2a5ae8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2a5ad0u;
 
     // 0x2a5ad0: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x2a5ad0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x2a5ad4: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x2a5ad4u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 16));
     // 0x2a5ad8: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x2a5ad8u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2a5adc: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2a5adcu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2a5ae0: 0xc0c6f96  jal         func_31BE58
-    ctx->pc = 0x2A5AE0u;
     SET_GPR_U32(ctx, 31, 0x2A5AE8u);
     ctx->pc = 0x2A5AE4u;
     ctx->in_delay_slot = true;
@@ -46,14 +44,12 @@ void func_002A5AD0_0x2a5ad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x2a5ae4: 0x2604018c  addiu       $a0, $s0, 0x18C (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 396));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x31BE58u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31BE58u, 0x2A5AE0u, 0x2A5AE8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &PathFinding_0x31be58, 0x31be58u, 0x2a5ae8u)) {
         return;
     }
     ctx->pc = 0x2A5AE8u;
 label_2a5ae8:
     // 0x2a5ae8: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x2a5ae8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2a5aec: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2a5aecu;
@@ -80,9 +76,7 @@ label_2a5ae8:
         return;
         #endif
     }
-    ctx->pc = 0x2A5AFCu;
     // 0x2a5afc: 0x0  nop
-    ctx->pc = 0x2a5afcu;
     // NOP
     ctx->pc = 0x2a5b00u;
 }

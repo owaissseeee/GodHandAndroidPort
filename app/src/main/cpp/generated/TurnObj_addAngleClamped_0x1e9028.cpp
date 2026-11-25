@@ -18,30 +18,27 @@ void TurnObj_addAngleClamped_0x1e9028(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("TurnObj_addAngleClamped_0x1e9028");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1e906cu: goto label_1e906c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1e9028u, 0)) {
+        switch (ctx->pc) {
+            case 0x1e906cu: goto label_1e906c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1e9028u;
 
     // 0x1e9028: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1e9028u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1e902c: 0x44800000  mtc1        $zero, $f0
-    ctx->pc = 0x1e902cu;
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x1e9030: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1e9030u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1e9034: 0x460d0034  c.lt.s      $f0, $f13
-    ctx->pc = 0x1e9034u;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[0], ctx->f[13])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x1e9038: 0xc48100b8  lwc1        $f1, 0xB8($a0)
     ctx->pc = 0x1e9038u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 184)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x1e903c: 0x460c0840  add.s       $f1, $f1, $f12
-    ctx->pc = 0x1e903cu;
     ctx->f[1] = FPU_ADD_S(ctx->f[1], ctx->f[12]);
     // 0x1e9040: 0x45000004  bc1f        . + 4 + (0x4 << 2)
     ctx->pc = 0x1E9040u;
@@ -58,9 +55,7 @@ void TurnObj_addAngleClamped_0x1e9028(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_1e9054;
         }
     }
-    ctx->pc = 0x1E9048u;
     // 0x1e9048: 0x46016834  c.lt.s      $f13, $f1
-    ctx->pc = 0x1e9048u;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[13], ctx->f[1])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x1e904c: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x1E904Cu;
@@ -78,7 +73,6 @@ label_1e9054:
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[1], ctx->f[13])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
 label_1e9058:
     // 0x1e9058: 0x0  nop
-    ctx->pc = 0x1e9058u;
     // NOP
     // 0x1e905c: 0x45030001  bc1tl       . + 4 + (0x1 << 2)
     ctx->pc = 0x1E905Cu;
@@ -98,7 +92,6 @@ label_1e9058:
     ctx->pc = 0x1E9064u;
 label_1e9064:
     // 0x1e9064: 0xc07a3de  jal         func_1E8F78
-    ctx->pc = 0x1E9064u;
     SET_GPR_U32(ctx, 31, 0x1E906Cu);
     ctx->pc = 0x1E9068u;
     ctx->in_delay_slot = true;
@@ -106,8 +99,7 @@ label_1e9064:
     // 0x1e9068: 0xc48c00b8  lwc1        $f12, 0xB8($a0) (Delay Slot)
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 184)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[12] = f; }
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1E8F78u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1E8F78u, 0x1E9064u, 0x1E906Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_001E8F78_0x1e8f78, 0x1e8f78u, 0x1e906cu)) {
         return;
     }
     ctx->pc = 0x1E906Cu;

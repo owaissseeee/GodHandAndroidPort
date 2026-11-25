@@ -18,24 +18,22 @@ void Forward139010_139040_0x139040(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("Forward139010_139040_0x139040");
 #endif
 
-    switch (ctx->pc) {
-        case 0x139054u: goto label_139054;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x139040u, 0)) {
+        switch (ctx->pc) {
+            case 0x139054u: goto label_139054;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x139040u;
 
     // 0x139040: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x139040u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x139044: 0x24040001  addiu       $a0, $zero, 0x1
-    ctx->pc = 0x139044u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x139048: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x139048u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x13904c: 0xc04e404  jal         func_139010
-    ctx->pc = 0x13904Cu;
     SET_GPR_U32(ctx, 31, 0x139054u);
     ctx->pc = 0x139050u;
     ctx->in_delay_slot = true;
@@ -43,8 +41,7 @@ void Forward139010_139040_0x139040(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     // 0x139050: 0x3405ffff  ori         $a1, $zero, 0xFFFF (Delay Slot)
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     ctx->in_delay_slot = false;
-    ctx->pc = 0x139010u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x139010u, 0x13904Cu, 0x139054u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00139010_0x139010, 0x139010u, 0x139054u)) {
         return;
     }
     ctx->pc = 0x139054u;

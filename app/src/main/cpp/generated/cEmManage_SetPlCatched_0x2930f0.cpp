@@ -18,10 +18,8 @@ void cEmManage_SetPlCatched_0x2930f0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("cEmManage_SetPlCatched_0x2930f0");
 #endif
 
-    ctx->pc = 0x2930f0u;
 
     // 0x2930f0: 0x24020002  addiu       $v0, $zero, 0x2
-    ctx->pc = 0x2930f0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x2930f4: 0x3e00008  jr          $ra
     ctx->pc = 0x2930F4u;
@@ -42,9 +40,7 @@ void cEmManage_SetPlCatched_0x2930f0(uint8_t* rdram, R5900Context* ctx, PS2Runti
         return;
         #endif
     }
-    ctx->pc = 0x2930FCu;
     // 0x2930fc: 0x0  nop
-    ctx->pc = 0x2930fcu;
     // NOP
     ctx->pc = 0x293100u;
 }

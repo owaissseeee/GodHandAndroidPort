@@ -18,15 +18,15 @@ void func_00297BA8_0x297ba8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00297BA8_0x297ba8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x297bbcu: goto label_297bbc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x297ba8u, 0)) {
+        switch (ctx->pc) {
+            case 0x297bbcu: goto label_297bbc;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x297ba8u;
 
     // 0x297ba8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x297ba8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x297bac: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x297bacu;
@@ -74,42 +74,32 @@ label_297bbc:
         return;
         #endif
     }
-    ctx->pc = 0x297BC8u;
     // 0x297bc8: 0xa0a40000  sb          $a0, 0x0($a1)
     ctx->pc = 0x297bc8u;
     WRITE8(ADD32(GPR_U32(ctx, 5), 0), (uint8_t)GPR_U32(ctx, 4));
     // 0x297bcc: 0x0  nop
-    ctx->pc = 0x297bccu;
     // NOP
     // 0x297bd0: 0xa0a40001  sb          $a0, 0x1($a1)
     ctx->pc = 0x297bd0u;
     WRITE8(ADD32(GPR_U32(ctx, 5), 1), (uint8_t)GPR_U32(ctx, 4));
     // 0x297bd4: 0x0  nop
-    ctx->pc = 0x297bd4u;
     // NOP
     // 0x297bd8: 0xac45002c  sw          $a1, 0x2C($v0)
     ctx->pc = 0x297bd8u;
     WRITE32(ADD32(GPR_U32(ctx, 2), 44), GPR_U32(ctx, 5));
     // 0x297bdc: 0x0  nop
-    ctx->pc = 0x297bdcu;
     // NOP
     // 0x297be0: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x297be0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x297be4: 0x0  nop
-    ctx->pc = 0x297be4u;
     // NOP
     // 0x297be8: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x297be8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x297bec: 0x0  nop
-    ctx->pc = 0x297becu;
     // NOP
     // 0x297bf0: 0x27bd0020  addiu       $sp, $sp, 0x20
-    ctx->pc = 0x297bf0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 32));
     // 0x297bf4: 0x0  nop
-    ctx->pc = 0x297bf4u;
     // NOP
     ctx->pc = 0x297bf8u;
 }

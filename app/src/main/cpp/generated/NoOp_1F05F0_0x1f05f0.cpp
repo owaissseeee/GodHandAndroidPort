@@ -18,7 +18,6 @@ void NoOp_1F05F0_0x1f05f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("NoOp_1F05F0_0x1f05f0");
 #endif
 
-    ctx->pc = 0x1f05f0u;
 
     // 0x1f05f0: 0x3e00008  jr          $ra
     ctx->pc = 0x1F05F0u;

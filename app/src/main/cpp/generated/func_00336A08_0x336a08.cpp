@@ -18,18 +18,17 @@ void func_00336A08_0x336a08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00336A08_0x336a08");
 #endif
 
-    switch (ctx->pc) {
-        case 0x336a24u: goto label_336a24;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x336a08u, 0)) {
+        switch (ctx->pc) {
+            case 0x336a24u: goto label_336a24;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x336a08u;
 
     // 0x336a08: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x336a08u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x336a0c: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x336a0cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x336a10: 0x14400007  bnez        $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x336A10u;
@@ -46,12 +45,9 @@ void func_00336A08_0x336a08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_336a30;
         }
     }
-    ctx->pc = 0x336A18u;
     // 0x336a18: 0x3c050045  lui         $a1, 0x45
-    ctx->pc = 0x336a18u;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)69 << 16));
     // 0x336a1c: 0xc0cd8cc  jal         func_336330
-    ctx->pc = 0x336A1Cu;
     SET_GPR_U32(ctx, 31, 0x336A24u);
     ctx->pc = 0x336A20u;
     ctx->in_delay_slot = true;
@@ -59,8 +55,7 @@ void func_00336A08_0x336a08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x336a20: 0x24a551d0  addiu       $a1, $a1, 0x51D0 (Delay Slot)
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 20944));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x336330u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x336330u, 0x336A1Cu, 0x336A24u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00336330_0x336330, 0x336330u, 0x336a24u)) {
         return;
     }
     ctx->pc = 0x336A24u;
@@ -80,7 +75,6 @@ label_336a24:
             goto label_336a34;
         }
     }
-    ctx->pc = 0x336A2Cu;
     // 0x336a2c: 0x0  nop
     ctx->pc = 0x336a2cu;
     // NOP

@@ -18,12 +18,13 @@ void Trail_snapToSources_0x1fceb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("Trail_snapToSources_0x1fceb0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1fcec0u: goto label_1fcec0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1fceb0u, 0)) {
+        switch (ctx->pc) {
+            case 0x1fcec0u: goto label_1fcec0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1fceb0u;
 
     // 0x1fceb0: 0x8c85003c  lw          $a1, 0x3C($a0)
     ctx->pc = 0x1fceb0u;
@@ -43,7 +44,6 @@ void Trail_snapToSources_0x1fceb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_1fcf18;
         }
     }
-    ctx->pc = 0x1FCEBCu;
     // 0x1fcebc: 0x8ca20028  lw          $v0, 0x28($a1)
     ctx->pc = 0x1fcebcu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 40)));
@@ -69,7 +69,6 @@ label_1fcec0:
             goto label_1fceec;
         }
     }
-    ctx->pc = 0x1FCED0u;
     // 0x1fced0: 0xc4400000  lwc1        $f0, 0x0($v0)
     ctx->pc = 0x1fced0u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 2), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -107,7 +106,6 @@ label_1fceec:
             goto label_1fcf10;
         }
     }
-    ctx->pc = 0x1FCEF4u;
     // 0x1fcef4: 0xc4a00000  lwc1        $f0, 0x0($a1)
     ctx->pc = 0x1fcef4u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }

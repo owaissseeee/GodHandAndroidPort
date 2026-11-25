@@ -18,13 +18,10 @@ void Obj34D8_CopyVec3_From98_To934_0x34dac0(uint8_t* rdram, R5900Context* ctx, P
     PS_LOG_ENTRY("Obj34D8_CopyVec3_From98_To934_0x34dac0");
 #endif
 
-    ctx->pc = 0x34dac0u;
 
     // 0x34dac0: 0x24850098  addiu       $a1, $a0, 0x98
-    ctx->pc = 0x34dac0u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 4), 152));
     // 0x34dac4: 0x2484090c  addiu       $a0, $a0, 0x90C
-    ctx->pc = 0x34dac4u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 2316));
     // 0x34dac8: 0x8ca20004  lw          $v0, 0x4($a1)
     ctx->pc = 0x34dac8u;
@@ -60,9 +57,7 @@ void Obj34D8_CopyVec3_From98_To934_0x34dac0(uint8_t* rdram, R5900Context* ctx, P
         return;
         #endif
     }
-    ctx->pc = 0x34DAE4u;
     // 0x34dae4: 0x0  nop
-    ctx->pc = 0x34dae4u;
     // NOP
     ctx->pc = 0x34dae8u;
 }

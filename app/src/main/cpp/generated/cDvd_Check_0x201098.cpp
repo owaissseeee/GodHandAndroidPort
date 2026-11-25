@@ -18,13 +18,14 @@ void cDvd_Check_0x201098(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     PS_LOG_ENTRY("cDvd_Check_0x201098");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2010c4u: goto label_2010c4;
-        case 0x2010d8u: goto label_2010d8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x201098u, 0)) {
+        switch (ctx->pc) {
+            case 0x2010c4u: goto label_2010c4;
+            case 0x2010d8u: goto label_2010d8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x201098u;
 
     // 0x201098: 0x54a00003  bnel        $a1, $zero, . + 4 + (0x3 << 2)
     ctx->pc = 0x201098u;
@@ -41,7 +42,6 @@ void cDvd_Check_0x201098(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
             goto label_2010a8;
         }
     }
-    ctx->pc = 0x2010A0u;
     // 0x2010a0: 0x3e00008  jr          $ra
     ctx->pc = 0x2010A0u;
     {
@@ -78,7 +78,6 @@ label_2010a8:
             goto label_2010cc;
         }
     }
-    ctx->pc = 0x2010B0u;
     // 0x2010b0: 0x8c420004  lw          $v0, 0x4($v0)
     ctx->pc = 0x2010b0u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 4)));
@@ -97,7 +96,6 @@ label_2010a8:
             goto label_2010d0;
         }
     }
-    ctx->pc = 0x2010BCu;
     // 0x2010bc: 0x3e00008  jr          $ra
     ctx->pc = 0x2010BCu;
     {
@@ -145,7 +143,6 @@ label_2010cc:
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), 8));
 label_2010d0:
     // 0x2010d0: 0x24840004  addiu       $a0, $a0, 0x4
-    ctx->pc = 0x2010d0u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 4));
     // 0x2010d4: 0x0  nop
     ctx->pc = 0x2010d4u;
@@ -169,7 +166,6 @@ label_2010d8:
             goto label_2010f0;
         }
     }
-    ctx->pc = 0x2010E4u;
     // 0x2010e4: 0x8c620000  lw          $v0, 0x0($v1)
     ctx->pc = 0x2010e4u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 0)));
@@ -188,7 +184,6 @@ label_2010d8:
     ctx->pc = 0x2010F0u;
 label_2010f0:
     // 0x2010f0: 0x86102a  slt         $v0, $a0, $a2
-    ctx->pc = 0x2010f0u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 4) < (int64_t)GPR_S64(ctx, 6)) ? 1 : 0);
     // 0x2010f4: 0x1440fff8  bnez        $v0, . + 4 + (-0x8 << 2)
     ctx->pc = 0x2010F4u;
@@ -208,7 +203,6 @@ label_2010f0:
             goto label_2010d8;
         }
     }
-    ctx->pc = 0x2010FCu;
     // 0x2010fc: 0x3e00008  jr          $ra
     ctx->pc = 0x2010FCu;
     {
@@ -228,9 +222,7 @@ label_2010f0:
         return;
         #endif
     }
-    ctx->pc = 0x201104u;
     // 0x201104: 0x0  nop
-    ctx->pc = 0x201104u;
     // NOP
     ctx->pc = 0x201108u;
 }

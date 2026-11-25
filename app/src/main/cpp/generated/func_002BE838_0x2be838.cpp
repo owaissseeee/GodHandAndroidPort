@@ -18,26 +18,23 @@ void func_002BE838_0x2be838(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002BE838_0x2be838");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2be84cu: goto label_2be84c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2be838u, 0)) {
+        switch (ctx->pc) {
+            case 0x2be84cu: goto label_2be84c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2be838u;
 
     // 0x2be838: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2be838u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2be83c: 0x630c0  sll         $a2, $a2, 3
-    ctx->pc = 0x2be83cu;
     SET_GPR_S32(ctx, 6, (int32_t)SLL32(GPR_U32(ctx, 6), 3));
     // 0x2be840: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2be840u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2be844: 0xc0af958  jal         func_2BE560
-    ctx->pc = 0x2BE844u;
     SET_GPR_U32(ctx, 31, 0x2BE84Cu);
-    ctx->pc = 0x2BE848u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x2BE844u;
     // 0x2be848: 0x862021  addu        $a0, $a0, $a2 (Delay Slot)

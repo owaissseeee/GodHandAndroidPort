@@ -18,27 +18,24 @@ void InitVtableField5C_1337E0_0x1337e0(uint8_t* rdram, R5900Context* ctx, PS2Run
     PS_LOG_ENTRY("InitVtableField5C_1337E0_0x1337e0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x133804u: goto label_133804;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1337e0u, 0)) {
+        switch (ctx->pc) {
+            case 0x133804u: goto label_133804;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1337e0u;
 
     // 0x1337e0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1337e0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1337e4: 0x3c020042  lui         $v0, 0x42
-    ctx->pc = 0x1337e4u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)66 << 16));
     // 0x1337e8: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1337e8u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1337ec: 0x2442d5a8  addiu       $v0, $v0, -0x2A58
-    ctx->pc = 0x1337ecu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294956456));
     // 0x1337f0: 0x30a50001  andi        $a1, $a1, 0x1
-    ctx->pc = 0x1337f0u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)1);
     // 0x1337f4: 0x10a00003  beqz        $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x1337F4u;
@@ -55,12 +52,10 @@ void InitVtableField5C_1337E0_0x1337e0(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_133804;
         }
     }
-    ctx->pc = 0x1337FCu;
     // 0x1337fc: 0xc0c3d68  jal         func_30F5A0
     ctx->pc = 0x1337FCu;
     SET_GPR_U32(ctx, 31, 0x133804u);
-    ctx->pc = 0x30F5A0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x30F5A0u, 0x1337FCu, 0x133804u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x133804u)) {
         return;
     }
     ctx->pc = 0x133804u;

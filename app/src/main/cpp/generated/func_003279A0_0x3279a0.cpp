@@ -18,7 +18,6 @@ void func_003279A0_0x3279a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_003279A0_0x3279a0");
 #endif
 
-    ctx->pc = 0x3279a0u;
 
     // 0x3279a0: 0x3e00008  jr          $ra
     ctx->pc = 0x3279A0u;
@@ -39,18 +38,15 @@ void func_003279A0_0x3279a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x3279A8u;
     // 0x3279a8: 0xac440008  sw          $a0, 0x8($v0)
     ctx->pc = 0x3279a8u;
     WRITE32(ADD32(GPR_U32(ctx, 2), 8), GPR_U32(ctx, 4));
     // 0x3279ac: 0x0  nop
-    ctx->pc = 0x3279acu;
     // NOP
     // 0x3279b0: 0xaca40010  sw          $a0, 0x10($a1)
     ctx->pc = 0x3279b0u;
     WRITE32(ADD32(GPR_U32(ctx, 5), 16), GPR_U32(ctx, 4));
     // 0x3279b4: 0x0  nop
-    ctx->pc = 0x3279b4u;
     // NOP
     ctx->pc = 0x3279b8u;
 }

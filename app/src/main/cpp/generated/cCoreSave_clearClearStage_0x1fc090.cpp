@@ -18,7 +18,6 @@ void cCoreSave_clearClearStage_0x1fc090(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("cCoreSave_clearClearStage_0x1fc090");
 #endif
 
-    ctx->pc = 0x1fc090u;
 
     // 0x1fc090: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc090u;
@@ -53,9 +52,7 @@ label_1fc09c:
         return;
         #endif
     }
-    ctx->pc = 0x1FC0A4u;
     // 0x1fc0a4: 0x0  nop
-    ctx->pc = 0x1fc0a4u;
     // NOP
     ctx->pc = 0x1fc0a8u;
 }

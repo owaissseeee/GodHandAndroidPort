@@ -18,37 +18,29 @@ void cIDBase_initEntry_0x2aa2d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("cIDBase_initEntry_0x2aa2d0");
 #endif
 
-    ctx->pc = 0x2aa2d0u;
 
     // 0x2aa2d0: 0x3c0200bc  lui         $v0, 0xBC
-    ctx->pc = 0x2aa2d0u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)188 << 16));
     // 0x2aa2d4: 0xacc5001c  sw          $a1, 0x1C($a2)
     ctx->pc = 0x2aa2d4u;
     WRITE32(ADD32(GPR_U32(ctx, 6), 28), GPR_U32(ctx, 5));
     // 0x2aa2d8: 0x3442614e  ori         $v0, $v0, 0x614E
-    ctx->pc = 0x2aa2d8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)24910);
     // 0x2aa2dc: 0x24aa027c  addiu       $t2, $a1, 0x27C
-    ctx->pc = 0x2aa2dcu;
     SET_GPR_S32(ctx, 10, (int32_t)ADD32(GPR_U32(ctx, 5), 636));
     // 0x2aa2e0: 0xacc20084  sw          $v0, 0x84($a2)
     ctx->pc = 0x2aa2e0u;
     WRITE32(ADD32(GPR_U32(ctx, 6), 132), GPR_U32(ctx, 2));
     // 0x2aa2e4: 0x24a40130  addiu       $a0, $a1, 0x130
-    ctx->pc = 0x2aa2e4u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 5), 304));
     // 0x2aa2e8: 0x24a80070  addiu       $t0, $a1, 0x70
-    ctx->pc = 0x2aa2e8u;
     SET_GPR_S32(ctx, 8, (int32_t)ADD32(GPR_U32(ctx, 5), 112));
     // 0x2aa2ec: 0x24a901b4  addiu       $t1, $a1, 0x1B4
-    ctx->pc = 0x2aa2ecu;
     SET_GPR_S32(ctx, 9, (int32_t)ADD32(GPR_U32(ctx, 5), 436));
     // 0x2aa2f0: 0x90a30066  lbu         $v1, 0x66($a1)
     ctx->pc = 0x2aa2f0u;
     SET_GPR_ZE32(ctx, 3, (uint8_t)READ8(ADD32(GPR_U32(ctx, 5), 102)));
     // 0x2aa2f4: 0x24a70218  addiu       $a3, $a1, 0x218
-    ctx->pc = 0x2aa2f4u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 5), 536));
     // 0x2aa2f8: 0xa0c30088  sb          $v1, 0x88($a2)
     ctx->pc = 0x2aa2f8u;

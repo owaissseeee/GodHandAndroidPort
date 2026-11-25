@@ -18,18 +18,17 @@ void BlackJack_SetBlackJackCamera_0x1d44d8(uint8_t* rdram, R5900Context* ctx, PS
     PS_LOG_ENTRY("BlackJack_SetBlackJackCamera_0x1d44d8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1d4510u: goto label_1d4510;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1d44d8u, 0)) {
+        switch (ctx->pc) {
+            case 0x1d4510u: goto label_1d4510;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1d44d8u;
 
     // 0x1d44d8: 0x27bdffb0  addiu       $sp, $sp, -0x50
-    ctx->pc = 0x1d44d8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967216));
     // 0x1d44dc: 0x3c020046  lui         $v0, 0x46
-    ctx->pc = 0x1d44dcu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)70 << 16));
     // 0x1d44e0: 0x7fb00040  sq          $s0, 0x40($sp)
     ctx->pc = 0x1d44e0u;
@@ -38,31 +37,25 @@ void BlackJack_SetBlackJackCamera_0x1d44d8(uint8_t* rdram, R5900Context* ctx, PS
     ctx->pc = 0x1d44e4u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 32), GPR_VEC(ctx, 18));
     // 0x1d44e8: 0xa0802d  daddu       $s0, $a1, $zero
-    ctx->pc = 0x1d44e8u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1d44ec: 0x7fb30010  sq          $s3, 0x10($sp)
     ctx->pc = 0x1d44ecu;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 19));
     // 0x1d44f0: 0x24523050  addiu       $s2, $v0, 0x3050
-    ctx->pc = 0x1d44f0u;
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 2), 12368));
     // 0x1d44f4: 0x7fb10030  sq          $s1, 0x30($sp)
     ctx->pc = 0x1d44f4u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 48), GPR_VEC(ctx, 17));
     // 0x1d44f8: 0x80982d  daddu       $s3, $a0, $zero
-    ctx->pc = 0x1d44f8u;
     SET_GPR_U64(ctx, 19, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1d44fc: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1d44fcu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1d4500: 0xc0882d  daddu       $s1, $a2, $zero
-    ctx->pc = 0x1d4500u;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1d4504: 0x240202d  daddu       $a0, $s2, $zero
-    ctx->pc = 0x1d4504u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1d4508: 0xc04e3ae  jal         func_138EB8
-    ctx->pc = 0x1D4508u;
     SET_GPR_U32(ctx, 31, 0x1D4510u);
     ctx->pc = 0x1D450Cu;
     ctx->in_delay_slot = true;
@@ -70,17 +63,14 @@ void BlackJack_SetBlackJackCamera_0x1d44d8(uint8_t* rdram, R5900Context* ctx, PS
     // 0x1d450c: 0x282d  daddu       $a1, $zero, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x138EB8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x138EB8u, 0x1D4508u, 0x1D4510u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cCamManager_setSubScrCamera_0x138eb8, 0x138eb8u, 0x1d4510u)) {
         return;
     }
     ctx->pc = 0x1D4510u;
 label_1d4510:
     // 0x1d4510: 0x26420c90  addiu       $v0, $s2, 0xC90
-    ctx->pc = 0x1d4510u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 18), 3216));
     // 0x1d4514: 0x26430ea0  addiu       $v1, $s2, 0xEA0
-    ctx->pc = 0x1d4514u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 18), 3744));
     // 0x1d4518: 0x12030007  beq         $s0, $v1, . + 4 + (0x7 << 2)
     ctx->pc = 0x1D4518u;
@@ -97,7 +87,6 @@ label_1d4510:
             goto label_1d4538;
         }
     }
-    ctx->pc = 0x1D4520u;
     // 0x1d4520: 0xc6000000  lwc1        $f0, 0x0($s0)
     ctx->pc = 0x1d4520u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 16), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -121,7 +110,6 @@ label_1d4538:
     ctx->pc = 0x1d4538u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 19), 6172)));
     // 0x1d453c: 0x24820200  addiu       $v0, $a0, 0x200
-    ctx->pc = 0x1d453cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 512));
     // 0x1d4540: 0x10510007  beq         $v0, $s1, . + 4 + (0x7 << 2)
     ctx->pc = 0x1D4540u;
@@ -138,7 +126,6 @@ label_1d4538:
             goto label_1d4560;
         }
     }
-    ctx->pc = 0x1D4548u;
     // 0x1d4548: 0xc6200000  lwc1        $f0, 0x0($s1)
     ctx->pc = 0x1d4548u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 17), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }

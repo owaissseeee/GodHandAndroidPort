@@ -18,7 +18,6 @@ void NoOp_33E6A8_0x33e6a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("NoOp_33E6A8_0x33e6a8");
 #endif
 
-    ctx->pc = 0x33e6a8u;
 
     // 0x33e6a8: 0x3e00008  jr          $ra
     ctx->pc = 0x33E6A8u;

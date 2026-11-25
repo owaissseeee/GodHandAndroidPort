@@ -18,13 +18,11 @@ void cOl29_setClose_0x17f9d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("cOl29_setClose_0x17f9d8");
 #endif
 
-    ctx->pc = 0x17f9d8u;
 
     // 0x17f9d8: 0x90820764  lbu         $v0, 0x764($a0)
     ctx->pc = 0x17f9d8u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 1892)));
     // 0x17f9dc: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x17f9dcu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x17f9e0: 0x14430005  bne         $v0, $v1, . + 4 + (0x5 << 2)
     ctx->pc = 0x17F9E0u;
@@ -41,7 +39,6 @@ void cOl29_setClose_0x17f9d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_17f9f8;
         }
     }
-    ctx->pc = 0x17F9E8u;
     // 0x17f9e8: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x17f9e8u;
     WRITE8(ADD32(GPR_U32(ctx, 4), 759), (uint8_t)GPR_U32(ctx, 0));

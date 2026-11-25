@@ -18,7 +18,6 @@ void cOm4f_setEventMode_0x1a4f20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("cOm4f_setEventMode_0x1a4f20");
 #endif
 
-    ctx->pc = 0x1a4f20u;
 
     // 0x1a4f20: 0x3e00008  jr          $ra
     ctx->pc = 0x1A4F20u;

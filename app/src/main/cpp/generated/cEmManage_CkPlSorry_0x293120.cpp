@@ -18,7 +18,6 @@ void cEmManage_CkPlSorry_0x293120(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("cEmManage_CkPlSorry_0x293120");
 #endif
 
-    ctx->pc = 0x293120u;
 
     // 0x293120: 0x8082053d  lb          $v0, 0x53D($a0)
     ctx->pc = 0x293120u;
@@ -42,9 +41,7 @@ void cEmManage_CkPlSorry_0x293120(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         return;
         #endif
     }
-    ctx->pc = 0x29312Cu;
     // 0x29312c: 0x0  nop
-    ctx->pc = 0x29312cu;
     // NOP
     ctx->pc = 0x293130u;
 }

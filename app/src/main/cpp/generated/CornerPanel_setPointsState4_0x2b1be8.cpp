@@ -18,33 +18,28 @@ void CornerPanel_setPointsState4_0x2b1be8(uint8_t* rdram, R5900Context* ctx, PS2
     PS_LOG_ENTRY("CornerPanel_setPointsState4_0x2b1be8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2b1c24u: goto label_2b1c24;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2b1be8u, 0)) {
+        switch (ctx->pc) {
+            case 0x2b1c24u: goto label_2b1c24;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2b1be8u;
 
     // 0x2b1be8: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x2b1be8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2b1bec: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2b1becu;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2b1bf0: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2b1bf0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2b1bf4: 0x24040078  addiu       $a0, $zero, 0x78
-    ctx->pc = 0x2b1bf4u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 120));
     // 0x2b1bf8: 0x24050100  addiu       $a1, $zero, 0x100
-    ctx->pc = 0x2b1bf8u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 256));
     // 0x2b1bfc: 0x24060170  addiu       $a2, $zero, 0x170
-    ctx->pc = 0x2b1bfcu;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 368));
     // 0x2b1c00: 0x240301e0  addiu       $v1, $zero, 0x1E0
-    ctx->pc = 0x2b1c00u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 480));
     // 0x2b1c04: 0xa44400ac  sh          $a0, 0xAC($v0)
     ctx->pc = 0x2b1c04u;
@@ -53,7 +48,6 @@ void CornerPanel_setPointsState4_0x2b1be8(uint8_t* rdram, R5900Context* ctx, PS2
     ctx->pc = 0x2b1c08u;
     WRITE16(ADD32(GPR_U32(ctx, 2), 170), (uint16_t)GPR_U32(ctx, 3));
     // 0x2b1c0c: 0x40202d  daddu       $a0, $v0, $zero
-    ctx->pc = 0x2b1c0cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2b1c10: 0xa44500ae  sh          $a1, 0xAE($v0)
     ctx->pc = 0x2b1c10u;
@@ -65,7 +59,6 @@ void CornerPanel_setPointsState4_0x2b1be8(uint8_t* rdram, R5900Context* ctx, PS2
     ctx->pc = 0x2b1c18u;
     WRITE16(ADD32(GPR_U32(ctx, 2), 166), (uint16_t)GPR_U32(ctx, 5));
     // 0x2b1c1c: 0xc0ac720  jal         func_2B1C80
-    ctx->pc = 0x2B1C1Cu;
     SET_GPR_U32(ctx, 31, 0x2B1C24u);
     ctx->pc = 0x2B1C20u;
     ctx->in_delay_slot = true;
@@ -73,8 +66,7 @@ void CornerPanel_setPointsState4_0x2b1be8(uint8_t* rdram, R5900Context* ctx, PS2
     // 0x2b1c20: 0xa44600a8  sh          $a2, 0xA8($v0) (Delay Slot)
     WRITE16(ADD32(GPR_U32(ctx, 2), 168), (uint16_t)GPR_U32(ctx, 6));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2B1C80u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2B1C80u, 0x2B1C1Cu, 0x2B1C24u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002B1C80_0x2b1c80, 0x2b1c80u, 0x2b1c24u)) {
         return;
     }
     ctx->pc = 0x2B1C24u;

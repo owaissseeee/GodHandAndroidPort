@@ -18,10 +18,8 @@ void pl00_lookCliff_0x12ce20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("pl00_lookCliff_0x12ce20");
 #endif
 
-    ctx->pc = 0x12ce20u;
 
     // 0x12ce20: 0x24820660  addiu       $v0, $a0, 0x660
-    ctx->pc = 0x12ce20u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 1632));
     // 0x12ce24: 0x50450008  beql        $v0, $a1, . + 4 + (0x8 << 2)
     ctx->pc = 0x12CE24u;
@@ -38,7 +36,6 @@ void pl00_lookCliff_0x12ce20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_12ce48;
         }
     }
-    ctx->pc = 0x12CE2Cu;
     // 0x12ce2c: 0xc4a00000  lwc1        $f0, 0x0($a1)
     ctx->pc = 0x12ce2cu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }

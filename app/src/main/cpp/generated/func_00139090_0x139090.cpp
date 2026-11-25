@@ -18,15 +18,15 @@ void func_00139090_0x139090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00139090_0x139090");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1390a4u: goto label_1390a4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x139090u, 0)) {
+        switch (ctx->pc) {
+            case 0x1390a4u: goto label_1390a4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x139090u;
 
     // 0x139090: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x139090u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x139094: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x139094u;
@@ -35,7 +35,6 @@ void func_00139090_0x139090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x139098u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x13909c: 0xc04e090  jal         func_138240
-    ctx->pc = 0x13909Cu;
     SET_GPR_U32(ctx, 31, 0x1390A4u);
     ctx->pc = 0x1390A0u;
     ctx->in_delay_slot = true;
@@ -43,8 +42,7 @@ void func_00139090_0x139090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x1390a0: 0x80802d  daddu       $s0, $a0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x138240u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x138240u, 0x13909Cu, 0x1390A4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cCamera_reset_0x138240, 0x138240u, 0x1390a4u)) {
         return;
     }
     ctx->pc = 0x1390A4u;

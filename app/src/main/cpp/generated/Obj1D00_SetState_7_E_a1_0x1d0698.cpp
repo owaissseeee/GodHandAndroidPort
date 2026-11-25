@@ -18,13 +18,10 @@ void Obj1D00_SetState_7_E_a1_0x1d0698(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("Obj1D00_SetState_7_E_a1_0x1d0698");
 #endif
 
-    ctx->pc = 0x1d0698u;
 
     // 0x1d0698: 0x24020007  addiu       $v0, $zero, 0x7
-    ctx->pc = 0x1d0698u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 7));
     // 0x1d069c: 0x2403000e  addiu       $v1, $zero, 0xE
-    ctx->pc = 0x1d069cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 14));
     // 0x1d06a0: 0xa08502f7  sb          $a1, 0x2F7($a0)
     ctx->pc = 0x1d06a0u;
@@ -54,9 +51,7 @@ void Obj1D00_SetState_7_E_a1_0x1d0698(uint8_t* rdram, R5900Context* ctx, PS2Runt
         return;
         #endif
     }
-    ctx->pc = 0x1D06B4u;
     // 0x1d06b4: 0x0  nop
-    ctx->pc = 0x1d06b4u;
     // NOP
     ctx->pc = 0x1d06b8u;
 }

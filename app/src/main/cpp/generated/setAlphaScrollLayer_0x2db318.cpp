@@ -18,15 +18,15 @@ void setAlphaScrollLayer_0x2db318(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("setAlphaScrollLayer_0x2db318");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2db338u: goto label_2db338;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2db318u, 0)) {
+        switch (ctx->pc) {
+            case 0x2db338u: goto label_2db338;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2db318u;
 
     // 0x2db318: 0x3c060075  lui         $a2, 0x75
-    ctx->pc = 0x2db318u;
     SET_GPR_S32(ctx, 6, (int32_t)((uint32_t)117 << 16));
     // 0x2db31c: 0x8cc24c38  lw          $v0, 0x4C38($a2)
     ctx->pc = 0x2db31cu;
@@ -46,7 +46,6 @@ void setAlphaScrollLayer_0x2db318(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_2db364;
         }
     }
-    ctx->pc = 0x2DB330u;
     // 0x2db330: 0x8ca30000  lw          $v1, 0x0($a1)
     ctx->pc = 0x2db330u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 0)));
@@ -72,7 +71,6 @@ label_2db338:
             goto label_2db354;
         }
     }
-    ctx->pc = 0x2DB344u;
     // 0x2db344: 0xe46c024c  swc1        $f12, 0x24C($v1)
     ctx->pc = 0x2db344u;
     { float f = ctx->f[12]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 3), 588), bits); }
@@ -87,7 +85,6 @@ label_2db338:
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 6), 19512)));
 label_2db354:
     // 0x2db354: 0x24a50004  addiu       $a1, $a1, 0x4
-    ctx->pc = 0x2db354u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 4));
     // 0x2db358: 0x8c620008  lw          $v0, 0x8($v1)
     ctx->pc = 0x2db358u;
@@ -125,9 +122,7 @@ label_2db364:
         return;
         #endif
     }
-    ctx->pc = 0x2DB36Cu;
     // 0x2db36c: 0x0  nop
-    ctx->pc = 0x2db36cu;
     // NOP
     ctx->pc = 0x2db370u;
 }

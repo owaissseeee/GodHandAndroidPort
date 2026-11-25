@@ -18,7 +18,6 @@ void Obj38B8_SetByte1B_0x38bf58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("Obj38B8_SetByte1B_0x38bf58");
 #endif
 
-    ctx->pc = 0x38bf58u;
 
     // 0x38bf58: 0x3e00008  jr          $ra
     ctx->pc = 0x38BF58u;

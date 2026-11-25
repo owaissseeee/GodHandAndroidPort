@@ -18,7 +18,6 @@ void cHeap_free_0x2a9680(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     PS_LOG_ENTRY("cHeap_free_0x2a9680");
 #endif
 
-    ctx->pc = 0x2a9680u;
 
     // 0x2a9680: 0x10a0000d  beqz        $a1, . + 4 + (0xD << 2)
     ctx->pc = 0x2A9680u;
@@ -35,7 +34,6 @@ void cHeap_free_0x2a9680(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
             goto label_2a96b8;
         }
     }
-    ctx->pc = 0x2A9688u;
     // 0x2a9688: 0x8ca60004  lw          $a2, 0x4($a1)
     ctx->pc = 0x2a9688u;
     SET_GPR_S32(ctx, 6, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 4)));
@@ -55,10 +53,8 @@ void cHeap_free_0x2a9680(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     ctx->pc = 0x2a969cu;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 12)));
     // 0x2a96a0: 0x431021  addu        $v0, $v0, $v1
-    ctx->pc = 0x2a96a0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
     // 0x2a96a4: 0x822021  addu        $a0, $a0, $v0
-    ctx->pc = 0x2a96a4u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 2)));
     // 0x2a96a8: 0xacc4000c  sw          $a0, 0xC($a2)
     ctx->pc = 0x2a96a8u;

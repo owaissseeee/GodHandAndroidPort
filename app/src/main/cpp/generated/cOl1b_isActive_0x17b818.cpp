@@ -18,7 +18,6 @@ void cOl1b_isActive_0x17b818(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("cOl1b_isActive_0x17b818");
 #endif
 
-    ctx->pc = 0x17b818u;
 
     // 0x17b818: 0x3e00008  jr          $ra
     ctx->pc = 0x17B818u;

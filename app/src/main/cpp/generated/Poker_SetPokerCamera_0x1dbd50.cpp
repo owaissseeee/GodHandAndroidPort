@@ -18,18 +18,17 @@ void Poker_SetPokerCamera_0x1dbd50(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("Poker_SetPokerCamera_0x1dbd50");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1dbd88u: goto label_1dbd88;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1dbd50u, 0)) {
+        switch (ctx->pc) {
+            case 0x1dbd88u: goto label_1dbd88;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1dbd50u;
 
     // 0x1dbd50: 0x27bdffb0  addiu       $sp, $sp, -0x50
-    ctx->pc = 0x1dbd50u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967216));
     // 0x1dbd54: 0x3c020046  lui         $v0, 0x46
-    ctx->pc = 0x1dbd54u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)70 << 16));
     // 0x1dbd58: 0x7fb00040  sq          $s0, 0x40($sp)
     ctx->pc = 0x1dbd58u;
@@ -38,31 +37,25 @@ void Poker_SetPokerCamera_0x1dbd50(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x1dbd5cu;
     WRITE128(ADD32(GPR_U32(ctx, 29), 32), GPR_VEC(ctx, 18));
     // 0x1dbd60: 0xa0802d  daddu       $s0, $a1, $zero
-    ctx->pc = 0x1dbd60u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1dbd64: 0x7fb30010  sq          $s3, 0x10($sp)
     ctx->pc = 0x1dbd64u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 19));
     // 0x1dbd68: 0x24523050  addiu       $s2, $v0, 0x3050
-    ctx->pc = 0x1dbd68u;
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 2), 12368));
     // 0x1dbd6c: 0x7fb10030  sq          $s1, 0x30($sp)
     ctx->pc = 0x1dbd6cu;
     WRITE128(ADD32(GPR_U32(ctx, 29), 48), GPR_VEC(ctx, 17));
     // 0x1dbd70: 0x80982d  daddu       $s3, $a0, $zero
-    ctx->pc = 0x1dbd70u;
     SET_GPR_U64(ctx, 19, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1dbd74: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1dbd74u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1dbd78: 0xc0882d  daddu       $s1, $a2, $zero
-    ctx->pc = 0x1dbd78u;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1dbd7c: 0x240202d  daddu       $a0, $s2, $zero
-    ctx->pc = 0x1dbd7cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1dbd80: 0xc04e3ae  jal         func_138EB8
-    ctx->pc = 0x1DBD80u;
     SET_GPR_U32(ctx, 31, 0x1DBD88u);
     ctx->pc = 0x1DBD84u;
     ctx->in_delay_slot = true;
@@ -70,17 +63,14 @@ void Poker_SetPokerCamera_0x1dbd50(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     // 0x1dbd84: 0x282d  daddu       $a1, $zero, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x138EB8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x138EB8u, 0x1DBD80u, 0x1DBD88u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cCamManager_setSubScrCamera_0x138eb8, 0x138eb8u, 0x1dbd88u)) {
         return;
     }
     ctx->pc = 0x1DBD88u;
 label_1dbd88:
     // 0x1dbd88: 0x26420c90  addiu       $v0, $s2, 0xC90
-    ctx->pc = 0x1dbd88u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 18), 3216));
     // 0x1dbd8c: 0x26430ea0  addiu       $v1, $s2, 0xEA0
-    ctx->pc = 0x1dbd8cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 18), 3744));
     // 0x1dbd90: 0x12030007  beq         $s0, $v1, . + 4 + (0x7 << 2)
     ctx->pc = 0x1DBD90u;
@@ -97,7 +87,6 @@ label_1dbd88:
             goto label_1dbdb0;
         }
     }
-    ctx->pc = 0x1DBD98u;
     // 0x1dbd98: 0xc6000000  lwc1        $f0, 0x0($s0)
     ctx->pc = 0x1dbd98u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 16), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -121,7 +110,6 @@ label_1dbdb0:
     ctx->pc = 0x1dbdb0u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 19), 12364)));
     // 0x1dbdb4: 0x24820200  addiu       $v0, $a0, 0x200
-    ctx->pc = 0x1dbdb4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 512));
     // 0x1dbdb8: 0x10510007  beq         $v0, $s1, . + 4 + (0x7 << 2)
     ctx->pc = 0x1DBDB8u;
@@ -138,7 +126,6 @@ label_1dbdb0:
             goto label_1dbdd8;
         }
     }
-    ctx->pc = 0x1DBDC0u;
     // 0x1dbdc0: 0xc6200000  lwc1        $f0, 0x0($s1)
     ctx->pc = 0x1dbdc0u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 17), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }

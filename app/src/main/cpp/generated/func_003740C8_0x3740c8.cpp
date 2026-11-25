@@ -18,7 +18,6 @@ void func_003740C8_0x3740c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_003740C8_0x3740c8");
 #endif
 
-    ctx->pc = 0x3740c8u;
 
     // 0x3740c8: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x3740c8u;
@@ -32,18 +31,13 @@ void func_003740C8_0x3740c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_374114;
         }
     }
-    ctx->pc = 0x3740D4u;
     // 0x3740d4: 0x44800000  mtc1        $zero, $f0
-    ctx->pc = 0x3740d4u;
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x3740d8: 0x0  nop
-    ctx->pc = 0x3740d8u;
     // NOP
     // 0x3740dc: 0x46006832  c.eq.s      $f13, $f0
-    ctx->pc = 0x3740dcu;
     ctx->fcr31 = (FPU_C_EQ_S(ctx->f[13], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x3740e0: 0x0  nop
-    ctx->pc = 0x3740e0u;
     // NOP
     // 0x3740e4: 0x4502000a  bc1fl       . + 4 + (0xA << 2)
     ctx->pc = 0x3740E4u;
@@ -60,15 +54,12 @@ void func_003740C8_0x3740c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_374110;
         }
     }
-    ctx->pc = 0x3740ECu;
     // 0x3740ec: 0xc4800018  lwc1        $f0, 0x18($a0)
     ctx->pc = 0x3740ecu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 24)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x3740f0: 0x46006036  c.le.s      $f12, $f0
-    ctx->pc = 0x3740f0u;
     ctx->fcr31 = (FPU_C_OLE_S(ctx->f[12], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x3740f4: 0x0  nop
-    ctx->pc = 0x3740f4u;
     // NOP
     // 0x3740f8: 0x45020004  bc1fl       . + 4 + (0x4 << 2)
     ctx->pc = 0x3740F8u;
@@ -85,7 +76,6 @@ void func_003740C8_0x3740c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_37410c;
         }
     }
-    ctx->pc = 0x374100u;
     // 0x374100: 0xc4800028  lwc1        $f0, 0x28($a0)
     ctx->pc = 0x374100u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 40)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -127,9 +117,7 @@ label_374114:
         return;
         #endif
     }
-    ctx->pc = 0x37411Cu;
     // 0x37411c: 0x0  nop
-    ctx->pc = 0x37411cu;
     // NOP
     ctx->pc = 0x374120u;
 }

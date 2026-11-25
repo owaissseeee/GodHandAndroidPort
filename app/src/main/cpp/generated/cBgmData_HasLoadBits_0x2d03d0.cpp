@@ -18,16 +18,13 @@ void cBgmData_HasLoadBits_0x2d03d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("cBgmData_HasLoadBits_0x2d03d0");
 #endif
 
-    ctx->pc = 0x2d03d0u;
 
     // 0x2d03d0: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2d03d0u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4)));
     // 0x2d03d4: 0x21027  nor         $v0, $zero, $v0
-    ctx->pc = 0x2d03d4u;
     SET_GPR_U64(ctx, 2, ~(GPR_U64(ctx, 0) | GPR_U64(ctx, 2)));
     // 0x2d03d8: 0x451024  and         $v0, $v0, $a1
-    ctx->pc = 0x2d03d8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 5));
     // 0x2d03dc: 0x3e00008  jr          $ra
     ctx->pc = 0x2D03DCu;
@@ -48,9 +45,7 @@ void cBgmData_HasLoadBits_0x2d03d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         return;
         #endif
     }
-    ctx->pc = 0x2D03E4u;
     // 0x2d03e4: 0x0  nop
-    ctx->pc = 0x2d03e4u;
     // NOP
     ctx->pc = 0x2d03e8u;
 }

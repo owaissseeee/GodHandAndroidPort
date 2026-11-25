@@ -18,7 +18,6 @@ void Obj38B8_GetField0_v2_0x38bf50(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("Obj38B8_GetField0_v2_0x38bf50");
 #endif
 
-    ctx->pc = 0x38bf50u;
 
     // 0x38bf50: 0x3e00008  jr          $ra
     ctx->pc = 0x38BF50u;

@@ -18,54 +18,56 @@ void func_00160B90_0x160b90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00160B90_0x160b90");
 #endif
 
-    switch (ctx->pc) {
-        case 0x160b90u: goto label_160b90;
-        case 0x160b94u: goto label_160b94;
-        case 0x160b98u: goto label_160b98;
-        case 0x160b9cu: goto label_160b9c;
-        case 0x160ba0u: goto label_160ba0;
-        case 0x160ba4u: goto label_160ba4;
-        case 0x160ba8u: goto label_160ba8;
-        case 0x160bacu: goto label_160bac;
-        case 0x160bb0u: goto label_160bb0;
-        case 0x160bb4u: goto label_160bb4;
-        case 0x160bb8u: goto label_160bb8;
-        case 0x160bbcu: goto label_160bbc;
-        case 0x160bc0u: goto label_160bc0;
-        case 0x160bc4u: goto label_160bc4;
-        case 0x160bc8u: goto label_160bc8;
-        case 0x160bccu: goto label_160bcc;
-        case 0x160bd0u: goto label_160bd0;
-        case 0x160bd4u: goto label_160bd4;
-        case 0x160bd8u: goto label_160bd8;
-        case 0x160bdcu: goto label_160bdc;
-        case 0x160be0u: goto label_160be0;
-        case 0x160be4u: goto label_160be4;
-        case 0x160be8u: goto label_160be8;
-        case 0x160becu: goto label_160bec;
-        case 0x160bf0u: goto label_160bf0;
-        case 0x160bf4u: goto label_160bf4;
-        case 0x160bf8u: goto label_160bf8;
-        case 0x160bfcu: goto label_160bfc;
-        case 0x160c00u: goto label_160c00;
-        case 0x160c04u: goto label_160c04;
-        case 0x160c08u: goto label_160c08;
-        case 0x160c0cu: goto label_160c0c;
-        case 0x160c10u: goto label_160c10;
-        case 0x160c14u: goto label_160c14;
-        case 0x160c18u: goto label_160c18;
-        case 0x160c1cu: goto label_160c1c;
-        case 0x160c20u: goto label_160c20;
-        case 0x160c24u: goto label_160c24;
-        case 0x160c28u: goto label_160c28;
-        case 0x160c2cu: goto label_160c2c;
-        case 0x160c30u: goto label_160c30;
-        case 0x160c34u: goto label_160c34;
-        case 0x160c38u: goto label_160c38;
-        case 0x160c3cu: goto label_160c3c;
-        case 0x160c40u: goto label_160c40;
-        case 0x160c44u: goto label_160c44;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x160b90u, 0)) {
+        switch (ctx->pc) {
+            case 0x160b90u: goto label_160b90;
+            case 0x160b94u: goto label_160b94;
+            case 0x160b98u: goto label_160b98;
+            case 0x160b9cu: goto label_160b9c;
+            case 0x160ba0u: goto label_160ba0;
+            case 0x160ba4u: goto label_160ba4;
+            case 0x160ba8u: goto label_160ba8;
+            case 0x160bacu: goto label_160bac;
+            case 0x160bb0u: goto label_160bb0;
+            case 0x160bb4u: goto label_160bb4;
+            case 0x160bb8u: goto label_160bb8;
+            case 0x160bbcu: goto label_160bbc;
+            case 0x160bc0u: goto label_160bc0;
+            case 0x160bc4u: goto label_160bc4;
+            case 0x160bc8u: goto label_160bc8;
+            case 0x160bccu: goto label_160bcc;
+            case 0x160bd0u: goto label_160bd0;
+            case 0x160bd4u: goto label_160bd4;
+            case 0x160bd8u: goto label_160bd8;
+            case 0x160bdcu: goto label_160bdc;
+            case 0x160be0u: goto label_160be0;
+            case 0x160be4u: goto label_160be4;
+            case 0x160be8u: goto label_160be8;
+            case 0x160becu: goto label_160bec;
+            case 0x160bf0u: goto label_160bf0;
+            case 0x160bf4u: goto label_160bf4;
+            case 0x160bf8u: goto label_160bf8;
+            case 0x160bfcu: goto label_160bfc;
+            case 0x160c00u: goto label_160c00;
+            case 0x160c04u: goto label_160c04;
+            case 0x160c08u: goto label_160c08;
+            case 0x160c0cu: goto label_160c0c;
+            case 0x160c10u: goto label_160c10;
+            case 0x160c14u: goto label_160c14;
+            case 0x160c18u: goto label_160c18;
+            case 0x160c1cu: goto label_160c1c;
+            case 0x160c20u: goto label_160c20;
+            case 0x160c24u: goto label_160c24;
+            case 0x160c28u: goto label_160c28;
+            case 0x160c2cu: goto label_160c2c;
+            case 0x160c30u: goto label_160c30;
+            case 0x160c34u: goto label_160c34;
+            case 0x160c38u: goto label_160c38;
+            case 0x160c3cu: goto label_160c3c;
+            case 0x160c40u: goto label_160c40;
+            case 0x160c44u: goto label_160c44;
+            default: break;
+        }
     }
 
     ctx->pc = 0x160b90u;
@@ -175,7 +177,6 @@ label_160bc8:
         ctx->pc = 0x160BCCu;
         goto label_160bcc;
     }
-    ctx->pc = 0x160BC4u;
     SET_GPR_U32(ctx, 31, 0x160BCCu);
     ctx->pc = 0x160BC8u;
     ctx->in_delay_slot = true;
@@ -183,8 +184,7 @@ label_160bc8:
     // 0x160bc8: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x160D50u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x160D50u, 0x160BC4u, 0x160BCCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00160D50_0x160d50, 0x160d50u, 0x160bccu)) {
         return;
     }
     ctx->pc = 0x160BCCu;
@@ -201,7 +201,6 @@ label_160bd0:
         ctx->pc = 0x160BD4u;
         goto label_160bd4;
     }
-    ctx->pc = 0x160BCCu;
     SET_GPR_U32(ctx, 31, 0x160BD4u);
     ctx->pc = 0x160BD0u;
     ctx->in_delay_slot = true;
@@ -209,8 +208,7 @@ label_160bd0:
     // 0x160bd0: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x161288u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x161288u, 0x160BCCu, 0x160BD4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Call_func_0015FD18_Field_48_161288_0x161288, 0x161288u, 0x160bd4u)) {
         return;
     }
     ctx->pc = 0x160BD4u;
@@ -446,7 +444,6 @@ label_160c40:
     ctx->pc = 0x160C44u;
 label_160c44:
     // 0x160c44: 0x0  nop
-    ctx->pc = 0x160c44u;
     // NOP
     ctx->pc = 0x160c48u;
 }

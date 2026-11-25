@@ -18,32 +18,34 @@ void ps2__IO_unbuffer_all_0x38cf40(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("ps2__IO_unbuffer_all_0x38cf40");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38cf40u: goto label_38cf40;
-        case 0x38cf44u: goto label_38cf44;
-        case 0x38cf48u: goto label_38cf48;
-        case 0x38cf4cu: goto label_38cf4c;
-        case 0x38cf50u: goto label_38cf50;
-        case 0x38cf54u: goto label_38cf54;
-        case 0x38cf58u: goto label_38cf58;
-        case 0x38cf5cu: goto label_38cf5c;
-        case 0x38cf60u: goto label_38cf60;
-        case 0x38cf64u: goto label_38cf64;
-        case 0x38cf68u: goto label_38cf68;
-        case 0x38cf6cu: goto label_38cf6c;
-        case 0x38cf70u: goto label_38cf70;
-        case 0x38cf74u: goto label_38cf74;
-        case 0x38cf78u: goto label_38cf78;
-        case 0x38cf7cu: goto label_38cf7c;
-        case 0x38cf80u: goto label_38cf80;
-        case 0x38cf84u: goto label_38cf84;
-        case 0x38cf88u: goto label_38cf88;
-        case 0x38cf8cu: goto label_38cf8c;
-        case 0x38cf90u: goto label_38cf90;
-        case 0x38cf94u: goto label_38cf94;
-        case 0x38cf98u: goto label_38cf98;
-        case 0x38cf9cu: goto label_38cf9c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38cf40u, 0)) {
+        switch (ctx->pc) {
+            case 0x38cf40u: goto label_38cf40;
+            case 0x38cf44u: goto label_38cf44;
+            case 0x38cf48u: goto label_38cf48;
+            case 0x38cf4cu: goto label_38cf4c;
+            case 0x38cf50u: goto label_38cf50;
+            case 0x38cf54u: goto label_38cf54;
+            case 0x38cf58u: goto label_38cf58;
+            case 0x38cf5cu: goto label_38cf5c;
+            case 0x38cf60u: goto label_38cf60;
+            case 0x38cf64u: goto label_38cf64;
+            case 0x38cf68u: goto label_38cf68;
+            case 0x38cf6cu: goto label_38cf6c;
+            case 0x38cf70u: goto label_38cf70;
+            case 0x38cf74u: goto label_38cf74;
+            case 0x38cf78u: goto label_38cf78;
+            case 0x38cf7cu: goto label_38cf7c;
+            case 0x38cf80u: goto label_38cf80;
+            case 0x38cf84u: goto label_38cf84;
+            case 0x38cf88u: goto label_38cf88;
+            case 0x38cf8cu: goto label_38cf8c;
+            case 0x38cf90u: goto label_38cf90;
+            case 0x38cf94u: goto label_38cf94;
+            case 0x38cf98u: goto label_38cf98;
+            case 0x38cf9cu: goto label_38cf9c;
+            default: break;
+        }
     }
 
     ctx->pc = 0x38cf40u;

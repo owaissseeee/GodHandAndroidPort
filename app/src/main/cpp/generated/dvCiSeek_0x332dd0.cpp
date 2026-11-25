@@ -18,18 +18,17 @@ void dvCiSeek_0x332dd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     PS_LOG_ENTRY("dvCiSeek_0x332dd0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x332decu: goto label_332dec;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x332dd0u, 0)) {
+        switch (ctx->pc) {
+            case 0x332decu: goto label_332dec;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x332dd0u;
 
     // 0x332dd0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x332dd0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x332dd4: 0x80382d  daddu       $a3, $a0, $zero
-    ctx->pc = 0x332dd4u;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x332dd8: 0x14e00007  bnez        $a3, . + 4 + (0x7 << 2)
     ctx->pc = 0x332DD8u;
@@ -46,12 +45,9 @@ void dvCiSeek_0x332dd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             goto label_332df8;
         }
     }
-    ctx->pc = 0x332DE0u;
     // 0x332de0: 0x3c050045  lui         $a1, 0x45
-    ctx->pc = 0x332de0u;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)69 << 16));
     // 0x332de4: 0xc0cca02  jal         func_332808
-    ctx->pc = 0x332DE4u;
     SET_GPR_U32(ctx, 31, 0x332DECu);
     ctx->pc = 0x332DE8u;
     ctx->in_delay_slot = true;
@@ -59,8 +55,7 @@ void dvCiSeek_0x332dd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     // 0x332de8: 0x24a54458  addiu       $a1, $a1, 0x4458 (Delay Slot)
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 17496));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x332808u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x332808u, 0x332DE4u, 0x332DECu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00332808_0x332808, 0x332808u, 0x332decu)) {
         return;
     }
     ctx->pc = 0x332DECu;
@@ -80,7 +75,6 @@ label_332dec:
             goto label_332e58;
         }
     }
-    ctx->pc = 0x332DF4u;
     // 0x332df4: 0x0  nop
     ctx->pc = 0x332df4u;
     // NOP
@@ -100,7 +94,6 @@ label_332df8:
             goto label_332e08;
         }
     }
-    ctx->pc = 0x332E00u;
     // 0x332e00: 0x1000000d  b           . + 4 + (0xD << 2)
     ctx->pc = 0x332E00u;
     {
@@ -133,12 +126,10 @@ label_332e08:
             goto label_332e20;
         }
     }
-    ctx->pc = 0x332E10u;
     // 0x332e10: 0x8ce40008  lw          $a0, 0x8($a3)
     ctx->pc = 0x332e10u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 7), 8)));
     // 0x332e14: 0x851021  addu        $v0, $a0, $a1
-    ctx->pc = 0x332e14u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 5)));
     // 0x332e18: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x332E18u;
@@ -172,12 +163,10 @@ label_332e20:
             goto label_332e3c;
         }
     }
-    ctx->pc = 0x332E28u;
     // 0x332e28: 0x8ce2000c  lw          $v0, 0xC($a3)
     ctx->pc = 0x332e28u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 7), 12)));
     // 0x332e2c: 0x451021  addu        $v0, $v0, $a1
-    ctx->pc = 0x332e2cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 5)));
     // 0x332e30: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x332E30u;
@@ -207,13 +196,11 @@ label_332e3c:
     ctx->pc = 0x332e40u;
     WRITE32(ADD32(GPR_U32(ctx, 7), 20), GPR_U32(ctx, 0));
     // 0x332e44: 0x44182a  slt         $v1, $v0, $a0
-    ctx->pc = 0x332e44u;
     SET_GPR_U64(ctx, 3, ((int64_t)GPR_S64(ctx, 2) < (int64_t)GPR_S64(ctx, 4)) ? 1 : 0);
     // 0x332e48: 0x83100a  movz        $v0, $a0, $v1
     ctx->pc = 0x332e48u;
     if (GPR_U64(ctx, 3) == 0) SET_GPR_VEC(ctx, 2, GPR_VEC(ctx, 4));
     // 0x332e4c: 0x28440000  slti        $a0, $v0, 0x0
-    ctx->pc = 0x332e4cu;
     SET_GPR_U64(ctx, 4, ((int64_t)GPR_S64(ctx, 2) < (int64_t)(int32_t)0) ? 1 : 0);
     // 0x332e50: 0x4100b  movn        $v0, $zero, $a0
     ctx->pc = 0x332e50u;
@@ -244,9 +231,7 @@ label_332e58:
         return;
         #endif
     }
-    ctx->pc = 0x332E64u;
     // 0x332e64: 0x0  nop
-    ctx->pc = 0x332e64u;
     // NOP
     ctx->pc = 0x332e68u;
 }

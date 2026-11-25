@@ -18,7 +18,6 @@ void Obj1F20_NoOp_2690_0x1f2690(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("Obj1F20_NoOp_2690_0x1f2690");
 #endif
 
-    ctx->pc = 0x1f2690u;
 
     // 0x1f2690: 0x3e00008  jr          $ra
     ctx->pc = 0x1F2690u;

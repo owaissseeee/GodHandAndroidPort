@@ -18,15 +18,15 @@ void Tramp_flush__7ostream_3892C0_0x3892c0(uint8_t* rdram, R5900Context* ctx, PS
     PS_LOG_ENTRY("Tramp_flush__7ostream_3892C0_0x3892c0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3892d0u: goto label_3892d0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3892c0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3892d0u: goto label_3892d0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3892c0u;
 
     // 0x3892c0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x3892c0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x3892c4: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x3892c4u;
@@ -34,8 +34,7 @@ void Tramp_flush__7ostream_3892C0_0x3892c0(uint8_t* rdram, R5900Context* ctx, PS
     // 0x3892c8: 0xc0e249a  jal         func_389268
     ctx->pc = 0x3892C8u;
     SET_GPR_U32(ctx, 31, 0x3892D0u);
-    ctx->pc = 0x389268u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x389268u, 0x3892C8u, 0x3892D0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &flush__7ostream_0x389268, 0x389268u, 0x3892d0u)) {
         return;
     }
     ctx->pc = 0x3892D0u;
@@ -62,9 +61,7 @@ label_3892d0:
         return;
         #endif
     }
-    ctx->pc = 0x3892DCu;
     // 0x3892dc: 0x0  nop
-    ctx->pc = 0x3892dcu;
     // NOP
     ctx->pc = 0x3892e0u;
 }

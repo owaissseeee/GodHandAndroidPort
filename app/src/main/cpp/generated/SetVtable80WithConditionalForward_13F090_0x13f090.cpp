@@ -18,27 +18,24 @@ void SetVtable80WithConditionalForward_13F090_0x13f090(uint8_t* rdram, R5900Cont
     PS_LOG_ENTRY("SetVtable80WithConditionalForward_13F090_0x13f090");
 #endif
 
-    switch (ctx->pc) {
-        case 0x13f0b4u: goto label_13f0b4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x13f090u, 0)) {
+        switch (ctx->pc) {
+            case 0x13f0b4u: goto label_13f0b4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x13f090u;
 
     // 0x13f090: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x13f090u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x13f094: 0x3c020042  lui         $v0, 0x42
-    ctx->pc = 0x13f094u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)66 << 16));
     // 0x13f098: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x13f098u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x13f09c: 0x2442dcc8  addiu       $v0, $v0, -0x2338
-    ctx->pc = 0x13f09cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294958280));
     // 0x13f0a0: 0x30a50001  andi        $a1, $a1, 0x1
-    ctx->pc = 0x13f0a0u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)1);
     // 0x13f0a4: 0x10a00003  beqz        $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x13F0A4u;
@@ -55,12 +52,10 @@ void SetVtable80WithConditionalForward_13F090_0x13f090(uint8_t* rdram, R5900Cont
             goto label_13f0b4;
         }
     }
-    ctx->pc = 0x13F0ACu;
     // 0x13f0ac: 0xc0c3d68  jal         func_30F5A0
     ctx->pc = 0x13F0ACu;
     SET_GPR_U32(ctx, 31, 0x13F0B4u);
-    ctx->pc = 0x30F5A0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x30F5A0u, 0x13F0ACu, 0x13F0B4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x13f0b4u)) {
         return;
     }
     ctx->pc = 0x13F0B4u;

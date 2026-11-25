@@ -18,7 +18,6 @@ void sceMpegClearRefBuff_0x39ac58(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("sceMpegClearRefBuff_0x39ac58");
 #endif
 
-    ctx->pc = 0x39ac58u;
 
     // 0x39ac58: 0x8c830040  lw          $v1, 0x40($a0)
     ctx->pc = 0x39ac58u;
@@ -162,39 +161,30 @@ label_39aca4:
         return;
         #endif
     }
-    ctx->pc = 0x39ACACu;
     // 0x39acac: 0x0  nop
-    ctx->pc = 0x39acacu;
     // NOP
     // 0x39acb0: 0xac60008c  sw          $zero, 0x8C($v1)
     ctx->pc = 0x39acb0u;
     WRITE32(ADD32(GPR_U32(ctx, 3), 140), GPR_U32(ctx, 0));
     // 0x39acb4: 0x0  nop
-    ctx->pc = 0x39acb4u;
     // NOP
     // 0x39acb8: 0x8c6200e0  lw          $v0, 0xE0($v1)
     ctx->pc = 0x39acb8u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 224)));
     // 0x39acbc: 0x0  nop
-    ctx->pc = 0x39acbcu;
     // NOP
     // 0x39acc0: 0x8c6200e4  lw          $v0, 0xE4($v1)
     ctx->pc = 0x39acc0u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 228)));
     // 0x39acc4: 0x0  nop
-    ctx->pc = 0x39acc4u;
     // NOP
     // 0x39acc8: 0x244200c8  addiu       $v0, $v0, 0xC8
-    ctx->pc = 0x39acc8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 200));
     // 0x39accc: 0x0  nop
-    ctx->pc = 0x39acccu;
     // NOP
     // 0x39acd0: 0x244200c8  addiu       $v0, $v0, 0xC8
-    ctx->pc = 0x39acd0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 200));
     // 0x39acd4: 0x0  nop
-    ctx->pc = 0x39acd4u;
     // NOP
     ctx->pc = 0x39acd8u;
 }

@@ -18,10 +18,8 @@ void cEma2_SetPoison_0x289068(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("cEma2_SetPoison_0x289068");
 #endif
 
-    ctx->pc = 0x289068u;
 
     // 0x289068: 0x24020005  addiu       $v0, $zero, 0x5
-    ctx->pc = 0x289068u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 5));
     // 0x28906c: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x28906cu;

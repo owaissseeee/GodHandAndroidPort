@@ -18,40 +18,42 @@ void cOmEffectHolder_syncEffectPos_0x1c2b80(uint8_t* rdram, R5900Context* ctx, P
     PS_LOG_ENTRY("cOmEffectHolder_syncEffectPos_0x1c2b80");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1c2b80u: goto label_1c2b80;
-        case 0x1c2b84u: goto label_1c2b84;
-        case 0x1c2b88u: goto label_1c2b88;
-        case 0x1c2b8cu: goto label_1c2b8c;
-        case 0x1c2b90u: goto label_1c2b90;
-        case 0x1c2b94u: goto label_1c2b94;
-        case 0x1c2b98u: goto label_1c2b98;
-        case 0x1c2b9cu: goto label_1c2b9c;
-        case 0x1c2ba0u: goto label_1c2ba0;
-        case 0x1c2ba4u: goto label_1c2ba4;
-        case 0x1c2ba8u: goto label_1c2ba8;
-        case 0x1c2bacu: goto label_1c2bac;
-        case 0x1c2bb0u: goto label_1c2bb0;
-        case 0x1c2bb4u: goto label_1c2bb4;
-        case 0x1c2bb8u: goto label_1c2bb8;
-        case 0x1c2bbcu: goto label_1c2bbc;
-        case 0x1c2bc0u: goto label_1c2bc0;
-        case 0x1c2bc4u: goto label_1c2bc4;
-        case 0x1c2bc8u: goto label_1c2bc8;
-        case 0x1c2bccu: goto label_1c2bcc;
-        case 0x1c2bd0u: goto label_1c2bd0;
-        case 0x1c2bd4u: goto label_1c2bd4;
-        case 0x1c2bd8u: goto label_1c2bd8;
-        case 0x1c2bdcu: goto label_1c2bdc;
-        case 0x1c2be0u: goto label_1c2be0;
-        case 0x1c2be4u: goto label_1c2be4;
-        case 0x1c2be8u: goto label_1c2be8;
-        case 0x1c2becu: goto label_1c2bec;
-        case 0x1c2bf0u: goto label_1c2bf0;
-        case 0x1c2bf4u: goto label_1c2bf4;
-        case 0x1c2bf8u: goto label_1c2bf8;
-        case 0x1c2bfcu: goto label_1c2bfc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1c2b80u, 0)) {
+        switch (ctx->pc) {
+            case 0x1c2b80u: goto label_1c2b80;
+            case 0x1c2b84u: goto label_1c2b84;
+            case 0x1c2b88u: goto label_1c2b88;
+            case 0x1c2b8cu: goto label_1c2b8c;
+            case 0x1c2b90u: goto label_1c2b90;
+            case 0x1c2b94u: goto label_1c2b94;
+            case 0x1c2b98u: goto label_1c2b98;
+            case 0x1c2b9cu: goto label_1c2b9c;
+            case 0x1c2ba0u: goto label_1c2ba0;
+            case 0x1c2ba4u: goto label_1c2ba4;
+            case 0x1c2ba8u: goto label_1c2ba8;
+            case 0x1c2bacu: goto label_1c2bac;
+            case 0x1c2bb0u: goto label_1c2bb0;
+            case 0x1c2bb4u: goto label_1c2bb4;
+            case 0x1c2bb8u: goto label_1c2bb8;
+            case 0x1c2bbcu: goto label_1c2bbc;
+            case 0x1c2bc0u: goto label_1c2bc0;
+            case 0x1c2bc4u: goto label_1c2bc4;
+            case 0x1c2bc8u: goto label_1c2bc8;
+            case 0x1c2bccu: goto label_1c2bcc;
+            case 0x1c2bd0u: goto label_1c2bd0;
+            case 0x1c2bd4u: goto label_1c2bd4;
+            case 0x1c2bd8u: goto label_1c2bd8;
+            case 0x1c2bdcu: goto label_1c2bdc;
+            case 0x1c2be0u: goto label_1c2be0;
+            case 0x1c2be4u: goto label_1c2be4;
+            case 0x1c2be8u: goto label_1c2be8;
+            case 0x1c2becu: goto label_1c2bec;
+            case 0x1c2bf0u: goto label_1c2bf0;
+            case 0x1c2bf4u: goto label_1c2bf4;
+            case 0x1c2bf8u: goto label_1c2bf8;
+            case 0x1c2bfcu: goto label_1c2bfc;
+            default: break;
+        }
     }
 
     ctx->pc = 0x1c2b80u;
@@ -230,7 +232,6 @@ label_1c2be8:
         ctx->pc = 0x1C2BECu;
         goto label_1c2bec;
     }
-    ctx->pc = 0x1C2BE4u;
     SET_GPR_U32(ctx, 31, 0x1C2BECu);
     ctx->pc = 0x1C2BE8u;
     ctx->in_delay_slot = true;
@@ -238,8 +239,7 @@ label_1c2be8:
     // 0x1c2be8: 0x2408ffff  addiu       $t0, $zero, -0x1 (Delay Slot)
     SET_GPR_S32(ctx, 8, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x306838u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x306838u, 0x1C2BE4u, 0x1C2BECu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &SetEffectPos_0x306838, 0x306838u, 0x1c2becu)) {
         return;
     }
     ctx->pc = 0x1C2BECu;
@@ -285,7 +285,6 @@ label_1c2bf8:
     ctx->pc = 0x1C2BFCu;
 label_1c2bfc:
     // 0x1c2bfc: 0x0  nop
-    ctx->pc = 0x1c2bfcu;
     // NOP
     ctx->pc = 0x1c2c00u;
 }

@@ -18,30 +18,32 @@ void ps2___do_global_dtors_0x31da48(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("ps2___do_global_dtors_0x31da48");
 #endif
 
-    switch (ctx->pc) {
-        case 0x31da48u: goto label_31da48;
-        case 0x31da4cu: goto label_31da4c;
-        case 0x31da50u: goto label_31da50;
-        case 0x31da54u: goto label_31da54;
-        case 0x31da58u: goto label_31da58;
-        case 0x31da5cu: goto label_31da5c;
-        case 0x31da60u: goto label_31da60;
-        case 0x31da64u: goto label_31da64;
-        case 0x31da68u: goto label_31da68;
-        case 0x31da6cu: goto label_31da6c;
-        case 0x31da70u: goto label_31da70;
-        case 0x31da74u: goto label_31da74;
-        case 0x31da78u: goto label_31da78;
-        case 0x31da7cu: goto label_31da7c;
-        case 0x31da80u: goto label_31da80;
-        case 0x31da84u: goto label_31da84;
-        case 0x31da88u: goto label_31da88;
-        case 0x31da8cu: goto label_31da8c;
-        case 0x31da90u: goto label_31da90;
-        case 0x31da94u: goto label_31da94;
-        case 0x31da98u: goto label_31da98;
-        case 0x31da9cu: goto label_31da9c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x31da48u, 0)) {
+        switch (ctx->pc) {
+            case 0x31da48u: goto label_31da48;
+            case 0x31da4cu: goto label_31da4c;
+            case 0x31da50u: goto label_31da50;
+            case 0x31da54u: goto label_31da54;
+            case 0x31da58u: goto label_31da58;
+            case 0x31da5cu: goto label_31da5c;
+            case 0x31da60u: goto label_31da60;
+            case 0x31da64u: goto label_31da64;
+            case 0x31da68u: goto label_31da68;
+            case 0x31da6cu: goto label_31da6c;
+            case 0x31da70u: goto label_31da70;
+            case 0x31da74u: goto label_31da74;
+            case 0x31da78u: goto label_31da78;
+            case 0x31da7cu: goto label_31da7c;
+            case 0x31da80u: goto label_31da80;
+            case 0x31da84u: goto label_31da84;
+            case 0x31da88u: goto label_31da88;
+            case 0x31da8cu: goto label_31da8c;
+            case 0x31da90u: goto label_31da90;
+            case 0x31da94u: goto label_31da94;
+            case 0x31da98u: goto label_31da98;
+            case 0x31da9cu: goto label_31da9c;
+            default: break;
+        }
     }
 
     ctx->pc = 0x31da48u;
@@ -220,7 +222,6 @@ label_31da98:
     ctx->pc = 0x31DA9Cu;
 label_31da9c:
     // 0x31da9c: 0x0  nop
-    ctx->pc = 0x31da9cu;
     // NOP
     ctx->pc = 0x31daa0u;
 }

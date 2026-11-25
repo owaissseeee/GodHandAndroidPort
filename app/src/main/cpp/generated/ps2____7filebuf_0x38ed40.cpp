@@ -18,40 +18,42 @@ void ps2____7filebuf_0x38ed40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("ps2____7filebuf_0x38ed40");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38ed40u: goto label_38ed40;
-        case 0x38ed44u: goto label_38ed44;
-        case 0x38ed48u: goto label_38ed48;
-        case 0x38ed4cu: goto label_38ed4c;
-        case 0x38ed50u: goto label_38ed50;
-        case 0x38ed54u: goto label_38ed54;
-        case 0x38ed58u: goto label_38ed58;
-        case 0x38ed5cu: goto label_38ed5c;
-        case 0x38ed60u: goto label_38ed60;
-        case 0x38ed64u: goto label_38ed64;
-        case 0x38ed68u: goto label_38ed68;
-        case 0x38ed6cu: goto label_38ed6c;
-        case 0x38ed70u: goto label_38ed70;
-        case 0x38ed74u: goto label_38ed74;
-        case 0x38ed78u: goto label_38ed78;
-        case 0x38ed7cu: goto label_38ed7c;
-        case 0x38ed80u: goto label_38ed80;
-        case 0x38ed84u: goto label_38ed84;
-        case 0x38ed88u: goto label_38ed88;
-        case 0x38ed8cu: goto label_38ed8c;
-        case 0x38ed90u: goto label_38ed90;
-        case 0x38ed94u: goto label_38ed94;
-        case 0x38ed98u: goto label_38ed98;
-        case 0x38ed9cu: goto label_38ed9c;
-        case 0x38eda0u: goto label_38eda0;
-        case 0x38eda4u: goto label_38eda4;
-        case 0x38eda8u: goto label_38eda8;
-        case 0x38edacu: goto label_38edac;
-        case 0x38edb0u: goto label_38edb0;
-        case 0x38edb4u: goto label_38edb4;
-        case 0x38edb8u: goto label_38edb8;
-        case 0x38edbcu: goto label_38edbc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38ed40u, 0)) {
+        switch (ctx->pc) {
+            case 0x38ed40u: goto label_38ed40;
+            case 0x38ed44u: goto label_38ed44;
+            case 0x38ed48u: goto label_38ed48;
+            case 0x38ed4cu: goto label_38ed4c;
+            case 0x38ed50u: goto label_38ed50;
+            case 0x38ed54u: goto label_38ed54;
+            case 0x38ed58u: goto label_38ed58;
+            case 0x38ed5cu: goto label_38ed5c;
+            case 0x38ed60u: goto label_38ed60;
+            case 0x38ed64u: goto label_38ed64;
+            case 0x38ed68u: goto label_38ed68;
+            case 0x38ed6cu: goto label_38ed6c;
+            case 0x38ed70u: goto label_38ed70;
+            case 0x38ed74u: goto label_38ed74;
+            case 0x38ed78u: goto label_38ed78;
+            case 0x38ed7cu: goto label_38ed7c;
+            case 0x38ed80u: goto label_38ed80;
+            case 0x38ed84u: goto label_38ed84;
+            case 0x38ed88u: goto label_38ed88;
+            case 0x38ed8cu: goto label_38ed8c;
+            case 0x38ed90u: goto label_38ed90;
+            case 0x38ed94u: goto label_38ed94;
+            case 0x38ed98u: goto label_38ed98;
+            case 0x38ed9cu: goto label_38ed9c;
+            case 0x38eda0u: goto label_38eda0;
+            case 0x38eda4u: goto label_38eda4;
+            case 0x38eda8u: goto label_38eda8;
+            case 0x38edacu: goto label_38edac;
+            case 0x38edb0u: goto label_38edb0;
+            case 0x38edb4u: goto label_38edb4;
+            case 0x38edb8u: goto label_38edb8;
+            case 0x38edbcu: goto label_38edbc;
+            default: break;
+        }
     }
 
     ctx->pc = 0x38ed40u;
@@ -141,7 +143,6 @@ label_38ed78:
         ctx->pc = 0x38ED7Cu;
         goto label_38ed7c;
     }
-    ctx->pc = 0x38ED74u;
     SET_GPR_U32(ctx, 31, 0x38ED7Cu);
     ctx->pc = 0x38ED78u;
     ctx->in_delay_slot = true;
@@ -149,8 +150,7 @@ label_38ed78:
     // 0x38ed78: 0xc53023  subu        $a2, $a2, $a1 (Delay Slot)
     SET_GPR_S32(ctx, 6, (int32_t)SUB32(GPR_U32(ctx, 6), GPR_U32(ctx, 5)));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x392A80u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x392A80u, 0x38ED74u, 0x38ED7Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_do_write_0x392a80, 0x392a80u, 0x38ed7cu)) {
         return;
     }
     ctx->pc = 0x38ED7Cu;
@@ -244,7 +244,6 @@ label_38eda4:
         ctx->pc = 0x38EDA8u;
         goto label_38eda8;
     }
-    ctx->pc = 0x38EDA0u;
     SET_GPR_U32(ctx, 31, 0x38EDA8u);
     ctx->pc = 0x38EDA4u;
     ctx->in_delay_slot = true;
@@ -252,8 +251,7 @@ label_38eda4:
     // 0x38eda4: 0x220282d  daddu       $a1, $s1, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x38B3E0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x38B3E0u, 0x38EDA0u, 0x38EDA8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ps2____9streambuf_0x38b3e0, 0x38b3e0u, 0x38eda8u)) {
         return;
     }
     ctx->pc = 0x38EDA8u;
@@ -303,7 +301,6 @@ label_38edb8:
     ctx->pc = 0x38EDBCu;
 label_38edbc:
     // 0x38edbc: 0x0  nop
-    ctx->pc = 0x38edbcu;
     // NOP
     ctx->pc = 0x38edc0u;
 }

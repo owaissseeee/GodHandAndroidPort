@@ -18,7 +18,6 @@ void func_0038C090_0x38c090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0038C090_0x38c090");
 #endif
 
-    ctx->pc = 0x38c090u;
 
     // 0x38c090: 0xdc820010  ld          $v0, 0x10($a0)
     ctx->pc = 0x38c090u;
@@ -42,9 +41,7 @@ void func_0038C090_0x38c090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x38C09Cu;
     // 0x38c09c: 0x0  nop
-    ctx->pc = 0x38c09cu;
     // NOP
     ctx->pc = 0x38c0a0u;
 }

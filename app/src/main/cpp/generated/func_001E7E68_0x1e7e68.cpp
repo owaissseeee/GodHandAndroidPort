@@ -18,18 +18,17 @@ void func_001E7E68_0x1e7e68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_001E7E68_0x1e7e68");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1e7e90u: goto label_1e7e90;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1e7e68u, 0)) {
+        switch (ctx->pc) {
+            case 0x1e7e90u: goto label_1e7e90;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1e7e68u;
 
     // 0x1e7e68: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1e7e68u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1e7e6c: 0x30e7ffff  andi        $a3, $a3, 0xFFFF
-    ctx->pc = 0x1e7e6cu;
     SET_GPR_U64(ctx, 7, GPR_U64(ctx, 7) & (uint64_t)(uint16_t)65535);
     // 0x1e7e70: 0x10a00007  beqz        $a1, . + 4 + (0x7 << 2)
     ctx->pc = 0x1E7E70u;
@@ -46,7 +45,6 @@ void func_001E7E68_0x1e7e68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1e7e90;
         }
     }
-    ctx->pc = 0x1E7E78u;
     // 0x1e7e78: 0x10c00005  beqz        $a2, . + 4 + (0x5 << 2)
     ctx->pc = 0x1E7E78u;
     {
@@ -62,7 +60,6 @@ void func_001E7E68_0x1e7e68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1e7e90;
         }
     }
-    ctx->pc = 0x1E7E80u;
     // 0x1e7e80: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x1E7E80u;
     {
@@ -78,12 +75,10 @@ void func_001E7E68_0x1e7e68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1e7e94;
         }
     }
-    ctx->pc = 0x1E7E88u;
     // 0x1e7e88: 0xc07a37c  jal         func_1E8DF0
     ctx->pc = 0x1E7E88u;
     SET_GPR_U32(ctx, 31, 0x1E7E90u);
-    ctx->pc = 0x1E8DF0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1E8DF0u, 0x1E7E88u, 0x1E7E90u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_001E8DF0_0x1e8df0, 0x1e8df0u, 0x1e7e90u)) {
         return;
     }
     ctx->pc = 0x1E7E90u;
@@ -111,9 +106,7 @@ label_1e7e94:
         return;
         #endif
     }
-    ctx->pc = 0x1E7E9Cu;
     // 0x1e7e9c: 0x0  nop
-    ctx->pc = 0x1e7e9cu;
     // NOP
     ctx->pc = 0x1e7ea0u;
 }

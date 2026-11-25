@@ -18,7 +18,6 @@ void cOm4f_setOpenFix_0x1a4e00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("cOm4f_setOpenFix_0x1a4e00");
 #endif
 
-    ctx->pc = 0x1a4e00u;
 
     // 0x1a4e00: 0x90820761  lbu         $v0, 0x761($a0)
     ctx->pc = 0x1a4e00u;
@@ -38,7 +37,6 @@ void cOm4f_setOpenFix_0x1a4e00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_1a4e7c;
         }
     }
-    ctx->pc = 0x1A4E0Cu;
     // 0x1a4e0c: 0x908202b4  lbu         $v0, 0x2B4($a0)
     ctx->pc = 0x1a4e0cu;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 692)));
@@ -57,7 +55,6 @@ void cOm4f_setOpenFix_0x1a4e00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_1a4e24;
         }
     }
-    ctx->pc = 0x1A4E18u;
     // 0x1a4e18: 0x8c820278  lw          $v0, 0x278($a0)
     ctx->pc = 0x1a4e18u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 632)));
@@ -97,7 +94,6 @@ label_1a4e28:
             goto label_1a4e64;
         }
     }
-    ctx->pc = 0x1A4E30u;
     // 0x1a4e30: 0x908202b4  lbu         $v0, 0x2B4($a0)
     ctx->pc = 0x1a4e30u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 692)));
@@ -116,7 +112,6 @@ label_1a4e28:
             goto label_1a4e48;
         }
     }
-    ctx->pc = 0x1A4E3Cu;
     // 0x1a4e3c: 0x8c820278  lw          $v0, 0x278($a0)
     ctx->pc = 0x1a4e3cu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 632)));
@@ -145,7 +140,6 @@ label_1a4e4c:
     ctx->pc = 0x1a4e4cu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 1940)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x1a4e50: 0x24620100  addiu       $v0, $v1, 0x100
-    ctx->pc = 0x1a4e50u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 3), 256));
     // 0x1a4e54: 0xe4600100  swc1        $f0, 0x100($v1)
     ctx->pc = 0x1a4e54u;
@@ -198,9 +192,7 @@ label_1a4e7c:
         return;
         #endif
     }
-    ctx->pc = 0x1A4E84u;
     // 0x1a4e84: 0x0  nop
-    ctx->pc = 0x1a4e84u;
     // NOP
     ctx->pc = 0x1a4e88u;
 }

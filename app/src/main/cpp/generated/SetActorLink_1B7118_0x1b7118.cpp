@@ -18,28 +18,30 @@ void SetActorLink_1B7118_0x1b7118(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("SetActorLink_1B7118_0x1b7118");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1b7118u: goto label_1b7118;
-        case 0x1b711cu: goto label_1b711c;
-        case 0x1b7120u: goto label_1b7120;
-        case 0x1b7124u: goto label_1b7124;
-        case 0x1b7128u: goto label_1b7128;
-        case 0x1b712cu: goto label_1b712c;
-        case 0x1b7130u: goto label_1b7130;
-        case 0x1b7134u: goto label_1b7134;
-        case 0x1b7138u: goto label_1b7138;
-        case 0x1b713cu: goto label_1b713c;
-        case 0x1b7140u: goto label_1b7140;
-        case 0x1b7144u: goto label_1b7144;
-        case 0x1b7148u: goto label_1b7148;
-        case 0x1b714cu: goto label_1b714c;
-        case 0x1b7150u: goto label_1b7150;
-        case 0x1b7154u: goto label_1b7154;
-        case 0x1b7158u: goto label_1b7158;
-        case 0x1b715cu: goto label_1b715c;
-        case 0x1b7160u: goto label_1b7160;
-        case 0x1b7164u: goto label_1b7164;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1b7118u, 0)) {
+        switch (ctx->pc) {
+            case 0x1b7118u: goto label_1b7118;
+            case 0x1b711cu: goto label_1b711c;
+            case 0x1b7120u: goto label_1b7120;
+            case 0x1b7124u: goto label_1b7124;
+            case 0x1b7128u: goto label_1b7128;
+            case 0x1b712cu: goto label_1b712c;
+            case 0x1b7130u: goto label_1b7130;
+            case 0x1b7134u: goto label_1b7134;
+            case 0x1b7138u: goto label_1b7138;
+            case 0x1b713cu: goto label_1b713c;
+            case 0x1b7140u: goto label_1b7140;
+            case 0x1b7144u: goto label_1b7144;
+            case 0x1b7148u: goto label_1b7148;
+            case 0x1b714cu: goto label_1b714c;
+            case 0x1b7150u: goto label_1b7150;
+            case 0x1b7154u: goto label_1b7154;
+            case 0x1b7158u: goto label_1b7158;
+            case 0x1b715cu: goto label_1b715c;
+            case 0x1b7160u: goto label_1b7160;
+            case 0x1b7164u: goto label_1b7164;
+            default: break;
+        }
     }
 
     ctx->pc = 0x1b7118u;

@@ -18,18 +18,20 @@ void ps2___get_dynamic_handler_chain_0x320418(uint8_t* rdram, R5900Context* ctx,
     PS_LOG_ENTRY("ps2___get_dynamic_handler_chain_0x320418");
 #endif
 
-    switch (ctx->pc) {
-        case 0x320418u: goto label_320418;
-        case 0x32041cu: goto label_32041c;
-        case 0x320420u: goto label_320420;
-        case 0x320424u: goto label_320424;
-        case 0x320428u: goto label_320428;
-        case 0x32042cu: goto label_32042c;
-        case 0x320430u: goto label_320430;
-        case 0x320434u: goto label_320434;
-        case 0x320438u: goto label_320438;
-        case 0x32043cu: goto label_32043c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x320418u, 0)) {
+        switch (ctx->pc) {
+            case 0x320418u: goto label_320418;
+            case 0x32041cu: goto label_32041c;
+            case 0x320420u: goto label_320420;
+            case 0x320424u: goto label_320424;
+            case 0x320428u: goto label_320428;
+            case 0x32042cu: goto label_32042c;
+            case 0x320430u: goto label_320430;
+            case 0x320434u: goto label_320434;
+            case 0x320438u: goto label_320438;
+            case 0x32043cu: goto label_32043c;
+            default: break;
+        }
     }
 
     ctx->pc = 0x320418u;

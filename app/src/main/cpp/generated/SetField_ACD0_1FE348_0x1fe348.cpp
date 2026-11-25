@@ -18,13 +18,10 @@ void SetField_ACD0_1FE348_0x1fe348(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("SetField_ACD0_1FE348_0x1fe348");
 #endif
 
-    ctx->pc = 0x1fe348u;
 
     // 0x1fe348: 0x34028000  ori         $v0, $zero, 0x8000
-    ctx->pc = 0x1fe348u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)32768);
     // 0x1fe34c: 0x822021  addu        $a0, $a0, $v0
-    ctx->pc = 0x1fe34cu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 2)));
     // 0x1fe350: 0x3e00008  jr          $ra
     ctx->pc = 0x1FE350u;

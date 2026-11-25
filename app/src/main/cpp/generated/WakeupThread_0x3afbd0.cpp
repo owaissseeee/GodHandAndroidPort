@@ -18,18 +18,17 @@ void WakeupThread_0x3afbd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("WakeupThread_0x3afbd0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afbd8u: goto label_3afbd8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afbd0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afbd8u: goto label_3afbd8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afbd0u;
 
     // 0x3afbd0: 0x24030033  addiu       $v1, $zero, 0x33
-    ctx->pc = 0x3afbd0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 51));
     // 0x3afbd4: 0xc  syscall     0
-    ctx->pc = 0x3afbd4u;
     ctx->pc = 0x3AFBD8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

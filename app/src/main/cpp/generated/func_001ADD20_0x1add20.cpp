@@ -18,54 +18,56 @@ void func_001ADD20_0x1add20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_001ADD20_0x1add20");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1add20u: goto label_1add20;
-        case 0x1add24u: goto label_1add24;
-        case 0x1add28u: goto label_1add28;
-        case 0x1add2cu: goto label_1add2c;
-        case 0x1add30u: goto label_1add30;
-        case 0x1add34u: goto label_1add34;
-        case 0x1add38u: goto label_1add38;
-        case 0x1add3cu: goto label_1add3c;
-        case 0x1add40u: goto label_1add40;
-        case 0x1add44u: goto label_1add44;
-        case 0x1add48u: goto label_1add48;
-        case 0x1add4cu: goto label_1add4c;
-        case 0x1add50u: goto label_1add50;
-        case 0x1add54u: goto label_1add54;
-        case 0x1add58u: goto label_1add58;
-        case 0x1add5cu: goto label_1add5c;
-        case 0x1add60u: goto label_1add60;
-        case 0x1add64u: goto label_1add64;
-        case 0x1add68u: goto label_1add68;
-        case 0x1add6cu: goto label_1add6c;
-        case 0x1add70u: goto label_1add70;
-        case 0x1add74u: goto label_1add74;
-        case 0x1add78u: goto label_1add78;
-        case 0x1add7cu: goto label_1add7c;
-        case 0x1add80u: goto label_1add80;
-        case 0x1add84u: goto label_1add84;
-        case 0x1add88u: goto label_1add88;
-        case 0x1add8cu: goto label_1add8c;
-        case 0x1add90u: goto label_1add90;
-        case 0x1add94u: goto label_1add94;
-        case 0x1add98u: goto label_1add98;
-        case 0x1add9cu: goto label_1add9c;
-        case 0x1adda0u: goto label_1adda0;
-        case 0x1adda4u: goto label_1adda4;
-        case 0x1adda8u: goto label_1adda8;
-        case 0x1addacu: goto label_1addac;
-        case 0x1addb0u: goto label_1addb0;
-        case 0x1addb4u: goto label_1addb4;
-        case 0x1addb8u: goto label_1addb8;
-        case 0x1addbcu: goto label_1addbc;
-        case 0x1addc0u: goto label_1addc0;
-        case 0x1addc4u: goto label_1addc4;
-        case 0x1addc8u: goto label_1addc8;
-        case 0x1addccu: goto label_1addcc;
-        case 0x1addd0u: goto label_1addd0;
-        case 0x1addd4u: goto label_1addd4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1add20u, 0)) {
+        switch (ctx->pc) {
+            case 0x1add20u: goto label_1add20;
+            case 0x1add24u: goto label_1add24;
+            case 0x1add28u: goto label_1add28;
+            case 0x1add2cu: goto label_1add2c;
+            case 0x1add30u: goto label_1add30;
+            case 0x1add34u: goto label_1add34;
+            case 0x1add38u: goto label_1add38;
+            case 0x1add3cu: goto label_1add3c;
+            case 0x1add40u: goto label_1add40;
+            case 0x1add44u: goto label_1add44;
+            case 0x1add48u: goto label_1add48;
+            case 0x1add4cu: goto label_1add4c;
+            case 0x1add50u: goto label_1add50;
+            case 0x1add54u: goto label_1add54;
+            case 0x1add58u: goto label_1add58;
+            case 0x1add5cu: goto label_1add5c;
+            case 0x1add60u: goto label_1add60;
+            case 0x1add64u: goto label_1add64;
+            case 0x1add68u: goto label_1add68;
+            case 0x1add6cu: goto label_1add6c;
+            case 0x1add70u: goto label_1add70;
+            case 0x1add74u: goto label_1add74;
+            case 0x1add78u: goto label_1add78;
+            case 0x1add7cu: goto label_1add7c;
+            case 0x1add80u: goto label_1add80;
+            case 0x1add84u: goto label_1add84;
+            case 0x1add88u: goto label_1add88;
+            case 0x1add8cu: goto label_1add8c;
+            case 0x1add90u: goto label_1add90;
+            case 0x1add94u: goto label_1add94;
+            case 0x1add98u: goto label_1add98;
+            case 0x1add9cu: goto label_1add9c;
+            case 0x1adda0u: goto label_1adda0;
+            case 0x1adda4u: goto label_1adda4;
+            case 0x1adda8u: goto label_1adda8;
+            case 0x1addacu: goto label_1addac;
+            case 0x1addb0u: goto label_1addb0;
+            case 0x1addb4u: goto label_1addb4;
+            case 0x1addb8u: goto label_1addb8;
+            case 0x1addbcu: goto label_1addbc;
+            case 0x1addc0u: goto label_1addc0;
+            case 0x1addc4u: goto label_1addc4;
+            case 0x1addc8u: goto label_1addc8;
+            case 0x1addccu: goto label_1addcc;
+            case 0x1addd0u: goto label_1addd0;
+            case 0x1addd4u: goto label_1addd4;
+            default: break;
+        }
     }
 
     ctx->pc = 0x1add20u;
@@ -332,7 +334,6 @@ label_1addb8:
         ctx->pc = 0x1ADDBCu;
         goto label_1addbc;
     }
-    ctx->pc = 0x1ADDB4u;
     SET_GPR_U32(ctx, 31, 0x1ADDBCu);
     ctx->pc = 0x1ADDB8u;
     ctx->in_delay_slot = true;
@@ -340,8 +341,7 @@ label_1addb8:
     // 0x1addb8: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x149EB8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x149EB8u, 0x1ADDB4u, 0x1ADDBCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cModel_calcParts_0x149eb8, 0x149eb8u, 0x1addbcu)) {
         return;
     }
     ctx->pc = 0x1ADDBCu;
@@ -358,7 +358,6 @@ label_1addc0:
         ctx->pc = 0x1ADDC4u;
         goto label_1addc4;
     }
-    ctx->pc = 0x1ADDBCu;
     SET_GPR_U32(ctx, 31, 0x1ADDC4u);
     ctx->pc = 0x1ADDC0u;
     ctx->in_delay_slot = true;
@@ -366,8 +365,7 @@ label_1addc0:
     // 0x1addc0: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x14A038u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x14A038u, 0x1ADDBCu, 0x1ADDC4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cModel_calcWorldParts_0x14a038, 0x14a038u, 0x1addc4u)) {
         return;
     }
     ctx->pc = 0x1ADDC4u;
@@ -413,7 +411,6 @@ label_1addd0:
     ctx->pc = 0x1ADDD4u;
 label_1addd4:
     // 0x1addd4: 0x0  nop
-    ctx->pc = 0x1addd4u;
     // NOP
     ctx->pc = 0x1addd8u;
 }

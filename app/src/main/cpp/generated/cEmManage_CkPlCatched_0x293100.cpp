@@ -18,7 +18,6 @@ void cEmManage_CkPlCatched_0x293100(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("cEmManage_CkPlCatched_0x293100");
 #endif
 
-    ctx->pc = 0x293100u;
 
     // 0x293100: 0x8082053c  lb          $v0, 0x53C($a0)
     ctx->pc = 0x293100u;
@@ -42,9 +41,7 @@ void cEmManage_CkPlCatched_0x293100(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         return;
         #endif
     }
-    ctx->pc = 0x29310Cu;
     // 0x29310c: 0x0  nop
-    ctx->pc = 0x29310cu;
     // NOP
     ctx->pc = 0x293110u;
 }

@@ -18,7 +18,6 @@ void cCoreSave_clearKillNpcNum_0x1fbeb8(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("cCoreSave_clearKillNpcNum_0x1fbeb8");
 #endif
 
-    ctx->pc = 0x1fbeb8u;
 
     // 0x1fbeb8: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fbeb8u;
@@ -53,9 +52,7 @@ label_1fbec4:
         return;
         #endif
     }
-    ctx->pc = 0x1FBECCu;
     // 0x1fbecc: 0x0  nop
-    ctx->pc = 0x1fbeccu;
     // NOP
     ctx->pc = 0x1fbed0u;
 }

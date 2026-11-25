@@ -18,10 +18,8 @@ void cCoreSave_getReelItem_0x1faee0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("cCoreSave_getReelItem_0x1faee0");
 #endif
 
-    ctx->pc = 0x1faee0u;
 
     // 0x1faee0: 0x80302d  daddu       $a2, $a0, $zero
-    ctx->pc = 0x1faee0u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1faee4: 0x8cc50000  lw          $a1, 0x0($a2)
     ctx->pc = 0x1faee4u;
@@ -41,7 +39,6 @@ void cCoreSave_getReelItem_0x1faee0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1faef8;
         }
     }
-    ctx->pc = 0x1FAEF0u;
     // 0x1faef0: 0x3e00008  jr          $ra
     ctx->pc = 0x1FAEF0u;
     {
@@ -64,13 +61,11 @@ void cCoreSave_getReelItem_0x1faee0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     ctx->pc = 0x1FAEF8u;
 label_1faef8:
     // 0x1faef8: 0x3c040800  lui         $a0, 0x800
-    ctx->pc = 0x1faef8u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)2048 << 16));
     // 0x1faefc: 0x8c437a38  lw          $v1, 0x7A38($v0)
     ctx->pc = 0x1faefcu;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 31288)));
     // 0x1faf00: 0x641824  and         $v1, $v1, $a0
-    ctx->pc = 0x1faf00u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 4));
     // 0x1faf04: 0x10600002  beqz        $v1, . + 4 + (0x2 << 2)
     ctx->pc = 0x1FAF04u;
@@ -87,7 +82,6 @@ label_1faef8:
             goto label_1faf10;
         }
     }
-    ctx->pc = 0x1FAF0Cu;
     // 0x1faf0c: 0xa0a20156  sb          $v0, 0x156($a1)
     ctx->pc = 0x1faf0cu;
     WRITE8(ADD32(GPR_U32(ctx, 5), 342), (uint8_t)GPR_U32(ctx, 2));
@@ -114,9 +108,7 @@ label_1faf10:
         return;
         #endif
     }
-    ctx->pc = 0x1FAF1Cu;
     // 0x1faf1c: 0x0  nop
-    ctx->pc = 0x1faf1cu;
     // NOP
     ctx->pc = 0x1faf20u;
 }

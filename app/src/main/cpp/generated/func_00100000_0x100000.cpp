@@ -18,13 +18,10 @@ void func_00100000_0x100000(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00100000_0x100000");
 #endif
 
-    ctx->pc = 0x100000u;
 
     // 0x100000: 0x0  nop
-    ctx->pc = 0x100000u;
     // NOP
     // 0x100004: 0x0  nop
-    ctx->pc = 0x100004u;
     // NOP
     ctx->pc = 0x100008u;
 }

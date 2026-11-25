@@ -18,14 +18,16 @@ void unexpected_0x321228(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     PS_LOG_ENTRY("unexpected_0x321228");
 #endif
 
-    switch (ctx->pc) {
-        case 0x321228u: goto label_321228;
-        case 0x32122cu: goto label_32122c;
-        case 0x321230u: goto label_321230;
-        case 0x321234u: goto label_321234;
-        case 0x321238u: goto label_321238;
-        case 0x32123cu: goto label_32123c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x321228u, 0)) {
+        switch (ctx->pc) {
+            case 0x321228u: goto label_321228;
+            case 0x32122cu: goto label_32122c;
+            case 0x321230u: goto label_321230;
+            case 0x321234u: goto label_321234;
+            case 0x321238u: goto label_321238;
+            case 0x32123cu: goto label_32123c;
+            default: break;
+        }
     }
 
     ctx->pc = 0x321228u;

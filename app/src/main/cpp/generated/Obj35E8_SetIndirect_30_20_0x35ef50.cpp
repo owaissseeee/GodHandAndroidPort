@@ -18,7 +18,6 @@ void Obj35E8_SetIndirect_30_20_0x35ef50(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("Obj35E8_SetIndirect_30_20_0x35ef50");
 #endif
 
-    ctx->pc = 0x35ef50u;
 
     // 0x35ef50: 0x8c820030  lw          $v0, 0x30($a0)
     ctx->pc = 0x35ef50u;
@@ -42,9 +41,7 @@ void Obj35E8_SetIndirect_30_20_0x35ef50(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x35EF5Cu;
     // 0x35ef5c: 0x0  nop
-    ctx->pc = 0x35ef5cu;
     // NOP
     ctx->pc = 0x35ef60u;
 }

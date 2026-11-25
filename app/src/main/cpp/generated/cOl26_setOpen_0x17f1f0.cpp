@@ -18,7 +18,6 @@ void cOl26_setOpen_0x17f1f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("cOl26_setOpen_0x17f1f0");
 #endif
 
-    ctx->pc = 0x17f1f0u;
 
     // 0x17f1f0: 0x90820600  lbu         $v0, 0x600($a0)
     ctx->pc = 0x17f1f0u;
@@ -38,7 +37,6 @@ void cOl26_setOpen_0x17f1f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_17f20c;
         }
     }
-    ctx->pc = 0x17F1FCu;
     // 0x17f1fc: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x17f1fcu;
     WRITE8(ADD32(GPR_U32(ctx, 4), 759), (uint8_t)GPR_U32(ctx, 0));
@@ -65,9 +63,7 @@ label_17f20c:
         return;
         #endif
     }
-    ctx->pc = 0x17F214u;
     // 0x17f214: 0x0  nop
-    ctx->pc = 0x17f214u;
     // NOP
     ctx->pc = 0x17f218u;
 }

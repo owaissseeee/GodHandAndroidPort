@@ -18,10 +18,8 @@ void cGameObj_setRot_0x2a9420(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("cGameObj_setRot_0x2a9420");
 #endif
 
-    ctx->pc = 0x2a9420u;
 
     // 0x2a9420: 0x24820100  addiu       $v0, $a0, 0x100
-    ctx->pc = 0x2a9420u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 256));
     // 0x2a9424: 0x10450007  beq         $v0, $a1, . + 4 + (0x7 << 2)
     ctx->pc = 0x2A9424u;
@@ -32,7 +30,6 @@ void cGameObj_setRot_0x2a9420(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_2a9444;
         }
     }
-    ctx->pc = 0x2A942Cu;
     // 0x2a942c: 0xc4a00000  lwc1        $f0, 0x0($a1)
     ctx->pc = 0x2a942cu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -65,15 +62,11 @@ label_2a9444:
         return;
         #endif
     }
-    ctx->pc = 0x2A944Cu;
     // 0x2a944c: 0x0  nop
-    ctx->pc = 0x2a944cu;
     // NOP
     // 0x2a9450: 0x27bd0020  addiu       $sp, $sp, 0x20
-    ctx->pc = 0x2a9450u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 32));
     // 0x2a9454: 0x0  nop
-    ctx->pc = 0x2a9454u;
     // NOP
     ctx->pc = 0x2a9458u;
 }

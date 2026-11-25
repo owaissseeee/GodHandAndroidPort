@@ -18,21 +18,20 @@ void cOmItem_setBlockObj_0x1c2558(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("cOmItem_setBlockObj_0x1c2558");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1c2570u: goto label_1c2570;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1c2558u, 0)) {
+        switch (ctx->pc) {
+            case 0x1c2570u: goto label_1c2570;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1c2558u;
 
     // 0x1c2558: 0x80a20000  lb          $v0, 0x0($a1)
     ctx->pc = 0x1c2558u;
     SET_GPR_S32(ctx, 2, (int8_t)READ8(ADD32(GPR_U32(ctx, 5), 0)));
     // 0x1c255c: 0x80402d  daddu       $t0, $a0, $zero
-    ctx->pc = 0x1c255cu;
     SET_GPR_U64(ctx, 8, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1c2560: 0x382d  daddu       $a3, $zero, $zero
-    ctx->pc = 0x1c2560u;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1c2564: 0x1040000c  beqz        $v0, . + 4 + (0xC << 2)
     ctx->pc = 0x1C2564u;
@@ -49,25 +48,19 @@ void cOmItem_setBlockObj_0x1c2558(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_1c2598;
         }
     }
-    ctx->pc = 0x1C256Cu;
     // 0x1c256c: 0x80a20000  lb          $v0, 0x0($a1)
     ctx->pc = 0x1c256cu;
     SET_GPR_S32(ctx, 2, (int8_t)READ8(ADD32(GPR_U32(ctx, 5), 0)));
 label_1c2570:
     // 0x1c2570: 0x620c0  sll         $a0, $a2, 3
-    ctx->pc = 0x1c2570u;
     SET_GPR_S32(ctx, 4, (int32_t)SLL32(GPR_U32(ctx, 6), 3));
     // 0x1c2574: 0x24c60001  addiu       $a2, $a2, 0x1
-    ctx->pc = 0x1c2574u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 6), 1));
     // 0x1c2578: 0x24a50001  addiu       $a1, $a1, 0x1
-    ctx->pc = 0x1c2578u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 1));
     // 0x1c257c: 0x821014  dsllv       $v0, $v0, $a0
-    ctx->pc = 0x1c257cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) << (GPR_U32(ctx, 4) & 0x3F));
     // 0x1c2580: 0x28c30008  slti        $v1, $a2, 0x8
-    ctx->pc = 0x1c2580u;
     SET_GPR_U64(ctx, 3, ((int64_t)GPR_S64(ctx, 6) < (int64_t)(int32_t)8) ? 1 : 0);
     // 0x1c2584: 0x10600004  beqz        $v1, . + 4 + (0x4 << 2)
     ctx->pc = 0x1C2584u;
@@ -84,7 +77,6 @@ label_1c2570:
             goto label_1c2598;
         }
     }
-    ctx->pc = 0x1C258Cu;
     // 0x1c258c: 0x80a20000  lb          $v0, 0x0($a1)
     ctx->pc = 0x1c258cu;
     SET_GPR_S32(ctx, 2, (int8_t)READ8(ADD32(GPR_U32(ctx, 5), 0)));

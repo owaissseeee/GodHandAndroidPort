@@ -18,13 +18,11 @@ void IsSpecialAnim_1C24A0_0x1c24a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("IsSpecialAnim_1C24A0_0x1c24a0");
 #endif
 
-    ctx->pc = 0x1c24a0u;
 
     // 0x1c24a0: 0x948302fe  lhu         $v1, 0x2FE($a0)
     ctx->pc = 0x1c24a0u;
     SET_GPR_ZE32(ctx, 3, (uint16_t)READ16(ADD32(GPR_U32(ctx, 4), 766)));
     // 0x1c24a4: 0x240203d9  addiu       $v0, $zero, 0x3D9
-    ctx->pc = 0x1c24a4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 985));
     // 0x1c24a8: 0x1062000a  beq         $v1, $v0, . + 4 + (0xA << 2)
     ctx->pc = 0x1C24A8u;
@@ -41,7 +39,6 @@ void IsSpecialAnim_1C24A0_0x1c24a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_1c24d4;
         }
     }
-    ctx->pc = 0x1C24B0u;
     // 0x1c24b0: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x1C24B0u;
     {
@@ -57,7 +54,6 @@ void IsSpecialAnim_1C24A0_0x1c24a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_1c24c8;
         }
     }
-    ctx->pc = 0x1C24B8u;
     // 0x1c24b8: 0x10620006  beq         $v1, $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x1C24B8u;
     {
@@ -73,7 +69,6 @@ void IsSpecialAnim_1C24A0_0x1c24a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_1c24d4;
         }
     }
-    ctx->pc = 0x1C24C0u;
     // 0x1c24c0: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x1C24C0u;
     {
@@ -86,7 +81,6 @@ void IsSpecialAnim_1C24A0_0x1c24a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x1C24C8u;
 label_1c24c8:
     // 0x1c24c8: 0x240203e3  addiu       $v0, $zero, 0x3E3
-    ctx->pc = 0x1c24c8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 995));
     // 0x1c24cc: 0x14620003  bne         $v1, $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x1C24CCu;
@@ -139,9 +133,7 @@ label_1c24dc:
         return;
         #endif
     }
-    ctx->pc = 0x1C24E4u;
     // 0x1c24e4: 0x0  nop
-    ctx->pc = 0x1c24e4u;
     // NOP
     ctx->pc = 0x1c24e8u;
 }

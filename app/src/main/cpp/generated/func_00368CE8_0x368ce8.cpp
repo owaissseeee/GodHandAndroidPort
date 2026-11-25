@@ -18,38 +18,40 @@ void func_00368CE8_0x368ce8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00368CE8_0x368ce8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x368ce8u: goto label_368ce8;
-        case 0x368cecu: goto label_368cec;
-        case 0x368cf0u: goto label_368cf0;
-        case 0x368cf4u: goto label_368cf4;
-        case 0x368cf8u: goto label_368cf8;
-        case 0x368cfcu: goto label_368cfc;
-        case 0x368d00u: goto label_368d00;
-        case 0x368d04u: goto label_368d04;
-        case 0x368d08u: goto label_368d08;
-        case 0x368d0cu: goto label_368d0c;
-        case 0x368d10u: goto label_368d10;
-        case 0x368d14u: goto label_368d14;
-        case 0x368d18u: goto label_368d18;
-        case 0x368d1cu: goto label_368d1c;
-        case 0x368d20u: goto label_368d20;
-        case 0x368d24u: goto label_368d24;
-        case 0x368d28u: goto label_368d28;
-        case 0x368d2cu: goto label_368d2c;
-        case 0x368d30u: goto label_368d30;
-        case 0x368d34u: goto label_368d34;
-        case 0x368d38u: goto label_368d38;
-        case 0x368d3cu: goto label_368d3c;
-        case 0x368d40u: goto label_368d40;
-        case 0x368d44u: goto label_368d44;
-        case 0x368d48u: goto label_368d48;
-        case 0x368d4cu: goto label_368d4c;
-        case 0x368d50u: goto label_368d50;
-        case 0x368d54u: goto label_368d54;
-        case 0x368d58u: goto label_368d58;
-        case 0x368d5cu: goto label_368d5c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x368ce8u, 0)) {
+        switch (ctx->pc) {
+            case 0x368ce8u: goto label_368ce8;
+            case 0x368cecu: goto label_368cec;
+            case 0x368cf0u: goto label_368cf0;
+            case 0x368cf4u: goto label_368cf4;
+            case 0x368cf8u: goto label_368cf8;
+            case 0x368cfcu: goto label_368cfc;
+            case 0x368d00u: goto label_368d00;
+            case 0x368d04u: goto label_368d04;
+            case 0x368d08u: goto label_368d08;
+            case 0x368d0cu: goto label_368d0c;
+            case 0x368d10u: goto label_368d10;
+            case 0x368d14u: goto label_368d14;
+            case 0x368d18u: goto label_368d18;
+            case 0x368d1cu: goto label_368d1c;
+            case 0x368d20u: goto label_368d20;
+            case 0x368d24u: goto label_368d24;
+            case 0x368d28u: goto label_368d28;
+            case 0x368d2cu: goto label_368d2c;
+            case 0x368d30u: goto label_368d30;
+            case 0x368d34u: goto label_368d34;
+            case 0x368d38u: goto label_368d38;
+            case 0x368d3cu: goto label_368d3c;
+            case 0x368d40u: goto label_368d40;
+            case 0x368d44u: goto label_368d44;
+            case 0x368d48u: goto label_368d48;
+            case 0x368d4cu: goto label_368d4c;
+            case 0x368d50u: goto label_368d50;
+            case 0x368d54u: goto label_368d54;
+            case 0x368d58u: goto label_368d58;
+            case 0x368d5cu: goto label_368d5c;
+            default: break;
+        }
     }
 
     ctx->pc = 0x368ce8u;
@@ -175,8 +177,7 @@ label_368d34:
     }
     ctx->pc = 0x368D30u;
     SET_GPR_U32(ctx, 31, 0x368D38u);
-    ctx->pc = 0x368D60u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x368D60u, 0x368D30u, 0x368D38u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00368D60_0x368d60, 0x368d60u, 0x368d38u)) {
         return;
     }
     ctx->pc = 0x368D38u;
@@ -217,8 +218,7 @@ label_368d44:
     }
     ctx->pc = 0x368D40u;
     SET_GPR_U32(ctx, 31, 0x368D48u);
-    ctx->pc = 0x366D18u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x366D18u, 0x368D40u, 0x368D48u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00366D18_0x366d18, 0x366d18u, 0x368d48u)) {
         return;
     }
     ctx->pc = 0x368D48u;
@@ -231,8 +231,7 @@ label_368d4c:
     }
     ctx->pc = 0x368D48u;
     SET_GPR_U32(ctx, 31, 0x368D50u);
-    ctx->pc = 0x368AA0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x368AA0u, 0x368D48u, 0x368D50u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00368AA0_0x368aa0, 0x368aa0u, 0x368d50u)) {
         return;
     }
     ctx->pc = 0x368D50u;

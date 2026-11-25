@@ -18,7 +18,6 @@ void Obj33F8_GetWord_10_FB60_0x33fb60(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("Obj33F8_GetWord_10_FB60_0x33fb60");
 #endif
 
-    ctx->pc = 0x33fb60u;
 
     // 0x33fb60: 0x3e00008  jr          $ra
     ctx->pc = 0x33FB60u;

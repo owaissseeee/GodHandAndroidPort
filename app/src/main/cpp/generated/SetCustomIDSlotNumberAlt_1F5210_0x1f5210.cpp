@@ -18,22 +18,21 @@ void SetCustomIDSlotNumberAlt_1F5210_0x1f5210(uint8_t* rdram, R5900Context* ctx,
     PS_LOG_ENTRY("SetCustomIDSlotNumberAlt_1F5210_0x1f5210");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1f5250u: goto label_1f5250;
-        case 0x1f5260u: goto label_1f5260;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1f5210u, 0)) {
+        switch (ctx->pc) {
+            case 0x1f5250u: goto label_1f5250;
+            case 0x1f5260u: goto label_1f5260;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1f5210u;
 
     // 0x1f5210: 0x27bdffc0  addiu       $sp, $sp, -0x40
-    ctx->pc = 0x1f5210u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967232));
     // 0x1f5214: 0x7fb00030  sq          $s0, 0x30($sp)
     ctx->pc = 0x1f5214u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 48), GPR_VEC(ctx, 16));
     // 0x1f5218: 0x30b0ffff  andi        $s0, $a1, 0xFFFF
-    ctx->pc = 0x1f5218u;
     SET_GPR_U64(ctx, 16, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)65535);
     // 0x1f521c: 0x7fb10020  sq          $s1, 0x20($sp)
     ctx->pc = 0x1f521cu;
@@ -42,16 +41,13 @@ void SetCustomIDSlotNumberAlt_1F5210_0x1f5210(uint8_t* rdram, R5900Context* ctx,
     ctx->pc = 0x1f5220u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 18));
     // 0x1f5224: 0x80882d  daddu       $s1, $a0, $zero
-    ctx->pc = 0x1f5224u;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1f5228: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1f5228u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1f522c: 0xc0282d  daddu       $a1, $a2, $zero
-    ctx->pc = 0x1f522cu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1f5230: 0x2e020007  sltiu       $v0, $s0, 0x7
-    ctx->pc = 0x1f5230u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 16) < (uint64_t)(int64_t)(int32_t)7) ? 1 : 0);
     // 0x1f5234: 0x1040000a  beqz        $v0, . + 4 + (0xA << 2)
     ctx->pc = 0x1F5234u;
@@ -68,18 +64,13 @@ void SetCustomIDSlotNumberAlt_1F5210_0x1f5210(uint8_t* rdram, R5900Context* ctx,
             goto label_1f5260;
         }
     }
-    ctx->pc = 0x1F523Cu;
     // 0x1f523c: 0x2404007c  addiu       $a0, $zero, 0x7C
-    ctx->pc = 0x1f523cu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 124));
     // 0x1f5240: 0x2042018  mult        $a0, $s0, $a0
-    ctx->pc = 0x1f5240u;
     { int64_t result = (int64_t)GPR_S32(ctx, 16) * (int64_t)GPR_S32(ctx, 4); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 4, (int32_t)result); }
     // 0x1f5244: 0x24842058  addiu       $a0, $a0, 0x2058
-    ctx->pc = 0x1f5244u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 8280));
     // 0x1f5248: 0xc0b5952  jal         func_2D6548
-    ctx->pc = 0x1F5248u;
     SET_GPR_U32(ctx, 31, 0x1F5250u);
     ctx->pc = 0x1F524Cu;
     ctx->in_delay_slot = true;
@@ -87,20 +78,16 @@ void SetCustomIDSlotNumberAlt_1F5210_0x1f5210(uint8_t* rdram, R5900Context* ctx,
     // 0x1f524c: 0x2242021  addu        $a0, $s1, $a0 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 17), GPR_U32(ctx, 4)));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2D6548u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D6548u, 0x1F5248u, 0x1F5250u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetNumber_0x2d6548, 0x2d6548u, 0x1f5250u)) {
         return;
     }
     ctx->pc = 0x1F5250u;
 label_1f5250:
     // 0x1f5250: 0x220202d  daddu       $a0, $s1, $zero
-    ctx->pc = 0x1f5250u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1f5254: 0x26050042  addiu       $a1, $s0, 0x42
-    ctx->pc = 0x1f5254u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 16), 66));
     // 0x1f5258: 0xc07d1de  jal         func_1F4778
-    ctx->pc = 0x1F5258u;
     SET_GPR_U32(ctx, 31, 0x1F5260u);
     ctx->pc = 0x1F525Cu;
     ctx->in_delay_slot = true;
@@ -108,8 +95,7 @@ label_1f5250:
     // 0x1f525c: 0x240302d  daddu       $a2, $s2, $zero (Delay Slot)
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1F4778u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1F4778u, 0x1F5258u, 0x1F5260u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &SetCustomIDDispOneOrAll_1F4778_0x1f4778, 0x1f4778u, 0x1f5260u)) {
         return;
     }
     ctx->pc = 0x1F5260u;

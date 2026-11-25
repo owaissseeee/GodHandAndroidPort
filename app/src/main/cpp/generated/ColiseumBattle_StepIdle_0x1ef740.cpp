@@ -18,7 +18,6 @@ void ColiseumBattle_StepIdle_0x1ef740(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("ColiseumBattle_StepIdle_0x1ef740");
 #endif
 
-    ctx->pc = 0x1ef740u;
 
     // 0x1ef740: 0x3e00008  jr          $ra
     ctx->pc = 0x1EF740u;

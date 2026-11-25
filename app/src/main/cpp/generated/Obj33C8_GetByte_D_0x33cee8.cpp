@@ -18,7 +18,6 @@ void Obj33C8_GetByte_D_0x33cee8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("Obj33C8_GetByte_D_0x33cee8");
 #endif
 
-    ctx->pc = 0x33cee8u;
 
     // 0x33cee8: 0x3e00008  jr          $ra
     ctx->pc = 0x33CEE8u;

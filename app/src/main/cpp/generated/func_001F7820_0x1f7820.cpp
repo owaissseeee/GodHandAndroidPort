@@ -18,15 +18,15 @@ void func_001F7820_0x1f7820(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_001F7820_0x1f7820");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1f7830u: goto label_1f7830;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1f7820u, 0)) {
+        switch (ctx->pc) {
+            case 0x1f7830u: goto label_1f7830;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1f7820u;
 
     // 0x1f7820: 0x248400f4  addiu       $a0, $a0, 0xF4
-    ctx->pc = 0x1f7820u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 244));
     // 0x1f7824: 0x1080000a  beqz        $a0, . + 4 + (0xA << 2)
     ctx->pc = 0x1F7824u;
@@ -37,7 +37,6 @@ void func_001F7820_0x1f7820(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1f7850;
         }
     }
-    ctx->pc = 0x1F782Cu;
     // 0x1f782c: 0x8c830004  lw          $v1, 0x4($a0)
     ctx->pc = 0x1f782cu;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4)));
@@ -57,7 +56,6 @@ label_1f7830:
             goto label_1f7848;
         }
     }
-    ctx->pc = 0x1F7838u;
     // 0x1f7838: 0x8c620004  lw          $v0, 0x4($v1)
     ctx->pc = 0x1f7838u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 4)));

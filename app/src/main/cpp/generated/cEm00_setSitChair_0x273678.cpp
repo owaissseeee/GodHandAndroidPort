@@ -18,22 +18,17 @@ void cEm00_setSitChair_0x273678(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("cEm00_setSitChair_0x273678");
 #endif
 
-    ctx->pc = 0x273678u;
 
     // 0x273678: 0x8c8316d0  lw          $v1, 0x16D0($a0)
     ctx->pc = 0x273678u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 5840)));
     // 0x27367c: 0x3c02dfff  lui         $v0, 0xDFFF
-    ctx->pc = 0x27367cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)57343 << 16));
     // 0x273680: 0x3442ffff  ori         $v0, $v0, 0xFFFF
-    ctx->pc = 0x273680u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)65535);
     // 0x273684: 0x24860490  addiu       $a2, $a0, 0x490
-    ctx->pc = 0x273684u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 4), 1168));
     // 0x273688: 0x621824  and         $v1, $v1, $v0
-    ctx->pc = 0x273688u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 2));
     // 0x27368c: 0xac8016ec  sw          $zero, 0x16EC($a0)
     ctx->pc = 0x27368cu;
@@ -53,7 +48,6 @@ void cEm00_setSitChair_0x273678(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_2736b0;
         }
     }
-    ctx->pc = 0x273698u;
     // 0x273698: 0xc4a00000  lwc1        $f0, 0x0($a1)
     ctx->pc = 0x273698u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -91,7 +85,6 @@ label_2736b0:
             goto label_2736d8;
         }
     }
-    ctx->pc = 0x2736BCu;
     // 0x2736bc: 0xc4800490  lwc1        $f0, 0x490($a0)
     ctx->pc = 0x2736bcu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 1168)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -115,7 +108,6 @@ label_2736b0:
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 5));
 label_2736d8:
     // 0x2736d8: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x2736d8u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2736dc: 0xe48c0104  swc1        $f12, 0x104($a0)
     ctx->pc = 0x2736dcu;

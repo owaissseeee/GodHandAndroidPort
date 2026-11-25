@@ -18,26 +18,28 @@ void _sceFs_Poff_Intr_0x3b3f08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("_sceFs_Poff_Intr_0x3b3f08");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b3f08u: goto label_3b3f08;
-        case 0x3b3f0cu: goto label_3b3f0c;
-        case 0x3b3f10u: goto label_3b3f10;
-        case 0x3b3f14u: goto label_3b3f14;
-        case 0x3b3f18u: goto label_3b3f18;
-        case 0x3b3f1cu: goto label_3b3f1c;
-        case 0x3b3f20u: goto label_3b3f20;
-        case 0x3b3f24u: goto label_3b3f24;
-        case 0x3b3f28u: goto label_3b3f28;
-        case 0x3b3f2cu: goto label_3b3f2c;
-        case 0x3b3f30u: goto label_3b3f30;
-        case 0x3b3f34u: goto label_3b3f34;
-        case 0x3b3f38u: goto label_3b3f38;
-        case 0x3b3f3cu: goto label_3b3f3c;
-        case 0x3b3f40u: goto label_3b3f40;
-        case 0x3b3f44u: goto label_3b3f44;
-        case 0x3b3f48u: goto label_3b3f48;
-        case 0x3b3f4cu: goto label_3b3f4c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b3f08u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b3f08u: goto label_3b3f08;
+            case 0x3b3f0cu: goto label_3b3f0c;
+            case 0x3b3f10u: goto label_3b3f10;
+            case 0x3b3f14u: goto label_3b3f14;
+            case 0x3b3f18u: goto label_3b3f18;
+            case 0x3b3f1cu: goto label_3b3f1c;
+            case 0x3b3f20u: goto label_3b3f20;
+            case 0x3b3f24u: goto label_3b3f24;
+            case 0x3b3f28u: goto label_3b3f28;
+            case 0x3b3f2cu: goto label_3b3f2c;
+            case 0x3b3f30u: goto label_3b3f30;
+            case 0x3b3f34u: goto label_3b3f34;
+            case 0x3b3f38u: goto label_3b3f38;
+            case 0x3b3f3cu: goto label_3b3f3c;
+            case 0x3b3f40u: goto label_3b3f40;
+            case 0x3b3f44u: goto label_3b3f44;
+            case 0x3b3f48u: goto label_3b3f48;
+            case 0x3b3f4cu: goto label_3b3f4c;
+            default: break;
+        }
     }
 
     ctx->pc = 0x3b3f08u;
@@ -178,7 +180,6 @@ label_3b3f48:
     ctx->pc = 0x3B3F4Cu;
 label_3b3f4c:
     // 0x3b3f4c: 0x0  nop
-    ctx->pc = 0x3b3f4cu;
     // NOP
     ctx->pc = 0x3b3f50u;
 }

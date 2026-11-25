@@ -18,7 +18,6 @@ void CasinoWork_SetWarmUpRoom_0x1f6d18(uint8_t* rdram, R5900Context* ctx, PS2Run
     PS_LOG_ENTRY("CasinoWork_SetWarmUpRoom_0x1f6d18");
 #endif
 
-    ctx->pc = 0x1f6d18u;
 
     // 0x1f6d18: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x1f6d18u;
@@ -27,7 +26,6 @@ void CasinoWork_SetWarmUpRoom_0x1f6d18(uint8_t* rdram, R5900Context* ctx, PS2Run
     ctx->pc = 0x1f6d1cu;
     WRITE32(ADD32(GPR_U32(ctx, 4), 4), GPR_U32(ctx, 5));
     // 0x1f6d20: 0x34420001  ori         $v0, $v0, 0x1
-    ctx->pc = 0x1f6d20u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)1);
     // 0x1f6d24: 0xe48c0008  swc1        $f12, 0x8($a0)
     ctx->pc = 0x1f6d24u;

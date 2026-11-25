@@ -18,16 +18,16 @@ void StateObj_runStep_0x385030(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("StateObj_runStep_0x385030");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38505cu: goto label_38505c;
-        case 0x38506cu: goto label_38506c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x385030u, 0)) {
+        switch (ctx->pc) {
+            case 0x38505cu: goto label_38505c;
+            case 0x38506cu: goto label_38506c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x385030u;
 
     // 0x385030: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x385030u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x385034: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x385034u;
@@ -50,7 +50,6 @@ void StateObj_runStep_0x385030(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_385054;
         }
     }
-    ctx->pc = 0x385044u;
     // 0x385044: 0x10620007  beq         $v1, $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x385044u;
     {
@@ -66,7 +65,6 @@ void StateObj_runStep_0x385030(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_385064;
         }
     }
-    ctx->pc = 0x38504Cu;
     // 0x38504c: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x38504Cu;
     {
@@ -81,8 +79,7 @@ label_385054:
     // 0x385054: 0xc0e141e  jal         func_385078
     ctx->pc = 0x385054u;
     SET_GPR_U32(ctx, 31, 0x38505Cu);
-    ctx->pc = 0x385078u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x385078u, 0x385054u, 0x38505Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00385078_0x385078, 0x385078u, 0x38505cu)) {
         return;
     }
     ctx->pc = 0x38505Cu;
@@ -107,8 +104,7 @@ label_385064:
     // 0x385064: 0xc0e144e  jal         func_385138
     ctx->pc = 0x385064u;
     SET_GPR_U32(ctx, 31, 0x38506Cu);
-    ctx->pc = 0x385138u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x385138u, 0x385064u, 0x38506Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00385138_0x385138, 0x385138u, 0x38506cu)) {
         return;
     }
     ctx->pc = 0x38506Cu;

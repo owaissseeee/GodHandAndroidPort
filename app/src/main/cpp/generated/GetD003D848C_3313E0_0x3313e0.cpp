@@ -18,13 +18,10 @@ void GetD003D848C_3313E0_0x3313e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("GetD003D848C_3313E0_0x3313e0");
 #endif
 
-    ctx->pc = 0x3313e0u;
 
     // 0x3313e0: 0x3c03003e  lui         $v1, 0x3E
-    ctx->pc = 0x3313e0u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)62 << 16));
     // 0x3313e4: 0x2463848c  addiu       $v1, $v1, -0x7B74
-    ctx->pc = 0x3313e4u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294935692));
     // 0x3313e8: 0x3e00008  jr          $ra
     ctx->pc = 0x3313E8u;

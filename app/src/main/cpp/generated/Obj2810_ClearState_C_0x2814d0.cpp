@@ -18,10 +18,8 @@ void Obj2810_ClearState_C_0x2814d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("Obj2810_ClearState_C_0x2814d0");
 #endif
 
-    ctx->pc = 0x2814d0u;
 
     // 0x2814d0: 0x2402000c  addiu       $v0, $zero, 0xC
-    ctx->pc = 0x2814d0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 12));
     // 0x2814d4: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x2814d4u;

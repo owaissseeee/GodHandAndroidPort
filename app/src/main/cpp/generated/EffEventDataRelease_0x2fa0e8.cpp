@@ -18,27 +18,24 @@ void EffEventDataRelease_0x2fa0e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("EffEventDataRelease_0x2fa0e8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2fa118u: goto label_2fa118;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2fa0e8u, 0)) {
+        switch (ctx->pc) {
+            case 0x2fa118u: goto label_2fa118;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2fa0e8u;
 
     // 0x2fa0e8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2fa0e8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2fa0ec: 0x3c020074  lui         $v0, 0x74
-    ctx->pc = 0x2fa0ecu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
     // 0x2fa0f0: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2fa0f0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2fa0f4: 0x244219a0  addiu       $v0, $v0, 0x19A0
-    ctx->pc = 0x2fa0f4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 6560));
     // 0x2fa0f8: 0x24040001  addiu       $a0, $zero, 0x1
-    ctx->pc = 0x2fa0f8u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2fa0fc: 0x9043041c  lbu         $v1, 0x41C($v0)
     ctx->pc = 0x2fa0fcu;
@@ -58,15 +55,12 @@ void EffEventDataRelease_0x2fa0e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_2fa11c;
         }
     }
-    ctx->pc = 0x2FA108u;
     // 0x2fa108: 0x40202d  daddu       $a0, $v0, $zero
-    ctx->pc = 0x2fa108u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2fa10c: 0xa040041c  sb          $zero, 0x41C($v0)
     ctx->pc = 0x2fa10cu;
     WRITE8(ADD32(GPR_U32(ctx, 2), 1052), (uint8_t)GPR_U32(ctx, 0));
     // 0x2fa110: 0xc0c15de  jal         func_305778
-    ctx->pc = 0x2FA110u;
     SET_GPR_U32(ctx, 31, 0x2FA118u);
     ctx->pc = 0x2FA114u;
     ctx->in_delay_slot = true;
@@ -74,8 +68,7 @@ void EffEventDataRelease_0x2fa0e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     // 0x2fa114: 0x24050006  addiu       $a1, $zero, 0x6 (Delay Slot)
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x305778u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x305778u, 0x2FA110u, 0x2FA118u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &espSys_effDataRelease_0x305778, 0x305778u, 0x2fa118u)) {
         return;
     }
     ctx->pc = 0x2FA118u;
@@ -103,9 +96,7 @@ label_2fa11c:
         return;
         #endif
     }
-    ctx->pc = 0x2FA124u;
     // 0x2fa124: 0x0  nop
-    ctx->pc = 0x2fa124u;
     // NOP
     ctx->pc = 0x2fa128u;
 }

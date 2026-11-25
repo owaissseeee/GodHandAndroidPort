@@ -18,16 +18,18 @@ void ps2___ls__7ostreamPFR7ostream_R7ostream_0x38a478(uint8_t* rdram, R5900Conte
     PS_LOG_ENTRY("ps2___ls__7ostreamPFR7ostream_R7ostream_0x38a478");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38a478u: goto label_38a478;
-        case 0x38a47cu: goto label_38a47c;
-        case 0x38a480u: goto label_38a480;
-        case 0x38a484u: goto label_38a484;
-        case 0x38a488u: goto label_38a488;
-        case 0x38a48cu: goto label_38a48c;
-        case 0x38a490u: goto label_38a490;
-        case 0x38a494u: goto label_38a494;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38a478u, 0)) {
+        switch (ctx->pc) {
+            case 0x38a478u: goto label_38a478;
+            case 0x38a47cu: goto label_38a47c;
+            case 0x38a480u: goto label_38a480;
+            case 0x38a484u: goto label_38a484;
+            case 0x38a488u: goto label_38a488;
+            case 0x38a48cu: goto label_38a48c;
+            case 0x38a490u: goto label_38a490;
+            case 0x38a494u: goto label_38a494;
+            default: break;
+        }
     }
 
     ctx->pc = 0x38a478u;
@@ -95,7 +97,6 @@ label_38a490:
     ctx->pc = 0x38A494u;
 label_38a494:
     // 0x38a494: 0x0  nop
-    ctx->pc = 0x38a494u;
     // NOP
     ctx->pc = 0x38a498u;
 }

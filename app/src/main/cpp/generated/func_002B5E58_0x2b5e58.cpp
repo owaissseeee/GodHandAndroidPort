@@ -18,12 +18,13 @@ void func_002B5E58_0x2b5e58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002B5E58_0x2b5e58");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2b5e70u: goto label_2b5e70;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2b5e58u, 0)) {
+        switch (ctx->pc) {
+            case 0x2b5e70u: goto label_2b5e70;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2b5e58u;
 
     // 0x2b5e58: 0x8c830008  lw          $v1, 0x8($a0)
     ctx->pc = 0x2b5e58u;
@@ -43,7 +44,6 @@ void func_002B5E58_0x2b5e58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2b5e88;
         }
     }
-    ctx->pc = 0x2B5E64u;
     // 0x2b5e64: 0x8c630010  lw          $v1, 0x10($v1)
     ctx->pc = 0x2b5e64u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 16)));
@@ -68,13 +68,10 @@ label_2b5e70:
     ctx->pc = 0x2b5e70u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 16)));
     // 0x2b5e74: 0x0  nop
-    ctx->pc = 0x2b5e74u;
     // NOP
     // 0x2b5e78: 0x0  nop
-    ctx->pc = 0x2b5e78u;
     // NOP
     // 0x2b5e7c: 0x0  nop
-    ctx->pc = 0x2b5e7cu;
     // NOP
     // 0x2b5e80: 0x1460fffb  bnez        $v1, . + 4 + (-0x5 << 2)
     ctx->pc = 0x2B5E80u;

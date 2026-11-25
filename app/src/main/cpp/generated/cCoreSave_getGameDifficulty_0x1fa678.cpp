@@ -18,7 +18,6 @@ void cCoreSave_getGameDifficulty_0x1fa678(uint8_t* rdram, R5900Context* ctx, PS2
     PS_LOG_ENTRY("cCoreSave_getGameDifficulty_0x1fa678");
 #endif
 
-    ctx->pc = 0x1fa678u;
 
     // 0x1fa678: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fa678u;
@@ -38,7 +37,6 @@ void cCoreSave_getGameDifficulty_0x1fa678(uint8_t* rdram, R5900Context* ctx, PS2
             goto label_1fa688;
         }
     }
-    ctx->pc = 0x1FA684u;
     // 0x1fa684: 0x8082001f  lb          $v0, 0x1F($a0)
     ctx->pc = 0x1fa684u;
     SET_GPR_S32(ctx, 2, (int8_t)READ8(ADD32(GPR_U32(ctx, 4), 31)));

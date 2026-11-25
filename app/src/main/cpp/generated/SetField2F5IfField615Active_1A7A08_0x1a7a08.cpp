@@ -18,7 +18,6 @@ void SetField2F5IfField615Active_1A7A08_0x1a7a08(uint8_t* rdram, R5900Context* c
     PS_LOG_ENTRY("SetField2F5IfField615Active_1A7A08_0x1a7a08");
 #endif
 
-    ctx->pc = 0x1a7a08u;
 
     // 0x1a7a08: 0x90820615  lbu         $v0, 0x615($a0)
     ctx->pc = 0x1a7a08u;
@@ -38,7 +37,6 @@ void SetField2F5IfField615Active_1A7A08_0x1a7a08(uint8_t* rdram, R5900Context* c
             goto label_1a7a20;
         }
     }
-    ctx->pc = 0x1A7A14u;
     // 0x1a7a14: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x1a7a14u;
     WRITE8(ADD32(GPR_U32(ctx, 4), 759), (uint8_t)GPR_U32(ctx, 0));

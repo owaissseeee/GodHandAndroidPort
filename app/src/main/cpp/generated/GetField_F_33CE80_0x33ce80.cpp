@@ -18,7 +18,6 @@ void GetField_F_33CE80_0x33ce80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("GetField_F_33CE80_0x33ce80");
 #endif
 
-    ctx->pc = 0x33ce80u;
 
     // 0x33ce80: 0x3e00008  jr          $ra
     ctx->pc = 0x33CE80u;

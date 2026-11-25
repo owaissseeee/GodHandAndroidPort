@@ -18,7 +18,6 @@ void Obj30E0_NoOp_E548_0x30e548(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("Obj30E0_NoOp_E548_0x30e548");
 #endif
 
-    ctx->pc = 0x30e548u;
 
     // 0x30e548: 0x3e00008  jr          $ra
     ctx->pc = 0x30E548u;

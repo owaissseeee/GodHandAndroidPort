@@ -18,47 +18,37 @@ void Slot1_SetActBtn_0x1dfd50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("Slot1_SetActBtn_0x1dfd50");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1dfd80u: goto label_1dfd80;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1dfd50u, 0)) {
+        switch (ctx->pc) {
+            case 0x1dfd80u: goto label_1dfd80;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1dfd50u;
 
     // 0x1dfd50: 0x80482d  daddu       $t1, $a0, $zero
-    ctx->pc = 0x1dfd50u;
     SET_GPR_U64(ctx, 9, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1dfd54: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1dfd54u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1dfd58: 0x3c040057  lui         $a0, 0x57
-    ctx->pc = 0x1dfd58u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)87 << 16));
     // 0x1dfd5c: 0x3c08001e  lui         $t0, 0x1E
-    ctx->pc = 0x1dfd5cu;
     SET_GPR_S32(ctx, 8, (int32_t)((uint32_t)30 << 16));
     // 0x1dfd60: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1dfd60u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1dfd64: 0x24848288  addiu       $a0, $a0, -0x7D78
-    ctx->pc = 0x1dfd64u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 4294935176));
     // 0x1dfd68: 0x2508fd90  addiu       $t0, $t0, -0x270
-    ctx->pc = 0x1dfd68u;
     SET_GPR_S32(ctx, 8, (int32_t)ADD32(GPR_U32(ctx, 8), 4294966672));
     // 0x1dfd6c: 0x24050004  addiu       $a1, $zero, 0x4
-    ctx->pc = 0x1dfd6cu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x1dfd70: 0x24060015  addiu       $a2, $zero, 0x15
-    ctx->pc = 0x1dfd70u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 21));
     // 0x1dfd74: 0x382d  daddu       $a3, $zero, $zero
-    ctx->pc = 0x1dfd74u;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1dfd78: 0xc07de16  jal         func_1F7858
-    ctx->pc = 0x1DFD78u;
     SET_GPR_U32(ctx, 31, 0x1DFD80u);
-    ctx->pc = 0x1DFD7Cu;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x1DFD78u;
     // 0x1dfd7c: 0x502d  daddu       $t2, $zero, $zero (Delay Slot)
@@ -92,9 +82,7 @@ label_1dfd80:
         return;
         #endif
     }
-    ctx->pc = 0x1DFD8Cu;
     // 0x1dfd8c: 0x0  nop
-    ctx->pc = 0x1dfd8cu;
     // NOP
     ctx->pc = 0x1dfd90u;
 }

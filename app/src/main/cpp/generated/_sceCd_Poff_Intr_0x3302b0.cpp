@@ -18,20 +18,22 @@ void _sceCd_Poff_Intr_0x3302b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("_sceCd_Poff_Intr_0x3302b0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3302b0u: goto label_3302b0;
-        case 0x3302b4u: goto label_3302b4;
-        case 0x3302b8u: goto label_3302b8;
-        case 0x3302bcu: goto label_3302bc;
-        case 0x3302c0u: goto label_3302c0;
-        case 0x3302c4u: goto label_3302c4;
-        case 0x3302c8u: goto label_3302c8;
-        case 0x3302ccu: goto label_3302cc;
-        case 0x3302d0u: goto label_3302d0;
-        case 0x3302d4u: goto label_3302d4;
-        case 0x3302d8u: goto label_3302d8;
-        case 0x3302dcu: goto label_3302dc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3302b0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3302b0u: goto label_3302b0;
+            case 0x3302b4u: goto label_3302b4;
+            case 0x3302b8u: goto label_3302b8;
+            case 0x3302bcu: goto label_3302bc;
+            case 0x3302c0u: goto label_3302c0;
+            case 0x3302c4u: goto label_3302c4;
+            case 0x3302c8u: goto label_3302c8;
+            case 0x3302ccu: goto label_3302cc;
+            case 0x3302d0u: goto label_3302d0;
+            case 0x3302d4u: goto label_3302d4;
+            case 0x3302d8u: goto label_3302d8;
+            case 0x3302dcu: goto label_3302dc;
+            default: break;
+        }
     }
 
     ctx->pc = 0x3302b0u;
@@ -147,7 +149,6 @@ label_3302d8:
     ctx->pc = 0x3302DCu;
 label_3302dc:
     // 0x3302dc: 0x0  nop
-    ctx->pc = 0x3302dcu;
     // NOP
     ctx->pc = 0x3302e0u;
 }

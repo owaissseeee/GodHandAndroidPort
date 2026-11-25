@@ -18,7 +18,6 @@ void func_00150738_0x150738(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00150738_0x150738");
 #endif
 
-    ctx->pc = 0x150738u;
 
     // 0x150738: 0xc4c00000  lwc1        $f0, 0x0($a2)
     ctx->pc = 0x150738u;
@@ -27,13 +26,10 @@ void func_00150738_0x150738(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x15073cu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x150740: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x150740u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
     // 0x150744: 0x44811000  mtc1        $at, $f2
-    ctx->pc = 0x150744u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[2], &bits, sizeof(bits)); }
     // 0x150748: 0x46000840  add.s       $f1, $f1, $f0
-    ctx->pc = 0x150748u;
     ctx->f[1] = FPU_ADD_S(ctx->f[1], ctx->f[0]);
     // 0x15074c: 0xe4810000  swc1        $f1, 0x0($a0)
     ctx->pc = 0x15074cu;
@@ -45,7 +41,6 @@ void func_00150738_0x150738(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x150754u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 4)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x150758: 0x46010000  add.s       $f0, $f0, $f1
-    ctx->pc = 0x150758u;
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[1]);
     // 0x15075c: 0xe4800004  swc1        $f0, 0x4($a0)
     ctx->pc = 0x15075cu;
@@ -60,7 +55,6 @@ void func_00150738_0x150738(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x150768u;
     { float f = ctx->f[2]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 4), 12), bits); }
     // 0x15076c: 0x46000840  add.s       $f1, $f1, $f0
-    ctx->pc = 0x15076cu;
     ctx->f[1] = FPU_ADD_S(ctx->f[1], ctx->f[0]);
     // 0x150770: 0x3e00008  jr          $ra
     ctx->pc = 0x150770u;

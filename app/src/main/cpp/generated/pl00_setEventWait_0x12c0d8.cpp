@@ -18,10 +18,8 @@ void pl00_setEventWait_0x12c0d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("pl00_setEventWait_0x12c0d8");
 #endif
 
-    ctx->pc = 0x12c0d8u;
 
     // 0x12c0d8: 0x24020045  addiu       $v0, $zero, 0x45
-    ctx->pc = 0x12c0d8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 69));
     // 0x12c0dc: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x12c0dcu;
@@ -51,12 +49,10 @@ void pl00_setEventWait_0x12c0d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
         return;
         #endif
     }
-    ctx->pc = 0x12C0F0u;
     // 0x12c0f0: 0xa08002f6  sb          $zero, 0x2F6($a0)
     ctx->pc = 0x12c0f0u;
     WRITE8(ADD32(GPR_U32(ctx, 4), 758), (uint8_t)GPR_U32(ctx, 0));
     // 0x12c0f4: 0x0  nop
-    ctx->pc = 0x12c0f4u;
     // NOP
     ctx->pc = 0x12c0f8u;
 }

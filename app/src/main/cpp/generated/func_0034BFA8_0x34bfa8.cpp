@@ -18,10 +18,8 @@ void func_0034BFA8_0x34bfa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0034BFA8_0x34bfa8");
 #endif
 
-    ctx->pc = 0x34bfa8u;
 
     // 0x34bfa8: 0x24020009  addiu       $v0, $zero, 0x9
-    ctx->pc = 0x34bfa8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 9));
     // 0x34bfac: 0xac850000  sw          $a1, 0x0($a0)
     ctx->pc = 0x34bfacu;

@@ -18,7 +18,6 @@ void ClearBytesAt74And79To7C_13C618_0x13c618(uint8_t* rdram, R5900Context* ctx, 
     PS_LOG_ENTRY("ClearBytesAt74And79To7C_13C618_0x13c618");
 #endif
 
-    ctx->pc = 0x13c618u;
 
     // 0x13c618: 0xa080007c  sb          $zero, 0x7C($a0)
     ctx->pc = 0x13c618u;

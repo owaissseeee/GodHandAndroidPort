@@ -18,7 +18,6 @@ void Obj0000_Set_Field_50_173998_0x173998(uint8_t* rdram, R5900Context* ctx, PS2
     PS_LOG_ENTRY("Obj0000_Set_Field_50_173998_0x173998");
 #endif
 
-    ctx->pc = 0x173998u;
 
     // 0x173998: 0x3e00008  jr          $ra
     ctx->pc = 0x173998u;

@@ -18,24 +18,22 @@ void func_0033BE80_0x33be80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0033BE80_0x33be80");
 #endif
 
-    switch (ctx->pc) {
-        case 0x33bea4u: goto label_33bea4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x33be80u, 0)) {
+        switch (ctx->pc) {
+            case 0x33bea4u: goto label_33bea4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x33be80u;
 
     // 0x33be80: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x33be80u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x33be84: 0x3c02003f  lui         $v0, 0x3F
-    ctx->pc = 0x33be84u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)63 << 16));
     // 0x33be88: 0xffb00000  sd          $s0, 0x0($sp)
     ctx->pc = 0x33be88u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 16));
     // 0x33be8c: 0x24509944  addiu       $s0, $v0, -0x66BC
-    ctx->pc = 0x33be8cu;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 2), 4294940996));
     // 0x33be90: 0x8e030000  lw          $v1, 0x0($s0)
     ctx->pc = 0x33be90u;
@@ -55,12 +53,10 @@ void func_0033BE80_0x33be80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_33bea4;
         }
     }
-    ctx->pc = 0x33BE9Cu;
     // 0x33be9c: 0xc0cef76  jal         func_33BDD8
     ctx->pc = 0x33BE9Cu;
     SET_GPR_U32(ctx, 31, 0x33BEA4u);
-    ctx->pc = 0x33BDD8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x33BDD8u, 0x33BE9Cu, 0x33BEA4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_0033BDD8_0x33bdd8, 0x33bdd8u, 0x33bea4u)) {
         return;
     }
     ctx->pc = 0x33BEA4u;
@@ -72,7 +68,6 @@ label_33bea4:
     ctx->pc = 0x33bea8u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 8)));
     // 0x33beac: 0x24420001  addiu       $v0, $v0, 0x1
-    ctx->pc = 0x33beacu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 1));
     // 0x33beb0: 0xae020000  sw          $v0, 0x0($s0)
     ctx->pc = 0x33beb0u;

@@ -18,7 +18,6 @@ void Obj0000_Set_Short_00_1FFE08_0x1ffe08(uint8_t* rdram, R5900Context* ctx, PS2
     PS_LOG_ENTRY("Obj0000_Set_Short_00_1FFE08_0x1ffe08");
 #endif
 
-    ctx->pc = 0x1ffe08u;
 
     // 0x1ffe08: 0x3e00008  jr          $ra
     ctx->pc = 0x1FFE08u;

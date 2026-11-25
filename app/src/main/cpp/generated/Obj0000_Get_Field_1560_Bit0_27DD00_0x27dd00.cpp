@@ -18,7 +18,6 @@ void Obj0000_Get_Field_1560_Bit0_27DD00_0x27dd00(uint8_t* rdram, R5900Context* c
     PS_LOG_ENTRY("Obj0000_Get_Field_1560_Bit0_27DD00_0x27dd00");
 #endif
 
-    ctx->pc = 0x27dd00u;
 
     // 0x27dd00: 0x8c821560  lw          $v0, 0x1560($a0)
     ctx->pc = 0x27dd00u;
@@ -42,9 +41,7 @@ void Obj0000_Get_Field_1560_Bit0_27DD00_0x27dd00(uint8_t* rdram, R5900Context* c
         return;
         #endif
     }
-    ctx->pc = 0x27DD0Cu;
     // 0x27dd0c: 0x0  nop
-    ctx->pc = 0x27dd0cu;
     // NOP
     ctx->pc = 0x27dd10u;
 }

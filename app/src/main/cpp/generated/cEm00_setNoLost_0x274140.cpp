@@ -18,13 +18,11 @@ void cEm00_setNoLost_0x274140(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("cEm00_setNoLost_0x274140");
 #endif
 
-    ctx->pc = 0x274140u;
 
     // 0x274140: 0x8c8216d4  lw          $v0, 0x16D4($a0)
     ctx->pc = 0x274140u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 5844)));
     // 0x274144: 0x34421000  ori         $v0, $v0, 0x1000
-    ctx->pc = 0x274144u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)4096);
     // 0x274148: 0x3e00008  jr          $ra
     ctx->pc = 0x274148u;

@@ -19,22 +19,20 @@ void cEm00_stepFadeOutAndRelease_0x288c98(uint8_t* rdram, R5900Context* ctx, PS2
     PS_LOG_ENTRY("cEm00_stepFadeOutAndRelease_0x288c98");
 #endif
 
-    switch (ctx->pc) {
-        case 0x288cd8u: goto label_288cd8;
-        case 0x288d20u: goto label_288d20;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x288c98u, 0)) {
+        switch (ctx->pc) {
+            case 0x288cd8u: goto label_288cd8;
+            case 0x288d20u: goto label_288d20;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x288c98u;
 
     // 0x288c98: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x288c98u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x288c9c: 0x3c014040  lui         $at, 0x4040
-    ctx->pc = 0x288c9cu;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16448 << 16));
     // 0x288ca0: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x288ca0u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x288ca4: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x288ca4u;
@@ -43,7 +41,6 @@ void cEm00_stepFadeOutAndRelease_0x288c98(uint8_t* rdram, R5900Context* ctx, PS2
     ctx->pc = 0x288ca8u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x288cac: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x288cacu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x288cb0: 0xe600054c  swc1        $f0, 0x54C($s0)
     ctx->pc = 0x288cb0u;
@@ -66,7 +63,6 @@ void cEm00_stepFadeOutAndRelease_0x288c98(uint8_t* rdram, R5900Context* ctx, PS2
             goto label_288cd0;
         }
     }
-    ctx->pc = 0x288CC0u;
     // 0x288cc0: 0x50620009  beql        $v1, $v0, . + 4 + (0x9 << 2)
     ctx->pc = 0x288CC0u;
     {
@@ -82,7 +78,6 @@ void cEm00_stepFadeOutAndRelease_0x288c98(uint8_t* rdram, R5900Context* ctx, PS2
             goto label_288ce8;
         }
     }
-    ctx->pc = 0x288CC8u;
     // 0x288cc8: 0x10000019  b           . + 4 + (0x19 << 2)
     ctx->pc = 0x288CC8u;
     {
@@ -101,7 +96,6 @@ void cEm00_stepFadeOutAndRelease_0x288c98(uint8_t* rdram, R5900Context* ctx, PS2
     ctx->pc = 0x288CD0u;
 label_288cd0:
     // 0x288cd0: 0xc0a3ec2  jal         func_28FB08
-    ctx->pc = 0x288CD0u;
     SET_GPR_U32(ctx, 31, 0x288CD8u);
     ctx->pc = 0x288CD4u;
     ctx->in_delay_slot = true;
@@ -109,8 +103,7 @@ label_288cd0:
     // 0x288cd4: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x28FB08u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x28FB08u, 0x288CD0u, 0x288CD8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_0028FB08_0x28fb08, 0x28fb08u, 0x288cd8u)) {
         return;
     }
     ctx->pc = 0x288CD8u;
@@ -119,7 +112,6 @@ label_288cd8:
     ctx->pc = 0x288cd8u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 16), 758)));
     // 0x288cdc: 0x24420001  addiu       $v0, $v0, 0x1
-    ctx->pc = 0x288cdcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 1));
     // 0x288ce0: 0xa20202f6  sb          $v0, 0x2F6($s0)
     ctx->pc = 0x288ce0u;
@@ -136,22 +128,16 @@ label_288ce8:
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15820 << 16));
     }
     // 0x288cec: 0x3421cccd  ori         $at, $at, 0xCCCD
-    ctx->pc = 0x288cecu;
     SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)52429);
     // 0x288cf0: 0x44810800  mtc1        $at, $f1
-    ctx->pc = 0x288cf0u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }
     // 0x288cf4: 0x44801000  mtc1        $zero, $f2
-    ctx->pc = 0x288cf4u;
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[2], &bits, sizeof(bits)); }
     // 0x288cf8: 0x46010001  sub.s       $f0, $f0, $f1
-    ctx->pc = 0x288cf8u;
     ctx->f[0] = FPU_SUB_S(ctx->f[0], ctx->f[1]);
     // 0x288cfc: 0x46020036  c.le.s      $f0, $f2
-    ctx->pc = 0x288cfcu;
     ctx->fcr31 = (FPU_C_OLE_S(ctx->f[0], ctx->f[2])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x288d00: 0x0  nop
-    ctx->pc = 0x288d00u;
     // NOP
     // 0x288d04: 0x45000009  bc1f        . + 4 + (0x9 << 2)
     ctx->pc = 0x288D04u;
@@ -168,18 +154,14 @@ label_288ce8:
             goto label_288d2c;
         }
     }
-    ctx->pc = 0x288D0Cu;
     // 0x288d0c: 0x3c040058  lui         $a0, 0x58
-    ctx->pc = 0x288d0cu;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)88 << 16));
     // 0x288d10: 0xe602024c  swc1        $f2, 0x24C($s0)
     ctx->pc = 0x288d10u;
     { float f = ctx->f[2]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 16), 588), bits); }
     // 0x288d14: 0x248464f0  addiu       $a0, $a0, 0x64F0
-    ctx->pc = 0x288d14u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 25840));
     // 0x288d18: 0xc0a41dc  jal         func_290770
-    ctx->pc = 0x288D18u;
     SET_GPR_U32(ctx, 31, 0x288D20u);
     ctx->pc = 0x288D1Cu;
     ctx->in_delay_slot = true;
@@ -187,8 +169,7 @@ label_288ce8:
     // 0x288d1c: 0x200282d  daddu       $a1, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x290770u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x290770u, 0x288D18u, 0x288D20u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_ReleaseEm_0x290770, 0x290770u, 0x288d20u)) {
         return;
     }
     ctx->pc = 0x288D20u;
@@ -197,7 +178,6 @@ label_288d20:
     ctx->pc = 0x288d20u;
     SET_GPR_ZE32(ctx, 3, (uint8_t)READ8(ADD32(GPR_U32(ctx, 16), 758)));
     // 0x288d24: 0x24630001  addiu       $v1, $v1, 0x1
-    ctx->pc = 0x288d24u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 1));
     // 0x288d28: 0xa20302f6  sb          $v1, 0x2F6($s0)
     ctx->pc = 0x288d28u;
@@ -229,9 +209,7 @@ label_288d30:
         return;
         #endif
     }
-    ctx->pc = 0x288D3Cu;
     // 0x288d3c: 0x0  nop
-    ctx->pc = 0x288d3cu;
     // NOP
     ctx->pc = 0x288d40u;
 }

@@ -18,22 +18,24 @@ void delObj_0x312778(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     PS_LOG_ENTRY("delObj_0x312778");
 #endif
 
-    switch (ctx->pc) {
-        case 0x312778u: goto label_312778;
-        case 0x31277cu: goto label_31277c;
-        case 0x312780u: goto label_312780;
-        case 0x312784u: goto label_312784;
-        case 0x312788u: goto label_312788;
-        case 0x31278cu: goto label_31278c;
-        case 0x312790u: goto label_312790;
-        case 0x312794u: goto label_312794;
-        case 0x312798u: goto label_312798;
-        case 0x31279cu: goto label_31279c;
-        case 0x3127a0u: goto label_3127a0;
-        case 0x3127a4u: goto label_3127a4;
-        case 0x3127a8u: goto label_3127a8;
-        case 0x3127acu: goto label_3127ac;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x312778u, 0)) {
+        switch (ctx->pc) {
+            case 0x312778u: goto label_312778;
+            case 0x31277cu: goto label_31277c;
+            case 0x312780u: goto label_312780;
+            case 0x312784u: goto label_312784;
+            case 0x312788u: goto label_312788;
+            case 0x31278cu: goto label_31278c;
+            case 0x312790u: goto label_312790;
+            case 0x312794u: goto label_312794;
+            case 0x312798u: goto label_312798;
+            case 0x31279cu: goto label_31279c;
+            case 0x3127a0u: goto label_3127a0;
+            case 0x3127a4u: goto label_3127a4;
+            case 0x3127a8u: goto label_3127a8;
+            case 0x3127acu: goto label_3127ac;
+            default: break;
+        }
     }
 
     ctx->pc = 0x312778u;
@@ -157,7 +159,6 @@ label_3127a8:
     ctx->pc = 0x3127ACu;
 label_3127ac:
     // 0x3127ac: 0x0  nop
-    ctx->pc = 0x3127acu;
     // NOP
     ctx->pc = 0x3127b0u;
 }

@@ -18,7 +18,6 @@ void cCamera_resetVib_0x138528(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("cCamera_resetVib_0x138528");
 #endif
 
-    ctx->pc = 0x138528u;
 
     // 0x138528: 0xa0800264  sb          $zero, 0x264($a0)
     ctx->pc = 0x138528u;
@@ -66,9 +65,7 @@ void cCamera_resetVib_0x138528(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
         return;
         #endif
     }
-    ctx->pc = 0x138554u;
     // 0x138554: 0x0  nop
-    ctx->pc = 0x138554u;
     // NOP
     ctx->pc = 0x138558u;
 }

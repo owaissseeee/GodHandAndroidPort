@@ -18,7 +18,6 @@ void cBgmData_IsEmpty_0x2cff78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("cBgmData_IsEmpty_0x2cff78");
 #endif
 
-    ctx->pc = 0x2cff78u;
 
     // 0x2cff78: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2cff78u;
@@ -42,15 +41,11 @@ void cBgmData_IsEmpty_0x2cff78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
         return;
         #endif
     }
-    ctx->pc = 0x2CFF84u;
     // 0x2cff84: 0x0  nop
-    ctx->pc = 0x2cff84u;
     // NOP
     // 0x2cff88: 0x27bd0020  addiu       $sp, $sp, 0x20
-    ctx->pc = 0x2cff88u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 32));
     // 0x2cff8c: 0x0  nop
-    ctx->pc = 0x2cff8cu;
     // NOP
     ctx->pc = 0x2cff90u;
 }

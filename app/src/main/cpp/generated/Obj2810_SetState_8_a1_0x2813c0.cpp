@@ -18,10 +18,8 @@ void Obj2810_SetState_8_a1_0x2813c0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("Obj2810_SetState_8_a1_0x2813c0");
 #endif
 
-    ctx->pc = 0x2813c0u;
 
     // 0x2813c0: 0x24020008  addiu       $v0, $zero, 0x8
-    ctx->pc = 0x2813c0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 8));
     // 0x2813c4: 0xa08502f7  sb          $a1, 0x2F7($a0)
     ctx->pc = 0x2813c4u;

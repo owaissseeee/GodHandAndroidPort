@@ -18,31 +18,28 @@ void FreeActorVtableState_170A90_0x170a90(uint8_t* rdram, R5900Context* ctx, PS2
     PS_LOG_ENTRY("FreeActorVtableState_170A90_0x170a90");
 #endif
 
-    switch (ctx->pc) {
-        case 0x170accu: goto label_170acc;
-        case 0x170adcu: goto label_170adc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x170a90u, 0)) {
+        switch (ctx->pc) {
+            case 0x170accu: goto label_170acc;
+            case 0x170adcu: goto label_170adc;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x170a90u;
 
     // 0x170a90: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x170a90u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x170a94: 0x3c020042  lui         $v0, 0x42
-    ctx->pc = 0x170a94u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)66 << 16));
     // 0x170a98: 0x7fb00020  sq          $s0, 0x20($sp)
     ctx->pc = 0x170a98u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 32), GPR_VEC(ctx, 16));
     // 0x170a9c: 0x24420780  addiu       $v0, $v0, 0x780
-    ctx->pc = 0x170a9cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 1920));
     // 0x170aa0: 0x7fb10010  sq          $s1, 0x10($sp)
     ctx->pc = 0x170aa0u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 17));
     // 0x170aa4: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x170aa4u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x170aa8: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x170aa8u;
@@ -68,15 +65,11 @@ void FreeActorVtableState_170A90_0x170a90(uint8_t* rdram, R5900Context* ctx, PS2
             goto label_170ad0;
         }
     }
-    ctx->pc = 0x170ABCu;
     // 0x170abc: 0x3c040057  lui         $a0, 0x57
-    ctx->pc = 0x170abcu;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)87 << 16));
     // 0x170ac0: 0x60282d  daddu       $a1, $v1, $zero
-    ctx->pc = 0x170ac0u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
     // 0x170ac4: 0xc07f89e  jal         func_1FE278
-    ctx->pc = 0x170AC4u;
     SET_GPR_U32(ctx, 31, 0x170ACCu);
     ctx->pc = 0x170AC8u;
     ctx->in_delay_slot = true;
@@ -84,8 +77,7 @@ void FreeActorVtableState_170A90_0x170a90(uint8_t* rdram, R5900Context* ctx, PS2
     // 0x170ac8: 0x24844380  addiu       $a0, $a0, 0x4380 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 17280));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1FE278u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1FE278u, 0x170AC4u, 0x170ACCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x170accu)) {
         return;
     }
     ctx->pc = 0x170ACCu;
@@ -95,10 +87,8 @@ label_170acc:
     WRITE32(ADD32(GPR_U32(ctx, 16), 1536), GPR_U32(ctx, 0));
 label_170ad0:
     // 0x170ad0: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x170ad0u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x170ad4: 0xc06fec0  jal         func_1BFB00
-    ctx->pc = 0x170AD4u;
     SET_GPR_U32(ctx, 31, 0x170ADCu);
     ctx->pc = 0x170AD8u;
     ctx->in_delay_slot = true;
@@ -106,8 +96,7 @@ label_170ad0:
     // 0x170ad8: 0x220282d  daddu       $a1, $s1, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1BFB00u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1BFB00u, 0x170AD4u, 0x170ADCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_001BFB00_0x1bfb00, 0x1bfb00u, 0x170adcu)) {
         return;
     }
     ctx->pc = 0x170ADCu;

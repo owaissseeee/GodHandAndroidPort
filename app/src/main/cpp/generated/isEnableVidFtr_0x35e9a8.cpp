@@ -18,15 +18,15 @@ void isEnableVidFtr_0x35e9a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("isEnableVidFtr_0x35e9a8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x35e9bcu: goto label_35e9bc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x35e9a8u, 0)) {
+        switch (ctx->pc) {
+            case 0x35e9bcu: goto label_35e9bc;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x35e9a8u;
 
     // 0x35e9a8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x35e9a8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x35e9ac: 0xffb00000  sd          $s0, 0x0($sp)
     ctx->pc = 0x35e9acu;
@@ -35,7 +35,6 @@ void isEnableVidFtr_0x35e9a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     ctx->pc = 0x35e9b0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 8), GPR_U64(ctx, 31));
     // 0x35e9b4: 0xc0d7a7a  jal         func_35E9E8
-    ctx->pc = 0x35E9B4u;
     SET_GPR_U32(ctx, 31, 0x35E9BCu);
     ctx->pc = 0x35E9B8u;
     ctx->in_delay_slot = true;
@@ -43,14 +42,12 @@ void isEnableVidFtr_0x35e9a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     // 0x35e9b8: 0xa0802d  daddu       $s0, $a1, $zero (Delay Slot)
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x35E9E8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x35E9E8u, 0x35E9B4u, 0x35E9BCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_0035E9E8_0x35e9e8, 0x35e9e8u, 0x35e9bcu)) {
         return;
     }
     ctx->pc = 0x35E9BCu;
 label_35e9bc:
     // 0x35e9bc: 0x240300e0  addiu       $v1, $zero, 0xE0
-    ctx->pc = 0x35e9bcu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 224));
     // 0x35e9c0: 0x14430005  bne         $v0, $v1, . + 4 + (0x5 << 2)
     ctx->pc = 0x35E9C0u;
@@ -67,15 +64,12 @@ label_35e9bc:
             goto label_35e9d8;
         }
     }
-    ctx->pc = 0x35E9C8u;
     // 0x35e9c8: 0x92030020  lbu         $v1, 0x20($s0)
     ctx->pc = 0x35e9c8u;
     SET_GPR_ZE32(ctx, 3, (uint8_t)READ8(ADD32(GPR_U32(ctx, 16), 32)));
     // 0x35e9cc: 0x3102b  sltu        $v0, $zero, $v1
-    ctx->pc = 0x35e9ccu;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 0) < (uint64_t)GPR_U64(ctx, 3)) ? 1 : 0);
     // 0x35e9d0: 0x2c630002  sltiu       $v1, $v1, 0x2
-    ctx->pc = 0x35e9d0u;
     SET_GPR_U64(ctx, 3, ((uint64_t)GPR_U64(ctx, 3) < (uint64_t)(int64_t)(int32_t)2) ? 1 : 0);
     // 0x35e9d4: 0x3100a  movz        $v0, $zero, $v1
     ctx->pc = 0x35e9d4u;

@@ -18,7 +18,6 @@ void cCoreSave_SetFightingRingClearFlag_0x1fc468(uint8_t* rdram, R5900Context* c
     PS_LOG_ENTRY("cCoreSave_SetFightingRingClearFlag_0x1fc468");
 #endif
 
-    ctx->pc = 0x1fc468u;
 
     // 0x1fc468: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc468u;
@@ -38,9 +37,7 @@ void cCoreSave_SetFightingRingClearFlag_0x1fc468(uint8_t* rdram, R5900Context* c
             goto label_1fc4c8;
         }
     }
-    ctx->pc = 0x1FC474u;
     // 0x1fc474: 0x2c620004  sltiu       $v0, $v1, 0x4
-    ctx->pc = 0x1fc474u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 3) < (uint64_t)(int64_t)(int32_t)4) ? 1 : 0);
     // 0x1fc478: 0x10400013  beqz        $v0, . + 4 + (0x13 << 2)
     ctx->pc = 0x1FC478u;
@@ -57,7 +54,6 @@ void cCoreSave_SetFightingRingClearFlag_0x1fc468(uint8_t* rdram, R5900Context* c
             goto label_1fc4c8;
         }
     }
-    ctx->pc = 0x1FC480u;
     // 0x1fc480: 0x10c00009  beqz        $a2, . + 4 + (0x9 << 2)
     ctx->pc = 0x1FC480u;
     {
@@ -73,24 +69,18 @@ void cCoreSave_SetFightingRingClearFlag_0x1fc468(uint8_t* rdram, R5900Context* c
             goto label_1fc4a8;
         }
     }
-    ctx->pc = 0x1FC488u;
     // 0x1fc488: 0x24840b98  addiu       $a0, $a0, 0xB98
-    ctx->pc = 0x1fc488u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 2968));
     // 0x1fc48c: 0x832021  addu        $a0, $a0, $v1
-    ctx->pc = 0x1fc48cu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 3)));
     // 0x1fc490: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1fc490u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1fc494: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x1fc494u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x1fc498: 0xa21004  sllv        $v0, $v0, $a1
-    ctx->pc = 0x1fc498u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), GPR_U32(ctx, 5) & 0x1F));
     // 0x1fc49c: 0x621825  or          $v1, $v1, $v0
-    ctx->pc = 0x1fc49cu;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) | GPR_U64(ctx, 2));
     // 0x1fc4a0: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC4A0u;
@@ -114,25 +104,19 @@ void cCoreSave_SetFightingRingClearFlag_0x1fc468(uint8_t* rdram, R5900Context* c
     ctx->pc = 0x1FC4A8u;
 label_1fc4a8:
     // 0x1fc4a8: 0x24840b98  addiu       $a0, $a0, 0xB98
-    ctx->pc = 0x1fc4a8u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 2968));
     // 0x1fc4ac: 0x832021  addu        $a0, $a0, $v1
-    ctx->pc = 0x1fc4acu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 3)));
     // 0x1fc4b0: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1fc4b0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1fc4b4: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x1fc4b4u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x1fc4b8: 0xa21004  sllv        $v0, $v0, $a1
-    ctx->pc = 0x1fc4b8u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), GPR_U32(ctx, 5) & 0x1F));
     // 0x1fc4bc: 0x21027  nor         $v0, $zero, $v0
-    ctx->pc = 0x1fc4bcu;
     SET_GPR_U64(ctx, 2, ~(GPR_U64(ctx, 0) | GPR_U64(ctx, 2)));
     // 0x1fc4c0: 0x621824  and         $v1, $v1, $v0
-    ctx->pc = 0x1fc4c0u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 2));
     // 0x1fc4c4: 0xac830000  sw          $v1, 0x0($a0)
     ctx->pc = 0x1fc4c4u;

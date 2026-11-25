@@ -18,19 +18,14 @@ void MtxInitScaleVec_0x147a08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("MtxInitScaleVec_0x147a08");
 #endif
 
-    ctx->pc = 0x147a08u;
 
     // 0x147a08: 0x4be4033c  vmove.xyzw  $vf4, $vf0
-    ctx->pc = 0x147a08u;
     { __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[4] = _mm_blendv_ps(ctx->vu0_vf[4], ctx->vu0_vf[0], _mm_castsi128_ps(mask)); }
     // 0x147a0c: 0x4be5233d  vmr32.xyzw  $vf5, $vf4
-    ctx->pc = 0x147a0cu;
     { __m128 res = _mm_shuffle_ps(ctx->vu0_vf[4], ctx->vu0_vf[4], _MM_SHUFFLE(0,3,2,1)); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[5] = _mm_blendv_ps(ctx->vu0_vf[5], res, _mm_castsi128_ps(mask)); }
     // 0x147a10: 0x4be62b3d  vmr32.xyzw  $vf6, $vf5
-    ctx->pc = 0x147a10u;
     { __m128 res = _mm_shuffle_ps(ctx->vu0_vf[5], ctx->vu0_vf[5], _MM_SHUFFLE(0,3,2,1)); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[6] = _mm_blendv_ps(ctx->vu0_vf[6], res, _mm_castsi128_ps(mask)); }
     // 0x147a14: 0x4be7333d  vmr32.xyzw  $vf7, $vf6
-    ctx->pc = 0x147a14u;
     { __m128 res = _mm_shuffle_ps(ctx->vu0_vf[6], ctx->vu0_vf[6], _MM_SHUFFLE(0,3,2,1)); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[7] = _mm_blendv_ps(ctx->vu0_vf[7], res, _mm_castsi128_ps(mask)); }
     // 0x147a18: 0xf8840030  sqc2        $vf4, 0x30($a0)
     ctx->pc = 0x147a18u;
@@ -78,9 +73,7 @@ void MtxInitScaleVec_0x147a08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
         return;
         #endif
     }
-    ctx->pc = 0x147A44u;
     // 0x147a44: 0x0  nop
-    ctx->pc = 0x147a44u;
     // NOP
     ctx->pc = 0x147a48u;
 }

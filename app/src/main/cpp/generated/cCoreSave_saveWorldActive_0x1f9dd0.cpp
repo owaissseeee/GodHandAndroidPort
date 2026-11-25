@@ -18,7 +18,6 @@ void cCoreSave_saveWorldActive_0x1f9dd0(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("cCoreSave_saveWorldActive_0x1f9dd0");
 #endif
 
-    ctx->pc = 0x1f9dd0u;
 
     // 0x1f9dd0: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1f9dd0u;
@@ -38,7 +37,6 @@ void cCoreSave_saveWorldActive_0x1f9dd0(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_1f9df4;
         }
     }
-    ctx->pc = 0x1F9DDCu;
     // 0x1f9ddc: 0x904385f8  lbu         $v1, -0x7A08($v0)
     ctx->pc = 0x1f9ddcu;
     SET_GPR_ZE32(ctx, 3, (uint8_t)READ8(ADD32(GPR_U32(ctx, 2), 4294936056)));
@@ -57,9 +55,7 @@ void cCoreSave_saveWorldActive_0x1f9dd0(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_1f9df4;
         }
     }
-    ctx->pc = 0x1F9DE8u;
     // 0x1f9de8: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1f9de8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1f9dec: 0x3e00008  jr          $ra
     ctx->pc = 0x1F9DECu;
@@ -95,9 +91,7 @@ label_1f9df4:
         return;
         #endif
     }
-    ctx->pc = 0x1F9DFCu;
     // 0x1f9dfc: 0x0  nop
-    ctx->pc = 0x1f9dfcu;
     // NOP
     ctx->pc = 0x1f9e00u;
 }

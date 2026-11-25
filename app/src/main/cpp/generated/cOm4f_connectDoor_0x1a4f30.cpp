@@ -18,7 +18,6 @@ void cOm4f_connectDoor_0x1a4f30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("cOm4f_connectDoor_0x1a4f30");
 #endif
 
-    ctx->pc = 0x1a4f30u;
 
     // 0x1a4f30: 0x3e00008  jr          $ra
     ctx->pc = 0x1A4F30u;

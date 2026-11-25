@@ -18,7 +18,6 @@ void cOm1f_setStart_0x195b30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("cOm1f_setStart_0x195b30");
 #endif
 
-    ctx->pc = 0x195b30u;
 
     // 0x195b30: 0x8c830600  lw          $v1, 0x600($a0)
     ctx->pc = 0x195b30u;
@@ -38,7 +37,6 @@ void cOm1f_setStart_0x195b30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_195b44;
         }
     }
-    ctx->pc = 0x195B3Cu;
     // 0x195b3c: 0x50620007  beql        $v1, $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x195B3Cu;
     {
@@ -57,7 +55,6 @@ void cOm1f_setStart_0x195b30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     ctx->pc = 0x195B44u;
 label_195b44:
     // 0x195b44: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x195b44u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x195b48: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x195b48u;
@@ -114,9 +111,7 @@ label_195b5c:
         return;
         #endif
     }
-    ctx->pc = 0x195B6Cu;
     // 0x195b6c: 0x0  nop
-    ctx->pc = 0x195b6cu;
     // NOP
     ctx->pc = 0x195b70u;
 }

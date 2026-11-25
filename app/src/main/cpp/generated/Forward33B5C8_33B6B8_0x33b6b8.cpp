@@ -18,13 +18,10 @@ void Forward33B5C8_33B6B8_0x33b6b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("Forward33B5C8_33B6B8_0x33b6b8");
 #endif
 
-    ctx->pc = 0x33b6b8u;
 
     // 0x33b6b8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x33b6b8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x33b6bc: 0x24040002  addiu       $a0, $zero, 0x2
-    ctx->pc = 0x33b6bcu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x33b6c0: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x33b6c0u;
@@ -33,8 +30,6 @@ void Forward33B5C8_33B6B8_0x33b6b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x33b6c4u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x33b6c8: 0x80ced72  j           func_33B5C8
-    ctx->pc = 0x33B6C8u;
-    ctx->pc = 0x33B6CCu;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x33B6C8u;
     // 0x33b6cc: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)

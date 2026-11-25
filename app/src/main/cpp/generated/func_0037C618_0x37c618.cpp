@@ -18,7 +18,6 @@ void func_0037C618_0x37c618(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0037C618_0x37c618");
 #endif
 
-    ctx->pc = 0x37c618u;
 
     // 0x37c618: 0x94820006  lhu         $v0, 0x6($a0)
     ctx->pc = 0x37c618u;
@@ -27,7 +26,6 @@ void func_0037C618_0x37c618(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x37c61cu;
     SET_GPR_ZE32(ctx, 3, (uint16_t)READ16(ADD32(GPR_U32(ctx, 5), 60)));
     // 0x37c620: 0x34420004  ori         $v0, $v0, 0x4
-    ctx->pc = 0x37c620u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)4);
     // 0x37c624: 0xa4830048  sh          $v1, 0x48($a0)
     ctx->pc = 0x37c624u;

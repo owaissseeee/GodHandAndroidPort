@@ -18,18 +18,17 @@ void func_002BB298_0x2bb298(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002BB298_0x2bb298");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2bb2c8u: goto label_2bb2c8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2bb298u, 0)) {
+        switch (ctx->pc) {
+            case 0x2bb2c8u: goto label_2bb2c8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2bb298u;
 
     // 0x2bb298: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2bb298u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2bb29c: 0x24820060  addiu       $v0, $a0, 0x60
-    ctx->pc = 0x2bb29cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 96));
     // 0x2bb2a0: 0x10450007  beq         $v0, $a1, . + 4 + (0x7 << 2)
     ctx->pc = 0x2BB2A0u;
@@ -46,7 +45,6 @@ void func_002BB298_0x2bb298(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2bb2c0;
         }
     }
-    ctx->pc = 0x2BB2A8u;
     // 0x2bb2a8: 0xc4a00000  lwc1        $f0, 0x0($a1)
     ctx->pc = 0x2bb2a8u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -69,8 +67,7 @@ label_2bb2c0:
     // 0x2bb2c0: 0xc0aecb6  jal         func_2BB2D8
     ctx->pc = 0x2BB2C0u;
     SET_GPR_U32(ctx, 31, 0x2BB2C8u);
-    ctx->pc = 0x2BB2D8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2BB2D8u, 0x2BB2C0u, 0x2BB2C8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002BB2D8_0x2bb2d8, 0x2bb2d8u, 0x2bb2c8u)) {
         return;
     }
     ctx->pc = 0x2BB2C8u;
@@ -97,9 +94,7 @@ label_2bb2c8:
         return;
         #endif
     }
-    ctx->pc = 0x2BB2D4u;
     // 0x2bb2d4: 0x0  nop
-    ctx->pc = 0x2bb2d4u;
     // NOP
     ctx->pc = 0x2bb2d8u;
 }

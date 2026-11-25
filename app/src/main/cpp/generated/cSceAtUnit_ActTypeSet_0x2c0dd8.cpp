@@ -18,7 +18,6 @@ void cSceAtUnit_ActTypeSet_0x2c0dd8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("cSceAtUnit_ActTypeSet_0x2c0dd8");
 #endif
 
-    ctx->pc = 0x2c0dd8u;
 
     // 0x2c0dd8: 0xa0860054  sb          $a2, 0x54($a0)
     ctx->pc = 0x2c0dd8u;
@@ -42,9 +41,7 @@ void cSceAtUnit_ActTypeSet_0x2c0dd8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         return;
         #endif
     }
-    ctx->pc = 0x2C0DE4u;
     // 0x2c0de4: 0x0  nop
-    ctx->pc = 0x2c0de4u;
     // NOP
     ctx->pc = 0x2c0de8u;
 }

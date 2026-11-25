@@ -18,7 +18,6 @@ void CustomIDWork_SetNumber_0x2d6548(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("CustomIDWork_SetNumber_0x2d6548");
 #endif
 
-    ctx->pc = 0x2d6548u;
 
     // 0x2d6548: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2d6548u;
@@ -53,9 +52,7 @@ label_2d6554:
         return;
         #endif
     }
-    ctx->pc = 0x2D655Cu;
     // 0x2d655c: 0x0  nop
-    ctx->pc = 0x2d655cu;
     // NOP
     ctx->pc = 0x2d6560u;
 }

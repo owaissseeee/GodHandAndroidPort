@@ -18,7 +18,6 @@ void ps2___rtti_attr_0x31fa40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("ps2___rtti_attr_0x31fa40");
 #endif
 
-    ctx->pc = 0x31fa40u;
 
     // 0x31fa40: 0x10800006  beqz        $a0, . + 4 + (0x6 << 2)
     ctx->pc = 0x31FA40u;
@@ -35,12 +34,10 @@ void ps2___rtti_attr_0x31fa40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_31fa5c;
         }
     }
-    ctx->pc = 0x31FA48u;
     // 0x31fa48: 0xac86000c  sw          $a2, 0xC($a0)
     ctx->pc = 0x31fa48u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 12), GPR_U32(ctx, 6));
     // 0x31fa4c: 0x244211a8  addiu       $v0, $v0, 0x11A8
-    ctx->pc = 0x31fa4cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4520));
     // 0x31fa50: 0xac850000  sw          $a1, 0x0($a0)
     ctx->pc = 0x31fa50u;
@@ -65,9 +62,7 @@ label_31fa5c:
         return;
         #endif
     }
-    ctx->pc = 0x31FA64u;
     // 0x31fa64: 0x0  nop
-    ctx->pc = 0x31fa64u;
     // NOP
     ctx->pc = 0x31fa68u;
 }

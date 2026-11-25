@@ -18,7 +18,6 @@ void stossc__9streambuf_0x38b900(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("stossc__9streambuf_0x38b900");
 #endif
 
-    ctx->pc = 0x38b900u;
 
     // 0x38b900: 0x8c830004  lw          $v1, 0x4($a0)
     ctx->pc = 0x38b900u;
@@ -27,7 +26,6 @@ void stossc__9streambuf_0x38b900(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     ctx->pc = 0x38b904u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 8)));
     // 0x38b908: 0x62102b  sltu        $v0, $v1, $v0
-    ctx->pc = 0x38b908u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 3) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
     // 0x38b90c: 0x10400002  beqz        $v0, . + 4 + (0x2 << 2)
     ctx->pc = 0x38B90Cu;
@@ -44,7 +42,6 @@ void stossc__9streambuf_0x38b900(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_38b918;
         }
     }
-    ctx->pc = 0x38B914u;
     // 0x38b914: 0xac820004  sw          $v0, 0x4($a0)
     ctx->pc = 0x38b914u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 4), GPR_U32(ctx, 2));

@@ -18,18 +18,20 @@ void ForwardVtableCall_138210_0x138210(uint8_t* rdram, R5900Context* ctx, PS2Run
     PS_LOG_ENTRY("ForwardVtableCall_138210_0x138210");
 #endif
 
-    switch (ctx->pc) {
-        case 0x138210u: goto label_138210;
-        case 0x138214u: goto label_138214;
-        case 0x138218u: goto label_138218;
-        case 0x13821cu: goto label_13821c;
-        case 0x138220u: goto label_138220;
-        case 0x138224u: goto label_138224;
-        case 0x138228u: goto label_138228;
-        case 0x13822cu: goto label_13822c;
-        case 0x138230u: goto label_138230;
-        case 0x138234u: goto label_138234;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x138210u, 0)) {
+        switch (ctx->pc) {
+            case 0x138210u: goto label_138210;
+            case 0x138214u: goto label_138214;
+            case 0x138218u: goto label_138218;
+            case 0x13821cu: goto label_13821c;
+            case 0x138220u: goto label_138220;
+            case 0x138224u: goto label_138224;
+            case 0x138228u: goto label_138228;
+            case 0x13822cu: goto label_13822c;
+            case 0x138230u: goto label_138230;
+            case 0x138234u: goto label_138234;
+            default: break;
+        }
     }
 
     ctx->pc = 0x138210u;

@@ -18,10 +18,8 @@ void cOm59_setParent_0x1aad88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("cOm59_setParent_0x1aad88");
 #endif
 
-    ctx->pc = 0x1aad88u;
 
     // 0x1aad88: 0x248209b0  addiu       $v0, $a0, 0x9B0
-    ctx->pc = 0x1aad88u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 2480));
     // 0x1aad8c: 0xac8509a0  sw          $a1, 0x9A0($a0)
     ctx->pc = 0x1aad8cu;
@@ -41,7 +39,6 @@ void cOm59_setParent_0x1aad88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_1aadb0;
         }
     }
-    ctx->pc = 0x1AAD98u;
     // 0x1aad98: 0xc4e00000  lwc1        $f0, 0x0($a3)
     ctx->pc = 0x1aad98u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 7), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -62,7 +59,6 @@ void cOm59_setParent_0x1aad88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 2), 8), bits); }
 label_1aadb0:
     // 0x1aadb0: 0x248209c0  addiu       $v0, $a0, 0x9C0
-    ctx->pc = 0x1aadb0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 2496));
     // 0x1aadb4: 0x10480007  beq         $v0, $t0, . + 4 + (0x7 << 2)
     ctx->pc = 0x1AADB4u;
@@ -73,7 +69,6 @@ label_1aadb0:
             goto label_1aadd4;
         }
     }
-    ctx->pc = 0x1AADBCu;
     // 0x1aadbc: 0xc5000000  lwc1        $f0, 0x0($t0)
     ctx->pc = 0x1aadbcu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 8), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -106,9 +101,7 @@ label_1aadd4:
         return;
         #endif
     }
-    ctx->pc = 0x1AADDCu;
     // 0x1aaddc: 0x0  nop
-    ctx->pc = 0x1aaddcu;
     // NOP
     ctx->pc = 0x1aade0u;
 }

@@ -18,10 +18,8 @@ void cOme9_setSwell_0x1be830(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("cOme9_setSwell_0x1be830");
 #endif
 
-    ctx->pc = 0x1be830u;
 
     // 0x1be830: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1be830u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1be834: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x1be834u;
@@ -51,24 +49,17 @@ void cOme9_setSwell_0x1be830(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
         return;
         #endif
     }
-    ctx->pc = 0x1BE848u;
     // 0x1be848: 0x0  nop
-    ctx->pc = 0x1be848u;
     // NOP
     // 0x1be84c: 0x0  nop
-    ctx->pc = 0x1be84cu;
     // NOP
     // 0x1be850: 0x0  nop
-    ctx->pc = 0x1be850u;
     // NOP
     // 0x1be854: 0x0  nop
-    ctx->pc = 0x1be854u;
     // NOP
     // 0x1be858: 0x0  nop
-    ctx->pc = 0x1be858u;
     // NOP
     // 0x1be85c: 0x0  nop
-    ctx->pc = 0x1be85cu;
     // NOP
     ctx->pc = 0x1be860u;
 }

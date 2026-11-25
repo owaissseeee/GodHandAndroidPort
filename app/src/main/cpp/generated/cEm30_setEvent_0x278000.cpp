@@ -18,10 +18,8 @@ void cEm30_setEvent_0x278000(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("cEm30_setEvent_0x278000");
 #endif
 
-    ctx->pc = 0x278000u;
 
     // 0x278000: 0x24020004  addiu       $v0, $zero, 0x4
-    ctx->pc = 0x278000u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x278004: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x278004u;

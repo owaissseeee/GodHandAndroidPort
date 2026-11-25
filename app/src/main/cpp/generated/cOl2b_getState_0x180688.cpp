@@ -18,7 +18,6 @@ void cOl2b_getState_0x180688(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("cOl2b_getState_0x180688");
 #endif
 
-    ctx->pc = 0x180688u;
 
     // 0x180688: 0x3e00008  jr          $ra
     ctx->pc = 0x180688u;

@@ -18,13 +18,10 @@ void SetFieldIfUnset_359218_0x359218(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("SetFieldIfUnset_359218_0x359218");
 #endif
 
-    ctx->pc = 0x359218u;
 
     // 0x359218: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x359218u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x35921c: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x35921cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x359220: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x359220u;
@@ -41,7 +38,6 @@ void SetFieldIfUnset_359218_0x359218(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_359240;
         }
     }
-    ctx->pc = 0x359230u;
     // 0x359230: 0xac450058  sw          $a1, 0x58($v0)
     ctx->pc = 0x359230u;
     WRITE32(ADD32(GPR_U32(ctx, 2), 88), GPR_U32(ctx, 5));
@@ -60,7 +56,6 @@ void SetFieldIfUnset_359218_0x359218(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_359260;
         }
     }
-    ctx->pc = 0x35923Cu;
     // 0x35923c: 0x0  nop
     ctx->pc = 0x35923cu;
     // NOP
@@ -80,19 +75,14 @@ label_359240:
             goto label_359260;
         }
     }
-    ctx->pc = 0x359248u;
     // 0x359248: 0x3c05ff00  lui         $a1, 0xFF00
-    ctx->pc = 0x359248u;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)65280 << 16));
     // 0x35924c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x35924cu;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x359250: 0x34a50207  ori         $a1, $a1, 0x207
-    ctx->pc = 0x359250u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) | (uint64_t)(uint16_t)519);
     // 0x359254: 0x80d375c  j           func_34DD70
-    ctx->pc = 0x359254u;
-    ctx->pc = 0x359258u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x359254u;
     // 0x359258: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)
@@ -102,7 +92,6 @@ label_359240:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x34DD70u, 0x359254u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x35925Cu;
     // 0x35925c: 0x0  nop
     ctx->pc = 0x35925cu;
     // NOP
@@ -129,9 +118,7 @@ label_359260:
         return;
         #endif
     }
-    ctx->pc = 0x35926Cu;
     // 0x35926c: 0x0  nop
-    ctx->pc = 0x35926cu;
     // NOP
     ctx->pc = 0x359270u;
 }

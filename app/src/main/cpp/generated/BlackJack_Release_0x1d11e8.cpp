@@ -18,15 +18,15 @@ void BlackJack_Release_0x1d11e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("BlackJack_Release_0x1d11e8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1d11f8u: goto label_1d11f8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1d11e8u, 0)) {
+        switch (ctx->pc) {
+            case 0x1d11f8u: goto label_1d11f8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1d11e8u;
 
     // 0x1d11e8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1d11e8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1d11ec: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1d11ecu;
@@ -34,8 +34,7 @@ void BlackJack_Release_0x1d11e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     // 0x1d11f0: 0xc0753d2  jal         func_1D4F48
     ctx->pc = 0x1D11F0u;
     SET_GPR_U32(ctx, 31, 0x1D11F8u);
-    ctx->pc = 0x1D4F48u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1D4F48u, 0x1D11F0u, 0x1D11F8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_001D4F48_0x1d4f48, 0x1d4f48u, 0x1d11f8u)) {
         return;
     }
     ctx->pc = 0x1D11F8u;
@@ -62,9 +61,7 @@ label_1d11f8:
         return;
         #endif
     }
-    ctx->pc = 0x1D1204u;
     // 0x1d1204: 0x0  nop
-    ctx->pc = 0x1d1204u;
     // NOP
     ctx->pc = 0x1d1208u;
 }

@@ -18,16 +18,13 @@ void func_0031F188_0x31f188(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0031F188_0x31f188");
 #endif
 
-    ctx->pc = 0x31f188u;
 
     // 0x31f188: 0x3c020045  lui         $v0, 0x45
-    ctx->pc = 0x31f188u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)69 << 16));
     // 0x31f18c: 0xac850000  sw          $a1, 0x0($a0)
     ctx->pc = 0x31f18cu;
     WRITE32(ADD32(GPR_U32(ctx, 4), 0), GPR_U32(ctx, 5));
     // 0x31f190: 0x24420fc0  addiu       $v0, $v0, 0xFC0
-    ctx->pc = 0x31f190u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4032));
     // 0x31f194: 0xac860008  sw          $a2, 0x8($a0)
     ctx->pc = 0x31f194u;
@@ -36,7 +33,6 @@ void func_0031F188_0x31f188(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x31f198u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 4), GPR_U32(ctx, 2));
     // 0x31f19c: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x31f19cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x31f1a0: 0x3e00008  jr          $ra
     ctx->pc = 0x31F1A0u;

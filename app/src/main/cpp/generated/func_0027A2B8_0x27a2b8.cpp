@@ -18,27 +18,24 @@ void func_0027A2B8_0x27a2b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_0027A2B8_0x27a2b8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x27a2dcu: goto label_27a2dc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x27a2b8u, 0)) {
+        switch (ctx->pc) {
+            case 0x27a2dcu: goto label_27a2dc;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x27a2b8u;
 
     // 0x27a2b8: 0x3c020074  lui         $v0, 0x74
-    ctx->pc = 0x27a2b8u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
     // 0x27a2bc: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x27a2bcu;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x27a2c0: 0x8c437a80  lw          $v1, 0x7A80($v0)
     ctx->pc = 0x27a2c0u;
     SET_GPR_S32(ctx, 3, (int32_t)FAST_READ32(0x747A80u));
     // 0x27a2c4: 0x3c054000  lui         $a1, 0x4000
-    ctx->pc = 0x27a2c4u;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)16384 << 16));
     // 0x27a2c8: 0x651824  and         $v1, $v1, $a1
-    ctx->pc = 0x27a2c8u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 5));
     // 0x27a2cc: 0x14600005  bnez        $v1, . + 4 + (0x5 << 2)
     ctx->pc = 0x27A2CCu;
@@ -55,12 +52,10 @@ void func_0027A2B8_0x27a2b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_27a2e4;
         }
     }
-    ctx->pc = 0x27A2D4u;
     // 0x27a2d4: 0xc052d1c  jal         func_14B470
     ctx->pc = 0x27A2D4u;
     SET_GPR_U32(ctx, 31, 0x27A2DCu);
-    ctx->pc = 0x14B470u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x14B470u, 0x27A2D4u, 0x27A2DCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &IsTargetVisible_14B470_0x14b470, 0x14b470u, 0x27a2dcu)) {
         return;
     }
     ctx->pc = 0x27A2DCu;
@@ -108,9 +103,7 @@ label_27a2e8:
         return;
         #endif
     }
-    ctx->pc = 0x27A2F4u;
     // 0x27a2f4: 0x0  nop
-    ctx->pc = 0x27a2f4u;
     // NOP
     ctx->pc = 0x27a2f8u;
 }

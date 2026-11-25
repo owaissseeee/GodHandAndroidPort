@@ -18,20 +18,22 @@ void seekpos__9streambufli_0x38b2f8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("seekpos__9streambufli_0x38b2f8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38b2f8u: goto label_38b2f8;
-        case 0x38b2fcu: goto label_38b2fc;
-        case 0x38b300u: goto label_38b300;
-        case 0x38b304u: goto label_38b304;
-        case 0x38b308u: goto label_38b308;
-        case 0x38b30cu: goto label_38b30c;
-        case 0x38b310u: goto label_38b310;
-        case 0x38b314u: goto label_38b314;
-        case 0x38b318u: goto label_38b318;
-        case 0x38b31cu: goto label_38b31c;
-        case 0x38b320u: goto label_38b320;
-        case 0x38b324u: goto label_38b324;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38b2f8u, 0)) {
+        switch (ctx->pc) {
+            case 0x38b2f8u: goto label_38b2f8;
+            case 0x38b2fcu: goto label_38b2fc;
+            case 0x38b300u: goto label_38b300;
+            case 0x38b304u: goto label_38b304;
+            case 0x38b308u: goto label_38b308;
+            case 0x38b30cu: goto label_38b30c;
+            case 0x38b310u: goto label_38b310;
+            case 0x38b314u: goto label_38b314;
+            case 0x38b318u: goto label_38b318;
+            case 0x38b31cu: goto label_38b31c;
+            case 0x38b320u: goto label_38b320;
+            case 0x38b324u: goto label_38b324;
+            default: break;
+        }
     }
 
     ctx->pc = 0x38b2f8u;

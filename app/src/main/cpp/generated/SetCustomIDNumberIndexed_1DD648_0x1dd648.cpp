@@ -18,27 +18,24 @@ void SetCustomIDNumberIndexed_1DD648_0x1dd648(uint8_t* rdram, R5900Context* ctx,
     PS_LOG_ENTRY("SetCustomIDNumberIndexed_1DD648_0x1dd648");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1dd6ccu: goto label_1dd6cc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1dd648u, 0)) {
+        switch (ctx->pc) {
+            case 0x1dd6ccu: goto label_1dd6cc;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1dd648u;
 
     // 0x1dd648: 0x30a3ffff  andi        $v1, $a1, 0xFFFF
-    ctx->pc = 0x1dd648u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)65535);
     // 0x1dd64c: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x1dd64cu;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x1dd650: 0xffbf0020  sd          $ra, 0x20($sp)
     ctx->pc = 0x1dd650u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 32), GPR_U64(ctx, 31));
     // 0x1dd654: 0x80382d  daddu       $a3, $a0, $zero
-    ctx->pc = 0x1dd654u;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1dd658: 0x2c620008  sltiu       $v0, $v1, 0x8
-    ctx->pc = 0x1dd658u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 3) < (uint64_t)(int64_t)(int32_t)8) ? 1 : 0);
     // 0x1dd65c: 0x1040001b  beqz        $v0, . + 4 + (0x1B << 2)
     ctx->pc = 0x1DD65Cu;
@@ -55,15 +52,11 @@ void SetCustomIDNumberIndexed_1DD648_0x1dd648(uint8_t* rdram, R5900Context* ctx,
             goto label_1dd6cc;
         }
     }
-    ctx->pc = 0x1DD664u;
     // 0x1dd664: 0x3c020043  lui         $v0, 0x43
-    ctx->pc = 0x1dd664u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)67 << 16));
     // 0x1dd668: 0x31880  sll         $v1, $v1, 2
-    ctx->pc = 0x1dd668u;
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 3), 2));
     // 0x1dd66c: 0x2449b5b0  addiu       $t1, $v0, -0x4A50
-    ctx->pc = 0x1dd66cu;
     SET_GPR_S32(ctx, 9, (int32_t)ADD32(GPR_U32(ctx, 2), 4294948272));
     // 0x1dd670: 0x69240007  ldl         $a0, 0x7($t1)
     ctx->pc = 0x1dd670u;
@@ -114,22 +107,17 @@ void SetCustomIDNumberIndexed_1DD648_0x1dd648(uint8_t* rdram, R5900Context* ctx,
     ctx->pc = 0x1dd6acu;
     { uint32_t addr = ADD32(GPR_U32(ctx, 29), 24); uint32_t aligned_addr = addr & ~7u; uint32_t offset = addr & 7u; uint32_t shift = offset << 3; uint64_t mask = 0xFFFFFFFFFFFFFFFFull << shift; uint64_t old_data = READ64(aligned_addr); uint64_t val = GPR_U64(ctx, 4); uint64_t new_data = (old_data & ~mask) | ((val << shift) & mask); WRITE64(aligned_addr, new_data); }
     // 0x1dd6b0: 0x3a33021  addu        $a2, $sp, $v1
-    ctx->pc = 0x1dd6b0u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 29), GPR_U32(ctx, 3)));
     // 0x1dd6b4: 0x2402007c  addiu       $v0, $zero, 0x7C
-    ctx->pc = 0x1dd6b4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 124));
     // 0x1dd6b8: 0x8cc40000  lw          $a0, 0x0($a2)
     ctx->pc = 0x1dd6b8u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 6), 0)));
     // 0x1dd6bc: 0x822018  mult        $a0, $a0, $v0
-    ctx->pc = 0x1dd6bcu;
     { int64_t result = (int64_t)GPR_S32(ctx, 4) * (int64_t)GPR_S32(ctx, 2); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 4, (int32_t)result); }
     // 0x1dd6c0: 0x24840060  addiu       $a0, $a0, 0x60
-    ctx->pc = 0x1dd6c0u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 96));
     // 0x1dd6c4: 0xc0b5952  jal         func_2D6548
-    ctx->pc = 0x1DD6C4u;
     SET_GPR_U32(ctx, 31, 0x1DD6CCu);
     ctx->pc = 0x1DD6C8u;
     ctx->in_delay_slot = true;
@@ -137,8 +125,7 @@ void SetCustomIDNumberIndexed_1DD648_0x1dd648(uint8_t* rdram, R5900Context* ctx,
     // 0x1dd6c8: 0xe42021  addu        $a0, $a3, $a0 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 7), GPR_U32(ctx, 4)));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2D6548u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D6548u, 0x1DD6C4u, 0x1DD6CCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetNumber_0x2d6548, 0x2d6548u, 0x1dd6ccu)) {
         return;
     }
     ctx->pc = 0x1DD6CCu;

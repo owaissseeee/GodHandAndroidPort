@@ -18,21 +18,20 @@ void cSndMemHeap_FindUnusedBlk_0x2cd930(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("cSndMemHeap_FindUnusedBlk_0x2cd930");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2cd940u: goto label_2cd940;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2cd930u, 0)) {
+        switch (ctx->pc) {
+            case 0x2cd940u: goto label_2cd940;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2cd930u;
 
     // 0x2cd930: 0x8c820380  lw          $v0, 0x380($a0)
     ctx->pc = 0x2cd930u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 896)));
     // 0x2cd934: 0x24040001  addiu       $a0, $zero, 0x1
-    ctx->pc = 0x2cd934u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2cd938: 0x2443001c  addiu       $v1, $v0, 0x1C
-    ctx->pc = 0x2cd938u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 28));
     // 0x2cd93c: 0x0  nop
     ctx->pc = 0x2cd93cu;
@@ -56,7 +55,6 @@ label_2cd940:
             goto label_2cd954;
         }
     }
-    ctx->pc = 0x2CD94Cu;
     // 0x2cd94c: 0x3e00008  jr          $ra
     ctx->pc = 0x2CD94Cu;
     {
@@ -79,7 +77,6 @@ label_2cd940:
     ctx->pc = 0x2CD954u;
 label_2cd954:
     // 0x2cd954: 0x28820020  slti        $v0, $a0, 0x20
-    ctx->pc = 0x2cd954u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 4) < (int64_t)(int32_t)32) ? 1 : 0);
     // 0x2cd958: 0x1440fff9  bnez        $v0, . + 4 + (-0x7 << 2)
     ctx->pc = 0x2CD958u;
@@ -99,7 +96,6 @@ label_2cd954:
             goto label_2cd940;
         }
     }
-    ctx->pc = 0x2CD960u;
     // 0x2cd960: 0x3e00008  jr          $ra
     ctx->pc = 0x2CD960u;
     {

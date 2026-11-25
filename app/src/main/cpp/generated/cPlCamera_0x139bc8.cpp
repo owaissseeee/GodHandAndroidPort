@@ -18,15 +18,15 @@ void cPlCamera_0x139bc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
     PS_LOG_ENTRY("cPlCamera_0x139bc8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x139bdcu: goto label_139bdc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x139bc8u, 0)) {
+        switch (ctx->pc) {
+            case 0x139bdcu: goto label_139bdc;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x139bc8u;
 
     // 0x139bc8: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x139bc8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x139bcc: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x139bccu;
@@ -35,7 +35,6 @@ void cPlCamera_0x139bc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
     ctx->pc = 0x139bd0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x139bd4: 0xc04e02a  jal         func_1380A8
-    ctx->pc = 0x139BD4u;
     SET_GPR_U32(ctx, 31, 0x139BDCu);
     ctx->pc = 0x139BD8u;
     ctx->in_delay_slot = true;
@@ -43,17 +42,14 @@ void cPlCamera_0x139bc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
     // 0x139bd8: 0x80802d  daddu       $s0, $a0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1380A8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1380A8u, 0x139BD4u, 0x139BDCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cCamera_0x1380a8, 0x1380a8u, 0x139bdcu)) {
         return;
     }
     ctx->pc = 0x139BDCu;
 label_139bdc:
     // 0x139bdc: 0x3c030042  lui         $v1, 0x42
-    ctx->pc = 0x139bdcu;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)66 << 16));
     // 0x139be0: 0x2463d8f8  addiu       $v1, $v1, -0x2708
-    ctx->pc = 0x139be0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294957304));
     // 0x139be4: 0xae03035c  sw          $v1, 0x35C($s0)
     ctx->pc = 0x139be4u;
@@ -77,10 +73,8 @@ label_139bdc:
     ctx->pc = 0x139bfcu;
     WRITE128(ADD32(GPR_U32(ctx, 16), 976), _mm_castps_si128(ctx->vu0_vf[0]));
     // 0x139c00: 0x3c020042  lui         $v0, 0x42
-    ctx->pc = 0x139c00u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)66 << 16));
     // 0x139c04: 0x2442dbb0  addiu       $v0, $v0, -0x2450
-    ctx->pc = 0x139c04u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294958000));
     // 0x139c08: 0xae02035c  sw          $v0, 0x35C($s0)
     ctx->pc = 0x139c08u;
@@ -113,7 +107,6 @@ label_139bdc:
     ctx->pc = 0x139c2cu;
     WRITE128(ADD32(GPR_U32(ctx, 16), 1280), _mm_castps_si128(ctx->vu0_vf[0]));
     // 0x139c30: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x139c30u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x139c34: 0xae000528  sw          $zero, 0x528($s0)
     ctx->pc = 0x139c34u;

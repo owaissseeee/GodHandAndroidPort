@@ -18,18 +18,17 @@ void ReferThreadStatus_0x3afba0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("ReferThreadStatus_0x3afba0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afba8u: goto label_3afba8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afba0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afba8u: goto label_3afba8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afba0u;
 
     // 0x3afba0: 0x24030030  addiu       $v1, $zero, 0x30
-    ctx->pc = 0x3afba0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 48));
     // 0x3afba4: 0xc  syscall     0
-    ctx->pc = 0x3afba4u;
     ctx->pc = 0x3AFBA8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

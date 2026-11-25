@@ -18,7 +18,6 @@ void func_002AF698_0x2af698(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002AF698_0x2af698");
 #endif
 
-    ctx->pc = 0x2af698u;
 
     // 0x2af698: 0xe48d0048  swc1        $f13, 0x48($a0)
     ctx->pc = 0x2af698u;
@@ -42,9 +41,7 @@ void func_002AF698_0x2af698(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2AF6A4u;
     // 0x2af6a4: 0x0  nop
-    ctx->pc = 0x2af6a4u;
     // NOP
     ctx->pc = 0x2af6a8u;
 }

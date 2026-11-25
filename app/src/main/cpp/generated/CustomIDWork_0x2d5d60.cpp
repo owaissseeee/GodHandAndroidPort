@@ -18,10 +18,8 @@ void CustomIDWork_0x2d5d60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("CustomIDWork_0x2d5d60");
 #endif
 
-    ctx->pc = 0x2d5d60u;
 
     // 0x2d5d60: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x2d5d60u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2d5d64: 0xac800000  sw          $zero, 0x0($a0)
     ctx->pc = 0x2d5d64u;

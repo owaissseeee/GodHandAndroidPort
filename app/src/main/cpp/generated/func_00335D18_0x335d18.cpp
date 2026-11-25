@@ -18,7 +18,6 @@ void func_00335D18_0x335d18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_00335D18_0x335d18");
 #endif
 
-    ctx->pc = 0x335d18u;
 
     // 0x335d18: 0x14800005  bnez        $a0, . + 4 + (0x5 << 2)
     ctx->pc = 0x335D18u;
@@ -35,9 +34,7 @@ void func_00335D18_0x335d18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_335d30;
         }
     }
-    ctx->pc = 0x335D20u;
     // 0x335d20: 0x3c03003e  lui         $v1, 0x3E
-    ctx->pc = 0x335d20u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)62 << 16));
     // 0x335d24: 0xac40a4d0  sw          $zero, -0x5B30($v0)
     ctx->pc = 0x335d24u;
@@ -64,7 +61,6 @@ void func_00335D18_0x335d18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x335D30u;
 label_335d30:
     // 0x335d30: 0x3c03003e  lui         $v1, 0x3E
-    ctx->pc = 0x335d30u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)62 << 16));
     // 0x335d34: 0xac44a4d0  sw          $a0, -0x5B30($v0)
     ctx->pc = 0x335d34u;

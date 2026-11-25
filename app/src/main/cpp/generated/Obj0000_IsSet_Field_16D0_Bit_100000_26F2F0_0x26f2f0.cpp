@@ -18,16 +18,13 @@ void Obj0000_IsSet_Field_16D0_Bit_100000_26F2F0_0x26f2f0(uint8_t* rdram, R5900Co
     PS_LOG_ENTRY("Obj0000_IsSet_Field_16D0_Bit_100000_26F2F0_0x26f2f0");
 #endif
 
-    ctx->pc = 0x26f2f0u;
 
     // 0x26f2f0: 0x8c8216d0  lw          $v0, 0x16D0($a0)
     ctx->pc = 0x26f2f0u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 5840)));
     // 0x26f2f4: 0x3c030010  lui         $v1, 0x10
-    ctx->pc = 0x26f2f4u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)16 << 16));
     // 0x26f2f8: 0x431024  and         $v0, $v0, $v1
-    ctx->pc = 0x26f2f8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 3));
     // 0x26f2fc: 0x3e00008  jr          $ra
     ctx->pc = 0x26F2FCu;
@@ -48,9 +45,7 @@ void Obj0000_IsSet_Field_16D0_Bit_100000_26F2F0_0x26f2f0(uint8_t* rdram, R5900Co
         return;
         #endif
     }
-    ctx->pc = 0x26F304u;
     // 0x26f304: 0x0  nop
-    ctx->pc = 0x26f304u;
     // NOP
     ctx->pc = 0x26f308u;
 }

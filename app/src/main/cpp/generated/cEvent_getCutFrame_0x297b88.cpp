@@ -18,7 +18,6 @@ void cEvent_getCutFrame_0x297b88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("cEvent_getCutFrame_0x297b88");
 #endif
 
-    ctx->pc = 0x297b88u;
 
     // 0x297b88: 0x3c020000  lui         $v0, 0x0
     ctx->pc = 0x297b88u;
@@ -42,9 +41,7 @@ void cEvent_getCutFrame_0x297b88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         return;
         #endif
     }
-    ctx->pc = 0x297B94u;
     // 0x297b94: 0x0  nop
-    ctx->pc = 0x297b94u;
     // NOP
     ctx->pc = 0x297b98u;
 }

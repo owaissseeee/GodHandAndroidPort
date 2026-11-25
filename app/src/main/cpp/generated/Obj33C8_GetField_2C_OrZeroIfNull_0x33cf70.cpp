@@ -18,7 +18,6 @@ void Obj33C8_GetField_2C_OrZeroIfNull_0x33cf70(uint8_t* rdram, R5900Context* ctx
     PS_LOG_ENTRY("Obj33C8_GetField_2C_OrZeroIfNull_0x33cf70");
 #endif
 
-    ctx->pc = 0x33cf70u;
 
     // 0x33cf70: 0x10800002  beqz        $a0, . + 4 + (0x2 << 2)
     ctx->pc = 0x33CF70u;
@@ -35,7 +34,6 @@ void Obj33C8_GetField_2C_OrZeroIfNull_0x33cf70(uint8_t* rdram, R5900Context* ctx
             goto label_33cf7c;
         }
     }
-    ctx->pc = 0x33CF78u;
     // 0x33cf78: 0x8c82002c  lw          $v0, 0x2C($a0)
     ctx->pc = 0x33cf78u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 44)));
@@ -53,9 +51,7 @@ label_33cf7c:
         return;
         #endif
     }
-    ctx->pc = 0x33CF84u;
     // 0x33cf84: 0x0  nop
-    ctx->pc = 0x33cf84u;
     // NOP
     ctx->pc = 0x33cf88u;
 }

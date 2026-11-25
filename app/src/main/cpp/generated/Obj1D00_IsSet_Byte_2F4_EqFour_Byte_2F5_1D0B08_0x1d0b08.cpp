@@ -18,7 +18,6 @@ void Obj1D00_IsSet_Byte_2F4_EqFour_Byte_2F5_1D0B08_0x1d0b08(uint8_t* rdram, R590
     PS_LOG_ENTRY("Obj1D00_IsSet_Byte_2F4_EqFour_Byte_2F5_1D0B08_0x1d0b08");
 #endif
 
-    ctx->pc = 0x1d0b08u;
 
     // 0x1d0b08: 0x908202f4  lbu         $v0, 0x2F4($a0)
     ctx->pc = 0x1d0b08u;
@@ -32,12 +31,10 @@ void Obj1D00_IsSet_Byte_2F4_EqFour_Byte_2F5_1D0B08_0x1d0b08(uint8_t* rdram, R590
             goto label_1d0b24;
         }
     }
-    ctx->pc = 0x1D0B14u;
     // 0x1d0b14: 0x908202f5  lbu         $v0, 0x2F5($a0)
     ctx->pc = 0x1d0b14u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 757)));
     // 0x1d0b18: 0x38420004  xori        $v0, $v0, 0x4
-    ctx->pc = 0x1d0b18u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)4);
     // 0x1d0b1c: 0x3e00008  jr          $ra
     ctx->pc = 0x1D0B1Cu;
@@ -79,9 +76,7 @@ label_1d0b24:
         return;
         #endif
     }
-    ctx->pc = 0x1D0B2Cu;
     // 0x1d0b2c: 0x0  nop
-    ctx->pc = 0x1d0b2cu;
     // NOP
     ctx->pc = 0x1d0b30u;
 }

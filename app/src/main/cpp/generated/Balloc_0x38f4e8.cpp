@@ -18,48 +18,41 @@ void Balloc_0x38f4e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     PS_LOG_ENTRY("Balloc_0x38f4e8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38f51cu: goto label_38f51c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38f4e8u, 0)) {
+        switch (ctx->pc) {
+            case 0x38f51cu: goto label_38f51c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x38f4e8u;
 
     // 0x38f4e8: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x38f4e8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x38f4ec: 0x24020002  addiu       $v0, $zero, 0x2
-    ctx->pc = 0x38f4ecu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x38f4f0: 0xffb00000  sd          $s0, 0x0($sp)
     ctx->pc = 0x38f4f0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 16));
     // 0x38f4f4: 0x44102a  slt         $v0, $v0, $a0
-    ctx->pc = 0x38f4f4u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 2) < (int64_t)GPR_S64(ctx, 4)) ? 1 : 0);
     // 0x38f4f8: 0xffb10010  sd          $s1, 0x10($sp)
     ctx->pc = 0x38f4f8u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 16), GPR_U64(ctx, 17));
     // 0x38f4fc: 0x24100003  addiu       $s0, $zero, 0x3
-    ctx->pc = 0x38f4fcu;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
     // 0x38f500: 0x82800b  movn        $s0, $a0, $v0
     ctx->pc = 0x38f500u;
     if (GPR_U64(ctx, 2) != 0) SET_GPR_VEC(ctx, 16, GPR_VEC(ctx, 4));
     // 0x38f504: 0x24110001  addiu       $s1, $zero, 0x1
-    ctx->pc = 0x38f504u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x38f508: 0x2118804  sllv        $s1, $s1, $s0
-    ctx->pc = 0x38f508u;
     SET_GPR_S32(ctx, 17, (int32_t)SLL32(GPR_U32(ctx, 17), GPR_U32(ctx, 16) & 0x1F));
     // 0x38f50c: 0xffbf0020  sd          $ra, 0x20($sp)
     ctx->pc = 0x38f50cu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 32), GPR_U64(ctx, 31));
     // 0x38f510: 0x112080  sll         $a0, $s1, 2
-    ctx->pc = 0x38f510u;
     SET_GPR_S32(ctx, 4, (int32_t)SLL32(GPR_U32(ctx, 17), 2));
     // 0x38f514: 0xc0e9f1c  jal         func_3A7C70
-    ctx->pc = 0x38F514u;
     SET_GPR_U32(ctx, 31, 0x38F51Cu);
     ctx->pc = 0x38F518u;
     ctx->in_delay_slot = true;
@@ -67,14 +60,12 @@ void Balloc_0x38f4e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     // 0x38f518: 0x24840014  addiu       $a0, $a0, 0x14 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 20));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x3A7C70u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3A7C70u, 0x38F514u, 0x38F51Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_003A7C70_0x3a7c70, 0x3a7c70u, 0x38f51cu)) {
         return;
     }
     ctx->pc = 0x38F51Cu;
 label_38f51c:
     // 0x38f51c: 0x40182d  daddu       $v1, $v0, $zero
-    ctx->pc = 0x38f51cu;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     // 0x38f520: 0xdfbf0020  ld          $ra, 0x20($sp)
     ctx->pc = 0x38f520u;

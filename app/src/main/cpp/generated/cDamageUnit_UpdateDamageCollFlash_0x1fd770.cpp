@@ -18,16 +18,16 @@ void cDamageUnit_UpdateDamageCollFlash_0x1fd770(uint8_t* rdram, R5900Context* ct
     PS_LOG_ENTRY("cDamageUnit_UpdateDamageCollFlash_0x1fd770");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1fd788u: goto label_1fd788;
-        case 0x1fd790u: goto label_1fd790;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1fd770u, 0)) {
+        switch (ctx->pc) {
+            case 0x1fd788u: goto label_1fd788;
+            case 0x1fd790u: goto label_1fd790;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1fd770u;
 
     // 0x1fd770: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x1fd770u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x1fd774: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1fd774u;
@@ -56,7 +56,6 @@ void cDamageUnit_UpdateDamageCollFlash_0x1fd770(uint8_t* rdram, R5900Context* ct
     ctx->pc = 0x1FD788u;
 label_1fd788:
     // 0x1fd788: 0xc07f330  jal         func_1FCCC0
-    ctx->pc = 0x1FD788u;
     SET_GPR_U32(ctx, 31, 0x1FD790u);
     ctx->pc = 0x1FD78Cu;
     ctx->in_delay_slot = true;
@@ -64,8 +63,7 @@ label_1fd788:
     // 0x1fd78c: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1FCCC0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1FCCC0u, 0x1FD788u, 0x1FD790u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_001FCCC0_0x1fccc0, 0x1fccc0u, 0x1fd790u)) {
         return;
     }
     ctx->pc = 0x1FD790u;
@@ -74,7 +72,6 @@ label_1fd790:
     ctx->pc = 0x1fd790u;
     SET_GPR_S32(ctx, 16, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 36)));
     // 0x1fd794: 0x0  nop
-    ctx->pc = 0x1fd794u;
     // NOP
     // 0x1fd798: 0x1600fffb  bnez        $s0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x1FD798u;
@@ -88,7 +85,6 @@ label_1fd790:
             goto label_1fd788;
         }
     }
-    ctx->pc = 0x1FD7A0u;
     // 0x1fd7a0: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1fd7a0u;
     SET_GPR_VEC(ctx, 16, READ128(ADD32(GPR_U32(ctx, 29), 16)));

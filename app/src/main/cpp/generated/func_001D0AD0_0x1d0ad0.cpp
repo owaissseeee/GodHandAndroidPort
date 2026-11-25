@@ -18,13 +18,10 @@ void func_001D0AD0_0x1d0ad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_001D0AD0_0x1d0ad0");
 #endif
 
-    ctx->pc = 0x1d0ad0u;
 
     // 0x1d0ad0: 0x3c0143e1  lui         $at, 0x43E1
-    ctx->pc = 0x1d0ad0u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)17377 << 16));
     // 0x1d0ad4: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x1d0ad4u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x1d0ad8: 0x3e00008  jr          $ra
     ctx->pc = 0x1D0AD8u;

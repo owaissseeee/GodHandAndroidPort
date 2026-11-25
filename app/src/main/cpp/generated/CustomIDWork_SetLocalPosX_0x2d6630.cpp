@@ -18,7 +18,6 @@ void CustomIDWork_SetLocalPosX_0x2d6630(uint8_t* rdram, R5900Context* ctx, PS2Ru
     PS_LOG_ENTRY("CustomIDWork_SetLocalPosX_0x2d6630");
 #endif
 
-    ctx->pc = 0x2d6630u;
 
     // 0x2d6630: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2d6630u;
@@ -32,15 +31,11 @@ void CustomIDWork_SetLocalPosX_0x2d6630(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_2d6650;
         }
     }
-    ctx->pc = 0x2D663Cu;
     // 0x2d663c: 0x44850000  mtc1        $a1, $f0
-    ctx->pc = 0x2d663cu;
     { uint32_t bits = GPR_U32(ctx, 5); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x2d6640: 0x0  nop
-    ctx->pc = 0x2d6640u;
     // NOP
     // 0x2d6644: 0x46800020  cvt.s.w     $f0, $f0
-    ctx->pc = 0x2d6644u;
     { int32_t tmp; std::memcpy(&tmp, &ctx->f[0], sizeof(tmp)); ctx->f[0] = FPU_CVT_S_W(tmp); }
     // 0x2d6648: 0xac800008  sw          $zero, 0x8($a0)
     ctx->pc = 0x2d6648u;

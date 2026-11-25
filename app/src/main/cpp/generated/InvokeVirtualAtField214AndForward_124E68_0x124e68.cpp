@@ -18,30 +18,32 @@ void InvokeVirtualAtField214AndForward_124E68_0x124e68(uint8_t* rdram, R5900Cont
     PS_LOG_ENTRY("InvokeVirtualAtField214AndForward_124E68_0x124e68");
 #endif
 
-    switch (ctx->pc) {
-        case 0x124e68u: goto label_124e68;
-        case 0x124e6cu: goto label_124e6c;
-        case 0x124e70u: goto label_124e70;
-        case 0x124e74u: goto label_124e74;
-        case 0x124e78u: goto label_124e78;
-        case 0x124e7cu: goto label_124e7c;
-        case 0x124e80u: goto label_124e80;
-        case 0x124e84u: goto label_124e84;
-        case 0x124e88u: goto label_124e88;
-        case 0x124e8cu: goto label_124e8c;
-        case 0x124e90u: goto label_124e90;
-        case 0x124e94u: goto label_124e94;
-        case 0x124e98u: goto label_124e98;
-        case 0x124e9cu: goto label_124e9c;
-        case 0x124ea0u: goto label_124ea0;
-        case 0x124ea4u: goto label_124ea4;
-        case 0x124ea8u: goto label_124ea8;
-        case 0x124eacu: goto label_124eac;
-        case 0x124eb0u: goto label_124eb0;
-        case 0x124eb4u: goto label_124eb4;
-        case 0x124eb8u: goto label_124eb8;
-        case 0x124ebcu: goto label_124ebc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x124e68u, 0)) {
+        switch (ctx->pc) {
+            case 0x124e68u: goto label_124e68;
+            case 0x124e6cu: goto label_124e6c;
+            case 0x124e70u: goto label_124e70;
+            case 0x124e74u: goto label_124e74;
+            case 0x124e78u: goto label_124e78;
+            case 0x124e7cu: goto label_124e7c;
+            case 0x124e80u: goto label_124e80;
+            case 0x124e84u: goto label_124e84;
+            case 0x124e88u: goto label_124e88;
+            case 0x124e8cu: goto label_124e8c;
+            case 0x124e90u: goto label_124e90;
+            case 0x124e94u: goto label_124e94;
+            case 0x124e98u: goto label_124e98;
+            case 0x124e9cu: goto label_124e9c;
+            case 0x124ea0u: goto label_124ea0;
+            case 0x124ea4u: goto label_124ea4;
+            case 0x124ea8u: goto label_124ea8;
+            case 0x124eacu: goto label_124eac;
+            case 0x124eb0u: goto label_124eb0;
+            case 0x124eb4u: goto label_124eb4;
+            case 0x124eb8u: goto label_124eb8;
+            case 0x124ebcu: goto label_124ebc;
+            default: break;
+        }
     }
 
     ctx->pc = 0x124e68u;
@@ -160,9 +162,7 @@ label_124ea8:
         ctx->pc = 0x124EACu;
         goto label_124eac;
     }
-    ctx->pc = 0x124EA4u;
     SET_GPR_U32(ctx, 31, 0x124EACu);
-    ctx->pc = 0x124EA8u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x124EA4u;
     // 0x124ea8: 0x4600a306  mov.s       $f12, $f20 (Delay Slot)

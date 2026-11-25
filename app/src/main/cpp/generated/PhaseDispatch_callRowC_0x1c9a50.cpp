@@ -18,48 +18,50 @@ void PhaseDispatch_callRowC_0x1c9a50(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("PhaseDispatch_callRowC_0x1c9a50");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1c9a50u: goto label_1c9a50;
-        case 0x1c9a54u: goto label_1c9a54;
-        case 0x1c9a58u: goto label_1c9a58;
-        case 0x1c9a5cu: goto label_1c9a5c;
-        case 0x1c9a60u: goto label_1c9a60;
-        case 0x1c9a64u: goto label_1c9a64;
-        case 0x1c9a68u: goto label_1c9a68;
-        case 0x1c9a6cu: goto label_1c9a6c;
-        case 0x1c9a70u: goto label_1c9a70;
-        case 0x1c9a74u: goto label_1c9a74;
-        case 0x1c9a78u: goto label_1c9a78;
-        case 0x1c9a7cu: goto label_1c9a7c;
-        case 0x1c9a80u: goto label_1c9a80;
-        case 0x1c9a84u: goto label_1c9a84;
-        case 0x1c9a88u: goto label_1c9a88;
-        case 0x1c9a8cu: goto label_1c9a8c;
-        case 0x1c9a90u: goto label_1c9a90;
-        case 0x1c9a94u: goto label_1c9a94;
-        case 0x1c9a98u: goto label_1c9a98;
-        case 0x1c9a9cu: goto label_1c9a9c;
-        case 0x1c9aa0u: goto label_1c9aa0;
-        case 0x1c9aa4u: goto label_1c9aa4;
-        case 0x1c9aa8u: goto label_1c9aa8;
-        case 0x1c9aacu: goto label_1c9aac;
-        case 0x1c9ab0u: goto label_1c9ab0;
-        case 0x1c9ab4u: goto label_1c9ab4;
-        case 0x1c9ab8u: goto label_1c9ab8;
-        case 0x1c9abcu: goto label_1c9abc;
-        case 0x1c9ac0u: goto label_1c9ac0;
-        case 0x1c9ac4u: goto label_1c9ac4;
-        case 0x1c9ac8u: goto label_1c9ac8;
-        case 0x1c9accu: goto label_1c9acc;
-        case 0x1c9ad0u: goto label_1c9ad0;
-        case 0x1c9ad4u: goto label_1c9ad4;
-        case 0x1c9ad8u: goto label_1c9ad8;
-        case 0x1c9adcu: goto label_1c9adc;
-        case 0x1c9ae0u: goto label_1c9ae0;
-        case 0x1c9ae4u: goto label_1c9ae4;
-        case 0x1c9ae8u: goto label_1c9ae8;
-        case 0x1c9aecu: goto label_1c9aec;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1c9a50u, 0)) {
+        switch (ctx->pc) {
+            case 0x1c9a50u: goto label_1c9a50;
+            case 0x1c9a54u: goto label_1c9a54;
+            case 0x1c9a58u: goto label_1c9a58;
+            case 0x1c9a5cu: goto label_1c9a5c;
+            case 0x1c9a60u: goto label_1c9a60;
+            case 0x1c9a64u: goto label_1c9a64;
+            case 0x1c9a68u: goto label_1c9a68;
+            case 0x1c9a6cu: goto label_1c9a6c;
+            case 0x1c9a70u: goto label_1c9a70;
+            case 0x1c9a74u: goto label_1c9a74;
+            case 0x1c9a78u: goto label_1c9a78;
+            case 0x1c9a7cu: goto label_1c9a7c;
+            case 0x1c9a80u: goto label_1c9a80;
+            case 0x1c9a84u: goto label_1c9a84;
+            case 0x1c9a88u: goto label_1c9a88;
+            case 0x1c9a8cu: goto label_1c9a8c;
+            case 0x1c9a90u: goto label_1c9a90;
+            case 0x1c9a94u: goto label_1c9a94;
+            case 0x1c9a98u: goto label_1c9a98;
+            case 0x1c9a9cu: goto label_1c9a9c;
+            case 0x1c9aa0u: goto label_1c9aa0;
+            case 0x1c9aa4u: goto label_1c9aa4;
+            case 0x1c9aa8u: goto label_1c9aa8;
+            case 0x1c9aacu: goto label_1c9aac;
+            case 0x1c9ab0u: goto label_1c9ab0;
+            case 0x1c9ab4u: goto label_1c9ab4;
+            case 0x1c9ab8u: goto label_1c9ab8;
+            case 0x1c9abcu: goto label_1c9abc;
+            case 0x1c9ac0u: goto label_1c9ac0;
+            case 0x1c9ac4u: goto label_1c9ac4;
+            case 0x1c9ac8u: goto label_1c9ac8;
+            case 0x1c9accu: goto label_1c9acc;
+            case 0x1c9ad0u: goto label_1c9ad0;
+            case 0x1c9ad4u: goto label_1c9ad4;
+            case 0x1c9ad8u: goto label_1c9ad8;
+            case 0x1c9adcu: goto label_1c9adc;
+            case 0x1c9ae0u: goto label_1c9ae0;
+            case 0x1c9ae4u: goto label_1c9ae4;
+            case 0x1c9ae8u: goto label_1c9ae8;
+            case 0x1c9aecu: goto label_1c9aec;
+            default: break;
+        }
     }
 
     ctx->pc = 0x1c9a50u;
@@ -347,7 +349,6 @@ label_1c9ae8:
     ctx->pc = 0x1C9AECu;
 label_1c9aec:
     // 0x1c9aec: 0x0  nop
-    ctx->pc = 0x1c9aecu;
     // NOP
     ctx->pc = 0x1c9af0u;
 }

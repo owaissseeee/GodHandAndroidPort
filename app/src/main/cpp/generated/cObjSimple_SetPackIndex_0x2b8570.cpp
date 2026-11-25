@@ -18,7 +18,6 @@ void cObjSimple_SetPackIndex_0x2b8570(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("cObjSimple_SetPackIndex_0x2b8570");
 #endif
 
-    ctx->pc = 0x2b8570u;
 
     // 0x2b8570: 0x4a00003  bltz        $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x2B8570u;
@@ -35,7 +34,6 @@ void cObjSimple_SetPackIndex_0x2b8570(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_2b8580;
         }
     }
-    ctx->pc = 0x2B8578u;
     // 0x2b8578: 0xac8504d4  sw          $a1, 0x4D4($a0)
     ctx->pc = 0x2b8578u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 1236), GPR_U32(ctx, 5));

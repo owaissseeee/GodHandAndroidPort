@@ -18,13 +18,11 @@ void cSeData_IsFailed_0x2cfc88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("cSeData_IsFailed_0x2cfc88");
 #endif
 
-    ctx->pc = 0x2cfc88u;
 
     // 0x2cfc88: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x2cfc88u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x2cfc8c: 0x38420003  xori        $v0, $v0, 0x3
-    ctx->pc = 0x2cfc8cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)3);
     // 0x2cfc90: 0x3e00008  jr          $ra
     ctx->pc = 0x2CFC90u;

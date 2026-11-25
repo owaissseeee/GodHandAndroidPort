@@ -18,7 +18,6 @@ void func_001ADA70_0x1ada70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_001ADA70_0x1ada70");
 #endif
 
-    ctx->pc = 0x1ada70u;
 
     // 0x1ada70: 0x3e00008  jr          $ra
     ctx->pc = 0x1ADA70u;

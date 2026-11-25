@@ -18,15 +18,15 @@ void cBgmData_GetHeadPtr_0x2d04f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("cBgmData_GetHeadPtr_0x2d04f8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2d050cu: goto label_2d050c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2d04f8u, 0)) {
+        switch (ctx->pc) {
+            case 0x2d050cu: goto label_2d050c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2d04f8u;
 
     // 0x2d04f8: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x2d04f8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x2d04fc: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x2d04fcu;
@@ -35,7 +35,6 @@ void cBgmData_GetHeadPtr_0x2d04f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     ctx->pc = 0x2d0500u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2d0504: 0xc0b3fda  jal         func_2CFF68
-    ctx->pc = 0x2D0504u;
     SET_GPR_U32(ctx, 31, 0x2D050Cu);
     ctx->pc = 0x2D0508u;
     ctx->in_delay_slot = true;
@@ -43,8 +42,7 @@ void cBgmData_GetHeadPtr_0x2d04f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     // 0x2d0508: 0x80802d  daddu       $s0, $a0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2CFF68u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2CFF68u, 0x2D0504u, 0x2D050Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cBgmData_IsReady_0x2cff68, 0x2cff68u, 0x2d050cu)) {
         return;
     }
     ctx->pc = 0x2D050Cu;
@@ -64,7 +62,6 @@ label_2d050c:
             goto label_2d0518;
         }
     }
-    ctx->pc = 0x2D0514u;
     // 0x2d0514: 0x8e02000c  lw          $v0, 0xC($s0)
     ctx->pc = 0x2d0514u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 12)));

@@ -18,13 +18,10 @@ void CopyVec16From20_B62E0_0x2b62e0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("CopyVec16From20_B62E0_0x2b62e0");
 #endif
 
-    ctx->pc = 0x2b62e0u;
 
     // 0x2b62e0: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x2b62e0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2b62e4: 0x24a50020  addiu       $a1, $a1, 0x20
-    ctx->pc = 0x2b62e4u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 32));
     // 0x2b62e8: 0xd8a40000  lqc2        $vf4, 0x0($a1)
     ctx->pc = 0x2b62e8u;

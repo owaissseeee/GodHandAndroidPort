@@ -18,7 +18,6 @@ void Obj35C0_SetField10_IfPositive_C528_0x35c528(uint8_t* rdram, R5900Context* c
     PS_LOG_ENTRY("Obj35C0_SetField10_IfPositive_C528_0x35c528");
 #endif
 
-    ctx->pc = 0x35c528u;
 
     // 0x35c528: 0x5ca00001  bgtzl       $a1, . + 4 + (0x1 << 2)
     ctx->pc = 0x35C528u;

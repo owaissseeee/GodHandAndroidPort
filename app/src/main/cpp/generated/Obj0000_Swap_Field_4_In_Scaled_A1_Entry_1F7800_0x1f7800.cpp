@@ -18,16 +18,12 @@ void Obj0000_Swap_Field_4_In_Scaled_A1_Entry_1F7800_0x1f7800(uint8_t* rdram, R59
     PS_LOG_ENTRY("Obj0000_Swap_Field_4_In_Scaled_A1_Entry_1F7800_0x1f7800");
 #endif
 
-    ctx->pc = 0x1f7800u;
 
     // 0x1f7800: 0x52900  sll         $a1, $a1, 4
-    ctx->pc = 0x1f7800u;
     SET_GPR_S32(ctx, 5, (int32_t)SLL32(GPR_U32(ctx, 5), 4));
     // 0x1f7804: 0x24a50004  addiu       $a1, $a1, 0x4
-    ctx->pc = 0x1f7804u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 4));
     // 0x1f7808: 0x852021  addu        $a0, $a0, $a1
-    ctx->pc = 0x1f7808u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 5)));
     // 0x1f780c: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x1f780cu;
@@ -54,9 +50,7 @@ void Obj0000_Swap_Field_4_In_Scaled_A1_Entry_1F7800_0x1f7800(uint8_t* rdram, R59
         return;
         #endif
     }
-    ctx->pc = 0x1F781Cu;
     // 0x1f781c: 0x0  nop
-    ctx->pc = 0x1f781cu;
     // NOP
     ctx->pc = 0x1f7820u;
 }

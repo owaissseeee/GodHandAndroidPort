@@ -775,6 +775,8 @@ PS2Runtime::PS2Runtime()
     m_iopSubsystem = std::make_unique<ps2x::iop::IopSubsystem>(*m_iopHost);
 
     m_eeScheduler = std::make_unique<EeScheduler>(*this);
+    m_schedulerTransferPtr = m_eeScheduler->transferPendingPtr();
+    m_schedulerUnwindingPtr = m_eeScheduler->unwindingPtr();
 
     // Assign rather than memset: R5900Context's constructor zeroes itself and
     // then applies the COP0 reset values, which a memset here would discard.

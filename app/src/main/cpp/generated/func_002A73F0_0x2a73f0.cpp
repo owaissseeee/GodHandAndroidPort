@@ -18,10 +18,8 @@ void func_002A73F0_0x2a73f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002A73F0_0x2a73f0");
 #endif
 
-    ctx->pc = 0x2a73f0u;
 
     // 0x2a73f0: 0x24830520  addiu       $v1, $a0, 0x520
-    ctx->pc = 0x2a73f0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), 1312));
     // 0x2a73f4: 0xac800520  sw          $zero, 0x520($a0)
     ctx->pc = 0x2a73f4u;
@@ -30,22 +28,17 @@ void func_002A73F0_0x2a73f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x2a73f8u;
     WRITE32(ADD32(GPR_U32(ctx, 3), 8), GPR_U32(ctx, 0));
     // 0x2a73fc: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x2a73fcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x2a7400: 0xac600004  sw          $zero, 0x4($v1)
     ctx->pc = 0x2a7400u;
     WRITE32(ADD32(GPR_U32(ctx, 3), 4), GPR_U32(ctx, 0));
     // 0x2a7404: 0x3c060800  lui         $a2, 0x800
-    ctx->pc = 0x2a7404u;
     SET_GPR_S32(ctx, 6, (int32_t)((uint32_t)2048 << 16));
     // 0x2a7408: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x2a7408u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
     // 0x2a740c: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x2a740cu;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x2a7410: 0x24050002  addiu       $a1, $zero, 0x2
-    ctx->pc = 0x2a7410u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x2a7414: 0x8c830254  lw          $v1, 0x254($a0)
     ctx->pc = 0x2a7414u;
@@ -54,10 +47,8 @@ void func_002A73F0_0x2a73f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x2a7418u;
     WRITE16(ADD32(GPR_U32(ctx, 4), 1392), (uint16_t)GPR_U32(ctx, 2));
     // 0x2a741c: 0x661825  or          $v1, $v1, $a2
-    ctx->pc = 0x2a741cu;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) | GPR_U64(ctx, 6));
     // 0x2a7420: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2a7420u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2a7424: 0xac850574  sw          $a1, 0x574($a0)
     ctx->pc = 0x2a7424u;

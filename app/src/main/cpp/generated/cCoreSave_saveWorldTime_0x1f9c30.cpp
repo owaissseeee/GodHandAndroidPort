@@ -18,10 +18,8 @@ void cCoreSave_saveWorldTime_0x1f9c30(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("cCoreSave_saveWorldTime_0x1f9c30");
 #endif
 
-    ctx->pc = 0x1f9c30u;
 
     // 0x1f9c30: 0x3c020062  lui         $v0, 0x62
-    ctx->pc = 0x1f9c30u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)98 << 16));
     // 0x1f9c34: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x1f9c34u;
@@ -30,7 +28,6 @@ void cCoreSave_saveWorldTime_0x1f9c30(uint8_t* rdram, R5900Context* ctx, PS2Runt
     ctx->pc = 0x1f9c38u;
     SET_GPR_S32(ctx, 6, (int32_t)FAST_READ32(0x61A990u));
     // 0x1f9c3c: 0x2442a990  addiu       $v0, $v0, -0x5670
-    ctx->pc = 0x1f9c3cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294945168));
     // 0x1f9c40: 0xac660000  sw          $a2, 0x0($v1)
     ctx->pc = 0x1f9c40u;
@@ -60,9 +57,7 @@ void cCoreSave_saveWorldTime_0x1f9c30(uint8_t* rdram, R5900Context* ctx, PS2Runt
         return;
         #endif
     }
-    ctx->pc = 0x1F9C54u;
     // 0x1f9c54: 0x0  nop
-    ctx->pc = 0x1f9c54u;
     // NOP
     ctx->pc = 0x1f9c58u;
 }

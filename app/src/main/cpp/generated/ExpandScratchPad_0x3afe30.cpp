@@ -18,18 +18,17 @@ void ExpandScratchPad_0x3afe30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("ExpandScratchPad_0x3afe30");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afe38u: goto label_3afe38;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afe30u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afe38u: goto label_3afe38;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afe30u;
 
     // 0x3afe30: 0x24030059  addiu       $v1, $zero, 0x59
-    ctx->pc = 0x3afe30u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 89));
     // 0x3afe34: 0xc  syscall     0
-    ctx->pc = 0x3afe34u;
     ctx->pc = 0x3AFE38u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

@@ -18,18 +18,17 @@ void SetBlendField5F4_1C2C00_0x1c2c00(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("SetBlendField5F4_1C2C00_0x1c2c00");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1c2c34u: goto label_1c2c34;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1c2c00u, 0)) {
+        switch (ctx->pc) {
+            case 0x1c2c34u: goto label_1c2c34;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1c2c00u;
 
     // 0x1c2c00: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1c2c00u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1c2c04: 0x80382d  daddu       $a3, $a0, $zero
-    ctx->pc = 0x1c2c04u;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1c2c08: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1c2c08u;
@@ -52,24 +51,17 @@ void SetBlendField5F4_1C2C00_0x1c2c00(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_1c2c34;
         }
     }
-    ctx->pc = 0x1C2C18u;
     // 0x1c2c18: 0x24050002  addiu       $a1, $zero, 0x2
-    ctx->pc = 0x1c2c18u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x1c2c1c: 0x2484ee00  addiu       $a0, $a0, -0x1200
-    ctx->pc = 0x1c2c1cu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 4294962688));
     // 0x1c2c20: 0x402d  daddu       $t0, $zero, $zero
-    ctx->pc = 0x1c2c20u;
     SET_GPR_U64(ctx, 8, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1c2c24: 0x482d  daddu       $t1, $zero, $zero
-    ctx->pc = 0x1c2c24u;
     SET_GPR_U64(ctx, 9, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1c2c28: 0x502d  daddu       $t2, $zero, $zero
-    ctx->pc = 0x1c2c28u;
     SET_GPR_U64(ctx, 10, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1c2c2c: 0xc0b2e92  jal         func_2CBA48
-    ctx->pc = 0x1C2C2Cu;
     SET_GPR_U32(ctx, 31, 0x1C2C34u);
     ctx->pc = 0x1C2C30u;
     ctx->in_delay_slot = true;
@@ -77,8 +69,7 @@ void SetBlendField5F4_1C2C00_0x1c2c00(uint8_t* rdram, R5900Context* ctx, PS2Runt
     // 0x1c2c30: 0x582d  daddu       $t3, $zero, $zero (Delay Slot)
     SET_GPR_U64(ctx, 11, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2CBA48u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2CBA48u, 0x1C2C2Cu, 0x1C2C34u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x1c2c34u)) {
         return;
     }
     ctx->pc = 0x1C2C34u;

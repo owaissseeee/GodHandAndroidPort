@@ -18,21 +18,19 @@ void func_001FE660_0x1fe660(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_001FE660_0x1fe660");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1fe670u: goto label_1fe670;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1fe660u, 0)) {
+        switch (ctx->pc) {
+            case 0x1fe670u: goto label_1fe670;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1fe660u;
 
     // 0x1fe660: 0x3c020057  lui         $v0, 0x57
-    ctx->pc = 0x1fe660u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)87 << 16));
     // 0x1fe664: 0x202d  daddu       $a0, $zero, $zero
-    ctx->pc = 0x1fe664u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1fe668: 0x2443c380  addiu       $v1, $v0, -0x3C80
-    ctx->pc = 0x1fe668u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 4294951808));
     // 0x1fe66c: 0x0  nop
     ctx->pc = 0x1fe66cu;
@@ -56,7 +54,6 @@ label_1fe670:
             goto label_1fe684;
         }
     }
-    ctx->pc = 0x1FE67Cu;
     // 0x1fe67c: 0x3e00008  jr          $ra
     ctx->pc = 0x1FE67Cu;
     {
@@ -79,7 +76,6 @@ label_1fe670:
     ctx->pc = 0x1FE684u;
 label_1fe684:
     // 0x1fe684: 0x2c820200  sltiu       $v0, $a0, 0x200
-    ctx->pc = 0x1fe684u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 4) < (uint64_t)(int64_t)(int32_t)512) ? 1 : 0);
     // 0x1fe688: 0x1440fff9  bnez        $v0, . + 4 + (-0x7 << 2)
     ctx->pc = 0x1FE688u;
@@ -99,7 +95,6 @@ label_1fe684:
             goto label_1fe670;
         }
     }
-    ctx->pc = 0x1FE690u;
     // 0x1fe690: 0x3e00008  jr          $ra
     ctx->pc = 0x1FE690u;
     {

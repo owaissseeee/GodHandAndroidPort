@@ -18,30 +18,25 @@ void cSnd_BgmEvFadeDefault_0x2d1e18(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("cSnd_BgmEvFadeDefault_0x2d1e18");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2d1e3cu: goto label_2d1e3c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2d1e18u, 0)) {
+        switch (ctx->pc) {
+            case 0x2d1e3cu: goto label_2d1e3c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2d1e18u;
 
     // 0x2d1e18: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2d1e18u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2d1e1c: 0x44806000  mtc1        $zero, $f12
-    ctx->pc = 0x2d1e1cu;
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[12], &bits, sizeof(bits)); }
     // 0x2d1e20: 0x3c014170  lui         $at, 0x4170
-    ctx->pc = 0x2d1e20u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16752 << 16));
     // 0x2d1e24: 0x44816800  mtc1        $at, $f13
-    ctx->pc = 0x2d1e24u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[13], &bits, sizeof(bits)); }
     // 0x2d1e28: 0x3c01bf80  lui         $at, 0xBF80
-    ctx->pc = 0x2d1e28u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)49024 << 16));
     // 0x2d1e2c: 0x44817000  mtc1        $at, $f14
-    ctx->pc = 0x2d1e2cu;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[14], &bits, sizeof(bits)); }
     // 0x2d1e30: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2d1e30u;
@@ -49,8 +44,7 @@ void cSnd_BgmEvFadeDefault_0x2d1e18(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     // 0x2d1e34: 0xc0b47e8  jal         func_2D1FA0
     ctx->pc = 0x2D1E34u;
     SET_GPR_U32(ctx, 31, 0x2D1E3Cu);
-    ctx->pc = 0x2D1FA0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D1FA0u, 0x2D1E34u, 0x2D1E3Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cSnd_BgmEvFadeSet_0x2d1fa0, 0x2d1fa0u, 0x2d1e3cu)) {
         return;
     }
     ctx->pc = 0x2D1E3Cu;

@@ -18,7 +18,6 @@ void func_002BEDD8_0x2bedd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002BEDD8_0x2bedd8");
 #endif
 
-    ctx->pc = 0x2bedd8u;
 
     // 0x2bedd8: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x2bedd8u;
@@ -42,9 +41,7 @@ void func_002BEDD8_0x2bedd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2BEDE4u;
     // 0x2bede4: 0x0  nop
-    ctx->pc = 0x2bede4u;
     // NOP
     ctx->pc = 0x2bede8u;
 }

@@ -18,7 +18,6 @@ void Obj0000_Set_Fields_166C_1664_1674_167C_Short_1682_10A420_0x10a420(uint8_t* 
     PS_LOG_ENTRY("Obj0000_Set_Fields_166C_1664_1674_167C_Short_1682_10A420_0x10a420");
 #endif
 
-    ctx->pc = 0x10a420u;
 
     // 0x10a420: 0xa4891682  sh          $t1, 0x1682($a0)
     ctx->pc = 0x10a420u;

@@ -18,7 +18,6 @@ void cOl2b_isActive_0x180690(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("cOl2b_isActive_0x180690");
 #endif
 
-    ctx->pc = 0x180690u;
 
     // 0x180690: 0x3e00008  jr          $ra
     ctx->pc = 0x180690u;

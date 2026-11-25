@@ -18,7 +18,6 @@ void func_002A9790_0x2a9790(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002A9790_0x2a9790");
 #endif
 
-    ctx->pc = 0x2a9790u;
 
     // 0x2a9790: 0xac800014  sw          $zero, 0x14($a0)
     ctx->pc = 0x2a9790u;

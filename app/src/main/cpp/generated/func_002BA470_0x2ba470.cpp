@@ -18,10 +18,8 @@ void func_002BA470_0x2ba470(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002BA470_0x2ba470");
 #endif
 
-    ctx->pc = 0x2ba470u;
 
     // 0x2ba470: 0x44800000  mtc1        $zero, $f0
-    ctx->pc = 0x2ba470u;
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x2ba474: 0x3e00008  jr          $ra
     ctx->pc = 0x2BA474u;
@@ -36,9 +34,7 @@ void func_002BA470_0x2ba470(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2BA47Cu;
     // 0x2ba47c: 0x0  nop
-    ctx->pc = 0x2ba47cu;
     // NOP
     ctx->pc = 0x2ba480u;
 }

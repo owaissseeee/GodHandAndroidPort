@@ -18,10 +18,8 @@ void PathFinding_0x31be58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     PS_LOG_ENTRY("PathFinding_0x31be58");
 #endif
 
-    ctx->pc = 0x31be58u;
 
     // 0x31be58: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x31be58u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x31be5c: 0xa0800000  sb          $zero, 0x0($a0)
     ctx->pc = 0x31be5cu;
@@ -48,15 +46,11 @@ void PathFinding_0x31be58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
         return;
         #endif
     }
-    ctx->pc = 0x31BE6Cu;
     // 0x31be6c: 0x0  nop
-    ctx->pc = 0x31be6cu;
     // NOP
     // 0x31be70: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x31be70u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x31be74: 0x0  nop
-    ctx->pc = 0x31be74u;
     // NOP
     ctx->pc = 0x31be78u;
 }

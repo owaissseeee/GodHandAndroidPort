@@ -19,15 +19,15 @@ void cOmBase_shakeHeight_0x1810a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("cOmBase_shakeHeight_0x1810a0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1810d4u: goto label_1810d4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1810a0u, 0)) {
+        switch (ctx->pc) {
+            case 0x1810d4u: goto label_1810d4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1810a0u;
 
     // 0x1810a0: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x1810a0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x1810a4: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x1810a4u;
@@ -36,7 +36,6 @@ void cOmBase_shakeHeight_0x1810a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     ctx->pc = 0x1810a8u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1810ac: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x1810acu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1810b0: 0x86020600  lh          $v0, 0x600($s0)
     ctx->pc = 0x1810b0u;
@@ -56,7 +55,6 @@ void cOmBase_shakeHeight_0x1810a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_181104;
         }
     }
-    ctx->pc = 0x1810BCu;
     // 0x1810bc: 0x2462ffff  addiu       $v0, $v1, -0x1
     ctx->pc = 0x1810bcu;
     if (ps2xPatchFlag("fps60")) {
@@ -67,7 +65,6 @@ void cOmBase_shakeHeight_0x1810a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 3), 4294967295));
     }
     // 0x1810c0: 0x21c00  sll         $v1, $v0, 16
-    ctx->pc = 0x1810c0u;
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 2), 16));
     // 0x1810c4: 0x1060000c  beqz        $v1, . + 4 + (0xC << 2)
     ctx->pc = 0x1810C4u;
@@ -84,9 +81,7 @@ void cOmBase_shakeHeight_0x1810a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_1810f8;
         }
     }
-    ctx->pc = 0x1810CCu;
     // 0x1810cc: 0xc0c7408  jal         func_31D020
-    ctx->pc = 0x1810CCu;
     SET_GPR_U32(ctx, 31, 0x1810D4u);
     ctx->pc = 0x31D020u;
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31D020u, 0x1810CCu, 0x1810D4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
@@ -95,25 +90,20 @@ void cOmBase_shakeHeight_0x1810a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     ctx->pc = 0x1810D4u;
 label_1810d4:
     // 0x1810d4: 0x3c013c75  lui         $at, 0x3C75
-    ctx->pc = 0x1810d4u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15477 << 16));
     // 0x1810d8: 0x3421c28f  ori         $at, $at, 0xC28F
-    ctx->pc = 0x1810d8u;
     SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)49807);
     // 0x1810dc: 0x44811000  mtc1        $at, $f2
-    ctx->pc = 0x1810dcu;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[2], &bits, sizeof(bits)); }
     // 0x1810e0: 0xc6010604  lwc1        $f1, 0x604($s0)
     ctx->pc = 0x1810e0u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 16), 1540)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x1810e4: 0x46020002  mul.s       $f0, $f0, $f2
-    ctx->pc = 0x1810e4u;
     ctx->f[0] = FPU_MUL_S(ctx->f[0], ctx->f[2]);
     // 0x1810e8: 0x8e0200f0  lw          $v0, 0xF0($s0)
     ctx->pc = 0x1810e8u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 240)));
     // 0x1810ec: 0x46000840  add.s       $f1, $f1, $f0
-    ctx->pc = 0x1810ecu;
     ctx->f[1] = FPU_ADD_S(ctx->f[1], ctx->f[0]);
     // 0x1810f0: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x1810F0u;
@@ -167,9 +157,7 @@ label_181104:
         return;
         #endif
     }
-    ctx->pc = 0x181114u;
     // 0x181114: 0x0  nop
-    ctx->pc = 0x181114u;
     // NOP
     ctx->pc = 0x181118u;
 }

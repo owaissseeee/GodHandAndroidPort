@@ -18,7 +18,6 @@ void Obj0000_Set_Byte_54_0x16f640(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("Obj0000_Set_Byte_54_0x16f640");
 #endif
 
-    ctx->pc = 0x16f640u;
 
     // 0x16f640: 0x3e00008  jr          $ra
     ctx->pc = 0x16F640u;

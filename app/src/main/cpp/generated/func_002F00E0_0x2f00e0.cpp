@@ -18,24 +18,21 @@ void func_002F00E0_0x2f00e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     PS_LOG_ENTRY("func_002F00E0_0x2f00e0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2f0188u: goto label_2f0188;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2f00e0u, 0)) {
+        switch (ctx->pc) {
+            case 0x2f0188u: goto label_2f0188;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2f00e0u;
 
     // 0x2f00e0: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x2f00e0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x2f00e4: 0x3c013c23  lui         $at, 0x3C23
-    ctx->pc = 0x2f00e4u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15395 << 16));
     // 0x2f00e8: 0x3421d70a  ori         $at, $at, 0xD70A
-    ctx->pc = 0x2f00e8u;
     SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)55050);
     // 0x2f00ec: 0x44811000  mtc1        $at, $f2
-    ctx->pc = 0x2f00ecu;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[2], &bits, sizeof(bits)); }
     // 0x2f00f0: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x2f00f0u;
@@ -44,16 +41,12 @@ void func_002F00E0_0x2f00e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x2f00f4u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2f00f8: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x2f00f8u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2f00fc: 0x3c013dcc  lui         $at, 0x3DCC
-    ctx->pc = 0x2f00fcu;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15820 << 16));
     // 0x2f0100: 0x3421cccd  ori         $at, $at, 0xCCCD
-    ctx->pc = 0x2f0100u;
     SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)52429);
     // 0x2f0104: 0x44811800  mtc1        $at, $f3
-    ctx->pc = 0x2f0104u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[3], &bits, sizeof(bits)); }
     // 0x2f0108: 0x8e050110  lw          $a1, 0x110($s0)
     ctx->pc = 0x2f0108u;
@@ -62,7 +55,6 @@ void func_002F00E0_0x2f00e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x2f010cu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 316)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x2f0110: 0x46020002  mul.s       $f0, $f0, $f2
-    ctx->pc = 0x2f0110u;
     ctx->f[0] = FPU_MUL_S(ctx->f[0], ctx->f[2]);
     // 0x2f0114: 0xe60002b0  swc1        $f0, 0x2B0($s0)
     ctx->pc = 0x2f0114u;
@@ -71,7 +63,6 @@ void func_002F00E0_0x2f00e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x2f0118u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 320)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x2f011c: 0x46020842  mul.s       $f1, $f1, $f2
-    ctx->pc = 0x2f011cu;
     ctx->f[1] = FPU_MUL_S(ctx->f[1], ctx->f[2]);
     // 0x2f0120: 0xe60102b4  swc1        $f1, 0x2B4($s0)
     ctx->pc = 0x2f0120u;
@@ -80,7 +71,6 @@ void func_002F00E0_0x2f00e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x2f0124u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 324)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x2f0128: 0x46020002  mul.s       $f0, $f0, $f2
-    ctx->pc = 0x2f0128u;
     ctx->f[0] = FPU_MUL_S(ctx->f[0], ctx->f[2]);
     // 0x2f012c: 0xe60002d0  swc1        $f0, 0x2D0($s0)
     ctx->pc = 0x2f012cu;
@@ -89,7 +79,6 @@ void func_002F00E0_0x2f00e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x2f0130u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 328)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x2f0134: 0x46030842  mul.s       $f1, $f1, $f3
-    ctx->pc = 0x2f0134u;
     ctx->f[1] = FPU_MUL_S(ctx->f[1], ctx->f[3]);
     // 0x2f0138: 0xe60102c8  swc1        $f1, 0x2C8($s0)
     ctx->pc = 0x2f0138u;
@@ -98,7 +87,6 @@ void func_002F00E0_0x2f00e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x2f013cu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 332)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x2f0140: 0x46030002  mul.s       $f0, $f0, $f3
-    ctx->pc = 0x2f0140u;
     ctx->f[0] = FPU_MUL_S(ctx->f[0], ctx->f[3]);
     // 0x2f0144: 0xe60002cc  swc1        $f0, 0x2CC($s0)
     ctx->pc = 0x2f0144u;
@@ -107,7 +95,6 @@ void func_002F00E0_0x2f00e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x2f0148u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 336)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x2f014c: 0x46030842  mul.s       $f1, $f1, $f3
-    ctx->pc = 0x2f014cu;
     ctx->f[1] = FPU_MUL_S(ctx->f[1], ctx->f[3]);
     // 0x2f0150: 0xe60102dc  swc1        $f1, 0x2DC($s0)
     ctx->pc = 0x2f0150u;
@@ -119,7 +106,6 @@ void func_002F00E0_0x2f00e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x2f0158u;
     WRITE8(ADD32(GPR_U32(ctx, 16), 736), (uint8_t)GPR_U32(ctx, 4));
     // 0x2f015c: 0x2c840003  sltiu       $a0, $a0, 0x3
-    ctx->pc = 0x2f015cu;
     SET_GPR_U64(ctx, 4, ((uint64_t)GPR_U64(ctx, 4) < (uint64_t)(int64_t)(int32_t)3) ? 1 : 0);
     // 0x2f0160: 0x90a2018d  lbu         $v0, 0x18D($a1)
     ctx->pc = 0x2f0160u;
@@ -145,18 +131,14 @@ void func_002F00E0_0x2f00e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2f0188;
         }
     }
-    ctx->pc = 0x2F0174u;
     // 0x2f0174: 0x3c050045  lui         $a1, 0x45
-    ctx->pc = 0x2f0174u;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)69 << 16));
     // 0x2f0178: 0x920602e0  lbu         $a2, 0x2E0($s0)
     ctx->pc = 0x2f0178u;
     SET_GPR_ZE32(ctx, 6, (uint8_t)READ8(ADD32(GPR_U32(ctx, 16), 736)));
     // 0x2f017c: 0x24a5eb50  addiu       $a1, $a1, -0x14B0
-    ctx->pc = 0x2f017cu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 4294962000));
     // 0x2f0180: 0xc0b67da  jal         func_2D9F68
-    ctx->pc = 0x2F0180u;
     SET_GPR_U32(ctx, 31, 0x2F0188u);
     ctx->pc = 0x2F0184u;
     ctx->in_delay_slot = true;
@@ -164,8 +146,7 @@ void func_002F00E0_0x2f00e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x2f0184: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2D9F68u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D9F68u, 0x2F0180u, 0x2F0188u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002D9F68_0x2d9f68, 0x2d9f68u, 0x2f0188u)) {
         return;
     }
     ctx->pc = 0x2F0188u;
@@ -174,7 +155,6 @@ label_2f0188:
     ctx->pc = 0x2f0188u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 16), 688)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x2f018c: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2f018cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2f0190: 0xc60202b4  lwc1        $f2, 0x2B4($s0)
     ctx->pc = 0x2f0190u;
@@ -216,9 +196,7 @@ label_2f0188:
         return;
         #endif
     }
-    ctx->pc = 0x2F01B4u;
     // 0x2f01b4: 0x0  nop
-    ctx->pc = 0x2f01b4u;
     // NOP
     ctx->pc = 0x2f01b8u;
 }

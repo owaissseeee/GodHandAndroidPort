@@ -18,18 +18,17 @@ void cGameObj_isDownedEnemy_0x124fd8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("cGameObj_isDownedEnemy_0x124fd8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x12502cu: goto label_12502c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x124fd8u, 0)) {
+        switch (ctx->pc) {
+            case 0x12502cu: goto label_12502c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x124fd8u;
 
     // 0x124fd8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x124fd8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x124fdc: 0xa0202d  daddu       $a0, $a1, $zero
-    ctx->pc = 0x124fdcu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     // 0x124fe0: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x124fe0u;
@@ -38,7 +37,6 @@ void cGameObj_isDownedEnemy_0x124fd8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     ctx->pc = 0x124fe4u;
     SET_GPR_ZE32(ctx, 3, (uint16_t)READ16(ADD32(GPR_U32(ctx, 4), 766)));
     // 0x124fe8: 0x28620200  slti        $v0, $v1, 0x200
-    ctx->pc = 0x124fe8u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)512) ? 1 : 0);
     // 0x124fec: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x124FECu;
@@ -55,16 +53,13 @@ void cGameObj_isDownedEnemy_0x124fd8(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_124ffc;
         }
     }
-    ctx->pc = 0x124FF4u;
     // 0x124ff4: 0x28620300  slti        $v0, $v1, 0x300
-    ctx->pc = 0x124ff4u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)768) ? 1 : 0);
     // 0x124ff8: 0x40302d  daddu       $a2, $v0, $zero
     ctx->pc = 0x124ff8u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_124ffc:
     // 0x124ffc: 0x30c200ff  andi        $v0, $a2, 0xFF
-    ctx->pc = 0x124ffcu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 6) & (uint64_t)(uint16_t)255);
     // 0x125000: 0x1040000c  beqz        $v0, . + 4 + (0xC << 2)
     ctx->pc = 0x125000u;
@@ -81,7 +76,6 @@ label_124ffc:
             goto label_125034;
         }
     }
-    ctx->pc = 0x125008u;
     // 0x125008: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x125008u;
     {
@@ -97,16 +91,13 @@ label_124ffc:
             goto label_125018;
         }
     }
-    ctx->pc = 0x125010u;
     // 0x125010: 0x28620300  slti        $v0, $v1, 0x300
-    ctx->pc = 0x125010u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)768) ? 1 : 0);
     // 0x125014: 0x40302d  daddu       $a2, $v0, $zero
     ctx->pc = 0x125014u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_125018:
     // 0x125018: 0x30c200ff  andi        $v0, $a2, 0xFF
-    ctx->pc = 0x125018u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 6) & (uint64_t)(uint16_t)255);
     // 0x12501c: 0x54400006  bnel        $v0, $zero, . + 4 + (0x6 << 2)
     ctx->pc = 0x12501Cu;
@@ -123,12 +114,10 @@ label_125018:
             goto label_125038;
         }
     }
-    ctx->pc = 0x125024u;
     // 0x125024: 0xc09bc38  jal         func_26F0E0
     ctx->pc = 0x125024u;
     SET_GPR_U32(ctx, 31, 0x12502Cu);
-    ctx->pc = 0x26F0E0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x26F0E0u, 0x125024u, 0x12502Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cEm00_ckDown_0x26f0e0, 0x26f0e0u, 0x12502cu)) {
         return;
     }
     ctx->pc = 0x12502Cu;
@@ -176,9 +165,7 @@ label_125038:
         return;
         #endif
     }
-    ctx->pc = 0x125044u;
     // 0x125044: 0x0  nop
-    ctx->pc = 0x125044u;
     // NOP
     ctx->pc = 0x125048u;
 }

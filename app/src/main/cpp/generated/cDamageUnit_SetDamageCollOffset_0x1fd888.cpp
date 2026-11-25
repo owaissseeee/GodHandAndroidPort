@@ -18,16 +18,16 @@ void cDamageUnit_SetDamageCollOffset_0x1fd888(uint8_t* rdram, R5900Context* ctx,
     PS_LOG_ENTRY("cDamageUnit_SetDamageCollOffset_0x1fd888");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1fd8a8u: goto label_1fd8a8;
-        case 0x1fd8b4u: goto label_1fd8b4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1fd888u, 0)) {
+        switch (ctx->pc) {
+            case 0x1fd8a8u: goto label_1fd8a8;
+            case 0x1fd8b4u: goto label_1fd8b4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1fd888u;
 
     // 0x1fd888: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x1fd888u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x1fd88c: 0x7fb10010  sq          $s1, 0x10($sp)
     ctx->pc = 0x1fd88cu;
@@ -56,16 +56,13 @@ void cDamageUnit_SetDamageCollOffset_0x1fd888(uint8_t* rdram, R5900Context* ctx,
             goto label_1fd8c0;
         }
     }
-    ctx->pc = 0x1FD8A4u;
     // 0x1fd8a4: 0x8e020028  lw          $v0, 0x28($s0)
     ctx->pc = 0x1fd8a4u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 40)));
 label_1fd8a8:
     // 0x1fd8a8: 0x220282d  daddu       $a1, $s1, $zero
-    ctx->pc = 0x1fd8a8u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1fd8ac: 0xc0aec96  jal         func_2BB258
-    ctx->pc = 0x1FD8ACu;
     SET_GPR_U32(ctx, 31, 0x1FD8B4u);
     ctx->pc = 0x1FD8B0u;
     ctx->in_delay_slot = true;
@@ -73,8 +70,7 @@ label_1fd8a8:
     // 0x1fd8b0: 0x8c440034  lw          $a0, 0x34($v0) (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 52)));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2BB258u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2BB258u, 0x1FD8ACu, 0x1FD8B4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cCollisionShape_setOffsetPos_0x2bb258, 0x2bb258u, 0x1fd8b4u)) {
         return;
     }
     ctx->pc = 0x1FD8B4u;
@@ -130,9 +126,7 @@ label_1fd8c0:
         return;
         #endif
     }
-    ctx->pc = 0x1FD8D4u;
     // 0x1fd8d4: 0x0  nop
-    ctx->pc = 0x1fd8d4u;
     // NOP
     ctx->pc = 0x1fd8d8u;
 }

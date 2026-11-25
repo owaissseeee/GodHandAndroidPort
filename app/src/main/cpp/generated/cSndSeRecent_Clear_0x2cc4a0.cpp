@@ -18,10 +18,8 @@ void cSndSeRecent_Clear_0x2cc4a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     PS_LOG_ENTRY("cSndSeRecent_Clear_0x2cc4a0");
 #endif
 
-    ctx->pc = 0x2cc4a0u;
 
     // 0x2cc4a0: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x2cc4a0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x2cc4a4: 0xac800004  sw          $zero, 0x4($a0)
     ctx->pc = 0x2cc4a4u;
@@ -48,9 +46,7 @@ void cSndSeRecent_Clear_0x2cc4a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         return;
         #endif
     }
-    ctx->pc = 0x2CC4B4u;
     // 0x2cc4b4: 0x0  nop
-    ctx->pc = 0x2cc4b4u;
     // NOP
     ctx->pc = 0x2cc4b8u;
 }

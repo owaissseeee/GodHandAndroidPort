@@ -18,7 +18,6 @@ void CustomIDWork_SetColorAnimNormal_2D6898_0x2d6898(uint8_t* rdram, R5900Contex
     PS_LOG_ENTRY("CustomIDWork_SetColorAnimNormal_2D6898_0x2d6898");
 #endif
 
-    ctx->pc = 0x2d6898u;
 
     // 0x2d6898: 0x8c830004  lw          $v1, 0x4($a0)
     ctx->pc = 0x2d6898u;
@@ -38,9 +37,7 @@ void CustomIDWork_SetColorAnimNormal_2D6898_0x2d6898(uint8_t* rdram, R5900Contex
             goto label_2d68cc;
         }
     }
-    ctx->pc = 0x2D68A4u;
     // 0x2d68a4: 0x24020003  addiu       $v0, $zero, 0x3
-    ctx->pc = 0x2d68a4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
     // 0x2d68a8: 0xac820048  sw          $v0, 0x48($a0)
     ctx->pc = 0x2d68a8u;
@@ -69,9 +66,7 @@ void CustomIDWork_SetColorAnimNormal_2D6898_0x2d6898(uint8_t* rdram, R5900Contex
             goto label_2d68c8;
         }
     }
-    ctx->pc = 0x2D68C0u;
     // 0x2d68c0: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2d68c0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2d68c4: 0xa4820058  sh          $v0, 0x58($a0)
     ctx->pc = 0x2d68c4u;
@@ -94,9 +89,7 @@ label_2d68cc:
         return;
         #endif
     }
-    ctx->pc = 0x2D68D4u;
     // 0x2d68d4: 0x0  nop
-    ctx->pc = 0x2d68d4u;
     // NOP
     ctx->pc = 0x2d68d8u;
 }

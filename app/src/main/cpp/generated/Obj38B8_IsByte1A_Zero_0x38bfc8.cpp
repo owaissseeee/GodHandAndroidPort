@@ -18,7 +18,6 @@ void Obj38B8_IsByte1A_Zero_0x38bfc8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("Obj38B8_IsByte1A_Zero_0x38bfc8");
 #endif
 
-    ctx->pc = 0x38bfc8u;
 
     // 0x38bfc8: 0x9082001a  lbu         $v0, 0x1A($a0)
     ctx->pc = 0x38bfc8u;
@@ -42,9 +41,7 @@ void Obj38B8_IsByte1A_Zero_0x38bfc8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         return;
         #endif
     }
-    ctx->pc = 0x38BFD4u;
     // 0x38bfd4: 0x0  nop
-    ctx->pc = 0x38bfd4u;
     // NOP
     ctx->pc = 0x38bfd8u;
 }

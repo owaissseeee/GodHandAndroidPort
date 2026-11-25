@@ -66,19 +66,14 @@ void sceVu0InnerProduct_0x30a348(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     ctx->pc = 0x30a34cu;
     ctx->vu0_vf[5] = _mm_castsi128_ps(READ128(ADD32(GPR_U32(ctx, 5), 0)));
     // 0x30a350: 0x4bc5216a  vmul.xyz    $vf5, $vf4, $vf5
-    ctx->pc = 0x30a350u;
     { __m128 res = PS2_VMUL(ctx->vu0_vf[4], ctx->vu0_vf[5]); __m128i mask = _mm_set_epi32(0, -1, -1, -1); ctx->vu0_vf[5] = PS2_VBLEND(ctx->vu0_vf[5], res, _mm_castsi128_ps(mask)); }
     // 0x30a354: 0x4b052941  vaddy.x     $vf5, $vf5, $vf5y
-    ctx->pc = 0x30a354u;
     { __m128 res = PS2_VADD(ctx->vu0_vf[5], _mm_shuffle_ps(ctx->vu0_vf[5], ctx->vu0_vf[5], _MM_SHUFFLE(1,1,1,1))); __m128i mask = _mm_set_epi32(0, 0, 0, -1); ctx->vu0_vf[5] = _mm_blendv_ps(ctx->vu0_vf[5], res, _mm_castsi128_ps(mask)); }
     // 0x30a358: 0x4b052942  vaddz.x     $vf5, $vf5, $vf5z
-    ctx->pc = 0x30a358u;
     { __m128 res = PS2_VADD(ctx->vu0_vf[5], _mm_shuffle_ps(ctx->vu0_vf[5], ctx->vu0_vf[5], _MM_SHUFFLE(2,2,2,2))); __m128i mask = _mm_set_epi32(0, 0, 0, -1); ctx->vu0_vf[5] = _mm_blendv_ps(ctx->vu0_vf[5], res, _mm_castsi128_ps(mask)); }
     // 0x30a35c: 0x48222800  qmfc2.ni    $v0, $vf5
-    ctx->pc = 0x30a35cu;
     SET_GPR_VEC(ctx, 2, _mm_castps_si128(ctx->vu0_vf[5]));
     // 0x30a360: 0x44820000  mtc1        $v0, $f0
-    ctx->pc = 0x30a360u;
     { uint32_t bits = GPR_U32(ctx, 2); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x30a364: 0x3e00008  jr          $ra
     ctx->pc = 0x30A364u;
@@ -93,9 +88,7 @@ void sceVu0InnerProduct_0x30a348(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         return;
         #endif
     }
-    ctx->pc = 0x30A36Cu;
     // 0x30a36c: 0x0  nop
-    ctx->pc = 0x30a36cu;
     // NOP
     ctx->pc = 0x30a370u;
 #endif

@@ -18,13 +18,10 @@ void Obj0000_Set_D_003EE2C0_34B290_0x34b290(uint8_t* rdram, R5900Context* ctx, P
     PS_LOG_ENTRY("Obj0000_Set_D_003EE2C0_34B290_0x34b290");
 #endif
 
-    ctx->pc = 0x34b290u;
 
     // 0x34b290: 0x3c03003f  lui         $v1, 0x3F
-    ctx->pc = 0x34b290u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)63 << 16));
     // 0x34b294: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x34b294u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x34b298: 0x3e00008  jr          $ra
     ctx->pc = 0x34B298u;

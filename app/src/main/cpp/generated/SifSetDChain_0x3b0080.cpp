@@ -18,18 +18,17 @@ void SifSetDChain_0x3b0080(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("SifSetDChain_0x3b0080");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b0088u: goto label_3b0088;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b0080u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b0088u: goto label_3b0088;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b0080u;
 
     // 0x3b0080: 0x24030078  addiu       $v1, $zero, 0x78
-    ctx->pc = 0x3b0080u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 120));
     // 0x3b0084: 0xc  syscall     0
-    ctx->pc = 0x3b0084u;
     ctx->pc = 0x3B0088u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

@@ -18,18 +18,17 @@ void ExecOSD_0x3b00c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     PS_LOG_ENTRY("ExecOSD_0x3b00c0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b00c8u: goto label_3b00c8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b00c0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b00c8u: goto label_3b00c8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b00c0u;
 
     // 0x3b00c0: 0x2403007b  addiu       $v1, $zero, 0x7B
-    ctx->pc = 0x3b00c0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 123));
     // 0x3b00c4: 0xc  syscall     0
-    ctx->pc = 0x3b00c4u;
     ctx->pc = 0x3B00C8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

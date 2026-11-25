@@ -18,13 +18,10 @@ void Obj0000_Set_D_003D1410_And_D_003D1414_32AB58_0x32ab58(uint8_t* rdram, R5900
     PS_LOG_ENTRY("Obj0000_Set_D_003D1410_And_D_003D1414_32AB58_0x32ab58");
 #endif
 
-    ctx->pc = 0x32ab58u;
 
     // 0x32ab58: 0x3c02003d  lui         $v0, 0x3D
-    ctx->pc = 0x32ab58u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)61 << 16));
     // 0x32ab5c: 0x3c03003d  lui         $v1, 0x3D
-    ctx->pc = 0x32ab5cu;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)61 << 16));
     // 0x32ab60: 0xac441410  sw          $a0, 0x1410($v0)
     ctx->pc = 0x32ab60u;
@@ -48,9 +45,7 @@ void Obj0000_Set_D_003D1410_And_D_003D1414_32AB58_0x32ab58(uint8_t* rdram, R5900
         return;
         #endif
     }
-    ctx->pc = 0x32AB6Cu;
     // 0x32ab6c: 0x0  nop
-    ctx->pc = 0x32ab6cu;
     // NOP
     ctx->pc = 0x32ab70u;
 }

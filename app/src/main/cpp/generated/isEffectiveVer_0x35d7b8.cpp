@@ -18,15 +18,15 @@ void isEffectiveVer_0x35d7b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     PS_LOG_ENTRY("isEffectiveVer_0x35d7b8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x35d7ccu: goto label_35d7cc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x35d7b8u, 0)) {
+        switch (ctx->pc) {
+            case 0x35d7ccu: goto label_35d7cc;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x35d7b8u;
 
     // 0x35d7b8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x35d7b8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x35d7bc: 0xffb00000  sd          $s0, 0x0($sp)
     ctx->pc = 0x35d7bcu;
@@ -35,7 +35,6 @@ void isEffectiveVer_0x35d7b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     ctx->pc = 0x35d7c0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 8), GPR_U64(ctx, 31));
     // 0x35d7c4: 0xc0d7600  jal         func_35D800
-    ctx->pc = 0x35D7C4u;
     SET_GPR_U32(ctx, 31, 0x35D7CCu);
     ctx->pc = 0x35D7C8u;
     ctx->in_delay_slot = true;
@@ -43,8 +42,7 @@ void isEffectiveVer_0x35d7b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     // 0x35d7c8: 0x80802d  daddu       $s0, $a0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x35D800u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x35D800u, 0x35D7C4u, 0x35D7CCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_0035D800_0x35d800, 0x35d800u, 0x35d7ccu)) {
         return;
     }
     ctx->pc = 0x35D7CCu;
@@ -64,7 +62,6 @@ label_35d7cc:
             goto label_35d7ec;
         }
     }
-    ctx->pc = 0x35D7D4u;
     // 0x35d7d4: 0x8e02000c  lw          $v0, 0xC($s0)
     ctx->pc = 0x35d7d4u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 12)));
@@ -83,7 +80,6 @@ label_35d7cc:
             goto label_35d7e8;
         }
     }
-    ctx->pc = 0x35D7E0u;
     // 0x35d7e0: 0x14600002  bnez        $v1, . + 4 + (0x2 << 2)
     ctx->pc = 0x35D7E0u;
     {
@@ -130,9 +126,7 @@ label_35d7ec:
         return;
         #endif
     }
-    ctx->pc = 0x35D7FCu;
     // 0x35d7fc: 0x0  nop
-    ctx->pc = 0x35d7fcu;
     // NOP
     ctx->pc = 0x35d800u;
 }

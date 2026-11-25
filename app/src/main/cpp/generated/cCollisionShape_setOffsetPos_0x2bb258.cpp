@@ -18,18 +18,17 @@ void cCollisionShape_setOffsetPos_0x2bb258(uint8_t* rdram, R5900Context* ctx, PS
     PS_LOG_ENTRY("cCollisionShape_setOffsetPos_0x2bb258");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2bb288u: goto label_2bb288;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2bb258u, 0)) {
+        switch (ctx->pc) {
+            case 0x2bb288u: goto label_2bb288;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2bb258u;
 
     // 0x2bb258: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2bb258u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2bb25c: 0x24820050  addiu       $v0, $a0, 0x50
-    ctx->pc = 0x2bb25cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 80));
     // 0x2bb260: 0x10450007  beq         $v0, $a1, . + 4 + (0x7 << 2)
     ctx->pc = 0x2BB260u;
@@ -46,7 +45,6 @@ void cCollisionShape_setOffsetPos_0x2bb258(uint8_t* rdram, R5900Context* ctx, PS
             goto label_2bb280;
         }
     }
-    ctx->pc = 0x2BB268u;
     // 0x2bb268: 0xc4a00000  lwc1        $f0, 0x0($a1)
     ctx->pc = 0x2bb268u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -69,8 +67,7 @@ label_2bb280:
     // 0x2bb280: 0xc0aecb6  jal         func_2BB2D8
     ctx->pc = 0x2BB280u;
     SET_GPR_U32(ctx, 31, 0x2BB288u);
-    ctx->pc = 0x2BB2D8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2BB2D8u, 0x2BB280u, 0x2BB288u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002BB2D8_0x2bb2d8, 0x2bb2d8u, 0x2bb288u)) {
         return;
     }
     ctx->pc = 0x2BB288u;
@@ -97,9 +94,7 @@ label_2bb288:
         return;
         #endif
     }
-    ctx->pc = 0x2BB294u;
     // 0x2bb294: 0x0  nop
-    ctx->pc = 0x2bb294u;
     // NOP
     ctx->pc = 0x2bb298u;
 }

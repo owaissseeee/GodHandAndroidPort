@@ -18,18 +18,17 @@ void cOl30_setPosAndPlace_0x183240(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("cOl30_setPosAndPlace_0x183240");
 #endif
 
-    switch (ctx->pc) {
-        case 0x183298u: goto label_183298;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x183240u, 0)) {
+        switch (ctx->pc) {
+            case 0x183298u: goto label_183298;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x183240u;
 
     // 0x183240: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x183240u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x183244: 0x24830490  addiu       $v1, $a0, 0x490
-    ctx->pc = 0x183244u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), 1168));
     // 0x183248: 0x10650007  beq         $v1, $a1, . + 4 + (0x7 << 2)
     ctx->pc = 0x183248u;
@@ -46,7 +45,6 @@ void cOl30_setPosAndPlace_0x183240(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_183268;
         }
     }
-    ctx->pc = 0x183250u;
     // 0x183250: 0xc4a00000  lwc1        $f0, 0x0($a1)
     ctx->pc = 0x183250u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -84,7 +82,6 @@ label_183268:
             goto label_183290;
         }
     }
-    ctx->pc = 0x183274u;
     // 0x183274: 0xc4800490  lwc1        $f0, 0x490($a0)
     ctx->pc = 0x183274u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 1168)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -108,7 +105,6 @@ label_183268:
     SET_GPR_S32(ctx, 5, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 240)));
 label_183290:
     // 0x183290: 0xc060bfe  jal         func_182FF8
-    ctx->pc = 0x183290u;
     SET_GPR_U32(ctx, 31, 0x183298u);
     ctx->pc = 0x183294u;
     ctx->in_delay_slot = true;
@@ -116,8 +112,7 @@ label_183290:
     // 0x183294: 0x24860100  addiu       $a2, $a0, 0x100 (Delay Slot)
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 4), 256));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x182FF8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x182FF8u, 0x183290u, 0x183298u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cOl30_SetInitialPosition_0x182ff8, 0x182ff8u, 0x183298u)) {
         return;
     }
     ctx->pc = 0x183298u;
@@ -144,9 +139,7 @@ label_183298:
         return;
         #endif
     }
-    ctx->pc = 0x1832A4u;
     // 0x1832a4: 0x0  nop
-    ctx->pc = 0x1832a4u;
     // NOP
     ctx->pc = 0x1832a8u;
 }

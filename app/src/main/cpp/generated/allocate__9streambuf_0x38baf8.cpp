@@ -18,28 +18,30 @@ void allocate__9streambuf_0x38baf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     PS_LOG_ENTRY("allocate__9streambuf_0x38baf8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38baf8u: goto label_38baf8;
-        case 0x38bafcu: goto label_38bafc;
-        case 0x38bb00u: goto label_38bb00;
-        case 0x38bb04u: goto label_38bb04;
-        case 0x38bb08u: goto label_38bb08;
-        case 0x38bb0cu: goto label_38bb0c;
-        case 0x38bb10u: goto label_38bb10;
-        case 0x38bb14u: goto label_38bb14;
-        case 0x38bb18u: goto label_38bb18;
-        case 0x38bb1cu: goto label_38bb1c;
-        case 0x38bb20u: goto label_38bb20;
-        case 0x38bb24u: goto label_38bb24;
-        case 0x38bb28u: goto label_38bb28;
-        case 0x38bb2cu: goto label_38bb2c;
-        case 0x38bb30u: goto label_38bb30;
-        case 0x38bb34u: goto label_38bb34;
-        case 0x38bb38u: goto label_38bb38;
-        case 0x38bb3cu: goto label_38bb3c;
-        case 0x38bb40u: goto label_38bb40;
-        case 0x38bb44u: goto label_38bb44;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38baf8u, 0)) {
+        switch (ctx->pc) {
+            case 0x38baf8u: goto label_38baf8;
+            case 0x38bafcu: goto label_38bafc;
+            case 0x38bb00u: goto label_38bb00;
+            case 0x38bb04u: goto label_38bb04;
+            case 0x38bb08u: goto label_38bb08;
+            case 0x38bb0cu: goto label_38bb0c;
+            case 0x38bb10u: goto label_38bb10;
+            case 0x38bb14u: goto label_38bb14;
+            case 0x38bb18u: goto label_38bb18;
+            case 0x38bb1cu: goto label_38bb1c;
+            case 0x38bb20u: goto label_38bb20;
+            case 0x38bb24u: goto label_38bb24;
+            case 0x38bb28u: goto label_38bb28;
+            case 0x38bb2cu: goto label_38bb2c;
+            case 0x38bb30u: goto label_38bb30;
+            case 0x38bb34u: goto label_38bb34;
+            case 0x38bb38u: goto label_38bb38;
+            case 0x38bb3cu: goto label_38bb3c;
+            case 0x38bb40u: goto label_38bb40;
+            case 0x38bb44u: goto label_38bb44;
+            default: break;
+        }
     }
 
     ctx->pc = 0x38baf8u;
@@ -207,7 +209,6 @@ label_38bb40:
     ctx->pc = 0x38BB44u;
 label_38bb44:
     // 0x38bb44: 0x0  nop
-    ctx->pc = 0x38bb44u;
     // NOP
     ctx->pc = 0x38bb48u;
 }

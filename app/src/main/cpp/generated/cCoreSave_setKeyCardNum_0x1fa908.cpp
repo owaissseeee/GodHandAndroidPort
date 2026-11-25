@@ -18,7 +18,6 @@ void cCoreSave_setKeyCardNum_0x1fa908(uint8_t* rdram, R5900Context* ctx, PS2Runt
     PS_LOG_ENTRY("cCoreSave_setKeyCardNum_0x1fa908");
 #endif
 
-    ctx->pc = 0x1fa908u;
 
     // 0x1fa908: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x1fa908u;
@@ -32,7 +31,6 @@ void cCoreSave_setKeyCardNum_0x1fa908(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_1fa944;
         }
     }
-    ctx->pc = 0x1FA914u;
     // 0x1fa914: 0xac450068  sw          $a1, 0x68($v0)
     ctx->pc = 0x1fa914u;
     WRITE32(ADD32(GPR_U32(ctx, 2), 104), GPR_U32(ctx, 5));
@@ -43,7 +41,6 @@ void cCoreSave_setKeyCardNum_0x1fa908(uint8_t* rdram, R5900Context* ctx, PS2Runt
     ctx->pc = 0x1fa91cu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 104)));
     // 0x1fa920: 0x2842000a  slti        $v0, $v0, 0xA
-    ctx->pc = 0x1fa920u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 2) < (int64_t)(int32_t)10) ? 1 : 0);
     // 0x1fa924: 0x54400004  bnel        $v0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x1FA924u;
@@ -60,9 +57,7 @@ void cCoreSave_setKeyCardNum_0x1fa908(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_1fa938;
         }
     }
-    ctx->pc = 0x1FA92Cu;
     // 0x1fa92c: 0x24020009  addiu       $v0, $zero, 0x9
-    ctx->pc = 0x1fa92cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 9));
     // 0x1fa930: 0xac620068  sw          $v0, 0x68($v1)
     ctx->pc = 0x1fa930u;
@@ -104,9 +99,7 @@ label_1fa944:
         return;
         #endif
     }
-    ctx->pc = 0x1FA94Cu;
     // 0x1fa94c: 0x0  nop
-    ctx->pc = 0x1fa94cu;
     // NOP
     ctx->pc = 0x1fa950u;
 }

@@ -18,7 +18,6 @@ void Obj33F8_NoOp_FCA8_0x33fca8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("Obj33F8_NoOp_FCA8_0x33fca8");
 #endif
 
-    ctx->pc = 0x33fca8u;
 
     // 0x33fca8: 0x3e00008  jr          $ra
     ctx->pc = 0x33FCA8u;

@@ -18,15 +18,15 @@ void cEvent_getObjPtr_0x297c50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     PS_LOG_ENTRY("cEvent_getObjPtr_0x297c50");
 #endif
 
-    switch (ctx->pc) {
-        case 0x297c6cu: goto label_297c6c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x297c50u, 0)) {
+        switch (ctx->pc) {
+            case 0x297c6cu: goto label_297c6c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x297c50u;
 
     // 0x297c50: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x297c50u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x297c54: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x297c54u;
@@ -35,7 +35,6 @@ void cEvent_getObjPtr_0x297c50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     ctx->pc = 0x297c58u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x297c5c: 0x30a5ffff  andi        $a1, $a1, 0xFFFF
-    ctx->pc = 0x297c5cu;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)65535);
     // 0x297c60: 0x24840000  addiu       $a0, $a0, 0x0
     ctx->pc = 0x297c60u;
@@ -80,12 +79,10 @@ label_297c6c:
         return;
         #endif
     }
-    ctx->pc = 0x297C78u;
     // 0x297c78: 0xac620000  sw          $v0, 0x0($v1)
     ctx->pc = 0x297c78u;
     WRITE32(ADD32(GPR_U32(ctx, 3), 0), GPR_U32(ctx, 2));
     // 0x297c7c: 0x0  nop
-    ctx->pc = 0x297c7cu;
     // NOP
     ctx->pc = 0x297c80u;
 }

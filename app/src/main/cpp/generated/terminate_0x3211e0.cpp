@@ -18,14 +18,16 @@ void terminate_0x3211e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
     PS_LOG_ENTRY("terminate_0x3211e0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3211e0u: goto label_3211e0;
-        case 0x3211e4u: goto label_3211e4;
-        case 0x3211e8u: goto label_3211e8;
-        case 0x3211ecu: goto label_3211ec;
-        case 0x3211f0u: goto label_3211f0;
-        case 0x3211f4u: goto label_3211f4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3211e0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3211e0u: goto label_3211e0;
+            case 0x3211e4u: goto label_3211e4;
+            case 0x3211e8u: goto label_3211e8;
+            case 0x3211ecu: goto label_3211ec;
+            case 0x3211f0u: goto label_3211f0;
+            case 0x3211f4u: goto label_3211f4;
+            default: break;
+        }
     }
 
     ctx->pc = 0x3211e0u;

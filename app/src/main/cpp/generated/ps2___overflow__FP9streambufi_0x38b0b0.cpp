@@ -18,18 +18,20 @@ void ps2___overflow__FP9streambufi_0x38b0b0(uint8_t* rdram, R5900Context* ctx, P
     PS_LOG_ENTRY("ps2___overflow__FP9streambufi_0x38b0b0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38b0b0u: goto label_38b0b0;
-        case 0x38b0b4u: goto label_38b0b4;
-        case 0x38b0b8u: goto label_38b0b8;
-        case 0x38b0bcu: goto label_38b0bc;
-        case 0x38b0c0u: goto label_38b0c0;
-        case 0x38b0c4u: goto label_38b0c4;
-        case 0x38b0c8u: goto label_38b0c8;
-        case 0x38b0ccu: goto label_38b0cc;
-        case 0x38b0d0u: goto label_38b0d0;
-        case 0x38b0d4u: goto label_38b0d4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38b0b0u, 0)) {
+        switch (ctx->pc) {
+            case 0x38b0b0u: goto label_38b0b0;
+            case 0x38b0b4u: goto label_38b0b4;
+            case 0x38b0b8u: goto label_38b0b8;
+            case 0x38b0bcu: goto label_38b0bc;
+            case 0x38b0c0u: goto label_38b0c0;
+            case 0x38b0c4u: goto label_38b0c4;
+            case 0x38b0c8u: goto label_38b0c8;
+            case 0x38b0ccu: goto label_38b0cc;
+            case 0x38b0d0u: goto label_38b0d0;
+            case 0x38b0d4u: goto label_38b0d4;
+            default: break;
+        }
     }
 
     ctx->pc = 0x38b0b0u;

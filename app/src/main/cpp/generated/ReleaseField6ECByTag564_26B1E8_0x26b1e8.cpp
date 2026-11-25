@@ -18,16 +18,16 @@ void ReleaseField6ECByTag564_26B1E8_0x26b1e8(uint8_t* rdram, R5900Context* ctx, 
     PS_LOG_ENTRY("ReleaseField6ECByTag564_26B1E8_0x26b1e8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x26b218u: goto label_26b218;
-        case 0x26b228u: goto label_26b228;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x26b1e8u, 0)) {
+        switch (ctx->pc) {
+            case 0x26b218u: goto label_26b218;
+            case 0x26b228u: goto label_26b228;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x26b1e8u;
 
     // 0x26b1e8: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x26b1e8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x26b1ec: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x26b1ecu;
@@ -36,7 +36,6 @@ void ReleaseField6ECByTag564_26B1E8_0x26b1e8(uint8_t* rdram, R5900Context* ctx, 
     ctx->pc = 0x26b1f0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x26b1f4: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x26b1f4u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x26b1f8: 0x8e0406ec  lw          $a0, 0x6EC($s0)
     ctx->pc = 0x26b1f8u;
@@ -56,7 +55,6 @@ void ReleaseField6ECByTag564_26B1E8_0x26b1e8(uint8_t* rdram, R5900Context* ctx, 
             goto label_26b22c;
         }
     }
-    ctx->pc = 0x26B204u;
     // 0x26b204: 0x8e030564  lw          $v1, 0x564($s0)
     ctx->pc = 0x26b204u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 1380)));
@@ -69,12 +67,10 @@ void ReleaseField6ECByTag564_26B1E8_0x26b1e8(uint8_t* rdram, R5900Context* ctx, 
             goto label_26b220;
         }
     }
-    ctx->pc = 0x26B210u;
     // 0x26b210: 0xc074206  jal         func_1D0818
     ctx->pc = 0x26B210u;
     SET_GPR_U32(ctx, 31, 0x26B218u);
-    ctx->pc = 0x1D0818u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1D0818u, 0x26B210u, 0x26B218u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cOmWeapon_SetBreak_0x1d0818, 0x1d0818u, 0x26b218u)) {
         return;
     }
     ctx->pc = 0x26B218u;
@@ -99,8 +95,7 @@ label_26b220:
     // 0x26b220: 0xc073d2a  jal         func_1CF4A8
     ctx->pc = 0x26B220u;
     SET_GPR_U32(ctx, 31, 0x26B228u);
-    ctx->pc = 0x1CF4A8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1CF4A8u, 0x26B220u, 0x26B228u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cOmWeapon_setFall_0x1cf4a8, 0x1cf4a8u, 0x26b228u)) {
         return;
     }
     ctx->pc = 0x26B228u;
@@ -134,9 +129,7 @@ label_26b22c:
         return;
         #endif
     }
-    ctx->pc = 0x26B23Cu;
     // 0x26b23c: 0x0  nop
-    ctx->pc = 0x26b23cu;
     // NOP
     ctx->pc = 0x26b240u;
 }

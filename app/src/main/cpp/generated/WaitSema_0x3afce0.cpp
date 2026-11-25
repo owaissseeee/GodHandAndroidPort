@@ -18,18 +18,17 @@ void WaitSema_0x3afce0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     PS_LOG_ENTRY("WaitSema_0x3afce0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afce8u: goto label_3afce8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afce0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afce8u: goto label_3afce8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afce0u;
 
     // 0x3afce0: 0x24030044  addiu       $v1, $zero, 0x44
-    ctx->pc = 0x3afce0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 68));
     // 0x3afce4: 0xc  syscall     0
-    ctx->pc = 0x3afce4u;
     ctx->pc = 0x3AFCE8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

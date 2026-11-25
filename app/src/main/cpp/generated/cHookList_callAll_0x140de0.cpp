@@ -18,38 +18,40 @@ void cHookList_callAll_0x140de0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     PS_LOG_ENTRY("cHookList_callAll_0x140de0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x140de0u: goto label_140de0;
-        case 0x140de4u: goto label_140de4;
-        case 0x140de8u: goto label_140de8;
-        case 0x140decu: goto label_140dec;
-        case 0x140df0u: goto label_140df0;
-        case 0x140df4u: goto label_140df4;
-        case 0x140df8u: goto label_140df8;
-        case 0x140dfcu: goto label_140dfc;
-        case 0x140e00u: goto label_140e00;
-        case 0x140e04u: goto label_140e04;
-        case 0x140e08u: goto label_140e08;
-        case 0x140e0cu: goto label_140e0c;
-        case 0x140e10u: goto label_140e10;
-        case 0x140e14u: goto label_140e14;
-        case 0x140e18u: goto label_140e18;
-        case 0x140e1cu: goto label_140e1c;
-        case 0x140e20u: goto label_140e20;
-        case 0x140e24u: goto label_140e24;
-        case 0x140e28u: goto label_140e28;
-        case 0x140e2cu: goto label_140e2c;
-        case 0x140e30u: goto label_140e30;
-        case 0x140e34u: goto label_140e34;
-        case 0x140e38u: goto label_140e38;
-        case 0x140e3cu: goto label_140e3c;
-        case 0x140e40u: goto label_140e40;
-        case 0x140e44u: goto label_140e44;
-        case 0x140e48u: goto label_140e48;
-        case 0x140e4cu: goto label_140e4c;
-        case 0x140e50u: goto label_140e50;
-        case 0x140e54u: goto label_140e54;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x140de0u, 0)) {
+        switch (ctx->pc) {
+            case 0x140de0u: goto label_140de0;
+            case 0x140de4u: goto label_140de4;
+            case 0x140de8u: goto label_140de8;
+            case 0x140decu: goto label_140dec;
+            case 0x140df0u: goto label_140df0;
+            case 0x140df4u: goto label_140df4;
+            case 0x140df8u: goto label_140df8;
+            case 0x140dfcu: goto label_140dfc;
+            case 0x140e00u: goto label_140e00;
+            case 0x140e04u: goto label_140e04;
+            case 0x140e08u: goto label_140e08;
+            case 0x140e0cu: goto label_140e0c;
+            case 0x140e10u: goto label_140e10;
+            case 0x140e14u: goto label_140e14;
+            case 0x140e18u: goto label_140e18;
+            case 0x140e1cu: goto label_140e1c;
+            case 0x140e20u: goto label_140e20;
+            case 0x140e24u: goto label_140e24;
+            case 0x140e28u: goto label_140e28;
+            case 0x140e2cu: goto label_140e2c;
+            case 0x140e30u: goto label_140e30;
+            case 0x140e34u: goto label_140e34;
+            case 0x140e38u: goto label_140e38;
+            case 0x140e3cu: goto label_140e3c;
+            case 0x140e40u: goto label_140e40;
+            case 0x140e44u: goto label_140e44;
+            case 0x140e48u: goto label_140e48;
+            case 0x140e4cu: goto label_140e4c;
+            case 0x140e50u: goto label_140e50;
+            case 0x140e54u: goto label_140e54;
+            default: break;
+        }
     }
 
     ctx->pc = 0x140de0u;
@@ -215,7 +217,6 @@ label_140e38:
         ctx->pc = 0x140E3Cu;
         goto label_140e3c;
     }
-    ctx->pc = 0x140E34u;
     SET_GPR_U32(ctx, 31, 0x140E3Cu);
     ctx->pc = 0x140E38u;
     ctx->in_delay_slot = true;
@@ -223,8 +224,7 @@ label_140e38:
     // 0x140e38: 0x282d  daddu       $a1, $zero, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1415E8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1415E8u, 0x140E34u, 0x140E3Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_001415E8_0x1415e8, 0x1415e8u, 0x140e3cu)) {
         return;
     }
     ctx->pc = 0x140E3Cu;
@@ -278,7 +278,6 @@ label_140e50:
     ctx->pc = 0x140E54u;
 label_140e54:
     // 0x140e54: 0x0  nop
-    ctx->pc = 0x140e54u;
     // NOP
     ctx->pc = 0x140e58u;
 }

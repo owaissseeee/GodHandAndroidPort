@@ -18,12 +18,13 @@ void ps2__IO_remove_marker_0x38d038(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     PS_LOG_ENTRY("ps2__IO_remove_marker_0x38d038");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38d048u: goto label_38d048;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38d038u, 0)) {
+        switch (ctx->pc) {
+            case 0x38d048u: goto label_38d048;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x38d038u;
 
     // 0x38d038: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x38d038u;
@@ -63,7 +64,6 @@ label_38d048:
             goto label_38d05c;
         }
     }
-    ctx->pc = 0x38D050u;
     // 0x38d050: 0x8c620000  lw          $v0, 0x0($v1)
     ctx->pc = 0x38d050u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 0)));

@@ -18,7 +18,6 @@ void Obj3270_SetField_40_0x327760(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     PS_LOG_ENTRY("Obj3270_SetField_40_0x327760");
 #endif
 
-    ctx->pc = 0x327760u;
 
     // 0x327760: 0x3e00008  jr          $ra
     ctx->pc = 0x327760u;

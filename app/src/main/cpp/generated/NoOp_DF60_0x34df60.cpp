@@ -18,7 +18,6 @@ void NoOp_DF60_0x34df60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
     PS_LOG_ENTRY("NoOp_DF60_0x34df60");
 #endif
 
-    ctx->pc = 0x34df60u;
 
     // 0x34df60: 0x3e00008  jr          $ra
     ctx->pc = 0x34DF60u;

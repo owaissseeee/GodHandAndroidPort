@@ -18,7 +18,6 @@ void cCamera_setMode_0x138238(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     PS_LOG_ENTRY("cCamera_setMode_0x138238");
 #endif
 
-    ctx->pc = 0x138238u;
 
     // 0x138238: 0x3e00008  jr          $ra
     ctx->pc = 0x138238u;

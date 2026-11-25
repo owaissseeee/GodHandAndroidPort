@@ -18,24 +18,26 @@ void cSceAtManager_AtExecuteUnit_0x2c2870(uint8_t* rdram, R5900Context* ctx, PS2
     PS_LOG_ENTRY("cSceAtManager_AtExecuteUnit_0x2c2870");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2c2870u: goto label_2c2870;
-        case 0x2c2874u: goto label_2c2874;
-        case 0x2c2878u: goto label_2c2878;
-        case 0x2c287cu: goto label_2c287c;
-        case 0x2c2880u: goto label_2c2880;
-        case 0x2c2884u: goto label_2c2884;
-        case 0x2c2888u: goto label_2c2888;
-        case 0x2c288cu: goto label_2c288c;
-        case 0x2c2890u: goto label_2c2890;
-        case 0x2c2894u: goto label_2c2894;
-        case 0x2c2898u: goto label_2c2898;
-        case 0x2c289cu: goto label_2c289c;
-        case 0x2c28a0u: goto label_2c28a0;
-        case 0x2c28a4u: goto label_2c28a4;
-        case 0x2c28a8u: goto label_2c28a8;
-        case 0x2c28acu: goto label_2c28ac;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2c2870u, 0)) {
+        switch (ctx->pc) {
+            case 0x2c2870u: goto label_2c2870;
+            case 0x2c2874u: goto label_2c2874;
+            case 0x2c2878u: goto label_2c2878;
+            case 0x2c287cu: goto label_2c287c;
+            case 0x2c2880u: goto label_2c2880;
+            case 0x2c2884u: goto label_2c2884;
+            case 0x2c2888u: goto label_2c2888;
+            case 0x2c288cu: goto label_2c288c;
+            case 0x2c2890u: goto label_2c2890;
+            case 0x2c2894u: goto label_2c2894;
+            case 0x2c2898u: goto label_2c2898;
+            case 0x2c289cu: goto label_2c289c;
+            case 0x2c28a0u: goto label_2c28a0;
+            case 0x2c28a4u: goto label_2c28a4;
+            case 0x2c28a8u: goto label_2c28a8;
+            case 0x2c28acu: goto label_2c28ac;
+            default: break;
+        }
     }
 
     ctx->pc = 0x2c2870u;
@@ -167,7 +169,6 @@ label_2c28a8:
     ctx->pc = 0x2C28ACu;
 label_2c28ac:
     // 0x2c28ac: 0x0  nop
-    ctx->pc = 0x2c28acu;
     // NOP
     ctx->pc = 0x2c28b0u;
 }

@@ -18,7 +18,6 @@ void cObjSimple_SetBustFlag_0x2b8500(uint8_t* rdram, R5900Context* ctx, PS2Runti
     PS_LOG_ENTRY("cObjSimple_SetBustFlag_0x2b8500");
 #endif
 
-    ctx->pc = 0x2b8500u;
 
     // 0x2b8500: 0x3e00008  jr          $ra
     ctx->pc = 0x2B8500u;

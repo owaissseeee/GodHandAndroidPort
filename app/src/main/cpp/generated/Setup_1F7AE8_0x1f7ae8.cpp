@@ -18,28 +18,21 @@ void Setup_1F7AE8_0x1f7ae8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     PS_LOG_ENTRY("Setup_1F7AE8_0x1f7ae8");
 #endif
 
-    ctx->pc = 0x1f7ae8u;
 
     // 0x1f7ae8: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x1f7ae8u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x1f7aec: 0x3c02ffff  lui         $v0, 0xFFFF
-    ctx->pc = 0x1f7aecu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)65535 << 16));
     // 0x1f7af0: 0x3442fffe  ori         $v0, $v0, 0xFFFE
-    ctx->pc = 0x1f7af0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)65534);
     // 0x1f7af4: 0x24060001  addiu       $a2, $zero, 0x1
-    ctx->pc = 0x1f7af4u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1f7af8: 0x24070031  addiu       $a3, $zero, 0x31
-    ctx->pc = 0x1f7af8u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 0), 49));
     // 0x1f7afc: 0x621824  and         $v1, $v1, $v0
-    ctx->pc = 0x1f7afcu;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 2));
     // 0x1f7b00: 0x2405001f  addiu       $a1, $zero, 0x1F
-    ctx->pc = 0x1f7b00u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 31));
     // 0x1f7b04: 0xac830000  sw          $v1, 0x0($a0)
     ctx->pc = 0x1f7b04u;
