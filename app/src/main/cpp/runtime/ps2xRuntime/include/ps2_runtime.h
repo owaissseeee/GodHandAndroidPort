@@ -350,29 +350,29 @@ public:
                                           R5900Context *ctx,
                                           RecompiledFunction targetFn,
                                           uint32_t targetPc,
-                                          uint32_t fallthroughPc) noexcept
+                                          uint32_t fallthroughPc)
     {
         ctx->pc = targetPc;
         if (__builtin_expect(eeCheckpointDue(8u), 0))
         {
             return false;
         }
+        const uint64_t jumpSerial = m_guestJumpSerialPtr ? *m_guestJumpSerialPtr : 0u;
         targetFn(rdram, ctx, this);
-        if (__builtin_expect(ctx->pc != fallthroughPc ||
-                             (m_schedulerTransferPtr && *m_schedulerTransferPtr) ||
+        if (__builtin_expect((m_schedulerTransferPtr && *m_schedulerTransferPtr) ||
                              (m_schedulerUnwindingPtr && *m_schedulerUnwindingPtr) ||
-                             isStopRequested(), 0))
+                             isStopRequested() ||
+                             ctx->pc == 0u, 0))
         {
-            if (ctx->pc == targetPc)
-            {
-                ctx->pc = fallthroughPc;
-                return !((m_schedulerTransferPtr && *m_schedulerTransferPtr) ||
-                         (m_schedulerUnwindingPtr && *m_schedulerUnwindingPtr) ||
-                         isStopRequested());
-            }
             return false;
         }
-        return true;
+        if (__builtin_expect(ctx->pc == targetPc &&
+                             (!m_guestJumpSerialPtr || jumpSerial == *m_guestJumpSerialPtr), 1))
+        {
+            ctx->pc = fallthroughPc;
+            return true;
+        }
+        return ctx->pc == fallthroughPc;
     }
     void reportMissingFunction(uint8_t *rdram,
                                R5900Context *ctx,
@@ -534,6 +534,7 @@ private:
     std::unique_ptr<EeScheduler> m_eeScheduler;
     const bool *m_schedulerTransferPtr = nullptr;
     const bool *m_schedulerUnwindingPtr = nullptr;
+    const uint64_t *m_guestJumpSerialPtr = nullptr;
     mutable std::mutex m_eeKernelStateMutex;
     std::unordered_map<int, std::vector<EeExitHandlerRegistration>> m_eeExitHandlers;
     std::unordered_map<uint32_t, uint32_t> m_eeSyscallOverrides;
