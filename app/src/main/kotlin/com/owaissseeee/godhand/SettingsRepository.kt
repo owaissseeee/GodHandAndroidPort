@@ -29,6 +29,7 @@ class SettingsRepository(context: Context) {
 
     private fun isIntKey(k: String): Boolean {
         return k.endsWith("_idx") || k.endsWith("_idx_v2") || k.endsWith("_idx_v3") || k.endsWith("_idx_v4") || k.endsWith("_idx_v5") ||
+               k.endsWith("_idx_v6") || k.endsWith("_idx_v7") ||
                k.endsWith("_mode") || k.endsWith("_slot") || k.endsWith("_multiplier") || k.endsWith("_lock") || k.endsWith("_costume") ||
                k == "cheat_speed_modifier" || k == "cheat_gene_costume" || k == "cheat_olivia_costume" ||
                k == "vibration_strength"
@@ -118,6 +119,14 @@ class SettingsRepository(context: Context) {
                 android.os.Build.BOARD.contains("mt6765", ignoreCase = true)
             } catch (_: Throwable) { false }
         }
+
+        val deviceTier: Int by lazy {
+            try {
+                NativeBridge.getDeviceTier().coerceIn(1, 3)
+            } catch (_: Throwable) {
+                if (isCortexA53OrPotato) 1 else 2
+            }
+        }
     }
 
     var rendererIdx: Int
@@ -133,14 +142,19 @@ class SettingsRepository(context: Context) {
 
     var resolutionIdx: Int
         get() {
-            if (!prefs.contains("res_idx_v4")) {
-                val def = if (isCortexA53OrPotato) 1 else 2
-                putInt("res_idx_v4", def)
+            if (!prefs.contains("res_idx_v5")) {
+                val tier = if (isCortexA53OrPotato) 1 else deviceTier
+                val def = when {
+                    tier <= 1 -> 1 // 0.75x for Potato / Low-End
+                    tier == 2 -> 2 // 1.0x Native for Mid-Range
+                    else -> 3      // 2.0x HD for Flagship
+                }
+                putInt("res_idx_v5", def)
                 return def
             }
-            return getSafeInt("res_idx_v4", 2).coerceIn(0, 5)
+            return getSafeInt("res_idx_v5", 2).coerceIn(0, 5)
         }
-        set(value) = putInt("res_idx_v4", value.coerceIn(0, 5))
+        set(value) = putInt("res_idx_v5", value.coerceIn(0, 5))
 
     var aspectIdx: Int
         get() {
@@ -159,14 +173,15 @@ class SettingsRepository(context: Context) {
 
     var fpsIdx: Int
         get() {
-            if (!prefs.contains("fps_idx_v6")) {
-                val def = 0 // 0: 30 FPS (Authentic PS2 - Default)
-                putInt("fps_idx_v6", def)
+            if (!prefs.contains("fps_idx_v7")) {
+                val tier = if (isCortexA53OrPotato) 1 else deviceTier
+                val def = if (tier <= 1) 0 else 1 // 0: 30 FPS (Potato), 1: 60 FPS (Mid-Range & Flagship)
+                putInt("fps_idx_v7", def)
                 return def
             }
-            return getSafeInt("fps_idx_v6", 0).coerceIn(0, 1)
+            return getSafeInt("fps_idx_v7", 0).coerceIn(0, 1)
         }
-        set(value) = putInt("fps_idx_v6", value.coerceIn(0, 1))
+        set(value) = putInt("fps_idx_v7", value.coerceIn(0, 1))
 
     var frameskipIdx: Int
         get() = getSafeInt("frameskip_idx_v3", 0).coerceIn(0, 1) // 0: Off (Full 1:1 Rendering - Default), 1: Skip 1 Frame (Mild Potato Boost)
@@ -373,6 +388,10 @@ class SettingsRepository(context: Context) {
         get() = prefs.getBoolean("cheat_unlock_jukebox", false)
         set(value) = putBoolean("cheat_unlock_jukebox", value)
 
+    var cheatUncensorPatch: Boolean
+        get() = prefs.getBoolean("cheat_uncensor_patch", false)
+        set(value) = putBoolean("cheat_uncensor_patch", value)
+
     fun syncCheatsToNative() {
         try {
             NativeBridge.setCheatBool("inf_health", cheatInfiniteHealth)
@@ -394,6 +413,7 @@ class SettingsRepository(context: Context) {
             NativeBridge.setCheatBool("casino_tickets", cheatCasinoTickets)
             NativeBridge.setCheatBool("casino_always_win", cheatCasinoAlwaysWin)
             NativeBridge.setCheatBool("unlock_jukebox", cheatUnlockJukebox)
+            NativeBridge.setCheatBool("uncensor_patch", cheatUncensorPatch)
         } catch (_: Throwable) {}
     }
 

@@ -1,4 +1,5 @@
 #include "cheats_engine.h"
+#include "runtime/ps2_cd_image.h"
 #include <android/log.h>
 
 #define CHEAT_LOG(...) __android_log_print(ANDROID_LOG_INFO, "GodHandCheats", __VA_ARGS__)
@@ -44,6 +45,9 @@ void CheatsEngine::setCheatBool(const std::string& key, bool enabled) {
         m_casinoAlwaysWin.store(enabled, std::memory_order_relaxed);
     } else if (key == "unlock_jukebox") {
         m_unlockJukebox.store(enabled, std::memory_order_relaxed);
+    } else if (key == "uncensor_patch") {
+        m_uncensorPatch.store(enabled, std::memory_order_relaxed);
+        PS2CdImage::instance().setUncensorEnabled(enabled);
     }
 }
 
@@ -76,6 +80,7 @@ bool CheatsEngine::isCheatEnabled(const std::string& key) const {
     if (key == "casino_tickets") return m_casinoTickets.load(std::memory_order_relaxed);
     if (key == "casino_always_win") return m_casinoAlwaysWin.load(std::memory_order_relaxed);
     if (key == "unlock_jukebox") return m_unlockJukebox.load(std::memory_order_relaxed);
+    if (key == "uncensor_patch") return m_uncensorPatch.load(std::memory_order_relaxed);
     return false;
 }
 
@@ -96,27 +101,81 @@ void CheatsEngine::applyFrameCheats(uint8_t* rdram) {
     std::memcpy(&playerPtr, rdram + 0x00747A94u, sizeof(playerPtr));
     const bool validPlayer = (playerPtr >= 0x00100000u && playerPtr < 0x02000000u);
 
-    if (m_maxHealthCapacity.load(std::memory_order_relaxed)) {
-        // Fit health gauge inside the HUD border without overflowing the screen:
-        // Level 6 border = 1100 HP, cleanly terminating inside the HUD right bracket
-        rdram[0x00568824u] = 0x06u;
-        const uint16_t maxHp = 1100u;
-        std::memcpy(rdram + 0x005686EAu, &maxHp, sizeof(maxHp));
+    const bool maxHpCap = m_maxHealthCapacity.load(std::memory_order_relaxed);
+    const bool infHealth = m_infHealth.load(std::memory_order_relaxed);
+    const bool invincible = m_invincibility.load(std::memory_order_relaxed);
+
+    if (maxHpCap) {
+        // Max VitalMax in cCoreSave_updateVitalMax (0x1facb0): state154 = 13 -> 13 * 20 + 100 = 360
+        rdram[0x00568824u] = 0x0Du;
+        const int32_t fullVitalMax = 360;
+        std::memcpy(rdram + 0x00568750u, &fullVitalMax, sizeof(fullVitalMax));
         if (validPlayer) {
-            std::memcpy(rdram + playerPtr + 0x548u, &maxHp, sizeof(maxHp));
+            const int16_t maxHp16 = 360;
+            std::memcpy(rdram + playerPtr + 0x548u, &maxHp16, sizeof(maxHp16));
         }
     }
 
-    if (m_infHealth.load(std::memory_order_relaxed) || m_invincibility.load(std::memory_order_relaxed)) {
-        uint16_t maxHp = 0;
+    if (infHealth || maxHpCap) {
+        int32_t saveVitalMax = 0;
+        std::memcpy(&saveVitalMax, rdram + 0x00568750u, sizeof(saveVitalMax));
+        int16_t playerMaxHp = 0;
         if (validPlayer) {
-            std::memcpy(&maxHp, rdram + playerPtr + 0x548u, sizeof(maxHp));
-            if (maxHp == 0) maxHp = 1000;
-            std::memcpy(rdram + playerPtr + 0x54Au, &maxHp, sizeof(maxHp));
+            std::memcpy(&playerMaxHp, rdram + playerPtr + 0x548u, sizeof(playerMaxHp));
         }
-        std::memcpy(&maxHp, rdram + 0x005686EAu, sizeof(maxHp));
-        if (maxHp == 0) maxHp = 1000;
-        std::memcpy(rdram + 0x005686E8u, &maxHp, sizeof(maxHp));
+        int32_t targetMaxHp = maxHpCap ? 360 : (playerMaxHp > 0 ? static_cast<int32_t>(playerMaxHp) : saveVitalMax);
+        if (targetMaxHp < 100) targetMaxHp = 100;
+        if (targetMaxHp > 360) targetMaxHp = 360;
+
+        if (infHealth) {
+            // Lock HP strictly to current max capacity without ever overflowing
+            std::memcpy(rdram + 0x00568754u, &targetMaxHp, sizeof(targetMaxHp));
+            if (validPlayer) {
+                const int16_t hp16 = static_cast<int16_t>(targetMaxHp);
+                std::memcpy(rdram + playerPtr + 0x54Au, &hp16, sizeof(hp16));
+            }
+        } else {
+            // Even without inf_health, prevent any curHp > maxHp overflow
+            int32_t curVital = 0;
+            std::memcpy(&curVital, rdram + 0x00568754u, sizeof(curVital));
+            if (curVital > targetMaxHp) {
+                std::memcpy(rdram + 0x00568754u, &targetMaxHp, sizeof(targetMaxHp));
+            }
+            if (validPlayer) {
+                int16_t curHp16 = 0;
+                std::memcpy(&curHp16, rdram + playerPtr + 0x54Au, sizeof(curHp16));
+                if (curHp16 > static_cast<int16_t>(targetMaxHp)) {
+                    const int16_t clamped16 = static_cast<int16_t>(targetMaxHp);
+                    std::memcpy(rdram + playerPtr + 0x54Au, &clamped16, sizeof(clamped16));
+                }
+            }
+        }
+    }
+
+    // Unleashed God Hand style Invulnerability:
+    // - GameWork Dbg::kPlMuteki (0x00747A2C & 0x08): blocks hazards, player damage handler, and enemy grabs (func_00270DB0)
+    // - playerPtr + 0x54C = 5.0f: exact timer Unleashed God Hand writes at 0x1093B0 so cDamageManage (func_001FCF20)
+    //   skips all hitbox/hurtbox intersections (enemy attacks whiff cleanly without sparks, stagger, or grab)
+    if (invincible) {
+        uint32_t dbgFlags0 = 0;
+        std::memcpy(&dbgFlags0, rdram + 0x00747A2Cu, sizeof(dbgFlags0));
+        dbgFlags0 |= 0x08u;
+        std::memcpy(rdram + 0x00747A2Cu, &dbgFlags0, sizeof(dbgFlags0));
+        if (validPlayer) {
+            const float invulnTimer = 5.0f;
+            std::memcpy(rdram + playerPtr + 0x54Cu, &invulnTimer, sizeof(invulnTimer));
+        }
+        m_wasInvincible = true;
+    } else if (m_wasInvincible) {
+        uint32_t dbgFlags0 = 0;
+        std::memcpy(&dbgFlags0, rdram + 0x00747A2Cu, sizeof(dbgFlags0));
+        dbgFlags0 &= ~0x08u;
+        std::memcpy(rdram + 0x00747A2Cu, &dbgFlags0, sizeof(dbgFlags0));
+        if (validPlayer && rdram[0x005CB010u] == 0u) {
+            const float zero = 0.0f;
+            std::memcpy(rdram + playerPtr + 0x54Cu, &zero, sizeof(zero));
+        }
+        m_wasInvincible = false;
     }
 
     // 2. Resources & Currency
@@ -125,15 +184,17 @@ void CheatsEngine::applyFrameCheats(uint8_t* rdram) {
         std::memcpy(rdram + 0x005686F0u, &gold, sizeof(gold));
     }
 
-    if (m_infOrbs.load(std::memory_order_relaxed)) {
-        const uint32_t orbs = 0x01010101u;
-        std::memcpy(rdram + 0x00568778u, &orbs, sizeof(orbs));
-        rdram[0x00568777u] = 5u;
+    // Apply Max Roulette Orbs (0..6 capacity at 0x00568826) before filling orbs
+    if (m_maxRouletteOrbs.load(std::memory_order_relaxed)) {
+        rdram[0x00568826u] = 0x06u;
     }
 
-    if (m_maxRouletteOrbs.load(std::memory_order_relaxed)) {
-        // Dwinash ARMax TMKJ-3MAA-K15JA: Max 6 Roulette Orbs capacity = 0x06 at 0x00568826
-        rdram[0x00568826u] = 0x06u;
+    if (m_infOrbs.load(std::memory_order_relaxed)) {
+        uint8_t orbCap = rdram[0x00568826u];
+        if (orbCap > 6u) orbCap = 6u;
+        for (uint8_t i = 0; i < 6u; ++i) {
+            rdram[0x00568778u + i] = (i < orbCap) ? 1u : 0u;
+        }
     }
 
     // 3. Combat, Techniques & Meters
@@ -210,9 +271,21 @@ void CheatsEngine::applyFrameCheats(uint8_t* rdram) {
         std::memcpy(rdram + 0x003BC7D0u, s_origTechDamage, sizeof(s_origTechDamage));
     }
 
-    if (m_freezeRoulette.load(std::memory_order_relaxed)) {
-        const uint32_t allRoulette = 0xFFFFFFFFu;
-        std::memcpy(rdram + 0x00568800u, &allRoulette, sizeof(allRoulette));
+    // Combat roulette timer freeze is handled directly in func_00114608 (0x1147CC) and func_00145238 (0x14530C).
+    // Uncensor Patch (xdelta codecave 0x003A51C4): unlock God Reel bitfield verbatim when enabled.
+    if (m_uncensorPatch.load(std::memory_order_relaxed)) {
+        if (!m_origGodReelSaved) {
+            std::memcpy(&m_origGodReelMask, rdram + 0x00568800u, sizeof(m_origGodReelMask));
+            m_origGodReelSaved = true;
+        }
+        const uint32_t allGodReel = 0xFFFFFFFFu;
+        std::memcpy(rdram + 0x00568800u, &allGodReel, sizeof(allGodReel));
+        m_wasUncensorPatch = true;
+    } else if (m_wasUncensorPatch) {
+        if (m_origGodReelSaved && !m_allTechniques.load(std::memory_order_relaxed)) {
+            std::memcpy(rdram + 0x00568800u, &m_origGodReelMask, sizeof(m_origGodReelMask));
+        }
+        m_wasUncensorPatch = false;
     }
 
     int diff = m_difficultyLock.load(std::memory_order_relaxed);

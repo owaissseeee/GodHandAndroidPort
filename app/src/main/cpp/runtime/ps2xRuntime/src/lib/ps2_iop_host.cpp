@@ -375,7 +375,13 @@ uint64_t PS2IopHostAdapter::openHostFile(std::string_view path)
     {
         handle = m_nextHostFileHandle++;
     }
-    m_hostFiles.emplace(handle, HostFile{stream, size});
+    HostFile hf;
+    hf.stream = stream;
+    hf.size = size;
+    hf.isDataAfs = PS2CdImage::isDataAfsPath(hostPath);
+    if (hf.isDataAfs)
+        hf.hostPath = hostPath;
+    m_hostFiles.emplace(handle, std::move(hf));
     return handle;
 }
 
@@ -440,6 +446,10 @@ bool PS2IopHostAdapter::readHostFile(uint64_t handle,
     {
         std::clearerr(it->second.stream);
         return false;
+    }
+    if (bytesRead != 0u && it->second.isDataAfs && PS2CdImage::instance().isUncensorEnabled())
+    {
+        PS2CdImage::instance().applyUncensorAfsOverlay(offset, destination, bytesRead, &it->second.hostPath);
     }
     return true;
 }

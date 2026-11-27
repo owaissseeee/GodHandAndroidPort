@@ -8,10 +8,14 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
+import android.os.Build
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.view.WindowInsets
+import android.view.WindowInsetsController
+import android.view.WindowManager
 import android.widget.*
 import com.owaissseeee.godhand.NativeBridge
 import com.owaissseeee.godhand.R
@@ -34,7 +38,7 @@ class SettingsDialog(
     private val onSaveStateRequested: ((slot: Int) -> Unit)? = null,
     private val onLoadStateRequested: ((slot: Int) -> Unit)? = null,
     private val onSettingsChanged: (() -> Unit)? = null
-) : Dialog(context) {
+) : Dialog(context, R.style.Theme_GodHandFullscreenDialog) {
 
     private var activeTab = 0 // 0: Graphics, 1: Controls, 2: Sound, 3: Saves, 4: Cheats, 5: Logs
     private val tabButtons = mutableListOf<Button>()
@@ -51,13 +55,13 @@ class SettingsDialog(
 
     init {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window?.setBackgroundDrawable(ColorDrawable(Color.argb(250, 22, 14, 9))) // Warm God Hand western leather & dark walnut
+        window?.setBackgroundDrawable(ColorDrawable(0xFF09090B.toInt()))
         window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
-        // Root Console Split-View Layout (Horizontal)
+        // Root Edge-to-Edge Fullscreen Console Split-View Layout
         val root = LinearLayout(context).apply {
             orientation = LinearLayout.HORIZONTAL
-            setPadding(12.dpToPx(), 10.dpToPx(), 12.dpToPx(), 10.dpToPx())
+            setBackgroundColor(0xFF09090B.toInt())
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
@@ -65,43 +69,38 @@ class SettingsDialog(
         }
 
         // ==========================================
-        // LEFT SIDEBAR (Console Navigation Tabs)
+        // LEFT SIDEBAR (Minimalist Console Navigation)
         // ==========================================
         val sidebar = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
-            val bg = GradientDrawable().apply {
-                setColor(0xFF140D08.toInt()) // Deep walnut brown
-                setStroke(1.dpToPx(), 0xFF352014.toInt())
-                cornerRadius = 10f.dpToPx()
-            }
-            background = bg
-            setPadding(10.dpToPx(), 12.dpToPx(), 10.dpToPx(), 10.dpToPx())
+            setBackgroundColor(0xFF0D0E13.toInt())
+            setPadding(12.dpToPx(), 16.dpToPx(), 12.dpToPx(), 14.dpToPx())
         }
 
         // 1. Sidebar Brand Header
         val brandLayout = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(6.dpToPx(), 4.dpToPx(), 6.dpToPx(), 12.dpToPx())
+            setPadding(6.dpToPx(), 2.dpToPx(), 6.dpToPx(), 14.dpToPx())
         }
         val appTitle = TextView(context).apply {
-            text = if (isMidGame) "⚔ IN-GAME" else "⚔ GOD HAND"
-            textSize = 14.5f
-            setTextColor(0xFFF59E0B.toInt()) // Amber-500
+            text = if (isMidGame) "PAUSE" else "GOD HAND"
+            textSize = 15f
+            setTextColor(0xFFF8FAFC.toInt())
             typeface = android.graphics.Typeface.DEFAULT_BOLD
-            letterSpacing = 0.06f
+            letterSpacing = 0.14f
         }
         val portCredit = TextView(context).apply {
-            text = "PORT BY OWAISSSEEEE"
+            text = "v2.3 • OWAISSSEEEE"
             textSize = 8.5f
-            setTextColor(0xFFD4AF37.toInt()) // Gold
+            setTextColor(0xFFD4AF37.toInt())
             typeface = android.graphics.Typeface.DEFAULT_BOLD
-            letterSpacing = 0.10f
+            letterSpacing = 0.12f
         }
         val appSub = TextView(context).apply {
             text = "SYSTEM SETTINGS"
-            textSize = 9f
-            setTextColor(0xFFA89682.toInt()) // Warm tan
-            letterSpacing = 0.12f
+            textSize = 8.5f
+            setTextColor(0xFF64748B.toInt())
+            letterSpacing = 0.14f
             typeface = android.graphics.Typeface.MONOSPACE
         }
         brandLayout.addView(appTitle)
@@ -109,14 +108,14 @@ class SettingsDialog(
         brandLayout.addView(appSub)
         sidebar.addView(brandLayout)
 
-        // 2. Vertical Navigation Tabs (Inside a ScrollView so all 6 tabs including LOGS are 100% accessible on any screen)
+        // 2. Vertical Navigation Tabs
         val tabsList = listOf(
-            "🎮  GRAPHICS",
-            "🕹️  CONTROLS",
-            "🔊  SOUND",
-            "💾  SAVES",
-            "⚡  CHEATS",
-            "📋  LOGS"
+            "GRAPHICS",
+            "CONTROLS",
+            "SOUND",
+            "SAVES",
+            "CHEATS",
+            "LOGS"
         )
         val tabsContainer = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
@@ -127,14 +126,14 @@ class SettingsDialog(
                 textSize = 11f
                 textAlignment = View.TEXT_ALIGNMENT_VIEW_START
                 gravity = Gravity.CENTER_VERTICAL or Gravity.START
-                setPadding(10.dpToPx(), 0, 6.dpToPx(), 0)
-                letterSpacing = 0.03f
+                setPadding(12.dpToPx(), 0, 8.dpToPx(), 0)
+                letterSpacing = 0.10f
                 setOnClickListener { selectTab(i) }
             }
             tabButtons.add(btnTab)
             tabsContainer.addView(btnTab, LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, 34.dpToPx()
-            ).apply { setMargins(0, 0, 0, 3.dpToPx()) })
+                LinearLayout.LayoutParams.MATCH_PARENT, 36.dpToPx()
+            ).apply { setMargins(0, 0, 0, 4.dpToPx()) })
         }
         val tabsScrollView = ScrollView(context).apply {
             isVerticalScrollBarEnabled = true
@@ -148,27 +147,30 @@ class SettingsDialog(
         ))
 
         root.addView(sidebar, LinearLayout.LayoutParams(
-            200.dpToPx(), LinearLayout.LayoutParams.MATCH_PARENT
+            188.dpToPx(), LinearLayout.LayoutParams.MATCH_PARENT
+        ))
+
+        // Hairline vertical divider separating sidebar & content
+        val sideDivider = View(context).apply {
+            setBackgroundColor(0xFF1F222D.toInt())
+        }
+        root.addView(sideDivider, LinearLayout.LayoutParams(
+            1.dpToPx(), LinearLayout.LayoutParams.MATCH_PARENT
         ))
 
         // ==========================================
-        // RIGHT MAIN CONTENT AREA
+        // RIGHT MAIN CONTENT AREA (Full Screen)
         // ==========================================
         val rightPane = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
-            val bg = GradientDrawable().apply {
-                setColor(0xFF1A110A.toInt()) // Dark saddle leather
-                setStroke(1.dpToPx(), 0xFF3D2717.toInt())
-                cornerRadius = 10f.dpToPx()
-            }
-            background = bg
-            setPadding(18.dpToPx(), 12.dpToPx(), 18.dpToPx(), 12.dpToPx())
+            setBackgroundColor(0xFF09090B.toInt())
+            setPadding(22.dpToPx(), 16.dpToPx(), 22.dpToPx(), 14.dpToPx())
         }
 
         // Right Pane Header
         val headerLayout = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(0, 0, 0, 8.dpToPx())
+            setPadding(0, 0, 0, 10.dpToPx())
         }
 
         val titleRow = LinearLayout(context).apply {
@@ -180,28 +182,28 @@ class SettingsDialog(
             orientation = LinearLayout.VERTICAL
         }
         tabTitleTv = TextView(context).apply {
-            text = "DISPLAY & RENDERING"
+            text = "GRAPHICS"
             textSize = 14f
-            setTextColor(0xFFF5EBE1.toInt())
+            setTextColor(0xFFF8FAFC.toInt())
             typeface = android.graphics.Typeface.DEFAULT_BOLD
-            letterSpacing = 0.05f
+            letterSpacing = 0.08f
         }
         tabSubtitleTv = TextView(context).apply {
             text = "Configure resolution, renderer, and frameskip engine"
             textSize = 10.5f
-            setTextColor(0xFFA89682.toInt())
+            setTextColor(0xFF94A3B8.toInt())
         }
         titleContainer.addView(tabTitleTv)
         titleContainer.addView(tabSubtitleTv)
 
         val btnCloseCross = TextView(context).apply {
             text = "✕"
-            textSize = 16f
-            setTextColor(0xFFF5EBE1.toInt())
+            textSize = 15f
+            setTextColor(0xFFE2E8F0.toInt())
             gravity = Gravity.CENTER
             val bg = GradientDrawable().apply {
-                setColor(0xFF2E1C11.toInt())
-                setStroke(1.dpToPx(), 0xFF4D301E.toInt())
+                setColor(0xFF15161D.toInt())
+                setStroke(1.dpToPx(), 0xFF2A2D39.toInt())
                 cornerRadius = 16f.dpToPx()
             }
             background = bg
@@ -223,11 +225,11 @@ class SettingsDialog(
         ))
 
         val divider = View(context).apply {
-            setBackgroundColor(0xFF382315.toInt())
+            setBackgroundColor(0xFF1F222D.toInt())
         }
         headerLayout.addView(divider, LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT, 1.dpToPx()
-        ).apply { setMargins(0, 8.dpToPx(), 0, 0) })
+        ).apply { setMargins(0, 10.dpToPx(), 0, 0) })
 
         rightPane.addView(headerLayout)
 
@@ -237,7 +239,7 @@ class SettingsDialog(
         }
         contentContainer = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
-            setPadding(0, 4.dpToPx(), 4.dpToPx(), 8.dpToPx())
+            setPadding(0, 4.dpToPx(), 4.dpToPx(), 12.dpToPx())
         }
         scrollContent.addView(contentContainer)
         rightPane.addView(scrollContent, LinearLayout.LayoutParams(
@@ -246,15 +248,49 @@ class SettingsDialog(
 
         root.addView(rightPane, LinearLayout.LayoutParams(
             0, LinearLayout.LayoutParams.MATCH_PARENT, 1f
-        ).apply { setMargins(10.dpToPx(), 0, 0, 0) })
+        ))
 
         setContentView(root)
         selectTab(0)
     }
 
+    @Suppress("DEPRECATION")
+    private fun applyFullscreenWindow() {
+        val w = window ?: return
+        w.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            w.attributes = w.attributes.apply {
+                layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+            }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            w.setDecorFitsSystemWindows(false)
+            w.insetsController?.let { controller ->
+                controller.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
+                controller.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            }
+        } else {
+            w.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_FULLSCREEN
+            )
+        }
+    }
+
     override fun onStart() {
         super.onStart()
-        window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        applyFullscreenWindow()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            applyFullscreenWindow()
+        }
     }
 
     fun refreshActiveTab() {
@@ -333,44 +369,44 @@ class SettingsDialog(
             val b = tabButtons[i]
             if (i == activeTab) {
                 val activeBg = GradientDrawable().apply {
-                    setColor(0xFF382417.toInt())
-                    setStroke(2.dpToPx(), 0xFFF59E0B.toInt())
+                    setColor(0xFF1A1214.toInt())
+                    setStroke(1.dpToPx(), 0xFFD4AF37.toInt())
                     cornerRadius = 6f.dpToPx()
                 }
                 b.background = activeBg
-                b.setTextColor(0xFFF59E0B.toInt())
+                b.setTextColor(0xFFD4AF37.toInt())
                 b.typeface = android.graphics.Typeface.DEFAULT_BOLD
             } else {
                 b.setBackgroundColor(Color.TRANSPARENT)
-                b.setTextColor(0xFFA89682.toInt())
+                b.setTextColor(0xFF94A3B8.toInt())
                 b.typeface = android.graphics.Typeface.DEFAULT
             }
         }
 
         when (activeTab) {
             0 -> {
-                tabTitleTv.text = "🎮 GRAPHICS & GPU ENGINE"
-                tabSubtitleTv.text = "Renderer, internal resolution, aspect ratio, target framerate & frameskip"
+                tabTitleTv.text = "GRAPHICS"
+                tabSubtitleTv.text = "Renderer, internal resolution, aspect ratio, framerate & Ultra Potato mode"
             }
             1 -> {
-                tabTitleTv.text = "🕹️ CONTROLS & TOUCH OVERLAY"
+                tabTitleTv.text = "CONTROLS"
                 tabSubtitleTv.text = "Gamepad routing, stick behaviors, dodge modes, HUD & button mapping"
             }
             2 -> {
-                tabTitleTv.text = "🔊 SOUND & SPU2 AUDIO"
+                tabTitleTv.text = "SOUND"
                 tabSubtitleTv.text = "AAudio scheduling, hardware buffer sizing & real-time master volume"
             }
             3 -> {
-                tabTitleTv.text = "💾 PS2 MEMORY CARD & SAVES"
+                tabTitleTv.text = "SAVES"
                 tabSubtitleTv.text = "Export raw Mcd001.ps2 / ZIP snapshots, import saves & instant restore"
             }
             4 -> {
-                tabTitleTv.text = "⚡ GAMEPLAY CHEATS & MODS"
-                tabSubtitleTv.text = "Action Replay MAX & CodeBreaker memory modifiers (Live toggleable)"
+                tabTitleTv.text = "CHEATS & PATCHES"
+                tabSubtitleTv.text = "Memory cheats & Gledson999 USA Uncensor Patch (Live toggleable)"
             }
             5 -> {
-                tabTitleTv.text = "📋 NATIVE SYSTEM LOGCAT"
-                tabSubtitleTv.text = "Real-time engine diagnostics, performance telemetry & crash inspect"
+                tabTitleTv.text = "LOGS"
+                tabSubtitleTv.text = "Real-time engine diagnostics, performance telemetry & spike logs"
             }
         }
 
@@ -457,7 +493,7 @@ class SettingsDialog(
 
         addSpinnerRow(
             "Target Frame Rate",
-            listOf("30 FPS (Authentic PS2 - Default)", "60 FPS (Experimental / Physics Uncapped)"),
+            listOf("30 FPS (Authentic PS2)", "60 FPS (Smooth 60 Hz)"),
             settings.fpsIdx
         ) { pos ->
             settings.fpsIdx = pos
@@ -1143,11 +1179,11 @@ class SettingsDialog(
     // ==========================================
     private fun buildCheatsTab() {
         // Section 1: Health & Protection
-        addSectionHeader("🛡️ HEALTH & PROTECTION")
+        addSectionHeader("HEALTH & PROTECTION")
         addCheatsGrid(listOf(
             CheatToggleItem(
                 title = "Infinite Health",
-                subtitle = "Locks & refills HP bar; standard attacks cannot kill Gene",
+                subtitle = "Locks HP strictly to current or Max HP without ever overflowing",
                 isChecked = settings.cheatInfiniteHealth
             ) { checked ->
                 settings.cheatInfiniteHealth = checked
@@ -1155,7 +1191,7 @@ class SettingsDialog(
             },
             CheatToggleItem(
                 title = "Invulnerability",
-                subtitle = "Attacks phase through Gene; zero damage & zero hit stagger",
+                subtitle = "Unleashed God Hand evasion: attacks whiff cleanly & enemies cannot grab",
                 isChecked = settings.cheatInvincibility
             ) { checked ->
                 settings.cheatInvincibility = checked
@@ -1163,7 +1199,7 @@ class SettingsDialog(
             },
             CheatToggleItem(
                 title = "Max Health Capacity",
-                subtitle = "Dwinash ARMax code: Extends health gauge to screen edge (3000 HP)",
+                subtitle = "Sets permanent max capacity to full VitalMax (360) without gauge overflow",
                 isChecked = settings.cheatMaxHealthCapacity
             ) { checked ->
                 settings.cheatMaxHealthCapacity = checked
@@ -1172,7 +1208,7 @@ class SettingsDialog(
         ))
 
         // Section 2: Resources & Currency
-        addSectionHeader("💰 RESOURCES & CURRENCY")
+        addSectionHeader("RESOURCES & CURRENCY")
         addCheatsGrid(listOf(
             CheatToggleItem(
                 title = "Infinite Gold",
@@ -1184,7 +1220,7 @@ class SettingsDialog(
             },
             CheatToggleItem(
                 title = "Infinite Roulette Orbs",
-                subtitle = "Endless Roulette Orbs; refilled continuously upon consumption",
+                subtitle = "Keeps all active Roulette Orbs (up to current/6 max) permanently filled",
                 isChecked = settings.cheatInfiniteOrbs
             ) { checked ->
                 settings.cheatInfiniteOrbs = checked
@@ -1192,7 +1228,7 @@ class SettingsDialog(
             },
             CheatToggleItem(
                 title = "Max Roulette Orbs",
-                subtitle = "Dwinash ARMax code: Permanently expands capacity to 6 Roulette Orbs",
+                subtitle = "Expands Roulette capacity to full 6 Orbs cleanly",
                 isChecked = settings.cheatMaxRouletteOrbs
             ) { checked ->
                 settings.cheatMaxRouletteOrbs = checked
@@ -1201,7 +1237,7 @@ class SettingsDialog(
         ))
 
         // Section 3: Combat, Techniques & Meters
-        addSectionHeader("⚡ COMBAT, TECHNIQUES & METERS")
+        addSectionHeader("COMBAT, TECHNIQUES & METERS")
         addCheatsGrid(listOf(
             CheatToggleItem(
                 title = "Infinite Tension Gauge",
@@ -1229,7 +1265,7 @@ class SettingsDialog(
             },
             CheatToggleItem(
                 title = "Always Run Forward",
-                subtitle = "Dwinash ARMax mod: Always run when moving forward instead of walking",
+                subtitle = "Starts running directly from forward tilt without dash entry",
                 isChecked = settings.cheatAlwaysRun
             ) { checked ->
                 settings.cheatAlwaysRun = checked
@@ -1237,11 +1273,19 @@ class SettingsDialog(
             },
             CheatToggleItem(
                 title = "Freeze Roulette Timer",
-                subtitle = "Timer never counts down during Roulette wheel selection",
+                subtitle = "Locks the Roulette wheel countdown at infinite time when enabled",
                 isChecked = settings.cheatFreezeRoulette
             ) { checked ->
                 settings.cheatFreezeRoulette = checked
                 NativeBridge.setCheatBool("freeze_roulette", checked)
+            },
+            CheatToggleItem(
+                title = "Uncensor Patch (USA)",
+                subtitle = "Restores Dead Pan roulette, Chihuahua Curry & uncensored disc textures",
+                isChecked = settings.cheatUncensorPatch
+            ) { checked ->
+                settings.cheatUncensorPatch = checked
+                NativeBridge.setCheatBool("uncensor_patch", checked)
             }
         ))
 
@@ -1486,11 +1530,11 @@ class SettingsDialog(
     private fun addSectionHeader(title: String) {
         val tv = TextView(context).apply {
             text = title
-            textSize = 11f
-            setTextColor(0xFFF59E0B.toInt()) // Amber
+            textSize = 10.5f
+            setTextColor(0xFFD4AF37.toInt())
             typeface = android.graphics.Typeface.DEFAULT_BOLD
-            letterSpacing = 0.05f
-            setPadding(0, 10.dpToPx(), 0, 6.dpToPx())
+            letterSpacing = 0.12f
+            setPadding(0, 12.dpToPx(), 0, 6.dpToPx())
         }
         contentContainer.addView(tv)
     }

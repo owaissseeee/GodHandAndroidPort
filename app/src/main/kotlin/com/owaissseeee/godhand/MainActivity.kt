@@ -14,6 +14,9 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.View
 import android.view.Window
+import android.view.WindowInsets
+import android.view.WindowInsetsController
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ProgressBar
@@ -345,8 +348,14 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            window.attributes = window.attributes.apply {
+                layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+            }
+        }
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        hideSystemUI()
 
         settings = SettingsRepository(this)
         processor = IsoCacheProcessor(this)
@@ -367,6 +376,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
+        hideSystemUI()
         settings.reload()
         loadCustomArtworkIfAvailable()
         val ready = processor.isCacheReady() && isShaderCacheReady()
@@ -375,6 +385,33 @@ class MainActivity : ComponentActivity() {
             if (isoPromptDialog == null || !isoPromptDialog!!.isShowing) {
                 showIsoPromptDialog()
             }
+        }
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            hideSystemUI()
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    private fun hideSystemUI() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.setDecorFitsSystemWindows(false)
+            window.insetsController?.let { controller ->
+                controller.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
+                controller.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            }
+        } else {
+            window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_FULLSCREEN
+            )
         }
     }
 
@@ -733,7 +770,7 @@ class MainActivity : ComponentActivity() {
 
     private fun updateBottomBadge() {
         val soc = if (Build.VERSION.SDK_INT >= 31) "${Build.SOC_MANUFACTURER} ${Build.SOC_MODEL}" else Build.HARDWARE
-        binding.tvBottomBadge.text = "Port by owaissseeee • Detected SoC: $soc • Vulkan PCSX2-GS • ARM64 Recomp"
+        binding.tvBottomBadge.text = "v2.3 • $soc • Vulkan PCSX2-GS • ARM64"
     }
 
     private fun Int.dpToPx(): Int {

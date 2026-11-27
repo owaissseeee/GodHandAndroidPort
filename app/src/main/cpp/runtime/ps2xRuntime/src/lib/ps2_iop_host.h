@@ -4,6 +4,7 @@
 
 #include <cstdint>
 #include <cstdio>
+#include <filesystem>
 #include <mutex>
 #include <unordered_map>
 
@@ -117,6 +118,8 @@ private:
         uint64_t size = 0u;
         bool cdImage = false;
         uint64_t cdImageOffset = 0u;
+        bool isDataAfs = false;
+        std::filesystem::path hostPath;
     };
     mutable std::mutex m_hostFileMutex;
     std::unordered_map<uint64_t, HostFile> m_hostFiles;

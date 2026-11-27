@@ -24,18 +24,20 @@ Unlike traditional emulators that translate MIPS CPU and VU instructions at runt
 * **Zero-Overhead Deep Performance Profiler & Persistent Spike Logger**: Lock-free circular ring buffer capturing thread-level telemetry (EE CPU compute, guest PC, VU1 queue backlog, Vulkan presentation time, audio buffer fill) on any frame drop > 18.0 ms. Includes persistent session log viewer in settings and a zero-overhead disable toggle.
 * **Low-Latency Async VIF Queue (16 Jobs / 512 KB)**: Cuts queued command latency in half for immediate touch/controller response and smooth combat flow.
 * **20:9 Edge-to-Edge Fullscreen & Guard-Band Wrap Rejection**: Eliminates 16-bit GS coordinate overflow horizontal strip lines while keeping screen fades 100% smooth, accompanied by real-time 3D camera projection FOV expansion (`0.7f * aspect`).
-* **Comprehensive In-Game Cheats Engine**: Action Replay / Codebreaker / ASM cheats toggleable mid-game with persistent saving:
-  * **Health & Defense**: Infinite Health, True Super-Armor Invulnerability (zero flinch/stagger from enemy attacks while Gene deals 100% full attack damage with all moves and launchers), and Screen-Aligned Max Health Capacity.
-  * **Resources & Meters**: Infinite Gold, Infinite Roulette Orbs, Max Roulette Orbs, Infinite / Max Tension Gauge.
-  * **Combat Mastery**: Enable Double God Hand (dual God Hands ASM), Have All Techniques & Roulettes, Freeze Roulette Timer, Damage Multipliers (1x–5x), Always Run Forward, and Dynamic Difficulty Lock (Die Meter).
-  * **Cosmetics & Unlockables**: Gene Costume Switcher (Normal, Karate Gi, Business Suit, Carnival), Olivia Costume Switcher (Normal, Bunny Girl, Cowgirl), Casino Slots Cheats, and Full Jukebox Unlocks.
+* **In-Game Cheats & Uncensor Patch Engine**: Live-toggleable memory modifiers and runtime disc overlay with persistent saving:
+  * **Health & Defense**: Infinite Health (locks HP to current/max capacity without overflowing), True Unleashed Invulnerability (enemy attacks whiff cleanly with zero hitstop/stagger and cannot grab Gene), and Max Health Capacity (`VitalMax = 360`).
+  * **Resources & Meters**: Infinite Gold, Infinite Roulette Orbs (fills up to active `0..6` capacity), Max Roulette Orbs (6 orbs), and Infinite Tension Gauge.
+  * **Combat & Mods**: Enable Double God Hand (dual God Hands ASM), All Techniques & Roulettes, Freeze Roulette Timer (infinite wheel countdown at 30/60 FPS), Native Always Run Forward (direct run entry without dash), Damage Multipliers (`1x` / `2x` / `999`), Difficulty Level Lock (`DIE` / `Level 1`), and **Uncensor Patch (USA)** (non-destructive runtime Gledson999 overlay restoring *Dead Pan*, *Chihuahua Curry*, God Reel unlocks, and uncensored disc textures).
+  * **Cosmetics & Unlockables**: Gene Costumes (Normal, Devil Hand, Karate Gi, Carnival), Olivia Costumes (Default, Bunny Girl), Casino Slots Mods, and Complete Jukebox Unlocks.
+* **Ultra Potato Mode (Opt-In Max FPS)**: CPU-focused performance toggle (Default: OFF) that unlocks the `0.5x` internal resolution option, skips shadow/cloth/heavy particle passes and audio reverb, uses nearest filtering, and trims texture cache for low-end SoCs.
 * **Integrated Memory Card / Saves Manager**: Dedicated Saves tab allows one-click export of `Mcd001.ps2` (compatible with PCSX2 / AetherSX2 / NetherSX2), timestamped card backups, and compressed ZIP archives via the Android Share sheet, plus instant save file restoration.
 * **Dual-Mode Minimal FPS HUD**:
   * **Compact HUD**: Clean, transparent shadowed text `"fps | frametime | %"` (e.g. `60.0 FPS | 16.7 ms | 100%`) without background blocks or colored dots.
   * **Detailed Debug View**: Clean multi-line text readout of Screen Present FPS, Game EE FPS/%, worst frame spike, and bottleneck classification without obstructive background boxes.
-* **Modernized UI & Asset System**:
+* **Minimalist Fullscreen God Hand UI (v2.3)**:
   * Seamless custom artwork support: automatically loads high-resolution `main_bg.png` and `title_logo.png` directly from `assets/`.
-  * Streamlined Settings dialog featuring a dedicated 6-tab navigation sidebar with smooth scrolling, clean Vulkan lock, and top-right dialog cross close button (`✕`).
+  * Edge-to-edge immersive fullscreen `MainActivity` & `GameActivity` hiding status and navigation bars cleanly.
+  * Fullscreen minimalist obsidian/gold/crimson Settings overlay with a 6-tab navigation sidebar (`GRAPHICS`, `CONTROLS`, `SOUND`, `SAVES`, `CHEATS`, `LOGS`) and top-right close button (`✕`).
   * Clean analog joysticks with all visual clutter and redundant subtext removed.
   * Cross-process JSON synchronization (`SettingsRepository`) ensuring seamless settings persistence between `MainActivity` and the `:game` execution process.
 * **3 God Hand Dodge Modes**:
@@ -50,12 +52,11 @@ Unlike traditional emulators that translate MIPS CPU and VU instructions at runt
 
 ## 📱 Hardware Performance & Compatibility Tiers
 
-| Tier | Chipset Examples | Recommended Resolution | Frameskip | Target FPS |
+| Tier | Chipset Examples | Auto Default Resolution | Default Target FPS | Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| **Flagship Elite** | Snapdragon 8 Gen 2 / Gen 3, Dimensity 9200 / 9300 | **2.0x – 4.0x (1080p - 2K)** | Off | **60 FPS Solid** |
-| **Upper Mid-Range**| Snapdragon 778G / 870 / 865, Dimensity 7050 / 8200 | **1.0x – 2.0x (Native - HD)**| Auto / Off | **45 – 60 FPS** |
-| **Mid-Range**      | Snapdragon 680 / 695, Helio G99 / G95 | **1.0x (512x448 Native)** | Auto | **30 – 50 FPS** |
-| **Potato / Low-End**| MediaTek Helio G35 / P35, Unisoc T606, SD 480 | **0.5x (Super Ultra Low)** | Auto | **Playable 30 FPS** |
+| **Flagship Elite** | Snapdragon 8 Gen 2 / Gen 3, Dimensity 9200 / 9300 | **2.0x HD (1024x896)** | **60 FPS** | Scalable up to `4.0x` |
+| **Mid-Range**      | Snapdragon 778G / 870 / 695, Dimensity 7050 / 8200, Helio G99 | **1.0x Native (512x448)** | **60 FPS** | Balanced visual clarity |
+| **Potato / Low-End**| MediaTek Helio G35 / P35, Unisoc T606, SD 480 | **0.75x Performance** | **30 FPS** | `0.5x` available via Ultra Potato Mode |
 
 
 ---
@@ -181,25 +182,25 @@ Before building your own release APK, you can easily personalize the application
   * `✕`: Top-right close button for instant dialog dismissal.
 * **Settings Tabs**:
   * **GRAPHICS**: 
-    * Renderer: Vulkan (PCSX2-GS - High Performance).
-    * Internal Resolution: 0.5x Potato Mode (256x224) up to 4.0x 4K UHD.
-    * Aspect Ratio: Original 4:3, Standard 16:9, or **True Fullscreen Hor+ Widescreen** (expanded 3D camera FOV without 2D stretching and guard-band wrap filter).
-    * Target FPS: Kamite 60 FPS Suite / DevSeville 60 FPS / 30 FPS Console Native Lock.
-    * Frameskip: Off, Auto (>34ms trigger), Skip 1 Frame.
+    * Renderer: Vulkan (PCSX2-GS) or OpenGL ES.
+    * Internal Resolution: `0.75x` up to `4.0x 4K QHD` (`0.5x` unlocked when **Ultra Potato Mode** is enabled).
+    * Aspect Ratio: `16:9 Widescreen`, `4:3 Original`, or **Full Screen** (expanded 3D camera FOV + guard-band wrap filter).
+    * Target FPS: `30 FPS (Authentic PS2)` or `60 FPS (Smooth 60 Hz)` — auto-configured by device tier.
+    * Frameskip & **Ultra Potato Mode**: Off / Skip 1 Frame + CPU-focused Ultra Potato Mode toggle (Default: OFF).
   * **CONTROLS**: 
     * Controller Mode: Auto, Touch Only, or Gamepad Only.
     * Auto-Hide Touch Controls on Gamepad Connection.
     * 3 Dodge Modes: Right Thumbstick, Swipe Gestures, or Dedicated Dodge Buttons.
     * Touch Opacity slider and **Interactive Controls Layout Editor**.
-  * **AUDIO & SYSTEM**: 
+  * **SOUND**: 
     * Audio Scheduling: Real-time, Balanced, or Safe Mode.
-    * Buffer Size: 128, 256, or 512 frames (Oboe / AAudio).
-    * Master Volume & Dual-Mode Performance FPS HUD.
+    * Buffer Size: 1024, 2048, or 4096 frames (Oboe / AAudio).
+    * Master, BGM, SFX, Voice volume sliders & Dual-Mode Performance FPS HUD.
   * **CHEATS**: 
-    * Health & Protection: Infinite Health, True Super-Armor Invulnerability, Max Capacity Health Bar (screen-aligned).
-    * Resources & Currency: Infinite Gold, Infinite Roulette Orbs, Max Roulette Orbs.
-    * Combat & Meters: Infinite / Max Tension, Double God Hand ASM, Have All Techniques & Roulettes, Freeze Roulette Timer, Damage Multipliers (1x–5x), Always Run Forward, Die Difficulty Lock.
-    * Cosmetics & Unlockables: Gene Costumes (Karate Gi, Business Suit, Carnival), Olivia Costumes (Bunny Girl, Cowgirl), Casino Mods, and Full Jukebox Unlocks.
+    * Health & Protection: Infinite Health (strict max clamp), Unleashed Invulnerability (whiff + grab immunity), Max Health Capacity.
+    * Resources & Currency: Infinite Gold, Infinite Roulette Orbs, Max Roulette Orbs (6).
+    * Combat & Patches: Infinite Tension, Double God Hand ASM, All Techniques & Roulettes, Native Always Run Forward, Freeze Roulette Timer, Damage Multipliers (`1x` / `2x` / `999`), Difficulty Lock (`DIE` / `Level 1`), and **Uncensor Patch (USA)**.
+    * Cosmetics & Unlockables: Gene Costumes (Default, Devil Hand, Karate Gi, Carnival), Olivia Costumes (Default, Bunny Girl), Casino Mods, and Complete Jukebox Unlocks.
   * **SAVES**: 
     * One-click **Export Saves** to `/sdcard/Download/GodHand_Saves/` (`Mcd001.ps2`, timestamped backups, and compressed ZIP archives ready for sharing or transferring to PCSX2 / AetherSX2 / NetherSX2).
     * One-click **Import Saves** from local device storage.

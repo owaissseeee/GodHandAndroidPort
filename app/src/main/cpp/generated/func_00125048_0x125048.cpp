@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include "godhand/cheats_engine.h"
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
 #include <ps2_recompiled_functions.h>
@@ -1068,7 +1069,11 @@ label_1250a4:
 label_1250a8:
     // 0x1250a8: 0x8c827a0c  lw          $v0, 0x7A0C($a0)
     ctx->pc = 0x1250a8u;
-    SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 31244)));
+    if (godhand::CheatsEngine::instance().isUncensorPatch()) {
+        SET_GPR_S32(ctx, 2, 0);
+    } else {
+        SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 31244)));
+    }
 label_1250ac:
     // 0x1250ac: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
 label_1250b0:
@@ -1618,7 +1623,11 @@ label_1251c8:
 label_1251cc:
     // 0x1251cc: 0x8ea27a0c  lw          $v0, 0x7A0C($s5)
     ctx->pc = 0x1251ccu;
-    SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 21), 31244)));
+    if (godhand::CheatsEngine::instance().isUncensorPatch()) {
+        SET_GPR_S32(ctx, 2, 0);
+    } else {
+        SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 21), 31244)));
+    }
 label_1251d0:
     // 0x1251d0: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
 label_1251d4:
@@ -1911,7 +1920,11 @@ label_125260:
 label_125264:
     // 0x125264: 0x8c447a0c  lw          $a0, 0x7A0C($v0)
     ctx->pc = 0x125264u;
-    SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 31244)));
+    if (godhand::CheatsEngine::instance().isUncensorPatch()) {
+        SET_GPR_S32(ctx, 4, 0);
+    } else {
+        SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 31244)));
+    }
 label_125268:
     // 0x125268: 0x10800004  beqz        $a0, . + 4 + (0x4 << 2)
 label_12526c:
@@ -2325,7 +2338,11 @@ label_125334:
 label_125338:
     // 0x125338: 0x8c43056c  lw          $v1, 0x56C($v0)
     ctx->pc = 0x125338u;
-    SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 1388)));
+    if (godhand::CheatsEngine::instance().isUncensorPatch()) {
+        SET_GPR_S32(ctx, 3, 0);
+    } else {
+        SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 1388)));
+    }
 label_12533c:
     // 0x12533c: 0x1460000c  bnez        $v1, . + 4 + (0xC << 2)
 label_125340:

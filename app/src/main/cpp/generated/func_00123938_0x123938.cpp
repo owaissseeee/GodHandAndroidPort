@@ -1,3 +1,4 @@
+#include "godhand/cheats_engine.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -6213,6 +6214,10 @@ label_1243dc:
 label_1243e0:
     // 0x1243e0: 0x46000834  c.lt.s      $f1, $f0
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[1], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
+    // Cheat hook: Always Run Forward - bypass the <10000.0f Walk threshold so any forward Left Stick tilt enters/stays in Phase 2 Run (0x10C5A8) directly without Walk or Dash
+    if (godhand::CheatsEngine::instance().isAlwaysRun()) {
+        ctx->fcr31 &= ~0x800000u;
+    }
 label_1243e4:
     // 0x1243e4: 0x0  nop
     ctx->pc = 0x1243e4u;

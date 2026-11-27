@@ -463,6 +463,10 @@ namespace
 
         file.read(reinterpret_cast<char *>(dst), static_cast<std::streamsize>(byteCount));
         file.clear(); // a short read at the end of the file must not poison the next one
+        if (PS2CdImage::instance().isUncensorEnabled() && PS2CdImage::isDataAfsPath(path))
+        {
+            PS2CdImage::instance().applyUncensorAfsOverlay(offsetBytes, dst, byteCount, &path);
+        }
         const double ms = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - started).count();
         static uint32_t slowLogsLeft = 32u;
         if (ms >= 30.0 && slowLogsLeft != 0u)

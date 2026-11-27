@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0A080A"
+    android:background="#09090B"
     tools:context=".MainActivity">
 
-    <!-- 1. Background Image -->
+    <!-- 1. Background Canvas / Custom Wallpaper -->
     <ImageView
         android:id="@+id/main_background_image"
         android:layout_width="match_parent"
@@ -15,19 +15,19 @@
         android:src="@drawable/god_hand_bg"
         android:contentDescription="God Hand Menu Background" />
 
-    <!-- 2. Subtle Dark Vignette Overlay for High Contrast Text & Buttons -->
+    <!-- 2. Minimalist Matte Scrim -->
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#40000000" />
+        android:background="#66070709" />
 
-    <!-- 3. Centered Main Menu Content -->
+    <!-- 3. Centered Minimalist Menu Stack -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="16dp">
 
         <!-- Title Area -->
         <LinearLayout
@@ -37,103 +37,105 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <!-- Title Picture Slot (1000x191 logo, 5.23:1 aspect ratio) -->
             <ImageView
                 android:id="@+id/god_hand_title_logo"
-                android:layout_width="260dp"
-                android:layout_height="50dp"
+                android:layout_width="240dp"
+                android:layout_height="46dp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
                 android:visibility="gone"
                 android:contentDescription="God Hand Custom Title Logo" />
 
-            <!-- Default Stylized Typography Banner -->
             <TextView
                 android:id="@+id/god_hand_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:letterSpacing="0.12"
-                android:shadowColor="#DC2626"
-                android:shadowDx="3"
-                android:shadowDy="4"
-                android:shadowRadius="10"
+                android:letterSpacing="0.22"
+                android:shadowColor="#991B1B"
+                android:shadowDx="0"
+                android:shadowDy="2"
+                android:shadowRadius="8"
                 android:text="GOD HAND"
-                android:textColor="#F59E0B"
-                android:textSize="36sp"
+                android:textColor="#F8FAFC"
+                android:textSize="32sp"
                 android:textStyle="bold" />
+
+            <!-- Minimalist God Hand Gold Hairline -->
+            <View
+                android:layout_width="72dp"
+                android:layout_height="1.5dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:background="#D4AF37" />
 
             <TextView
                 android:id="@+id/god_hand_subtitle_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:letterSpacing="0.15"
-                android:text="PORT BY OWAISSSEEEE • PS2 STATIC RECOMPILATION"
+                android:letterSpacing="0.18"
+                android:text="ANDROID STATIC RECOMP • OWAISSSEEEE"
                 android:textColor="#D4AF37"
-                android:textSize="10sp"
+                android:textSize="9.5sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- Menu Action Options (PLAY, SETTINGS, QUIT) -->
+        <!-- Action Buttons (PLAY, SETTINGS, QUIT) -->
         <LinearLayout
-            android:layout_width="260dp"
+            android:layout_width="236dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
-            <!-- 1. PLAY BUTTON -->
             <Button
                 android:id="@+id/btn_menu_play"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:background="@drawable/btn_god_hand_primary"
-                android:letterSpacing="0.08"
-                android:text="⚔   P L A Y"
+                android:letterSpacing="0.16"
+                android:text="P L A Y"
                 android:textColor="#FFFFFF"
-                android:textSize="15sp"
+                android:textSize="13.5sp"
                 android:textStyle="bold" />
 
-            <!-- 2. SETTINGS BUTTON -->
             <Button
                 android:id="@+id/btn_menu_settings"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="9dp"
                 android:background="@drawable/btn_god_hand_secondary"
-                android:letterSpacing="0.06"
-                android:text="⚙   S E T T I N G S"
-                android:textColor="#FDE047"
-                android:textSize="14sp"
+                android:letterSpacing="0.14"
+                android:text="S E T T I N G S"
+                android:textColor="#D4AF37"
+                android:textSize="12.5sp"
                 android:textStyle="bold" />
 
-            <!-- 3. QUIT BUTTON -->
             <Button
                 android:id="@+id/btn_menu_quit"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="9dp"
                 android:background="@drawable/btn_god_hand_secondary"
-                android:letterSpacing="0.06"
-                android:text="✕   Q U I T"
-                android:textColor="#E2E8F0"
-                android:textSize="14sp"
+                android:letterSpacing="0.14"
+                android:text="Q U I T"
+                android:textColor="#CBD5E1"
+                android:textSize="12.5sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-    <!-- 4. Subtle Bottom Footprint / SoC Badge -->
+    <!-- 4. Minimal Footer Version Badge -->
     <TextView
         android:id="@+id/tv_bottom_badge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="8dp"
-        android:alpha="0.75"
-        android:letterSpacing="0.05"
-        android:text="Port by owaissseeee • v2.2 • Vulkan PCSX2-GS Engine"
+        android:layout_marginBottom="10dp"
+        android:alpha="0.7"
+        android:letterSpacing="0.08"
+        android:text="v2.3 • Port by owaissseeee • Vulkan PCSX2-GS"
         android:textColor="#94A3B8"
-        android:textSize="10sp" />
+        android:textSize="9.5sp" />
 
 </FrameLayout>

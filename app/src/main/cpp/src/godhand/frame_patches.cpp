@@ -32,6 +32,7 @@
 // next frame (0x30ADD8..0x30ADF0), where the pnach's stick hook ran; the per-vblank writes run there too, once per
 // game frame.
 #include "godhand/frame_patches.h"
+#include "godhand/cheats_engine.h"
 #include "godhand/function_hooks.h"
 #include "godhand/game_layout.h"
 #include "godhand/menu_touch_controller.h"
@@ -1553,6 +1554,12 @@ namespace kamite
         // store happens once every g_roulettePeriod calls.
         void rouletteTimer(uint8_t *rdram, R5900Context *ctx, PS2Runtime *)
         {
+            if (godhand::CheatsEngine::instance().isFreezeRoulette())
+            {
+                const uint32_t frozen = 102u, address = GPR_U32(ctx, 17) + 0x15B0u;
+                std::memcpy(&ram8(rdram, address), &frozen, sizeof(frozen));
+                return;
+            }
             if (gameFrames(rdram) % g_roulettePeriod.load(std::memory_order_relaxed) != 0u)
                 return;
             const uint32_t value = GPR_U32(ctx, 2), address = GPR_U32(ctx, 17) + 0x15B0u;
@@ -2080,6 +2087,11 @@ namespace kamite
         // Replaces addiu v0,v0,-1 at 0x14530C (the roulette TIME dial, cCockRoulette +0x4D0): every other frame.
         void rouletteDial(uint8_t *rdram, R5900Context *ctx, PS2Runtime *)
         {
+            if (godhand::CheatsEngine::instance().isFreezeRoulette())
+            {
+                SET_GPR_S32(ctx, 2, 102);
+                return;
+            }
             if (gameFrames(rdram) % g_roulettePeriod.load(std::memory_order_relaxed) == 0u)
                 SET_GPR_S32(ctx, 2, GPR_S32(ctx, 2) - 1);
         }
@@ -2097,7 +2109,7 @@ namespace kamite
 
     void installFramePatches(PS2Runtime &runtime)
     {
-        const bool is60 = (godhand::mobile::getFpsMode() == 0);
+        const bool is60 = (godhand::mobile::getFpsMode() == 1);
         g_fps60 = is60;
         g_fps60User = is60;
         g_fps60Shown.store(is60);

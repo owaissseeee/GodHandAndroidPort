@@ -17,7 +17,12 @@ namespace
     class HostOpenFile final : public IPS2OpenFile
     {
     public:
-        explicit HostOpenFile(FILE *file) : m_file(file) {}
+        explicit HostOpenFile(FILE *file, const std::filesystem::path &hostPath = {})
+            : m_file(file), m_isDataAfs(PS2CdImage::isDataAfsPath(hostPath))
+        {
+            if (m_isDataAfs)
+                m_hostPath = hostPath;
+        }
         ~HostOpenFile() override
         {
             if (m_file)
@@ -28,11 +33,27 @@ namespace
         {
             if ((!destination && size != 0u) || !m_file)
                 return -1;
+            const bool checkUncensor = m_isDataAfs && PS2CdImage::instance().isUncensorEnabled();
+            uint64_t preOffset = 0;
+            if (checkUncensor)
+            {
+#if defined(_WIN32)
+                const int64_t pos = ::_ftelli64(m_file);
+#else
+                const off_t pos = ftello(m_file);
+#endif
+                if (pos >= 0)
+                    preOffset = static_cast<uint64_t>(pos);
+            }
             const size_t bytes = std::fread(destination, 1u, size, m_file);
             if (bytes < size && std::ferror(m_file))
             {
                 std::clearerr(m_file);
                 return -1;
+            }
+            if (bytes != 0u && checkUncensor)
+            {
+                PS2CdImage::instance().applyUncensorAfsOverlay(preOffset, destination, bytes, &m_hostPath);
             }
             return static_cast<int64_t>(bytes);
         }
@@ -52,14 +73,26 @@ namespace
 
         int64_t seek(int64_t offset, int whence) override
         {
-            if (!m_file || offset < std::numeric_limits<long>::min() || offset > std::numeric_limits<long>::max() || std::fseek(m_file, static_cast<long>(offset), whence) != 0)
+            if (!m_file)
                 return -1;
-            const long position = std::ftell(m_file);
+#if defined(_WIN32)
+            if (::_fseeki64(m_file, static_cast<int64_t>(offset), whence) != 0)
+                return -1;
+            const int64_t position = ::_ftelli64(m_file);
+            return position < 0 ? -1 : position;
+#else
+            if (offset < std::numeric_limits<off_t>::min() || offset > std::numeric_limits<off_t>::max() ||
+                fseeko(m_file, static_cast<off_t>(offset), whence) != 0)
+                return -1;
+            const off_t position = ftello(m_file);
             return position < 0 ? -1 : static_cast<int64_t>(position);
+#endif
         }
 
     private:
         FILE *m_file = nullptr;
+        bool m_isDataAfs = false;
+        std::filesystem::path m_hostPath;
     };
 
     class CdImageOpenFile final : public IPS2OpenFile
@@ -247,7 +280,7 @@ int32_t PS2Vfs::open(std::string_view path, uint32_t flags, const PS2VfsMounts &
         }
         if (!stream)
             return -1;
-        file = std::make_unique<HostOpenFile>(stream);
+        file = std::make_unique<HostOpenFile>(stream, hostPath);
     }
 
     std::lock_guard<std::mutex> lock(m_mutex);

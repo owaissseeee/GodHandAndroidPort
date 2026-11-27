@@ -18,6 +18,9 @@ public:
 
     bool isInvincibility() const { return m_invincibility.load(std::memory_order_relaxed); }
     bool isInfHealth() const { return m_infHealth.load(std::memory_order_relaxed); }
+    bool isAlwaysRun() const { return m_alwaysRun.load(std::memory_order_relaxed); }
+    bool isFreezeRoulette() const { return m_freezeRoulette.load(std::memory_order_relaxed); }
+    bool isUncensorPatch() const { return m_uncensorPatch.load(std::memory_order_relaxed); }
 
     // Called on every frame at VBlank flip boundary
     void applyFrameCheats(uint8_t* rdram);
@@ -51,13 +54,13 @@ private:
     std::atomic<bool> m_casinoTickets{false};
     std::atomic<bool> m_casinoAlwaysWin{false};
     std::atomic<bool> m_unlockJukebox{false};
+    std::atomic<bool> m_uncensorPatch{false};
 
-    // Original opcodes for reversible ASM patches
-    bool m_origInvincibilityOpcodeSaved{false};
-    uint32_t m_origInvincibilityOpcode{0x00851823u}; // subu v1, a0, a1
-
-    bool m_origDoubleGodHandOpcodeSaved{false};
-    uint32_t m_origDoubleGodHandOpcode{0x00000000u};
+    // State transition guards so disabling cheats cleanly restores runtime flags
+    bool m_wasInvincible{false};
+    bool m_wasUncensorPatch{false};
+    bool m_origGodReelSaved{false};
+    uint32_t m_origGodReelMask{0};
 };
 
 } // namespace godhand

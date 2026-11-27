@@ -1,4 +1,5 @@
 #include "godhand/frame_patches.h"
+#include "godhand/cheats_engine.h"
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
@@ -309,7 +310,9 @@ label_1452e4:
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 19), 1232)));
     // 0x14530c: 0x2442ffff  addiu       $v0, $v0, -0x1
     ctx->pc = 0x14530cu;
-    if (ps2xPatchFlag("fps60")) {
+    if (godhand::CheatsEngine::instance().isFreezeRoulette()) {
+        SET_GPR_S32(ctx, 2, 102);
+    } else if (ps2xPatchFlag("fps60")) {
         static PS2Runtime::RecompiledFunction hook = nullptr;
         if (!hook) hook = ps2xHostHook("km_fps60_roulette_dial");
         if (hook) hook(rdram, ctx, runtime);

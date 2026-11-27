@@ -34,6 +34,8 @@ object NativeBridge {
     external fun setFpsMode(fpsIdx: Int)
     external fun setCheatBool(key: String, enabled: Boolean)
     external fun setCheatInt(key: String, value: Int)
+    external fun setUncensorPatchData(data: ByteArray)
+    external fun getDeviceTier(): Int
     external fun getPerformanceStats(outStats: FloatArray, outHistory: FloatArray?): Boolean
     external fun getPerformanceThreadIds(): IntArray
     external fun getLastFrameWorkDurationNanos(): Long

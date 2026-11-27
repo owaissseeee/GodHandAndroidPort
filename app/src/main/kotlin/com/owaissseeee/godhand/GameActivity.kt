@@ -912,12 +912,35 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         }
     }
 
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            hideSystemUI()
+        }
+    }
+
+    @Suppress("DEPRECATION")
     private fun hideSystemUI() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            window.attributes = window.attributes.apply {
+                layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+            }
+        }
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            window.setDecorFitsSystemWindows(false)
             window.insetsController?.let { controller ->
                 controller.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
                 controller.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
             }
+        } else {
+            window.decorView.systemUiVisibility = (
+                android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    or android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    or android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    or android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    or android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    or android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
+            )
         }
     }
 
@@ -975,6 +998,14 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         val cachePath = java.io.File(filesDir, "godhand_cache").absolutePath
         NativeBridge.setGameCacheDirectory(cachePath)
 
+        try {
+            assets.open("patches/uncensor_usa.xdelta").use { stream ->
+                NativeBridge.setUncensorPatchData(stream.readBytes())
+            }
+        } catch (_: Throwable) {}
+
+        settings.syncCheatsToNative()
+
         NativeBridge.setAudioChannelVolumes(
             settings.masterVolume,
             settings.bgmVolume,
@@ -994,7 +1025,6 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             holder.surface, width, height,
             rendererIdx, resolutionIdx, aspectIdx, fpsIdx, frameskipIdx
         )
-        settings.syncCheatsToNative()
         kotlin.concurrent.thread(name = "RootAffinityOptimizer", isDaemon = true) {
             try {
                 Thread.sleep(1500)

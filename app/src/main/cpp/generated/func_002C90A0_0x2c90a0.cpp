@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include "godhand/cheats_engine.h"
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
 #include <ps2_recompiled_functions.h>
@@ -210,6 +211,12 @@ label_2c9118:
     ctx->pc = 0x2c9128u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 12)));
     // 0x2c912c: 0x30420001  andi        $v0, $v0, 0x1
+    // Uncensor Patch (Gledson999 @ 0x2C912C): ori $v0, $v0, 7; sw $v0, 0xC($v1) -> restores Chihuahua Curry in shop
+    if (godhand::CheatsEngine::instance().isUncensorPatch()) {
+        SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | 0x7ULL);
+        WRITE32(ADD32(GPR_U32(ctx, 3), 12), GPR_U32(ctx, 2));
+        SET_GPR_S32(ctx, 21, (int32_t)((uint32_t)87 << 16));
+    } else {
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
     // 0x2c9130: 0x104000b7  beqz        $v0, . + 4 + (0xB7 << 2)
     ctx->pc = 0x2C9130u;
@@ -225,6 +232,7 @@ label_2c9118:
             ctx->pc = 0x2C9410u;
             goto label_2c9410;
         }
+    }
     }
     // 0x2c9138: 0x26b29b70  addiu       $s2, $s5, -0x6490
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 21), 4294941552));

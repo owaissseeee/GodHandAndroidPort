@@ -970,6 +970,7 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     PS2Runtime::setIoPaths(paths);
     runtime.setMissingFunctionPolicy(PS2Runtime::MissingFunctionPolicy::SkipCallDebug);
 
+    godhand::mobile::setFpsMode(fpsIdx);
     godhand::FunctionHooks::instance().attach(runtime);
     godhand::FunctionHooks::instance().observeEntry(runtime.cpu().pc, "boot_entry", [](uint8_t *, R5900Context *, PS2Runtime *) {
         applyEeFloatingPointMode();

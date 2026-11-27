@@ -25,6 +25,7 @@
 #include "src/godhand/menu_touch_controller.h"
 #include "godhand_patches_mobile.h"
 #include "runtime/gs/gs_pcsx2_backend.h"
+#include "runtime/ps2_cd_image.h"
 
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, "GodHandRecomp", __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, "GodHandRecomp", __VA_ARGS__)
@@ -566,6 +567,33 @@ Java_com_owaissseeee_godhand_NativeBridge_getPerformanceStats(
 extern "C" {
 void godhand_set_resolution_scale(float scale);
 void godhand_set_aspect_ratio(int aspectIdx);
+int godhand_get_device_tier();
+}
+
+JNIEXPORT jint JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_getDeviceTier(
+    JNIEnv* /*env*/, jobject /*thiz*/)
+{
+    return static_cast<jint>(godhand_get_device_tier());
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setUncensorPatchData(
+    JNIEnv* env, jobject /*thiz*/, jbyteArray data)
+{
+    if (!data) {
+        PS2CdImage::instance().setUncensorXdeltaData({});
+        return;
+    }
+    const jsize len = env->GetArrayLength(data);
+    if (len <= 0) {
+        PS2CdImage::instance().setUncensorXdeltaData({});
+        return;
+    }
+    std::vector<uint8_t> bytes(static_cast<size_t>(len));
+    env->GetByteArrayRegion(data, 0, len, reinterpret_cast<jbyte*>(bytes.data()));
+    PS2CdImage::instance().setUncensorXdeltaData(std::move(bytes));
+    LOGI("NativeBridge: loaded uncensor_usa.xdelta (%d bytes)", static_cast<int>(len));
 }
 
 JNIEXPORT void JNICALL
@@ -618,7 +646,7 @@ Java_com_owaissseeee_godhand_NativeBridge_setFpsMode(
     JNIEnv* /*env*/, jobject /*thiz*/, jint fpsIdx)
 {
     godhand::mobile::setFpsMode(fpsIdx);
-    LOGI("NativeBridge: Target FPS mode set to %d (%s)", fpsIdx, (fpsIdx == 0) ? "60 FPS" : "30 FPS");
+    LOGI("NativeBridge: Target FPS mode set to %d (%s)", fpsIdx, (fpsIdx == 1) ? "60 FPS" : "30 FPS");
 }
 
 JNIEXPORT void JNICALL

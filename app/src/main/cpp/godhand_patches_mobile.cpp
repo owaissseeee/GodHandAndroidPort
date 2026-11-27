@@ -31,7 +31,7 @@ void setFpsMode(int fpsIdx) {
 }
 
 int getFpsMode() {
-    return kamite::fps60() ? 1 : 0;
+    return s_fpsIdx.load(std::memory_order_relaxed);
 }
 
 void setAspectMode(int aspectIdx) {

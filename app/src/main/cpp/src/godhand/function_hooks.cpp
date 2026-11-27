@@ -1269,7 +1269,7 @@ namespace godhand
                 kSceGsResetGraph,
                 "sceGsResetGraph_devseville_60fps",
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
-                    if (godhand::mobile::getFpsMode() == 0) // 60 FPS
+                    if (godhand::mobile::getFpsMode() == 1) // 60 FPS
                     {
                         // DevSeville 60 FPS patch (SLUS-21503):
                         // 00395204 lui a1, 0000 -> SCE_GS_NOINTERLACE (0)
@@ -1335,7 +1335,7 @@ namespace godhand
                 kSceGsSetDefDispEnv,
                 "sceGsSetDefDispEnv_devseville_60fps",
                 [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
-                    if (godhand::mobile::getFpsMode() == 0) // 60 FPS
+                    if (godhand::mobile::getFpsMode() == 1) // 60 FPS
                     {
                         // DevSeville 60 FPS: 00396594 lui t1, 0010
                         SET_GPR_S32(ctx, 9, 0x10);
@@ -1347,37 +1347,7 @@ namespace godhand
                 "DevSeville 60 FPS display environment hook");
         }
 
-        // True Invulnerability & Super-Armor:
-        // Hook cOmBase_checkDamage (0x001B7380). If victim == playerPtr, return 0!
-        // Attack misses Gene completely: zero damage, zero flinch, zero knockback.
-        // Enemies receiving Gene's attacks continue to take 100% damage, flinches, launches, and roulette hits!
-        constexpr uint32_t kOmBase_checkDamage = 0x001B7380u;
-        if (runtime.hasFunction(kOmBase_checkDamage))
-        {
-            static GuestFunction s_origCheckDamage = runtime.lookupFunction(kOmBase_checkDamage);
-            FunctionHooks::instance().replace(
-                kOmBase_checkDamage,
-                "cOmBase_checkDamage_invulnerability",
-                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
-                    if (rdram && ctx && CheatsEngine::instance().isCheatEnabled("invincibility"))
-                    {
-                        uint32_t victim = GPR_U32(ctx, 4); // a0 = this (character receiving damage check)
-                        uint32_t playerPtr = 0;
-                        std::memcpy(&playerPtr, rdram + 0x00747A94u, sizeof(playerPtr));
-                        if (playerPtr >= 0x00100000u && playerPtr < 0x02000000u && victim == playerPtr)
-                        {
-                            // Return 0: Miss! No damage, no flinch, no knockback!
-                            SET_GPR_S32(ctx, 2, 0);
-                            ctx->pc = GPR_U32(ctx, 31);
-                            return;
-                        }
-                    }
-                    if (s_origCheckDamage)
-                        s_origCheckDamage(rdram, ctx, rt);
-                },
-                ReplacementStatus::Native,
-                "Invulnerability super armor: immune to incoming hits, Gene attacks unaffected");
-        }
+        // Invulnerability is handled cleanly via GameWork Dbg::kPlMuteki + playerPtr +0x54C in cheats_engine.cpp.
 
         // Technique Mastery: Unlock All Techniques & Skills
         constexpr uint32_t kCoreSave_getSkill = 0x001FAF58u;
@@ -1402,43 +1372,7 @@ namespace godhand
                 "Unlock all techniques and skills hook");
         }
 
-        // Roulette Selection Timer: 60 FPS Pacing & Freeze Timer
-        constexpr uint32_t kRouletteUpdate = 0x00162C98u;
-        if (runtime.hasFunction(kRouletteUpdate))
-        {
-            static GuestFunction s_origRouletteUpdate = runtime.lookupFunction(kRouletteUpdate);
-            FunctionHooks::instance().replace(
-                kRouletteUpdate,
-                "cRoulette_Update_timer",
-                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
-                    kamite::markRouletteSeen();
-                    if (s_origRouletteUpdate)
-                        s_origRouletteUpdate(rdram, ctx, rt);
-
-                    if (rdram && ctx)
-                    {
-                        uint32_t s0 = GPR_U32(ctx, 16);
-                        if (s0 >= 0x00100000u && s0 < 0x02000000u)
-                        {
-                            uint32_t timerObj = 0;
-                            std::memcpy(&timerObj, rdram + s0 + 0x80u, sizeof(timerObj));
-                            if (timerObj >= 0x00100000u && timerObj < 0x02000000u)
-                            {
-                                if (CheatsEngine::instance().isCheatEnabled("freeze_roulette"))
-                                {
-                                    float maxTime = 99.0f;
-                                    std::memcpy(&maxTime, rdram + timerObj + 0x38u, sizeof(maxTime));
-                                    if (maxTime <= 0.0f) maxTime = 99.0f;
-                                    std::memcpy(rdram + timerObj + 0x3Cu, &maxTime, sizeof(maxTime));
-                                }
-// Roulette pacing handled accurately by kamite::km_fps60_roulette_timer
-                            }
-                        }
-                    }
-                },
-                ReplacementStatus::Native,
-                "Roulette timer 60 FPS pacing & freeze timer hook");
-        }
+        // Combat roulette timer freeze & pacing are handled in func_00114608 (0x1147CC) and func_00145238 (0x14530C).
 
         // CRI ADX Stream Volume Hook 1-channel (0x00373FF0)
         if (runtime.hasFunction(kStreamVolume1))

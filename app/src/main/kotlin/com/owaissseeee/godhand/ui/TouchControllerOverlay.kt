@@ -85,10 +85,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
     var hapticController: HapticController? = null
     private val handler = Handler(Looper.getMainLooper())
     private var repo: SettingsRepository = SettingsRepository(context)
-    private var isAutoRunPulsing = false
     private var wasMovingForward = false
     private var lastForwardTapTime = 0L
-    private val runPulseHandler = Handler(Looper.getMainLooper())
 
     var onExitClicked: (() -> Unit)? = null
     var onSettingsClicked: (() -> Unit)? = null
@@ -212,8 +210,6 @@ class TouchControllerOverlay(context: Context) : View(context) {
         leftCurrX = 0f
         leftCurrY = 0f
         wasMovingForward = false
-        isAutoRunPulsing = false
-        runPulseHandler.removeCallbacksAndMessages(null)
         rightStickPointerId = -1
         rightStickX = 0f
         rightStickY = 0f
@@ -1441,22 +1437,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                         leftStickY = rawY
 
                         val isForward = (rawY < -0.30f)
-                        if (repo.cheatAlwaysRun) {
-                            if (isForward && !wasMovingForward && !isAutoRunPulsing) {
-                                wasMovingForward = true
-                                isAutoRunPulsing = true
-                                NativeBridge.updatePadState(buttonMask, leftStickX, -1.0f, rightStickX, rightStickY)
-                                runPulseHandler.postDelayed({
-                                    NativeBridge.updatePadState(buttonMask, leftStickX, 0.0f, rightStickX, rightStickY)
-                                    runPulseHandler.postDelayed({
-                                        isAutoRunPulsing = false
-                                        NativeBridge.updatePadState(buttonMask, leftStickX, leftStickY, rightStickX, rightStickY)
-                                    }, 25L)
-                                }, 25L)
-                            } else if (!isForward) {
-                                wasMovingForward = false
-                            }
-                        } else if (repo.fpsIdx == 1) {
+                        if (!repo.cheatAlwaysRun && repo.fpsIdx == 1) {
                             if (isForward && !wasMovingForward) {
                                 val now = android.os.SystemClock.uptimeMillis()
                                 if (now - lastForwardTapTime in 40L..450L) {
@@ -1492,22 +1473,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                         leftStickY = rawY
 
                         val isForward = (rawY < -0.30f)
-                        if (repo.cheatAlwaysRun) {
-                            if (isForward && !wasMovingForward && !isAutoRunPulsing) {
-                                wasMovingForward = true
-                                isAutoRunPulsing = true
-                                NativeBridge.updatePadState(buttonMask, leftStickX, -1.0f, rightStickX, rightStickY)
-                                runPulseHandler.postDelayed({
-                                    NativeBridge.updatePadState(buttonMask, leftStickX, 0.0f, rightStickX, rightStickY)
-                                    runPulseHandler.postDelayed({
-                                        isAutoRunPulsing = false
-                                        NativeBridge.updatePadState(buttonMask, leftStickX, leftStickY, rightStickX, rightStickY)
-                                    }, 25L)
-                                }, 25L)
-                            } else if (!isForward) {
-                                wasMovingForward = false
-                            }
-                        } else if (repo.fpsIdx == 1) {
+                        if (!repo.cheatAlwaysRun && repo.fpsIdx == 1) {
                             if (isForward && !wasMovingForward) {
                                 val now = android.os.SystemClock.uptimeMillis()
                                 if (now - lastForwardTapTime in 40L..450L) {
@@ -1565,8 +1531,6 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     leftStickX = 0f
                     leftStickY = 0f
                     wasMovingForward = false
-                    isAutoRunPulsing = false
-                    runPulseHandler.removeCallbacksAndMessages(null)
                 }
                 if (pid == rightStickPointerId || action == MotionEvent.ACTION_CANCEL) {
                     rightStickPointerId = -1
@@ -1588,9 +1552,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
         }
         val prevMask = buttonMask
         buttonMask = mask
-        if (!isAutoRunPulsing) {
-            NativeBridge.updatePadState(buttonMask, leftStickX, leftStickY, rightStickX, rightStickY)
-        }
+        NativeBridge.updatePadState(buttonMask, leftStickX, leftStickY, rightStickX, rightStickY)
 
         val nowMs = android.os.SystemClock.uptimeMillis()
         if (buttonMask != lastRenderedButtonMask ||
