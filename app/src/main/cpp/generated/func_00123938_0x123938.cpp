@@ -6381,7 +6381,9 @@ label_12443c:
     }
     ctx->pc = 0x124438u;
     {
-        const bool branch_taken_0x124438 = (GPR_U64(ctx, 2) == GPR_U64(ctx, 4));
+        const bool alwaysRunUpgradeSub = godhand::CheatsEngine::instance().isAlwaysRun() &&
+            READ8(ADD32(GPR_U32(ctx, 17), 759)) == 0u;
+        const bool branch_taken_0x124438 = (GPR_U64(ctx, 2) == GPR_U64(ctx, 4)) && !alwaysRunUpgradeSub;
         ctx->pc = 0x12443Cu;
         ctx->in_delay_slot = true;
         ctx->branch_pc = 0x124438u;
@@ -6440,7 +6442,9 @@ label_124454:
     }
     ctx->pc = 0x124450u;
     {
-        const bool branch_taken_0x124450 = (GPR_U64(ctx, 2) == GPR_U64(ctx, 0));
+        // Cheat hook: Always Run Forward - enter Phase 2 Sprint Run (+0x2F5 = 2, +0x2F7 = 1, 1.6x speed) directly without dashing
+        const bool branch_taken_0x124450 = (GPR_U64(ctx, 2) == GPR_U64(ctx, 0)) &&
+            !godhand::CheatsEngine::instance().isAlwaysRun();
         ctx->pc = 0x124454u;
         ctx->in_delay_slot = true;
         ctx->branch_pc = 0x124450u;
