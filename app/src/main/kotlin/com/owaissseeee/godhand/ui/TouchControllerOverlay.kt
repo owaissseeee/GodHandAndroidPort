@@ -226,7 +226,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
     var leftStickSticky: Boolean = true
     var rightStickSticky: Boolean = true
     var dodgeMode: Int = DODGE_MODE_STICK
-    var controlsOpacity: Float = 0.75f
+    var controlsOpacity: Float = 0.50f
         set(value) {
             if (field != value) {
                 field = value

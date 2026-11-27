@@ -275,7 +275,7 @@ class SettingsRepository(context: Context) {
         set(value) = putInt("dodge_mode", value.coerceIn(0, 2))
 
     var touchControlsOpacity: Float
-        get() = getSafeFloat("touch_controls_opacity", 0.75f).coerceIn(0.10f, 1.0f)
+        get() = getSafeFloat("touch_controls_opacity", 0.50f).coerceIn(0.10f, 1.0f)
         set(value) = putFloat("touch_controls_opacity", value.coerceIn(0.10f, 1.0f))
 
     var fpsOverlayMode: Int
