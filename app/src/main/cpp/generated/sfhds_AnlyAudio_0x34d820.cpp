@@ -13,7 +13,7 @@
 
 // Function: sfhds_AnlyAudio
 // Address: 0x34d820 - 0x34d8b8
-void sfhds_AnlyAudio_0x34d820(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfhds_AnlyAudio_0x34d820(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfhds_AnlyAudio_0x34d820");
 #endif
@@ -74,7 +74,6 @@ void sfhds_AnlyAudio_0x34d820(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &sfhds_CallS_0x34da88, 0x34da88u, 0x34d850u)) {
         return;
     }
-    ctx->pc = 0x34D850u;
 label_34d850:
     // 0x34d850: 0x3c060036  lui         $a2, 0x36
     SET_GPR_S32(ctx, 6, (int32_t)((uint32_t)54 << 16));
@@ -96,7 +95,6 @@ label_34d850:
     if (!runtime->callDirectStatic(rdram, ctx, &sfhds_CallS_0x34da88, 0x34da88u, 0x34d868u)) {
         return;
     }
-    ctx->pc = 0x34D868u;
 label_34d868:
     // 0x34d868: 0x3c060036  lui         $a2, 0x36
     SET_GPR_S32(ctx, 6, (int32_t)((uint32_t)54 << 16));
@@ -118,7 +116,6 @@ label_34d868:
     if (!runtime->callDirectStatic(rdram, ctx, &sfhds_CallS_0x34da88, 0x34da88u, 0x34d880u)) {
         return;
     }
-    ctx->pc = 0x34D880u;
 label_34d880:
     // 0x34d880: 0x3c060036  lui         $a2, 0x36
     SET_GPR_S32(ctx, 6, (int32_t)((uint32_t)54 << 16));
@@ -140,7 +137,6 @@ label_34d880:
     if (!runtime->callDirectStatic(rdram, ctx, &sfhds_CallS_0x34da88, 0x34da88u, 0x34d898u)) {
         return;
     }
-    ctx->pc = 0x34D898u;
 label_34d898:
     // 0x34d898: 0xae42000c  sw          $v0, 0xC($s2)
     ctx->pc = 0x34d898u;

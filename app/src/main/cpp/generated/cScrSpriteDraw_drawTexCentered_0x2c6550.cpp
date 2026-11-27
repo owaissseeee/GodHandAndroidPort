@@ -13,7 +13,7 @@
 
 // Function: cScrSpriteDraw_drawTexCentered
 // Address: 0x2c6550 - 0x2c6590
-void cScrSpriteDraw_drawTexCentered_0x2c6550(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScrSpriteDraw_drawTexCentered_0x2c6550(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScrSpriteDraw_drawTexCentered_0x2c6550");
 #endif
@@ -62,7 +62,6 @@ void cScrSpriteDraw_drawTexCentered_0x2c6550(uint8_t* rdram, R5900Context* ctx, 
     if (!runtime->callDirectStatic(rdram, ctx, &cScrSpriteDraw_drawTex_0x2c5bd8, 0x2c5bd8u, 0x2c6584u)) {
         return;
     }
-    ctx->pc = 0x2C6584u;
 label_2c6584:
     // 0x2c6584: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2c6584u;

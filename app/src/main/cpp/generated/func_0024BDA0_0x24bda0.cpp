@@ -14,7 +14,7 @@
 
 // Function: func_0024BDA0
 // Address: 0x24bda0 - 0x24bf20
-void func_0024BDA0_0x24bda0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0024BDA0_0x24bda0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0024BDA0_0x24bda0");
 #endif
@@ -80,7 +80,6 @@ void func_0024BDA0_0x24bda0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_24bdf0;
         }
     }
-    ctx->pc = 0x24BDD0u;
 label_24bdd0:
     // 0x24bdd0: 0x3c040074  lui         $a0, 0x74
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)116 << 16));
@@ -117,7 +116,6 @@ label_24bdd0:
             goto label_24bf04;
         }
     }
-    ctx->pc = 0x24BDF0u;
 label_24bdf0:
     // 0x24bdf0: 0x248274a0  addiu       $v0, $a0, 0x74A0
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 29856));
@@ -170,7 +168,6 @@ label_24bdf0:
     if (!runtime->callDirectStatic(rdram, ctx, &Turn_dest_0x2da038, 0x2da038u, 0x24be2cu)) {
         return;
     }
-    ctx->pc = 0x24BE2Cu;
 label_24be2c:
     // 0x24be2c: 0x46150034  c.lt.s      $f0, $f21
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[0], ctx->f[21])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -192,7 +189,6 @@ label_24be2c:
         }
     }
     // 0x24be3c: 0x46000047  neg.s       $f1, $f0
-    ctx->pc = 0x24be3cu;
     ctx->f[1] = FPU_NEG_S(ctx->f[0]);
 label_24be40:
     // 0x24be40: 0x3c013f06  lui         $at, 0x3F06
@@ -242,7 +238,6 @@ label_24be40:
     if (!runtime->callDirectStatic(rdram, ctx, &cSceAtManager_findJumpPoint_0x2c2b58, 0x2c2b58u, 0x24be78u)) {
         return;
     }
-    ctx->pc = 0x24BE78u;
 label_24be78:
     // 0x24be78: 0x10400011  beqz        $v0, . + 4 + (0x11 << 2)
     ctx->pc = 0x24BE78u;
@@ -273,7 +268,6 @@ label_24be78:
     if (!runtime->callDirectStatic(rdram, ctx, &Turn_dest_dir_0x2da1f8, 0x2da1f8u, 0x24be8cu)) {
         return;
     }
-    ctx->pc = 0x24BE8Cu;
 label_24be8c:
     // 0x24be8c: 0x46150034  c.lt.s      $f0, $f21
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[0], ctx->f[21])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -295,7 +289,6 @@ label_24be8c:
         }
     }
     // 0x24be9c: 0x46000047  neg.s       $f1, $f0
-    ctx->pc = 0x24be9cu;
     ctx->f[1] = FPU_NEG_S(ctx->f[0]);
 label_24bea0:
     // 0x24bea0: 0x3c013f49  lui         $at, 0x3F49
@@ -325,7 +318,6 @@ label_24bea0:
             goto label_24bec8;
         }
     }
-    ctx->pc = 0x24BEC0u;
 label_24bec0:
     // 0x24bec0: 0x10000010  b           . + 4 + (0x10 << 2)
     ctx->pc = 0x24BEC0u;
@@ -342,7 +334,6 @@ label_24bec0:
             goto label_24bf04;
         }
     }
-    ctx->pc = 0x24BEC8u;
 label_24bec8:
     // 0x24bec8: 0x105d0006  beq         $v0, $sp, . + 4 + (0x6 << 2)
     ctx->pc = 0x24BEC8u;

@@ -13,7 +13,7 @@
 
 // Function: toUpperStr
 // Address: 0x330518 - 0x330580
-void toUpperStr_0x330518(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void toUpperStr_0x330518(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("toUpperStr_0x330518");
 #endif
@@ -46,7 +46,6 @@ void toUpperStr_0x330518(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     if (!runtime->callDirectStatic(rdram, ctx, &strlen_0x3a58dc, 0x3a58dcu, 0x33052cu)) {
         return;
     }
-    ctx->pc = 0x33052Cu;
 label_33052c:
     // 0x33052c: 0x24420001  addiu       $v0, $v0, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 1));
@@ -68,7 +67,6 @@ label_33052c:
     // 0x330538: 0x40382d  daddu       $a3, $v0, $zero
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     // 0x33053c: 0x2062021  addu        $a0, $s0, $a2
-    ctx->pc = 0x33053cu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), GPR_U32(ctx, 6)));
 label_330540:
     // 0x330540: 0x24c60001  addiu       $a2, $a2, 0x1
@@ -119,7 +117,6 @@ label_330560:
             goto label_330540;
         }
     }
-    ctx->pc = 0x330568u;
 label_330568:
     // 0x330568: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x330568u;

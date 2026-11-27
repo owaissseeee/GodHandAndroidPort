@@ -13,7 +13,7 @@
 
 // Function: func_002F5588
 // Address: 0x2f5588 - 0x2f56c0
-void func_002F5588_0x2f5588(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002F5588_0x2f5588(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002F5588_0x2f5588");
 #endif
@@ -63,7 +63,6 @@ void func_002F5588_0x2f5588(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x2f55b8: 0xc3102a  slt         $v0, $a2, $v1
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 6) < (int64_t)GPR_S64(ctx, 3)) ? 1 : 0);
     // 0x2f55bc: 0x40402d  daddu       $t0, $v0, $zero
-    ctx->pc = 0x2f55bcu;
     SET_GPR_U64(ctx, 8, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_2f55c0:
     // 0x2f55c0: 0x310200ff  andi        $v0, $t0, 0xFF
@@ -103,10 +102,8 @@ label_2f55c0:
             goto label_2f55e0;
         }
     }
-    ctx->pc = 0x2F55DCu;
 label_2f55dc:
     // 0x2f55dc: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2f55dcu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2f55e0:
     // 0x2f55e0: 0xc44300b8  lwc1        $f3, 0xB8($v0)
@@ -163,7 +160,6 @@ label_2f55e0:
     // 0x2f561c: 0xa3102a  slt         $v0, $a1, $v1
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 5) < (int64_t)GPR_S64(ctx, 3)) ? 1 : 0);
     // 0x2f5620: 0x40382d  daddu       $a3, $v0, $zero
-    ctx->pc = 0x2f5620u;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_2f5624:
     // 0x2f5624: 0x30e200ff  andi        $v0, $a3, 0xFF
@@ -203,10 +199,8 @@ label_2f5624:
             goto label_2f5644;
         }
     }
-    ctx->pc = 0x2F5640u;
 label_2f5640:
     // 0x2f5640: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2f5640u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2f5644:
     // 0x2f5644: 0xc44000b0  lwc1        $f0, 0xB0($v0)

@@ -13,7 +13,7 @@
 
 // Function: cSnd_GetBgmEntryPtr
 // Address: 0x2d0598 - 0x2d05b8
-void cSnd_GetBgmEntryPtr_0x2d0598(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_GetBgmEntryPtr_0x2d0598(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_GetBgmEntryPtr_0x2d0598");
 #endif
@@ -59,7 +59,6 @@ void cSnd_GetBgmEntryPtr_0x2d0598(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         return;
         #endif
     }
-    ctx->pc = 0x2D05B0u;
 label_2d05b0:
     // 0x2d05b0: 0x3e00008  jr          $ra
     ctx->pc = 0x2D05B0u;

@@ -13,7 +13,7 @@
 
 // Function: sfmpv_CalcDistance
 // Address: 0x351108 - 0x351170
-void sfmpv_CalcDistance_0x351108(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfmpv_CalcDistance_0x351108(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfmpv_CalcDistance_0x351108");
 #endif
@@ -59,7 +59,6 @@ void sfmpv_CalcDistance_0x351108(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_351164;
         }
     }
-    ctx->pc = 0x351134u;
 label_351134:
     // 0x351134: 0x8ce50008  lw          $a1, 0x8($a3)
     ctx->pc = 0x351134u;
@@ -103,7 +102,6 @@ label_351134:
     // 0x35115c: 0xc51023  subu        $v0, $a2, $a1
     SET_GPR_S32(ctx, 2, (int32_t)SUB32(GPR_U32(ctx, 6), GPR_U32(ctx, 5)));
     // 0x351160: 0x432021  addu        $a0, $v0, $v1
-    ctx->pc = 0x351160u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
 label_351164:
     // 0x351164: 0x3e00008  jr          $ra

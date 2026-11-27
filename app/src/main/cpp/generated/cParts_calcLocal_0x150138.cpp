@@ -13,7 +13,7 @@
 
 // Function: cParts_calcLocal
 // Address: 0x150138 - 0x1501d0
-void cParts_calcLocal_0x150138(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cParts_calcLocal_0x150138(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cParts_calcLocal_0x150138");
 #endif
@@ -89,7 +89,6 @@ void cParts_calcLocal_0x150138(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_vec_0x1f7da0, 0x1f7da0u, 0x15018cu)) {
         return;
     }
-    ctx->pc = 0x15018Cu;
 label_15018c:
     // 0x15018c: 0x8e0500d0  lw          $a1, 0xD0($s0)
     ctx->pc = 0x15018cu;
@@ -105,7 +104,6 @@ label_15018c:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitTransVec_0x1476d0, 0x1476d0u, 0x150198u)) {
         return;
     }
-    ctx->pc = 0x150198u;
 label_150198:
     // 0x150198: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -124,7 +122,6 @@ label_150198:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxMulRotVec_0x147b60, 0x147b60u, 0x1501acu)) {
         return;
     }
-    ctx->pc = 0x1501ACu;
 label_1501ac:
     // 0x1501ac: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -141,7 +138,6 @@ label_1501ac:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxMulScaleVec_0x147bf8, 0x147bf8u, 0x1501bcu)) {
         return;
     }
-    ctx->pc = 0x1501BCu;
 label_1501bc:
     // 0x1501bc: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1501bcu;

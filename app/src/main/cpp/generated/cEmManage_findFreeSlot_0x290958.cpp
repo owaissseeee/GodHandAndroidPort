@@ -13,7 +13,7 @@
 
 // Function: cEmManage_findFreeSlot
 // Address: 0x290958 - 0x290988
-void cEmManage_findFreeSlot_0x290958(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_findFreeSlot_0x290958(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_findFreeSlot_0x290958");
 #endif
@@ -29,7 +29,6 @@ void cEmManage_findFreeSlot_0x290958(uint8_t* rdram, R5900Context* ctx, PS2Runti
     // 0x290958: 0x182d  daddu       $v1, $zero, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x29095c: 0x0  nop
-    ctx->pc = 0x29095cu;
     // NOP
 label_290960:
     // 0x290960: 0x90820010  lbu         $v0, 0x10($a0)
@@ -69,7 +68,6 @@ label_290960:
         return;
         #endif
     }
-    ctx->pc = 0x290974u;
 label_290974:
     // 0x290974: 0x2c620040  sltiu       $v0, $v1, 0x40
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 3) < (uint64_t)(int64_t)(int32_t)64) ? 1 : 0);

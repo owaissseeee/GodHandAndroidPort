@@ -13,7 +13,7 @@
 
 // Function: SetField5CAndForward_12D178
 // Address: 0x12d178 - 0x12d1a8
-void SetField5CAndForward_12D178_0x12d178(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetField5CAndForward_12D178_0x12d178(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetField5CAndForward_12D178_0x12d178");
 #endif
@@ -58,7 +58,6 @@ void SetField5CAndForward_12D178_0x12d178(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x12d19cu)) {
         return;
     }
-    ctx->pc = 0x12D19Cu;
 label_12d19c:
     // 0x12d19c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x12d19cu;

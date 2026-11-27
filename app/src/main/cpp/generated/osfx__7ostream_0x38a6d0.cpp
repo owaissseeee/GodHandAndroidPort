@@ -13,7 +13,7 @@
 
 // Function: osfx__7ostream
 // Address: 0x38a6d0 - 0x38a700
-void osfx__7ostream_0x38a6d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void osfx__7ostream_0x38a6d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("osfx__7ostream_0x38a6d0");
 #endif
@@ -60,7 +60,6 @@ void osfx__7ostream_0x38a6d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &do_osfx__7ostream_0x389548, 0x389548u, 0x38a6f4u)) {
         return;
     }
-    ctx->pc = 0x38A6F4u;
 label_38a6f4:
     // 0x38a6f4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38a6f4u;

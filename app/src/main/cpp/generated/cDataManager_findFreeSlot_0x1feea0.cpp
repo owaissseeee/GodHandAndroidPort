@@ -13,7 +13,7 @@
 
 // Function: cDataManager_findFreeSlot
 // Address: 0x1feea0 - 0x1fef30
-void cDataManager_findFreeSlot_0x1feea0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDataManager_findFreeSlot_0x1feea0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDataManager_findFreeSlot_0x1feea0");
 #endif
@@ -62,7 +62,6 @@ void cDataManager_findFreeSlot_0x1feea0(uint8_t* rdram, R5900Context* ctx, PS2Ru
         }
     }
     // 0x1feec4: 0x902d  daddu       $s2, $zero, $zero
-    ctx->pc = 0x1feec4u;
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1feec8:
     // 0x1feec8: 0x8e240008  lw          $a0, 0x8($s1)
@@ -79,7 +78,6 @@ label_1feec8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FF0D8_0x1ff0d8, 0x1ff0d8u, 0x1feed4u)) {
         return;
     }
-    ctx->pc = 0x1FEED4u;
 label_1feed4:
     // 0x1feed4: 0x5440000a  bnel        $v0, $zero, . + 4 + (0xA << 2)
     ctx->pc = 0x1FEED4u;
@@ -138,7 +136,6 @@ label_1feed4:
             goto label_1fef14;
         }
     }
-    ctx->pc = 0x1FEF00u;
 label_1fef00:
     // 0x1fef00: 0x26100001  addiu       $s0, $s0, 0x1
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 1));
@@ -162,10 +159,8 @@ label_1fef00:
             goto label_1feec8;
         }
     }
-    ctx->pc = 0x1FEF10u;
 label_1fef10:
     // 0x1fef10: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x1fef10u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_1fef14:
     // 0x1fef14: 0x7bb00030  lq          $s0, 0x30($sp)

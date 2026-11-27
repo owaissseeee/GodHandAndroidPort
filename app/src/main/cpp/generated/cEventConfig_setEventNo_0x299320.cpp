@@ -13,7 +13,7 @@
 
 // Function: cEventConfig_setEventNo
 // Address: 0x299320 - 0x299348
-void cEventConfig_setEventNo_0x299320(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEventConfig_setEventNo_0x299320(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEventConfig_setEventNo_0x299320");
 #endif

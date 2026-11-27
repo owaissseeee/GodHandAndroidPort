@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_clearAllKillNpcNum
 // Address: 0x1fc5b8 - 0x1fc5d0
-void cCoreSave_clearAllKillNpcNum_0x1fc5b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_clearAllKillNpcNum_0x1fc5b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_clearAllKillNpcNum_0x1fc5b8");
 #endif
@@ -37,7 +37,6 @@ void cCoreSave_clearAllKillNpcNum_0x1fc5b8(uint8_t* rdram, R5900Context* ctx, PS
             goto label_1fc5c4;
         }
     }
-    ctx->pc = 0x1FC5C4u;
 label_1fc5c4:
     // 0x1fc5c4: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC5C4u;

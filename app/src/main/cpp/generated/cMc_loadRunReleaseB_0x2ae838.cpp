@@ -13,7 +13,7 @@
 
 // Function: cMc_loadRunReleaseB
 // Address: 0x2ae838 - 0x2ae8a8
-void cMc_loadRunReleaseB_0x2ae838(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMc_loadRunReleaseB_0x2ae838(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMc_loadRunReleaseB_0x2ae838");
 #endif
@@ -58,7 +58,6 @@ void cMc_loadRunReleaseB_0x2ae838(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2AE4A8u, 0x2AE854u, 0x2AE85Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2AE85Cu;
 label_2ae85c:
     // 0x2ae85c: 0x3c110000  lui         $s1, 0x0
     ctx->pc = 0x2ae85cu;
@@ -82,7 +81,6 @@ label_2ae85c:
             return;
         }
     }
-    ctx->pc = 0x2AE86Cu;
 label_2ae86c:
     // 0x2ae86c: 0xc000000  jal         func_000000
     ctx->pc = 0x2AE86Cu;
@@ -100,7 +98,6 @@ label_2ae86c:
             return;
         }
     }
-    ctx->pc = 0x2AE874u;
 label_2ae874:
     // 0x2ae874: 0xc0ab97a  jal         func_2AE5E8
     SET_GPR_U32(ctx, 31, 0x2AE87Cu);
@@ -113,7 +110,6 @@ label_2ae874:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2AE5E8u, 0x2AE874u, 0x2AE87Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2AE87Cu;
 label_2ae87c:
     // 0x2ae87c: 0x3c020075  lui         $v0, 0x75
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)117 << 16));
@@ -128,7 +124,6 @@ label_2ae87c:
     if (!runtime->callDirectStatic(rdram, ctx, &cTaskWork_exit_0x2d5a48, 0x2d5a48u, 0x2ae888u)) {
         return;
     }
-    ctx->pc = 0x2AE888u;
 label_2ae888:
     // 0x2ae888: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2ae888u;

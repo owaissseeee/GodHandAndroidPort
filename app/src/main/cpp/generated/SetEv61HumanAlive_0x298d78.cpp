@@ -13,7 +13,7 @@
 
 // Function: SetEv61HumanAlive
 // Address: 0x298d78 - 0x298db8
-void SetEv61HumanAlive_0x298d78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetEv61HumanAlive_0x298d78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetEv61HumanAlive_0x298d78");
 #endif
@@ -61,7 +61,6 @@ void SetEv61HumanAlive_0x298d78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297C80_0x297c80, 0x297c80u, 0x298da8u)) {
         return;
     }
-    ctx->pc = 0x298DA8u;
 label_298da8:
     // 0x298da8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x298da8u;

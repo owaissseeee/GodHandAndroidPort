@@ -13,7 +13,7 @@
 
 // Function: cDataManager_isLoaded
 // Address: 0x1fe9b8 - 0x1fea00
-void cDataManager_isLoaded_0x1fe9b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDataManager_isLoaded_0x1fe9b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDataManager_isLoaded_0x1fe9b8");
 #endif
@@ -46,7 +46,6 @@ void cDataManager_isLoaded_0x1fe9b8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &cDataManager_findKind_0x1fee00, 0x1fee00u, 0x1fe9ccu)) {
         return;
     }
-    ctx->pc = 0x1FE9CCu;
 label_1fe9cc:
     // 0x1fe9cc: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -80,7 +79,6 @@ label_1fe9cc:
             goto label_1fe9f0;
         }
     }
-    ctx->pc = 0x1FE9E0u;
 label_1fe9e0:
     // 0x1fe9e0: 0x8e020008  lw          $v0, 0x8($s0)
     ctx->pc = 0x1fe9e0u;
@@ -98,7 +96,6 @@ label_1fe9e0:
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateStateReady_1FF238_0x1ff238, 0x1ff238u, 0x1fe9f0u)) {
         return;
     }
-    ctx->pc = 0x1FE9F0u;
 label_1fe9f0:
     // 0x1fe9f0: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1fe9f0u;

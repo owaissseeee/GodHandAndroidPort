@@ -13,7 +13,7 @@
 
 // Function: cCollisionSolidManage_CreateUnit
 // Address: 0x1346f8 - 0x1347e8
-void cCollisionSolidManage_CreateUnit_0x1346f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCollisionSolidManage_CreateUnit_0x1346f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCollisionSolidManage_CreateUnit_0x1346f8");
 #endif
@@ -77,7 +77,6 @@ void cCollisionSolidManage_CreateUnit_0x1346f8(uint8_t* rdram, R5900Context* ctx
     if (!runtime->callDirectStatic(rdram, ctx, &func_001346C8_0x1346c8, 0x1346c8u, 0x134730u)) {
         return;
     }
-    ctx->pc = 0x134730u;
 label_134730:
     // 0x134730: 0x14400026  bnez        $v0, . + 4 + (0x26 << 2)
     ctx->pc = 0x134730u;
@@ -128,7 +127,6 @@ label_134730:
     ctx->pc = 0x134750u;
     SET_GPR_S32(ctx, 16, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 16)));
     // 0x134754: 0x0  nop
-    ctx->pc = 0x134754u;
     // NOP
 label_134758:
     // 0x134758: 0x8e020010  lw          $v0, 0x10($s0)
@@ -158,7 +156,6 @@ label_134758:
             goto label_134758;
         }
     }
-    ctx->pc = 0x134770u;
 label_134770:
     // 0x134770: 0xc0c3d54  jal         func_30F550
     SET_GPR_U32(ctx, 31, 0x134778u);
@@ -171,7 +168,6 @@ label_134770:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0030F550_0x30f550, 0x30f550u, 0x134778u)) {
         return;
     }
-    ctx->pc = 0x134778u;
 label_134778:
     // 0x134778: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -190,7 +186,6 @@ label_134778:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00134430_0x134430, 0x134430u, 0x13478cu)) {
         return;
     }
-    ctx->pc = 0x13478Cu;
 label_13478c:
     // 0x13478c: 0x10000009  b           . + 4 + (0x9 << 2)
     ctx->pc = 0x13478Cu;
@@ -207,7 +202,6 @@ label_13478c:
             goto label_1347b4;
         }
     }
-    ctx->pc = 0x134794u;
 label_134794:
     // 0x134794: 0xc0c3d54  jal         func_30F550
     SET_GPR_U32(ctx, 31, 0x13479Cu);
@@ -220,7 +214,6 @@ label_134794:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0030F550_0x30f550, 0x30f550u, 0x13479cu)) {
         return;
     }
-    ctx->pc = 0x13479Cu;
 label_13479c:
     // 0x13479c: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -239,7 +232,6 @@ label_13479c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00134430_0x134430, 0x134430u, 0x1347b0u)) {
         return;
     }
-    ctx->pc = 0x1347B0u;
 label_1347b0:
     // 0x1347b0: 0xae220000  sw          $v0, 0x0($s1)
     ctx->pc = 0x1347b0u;

@@ -13,7 +13,7 @@
 
 // Function: SetSuspendScrollLayerAll
 // Address: 0x2db518 - 0x2db5a0
-void SetSuspendScrollLayerAll_0x2db518(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetSuspendScrollLayerAll_0x2db518(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetSuspendScrollLayerAll_0x2db518");
 #endif
@@ -64,7 +64,6 @@ void SetSuspendScrollLayerAll_0x2db518(uint8_t* rdram, R5900Context* ctx, PS2Run
     ctx->pc = 0x2db540u;
     SET_GPR_S32(ctx, 5, (int32_t)READ32(ADD32(GPR_U32(ctx, 6), 0)));
     // 0x2db544: 0x0  nop
-    ctx->pc = 0x2db544u;
     // NOP
 label_2db548:
     // 0x2db548: 0x90a402fd  lbu         $a0, 0x2FD($a1)
@@ -115,10 +114,8 @@ label_2db548:
             goto label_2db57c;
         }
     }
-    ctx->pc = 0x2DB578u;
 label_2db578:
     // 0x2db578: 0x471024  and         $v0, $v0, $a3
-    ctx->pc = 0x2db578u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 7));
 label_2db57c:
     // 0x2db57c: 0xaca20250  sw          $v0, 0x250($a1)
@@ -150,7 +147,6 @@ label_2db57c:
             goto label_2db548;
         }
     }
-    ctx->pc = 0x2DB594u;
 label_2db594:
     // 0x2db594: 0x3e00008  jr          $ra
     ctx->pc = 0x2DB594u;

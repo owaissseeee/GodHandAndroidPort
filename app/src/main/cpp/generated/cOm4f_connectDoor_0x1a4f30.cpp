@@ -13,7 +13,7 @@
 
 // Function: cOm4f_connectDoor
 // Address: 0x1a4f30 - 0x1a4f38
-void cOm4f_connectDoor_0x1a4f30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm4f_connectDoor_0x1a4f30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm4f_connectDoor_0x1a4f30");
 #endif

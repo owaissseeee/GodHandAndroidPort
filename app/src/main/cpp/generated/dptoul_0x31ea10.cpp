@@ -13,7 +13,7 @@
 
 // Function: dptoul
 // Address: 0x31ea10 - 0x31eab0
-void dptoul_0x31ea10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void dptoul_0x31ea10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("dptoul_0x31ea10");
 #endif
@@ -48,7 +48,6 @@ void dptoul_0x31ea10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___unpack_d_0x31dfa8, 0x31dfa8u, 0x31ea28u)) {
         return;
     }
-    ctx->pc = 0x31EA28u;
 label_31ea28:
     // 0x31ea28: 0x8fa30000  lw          $v1, 0x0($sp)
     ctx->pc = 0x31ea28u;
@@ -85,7 +84,6 @@ label_31ea28:
             goto label_31ea48;
         }
     }
-    ctx->pc = 0x31EA40u;
 label_31ea40:
     // 0x31ea40: 0x10000018  b           . + 4 + (0x18 << 2)
     ctx->pc = 0x31EA40u;
@@ -102,7 +100,6 @@ label_31ea40:
             goto label_31eaa4;
         }
     }
-    ctx->pc = 0x31EA48u;
 label_31ea48:
     // 0x31ea48: 0x14400016  bnez        $v0, . + 4 + (0x16 << 2)
     ctx->pc = 0x31EA48u;
@@ -169,7 +166,6 @@ label_31ea48:
             goto label_31ea78;
         }
     }
-    ctx->pc = 0x31EA6Cu;
 label_31ea6c:
     // 0x31ea6c: 0x3c02ffff  lui         $v0, 0xFFFF
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)65535 << 16));
@@ -188,7 +184,6 @@ label_31ea6c:
             goto label_31eaa4;
         }
     }
-    ctx->pc = 0x31EA78u;
 label_31ea78:
     // 0x31ea78: 0x14400005  bnez        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x31EA78u;
@@ -225,7 +220,6 @@ label_31ea78:
             goto label_31ea9c;
         }
     }
-    ctx->pc = 0x31EA90u;
 label_31ea90:
     // 0x31ea90: 0xdfa20010  ld          $v0, 0x10($sp)
     ctx->pc = 0x31ea90u;
@@ -233,13 +227,11 @@ label_31ea90:
     // 0x31ea94: 0x641823  subu        $v1, $v1, $a0
     SET_GPR_S32(ctx, 3, (int32_t)SUB32(GPR_U32(ctx, 3), GPR_U32(ctx, 4)));
     // 0x31ea98: 0x621016  dsrlv       $v0, $v0, $v1
-    ctx->pc = 0x31ea98u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) >> (GPR_U32(ctx, 3) & 0x3F));
 label_31ea9c:
     // 0x31ea9c: 0x2103c  dsll32      $v0, $v0, 0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) << (32 + 0));
     // 0x31eaa0: 0x2103f  dsra32      $v0, $v0, 0
-    ctx->pc = 0x31eaa0u;
     SET_GPR_S64(ctx, 2, GPR_S64(ctx, 2) >> (32 + 0));
 label_31eaa4:
     // 0x31eaa4: 0xdfbf0030  ld          $ra, 0x30($sp)

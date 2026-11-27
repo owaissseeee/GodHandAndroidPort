@@ -13,7 +13,7 @@
 
 // Function: htCiSeek
 // Address: 0x334738 - 0x3347d0
-void htCiSeek_0x334738(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void htCiSeek_0x334738(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("htCiSeek_0x334738");
 #endif
@@ -58,7 +58,6 @@ void htCiSeek_0x334738(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &func_00334008_0x334008, 0x334008u, 0x334754u)) {
         return;
     }
-    ctx->pc = 0x334754u;
 label_334754:
     // 0x334754: 0x1000001a  b           . + 4 + (0x1A << 2)
     ctx->pc = 0x334754u;
@@ -76,7 +75,6 @@ label_334754:
         }
     }
     // 0x33475c: 0x0  nop
-    ctx->pc = 0x33475cu;
     // NOP
 label_334760:
     // 0x334760: 0x14c00003  bnez        $a2, . + 4 + (0x3 << 2)
@@ -109,7 +107,6 @@ label_334760:
             goto label_3347a0;
         }
     }
-    ctx->pc = 0x334770u;
 label_334770:
     // 0x334770: 0x14c20005  bne         $a2, $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x334770u;
@@ -146,7 +143,6 @@ label_334770:
             goto label_3347a4;
         }
     }
-    ctx->pc = 0x334788u;
 label_334788:
     // 0x334788: 0x14c20006  bne         $a2, $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x334788u;
@@ -183,7 +179,6 @@ label_334788:
             goto label_3347a4;
         }
     }
-    ctx->pc = 0x3347A0u;
 label_3347a0:
     // 0x3347a0: 0x8ce40010  lw          $a0, 0x10($a3)
     ctx->pc = 0x3347a0u;

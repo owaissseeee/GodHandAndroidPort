@@ -13,7 +13,7 @@
 
 // Function: MWSFD_GetReqSvrBdrLib
 // Address: 0x349778 - 0x3497a0
-void MWSFD_GetReqSvrBdrLib_0x349778(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MWSFD_GetReqSvrBdrLib_0x349778(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MWSFD_GetReqSvrBdrLib_0x349778");
 #endif
@@ -37,7 +37,6 @@ void MWSFD_GetReqSvrBdrLib_0x349778(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &GetD003EC7E0_3452B0_0x3452b0, 0x3452b0u, 0x349788u)) {
         return;
     }
-    ctx->pc = 0x349788u;
 label_349788:
     // 0x349788: 0x8c420024  lw          $v0, 0x24($v0)
     ctx->pc = 0x349788u;

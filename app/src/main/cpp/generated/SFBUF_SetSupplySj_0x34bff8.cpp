@@ -13,7 +13,7 @@
 
 // Function: SFBUF_SetSupplySj
 // Address: 0x34bff8 - 0x34c0a0
-void SFBUF_SetSupplySj_0x34bff8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFBUF_SetSupplySj_0x34bff8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFBUF_SetSupplySj_0x34bff8");
 #endif
@@ -55,7 +55,6 @@ void SFBUF_SetSupplySj_0x34bff8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &sfbuf_ChkSupSj_0x34c0a0, 0x34c0a0u, 0x34c018u)) {
         return;
     }
-    ctx->pc = 0x34C018u;
 label_34c018:
     // 0x34c018: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -97,7 +96,6 @@ label_34c018:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x34DD70u, 0x34C038u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x34C040u;
 label_34c040:
     // 0x34c040: 0xc0d70e0  jal         func_35C380
     SET_GPR_U32(ctx, 31, 0x34C048u);
@@ -110,7 +108,6 @@ label_34c040:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj35C0_IsIndexedSet_1F3C_C380_0x35c380, 0x35c380u, 0x34c048u)) {
         return;
     }
-    ctx->pc = 0x34C048u;
 label_34c048:
     // 0x34c048: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -137,7 +134,6 @@ label_34c048:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj35C0_IsIndexedSet_1F3C_C380_0x35c380, 0x35c380u, 0x34c060u)) {
         return;
     }
-    ctx->pc = 0x34C060u;
 label_34c060:
     // 0x34c060: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -164,7 +160,6 @@ label_34c060:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj35C0_IsIndexedSet_1F3C_C380_0x35c380, 0x35c380u, 0x34c078u)) {
         return;
     }
-    ctx->pc = 0x34C078u;
 label_34c078:
     // 0x34c078: 0x24030002  addiu       $v1, $zero, 0x2
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
@@ -174,7 +169,6 @@ label_34c078:
     ctx->pc = 0x34c080u;
     if (GPR_U64(ctx, 2) != 0) SET_GPR_VEC(ctx, 6, GPR_VEC(ctx, 3));
     // 0x34c084: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x34c084u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_34c088:
     // 0x34c088: 0xdfb00000  ld          $s0, 0x0($sp)

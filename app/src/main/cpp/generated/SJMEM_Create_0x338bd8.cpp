@@ -13,7 +13,7 @@
 
 // Function: SJMEM_Create
 // Address: 0x338bd8 - 0x338ca0
-void SJMEM_Create_0x338bd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SJMEM_Create_0x338bd8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SJMEM_Create_0x338bd8");
 #endif
@@ -64,7 +64,6 @@ void SJMEM_Create_0x338bd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
         }
     }
     // 0x338c04: 0x24840001  addiu       $a0, $a0, 0x1
-    ctx->pc = 0x338c04u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 1));
 label_338c08:
     // 0x338c08: 0x28820020  slti        $v0, $a0, 0x20
@@ -111,7 +110,6 @@ label_338c08:
             goto label_338c08;
         }
     }
-    ctx->pc = 0x338C2Cu;
 label_338c2c:
     // 0x338c2c: 0x24030020  addiu       $v1, $zero, 0x20
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 32));
@@ -185,10 +183,8 @@ label_338c2c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00338EC8_0x338ec8, 0x338ec8u, 0x338c8cu)) {
         return;
     }
-    ctx->pc = 0x338C8Cu;
 label_338c8c:
     // 0x338c8c: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x338c8cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_338c90:
     // 0x338c90: 0xdfb00000  ld          $s0, 0x0($sp)

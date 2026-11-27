@@ -13,7 +13,7 @@
 
 // Function: cGame_isReleaseActiveHeap
 // Address: 0x2a6c50 - 0x2a6c78
-void cGame_isReleaseActiveHeap_0x2a6c50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGame_isReleaseActiveHeap_0x2a6c50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGame_isReleaseActiveHeap_0x2a6c50");
 #endif
@@ -56,7 +56,6 @@ void cGame_isReleaseActiveHeap_0x2a6c50(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x2A6C64u;
 label_2a6c64:
     // 0x2a6c64: 0x2463ffff  addiu       $v1, $v1, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294967295));

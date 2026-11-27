@@ -13,7 +13,7 @@
 
 // Function: cOmSized_start
 // Address: 0x1b0bd0 - 0x1b0c78
-void cOmSized_start_0x1b0bd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmSized_start_0x1b0bd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmSized_start_0x1b0bd0");
 #endif
@@ -48,7 +48,6 @@ void cOmSized_start_0x1b0bd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B6FB8_0x1b6fb8, 0x1b6fb8u, 0x1b0be4u)) {
         return;
     }
-    ctx->pc = 0x1B0BE4u;
 label_1b0be4:
     // 0x1b0be4: 0x3c013fc0  lui         $at, 0x3FC0
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16320 << 16));
@@ -120,7 +119,6 @@ label_1b0c34:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmDoor_setObjCollisionCenterOnly_0x1bda00, 0x1bda00u, 0x1b0c3cu)) {
         return;
     }
-    ctx->pc = 0x1B0C3Cu;
 label_1b0c3c:
     // 0x1b0c3c: 0xc06f5a6  jal         func_1BD698
     SET_GPR_U32(ctx, 31, 0x1B0C44u);
@@ -133,7 +131,6 @@ label_1b0c3c:
     if (!runtime->callDirectStatic(rdram, ctx, &SetFlagBit_1BD698_0x1bd698, 0x1bd698u, 0x1b0c44u)) {
         return;
     }
-    ctx->pc = 0x1B0C44u;
 label_1b0c44:
     // 0x1b0c44: 0x3c014020  lui         $at, 0x4020
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16416 << 16));
@@ -150,7 +147,6 @@ label_1b0c44:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001BDD88_0x1bdd88, 0x1bdd88u, 0x1b0c54u)) {
         return;
     }
-    ctx->pc = 0x1B0C54u;
 label_1b0c54:
     // 0x1b0c54: 0x8e0305a0  lw          $v1, 0x5A0($s0)
     ctx->pc = 0x1b0c54u;

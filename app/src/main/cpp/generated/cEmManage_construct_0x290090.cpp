@@ -13,7 +13,7 @@
 
 // Function: cEmManage_construct
 // Address: 0x290090 - 0x290110
-void cEmManage_construct_0x290090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_construct_0x290090(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_construct_0x290090");
 #endif
@@ -51,7 +51,6 @@ void cEmManage_construct_0x290090(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     ctx->pc = 0x2900b0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2900b4: 0x2413ffff  addiu       $s3, $zero, -0x1
-    ctx->pc = 0x2900b4u;
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_2900b8:
     // 0x2900b8: 0x200202d  daddu       $a0, $s0, $zero
@@ -67,7 +66,6 @@ label_2900b8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x290000u, 0x2900BCu, 0x2900C4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2900C4u;
 label_2900c4:
     // 0x2900c4: 0x0  nop
     // NOP

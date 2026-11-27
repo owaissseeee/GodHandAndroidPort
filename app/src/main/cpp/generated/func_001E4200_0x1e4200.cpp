@@ -13,7 +13,7 @@
 
 // Function: func_001E4200
 // Address: 0x1e4200 - 0x1e4308
-void func_001E4200_0x1e4200(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001E4200_0x1e4200(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001E4200_0x1e4200");
 #endif
@@ -174,7 +174,6 @@ label_1e4288:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e42a8u)) {
         return;
     }
-    ctx->pc = 0x1E42A8u;
 label_1e42a8:
     // 0x1e42a8: 0x2a220005  slti        $v0, $s1, 0x5
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 17) < (int64_t)(int32_t)5) ? 1 : 0);
@@ -211,7 +210,6 @@ label_1e42a8:
             goto label_1e42f0;
         }
     }
-    ctx->pc = 0x1E42BCu;
 label_1e42bc:
     // 0x1e42bc: 0x3a0802d  daddu       $s0, $sp, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -242,7 +240,6 @@ label_1e42c8:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e42e4u)) {
         return;
     }
-    ctx->pc = 0x1E42E4u;
 label_1e42e4:
     // 0x1e42e4: 0x623fff8  bgezl       $s1, . + 4 + (-0x8 << 2)
     ctx->pc = 0x1E42E4u;
@@ -262,7 +259,6 @@ label_1e42e4:
             goto label_1e42c8;
         }
     }
-    ctx->pc = 0x1E42ECu;
 label_1e42ec:
     // 0x1e42ec: 0x7bb00060  lq          $s0, 0x60($sp)
     ctx->pc = 0x1e42ecu;

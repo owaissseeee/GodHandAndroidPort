@@ -13,7 +13,7 @@
 
 // Function: _IO_putc
 // Address: 0x38eb28 - 0x38eb78
-void ps2__IO_putc_0x38eb28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_putc_0x38eb28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_putc_0x38eb28");
 #endif
@@ -67,7 +67,6 @@ void ps2__IO_putc_0x38eb28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_0038C3F0_0x38c3f0, 0x38c3f0u, 0x38eb50u)) {
         return;
     }
-    ctx->pc = 0x38EB50u;
 label_38eb50:
     // 0x38eb50: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x38EB50u;
@@ -84,7 +83,6 @@ label_38eb50:
             goto label_38eb6c;
         }
     }
-    ctx->pc = 0x38EB58u;
 label_38eb58:
     // 0x38eb58: 0x24620001  addiu       $v0, $v1, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 3), 1));

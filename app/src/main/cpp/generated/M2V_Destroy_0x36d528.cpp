@@ -13,7 +13,7 @@
 
 // Function: M2V_Destroy
 // Address: 0x36d528 - 0x36d578
-void M2V_Destroy_0x36d528(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void M2V_Destroy_0x36d528(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("M2V_Destroy_0x36d528");
 #endif
@@ -45,7 +45,6 @@ void M2V_Destroy_0x36d528(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Set_D_0076A5D8_Check_Field_0_EQ_2_0x36d688, 0x36d688u, 0x36d53cu)) {
         return;
     }
-    ctx->pc = 0x36D53Cu;
 label_36d53c:
     // 0x36d53c: 0x3c05ff03  lui         $a1, 0xFF03
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)65283 << 16));
@@ -83,7 +82,6 @@ label_36d53c:
         return;
     }
     // 0x36d55c: 0x0  nop
-    ctx->pc = 0x36d55cu;
     // NOP
 label_36d560:
     // 0x36d560: 0x24020001  addiu       $v0, $zero, 0x1

@@ -13,7 +13,7 @@
 
 // Function: scTag2
 // Address: 0x3558e8 - 0x355910
-void scTag2_0x3558e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void scTag2_0x3558e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("scTag2_0x3558e8");
 #endif

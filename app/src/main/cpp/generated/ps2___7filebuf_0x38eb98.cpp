@@ -13,7 +13,7 @@
 
 // Function: __7filebuf
 // Address: 0x38eb98 - 0x38ec08
-void ps2___7filebuf_0x38eb98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___7filebuf_0x38eb98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___7filebuf_0x38eb98");
 #endif
@@ -52,7 +52,6 @@ void ps2___7filebuf_0x38eb98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___9streambufi_0x38b3a8, 0x38b3a8u, 0x38ebb0u)) {
         return;
     }
-    ctx->pc = 0x38EBB0u;
 label_38ebb0:
     // 0x38ebb0: 0x3c030046  lui         $v1, 0x46
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)70 << 16));
@@ -71,7 +70,6 @@ label_38ebb0:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_file_init_0x392718, 0x392718u, 0x38ebc4u)) {
         return;
     }
-    ctx->pc = 0x38EBC4u;
 label_38ebc4:
     // 0x38ebc4: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x38EBC4u;
@@ -88,7 +86,6 @@ label_38ebc4:
             goto label_38ebd4;
         }
     }
-    ctx->pc = 0x38EBCCu;
 label_38ebcc:
     // 0x38ebcc: 0xc0c8386  jal         func_320E18
     ctx->pc = 0x38EBCCu;
@@ -96,7 +93,6 @@ label_38ebcc:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___throw_0x320e18, 0x320e18u, 0x38ebd4u)) {
         return;
     }
-    ctx->pc = 0x38EBD4u;
 label_38ebd4:
     // 0x38ebd4: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x38EBD4u;
@@ -126,7 +122,6 @@ label_38ebd4:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2____9streambuf_0x38b3e0, 0x38b3e0u, 0x38ebe8u)) {
         return;
     }
-    ctx->pc = 0x38EBE8u;
 label_38ebe8:
     // 0x38ebe8: 0x1000fff8  b           . + 4 + (-0x8 << 2)
     ctx->pc = 0x38EBE8u;
@@ -146,7 +141,6 @@ label_38ebe8:
     if (!runtime->callDirectStatic(rdram, ctx, &terminate_0x3211e0, 0x3211e0u, 0x38ebf8u)) {
         return;
     }
-    ctx->pc = 0x38EBF8u;
 label_38ebf8:
     // 0x38ebf8: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x38ebf8u;

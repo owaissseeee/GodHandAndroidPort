@@ -13,7 +13,7 @@
 
 // Function: deci2Putchar
 // Address: 0x3b0d80 - 0x3b0e30
-void deci2Putchar_0x3b0d80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void deci2Putchar_0x3b0d80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("deci2Putchar_0x3b0d80");
 #endif
@@ -81,7 +81,6 @@ void deci2Putchar_0x3b0d80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &kputs_0x3b7aa8, 0x3b7aa8u, 0x3b0dc0u)) {
         return;
     }
-    ctx->pc = 0x3B0DC0u;
 label_3b0dc0:
     // 0x3b0dc0: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x3B0DC0u;
@@ -98,10 +97,8 @@ label_3b0dc0:
             goto label_3b0dcc;
         }
     }
-    ctx->pc = 0x3B0DC8u;
 label_3b0dc8:
     // 0x3b0dc8: 0x3c120078  lui         $s2, 0x78
-    ctx->pc = 0x3b0dc8u;
     SET_GPR_S32(ctx, 18, (int32_t)((uint32_t)120 << 16));
 label_3b0dcc:
     // 0x3b0dcc: 0x2402000a  addiu       $v0, $zero, 0xA
@@ -158,7 +155,6 @@ label_3b0dcc:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B7AA8u, 0x3B0E00u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x3B0E08u;
 label_3b0e08:
     // 0x3b0e08: 0x24a30001  addiu       $v1, $a1, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 5), 1));

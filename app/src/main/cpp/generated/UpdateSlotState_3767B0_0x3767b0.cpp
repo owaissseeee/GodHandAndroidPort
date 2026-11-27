@@ -13,7 +13,7 @@
 
 // Function: UpdateSlotState_3767B0
 // Address: 0x3767b0 - 0x376820
-void UpdateSlotState_3767B0_0x3767b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateSlotState_3767B0_0x3767b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateSlotState_3767B0_0x3767b0");
 #endif
@@ -106,7 +106,6 @@ void UpdateSlotState_3767B0_0x3767b0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &ClearSlotRefs_376AE0_0x376ae0, 0x376ae0u, 0x3767f4u)) {
         return;
     }
-    ctx->pc = 0x3767F4u;
 label_3767f4:
     // 0x3767f4: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x3767F4u;
@@ -123,7 +122,6 @@ label_3767f4:
             goto label_376814;
         }
     }
-    ctx->pc = 0x3767FCu;
 label_3767fc:
     // 0x3767fc: 0xc0de01c  jal         func_378070
     SET_GPR_U32(ctx, 31, 0x376804u);
@@ -136,7 +134,6 @@ label_3767fc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00378070_0x378070, 0x378070u, 0x376804u)) {
         return;
     }
-    ctx->pc = 0x376804u;
 label_376804:
     // 0x376804: 0x96020012  lhu         $v0, 0x12($s0)
     ctx->pc = 0x376804u;

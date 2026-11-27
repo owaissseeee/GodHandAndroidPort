@@ -13,7 +13,7 @@
 
 // Function: new_eh_context
 // Address: 0x3202e0 - 0x320338
-void new_eh_context_0x3202e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void new_eh_context_0x3202e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("new_eh_context_0x3202e0");
 #endif
@@ -47,7 +47,6 @@ void new_eh_context_0x3202e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A7C70_0x3a7c70, 0x3a7c70u, 0x3202f4u)) {
         return;
     }
-    ctx->pc = 0x3202F4u;
 label_3202f4:
     // 0x3202f4: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -72,10 +71,8 @@ label_3202f4:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___terminate_0x320280, 0x320280u, 0x320308u)) {
         return;
     }
-    ctx->pc = 0x320308u;
 label_320308:
     // 0x320308: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x320308u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_32030c:
     // 0x32030c: 0x282d  daddu       $a1, $zero, $zero
@@ -91,7 +88,6 @@ label_32030c:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x320318u)) {
         return;
     }
-    ctx->pc = 0x320318u;
 label_320318:
     // 0x320318: 0x26030010  addiu       $v1, $s0, 0x10
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 16), 16));

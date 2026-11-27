@@ -13,7 +13,7 @@
 
 // Function: __sseek
 // Address: 0x3a6e60 - 0x3a6ec8
-void ps2___sseek_0x3a6e60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___sseek_0x3a6e60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___sseek_0x3a6e60");
 #endif
@@ -56,7 +56,6 @@ void ps2___sseek_0x3a6e60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_003AE008_0x3ae008, 0x3ae008u, 0x3a6e88u)) {
         return;
     }
-    ctx->pc = 0x3A6E88u;
 label_3a6e88:
     // 0x3a6e88: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -92,7 +91,6 @@ label_3a6e88:
             goto label_3a6eb0;
         }
     }
-    ctx->pc = 0x3A6EA0u;
 label_3a6ea0:
     // 0x3a6ea0: 0x4183c  dsll32      $v1, $a0, 0
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 4) << (32 + 0));
@@ -102,7 +100,6 @@ label_3a6ea0:
     ctx->pc = 0x3a6ea8u;
     WRITE32(ADD32(GPR_U32(ctx, 16), 80), GPR_U32(ctx, 3));
     // 0x3a6eac: 0x34421000  ori         $v0, $v0, 0x1000
-    ctx->pc = 0x3a6eacu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)4096);
 label_3a6eb0:
     // 0x3a6eb0: 0xa602000c  sh          $v0, 0xC($s0)

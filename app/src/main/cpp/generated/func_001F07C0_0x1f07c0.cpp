@@ -13,7 +13,7 @@
 
 // Function: func_001F07C0
 // Address: 0x1f07c0 - 0x1f0870
-void func_001F07C0_0x1f07c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001F07C0_0x1f07c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001F07C0_0x1f07c0");
 #endif
@@ -86,7 +86,6 @@ void func_001F07C0_0x1f07c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1f0864;
         }
     }
-    ctx->pc = 0x1F07ECu;
 label_1f07ec:
     // 0x1f07ec: 0xc07be5e  jal         func_1EF978
     SET_GPR_U32(ctx, 31, 0x1F07F4u);
@@ -99,7 +98,6 @@ label_1f07ec:
     if (!runtime->callDirectStatic(rdram, ctx, &ColiseumBattle_DefeatAllEnemies_0x1ef978, 0x1ef978u, 0x1f07f4u)) {
         return;
     }
-    ctx->pc = 0x1F07F4u;
 label_1f07f4:
     // 0x1f07f4: 0x8e020b94  lw          $v0, 0xB94($s0)
     ctx->pc = 0x1f07f4u;
@@ -126,7 +124,6 @@ label_1f07f4:
             goto label_1f0860;
         }
     }
-    ctx->pc = 0x1F080Cu;
 label_1f080c:
     // 0x1f080c: 0x28420002  slti        $v0, $v0, 0x2
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 2) < (int64_t)(int32_t)2) ? 1 : 0);
@@ -164,7 +161,6 @@ label_1f080c:
         }
     }
     // 0x1f0824: 0x3c040058  lui         $a0, 0x58
-    ctx->pc = 0x1f0824u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)88 << 16));
 label_1f0828:
     // 0x1f0828: 0xa3a00000  sb          $zero, 0x0($sp)
@@ -183,7 +179,6 @@ label_1f0828:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmSetParam_setEm_0x2952d0, 0x2952d0u, 0x1f0838u)) {
         return;
     }
-    ctx->pc = 0x1F0838u;
 label_1f0838:
     // 0x1f0838: 0xc0a573a  jal         func_295CE8
     SET_GPR_U32(ctx, 31, 0x1F0840u);
@@ -196,7 +191,6 @@ label_1f0838:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmWrap_StartAction_0x295ce8, 0x295ce8u, 0x1f0840u)) {
         return;
     }
-    ctx->pc = 0x1F0840u;
 label_1f0840:
     // 0x1f0840: 0x8e020b8c  lw          $v0, 0xB8C($s0)
     ctx->pc = 0x1f0840u;
@@ -226,7 +220,6 @@ label_1f0840:
             goto label_1f0860;
         }
     }
-    ctx->pc = 0x1F085Cu;
 label_1f085c:
     // 0x1f085c: 0xae020ba0  sw          $v0, 0xBA0($s0)
     ctx->pc = 0x1f085cu;

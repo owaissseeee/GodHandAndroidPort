@@ -13,7 +13,7 @@
 
 // Function: cMessCommon_isPageEndCode
 // Address: 0x2af0b8 - 0x2af1f8
-void cMessCommon_isPageEndCode_0x2af0b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessCommon_isPageEndCode_0x2af0b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessCommon_isPageEndCode_0x2af0b8");
 #endif
@@ -57,7 +57,6 @@ void cMessCommon_isPageEndCode_0x2af0b8(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x2AF0D0u;
 label_2af0d0:
     // 0x2af0d0: 0x3402a600  ori         $v0, $zero, 0xA600
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)42496);
@@ -181,7 +180,6 @@ label_2af0d0:
             goto label_2af1f0;
         }
     }
-    ctx->pc = 0x2AF120u;
 label_2af120:
     // 0x2af120: 0x10820031  beq         $a0, $v0, . + 4 + (0x31 << 2)
     ctx->pc = 0x2AF120u;
@@ -207,7 +205,6 @@ label_2af120:
             goto label_2af1f0;
         }
     }
-    ctx->pc = 0x2AF130u;
 label_2af130:
     // 0x2af130: 0x1082002d  beq         $a0, $v0, . + 4 + (0x2D << 2)
     ctx->pc = 0x2AF130u;
@@ -265,7 +262,6 @@ label_2af130:
             goto label_2af1f0;
         }
     }
-    ctx->pc = 0x2AF154u;
 label_2af154:
     // 0x2af154: 0x10820024  beq         $a0, $v0, . + 4 + (0x24 << 2)
     ctx->pc = 0x2AF154u;
@@ -306,7 +302,6 @@ label_2af154:
             goto label_2af1f0;
         }
     }
-    ctx->pc = 0x2AF16Cu;
 label_2af16c:
     // 0x2af16c: 0x1082001e  beq         $a0, $v0, . + 4 + (0x1E << 2)
     ctx->pc = 0x2AF16Cu;
@@ -396,7 +391,6 @@ label_2af16c:
             goto label_2af1f0;
         }
     }
-    ctx->pc = 0x2AF1A4u;
 label_2af1a4:
     // 0x2af1a4: 0x10820010  beq         $a0, $v0, . + 4 + (0x10 << 2)
     ctx->pc = 0x2AF1A4u;
@@ -422,7 +416,6 @@ label_2af1a4:
             goto label_2af1f0;
         }
     }
-    ctx->pc = 0x2AF1B4u;
 label_2af1b4:
     // 0x2af1b4: 0x1082000c  beq         $a0, $v0, . + 4 + (0xC << 2)
     ctx->pc = 0x2AF1B4u;
@@ -480,7 +473,6 @@ label_2af1b4:
             goto label_2af1f0;
         }
     }
-    ctx->pc = 0x2AF1D8u;
 label_2af1d8:
     // 0x2af1d8: 0x10820003  beq         $a0, $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x2AF1D8u;
@@ -512,7 +504,6 @@ label_2af1d8:
             goto label_2af1f0;
         }
     }
-    ctx->pc = 0x2AF1E8u;
 label_2af1e8:
     // 0x2af1e8: 0x3e00008  jr          $ra
     ctx->pc = 0x2AF1E8u;
@@ -533,7 +524,6 @@ label_2af1e8:
         return;
         #endif
     }
-    ctx->pc = 0x2AF1F0u;
 label_2af1f0:
     // 0x2af1f0: 0x3e00008  jr          $ra
     ctx->pc = 0x2AF1F0u;

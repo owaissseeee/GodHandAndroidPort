@@ -13,7 +13,7 @@
 
 // Function: sceDmaSync
 // Address: 0x397550 - 0x397590
-void sceDmaSync_0x397550(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceDmaSync_0x397550(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceDmaSync_0x397550");
 #endif
@@ -65,7 +65,6 @@ void sceDmaSync_0x397550(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
             goto label_39757c;
         }
     }
-    ctx->pc = 0x397570u;
 label_397570:
     // 0x397570: 0xc0e5c0a  jal         func_397028
     ctx->pc = 0x397570u;
@@ -73,10 +72,8 @@ label_397570:
     if (!runtime->callDirectStatic(rdram, ctx, &WaitDma_0x397028, 0x397028u, 0x397578u)) {
         return;
     }
-    ctx->pc = 0x397578u;
 label_397578:
     // 0x397578: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x397578u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_39757c:
     // 0x39757c: 0xdfbf0000  ld          $ra, 0x0($sp)

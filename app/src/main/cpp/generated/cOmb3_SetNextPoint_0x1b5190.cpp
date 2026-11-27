@@ -13,7 +13,7 @@
 
 // Function: cOmb3_SetNextPoint
 // Address: 0x1b5190 - 0x1b51b0
-void cOmb3_SetNextPoint_0x1b5190(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmb3_SetNextPoint_0x1b5190(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmb3_SetNextPoint_0x1b5190");
 #endif
@@ -41,7 +41,6 @@ void cOmb3_SetNextPoint_0x1b5190(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_1b51a4;
         }
     }
-    ctx->pc = 0x1B51A4u;
 label_1b51a4:
     // 0x1b51a4: 0x3e00008  jr          $ra
     ctx->pc = 0x1B51A4u;

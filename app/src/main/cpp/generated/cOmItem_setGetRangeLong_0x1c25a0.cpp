@@ -13,7 +13,7 @@
 
 // Function: cOmItem_setGetRangeLong
 // Address: 0x1c25a0 - 0x1c25c8
-void cOmItem_setGetRangeLong_0x1c25a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmItem_setGetRangeLong_0x1c25a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmItem_setGetRangeLong_0x1c25a0");
 #endif
@@ -57,7 +57,6 @@ void cOmItem_setGetRangeLong_0x1c25a0(uint8_t* rdram, R5900Context* ctx, PS2Runt
         return;
         #endif
     }
-    ctx->pc = 0x1C25B8u;
 label_1c25b8:
     // 0x1c25b8: 0x304200fb  andi        $v0, $v0, 0xFB
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)251);

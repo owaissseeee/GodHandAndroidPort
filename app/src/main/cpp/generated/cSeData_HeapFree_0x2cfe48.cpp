@@ -13,7 +13,7 @@
 
 // Function: cSeData_HeapFree
 // Address: 0x2cfe48 - 0x2cfe68
-void cSeData_HeapFree_0x2cfe48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSeData_HeapFree_0x2cfe48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSeData_HeapFree_0x2cfe48");
 #endif
@@ -42,7 +42,6 @@ void cSeData_HeapFree_0x2cfe48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &cSndMemHeap_Free_0x2cd890, 0x2cd890u, 0x2cfe58u)) {
         return;
     }
-    ctx->pc = 0x2CFE58u;
 label_2cfe58:
     // 0x2cfe58: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2cfe58u;

@@ -13,7 +13,7 @@
 
 // Function: func_00348098
 // Address: 0x348098 - 0x348158
-void func_00348098_0x348098(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00348098_0x348098(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00348098_0x348098");
 #endif
@@ -52,7 +52,6 @@ void func_00348098_0x348098(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Call_0035A128_Field_3C_0x3467c0, 0x3467c0u, 0x3480b4u)) {
         return;
     }
-    ctx->pc = 0x3480B4u;
 label_3480b4:
     // 0x3480b4: 0x8e04003c  lw          $a0, 0x3C($s0)
     ctx->pc = 0x3480b4u;
@@ -68,7 +67,6 @@ label_3480b4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035B5F8_0x35b5f8, 0x35b5f8u, 0x3480c0u)) {
         return;
     }
-    ctx->pc = 0x3480C0u;
 label_3480c0:
     // 0x3480c0: 0x8fa20004  lw          $v0, 0x4($sp)
     ctx->pc = 0x3480c0u;
@@ -101,7 +99,6 @@ label_3480c0:
     if (!runtime->callDirectStatic(rdram, ctx, &MWSFSVM_Error_0x348be0, 0x348be0u, 0x3480d8u)) {
         return;
     }
-    ctx->pc = 0x3480D8u;
 label_3480d8:
     // 0x3480d8: 0x2402ffff  addiu       $v0, $zero, -0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
@@ -123,7 +120,6 @@ label_3480d8:
             goto label_348144;
         }
     }
-    ctx->pc = 0x3480E8u;
 label_3480e8:
     // 0x3480e8: 0xc0d13c6  jal         func_344F18
     ctx->pc = 0x3480E8u;
@@ -131,7 +127,6 @@ label_3480e8:
     if (!runtime->callDirectStatic(rdram, ctx, &Forward345250_344F18_0x344f18, 0x344f18u, 0x3480f0u)) {
         return;
     }
-    ctx->pc = 0x3480F0u;
 label_3480f0:
     // 0x3480f0: 0x22140  sll         $a0, $v0, 5
     SET_GPR_S32(ctx, 4, (int32_t)SLL32(GPR_U32(ctx, 2), 5));
@@ -163,7 +158,6 @@ label_3480f0:
             goto label_348114;
         }
     }
-    ctx->pc = 0x348114u;
 label_348114:
     // 0x348114: 0x8fa20000  lw          $v0, 0x0($sp)
     ctx->pc = 0x348114u;

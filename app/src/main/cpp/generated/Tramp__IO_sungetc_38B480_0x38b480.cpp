@@ -13,7 +13,7 @@
 
 // Function: Tramp__IO_sungetc_38B480
 // Address: 0x38b480 - 0x38b4a0
-void Tramp__IO_sungetc_38B480_0x38b480(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp__IO_sungetc_38B480_0x38b480(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp__IO_sungetc_38B480_0x38b480");
 #endif
@@ -37,7 +37,6 @@ void Tramp__IO_sungetc_38B480_0x38b480(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_sungetc_0x38cd98, 0x38cd98u, 0x38b490u)) {
         return;
     }
-    ctx->pc = 0x38B490u;
 label_38b490:
     // 0x38b490: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38b490u;

@@ -13,7 +13,7 @@
 
 // Function: _sceCd_Poff_Intr
 // Address: 0x3987c0 - 0x398818
-void _sceCd_Poff_Intr_0x3987c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceCd_Poff_Intr_0x3987c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceCd_Poff_Intr_0x3987c0");
 #endif
@@ -46,15 +46,12 @@ void _sceCd_Poff_Intr_0x3987c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
         }
     }
 
-    ctx->pc = 0x3987c0u;
 
 label_3987c0:
     // 0x3987c0: 0x3c020078  lui         $v0, 0x78
-    ctx->pc = 0x3987c0u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)120 << 16));
 label_3987c4:
     // 0x3987c4: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x3987c4u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
 label_3987c8:
     // 0x3987c8: 0x8c45c3c8  lw          $a1, -0x3C38($v0)
@@ -91,10 +88,8 @@ label_3987d4:
             goto label_398804;
         }
     }
-    ctx->pc = 0x3987D8u;
 label_3987d8:
     // 0x3987d8: 0x3c020040  lui         $v0, 0x40
-    ctx->pc = 0x3987d8u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)64 << 16));
 label_3987dc:
     // 0x3987dc: 0x8c438664  lw          $v1, -0x799C($v0)
@@ -127,14 +122,11 @@ label_3987e4:
             goto label_398808;
         }
     }
-    ctx->pc = 0x3987E8u;
 label_3987e8:
     // 0x3987e8: 0x3c020078  lui         $v0, 0x78
-    ctx->pc = 0x3987e8u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)120 << 16));
 label_3987ec:
     // 0x3987ec: 0x380802d  daddu       $s0, $gp, $zero
-    ctx->pc = 0x3987ecu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 28) + (uint64_t)GPR_U64(ctx, 0));
 label_3987f0:
     // 0x3987f0: 0x8c5cc3cc  lw          $gp, -0x3C34($v0)
@@ -172,10 +164,8 @@ label_3987fc:
             return;
         }
     }
-    ctx->pc = 0x398800u;
 label_398800:
     // 0x398800: 0x200e02d  daddu       $gp, $s0, $zero
-    ctx->pc = 0x398800u;
     SET_GPR_U64(ctx, 28, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_398804:
     // 0x398804: 0xdfbf0010  ld          $ra, 0x10($sp)
@@ -216,7 +206,6 @@ label_398810:
         return;
         #endif
     }
-    ctx->pc = 0x398814u;
 label_398814:
     // 0x398814: 0x0  nop
     // NOP

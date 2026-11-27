@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getClearNum
 // Address: 0x1fa6c0 - 0x1fa6f8
-void cCoreSave_getClearNum_0x1fa6c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getClearNum_0x1fa6c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getClearNum_0x1fa6c0");
 #endif
@@ -56,7 +56,6 @@ void cCoreSave_getClearNum_0x1fa6c0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         return;
         #endif
     }
-    ctx->pc = 0x1FA6D4u;
 label_1fa6d4:
     // 0x1fa6d4: 0x3c040004  lui         $a0, 0x4
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)4 << 16));
@@ -95,7 +94,6 @@ label_1fa6d4:
             goto label_1fa6f0;
         }
     }
-    ctx->pc = 0x1FA6F0u;
 label_1fa6f0:
     // 0x1fa6f0: 0x3e00008  jr          $ra
     ctx->pc = 0x1FA6F0u;

@@ -13,7 +13,7 @@
 
 // Function: sfuo_InitUoch
 // Address: 0x35d188 - 0x35d1b0
-void sfuo_InitUoch_0x35d188(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfuo_InitUoch_0x35d188(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfuo_InitUoch_0x35d188");
 #endif

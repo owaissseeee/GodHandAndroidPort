@@ -13,7 +13,7 @@
 
 // Function: UpdatePlayStage
 // Address: 0x2b2500 - 0x2b2580
-void UpdatePlayStage_0x2b2500(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdatePlayStage_0x2b2500(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdatePlayStage_0x2b2500");
 #endif
@@ -80,7 +80,6 @@ void UpdatePlayStage_0x2b2500(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_2b2570;
         }
     }
-    ctx->pc = 0x2B252Cu;
 label_2b252c:
     // 0x2b252c: 0xc0ac960  jal         func_2B2580
     SET_GPR_U32(ctx, 31, 0x2B2534u);
@@ -93,7 +92,6 @@ label_2b252c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B2580_0x2b2580, 0x2b2580u, 0x2b2534u)) {
         return;
     }
-    ctx->pc = 0x2B2534u;
 label_2b2534:
     // 0x2b2534: 0x9202000d  lbu         $v0, 0xD($s0)
     ctx->pc = 0x2b2534u;
@@ -115,7 +113,6 @@ label_2b2540:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B2588_0x2b2588, 0x2b2588u, 0x2b2548u)) {
         return;
     }
-    ctx->pc = 0x2B2548u;
 label_2b2548:
     // 0x2b2548: 0x10400008  beqz        $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x2B2548u;
@@ -143,7 +140,6 @@ label_2b2548:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B2E80_0x2b2e80, 0x2b2e80u, 0x2b2558u)) {
         return;
     }
-    ctx->pc = 0x2B2558u;
 label_2b2558:
     // 0x2b2558: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));

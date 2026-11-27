@@ -19,7 +19,7 @@
 
 // Function: MtxInitRotY
 // Address: 0x147988 - 0x1479c8
-void MtxInitRotY_0x147988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MtxInitRotY_0x147988(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MtxInitRotY_0x147988");
 #endif
@@ -92,7 +92,6 @@ void MtxInitRotY_0x147988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0RotMatrixY_0x30a7b8, 0x30a7b8u, 0x1479b8u)) {
         return;
     }
-    ctx->pc = 0x1479B8u;
 label_1479b8:
     // 0x1479b8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1479b8u;

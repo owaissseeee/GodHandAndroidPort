@@ -13,7 +13,7 @@
 
 // Function: dtx_destroy_rmt
 // Address: 0x332090 - 0x3320e0
-void dtx_destroy_rmt_0x332090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void dtx_destroy_rmt_0x332090(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("dtx_destroy_rmt_0x332090");
 #endif
@@ -68,7 +68,6 @@ void dtx_destroy_rmt_0x332090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B3128u, 0x3320C8u, 0x3320D0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3320D0u;
 label_3320d0:
     // 0x3320d0: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x3320d0u;

@@ -13,7 +13,7 @@
 
 // Function: Thunk_func_0034D068
 // Address: 0x34df40 - 0x34df58
-void Thunk_func_0034D068_0x34df40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Thunk_func_0034D068_0x34df40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Thunk_func_0034D068_0x34df40");
 #endif

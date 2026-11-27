@@ -13,7 +13,7 @@
 
 // Function: CopyVec3ToField40_173968
 // Address: 0x173968 - 0x173998
-void CopyVec3ToField40_173968_0x173968(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CopyVec3ToField40_173968_0x173968(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CopyVec3ToField40_173968_0x173968");
 #endif

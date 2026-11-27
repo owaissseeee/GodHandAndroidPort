@@ -13,7 +13,7 @@
 
 // Function: InitEmitterWork
 // Address: 0x3003f0 - 0x300458
-void InitEmitterWork_0x3003f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitEmitterWork_0x3003f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitEmitterWork_0x3003f0");
 #endif
@@ -53,7 +53,6 @@ void InitEmitterWork_0x3003f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x300410u)) {
         return;
     }
-    ctx->pc = 0x300410u;
 label_300410:
     // 0x300410: 0x3c040074  lui         $a0, 0x74
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)116 << 16));
@@ -72,7 +71,6 @@ label_300410:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x300424u)) {
         return;
     }
-    ctx->pc = 0x300424u;
 label_300424:
     // 0x300424: 0x3c040074  lui         $a0, 0x74
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)116 << 16));
@@ -91,7 +89,6 @@ label_300424:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x300438u)) {
         return;
     }
-    ctx->pc = 0x300438u;
 label_300438:
     // 0x300438: 0x3c040074  lui         $a0, 0x74
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)116 << 16));
@@ -110,7 +107,6 @@ label_300438:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x30044cu)) {
         return;
     }
-    ctx->pc = 0x30044Cu;
 label_30044c:
     // 0x30044c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x30044cu;

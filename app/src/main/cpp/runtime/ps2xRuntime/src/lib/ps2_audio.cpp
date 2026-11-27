@@ -27,12 +27,22 @@ namespace
     static std::atomic<float> s_bgmVolume{1.0f};
     static std::atomic<float> s_sfxVolume{1.0f};
     static std::atomic<float> s_voiceVolume{1.0f};
+    static std::atomic<bool> s_audioMuted{false};
+    static std::atomic<int> s_desiredBufferFrames{1024};
 
     float gainOf(float percent)
     {
         float v = std::clamp(percent, 0.0f, 1.0f);
         return v * v;
     }
+}
+
+extern "C" void godhand_set_audio_muted(bool muted) {
+    s_audioMuted.store(muted, std::memory_order_relaxed);
+}
+
+extern "C" void godhand_set_audio_buffer_frames(int frames) {
+    s_desiredBufferFrames.store(std::clamp(frames, 256, 8192), std::memory_order_relaxed);
 }
 
 extern "C" void godhand_set_audio_channel_volumes(float master, float bgm, float sfx, float voice) {
@@ -55,6 +65,10 @@ extern "C" float godhand_get_sfx_volume() {
 
 extern "C" float godhand_get_voice_volume() {
     return s_voiceVolume.load(std::memory_order_relaxed);
+}
+
+extern "C" float godhand_get_master_volume() {
+    return s_masterVolume.load(std::memory_order_relaxed);
 }
 
 namespace
@@ -379,8 +393,14 @@ struct PS2AudioBackend::Impl
             output[frame * 2u] = owner->lastOutput[0];
             output[frame * 2u + 1u] = owner->lastOutput[1];
         }
-        const float master = s_masterVolume.load(std::memory_order_relaxed);
-        if (master < 0.999f)
+        const float master = s_audioMuted.load(std::memory_order_relaxed)
+                                 ? 0.0f
+                                 : s_masterVolume.load(std::memory_order_relaxed);
+        if (master < 0.001f)
+        {
+            std::fill_n(output, requested, int16_t{0});
+        }
+        else if (master < 0.999f)
         {
             for (size_t i = 0u; i < requested; ++i)
                 output[i] = static_cast<int16_t>(std::clamp(output[i] * master, -32768.0f, 32767.0f));
@@ -445,7 +465,7 @@ void PS2AudioBackend::setAudioReady(bool ready)
         const char *audioMute = std::getenv("PS2X_AUDIO_MUTE");
         if (audioMute && *audioMute && *audioMute != '0')
             SetMasterVolume(0.0f);
-        SetAudioStreamBufferSizeDefault(1024);
+        SetAudioStreamBufferSizeDefault(s_desiredBufferFrames.load(std::memory_order_relaxed));
         if (const char *outPath = std::getenv("PS2X_AUDIO_OUT_DUMP"); outPath && *outPath && !m_impl->outDump)
             m_impl->outDump = std::fopen(outPath, "wb");
         m_impl->stream = LoadAudioStream(48000, 16, 2);

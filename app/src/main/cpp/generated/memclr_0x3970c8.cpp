@@ -6,6 +6,7 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,7 +14,7 @@
 
 // Function: memclr
 // Address: 0x3970c8 - 0x397100
-void memclr_0x3970c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void memclr_0x3970c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("memclr_0x3970c8");
 #endif
@@ -24,6 +25,22 @@ void memclr_0x3970c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             default: break;
         }
     }
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    if (__builtin_expect(ctx->pc == 0x3970c8u, 1)) {
+        const uint32_t n = GPR_U32(ctx, 5);
+        if (n == 0u) {
+            ps2FastReturn(rdram, ctx, runtime, 0x3970F4u);
+            return;
+        }
+        uint8_t* const dst = ps2TryFastSpan(rdram, GPR_U32(ctx, 4), n);
+        if (__builtin_expect(dst != nullptr, 1)) {
+            std::memset(dst, 0, n);
+            ps2FastReturn(rdram, ctx, runtime, 0x3970F4u);
+            return;
+        }
+    }
+#endif
 
 
     // 0x3970c8: 0x10a0000a  beqz        $a1, . + 4 + (0xA << 2)
@@ -44,7 +61,6 @@ void memclr_0x3970c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     // 0x3970d0: 0x2403ffff  addiu       $v1, $zero, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x3970d4: 0x0  nop
-    ctx->pc = 0x3970d4u;
     // NOP
 label_3970d8:
     // 0x3970d8: 0xa0800000  sb          $zero, 0x0($a0)
@@ -70,7 +86,6 @@ label_3970d8:
             goto label_3970d8;
         }
     }
-    ctx->pc = 0x3970F4u;
 label_3970f4:
     // 0x3970f4: 0x3e00008  jr          $ra
     ctx->pc = 0x3970F4u;

@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_setStat8A
 // Address: 0x1fbd00 - 0x1fbd28
-void cCoreSave_setStat8A_0x1fbd00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setStat8A_0x1fbd00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setStat8A_0x1fbd00");
 #endif
@@ -56,7 +56,6 @@ void cCoreSave_setStat8A_0x1fbd00(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_1fbd1c;
         }
     }
-    ctx->pc = 0x1FBD1Cu;
 label_1fbd1c:
     // 0x1fbd1c: 0x3e00008  jr          $ra
     ctx->pc = 0x1FBD1Cu;

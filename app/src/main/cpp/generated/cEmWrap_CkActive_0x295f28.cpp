@@ -13,7 +13,7 @@
 
 // Function: cEmWrap_CkActive
 // Address: 0x295f28 - 0x295f80
-void cEmWrap_CkActive_0x295f28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmWrap_CkActive_0x295f28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmWrap_CkActive_0x295f28");
 #endif
@@ -47,7 +47,6 @@ void cEmWrap_CkActive_0x295f28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &FindResolveActor_295978_0x295978, 0x295978u, 0x295f3cu)) {
         return;
     }
-    ctx->pc = 0x295F3Cu;
 label_295f3c:
     // 0x295f3c: 0x10400007  beqz        $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x295F3Cu;
@@ -80,7 +79,6 @@ label_295f3c:
     if (!runtime->callDirectStatic(rdram, ctx, &strcmp_0x3a5678, 0x3a5678u, 0x295f54u)) {
         return;
     }
-    ctx->pc = 0x295F54u;
 label_295f54:
     // 0x295f54: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x295F54u;
@@ -91,7 +89,6 @@ label_295f54:
             goto label_295f64;
         }
     }
-    ctx->pc = 0x295F5Cu;
 label_295f5c:
     // 0x295f5c: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x295F5Cu;
@@ -108,7 +105,6 @@ label_295f5c:
             goto label_295f6c;
         }
     }
-    ctx->pc = 0x295F64u;
 label_295f64:
     // 0x295f64: 0xc09bb30  jal         func_26ECC0
     SET_GPR_U32(ctx, 31, 0x295F6Cu);
@@ -121,7 +117,6 @@ label_295f64:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_IsSet_Field_16D0_Bit_1_26ECC0_0x26ecc0, 0x26ecc0u, 0x295f6cu)) {
         return;
     }
-    ctx->pc = 0x295F6Cu;
 label_295f6c:
     // 0x295f6c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x295f6cu;

@@ -13,7 +13,7 @@
 
 // Function: _IO_remove_marker
 // Address: 0x38d038 - 0x38d070
-void ps2__IO_remove_marker_0x38d038(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_remove_marker_0x38d038(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_remove_marker_0x38d038");
 #endif
@@ -47,7 +47,6 @@ void ps2__IO_remove_marker_0x38d038(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_38d068;
         }
     }
-    ctx->pc = 0x38D048u;
 label_38d048:
     // 0x38d048: 0x54640004  bnel        $v1, $a0, . + 4 + (0x4 << 2)
     ctx->pc = 0x38D048u;
@@ -86,7 +85,6 @@ label_38d048:
         return;
         #endif
     }
-    ctx->pc = 0x38D05Cu;
 label_38d05c:
     // 0x38d05c: 0x8ca20000  lw          $v0, 0x0($a1)
     ctx->pc = 0x38d05cu;
@@ -109,7 +107,6 @@ label_38d05c:
             goto label_38d048;
         }
     }
-    ctx->pc = 0x38D068u;
 label_38d068:
     // 0x38d068: 0x3e00008  jr          $ra
     ctx->pc = 0x38D068u;

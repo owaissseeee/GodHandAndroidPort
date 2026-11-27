@@ -13,7 +13,7 @@
 
 // Function: DmgObj_stopDamageVolumes
 // Address: 0x10a2c8 - 0x10a408
-void DmgObj_stopDamageVolumes_0x10a2c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void DmgObj_stopDamageVolumes_0x10a2c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("DmgObj_stopDamageVolumes_0x10a2c8");
 #endif
@@ -156,7 +156,6 @@ void DmgObj_stopDamageVolumes_0x10a2c8(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x10a32cu)) {
         return;
     }
-    ctx->pc = 0x10A32Cu;
 label_10a32c:
     // 0x10a32c: 0x8e0405b0  lw          $a0, 0x5B0($s0)
     ctx->pc = 0x10a32cu;
@@ -174,7 +173,6 @@ label_10a32c:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollRadius_0x1fd7b0, 0x1fd7b0u, 0x10a33cu)) {
         return;
     }
-    ctx->pc = 0x10A33Cu;
 label_10a33c:
     // 0x10a33c: 0x8e0305b0  lw          $v1, 0x5B0($s0)
     ctx->pc = 0x10a33cu;
@@ -201,7 +199,6 @@ label_10a33c:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x10a358u)) {
         return;
     }
-    ctx->pc = 0x10A358u;
 label_10a358:
     // 0x10a358: 0x8e0405b8  lw          $a0, 0x5B8($s0)
     ctx->pc = 0x10a358u;
@@ -219,7 +216,6 @@ label_10a358:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollRadius_0x1fd7b0, 0x1fd7b0u, 0x10a368u)) {
         return;
     }
-    ctx->pc = 0x10A368u;
 label_10a368:
     // 0x10a368: 0x8e0305b8  lw          $v1, 0x5B8($s0)
     ctx->pc = 0x10a368u;
@@ -246,7 +242,6 @@ label_10a368:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x10a384u)) {
         return;
     }
-    ctx->pc = 0x10A384u;
 label_10a384:
     // 0x10a384: 0x8e0405c0  lw          $a0, 0x5C0($s0)
     ctx->pc = 0x10a384u;
@@ -264,7 +259,6 @@ label_10a384:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollRadius_0x1fd7b0, 0x1fd7b0u, 0x10a394u)) {
         return;
     }
-    ctx->pc = 0x10A394u;
 label_10a394:
     // 0x10a394: 0x8e0305c0  lw          $v1, 0x5C0($s0)
     ctx->pc = 0x10a394u;
@@ -291,7 +285,6 @@ label_10a394:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x10a3b0u)) {
         return;
     }
-    ctx->pc = 0x10A3B0u;
 label_10a3b0:
     // 0x10a3b0: 0x8e0405c8  lw          $a0, 0x5C8($s0)
     ctx->pc = 0x10a3b0u;
@@ -309,7 +302,6 @@ label_10a3b0:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollRadius_0x1fd7b0, 0x1fd7b0u, 0x10a3c0u)) {
         return;
     }
-    ctx->pc = 0x10A3C0u;
 label_10a3c0:
     // 0x10a3c0: 0x8e0305c8  lw          $v1, 0x5C8($s0)
     ctx->pc = 0x10a3c0u;
@@ -336,7 +328,6 @@ label_10a3c0:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x10a3dcu)) {
         return;
     }
-    ctx->pc = 0x10A3DCu;
 label_10a3dc:
     // 0x10a3dc: 0x8e0405d0  lw          $a0, 0x5D0($s0)
     ctx->pc = 0x10a3dcu;
@@ -354,7 +345,6 @@ label_10a3dc:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollRadius_0x1fd7b0, 0x1fd7b0u, 0x10a3ecu)) {
         return;
     }
-    ctx->pc = 0x10A3ECu;
 label_10a3ec:
     // 0x10a3ec: 0x8e0205d0  lw          $v0, 0x5D0($s0)
     ctx->pc = 0x10a3ecu;

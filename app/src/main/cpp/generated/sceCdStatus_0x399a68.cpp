@@ -13,7 +13,7 @@
 
 // Function: sceCdStatus
 // Address: 0x399a68 - 0x399b20
-void sceCdStatus_0x399a68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceCdStatus_0x399a68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceCdStatus_0x399a68");
 #endif
@@ -49,7 +49,6 @@ void sceCdStatus_0x399a68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x398EB0u, 0x399A74u, 0x399A7Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x399A7Cu;
 label_399a7c:
     // 0x399a7c: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x399A7Cu;
@@ -81,7 +80,6 @@ label_399a7c:
             goto label_399b10;
         }
     }
-    ctx->pc = 0x399A8Cu;
 label_399a8c:
     // 0x399a8c: 0x3c040040  lui         $a0, 0x40
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)64 << 16));
@@ -115,7 +113,6 @@ label_399a8c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B3128u, 0x399AB4u, 0x399ABCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x399ABCu;
 label_399abc:
     // 0x399abc: 0x4410006  bgez        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x399ABCu;
@@ -145,7 +142,6 @@ label_399abc:
     if (!runtime->callDirectStatic(rdram, ctx, &SignalSema_0x3afcc0, 0x3afcc0u, 0x399ad0u)) {
         return;
     }
-    ctx->pc = 0x399AD0u;
 label_399ad0:
     // 0x399ad0: 0x1000000f  b           . + 4 + (0xF << 2)
     ctx->pc = 0x399AD0u;
@@ -162,7 +158,6 @@ label_399ad0:
             goto label_399b10;
         }
     }
-    ctx->pc = 0x399AD8u;
 label_399ad8:
     // 0x399ad8: 0x3c022000  lui         $v0, 0x2000
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)8192 << 16));
@@ -182,7 +177,6 @@ label_399ad8:
     if (!runtime->callDirectStatic(rdram, ctx, &SignalSema_0x3afcc0, 0x3afcc0u, 0x399aecu)) {
         return;
     }
-    ctx->pc = 0x399AECu;
 label_399aec:
     // 0x399aec: 0x3c030040  lui         $v1, 0x40
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)64 << 16));
@@ -219,10 +213,8 @@ label_399aec:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B1F28u, 0x399B04u, 0x399B0Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x399B0Cu;
 label_399b0c:
     // 0x399b0c: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x399b0cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_399b10:
     // 0x399b10: 0xdfbf0020  ld          $ra, 0x20($sp)

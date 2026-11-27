@@ -13,7 +13,7 @@
 
 // Function: InitField214AndSubfields_17D638
 // Address: 0x17d638 - 0x17d680
-void InitField214AndSubfields_17D638_0x17d638(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitField214AndSubfields_17D638_0x17d638(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitField214AndSubfields_17D638_0x17d638");
 #endif
@@ -57,7 +57,6 @@ void InitField214AndSubfields_17D638_0x17d638(uint8_t* rdram, R5900Context* ctx,
     if (!runtime->callDirectStatic(rdram, ctx, &cOl21_releaseShapes_0x17df88, 0x17df88u, 0x17d660u)) {
         return;
     }
-    ctx->pc = 0x17D660u;
 label_17d660:
     // 0x17d660: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -72,7 +71,6 @@ label_17d660:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField214PtrThenInit_1B6F38_0x1b6f38, 0x1b6f38u, 0x17d66cu)) {
         return;
     }
-    ctx->pc = 0x17D66Cu;
 label_17d66c:
     // 0x17d66c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x17d66cu;

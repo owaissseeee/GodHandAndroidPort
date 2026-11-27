@@ -13,7 +13,7 @@
 
 // Function: EnableIntc
 // Address: 0x3af9e0 - 0x3af9f0
-void EnableIntc_0x3af9e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EnableIntc_0x3af9e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EnableIntc_0x3af9e0");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: func_00201A50
 // Address: 0x201a50 - 0x201a80
-void func_00201A50_0x201a50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00201A50_0x201a50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00201A50_0x201a50");
 #endif
@@ -42,7 +42,6 @@ void func_00201A50_0x201a50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x399508u, 0x201A58u, 0x201A60u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x201A60u;
 label_201a60:
     // 0x201a60: 0x38420002  xori        $v0, $v0, 0x2
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)2);

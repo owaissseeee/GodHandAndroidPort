@@ -13,7 +13,7 @@
 
 // Function: ClearAndResetFields_1FE278
 // Address: 0x1fe278 - 0x1fe2b8
-void ClearAndResetFields_1FE278_0x1fe278(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearAndResetFields_1FE278_0x1fe278(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearAndResetFields_1FE278_0x1fe278");
 #endif
@@ -60,7 +60,6 @@ void ClearAndResetFields_1FE278_0x1fe278(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FD580_0x1fd580, 0x1fd580u, 0x1fe294u)) {
         return;
     }
-    ctx->pc = 0x1FE294u;
 label_1fe294:
     // 0x1fe294: 0xc07f37a  jal         func_1FCDE8
     SET_GPR_U32(ctx, 31, 0x1FE29Cu);
@@ -73,7 +72,6 @@ label_1fe294:
     if (!runtime->callDirectStatic(rdram, ctx, &ResetObjectFields_1FCDE8_0x1fcde8, 0x1fcde8u, 0x1fe29cu)) {
         return;
     }
-    ctx->pc = 0x1FE29Cu;
 label_1fe29c:
     // 0x1fe29c: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x1FE29Cu;
@@ -90,10 +88,8 @@ label_1fe29c:
             goto label_1fe2a8;
         }
     }
-    ctx->pc = 0x1FE2A4u;
 label_1fe2a4:
     // 0x1fe2a4: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1fe2a4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1fe2a8:
     // 0x1fe2a8: 0x7bb00010  lq          $s0, 0x10($sp)

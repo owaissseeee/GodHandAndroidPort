@@ -13,7 +13,7 @@
 
 // Function: func_00155C68
 // Address: 0x155c68 - 0x155d60
-void func_00155C68_0x155c68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00155C68_0x155c68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00155C68_0x155c68");
 #endif
@@ -124,7 +124,6 @@ void func_00155C68_0x155c68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x155CFCu;
 label_155cfc:
     // 0x155cfc: 0x314a00ff  andi        $t2, $t2, 0xFF
     SET_GPR_U64(ctx, 10, GPR_U64(ctx, 10) & (uint64_t)(uint16_t)255);

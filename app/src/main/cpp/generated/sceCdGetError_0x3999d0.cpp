@@ -13,7 +13,7 @@
 
 // Function: sceCdGetError
 // Address: 0x3999d0 - 0x399a68
-void sceCdGetError_0x3999d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceCdGetError_0x3999d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceCdGetError_0x3999d0");
 #endif
@@ -48,7 +48,6 @@ void sceCdGetError_0x3999d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x398EB0u, 0x3999DCu, 0x3999E4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3999E4u;
 label_3999e4:
     // 0x3999e4: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x3999E4u;
@@ -80,7 +79,6 @@ label_3999e4:
             goto label_399a58;
         }
     }
-    ctx->pc = 0x3999F4u;
 label_3999f4:
     // 0x3999f4: 0x3c040040  lui         $a0, 0x40
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)64 << 16));
@@ -114,7 +112,6 @@ label_3999f4:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B3128u, 0x399A1Cu, 0x399A24u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x399A24u;
 label_399a24:
     // 0x399a24: 0x4410006  bgez        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x399A24u;
@@ -144,7 +141,6 @@ label_399a24:
     if (!runtime->callDirectStatic(rdram, ctx, &SignalSema_0x3afcc0, 0x3afcc0u, 0x399a38u)) {
         return;
     }
-    ctx->pc = 0x399A38u;
 label_399a38:
     // 0x399a38: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x399A38u;
@@ -161,7 +157,6 @@ label_399a38:
             goto label_399a58;
         }
     }
-    ctx->pc = 0x399A40u;
 label_399a40:
     // 0x399a40: 0x3c022000  lui         $v0, 0x2000
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)8192 << 16));
@@ -181,10 +176,8 @@ label_399a40:
     if (!runtime->callDirectStatic(rdram, ctx, &SignalSema_0x3afcc0, 0x3afcc0u, 0x399a54u)) {
         return;
     }
-    ctx->pc = 0x399A54u;
 label_399a54:
     // 0x399a54: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x399a54u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_399a58:
     // 0x399a58: 0xdfbf0020  ld          $ra, 0x20($sp)

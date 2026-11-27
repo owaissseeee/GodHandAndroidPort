@@ -13,7 +13,7 @@
 
 // Function: GetCop0
 // Address: 0x3aff10 - 0x3aff20
-void GetCop0_0x3aff10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetCop0_0x3aff10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetCop0_0x3aff10");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: cScreenNode_updateScreenPos
 // Address: 0x2e9c30 - 0x2e9d48
-void cScreenNode_updateScreenPos_0x2e9c30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScreenNode_updateScreenPos_0x2e9c30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScreenNode_updateScreenPos_0x2e9c30");
 #endif
@@ -47,7 +47,6 @@ void cScreenNode_updateScreenPos_0x2e9c30(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &func_002FBED0_0x2fbed0, 0x2fbed0u, 0x2e9c44u)) {
         return;
     }
-    ctx->pc = 0x2E9C44u;
 label_2e9c44:
     // 0x2e9c44: 0x3a0202d  daddu       $a0, $sp, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -62,7 +61,6 @@ label_2e9c44:
     if (!runtime->callDirectStatic(rdram, ctx, &StoreVecFromFieldB0_2B6160_0x2b6160, 0x2b6160u, 0x2e9c50u)) {
         return;
     }
-    ctx->pc = 0x2E9C50u;
 label_2e9c50:
     // 0x2e9c50: 0x3c02005d  lui         $v0, 0x5D
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)93 << 16));
@@ -82,7 +80,6 @@ label_2e9c50:
     if (!runtime->callDirectStatic(rdram, ctx, &cCamera_getScreenPos_0x138470, 0x138470u, 0x2e9c64u)) {
         return;
     }
-    ctx->pc = 0x2E9C64u;
 label_2e9c64:
     // 0x2e9c64: 0x44801000  mtc1        $zero, $f2
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[2], &bits, sizeof(bits)); }

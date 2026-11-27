@@ -13,7 +13,7 @@
 
 // Function: cFont_setDrawState
 // Address: 0x2a4e58 - 0x2a4ed8
-void cFont_setDrawState_0x2a4e58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cFont_setDrawState_0x2a4e58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cFont_setDrawState_0x2a4e58");
 #endif
@@ -76,7 +76,6 @@ void cFont_setDrawState_0x2a4e58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A58A0_0x2a58a0, 0x2a58a0u, 0x2a4e9cu)) {
         return;
     }
-    ctx->pc = 0x2A4E9Cu;
 label_2a4e9c:
     // 0x2a4e9c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -91,7 +90,6 @@ label_2a4e9c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A58D8_0x2a58d8, 0x2a58d8u, 0x2a4ea8u)) {
         return;
     }
-    ctx->pc = 0x2A4EA8u;
 label_2a4ea8:
     // 0x2a4ea8: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2a4ea8u;

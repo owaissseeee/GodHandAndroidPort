@@ -13,7 +13,7 @@
 
 // Function: InitStructAndSubfields_1E8DA8
 // Address: 0x1e8da8 - 0x1e8df0
-void InitStructAndSubfields_1E8DA8_0x1e8da8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitStructAndSubfields_1E8DA8_0x1e8da8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitStructAndSubfields_1E8DA8_0x1e8da8");
 #endif
@@ -51,7 +51,6 @@ void InitStructAndSubfields_1E8DA8_0x1e8da8(uint8_t* rdram, R5900Context* ctx, P
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x1e8dc4u)) {
         return;
     }
-    ctx->pc = 0x1E8DC4u;
 label_1e8dc4:
     // 0x1e8dc4: 0xc07a3a2  jal         func_1E8E88
     SET_GPR_U32(ctx, 31, 0x1E8DCCu);
@@ -64,7 +63,6 @@ label_1e8dc4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001E8E88_0x1e8e88, 0x1e8e88u, 0x1e8dccu)) {
         return;
     }
-    ctx->pc = 0x1E8DCCu;
 label_1e8dcc:
     // 0x1e8dcc: 0xc07a3ae  jal         func_1E8EB8
     SET_GPR_U32(ctx, 31, 0x1E8DD4u);
@@ -77,7 +75,6 @@ label_1e8dcc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001E8EB8_0x1e8eb8, 0x1e8eb8u, 0x1e8dd4u)) {
         return;
     }
-    ctx->pc = 0x1E8DD4u;
 label_1e8dd4:
     // 0x1e8dd4: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

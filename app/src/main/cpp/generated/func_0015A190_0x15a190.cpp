@@ -13,7 +13,7 @@
 
 // Function: func_0015A190
 // Address: 0x15a190 - 0x15a3e8
-void func_0015A190_0x15a190(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0015A190_0x15a190(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0015A190_0x15a190");
 #endif
@@ -118,7 +118,6 @@ void func_0015A190_0x15a190(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &sqrtf_0x3a2440, 0x3a2440u, 0x15a20cu)) {
         return;
     }
-    ctx->pc = 0x15A20Cu;
 label_15a20c:
     // 0x15a20c: 0x3c013f00  lui         $at, 0x3F00
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16128 << 16));
@@ -188,7 +187,6 @@ label_15a20c:
             goto label_15a3bc;
         }
     }
-    ctx->pc = 0x15A26Cu;
 label_15a26c:
     // 0x15a26c: 0x46021834  c.lt.s      $f3, $f2
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[3], ctx->f[2])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -210,7 +208,6 @@ label_15a26c:
         }
     }
     // 0x15a27c: 0x24160001  addiu       $s6, $zero, 0x1
-    ctx->pc = 0x15a27cu;
     SET_GPR_S32(ctx, 22, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_15a280:
     // 0x15a280: 0x24060014  addiu       $a2, $zero, 0x14
@@ -241,7 +238,6 @@ label_15a280:
             goto label_15a2a0;
         }
     }
-    ctx->pc = 0x15A2A0u;
 label_15a2a0:
     // 0x15a2a0: 0x2c61818  mult        $v1, $s6, $a2
     { int64_t result = (int64_t)GPR_S32(ctx, 22) * (int64_t)GPR_S32(ctx, 6); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 3, (int32_t)result); }
@@ -313,10 +309,8 @@ label_15a2a0:
     if (!runtime->callDirectStatic(rdram, ctx, &sqrtf_0x3a2440, 0x3a2440u, 0x15a314u)) {
         return;
     }
-    ctx->pc = 0x15A314u;
 label_15a314:
     // 0x15a314: 0x46000046  mov.s       $f1, $f0
-    ctx->pc = 0x15a314u;
     ctx->f[1] = FPU_MOV_S(ctx->f[0]);
 label_15a318:
     // 0x15a318: 0x3c013f00  lui         $at, 0x3F00

@@ -13,7 +13,7 @@
 
 // Function: SetFlagAfterCopy_145160
 // Address: 0x145160 - 0x1451a0
-void SetFlagAfterCopy_145160_0x145160(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetFlagAfterCopy_145160_0x145160(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetFlagAfterCopy_145160_0x145160");
 #endif
@@ -52,7 +52,6 @@ void SetFlagAfterCopy_145160_0x145160(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &memcpy_0x3a5148, 0x3a5148u, 0x145180u)) {
         return;
     }
-    ctx->pc = 0x145180u;
 label_145180:
     // 0x145180: 0x8e030090  lw          $v1, 0x90($s0)
     ctx->pc = 0x145180u;

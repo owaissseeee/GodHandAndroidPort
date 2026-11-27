@@ -13,7 +13,7 @@
 
 // Function: func_0028AC58
 // Address: 0x28ac58 - 0x28ae18
-void func_0028AC58_0x28ac58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0028AC58_0x28ac58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0028AC58_0x28ac58");
 #endif
@@ -63,7 +63,6 @@ void func_0028AC58_0x28ac58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &GetEm00CharIndex_0x2ddea0, 0x2ddea0u, 0x28ac7cu)) {
         return;
     }
-    ctx->pc = 0x28AC7Cu;
 label_28ac7c:
     // 0x28ac7c: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -80,7 +79,6 @@ label_28ac7c:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Set_Field_424_1595E8_0x1595e8, 0x1595e8u, 0x28ac8cu)) {
         return;
     }
-    ctx->pc = 0x28AC8Cu;
 label_28ac8c:
     // 0x28ac8c: 0x8e240304  lw          $a0, 0x304($s1)
     ctx->pc = 0x28ac8cu;
@@ -100,7 +98,6 @@ label_28ac8c:
     if (!runtime->callDirectStatic(rdram, ctx, &SearchData_0x31ccf0, 0x31ccf0u, 0x28aca0u)) {
         return;
     }
-    ctx->pc = 0x28ACA0u;
 label_28aca0:
     // 0x28aca0: 0x3c050045  lui         $a1, 0x45
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)69 << 16));
@@ -122,7 +119,6 @@ label_28aca0:
     if (!runtime->callDirectStatic(rdram, ctx, &SearchData_0x31ccf0, 0x31ccf0u, 0x28acb8u)) {
         return;
     }
-    ctx->pc = 0x28ACB8u;
 label_28acb8:
     // 0x28acb8: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -185,7 +181,6 @@ label_28acb8:
             goto label_28add4;
         }
     }
-    ctx->pc = 0x28ACE4u;
 label_28ace4:
     // 0x28ace4: 0x240202ab  addiu       $v0, $zero, 0x2AB
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 683));
@@ -213,7 +208,6 @@ label_28ace4:
             goto label_28add4;
         }
     }
-    ctx->pc = 0x28ACF8u;
 label_28acf8:
     // 0x28acf8: 0x30420001  andi        $v0, $v0, 0x1
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
@@ -264,7 +258,6 @@ label_28acf8:
             goto label_28ad58;
         }
     }
-    ctx->pc = 0x28AD28u;
 label_28ad28:
     // 0x28ad28: 0x8e22155c  lw          $v0, 0x155C($s1)
     ctx->pc = 0x28ad28u;
@@ -318,7 +311,6 @@ label_28ad58:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28ad60u)) {
         return;
     }
-    ctx->pc = 0x28AD60u;
 label_28ad60:
     // 0x28ad60: 0x1000001c  b           . + 4 + (0x1C << 2)
     ctx->pc = 0x28AD60u;
@@ -329,7 +321,6 @@ label_28ad60:
             goto label_28add4;
         }
     }
-    ctx->pc = 0x28AD68u;
 label_28ad68:
     // 0x28ad68: 0x30420001  andi        $v0, $v0, 0x1
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
@@ -379,7 +370,6 @@ label_28ad68:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28ad9cu)) {
         return;
     }
-    ctx->pc = 0x28AD9Cu;
 label_28ad9c:
     // 0x28ad9c: 0x8e22155c  lw          $v0, 0x155C($s1)
     ctx->pc = 0x28ad9cu;
@@ -432,7 +422,6 @@ label_28ad9c:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28add4u)) {
         return;
     }
-    ctx->pc = 0x28ADD4u;
 label_28add4:
     // 0x28add4: 0x16000003  bnez        $s0, . + 4 + (0x3 << 2)
     ctx->pc = 0x28ADD4u;
@@ -464,7 +453,6 @@ label_28add4:
             goto label_28adf8;
         }
     }
-    ctx->pc = 0x28ADE4u;
 label_28ade4:
     // 0x28ade4: 0x240282d  daddu       $a1, $s2, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -483,7 +471,6 @@ label_28ade4:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setupModel_0x149738, 0x149738u, 0x28adf8u)) {
         return;
     }
-    ctx->pc = 0x28ADF8u;
 label_28adf8:
     // 0x28adf8: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x28adf8u;

@@ -13,7 +13,7 @@
 
 // Function: M2V_SetErrFunc
 // Address: 0x36d7f8 - 0x36d868
-void M2V_SetErrFunc_0x36d7f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void M2V_SetErrFunc_0x36d7f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("M2V_SetErrFunc_0x36d7f8");
 #endif
@@ -55,7 +55,6 @@ void M2V_SetErrFunc_0x36d7f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Set_D_0076A5D8_Check_Field_0_EQ_2_0x36d688, 0x36d688u, 0x36d81cu)) {
         return;
     }
-    ctx->pc = 0x36D81Cu;
 label_36d81c:
     // 0x36d81c: 0x3c05ff03  lui         $a1, 0xFF03
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)65283 << 16));
@@ -100,7 +99,6 @@ label_36d81c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x36D8E8u, 0x36D840u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x36D848u;
 label_36d848:
     // 0x36d848: 0xae110004  sw          $s1, 0x4($s0)
     ctx->pc = 0x36d848u;

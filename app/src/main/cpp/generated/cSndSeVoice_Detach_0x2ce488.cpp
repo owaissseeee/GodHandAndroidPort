@@ -13,7 +13,7 @@
 
 // Function: cSndSeVoice_Detach
 // Address: 0x2ce488 - 0x2ce510
-void cSndSeVoice_Detach_0x2ce488(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndSeVoice_Detach_0x2ce488(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndSeVoice_Detach_0x2ce488");
 #endif
@@ -52,7 +52,6 @@ void cSndSeVoice_Detach_0x2ce488(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &cSndSeVoice_IsActive_0x2cda38, 0x2cda38u, 0x2ce4a4u)) {
         return;
     }
-    ctx->pc = 0x2CE4A4u;
 label_2ce4a4:
     // 0x2ce4a4: 0x50400016  beql        $v0, $zero, . + 4 + (0x16 << 2)
     ctx->pc = 0x2CE4A4u;
@@ -141,7 +140,6 @@ label_2ce4a4:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0CopyVector_0x30a538, 0x30a538u, 0x2ce4e4u)) {
         return;
     }
-    ctx->pc = 0x2CE4E4u;
 label_2ce4e4:
     // 0x2ce4e4: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x2CE4E4u;
@@ -158,7 +156,6 @@ label_2ce4e4:
             goto label_2ce4f8;
         }
     }
-    ctx->pc = 0x2CE4ECu;
 label_2ce4ec:
     // 0x2ce4ec: 0xc0c294e  jal         func_30A538
     SET_GPR_U32(ctx, 31, 0x2CE4F4u);
@@ -171,7 +168,6 @@ label_2ce4ec:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0CopyVector_0x30a538, 0x30a538u, 0x2ce4f4u)) {
         return;
     }
-    ctx->pc = 0x2CE4F4u;
 label_2ce4f4:
     // 0x2ce4f4: 0xae00003c  sw          $zero, 0x3C($s0)
     ctx->pc = 0x2ce4f4u;

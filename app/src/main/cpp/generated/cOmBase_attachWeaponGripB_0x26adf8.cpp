@@ -13,7 +13,7 @@
 
 // Function: cOmBase_attachWeaponGripB
 // Address: 0x26adf8 - 0x26af20
-void cOmBase_attachWeaponGripB_0x26adf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmBase_attachWeaponGripB_0x26adf8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmBase_attachWeaponGripB_0x26adf8");
 #endif
@@ -177,7 +177,6 @@ void cOmBase_attachWeaponGripB_0x26adf8(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_26af00;
         }
     }
-    ctx->pc = 0x26AEA4u;
 label_26aea4:
     // 0x26aea4: 0x3c01bda3  lui         $at, 0xBDA3
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)48547 << 16));
@@ -259,7 +258,6 @@ label_26af00:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmWeapon_setParent_0x1cf160, 0x1cf160u, 0x26af10u)) {
         return;
     }
-    ctx->pc = 0x26AF10u;
 label_26af10:
     // 0x26af10: 0xdfbf0020  ld          $ra, 0x20($sp)
     ctx->pc = 0x26af10u;

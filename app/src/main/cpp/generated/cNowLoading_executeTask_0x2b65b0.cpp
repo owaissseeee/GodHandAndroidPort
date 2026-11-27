@@ -13,7 +13,7 @@
 
 // Function: cNowLoading_executeTask
 // Address: 0x2b65b0 - 0x2b65f0
-void cNowLoading_executeTask_0x2b65b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cNowLoading_executeTask_0x2b65b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cNowLoading_executeTask_0x2b65b0");
 #endif
@@ -72,7 +72,6 @@ void cNowLoading_executeTask_0x2b65b0(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cTaskManager_execute_0x2d5470, 0x2d5470u, 0x2b65e4u)) {
         return;
     }
-    ctx->pc = 0x2B65E4u;
 label_2b65e4:
     // 0x2b65e4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2b65e4u;

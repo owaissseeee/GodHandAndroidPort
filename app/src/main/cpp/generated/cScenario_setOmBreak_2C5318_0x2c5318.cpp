@@ -13,7 +13,7 @@
 
 // Function: cScenario_setOmBreak_2C5318
 // Address: 0x2c5318 - 0x2c5338
-void cScenario_setOmBreak_2C5318_0x2c5318(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_setOmBreak_2C5318_0x2c5318(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_setOmBreak_2C5318_0x2c5318");
 #endif
@@ -44,7 +44,6 @@ void cScenario_setOmBreak_2C5318_0x2c5318(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BECB0_0x2becb0, 0x2becb0u, 0x2c532cu)) {
         return;
     }
-    ctx->pc = 0x2C532Cu;
 label_2c532c:
     // 0x2c532c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2c532cu;

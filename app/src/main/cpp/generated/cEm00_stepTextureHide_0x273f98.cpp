@@ -14,7 +14,7 @@
 
 // Function: cEm00_stepTextureHide
 // Address: 0x273f98 - 0x274018
-void cEm00_stepTextureHide_0x273f98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_stepTextureHide_0x273f98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_stepTextureHide_0x273f98");
 #endif
@@ -105,7 +105,6 @@ void cEm00_stepTextureHide_0x273f98(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_273fe8;
         }
     }
-    ctx->pc = 0x273FDCu;
 label_273fdc:
     // 0x273fdc: 0x8ca20254  lw          $v0, 0x254($a1)
     ctx->pc = 0x273fdcu;
@@ -113,7 +112,6 @@ label_273fdc:
     // 0x273fe0: 0x3c031000  lui         $v1, 0x1000
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)4096 << 16));
     // 0x273fe4: 0x431025  or          $v0, $v0, $v1
-    ctx->pc = 0x273fe4u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | GPR_U64(ctx, 3));
 label_273fe8:
     // 0x273fe8: 0xaca20254  sw          $v0, 0x254($a1)
@@ -143,7 +141,6 @@ label_273fe8:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x274008u)) {
         return;
     }
-    ctx->pc = 0x274008u;
 label_274008:
     // 0x274008: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x274008u;

@@ -30,7 +30,8 @@ class SettingsRepository(context: Context) {
     private fun isIntKey(k: String): Boolean {
         return k.endsWith("_idx") || k.endsWith("_idx_v2") || k.endsWith("_idx_v3") || k.endsWith("_idx_v4") || k.endsWith("_idx_v5") ||
                k.endsWith("_mode") || k.endsWith("_slot") || k.endsWith("_multiplier") || k.endsWith("_lock") || k.endsWith("_costume") ||
-               k == "cheat_speed_modifier" || k == "cheat_gene_costume" || k == "cheat_olivia_costume"
+               k == "cheat_speed_modifier" || k == "cheat_gene_costume" || k == "cheat_olivia_costume" ||
+               k == "vibration_strength"
     }
 
     private fun getSafeFloat(key: String, def: Float): Float {
@@ -171,6 +172,10 @@ class SettingsRepository(context: Context) {
         get() = getSafeInt("frameskip_idx_v3", 0).coerceIn(0, 1) // 0: Off (Full 1:1 Rendering - Default), 1: Skip 1 Frame (Mild Potato Boost)
         set(value) = putInt("frameskip_idx_v3", value.coerceIn(0, 1))
 
+    var ultraPotatoMode: Boolean
+        get() = prefs.getBoolean("ultra_potato_enabled", false) // Default OFF: opt-in max-FPS mode
+        set(value) = putBoolean("ultra_potato_enabled", value)
+
     // --- Audio Settings ---
     var audioSchedulingIdx: Int
         get() = getSafeInt("audio_scheduling_idx", 1).coerceIn(0, 2) // 0: Real-time, 1: Balanced, 2: Safe Buffer (Helio G35)
@@ -239,7 +244,7 @@ class SettingsRepository(context: Context) {
         set(value) = putBoolean("menu_direct_touch_enabled", value)
 
     var showMenuDebugBoxes: Boolean
-        get() = prefs.getBoolean("show_menu_debug_boxes", true)
+        get() = prefs.getBoolean("show_menu_debug_boxes", false)
         set(value) = putBoolean("show_menu_debug_boxes", value)
 
     var leftStickSticky: Boolean
@@ -263,8 +268,25 @@ class SettingsRepository(context: Context) {
         set(value) = putInt("fps_overlay_mode", value.coerceIn(0, 2))
 
     var perfSpikeLoggingEnabled: Boolean
-        get() = prefs.getBoolean("perf_spike_logging", true) // Default is ON to capture freezes & spikes
+        get() = prefs.getBoolean("perf_spike_logging", false) // Default OFF: avoids spike string formatting overhead
         set(value) = putBoolean("perf_spike_logging", value)
+
+    // --- Vibration & Haptics ---
+    var vibrationEnabled: Boolean
+        get() = prefs.getBoolean("vibration_enabled", true)
+        set(value) = putBoolean("vibration_enabled", value)
+
+    var touchVibrationEnabled: Boolean
+        get() = prefs.getBoolean("touch_vibration_enabled", true)
+        set(value) = putBoolean("touch_vibration_enabled", value)
+
+    var inGameVibrationEnabled: Boolean
+        get() = prefs.getBoolean("ingame_vibration_enabled", true)
+        set(value) = putBoolean("ingame_vibration_enabled", value)
+
+    var vibrationStrength: Int
+        get() = getSafeInt("vibration_strength", 60).coerceIn(10, 100)
+        set(value) = putInt("vibration_strength", value.coerceIn(10, 100))
 
     // --- CHEAT ENGINE PREFERENCES ---
     // Health & Protection

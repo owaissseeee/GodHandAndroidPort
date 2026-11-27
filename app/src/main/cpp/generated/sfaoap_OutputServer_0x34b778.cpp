@@ -13,7 +13,7 @@
 
 // Function: sfaoap_OutputServer
 // Address: 0x34b778 - 0x34b7a8
-void sfaoap_OutputServer_0x34b778(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfaoap_OutputServer_0x34b778(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfaoap_OutputServer_0x34b778");
 #endif
@@ -46,7 +46,6 @@ void sfaoap_OutputServer_0x34b778(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034B7A8_0x34b7a8, 0x34b7a8u, 0x34b78cu)) {
         return;
     }
-    ctx->pc = 0x34B78Cu;
 label_34b78c:
     // 0x34b78c: 0xc0d2e06  jal         func_34B818
     SET_GPR_U32(ctx, 31, 0x34B794u);
@@ -59,7 +58,6 @@ label_34b78c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034B818_0x34b818, 0x34b818u, 0x34b794u)) {
         return;
     }
-    ctx->pc = 0x34B794u;
 label_34b794:
     // 0x34b794: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

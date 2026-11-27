@@ -13,7 +13,7 @@
 
 // Function: SetViewScrollIdAll
 // Address: 0x2db620 - 0x2db6b0
-void SetViewScrollIdAll_0x2db620(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetViewScrollIdAll_0x2db620(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetViewScrollIdAll_0x2db620");
 #endif
@@ -64,7 +64,6 @@ void SetViewScrollIdAll_0x2db620(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     ctx->pc = 0x2db648u;
     SET_GPR_S32(ctx, 5, (int32_t)READ32(ADD32(GPR_U32(ctx, 6), 0)));
     // 0x2db64c: 0x0  nop
-    ctx->pc = 0x2db64cu;
     // NOP
 label_2db650:
     // 0x2db650: 0x90a402fd  lbu         $a0, 0x2FD($a1)
@@ -130,10 +129,8 @@ label_2db650:
             goto label_2db68c;
         }
     }
-    ctx->pc = 0x2DB688u;
 label_2db688:
     // 0x2db688: 0x471024  and         $v0, $v0, $a3
-    ctx->pc = 0x2db688u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 7));
 label_2db68c:
     // 0x2db68c: 0xaca20250  sw          $v0, 0x250($a1)
@@ -166,7 +163,6 @@ label_2db690:
             goto label_2db650;
         }
     }
-    ctx->pc = 0x2DB6A4u;
 label_2db6a4:
     // 0x2db6a4: 0x3e00008  jr          $ra
     ctx->pc = 0x2DB6A4u;

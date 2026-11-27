@@ -13,7 +13,7 @@
 
 // Function: SetSequenceFlags_373810
 // Address: 0x373810 - 0x373858
-void SetSequenceFlags_373810_0x373810(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetSequenceFlags_373810_0x373810(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetSequenceFlags_373810_0x373810");
 #endif
@@ -50,7 +50,6 @@ void SetSequenceFlags_373810_0x373810(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373A50_0x373a50, 0x373a50u, 0x37382cu)) {
         return;
     }
-    ctx->pc = 0x37382Cu;
 label_37382c:
     // 0x37382c: 0x50400005  beql        $v0, $zero, . + 4 + (0x5 << 2)
     ctx->pc = 0x37382Cu;

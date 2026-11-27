@@ -13,7 +13,7 @@
 
 // Function: cOm1f_setHomePos
 // Address: 0x195b88 - 0x195bd0
-void cOm1f_setHomePos_0x195b88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm1f_setHomePos_0x195b88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm1f_setHomePos_0x195b88");
 #endif

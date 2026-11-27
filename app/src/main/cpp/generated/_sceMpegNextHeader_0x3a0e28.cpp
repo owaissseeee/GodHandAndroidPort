@@ -13,7 +13,7 @@
 
 // Function: _sceMpegNextHeader
 // Address: 0x3a0e28 - 0x3a0f80
-void _sceMpegNextHeader_0x3a0e28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceMpegNextHeader_0x3a0e28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceMpegNextHeader_0x3a0e28");
 #endif
@@ -110,7 +110,6 @@ label_3a0e70:
     if (!runtime->callDirectStatic(rdram, ctx, &flushByteBoundary_0x3a0f88, 0x3a0f88u, 0x3a0e84u)) {
         return;
     }
-    ctx->pc = 0x3A0E84u;
 label_3a0e84:
     // 0x3a0e84: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x3A0E84u;
@@ -128,7 +127,6 @@ label_3a0e84:
         }
     }
     // 0x3a0e8c: 0x0  nop
-    ctx->pc = 0x3a0e8cu;
     // NOP
 label_3a0e90:
     // 0x3a0e90: 0xc0e8388  jal         func_3A0E20
@@ -142,10 +140,8 @@ label_3a0e90:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A0E20_0x3a0e20, 0x3a0e20u, 0x3a0e98u)) {
         return;
     }
-    ctx->pc = 0x3A0E98u;
 label_3a0e98:
     // 0x3a0e98: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x3a0e98u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_3a0e9c:
     // 0x3a0e9c: 0xc0e7ae4  jal         func_39EB90
@@ -159,7 +155,6 @@ label_3a0e9c:
     if (!runtime->callDirectStatic(rdram, ctx, &_sceMpegPeepBit_0x39eb90, 0x39eb90u, 0x3a0ea4u)) {
         return;
     }
-    ctx->pc = 0x3A0EA4u;
 label_3a0ea4:
     // 0x3a0ea4: 0x10510004  beq         $v0, $s1, . + 4 + (0x4 << 2)
     ctx->pc = 0x3A0EA4u;
@@ -191,7 +186,6 @@ label_3a0ea4:
             goto label_3a0e90;
         }
     }
-    ctx->pc = 0x3A0EB8u;
 label_3a0eb8:
     // 0x3a0eb8: 0xc0e7aaa  jal         func_39EAA8
     SET_GPR_U32(ctx, 31, 0x3A0EC0u);
@@ -204,7 +198,6 @@ label_3a0eb8:
     if (!runtime->callDirectStatic(rdram, ctx, &_sceMpegNextBit_0x39eaa8, 0x39eaa8u, 0x3a0ec0u)) {
         return;
     }
-    ctx->pc = 0x3A0EC0u;
 label_3a0ec0:
     // 0x3a0ec0: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -259,7 +252,6 @@ label_3a0ec0:
             goto label_3a0e70;
         }
     }
-    ctx->pc = 0x3A0EE4u;
 label_3a0ee4:
     // 0x3a0ee4: 0x1074001a  beq         $v1, $s4, . + 4 + (0x1A << 2)
     ctx->pc = 0x3A0EE4u;
@@ -303,7 +295,6 @@ label_3a0ee4:
             goto label_3a0e70;
         }
     }
-    ctx->pc = 0x3A0EFCu;
 label_3a0efc:
     // 0x3a0efc: 0xc0e80cc  jal         func_3A0330
     SET_GPR_U32(ctx, 31, 0x3A0F04u);
@@ -316,7 +307,6 @@ label_3a0efc:
     if (!runtime->callDirectStatic(rdram, ctx, &_sequenceHeader_0x3a0330, 0x3a0330u, 0x3a0f04u)) {
         return;
     }
-    ctx->pc = 0x3A0F04u;
 label_3a0f04:
     // 0x3a0f04: 0x1000ffda  b           . + 4 + (-0x26 << 2)
     ctx->pc = 0x3A0F04u;
@@ -336,7 +326,6 @@ label_3a0f04:
             goto label_3a0e70;
         }
     }
-    ctx->pc = 0x3A0F0Cu;
 label_3a0f0c:
     // 0x3a0f0c: 0xc0e8178  jal         func_3A05E0
     SET_GPR_U32(ctx, 31, 0x3A0F14u);
@@ -349,7 +338,6 @@ label_3a0f0c:
     if (!runtime->callDirectStatic(rdram, ctx, &_groupOfPicturesHeader_0x3a05e0, 0x3a05e0u, 0x3a0f14u)) {
         return;
     }
-    ctx->pc = 0x3A0F14u;
 label_3a0f14:
     // 0x3a0f14: 0x1000ffd6  b           . + 4 + (-0x2A << 2)
     ctx->pc = 0x3A0F14u;
@@ -369,7 +357,6 @@ label_3a0f14:
             goto label_3a0e70;
         }
     }
-    ctx->pc = 0x3A0F1Cu;
 label_3a0f1c:
     // 0x3a0f1c: 0xc0e81a0  jal         func_3A0680
     SET_GPR_U32(ctx, 31, 0x3A0F24u);
@@ -382,7 +369,6 @@ label_3a0f1c:
     if (!runtime->callDirectStatic(rdram, ctx, &_pictureHeader_0x3a0680, 0x3a0680u, 0x3a0f24u)) {
         return;
     }
-    ctx->pc = 0x3A0F24u;
 label_3a0f24:
     // 0x3a0f24: 0x8e040868  lw          $a0, 0x868($s0)
     ctx->pc = 0x3a0f24u;
@@ -407,7 +393,6 @@ label_3a0f24:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x39AB20u, 0x3A0F34u, 0x3A0F3Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3A0F3Cu;
 label_3a0f3c:
     // 0x3a0f3c: 0xdfa20010  ld          $v0, 0x10($sp)
     ctx->pc = 0x3a0f3cu;

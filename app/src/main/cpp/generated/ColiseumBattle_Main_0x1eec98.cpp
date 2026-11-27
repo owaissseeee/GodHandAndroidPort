@@ -13,7 +13,7 @@
 
 // Function: ColiseumBattle_Main
 // Address: 0x1eec98 - 0x1eed00
-void ColiseumBattle_Main_0x1eec98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumBattle_Main_0x1eec98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumBattle_Main_0x1eec98");
 #endif
@@ -50,15 +50,12 @@ void ColiseumBattle_Main_0x1eec98(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         }
     }
 
-    ctx->pc = 0x1eec98u;
 
 label_1eec98:
     // 0x1eec98: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x1eec98u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
 label_1eec9c:
     // 0x1eec9c: 0x3c03003c  lui         $v1, 0x3C
-    ctx->pc = 0x1eec9cu;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)60 << 16));
 label_1eeca0:
     // 0x1eeca0: 0x7fb00010  sq          $s0, 0x10($sp)
@@ -66,7 +63,6 @@ label_1eeca0:
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 16));
 label_1eeca4:
     // 0x1eeca4: 0x2463e548  addiu       $v1, $v1, -0x1AB8
-    ctx->pc = 0x1eeca4u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294960456));
 label_1eeca8:
     // 0x1eeca8: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -74,7 +70,6 @@ label_1eeca8:
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
 label_1eecac:
     // 0x1eecac: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x1eecacu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_1eecb0:
     // 0x1eecb0: 0x8e020004  lw          $v0, 0x4($s0)
@@ -82,15 +77,12 @@ label_1eecb0:
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 4)));
 label_1eecb4:
     // 0x1eecb4: 0x210c0  sll         $v0, $v0, 3
-    ctx->pc = 0x1eecb4u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 3));
 label_1eecb8:
     // 0x1eecb8: 0x432821  addu        $a1, $v0, $v1
-    ctx->pc = 0x1eecb8u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
 label_1eecbc:
     // 0x1eecbc: 0x621821  addu        $v1, $v1, $v0
-    ctx->pc = 0x1eecbcu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 2)));
 label_1eecc0:
     // 0x1eecc0: 0x84a40000  lh          $a0, 0x0($a1)
@@ -128,14 +120,12 @@ label_1eeccc:
             return;
         }
     }
-    ctx->pc = 0x1EECD0u;
 label_1eecd0:
     // 0x1eecd0: 0x9e020054  lwu         $v0, 0x54($s0)
     ctx->pc = 0x1eecd0u;
     SET_GPR_ZE32(ctx, 2, READ32(ADD32(GPR_U32(ctx, 16), 84)));
 label_1eecd4:
     // 0x1eecd4: 0x210bb  dsra        $v0, $v0, 2
-    ctx->pc = 0x1eecd4u;
     SET_GPR_S64(ctx, 2, GPR_S64(ctx, 2) >> 2);
 label_1eecd8:
     // 0x1eecd8: 0x30420001  andi        $v0, $v0, 0x1
@@ -168,10 +158,8 @@ label_1eece0:
             goto label_1eecec;
         }
     }
-    ctx->pc = 0x1EECE4u;
 label_1eece4:
     // 0x1eece4: 0x2402000f  addiu       $v0, $zero, 0xF
-    ctx->pc = 0x1eece4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 15));
 label_1eece8:
     // 0x1eece8: 0xa462ae40  sh          $v0, -0x51C0($v1)
@@ -216,7 +204,6 @@ label_1eecf8:
         return;
         #endif
     }
-    ctx->pc = 0x1EECFCu;
 label_1eecfc:
     // 0x1eecfc: 0x0  nop
     // NOP

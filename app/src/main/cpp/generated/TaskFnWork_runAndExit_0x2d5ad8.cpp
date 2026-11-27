@@ -13,7 +13,7 @@
 
 // Function: TaskFnWork_runAndExit
 // Address: 0x2d5ad8 - 0x2d5b30
-void TaskFnWork_runAndExit_0x2d5ad8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void TaskFnWork_runAndExit_0x2d5ad8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("TaskFnWork_runAndExit_0x2d5ad8");
 #endif
@@ -46,11 +46,9 @@ void TaskFnWork_runAndExit_0x2d5ad8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         }
     }
 
-    ctx->pc = 0x2d5ad8u;
 
 label_2d5ad8:
     // 0x2d5ad8: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x2d5ad8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
 label_2d5adc:
     // 0x2d5adc: 0x7fb00010  sq          $s0, 0x10($sp)
@@ -62,7 +60,6 @@ label_2d5ae0:
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
 label_2d5ae4:
     // 0x2d5ae4: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x2d5ae4u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_2d5ae8:
     // 0x2d5ae8: 0x9603001e  lhu         $v1, 0x1E($s0)
@@ -123,7 +120,6 @@ label_2d5af8:
             goto label_2d5b10;
         }
     }
-    ctx->pc = 0x2D5AFCu;
 label_2d5afc:
     // 0x2d5afc: 0x8e020014  lw          $v0, 0x14($s0)
     ctx->pc = 0x2d5afcu;
@@ -213,7 +209,6 @@ label_2d5b1c:
     if (!runtime->callDirectStatic(rdram, ctx, &cTaskWork_exit_0x2d5a48, 0x2d5a48u, 0x2d5b20u)) {
         return;
     }
-    ctx->pc = 0x2D5B20u;
 label_2d5b20:
     // 0x2d5b20: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2d5b20u;

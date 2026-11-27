@@ -13,7 +13,7 @@
 
 // Function: SetSlotDeadBitB_198A58
 // Address: 0x198a58 - 0x198ac8
-void SetSlotDeadBitB_198A58_0x198a58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetSlotDeadBitB_198A58_0x198a58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetSlotDeadBitB_198A58_0x198a58");
 #endif
@@ -74,10 +74,8 @@ void SetSlotDeadBitB_198A58_0x198a58(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x198a8cu)) {
         return;
     }
-    ctx->pc = 0x198A8Cu;
 label_198a8c:
     // 0x198a8c: 0x102142  srl         $a0, $s0, 5
-    ctx->pc = 0x198a8cu;
     SET_GPR_S32(ctx, 4, (int32_t)SRL32(GPR_U32(ctx, 16), 5));
 label_198a90:
     // 0x198a90: 0x262309d0  addiu       $v1, $s1, 0x9D0

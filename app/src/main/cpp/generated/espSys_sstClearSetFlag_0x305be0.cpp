@@ -13,7 +13,7 @@
 
 // Function: espSys_sstClearSetFlag
 // Address: 0x305be0 - 0x305c10
-void espSys_sstClearSetFlag_0x305be0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void espSys_sstClearSetFlag_0x305be0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("espSys_sstClearSetFlag_0x305be0");
 #endif
@@ -49,7 +49,6 @@ void espSys_sstClearSetFlag_0x305be0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_00306330_0x306330, 0x306330u, 0x305bfcu)) {
         return;
     }
-    ctx->pc = 0x305BFCu;
 label_305bfc:
     // 0x305bfc: 0xae000414  sw          $zero, 0x414($s0)
     ctx->pc = 0x305bfcu;

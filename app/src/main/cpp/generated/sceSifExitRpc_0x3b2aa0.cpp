@@ -13,7 +13,7 @@
 
 // Function: sceSifExitRpc
 // Address: 0x3b2aa0 - 0x3b2ac8
-void sceSifExitRpc_0x3b2aa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSifExitRpc_0x3b2aa0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSifExitRpc_0x3b2aa0");
 #endif
@@ -37,7 +37,6 @@ void sceSifExitRpc_0x3b2aa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B2450u, 0x3B2AA8u, 0x3B2AB0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3B2AB0u;
 label_3b2ab0:
     // 0x3b2ab0: 0x3c020040  lui         $v0, 0x40
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)64 << 16));

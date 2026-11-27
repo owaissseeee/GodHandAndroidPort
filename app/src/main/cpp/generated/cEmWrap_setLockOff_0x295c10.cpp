@@ -13,7 +13,7 @@
 
 // Function: cEmWrap_setLockOff
 // Address: 0x295c10 - 0x295c70
-void cEmWrap_setLockOff_0x295c10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmWrap_setLockOff_0x295c10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmWrap_setLockOff_0x295c10");
 #endif
@@ -52,7 +52,6 @@ void cEmWrap_setLockOff_0x295c10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &FindResolveActor_295978_0x295978, 0x295978u, 0x295c2cu)) {
         return;
     }
-    ctx->pc = 0x295C2Cu;
 label_295c2c:
     // 0x295c2c: 0x1040000a  beqz        $v0, . + 4 + (0xA << 2)
     ctx->pc = 0x295C2Cu;
@@ -85,7 +84,6 @@ label_295c2c:
     if (!runtime->callDirectStatic(rdram, ctx, &strcmp_0x3a5678, 0x3a5678u, 0x295c44u)) {
         return;
     }
-    ctx->pc = 0x295C44u;
 label_295c44:
     // 0x295c44: 0x54400005  bnel        $v0, $zero, . + 4 + (0x5 << 2)
     ctx->pc = 0x295C44u;
@@ -116,7 +114,6 @@ label_295c44:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00276090_0x276090, 0x276090u, 0x295c58u)) {
         return;
     }
-    ctx->pc = 0x295C58u;
 label_295c58:
     // 0x295c58: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x295c58u;

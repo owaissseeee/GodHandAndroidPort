@@ -13,7 +13,7 @@
 
 // Function: Tramp_GsGetIMR_3964A0
 // Address: 0x3964a0 - 0x3964c0
-void Tramp_GsGetIMR_3964A0_0x3964a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp_GsGetIMR_3964A0_0x3964a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp_GsGetIMR_3964A0_0x3964a0");
 #endif
@@ -37,7 +37,6 @@ void Tramp_GsGetIMR_3964A0_0x3964a0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &GsGetIMR_0x3affc0, 0x3affc0u, 0x3964b0u)) {
         return;
     }
-    ctx->pc = 0x3964B0u;
 label_3964b0:
     // 0x3964b0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3964b0u;

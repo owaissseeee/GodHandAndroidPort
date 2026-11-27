@@ -13,7 +13,7 @@
 
 // Function: _rix_000
 // Address: 0x39f0e8 - 0x39f160
-void _rix_000_0x39f0e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _rix_000_0x39f0e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_rix_000_0x39f0e8");
 #endif
@@ -49,7 +49,6 @@ void _rix_000_0x39f0e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     // 0x39f104: 0xc5840  sll         $t3, $t4, 1
     SET_GPR_S32(ctx, 11, (int32_t)SLL32(GPR_U32(ctx, 12), 1));
     // 0x39f108: 0x240fffff  addiu       $t7, $zero, -0x1
-    ctx->pc = 0x39f108u;
     SET_GPR_S32(ctx, 15, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_39f10c:
     // 0x39f10c: 0x78a80000  lq          $t0, 0x0($a1)

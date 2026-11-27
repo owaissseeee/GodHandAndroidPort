@@ -13,7 +13,7 @@
 
 // Function: func_001A4CF8
 // Address: 0x1a4cf8 - 0x1a4d48
-void func_001A4CF8_0x1a4cf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001A4CF8_0x1a4cf8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001A4CF8_0x1a4cf8");
 #endif
@@ -63,7 +63,6 @@ void func_001A4CF8_0x1a4cf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cCamManager_setPlCamera_0x138d40, 0x138d40u, 0x1a4d18u)) {
         return;
     }
-    ctx->pc = 0x1A4D18u;
 label_1a4d18:
     // 0x1a4d18: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
@@ -78,7 +77,6 @@ label_1a4d18:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario__endSoftEvent_0x2c3c10, 0x2c3c10u, 0x1a4d24u)) {
         return;
     }
-    ctx->pc = 0x1A4D24u;
 label_1a4d24:
     // 0x1a4d24: 0x3c040074  lui         $a0, 0x74
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)116 << 16));

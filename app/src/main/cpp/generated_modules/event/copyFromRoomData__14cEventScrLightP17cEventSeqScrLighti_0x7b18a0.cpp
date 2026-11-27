@@ -14,33 +14,26 @@ namespace gh_event
 {
 // Function: copyFromRoomData__14cEventScrLightP17cEventSeqScrLighti
 // Address: 0x7b18a0 - 0x7b19e0
-void copyFromRoomData__14cEventScrLightP17cEventSeqScrLighti_0x7b18a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void copyFromRoomData__14cEventScrLightP17cEventSeqScrLighti_0x7b18a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("copyFromRoomData__14cEventScrLightP17cEventSeqScrLighti_0x7b18a0");
 #endif
 
-    ctx->pc = 0x7b18a0u;
 
     // 0x7b18a0: 0x28c40020  slti        $a0, $a2, 0x20
-    ctx->pc = 0x7b18a0u;
     SET_GPR_U64(ctx, 4, ((int64_t)GPR_S64(ctx, 6) < (int64_t)(int32_t)32) ? 1 : 0);
     // 0x7b18a4: 0x2402001f  addiu       $v0, $zero, 0x1F
-    ctx->pc = 0x7b18a4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 31));
     // 0x7b18a8: 0xc4100b  movn        $v0, $a2, $a0
     ctx->pc = 0x7b18a8u;
     if (GPR_U64(ctx, 4) != 0) SET_GPR_VEC(ctx, 2, GPR_VEC(ctx, 6));
     // 0x7b18ac: 0x3c030062  lui         $v1, 0x62
-    ctx->pc = 0x7b18acu;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)98 << 16));
     // 0x7b18b0: 0x2463a400  addiu       $v1, $v1, -0x5C00
-    ctx->pc = 0x7b18b0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294943744));
     // 0x7b18b4: 0x211c0  sll         $v0, $v0, 7
-    ctx->pc = 0x7b18b4u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 7));
     // 0x7b18b8: 0x431021  addu        $v0, $v0, $v1
-    ctx->pc = 0x7b18b8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
     // 0x7b18bc: 0xc4400000  lwc1        $f0, 0x0($v0)
     ctx->pc = 0x7b18bcu;

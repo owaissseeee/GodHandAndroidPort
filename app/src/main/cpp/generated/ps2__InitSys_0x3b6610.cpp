@@ -13,7 +13,7 @@
 
 // Function: _InitSys
 // Address: 0x3b6610 - 0x3b6668
-void ps2__InitSys_0x3b6610(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__InitSys_0x3b6610(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__InitSys_0x3b6610");
 #endif
@@ -44,7 +44,6 @@ void ps2__InitSys_0x3b6610(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &supplement_crt0_0x3b6408, 0x3b6408u, 0x3b6620u)) {
         return;
     }
-    ctx->pc = 0x3B6620u;
 label_3b6620:
     // 0x3b6620: 0xc0ed940  jal         func_3B6500
     ctx->pc = 0x3B6620u;
@@ -52,7 +51,6 @@ label_3b6620:
     if (!runtime->callDirectStatic(rdram, ctx, &InitSystemCallTableAddress_0x3b6500, 0x3b6500u, 0x3b6628u)) {
         return;
     }
-    ctx->pc = 0x3B6628u;
 label_3b6628:
     // 0x3b6628: 0xc0eda2e  jal         func_3B68B8
     ctx->pc = 0x3B6628u;
@@ -60,7 +58,6 @@ label_3b6628:
     if (!runtime->callDirectStatic(rdram, ctx, &InitAlarm_0x3b68b8, 0x3b68b8u, 0x3b6630u)) {
         return;
     }
-    ctx->pc = 0x3B6630u;
 label_3b6630:
     // 0x3b6630: 0xc0eda8c  jal         func_3B6A30
     SET_GPR_U32(ctx, 31, 0x3B6638u);
@@ -73,7 +70,6 @@ label_3b6630:
     if (!runtime->callDirectStatic(rdram, ctx, &InitTimer_0x3b6a30, 0x3b6a30u, 0x3b6638u)) {
         return;
     }
-    ctx->pc = 0x3B6638u;
 label_3b6638:
     // 0x3b6638: 0xc0edae4  jal         func_3B6B90
     ctx->pc = 0x3B6638u;
@@ -81,7 +77,6 @@ label_3b6638:
     if (!runtime->callDirectStatic(rdram, ctx, &StartTimerSystemTime_0x3b6b90, 0x3b6b90u, 0x3b6640u)) {
         return;
     }
-    ctx->pc = 0x3B6640u;
 label_3b6640:
     // 0x3b6640: 0xc0ec254  jal         func_3B0950
     ctx->pc = 0x3B6640u;
@@ -89,7 +84,6 @@ label_3b6640:
     if (!runtime->callDirectStatic(rdram, ctx, &InitThread_0x3b0950, 0x3b0950u, 0x3b6648u)) {
         return;
     }
-    ctx->pc = 0x3B6648u;
 label_3b6648:
     // 0x3b6648: 0xc0ed9ce  jal         func_3B6738
     ctx->pc = 0x3B6648u;
@@ -97,7 +91,6 @@ label_3b6648:
     if (!runtime->callDirectStatic(rdram, ctx, &InitExecPS2_0x3b6738, 0x3b6738u, 0x3b6650u)) {
         return;
     }
-    ctx->pc = 0x3B6650u;
 label_3b6650:
     // 0x3b6650: 0xc0eded0  jal         func_3B7B40
     ctx->pc = 0x3B6650u;
@@ -105,7 +98,6 @@ label_3b6650:
     if (!runtime->callDirectStatic(rdram, ctx, &InitTLBFunctions_0x3b7b40, 0x3b7b40u, 0x3b6658u)) {
         return;
     }
-    ctx->pc = 0x3B6658u;
 label_3b6658:
     // 0x3b6658: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3b6658u;

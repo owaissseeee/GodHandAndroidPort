@@ -13,7 +13,7 @@
 
 // Function: func_00140BF0
 // Address: 0x140bf0 - 0x140c58
-void func_00140BF0_0x140bf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00140BF0_0x140bf0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00140BF0_0x140bf0");
 #endif
@@ -55,7 +55,6 @@ void func_00140BF0_0x140bf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &FindFreeSlotIndex_140C58_0x140c58, 0x140c58u, 0x140c14u)) {
         return;
     }
-    ctx->pc = 0x140C14u;
 label_140c14:
     // 0x140c14: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -100,10 +99,8 @@ label_140c14:
             goto label_140c40;
         }
     }
-    ctx->pc = 0x140C3Cu;
 label_140c3c:
     // 0x140c3c: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x140c3cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_140c40:
     // 0x140c40: 0x7bb00030  lq          $s0, 0x30($sp)

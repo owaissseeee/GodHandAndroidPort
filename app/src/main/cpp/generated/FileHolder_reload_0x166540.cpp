@@ -13,7 +13,7 @@
 
 // Function: FileHolder_reload
 // Address: 0x166540 - 0x1665c8
-void FileHolder_reload_0x166540(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FileHolder_reload_0x166540(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FileHolder_reload_0x166540");
 #endif
@@ -76,10 +76,8 @@ void FileHolder_reload_0x166540(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x166568u, 0x166570u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x166570u;
 label_166570:
     // 0x166570: 0x3c100058  lui         $s0, 0x58
-    ctx->pc = 0x166570u;
     SET_GPR_S32(ctx, 16, (int32_t)((uint32_t)88 << 16));
 label_166574:
     // 0x166574: 0x3c070075  lui         $a3, 0x75
@@ -111,7 +109,6 @@ label_166574:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x200CB0u, 0x166598u, 0x1665A0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1665A0u;
 label_1665a0:
     // 0x1665a0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -129,7 +126,6 @@ label_1665a0:
     if (!runtime->callDirectStatic(rdram, ctx, &cDvd_CheckWait_0x201160, 0x201160u, 0x1665b0u)) {
         return;
     }
-    ctx->pc = 0x1665B0u;
 label_1665b0:
     // 0x1665b0: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x1665b0u;

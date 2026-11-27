@@ -13,7 +13,7 @@
 
 // Function: sceSifLoadModuleBuffer
 // Address: 0x3b5e50 - 0x3b5e78
-void sceSifLoadModuleBuffer_0x3b5e50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSifLoadModuleBuffer_0x3b5e50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSifLoadModuleBuffer_0x3b5e50");
 #endif
@@ -42,7 +42,6 @@ void sceSifLoadModuleBuffer_0x3b5e50(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &_sceSifLoadModuleBuffer_0x3b5c48, 0x3b5c48u, 0x3b5e60u)) {
         return;
     }
-    ctx->pc = 0x3B5E60u;
 label_3b5e60:
     // 0x3b5e60: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x3b5e60u;

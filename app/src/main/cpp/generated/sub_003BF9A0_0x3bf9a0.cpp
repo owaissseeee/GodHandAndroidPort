@@ -5,7 +5,7 @@
 #include "ps2_log.h"
 #endif
 
-void sub_003BF9A0_0x3bf9a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sub_003BF9A0_0x3bf9a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef _DEBUG
     PS_LOG_ENTRY("sub_003BF9A0_0x3bf9a0");
 #endif

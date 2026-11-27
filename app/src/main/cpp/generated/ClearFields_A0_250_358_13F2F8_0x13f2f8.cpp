@@ -13,7 +13,7 @@
 
 // Function: ClearFields_A0_250_358_13F2F8
 // Address: 0x13f2f8 - 0x13f330
-void ClearFields_A0_250_358_13F2F8_0x13f2f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearFields_A0_250_358_13F2F8_0x13f2f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearFields_A0_250_358_13F2F8_0x13f2f8");
 #endif
@@ -34,7 +34,6 @@ void ClearFields_A0_250_358_13F2F8_0x13f2f8(uint8_t* rdram, R5900Context* ctx, P
     // 0x13f300: 0x24860250  addiu       $a2, $a0, 0x250
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 4), 592));
     // 0x13f304: 0x0  nop
-    ctx->pc = 0x13f304u;
     // NOP
 label_13f308:
     // 0x13f308: 0x24a20001  addiu       $v0, $a1, 0x1

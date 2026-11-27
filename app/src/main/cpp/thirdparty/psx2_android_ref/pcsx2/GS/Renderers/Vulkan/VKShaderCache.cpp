@@ -21,8 +21,11 @@
 #include "fmt/format.h"
 #include "shaderc/shaderc.h"
 
+#include <atomic>
 #include <cstring>
 #include <memory>
+#include <mutex>
+#include <thread>
 
 // TODO: store the driver version and stuff in the shader header
 
@@ -539,54 +542,114 @@ bool VKShaderCache::ReadExistingPipelineCache()
 	return true;
 }
 
+namespace
+{
+	std::mutex s_async_flush_mutex;
+	std::thread s_async_flush_thread;
+	std::vector<u8> s_async_flush_scratch;
+	std::atomic<bool> s_async_flush_busy{false};
+
+	void WaitForAsyncPipelineFlush()
+	{
+		std::thread t;
+		{
+			std::lock_guard<std::mutex> lock(s_async_flush_mutex);
+			t = std::move(s_async_flush_thread);
+		}
+		if (t.joinable())
+			t.join();
+	}
+
+	void WritePipelineCacheBlob(std::string filename, const std::vector<u8>& data)
+	{
+		FILESYSTEM_STAT_DATA sd;
+		if (!FileSystem::StatFile(filename.c_str(), &sd) || sd.Size != static_cast<s64>(data.size()))
+		{
+			Console.WriteLn("Writing %zu bytes to '%s'", data.size(), filename.c_str());
+			if (!FileSystem::WriteBinaryFile(filename.c_str(), data.data(), data.size()))
+			{
+				Console.Error("Failed to write pipeline cache to '%s'", filename.c_str());
+			}
+		}
+	}
+} // namespace
+
 bool VKShaderCache::FlushPipelineCache()
 {
 	if (m_pipeline_cache == VK_NULL_HANDLE || !m_pipeline_cache_dirty || m_pipeline_cache_filename.empty())
 		return false;
 
-	size_t data_size;
+	if (s_async_flush_busy.exchange(true, std::memory_order_acq_rel))
+		return false;
+
+	size_t data_size = 0;
 	VkResult res =
 		vkGetPipelineCacheData(GSDeviceVK::GetInstance()->GetDevice(), m_pipeline_cache, &data_size, nullptr);
 	if (res != VK_SUCCESS)
 	{
+		s_async_flush_busy.store(false, std::memory_order_release);
 		LOG_VULKAN_ERROR(res, "vkGetPipelineCacheData() failed: ");
 		return false;
 	}
 
-	std::vector<u8> data(data_size);
+	WaitForAsyncPipelineFlush();
+	std::vector<u8> data;
+	{
+		std::lock_guard<std::mutex> lock(s_async_flush_mutex);
+		data = std::move(s_async_flush_scratch);
+	}
+	data.resize(data_size);
 	res = vkGetPipelineCacheData(GSDeviceVK::GetInstance()->GetDevice(), m_pipeline_cache, &data_size, data.data());
 	if (res != VK_SUCCESS)
 	{
+		{
+			std::lock_guard<std::mutex> lock(s_async_flush_mutex);
+			s_async_flush_scratch = std::move(data);
+		}
+		s_async_flush_busy.store(false, std::memory_order_release);
 		LOG_VULKAN_ERROR(res, "vkGetPipelineCacheData() (2) failed: ");
 		return false;
 	}
 
 	data.resize(data_size);
-
-	// Save disk writes if it hasn't changed, think of the poor SSDs.
-	FILESYSTEM_STAT_DATA sd;
-	if (!FileSystem::StatFile(m_pipeline_cache_filename.c_str(), &sd) || sd.Size != static_cast<s64>(data_size))
-	{
-		Console.WriteLn("Writing %zu bytes to '%s'", data_size, m_pipeline_cache_filename.c_str());
-		if (!FileSystem::WriteBinaryFile(m_pipeline_cache_filename.c_str(), data.data(), data.size()))
-		{
-			Console.Error("Failed to write pipeline cache to '%s'", m_pipeline_cache_filename.c_str());
-			return false;
-		}
-	}
-	else
-	{
-		Console.WriteLn("Skipping updating pipeline cache '%s' due to no changes.", m_pipeline_cache_filename.c_str());
-	}
-
 	m_pipeline_cache_dirty = false;
+
+	std::string filename = m_pipeline_cache_filename;
+	{
+		std::lock_guard<std::mutex> lock(s_async_flush_mutex);
+		s_async_flush_thread = std::thread([filename = std::move(filename), data = std::move(data)]() mutable {
+			WritePipelineCacheBlob(std::move(filename), data);
+			{
+				std::lock_guard<std::mutex> scratch_lock(s_async_flush_mutex);
+				s_async_flush_scratch = std::move(data);
+			}
+			s_async_flush_busy.store(false, std::memory_order_release);
+		});
+	}
 	return true;
 }
 
 void VKShaderCache::ClosePipelineCache()
 {
+	WaitForAsyncPipelineFlush();
+
 	if (m_pipeline_cache == VK_NULL_HANDLE)
 		return;
+
+	if (m_pipeline_cache_dirty && !m_pipeline_cache_filename.empty())
+	{
+		size_t data_size = 0;
+		if (vkGetPipelineCacheData(GSDeviceVK::GetInstance()->GetDevice(), m_pipeline_cache, &data_size, nullptr) == VK_SUCCESS && data_size > 0)
+		{
+			std::vector<u8> data(data_size);
+			if (vkGetPipelineCacheData(GSDeviceVK::GetInstance()->GetDevice(), m_pipeline_cache, &data_size, data.data()) == VK_SUCCESS)
+			{
+				data.resize(data_size);
+				WritePipelineCacheBlob(m_pipeline_cache_filename, std::move(data));
+			}
+		}
+		m_pipeline_cache_dirty = false;
+	}
 
 	vkDestroyPipelineCache(GSDeviceVK::GetInstance()->GetDevice(), m_pipeline_cache, nullptr);
 	m_pipeline_cache = VK_NULL_HANDLE;
@@ -711,8 +774,7 @@ std::optional<VKShaderCache::SPIRVCodeVector> VKShaderCache::CompileAndAddShader
 	entry.file_offset = data.file_offset;
 
 	if (std::fwrite(spv->data(), sizeof(SPIRVCodeType), entry.blob_size, m_blob_file) != entry.blob_size ||
-		std::fflush(m_blob_file) != 0 || std::fwrite(&entry, sizeof(entry), 1, m_index_file) != 1 ||
-		std::fflush(m_index_file) != 0)
+		std::fwrite(&entry, sizeof(entry), 1, m_index_file) != 1)
 	{
 		Console.Error("Failed to write shader blob to file");
 		return spv;

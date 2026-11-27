@@ -13,7 +13,7 @@
 
 // Function: InitActorWithVtable_107EC8
 // Address: 0x107ec8 - 0x107f20
-void InitActorWithVtable_107EC8_0x107ec8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitActorWithVtable_107EC8_0x107ec8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitActorWithVtable_107EC8_0x107ec8");
 #endif
@@ -64,7 +64,6 @@ void InitActorWithVtable_107EC8_0x107ec8(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &cCollisionSolidManage_ReleaseUnit_0x1347e8, 0x1347e8u, 0x107efcu)) {
         return;
     }
-    ctx->pc = 0x107EFCu;
 label_107efc:
     // 0x107efc: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -79,7 +78,6 @@ label_107efc:
     if (!runtime->callDirectStatic(rdram, ctx, &InitObjectVtableAndRegister_1002C0_0x1002c0, 0x1002c0u, 0x107f08u)) {
         return;
     }
-    ctx->pc = 0x107F08u;
 label_107f08:
     // 0x107f08: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x107f08u;

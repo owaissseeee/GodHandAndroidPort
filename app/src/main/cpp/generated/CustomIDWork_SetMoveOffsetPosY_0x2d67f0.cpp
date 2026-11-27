@@ -13,7 +13,7 @@
 
 // Function: CustomIDWork_SetMoveOffsetPosY
 // Address: 0x2d67f0 - 0x2d6838
-void CustomIDWork_SetMoveOffsetPosY_0x2d67f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CustomIDWork_SetMoveOffsetPosY_0x2d67f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CustomIDWork_SetMoveOffsetPosY_0x2d67f0");
 #endif

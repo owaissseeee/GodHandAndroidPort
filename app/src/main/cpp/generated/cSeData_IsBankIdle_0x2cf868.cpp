@@ -13,7 +13,7 @@
 
 // Function: cSeData_IsBankIdle
 // Address: 0x2cf868 - 0x2cf888
-void cSeData_IsBankIdle_0x2cf868(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSeData_IsBankIdle_0x2cf868(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSeData_IsBankIdle_0x2cf868");
 #endif
@@ -42,7 +42,6 @@ void cSeData_IsBankIdle_0x2cf868(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &func_00375128_0x375128, 0x375128u, 0x2cf878u)) {
         return;
     }
-    ctx->pc = 0x2CF878u;
 label_2cf878:
     // 0x2cf878: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2cf878u;

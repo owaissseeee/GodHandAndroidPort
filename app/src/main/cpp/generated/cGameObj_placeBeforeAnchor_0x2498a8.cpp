@@ -13,7 +13,7 @@
 
 // Function: cGameObj_placeBeforeAnchor
 // Address: 0x2498a8 - 0x249960
-void cGameObj_placeBeforeAnchor_0x2498a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObj_placeBeforeAnchor_0x2498a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObj_placeBeforeAnchor_0x2498a8");
 #endif
@@ -69,7 +69,6 @@ void cGameObj_placeBeforeAnchor_0x2498a8(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_0x1f7d48, 0x1f7d48u, 0x2498e4u)) {
         return;
     }
-    ctx->pc = 0x2498E4u;
 label_2498e4:
     // 0x2498e4: 0xe6000104  swc1        $f0, 0x104($s0)
     ctx->pc = 0x2498e4u;
@@ -87,7 +86,6 @@ label_2498e4:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitRotY_0x147988, 0x147988u, 0x2498f4u)) {
         return;
     }
-    ctx->pc = 0x2498F4u;
 label_2498f4:
     // 0x2498f4: 0x3c0141d0  lui         $at, 0x41D0
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16848 << 16));
@@ -116,7 +114,6 @@ label_2498f4:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x249918u)) {
         return;
     }
-    ctx->pc = 0x249918u;
 label_249918:
     // 0x249918: 0x3c020058  lui         $v0, 0x58
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)88 << 16));

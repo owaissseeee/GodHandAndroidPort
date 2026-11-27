@@ -13,7 +13,7 @@
 
 // Function: multadd
 // Address: 0x38f630 - 0x38f700
-void multadd_0x38f630(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void multadd_0x38f630(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("multadd_0x38f630");
 #endif
@@ -54,7 +54,6 @@ void multadd_0x38f630(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     // 0x38f658: 0x502d  daddu       $t2, $zero, $zero
     SET_GPR_U64(ctx, 10, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x38f65c: 0x0  nop
-    ctx->pc = 0x38f65cu;
     // NOP
 label_38f660:
     // 0x38f660: 0x8ce30000  lw          $v1, 0x0($a3)
@@ -158,14 +157,12 @@ label_38f660:
     if (!runtime->callDirectStatic(rdram, ctx, &Brealloc_0x38f5b8, 0x38f5b8u, 0x38f6ccu)) {
         return;
     }
-    ctx->pc = 0x38F6CCu;
 label_38f6cc:
     // 0x38f6cc: 0x40402d  daddu       $t0, $v0, $zero
     SET_GPR_U64(ctx, 8, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     // 0x38f6d0: 0x250b0014  addiu       $t3, $t0, 0x14
     SET_GPR_S32(ctx, 11, (int32_t)ADD32(GPR_U32(ctx, 8), 20));
     // 0x38f6d4: 0x101080  sll         $v0, $s0, 2
-    ctx->pc = 0x38f6d4u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 16), 2));
 label_38f6d8:
     // 0x38f6d8: 0x1621021  addu        $v0, $t3, $v0

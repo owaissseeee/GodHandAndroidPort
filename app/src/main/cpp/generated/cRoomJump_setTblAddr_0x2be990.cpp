@@ -13,7 +13,7 @@
 
 // Function: cRoomJump_setTblAddr
 // Address: 0x2be990 - 0x2be998
-void cRoomJump_setTblAddr_0x2be990(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cRoomJump_setTblAddr_0x2be990(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cRoomJump_setTblAddr_0x2be990");
 #endif

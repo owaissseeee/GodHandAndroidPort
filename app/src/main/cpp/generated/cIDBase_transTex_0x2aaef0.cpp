@@ -13,7 +13,7 @@
 
 // Function: cIDBase_transTex
 // Address: 0x2aaef0 - 0x2aaff0
-void cIDBase_transTex_0x2aaef0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDBase_transTex_0x2aaef0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDBase_transTex_0x2aaef0");
 #endif
@@ -87,7 +87,6 @@ void cIDBase_transTex_0x2aaef0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &cIDManager_getTexAddr_0x2acdc8, 0x2acdc8u, 0x2aaf34u)) {
         return;
     }
-    ctx->pc = 0x2AAF34u;
 label_2aaf34:
     // 0x2aaf34: 0x40282d  daddu       $a1, $v0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -218,7 +217,6 @@ label_2aaf4c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002C5EA8_0x2c5ea8, 0x2c5ea8u, 0x2aafd8u)) {
         return;
     }
-    ctx->pc = 0x2AAFD8u;
 label_2aafd8:
     // 0x2aafd8: 0x7bb00060  lq          $s0, 0x60($sp)
     ctx->pc = 0x2aafd8u;

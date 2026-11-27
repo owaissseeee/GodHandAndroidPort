@@ -13,7 +13,7 @@
 
 // Function: func_0015A6A0
 // Address: 0x15a6a0 - 0x15a878
-void func_0015A6A0_0x15a6a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0015A6A0_0x15a6a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0015A6A0_0x15a6a0");
 #endif
@@ -130,7 +130,6 @@ void func_0015A6A0_0x15a6a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x15a72c: 0x3c01bf80  lui         $at, 0xBF80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)49024 << 16));
     // 0x15a730: 0x4481c000  mtc1        $at, $f24
-    ctx->pc = 0x15a730u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[24], &bits, sizeof(bits)); }
 label_15a734:
     // 0x15a734: 0x0  nop
@@ -201,12 +200,10 @@ label_15a734:
     if (!runtime->callDirectStatic(rdram, ctx, &sqrtf_0x3a2440, 0x3a2440u, 0x15a78cu)) {
         return;
     }
-    ctx->pc = 0x15A78Cu;
 label_15a78c:
     // 0x15a78c: 0x46000506  mov.s       $f20, $f0
     ctx->f[20] = FPU_MOV_S(ctx->f[0]);
     // 0x15a790: 0x4600ab46  mov.s       $f13, $f21
-    ctx->pc = 0x15a790u;
     ctx->f[13] = FPU_MOV_S(ctx->f[21]);
 label_15a794:
     // 0x15a794: 0xc07e060  jal         func_1F8180
@@ -220,7 +217,6 @@ label_15a794:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Atan2_0x1f8180, 0x1f8180u, 0x15a79cu)) {
         return;
     }
-    ctx->pc = 0x15A79Cu;
 label_15a79c:
     // 0x15a79c: 0x0  nop
     // NOP
@@ -241,7 +237,6 @@ label_15a79c:
     if (!runtime->callDirectStatic(rdram, ctx, &sinf_0x3a19f8, 0x3a19f8u, 0x15a7b4u)) {
         return;
     }
-    ctx->pc = 0x15A7B4u;
 label_15a7b4:
     // 0x15a7b4: 0x4617b301  sub.s       $f12, $f22, $f23
     ctx->f[12] = FPU_SUB_S(ctx->f[22], ctx->f[23]);
@@ -258,7 +253,6 @@ label_15a7b4:
     if (!runtime->callDirectStatic(rdram, ctx, &sinf_0x3a19f8, 0x3a19f8u, 0x15a7c4u)) {
         return;
     }
-    ctx->pc = 0x15A7C4u;
 label_15a7c4:
     // 0x15a7c4: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x15A7C4u;
@@ -275,7 +269,6 @@ label_15a7c4:
             goto label_15a7dc;
         }
     }
-    ctx->pc = 0x15A7CCu;
 label_15a7cc:
     // 0x15a7cc: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -284,7 +277,6 @@ label_15a7cc:
     // 0x15a7d4: 0x0  nop
     // NOP
     // 0x15a7d8: 0x46160301  sub.s       $f12, $f0, $f22
-    ctx->pc = 0x15a7d8u;
     ctx->f[12] = FPU_SUB_S(ctx->f[0], ctx->f[22]);
 label_15a7dc:
     // 0x15a7dc: 0x4618b582  mul.s       $f22, $f22, $f24

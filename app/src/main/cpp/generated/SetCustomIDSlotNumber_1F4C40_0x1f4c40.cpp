@@ -13,7 +13,7 @@
 
 // Function: SetCustomIDSlotNumber_1F4C40
 // Address: 0x1f4c40 - 0x1f4ca8
-void SetCustomIDSlotNumber_1F4C40_0x1f4c40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetCustomIDSlotNumber_1F4C40_0x1f4c40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetCustomIDSlotNumber_1F4C40_0x1f4c40");
 #endif
@@ -81,7 +81,6 @@ void SetCustomIDSlotNumber_1F4C40_0x1f4c40(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetNumber_0x2d6548, 0x2d6548u, 0x1f4c80u)) {
         return;
     }
-    ctx->pc = 0x1F4C80u;
 label_1f4c80:
     // 0x1f4c80: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -98,7 +97,6 @@ label_1f4c80:
     if (!runtime->callDirectStatic(rdram, ctx, &SetCustomIDDispOneOrAll_1F4778_0x1f4778, 0x1f4778u, 0x1f4c90u)) {
         return;
     }
-    ctx->pc = 0x1F4C90u;
 label_1f4c90:
     // 0x1f4c90: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x1f4c90u;

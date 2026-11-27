@@ -13,7 +13,7 @@
 
 // Function: ResetField214FreeField600F_193A20
 // Address: 0x193a20 - 0x193a80
-void ResetField214FreeField600F_193A20_0x193a20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ResetField214FreeField600F_193A20_0x193a20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ResetField214FreeField600F_193A20_0x193a20");
 #endif
@@ -80,7 +80,6 @@ void ResetField214FreeField600F_193A20_0x193a20(uint8_t* rdram, R5900Context* ct
     if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x193a5cu)) {
         return;
     }
-    ctx->pc = 0x193A5Cu;
 label_193a5c:
     // 0x193a5c: 0xae000600  sw          $zero, 0x600($s0)
     ctx->pc = 0x193a5cu;
@@ -99,7 +98,6 @@ label_193a60:
     if (!runtime->callDirectStatic(rdram, ctx, &ResetField214FreeField180_1C2820_0x1c2820, 0x1c2820u, 0x193a6cu)) {
         return;
     }
-    ctx->pc = 0x193A6Cu;
 label_193a6c:
     // 0x193a6c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x193a6cu;

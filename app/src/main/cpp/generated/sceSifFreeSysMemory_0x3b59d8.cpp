@@ -13,7 +13,7 @@
 
 // Function: sceSifFreeSysMemory
 // Address: 0x3b59d8 - 0x3b5a50
-void sceSifFreeSysMemory_0x3b59d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSifFreeSysMemory_0x3b59d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSifFreeSysMemory_0x3b59d8");
 #endif
@@ -68,7 +68,6 @@ void sceSifFreeSysMemory_0x3b59d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_3b5a40;
         }
     }
-    ctx->pc = 0x3B59FCu;
 label_3b59fc:
     // 0x3b59fc: 0x3c070078  lui         $a3, 0x78
     SET_GPR_S32(ctx, 7, (int32_t)((uint32_t)120 << 16));
@@ -107,7 +106,6 @@ label_3b59fc:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B3128u, 0x3B5A2Cu, 0x3B5A34u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3B5A34u;
 label_3b5a34:
     // 0x3b5a34: 0x4410002  bgez        $v0, . + 4 + (0x2 << 2)
     ctx->pc = 0x3B5A34u;
@@ -125,7 +123,6 @@ label_3b5a34:
         }
     }
     // 0x3b5a3c: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x3b5a3cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_3b5a40:
     // 0x3b5a40: 0xdfbf0020  ld          $ra, 0x20($sp)

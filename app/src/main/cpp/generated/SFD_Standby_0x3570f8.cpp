@@ -13,7 +13,7 @@
 
 // Function: SFD_Standby
 // Address: 0x3570f8 - 0x357140
-void SFD_Standby_0x3570f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFD_Standby_0x3570f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFD_Standby_0x3570f8");
 #endif
@@ -45,7 +45,6 @@ void SFD_Standby_0x3570f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &Obj34D8_SetGlobalEE0B8_IfField48_0x34dec8, 0x34dec8u, 0x35710cu)) {
         return;
     }
-    ctx->pc = 0x35710Cu;
 label_35710c:
     // 0x35710c: 0x3c05ff00  lui         $a1, 0xFF00
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)65280 << 16));
@@ -84,7 +83,6 @@ label_35710c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x34DD70u, 0x357128u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x357130u;
 label_357130:
     // 0x357130: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x357130u;

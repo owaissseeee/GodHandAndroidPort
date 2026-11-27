@@ -13,7 +13,7 @@
 
 // Function: PanelObj_setCursorMode
 // Address: 0x1def48 - 0x1defc8
-void PanelObj_setCursorMode_0x1def48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void PanelObj_setCursorMode_0x1def48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("PanelObj_setCursorMode_0x1def48");
 #endif
@@ -86,7 +86,6 @@ void PanelObj_setCursorMode_0x1def48(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_1defbc;
         }
     }
-    ctx->pc = 0x1DEF74u;
 label_1def74:
     // 0x1def74: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -103,7 +102,6 @@ label_1def74:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DEE60_0x1dee60, 0x1dee60u, 0x1def84u)) {
         return;
     }
-    ctx->pc = 0x1DEF84u;
 label_1def84:
     // 0x1def84: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -120,7 +118,6 @@ label_1def84:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DEE60_0x1dee60, 0x1dee60u, 0x1def94u)) {
         return;
     }
-    ctx->pc = 0x1DEF94u;
 label_1def94:
     // 0x1def94: 0x10000009  b           . + 4 + (0x9 << 2)
     ctx->pc = 0x1DEF94u;
@@ -137,7 +134,6 @@ label_1def94:
             goto label_1defbc;
         }
     }
-    ctx->pc = 0x1DEF9Cu;
 label_1def9c:
     // 0x1def9c: 0x24050002  addiu       $a1, $zero, 0x2
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
@@ -152,7 +148,6 @@ label_1def9c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DEE60_0x1dee60, 0x1dee60u, 0x1defa8u)) {
         return;
     }
-    ctx->pc = 0x1DEFA8u;
 label_1defa8:
     // 0x1defa8: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -169,7 +164,6 @@ label_1defa8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DEE60_0x1dee60, 0x1dee60u, 0x1defb8u)) {
         return;
     }
-    ctx->pc = 0x1DEFB8u;
 label_1defb8:
     // 0x1defb8: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1defb8u;

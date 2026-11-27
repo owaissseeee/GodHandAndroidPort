@@ -13,7 +13,7 @@
 
 // Function: sfadxt_GetTimeTst
 // Address: 0x34b0f0 - 0x34b198
-void sfadxt_GetTimeTst_0x34b0f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfadxt_GetTimeTst_0x34b0f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfadxt_GetTimeTst_0x34b0f0");
 #endif
@@ -66,7 +66,6 @@ void sfadxt_GetTimeTst_0x34b0f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &GuardedCall_00329FD0_329F98_0x329f98, 0x329f98u, 0x34b120u)) {
         return;
     }
-    ctx->pc = 0x34B120u;
 label_34b120:
     // 0x34b120: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -87,7 +86,6 @@ label_34b120:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032A160_0x32a160, 0x32a160u, 0x34b138u)) {
         return;
     }
-    ctx->pc = 0x34B138u;
 label_34b138:
     // 0x34b138: 0x8fa30034  lw          $v1, 0x34($sp)
     ctx->pc = 0x34b138u;
@@ -109,7 +107,6 @@ label_34b138:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00360B18_0x360b18, 0x360b18u, 0x34b14cu)) {
         return;
     }
-    ctx->pc = 0x34B14Cu;
 label_34b14c:
     // 0x34b14c: 0xc0d8316  jal         func_360C58
     SET_GPR_U32(ctx, 31, 0x34B154u);
@@ -122,7 +119,6 @@ label_34b14c:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Get_D_003EEA70_360C58_0x360c58, 0x360c58u, 0x34b154u)) {
         return;
     }
-    ctx->pc = 0x34B154u;
 label_34b154:
     // 0x34b154: 0x3a0282d  daddu       $a1, $sp, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -143,7 +139,6 @@ label_34b154:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035C5A0_0x35c5a0, 0x35c5a0u, 0x34b16cu)) {
         return;
     }
-    ctx->pc = 0x34B16Cu;
 label_34b16c:
     // 0x34b16c: 0x8fa20020  lw          $v0, 0x20($sp)
     ctx->pc = 0x34b16cu;

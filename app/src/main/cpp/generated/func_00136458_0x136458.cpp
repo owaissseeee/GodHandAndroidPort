@@ -13,7 +13,7 @@
 
 // Function: func_00136458
 // Address: 0x136458 - 0x1365b8
-void func_00136458_0x136458(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00136458_0x136458(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00136458_0x136458");
 #endif
@@ -131,7 +131,6 @@ void func_00136458_0x136458(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0OuterProduct_0x30a328, 0x30a328u, 0x1364ecu)) {
         return;
     }
-    ctx->pc = 0x1364ECu;
 label_1364ec:
     // 0x1364ec: 0xfba00030  sqc2        $vf0, 0x30($sp)
     ctx->pc = 0x1364ecu;
@@ -166,7 +165,6 @@ label_1364ec:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0InnerProduct_0x30a348, 0x30a348u, 0x136514u)) {
         return;
     }
-    ctx->pc = 0x136514u;
 label_136514:
     // 0x136514: 0x44800800  mtc1        $zero, $f1
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }
@@ -212,7 +210,6 @@ label_136514:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00135EC8_0x135ec8, 0x135ec8u, 0x136548u)) {
         return;
     }
-    ctx->pc = 0x136548u;
 label_136548:
     // 0x136548: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x136548u;
@@ -240,7 +237,6 @@ label_136548:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00136030_0x136030, 0x136030u, 0x136558u)) {
         return;
     }
-    ctx->pc = 0x136558u;
 label_136558:
     // 0x136558: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x136558u;
@@ -251,7 +247,6 @@ label_136558:
             goto label_136568;
         }
     }
-    ctx->pc = 0x136560u;
 label_136560:
     // 0x136560: 0x1000000b  b           . + 4 + (0xB << 2)
     ctx->pc = 0x136560u;
@@ -268,7 +263,6 @@ label_136560:
             goto label_136590;
         }
     }
-    ctx->pc = 0x136568u;
 label_136568:
     // 0x136568: 0x12600009  beqz        $s3, . + 4 + (0x9 << 2)
     ctx->pc = 0x136568u;
@@ -316,7 +310,6 @@ label_136568:
     ctx->pc = 0x136588u;
     { float f = ctx->f[2]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 19), 4), bits); }
     // 0x13658c: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x13658cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_136590:
     // 0x136590: 0x7bb000b0  lq          $s0, 0xB0($sp)

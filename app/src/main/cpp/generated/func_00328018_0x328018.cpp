@@ -13,7 +13,7 @@
 
 // Function: func_00328018
 // Address: 0x328018 - 0x328048
-void func_00328018_0x328018(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00328018_0x328018(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00328018_0x328018");
 #endif
@@ -46,7 +46,6 @@ void func_00328018_0x328018(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Obj3290_Tramp_0033E6A8_9070_0x329070, 0x329070u, 0x32802cu)) {
         return;
     }
-    ctx->pc = 0x32802Cu;
 label_32802c:
     // 0x32802c: 0xc0ca012  jal         func_328048
     SET_GPR_U32(ctx, 31, 0x328034u);
@@ -59,7 +58,6 @@ label_32802c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00328048_0x328048, 0x328048u, 0x328034u)) {
         return;
     }
-    ctx->pc = 0x328034u;
 label_328034:
     // 0x328034: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x328034u;

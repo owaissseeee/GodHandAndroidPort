@@ -31,6 +31,9 @@ void frameStart(uint8_t* rdram);
 // Request a Back / Cancel action (from Android OnBackPressed or back gesture)
 bool handleBackPressed();
 
+// Request a Cutscene / FMV skip action (pulses START while cutscene/movie is active)
+void triggerCutsceneSkip();
+
 // Returns packed active menu state (MenuScreenId | flags)
 uint32_t getActiveMenuState();
 

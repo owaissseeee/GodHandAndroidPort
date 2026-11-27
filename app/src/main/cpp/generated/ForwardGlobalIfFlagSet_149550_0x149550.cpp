@@ -13,7 +13,7 @@
 
 // Function: ForwardGlobalIfFlagSet_149550
 // Address: 0x149550 - 0x149580
-void ForwardGlobalIfFlagSet_149550_0x149550(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardGlobalIfFlagSet_149550_0x149550(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardGlobalIfFlagSet_149550_0x149550");
 #endif
@@ -73,7 +73,6 @@ void ForwardGlobalIfFlagSet_149550_0x149550(uint8_t* rdram, R5900Context* ctx, P
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A9790_0x2a9790, 0x2a9790u, 0x149574u)) {
         return;
     }
-    ctx->pc = 0x149574u;
 label_149574:
     // 0x149574: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x149574u;

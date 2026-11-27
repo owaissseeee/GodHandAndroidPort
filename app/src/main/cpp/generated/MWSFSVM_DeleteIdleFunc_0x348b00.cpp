@@ -13,7 +13,7 @@
 
 // Function: MWSFSVM_DeleteIdleFunc
 // Address: 0x348b00 - 0x348b20
-void MWSFSVM_DeleteIdleFunc_0x348b00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MWSFSVM_DeleteIdleFunc_0x348b00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MWSFSVM_DeleteIdleFunc_0x348b00");
 #endif

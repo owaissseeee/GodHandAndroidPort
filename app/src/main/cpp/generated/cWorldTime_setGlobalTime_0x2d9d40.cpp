@@ -13,7 +13,7 @@
 
 // Function: cWorldTime_setGlobalTime
 // Address: 0x2d9d40 - 0x2d9d48
-void cWorldTime_setGlobalTime_0x2d9d40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cWorldTime_setGlobalTime_0x2d9d40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cWorldTime_setGlobalTime_0x2d9d40");
 #endif

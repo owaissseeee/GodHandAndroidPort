@@ -13,7 +13,7 @@
 
 // Function: func_001DCAD8
 // Address: 0x1dcad8 - 0x1dcc30
-void func_001DCAD8_0x1dcad8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001DCAD8_0x1dcad8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001DCAD8_0x1dcad8");
 #endif
@@ -83,7 +83,6 @@ void func_001DCAD8_0x1dcad8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DBFB8_0x1dbfb8, 0x1dbfb8u, 0x1dcb28u)) {
         return;
     }
-    ctx->pc = 0x1DCB28u;
 label_1dcb28:
     // 0x1dcb28: 0x24050002  addiu       $a1, $zero, 0x2
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
@@ -92,7 +91,6 @@ label_1dcb28:
     // 0x1dcb30: 0x24030004  addiu       $v1, $zero, 0x4
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x1dcb34: 0x0  nop
-    ctx->pc = 0x1dcb34u;
     // NOP
 label_1dcb38:
     // 0x1dcb38: 0x96020000  lhu         $v0, 0x0($s0)
@@ -116,7 +114,6 @@ label_1dcb38:
     // 0x1dcb44: 0x24820001  addiu       $v0, $a0, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 1));
     // 0x1dcb48: 0x3044ffff  andi        $a0, $v0, 0xFFFF
-    ctx->pc = 0x1dcb48u;
     SET_GPR_U64(ctx, 4, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)65535);
 label_1dcb4c:
     // 0x1dcb4c: 0x461fffa  bgez        $v1, . + 4 + (-0x6 << 2)
@@ -161,7 +158,6 @@ label_1dcb4c:
     // 0x1dcb68: 0x240effff  addiu       $t6, $zero, -0x1
     SET_GPR_S32(ctx, 14, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x1dcb6c: 0x91e00  sll         $v1, $t1, 24
-    ctx->pc = 0x1dcb6cu;
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 9), 24));
 label_1dcb70:
     // 0x1dcb70: 0x91080  sll         $v0, $t1, 2
@@ -175,7 +171,6 @@ label_1dcb70:
     // 0x1dcb80: 0x252c0001  addiu       $t4, $t1, 0x1
     SET_GPR_S32(ctx, 12, (int32_t)ADD32(GPR_U32(ctx, 9), 1));
     // 0x1dcb84: 0x26273004  addiu       $a3, $s1, 0x3004
-    ctx->pc = 0x1dcb84u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 17), 12292));
 label_1dcb88:
     // 0x1dcb88: 0x5128000b  beql        $t1, $t0, . + 4 + (0xB << 2)
@@ -241,7 +236,6 @@ label_1dcb88:
             goto label_1dcbc4;
         }
     }
-    ctx->pc = 0x1DCBB8u;
 label_1dcbb8:
     // 0x1dcbb8: 0x29020005  slti        $v0, $t0, 0x5
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 8) < (int64_t)(int32_t)5) ? 1 : 0);
@@ -263,7 +257,6 @@ label_1dcbb8:
             goto label_1dcb88;
         }
     }
-    ctx->pc = 0x1DCBC4u;
 label_1dcbc4:
     // 0x1dcbc4: 0x514e0011  beql        $t2, $t6, . + 4 + (0x11 << 2)
     ctx->pc = 0x1DCBC4u;
@@ -285,7 +278,6 @@ label_1dcbc4:
     // 0x1dcbd0: 0x2406fffb  addiu       $a2, $zero, -0x5
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967291));
     // 0x1dcbd4: 0x26243004  addiu       $a0, $s1, 0x3004
-    ctx->pc = 0x1dcbd4u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 17), 12292));
 label_1dcbd8:
     // 0x1dcbd8: 0x15450004  bne         $t2, $a1, . + 4 + (0x4 << 2)
@@ -321,13 +313,11 @@ label_1dcbd8:
             goto label_1dcbf4;
         }
     }
-    ctx->pc = 0x1DCBECu;
 label_1dcbec:
     // 0x1dcbec: 0x8c620004  lw          $v0, 0x4($v1)
     ctx->pc = 0x1dcbecu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 4)));
     // 0x1dcbf0: 0x34420004  ori         $v0, $v0, 0x4
-    ctx->pc = 0x1dcbf0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)4);
 label_1dcbf4:
     // 0x1dcbf4: 0xac620004  sw          $v0, 0x4($v1)
@@ -356,7 +346,6 @@ label_1dcbf4:
         }
     }
     // 0x1dcc08: 0x180482d  daddu       $t1, $t4, $zero
-    ctx->pc = 0x1dcc08u;
     SET_GPR_U64(ctx, 9, (uint64_t)GPR_U64(ctx, 12) + (uint64_t)GPR_U64(ctx, 0));
 label_1dcc0c:
     // 0x1dcc0c: 0x29220005  slti        $v0, $t1, 0x5
@@ -380,7 +369,6 @@ label_1dcc0c:
         }
     }
     // 0x1dcc18: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1dcc18u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_1dcc1c:
     // 0x1dcc1c: 0x7bb00060  lq          $s0, 0x60($sp)

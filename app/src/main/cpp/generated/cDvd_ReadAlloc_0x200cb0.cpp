@@ -13,7 +13,7 @@
 
 // Function: cDvd_ReadAlloc
 // Address: 0x200cb0 - 0x200df8
-void cDvd_ReadAlloc_0x200cb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDvd_ReadAlloc_0x200cb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDvd_ReadAlloc_0x200cb0");
 #endif
@@ -90,7 +90,6 @@ void cDvd_ReadAlloc_0x200cb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_002017A8_0x2017a8, 0x2017a8u, 0x200d04u)) {
         return;
     }
-    ctx->pc = 0x200D04u;
 label_200d04:
     // 0x200d04: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -126,7 +125,6 @@ label_200d04:
     if (!runtime->callDirectStatic(rdram, ctx, &FindEntryValue_1FF9C0_0x1ff9c0, 0x1ff9c0u, 0x200d24u)) {
         return;
     }
-    ctx->pc = 0x200D24u;
 label_200d24:
     // 0x200d24: 0x8e030078  lw          $v1, 0x78($s0)
     ctx->pc = 0x200d24u;
@@ -184,7 +182,6 @@ label_200d24:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00201788_0x201788, 0x201788u, 0x200d54u)) {
         return;
     }
-    ctx->pc = 0x200D54u;
 label_200d54:
     // 0x200d54: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x200D54u;
@@ -201,7 +198,6 @@ label_200d54:
             goto label_200d60;
         }
     }
-    ctx->pc = 0x200D5Cu;
 label_200d5c:
     // 0x200d5c: 0xae130004  sw          $s3, 0x4($s0)
     ctx->pc = 0x200d5cu;
@@ -254,7 +250,6 @@ label_200d7c:
     if (!runtime->callDirectStatic(rdram, ctx, &EnsureInitThenForward_2A9538_30EE08_0x30ee08, 0x30ee08u, 0x200d90u)) {
         return;
     }
-    ctx->pc = 0x200D90u;
 label_200d90:
     // 0x200d90: 0x14400006  bnez        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x200D90u;
@@ -284,7 +279,6 @@ label_200d90:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00201228_0x201228, 0x201228u, 0x200da4u)) {
         return;
     }
-    ctx->pc = 0x200DA4u;
 label_200da4:
     // 0x200da4: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x200DA4u;
@@ -301,7 +295,6 @@ label_200da4:
             goto label_200dc8;
         }
     }
-    ctx->pc = 0x200DACu;
 label_200dac:
     // 0x200dac: 0xafc20000  sw          $v0, 0x0($fp)
     ctx->pc = 0x200dacu;
@@ -335,7 +328,6 @@ label_200dac:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00201290_0x201290, 0x201290u, 0x200dc4u)) {
         return;
     }
-    ctx->pc = 0x200DC4u;
 label_200dc4:
     // 0x200dc4: 0x8e020004  lw          $v0, 0x4($s0)
     ctx->pc = 0x200dc4u;

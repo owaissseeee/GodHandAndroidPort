@@ -13,7 +13,7 @@
 
 // Function: cEm00_setSitChair
 // Address: 0x273678 - 0x2736f8
-void cEm00_setSitChair_0x273678(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_setSitChair_0x273678(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_setSitChair_0x273678");
 #endif
@@ -104,7 +104,6 @@ label_2736b0:
     ctx->pc = 0x2736d0u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 2), 8), bits); }
     // 0x2736d4: 0x24020005  addiu       $v0, $zero, 0x5
-    ctx->pc = 0x2736d4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 5));
 label_2736d8:
     // 0x2736d8: 0x24030001  addiu       $v1, $zero, 0x1

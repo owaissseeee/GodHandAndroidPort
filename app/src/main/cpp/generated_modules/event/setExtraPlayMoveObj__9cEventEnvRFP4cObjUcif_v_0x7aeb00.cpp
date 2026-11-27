@@ -14,12 +14,11 @@ namespace gh_event
 {
 // Function: setExtraPlayMoveObj__9cEventEnvRFP4cObjUcif_v
 // Address: 0x7aeb00 - 0x7aeb08
-void setExtraPlayMoveObj__9cEventEnvRFP4cObjUcif_v_0x7aeb00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void setExtraPlayMoveObj__9cEventEnvRFP4cObjUcif_v_0x7aeb00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("setExtraPlayMoveObj__9cEventEnvRFP4cObjUcif_v_0x7aeb00");
 #endif
 
-    ctx->pc = 0x7aeb00u;
 
     // 0x7aeb00: 0x3e00008  jr          $ra
     ctx->pc = 0x7AEB00u;

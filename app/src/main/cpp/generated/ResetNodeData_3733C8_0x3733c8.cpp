@@ -13,7 +13,7 @@
 
 // Function: ResetNodeData_3733C8
 // Address: 0x3733c8 - 0x373430
-void ResetNodeData_3733C8_0x3733c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ResetNodeData_3733C8_0x3733c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ResetNodeData_3733C8_0x3733c8");
 #endif
@@ -49,7 +49,6 @@ void ResetNodeData_3733C8_0x3733c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373A50_0x373a50, 0x373a50u, 0x3733dcu)) {
         return;
     }
-    ctx->pc = 0x3733DCu;
 label_3733dc:
     // 0x3733dc: 0x50400011  beql        $v0, $zero, . + 4 + (0x11 << 2)
     ctx->pc = 0x3733DCu;
@@ -77,7 +76,6 @@ label_3733dc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373B20_0x373b20, 0x373b20u, 0x3733ecu)) {
         return;
     }
-    ctx->pc = 0x3733ECu;
 label_3733ec:
     // 0x3733ec: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -101,7 +99,6 @@ label_3733ec:
     if (!runtime->callDirectStatic(rdram, ctx, &ClearSequenceNode_374318_0x374318, 0x374318u, 0x373400u)) {
         return;
     }
-    ctx->pc = 0x373400u;
 label_373400:
     // 0x373400: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x373400u;
@@ -118,7 +115,6 @@ label_373400:
             goto label_373414;
         }
     }
-    ctx->pc = 0x373408u;
 label_373408:
     // 0x373408: 0xc0dcf52  jal         func_373D48
     SET_GPR_U32(ctx, 31, 0x373410u);
@@ -131,10 +127,8 @@ label_373408:
     if (!runtime->callDirectStatic(rdram, ctx, &FreeSequenceNode_373D48_0x373d48, 0x373d48u, 0x373410u)) {
         return;
     }
-    ctx->pc = 0x373410u;
 label_373410:
     // 0x373410: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x373410u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_373414:
     // 0x373414: 0x282d  daddu       $a1, $zero, $zero
@@ -150,7 +144,6 @@ label_373414:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x373420u)) {
         return;
     }
-    ctx->pc = 0x373420u;
 label_373420:
     // 0x373420: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x373420u;

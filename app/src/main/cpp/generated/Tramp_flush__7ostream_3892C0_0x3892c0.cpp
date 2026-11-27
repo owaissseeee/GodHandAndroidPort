@@ -13,7 +13,7 @@
 
 // Function: Tramp_flush__7ostream_3892C0
 // Address: 0x3892c0 - 0x3892e0
-void Tramp_flush__7ostream_3892C0_0x3892c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp_flush__7ostream_3892C0_0x3892c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp_flush__7ostream_3892C0_0x3892c0");
 #endif
@@ -37,7 +37,6 @@ void Tramp_flush__7ostream_3892C0_0x3892c0(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &flush__7ostream_0x389268, 0x389268u, 0x3892d0u)) {
         return;
     }
-    ctx->pc = 0x3892D0u;
 label_3892d0:
     // 0x3892d0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3892d0u;

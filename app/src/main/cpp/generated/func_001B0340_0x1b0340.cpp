@@ -13,7 +13,7 @@
 
 // Function: func_001B0340
 // Address: 0x1b0340 - 0x1b0468
-void func_001B0340_0x1b0340(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001B0340_0x1b0340(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001B0340_0x1b0340");
 #endif
@@ -52,7 +52,6 @@ void func_001B0340_0x1b0340(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B6FB8_0x1b6fb8, 0x1b6fb8u, 0x1b0358u)) {
         return;
     }
-    ctx->pc = 0x1B0358u;
 label_1b0358:
     // 0x1b0358: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -86,7 +85,6 @@ label_1b0358:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_CreateDamageTake_0x1fe218, 0x1fe218u, 0x1b0384u)) {
         return;
     }
-    ctx->pc = 0x1B0384u;
 label_1b0384:
     // 0x1b0384: 0x10400012  beqz        $v0, . + 4 + (0x12 << 2)
     ctx->pc = 0x1B0384u;
@@ -139,10 +137,8 @@ label_1b0384:
             goto label_1b03a8;
         }
     }
-    ctx->pc = 0x1B03A4u;
 label_1b03a4:
     // 0x1b03a4: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1b03a4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1b03a8:
     // 0x1b03a8: 0x8e240600  lw          $a0, 0x600($s1)
@@ -165,7 +161,6 @@ label_1b03a8:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_AddDamageCollSphere_0x1fdaf0, 0x1fdaf0u, 0x1b03c0u)) {
         return;
     }
-    ctx->pc = 0x1B03C0u;
 label_1b03c0:
     // 0x1b03c0: 0x8e230600  lw          $v1, 0x600($s1)
     ctx->pc = 0x1b03c0u;
@@ -212,7 +207,6 @@ label_1b03d0:
     if (!runtime->callDirectStatic(rdram, ctx, &cCollisionSolidManage_CreateUnit_0x1346f8, 0x1346f8u, 0x1b0400u)) {
         return;
     }
-    ctx->pc = 0x1B0400u;
 label_1b0400:
     // 0x1b0400: 0x3c013fc0  lui         $at, 0x3FC0
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16320 << 16));
@@ -252,7 +246,6 @@ label_1b0400:
     if (!runtime->callDirectStatic(rdram, ctx, &cCollisionSolidManage_CreateSphere_0x134880, 0x134880u, 0x1b0438u)) {
         return;
     }
-    ctx->pc = 0x1B0438u;
 label_1b0438:
     // 0x1b0438: 0x8e2305b8  lw          $v1, 0x5B8($s1)
     ctx->pc = 0x1b0438u;

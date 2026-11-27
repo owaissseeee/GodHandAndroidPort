@@ -13,7 +13,7 @@
 
 // Function: cSeData_LoadNumbered
 // Address: 0x2cf6f8 - 0x2cf760
-void cSeData_LoadNumbered_0x2cf6f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSeData_LoadNumbered_0x2cf6f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSeData_LoadNumbered_0x2cf6f8");
 #endif
@@ -58,7 +58,6 @@ void cSeData_LoadNumbered_0x2cf6f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &cSeData_MakeFileName_0x2cfe68, 0x2cfe68u, 0x2cf720u)) {
         return;
     }
-    ctx->pc = 0x2CF720u;
 label_2cf720:
     // 0x2cf720: 0x200282d  daddu       $a1, $s0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -75,7 +74,6 @@ label_2cf720:
     if (!runtime->callDirectStatic(rdram, ctx, &cSeData_LoadFile_0x2cf600, 0x2cf600u, 0x2cf730u)) {
         return;
     }
-    ctx->pc = 0x2CF730u;
 label_2cf730:
     // 0x2cf730: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -96,7 +94,6 @@ label_2cf730:
             goto label_2cf740;
         }
     }
-    ctx->pc = 0x2CF740u;
 label_2cf740:
     // 0x2cf740: 0x7bb00070  lq          $s0, 0x70($sp)
     ctx->pc = 0x2cf740u;

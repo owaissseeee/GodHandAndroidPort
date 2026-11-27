@@ -13,7 +13,7 @@
 
 // Function: func_00275308
 // Address: 0x275308 - 0x2755e0
-void func_00275308_0x275308(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00275308_0x275308(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00275308_0x275308");
 #endif
@@ -206,15 +206,12 @@ void func_00275308_0x275308(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
 
-    ctx->pc = 0x275308u;
 
 label_275308:
     // 0x275308: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x275308u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
 label_27530c:
     // 0x27530c: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x27530cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_275310:
     // 0x275310: 0x7fb00020  sq          $s0, 0x20($sp)
@@ -226,7 +223,6 @@ label_275314:
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 17));
 label_275318:
     // 0x275318: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x275318u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_27531c:
     // 0x27531c: 0xa0882d  daddu       $s1, $a1, $zero
@@ -259,7 +255,6 @@ label_275324:
             goto label_275338;
         }
     }
-    ctx->pc = 0x275328u;
 label_275328:
     // 0x275328: 0x8e020250  lw          $v0, 0x250($s0)
     ctx->pc = 0x275328u;
@@ -295,22 +290,18 @@ label_275334:
             goto label_27534c;
         }
     }
-    ctx->pc = 0x275338u;
 label_275338:
     // 0x275338: 0x8e030250  lw          $v1, 0x250($s0)
     ctx->pc = 0x275338u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 592)));
 label_27533c:
     // 0x27533c: 0x3c02ffff  lui         $v0, 0xFFFF
-    ctx->pc = 0x27533cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)65535 << 16));
 label_275340:
     // 0x275340: 0x34427fff  ori         $v0, $v0, 0x7FFF
-    ctx->pc = 0x275340u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)32767);
 label_275344:
     // 0x275344: 0x621824  and         $v1, $v1, $v0
-    ctx->pc = 0x275344u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 2));
 label_275348:
     // 0x275348: 0xae030250  sw          $v1, 0x250($s0)
@@ -375,14 +366,11 @@ label_27535c:
             goto label_275368;
         }
     }
-    ctx->pc = 0x275360u;
 label_275360:
     // 0x275360: 0x2403fff7  addiu       $v1, $zero, -0x9
-    ctx->pc = 0x275360u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967287));
 label_275364:
     // 0x275364: 0x431024  and         $v0, $v0, $v1
-    ctx->pc = 0x275364u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 3));
 label_275368:
     // 0x275368: 0xae0205a0  sw          $v0, 0x5A0($s0)
@@ -419,7 +407,6 @@ label_275374:
             goto label_27538c;
         }
     }
-    ctx->pc = 0x275378u;
 label_275378:
     // 0x275378: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x275378u;
@@ -460,7 +447,6 @@ label_275388:
             return;
         }
     }
-    ctx->pc = 0x27538Cu;
 label_27538c:
     // 0x27538c: 0x8e0606f0  lw          $a2, 0x6F0($s0)
     ctx->pc = 0x27538cu;
@@ -492,7 +478,6 @@ label_275394:
             goto label_2753ac;
         }
     }
-    ctx->pc = 0x275398u;
 label_275398:
     // 0x275398: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x275398u;
@@ -533,7 +518,6 @@ label_2753a8:
             return;
         }
     }
-    ctx->pc = 0x2753ACu;
 label_2753ac:
     // 0x2753ac: 0x8e0606f8  lw          $a2, 0x6F8($s0)
     ctx->pc = 0x2753acu;
@@ -565,7 +549,6 @@ label_2753b4:
             goto label_2753cc;
         }
     }
-    ctx->pc = 0x2753B8u;
 label_2753b8:
     // 0x2753b8: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x2753b8u;
@@ -606,7 +589,6 @@ label_2753c8:
             return;
         }
     }
-    ctx->pc = 0x2753CCu;
 label_2753cc:
     // 0x2753cc: 0x8e0606fc  lw          $a2, 0x6FC($s0)
     ctx->pc = 0x2753ccu;
@@ -638,7 +620,6 @@ label_2753d4:
             goto label_2753ec;
         }
     }
-    ctx->pc = 0x2753D8u;
 label_2753d8:
     // 0x2753d8: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x2753d8u;
@@ -679,7 +660,6 @@ label_2753e8:
             return;
         }
     }
-    ctx->pc = 0x2753ECu;
 label_2753ec:
     // 0x2753ec: 0x8e060700  lw          $a2, 0x700($s0)
     ctx->pc = 0x2753ecu;
@@ -711,7 +691,6 @@ label_2753f4:
             goto label_27540c;
         }
     }
-    ctx->pc = 0x2753F8u;
 label_2753f8:
     // 0x2753f8: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x2753f8u;
@@ -752,7 +731,6 @@ label_275408:
             return;
         }
     }
-    ctx->pc = 0x27540Cu;
 label_27540c:
     // 0x27540c: 0x8e060704  lw          $a2, 0x704($s0)
     ctx->pc = 0x27540cu;
@@ -784,7 +762,6 @@ label_275414:
             goto label_27542c;
         }
     }
-    ctx->pc = 0x275418u;
 label_275418:
     // 0x275418: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x275418u;
@@ -825,7 +802,6 @@ label_275428:
             return;
         }
     }
-    ctx->pc = 0x27542Cu;
 label_27542c:
     // 0x27542c: 0x8e060708  lw          $a2, 0x708($s0)
     ctx->pc = 0x27542cu;
@@ -857,7 +833,6 @@ label_275434:
             goto label_27544c;
         }
     }
-    ctx->pc = 0x275438u;
 label_275438:
     // 0x275438: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x275438u;
@@ -898,7 +873,6 @@ label_275448:
             return;
         }
     }
-    ctx->pc = 0x27544Cu;
 label_27544c:
     // 0x27544c: 0x8e060734  lw          $a2, 0x734($s0)
     ctx->pc = 0x27544cu;
@@ -930,7 +904,6 @@ label_275454:
             goto label_27546c;
         }
     }
-    ctx->pc = 0x275458u;
 label_275458:
     // 0x275458: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x275458u;
@@ -971,7 +944,6 @@ label_275468:
             return;
         }
     }
-    ctx->pc = 0x27546Cu;
 label_27546c:
     // 0x27546c: 0x8e0606f4  lw          $a2, 0x6F4($s0)
     ctx->pc = 0x27546cu;
@@ -1003,7 +975,6 @@ label_275474:
             goto label_27548c;
         }
     }
-    ctx->pc = 0x275478u;
 label_275478:
     // 0x275478: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x275478u;
@@ -1044,7 +1015,6 @@ label_275488:
             return;
         }
     }
-    ctx->pc = 0x27548Cu;
 label_27548c:
     // 0x27548c: 0x8e06070c  lw          $a2, 0x70C($s0)
     ctx->pc = 0x27548cu;
@@ -1076,7 +1046,6 @@ label_275494:
             goto label_2754ac;
         }
     }
-    ctx->pc = 0x275498u;
 label_275498:
     // 0x275498: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x275498u;
@@ -1117,7 +1086,6 @@ label_2754a8:
             return;
         }
     }
-    ctx->pc = 0x2754ACu;
 label_2754ac:
     // 0x2754ac: 0x8e061964  lw          $a2, 0x1964($s0)
     ctx->pc = 0x2754acu;
@@ -1149,7 +1117,6 @@ label_2754b4:
             goto label_2754cc;
         }
     }
-    ctx->pc = 0x2754B8u;
 label_2754b8:
     // 0x2754b8: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x2754b8u;
@@ -1190,7 +1157,6 @@ label_2754c8:
             return;
         }
     }
-    ctx->pc = 0x2754CCu;
 label_2754cc:
     // 0x2754cc: 0x8e06196c  lw          $a2, 0x196C($s0)
     ctx->pc = 0x2754ccu;
@@ -1222,7 +1188,6 @@ label_2754d4:
             goto label_2754ec;
         }
     }
-    ctx->pc = 0x2754D8u;
 label_2754d8:
     // 0x2754d8: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x2754d8u;
@@ -1263,7 +1228,6 @@ label_2754e8:
             return;
         }
     }
-    ctx->pc = 0x2754ECu;
 label_2754ec:
     // 0x2754ec: 0x8e061970  lw          $a2, 0x1970($s0)
     ctx->pc = 0x2754ecu;
@@ -1295,7 +1259,6 @@ label_2754f4:
             goto label_27550c;
         }
     }
-    ctx->pc = 0x2754F8u;
 label_2754f8:
     // 0x2754f8: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x2754f8u;
@@ -1336,7 +1299,6 @@ label_275508:
             return;
         }
     }
-    ctx->pc = 0x27550Cu;
 label_27550c:
     // 0x27550c: 0x8e061974  lw          $a2, 0x1974($s0)
     ctx->pc = 0x27550cu;
@@ -1368,7 +1330,6 @@ label_275514:
             goto label_27552c;
         }
     }
-    ctx->pc = 0x275518u;
 label_275518:
     // 0x275518: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x275518u;
@@ -1409,7 +1370,6 @@ label_275528:
             return;
         }
     }
-    ctx->pc = 0x27552Cu;
 label_27552c:
     // 0x27552c: 0x8e060740  lw          $a2, 0x740($s0)
     ctx->pc = 0x27552cu;
@@ -1441,7 +1401,6 @@ label_275534:
             goto label_27554c;
         }
     }
-    ctx->pc = 0x275538u;
 label_275538:
     // 0x275538: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x275538u;
@@ -1482,7 +1441,6 @@ label_275548:
             return;
         }
     }
-    ctx->pc = 0x27554Cu;
 label_27554c:
     // 0x27554c: 0x8e060744  lw          $a2, 0x744($s0)
     ctx->pc = 0x27554cu;
@@ -1514,7 +1472,6 @@ label_275554:
             goto label_27556c;
         }
     }
-    ctx->pc = 0x275558u;
 label_275558:
     // 0x275558: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x275558u;
@@ -1555,7 +1512,6 @@ label_275568:
             return;
         }
     }
-    ctx->pc = 0x27556Cu;
 label_27556c:
     // 0x27556c: 0x8e060748  lw          $a2, 0x748($s0)
     ctx->pc = 0x27556cu;
@@ -1587,7 +1543,6 @@ label_275574:
             goto label_27558c;
         }
     }
-    ctx->pc = 0x275578u;
 label_275578:
     // 0x275578: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x275578u;
@@ -1628,7 +1583,6 @@ label_275588:
             return;
         }
     }
-    ctx->pc = 0x27558Cu;
 label_27558c:
     // 0x27558c: 0x8e06074c  lw          $a2, 0x74C($s0)
     ctx->pc = 0x27558cu;
@@ -1660,7 +1614,6 @@ label_275594:
             goto label_2755ac;
         }
     }
-    ctx->pc = 0x275598u;
 label_275598:
     // 0x275598: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x275598u;
@@ -1701,7 +1654,6 @@ label_2755a8:
             return;
         }
     }
-    ctx->pc = 0x2755ACu;
 label_2755ac:
     // 0x2755ac: 0x8e060750  lw          $a2, 0x750($s0)
     ctx->pc = 0x2755acu;
@@ -1733,7 +1685,6 @@ label_2755b4:
             goto label_2755cc;
         }
     }
-    ctx->pc = 0x2755B8u;
 label_2755b8:
     // 0x2755b8: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x2755b8u;
@@ -1774,7 +1725,6 @@ label_2755c8:
             return;
         }
     }
-    ctx->pc = 0x2755CCu;
 label_2755cc:
     // 0x2755cc: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2755ccu;

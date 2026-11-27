@@ -13,7 +13,7 @@
 
 // Function: ActorMove_resetMotion
 // Address: 0x2b2158 - 0x2b21f0
-void ActorMove_resetMotion_0x2b2158(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ActorMove_resetMotion_0x2b2158(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ActorMove_resetMotion_0x2b2158");
 #endif
@@ -65,7 +65,6 @@ void ActorMove_resetMotion_0x2b2158(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B22E0_0x2b22e0, 0x2b22e0u, 0x2b218cu)) {
         return;
     }
-    ctx->pc = 0x2B218Cu;
 label_2b218c:
     // 0x2b218c: 0x2402ffff  addiu       $v0, $zero, -0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
@@ -111,7 +110,6 @@ label_2b218c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B21F0_0x2b21f0, 0x2b21f0u, 0x2b21c4u)) {
         return;
     }
-    ctx->pc = 0x2B21C4u;
 label_2b21c4:
     // 0x2b21c4: 0xa200000f  sb          $zero, 0xF($s0)
     ctx->pc = 0x2b21c4u;

@@ -13,7 +13,7 @@
 
 // Function: ColiseumBattle_ResetUi
 // Address: 0x1eec68 - 0x1eec98
-void ColiseumBattle_ResetUi_0x1eec68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumBattle_ResetUi_0x1eec68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumBattle_ResetUi_0x1eec68");
 #endif
@@ -42,7 +42,6 @@ void ColiseumBattle_ResetUi_0x1eec68(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F28C0_0x1f28c0, 0x1f28c0u, 0x1eec78u)) {
         return;
     }
-    ctx->pc = 0x1EEC78u;
 label_1eec78:
     // 0x1eec78: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));

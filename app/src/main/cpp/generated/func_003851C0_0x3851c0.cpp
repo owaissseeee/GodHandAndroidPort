@@ -13,7 +13,7 @@
 
 // Function: func_003851C0
 // Address: 0x3851c0 - 0x385308
-void func_003851C0_0x3851c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003851C0_0x3851c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003851C0_0x3851c0");
 #endif
@@ -108,7 +108,6 @@ void func_003851C0_0x3851c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_385250;
         }
     }
-    ctx->pc = 0x385214u;
 label_385214:
     // 0x385214: 0x2402fc40  addiu       $v0, $zero, -0x3C0
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294966336));
@@ -127,7 +126,6 @@ label_385214:
             goto label_385250;
         }
     }
-    ctx->pc = 0x385220u;
 label_385220:
     // 0x385220: 0x3c024000  lui         $v0, 0x4000
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)16384 << 16));
@@ -185,7 +183,6 @@ label_385220:
             goto label_385250;
         }
     }
-    ctx->pc = 0x38524Cu;
 label_38524c:
     // 0x38524c: 0xa6000004  sh          $zero, 0x4($s0)
     ctx->pc = 0x38524cu;
@@ -202,7 +199,6 @@ label_385250:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003807E0_0x3807e0, 0x3807e0u, 0x385258u)) {
         return;
     }
-    ctx->pc = 0x385258u;
 label_385258:
     // 0x385258: 0x10000020  b           . + 4 + (0x20 << 2)
     ctx->pc = 0x385258u;
@@ -219,7 +215,6 @@ label_385258:
             goto label_3852dc;
         }
     }
-    ctx->pc = 0x385260u;
 label_385260:
     // 0x385260: 0x30c28000  andi        $v0, $a2, 0x8000
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 6) & (uint64_t)(uint16_t)32768);
@@ -275,7 +270,6 @@ label_385260:
             goto label_3852c0;
         }
     }
-    ctx->pc = 0x385288u;
 label_385288:
     // 0x385288: 0x1000000d  b           . + 4 + (0xD << 2)
     ctx->pc = 0x385288u;
@@ -292,7 +286,6 @@ label_385288:
             goto label_3852c0;
         }
     }
-    ctx->pc = 0x385290u;
 label_385290:
     // 0x385290: 0x50400018  beql        $v0, $zero, . + 4 + (0x18 << 2)
     ctx->pc = 0x385290u;
@@ -350,7 +343,6 @@ label_385290:
             goto label_3852c0;
         }
     }
-    ctx->pc = 0x3852BCu;
 label_3852bc:
     // 0x3852bc: 0xa6050006  sh          $a1, 0x6($s0)
     ctx->pc = 0x3852bcu;
@@ -403,7 +395,6 @@ label_3852dc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032A9F0_0x32a9f0, 0x32a9f0u, 0x3852f0u)) {
         return;
     }
-    ctx->pc = 0x3852F0u;
 label_3852f0:
     // 0x3852f0: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x3852f0u;

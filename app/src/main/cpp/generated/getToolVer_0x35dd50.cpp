@@ -13,7 +13,7 @@
 
 // Function: getToolVer
 // Address: 0x35dd50 - 0x35ddb0
-void getToolVer_0x35dd50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getToolVer_0x35dd50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getToolVer_0x35dd50");
 #endif
@@ -56,7 +56,6 @@ void getToolVer_0x35dd50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A93F8_0x3a93f8, 0x3a93f8u, 0x35dd74u)) {
         return;
     }
-    ctx->pc = 0x35DD74u;
 label_35dd74:
     // 0x35dd74: 0x200282d  daddu       $a1, $s0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -83,7 +82,6 @@ label_35dd74:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035DDB0_0x35ddb0, 0x35ddb0u, 0x35dd8cu)) {
         return;
     }
-    ctx->pc = 0x35DD8Cu;
 label_35dd8c:
     // 0x35dd8c: 0x220282d  daddu       $a1, $s1, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -98,10 +96,8 @@ label_35dd8c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035DDB0_0x35ddb0, 0x35ddb0u, 0x35dd98u)) {
         return;
     }
-    ctx->pc = 0x35DD98u;
 label_35dd98:
     // 0x35dd98: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x35dd98u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_35dd9c:
     // 0x35dd9c: 0xdfb00000  ld          $s0, 0x0($sp)

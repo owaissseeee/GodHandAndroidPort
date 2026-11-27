@@ -13,7 +13,7 @@
 
 // Function: cSnd_BgmEvFadeDefault
 // Address: 0x2d1e18 - 0x2d1e48
-void cSnd_BgmEvFadeDefault_0x2d1e18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BgmEvFadeDefault_0x2d1e18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BgmEvFadeDefault_0x2d1e18");
 #endif
@@ -47,7 +47,6 @@ void cSnd_BgmEvFadeDefault_0x2d1e18(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_BgmEvFadeSet_0x2d1fa0, 0x2d1fa0u, 0x2d1e3cu)) {
         return;
     }
-    ctx->pc = 0x2D1E3Cu;
 label_2d1e3c:
     // 0x2d1e3c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2d1e3cu;

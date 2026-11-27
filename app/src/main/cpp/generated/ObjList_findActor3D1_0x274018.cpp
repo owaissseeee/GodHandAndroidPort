@@ -13,7 +13,7 @@
 
 // Function: ObjList_findActor3D1
 // Address: 0x274018 - 0x2740d8
-void ObjList_findActor3D1_0x274018(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ObjList_findActor3D1_0x274018(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ObjList_findActor3D1_0x274018");
 #endif
@@ -73,7 +73,6 @@ void ObjList_findActor3D1_0x274018(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     // 0x274048: 0x3c138000  lui         $s3, 0x8000
     SET_GPR_S32(ctx, 19, (int32_t)((uint32_t)32768 << 16));
     // 0x27404c: 0x220102d  daddu       $v0, $s1, $zero
-    ctx->pc = 0x27404cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
 label_274050:
     // 0x274050: 0x8c500000  lw          $s0, 0x0($v0)
@@ -133,7 +132,6 @@ label_274050:
     // 0x274080: 0x28620500  slti        $v0, $v1, 0x500
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)1280) ? 1 : 0);
     // 0x274084: 0x40202d  daddu       $a0, $v0, $zero
-    ctx->pc = 0x274084u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_274088:
     // 0x274088: 0x308200ff  andi        $v0, $a0, 0xFF
@@ -173,7 +171,6 @@ label_274088:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001C2328_0x1c2328, 0x1c2328u, 0x2740a4u)) {
         return;
     }
-    ctx->pc = 0x2740A4u;
 label_2740a4:
     // 0x2740a4: 0x14400004  bnez        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x2740A4u;
@@ -190,7 +187,6 @@ label_2740a4:
             goto label_2740b8;
         }
     }
-    ctx->pc = 0x2740ACu;
 label_2740ac:
     // 0x2740ac: 0x1632ffe8  bne         $s1, $s2, . + 4 + (-0x18 << 2)
     ctx->pc = 0x2740ACu;
@@ -211,7 +207,6 @@ label_2740ac:
         }
     }
     // 0x2740b4: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2740b4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2740b8:
     // 0x2740b8: 0x7bb00040  lq          $s0, 0x40($sp)

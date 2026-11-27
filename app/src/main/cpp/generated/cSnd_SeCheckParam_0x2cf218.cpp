@@ -13,7 +13,7 @@
 
 // Function: cSnd_SeCheckParam
 // Address: 0x2cf218 - 0x2cf258
-void cSnd_SeCheckParam_0x2cf218(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_SeCheckParam_0x2cf218(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_SeCheckParam_0x2cf218");
 #endif
@@ -50,7 +50,6 @@ void cSnd_SeCheckParam_0x2cf218(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &SdeIssTblGet_0x374cb8, 0x374cb8u, 0x2cf238u)) {
         return;
     }
-    ctx->pc = 0x2CF238u;
 label_2cf238:
     // 0x2cf238: 0x21827  nor         $v1, $zero, $v0
     SET_GPR_U64(ctx, 3, ~(GPR_U64(ctx, 0) | GPR_U64(ctx, 2)));

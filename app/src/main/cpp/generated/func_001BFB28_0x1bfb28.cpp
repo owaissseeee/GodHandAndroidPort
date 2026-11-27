@@ -13,7 +13,7 @@
 
 // Function: func_001BFB28
 // Address: 0x1bfb28 - 0x1bfb80
-void func_001BFB28_0x1bfb28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001BFB28_0x1bfb28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001BFB28_0x1bfb28");
 #endif
@@ -47,7 +47,6 @@ void func_001BFB28_0x1bfb28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_getMeshPtr_0x14b6f8, 0x14b6f8u, 0x1bfb40u)) {
         return;
     }
-    ctx->pc = 0x1BFB40u;
 label_1bfb40:
     // 0x1bfb40: 0x8c440380  lw          $a0, 0x380($v0)
     ctx->pc = 0x1bfb40u;

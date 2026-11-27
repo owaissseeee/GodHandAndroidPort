@@ -6,6 +6,7 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,7 +14,7 @@
 
 // Function: floorf
 // Address: 0x3a4d18 - 0x3a4e00
-void floorf_0x3a4d18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void floorf_0x3a4d18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("floorf_0x3a4d18");
 #endif
@@ -24,6 +25,17 @@ void floorf_0x3a4d18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             default: break;
         }
     }
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    if (__builtin_expect(ctx->pc == 0x3a4d18u, 1)) {
+        const float x = ctx->f[12];
+        if (__builtin_expect(std::isfinite(x), 1)) {
+            ctx->f[0] = std::floorf(x);
+            ps2FastReturn(rdram, ctx, runtime, 0x3A4DF4u);
+            return;
+        }
+    }
+#endif
 
 
     // 0x3a4d18: 0x44026000  mfc1        $v0, $f12
@@ -119,7 +131,6 @@ void floorf_0x3a4d18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             goto label_3a4df0;
         }
     }
-    ctx->pc = 0x3A4D70u;
 label_3a4d70:
     // 0x3a4d70: 0x3c03bf80  lui         $v1, 0xBF80
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)49024 << 16));
@@ -142,7 +153,6 @@ label_3a4d70:
             goto label_3a4df0;
         }
     }
-    ctx->pc = 0x3A4D84u;
 label_3a4d84:
     // 0x3a4d84: 0x3442ffff  ori         $v0, $v0, 0xFFFF
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)65535);
@@ -159,7 +169,6 @@ label_3a4d84:
             goto label_3a4da0;
         }
     }
-    ctx->pc = 0x3A4D98u;
 label_3a4d98:
     // 0x3a4d98: 0x3e00008  jr          $ra
     ctx->pc = 0x3A4D98u;
@@ -180,7 +189,6 @@ label_3a4d98:
         return;
         #endif
     }
-    ctx->pc = 0x3A4DA0u;
 label_3a4da0:
     // 0x3a4da0: 0x3c017149  lui         $at, 0x7149
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)29001 << 16));
@@ -225,7 +233,6 @@ label_3a4da0:
     // 0x3a4dd0: 0x822021  addu        $a0, $a0, $v0
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 2)));
     // 0x3a4dd4: 0x61027  nor         $v0, $zero, $a2
-    ctx->pc = 0x3a4dd4u;
     SET_GPR_U64(ctx, 2, ~(GPR_U64(ctx, 0) | GPR_U64(ctx, 6)));
 label_3a4dd8:
     // 0x3a4dd8: 0x10000005  b           . + 4 + (0x5 << 2)
@@ -243,7 +250,6 @@ label_3a4dd8:
             goto label_3a4df0;
         }
     }
-    ctx->pc = 0x3A4DE0u;
 label_3a4de0:
     // 0x3a4de0: 0x14a2ffed  bne         $a1, $v0, . + 4 + (-0x13 << 2)
     ctx->pc = 0x3A4DE0u;
@@ -276,7 +282,6 @@ label_3a4de0:
         return;
         #endif
     }
-    ctx->pc = 0x3A4DF0u;
 label_3a4df0:
     // 0x3a4df0: 0x44846000  mtc1        $a0, $f12
     { uint32_t bits = GPR_U32(ctx, 4); std::memcpy(&ctx->f[12], &bits, sizeof(bits)); }

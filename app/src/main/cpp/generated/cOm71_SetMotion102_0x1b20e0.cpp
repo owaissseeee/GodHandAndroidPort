@@ -13,7 +13,7 @@
 
 // Function: cOm71_SetMotion102
 // Address: 0x1b20e0 - 0x1b2118
-void cOm71_SetMotion102_0x1b20e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm71_SetMotion102_0x1b20e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm71_SetMotion102_0x1b20e0");
 #endif
@@ -58,7 +58,6 @@ void cOm71_SetMotion102_0x1b20e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x1b210cu)) {
         return;
     }
-    ctx->pc = 0x1B210Cu;
 label_1b210c:
     // 0x1b210c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1b210cu;

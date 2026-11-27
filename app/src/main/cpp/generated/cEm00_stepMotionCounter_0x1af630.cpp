@@ -14,7 +14,7 @@
 
 // Function: cEm00_stepMotionCounter
 // Address: 0x1af630 - 0x1af680
-void cEm00_stepMotionCounter_0x1af630(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_stepMotionCounter_0x1af630(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_stepMotionCounter_0x1af630");
 #endif
@@ -46,7 +46,6 @@ void cEm00_stepMotionCounter_0x1af630(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x1AF63Cu, 0x1AF644u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1AF644u;
 label_1af644:
     // 0x1af644: 0x86030984  lh          $v1, 0x984($s0)
     ctx->pc = 0x1af644u;

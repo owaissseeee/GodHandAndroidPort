@@ -13,7 +13,7 @@
 
 // Function: Obj35D0_SendEvent_FF000601_D210
 // Address: 0x35d210 - 0x35d230
-void Obj35D0_SendEvent_FF000601_D210_0x35d210(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj35D0_SendEvent_FF000601_D210_0x35d210(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj35D0_SendEvent_FF000601_D210_0x35d210");
 #endif

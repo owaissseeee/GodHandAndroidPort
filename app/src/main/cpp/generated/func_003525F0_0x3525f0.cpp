@@ -13,7 +13,7 @@
 
 // Function: func_003525F0
 // Address: 0x3525f0 - 0x3526d0
-void func_003525F0_0x3525f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003525F0_0x3525f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003525F0_0x3525f0");
 #endif
@@ -67,7 +67,6 @@ void func_003525F0_0x3525f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &GetArrayElemA0C_35A1C8_0x35a1c8, 0x35a1c8u, 0x352624u)) {
         return;
     }
-    ctx->pc = 0x352624u;
 label_352624:
     // 0x352624: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -163,7 +162,6 @@ label_352624:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003526D0_0x3526d0, 0x3526d0u, 0x352660u)) {
         return;
     }
-    ctx->pc = 0x352660u;
 label_352660:
     // 0x352660: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x352660u;
@@ -180,14 +178,11 @@ label_352660:
             goto label_352678;
         }
     }
-    ctx->pc = 0x352668u;
 label_352668:
     // 0x352668: 0x24050034  addiu       $a1, $zero, 0x34
-    ctx->pc = 0x352668u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 52));
 label_35266c:
     // 0x35266c: 0x24060001  addiu       $a2, $zero, 0x1
-    ctx->pc = 0x35266cu;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_352670:
     // 0x352670: 0xc0d6800  jal         func_35A000
@@ -201,10 +196,8 @@ label_352670:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035A000_0x35a000, 0x35a000u, 0x352678u)) {
         return;
     }
-    ctx->pc = 0x352678u;
 label_352678:
     // 0x352678: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x352678u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_35267c:
     // 0x35267c: 0x1602000c  bne         $s0, $v0, . + 4 + (0xC << 2)
@@ -255,7 +248,6 @@ label_35267c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x352790u, 0x3526A8u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x3526B0u;
 label_3526b0:
     // 0x3526b0: 0xdfb10008  ld          $s1, 0x8($sp)
     ctx->pc = 0x3526b0u;

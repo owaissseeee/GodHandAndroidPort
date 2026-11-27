@@ -13,7 +13,7 @@
 
 // Function: SlotIds_sendSetup
 // Address: 0x2ae3f0 - 0x2ae4a8
-void SlotIds_sendSetup_0x2ae3f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SlotIds_sendSetup_0x2ae3f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SlotIds_sendSetup_0x2ae3f0");
 #endif
@@ -58,7 +58,6 @@ void SlotIds_sendSetup_0x2ae3f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     // 0x2ae418: 0x26048140  addiu       $a0, $s0, -0x7EC0
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 4294934848));
     // 0x2ae41c: 0x0  nop
-    ctx->pc = 0x2ae41cu;
     // NOP
 label_2ae420:
     // 0x2ae420: 0x2625b060  addiu       $a1, $s1, -0x4FA0
@@ -76,7 +75,6 @@ label_2ae420:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BE240_0x2be240, 0x2be240u, 0x2ae430u)) {
         return;
     }
-    ctx->pc = 0x2AE430u;
 label_2ae430:
     // 0x2ae430: 0x440fffb  bltz        $v0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x2AE430u;
@@ -136,7 +134,6 @@ label_2ae460:
     if (!runtime->callDirectStatic(rdram, ctx, &strlen_0x3a58dc, 0x3a58dcu, 0x2ae468u)) {
         return;
     }
-    ctx->pc = 0x2AE468u;
 label_2ae468:
     // 0x2ae468: 0x24460001  addiu       $a2, $v0, 0x1
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 2), 1));
@@ -155,7 +152,6 @@ label_2ae468:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BE240_0x2be240, 0x2be240u, 0x2ae47cu)) {
         return;
     }
-    ctx->pc = 0x2AE47Cu;
 label_2ae47c:
     // 0x2ae47c: 0x440fff8  bltz        $v0, . + 4 + (-0x8 << 2)
     ctx->pc = 0x2AE47Cu;

@@ -13,7 +13,7 @@
 
 // Function: cOmBase_setMeshDispFromLayer
 // Address: 0x1b7280 - 0x1b7300
-void cOmBase_setMeshDispFromLayer_0x1b7280(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmBase_setMeshDispFromLayer_0x1b7280(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmBase_setMeshDispFromLayer_0x1b7280");
 #endif
@@ -53,7 +53,6 @@ void cOmBase_setMeshDispFromLayer_0x1b7280(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_getMeshPtr_0x14b6f8, 0x14b6f8u, 0x1b72a0u)) {
         return;
     }
-    ctx->pc = 0x1B72A0u;
 label_1b72a0:
     // 0x1b72a0: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -82,7 +81,6 @@ label_1b72a0:
     ctx->pc = 0x1b72b8u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 3), 1036)));
     // 0x1b72bc: 0x0  nop
-    ctx->pc = 0x1b72bcu;
     // NOP
 label_1b72c0:
     // 0x1b72c0: 0x54510008  bnel        $v0, $s1, . + 4 + (0x8 << 2)
@@ -130,10 +128,8 @@ label_1b72c0:
             goto label_1b72dc;
         }
     }
-    ctx->pc = 0x1B72D8u;
 label_1b72d8:
     // 0x1b72d8: 0x34420001  ori         $v0, $v0, 0x1
-    ctx->pc = 0x1b72d8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)1);
 label_1b72dc:
     // 0x1b72dc: 0xac620380  sw          $v0, 0x380($v1)

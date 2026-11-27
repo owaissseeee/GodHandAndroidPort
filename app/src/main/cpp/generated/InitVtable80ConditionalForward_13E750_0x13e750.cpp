@@ -13,7 +13,7 @@
 
 // Function: InitVtable80ConditionalForward_13E750
 // Address: 0x13e750 - 0x13e780
-void InitVtable80ConditionalForward_13E750_0x13e750(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitVtable80ConditionalForward_13E750_0x13e750(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitVtable80ConditionalForward_13E750_0x13e750");
 #endif
@@ -58,7 +58,6 @@ void InitVtable80ConditionalForward_13E750_0x13e750(uint8_t* rdram, R5900Context
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x13e774u)) {
         return;
     }
-    ctx->pc = 0x13E774u;
 label_13e774:
     // 0x13e774: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x13e774u;

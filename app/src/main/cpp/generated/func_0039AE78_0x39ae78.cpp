@@ -13,7 +13,7 @@
 
 // Function: func_0039AE78
 // Address: 0x39ae78 - 0x39aea0
-void func_0039AE78_0x39ae78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0039AE78_0x39ae78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0039AE78_0x39ae78");
 #endif
@@ -45,7 +45,6 @@ void func_0039AE78_0x39ae78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3BAB50u, 0x39AE84u, 0x39AE8Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x39AE8Cu;
 label_39ae8c:
     // 0x39ae8c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x39ae8cu;

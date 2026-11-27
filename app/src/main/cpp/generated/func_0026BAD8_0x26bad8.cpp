@@ -13,7 +13,7 @@
 
 // Function: func_0026BAD8
 // Address: 0x26bad8 - 0x26bb70
-void func_0026BAD8_0x26bad8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0026BAD8_0x26bad8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0026BAD8_0x26bad8");
 #endif
@@ -92,7 +92,6 @@ void func_0026BAD8_0x26bad8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x26bb18u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 0)));
     // 0x26bb1c: 0x0  nop
-    ctx->pc = 0x26bb1cu;
     // NOP
 label_26bb20:
     // 0x26bb20: 0x10800004  beqz        $a0, . + 4 + (0x4 << 2)
@@ -121,7 +120,6 @@ label_26bb20:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001CFE88_0x1cfe88, 0x1cfe88u, 0x26bb30u)) {
         return;
     }
-    ctx->pc = 0x26BB30u;
 label_26bb30:
     // 0x26bb30: 0xae000000  sw          $zero, 0x0($s0)
     ctx->pc = 0x26bb30u;
@@ -166,7 +164,6 @@ label_26bb34:
             goto label_26bb20;
         }
     }
-    ctx->pc = 0x26BB50u;
 label_26bb50:
     // 0x26bb50: 0x7bb00050  lq          $s0, 0x50($sp)
     ctx->pc = 0x26bb50u;

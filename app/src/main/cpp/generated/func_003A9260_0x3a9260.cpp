@@ -13,7 +13,7 @@
 
 // Function: func_003A9260
 // Address: 0x3a9260 - 0x3a92e0
-void func_003A9260_0x3a9260(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003A9260_0x3a9260(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003A9260_0x3a9260");
 #endif
@@ -60,10 +60,8 @@ void func_003A9260_0x3a9260(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_3a9284;
         }
     }
-    ctx->pc = 0x3A9280u;
 label_3a9280:
     // 0x3a9280: 0x26520001  addiu       $s2, $s2, 0x1
-    ctx->pc = 0x3a9280u;
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), 1));
 label_3a9284:
     // 0x3a9284: 0x82240000  lb          $a0, 0x0($s1)
@@ -84,7 +82,6 @@ label_3a9284:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003AD0F8_0x3ad0f8, 0x3ad0f8u, 0x3a9298u)) {
         return;
     }
-    ctx->pc = 0x3A9298u;
 label_3a9298:
     // 0x3a9298: 0x82440000  lb          $a0, 0x0($s2)
     ctx->pc = 0x3a9298u;
@@ -100,7 +97,6 @@ label_3a9298:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003AD0F8_0x3ad0f8, 0x3ad0f8u, 0x3a92a4u)) {
         return;
     }
-    ctx->pc = 0x3A92A4u;
 label_3a92a4:
     // 0x3a92a4: 0x5202fff6  beql        $s0, $v0, . + 4 + (-0xA << 2)
     ctx->pc = 0x3A92A4u;
@@ -120,7 +116,6 @@ label_3a92a4:
             goto label_3a9280;
         }
     }
-    ctx->pc = 0x3A92ACu;
 label_3a92ac:
     // 0x3a92ac: 0xc0eb43e  jal         func_3AD0F8
     SET_GPR_U32(ctx, 31, 0x3A92B4u);
@@ -133,7 +128,6 @@ label_3a92ac:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003AD0F8_0x3ad0f8, 0x3ad0f8u, 0x3a92b4u)) {
         return;
     }
-    ctx->pc = 0x3A92B4u;
 label_3a92b4:
     // 0x3a92b4: 0x92440000  lbu         $a0, 0x0($s2)
     ctx->pc = 0x3a92b4u;
@@ -149,7 +143,6 @@ label_3a92b4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003AD0F8_0x3ad0f8, 0x3ad0f8u, 0x3a92c0u)) {
         return;
     }
-    ctx->pc = 0x3A92C0u;
 label_3a92c0:
     // 0x3a92c0: 0x2021023  subu        $v0, $s0, $v0
     SET_GPR_S32(ctx, 2, (int32_t)SUB32(GPR_U32(ctx, 16), GPR_U32(ctx, 2)));

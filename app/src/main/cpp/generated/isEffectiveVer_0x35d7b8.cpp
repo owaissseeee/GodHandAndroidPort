@@ -13,7 +13,7 @@
 
 // Function: isEffectiveVer
 // Address: 0x35d7b8 - 0x35d800
-void isEffectiveVer_0x35d7b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void isEffectiveVer_0x35d7b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("isEffectiveVer_0x35d7b8");
 #endif
@@ -45,7 +45,6 @@ void isEffectiveVer_0x35d7b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035D800_0x35d800, 0x35d800u, 0x35d7ccu)) {
         return;
     }
-    ctx->pc = 0x35D7CCu;
 label_35d7cc:
     // 0x35d7cc: 0x10400007  beqz        $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x35D7CCu;
@@ -95,10 +94,8 @@ label_35d7cc:
             goto label_35d7ec;
         }
     }
-    ctx->pc = 0x35D7E8u;
 label_35d7e8:
     // 0x35d7e8: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x35d7e8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_35d7ec:
     // 0x35d7ec: 0xdfb00000  ld          $s0, 0x0($sp)

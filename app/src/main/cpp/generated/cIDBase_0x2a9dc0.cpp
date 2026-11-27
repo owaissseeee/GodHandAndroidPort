@@ -13,7 +13,7 @@
 
 // Function: cIDBase
 // Address: 0x2a9dc0 - 0x2a9df8
-void cIDBase_0x2a9dc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDBase_0x2a9dc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDBase_0x2a9dc0");
 #endif
@@ -53,7 +53,6 @@ void cIDBase_0x2a9dc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_clear_0x2a9df8, 0x2a9df8u, 0x2a9de0u)) {
         return;
     }
-    ctx->pc = 0x2A9DE0u;
 label_2a9de0:
     // 0x2a9de0: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

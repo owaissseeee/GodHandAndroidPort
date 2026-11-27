@@ -13,7 +13,7 @@
 
 // Function: sceVpu0Reset
 // Address: 0x30abd8 - 0x30ac38
-void sceVpu0Reset_0x30abd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVpu0Reset_0x30abd8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVpu0Reset_0x30abd8");
 #endif

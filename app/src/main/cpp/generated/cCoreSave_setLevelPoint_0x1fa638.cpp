@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_setLevelPoint
 // Address: 0x1fa638 - 0x1fa658
-void cCoreSave_setLevelPoint_0x1fa638(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setLevelPoint_0x1fa638(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setLevelPoint_0x1fa638");
 #endif

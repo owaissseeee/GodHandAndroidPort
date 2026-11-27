@@ -13,7 +13,7 @@
 
 // Function: PowerOffCB
 // Address: 0x398818 - 0x398890
-void PowerOffCB_0x398818(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void PowerOffCB_0x398818(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("PowerOffCB_0x398818");
 #endif
@@ -57,7 +57,6 @@ void PowerOffCB_0x398818(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x39883cu)) {
         return;
     }
-    ctx->pc = 0x39883Cu;
 label_39883c:
     // 0x39883c: 0x3c05003a  lui         $a1, 0x3A
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)58 << 16));
@@ -80,7 +79,6 @@ label_39883c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B2488u, 0x398850u, 0x398858u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x398858u;
 label_398858:
     // 0x398858: 0x12000004  beqz        $s0, . + 4 + (0x4 << 2)
     ctx->pc = 0x398858u;
@@ -103,10 +101,8 @@ label_398858:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x398868u)) {
         return;
     }
-    ctx->pc = 0x398868u;
 label_398868:
     // 0x398868: 0x3c020040  lui         $v0, 0x40
-    ctx->pc = 0x398868u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)64 << 16));
 label_39886c:
     // 0x39886c: 0xae208664  sw          $zero, -0x799C($s1)

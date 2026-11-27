@@ -13,7 +13,7 @@
 
 // Function: cEmSetParam_updateSetDataRot
 // Address: 0x295400 - 0x295458
-void cEmSetParam_updateSetDataRot_0x295400(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmSetParam_updateSetDataRot_0x295400(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmSetParam_updateSetDataRot_0x295400");
 #endif
@@ -49,7 +49,6 @@ void cEmSetParam_updateSetDataRot_0x295400(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &cRoomSave_findEm_0x2bef60, 0x2bef60u, 0x29541cu)) {
         return;
     }
-    ctx->pc = 0x29541Cu;
 label_29541c:
     // 0x29541c: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));

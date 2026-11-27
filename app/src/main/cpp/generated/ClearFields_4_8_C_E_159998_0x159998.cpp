@@ -13,7 +13,7 @@
 
 // Function: ClearFields_4_8_C_E_159998
 // Address: 0x159998 - 0x1599b0
-void ClearFields_4_8_C_E_159998_0x159998(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearFields_4_8_C_E_159998_0x159998(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearFields_4_8_C_E_159998_0x159998");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: cE3_runDemo
 // Address: 0x201d20 - 0x201e80
-void cE3_runDemo_0x201d20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cE3_runDemo_0x201d20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cE3_runDemo_0x201d20");
 #endif
@@ -107,7 +107,6 @@ void cE3_runDemo_0x201d20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
             goto label_201e70;
         }
     }
-    ctx->pc = 0x201D5Cu;
 label_201d5c:
     // 0x201d5c: 0x1062003d  beq         $v1, $v0, . + 4 + (0x3D << 2)
     ctx->pc = 0x201D5Cu;
@@ -139,7 +138,6 @@ label_201d5c:
             goto label_201e74;
         }
     }
-    ctx->pc = 0x201D6Cu;
 label_201d6c:
     // 0x201d6c: 0x1040000b  beqz        $v0, . + 4 + (0xB << 2)
     ctx->pc = 0x201D6Cu;
@@ -179,7 +177,6 @@ label_201d6c:
     if (!runtime->callDirectStatic(rdram, ctx, &classFADE_start_0x307208, 0x307208u, 0x201d94u)) {
         return;
     }
-    ctx->pc = 0x201D94u;
 label_201d94:
     // 0x201d94: 0x1000000a  b           . + 4 + (0xA << 2)
     ctx->pc = 0x201D94u;
@@ -196,7 +193,6 @@ label_201d94:
             goto label_201dc0;
         }
     }
-    ctx->pc = 0x201D9Cu;
 label_201d9c:
     // 0x201d9c: 0x282d  daddu       $a1, $zero, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
@@ -221,7 +217,6 @@ label_201d9c:
     if (!runtime->callDirectStatic(rdram, ctx, &classFADE_start_0x307208, 0x307208u, 0x201dbcu)) {
         return;
     }
-    ctx->pc = 0x201DBCu;
 label_201dbc:
     // 0x201dbc: 0x92020001  lbu         $v0, 0x1($s0)
     ctx->pc = 0x201dbcu;
@@ -312,7 +307,6 @@ label_201dc8:
     if (!runtime->callDirectStatic(rdram, ctx, &Set_bg_mode_0x30e5c0, 0x30e5c0u, 0x201e3cu)) {
         return;
     }
-    ctx->pc = 0x201E3Cu;
 label_201e3c:
     // 0x201e3c: 0xc0c1db8  jal         func_3076E0
     SET_GPR_U32(ctx, 31, 0x201E44u);
@@ -325,7 +319,6 @@ label_201e3c:
     if (!runtime->callDirectStatic(rdram, ctx, &classFADE_kill_0x3076e0, 0x3076e0u, 0x201e44u)) {
         return;
     }
-    ctx->pc = 0x201E44u;
 label_201e44:
     // 0x201e44: 0x92020001  lbu         $v0, 0x1($s0)
     ctx->pc = 0x201e44u;
@@ -347,7 +340,6 @@ label_201e44:
             goto label_201e6c;
         }
     }
-    ctx->pc = 0x201E54u;
 label_201e54:
     // 0x201e54: 0x3c040074  lui         $a0, 0x74
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)116 << 16));

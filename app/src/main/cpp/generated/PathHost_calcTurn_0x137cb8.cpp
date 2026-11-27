@@ -13,7 +13,7 @@
 
 // Function: PathHost_calcTurn
 // Address: 0x137cb8 - 0x137e70
-void PathHost_calcTurn_0x137cb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void PathHost_calcTurn_0x137cb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("PathHost_calcTurn_0x137cb8");
 #endif
@@ -241,7 +241,6 @@ label_137d94:
             goto label_137db0;
         }
     }
-    ctx->pc = 0x137DB0u;
 label_137db0:
     // 0x137db0: 0x3a0202d  daddu       $a0, $sp, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -258,7 +257,6 @@ label_137db0:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0Normalize_0x30a370, 0x30a370u, 0x137dc0u)) {
         return;
     }
-    ctx->pc = 0x137DC0u;
 label_137dc0:
     // 0x137dc0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -273,7 +271,6 @@ label_137dc0:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0Normalize_0x30a370, 0x30a370u, 0x137dccu)) {
         return;
     }
-    ctx->pc = 0x137DCCu;
 label_137dcc:
     // 0x137dcc: 0x3a0202d  daddu       $a0, $sp, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -288,7 +285,6 @@ label_137dcc:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0InnerProduct_0x30a348, 0x30a348u, 0x137dd8u)) {
         return;
     }
-    ctx->pc = 0x137DD8u;
 label_137dd8:
     // 0x137dd8: 0xc07e050  jal         func_1F8140
     SET_GPR_U32(ctx, 31, 0x137DE0u);
@@ -301,7 +297,6 @@ label_137dd8:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Acos_0x1f8140, 0x1f8140u, 0x137de0u)) {
         return;
     }
-    ctx->pc = 0x137DE0u;
 label_137de0:
     // 0x137de0: 0x46000506  mov.s       $f20, $f0
     ctx->f[20] = FPU_MOV_S(ctx->f[0]);
@@ -332,7 +327,6 @@ label_137de0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00137E70_0x137e70, 0x137e70u, 0x137e04u)) {
         return;
     }
-    ctx->pc = 0x137E04u;
 label_137e04:
     // 0x137e04: 0x17d50004  bne         $fp, $s5, . + 4 + (0x4 << 2)
     ctx->pc = 0x137E04u;
@@ -366,10 +360,8 @@ label_137e04:
             goto label_137e1c;
         }
     }
-    ctx->pc = 0x137E18u;
 label_137e18:
     // 0x137e18: 0x4602a002  mul.s       $f0, $f20, $f2
-    ctx->pc = 0x137e18u;
     ctx->f[0] = FPU_MUL_S(ctx->f[20], ctx->f[2]);
 label_137e1c:
     // 0x137e1c: 0xe6c00000  swc1        $f0, 0x0($s6)

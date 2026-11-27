@@ -13,7 +13,7 @@
 
 // Function: GetActiveState_149310
 // Address: 0x149310 - 0x149350
-void GetActiveState_149310_0x149310(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetActiveState_149310_0x149310(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetActiveState_149310_0x149310");
 #endif
@@ -65,7 +65,6 @@ void GetActiveState_149310_0x149310(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &EntPool_allocClear_0x149488, 0x149488u, 0x149338u)) {
         return;
     }
-    ctx->pc = 0x149338u;
 label_149338:
     // 0x149338: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x149338u;
@@ -82,7 +81,6 @@ label_149338:
             goto label_149348;
         }
     }
-    ctx->pc = 0x149340u;
 label_149340:
     // 0x149340: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

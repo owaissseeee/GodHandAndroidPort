@@ -13,7 +13,7 @@
 
 // Function: setScrollFlagScrollLayer
 // Address: 0x2db3e8 - 0x2db478
-void setScrollFlagScrollLayer_0x2db3e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void setScrollFlagScrollLayer_0x2db3e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("setScrollFlagScrollLayer_0x2db3e8");
 #endif
@@ -72,7 +72,6 @@ void setScrollFlagScrollLayer_0x2db3e8(uint8_t* rdram, R5900Context* ctx, PS2Run
     ctx->pc = 0x2db420u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 7), 0)));
     // 0x2db424: 0x0  nop
-    ctx->pc = 0x2db424u;
     // NOP
 label_2db428:
     // 0x2db428: 0x906202fd  lbu         $v0, 0x2FD($v1)
@@ -128,7 +127,6 @@ label_2db428:
             goto label_2db458;
         }
     }
-    ctx->pc = 0x2DB44Cu;
 label_2db44c:
     // 0x2db44c: 0x831821  addu        $v1, $a0, $v1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 3)));
@@ -136,7 +134,6 @@ label_2db44c:
     ctx->pc = 0x2db450u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 0)));
     // 0x2db454: 0x451024  and         $v0, $v0, $a1
-    ctx->pc = 0x2db454u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 5));
 label_2db458:
     // 0x2db458: 0xac620000  sw          $v0, 0x0($v1)
@@ -169,7 +166,6 @@ label_2db460:
             goto label_2db428;
         }
     }
-    ctx->pc = 0x2DB470u;
 label_2db470:
     // 0x2db470: 0x3e00008  jr          $ra
     ctx->pc = 0x2DB470u;

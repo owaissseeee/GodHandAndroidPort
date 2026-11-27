@@ -13,7 +13,7 @@
 
 // Function: InitFiveSubstructs2AABA0_13D100
 // Address: 0x13d100 - 0x13d148
-void InitFiveSubstructs2AABA0_13D100_0x13d100(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitFiveSubstructs2AABA0_13D100_0x13d100(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitFiveSubstructs2AABA0_13D100_0x13d100");
 #endif
@@ -49,7 +49,6 @@ void InitFiveSubstructs2AABA0_13D100_0x13d100(uint8_t* rdram, R5900Context* ctx,
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_stepJitter_0x2aaba0, 0x2aaba0u, 0x13d114u)) {
         return;
     }
-    ctx->pc = 0x13D114u;
 label_13d114:
     // 0x13d114: 0xc0aaae8  jal         func_2AABA0
     SET_GPR_U32(ctx, 31, 0x13D11Cu);
@@ -62,7 +61,6 @@ label_13d114:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_stepJitter_0x2aaba0, 0x2aaba0u, 0x13d11cu)) {
         return;
     }
-    ctx->pc = 0x13D11Cu;
 label_13d11c:
     // 0x13d11c: 0xc0aaae8  jal         func_2AABA0
     SET_GPR_U32(ctx, 31, 0x13D124u);
@@ -75,7 +73,6 @@ label_13d11c:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_stepJitter_0x2aaba0, 0x2aaba0u, 0x13d124u)) {
         return;
     }
-    ctx->pc = 0x13D124u;
 label_13d124:
     // 0x13d124: 0xc0aaae8  jal         func_2AABA0
     SET_GPR_U32(ctx, 31, 0x13D12Cu);
@@ -88,7 +85,6 @@ label_13d124:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_stepJitter_0x2aaba0, 0x2aaba0u, 0x13d12cu)) {
         return;
     }
-    ctx->pc = 0x13D12Cu;
 label_13d12c:
     // 0x13d12c: 0xc0aaae8  jal         func_2AABA0
     SET_GPR_U32(ctx, 31, 0x13D134u);
@@ -101,7 +97,6 @@ label_13d12c:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_stepJitter_0x2aaba0, 0x2aaba0u, 0x13d134u)) {
         return;
     }
-    ctx->pc = 0x13D134u;
 label_13d134:
     // 0x13d134: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x13d134u;

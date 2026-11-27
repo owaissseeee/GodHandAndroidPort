@@ -13,7 +13,7 @@
 
 // Function: SetFlagOnChildren_167EE8
 // Address: 0x167ee8 - 0x167f20
-void SetFlagOnChildren_167EE8_0x167ee8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetFlagOnChildren_167EE8_0x167ee8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetFlagOnChildren_167EE8_0x167ee8");
 #endif
@@ -33,7 +33,6 @@ void SetFlagOnChildren_167EE8_0x167ee8(uint8_t* rdram, R5900Context* ctx, PS2Run
     // 0x167ef0: 0x3c070800  lui         $a3, 0x800
     SET_GPR_S32(ctx, 7, (int32_t)((uint32_t)2048 << 16));
     // 0x167ef4: 0x0  nop
-    ctx->pc = 0x167ef4u;
     // NOP
 label_167ef8:
     // 0x167ef8: 0x8ca20000  lw          $v0, 0x0($a1)

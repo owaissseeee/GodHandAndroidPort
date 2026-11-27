@@ -13,7 +13,7 @@
 
 // Function: func_003128B0
 // Address: 0x3128b0 - 0x312908
-void func_003128B0_0x3128b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003128B0_0x3128b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003128B0_0x3128b0");
 #endif
@@ -82,7 +82,6 @@ void func_003128B0_0x3128b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x3128DCu, 0x3128E4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3128E4u;
 label_3128e4:
     // 0x3128e4: 0xc0c3d68  jal         func_30F5A0
     SET_GPR_U32(ctx, 31, 0x3128ECu);
@@ -95,7 +94,6 @@ label_3128e4:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x3128ecu)) {
         return;
     }
-    ctx->pc = 0x3128ECu;
 label_3128ec:
     // 0x3128ec: 0xae200000  sw          $zero, 0x0($s1)
     ctx->pc = 0x3128ecu;

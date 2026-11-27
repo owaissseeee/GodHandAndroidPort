@@ -13,7 +13,7 @@
 
 // Function: func_00375500
 // Address: 0x375500 - 0x375600
-void func_00375500_0x375500(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00375500_0x375500(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00375500_0x375500");
 #endif
@@ -67,7 +67,6 @@ void func_00375500_0x375500(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &GetTimerSystemTime_0x3b7180, 0x3b7180u, 0x375530u)) {
         return;
     }
-    ctx->pc = 0x375530u;
 label_375530:
     // 0x375530: 0x2983c  dsll32      $s3, $v0, 0
     SET_GPR_U64(ctx, 19, GPR_U64(ctx, 2) << (32 + 0));
@@ -91,7 +90,6 @@ label_375530:
     if (!runtime->callDirectStatic(rdram, ctx, &SyncDCache_0x3b0510, 0x3b0510u, 0x37554cu)) {
         return;
     }
-    ctx->pc = 0x37554Cu;
 label_37554c:
     // 0x37554c: 0x3c020077  lui         $v0, 0x77
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)119 << 16));
@@ -108,7 +106,6 @@ label_37554c:
     if (!runtime->callDirectStatic(rdram, ctx, &SyncDCache_0x3b0510, 0x3b0510u, 0x37555cu)) {
         return;
     }
-    ctx->pc = 0x37555Cu;
 label_37555c:
     // 0x37555c: 0xc0dd63a  jal         func_3758E8
     SET_GPR_U32(ctx, 31, 0x375564u);
@@ -121,7 +118,6 @@ label_37555c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003758E8_0x3758e8, 0x3758e8u, 0x375564u)) {
         return;
     }
-    ctx->pc = 0x375564u;
 label_375564:
     // 0x375564: 0x8e100000  lw          $s0, 0x0($s0)
     ctx->pc = 0x375564u;
@@ -132,7 +128,6 @@ label_375564:
     if (!runtime->callDirectStatic(rdram, ctx, &GetTimerSystemTime_0x3b7180, 0x3b7180u, 0x375570u)) {
         return;
     }
-    ctx->pc = 0x375570u;
 label_375570:
     // 0x375570: 0x2203c  dsll32      $a0, $v0, 0
     SET_GPR_U64(ctx, 4, GPR_U64(ctx, 2) << (32 + 0));
@@ -170,7 +165,6 @@ label_375570:
             goto label_375590;
         }
     }
-    ctx->pc = 0x37558Cu;
 label_37558c:
     // 0x37558c: 0xae220094  sw          $v0, 0x94($s1)
     ctx->pc = 0x37558cu;
@@ -195,7 +189,6 @@ label_375590:
     if (!runtime->callDirectStatic(rdram, ctx, &TimerBusClock2USec_0x3b7590, 0x3b7590u, 0x3755a8u)) {
         return;
     }
-    ctx->pc = 0x3755A8u;
 label_3755a8:
     // 0x3755a8: 0x8e240094  lw          $a0, 0x94($s1)
     ctx->pc = 0x3755a8u;
@@ -250,7 +243,6 @@ label_3755c4:
             goto label_3755d8;
         }
     }
-    ctx->pc = 0x3755D8u;
 label_3755d8:
     // 0x3755d8: 0x7bb00050  lq          $s0, 0x50($sp)
     ctx->pc = 0x3755d8u;

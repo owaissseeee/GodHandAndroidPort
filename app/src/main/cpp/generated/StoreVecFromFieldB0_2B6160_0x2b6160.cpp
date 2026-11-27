@@ -13,7 +13,7 @@
 
 // Function: StoreVecFromFieldB0_2B6160
 // Address: 0x2b6160 - 0x2b61b0
-void StoreVecFromFieldB0_2B6160_0x2b6160(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void StoreVecFromFieldB0_2B6160_0x2b6160(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("StoreVecFromFieldB0_2B6160_0x2b6160");
 #endif
@@ -56,7 +56,6 @@ void StoreVecFromFieldB0_2B6160_0x2b6160(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B6420_0x2b6420, 0x2b6420u, 0x2b6184u)) {
         return;
     }
-    ctx->pc = 0x2B6184u;
 label_2b6184:
     // 0x2b6184: 0x260500b0  addiu       $a1, $s0, 0xB0
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 16), 176));
@@ -71,7 +70,6 @@ label_2b6184:
     if (!runtime->callDirectStatic(rdram, ctx, &ForwardVec3At30_147C60_0x147c60, 0x147c60u, 0x2b6190u)) {
         return;
     }
-    ctx->pc = 0x2B6190u;
 label_2b6190:
     // 0x2b6190: 0xdba40000  lqc2        $vf4, 0x0($sp)
     ctx->pc = 0x2b6190u;

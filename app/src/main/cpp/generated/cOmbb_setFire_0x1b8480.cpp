@@ -13,7 +13,7 @@
 
 // Function: cOmbb_setFire
 // Address: 0x1b8480 - 0x1b8518
-void cOmbb_setFire_0x1b8480(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmbb_setFire_0x1b8480(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmbb_setFire_0x1b8480");
 #endif
@@ -77,7 +77,6 @@ void cOmbb_setFire_0x1b8480(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &KillEffect_0x306200, 0x306200u, 0x1b84b4u)) {
         return;
     }
-    ctx->pc = 0x1B84B4u;
 label_1b84b4:
     // 0x1b84b4: 0x3c09ffff  lui         $t1, 0xFFFF
     SET_GPR_S32(ctx, 9, (int32_t)((uint32_t)65535 << 16));
@@ -102,7 +101,6 @@ label_1b84b4:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x1b84d4u)) {
         return;
     }
-    ctx->pc = 0x1B84D4u;
 label_1b84d4:
     // 0x1b84d4: 0x3c040060  lui         $a0, 0x60
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)96 << 16));
@@ -131,7 +129,6 @@ label_1b84d4:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x1b84fcu)) {
         return;
     }
-    ctx->pc = 0x1B84FCu;
 label_1b84fc:
     // 0x1b84fc: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));

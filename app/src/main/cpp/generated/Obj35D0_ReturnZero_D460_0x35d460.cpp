@@ -13,7 +13,7 @@
 
 // Function: Obj35D0_ReturnZero_D460
 // Address: 0x35d460 - 0x35d468
-void Obj35D0_ReturnZero_D460_0x35d460(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj35D0_ReturnZero_D460_0x35d460(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj35D0_ReturnZero_D460_0x35d460");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: CustomIDWork__dtor
 // Address: 0x2d5d80 - 0x2d5da8
-void CustomIDWork__dtor_0x2d5d80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CustomIDWork__dtor_0x2d5d80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CustomIDWork__dtor_0x2d5d80");
 #endif
@@ -51,7 +51,6 @@ void CustomIDWork__dtor_0x2d5d80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x2d5d98u)) {
         return;
     }
-    ctx->pc = 0x2D5D98u;
 label_2d5d98:
     // 0x2d5d98: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2d5d98u;

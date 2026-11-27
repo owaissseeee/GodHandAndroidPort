@@ -13,7 +13,7 @@
 
 // Function: SFHDS_SetHdr
 // Address: 0x34d0a8 - 0x34d160
-void SFHDS_SetHdr_0x34d0a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFHDS_SetHdr_0x34d0a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFHDS_SetHdr_0x34d0a8");
 #endif
@@ -86,7 +86,6 @@ void SFHDS_SetHdr_0x34d0a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &sfhds_IsPrvate2PketStart_0x34d160, 0x34d160u, 0x34d0f4u)) {
         return;
     }
-    ctx->pc = 0x34D0F4u;
 label_34d0f4:
     // 0x34d0f4: 0x54400007  bnel        $v0, $zero, . + 4 + (0x7 << 2)
     ctx->pc = 0x34D0F4u;
@@ -118,7 +117,6 @@ label_34d0f4:
     if (!runtime->callDirectStatic(rdram, ctx, &sfhds_IsPrvate2PketStart_0x34d160, 0x34d160u, 0x34d10cu)) {
         return;
     }
-    ctx->pc = 0x34D10Cu;
 label_34d10c:
     // 0x34d10c: 0x1040000d  beqz        $v0, . + 4 + (0xD << 2)
     ctx->pc = 0x34D10Cu;
@@ -135,7 +133,6 @@ label_34d10c:
             goto label_34d144;
         }
     }
-    ctx->pc = 0x34D114u;
 label_34d114:
     // 0x34d114: 0x2631000c  addiu       $s1, $s1, 0xC
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 12));
@@ -152,7 +149,6 @@ label_34d114:
     if (!runtime->callDirectStatic(rdram, ctx, &SFHDS_IsSfdHeader_0x34d1b8, 0x34d1b8u, 0x34d124u)) {
         return;
     }
-    ctx->pc = 0x34D124u;
 label_34d124:
     // 0x34d124: 0x260202d  daddu       $a0, $s3, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 19) + (uint64_t)GPR_U64(ctx, 0));
@@ -179,13 +175,11 @@ label_34d124:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034D210_0x34d210, 0x34d210u, 0x34d13cu)) {
         return;
     }
-    ctx->pc = 0x34D13Cu;
 label_34d13c:
     // 0x34d13c: 0xae420000  sw          $v0, 0x0($s2)
     ctx->pc = 0x34d13cu;
     WRITE32(ADD32(GPR_U32(ctx, 18), 0), GPR_U32(ctx, 2));
     // 0x34d140: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x34d140u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_34d144:
     // 0x34d144: 0xdfb00000  ld          $s0, 0x0($sp)

@@ -13,7 +13,7 @@
 
 // Function: _waitIpuIdle
 // Address: 0x39ecb8 - 0x39ecf0
-void _waitIpuIdle_0x39ecb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _waitIpuIdle_0x39ecb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_waitIpuIdle_0x39ecb8");
 #endif
@@ -48,7 +48,6 @@ void _waitIpuIdle_0x39ecb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x39E7C0u, 0x39ECDCu, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x39ECE4u;
 label_39ece4:
     // 0x39ece4: 0x3e00008  jr          $ra
     ctx->pc = 0x39ECE4u;

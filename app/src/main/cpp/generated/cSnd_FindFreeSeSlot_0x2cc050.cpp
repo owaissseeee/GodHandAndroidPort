@@ -13,7 +13,7 @@
 
 // Function: cSnd_FindFreeSeSlot
 // Address: 0x2cc050 - 0x2cc0c0
-void cSnd_FindFreeSeSlot_0x2cc050(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_FindFreeSeSlot_0x2cc050(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_FindFreeSeSlot_0x2cc050");
 #endif
@@ -51,7 +51,6 @@ void cSnd_FindFreeSeSlot_0x2cc050(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     ctx->pc = 0x2cc070u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 60)));
     // 0x2cc074: 0x0  nop
-    ctx->pc = 0x2cc074u;
     // NOP
 label_2cc078:
     // 0x2cc078: 0x102180  sll         $a0, $s0, 6
@@ -67,7 +66,6 @@ label_2cc078:
     if (!runtime->callDirectStatic(rdram, ctx, &cSeData_IsFree_0x2cfc78, 0x2cfc78u, 0x2cc084u)) {
         return;
     }
-    ctx->pc = 0x2CC084u;
 label_2cc084:
     // 0x2cc084: 0x54520003  bnel        $v0, $s2, . + 4 + (0x3 << 2)
     ctx->pc = 0x2CC084u;
@@ -99,7 +97,6 @@ label_2cc084:
             goto label_2cc0a4;
         }
     }
-    ctx->pc = 0x2CC094u;
 label_2cc094:
     // 0x2cc094: 0x2a020034  slti        $v0, $s0, 0x34
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 16) < (int64_t)(int32_t)52) ? 1 : 0);
@@ -122,7 +119,6 @@ label_2cc094:
         }
     }
     // 0x2cc0a0: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x2cc0a0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_2cc0a4:
     // 0x2cc0a4: 0x7bb00030  lq          $s0, 0x30($sp)

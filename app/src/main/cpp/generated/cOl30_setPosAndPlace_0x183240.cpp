@@ -13,7 +13,7 @@
 
 // Function: cOl30_setPosAndPlace
 // Address: 0x183240 - 0x1832a8
-void cOl30_setPosAndPlace_0x183240(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl30_setPosAndPlace_0x183240(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl30_setPosAndPlace_0x183240");
 #endif
@@ -115,7 +115,6 @@ label_183290:
     if (!runtime->callDirectStatic(rdram, ctx, &cOl30_SetInitialPosition_0x182ff8, 0x182ff8u, 0x183298u)) {
         return;
     }
-    ctx->pc = 0x183298u;
 label_183298:
     // 0x183298: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x183298u;

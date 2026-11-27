@@ -13,15 +13,16 @@ import android.graphics.Path
 import android.graphics.PointF
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.Typeface
 import android.os.Handler
 import android.os.Looper
-import android.os.VibrationEffect
-import android.os.Vibrator
+import android.view.Choreographer
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
+import com.owaissseeee.godhand.HapticController
 import com.owaissseeee.godhand.NativeBridge
 import com.owaissseeee.godhand.SettingsRepository
 import java.io.File
@@ -81,7 +82,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
     }
 
     private val density = resources.displayMetrics.density
-    private val vibrator = context.getSystemService(Vibrator::class.java)
+    var hapticController: HapticController? = null
     private val handler = Handler(Looper.getMainLooper())
     private var repo: SettingsRepository = SettingsRepository(context)
     private var isAutoRunPulsing = false
@@ -122,6 +123,80 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 postInvalidate()
             }
         }
+
+    var isCutsceneTouchActive: Boolean = false
+        set(value) {
+            if (field != value) {
+                field = value
+                resetVirtualControlsState()
+                if (!value && (cutsceneSkipDispatched || cutsceneHoldPointerId != -1)) {
+                    menuExitTimestamp = android.os.SystemClock.uptimeMillis()
+                    requireFreshTouchAfterMenu = true
+                }
+                resetCutsceneHoldState()
+                postInvalidate()
+            }
+        }
+
+    private var cutsceneHoldProgress: Float = 0f
+    private var cutsceneHoldPointerId: Int = -1
+    private var cutsceneSkipDispatched: Boolean = false
+    private var cutsceneAnimLastNanos: Long = 0L
+    private var cutsceneAnimPosted: Boolean = false
+    private val cutsceneFrameCallback = object : Choreographer.FrameCallback {
+        override fun doFrame(frameTimeNanos: Long) {
+            cutsceneAnimPosted = false
+            if (!isCutsceneTouchActive || isMenuTouchActive || isEditMode) {
+                resetCutsceneHoldState()
+                invalidate()
+                return
+            }
+            val prevNanos = cutsceneAnimLastNanos
+            cutsceneAnimLastNanos = frameTimeNanos
+            val dtSec = if (prevNanos == 0L) 0f else ((frameTimeNanos - prevNanos).coerceIn(0L, 100_000_000L)) / 1_000_000_000f
+
+            if (cutsceneHoldPointerId != -1) {
+                if (!cutsceneSkipDispatched) {
+                    cutsceneHoldProgress = (cutsceneHoldProgress + dtSec / 1.5f).coerceAtMost(1f)
+                    if (cutsceneHoldProgress >= 1f) {
+                        cutsceneSkipDispatched = true
+                        requireFreshTouchAfterMenu = true
+                        NativeBridge.triggerCutsceneSkip()
+                    }
+                }
+            } else if (cutsceneHoldProgress > 0f) {
+                cutsceneHoldProgress = (cutsceneHoldProgress - dtSec / 0.35f).coerceAtLeast(0f)
+            }
+
+            invalidate()
+            if ((cutsceneHoldPointerId != -1 && !cutsceneSkipDispatched) ||
+                (cutsceneHoldPointerId == -1 && cutsceneHoldProgress > 0f)) {
+                cutsceneAnimPosted = true
+                Choreographer.getInstance().postFrameCallback(this)
+            } else {
+                cutsceneAnimLastNanos = 0L
+            }
+        }
+    }
+
+    private fun scheduleCutsceneAnim() {
+        if (!cutsceneAnimPosted) {
+            cutsceneAnimLastNanos = System.nanoTime()
+            cutsceneAnimPosted = true
+            Choreographer.getInstance().postFrameCallback(cutsceneFrameCallback)
+        }
+    }
+
+    private fun resetCutsceneHoldState() {
+        cutsceneHoldPointerId = -1
+        cutsceneHoldProgress = 0f
+        cutsceneSkipDispatched = false
+        cutsceneAnimLastNanos = 0L
+        if (cutsceneAnimPosted) {
+            Choreographer.getInstance().removeFrameCallback(cutsceneFrameCallback)
+            cutsceneAnimPosted = false
+        }
+    }
 
     fun resetVirtualControlsState() {
         for (btn in buttons) {
@@ -375,6 +450,33 @@ class TouchControllerOverlay(context: Context) : View(context) {
         textAlign = Paint.Align.LEFT
         setShadowLayer(4f, 1f, 1f, 0xDD000000.toInt())
     }
+    private val cutsceneSkipLabel = "Hold to skip"
+    private val cutsceneTextPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = 0xFFFFFFFF.toInt()
+        textSize = 11.5f * density
+        typeface = Typeface.MONOSPACE
+        isFakeBoldText = true
+        textAlign = Paint.Align.LEFT
+        setShadowLayer(4f, 1f, 1f, 0xDD000000.toInt())
+    }
+    private val cutsceneRingStrokeWidth = 2.0f * density
+    private val cutsceneRingShadowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+        strokeWidth = cutsceneRingStrokeWidth + 1.4f * density
+        strokeCap = Paint.Cap.ROUND
+        color = 0x55000000.toInt()
+    }
+    private val cutsceneRingArcPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE
+        strokeWidth = cutsceneRingStrokeWidth
+        strokeCap = Paint.Cap.ROUND
+        color = 0xFFFFFFFF.toInt()
+    }
+    private val cutsceneArcRect = RectF()
+    private val cutsceneTextBounds = Rect().also {
+        cutsceneTextPaint.getTextBounds(cutsceneSkipLabel, 0, cutsceneSkipLabel.length, it)
+    }
+    private val cutsceneTextWidth = cutsceneTextPaint.measureText(cutsceneSkipLabel)
     private val fpsTitlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = 0xFF38BDF8.toInt()
         textSize = 10.5f * density
@@ -508,6 +610,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
     private val currentScreenBoxes = ArrayList<DebugBox>(24)
     private val debugBoxPool = ArrayList<DebugBox>(24)
     private var pooledBoxCount = 0
+    private var lastPopulatedScreenId: Int = -999
+    private var lastPopulatedSubState: Int = -999
 
     private fun findOverride(screenId: Int, subState: Int, buttonId: Int): RectF? {
         for (i in 0 until activeOverrides.size) {
@@ -669,6 +773,13 @@ class TouchControllerOverlay(context: Context) : View(context) {
             setOverride(o.screenId, o.subState, o.buttonId, o.x0, o.y0, o.x1, o.y1)
             NativeBridge.setHitboxOverride(o.screenId, o.subState, o.buttonId, o.x0, o.y0, o.x1, o.y1)
         }
+        menuTouchHandler.onCleanTapCheck = { tx, ty ->
+            val vw = width.toFloat().coerceAtLeast(1f)
+            val vh = height.toFloat().coerceAtLeast(1f)
+            if (isPointInActiveMenuBox(tx, ty, vw, vh)) {
+                hapticTick()
+            }
+        }
     }
 
     private fun updatePaintsOpacity() {
@@ -731,6 +842,12 @@ class TouchControllerOverlay(context: Context) : View(context) {
             2 -> FpsOverlayMode.HIDDEN
             else -> FpsOverlayMode.COMPACT
         }
+        hapticController?.updateConfig(
+            repo.vibrationEnabled,
+            repo.touchVibrationEnabled,
+            repo.inGameVibrationEnabled,
+            repo.vibrationStrength
+        )
         updatePaintsOpacity()
         updateCachedFpsStrings()
         invalidate()
@@ -828,6 +945,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
         super.onDetachedFromWindow()
         removeCallbacks(fpsUpdateRunnable)
         handler.removeCallbacks(swipeResetRunnable)
+        resetCutsceneHoldState()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -845,21 +963,22 @@ class TouchControllerOverlay(context: Context) : View(context) {
             }
 
             // User requirement: Settings button must NEVER hide at any time, must be visible and pressable
-            for (btn in buttons) {
-                if (btn.id == "SETTINGS" || btn.id == "MENU") {
-                    val bx = w * btn.normX
-                    val by = h * btn.normY
-                    val br = btn.effectiveRadiusDp * density
-                    val isPressed = btn.activePointerId != -1
-                    drawButton(canvas, btn, bx, by, br, isPressed)
-                }
-            }
+            drawSettingsAndMenuButtons(canvas, w, h)
 
             // Circular back button permanently rendered when menu touch is active (except Pause Root)
             drawCircularBackButton(canvas, w, h, screenId)
 
             if (!isEditMode) {
                 drawFpsOverlay(canvas)
+            }
+            return
+        }
+
+        if (isCutsceneTouchActive && !isEditMode) {
+            drawSettingsAndMenuButtons(canvas, w, h)
+            drawFpsOverlay(canvas)
+            if (!cutsceneSkipDispatched) {
+                drawCutsceneSkipOverlay(canvas, w, h)
             }
             return
         }
@@ -892,15 +1011,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
             }
         } else {
             // If touch controls are hidden for physical gamepad, always keep EXIT and SETTINGS accessible
-            for (btn in buttons) {
-                if (btn.id == "MENU" || btn.id == "SETTINGS") {
-                    val bx = w * btn.normX
-                    val by = h * btn.normY
-                    val br = btn.effectiveRadiusDp * density
-                    val isPressed = btn.activePointerId != -1
-                    drawButton(canvas, btn, bx, by, br, isPressed)
-                }
-            }
+            drawSettingsAndMenuButtons(canvas, w, h)
         }
 
         // 2. Draw Performance HUD Overlay (if not in edit mode)
@@ -1049,6 +1160,73 @@ class TouchControllerOverlay(context: Context) : View(context) {
         }
     }
 
+    private fun drawSettingsAndMenuButtons(canvas: Canvas, w: Float, h: Float) {
+        for (btn in buttons) {
+            if (btn.id == "SETTINGS" || btn.id == "MENU") {
+                val bx = w * btn.normX
+                val by = h * btn.normY
+                val br = btn.effectiveRadiusDp * density
+                val isPressed = btn.activePointerId != -1
+                drawButton(canvas, btn, bx, by, br, isPressed)
+            }
+        }
+    }
+
+    private fun handleSettingsAndMenuTouch(pid: Int, action: Int, x: Float, y: Float, w: Float, h: Float): Boolean {
+        for (btn in buttons) {
+            if (btn.id == "SETTINGS" || btn.id == "MENU") {
+                if (btn.activePointerId == pid) {
+                    if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP || action == MotionEvent.ACTION_CANCEL) {
+                        btn.activePointerId = -1
+                        invalidate()
+                        return true
+                    }
+                    if (action == MotionEvent.ACTION_MOVE) {
+                        return true
+                    }
+                }
+
+                val bx = w * btn.normX
+                val by = h * btn.normY
+                val br = btn.effectiveRadiusDp * density * 1.35f
+                if (hypot(x - bx, y - by) <= br) {
+                    if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN) {
+                        btn.activePointerId = pid
+                        hapticTick()
+                        invalidate()
+                        if (btn.id == "SETTINGS") {
+                            onSettingsClicked?.invoke()
+                        } else if (btn.id == "MENU") {
+                            onExitClicked?.invoke()
+                        }
+                        return true
+                    }
+                }
+            }
+        }
+        return false
+    }
+
+    private fun drawCutsceneSkipOverlay(canvas: Canvas, w: Float, h: Float) {
+        val diameter = cutsceneTextBounds.height().toFloat().coerceAtLeast(10f * density)
+        val ringR = ((diameter - cutsceneRingStrokeWidth) * 0.5f).coerceAtLeast(3f * density)
+        val marginRight = 22f * density
+        val marginBottom = 20f * density
+        val gap = 7f * density
+        val cx = w - marginRight - diameter * 0.5f
+        val cy = h - marginBottom - diameter * 0.5f
+        val textX = cx - diameter * 0.5f - gap - cutsceneTextWidth
+        val textBaseline = cy - (cutsceneTextBounds.top + cutsceneTextBounds.bottom) * 0.5f
+
+        canvas.drawText(cutsceneSkipLabel, textX, textBaseline, cutsceneTextPaint)
+        if (cutsceneHoldProgress > 0.001f) {
+            cutsceneArcRect.set(cx - ringR, cy - ringR, cx + ringR, cy + ringR)
+            val sweep = 360f * cutsceneHoldProgress
+            canvas.drawArc(cutsceneArcRect, -90f, sweep, false, cutsceneRingShadowPaint)
+            canvas.drawArc(cutsceneArcRect, -90f, sweep, false, cutsceneRingArcPaint)
+        }
+    }
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val w = width.toFloat().coerceAtLeast(1f)
         val h = height.toFloat().coerceAtLeast(1f)
@@ -1065,36 +1243,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
             val y = event.getY(idx)
 
             // User requirement: Settings button must ALWAYS be pressable even with direct menu touch active
-            for (btn in buttons) {
-                if (btn.id == "SETTINGS" || btn.id == "MENU") {
-                    if (btn.activePointerId == pid) {
-                        if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP || action == MotionEvent.ACTION_CANCEL) {
-                            btn.activePointerId = -1
-                            invalidate()
-                            return true
-                        }
-                        if (action == MotionEvent.ACTION_MOVE) {
-                            return true
-                        }
-                    }
-
-                    val bx = w * btn.normX
-                    val by = h * btn.normY
-                    val br = btn.effectiveRadiusDp * density * 1.35f
-                    if (hypot(x - bx, y - by) <= br) {
-                        if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN) {
-                            btn.activePointerId = pid
-                            hapticTick()
-                            invalidate()
-                            if (btn.id == "SETTINGS") {
-                                onSettingsClicked?.invoke()
-                            } else if (btn.id == "MENU") {
-                                onExitClicked?.invoke()
-                            }
-                            return true
-                        }
-                    }
-                }
+            if (handleSettingsAndMenuTouch(pid, action, x, y, w, h)) {
+                return true
             }
 
             // 2. Check [✏️ EDIT] button tap
@@ -1106,6 +1256,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
             if (x >= editBtnX && x <= editBtnX + editBtnW && y >= editBtnY && y <= editBtnY + editBtnH) {
                 if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_POINTER_DOWN) {
+                    hapticTick()
                     isHitboxEditMode = !isHitboxEditMode
                     if (!isHitboxEditMode) {
                         cropDragPointerId = -1
@@ -1133,7 +1284,6 @@ class TouchControllerOverlay(context: Context) : View(context) {
                 if (backButtonPointerId == pid) {
                     if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP) {
                         backButtonPointerId = -1
-                        hapticTick()
                         invalidate()
                         onBackTriggered?.invoke()
                         return true
@@ -1161,6 +1311,36 @@ class TouchControllerOverlay(context: Context) : View(context) {
             return menuTouchHandler.onTouchEvent(event)
         }
 
+        if (isCutsceneTouchActive) {
+            val x = event.getX(idx)
+            val y = event.getY(idx)
+
+            if (handleSettingsAndMenuTouch(pid, action, x, y, w, h)) {
+                return true
+            }
+
+            when (action) {
+                MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN -> {
+                    if (cutsceneHoldPointerId == -1) {
+                        cutsceneHoldPointerId = pid
+                        cutsceneSkipDispatched = false
+                        scheduleCutsceneAnim()
+                    }
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_POINTER_UP -> {
+                    if (pid == cutsceneHoldPointerId) {
+                        cutsceneHoldPointerId = -1
+                        scheduleCutsceneAnim()
+                    }
+                }
+                MotionEvent.ACTION_CANCEL -> {
+                    cutsceneHoldPointerId = -1
+                    scheduleCutsceneAnim()
+                }
+            }
+            return true
+        }
+
         if (android.os.SystemClock.uptimeMillis() - menuExitTimestamp < 250L) {
             return true
         }
@@ -1183,7 +1363,9 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     if (hypot(x - bx, y - by) <= br) {
                         btn.activePointerId = pid
                         hitButton = true
-                        hapticTick()
+                        if (btn.id == "MENU" || btn.id == "SETTINGS") {
+                            hapticTick()
+                        }
 
                         if (btn.id == "MENU") {
                             onExitClicked?.invoke()
@@ -1222,7 +1404,6 @@ class TouchControllerOverlay(context: Context) : View(context) {
                             rightCurrY = rightCenterY + sin(angle) * clamped
                             rightStickX = (dx / maxR).coerceIn(-1f, 1f)
                             rightStickY = (dy / maxR).coerceIn(-1f, 1f)
-                            hapticTick()
                         }
                     } else if (dodgeMode == DODGE_MODE_SWIPE) {
                         // Swipe dodge trigger zone on right side
@@ -1354,7 +1535,6 @@ class TouchControllerOverlay(context: Context) : View(context) {
                         val dy = y - swipeStartY
                         val threshold = 32f * density
                         if (hypot(dx, dy) >= threshold) {
-                            hapticTick()
                             if (abs(dy) > abs(dx)) {
                                 rightStickY = if (dy < 0) -1.0f else 1.0f
                                 rightStickX = 0f
@@ -1444,6 +1624,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     } else if (x in (w * 0.65f - 45f * density)..(w * 0.65f + 45f * density)) {
                         resetToDefaultLayout()
                     } else if (x in (w * 0.85f - 55f * density)..(w * 0.85f + 55f * density)) {
+                        hapticTick()
                         exitEditMode(save = true)
                     }
                     return true
@@ -1593,9 +1774,8 @@ class TouchControllerOverlay(context: Context) : View(context) {
         invalidate()
     }
 
-    private var lastHapticTimeMs = 0L
     private fun hapticTick() {
-        // No-op during gameplay to prevent synchronous Vibrator Binder IPC stalls on UI/RenderThread
+        hapticController?.triggerTouchTap()
     }
 
     private class DebugBox(
@@ -1704,59 +1884,33 @@ class TouchControllerOverlay(context: Context) : View(context) {
         currentScreenBoxes.add(box)
     }
 
-    private fun drawMenuDebugOverlay(canvas: Canvas, w: Float, h: Float) {
+    private fun isPointInActiveMenuBox(screenX: Float, screenY: Float, w: Float, h: Float): Boolean {
+        NativeBridge.getMenuDebugInfo(menuDebugInfoArray)
         val screenId = menuDebugInfoArray[0]
         val subState = menuDebugInfoArray[1]
-        val curIdx = menuDebugInfoArray[2]
-        val scrollTop = menuDebugInfoArray[3]
-        val lastTapId = menuDebugInfoArray[4]
-        val pendingTargetId = menuDebugInfoArray[5]
-
-        // 1. Draw Top-Right Mini HUD (cached until telemetry values change)
-        if (screenId != cachedHudScreenId || subState != cachedHudSubState ||
-            curIdx != cachedHudCurIdx || scrollTop != cachedHudScrollTop || lastTapId != cachedHudLastTapId) {
-            cachedHudScreenId = screenId
-            cachedHudSubState = subState
-            cachedHudCurIdx = curIdx
-            cachedHudScrollTop = scrollTop
-            cachedHudLastTapId = lastTapId
-            val screenName = when (screenId) {
-                1 -> "TITLE"
-                2 -> "PAUSE ROOT"
-                3 -> "TECHNIQUES"
-                4 -> "ROULETTE"
-                5 -> "OPTIONS"
-                6 -> "ITEMS"
-                7 -> "SAVELOAD"
-                8 -> "SHOP"
-                9 -> "STAGE MAP"
-                10 -> "DIALOG"
-                11 -> "MAP"
-                else -> "ID $screenId"
-            }
-            cachedHudLine = "$screenName | S:$subState C:$curIdx Scr:$scrollTop Tap:$lastTapId"
-            lastHudW = menuDebugHudTextPaint.measureText(cachedHudLine) + 14f * density
+        if (screenId <= 0) return false
+        if (!repo.showMenuDebugBoxes || lastPopulatedScreenId != screenId || lastPopulatedSubState != subState) {
+            populateMenuDebugBoxes(screenId, subState)
         }
-        val hudLine = cachedHudLine
-        val hudW = lastHudW
-        val hudH = 18f * density
-        val hudX = w - hudW - 10f * density
-        val hudY = 8f * density
-        canvas.drawRoundRect(hudX, hudY, hudX + hudW, hudY + hudH, 4f * density, 4f * density, menuDebugHudBgPaint)
-        canvas.drawRoundRect(hudX, hudY, hudX + hudW, hudY + hudH, 4f * density, 4f * density, menuDebugHudBorderPaint)
-        canvas.drawText(hudLine, hudX + 7f * density, hudY + 12f * density, menuDebugHudTextPaint)
+        val aspectMode = repo.aspectIdx
+        for (i in 0 until currentScreenBoxes.size) {
+            val b = currentScreenBoxes[i]
+            ps2ToScreenInto(b.x0, b.y0, w, h, aspectMode, scratchP0)
+            ps2ToScreenInto(b.x1, b.y1, w, h, aspectMode, scratchP1)
+            val minX = min(scratchP0.x, scratchP1.x)
+            val maxX = maxOf(scratchP0.x, scratchP1.x)
+            val minY = min(scratchP0.y, scratchP1.y)
+            val maxY = maxOf(scratchP0.y, scratchP1.y)
+            if (screenX in minX..maxX && screenY in minY..maxY) {
+                return true
+            }
+        }
+        return false
+    }
 
-        // 2. Draw [✏️ EDIT] / [✓ DONE] button next to Mini HUD
-        val editBtnText = if (isHitboxEditMode) "✓ DONE" else "✏️ EDIT"
-        val editBtnW = if (isHitboxEditMode) editBtnWDone else editBtnWEdit
-        val editBtnH = 18f * density
-        val editBtnX = hudX - editBtnW - 6f * density
-        val editBtnY = 8f * density
-        canvas.drawRoundRect(editBtnX, editBtnY, editBtnX + editBtnW, editBtnY + editBtnH, 4f * density, 4f * density, menuDebugHudBgPaint)
-        canvas.drawRoundRect(editBtnX, editBtnY, editBtnX + editBtnW, editBtnY + editBtnH, 4f * density, 4f * density, if (isHitboxEditMode) cropSelectedBoxPaint else menuDebugHudBorderPaint)
-        canvas.drawText(editBtnText, editBtnX + editBtnW * 0.5f, editBtnY + 12f * density, cropToolbarBtnTextPaint)
-
-        // 3. Populate hitboxes directly into pooled currentScreenBoxes (0 allocations)
+    private fun populateMenuDebugBoxes(screenId: Int, subState: Int) {
+        lastPopulatedScreenId = screenId
+        lastPopulatedSubState = subState
         currentScreenBoxes.clear()
         pooledBoxCount = 0
 
@@ -1923,6 +2077,62 @@ class TouchControllerOverlay(context: Context) : View(context) {
 
         selectedScreenId = screenId
         selectedSubState = subState
+    }
+
+    private fun drawMenuDebugOverlay(canvas: Canvas, w: Float, h: Float) {
+        val screenId = menuDebugInfoArray[0]
+        val subState = menuDebugInfoArray[1]
+        val curIdx = menuDebugInfoArray[2]
+        val scrollTop = menuDebugInfoArray[3]
+        val lastTapId = menuDebugInfoArray[4]
+        val pendingTargetId = menuDebugInfoArray[5]
+
+        // 1. Draw Top-Right Mini HUD (cached until telemetry values change)
+        if (screenId != cachedHudScreenId || subState != cachedHudSubState ||
+            curIdx != cachedHudCurIdx || scrollTop != cachedHudScrollTop || lastTapId != cachedHudLastTapId) {
+            cachedHudScreenId = screenId
+            cachedHudSubState = subState
+            cachedHudCurIdx = curIdx
+            cachedHudScrollTop = scrollTop
+            cachedHudLastTapId = lastTapId
+            val screenName = when (screenId) {
+                1 -> "TITLE"
+                2 -> "PAUSE ROOT"
+                3 -> "TECHNIQUES"
+                4 -> "ROULETTE"
+                5 -> "OPTIONS"
+                6 -> "ITEMS"
+                7 -> "SAVELOAD"
+                8 -> "SHOP"
+                9 -> "STAGE MAP"
+                10 -> "DIALOG"
+                11 -> "MAP"
+                else -> "ID $screenId"
+            }
+            cachedHudLine = "$screenName | S:$subState C:$curIdx Scr:$scrollTop Tap:$lastTapId"
+            lastHudW = menuDebugHudTextPaint.measureText(cachedHudLine) + 14f * density
+        }
+        val hudLine = cachedHudLine
+        val hudW = lastHudW
+        val hudH = 18f * density
+        val hudX = w - hudW - 10f * density
+        val hudY = 8f * density
+        canvas.drawRoundRect(hudX, hudY, hudX + hudW, hudY + hudH, 4f * density, 4f * density, menuDebugHudBgPaint)
+        canvas.drawRoundRect(hudX, hudY, hudX + hudW, hudY + hudH, 4f * density, 4f * density, menuDebugHudBorderPaint)
+        canvas.drawText(hudLine, hudX + 7f * density, hudY + 12f * density, menuDebugHudTextPaint)
+
+        // 2. Draw [✏️ EDIT] / [✓ DONE] button next to Mini HUD
+        val editBtnText = if (isHitboxEditMode) "✓ DONE" else "✏️ EDIT"
+        val editBtnW = if (isHitboxEditMode) editBtnWDone else editBtnWEdit
+        val editBtnH = 18f * density
+        val editBtnX = hudX - editBtnW - 6f * density
+        val editBtnY = 8f * density
+        canvas.drawRoundRect(editBtnX, editBtnY, editBtnX + editBtnW, editBtnY + editBtnH, 4f * density, 4f * density, menuDebugHudBgPaint)
+        canvas.drawRoundRect(editBtnX, editBtnY, editBtnX + editBtnW, editBtnY + editBtnH, 4f * density, 4f * density, if (isHitboxEditMode) cropSelectedBoxPaint else menuDebugHudBorderPaint)
+        canvas.drawText(editBtnText, editBtnX + editBtnW * 0.5f, editBtnY + 12f * density, cropToolbarBtnTextPaint)
+
+        // 3. Populate hitboxes directly into pooled currentScreenBoxes (0 allocations)
+        populateMenuDebugBoxes(screenId, subState)
         val aspectMode = repo.aspectIdx
 
         // 4. Render all boxes (0 allocations)
@@ -2373,6 +2583,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     val exportBtnW = 54f * density
                     val exportBtnX = tbX + tbW - exportBtnW - 4f * density
                     if (x in exportBtnX..(exportBtnX + exportBtnW)) {
+                        hapticTick()
                         val exportText = exportAllHitboxes()
                         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                         val clip = ClipData.newPlainText("GodHandHitboxes", exportText)
@@ -2398,6 +2609,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                         val resetBtnX = copyBtnX - resetBtnW - 4f * density
 
                         if (x in saveBtnX..(saveBtnX + saveBtnW)) {
+                            hapticTick()
                             repo.saveHitboxOverride(selectedScreenId, selectedSubState, selBox.id, selBox.x0, selBox.y0, selBox.x1, selBox.y1)
                             NativeBridge.setHitboxOverride(selectedScreenId, selectedSubState, selBox.id, selBox.x0, selBox.y0, selBox.x1, selBox.y1)
                             Toast.makeText(context, "Saved: [${selBox.x0.toInt()}, ${selBox.y0.toInt()}..${selBox.x1.toInt()}, ${selBox.y1.toInt()}]", Toast.LENGTH_SHORT).show()
@@ -2405,6 +2617,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                             return true
                         }
                         if (x in copyBtnX..(copyBtnX + copyBtnW)) {
+                            hapticTick()
                             val text = "{ ${selBox.id}, { ${selBox.x0}f, ${selBox.y0}f, ${selBox.x1}f, ${selBox.y1}f } }, // ${selBox.label}"
                             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                             val clip = ClipData.newPlainText("Hitbox", text)
@@ -2413,6 +2626,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                             return true
                         }
                         if (x in resetBtnX..(resetBtnX + resetBtnW)) {
+                            hapticTick()
                             removeOverride(selectedScreenId, selectedSubState, selBox.id)
                             repo.removeHitboxOverride(selectedScreenId, selectedSubState, selBox.id)
                             NativeBridge.clearHitboxOverrides()
@@ -2475,6 +2689,7 @@ class TouchControllerOverlay(context: Context) : View(context) {
                     val p0 = ps2ToScreen(b.x0, b.y0, w, h)
                     val p1 = ps2ToScreen(b.x1, b.y1, w, h)
                     if (x in p0.x..p1.x && y in p0.y..p1.y) {
+                        hapticTick()
                         selectedBoxId = b.id
                         cropDragPointerId = -1
                         activeCropHandle = null

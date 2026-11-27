@@ -13,7 +13,7 @@
 
 // Function: Obj35E8_SetIndirect_30_1C
 // Address: 0x35ef60 - 0x35ef70
-void Obj35E8_SetIndirect_30_1C_0x35ef60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj35E8_SetIndirect_30_1C_0x35ef60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj35E8_SetIndirect_30_1C_0x35ef60");
 #endif

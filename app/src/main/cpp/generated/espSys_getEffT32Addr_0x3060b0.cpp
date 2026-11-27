@@ -13,7 +13,7 @@
 
 // Function: espSys_getEffT32Addr
 // Address: 0x3060b0 - 0x306140
-void espSys_getEffT32Addr_0x3060b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void espSys_getEffT32Addr_0x3060b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("espSys_getEffT32Addr_0x3060b0");
 #endif
@@ -68,7 +68,6 @@ void espSys_getEffT32Addr_0x3060b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &cIDManager_getTexAddr_0x2acdc8, 0x2acdc8u, 0x3060d8u)) {
         return;
     }
-    ctx->pc = 0x3060D8u;
 label_3060d8:
     // 0x3060d8: 0x10000013  b           . + 4 + (0x13 << 2)
     ctx->pc = 0x3060D8u;
@@ -85,7 +84,6 @@ label_3060d8:
             goto label_306128;
         }
     }
-    ctx->pc = 0x3060E0u;
 label_3060e0:
     // 0x3060e0: 0xc0c1636  jal         func_3058D8
     ctx->pc = 0x3060E0u;
@@ -93,7 +91,6 @@ label_3060e0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003058D8_0x3058d8, 0x3058d8u, 0x3060e8u)) {
         return;
     }
-    ctx->pc = 0x3060E8u;
 label_3060e8:
     // 0x3060e8: 0x5040000e  beql        $v0, $zero, . + 4 + (0xE << 2)
     ctx->pc = 0x3060E8u;
@@ -163,7 +160,6 @@ label_3060e8:
             goto label_306124;
         }
     }
-    ctx->pc = 0x306114u;
 label_306114:
     // 0x306114: 0x441021  addu        $v0, $v0, $a0
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 4)));

@@ -13,7 +13,7 @@
 
 // Function: func_001F1038
 // Address: 0x1f1038 - 0x1f1100
-void func_001F1038_0x1f1038(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001F1038_0x1f1038(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001F1038_0x1f1038");
 #endif
@@ -65,7 +65,6 @@ void func_001F1038_0x1f1038(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cEmWrap_GetVitalMax_0x295e00, 0x295e00u, 0x1f1064u)) {
         return;
     }
-    ctx->pc = 0x1F1064u;
 label_1f1064:
     // 0x1f1064: 0x3c013e19  lui         $at, 0x3E19
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15897 << 16));
@@ -96,7 +95,6 @@ label_1f1064:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmWrap_SetVital_0x295d30, 0x295d30u, 0x1f1090u)) {
         return;
     }
-    ctx->pc = 0x1F1090u;
 label_1f1090:
     // 0x1f1090: 0x27b00010  addiu       $s0, $sp, 0x10
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
@@ -111,7 +109,6 @@ label_1f1090:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmWrap_GetVitalMax_0x295e00, 0x295e00u, 0x1f109cu)) {
         return;
     }
-    ctx->pc = 0x1F109Cu;
 label_1f109c:
     // 0x1f109c: 0x44820000  mtc1        $v0, $f0
     { uint32_t bits = GPR_U32(ctx, 2); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
@@ -136,7 +133,6 @@ label_1f109c:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmWrap_SetVital_0x295d30, 0x295d30u, 0x1f10bcu)) {
         return;
     }
-    ctx->pc = 0x1F10BCu;
 label_1f10bc:
     // 0x1f10bc: 0x27b00020  addiu       $s0, $sp, 0x20
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 29), 32));
@@ -151,7 +147,6 @@ label_1f10bc:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmWrap_GetVitalMax_0x295e00, 0x295e00u, 0x1f10c8u)) {
         return;
     }
-    ctx->pc = 0x1F10C8u;
 label_1f10c8:
     // 0x1f10c8: 0x44820000  mtc1        $v0, $f0
     { uint32_t bits = GPR_U32(ctx, 2); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
@@ -176,7 +171,6 @@ label_1f10c8:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmWrap_SetVital_0x295d30, 0x295d30u, 0x1f10e8u)) {
         return;
     }
-    ctx->pc = 0x1F10E8u;
 label_1f10e8:
     // 0x1f10e8: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x1f10e8u;

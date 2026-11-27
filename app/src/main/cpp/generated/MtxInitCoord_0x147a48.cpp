@@ -13,7 +13,7 @@
 
 // Function: MtxInitCoord
 // Address: 0x147a48 - 0x147ab8
-void MtxInitCoord_0x147a48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MtxInitCoord_0x147a48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MtxInitCoord_0x147a48");
 #endif
@@ -62,7 +62,6 @@ void MtxInitCoord_0x147a48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitTransVec_0x1476d0, 0x1476d0u, 0x147a74u)) {
         return;
     }
-    ctx->pc = 0x147A74u;
 label_147a74:
     // 0x147a74: 0x220382d  daddu       $a3, $s1, $zero
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -81,7 +80,6 @@ label_147a74:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxMulRotVec_0x147b60, 0x147b60u, 0x147a88u)) {
         return;
     }
-    ctx->pc = 0x147A88u;
 label_147a88:
     // 0x147a88: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -98,7 +96,6 @@ label_147a88:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxMulScaleVec_0x147bf8, 0x147bf8u, 0x147a98u)) {
         return;
     }
-    ctx->pc = 0x147A98u;
 label_147a98:
     // 0x147a98: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x147a98u;

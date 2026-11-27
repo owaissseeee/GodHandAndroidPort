@@ -13,7 +13,7 @@
 
 // Function: cDoor_setDoorJump
 // Address: 0x1fff80 - 0x2000f8
-void cDoor_setDoorJump_0x1fff80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDoor_setDoorJump_0x1fff80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDoor_setDoorJump_0x1fff80");
 #endif
@@ -107,7 +107,6 @@ void cDoor_setDoorJump_0x1fff80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_1fffd8;
         }
     }
-    ctx->pc = 0x1FFFCCu;
 label_1fffcc:
     // 0x1fffcc: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
@@ -122,7 +121,6 @@ label_1fffcc:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessage_closeAll_0x2aecd0, 0x2aecd0u, 0x1fffd8u)) {
         return;
     }
-    ctx->pc = 0x1FFFD8u;
 label_1fffd8:
     // 0x1fffd8: 0x8e030018  lw          $v1, 0x18($s0)
     ctx->pc = 0x1fffd8u;
@@ -173,7 +171,6 @@ label_1fffd8:
             goto label_20002c;
         }
     }
-    ctx->pc = 0x20000Cu;
 label_20000c:
     // 0x20000c: 0x30620002  andi        $v0, $v1, 0x2
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) & (uint64_t)(uint16_t)2);
@@ -201,7 +198,6 @@ label_20000c:
     // 0x200024: 0x402d  daddu       $t0, $zero, $zero
     SET_GPR_U64(ctx, 8, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x200028: 0x3c09ff00  lui         $t1, 0xFF00
-    ctx->pc = 0x200028u;
     SET_GPR_S32(ctx, 9, (int32_t)((uint32_t)65280 << 16));
 label_20002c:
     // 0x20002c: 0xc0c1c82  jal         func_307208
@@ -215,7 +211,6 @@ label_20002c:
     if (!runtime->callDirectStatic(rdram, ctx, &classFADE_start_0x307208, 0x307208u, 0x200034u)) {
         return;
     }
-    ctx->pc = 0x200034u;
 label_200034:
     // 0x200034: 0x3c03005d  lui         $v1, 0x5D
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)93 << 16));
@@ -251,7 +246,6 @@ label_200040:
     if (!runtime->callDirectStatic(rdram, ctx, &KeyStop_0x31afa0, 0x31afa0u, 0x200060u)) {
         return;
     }
-    ctx->pc = 0x200060u;
 label_200060:
     // 0x200060: 0x8e02fff4  lw          $v0, -0xC($s0)
     ctx->pc = 0x200060u;
@@ -322,7 +316,6 @@ label_200060:
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x2000c0u)) {
         return;
     }
-    ctx->pc = 0x2000C0u;
 label_2000c0:
     // 0x2000c0: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -337,7 +330,6 @@ label_2000c0:
     if (!runtime->callDirectStatic(rdram, ctx, &pl00_DiscardWeapon_0x12ac60, 0x12ac60u, 0x2000ccu)) {
         return;
     }
-    ctx->pc = 0x2000CCu;
 label_2000cc:
     // 0x2000cc: 0xc04ae7c  jal         func_12B9F0
     SET_GPR_U32(ctx, 31, 0x2000D4u);
@@ -350,7 +342,6 @@ label_2000cc:
     if (!runtime->callDirectStatic(rdram, ctx, &pl00_DiscardThrowObj_0x12b9f0, 0x12b9f0u, 0x2000d4u)) {
         return;
     }
-    ctx->pc = 0x2000D4u;
 label_2000d4:
     // 0x2000d4: 0x3c01447a  lui         $at, 0x447A
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)17530 << 16));

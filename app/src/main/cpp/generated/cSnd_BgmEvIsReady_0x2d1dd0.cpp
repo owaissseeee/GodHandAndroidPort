@@ -13,7 +13,7 @@
 
 // Function: cSnd_BgmEvIsReady
 // Address: 0x2d1dd0 - 0x2d1e18
-void cSnd_BgmEvIsReady_0x2d1dd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BgmEvIsReady_0x2d1dd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BgmEvIsReady_0x2d1dd0");
 #endif
@@ -38,7 +38,6 @@ void cSnd_BgmEvIsReady_0x2d1dd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_FindBgmNode_0x2d22b0, 0x2d22b0u, 0x2d1de0u)) {
         return;
     }
-    ctx->pc = 0x2D1DE0u;
 label_2d1de0:
     // 0x2d1de0: 0x50400007  beql        $v0, $zero, . + 4 + (0x7 << 2)
     ctx->pc = 0x2D1DE0u;
@@ -66,7 +65,6 @@ label_2d1de0:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_IsDone_0x2cca78, 0x2cca78u, 0x2d1df0u)) {
         return;
     }
-    ctx->pc = 0x2D1DF0u;
 label_2d1df0:
     // 0x2d1df0: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -86,7 +84,6 @@ label_2d1df0:
         }
     }
     // 0x2d1dfc: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2d1dfcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2d1e00:
     // 0x2d1e00: 0xdfbf0000  ld          $ra, 0x0($sp)

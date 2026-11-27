@@ -13,7 +13,7 @@
 
 // Function: func_0018F5D0
 // Address: 0x18f5d0 - 0x18f618
-void func_0018F5D0_0x18f5d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0018F5D0_0x18f5d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0018F5D0_0x18f5d0");
 #endif
@@ -48,7 +48,6 @@ void func_0018F5D0_0x18f5d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1B7380u, 0x18F5E0u, 0x18F5E8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x18F5E8u;
 label_18f5e8:
     // 0x18f5e8: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));

@@ -13,7 +13,7 @@
 
 // Function: cGameObj_pickDropItem
 // Address: 0x1b0150 - 0x1b0240
-void cGameObj_pickDropItem_0x1b0150(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObj_pickDropItem_0x1b0150(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObj_pickDropItem_0x1b0150");
 #endif
@@ -63,7 +63,6 @@ void cGameObj_pickDropItem_0x1b0150(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31D000u, 0x1B0170u, 0x1B0178u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1B0178u;
 label_1b0178:
     // 0x1b0178: 0x3c020043  lui         $v0, 0x43
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)67 << 16));
@@ -136,7 +135,6 @@ label_1b0178:
     // 0x1b01d8: 0x37a30004  ori         $v1, $sp, 0x4
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 29) | (uint64_t)(uint16_t)4);
     // 0x1b01dc: 0x0  nop
-    ctx->pc = 0x1b01dcu;
     // NOP
 label_1b01e0:
     // 0x1b01e0: 0xc4610000  lwc1        $f1, 0x0($v1)
@@ -176,7 +174,6 @@ label_1b01e0:
             goto label_1b0214;
         }
     }
-    ctx->pc = 0x1B01FCu;
 label_1b01fc:
     // 0x1b01fc: 0x46010001  sub.s       $f0, $f0, $f1
     ctx->f[0] = FPU_SUB_S(ctx->f[0], ctx->f[1]);
@@ -203,7 +200,6 @@ label_1b01fc:
         }
     }
     // 0x1b0210: 0x240203e2  addiu       $v0, $zero, 0x3E2
-    ctx->pc = 0x1b0210u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 994));
 label_1b0214:
     // 0x1b0214: 0xae020560  sw          $v0, 0x560($s0)

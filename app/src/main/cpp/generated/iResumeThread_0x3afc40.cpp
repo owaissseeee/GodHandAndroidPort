@@ -13,7 +13,7 @@
 
 // Function: iResumeThread
 // Address: 0x3afc40 - 0x3afc50
-void iResumeThread_0x3afc40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iResumeThread_0x3afc40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iResumeThread_0x3afc40");
 #endif

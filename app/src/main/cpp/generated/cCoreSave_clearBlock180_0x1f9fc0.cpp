@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_clearBlock180
 // Address: 0x1f9fc0 - 0x1f9ff0
-void cCoreSave_clearBlock180_0x1f9fc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_clearBlock180_0x1f9fc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_clearBlock180_0x1f9fc0");
 #endif
@@ -62,7 +62,6 @@ void cCoreSave_clearBlock180_0x1f9fc0(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x1f9fe0u)) {
         return;
     }
-    ctx->pc = 0x1F9FE0u;
 label_1f9fe0:
     // 0x1f9fe0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1f9fe0u;

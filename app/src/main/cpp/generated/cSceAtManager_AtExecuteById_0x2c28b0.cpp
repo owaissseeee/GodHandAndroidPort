@@ -13,7 +13,7 @@
 
 // Function: cSceAtManager_AtExecuteById
 // Address: 0x2c28b0 - 0x2c28f8
-void cSceAtManager_AtExecuteById_0x2c28b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSceAtManager_AtExecuteById_0x2c28b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSceAtManager_AtExecuteById_0x2c28b0");
 #endif
@@ -42,11 +42,9 @@ void cSceAtManager_AtExecuteById_0x2c28b0(uint8_t* rdram, R5900Context* ctx, PS2
         }
     }
 
-    ctx->pc = 0x2c28b0u;
 
 label_2c28b0:
     // 0x2c28b0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2c28b0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_2c28b4:
     // 0x2c28b4: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -75,7 +73,6 @@ label_2c28bc:
     if (!runtime->callDirectStatic(rdram, ctx, &cSceAtManager_getUnit_0x2c3118, 0x2c3118u, 0x2c28c0u)) {
         return;
     }
-    ctx->pc = 0x2C28C0u;
 label_2c28c0:
     // 0x2c28c0: 0x40202d  daddu       $a0, $v0, $zero
     ctx->pc = 0x2c28c0u;
@@ -107,22 +104,18 @@ label_2c28c8:
             goto label_2c28e8;
         }
     }
-    ctx->pc = 0x2C28CCu;
 label_2c28cc:
     // 0x2c28cc: 0x90830035  lbu         $v1, 0x35($a0)
     ctx->pc = 0x2c28ccu;
     SET_GPR_ZE32(ctx, 3, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 53)));
 label_2c28d0:
     // 0x2c28d0: 0x24422650  addiu       $v0, $v0, 0x2650
-    ctx->pc = 0x2c28d0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 9808));
 label_2c28d4:
     // 0x2c28d4: 0x318c0  sll         $v1, $v1, 3
-    ctx->pc = 0x2c28d4u;
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 3), 3));
 label_2c28d8:
     // 0x2c28d8: 0x621821  addu        $v1, $v1, $v0
-    ctx->pc = 0x2c28d8u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 2)));
 label_2c28dc:
     // 0x2c28dc: 0x8c620000  lw          $v0, 0x0($v1)
@@ -156,7 +149,6 @@ label_2c28e4:
             return;
         }
     }
-    ctx->pc = 0x2C28E8u;
 label_2c28e8:
     // 0x2c28e8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2c28e8u;
@@ -192,7 +184,6 @@ label_2c28f0:
         return;
         #endif
     }
-    ctx->pc = 0x2C28F4u;
 label_2c28f4:
     // 0x2c28f4: 0x0  nop
     // NOP

@@ -13,7 +13,7 @@
 
 // Function: cEmSetParam_updateSetDataFlag
 // Address: 0x295498 - 0x2954d0
-void cEmSetParam_updateSetDataFlag_0x295498(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmSetParam_updateSetDataFlag_0x295498(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmSetParam_updateSetDataFlag_0x295498");
 #endif
@@ -49,7 +49,6 @@ void cEmSetParam_updateSetDataFlag_0x295498(uint8_t* rdram, R5900Context* ctx, P
     if (!runtime->callDirectStatic(rdram, ctx, &cRoomSave_findEm_0x2bef60, 0x2bef60u, 0x2954b4u)) {
         return;
     }
-    ctx->pc = 0x2954B4u;
 label_2954b4:
     // 0x2954b4: 0x54400001  bnel        $v0, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x2954B4u;
@@ -66,7 +65,6 @@ label_2954b4:
             goto label_2954bc;
         }
     }
-    ctx->pc = 0x2954BCu;
 label_2954bc:
     // 0x2954bc: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2954bcu;

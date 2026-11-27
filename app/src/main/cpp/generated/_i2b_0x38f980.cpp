@@ -13,7 +13,7 @@
 
 // Function: _i2b
 // Address: 0x38f980 - 0x38f9b8
-void _i2b_0x38f980(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _i2b_0x38f980(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_i2b_0x38f980");
 #endif
@@ -47,7 +47,6 @@ void _i2b_0x38f980(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &Brealloc_0x38f5b8, 0x38f5b8u, 0x38f998u)) {
         return;
     }
-    ctx->pc = 0x38F998u;
 label_38f998:
     // 0x38f998: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));

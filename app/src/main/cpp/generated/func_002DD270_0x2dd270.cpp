@@ -13,7 +13,7 @@
 
 // Function: func_002DD270
 // Address: 0x2dd270 - 0x2dd300
-void func_002DD270_0x2dd270(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002DD270_0x2dd270(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002DD270_0x2dd270");
 #endif
@@ -51,7 +51,6 @@ void func_002DD270_0x2dd270(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x2dd288u)) {
         return;
     }
-    ctx->pc = 0x2DD288u;
 label_2dd288:
     // 0x2dd288: 0x12200018  beqz        $s1, . + 4 + (0x18 << 2)
     ctx->pc = 0x2DD288u;
@@ -97,7 +96,6 @@ label_2dd288:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_IsSet_Field_15F4_Bit_400000_10B698_0x10b698, 0x10b698u, 0x2dd2a4u)) {
         return;
     }
-    ctx->pc = 0x2DD2A4u;
 label_2dd2a4:
     // 0x2dd2a4: 0x54400012  bnel        $v0, $zero, . + 4 + (0x12 << 2)
     ctx->pc = 0x2DD2A4u;
@@ -142,7 +140,6 @@ label_2dd2a4:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_CkPlCatched_0x293100, 0x293100u, 0x2dd2c8u)) {
         return;
     }
-    ctx->pc = 0x2DD2C8u;
 label_2dd2c8:
     // 0x2dd2c8: 0x54400009  bnel        $v0, $zero, . + 4 + (0x9 << 2)
     ctx->pc = 0x2DD2C8u;
@@ -182,7 +179,6 @@ label_2dd2c8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00129718_0x129718, 0x129718u, 0x2dd2ecu)) {
         return;
     }
-    ctx->pc = 0x2DD2ECu;
 label_2dd2ec:
     // 0x2dd2ec: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2dd2ecu;

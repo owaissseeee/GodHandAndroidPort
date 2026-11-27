@@ -13,7 +13,7 @@
 
 // Function: _IO_adjust_column
 // Address: 0x38ce10 - 0x38ce58
-void ps2__IO_adjust_column_0x38ce10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_adjust_column_0x38ce10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_adjust_column_0x38ce10");
 #endif
@@ -52,7 +52,6 @@ void ps2__IO_adjust_column_0x38ce10(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     // 0x38ce28: 0x2463ffff  addiu       $v1, $v1, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294967295));
     // 0x38ce2c: 0x0  nop
-    ctx->pc = 0x38ce2cu;
     // NOP
 label_38ce30:
     // 0x38ce30: 0x80620000  lb          $v0, 0x0($v1)
@@ -92,7 +91,6 @@ label_38ce30:
         return;
         #endif
     }
-    ctx->pc = 0x38CE44u;
 label_38ce44:
     // 0x38ce44: 0xa3102b  sltu        $v0, $a1, $v1
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 5) < (uint64_t)GPR_U64(ctx, 3)) ? 1 : 0);
@@ -114,7 +112,6 @@ label_38ce44:
             goto label_38ce30;
         }
     }
-    ctx->pc = 0x38CE50u;
 label_38ce50:
     // 0x38ce50: 0x3e00008  jr          $ra
     ctx->pc = 0x38CE50u;

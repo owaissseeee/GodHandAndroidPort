@@ -13,7 +13,7 @@
 
 // Function: func_0026B4E8
 // Address: 0x26b4e8 - 0x26b600
-void func_0026B4E8_0x26b4e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0026B4E8_0x26b4e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0026B4E8_0x26b4e8");
 #endif
@@ -79,7 +79,6 @@ void func_0026B4E8_0x26b4e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x26b518u)) {
         return;
     }
-    ctx->pc = 0x26B518u;
 label_26b518:
     // 0x26b518: 0x8c4500f0  lw          $a1, 0xF0($v0)
     ctx->pc = 0x26b518u;
@@ -103,7 +102,6 @@ label_26b518:
     if (!runtime->callDirectStatic(rdram, ctx, &Turn_dest_0x2da038, 0x2da038u, 0x26b534u)) {
         return;
     }
-    ctx->pc = 0x26B534u;
 label_26b534:
     // 0x26b534: 0xc62c0104  lwc1        $f12, 0x104($s1)
     ctx->pc = 0x26b534u;
@@ -119,7 +117,6 @@ label_26b534:
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_0x1f7d48, 0x1f7d48u, 0x26b540u)) {
         return;
     }
-    ctx->pc = 0x26B540u;
 label_26b540:
     // 0x26b540: 0x46000306  mov.s       $f12, $f0
     ctx->f[12] = FPU_MOV_S(ctx->f[0]);
@@ -134,7 +131,6 @@ label_26b540:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitRotY_0x147988, 0x147988u, 0x26b54cu)) {
         return;
     }
-    ctx->pc = 0x26B54Cu;
 label_26b54c:
     // 0x26b54c: 0x3c013e99  lui         $at, 0x3E99
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16025 << 16));
@@ -165,7 +161,6 @@ label_26b54c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x26b574u)) {
         return;
     }
-    ctx->pc = 0x26B574u;
 label_26b574:
     // 0x26b574: 0x8e4300f0  lw          $v1, 0xF0($s2)
     ctx->pc = 0x26b574u;
@@ -274,7 +269,6 @@ label_26b5dc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001CFB28_0x1cfb28, 0x1cfb28u, 0x26b5e8u)) {
         return;
     }
-    ctx->pc = 0x26B5E8u;
 label_26b5e8:
     // 0x26b5e8: 0x7bb00080  lq          $s0, 0x80($sp)
     ctx->pc = 0x26b5e8u;

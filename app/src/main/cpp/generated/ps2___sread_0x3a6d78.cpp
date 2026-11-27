@@ -13,7 +13,7 @@
 
 // Function: __sread
 // Address: 0x3a6d78 - 0x3a6de0
-void ps2___sread_0x3a6d78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___sread_0x3a6d78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___sread_0x3a6d78");
 #endif
@@ -56,7 +56,6 @@ void ps2___sread_0x3a6d78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_003AE068_0x3ae068, 0x3ae068u, 0x3a6da0u)) {
         return;
     }
-    ctx->pc = 0x3A6DA0u;
 label_3a6da0:
     // 0x3a6da0: 0x2183c  dsll32      $v1, $v0, 0
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 2) << (32 + 0));
@@ -97,7 +96,6 @@ label_3a6da0:
             goto label_3a6dc8;
         }
     }
-    ctx->pc = 0x3A6DC0u;
 label_3a6dc0:
     // 0x3a6dc0: 0x3042efff  andi        $v0, $v0, 0xEFFF
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)61439);

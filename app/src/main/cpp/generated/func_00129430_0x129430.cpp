@@ -13,7 +13,7 @@
 
 // Function: func_00129430
 // Address: 0x129430 - 0x129578
-void func_00129430_0x129430(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00129430_0x129430(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00129430_0x129430");
 #endif
@@ -68,7 +68,6 @@ void func_00129430_0x129430(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_129458;
         }
     }
-    ctx->pc = 0x129458u;
 label_129458:
     // 0x129458: 0x92031615  lbu         $v1, 0x1615($s0)
     ctx->pc = 0x129458u;
@@ -130,7 +129,6 @@ label_129458:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x1294a8u)) {
         return;
     }
-    ctx->pc = 0x1294A8u;
 label_1294a8:
     // 0x1294a8: 0x26249b70  addiu       $a0, $s1, -0x6490
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 17), 4294941552));
@@ -145,7 +143,6 @@ label_1294a8:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_addGameLevelPoint_0x1fa280, 0x1fa280u, 0x1294b4u)) {
         return;
     }
-    ctx->pc = 0x1294B4u;
 label_1294b4:
     // 0x1294b4: 0x82021615  lb          $v0, 0x1615($s0)
     ctx->pc = 0x1294b4u;
@@ -174,7 +171,6 @@ label_1294b4:
     // 0x1294cc: 0x3c013f00  lui         $at, 0x3F00
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16128 << 16));
     // 0x1294d0: 0x4481a000  mtc1        $at, $f20
-    ctx->pc = 0x1294d0u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[20], &bits, sizeof(bits)); }
 label_1294d4:
     // 0x1294d4: 0xc07e804  jal         func_1FA010
@@ -188,7 +184,6 @@ label_1294d4:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getGameLevel_0x1fa010, 0x1fa010u, 0x1294dcu)) {
         return;
     }
-    ctx->pc = 0x1294DCu;
 label_1294dc:
     // 0x1294dc: 0x14520005  bne         $v0, $s2, . + 4 + (0x5 << 2)
     ctx->pc = 0x1294DCu;
@@ -212,7 +207,6 @@ label_1294dc:
     // 0x1294ec: 0x0  nop
     // NOP
     // 0x1294f0: 0x4600a502  mul.s       $f20, $f20, $f0
-    ctx->pc = 0x1294f0u;
     ctx->f[20] = FPU_MUL_S(ctx->f[20], ctx->f[0]);
 label_1294f4:
     // 0x1294f4: 0x282d  daddu       $a1, $zero, $zero
@@ -230,7 +224,6 @@ label_1294f4:
     if (!runtime->callDirectStatic(rdram, ctx, &cHeatSys_AddHeatGage_0x2a9978, 0x2a9978u, 0x129504u)) {
         return;
     }
-    ctx->pc = 0x129504u;
 label_129504:
     // 0x129504: 0x82051615  lb          $a1, 0x1615($s0)
     ctx->pc = 0x129504u;
@@ -302,10 +295,8 @@ label_129514:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x129550u)) {
         return;
     }
-    ctx->pc = 0x129550u;
 label_129550:
     // 0x129550: 0x220202d  daddu       $a0, $s1, $zero
-    ctx->pc = 0x129550u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
 label_129554:
     // 0x129554: 0xc07e8a0  jal         func_1FA280
@@ -319,7 +310,6 @@ label_129554:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_addGameLevelPoint_0x1fa280, 0x1fa280u, 0x12955cu)) {
         return;
     }
-    ctx->pc = 0x12955Cu;
 label_12955c:
     // 0x12955c: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x12955cu;

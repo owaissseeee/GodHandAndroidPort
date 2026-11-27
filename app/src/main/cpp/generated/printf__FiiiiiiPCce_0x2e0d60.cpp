@@ -13,7 +13,7 @@
 
 // Function: printf__FiiiiiiPCce
 // Address: 0x2e0d60 - 0x2e0da8
-void printf__FiiiiiiPCce_0x2e0d60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void printf__FiiiiiiPCce_0x2e0d60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("printf__FiiiiiiPCce_0x2e0d60");
 #endif
@@ -63,7 +63,6 @@ void printf__FiiiiiiPCce_0x2e0d60(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &func_002E0B78_0x2e0b78, 0x2e0b78u, 0x2e0d90u)) {
         return;
     }
-    ctx->pc = 0x2E0D90u;
 label_2e0d90:
     // 0x2e0d90: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x2e0d90u;

@@ -13,7 +13,7 @@
 
 // Function: InitDogRaceResultIdWorks
 // Address: 0x1ecaf0 - 0x1ecbd0
-void InitDogRaceResultIdWorks_0x1ecaf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitDogRaceResultIdWorks_0x1ecaf0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitDogRaceResultIdWorks_0x1ecaf0");
 #endif
@@ -74,7 +74,6 @@ void InitDogRaceResultIdWorks_0x1ecaf0(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_initialize_0x2a9ea0, 0x2a9ea0u, 0x1ecb24u)) {
         return;
     }
-    ctx->pc = 0x1ECB24u;
 label_1ecb24:
     // 0x1ecb24: 0x26510060  addiu       $s1, $s2, 0x60
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 18), 96));
@@ -89,7 +88,6 @@ label_1ecb24:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_restartAnim_0x2abbe8, 0x2abbe8u, 0x1ecb30u)) {
         return;
     }
-    ctx->pc = 0x1ECB30u;
 label_1ecb30:
     // 0x1ecb30: 0x260282d  daddu       $a1, $s3, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 19) + (uint64_t)GPR_U64(ctx, 0));
@@ -104,7 +102,6 @@ label_1ecb30:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_getIDWork_0x2aa410, 0x2aa410u, 0x1ecb3cu)) {
         return;
     }
-    ctx->pc = 0x1ECB3Cu;
 label_1ecb3c:
     // 0x1ecb3c: 0x26730001  addiu       $s3, $s3, 0x1
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 19), 1));
@@ -121,7 +118,6 @@ label_1ecb3c:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_Initialize_0x2d5da8, 0x2d5da8u, 0x1ecb4cu)) {
         return;
     }
-    ctx->pc = 0x1ECB4Cu;
 label_1ecb4c:
     // 0x1ecb4c: 0x2a62002d  slti        $v0, $s3, 0x2D
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 19) < (int64_t)(int32_t)45) ? 1 : 0);
@@ -156,7 +152,6 @@ label_1ecb4c:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMessNo_0x2d6560, 0x2d6560u, 0x1ecb64u)) {
         return;
     }
-    ctx->pc = 0x1ECB64u;
 label_1ecb64:
     // 0x1ecb64: 0x26441534  addiu       $a0, $s2, 0x1534
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 18), 5428));
@@ -171,7 +166,6 @@ label_1ecb64:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMessNo_0x2d6560, 0x2d6560u, 0x1ecb70u)) {
         return;
     }
-    ctx->pc = 0x1ECB70u;
 label_1ecb70:
     // 0x1ecb70: 0x26440ee8  addiu       $a0, $s2, 0xEE8
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 18), 3816));
@@ -186,7 +180,6 @@ label_1ecb70:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMessNo_0x2d6560, 0x2d6560u, 0x1ecb7cu)) {
         return;
     }
-    ctx->pc = 0x1ECB7Cu;
 label_1ecb7c:
     // 0x1ecb7c: 0x264415b0  addiu       $a0, $s2, 0x15B0
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 18), 5552));
@@ -201,7 +194,6 @@ label_1ecb7c:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMessNo_0x2d6560, 0x2d6560u, 0x1ecb88u)) {
         return;
     }
-    ctx->pc = 0x1ECB88u;
 label_1ecb88:
     // 0x1ecb88: 0x26440440  addiu       $a0, $s2, 0x440
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 18), 1088));
@@ -216,7 +208,6 @@ label_1ecb88:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetDisp_0x2d6490, 0x2d6490u, 0x1ecb94u)) {
         return;
     }
-    ctx->pc = 0x1ECB94u;
 label_1ecb94:
     // 0x1ecb94: 0x240202d  daddu       $a0, $s2, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -233,7 +224,6 @@ label_1ecb94:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_setDispAllButEight_0x1ece30, 0x1ece30u, 0x1ecba4u)) {
         return;
     }
-    ctx->pc = 0x1ECBA4u;
 label_1ecba4:
     // 0x1ecba4: 0x240202d  daddu       $a0, $s2, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -248,7 +238,6 @@ label_1ecba4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001ED490_0x1ed490, 0x1ed490u, 0x1ecbb0u)) {
         return;
     }
-    ctx->pc = 0x1ECBB0u;
 label_1ecbb0:
     // 0x1ecbb0: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x1ecbb0u;

@@ -13,7 +13,7 @@
 
 // Function: func_00137BB8
 // Address: 0x137bb8 - 0x137cb8
-void func_00137BB8_0x137bb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00137BB8_0x137bb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00137BB8_0x137bb8");
 #endif
@@ -89,7 +89,6 @@ void func_00137BB8_0x137bb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_137c8c;
         }
     }
-    ctx->pc = 0x137BF4u;
 label_137bf4:
     // 0x137bf4: 0x8e42000c  lw          $v0, 0xC($s2)
     ctx->pc = 0x137bf4u;
@@ -116,7 +115,6 @@ label_137bf4:
     // 0x137c08: 0xa82d  daddu       $s5, $zero, $zero
     SET_GPR_U64(ctx, 21, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x137c0c: 0x0  nop
-    ctx->pc = 0x137c0cu;
     // NOP
 label_137c10:
     // 0x137c10: 0x8e420000  lw          $v0, 0x0($s2)
@@ -156,7 +154,6 @@ label_137c10:
     if (!runtime->callDirectStatic(rdram, ctx, &cArea_HitCheck_0x1f8438, 0x1f8438u, 0x137c30u)) {
         return;
     }
-    ctx->pc = 0x137C30u;
 label_137c30:
     // 0x137c30: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x137C30u;
@@ -173,7 +170,6 @@ label_137c30:
             goto label_137c44;
         }
     }
-    ctx->pc = 0x137C38u;
 label_137c38:
     // 0x137c38: 0xc07e0fa  jal         func_1F83E8
     SET_GPR_U32(ctx, 31, 0x137C40u);
@@ -186,10 +182,8 @@ label_137c38:
     if (!runtime->callDirectStatic(rdram, ctx, &cArea_HitCheck_1F83E8_0x1f83e8, 0x1f83e8u, 0x137c40u)) {
         return;
     }
-    ctx->pc = 0x137C40u;
 label_137c40:
     // 0x137c40: 0x304200ff  andi        $v0, $v0, 0xFF
-    ctx->pc = 0x137c40u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)255);
 label_137c44:
     // 0x137c44: 0x50400007  beql        $v0, $zero, . + 4 + (0x7 << 2)
@@ -255,7 +249,6 @@ label_137c64:
             goto label_137c10;
         }
     }
-    ctx->pc = 0x137C74u;
 label_137c74:
     // 0x137c74: 0x56200004  bnel        $s1, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x137C74u;
@@ -290,10 +283,8 @@ label_137c74:
             goto label_137c8c;
         }
     }
-    ctx->pc = 0x137C88u;
 label_137c88:
     // 0x137c88: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x137c88u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_137c8c:
     // 0x137c8c: 0x7bb00070  lq          $s0, 0x70($sp)

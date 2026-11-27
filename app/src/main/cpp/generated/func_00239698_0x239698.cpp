@@ -14,7 +14,7 @@
 
 // Function: func_00239698
 // Address: 0x239698 - 0x2397c0
-void func_00239698_0x239698(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00239698_0x239698(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00239698_0x239698");
 #endif
@@ -56,7 +56,6 @@ void func_00239698_0x239698(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x2396b4u)) {
         return;
     }
-    ctx->pc = 0x2396B4u;
 label_2396b4:
     // 0x2396b4: 0x3c040046  lui         $a0, 0x46
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)70 << 16));
@@ -77,7 +76,6 @@ label_2396b4:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1351D8u, 0x2396C4u, 0x2396CCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2396CCu;
 label_2396cc:
     // 0x2396cc: 0x920302f6  lbu         $v1, 0x2F6($s0)
     ctx->pc = 0x2396ccu;
@@ -127,7 +125,6 @@ label_2396cc:
             goto label_2397a8;
         }
     }
-    ctx->pc = 0x2396E8u;
 label_2396e8:
     // 0x2396e8: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x2396e8u;
@@ -164,7 +161,6 @@ label_2396e8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x239718u)) {
         return;
     }
-    ctx->pc = 0x239718u;
 label_239718:
     // 0x239718: 0x920202f6  lbu         $v0, 0x2F6($s0)
     ctx->pc = 0x239718u;
@@ -245,7 +241,6 @@ label_239758:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x239764u, 0x23976Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x23976Cu;
 label_23976c:
     // 0x23976c: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x23976Cu;
@@ -292,7 +287,6 @@ label_239784:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x14F9F0u, 0x239790u, 0x239798u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x239798u;
 label_239798:
     // 0x239798: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -307,7 +301,6 @@ label_239798:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x14F928u, 0x23979Cu, 0x2397A4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2397A4u;
 label_2397a4:
     // 0x2397a4: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2397a4u;

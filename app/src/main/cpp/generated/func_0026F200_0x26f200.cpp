@@ -13,7 +13,7 @@
 
 // Function: func_0026F200
 // Address: 0x26f200 - 0x26f2b8
-void func_0026F200_0x26f200(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0026F200_0x26f200(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0026F200_0x26f200");
 #endif
@@ -73,7 +73,6 @@ void func_0026F200_0x26f200(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0026F328_0x26f328, 0x26f328u, 0x26f230u)) {
         return;
     }
-    ctx->pc = 0x26F230u;
 label_26f230:
     // 0x26f230: 0x54400003  bnel        $v0, $zero, . + 4 + (0x3 << 2)
     ctx->pc = 0x26F230u;
@@ -90,7 +89,6 @@ label_26f230:
             goto label_26f240;
         }
     }
-    ctx->pc = 0x26F238u;
 label_26f238:
     // 0x26f238: 0x1000001b  b           . + 4 + (0x1B << 2)
     ctx->pc = 0x26F238u;
@@ -107,7 +105,6 @@ label_26f238:
             goto label_26f2a8;
         }
     }
-    ctx->pc = 0x26F240u;
 label_26f240:
     // 0x26f240: 0x3c030004  lui         $v1, 0x4
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)4 << 16));
@@ -190,7 +187,6 @@ label_26f240:
         }
     }
     // 0x26f27c: 0x24020218  addiu       $v0, $zero, 0x218
-    ctx->pc = 0x26f27cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 536));
 label_26f280:
     // 0x26f280: 0x14a20006  bne         $a1, $v0, . + 4 + (0x6 << 2)
@@ -233,7 +229,6 @@ label_26f280:
             goto label_26f238;
         }
     }
-    ctx->pc = 0x26F29Cu;
 label_26f29c:
     // 0x26f29c: 0xc09bb34  jal         func_26ECD0
     SET_GPR_U32(ctx, 31, 0x26F2A4u);
@@ -246,10 +241,8 @@ label_26f29c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0026ECD0_0x26ecd0, 0x26ecd0u, 0x26f2a4u)) {
         return;
     }
-    ctx->pc = 0x26F2A4u;
 label_26f2a4:
     // 0x26f2a4: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x26f2a4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_26f2a8:
     // 0x26f2a8: 0x7bb00010  lq          $s0, 0x10($sp)

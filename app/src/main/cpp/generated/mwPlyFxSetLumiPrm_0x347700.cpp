@@ -13,7 +13,7 @@
 
 // Function: mwPlyFxSetLumiPrm
 // Address: 0x347700 - 0x3477a8
-void mwPlyFxSetLumiPrm_0x347700(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void mwPlyFxSetLumiPrm_0x347700(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("mwPlyFxSetLumiPrm_0x347700");
 #endif
@@ -55,7 +55,6 @@ void mwPlyFxSetLumiPrm_0x347700(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &func_00346C48_0x346c48, 0x346c48u, 0x347724u)) {
         return;
     }
-    ctx->pc = 0x347724u;
 label_347724:
     // 0x347724: 0x3a100001  xori        $s0, $s0, 0x1
     SET_GPR_U64(ctx, 16, GPR_U64(ctx, 16) ^ (uint64_t)(uint16_t)1);

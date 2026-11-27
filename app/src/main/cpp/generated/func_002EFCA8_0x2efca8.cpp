@@ -13,7 +13,7 @@
 
 // Function: func_002EFCA8
 // Address: 0x2efca8 - 0x2efd20
-void func_002EFCA8_0x2efca8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002EFCA8_0x2efca8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002EFCA8_0x2efca8");
 #endif
@@ -103,7 +103,6 @@ void func_002EFCA8_0x2efca8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2EFCFCu;
 label_2efcfc:
     // 0x2efcfc: 0x304200ff  andi        $v0, $v0, 0xFF
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)255);
@@ -143,7 +142,6 @@ label_2efcfc:
         return;
         #endif
     }
-    ctx->pc = 0x2EFD14u;
 label_2efd14:
     // 0x2efd14: 0x3e00008  jr          $ra
     ctx->pc = 0x2EFD14u;

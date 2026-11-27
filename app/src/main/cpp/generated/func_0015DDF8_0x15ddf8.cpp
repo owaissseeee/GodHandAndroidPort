@@ -13,7 +13,7 @@
 
 // Function: func_0015DDF8
 // Address: 0x15ddf8 - 0x15e0a0
-void func_0015DDF8_0x15ddf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0015DDF8_0x15ddf8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0015DDF8_0x15ddf8");
 #endif
@@ -109,7 +109,6 @@ void func_0015DDF8_0x15ddf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_15de78;
         }
     }
-    ctx->pc = 0x15DE58u;
 label_15de58:
     // 0x15de58: 0x8ca20004  lw          $v0, 0x4($a1)
     ctx->pc = 0x15de58u;
@@ -144,7 +143,6 @@ label_15de58:
             goto label_15de58;
         }
     }
-    ctx->pc = 0x15DE78u;
 label_15de78:
     // 0x15de78: 0x96820012  lhu         $v0, 0x12($s4)
     ctx->pc = 0x15de78u;
@@ -166,7 +164,6 @@ label_15de78:
             goto label_15dea8;
         }
     }
-    ctx->pc = 0x15DE88u;
 label_15de88:
     // 0x15de88: 0x8e620004  lw          $v0, 0x4($s3)
     ctx->pc = 0x15de88u;
@@ -201,7 +198,6 @@ label_15de88:
             goto label_15de88;
         }
     }
-    ctx->pc = 0x15DEA8u;
 label_15dea8:
     // 0x15dea8: 0x8e820000  lw          $v0, 0x0($s4)
     ctx->pc = 0x15dea8u;

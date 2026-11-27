@@ -13,7 +13,7 @@
 
 // Function: InitAllocBuffer_14FE08
 // Address: 0x14fe08 - 0x14fe78
-void InitAllocBuffer_14FE08_0x14fe08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitAllocBuffer_14FE08_0x14fe08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitAllocBuffer_14FE08_0x14fe08");
 #endif
@@ -65,7 +65,6 @@ void InitAllocBuffer_14FE08_0x14fe08(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &EnsureInitThenForward_2A9538_30EE08_0x30ee08, 0x30ee08u, 0x14fe3cu)) {
         return;
     }
-    ctx->pc = 0x14FE3Cu;
 label_14fe3c:
     // 0x14fe3c: 0x220302d  daddu       $a2, $s1, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -85,7 +84,6 @@ label_14fe3c:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x14fe50u)) {
         return;
     }
-    ctx->pc = 0x14FE50u;
 label_14fe50:
     // 0x14fe50: 0xae120020  sw          $s2, 0x20($s0)
     ctx->pc = 0x14fe50u;
@@ -101,7 +99,6 @@ label_14fe50:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0014FE78_0x14fe78, 0x14fe78u, 0x14fe5cu)) {
         return;
     }
-    ctx->pc = 0x14FE5Cu;
 label_14fe5c:
     // 0x14fe5c: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x14fe5cu;

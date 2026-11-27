@@ -13,7 +13,7 @@
 
 // Function: F32toF16
 // Address: 0x1563f0 - 0x156488
-void F32toF16_0x1563f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void F32toF16_0x1563f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("F32toF16_0x1563f0");
 #endif
@@ -73,7 +73,6 @@ void F32toF16_0x1563f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
         return;
         #endif
     }
-    ctx->pc = 0x156428u;
 label_156428:
     // 0x156428: 0x3c02387f  lui         $v0, 0x387F
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)14463 << 16));
@@ -125,12 +124,10 @@ label_156428:
             goto label_156468;
         }
     }
-    ctx->pc = 0x156460u;
 label_156460:
     // 0x156460: 0x3c02c800  lui         $v0, 0xC800
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)51200 << 16));
     // 0x156464: 0xc23021  addu        $a2, $a2, $v0
-    ctx->pc = 0x156464u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 6), GPR_U32(ctx, 2)));
 label_156468:
     // 0x156468: 0x61342  srl         $v0, $a2, 13

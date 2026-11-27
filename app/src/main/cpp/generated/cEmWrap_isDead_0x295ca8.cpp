@@ -13,7 +13,7 @@
 
 // Function: cEmWrap_isDead
 // Address: 0x295ca8 - 0x295ce8
-void cEmWrap_isDead_0x295ca8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmWrap_isDead_0x295ca8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmWrap_isDead_0x295ca8");
 #endif
@@ -46,7 +46,6 @@ void cEmWrap_isDead_0x295ca8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &FindResolveActor_295978_0x295978, 0x295978u, 0x295cbcu)) {
         return;
     }
-    ctx->pc = 0x295CBCu;
 label_295cbc:
     // 0x295cbc: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x295CBCu;
@@ -74,7 +73,6 @@ label_295cbc:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmBase_checkDeadFlag_0x28fb38, 0x28fb38u, 0x295cccu)) {
         return;
     }
-    ctx->pc = 0x295CCCu;
 label_295ccc:
     // 0x295ccc: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x295CCCu;
@@ -91,7 +89,6 @@ label_295ccc:
             goto label_295cd8;
         }
     }
-    ctx->pc = 0x295CD4u;
 label_295cd4:
     // 0x295cd4: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x295cd4u;

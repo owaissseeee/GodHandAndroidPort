@@ -13,7 +13,7 @@
 
 // Function: sfsee_IsMpsStream
 // Address: 0x359ab0 - 0x359af0
-void sfsee_IsMpsStream_0x359ab0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfsee_IsMpsStream_0x359ab0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfsee_IsMpsStream_0x359ab0");
 #endif
@@ -42,7 +42,6 @@ void sfsee_IsMpsStream_0x359ab0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &Obj35C0_IsIndexedSet_1F3C_C380_0x35c380, 0x35c380u, 0x359ac0u)) {
         return;
     }
-    ctx->pc = 0x359AC0u;
 label_359ac0:
     // 0x359ac0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x359ac0u;

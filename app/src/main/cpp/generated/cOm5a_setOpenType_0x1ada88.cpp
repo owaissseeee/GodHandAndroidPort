@@ -13,7 +13,7 @@
 
 // Function: cOm5a_setOpenType
 // Address: 0x1ada88 - 0x1adae8
-void cOm5a_setOpenType_0x1ada88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm5a_setOpenType_0x1ada88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm5a_setOpenType_0x1ada88");
 #endif
@@ -84,7 +84,6 @@ void cOm5a_setOpenType_0x1ada88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &cOm5a_setCloseFix_0x1ad9c8, 0x1ad9c8u, 0x1adac0u)) {
         return;
     }
-    ctx->pc = 0x1ADAC0u;
 label_1adac0:
     // 0x1adac0: 0xae110600  sw          $s1, 0x600($s0)
     ctx->pc = 0x1adac0u;
@@ -100,7 +99,6 @@ label_1adac0:
     if (!runtime->callDirectStatic(rdram, ctx, &cOm5a_setOpenFix_0x1ad918, 0x1ad918u, 0x1adaccu)) {
         return;
     }
-    ctx->pc = 0x1ADACCu;
 label_1adacc:
     // 0x1adacc: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x1ADACCu;
@@ -117,7 +115,6 @@ label_1adacc:
             goto label_1adad8;
         }
     }
-    ctx->pc = 0x1ADAD4u;
 label_1adad4:
     // 0x1adad4: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1adad4u;

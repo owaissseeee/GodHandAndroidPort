@@ -13,7 +13,7 @@
 
 // Function: func_002AED40
 // Address: 0x2aed40 - 0x2aed70
-void func_002AED40_0x2aed40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002AED40_0x2aed40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002AED40_0x2aed40");
 #endif
@@ -82,7 +82,6 @@ label_2aed50:
         return;
         #endif
     }
-    ctx->pc = 0x2AED60u;
 label_2aed60:
     // 0x2aed60: 0x5460fffb  bnel        $v1, $zero, . + 4 + (-0x5 << 2)
     ctx->pc = 0x2AED60u;
@@ -102,7 +101,6 @@ label_2aed60:
             goto label_2aed50;
         }
     }
-    ctx->pc = 0x2AED68u;
 label_2aed68:
     // 0x2aed68: 0x3e00008  jr          $ra
     ctx->pc = 0x2AED68u;

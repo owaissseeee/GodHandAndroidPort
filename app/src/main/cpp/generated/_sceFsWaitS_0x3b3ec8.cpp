@@ -13,7 +13,7 @@
 
 // Function: _sceFsWaitS
 // Address: 0x3b3ec8 - 0x3b3ef8
-void _sceFsWaitS_0x3b3ec8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceFsWaitS_0x3b3ec8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceFsWaitS_0x3b3ec8");
 #endif
@@ -38,7 +38,6 @@ void _sceFsWaitS_0x3b3ec8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &_sceFsSemInit_0x3b3e70, 0x3b3e70u, 0x3b3ed8u)) {
         return;
     }
-    ctx->pc = 0x3B3ED8u;
 label_3b3ed8:
     // 0x3b3ed8: 0x3c020040  lui         $v0, 0x40
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)64 << 16));
@@ -53,7 +52,6 @@ label_3b3ed8:
     if (!runtime->callDirectStatic(rdram, ctx, &WaitSema_0x3afce0, 0x3afce0u, 0x3b3ee4u)) {
         return;
     }
-    ctx->pc = 0x3B3EE4u;
 label_3b3ee4:
     // 0x3b3ee4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3b3ee4u;

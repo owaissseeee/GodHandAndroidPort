@@ -13,7 +13,7 @@
 
 // Function: cEmSetParam_rewriteDataSet
 // Address: 0x294b60 - 0x294b98
-void cEmSetParam_rewriteDataSet_0x294b60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmSetParam_rewriteDataSet_0x294b60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmSetParam_rewriteDataSet_0x294b60");
 #endif
@@ -56,7 +56,6 @@ void cEmSetParam_rewriteDataSet_0x294b60(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &cEmSetParam_loadSetFile_0x294b98, 0x294b98u, 0x294b88u)) {
         return;
     }
-    ctx->pc = 0x294B88u;
 label_294b88:
     // 0x294b88: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x294b88u;

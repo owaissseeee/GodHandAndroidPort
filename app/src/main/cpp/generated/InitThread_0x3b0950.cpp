@@ -13,7 +13,7 @@
 
 // Function: InitThread
 // Address: 0x3b0950 - 0x3b0a40
-void InitThread_0x3b0950(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitThread_0x3b0950(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitThread_0x3b0950");
 #endif
@@ -90,7 +90,6 @@ void InitThread_0x3b0950(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     if (!runtime->callDirectStatic(rdram, ctx, &CreateSema_0x3afca0, 0x3afca0u, 0x3b0994u)) {
         return;
     }
-    ctx->pc = 0x3B0994u;
 label_3b0994:
     // 0x3b0994: 0x4400015  bltz        $v0, . + 4 + (0x15 << 2)
     ctx->pc = 0x3B0994u;
@@ -149,7 +148,6 @@ label_3b0994:
     if (!runtime->callDirectStatic(rdram, ctx, &CreateThread_0x3afaa0, 0x3afaa0u, 0x3b09d8u)) {
         return;
     }
-    ctx->pc = 0x3B09D8u;
 label_3b09d8:
     // 0x3b09d8: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -179,7 +177,6 @@ label_3b09d8:
     if (!runtime->callDirectStatic(rdram, ctx, &DeleteSema_0x3afcb0, 0x3afcb0u, 0x3b09ecu)) {
         return;
     }
-    ctx->pc = 0x3B09ECu;
 label_3b09ec:
     // 0x3b09ec: 0x1000000d  b           . + 4 + (0xD << 2)
     ctx->pc = 0x3B09ECu;
@@ -196,7 +193,6 @@ label_3b09ec:
             goto label_3b0a24;
         }
     }
-    ctx->pc = 0x3B09F4u;
 label_3b09f4:
     // 0x3b09f4: 0x3c020078  lui         $v0, 0x78
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)120 << 16));
@@ -218,7 +214,6 @@ label_3b09f4:
     if (!runtime->callDirectStatic(rdram, ctx, &StartThread_0x3b0ba8, 0x3b0ba8u, 0x3b0a0cu)) {
         return;
     }
-    ctx->pc = 0x3B0A0Cu;
 label_3b0a0c:
     // 0x3b0a0c: 0xc0ebee4  jal         func_3AFB90
     ctx->pc = 0x3B0A0Cu;
@@ -226,7 +221,6 @@ label_3b0a0c:
     if (!runtime->callDirectStatic(rdram, ctx, &GetThreadId_0x3afb90, 0x3afb90u, 0x3b0a14u)) {
         return;
     }
-    ctx->pc = 0x3B0A14u;
 label_3b0a14:
     // 0x3b0a14: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -241,7 +235,6 @@ label_3b0a14:
     if (!runtime->callDirectStatic(rdram, ctx, &ChangeThreadPriority_0x3afb30, 0x3afb30u, 0x3b0a20u)) {
         return;
     }
-    ctx->pc = 0x3B0A20u;
 label_3b0a20:
     // 0x3b0a20: 0x8e02ae48  lw          $v0, -0x51B8($s0)
     ctx->pc = 0x3b0a20u;

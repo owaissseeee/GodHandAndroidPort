@@ -13,7 +13,7 @@
 
 // Function: cOmBase_setScrSollEnable
 // Address: 0x1b7680 - 0x1b76b0
-void cOmBase_setScrSollEnable_0x1b7680(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmBase_setScrSollEnable_0x1b7680(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmBase_setScrSollEnable_0x1b7680");
 #endif
@@ -51,7 +51,6 @@ void cOmBase_setScrSollEnable_0x1b7680(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &func_001331B8_0x1331b8, 0x1331b8u, 0x1b76a0u)) {
         return;
     }
-    ctx->pc = 0x1B76A0u;
 label_1b76a0:
     // 0x1b76a0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1b76a0u;

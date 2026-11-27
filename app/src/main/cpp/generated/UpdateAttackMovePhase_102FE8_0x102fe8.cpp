@@ -13,7 +13,7 @@
 
 // Function: UpdateAttackMovePhase_102FE8
 // Address: 0x102fe8 - 0x1030c8
-void UpdateAttackMovePhase_102FE8_0x102fe8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateAttackMovePhase_102FE8_0x102fe8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateAttackMovePhase_102FE8_0x102fe8");
 #endif
@@ -85,7 +85,6 @@ void UpdateAttackMovePhase_102FE8_0x102fe8(uint8_t* rdram, R5900Context* ctx, PS
             goto label_1030b4;
         }
     }
-    ctx->pc = 0x103018u;
 label_103018:
     // 0x103018: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x103018u;
@@ -119,7 +118,6 @@ label_103018:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x103044u)) {
         return;
     }
-    ctx->pc = 0x103044u;
 label_103044:
     // 0x103044: 0x3c09ffff  lui         $t1, 0xFFFF
     SET_GPR_S32(ctx, 9, (int32_t)((uint32_t)65535 << 16));
@@ -144,7 +142,6 @@ label_103044:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x103064u)) {
         return;
     }
-    ctx->pc = 0x103064u;
 label_103064:
     // 0x103064: 0x920302f6  lbu         $v1, 0x2F6($s0)
     ctx->pc = 0x103064u;
@@ -166,7 +163,6 @@ label_103070:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x103070u, 0x103078u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x103078u;
 label_103078:
     // 0x103078: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x103078u;
@@ -207,7 +203,6 @@ label_103090:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x14F9F0u, 0x10309Cu, 0x1030A4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1030A4u;
 label_1030a4:
     // 0x1030a4: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -222,7 +217,6 @@ label_1030a4:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x14F928u, 0x1030A8u, 0x1030B0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1030B0u;
 label_1030b0:
     // 0x1030b0: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1030b0u;

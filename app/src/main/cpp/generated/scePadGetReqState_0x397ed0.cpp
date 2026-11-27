@@ -13,7 +13,7 @@
 
 // Function: scePadGetReqState
 // Address: 0x397ed0 - 0x397f38
-void scePadGetReqState_0x397ed0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void scePadGetReqState_0x397ed0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("scePadGetReqState_0x397ed0");
 #endif
@@ -82,7 +82,6 @@ void scePadGetReqState_0x397ed0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_397f1c;
         }
     }
-    ctx->pc = 0x397F10u;
 label_397f10:
     // 0x397f10: 0xc0e5ef2  jal         func_397BC8
     SET_GPR_U32(ctx, 31, 0x397F18u);
@@ -95,7 +94,6 @@ label_397f10:
     if (!runtime->callDirectStatic(rdram, ctx, &scePadGetDmaStr_0x397bc8, 0x397bc8u, 0x397f18u)) {
         return;
     }
-    ctx->pc = 0x397F18u;
 label_397f18:
     // 0x397f18: 0x90420071  lbu         $v0, 0x71($v0)
     ctx->pc = 0x397f18u;

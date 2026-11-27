@@ -13,7 +13,7 @@
 
 // Function: SetActorLink_1B7118
 // Address: 0x1b7118 - 0x1b7168
-void SetActorLink_1B7118_0x1b7118(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetActorLink_1B7118_0x1b7118(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetActorLink_1B7118_0x1b7118");
 #endif
@@ -44,15 +44,12 @@ void SetActorLink_1B7118_0x1b7118(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         }
     }
 
-    ctx->pc = 0x1b7118u;
 
 label_1b7118:
     // 0x1b7118: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1b7118u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_1b711c:
     // 0x1b711c: 0x80302d  daddu       $a2, $a0, $zero
-    ctx->pc = 0x1b711cu;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_1b7120:
     // 0x1b7120: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -121,10 +118,8 @@ label_1b7138:
             goto label_1b7140;
         }
     }
-    ctx->pc = 0x1B713Cu;
 label_1b713c:
     // 0x1b713c: 0x24620700  addiu       $v0, $v1, 0x700
-    ctx->pc = 0x1b713cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 3), 1792));
 label_1b7140:
     // 0x1b7140: 0xacc20560  sw          $v0, 0x560($a2)
@@ -170,7 +165,6 @@ label_1b7154:
             return;
         }
     }
-    ctx->pc = 0x1B7158u;
 label_1b7158:
     // 0x1b7158: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1b7158u;

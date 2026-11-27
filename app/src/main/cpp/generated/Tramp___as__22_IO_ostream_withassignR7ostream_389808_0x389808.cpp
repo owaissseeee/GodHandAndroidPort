@@ -13,7 +13,7 @@
 
 // Function: Tramp___as__22_IO_ostream_withassignR7ostream_389808
 // Address: 0x389808 - 0x389828
-void Tramp___as__22_IO_ostream_withassignR7ostream_389808_0x389808(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp___as__22_IO_ostream_withassignR7ostream_389808_0x389808(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp___as__22_IO_ostream_withassignR7ostream_389808_0x389808");
 #endif
@@ -37,7 +37,6 @@ void Tramp___as__22_IO_ostream_withassignR7ostream_389808_0x389808(uint8_t* rdra
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___as__22_IO_ostream_withassignR7ostream_0x38f1a0, 0x38f1a0u, 0x389818u)) {
         return;
     }
-    ctx->pc = 0x389818u;
 label_389818:
     // 0x389818: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x389818u;

@@ -14,12 +14,11 @@ namespace gh_mcport
 {
 // Function: DispSet__6cMcSys
 // Address: 0x7c8b08 - 0x7c8b10
-void DispSet__6cMcSys_0x7c8b08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void DispSet__6cMcSys_0x7c8b08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("DispSet__6cMcSys_0x7c8b08");
 #endif
 
-    ctx->pc = 0x7c8b08u;
 
     // 0x7c8b08: 0x3e00008  jr          $ra
     ctx->pc = 0x7C8B08u;

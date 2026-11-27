@@ -13,7 +13,7 @@
 
 // Function: cSceAtManager_SetDisableById
 // Address: 0x2c29f8 - 0x2c2a48
-void cSceAtManager_SetDisableById_0x2c29f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSceAtManager_SetDisableById_0x2c29f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSceAtManager_SetDisableById_0x2c29f8");
 #endif
@@ -66,7 +66,6 @@ void cSceAtManager_SetDisableById_0x2c29f8(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &cSceAtManager_getUnit_0x2c3118, 0x2c3118u, 0x2c2a1cu)) {
         return;
     }
-    ctx->pc = 0x2C2A1Cu;
 label_2c2a1c:
     // 0x2c2a1c: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x2C2A1Cu;
@@ -94,7 +93,6 @@ label_2c2a1c:
     if (!runtime->callDirectStatic(rdram, ctx, &cSceAtManager_SetDisable_0x2c29a0, 0x2c29a0u, 0x2c2a2cu)) {
         return;
     }
-    ctx->pc = 0x2C2A2Cu;
 label_2c2a2c:
     // 0x2c2a2c: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x2C2A2Cu;
@@ -111,7 +109,6 @@ label_2c2a2c:
             goto label_2c2a3c;
         }
     }
-    ctx->pc = 0x2C2A34u;
 label_2c2a34:
     // 0x2c2a34: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

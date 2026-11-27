@@ -13,7 +13,7 @@
 
 // Function: __uncatch_exception
 // Address: 0x3214d0 - 0x321500
-void ps2___uncatch_exception_0x3214d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___uncatch_exception_0x3214d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___uncatch_exception_0x3214d0");
 #endif
@@ -38,7 +38,6 @@ void ps2___uncatch_exception_0x3214d0(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___get_eh_info_0x320360, 0x320360u, 0x3214e0u)) {
         return;
     }
-    ctx->pc = 0x3214E0u;
 label_3214e0:
     // 0x3214e0: 0x8c420000  lw          $v0, 0x0($v0)
     ctx->pc = 0x3214e0u;
@@ -64,7 +63,6 @@ label_3214e0:
     if (!runtime->callDirectStatic(rdram, ctx, &terminate_0x3211e0, 0x3211e0u, 0x3214f4u)) {
         return;
     }
-    ctx->pc = 0x3214F4u;
 label_3214f4:
     // 0x3214f4: 0xac400014  sw          $zero, 0x14($v0)
     ctx->pc = 0x3214f4u;

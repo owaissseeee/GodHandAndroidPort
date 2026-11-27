@@ -13,7 +13,7 @@
 
 // Function: func_001DF820
 // Address: 0x1df820 - 0x1df858
-void func_001DF820_0x1df820(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001DF820_0x1df820(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001DF820_0x1df820");
 #endif
@@ -59,7 +59,6 @@ void func_001DF820_0x1df820(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMoveOffsetPosXSin_0x2d67b0, 0x2d67b0u, 0x1df83cu)) {
         return;
     }
-    ctx->pc = 0x1DF83Cu;
 label_1df83c:
     // 0x1df83c: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x1DF83Cu;
@@ -76,7 +75,6 @@ label_1df83c:
             goto label_1df850;
         }
     }
-    ctx->pc = 0x1DF844u;
 label_1df844:
     // 0x1df844: 0xc0b5a1c  jal         func_2D6870
     SET_GPR_U32(ctx, 31, 0x1DF84Cu);
@@ -89,7 +87,6 @@ label_1df844:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_ResetMoveOffsetPos_0x2d6870, 0x2d6870u, 0x1df84cu)) {
         return;
     }
-    ctx->pc = 0x1DF84Cu;
 label_1df84c:
     // 0x1df84c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1df84cu;

@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_addStock
 // Address: 0x1facf8 - 0x1fad38
-void cCoreSave_addStock_0x1facf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_addStock_0x1facf8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_addStock_0x1facf8");
 #endif
@@ -71,7 +71,6 @@ void cCoreSave_addStock_0x1facf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         return;
         #endif
     }
-    ctx->pc = 0x1FAD28u;
 label_1fad28:
     // 0x1fad28: 0x3e00008  jr          $ra
     ctx->pc = 0x1FAD28u;

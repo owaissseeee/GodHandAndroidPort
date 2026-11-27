@@ -13,7 +13,7 @@
 
 // Function: func_00336B00
 // Address: 0x336b00 - 0x336ba8
-void func_00336B00_0x336b00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00336B00_0x336b00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00336B00_0x336b00");
 #endif
@@ -114,7 +114,6 @@ void func_00336B00_0x336b00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
     // 0x336b3c: 0x0  nop
-    ctx->pc = 0x336b3cu;
     // NOP
 label_336b40:
     // 0x336b40: 0x10a2000f  beq         $a1, $v0, . + 4 + (0xF << 2)
@@ -195,7 +194,6 @@ label_336b40:
         }
     }
     // 0x336b6c: 0x0  nop
-    ctx->pc = 0x336b6cu;
     // NOP
 label_336b70:
     // 0x336b70: 0xc0cdab0  jal         func_336AC0
@@ -204,7 +202,6 @@ label_336b70:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00336AC0_0x336ac0, 0x336ac0u, 0x336b78u)) {
         return;
     }
-    ctx->pc = 0x336B78u;
 label_336b78:
     // 0x336b78: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x336B78u;
@@ -221,7 +218,6 @@ label_336b78:
             goto label_336b94;
         }
     }
-    ctx->pc = 0x336B80u;
 label_336b80:
     // 0x336b80: 0xc0cd944  jal         func_336510
     ctx->pc = 0x336B80u;
@@ -229,7 +225,6 @@ label_336b80:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00336510_0x336510, 0x336510u, 0x336b88u)) {
         return;
     }
-    ctx->pc = 0x336B88u;
 label_336b88:
     // 0x336b88: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x336B88u;
@@ -246,14 +241,11 @@ label_336b88:
             goto label_336b94;
         }
     }
-    ctx->pc = 0x336B90u;
 label_336b90:
     // 0x336b90: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x336b90u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_336b94:
     // 0x336b94: 0x60102d  daddu       $v0, $v1, $zero
-    ctx->pc = 0x336b94u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
 label_336b98:
     // 0x336b98: 0xdfbf0000  ld          $ra, 0x0($sp)

@@ -13,7 +13,7 @@
 
 // Function: ResetAnimState_1F5EF8
 // Address: 0x1f5ef8 - 0x1f5f70
-void ResetAnimState_1F5EF8_0x1f5ef8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ResetAnimState_1F5EF8_0x1f5ef8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ResetAnimState_1F5EF8_0x1f5ef8");
 #endif
@@ -49,7 +49,6 @@ void ResetAnimState_1F5EF8_0x1f5ef8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_restartAnim_0x2abbe8, 0x2abbe8u, 0x1f5f10u)) {
         return;
     }
-    ctx->pc = 0x1F5F10u;
 label_1f5f10:
     // 0x1f5f10: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -90,7 +89,6 @@ label_1f5f10:
     if (!runtime->callDirectStatic(rdram, ctx, &classFADE_start_0x307208, 0x307208u, 0x1f5f48u)) {
         return;
     }
-    ctx->pc = 0x1F5F48u;
 label_1f5f48:
     // 0x1f5f48: 0x3c03003c  lui         $v1, 0x3C
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)60 << 16));
@@ -111,7 +109,6 @@ label_1f5f48:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D5AA0u, 0x1F5F54u, 0x1F5F5Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1F5F5Cu;
 label_1f5f5c:
     // 0x1f5f5c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1f5f5cu;

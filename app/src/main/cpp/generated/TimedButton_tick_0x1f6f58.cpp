@@ -14,7 +14,7 @@
 
 // Function: TimedButton_tick
 // Address: 0x1f6f58 - 0x1f6fa0
-void TimedButton_tick_0x1f6f58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void TimedButton_tick_0x1f6f58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("TimedButton_tick_0x1f6f58");
 #endif
@@ -76,7 +76,6 @@ void TimedButton_tick_0x1f6f58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &cActionButtonEnt_reset_0x1f7228, 0x1f7228u, 0x1f6f84u)) {
         return;
     }
-    ctx->pc = 0x1F6F84u;
 label_1f6f84:
     // 0x1f6f84: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x1F6F84u;
@@ -93,7 +92,6 @@ label_1f6f84:
             goto label_1f6f98;
         }
     }
-    ctx->pc = 0x1F6F8Cu;
 label_1f6f8c:
     // 0x1f6f8c: 0x2462ffff  addiu       $v0, $v1, -0x1
     ctx->pc = 0x1f6f8cu;

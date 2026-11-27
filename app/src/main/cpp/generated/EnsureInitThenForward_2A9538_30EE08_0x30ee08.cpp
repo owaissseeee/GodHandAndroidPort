@@ -13,7 +13,7 @@
 
 // Function: EnsureInitThenForward_2A9538_30EE08
 // Address: 0x30ee08 - 0x30ee68
-void EnsureInitThenForward_2A9538_30EE08_0x30ee08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EnsureInitThenForward_2A9538_30EE08_0x30ee08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EnsureInitThenForward_2A9538_30EE08_0x30ee08");
 #endif
@@ -75,7 +75,6 @@ void EnsureInitThenForward_2A9538_30EE08_0x30ee08(uint8_t* rdram, R5900Context* 
     if (!runtime->callDirectStatic(rdram, ctx, &func_0030ECF8_0x30ecf8, 0x30ecf8u, 0x30ee3cu)) {
         return;
     }
-    ctx->pc = 0x30EE3Cu;
 label_30ee3c:
     // 0x30ee3c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -92,7 +91,6 @@ label_30ee3c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9538u, 0x30EE44u, 0x30EE4Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x30EE4Cu;
 label_30ee4c:
     // 0x30ee4c: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x30ee4cu;

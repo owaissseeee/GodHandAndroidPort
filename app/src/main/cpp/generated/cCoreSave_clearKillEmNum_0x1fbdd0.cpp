@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_clearKillEmNum
 // Address: 0x1fbdd0 - 0x1fbe08
-void cCoreSave_clearKillEmNum_0x1fbdd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_clearKillEmNum_0x1fbdd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_clearKillEmNum_0x1fbdd0");
 #endif
@@ -46,7 +46,6 @@ void cCoreSave_clearKillEmNum_0x1fbdd0(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_1fbdfc;
         }
     }
-    ctx->pc = 0x1FBDE0u;
 label_1fbde0:
     // 0x1fbde0: 0x8cc20000  lw          $v0, 0x0($a2)
     ctx->pc = 0x1fbde0u;
@@ -77,7 +76,6 @@ label_1fbde0:
             goto label_1fbde0;
         }
     }
-    ctx->pc = 0x1FBDFCu;
 label_1fbdfc:
     // 0x1fbdfc: 0x3e00008  jr          $ra
     ctx->pc = 0x1FBDFCu;

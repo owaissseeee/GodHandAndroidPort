@@ -13,7 +13,7 @@
 
 // Function: func_003B2AC8
 // Address: 0x3b2ac8 - 0x3b2b70
-void func_003B2AC8_0x3b2ac8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003B2AC8_0x3b2ac8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003B2AC8_0x3b2ac8");
 #endif
@@ -51,7 +51,6 @@ void func_003B2AC8_0x3b2ac8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x3b2ae0u)) {
         return;
     }
-    ctx->pc = 0x3B2AE0u;
 label_3b2ae0:
     // 0x3b2ae0: 0x8e240008  lw          $a0, 0x8($s1)
     ctx->pc = 0x3b2ae0u;
@@ -76,7 +75,6 @@ label_3b2ae0:
     // 0x3b2af0: 0x24050001  addiu       $a1, $zero, 0x1
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x3b2af4: 0x0  nop
-    ctx->pc = 0x3b2af4u;
     // NOP
 label_3b2af8:
     // 0x3b2af8: 0x8e020010  lw          $v0, 0x10($s0)
@@ -148,7 +146,6 @@ label_3b2b30:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x3b2b3cu)) {
         return;
     }
-    ctx->pc = 0x3B2B3Cu;
 label_3b2b3c:
     // 0x3b2b3c: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x3B2B3Cu;
@@ -165,7 +162,6 @@ label_3b2b3c:
             goto label_3b2b5c;
         }
     }
-    ctx->pc = 0x3B2B44u;
 label_3b2b44:
     // 0x3b2b44: 0x64102a  slt         $v0, $v1, $a0
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)GPR_S64(ctx, 4)) ? 1 : 0);
@@ -187,7 +183,6 @@ label_3b2b44:
             goto label_3b2af8;
         }
     }
-    ctx->pc = 0x3B2B50u;
 label_3b2b50:
     // 0x3b2b50: 0xc0ed8fc  jal         func_3B63F0
     ctx->pc = 0x3B2B50u;
@@ -195,10 +190,8 @@ label_3b2b50:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x3b2b58u)) {
         return;
     }
-    ctx->pc = 0x3B2B58u;
 label_3b2b58:
     // 0x3b2b58: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x3b2b58u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_3b2b5c:
     // 0x3b2b5c: 0xdfbf0020  ld          $ra, 0x20($sp)

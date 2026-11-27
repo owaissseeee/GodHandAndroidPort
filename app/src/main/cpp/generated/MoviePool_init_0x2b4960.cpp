@@ -13,7 +13,7 @@
 
 // Function: MoviePool_init
 // Address: 0x2b4960 - 0x2b4a30
-void MoviePool_init_0x2b4960(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MoviePool_init_0x2b4960(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MoviePool_init_0x2b4960");
 #endif
@@ -81,7 +81,6 @@ void MoviePool_init_0x2b4960(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2b49a8u)) {
         return;
     }
-    ctx->pc = 0x2B49A8u;
 label_2b49a8:
     // 0x2b49a8: 0x3c01426f  lui         $at, 0x426F
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)17007 << 16));
@@ -113,7 +112,6 @@ label_2b49a8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003452D8_0x3452d8, 0x3452d8u, 0x2b49d0u)) {
         return;
     }
-    ctx->pc = 0x2B49D0u;
 label_2b49d0:
     // 0x2b49d0: 0xc0d1ade  jal         func_346B78
     SET_GPR_U32(ctx, 31, 0x2B49D8u);
@@ -126,7 +124,6 @@ label_2b49d0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00346B78_0x346b78, 0x346b78u, 0x2b49d8u)) {
         return;
     }
-    ctx->pc = 0x2B49D8u;
 label_2b49d8:
     // 0x2b49d8: 0x3c04002b  lui         $a0, 0x2B
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)43 << 16));
@@ -147,13 +144,11 @@ label_2b49d8:
     if (!runtime->callDirectStatic(rdram, ctx, &mwPlySetMallocFn_0x344520, 0x344520u, 0x2b49f0u)) {
         return;
     }
-    ctx->pc = 0x2B49F0u;
 label_2b49f0:
     // 0x2b49f0: 0x8e100000  lw          $s0, 0x0($s0)
     ctx->pc = 0x2b49f0u;
     SET_GPR_S32(ctx, 16, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 0)));
     // 0x2b49f4: 0x0  nop
-    ctx->pc = 0x2b49f4u;
     // NOP
 label_2b49f8:
     // 0x2b49f8: 0x200202d  daddu       $a0, $s0, $zero
@@ -169,7 +164,6 @@ label_2b49f8:
     if (!runtime->callDirectStatic(rdram, ctx, &FreeResourceNode_2D3710_0x2d3710, 0x2d3710u, 0x2b4a04u)) {
         return;
     }
-    ctx->pc = 0x2B4A04u;
 label_2b4a04:
     // 0x2b4a04: 0x261000ac  addiu       $s0, $s0, 0xAC
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 172));

@@ -13,7 +13,7 @@
 
 // Function: FreeObjectSlot_2018F0
 // Address: 0x2018f0 - 0x201960
-void FreeObjectSlot_2018F0_0x2018f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FreeObjectSlot_2018F0_0x2018f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FreeObjectSlot_2018F0_0x2018f0");
 #endif
@@ -67,7 +67,6 @@ void FreeObjectSlot_2018F0_0x2018f0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_00323A70_0x323a70, 0x323a70u, 0x201914u)) {
         return;
     }
-    ctx->pc = 0x201914u;
 label_201914:
     // 0x201914: 0x8e020000  lw          $v0, 0x0($s0)
     ctx->pc = 0x201914u;
@@ -111,7 +110,6 @@ label_201914:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9648u, 0x201930u, 0x201938u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x201938u;
 label_201938:
     // 0x201938: 0x8e040000  lw          $a0, 0x0($s0)
     ctx->pc = 0x201938u;
@@ -129,7 +127,6 @@ label_201938:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x201948u)) {
         return;
     }
-    ctx->pc = 0x201948u;
 label_201948:
     // 0x201948: 0xae000000  sw          $zero, 0x0($s0)
     ctx->pc = 0x201948u;

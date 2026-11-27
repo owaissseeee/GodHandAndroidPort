@@ -13,7 +13,7 @@
 
 // Function: func_001A5190
 // Address: 0x1a5190 - 0x1a5208
-void func_001A5190_0x1a5190(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001A5190_0x1a5190(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001A5190_0x1a5190");
 #endif
@@ -81,7 +81,6 @@ void func_001A5190_0x1a5190(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x1a51ccu)) {
         return;
     }
-    ctx->pc = 0x1A51CCu;
 label_1a51cc:
     // 0x1a51cc: 0xae000624  sw          $zero, 0x624($s0)
     ctx->pc = 0x1a51ccu;
@@ -116,7 +115,6 @@ label_1a51d0:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_ReleaseDamageGive_0x1fe148, 0x1fe148u, 0x1a51e4u)) {
         return;
     }
-    ctx->pc = 0x1A51E4u;
 label_1a51e4:
     // 0x1a51e4: 0xae000620  sw          $zero, 0x620($s0)
     ctx->pc = 0x1a51e4u;
@@ -135,7 +133,6 @@ label_1a51e8:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField214PtrThenInit_1B6F38_0x1b6f38, 0x1b6f38u, 0x1a51f4u)) {
         return;
     }
-    ctx->pc = 0x1A51F4u;
 label_1a51f4:
     // 0x1a51f4: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1a51f4u;

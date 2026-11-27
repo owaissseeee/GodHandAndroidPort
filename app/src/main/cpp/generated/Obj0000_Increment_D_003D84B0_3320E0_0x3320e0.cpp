@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Increment_D_003D84B0_3320E0
 // Address: 0x3320e0 - 0x3320f8
-void Obj0000_Increment_D_003D84B0_3320E0_0x3320e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Increment_D_003D84B0_3320E0_0x3320e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Increment_D_003D84B0_3320E0_0x3320e0");
 #endif

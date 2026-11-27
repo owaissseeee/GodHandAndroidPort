@@ -11,6 +11,8 @@ namespace ps2x::iop
 {
     void setVoiceGain(float gain);
     float voiceGain();
+    void setReverbDisabled(bool disabled) noexcept;
+    bool reverbDisabled() noexcept;
 }
 
 namespace ps2x::iop::detail

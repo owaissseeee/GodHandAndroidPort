@@ -13,7 +13,7 @@
 
 // Function: FindEntryValue_1FF9C0
 // Address: 0x1ff9c0 - 0x1ffa28
-void FindEntryValue_1FF9C0_0x1ff9c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FindEntryValue_1FF9C0_0x1ff9c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FindEntryValue_1FF9C0_0x1ff9c0");
 #endif
@@ -72,7 +72,6 @@ label_1ff9e4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FFA68_0x1ffa68, 0x1ffa68u, 0x1ff9ecu)) {
         return;
     }
-    ctx->pc = 0x1FF9ECu;
 label_1ff9ec:
     // 0x1ff9ec: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -117,7 +116,6 @@ label_1ff9ec:
     if (!runtime->callDirectStatic(rdram, ctx, &BuildPackedAddr_1FFD98_0x1ffd98, 0x1ffd98u, 0x1ffa08u)) {
         return;
     }
-    ctx->pc = 0x1FFA08u;
 label_1ffa08:
     // 0x1ffa08: 0xae220000  sw          $v0, 0x0($s1)
     ctx->pc = 0x1ffa08u;

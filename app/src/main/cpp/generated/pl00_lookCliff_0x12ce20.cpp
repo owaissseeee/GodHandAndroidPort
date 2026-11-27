@@ -13,7 +13,7 @@
 
 // Function: pl00_lookCliff
 // Address: 0x12ce20 - 0x12ce60
-void pl00_lookCliff_0x12ce20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void pl00_lookCliff_0x12ce20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("pl00_lookCliff_0x12ce20");
 #endif
@@ -55,7 +55,6 @@ void pl00_lookCliff_0x12ce20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     ctx->pc = 0x12ce40u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 2), 8), bits); }
     // 0x12ce44: 0x24020035  addiu       $v0, $zero, 0x35
-    ctx->pc = 0x12ce44u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 53));
 label_12ce48:
     // 0x12ce48: 0xe48c0670  swc1        $f12, 0x670($a0)

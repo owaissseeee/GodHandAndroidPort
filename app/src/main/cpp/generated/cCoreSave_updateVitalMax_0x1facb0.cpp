@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_updateVitalMax
 // Address: 0x1facb0 - 0x1facf8
-void cCoreSave_updateVitalMax_0x1facb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_updateVitalMax_0x1facb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_updateVitalMax_0x1facb0");
 #endif
@@ -60,7 +60,6 @@ void cCoreSave_updateVitalMax_0x1facb0(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getState154_0x1fae60, 0x1fae60u, 0x1facd4u)) {
         return;
     }
-    ctx->pc = 0x1FACD4u;
 label_1facd4:
     // 0x1facd4: 0x24030014  addiu       $v1, $zero, 0x14
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 20));

@@ -13,7 +13,7 @@
 
 // Function: cRoomSave_clearEmDeadFlag
 // Address: 0x2bf078 - 0x2bf108
-void cRoomSave_clearEmDeadFlag_0x2bf078(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cRoomSave_clearEmDeadFlag_0x2bf078(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cRoomSave_clearEmDeadFlag_0x2bf078");
 #endif
@@ -62,7 +62,6 @@ void cRoomSave_clearEmDeadFlag_0x2bf078(uint8_t* rdram, R5900Context* ctx, PS2Ru
         }
     }
     // 0x2bf09c: 0x0  nop
-    ctx->pc = 0x2bf09cu;
     // NOP
 label_2bf0a0:
     // 0x2bf0a0: 0xc0afbc2  jal         func_2BEF08
@@ -76,7 +75,6 @@ label_2bf0a0:
     if (!runtime->callDirectStatic(rdram, ctx, &cRoomSave_getEm_0x2bef08, 0x2bef08u, 0x2bf0a8u)) {
         return;
     }
-    ctx->pc = 0x2BF0A8u;
 label_2bf0a8:
     // 0x2bf0a8: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -125,7 +123,6 @@ label_2bf0a8:
             goto label_2bf0e4;
         }
     }
-    ctx->pc = 0x2BF0CCu;
 label_2bf0cc:
     // 0x2bf0cc: 0xc0afb76  jal         func_2BEDD8
     SET_GPR_U32(ctx, 31, 0x2BF0D4u);
@@ -138,7 +135,6 @@ label_2bf0cc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BEDD8_0x2bedd8, 0x2bedd8u, 0x2bf0d4u)) {
         return;
     }
-    ctx->pc = 0x2BF0D4u;
 label_2bf0d4:
     // 0x2bf0d4: 0x202102b  sltu        $v0, $s0, $v0
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 16) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
@@ -161,7 +157,6 @@ label_2bf0d4:
         }
     }
     // 0x2bf0e0: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2bf0e0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2bf0e4:
     // 0x2bf0e4: 0x7bb00030  lq          $s0, 0x30($sp)

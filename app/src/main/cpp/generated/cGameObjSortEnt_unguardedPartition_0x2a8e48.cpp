@@ -13,7 +13,7 @@
 
 // Function: cGameObjSortEnt_unguardedPartition
 // Address: 0x2a8e48 - 0x2a8ef0
-void cGameObjSortEnt_unguardedPartition_0x2a8e48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObjSortEnt_unguardedPartition_0x2a8e48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObjSortEnt_unguardedPartition_0x2a8e48");
 #endif
@@ -63,7 +63,6 @@ label_2a8e58:
         }
     }
     // 0x2a8e6c: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2a8e6cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2a8e70:
     // 0x2a8e70: 0x5440fff9  bnel        $v0, $zero, . + 4 + (-0x7 << 2)
@@ -99,7 +98,6 @@ label_2a8e70:
             goto label_2a8e84;
         }
     }
-    ctx->pc = 0x2A8E80u;
 label_2a8e80:
     // 0x2a8e80: 0xc4a00004  lwc1        $f0, 0x4($a1)
     ctx->pc = 0x2a8e80u;
@@ -125,7 +123,6 @@ label_2a8e84:
         }
     }
     // 0x2a8e94: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2a8e94u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2a8e98:
     // 0x2a8e98: 0x5440fff9  bnel        $v0, $zero, . + 4 + (-0x7 << 2)
@@ -217,7 +214,6 @@ label_2a8e98:
             goto label_2a8e50;
         }
     }
-    ctx->pc = 0x2A8EE4u;
 label_2a8ee4:
     // 0x2a8ee4: 0x3e00008  jr          $ra
     ctx->pc = 0x2A8EE4u;

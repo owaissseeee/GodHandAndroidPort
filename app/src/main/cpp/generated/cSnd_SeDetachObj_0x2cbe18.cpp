@@ -13,7 +13,7 @@
 
 // Function: cSnd_SeDetachObj
 // Address: 0x2cbe18 - 0x2cbe68
-void cSnd_SeDetachObj_0x2cbe18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_SeDetachObj_0x2cbe18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_SeDetachObj_0x2cbe18");
 #endif
@@ -57,7 +57,6 @@ void cSnd_SeDetachObj_0x2cbe18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
         }
     }
     // 0x2cbe34: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x2cbe34u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_2cbe38:
     // 0x2cbe38: 0xc0b3922  jal         func_2CE488
@@ -71,7 +70,6 @@ label_2cbe38:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndSeVoice_Detach_0x2ce488, 0x2ce488u, 0x2cbe40u)) {
         return;
     }
-    ctx->pc = 0x2CBE40u;
 label_2cbe40:
     // 0x2cbe40: 0x8e100004  lw          $s0, 0x4($s0)
     ctx->pc = 0x2cbe40u;
@@ -96,7 +94,6 @@ label_2cbe40:
             goto label_2cbe38;
         }
     }
-    ctx->pc = 0x2CBE50u;
 label_2cbe50:
     // 0x2cbe50: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2cbe50u;

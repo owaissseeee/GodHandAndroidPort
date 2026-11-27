@@ -13,7 +13,7 @@
 
 // Function: iReferThreadStatus
 // Address: 0x3afbb0 - 0x3afbc0
-void iReferThreadStatus_0x3afbb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iReferThreadStatus_0x3afbb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iReferThreadStatus_0x3afbb0");
 #endif

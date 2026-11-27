@@ -13,7 +13,7 @@
 
 // Function: cGameObj_setPosAndRefresh
 // Address: 0x17c3a0 - 0x17c408
-void cGameObj_setPosAndRefresh_0x17c3a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObj_setPosAndRefresh_0x17c3a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObj_setPosAndRefresh_0x17c3a0");
 #endif
@@ -115,7 +115,6 @@ label_17c3f0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0017C028_0x17c028, 0x17c028u, 0x17c3f8u)) {
         return;
     }
-    ctx->pc = 0x17C3F8u;
 label_17c3f8:
     // 0x17c3f8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x17c3f8u;

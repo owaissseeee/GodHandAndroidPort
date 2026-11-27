@@ -13,7 +13,7 @@
 
 // Function: DogRace_SetActBtn
 // Address: 0x1e9ed8 - 0x1e9f18
-void DogRace_SetActBtn_0x1e9ed8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void DogRace_SetActBtn_0x1e9ed8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("DogRace_SetActBtn_0x1e9ed8");
 #endif
@@ -58,7 +58,6 @@ void DogRace_SetActBtn_0x1e9ed8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1F7858u, 0x1E9F00u, 0x1E9F08u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1E9F08u;
 label_1e9f08:
     // 0x1e9f08: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1e9f08u;

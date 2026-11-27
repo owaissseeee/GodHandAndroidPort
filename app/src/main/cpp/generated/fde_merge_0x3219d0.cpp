@@ -13,7 +13,7 @@
 
 // Function: fde_merge
 // Address: 0x3219d0 - 0x321ad0
-void fde_merge_0x3219d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void fde_merge_0x3219d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("fde_merge_0x3219d0");
 #endif
@@ -88,7 +88,6 @@ void fde_merge_0x3219d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
     // 0x321a20: 0x4f5821  addu        $t3, $v0, $t7
     SET_GPR_S32(ctx, 11, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 15)));
     // 0x321a24: 0x0  nop
-    ctx->pc = 0x321a24u;
     // NOP
 label_321a28:
     // 0x321a28: 0x24a5fffc  addiu       $a1, $a1, -0x4
@@ -205,7 +204,6 @@ label_321a68:
             goto label_321a68;
         }
     }
-    ctx->pc = 0x321A9Cu;
 label_321a9c:
     // 0x321a9c: 0x12d1021  addu        $v0, $t1, $t5
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 9), GPR_U32(ctx, 13)));

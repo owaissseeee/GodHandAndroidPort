@@ -13,7 +13,7 @@
 
 // Function: cEmManage_ckEmNear
 // Address: 0x291ac8 - 0x291b90
-void cEmManage_ckEmNear_0x291ac8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_ckEmNear_0x291ac8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_ckEmNear_0x291ac8");
 #endif
@@ -74,7 +74,6 @@ void cEmManage_ckEmNear_0x291ac8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     ctx->pc = 0x291af8u;
     SET_GPR_S32(ctx, 16, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 8)));
     // 0x291afc: 0x0  nop
-    ctx->pc = 0x291afcu;
     // NOP
 label_291b00:
     // 0x291b00: 0x52000018  beql        $s0, $zero, . + 4 + (0x18 << 2)
@@ -157,7 +156,6 @@ label_291b00:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_IsSet_Field_16D0_Bit_1_26ECC0_0x26ecc0, 0x26ecc0u, 0x291b38u)) {
         return;
     }
-    ctx->pc = 0x291B38u;
 label_291b38:
     // 0x291b38: 0x5040000a  beql        $v0, $zero, . + 4 + (0xA << 2)
     ctx->pc = 0x291B38u;
@@ -188,7 +186,6 @@ label_291b38:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0MagnitudeSqXZ_0x1f7eb0, 0x1f7eb0u, 0x291b4cu)) {
         return;
     }
-    ctx->pc = 0x291B4Cu;
 label_291b4c:
     // 0x291b4c: 0x4614a042  mul.s       $f1, $f20, $f20
     ctx->f[1] = FPU_MUL_S(ctx->f[20], ctx->f[20]);
@@ -233,10 +230,8 @@ label_291b64:
             goto label_291b00;
         }
     }
-    ctx->pc = 0x291B6Cu;
 label_291b6c:
     // 0x291b6c: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x291b6cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_291b70:
     // 0x291b70: 0x7bb00040  lq          $s0, 0x40($sp)

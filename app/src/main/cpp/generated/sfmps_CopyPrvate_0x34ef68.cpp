@@ -13,7 +13,7 @@
 
 // Function: sfmps_CopyPrvate
 // Address: 0x34ef68 - 0x34f008
-void sfmps_CopyPrvate_0x34ef68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfmps_CopyPrvate_0x34ef68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfmps_CopyPrvate_0x34ef68");
 #endif
@@ -65,7 +65,6 @@ void sfmps_CopyPrvate_0x34ef68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &SFHDS_SetHdr_0x34d0a8, 0x34d0a8u, 0x34ef98u)) {
         return;
     }
-    ctx->pc = 0x34EF98u;
 label_34ef98:
     // 0x34ef98: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -94,7 +93,6 @@ label_34ef98:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00350040_0x350040, 0x350040u, 0x34efb4u)) {
         return;
     }
-    ctx->pc = 0x34EFB4u;
 label_34efb4:
     // 0x34efb4: 0x2646ffee  addiu       $a2, $s2, -0x12
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 18), 4294967278));
@@ -126,7 +124,6 @@ label_34efb4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034F008_0x34f008, 0x34f008u, 0x34efd4u)) {
         return;
     }
-    ctx->pc = 0x34EFD4u;
 label_34efd4:
     // 0x34efd4: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x34EFD4u;
@@ -144,7 +141,6 @@ label_34efd4:
         }
     }
     // 0x34efdc: 0x0  nop
-    ctx->pc = 0x34efdcu;
     // NOP
 label_34efe0:
     // 0x34efe0: 0xc0d3c02  jal         func_34F008
@@ -158,7 +154,6 @@ label_34efe0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034F008_0x34f008, 0x34f008u, 0x34efe8u)) {
         return;
     }
-    ctx->pc = 0x34EFE8u;
 label_34efe8:
     // 0x34efe8: 0xdfb00010  ld          $s0, 0x10($sp)
     ctx->pc = 0x34efe8u;

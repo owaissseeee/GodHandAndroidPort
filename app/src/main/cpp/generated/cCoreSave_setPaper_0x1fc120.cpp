@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_setPaper
 // Address: 0x1fc120 - 0x1fc138
-void cCoreSave_setPaper_0x1fc120(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setPaper_0x1fc120(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setPaper_0x1fc120");
 #endif

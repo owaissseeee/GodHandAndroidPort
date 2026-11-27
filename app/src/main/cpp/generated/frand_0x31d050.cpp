@@ -13,7 +13,7 @@
 
 // Function: frand
 // Address: 0x31d050 - 0x31d098
-void frand_0x31d050(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void frand_0x31d050(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("frand_0x31d050");
 #endif
@@ -56,7 +56,6 @@ void frand_0x31d050(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31D020u, 0x31D070u, 0x31D078u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x31D078u;
 label_31d078:
     // 0x31d078: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x31d078u;

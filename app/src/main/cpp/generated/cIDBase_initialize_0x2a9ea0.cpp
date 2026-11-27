@@ -13,7 +13,7 @@
 
 // Function: cIDBase_initialize
 // Address: 0x2a9ea0 - 0x2a9f30
-void cIDBase_initialize_0x2a9ea0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDBase_initialize_0x2a9ea0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDBase_initialize_0x2a9ea0");
 #endif
@@ -58,7 +58,6 @@ void cIDBase_initialize_0x2a9ea0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_clear_0x2a9df8, 0x2a9df8u, 0x2a9ec4u)) {
         return;
     }
-    ctx->pc = 0x2A9EC4u;
 label_2a9ec4:
     // 0x2a9ec4: 0x24020006  addiu       $v0, $zero, 0x6
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
@@ -91,7 +90,6 @@ label_2a9ec4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002ACD78_0x2acd78, 0x2acd78u, 0x2a9eecu)) {
         return;
     }
-    ctx->pc = 0x2A9EECu;
 label_2a9eec:
     // 0x2a9eec: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x2A9EECu;
@@ -123,7 +121,6 @@ label_2a9eec:
             goto label_2a9f18;
         }
     }
-    ctx->pc = 0x2A9EFCu;
 label_2a9efc:
     // 0x2a9efc: 0xc0aa834  jal         func_2AA0D0
     SET_GPR_U32(ctx, 31, 0x2A9F04u);
@@ -136,7 +133,6 @@ label_2a9efc:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_setWorkFromData_0x2aa0d0, 0x2aa0d0u, 0x2a9f04u)) {
         return;
     }
-    ctx->pc = 0x2A9F04u;
 label_2a9f04:
     // 0x2a9f04: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x2A9F04u;
@@ -164,10 +160,8 @@ label_2a9f04:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_resetAnim_0x2aba78, 0x2aba78u, 0x2a9f14u)) {
         return;
     }
-    ctx->pc = 0x2A9F14u;
 label_2a9f14:
     // 0x2a9f14: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2a9f14u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2a9f18:
     // 0x2a9f18: 0x7bb00030  lq          $s0, 0x30($sp)

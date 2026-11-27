@@ -13,7 +13,7 @@
 
 // Function: cOm5c_setArm
 // Address: 0x1ae5b0 - 0x1ae630
-void cOm5c_setArm_0x1ae5b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm5c_setArm_0x1ae5b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm5c_setArm_0x1ae5b0");
 #endif
@@ -111,7 +111,6 @@ void cOm5c_setArm_0x1ae5b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &cOm59_setParent_0x1aad88, 0x1aad88u, 0x1ae60cu)) {
         return;
     }
-    ctx->pc = 0x1AE60Cu;
 label_1ae60c:
     // 0x1ae60c: 0x111080  sll         $v0, $s1, 2
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 17), 2));

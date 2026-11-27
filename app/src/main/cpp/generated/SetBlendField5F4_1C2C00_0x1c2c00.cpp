@@ -13,7 +13,7 @@
 
 // Function: SetBlendField5F4_1C2C00
 // Address: 0x1c2c00 - 0x1c2c40
-void SetBlendField5F4_1C2C00_0x1c2c00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetBlendField5F4_1C2C00_0x1c2c00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetBlendField5F4_1C2C00_0x1c2c00");
 #endif
@@ -72,7 +72,6 @@ void SetBlendField5F4_1C2C00_0x1c2c00(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x1c2c34u)) {
         return;
     }
-    ctx->pc = 0x1C2C34u;
 label_1c2c34:
     // 0x1c2c34: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1c2c34u;

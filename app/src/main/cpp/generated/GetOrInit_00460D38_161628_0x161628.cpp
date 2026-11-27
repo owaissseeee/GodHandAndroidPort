@@ -13,7 +13,7 @@
 
 // Function: GetOrInit_00460D38_161628
 // Address: 0x161628 - 0x161688
-void GetOrInit_00460D38_161628_0x161628(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetOrInit_00460D38_161628_0x161628(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetOrInit_00460D38_161628_0x161628");
 #endif
@@ -68,7 +68,6 @@ void GetOrInit_00460D38_161628_0x161628(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031EEC8_0x31eec8, 0x31eec8u, 0x161654u)) {
         return;
     }
-    ctx->pc = 0x161654u;
 label_161654:
     // 0x161654: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

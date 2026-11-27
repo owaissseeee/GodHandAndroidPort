@@ -13,7 +13,7 @@
 
 // Function: cSndBgmNode_Unlink
 // Address: 0x2cc5e8 - 0x2cc628
-void cSndBgmNode_Unlink_0x2cc5e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndBgmNode_Unlink_0x2cc5e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndBgmNode_Unlink_0x2cc5e8");
 #endif
@@ -55,7 +55,6 @@ void cSndBgmNode_Unlink_0x2cc5e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_2cc608;
         }
     }
-    ctx->pc = 0x2CC600u;
 label_2cc600:
     // 0x2cc600: 0x3c020060  lui         $v0, 0x60
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)96 << 16));

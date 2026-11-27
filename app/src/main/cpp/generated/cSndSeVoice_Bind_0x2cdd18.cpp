@@ -13,7 +13,7 @@
 
 // Function: cSndSeVoice_Bind
 // Address: 0x2cdd18 - 0x2cde28
-void cSndSeVoice_Bind_0x2cdd18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndSeVoice_Bind_0x2cdd18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndSeVoice_Bind_0x2cdd18");
 #endif
@@ -82,7 +82,6 @@ void cSndSeVoice_Bind_0x2cdd18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &cSndSeVoice_IsActive_0x2cda38, 0x2cda38u, 0x2cdd64u)) {
         return;
     }
-    ctx->pc = 0x2CDD64u;
 label_2cdd64:
     // 0x2cdd64: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -116,7 +115,6 @@ label_2cdd64:
             goto label_2cde00;
         }
     }
-    ctx->pc = 0x2CDD78u;
 label_2cdd78:
     // 0x2cdd78: 0x16400009  bnez        $s2, . + 4 + (0x9 << 2)
     ctx->pc = 0x2CDD78u;
@@ -164,7 +162,6 @@ label_2cdd78:
             goto label_2cdde8;
         }
     }
-    ctx->pc = 0x2CDDA0u;
 label_2cdda0:
     // 0x2cdda0: 0x24020002  addiu       $v0, $zero, 0x2
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
@@ -197,7 +194,6 @@ label_2cdda0:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0CopyVector_0x30a538, 0x30a538u, 0x2cddb8u)) {
         return;
     }
-    ctx->pc = 0x2CDDB8u;
 label_2cddb8:
     // 0x2cddb8: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x2CDDB8u;
@@ -214,7 +210,6 @@ label_2cddb8:
             goto label_2cddd0;
         }
     }
-    ctx->pc = 0x2CDDC0u;
 label_2cddc0:
     // 0x2cddc0: 0x8e2500f0  lw          $a1, 0xF0($s1)
     ctx->pc = 0x2cddc0u;
@@ -230,7 +225,6 @@ label_2cddc0:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0CopyVector_0x30a538, 0x30a538u, 0x2cddccu)) {
         return;
     }
-    ctx->pc = 0x2CDDCCu;
 label_2cddcc:
     // 0x2cddcc: 0xc6000044  lwc1        $f0, 0x44($s0)
     ctx->pc = 0x2cddccu;
@@ -269,7 +263,6 @@ label_2cdde8:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndSeVoice_Setup_0x2cdff0, 0x2cdff0u, 0x2cde00u)) {
         return;
     }
-    ctx->pc = 0x2CDE00u;
 label_2cde00:
     // 0x2cde00: 0x7bb00070  lq          $s0, 0x70($sp)
     ctx->pc = 0x2cde00u;

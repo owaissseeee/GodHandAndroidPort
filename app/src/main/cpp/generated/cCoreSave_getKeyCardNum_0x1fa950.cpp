@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getKeyCardNum
 // Address: 0x1fa950 - 0x1fa968
-void cCoreSave_getKeyCardNum_0x1fa950(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getKeyCardNum_0x1fa950(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getKeyCardNum_0x1fa950");
 #endif

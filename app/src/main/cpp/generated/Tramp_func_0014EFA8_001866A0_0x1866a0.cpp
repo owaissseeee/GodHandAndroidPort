@@ -13,7 +13,7 @@
 
 // Function: Tramp_func_0014EFA8_001866A0
 // Address: 0x1866a0 - 0x1866d8
-void Tramp_func_0014EFA8_001866A0_0x1866a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp_func_0014EFA8_001866A0_0x1866a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp_func_0014EFA8_001866A0_0x1866a0");
 #endif
@@ -37,7 +37,6 @@ void Tramp_func_0014EFA8_001866A0_0x1866a0(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &cObjBase_KageDraw_0x14efa8, 0x14efa8u, 0x1866b0u)) {
         return;
     }
-    ctx->pc = 0x1866B0u;
 label_1866b0:
     // 0x1866b0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1866b0u;

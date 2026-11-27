@@ -13,7 +13,7 @@
 
 // Function: cWorldLight_getTblValue
 // Address: 0x2d9360 - 0x2d93e8
-void cWorldLight_getTblValue_0x2d9360(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cWorldLight_getTblValue_0x2d9360(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cWorldLight_getTblValue_0x2d9360");
 #endif
@@ -57,7 +57,6 @@ void cWorldLight_getTblValue_0x2d9360(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_2d938c;
         }
     }
-    ctx->pc = 0x2D937Cu;
 label_2d937c:
     // 0x2d937c: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -76,7 +75,6 @@ label_2d937c:
         return;
         #endif
     }
-    ctx->pc = 0x2D938Cu;
 label_2d938c:
     // 0x2d938c: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -138,7 +136,6 @@ label_2d938c:
         }
     }
     // 0x2d93bc: 0x0  nop
-    ctx->pc = 0x2d93bcu;
     // NOP
 label_2d93c0:
     // 0x2d93c0: 0x88102b  sltu        $v0, $a0, $t0

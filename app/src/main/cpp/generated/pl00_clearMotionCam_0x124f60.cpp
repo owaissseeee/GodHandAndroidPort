@@ -13,7 +13,7 @@
 
 // Function: pl00_clearMotionCam
 // Address: 0x124f60 - 0x124fc8
-void pl00_clearMotionCam_0x124f60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void pl00_clearMotionCam_0x124f60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("pl00_clearMotionCam_0x124f60");
 #endif
@@ -107,10 +107,8 @@ label_124f90:
     if (!runtime->callDirectStatic(rdram, ctx, &cPlCamera_setCamUpdate_0x13b9b8, 0x13b9b8u, 0x124fa8u)) {
         return;
     }
-    ctx->pc = 0x124FA8u;
 label_124fa8:
     // 0x124fa8: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x124fa8u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_124fac:
     // 0x124fac: 0xc04e350  jal         func_138D40
@@ -124,7 +122,6 @@ label_124fac:
     if (!runtime->callDirectStatic(rdram, ctx, &cCamManager_setPlCamera_0x138d40, 0x138d40u, 0x124fb4u)) {
         return;
     }
-    ctx->pc = 0x124FB4u;
 label_124fb4:
     // 0x124fb4: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x124fb4u;

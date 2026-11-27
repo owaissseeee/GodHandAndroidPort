@@ -13,7 +13,7 @@
 
 // Function: cPlCamera_SetNormalZoomOutMode
 // Address: 0x139db8 - 0x139fa8
-void cPlCamera_SetNormalZoomOutMode_0x139db8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cPlCamera_SetNormalZoomOutMode_0x139db8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cPlCamera_SetNormalZoomOutMode_0x139db8");
 #endif
@@ -154,7 +154,6 @@ label_139e2c:
             goto label_139edc;
         }
     }
-    ctx->pc = 0x139E34u;
 label_139e34:
     // 0x139e34: 0x3c020074  lui         $v0, 0x74
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
@@ -178,7 +177,6 @@ label_139e34:
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x139e50u)) {
         return;
     }
-    ctx->pc = 0x139E50u;
 label_139e50:
     // 0x139e50: 0x3c01be4c  lui         $at, 0xBE4C
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)48716 << 16));
@@ -215,7 +213,6 @@ label_139e50:
             goto label_139eb4;
         }
     }
-    ctx->pc = 0x139E80u;
 label_139e80:
     // 0x139e80: 0xc0b6dac  jal         func_2DB6B0
     ctx->pc = 0x139E80u;
@@ -223,7 +220,6 @@ label_139e80:
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x139e88u)) {
         return;
     }
-    ctx->pc = 0x139E88u;
 label_139e88:
     // 0x139e88: 0x3c01be4c  lui         $at, 0xBE4C
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)48716 << 16));
@@ -246,7 +242,6 @@ label_139e88:
     // 0x139eac: 0x3421cccd  ori         $at, $at, 0xCCCD
     SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)52429);
     // 0x139eb0: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x139eb0u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
 label_139eb4:
     // 0x139eb4: 0x3c014080  lui         $at, 0x4080
@@ -403,7 +398,6 @@ label_139f34:
     if (!runtime->callDirectStatic(rdram, ctx, &cPlCamera_setCamUpdate_0x13b9b8, 0x13b9b8u, 0x139f5cu)) {
         return;
     }
-    ctx->pc = 0x139F5Cu;
 label_139f5c:
     // 0x139f5c: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x139F5Cu;
@@ -420,7 +414,6 @@ label_139f5c:
             goto label_139f74;
         }
     }
-    ctx->pc = 0x139F64u;
 label_139f64:
     // 0x139f64: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -435,10 +428,8 @@ label_139f64:
     if (!runtime->callDirectStatic(rdram, ctx, &cPlCamera_setCamUpdate_0x13b9b8, 0x13b9b8u, 0x139f70u)) {
         return;
     }
-    ctx->pc = 0x139F70u;
 label_139f70:
     // 0x139f70: 0x26020180  addiu       $v0, $s0, 0x180
-    ctx->pc = 0x139f70u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 384));
 label_139f74:
     // 0x139f74: 0x4be4033c  vmove.xyzw  $vf4, $vf0

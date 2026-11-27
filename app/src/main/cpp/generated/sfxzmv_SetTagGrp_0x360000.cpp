@@ -13,7 +13,7 @@
 
 // Function: sfxzmv_SetTagGrp
 // Address: 0x360000 - 0x3600e8
-void sfxzmv_SetTagGrp_0x360000(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfxzmv_SetTagGrp_0x360000(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfxzmv_SetTagGrp_0x360000");
 #endif
@@ -105,7 +105,6 @@ void sfxzmv_SetTagGrp_0x360000(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_3600c8;
         }
     }
-    ctx->pc = 0x360058u;
 label_360058:
     // 0x360058: 0x3c100046  lui         $s0, 0x46
     SET_GPR_S32(ctx, 16, (int32_t)((uint32_t)70 << 16));
@@ -140,7 +139,6 @@ label_360058:
     if (!runtime->callDirectStatic(rdram, ctx, &SJ_SearchTag_0x33adf8, 0x33adf8u, 0x360088u)) {
         return;
     }
-    ctx->pc = 0x360088u;
 label_360088:
     // 0x360088: 0x8fa30010  lw          $v1, 0x10($sp)
     ctx->pc = 0x360088u;
@@ -176,7 +174,6 @@ label_360088:
     if (!runtime->callDirectStatic(rdram, ctx, &SJ_SearchTag_0x33adf8, 0x33adf8u, 0x3600b4u)) {
         return;
     }
-    ctx->pc = 0x3600B4u;
 label_3600b4:
     // 0x3600b4: 0xae910000  sw          $s1, 0x0($s4)
     ctx->pc = 0x3600b4u;

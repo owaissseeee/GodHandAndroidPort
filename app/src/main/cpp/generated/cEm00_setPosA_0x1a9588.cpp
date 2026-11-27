@@ -13,7 +13,7 @@
 
 // Function: cEm00_setPosA
 // Address: 0x1a9588 - 0x1a95f0
-void cEm00_setPosA_0x1a9588(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_setPosA_0x1a9588(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_setPosA_0x1a9588");
 #endif
@@ -115,7 +115,6 @@ label_1a95d8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001A9210_0x1a9210, 0x1a9210u, 0x1a95e0u)) {
         return;
     }
-    ctx->pc = 0x1A95E0u;
 label_1a95e0:
     // 0x1a95e0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1a95e0u;

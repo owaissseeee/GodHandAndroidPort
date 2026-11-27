@@ -13,7 +13,7 @@
 
 // Function: CustomIDOwner_setColumnNumber
 // Address: 0x1f4ff0 - 0x1f5098
-void CustomIDOwner_setColumnNumber_0x1f4ff0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CustomIDOwner_setColumnNumber_0x1f4ff0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CustomIDOwner_setColumnNumber_0x1f4ff0");
 #endif
@@ -118,7 +118,6 @@ label_1f5040:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetOffsetPosX_0x2d66d0, 0x2d66d0u, 0x1f505cu)) {
         return;
     }
-    ctx->pc = 0x1F505Cu;
 label_1f505c:
     // 0x1f505c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -133,7 +132,6 @@ label_1f505c:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetNumber_0x2d6548, 0x2d6548u, 0x1f5068u)) {
         return;
     }
-    ctx->pc = 0x1F5068u;
 label_1f5068:
     // 0x1f5068: 0x260202d  daddu       $a0, $s3, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 19) + (uint64_t)GPR_U64(ctx, 0));
@@ -150,7 +148,6 @@ label_1f5068:
     if (!runtime->callDirectStatic(rdram, ctx, &SetCustomIDDispOneOrAll_1F4778_0x1f4778, 0x1f4778u, 0x1f5078u)) {
         return;
     }
-    ctx->pc = 0x1F5078u;
 label_1f5078:
     // 0x1f5078: 0x7bb00050  lq          $s0, 0x50($sp)
     ctx->pc = 0x1f5078u;

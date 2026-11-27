@@ -13,7 +13,7 @@
 
 // Function: __mcmp
 // Address: 0x38fde8 - 0x38fe50
-void ps2___mcmp_0x38fde8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___mcmp_0x38fde8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___mcmp_0x38fde8");
 #endif
@@ -63,7 +63,6 @@ void ps2___mcmp_0x38fde8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
         return;
         #endif
     }
-    ctx->pc = 0x38FE04u;
 label_38fe04:
     // 0x38fe04: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -88,7 +87,6 @@ label_38fe04:
         return;
         #endif
     }
-    ctx->pc = 0x38FE14u;
 label_38fe14:
     // 0x38fe14: 0x24870014  addiu       $a3, $a0, 0x14
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 4), 20));
@@ -99,7 +97,6 @@ label_38fe14:
     // 0x38fe20: 0x431821  addu        $v1, $v0, $v1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
     // 0x38fe24: 0x24c6fffc  addiu       $a2, $a2, -0x4
-    ctx->pc = 0x38fe24u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 6), 4294967292));
 label_38fe28:
     // 0x38fe28: 0x2463fffc  addiu       $v1, $v1, -0x4

@@ -13,7 +13,7 @@
 
 // Function: CreateThread
 // Address: 0x3afaa0 - 0x3afab0
-void CreateThread_0x3afaa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CreateThread_0x3afaa0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CreateThread_0x3afaa0");
 #endif

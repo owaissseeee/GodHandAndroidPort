@@ -13,7 +13,7 @@
 
 // Function: EnableDispatchThread
 // Address: 0x3afb20 - 0x3afb30
-void EnableDispatchThread_0x3afb20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EnableDispatchThread_0x3afb20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EnableDispatchThread_0x3afb20");
 #endif

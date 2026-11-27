@@ -13,7 +13,7 @@
 
 // Function: BlendWork_copyTable
 // Address: 0x145100 - 0x145160
-void BlendWork_copyTable_0x145100(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BlendWork_copyTable_0x145100(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BlendWork_copyTable_0x145100");
 #endif
@@ -72,7 +72,6 @@ void BlendWork_copyTable_0x145100(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_145130;
         }
     }
-    ctx->pc = 0x14512Cu;
 label_14512c:
     // 0x14512c: 0xa6060334  sh          $a2, 0x334($s0)
     ctx->pc = 0x14512cu;
@@ -94,7 +93,6 @@ label_145130:
     if (!runtime->callDirectStatic(rdram, ctx, &memcpy_0x3a5148, 0x3a5148u, 0x145140u)) {
         return;
     }
-    ctx->pc = 0x145140u;
 label_145140:
     // 0x145140: 0x8e030090  lw          $v1, 0x90($s0)
     ctx->pc = 0x145140u;

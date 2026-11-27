@@ -13,7 +13,7 @@
 
 // Function: MPSLIB_CheckHn
 // Address: 0x368fc0 - 0x368fe8
-void MPSLIB_CheckHn_0x368fc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MPSLIB_CheckHn_0x368fc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MPSLIB_CheckHn_0x368fc0");
 #endif

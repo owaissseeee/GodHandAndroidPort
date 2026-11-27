@@ -13,7 +13,7 @@
 
 // Function: cOmWeapon_dropToGround
 // Address: 0x1cf8b0 - 0x1cfa20
-void cOmWeapon_dropToGround_0x1cf8b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmWeapon_dropToGround_0x1cf8b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmWeapon_dropToGround_0x1cf8b0");
 #endif
@@ -93,10 +93,8 @@ void cOmWeapon_dropToGround_0x1cf8b0(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_1cf8ec;
         }
     }
-    ctx->pc = 0x1CF8E8u;
 label_1cf8e8:
     // 0x1cf8e8: 0x202d  daddu       $a0, $zero, $zero
-    ctx->pc = 0x1cf8e8u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1cf8ec:
     // 0x1cf8ec: 0x8e020600  lw          $v0, 0x600($s0)
@@ -333,10 +331,8 @@ label_1cf994:
             goto label_1cf9e0;
         }
     }
-    ctx->pc = 0x1CF9DCu;
 label_1cf9dc:
     // 0x1cf9dc: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1cf9dcu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1cf9e0:
     // 0x1cf9e0: 0x1040000b  beqz        $v0, . + 4 + (0xB << 2)
@@ -374,7 +370,6 @@ label_1cf9e0:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_calcParts_0x149eb8, 0x149eb8u, 0x1cf9fcu)) {
         return;
     }
-    ctx->pc = 0x1CF9FCu;
 label_1cf9fc:
     // 0x1cf9fc: 0x24020004  addiu       $v0, $zero, 0x4
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4));

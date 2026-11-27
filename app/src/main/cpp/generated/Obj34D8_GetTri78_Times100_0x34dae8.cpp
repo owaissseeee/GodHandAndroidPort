@@ -13,7 +13,7 @@
 
 // Function: Obj34D8_GetTri78_Times100
 // Address: 0x34dae8 - 0x34db20
-void Obj34D8_GetTri78_Times100_0x34dae8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj34D8_GetTri78_Times100_0x34dae8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj34D8_GetTri78_Times100_0x34dae8");
 #endif
@@ -56,7 +56,6 @@ void Obj34D8_GetTri78_Times100_0x34dae8(uint8_t* rdram, R5900Context* ctx, PS2Ru
     // 0x34db10: 0x21080  sll         $v0, $v0, 2
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 2));
     // 0x34db14: 0x441021  addu        $v0, $v0, $a0
-    ctx->pc = 0x34db14u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 4)));
 label_34db18:
     // 0x34db18: 0x3e00008  jr          $ra

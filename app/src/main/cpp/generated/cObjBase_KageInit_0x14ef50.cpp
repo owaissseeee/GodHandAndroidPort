@@ -13,7 +13,7 @@
 
 // Function: cObjBase_KageInit
 // Address: 0x14ef50 - 0x14efa8
-void cObjBase_KageInit_0x14ef50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cObjBase_KageInit_0x14ef50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cObjBase_KageInit_0x14ef50");
 #endif
@@ -70,7 +70,6 @@ label_14ef78:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0015EAC8_0x15eac8, 0x15eac8u, 0x14ef88u)) {
         return;
     }
-    ctx->pc = 0x14EF88u;
 label_14ef88:
     // 0x14ef88: 0x621fffb  bgez        $s1, . + 4 + (-0x5 << 2)
     ctx->pc = 0x14EF88u;

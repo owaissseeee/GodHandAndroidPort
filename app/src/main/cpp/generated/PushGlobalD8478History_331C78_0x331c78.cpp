@@ -13,7 +13,7 @@
 
 // Function: PushGlobalD8478History_331C78
 // Address: 0x331c78 - 0x331c98
-void PushGlobalD8478History_331C78_0x331c78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void PushGlobalD8478History_331C78_0x331c78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("PushGlobalD8478History_331C78_0x331c78");
 #endif

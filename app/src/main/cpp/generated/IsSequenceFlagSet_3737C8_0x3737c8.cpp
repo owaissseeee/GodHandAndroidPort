@@ -13,7 +13,7 @@
 
 // Function: IsSequenceFlagSet_3737C8
 // Address: 0x3737c8 - 0x373810
-void IsSequenceFlagSet_3737C8_0x3737c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IsSequenceFlagSet_3737C8_0x3737c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IsSequenceFlagSet_3737C8_0x3737c8");
 #endif
@@ -50,7 +50,6 @@ void IsSequenceFlagSet_3737C8_0x3737c8(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373A50_0x373a50, 0x373a50u, 0x3737e4u)) {
         return;
     }
-    ctx->pc = 0x3737E4u;
 label_3737e4:
     // 0x3737e4: 0x50400004  beql        $v0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x3737E4u;
@@ -73,7 +72,6 @@ label_3737e4:
     // 0x3737f0: 0x511024  and         $v0, $v0, $s1
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 17));
     // 0x3737f4: 0x2102b  sltu        $v0, $zero, $v0
-    ctx->pc = 0x3737f4u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 0) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
 label_3737f8:
     // 0x3737f8: 0x7bb00020  lq          $s0, 0x20($sp)

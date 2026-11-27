@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Memset_Backward_366B80
 // Address: 0x366b80 - 0x366c50
-void Obj0000_Memset_Backward_366B80_0x366b80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Memset_Backward_366B80_0x366b80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Memset_Backward_366B80_0x366b80");
 #endif
@@ -49,7 +49,6 @@ void Obj0000_Memset_Backward_366B80_0x366b80(uint8_t* rdram, R5900Context* ctx, 
         }
     }
     // 0x366b94: 0x0  nop
-    ctx->pc = 0x366b94u;
     // NOP
 label_366b98:
     // 0x366b98: 0x2484ffff  addiu       $a0, $a0, -0x1
@@ -80,7 +79,6 @@ label_366b98:
             goto label_366b98;
         }
     }
-    ctx->pc = 0x366BB4u;
 label_366bb4:
     // 0x366bb4: 0x63102  srl         $a2, $a2, 4
     SET_GPR_S32(ctx, 6, (int32_t)SRL32(GPR_U32(ctx, 6), 4));
@@ -93,7 +91,6 @@ label_366bb4:
             goto label_366c48;
         }
     }
-    ctx->pc = 0x366BC0u;
 label_366bc0:
     // 0x366bc0: 0x2484ffff  addiu       $a0, $a0, -0x1
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 4294967295));
@@ -192,7 +189,6 @@ label_366bc0:
             goto label_366bc0;
         }
     }
-    ctx->pc = 0x366C48u;
 label_366c48:
     // 0x366c48: 0x3e00008  jr          $ra
     ctx->pc = 0x366C48u;

@@ -13,7 +13,7 @@
 
 // Function: mwsflib_SetDefCond
 // Address: 0x3455d8 - 0x345610
-void mwsflib_SetDefCond_0x3455d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void mwsflib_SetDefCond_0x3455d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("mwsflib_SetDefCond_0x3455d8");
 #endif
@@ -51,7 +51,6 @@ void mwsflib_SetDefCond_0x3455d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Call_00359EC0_Field_3C_0x346798, 0x346798u, 0x3455f8u)) {
         return;
     }
-    ctx->pc = 0x3455F8u;
 label_3455f8:
     // 0x3455f8: 0x202d  daddu       $a0, $zero, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

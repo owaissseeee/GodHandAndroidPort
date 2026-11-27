@@ -13,7 +13,7 @@
 
 // Function: func_0015D6E8
 // Address: 0x15d6e8 - 0x15db30
-void func_0015D6E8_0x15d6e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0015D6E8_0x15d6e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0015D6E8_0x15d6e8");
 #endif
@@ -87,7 +87,6 @@ void func_0015D6E8_0x15d6e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &PostInc_D_00566E10_0015B0F0_15B0F0_0x15b0f0, 0x15b0f0u, 0x15d738u)) {
         return;
     }
-    ctx->pc = 0x15D738u;
 label_15d738:
     // 0x15d738: 0x40882d  daddu       $s1, $v0, $zero
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -132,7 +131,6 @@ label_15d738:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0015E0A0_0x15e0a0, 0x15e0a0u, 0x15d768u)) {
         return;
     }
-    ctx->pc = 0x15D768u;
 label_15d768:
     // 0x15d768: 0x321e00ff  andi        $fp, $s0, 0xFF
     SET_GPR_U64(ctx, 30, GPR_U64(ctx, 16) & (uint64_t)(uint16_t)255);
@@ -248,7 +246,6 @@ label_15d768:
     ctx->pc = 0x15d820u;
     WRITE64(ADD32(GPR_U32(ctx, 17), 472), GPR_U64(ctx, 3));
     // 0x15d824: 0x0  nop
-    ctx->pc = 0x15d824u;
     // NOP
 label_15d828:
     // 0x15d828: 0x200202d  daddu       $a0, $s0, $zero
@@ -264,7 +261,6 @@ label_15d828:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0FTOI4Vector_0x30a570, 0x30a570u, 0x15d834u)) {
         return;
     }
-    ctx->pc = 0x15D834u;
 label_15d834:
     // 0x15d834: 0x2673fff0  addiu       $s3, $s3, -0x10
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 19), 4294967280));
@@ -753,10 +749,8 @@ label_15dadc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031A650_0x31a650, 0x31a650u, 0x15daf8u)) {
         return;
     }
-    ctx->pc = 0x15DAF8u;
 label_15daf8:
     // 0x15daf8: 0x220102d  daddu       $v0, $s1, $zero
-    ctx->pc = 0x15daf8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
 label_15dafc:
     // 0x15dafc: 0x7bb000d0  lq          $s0, 0xD0($sp)

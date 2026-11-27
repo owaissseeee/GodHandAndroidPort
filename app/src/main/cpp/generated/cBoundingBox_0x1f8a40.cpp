@@ -13,7 +13,7 @@
 
 // Function: cBoundingBox
 // Address: 0x1f8a40 - 0x1f8a60
-void cBoundingBox_0x1f8a40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cBoundingBox_0x1f8a40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cBoundingBox_0x1f8a40");
 #endif

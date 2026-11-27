@@ -13,7 +13,7 @@
 
 // Function: IsStateVal6_10B5C8
 // Address: 0x10b5c8 - 0x10b5f0
-void IsStateVal6_10B5C8_0x10b5c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IsStateVal6_10B5C8_0x10b5c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IsStateVal6_10B5C8_0x10b5c8");
 #endif
@@ -55,7 +55,6 @@ void IsStateVal6_10B5C8_0x10b5c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         return;
         #endif
     }
-    ctx->pc = 0x10B5E4u;
 label_10b5e4:
     // 0x10b5e4: 0x3e00008  jr          $ra
     ctx->pc = 0x10B5E4u;

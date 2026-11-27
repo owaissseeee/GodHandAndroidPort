@@ -13,7 +13,7 @@
 
 // Function: cDvd_init
 // Address: 0x200ac0 - 0x200b20
-void cDvd_init_0x200ac0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDvd_init_0x200ac0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDvd_init_0x200ac0");
 #endif
@@ -46,7 +46,6 @@ void cDvd_init_0x200ac0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
     ctx->pc = 0x200ad8u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x200adc: 0x2412001f  addiu       $s2, $zero, 0x1F
-    ctx->pc = 0x200adcu;
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 0), 31));
 label_200ae0:
     // 0x200ae0: 0x200282d  daddu       $a1, $s0, $zero
@@ -62,7 +61,6 @@ label_200ae0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00201228_0x201228, 0x201228u, 0x200aecu)) {
         return;
     }
-    ctx->pc = 0x200AECu;
 label_200aec:
     // 0x200aec: 0x2652ffff  addiu       $s2, $s2, -0x1
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), 4294967295));

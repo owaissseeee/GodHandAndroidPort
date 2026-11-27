@@ -13,7 +13,7 @@
 
 // Function: InitPtrField80AndForward_144AD0
 // Address: 0x144ad0 - 0x144b00
-void InitPtrField80AndForward_144AD0_0x144ad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitPtrField80AndForward_144AD0_0x144ad0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitPtrField80AndForward_144AD0_0x144ad0");
 #endif
@@ -58,7 +58,6 @@ void InitPtrField80AndForward_144AD0_0x144ad0(uint8_t* rdram, R5900Context* ctx,
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x144af4u)) {
         return;
     }
-    ctx->pc = 0x144AF4u;
 label_144af4:
     // 0x144af4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x144af4u;

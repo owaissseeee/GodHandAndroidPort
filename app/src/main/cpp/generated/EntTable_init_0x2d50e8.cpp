@@ -13,7 +13,7 @@
 
 // Function: EntTable_init
 // Address: 0x2d50e8 - 0x2d51c0
-void EntTable_init_0x2d50e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EntTable_init_0x2d50e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EntTable_init_0x2d50e8");
 #endif
@@ -82,7 +82,6 @@ void EntTable_init_0x2d50e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &EnsureInitThenForward_2A9538_30EE08_0x30ee08, 0x30ee08u, 0x2d5134u)) {
         return;
     }
-    ctx->pc = 0x2D5134u;
 label_2d5134:
     // 0x2d5134: 0x200302d  daddu       $a2, $s0, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -102,7 +101,6 @@ label_2d5134:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2d5148u)) {
         return;
     }
-    ctx->pc = 0x2D5148u;
 label_2d5148:
     // 0x2d5148: 0x9623000c  lhu         $v1, 0xC($s1)
     ctx->pc = 0x2d5148u;
@@ -123,7 +121,6 @@ label_2d5148:
         }
     }
     // 0x2d5154: 0x0  nop
-    ctx->pc = 0x2d5154u;
     // NOP
 label_2d5158:
     // 0x2d5158: 0x9626000e  lhu         $a2, 0xE($s1)
@@ -151,7 +148,6 @@ label_2d5158:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D5768_0x2d5768, 0x2d5768u, 0x2d5178u)) {
         return;
     }
-    ctx->pc = 0x2D5178u;
 label_2d5178:
     // 0x2d5178: 0x26520001  addiu       $s2, $s2, 0x1
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), 1));
@@ -178,7 +174,6 @@ label_2d5178:
             goto label_2d5158;
         }
     }
-    ctx->pc = 0x2D518Cu;
 label_2d518c:
     // 0x2d518c: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -198,7 +193,6 @@ label_2d518c:
     if (!runtime->callDirectStatic(rdram, ctx, &CreateSema_0x3afca0, 0x3afca0u, 0x2d51a0u)) {
         return;
     }
-    ctx->pc = 0x2D51A0u;
 label_2d51a0:
     // 0x2d51a0: 0xae220028  sw          $v0, 0x28($s1)
     ctx->pc = 0x2d51a0u;

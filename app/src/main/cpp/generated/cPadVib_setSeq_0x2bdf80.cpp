@@ -13,7 +13,7 @@
 
 // Function: cPadVib_setSeq
 // Address: 0x2bdf80 - 0x2bdfd8
-void cPadVib_setSeq_0x2bdf80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cPadVib_setSeq_0x2bdf80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cPadVib_setSeq_0x2bdf80");
 #endif

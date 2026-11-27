@@ -13,7 +13,7 @@
 
 // Function: func_0031BC98
 // Address: 0x31bc98 - 0x31bd78
-void func_0031BC98_0x31bc98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0031BC98_0x31bc98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0031BC98_0x31bc98");
 #endif
@@ -107,7 +107,6 @@ label_31bcbc:
             goto label_31bcf4;
         }
     }
-    ctx->pc = 0x31BCF4u;
 label_31bcf4:
     // 0x31bcf4: 0xa0e60000  sb          $a2, 0x0($a3)
     ctx->pc = 0x31bcf4u;
@@ -202,7 +201,6 @@ label_31bd40:
             goto label_31bd54;
         }
     }
-    ctx->pc = 0x31BD54u;
 label_31bd54:
     // 0x31bd54: 0x84e2000a  lh          $v0, 0xA($a3)
     ctx->pc = 0x31bd54u;

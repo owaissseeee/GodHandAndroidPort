@@ -13,7 +13,7 @@
 
 // Function: _IO_switch_to_main_get_area
 // Address: 0x38c280 - 0x38c2b8
-void ps2__IO_switch_to_main_get_area_0x38c280(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_switch_to_main_get_area_0x38c280(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_switch_to_main_get_area_0x38c280");
 #endif

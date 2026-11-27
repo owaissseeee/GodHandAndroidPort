@@ -13,7 +13,7 @@
 
 // Function: Slot2_blinkMarksAt4A6
 // Address: 0x1e3cb0 - 0x1e3d78
-void Slot2_blinkMarksAt4A6_0x1e3cb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Slot2_blinkMarksAt4A6_0x1e3cb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Slot2_blinkMarksAt4A6_0x1e3cb0");
 #endif
@@ -121,7 +121,6 @@ void Slot2_blinkMarksAt4A6_0x1e3cb0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e3d08u)) {
         return;
     }
-    ctx->pc = 0x1E3D08u;
 label_1e3d08:
     // 0x1e3d08: 0x8e04047c  lw          $a0, 0x47C($s0)
     ctx->pc = 0x1e3d08u;
@@ -137,7 +136,6 @@ label_1e3d08:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e3d14u)) {
         return;
     }
-    ctx->pc = 0x1E3D14u;
 label_1e3d14:
     // 0x1e3d14: 0x8e040474  lw          $a0, 0x474($s0)
     ctx->pc = 0x1e3d14u;
@@ -153,7 +151,6 @@ label_1e3d14:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e3d20u)) {
         return;
     }
-    ctx->pc = 0x1E3D20u;
 label_1e3d20:
     // 0x1e3d20: 0x8e040478  lw          $a0, 0x478($s0)
     ctx->pc = 0x1e3d20u;
@@ -169,7 +166,6 @@ label_1e3d20:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e3d2cu)) {
         return;
     }
-    ctx->pc = 0x1E3D2Cu;
 label_1e3d2c:
     // 0x1e3d2c: 0x1000000e  b           . + 4 + (0xE << 2)
     ctx->pc = 0x1E3D2Cu;
@@ -186,7 +182,6 @@ label_1e3d2c:
             goto label_1e3d68;
         }
     }
-    ctx->pc = 0x1E3D34u;
 label_1e3d34:
     // 0x1e3d34: 0x8e040430  lw          $a0, 0x430($s0)
     ctx->pc = 0x1e3d34u;
@@ -202,7 +197,6 @@ label_1e3d34:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e3d40u)) {
         return;
     }
-    ctx->pc = 0x1E3D40u;
 label_1e3d40:
     // 0x1e3d40: 0x8e04047c  lw          $a0, 0x47C($s0)
     ctx->pc = 0x1e3d40u;
@@ -218,7 +212,6 @@ label_1e3d40:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e3d4cu)) {
         return;
     }
-    ctx->pc = 0x1E3D4Cu;
 label_1e3d4c:
     // 0x1e3d4c: 0x8e040474  lw          $a0, 0x474($s0)
     ctx->pc = 0x1e3d4cu;
@@ -234,7 +227,6 @@ label_1e3d4c:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e3d58u)) {
         return;
     }
-    ctx->pc = 0x1E3D58u;
 label_1e3d58:
     // 0x1e3d58: 0x8e040478  lw          $a0, 0x478($s0)
     ctx->pc = 0x1e3d58u;
@@ -250,7 +242,6 @@ label_1e3d58:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e3d64u)) {
         return;
     }
-    ctx->pc = 0x1E3D64u;
 label_1e3d64:
     // 0x1e3d64: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1e3d64u;

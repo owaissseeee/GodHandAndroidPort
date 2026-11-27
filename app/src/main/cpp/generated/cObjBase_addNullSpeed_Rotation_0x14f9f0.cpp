@@ -14,7 +14,7 @@
 
 // Function: cObjBase_addNullSpeed_Rotation
 // Address: 0x14f9f0 - 0x14fa60
-void cObjBase_addNullSpeed_Rotation_0x14f9f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cObjBase_addNullSpeed_Rotation_0x14f9f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cObjBase_addNullSpeed_Rotation_0x14f9f0");
 #endif
@@ -113,7 +113,6 @@ void cObjBase_addNullSpeed_Rotation_0x14f9f0(uint8_t* rdram, R5900Context* ctx, 
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_vec_0x1f7da0, 0x1f7da0u, 0x14fa54u)) {
         return;
     }
-    ctx->pc = 0x14FA54u;
 label_14fa54:
     // 0x14fa54: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x14fa54u;

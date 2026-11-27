@@ -13,7 +13,7 @@
 
 // Function: UpdateChannelOutputLevels_377700
 // Address: 0x377700 - 0x3777c0
-void UpdateChannelOutputLevels_377700_0x377700(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateChannelOutputLevels_377700_0x377700(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateChannelOutputLevels_377700_0x377700");
 #endif
@@ -79,7 +79,6 @@ void UpdateChannelOutputLevels_377700_0x377700(uint8_t* rdram, R5900Context* ctx
     // 0x377738: 0x24140003  addiu       $s4, $zero, 0x3
     SET_GPR_S32(ctx, 20, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
     // 0x37773c: 0x0  nop
-    ctx->pc = 0x37773cu;
     // NOP
 label_377740:
     // 0x377740: 0x86050000  lh          $a1, 0x0($s0)
@@ -98,7 +97,6 @@ label_377740:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003780B0_0x3780b0, 0x3780b0u, 0x377750u)) {
         return;
     }
-    ctx->pc = 0x377750u;
 label_377750:
     // 0x377750: 0xa6420000  sh          $v0, 0x0($s2)
     ctx->pc = 0x377750u;
@@ -122,7 +120,6 @@ label_377750:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003780B0_0x3780b0, 0x3780b0u, 0x377768u)) {
         return;
     }
-    ctx->pc = 0x377768u;
 label_377768:
     // 0x377768: 0xa6620000  sh          $v0, 0x0($s3)
     ctx->pc = 0x377768u;
@@ -158,7 +155,6 @@ label_377768:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00377AC0_0x377ac0, 0x377ac0u, 0x377780u)) {
         return;
     }
-    ctx->pc = 0x377780u;
 label_377780:
     // 0x377780: 0x96220010  lhu         $v0, 0x10($s1)
     ctx->pc = 0x377780u;
@@ -191,7 +187,6 @@ label_377780:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00377AC0_0x377ac0, 0x377ac0u, 0x377798u)) {
         return;
     }
-    ctx->pc = 0x377798u;
 label_377798:
     // 0x377798: 0xa6200010  sh          $zero, 0x10($s1)
     ctx->pc = 0x377798u;

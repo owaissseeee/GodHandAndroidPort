@@ -13,7 +13,7 @@
 
 // Function: cSnd_BgmEvIsPlaying
 // Address: 0x2d1578 - 0x2d15a8
-void cSnd_BgmEvIsPlaying_0x2d1578(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BgmEvIsPlaying_0x2d1578(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BgmEvIsPlaying_0x2d1578");
 #endif
@@ -48,7 +48,6 @@ void cSnd_BgmEvIsPlaying_0x2d1578(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_FindBgmNode_0x2d22b0, 0x2d22b0u, 0x2d1594u)) {
         return;
     }
-    ctx->pc = 0x2D1594u;
 label_2d1594:
     // 0x2d1594: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2d1594u;

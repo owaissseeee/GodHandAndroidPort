@@ -14,7 +14,7 @@
 
 // Function: func_0028ED28
 // Address: 0x28ed28 - 0x28ed78
-void func_0028ED28_0x28ed28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0028ED28_0x28ed28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0028ED28_0x28ed28");
 #endif
@@ -75,7 +75,6 @@ label_28ed3c:
             goto label_28ed54;
         }
     }
-    ctx->pc = 0x28ED54u;
 label_28ed54:
     // 0x28ed54: 0x18a00005  blez        $a1, . + 4 + (0x5 << 2)
     ctx->pc = 0x28ED54u;

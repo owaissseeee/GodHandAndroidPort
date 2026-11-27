@@ -14,18 +14,16 @@ namespace gh_event
 {
 // Function: isMotionFrame__C12cEventCameraUcf
 // Address: 0x7acf50 - 0x7acf88
-void isMotionFrame__C12cEventCameraUcf_0x7acf50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void isMotionFrame__C12cEventCameraUcf_0x7acf50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("isMotionFrame__C12cEventCameraUcf_0x7acf50");
 #endif
 
-    ctx->pc = 0x7acf50u;
 
     // 0x7acf50: 0x84820006  lh          $v0, 0x6($a0)
     ctx->pc = 0x7acf50u;
     SET_GPR_S32(ctx, 2, (int16_t)READ16(ADD32(GPR_U32(ctx, 4), 6)));
     // 0x7acf54: 0x30a500ff  andi        $a1, $a1, 0xFF
-    ctx->pc = 0x7acf54u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)255);
     // 0x7acf58: 0x14450008  bne         $v0, $a1, . + 4 + (0x8 << 2)
     ctx->pc = 0x7ACF58u;
@@ -42,15 +40,12 @@ void isMotionFrame__C12cEventCameraUcf_0x7acf50(uint8_t* rdram, R5900Context* ct
             goto label_7acf7c;
         }
     }
-    ctx->pc = 0x7ACF60u;
     // 0x7acf60: 0xc480000c  lwc1        $f0, 0xC($a0)
     ctx->pc = 0x7acf60u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 12)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x7acf64: 0x460c0032  c.eq.s      $f0, $f12
-    ctx->pc = 0x7acf64u;
     ctx->fcr31 = (FPU_C_EQ_S(ctx->f[0], ctx->f[12])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x7acf68: 0x0  nop
-    ctx->pc = 0x7acf68u;
     // NOP
     // 0x7acf6c: 0x45000003  bc1f        . + 4 + (0x3 << 2)
     ctx->pc = 0x7ACF6Cu;
@@ -61,7 +56,6 @@ void isMotionFrame__C12cEventCameraUcf_0x7acf50(uint8_t* rdram, R5900Context* ct
             goto label_7acf7c;
         }
     }
-    ctx->pc = 0x7ACF74u;
     // 0x7acf74: 0x3e00008  jr          $ra
     ctx->pc = 0x7ACF74u;
     {
@@ -81,7 +75,6 @@ void isMotionFrame__C12cEventCameraUcf_0x7acf50(uint8_t* rdram, R5900Context* ct
         return;
         #endif
     }
-    ctx->pc = 0x7ACF7Cu;
 label_7acf7c:
     // 0x7acf7c: 0x3e00008  jr          $ra
     ctx->pc = 0x7ACF7Cu;
@@ -96,9 +89,7 @@ label_7acf7c:
         return;
         #endif
     }
-    ctx->pc = 0x7ACF84u;
     // 0x7acf84: 0x0  nop
-    ctx->pc = 0x7acf84u;
     // NOP
     ctx->pc = 0x7acf88u;
 }

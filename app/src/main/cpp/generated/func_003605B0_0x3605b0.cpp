@@ -13,7 +13,7 @@
 
 // Function: func_003605B0
 // Address: 0x3605b0 - 0x360710
-void func_003605B0_0x3605b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003605B0_0x3605b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003605B0_0x3605b0");
 #endif
@@ -57,7 +57,6 @@ void func_003605B0_0x3605b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &GetD003EE804_360720_0x360720, 0x360720u, 0x3605d4u)) {
         return;
     }
-    ctx->pc = 0x3605D4u;
 label_3605d4:
     // 0x3605d4: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -79,7 +78,6 @@ label_3605d4:
     // 0x3605e0: 0x3c077fff  lui         $a3, 0x7FFF
     SET_GPR_S32(ctx, 7, (int32_t)((uint32_t)32767 << 16));
     // 0x3605e4: 0x34e7ff80  ori         $a3, $a3, 0xFF80
-    ctx->pc = 0x3605e4u;
     SET_GPR_U64(ctx, 7, GPR_U64(ctx, 7) | (uint64_t)(uint16_t)65408);
 label_3605e8:
     // 0x3605e8: 0x62080  sll         $a0, $a2, 2
@@ -132,7 +130,6 @@ label_3605e8:
             goto label_3606e0;
         }
     }
-    ctx->pc = 0x360618u;
 label_360618:
     // 0x360618: 0x3c014eff  lui         $at, 0x4EFF
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)20223 << 16));
@@ -149,7 +146,6 @@ label_360618:
     // 0x360630: 0x24080001  addiu       $t0, $zero, 0x1
     SET_GPR_S32(ctx, 8, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x360634: 0x3c098000  lui         $t1, 0x8000
-    ctx->pc = 0x360634u;
     SET_GPR_S32(ctx, 9, (int32_t)((uint32_t)32768 << 16));
 label_360638:
     // 0x360638: 0x61080  sll         $v0, $a2, 2
@@ -182,7 +178,6 @@ label_360638:
     ctx->pc = 0x360654u;
     WRITE32(ADD32(GPR_U32(ctx, 3), 0), GPR_U32(ctx, 8));
     // 0x360658: 0x100202d  daddu       $a0, $t0, $zero
-    ctx->pc = 0x360658u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 8) + (uint64_t)GPR_U64(ctx, 0));
 label_36065c:
     // 0x36065c: 0x4800006  bltz        $a0, . + 4 + (0x6 << 2)
@@ -220,7 +215,6 @@ label_36065c:
         }
     }
     // 0x360674: 0x0  nop
-    ctx->pc = 0x360674u;
     // NOP
 label_360678:
     // 0x360678: 0x30820001  andi        $v0, $a0, 0x1
@@ -234,7 +228,6 @@ label_360678:
     // 0x360688: 0x46000000  add.s       $f0, $f0, $f0
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[0]);
     // 0x36068c: 0x4600a002  mul.s       $f0, $f20, $f0
-    ctx->pc = 0x36068cu;
     ctx->f[0] = FPU_MUL_S(ctx->f[20], ctx->f[0]);
 label_360690:
     // 0x360690: 0x3c014f00  lui         $at, 0x4F00
@@ -275,7 +268,6 @@ label_360690:
     // 0x3606cc: 0x44020800  mfc1        $v0, $f1
     { uint32_t bits; std::memcpy(&bits, &ctx->f[1], sizeof(bits)); SET_GPR_U32(ctx, 2, bits); }
     // 0x3606d0: 0x491025  or          $v0, $v0, $t1
-    ctx->pc = 0x3606d0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | GPR_U64(ctx, 9));
 label_3606d4:
     // 0x3606d4: 0x14e0ffd8  bnez        $a3, . + 4 + (-0x28 << 2)

@@ -13,7 +13,7 @@
 
 // Function: cSnd_BgmEvPause
 // Address: 0x2d1e48 - 0x2d1ee8
-void cSnd_BgmEvPause_0x2d1e48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BgmEvPause_0x2d1e48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BgmEvPause_0x2d1e48");
 #endif
@@ -72,7 +72,6 @@ void cSnd_BgmEvPause_0x2d1e48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     // 0x2d1e78: 0x24130004  addiu       $s3, $zero, 0x4
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x2d1e7c: 0x0  nop
-    ctx->pc = 0x2d1e7cu;
     // NOP
 label_2d1e80:
     // 0x2d1e80: 0x52340009  beql        $s1, $s4, . + 4 + (0x9 << 2)
@@ -158,7 +157,6 @@ label_2d1ea8:
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateSequenceNodeSetFlag_373488_0x373488, 0x373488u, 0x2d1eb8u)) {
         return;
     }
-    ctx->pc = 0x2D1EB8u;
 label_2d1eb8:
     // 0x2d1eb8: 0x8e100088  lw          $s0, 0x88($s0)
     ctx->pc = 0x2d1eb8u;
@@ -176,7 +174,6 @@ label_2d1ebc:
             goto label_2d1e80;
         }
     }
-    ctx->pc = 0x2D1EC4u;
 label_2d1ec4:
     // 0x2d1ec4: 0x7bb00050  lq          $s0, 0x50($sp)
     ctx->pc = 0x2d1ec4u;

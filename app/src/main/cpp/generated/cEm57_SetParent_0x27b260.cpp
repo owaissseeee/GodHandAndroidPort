@@ -13,7 +13,7 @@
 
 // Function: cEm57_SetParent
 // Address: 0x27b260 - 0x27b2e8
-void cEm57_SetParent_0x27b260(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm57_SetParent_0x27b260(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm57_SetParent_0x27b260");
 #endif
@@ -70,10 +70,8 @@ void cEm57_SetParent_0x27b260(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_27b284;
         }
     }
-    ctx->pc = 0x27B280u;
 label_27b280:
     // 0x27b280: 0x382d  daddu       $a3, $zero, $zero
-    ctx->pc = 0x27b280u;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_27b284:
     // 0x27b284: 0x10e00015  beqz        $a3, . + 4 + (0x15 << 2)
@@ -110,7 +108,6 @@ label_27b284:
         }
     }
     // 0x27b298: 0xc3102a  slt         $v0, $a2, $v1
-    ctx->pc = 0x27b298u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 6) < (int64_t)GPR_S64(ctx, 3)) ? 1 : 0);
 label_27b29c:
     // 0x27b29c: 0x304200ff  andi        $v0, $v0, 0xFF
@@ -150,10 +147,8 @@ label_27b29c:
             goto label_27b2bc;
         }
     }
-    ctx->pc = 0x27B2B8u;
 label_27b2b8:
     // 0x27b2b8: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x27b2b8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_27b2bc:
     // 0x27b2bc: 0x10400007  beqz        $v0, . + 4 + (0x7 << 2)

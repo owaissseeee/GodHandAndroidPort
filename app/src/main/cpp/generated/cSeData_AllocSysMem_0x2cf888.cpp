@@ -13,7 +13,7 @@
 
 // Function: cSeData_AllocSysMem
 // Address: 0x2cf888 - 0x2cf8e8
-void cSeData_AllocSysMem_0x2cf888(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSeData_AllocSysMem_0x2cf888(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSeData_AllocSysMem_0x2cf888");
 #endif
@@ -92,7 +92,6 @@ void cSeData_AllocSysMem_0x2cf888(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D3050_0x2d3050, 0x2d3050u, 0x2cf8c4u)) {
         return;
     }
-    ctx->pc = 0x2CF8C4u;
 label_2cf8c4:
     // 0x2cf8c4: 0xae020030  sw          $v0, 0x30($s0)
     ctx->pc = 0x2cf8c4u;
@@ -111,10 +110,8 @@ label_2cf8c8:
     if (!runtime->callDirectStatic(rdram, ctx, &cSeData_AddLoadBits_0x2cfcb0, 0x2cfcb0u, 0x2cf8d4u)) {
         return;
     }
-    ctx->pc = 0x2CF8D4u;
 label_2cf8d4:
     // 0x2cf8d4: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2cf8d4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2cf8d8:
     // 0x2cf8d8: 0x7bb00010  lq          $s0, 0x10($sp)

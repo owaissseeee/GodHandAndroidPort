@@ -13,7 +13,7 @@
 
 // Function: EnemyOwner_releaseChild
 // Address: 0x27bb30 - 0x27bb78
-void EnemyOwner_releaseChild_0x27bb30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EnemyOwner_releaseChild_0x27bb30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EnemyOwner_releaseChild_0x27bb30");
 #endif
@@ -52,7 +52,6 @@ void EnemyOwner_releaseChild_0x27bb30(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cCollisionSolidManage_ReleaseUnit_0x1347e8, 0x1347e8u, 0x27bb50u)) {
         return;
     }
-    ctx->pc = 0x27BB50u;
 label_27bb50:
     // 0x27bb50: 0x8e0415b0  lw          $a0, 0x15B0($s0)
     ctx->pc = 0x27bb50u;
@@ -78,7 +77,6 @@ label_27bb50:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_dieCommon_0x1b79b0, 0x1b79b0u, 0x27bb64u)) {
         return;
     }
-    ctx->pc = 0x27BB64u;
 label_27bb64:
     // 0x27bb64: 0xae0015b0  sw          $zero, 0x15B0($s0)
     ctx->pc = 0x27bb64u;

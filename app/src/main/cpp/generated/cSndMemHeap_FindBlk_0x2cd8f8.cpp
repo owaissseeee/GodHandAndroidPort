@@ -13,7 +13,7 @@
 
 // Function: cSndMemHeap_FindBlk
 // Address: 0x2cd8f8 - 0x2cd930
-void cSndMemHeap_FindBlk_0x2cd8f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndMemHeap_FindBlk_0x2cd8f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndMemHeap_FindBlk_0x2cd8f8");
 #endif
@@ -34,7 +34,6 @@ void cSndMemHeap_FindBlk_0x2cd8f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     // 0x2cd900: 0x2443001c  addiu       $v1, $v0, 0x1C
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 28));
     // 0x2cd904: 0x0  nop
-    ctx->pc = 0x2cd904u;
     // NOP
 label_2cd908:
     // 0x2cd908: 0x8c620014  lw          $v0, 0x14($v1)
@@ -74,7 +73,6 @@ label_2cd908:
         return;
         #endif
     }
-    ctx->pc = 0x2CD91Cu;
 label_2cd91c:
     // 0x2cd91c: 0x28820020  slti        $v0, $a0, 0x20
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 4) < (int64_t)(int32_t)32) ? 1 : 0);

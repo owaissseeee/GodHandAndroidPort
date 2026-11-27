@@ -13,7 +13,7 @@
 
 // Function: SFUO_ExecServer
 // Address: 0x35cf80 - 0x35cfc8
-void SFUO_ExecServer_0x35cf80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFUO_ExecServer_0x35cf80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFUO_ExecServer_0x35cf80");
 #endif
@@ -50,7 +50,6 @@ void SFUO_ExecServer_0x35cf80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035CFC8_0x35cfc8, 0x35cfc8u, 0x35cf98u)) {
         return;
     }
-    ctx->pc = 0x35CF98u;
 label_35cf98:
     // 0x35cf98: 0xc0d7436  jal         func_35D0D8
     SET_GPR_U32(ctx, 31, 0x35CFA0u);
@@ -63,7 +62,6 @@ label_35cf98:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj35D0_ReturnZero_D0D8_0x35d0d8, 0x35d0d8u, 0x35cfa0u)) {
         return;
     }
-    ctx->pc = 0x35CFA0u;
 label_35cfa0:
     // 0x35cfa0: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -78,7 +76,6 @@ label_35cfa0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035D050_0x35d050, 0x35d050u, 0x35cfacu)) {
         return;
     }
-    ctx->pc = 0x35CFACu;
 label_35cfac:
     // 0x35cfac: 0xdfb10008  ld          $s1, 0x8($sp)
     ctx->pc = 0x35cfacu;

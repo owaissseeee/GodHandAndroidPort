@@ -13,7 +13,7 @@
 
 // Function: InitSubBufferPool_2C3280
 // Address: 0x2c3280 - 0x2c32c0
-void InitSubBufferPool_2C3280_0x2c3280(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitSubBufferPool_2C3280_0x2c3280(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitSubBufferPool_2C3280_0x2c3280");
 #endif
@@ -54,7 +54,6 @@ void InitSubBufferPool_2C3280_0x2c3280(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &EntTable_init_0x2d50e8, 0x2d50e8u, 0x2c32a4u)) {
         return;
     }
-    ctx->pc = 0x2C32A4u;
 label_2c32a4:
     // 0x2c32a4: 0xc0b547c  jal         func_2D51F0
     SET_GPR_U32(ctx, 31, 0x2C32ACu);
@@ -67,7 +66,6 @@ label_2c32a4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D51F0_0x2d51f0, 0x2d51f0u, 0x2c32acu)) {
         return;
     }
-    ctx->pc = 0x2C32ACu;
 label_2c32ac:
     // 0x2c32ac: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2c32acu;

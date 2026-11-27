@@ -13,7 +13,7 @@
 
 // Function: func_0033B878
 // Address: 0x33b878 - 0x33b938
-void func_0033B878_0x33b878(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0033B878_0x33b878(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0033B878_0x33b878");
 #endif
@@ -65,7 +65,6 @@ void func_0033B878_0x33b878(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
     // 0x33b894: 0x0  nop
-    ctx->pc = 0x33b894u;
     // NOP
 label_33b898:
     // 0x33b898: 0x1000001c  b           . + 4 + (0x1C << 2)
@@ -83,7 +82,6 @@ label_33b898:
             goto label_33b90c;
         }
     }
-    ctx->pc = 0x33B8A0u;
 label_33b8a0:
     // 0x33b8a0: 0x410c0  sll         $v0, $a0, 3
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 4), 3));
@@ -124,7 +122,6 @@ label_33b8a0:
     // 0x33b8d0: 0x25290001  addiu       $t1, $t1, 0x1
     SET_GPR_S32(ctx, 9, (int32_t)ADD32(GPR_U32(ctx, 9), 1));
     // 0x33b8d4: 0x0  nop
-    ctx->pc = 0x33b8d4u;
     // NOP
 label_33b8d8:
     // 0x33b8d8: 0x2484000c  addiu       $a0, $a0, 0xC
@@ -171,7 +168,6 @@ label_33b8d8:
             goto label_33b8d8;
         }
     }
-    ctx->pc = 0x33B8FCu;
 label_33b8fc:
     // 0x33b8fc: 0xac850000  sw          $a1, 0x0($a0)
     ctx->pc = 0x33b8fcu;
@@ -218,7 +214,6 @@ label_33b90c:
     // 0x33b918: 0x3c040045  lui         $a0, 0x45
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)69 << 16));
     // 0x33b91c: 0x24845ef8  addiu       $a0, $a0, 0x5EF8
-    ctx->pc = 0x33b91cu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 24312));
 label_33b920:
     // 0x33b920: 0xc0cede4  jal         func_33B790
@@ -227,10 +222,8 @@ label_33b920:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0033B790_0x33b790, 0x33b790u, 0x33b928u)) {
         return;
     }
-    ctx->pc = 0x33B928u;
 label_33b928:
     // 0x33b928: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x33b928u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_33b92c:
     // 0x33b92c: 0xdfbf0000  ld          $ra, 0x0($sp)

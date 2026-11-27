@@ -13,7 +13,7 @@
 
 // Function: ColiseumBattle_KillFade
 // Address: 0x1efd00 - 0x1efd50
-void ColiseumBattle_KillFade_0x1efd00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumBattle_KillFade_0x1efd00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumBattle_KillFade_0x1efd00");
 #endif
@@ -71,7 +71,6 @@ void ColiseumBattle_KillFade_0x1efd00(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &classFADE_kill_0x3076e0, 0x3076e0u, 0x1efd30u)) {
         return;
     }
-    ctx->pc = 0x1EFD30u;
 label_1efd30:
     // 0x1efd30: 0x8e020054  lw          $v0, 0x54($s0)
     ctx->pc = 0x1efd30u;

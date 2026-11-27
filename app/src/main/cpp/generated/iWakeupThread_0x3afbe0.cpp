@@ -13,7 +13,7 @@
 
 // Function: iWakeupThread
 // Address: 0x3afbe0 - 0x3afbf0
-void iWakeupThread_0x3afbe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iWakeupThread_0x3afbe0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iWakeupThread_0x3afbe0");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: func_00143A90
 // Address: 0x143a90 - 0x143af0
-void func_00143A90_0x143a90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00143A90_0x143a90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00143A90_0x143a90");
 #endif
@@ -72,7 +72,6 @@ void func_00143A90_0x143a90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getGold_0x1fa710, 0x1fa710u, 0x143abcu)) {
         return;
     }
-    ctx->pc = 0x143ABCu;
 label_143abc:
     // 0x143abc: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -87,7 +86,6 @@ label_143abc:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getGold_0x1fa710, 0x1fa710u, 0x143ac8u)) {
         return;
     }
-    ctx->pc = 0x143AC8u;
 label_143ac8:
     // 0x143ac8: 0x8e230094  lw          $v1, 0x94($s1)
     ctx->pc = 0x143ac8u;
@@ -105,7 +103,6 @@ label_143ac8:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_initAddGold_0x1fa820, 0x1fa820u, 0x143ad8u)) {
         return;
     }
-    ctx->pc = 0x143AD8u;
 label_143ad8:
     // 0x143ad8: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x143ad8u;

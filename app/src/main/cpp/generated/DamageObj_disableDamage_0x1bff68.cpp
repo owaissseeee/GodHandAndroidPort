@@ -13,7 +13,7 @@
 
 // Function: DamageObj_disableDamage
 // Address: 0x1bff68 - 0x1bffe0
-void DamageObj_disableDamage_0x1bff68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void DamageObj_disableDamage_0x1bff68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("DamageObj_disableDamage_0x1bff68");
 #endif
@@ -67,10 +67,8 @@ void DamageObj_disableDamage_0x1bff68(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x1bff8cu)) {
         return;
     }
-    ctx->pc = 0x1BFF8Cu;
 label_1bff8c:
     // 0x1bff8c: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x1bff8cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_1bff90:
     // 0x1bff90: 0xc052dbe  jal         func_14B6F8
@@ -84,7 +82,6 @@ label_1bff90:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_getMeshPtr_0x14b6f8, 0x14b6f8u, 0x1bff98u)) {
         return;
     }
-    ctx->pc = 0x1BFF98u;
 label_1bff98:
     // 0x1bff98: 0x8c430380  lw          $v1, 0x380($v0)
     ctx->pc = 0x1bff98u;
@@ -106,7 +103,6 @@ label_1bff98:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_getMeshPtr_0x14b6f8, 0x14b6f8u, 0x1bffb0u)) {
         return;
     }
-    ctx->pc = 0x1BFFB0u;
 label_1bffb0:
     // 0x1bffb0: 0x8c430380  lw          $v1, 0x380($v0)
     ctx->pc = 0x1bffb0u;

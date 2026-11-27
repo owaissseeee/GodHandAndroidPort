@@ -13,7 +13,7 @@
 
 // Function: cOm71_SetMotionRun
 // Address: 0x1b1f58 - 0x1b1fe0
-void cOm71_SetMotionRun_0x1b1f58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm71_SetMotionRun_0x1b1f58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm71_SetMotionRun_0x1b1f58");
 #endif
@@ -82,7 +82,6 @@ void cOm71_SetMotionRun_0x1b1f58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x1b1f9cu)) {
         return;
     }
-    ctx->pc = 0x1B1F9Cu;
 label_1b1f9c:
     // 0x1b1f9c: 0x1000000d  b           . + 4 + (0xD << 2)
     ctx->pc = 0x1B1F9Cu;
@@ -99,7 +98,6 @@ label_1b1f9c:
             goto label_1b1fd4;
         }
     }
-    ctx->pc = 0x1B1FA4u;
 label_1b1fa4:
     // 0x1b1fa4: 0x8ca20304  lw          $v0, 0x304($a1)
     ctx->pc = 0x1b1fa4u;
@@ -133,7 +131,6 @@ label_1b1fa4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x1b1fd0u)) {
         return;
     }
-    ctx->pc = 0x1B1FD0u;
 label_1b1fd0:
     // 0x1b1fd0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1b1fd0u;

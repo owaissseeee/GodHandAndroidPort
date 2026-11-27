@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Set_D_003DECFC_D_003DED00_3364F8
 // Address: 0x3364f8 - 0x336510
-void Obj0000_Set_D_003DECFC_D_003DED00_3364F8_0x3364f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_D_003DECFC_D_003DED00_3364F8_0x3364f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_D_003DECFC_D_003DED00_3364F8_0x3364f8");
 #endif

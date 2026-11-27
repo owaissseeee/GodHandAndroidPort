@@ -13,7 +13,7 @@
 
 // Function: func_001F77D0
 // Address: 0x1f77d0 - 0x1f7800
-void func_001F77D0_0x1f77d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001F77D0_0x1f77d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001F77D0_0x1f77d0");
 #endif
@@ -29,7 +29,6 @@ void func_001F77D0_0x1f77d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x1f77d0: 0x2405000f  addiu       $a1, $zero, 0xF
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 15));
     // 0x1f77d4: 0x248300e4  addiu       $v1, $a0, 0xE4
-    ctx->pc = 0x1f77d4u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), 228));
 label_1f77d8:
     // 0x1f77d8: 0xac630014  sw          $v1, 0x14($v1)

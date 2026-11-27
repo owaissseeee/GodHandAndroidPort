@@ -13,7 +13,7 @@
 
 // Function: AddSoundEntry_374F30
 // Address: 0x374f30 - 0x375050
-void AddSoundEntry_374F30_0x374f30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void AddSoundEntry_374F30_0x374f30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("AddSoundEntry_374F30_0x374f30");
 #endif
@@ -50,7 +50,6 @@ void AddSoundEntry_374F30_0x374f30(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_0037D170_0x37d170, 0x37d170u, 0x374f4cu)) {
         return;
     }
-    ctx->pc = 0x374F4Cu;
 label_374f4c:
     // 0x374f4c: 0x40302d  daddu       $a2, $v0, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -84,7 +83,6 @@ label_374f4c:
             goto label_37503c;
         }
     }
-    ctx->pc = 0x374F60u;
 label_374f60:
     // 0x374f60: 0x24030010  addiu       $v1, $zero, 0x10
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 16));
@@ -261,7 +259,6 @@ label_374f60:
     WRITE8(ADD32(GPR_U32(ctx, 6), 13), (uint8_t)GPR_U32(ctx, 2));
 label_375038:
     // 0x375038: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x375038u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_37503c:
     // 0x37503c: 0x7bb00020  lq          $s0, 0x20($sp)

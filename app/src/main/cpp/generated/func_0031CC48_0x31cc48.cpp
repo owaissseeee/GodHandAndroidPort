@@ -13,7 +13,7 @@
 
 // Function: func_0031CC48
 // Address: 0x31cc48 - 0x31ccf0
-void func_0031CC48_0x31cc48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0031CC48_0x31cc48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0031CC48_0x31cc48");
 #endif
@@ -66,7 +66,6 @@ void func_0031CC48_0x31cc48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A6C58_0x3a6c58, 0x3a6c58u, 0x31cc7cu)) {
         return;
     }
-    ctx->pc = 0x31CC7Cu;
 label_31cc7c:
     // 0x31cc7c: 0x3c100058  lui         $s0, 0x58
     SET_GPR_S32(ctx, 16, (int32_t)((uint32_t)88 << 16));
@@ -99,7 +98,6 @@ label_31cc7c:
     if (!runtime->callDirectStatic(rdram, ctx, &cDvd_ReadAllocSized_0x200df8, 0x200df8u, 0x31ccacu)) {
         return;
     }
-    ctx->pc = 0x31CCACu;
 label_31ccac:
     // 0x31ccac: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -114,7 +112,6 @@ label_31ccac:
     if (!runtime->callDirectStatic(rdram, ctx, &cDvd_CheckWaitFrame_0x201108, 0x201108u, 0x31ccb8u)) {
         return;
     }
-    ctx->pc = 0x31CCB8u;
 label_31ccb8:
     // 0x31ccb8: 0x8e2505ac  lw          $a1, 0x5AC($s1)
     ctx->pc = 0x31ccb8u;

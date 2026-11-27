@@ -13,7 +13,7 @@
 
 // Function: InitObjVtableField35C_139878
 // Address: 0x139878 - 0x1398d0
-void InitObjVtableField35C_139878_0x139878(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitObjVtableField35C_139878_0x139878(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitObjVtableField35C_139878_0x139878");
 #endif
@@ -58,7 +58,6 @@ void InitObjVtableField35C_139878_0x139878(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x13989cu)) {
         return;
     }
-    ctx->pc = 0x13989Cu;
 label_13989c:
     // 0x13989c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x13989cu;

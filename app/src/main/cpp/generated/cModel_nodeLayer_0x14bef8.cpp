@@ -13,7 +13,7 @@
 
 // Function: cModel_nodeLayer
 // Address: 0x14bef8 - 0x14bfe0
-void cModel_nodeLayer_0x14bef8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cModel_nodeLayer_0x14bef8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cModel_nodeLayer_0x14bef8");
 #endif
@@ -60,7 +60,6 @@ void cModel_nodeLayer_0x14bef8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
         return;
         #endif
     }
-    ctx->pc = 0x14BF14u;
 label_14bf14:
     // 0x14bf14: 0x8d050380  lw          $a1, 0x380($t0)
     ctx->pc = 0x14bf14u;
@@ -171,7 +170,6 @@ label_14bf14:
             goto label_14bfb4;
         }
     }
-    ctx->pc = 0x14BFB4u;
 label_14bfb4:
     // 0x14bfb4: 0x8d020414  lw          $v0, 0x414($t0)
     ctx->pc = 0x14bfb4u;

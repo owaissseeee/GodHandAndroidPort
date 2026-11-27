@@ -13,7 +13,7 @@
 
 // Function: cWorldLight_getExtra
 // Address: 0x2d9018 - 0x2d9038
-void cWorldLight_getExtra_0x2d9018(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cWorldLight_getExtra_0x2d9018(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cWorldLight_getExtra_0x2d9018");
 #endif

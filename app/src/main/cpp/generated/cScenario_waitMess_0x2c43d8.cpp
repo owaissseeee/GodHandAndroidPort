@@ -13,7 +13,7 @@
 
 // Function: cScenario_waitMess
 // Address: 0x2c43d8 - 0x2c4440
-void cScenario_waitMess_0x2c43d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_waitMess_0x2c43d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_waitMess_0x2c43d8");
 #endif
@@ -63,7 +63,6 @@ void cScenario_waitMess_0x2c43d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         }
     }
     // 0x2c43fc: 0x0  nop
-    ctx->pc = 0x2c43fcu;
     // NOP
 label_2c4400:
     // 0x2c4400: 0x24050001  addiu       $a1, $zero, 0x1
@@ -80,7 +79,6 @@ label_2c4400:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D5AA0u, 0x2C4404u, 0x2C440Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2C440Cu;
 label_2c440c:
     // 0x2c440c: 0xc0b10d4  jal         func_2C4350
     SET_GPR_U32(ctx, 31, 0x2C4414u);
@@ -93,7 +91,6 @@ label_2c440c:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_isMessOn_0x2c4350, 0x2c4350u, 0x2c4414u)) {
         return;
     }
-    ctx->pc = 0x2C4414u;
 label_2c4414:
     // 0x2c4414: 0x1052fffa  beq         $v0, $s2, . + 4 + (-0x6 << 2)
     ctx->pc = 0x2C4414u;
@@ -124,7 +121,6 @@ label_2c4414:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_endMess_0x2c4390, 0x2c4390u, 0x2c4424u)) {
         return;
     }
-    ctx->pc = 0x2C4424u;
 label_2c4424:
     // 0x2c4424: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x2c4424u;

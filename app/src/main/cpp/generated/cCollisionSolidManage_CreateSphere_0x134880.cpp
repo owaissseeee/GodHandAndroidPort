@@ -13,7 +13,7 @@
 
 // Function: cCollisionSolidManage_CreateSphere
 // Address: 0x134880 - 0x1348e8
-void cCollisionSolidManage_CreateSphere_0x134880(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCollisionSolidManage_CreateSphere_0x134880(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCollisionSolidManage_CreateSphere_0x134880");
 #endif
@@ -56,7 +56,6 @@ void cCollisionSolidManage_CreateSphere_0x134880(uint8_t* rdram, R5900Context* c
     if (!runtime->callDirectStatic(rdram, ctx, &func_001346C8_0x1346c8, 0x1346c8u, 0x1348a4u)) {
         return;
     }
-    ctx->pc = 0x1348A4u;
 label_1348a4:
     // 0x1348a4: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x1348A4u;
@@ -88,7 +87,6 @@ label_1348a4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00134520_0x134520, 0x134520u, 0x1348bcu)) {
         return;
     }
-    ctx->pc = 0x1348BCu;
 label_1348bc:
     // 0x1348bc: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1348bcu;

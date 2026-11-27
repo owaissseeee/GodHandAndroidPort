@@ -13,7 +13,7 @@
 
 // Function: func_001B1630
 // Address: 0x1b1630 - 0x1b1760
-void func_001B1630_0x1b1630(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001B1630_0x1b1630(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001B1630_0x1b1630");
 #endif
@@ -78,7 +78,6 @@ void func_001B1630_0x1b1630(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
     // 0x1b165c: 0x85102a  slt         $v0, $a0, $a1
-    ctx->pc = 0x1b165cu;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 4) < (int64_t)GPR_S64(ctx, 5)) ? 1 : 0);
 label_1b1660:
     // 0x1b1660: 0x304200ff  andi        $v0, $v0, 0xFF
@@ -118,10 +117,8 @@ label_1b1660:
             goto label_1b1680;
         }
     }
-    ctx->pc = 0x1B167Cu;
 label_1b167c:
     // 0x1b167c: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1b167cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1b1680:
     // 0x1b1680: 0x8e0400f0  lw          $a0, 0xF0($s0)
@@ -177,7 +174,6 @@ label_1b16ac:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x1b16b4u)) {
         return;
     }
-    ctx->pc = 0x1B16B4u;
 label_1b16b4:
     // 0x1b16b4: 0x8e030600  lw          $v1, 0x600($s0)
     ctx->pc = 0x1b16b4u;
@@ -228,7 +224,6 @@ label_1b16b4:
             goto label_1b16f0;
         }
     }
-    ctx->pc = 0x1B16E0u;
 label_1b16e0:
     // 0x1b16e0: 0x3c02ffff  lui         $v0, 0xFFFF
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)65535 << 16));
@@ -285,7 +280,6 @@ label_1b16f0:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x1b1724u)) {
         return;
     }
-    ctx->pc = 0x1B1724u;
 label_1b1724:
     // 0x1b1724: 0x3c040060  lui         $a0, 0x60
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)96 << 16));
@@ -314,7 +308,6 @@ label_1b1724:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x1b174cu)) {
         return;
     }
-    ctx->pc = 0x1B174Cu;
 label_1b174c:
     // 0x1b174c: 0xae020668  sw          $v0, 0x668($s0)
     ctx->pc = 0x1b174cu;

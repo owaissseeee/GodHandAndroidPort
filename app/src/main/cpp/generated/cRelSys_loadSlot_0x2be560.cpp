@@ -13,7 +13,7 @@
 
 // Function: cRelSys_loadSlot
 // Address: 0x2be560 - 0x2be5f0
-void cRelSys_loadSlot_0x2be560(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cRelSys_loadSlot_0x2be560(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cRelSys_loadSlot_0x2be560");
 #endif
@@ -71,7 +71,6 @@ void cRelSys_loadSlot_0x2be560(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x200CB0u, 0x2BE598u, 0x2BE5A0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2BE5A0u;
 label_2be5a0:
     // 0x2be5a0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -86,7 +85,6 @@ label_2be5a0:
     if (!runtime->callDirectStatic(rdram, ctx, &cDvd_CheckWaitFrame_0x201108, 0x201108u, 0x2be5acu)) {
         return;
     }
-    ctx->pc = 0x2BE5ACu;
 label_2be5ac:
     // 0x2be5ac: 0xc0af9a8  jal         func_2BE6A0
     SET_GPR_U32(ctx, 31, 0x2BE5B4u);
@@ -99,7 +97,6 @@ label_2be5ac:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BE6A0_0x2be6a0, 0x2be6a0u, 0x2be5b4u)) {
         return;
     }
-    ctx->pc = 0x2BE5B4u;
 label_2be5b4:
     // 0x2be5b4: 0x304300ff  andi        $v1, $v0, 0xFF
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)255);
@@ -148,7 +145,6 @@ label_2be5b4:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x2BE5CCu, 0x2BE5D4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2BE5D4u;
 label_2be5d4:
     // 0x2be5d4: 0xae200000  sw          $zero, 0x0($s1)
     ctx->pc = 0x2be5d4u;

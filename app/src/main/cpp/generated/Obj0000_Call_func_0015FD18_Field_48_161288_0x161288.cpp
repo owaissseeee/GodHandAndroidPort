@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Call_func_0015FD18_Field_48_161288
 // Address: 0x161288 - 0x1612a8
-void Obj0000_Call_func_0015FD18_Field_48_161288_0x161288(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Call_func_0015FD18_Field_48_161288_0x161288(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Call_func_0015FD18_Field_48_161288_0x161288");
 #endif
@@ -42,7 +42,6 @@ void Obj0000_Call_func_0015FD18_Field_48_161288_0x161288(uint8_t* rdram, R5900Co
     if (!runtime->callDirectStatic(rdram, ctx, &func_0015FD18_0x15fd18, 0x15fd18u, 0x161298u)) {
         return;
     }
-    ctx->pc = 0x161298u;
 label_161298:
     // 0x161298: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x161298u;

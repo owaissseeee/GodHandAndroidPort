@@ -13,7 +13,7 @@
 
 // Function: ignore__9streambufi
 // Address: 0x38b168 - 0x38b1f0
-void ignore__9streambufi_0x38b168(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ignore__9streambufi_0x38b168(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ignore__9streambufi_0x38b168");
 #endif
@@ -56,7 +56,6 @@ void ignore__9streambufi_0x38b168(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     ctx->pc = 0x38b190u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 8)));
     // 0x38b194: 0x0  nop
-    ctx->pc = 0x38b194u;
     // NOP
 label_38b198:
     // 0x38b198: 0x8e230004  lw          $v1, 0x4($s1)
@@ -116,7 +115,6 @@ label_38b1b8:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___underflow_0x38c5b8, 0x38c5b8u, 0x38b1c8u)) {
         return;
     }
-    ctx->pc = 0x38B1C8u;
 label_38b1c8:
     // 0x38b1c8: 0x5453fff3  bnel        $v0, $s3, . + 4 + (-0xD << 2)
     ctx->pc = 0x38B1C8u;
@@ -137,7 +135,6 @@ label_38b1c8:
         }
     }
     // 0x38b1d0: 0x2501023  subu        $v0, $s2, $s0
-    ctx->pc = 0x38b1d0u;
     SET_GPR_S32(ctx, 2, (int32_t)SUB32(GPR_U32(ctx, 18), GPR_U32(ctx, 16)));
 label_38b1d4:
     // 0x38b1d4: 0xdfbf0040  ld          $ra, 0x40($sp)

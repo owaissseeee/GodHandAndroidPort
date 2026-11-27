@@ -13,7 +13,7 @@
 
 // Function: func_0027C790
 // Address: 0x27c790 - 0x27c888
-void func_0027C790_0x27c790(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0027C790_0x27c790(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0027C790_0x27c790");
 #endif
@@ -81,7 +81,6 @@ void func_0027C790_0x27c790(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_27c878;
         }
     }
-    ctx->pc = 0x27C7BCu;
 label_27c7bc:
     // 0x27c7bc: 0x3c040060  lui         $a0, 0x60
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)96 << 16));
@@ -110,7 +109,6 @@ label_27c7bc:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x27c7e4u)) {
         return;
     }
-    ctx->pc = 0x27C7E4u;
 label_27c7e4:
     // 0x27c7e4: 0x920302f7  lbu         $v1, 0x2F7($s0)
     ctx->pc = 0x27c7e4u;
@@ -160,7 +158,6 @@ label_27c7e4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x27c818u)) {
         return;
     }
-    ctx->pc = 0x27C818u;
 label_27c818:
     // 0x27c818: 0x1000000c  b           . + 4 + (0xC << 2)
     ctx->pc = 0x27C818u;
@@ -177,7 +174,6 @@ label_27c818:
             goto label_27c84c;
         }
     }
-    ctx->pc = 0x27C820u;
 label_27c820:
     // 0x27c820: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x27c820u;
@@ -209,7 +205,6 @@ label_27c820:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x27c848u)) {
         return;
     }
-    ctx->pc = 0x27C848u;
 label_27c848:
     // 0x27c848: 0x920202f6  lbu         $v0, 0x2F6($s0)
     ctx->pc = 0x27c848u;
@@ -232,7 +227,6 @@ label_27c854:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x27C854u, 0x27C85Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x27C85Cu;
 label_27c85c:
     // 0x27c85c: 0x50400006  beql        $v0, $zero, . + 4 + (0x6 << 2)
     ctx->pc = 0x27C85Cu;

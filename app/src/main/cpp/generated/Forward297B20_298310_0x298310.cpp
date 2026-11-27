@@ -13,7 +13,7 @@
 
 // Function: Forward297B20_298310
 // Address: 0x298310 - 0x298338
-void Forward297B20_298310_0x298310(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Forward297B20_298310_0x298310(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Forward297B20_298310_0x298310");
 #endif
@@ -48,7 +48,6 @@ void Forward297B20_298310_0x298310(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297B20_0x297b20, 0x297b20u, 0x29832cu)) {
         return;
     }
-    ctx->pc = 0x29832Cu;
 label_29832c:
     // 0x29832c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x29832cu;

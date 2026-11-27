@@ -13,7 +13,7 @@
 
 // Function: ActBtnHandler_Variant2
 // Address: 0x1e9f18 - 0x1e9f68
-void ActBtnHandler_Variant2_0x1e9f18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ActBtnHandler_Variant2_0x1e9f18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ActBtnHandler_Variant2_0x1e9f18");
 #endif
@@ -53,7 +53,6 @@ void ActBtnHandler_Variant2_0x1e9f18(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &cSceAtManager_SetDisableById_0x2c29f8, 0x2c29f8u, 0x1e9f38u)) {
         return;
     }
-    ctx->pc = 0x1E9F38u;
 label_1e9f38:
     // 0x1e9f38: 0x3c03003c  lui         $v1, 0x3C
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)60 << 16));
@@ -77,7 +76,6 @@ label_1e9f38:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_taskExec_0x2c3920, 0x2c3920u, 0x1e9f54u)) {
         return;
     }
-    ctx->pc = 0x1E9F54u;
 label_1e9f54:
     // 0x1e9f54: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1e9f54u;

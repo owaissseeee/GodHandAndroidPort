@@ -14,12 +14,11 @@ namespace gh_event
 {
 // Function: movePlayActorDirect__C12cEventVertexiPC15cEventSeqVertex
 // Address: 0x7b23e0 - 0x7b23e8
-void movePlayActorDirect__C12cEventVertexiPC15cEventSeqVertex_0x7b23e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void movePlayActorDirect__C12cEventVertexiPC15cEventSeqVertex_0x7b23e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("movePlayActorDirect__C12cEventVertexiPC15cEventSeqVertex_0x7b23e0");
 #endif
 
-    ctx->pc = 0x7b23e0u;
 
     // 0x7b23e0: 0x3e00008  jr          $ra
     ctx->pc = 0x7B23E0u;

@@ -13,7 +13,7 @@
 
 // Function: dvci_to_large_to_yen
 // Address: 0x3329e8 - 0x332a60
-void dvci_to_large_to_yen_0x3329e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void dvci_to_large_to_yen_0x3329e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("dvci_to_large_to_yen_0x3329e8");
 #endif
@@ -46,7 +46,6 @@ void dvci_to_large_to_yen_0x3329e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &strlen_0x3a58dc, 0x3a58dcu, 0x3329fcu)) {
         return;
     }
-    ctx->pc = 0x3329FCu;
 label_3329fc:
     // 0x3329fc: 0x40382d  daddu       $a3, $v0, $zero
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -72,7 +71,6 @@ label_3329fc:
     // 0x332a10: 0x2062021  addu        $a0, $s0, $a2
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), GPR_U32(ctx, 6)));
     // 0x332a14: 0x0  nop
-    ctx->pc = 0x332a14u;
     // NOP
 label_332a18:
     // 0x332a18: 0x24c60001  addiu       $a2, $a2, 0x1
@@ -101,7 +99,6 @@ label_332a18:
     ctx->pc = 0x332a2cu;
     WRITE8(ADD32(GPR_U32(ctx, 4), 0), (uint8_t)GPR_U32(ctx, 8));
     // 0x332a30: 0x100182d  daddu       $v1, $t0, $zero
-    ctx->pc = 0x332a30u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 8) + (uint64_t)GPR_U64(ctx, 0));
 label_332a34:
     // 0x332a34: 0x2462ff9f  addiu       $v0, $v1, -0x61
@@ -145,7 +142,6 @@ label_332a48:
             goto label_332a18;
         }
     }
-    ctx->pc = 0x332A50u;
 label_332a50:
     // 0x332a50: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x332a50u;

@@ -13,7 +13,7 @@
 
 // Function: func_002BA7B8
 // Address: 0x2ba7b8 - 0x2ba818
-void func_002BA7B8_0x2ba7b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002BA7B8_0x2ba7b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002BA7B8_0x2ba7b8");
 #endif
@@ -48,11 +48,9 @@ void func_002BA7B8_0x2ba7b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
 
-    ctx->pc = 0x2ba7b8u;
 
 label_2ba7b8:
     // 0x2ba7b8: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x2ba7b8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
 label_2ba7bc:
     // 0x2ba7bc: 0x7fb00010  sq          $s0, 0x10($sp)
@@ -64,7 +62,6 @@ label_2ba7c0:
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
 label_2ba7c4:
     // 0x2ba7c4: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x2ba7c4u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_2ba7c8:
     // 0x2ba7c8: 0xe7b40020  swc1        $f20, 0x20($sp)
@@ -110,14 +107,12 @@ label_2ba7dc:
             return;
         }
     }
-    ctx->pc = 0x2BA7E0u;
 label_2ba7e0:
     // 0x2ba7e0: 0x8e020100  lw          $v0, 0x100($s0)
     ctx->pc = 0x2ba7e0u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 256)));
 label_2ba7e4:
     // 0x2ba7e4: 0x46000506  mov.s       $f20, $f0
-    ctx->pc = 0x2ba7e4u;
     ctx->f[20] = FPU_MOV_S(ctx->f[0]);
 label_2ba7e8:
     // 0x2ba7e8: 0x84440010  lh          $a0, 0x10($v0)
@@ -155,10 +150,8 @@ label_2ba7f4:
             return;
         }
     }
-    ctx->pc = 0x2BA7F8u;
 label_2ba7f8:
     // 0x2ba7f8: 0x4600a500  add.s       $f20, $f20, $f0
-    ctx->pc = 0x2ba7f8u;
     ctx->f[20] = FPU_ADD_S(ctx->f[20], ctx->f[0]);
 label_2ba7fc:
     // 0x2ba7fc: 0xdfbf0000  ld          $ra, 0x0($sp)
@@ -207,7 +200,6 @@ label_2ba810:
         return;
         #endif
     }
-    ctx->pc = 0x2BA814u;
 label_2ba814:
     // 0x2ba814: 0x0  nop
     // NOP

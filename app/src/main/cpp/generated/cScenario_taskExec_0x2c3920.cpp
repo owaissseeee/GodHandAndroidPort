@@ -13,7 +13,7 @@
 
 // Function: cScenario_taskExec
 // Address: 0x2c3920 - 0x2c3968
-void cScenario_taskExec_0x2c3920(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_taskExec_0x2c3920(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_taskExec_0x2c3920");
 #endif
@@ -51,7 +51,6 @@ void cScenario_taskExec_0x2c3920(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D5580_0x2d5580, 0x2d5580u, 0x2c393cu)) {
         return;
     }
-    ctx->pc = 0x2C393Cu;
 label_2c393c:
     // 0x2c393c: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -68,7 +67,6 @@ label_2c393c:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_clearTaskData_0x2c3968, 0x2c3968u, 0x2c394cu)) {
         return;
     }
-    ctx->pc = 0x2C394Cu;
 label_2c394c:
     // 0x2c394c: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

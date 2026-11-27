@@ -13,7 +13,7 @@
 
 // Function: cMenu_loadDataTables
 // Address: 0x2ae990 - 0x2aea18
-void cMenu_loadDataTables_0x2ae990(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMenu_loadDataTables_0x2ae990(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMenu_loadDataTables_0x2ae990");
 #endif
@@ -72,7 +72,6 @@ void cMenu_loadDataTables_0x2ae990(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &SearchData_0x31ccf0, 0x31ccf0u, 0x2ae9d0u)) {
         return;
     }
-    ctx->pc = 0x2AE9D0u;
 label_2ae9d0:
     // 0x2ae9d0: 0x8e4323a4  lw          $v1, 0x23A4($s2)
     ctx->pc = 0x2ae9d0u;
@@ -95,7 +94,6 @@ label_2ae9d0:
     if (!runtime->callDirectStatic(rdram, ctx, &SearchData_0x31ccf0, 0x31ccf0u, 0x2ae9e8u)) {
         return;
     }
-    ctx->pc = 0x2AE9E8u;
 label_2ae9e8:
     // 0x2ae9e8: 0x8e4323a4  lw          $v1, 0x23A4($s2)
     ctx->pc = 0x2ae9e8u;

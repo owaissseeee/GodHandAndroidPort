@@ -1,5 +1,9 @@
 #pragma once
 
+#if !defined(__GNUC__) && !defined(__clang__) && !defined(__builtin_expect)
+#define __builtin_expect(exp, c) (exp)
+#endif
+
 #include <cstddef>
 #include "ps2x/state_io.h"
 #include <cstdint>
@@ -48,17 +52,17 @@ namespace ps2x::iop::detail
 
         void reset();
 
-        // RAM reads inline (the interpreter fetches and loads through these for every instruction); everything else
-        // goes to the out-of-line *Slow versions.
+        // RAM reads and writes inline (the interpreter fetches, loads, and stores through these for every instruction);
+        // everything else goes to the out-of-line *Slow versions.
         [[nodiscard]] uint8_t read8(uint32_t address) const
         {
             const uint32_t phys = physicalAddress(address);
-            return phys < RamSize ? m_ram[phys] : read8Slow(address);
+            return __builtin_expect(phys < RamSize, 1) ? m_ram[phys] : read8Slow(address);
         }
         [[nodiscard]] uint16_t read16(uint32_t address) const
         {
             const uint32_t phys = physicalAddress(address);
-            if (phys + 1u < RamSize)
+            if (__builtin_expect(phys + 1u < RamSize, 1))
             {
                 uint16_t value;
                 std::memcpy(&value, m_ram.data() + phys, sizeof(value));
@@ -69,7 +73,7 @@ namespace ps2x::iop::detail
         [[nodiscard]] uint32_t read32(uint32_t address) const
         {
             const uint32_t phys = physicalAddress(address);
-            if ((phys & 3u) == 0u && phys + 3u < RamSize)
+            if (__builtin_expect((phys & 3u) == 0u && phys + 3u < RamSize, 1))
             {
                 uint32_t value;
                 std::memcpy(&value, m_ram.data() + phys, sizeof(value));
@@ -80,9 +84,44 @@ namespace ps2x::iop::detail
         [[nodiscard]] uint8_t read8Slow(uint32_t address) const;
         [[nodiscard]] uint16_t read16Slow(uint32_t address) const;
         [[nodiscard]] uint32_t read32Slow(uint32_t address) const;
-        void write8(uint32_t address, uint8_t value);
-        void write16(uint32_t address, uint16_t value);
-        void write32(uint32_t address, uint32_t value);
+        void write8(uint32_t address, uint8_t value)
+        {
+            const uint32_t phys = physicalAddress(address);
+            if (__builtin_expect(phys < RamSize, 1))
+            {
+                m_ram[phys] = value;
+                m_owned[phys] = 1u;
+                return;
+            }
+            write8Slow(address, value);
+        }
+        void write16(uint32_t address, uint16_t value)
+        {
+            const uint32_t phys = physicalAddress(address);
+            if (__builtin_expect(phys + 1u < RamSize, 1))
+            {
+                std::memcpy(m_ram.data() + phys, &value, sizeof(value));
+                constexpr uint16_t kOne16 = 0x0101u;
+                std::memcpy(m_owned.data() + phys, &kOne16, sizeof(kOne16));
+                return;
+            }
+            write16Slow(address, value);
+        }
+        void write32(uint32_t address, uint32_t value)
+        {
+            const uint32_t phys = physicalAddress(address);
+            if (__builtin_expect((phys & 3u) == 0u && phys + 3u < RamSize, 1))
+            {
+                std::memcpy(m_ram.data() + phys, &value, sizeof(value));
+                constexpr uint32_t kOne32 = 0x01010101u;
+                std::memcpy(m_owned.data() + phys, &kOne32, sizeof(kOne32));
+                return;
+            }
+            write32Slow(address, value);
+        }
+        void write8Slow(uint32_t address, uint8_t value);
+        void write16Slow(uint32_t address, uint16_t value);
+        void write32Slow(uint32_t address, uint32_t value);
 
         [[nodiscard]] bool readRam(uint32_t address, void *destination, size_t size) const;
         [[nodiscard]] bool writeRam(uint32_t address, const void *source, size_t size);

@@ -13,7 +13,7 @@
 
 // Function: htci_zero_padding
 // Address: 0x334090 - 0x3340f0
-void htci_zero_padding_0x334090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void htci_zero_padding_0x334090(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("htci_zero_padding_0x334090");
 #endif
@@ -85,7 +85,6 @@ void htci_zero_padding_0x334090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3A52F0u, 0x3340E0u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x3340E8u;
 label_3340e8:
     // 0x3340e8: 0x3e00008  jr          $ra
     ctx->pc = 0x3340E8u;

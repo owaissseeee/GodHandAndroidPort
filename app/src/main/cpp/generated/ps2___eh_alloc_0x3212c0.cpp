@@ -13,7 +13,7 @@
 
 // Function: __eh_alloc
 // Address: 0x3212c0 - 0x3212e8
-void ps2___eh_alloc_0x3212c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___eh_alloc_0x3212c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___eh_alloc_0x3212c0");
 #endif
@@ -38,7 +38,6 @@ void ps2___eh_alloc_0x3212c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A7C70_0x3a7c70, 0x3a7c70u, 0x3212d0u)) {
         return;
     }
-    ctx->pc = 0x3212D0u;
 label_3212d0:
     // 0x3212d0: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x3212D0u;
@@ -61,7 +60,6 @@ label_3212d0:
     if (!runtime->callDirectStatic(rdram, ctx, &terminate_0x3211e0, 0x3211e0u, 0x3212e0u)) {
         return;
     }
-    ctx->pc = 0x3212E0u;
 label_3212e0:
     // 0x3212e0: 0x3e00008  jr          $ra
     ctx->pc = 0x3212E0u;

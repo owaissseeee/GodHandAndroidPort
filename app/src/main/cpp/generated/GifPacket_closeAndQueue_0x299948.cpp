@@ -13,7 +13,7 @@
 
 // Function: GifPacket_closeAndQueue
 // Address: 0x299948 - 0x2999d0
-void GifPacket_closeAndQueue_0x299948(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GifPacket_closeAndQueue_0x299948(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GifPacket_closeAndQueue_0x299948");
 #endif
@@ -110,7 +110,6 @@ label_2999ac:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031A600_0x31a600, 0x31a600u, 0x2999c0u)) {
         return;
     }
-    ctx->pc = 0x2999C0u;
 label_2999c0:
     // 0x2999c0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2999c0u;

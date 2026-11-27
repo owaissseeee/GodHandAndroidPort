@@ -13,7 +13,7 @@
 
 // Function: ExecPS2
 // Address: 0x3af8f0 - 0x3af900
-void ExecPS2_0x3af8f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ExecPS2_0x3af8f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ExecPS2_0x3af8f0");
 #endif

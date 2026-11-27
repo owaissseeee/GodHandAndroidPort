@@ -14,12 +14,11 @@ namespace gh_r305
 {
 // Function: __15cR305_Chihuahua
 // Address: 0x799670 - 0x7996a0
-void ps2___15cR305_Chihuahua_0x799670(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___15cR305_Chihuahua_0x799670(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___15cR305_Chihuahua_0x799670");
 #endif
 
-    ctx->pc = 0x799670u;
 
     // 0x799670: 0xac800014  sw          $zero, 0x14($a0)
     ctx->pc = 0x799670u;
@@ -40,7 +39,6 @@ void ps2___15cR305_Chihuahua_0x799670(uint8_t* rdram, R5900Context* ctx, PS2Runt
     ctx->pc = 0x799684u;
     WRITE128(ADD32(GPR_U32(ctx, 4), 112), _mm_castps_si128(ctx->vu0_vf[0]));
     // 0x799688: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x799688u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x79968c: 0xac800000  sw          $zero, 0x0($a0)
     ctx->pc = 0x79968cu;
@@ -67,9 +65,7 @@ void ps2___15cR305_Chihuahua_0x799670(uint8_t* rdram, R5900Context* ctx, PS2Runt
         return;
         #endif
     }
-    ctx->pc = 0x79969Cu;
     // 0x79969c: 0x0  nop
-    ctx->pc = 0x79969cu;
     // NOP
     ctx->pc = 0x7996a0u;
 }

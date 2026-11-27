@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Swap_Field_4_In_Scaled_A1_Entry_1F7800
 // Address: 0x1f7800 - 0x1f7820
-void Obj0000_Swap_Field_4_In_Scaled_A1_Entry_1F7800_0x1f7800(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Swap_Field_4_In_Scaled_A1_Entry_1F7800_0x1f7800(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Swap_Field_4_In_Scaled_A1_Entry_1F7800_0x1f7800");
 #endif

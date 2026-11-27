@@ -13,7 +13,7 @@
 
 // Function: ResetObjVtableAndFree_19EEB8
 // Address: 0x19eeb8 - 0x19ef18
-void ResetObjVtableAndFree_19EEB8_0x19eeb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ResetObjVtableAndFree_19EEB8_0x19eeb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ResetObjVtableAndFree_19EEB8_0x19eeb8");
 #endif
@@ -80,7 +80,6 @@ void ResetObjVtableAndFree_19EEB8_0x19eeb8(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x19eef4u)) {
         return;
     }
-    ctx->pc = 0x19EEF4u;
 label_19eef4:
     // 0x19eef4: 0xae000600  sw          $zero, 0x600($s0)
     ctx->pc = 0x19eef4u;
@@ -99,7 +98,6 @@ label_19eef8:
     if (!runtime->callDirectStatic(rdram, ctx, &ResetField214FreeField180_1C2820_0x1c2820, 0x1c2820u, 0x19ef04u)) {
         return;
     }
-    ctx->pc = 0x19EF04u;
 label_19ef04:
     // 0x19ef04: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x19ef04u;

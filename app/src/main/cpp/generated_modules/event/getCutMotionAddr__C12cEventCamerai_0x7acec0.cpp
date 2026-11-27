@@ -14,24 +14,20 @@ namespace gh_event
 {
 // Function: getCutMotionAddr__C12cEventCamerai
 // Address: 0x7acec0 - 0x7acee0
-void getCutMotionAddr__C12cEventCamerai_0x7acec0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getCutMotionAddr__C12cEventCamerai_0x7acec0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getCutMotionAddr__C12cEventCamerai_0x7acec0");
 #endif
 
-    ctx->pc = 0x7acec0u;
 
     // 0x7acec0: 0x2402000c  addiu       $v0, $zero, 0xC
-    ctx->pc = 0x7acec0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 12));
     // 0x7acec4: 0x8c830014  lw          $v1, 0x14($a0)
     ctx->pc = 0x7acec4u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 20)));
     // 0x7acec8: 0xa22818  mult        $a1, $a1, $v0
-    ctx->pc = 0x7acec8u;
     { int64_t result = (int64_t)GPR_S32(ctx, 5) * (int64_t)GPR_S32(ctx, 2); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 5, (int32_t)result); }
     // 0x7acecc: 0xa32821  addu        $a1, $a1, $v1
-    ctx->pc = 0x7aceccu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), GPR_U32(ctx, 3)));
     // 0x7aced0: 0x8ca40008  lw          $a0, 0x8($a1)
     ctx->pc = 0x7aced0u;

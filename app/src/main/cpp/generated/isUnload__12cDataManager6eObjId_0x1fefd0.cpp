@@ -13,7 +13,7 @@
 
 // Function: isUnload__12cDataManager6eObjId
 // Address: 0x1fefd0 - 0x1ff028
-void isUnload__12cDataManager6eObjId_0x1fefd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void isUnload__12cDataManager6eObjId_0x1fefd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("isUnload__12cDataManager6eObjId_0x1fefd0");
 #endif
@@ -58,7 +58,6 @@ void isUnload__12cDataManager6eObjId_0x1fefd0(uint8_t* rdram, R5900Context* ctx,
     // 0x1feff0: 0x2407ffff  addiu       $a3, $zero, -0x1
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x1feff4: 0x432021  addu        $a0, $v0, $v1
-    ctx->pc = 0x1feff4u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
 label_1feff8:
     // 0x1feff8: 0x8c820020  lw          $v0, 0x20($a0)
@@ -97,7 +96,6 @@ label_1feff8:
             goto label_1ff020;
         }
     }
-    ctx->pc = 0x1FF010u;
 label_1ff010:
     // 0x1ff010: 0x14c7fff9  bne         $a2, $a3, . + 4 + (-0x7 << 2)
     ctx->pc = 0x1FF010u;
@@ -117,7 +115,6 @@ label_1ff010:
             goto label_1feff8;
         }
     }
-    ctx->pc = 0x1FF018u;
 label_1ff018:
     // 0x1ff018: 0x3e00008  jr          $ra
     ctx->pc = 0x1FF018u;
@@ -138,7 +135,6 @@ label_1ff018:
         return;
         #endif
     }
-    ctx->pc = 0x1FF020u;
 label_1ff020:
     // 0x1ff020: 0x3e00008  jr          $ra
     ctx->pc = 0x1FF020u;

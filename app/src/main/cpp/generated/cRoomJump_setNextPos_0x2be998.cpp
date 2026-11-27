@@ -13,7 +13,7 @@
 
 // Function: cRoomJump_setNextPos
 // Address: 0x2be998 - 0x2beaa8
-void cRoomJump_setNextPos_0x2be998(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cRoomJump_setNextPos_0x2be998(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cRoomJump_setNextPos_0x2be998");
 #endif
@@ -54,7 +54,6 @@ void cRoomJump_setNextPos_0x2be998(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BEB00_0x2beb00, 0x2beb00u, 0x2be9bcu)) {
         return;
     }
-    ctx->pc = 0x2BE9BCu;
 label_2be9bc:
     // 0x2be9bc: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -148,7 +147,6 @@ label_2be9bc:
             goto label_2bea58;
         }
     }
-    ctx->pc = 0x2BEA24u;
 label_2bea24:
     // 0x2bea24: 0x3c013c8e  lui         $at, 0x3C8E
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15502 << 16));
@@ -175,7 +173,6 @@ label_2bea24:
             goto label_2bea58;
         }
     }
-    ctx->pc = 0x2BEA40u;
 label_2bea40:
     // 0x2bea40: 0x3c030074  lui         $v1, 0x74
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));

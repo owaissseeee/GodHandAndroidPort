@@ -13,7 +13,7 @@
 
 // Function: cOm4f_syncDoor
 // Address: 0x1a4f38 - 0x1a4fe0
-void cOm4f_syncDoor_0x1a4f38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm4f_syncDoor_0x1a4f38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm4f_syncDoor_0x1a4f38");
 #endif
@@ -67,7 +67,6 @@ void cOm4f_syncDoor_0x1a4f38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &cOm4f_isOpen_0x1a4f10, 0x1a4f10u, 0x1a4f5cu)) {
         return;
     }
-    ctx->pc = 0x1A4F5Cu;
 label_1a4f5c:
     // 0x1a4f5c: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -91,7 +90,6 @@ label_1a4f5c:
     if (!runtime->callDirectStatic(rdram, ctx, &GetField_774_1BDD90_0x1bdd90, 0x1bdd90u, 0x1a4f70u)) {
         return;
     }
-    ctx->pc = 0x1A4F70u;
 label_1a4f70:
     // 0x1a4f70: 0x14400007  bnez        $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x1A4F70u;
@@ -113,7 +111,6 @@ label_1a4f70:
     if (!runtime->callDirectStatic(rdram, ctx, &GetField_775_1BDD98_0x1bdd98, 0x1bdd98u, 0x1a4f80u)) {
         return;
     }
-    ctx->pc = 0x1A4F80u;
 label_1a4f80:
     // 0x1a4f80: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x1A4F80u;
@@ -135,7 +132,6 @@ label_1a4f80:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmDoor2_setOpen_0x1bdbf8, 0x1bdbf8u, 0x1a4f90u)) {
         return;
     }
-    ctx->pc = 0x1A4F90u;
 label_1a4f90:
     // 0x1a4f90: 0xc0693c4  jal         func_1A4F10
     SET_GPR_U32(ctx, 31, 0x1A4F98u);
@@ -148,7 +144,6 @@ label_1a4f90:
     if (!runtime->callDirectStatic(rdram, ctx, &cOm4f_isOpen_0x1a4f10, 0x1a4f10u, 0x1a4f98u)) {
         return;
     }
-    ctx->pc = 0x1A4F98u;
 label_1a4f98:
     // 0x1a4f98: 0x5440000d  bnel        $v0, $zero, . + 4 + (0xD << 2)
     ctx->pc = 0x1A4F98u;
@@ -176,7 +171,6 @@ label_1a4f98:
     if (!runtime->callDirectStatic(rdram, ctx, &GetField_774_1BDD90_0x1bdd90, 0x1bdd90u, 0x1a4fa8u)) {
         return;
     }
-    ctx->pc = 0x1A4FA8u;
 label_1a4fa8:
     // 0x1a4fa8: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -206,7 +200,6 @@ label_1a4fa8:
     if (!runtime->callDirectStatic(rdram, ctx, &GetField_775_1BDD98_0x1bdd98, 0x1bdd98u, 0x1a4fbcu)) {
         return;
     }
-    ctx->pc = 0x1A4FBCu;
 label_1a4fbc:
     // 0x1a4fbc: 0x54400004  bnel        $v0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x1A4FBCu;
@@ -234,7 +227,6 @@ label_1a4fbc:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmDoor2_setClose_0x1bdc20, 0x1bdc20u, 0x1a4fccu)) {
         return;
     }
-    ctx->pc = 0x1A4FCCu;
 label_1a4fcc:
     // 0x1a4fcc: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1a4fccu;

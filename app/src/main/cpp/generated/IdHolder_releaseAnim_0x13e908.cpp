@@ -13,7 +13,7 @@
 
 // Function: IdHolder_releaseAnim
 // Address: 0x13e908 - 0x13e970
-void IdHolder_releaseAnim_0x13e908(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IdHolder_releaseAnim_0x13e908(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IdHolder_releaseAnim_0x13e908");
 #endif
@@ -54,7 +54,6 @@ void IdHolder_releaseAnim_0x13e908(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_release_0x2aa078, 0x2aa078u, 0x13e92cu)) {
         return;
     }
-    ctx->pc = 0x13E92Cu;
 label_13e92c:
     // 0x13e92c: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));

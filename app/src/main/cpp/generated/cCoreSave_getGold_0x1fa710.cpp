@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getGold
 // Address: 0x1fa710 - 0x1fa750
-void cCoreSave_getGold_0x1fa710(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getGold_0x1fa710(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getGold_0x1fa710");
 #endif
@@ -58,7 +58,6 @@ void cCoreSave_getGold_0x1fa710(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
         return;
         #endif
     }
-    ctx->pc = 0x1FA728u;
 label_1fa728:
     // 0x1fa728: 0x3c040200  lui         $a0, 0x200
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)512 << 16));

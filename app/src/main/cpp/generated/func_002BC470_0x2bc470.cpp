@@ -13,7 +13,7 @@
 
 // Function: func_002BC470
 // Address: 0x2bc470 - 0x2bc6c8
-void func_002BC470_0x2bc470(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002BC470_0x2bc470(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002BC470_0x2bc470");
 #endif
@@ -110,7 +110,6 @@ void func_002BC470_0x2bc470(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &ForwardVec3At30_147C60_0x147c60, 0x147c60u, 0x2bc4e0u)) {
         return;
     }
-    ctx->pc = 0x2BC4E0u;
 label_2bc4e0:
     // 0x2bc4e0: 0x27b20060  addiu       $s2, $sp, 0x60
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 29), 96));
@@ -138,7 +137,6 @@ label_2bc4e0:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x2bc500u)) {
         return;
     }
-    ctx->pc = 0x2BC500u;
 label_2bc500:
     // 0x2bc500: 0xda440000  lqc2        $vf4, 0x0($s2)
     ctx->pc = 0x2bc500u;
@@ -218,7 +216,6 @@ label_2bc500:
     if (!runtime->callDirectStatic(rdram, ctx, &Tramp_001F7DF8_00101E28_0x101e28, 0x101e28u, 0x2bc564u)) {
         return;
     }
-    ctx->pc = 0x2BC564u;
 label_2bc564:
     // 0x2bc564: 0x460000c6  mov.s       $f3, $f0
     ctx->f[3] = FPU_MOV_S(ctx->f[0]);
@@ -360,7 +357,6 @@ label_2bc5bc:
     if (!runtime->callDirectStatic(rdram, ctx, &ForwardVec3At30_147C60_0x147c60, 0x147c60u, 0x2bc628u)) {
         return;
     }
-    ctx->pc = 0x2BC628u;
 label_2bc628:
     // 0x2bc628: 0xe7b60034  swc1        $f22, 0x34($sp)
     ctx->pc = 0x2bc628u;
@@ -388,7 +384,6 @@ label_2bc628:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x2bc648u)) {
         return;
     }
-    ctx->pc = 0x2BC648u;
 label_2bc648:
     // 0x2bc648: 0xda640000  lqc2        $vf4, 0x0($s3)
     ctx->pc = 0x2bc648u;
@@ -438,7 +433,6 @@ label_2bc648:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BC0F8_0x2bc0f8, 0x2bc0f8u, 0x2bc68cu)) {
         return;
     }
-    ctx->pc = 0x2BC68Cu;
 label_2bc68c:
     // 0x2bc68c: 0x7bb000d0  lq          $s0, 0xD0($sp)
     ctx->pc = 0x2bc68cu;

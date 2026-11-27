@@ -13,7 +13,7 @@
 
 // Function: cSndSeVoice_CheckEnd
 // Address: 0x2cb7e8 - 0x2cb830
-void cSndSeVoice_CheckEnd_0x2cb7e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndSeVoice_CheckEnd_0x2cb7e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndSeVoice_CheckEnd_0x2cb7e8");
 #endif
@@ -54,7 +54,6 @@ void cSndSeVoice_CheckEnd_0x2cb7e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeVoiceCallAll_0x2cbe68, 0x2cbe68u, 0x2cb808u)) {
         return;
     }
-    ctx->pc = 0x2CB808u;
 label_2cb808:
     // 0x2cb808: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -69,7 +68,6 @@ label_2cb808:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_GetSeData_0x2cc4b8, 0x2cc4b8u, 0x2cb814u)) {
         return;
     }
-    ctx->pc = 0x2CB814u;
 label_2cb814:
     // 0x2cb814: 0xc0b3f26  jal         func_2CFC98
     SET_GPR_U32(ctx, 31, 0x2CB81Cu);
@@ -82,7 +80,6 @@ label_2cb814:
     if (!runtime->callDirectStatic(rdram, ctx, &cSeData_SetFailed_0x2cfc98, 0x2cfc98u, 0x2cb81cu)) {
         return;
     }
-    ctx->pc = 0x2CB81Cu;
 label_2cb81c:
     // 0x2cb81c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2cb81cu;

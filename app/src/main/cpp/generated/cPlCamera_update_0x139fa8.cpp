@@ -13,7 +13,7 @@
 
 // Function: cPlCamera_update
 // Address: 0x139fa8 - 0x139ff8
-void cPlCamera_update_0x139fa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cPlCamera_update_0x139fa8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cPlCamera_update_0x139fa8");
 #endif
@@ -47,7 +47,6 @@ void cPlCamera_update_0x139fa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x139fbcu)) {
         return;
     }
-    ctx->pc = 0x139FBCu;
 label_139fbc:
     // 0x139fbc: 0x8c4305d8  lw          $v1, 0x5D8($v0)
     ctx->pc = 0x139fbcu;
@@ -74,7 +73,6 @@ label_139fbc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00139FF8_0x139ff8, 0x139ff8u, 0x139fd4u)) {
         return;
     }
-    ctx->pc = 0x139FD4u;
 label_139fd4:
     // 0x139fd4: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x139FD4u;
@@ -91,7 +89,6 @@ label_139fd4:
             goto label_139fe8;
         }
     }
-    ctx->pc = 0x139FDCu;
 label_139fdc:
     // 0x139fdc: 0xc04eb64  jal         func_13AD90
     SET_GPR_U32(ctx, 31, 0x139FE4u);
@@ -104,7 +101,6 @@ label_139fdc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0013AD90_0x13ad90, 0x13ad90u, 0x139fe4u)) {
         return;
     }
-    ctx->pc = 0x139FE4u;
 label_139fe4:
     // 0x139fe4: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x139fe4u;

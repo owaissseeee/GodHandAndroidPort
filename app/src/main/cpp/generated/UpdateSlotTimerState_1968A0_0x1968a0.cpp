@@ -13,7 +13,7 @@
 
 // Function: UpdateSlotTimerState_1968A0
 // Address: 0x1968a0 - 0x196978
-void UpdateSlotTimerState_1968A0_0x1968a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateSlotTimerState_1968A0_0x1968a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateSlotTimerState_1968A0_0x1968a0");
 #endif
@@ -61,7 +61,6 @@ void UpdateSlotTimerState_1968A0_0x1968a0(uint8_t* rdram, R5900Context* ctx, PS2
     ctx->pc = 0x1968d0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1968d4: 0x24150001  addiu       $s5, $zero, 0x1
-    ctx->pc = 0x1968d4u;
     SET_GPR_S32(ctx, 21, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_1968d8:
     // 0x1968d8: 0x8e250000  lw          $a1, 0x0($s1)
@@ -78,7 +77,6 @@ label_1968d8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1B7380u, 0x1968DCu, 0x1968E4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1968E4u;
 label_1968e4:
     // 0x1968e4: 0x40282d  daddu       $a1, $v0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -160,7 +158,6 @@ label_1968e4:
             goto label_196940;
         }
     }
-    ctx->pc = 0x196930u;
 label_196930:
     // 0x196930: 0xa20502f4  sb          $a1, 0x2F4($s0)
     ctx->pc = 0x196930u;
@@ -176,7 +173,6 @@ label_196930:
     WRITE8(ADD32(GPR_U32(ctx, 16), 759), (uint8_t)GPR_U32(ctx, 0));
 label_196940:
     // 0x196940: 0x26520002  addiu       $s2, $s2, 0x2
-    ctx->pc = 0x196940u;
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), 2));
 label_196944:
     // 0x196944: 0x26730001  addiu       $s3, $s3, 0x1

@@ -13,7 +13,7 @@
 
 // Function: classFADE_start
 // Address: 0x307208 - 0x307388
-void classFADE_start_0x307208(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void classFADE_start_0x307208(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("classFADE_start_0x307208");
 #endif
@@ -198,7 +198,6 @@ void classFADE_start_0x307208(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_307344;
         }
     }
-    ctx->pc = 0x3072FCu;
 label_3072fc:
     // 0x3072fc: 0x34028000  ori         $v0, $zero, 0x8000
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)32768);
@@ -218,7 +217,6 @@ label_3072fc:
             goto label_307344;
         }
     }
-    ctx->pc = 0x307314u;
 label_307314:
     // 0x307314: 0x34028000  ori         $v0, $zero, 0x8000
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)32768);
@@ -238,7 +236,6 @@ label_307314:
             goto label_307344;
         }
     }
-    ctx->pc = 0x30732Cu;
 label_30732c:
     // 0x30732c: 0x34028000  ori         $v0, $zero, 0x8000
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)32768);
@@ -258,7 +255,6 @@ label_30732c:
             goto label_307344;
         }
     }
-    ctx->pc = 0x307344u;
 label_307344:
     // 0x307344: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -272,7 +268,6 @@ label_307344:
     if (!runtime->callDirectStatic(rdram, ctx, &classFADE_setOt_0x307760, 0x307760u, 0x307358u)) {
         return;
     }
-    ctx->pc = 0x307358u;
 label_307358:
     // 0x307358: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x307358u;
@@ -292,7 +287,6 @@ label_307358:
             goto label_307368;
         }
     }
-    ctx->pc = 0x307368u;
 label_307368:
     // 0x307368: 0x3c0e82d  daddu       $sp, $fp, $zero
     SET_GPR_U64(ctx, 29, (uint64_t)GPR_U64(ctx, 30) + (uint64_t)GPR_U64(ctx, 0));

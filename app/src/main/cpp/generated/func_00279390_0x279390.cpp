@@ -13,7 +13,7 @@
 
 // Function: func_00279390
 // Address: 0x279390 - 0x279670
-void func_00279390_0x279390(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00279390_0x279390(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00279390_0x279390");
 #endif
@@ -180,10 +180,8 @@ label_2793e0:
             goto label_279440;
         }
     }
-    ctx->pc = 0x27943Cu;
 label_27943c:
     // 0x27943c: 0x282d  daddu       $a1, $zero, $zero
-    ctx->pc = 0x27943cu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_279440:
     // 0x279440: 0x10a00011  beqz        $a1, . + 4 + (0x11 << 2)
@@ -222,7 +220,6 @@ label_279440:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x279460u)) {
         return;
     }
-    ctx->pc = 0x279460u;
 label_279460:
     // 0x279460: 0xda040000  lqc2        $vf4, 0x0($s0)
     ctx->pc = 0x279460u;
@@ -299,7 +296,6 @@ label_279488:
             goto label_279604;
         }
     }
-    ctx->pc = 0x2794A4u;
 label_2794a4:
     // 0x2794a4: 0x8e220304  lw          $v0, 0x304($s1)
     ctx->pc = 0x2794a4u;
@@ -333,7 +329,6 @@ label_2794a4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x2794d0u)) {
         return;
     }
-    ctx->pc = 0x2794D0u;
 label_2794d0:
     // 0x2794d0: 0x922202f6  lbu         $v0, 0x2F6($s1)
     ctx->pc = 0x2794d0u;
@@ -499,7 +494,6 @@ label_2794dc:
     if (!runtime->callDirectStatic(rdram, ctx, &Turn_dest_dir_0x2da1f8, 0x2da1f8u, 0x2795b0u)) {
         return;
     }
-    ctx->pc = 0x2795B0u;
 label_2795b0:
     // 0x2795b0: 0xc6210104  lwc1        $f1, 0x104($s1)
     ctx->pc = 0x2795b0u;
@@ -519,7 +513,6 @@ label_2795b0:
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_0x1f7d48, 0x1f7d48u, 0x2795c4u)) {
         return;
     }
-    ctx->pc = 0x2795C4u;
 label_2795c4:
     // 0x2795c4: 0xe6200104  swc1        $f0, 0x104($s1)
     ctx->pc = 0x2795c4u;
@@ -536,7 +529,6 @@ label_2795c8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x2795C8u, 0x2795D0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2795D0u;
 label_2795d0:
     // 0x2795d0: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x2795D0u;
@@ -564,7 +556,6 @@ label_2795d0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002799B8_0x2799b8, 0x2799b8u, 0x2795e0u)) {
         return;
     }
-    ctx->pc = 0x2795E0u;
 label_2795e0:
     // 0x2795e0: 0x1000001c  b           . + 4 + (0x1C << 2)
     ctx->pc = 0x2795E0u;
@@ -581,7 +572,6 @@ label_2795e0:
             goto label_279654;
         }
     }
-    ctx->pc = 0x2795E8u;
 label_2795e8:
     // 0x2795e8: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -598,7 +588,6 @@ label_2795e8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x14F9F0u, 0x2795F0u, 0x2795F8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2795F8u;
 label_2795f8:
     // 0x2795f8: 0x4600a306  mov.s       $f12, $f20
     ctx->f[12] = FPU_MOV_S(ctx->f[20]);
@@ -613,7 +602,6 @@ label_2795f8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x14F928u, 0x2795FCu, 0x279604u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x279604u;
 label_279604:
     // 0x279604: 0x12400012  beqz        $s2, . + 4 + (0x12 << 2)
     ctx->pc = 0x279604u;
@@ -662,7 +650,6 @@ label_279604:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0MagnitudeSqXZ_0x1f7eb0, 0x1f7eb0u, 0x279624u)) {
         return;
     }
-    ctx->pc = 0x279624u;
 label_279624:
     // 0x279624: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -689,7 +676,6 @@ label_279624:
             goto label_279650;
         }
     }
-    ctx->pc = 0x279640u;
 label_279640:
     // 0x279640: 0xa22002f7  sb          $zero, 0x2F7($s1)
     ctx->pc = 0x279640u;

@@ -13,7 +13,7 @@
 
 // Function: Init_Vtable214_TypeName4AC_279CE8
 // Address: 0x279ce8 - 0x279d40
-void Init_Vtable214_TypeName4AC_279CE8_0x279ce8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Init_Vtable214_TypeName4AC_279CE8_0x279ce8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Init_Vtable214_TypeName4AC_279CE8_0x279ce8");
 #endif
@@ -45,7 +45,6 @@ void Init_Vtable214_TypeName4AC_279CE8_0x279ce8(uint8_t* rdram, R5900Context* ct
     if (!runtime->callDirectStatic(rdram, ctx, &func_0028EB00_0x28eb00, 0x28eb00u, 0x279cfcu)) {
         return;
     }
-    ctx->pc = 0x279CFCu;
 label_279cfc:
     // 0x279cfc: 0x3c030044  lui         $v1, 0x44
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)68 << 16));

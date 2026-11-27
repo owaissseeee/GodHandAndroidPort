@@ -13,7 +13,7 @@
 
 // Function: GetNextAnimIndex_1451E0
 // Address: 0x1451e0 - 0x145238
-void GetNextAnimIndex_1451E0_0x1451e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetNextAnimIndex_1451E0_0x1451e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetNextAnimIndex_1451E0_0x1451e0");
 #endif
@@ -101,7 +101,6 @@ void GetNextAnimIndex_1451E0_0x1451e0(uint8_t* rdram, R5900Context* ctx, PS2Runt
         return;
         #endif
     }
-    ctx->pc = 0x14521Cu;
 label_14521c:
     // 0x14521c: 0x831821  addu        $v1, $a0, $v1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 3)));
@@ -124,7 +123,6 @@ label_14521c:
         return;
         #endif
     }
-    ctx->pc = 0x145228u;
 label_145228:
     // 0x145228: 0x2403ffff  addiu       $v1, $zero, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));

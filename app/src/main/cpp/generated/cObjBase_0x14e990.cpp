@@ -13,7 +13,7 @@
 
 // Function: cObjBase
 // Address: 0x14e990 - 0x14ea28
-void cObjBase_0x14e990(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cObjBase_0x14e990(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cObjBase_0x14e990");
 #endif
@@ -46,7 +46,6 @@ void cObjBase_0x14e990(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &func_0014E598_0x14e598, 0x14e598u, 0x14e9a4u)) {
         return;
     }
-    ctx->pc = 0x14E9A4u;
 label_14e9a4:
     // 0x14e9a4: 0x3c030042  lui         $v1, 0x42
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)66 << 16));
@@ -110,7 +109,6 @@ label_14e9a4:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x14e9f8u)) {
         return;
     }
-    ctx->pc = 0x14E9F8u;
 label_14e9f8:
     // 0x14e9f8: 0x2403ffff  addiu       $v1, $zero, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));

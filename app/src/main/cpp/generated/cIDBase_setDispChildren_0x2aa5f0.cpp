@@ -13,7 +13,7 @@
 
 // Function: cIDBase_setDispChildren
 // Address: 0x2aa5f0 - 0x2aa6e0
-void cIDBase_setDispChildren_0x2aa5f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDBase_setDispChildren_0x2aa5f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDBase_setDispChildren_0x2aa5f0");
 #endif
@@ -26,7 +26,6 @@ void cIDBase_setDispChildren_0x2aa5f0(uint8_t* rdram, R5900Context* ctx, PS2Runt
         }
     }
 
-    ctx->pc = 0x2aa5f0u;
 
 label_2aa5f0:
     // 0x2aa5f0: 0x27bdff60  addiu       $sp, $sp, -0xA0
@@ -98,7 +97,6 @@ label_2aa5f0:
     // 0x2aa648: 0xa02d  daddu       $s4, $zero, $zero
     SET_GPR_U64(ctx, 20, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2aa64c: 0x0  nop
-    ctx->pc = 0x2aa64cu;
     // NOP
 label_2aa650:
     // 0x2aa650: 0x8e020004  lw          $v0, 0x4($s0)
@@ -169,10 +167,8 @@ label_2aa650:
             goto label_2aa680;
         }
     }
-    ctx->pc = 0x2AA67Cu;
 label_2aa67c:
     // 0x2aa67c: 0x521024  and         $v0, $v0, $s2
-    ctx->pc = 0x2aa67cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 18));
 label_2aa680:
     // 0x2aa680: 0xac62002c  sw          $v0, 0x2C($v1)
@@ -194,7 +190,6 @@ label_2aa680:
     ctx->in_delay_slot = false;
     ctx->pc = 0x2AA5F0u;
     goto label_2aa5f0;
-    ctx->pc = 0x2AA698u;
 label_2aa698:
     // 0x2aa698: 0x8e02000c  lw          $v0, 0xC($s0)
     ctx->pc = 0x2aa698u;
@@ -224,7 +219,6 @@ label_2aa69c:
             goto label_2aa650;
         }
     }
-    ctx->pc = 0x2AA6B0u;
 label_2aa6b0:
     // 0x2aa6b0: 0x7bb00090  lq          $s0, 0x90($sp)
     ctx->pc = 0x2aa6b0u;

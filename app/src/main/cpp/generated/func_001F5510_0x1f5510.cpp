@@ -13,7 +13,7 @@
 
 // Function: func_001F5510
 // Address: 0x1f5510 - 0x1f55c0
-void func_001F5510_0x1f5510(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001F5510_0x1f5510(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001F5510_0x1f5510");
 #endif
@@ -62,7 +62,6 @@ void func_001F5510_0x1f5510(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D65D0_0x2d65d0, 0x2d65d0u, 0x1f553cu)) {
         return;
     }
-    ctx->pc = 0x1F553Cu;
 label_1f553c:
     // 0x1f553c: 0x44900800  mtc1        $s0, $f1
     { uint32_t bits = GPR_U32(ctx, 16); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }
@@ -101,7 +100,6 @@ label_1f553c:
             goto label_1f5570;
         }
     }
-    ctx->pc = 0x1F5570u;
 label_1f5570:
     // 0x1f5570: 0xc7a00000  lwc1        $f0, 0x0($sp)
     ctx->pc = 0x1f5570u;
@@ -123,7 +121,6 @@ label_1f5570:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D65A0_0x2d65a0, 0x2d65a0u, 0x1f5588u)) {
         return;
     }
-    ctx->pc = 0x1F5588u;
 label_1f5588:
     // 0x1f5588: 0x26442f5c  addiu       $a0, $s2, 0x2F5C
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 18), 12124));
@@ -140,7 +137,6 @@ label_1f5588:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMoveOffsetPosYSin_0x2d6838, 0x2d6838u, 0x1f5598u)) {
         return;
     }
-    ctx->pc = 0x1F5598u;
 label_1f5598:
     // 0x1f5598: 0x26442fd8  addiu       $a0, $s2, 0x2FD8
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 18), 12248));
@@ -157,7 +153,6 @@ label_1f5598:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMoveOffsetPosYSin_0x2d6838, 0x2d6838u, 0x1f55a8u)) {
         return;
     }
-    ctx->pc = 0x1F55A8u;
 label_1f55a8:
     // 0x1f55a8: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x1f55a8u;

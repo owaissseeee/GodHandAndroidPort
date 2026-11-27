@@ -13,7 +13,7 @@
 
 // Function: Obj2B28_CopyU16_8C2_To38_ReturnZero
 // Address: 0x2b2fd8 - 0x2b2ff0
-void Obj2B28_CopyU16_8C2_To38_ReturnZero_0x2b2fd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj2B28_CopyU16_8C2_To38_ReturnZero_0x2b2fd8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj2B28_CopyU16_8C2_To38_ReturnZero_0x2b2fd8");
 #endif

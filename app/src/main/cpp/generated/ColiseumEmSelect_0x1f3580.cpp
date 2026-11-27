@@ -13,7 +13,7 @@
 
 // Function: ColiseumEmSelect
 // Address: 0x1f3580 - 0x1f35c8
-void ColiseumEmSelect_0x1f3580(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumEmSelect_0x1f3580(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumEmSelect_0x1f3580");
 #endif
@@ -50,7 +50,6 @@ void ColiseumEmSelect_0x1f3580(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x1f359cu)) {
         return;
     }
-    ctx->pc = 0x1F359Cu;
 label_1f359c:
     // 0x1f359c: 0xae000054  sw          $zero, 0x54($s0)
     ctx->pc = 0x1f359cu;
@@ -66,7 +65,6 @@ label_1f359c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F45D8_0x1f45d8, 0x1f45d8u, 0x1f35a8u)) {
         return;
     }
-    ctx->pc = 0x1F35A8u;
 label_1f35a8:
     // 0x1f35a8: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

@@ -13,7 +13,7 @@
 
 // Function: func_0032CA10
 // Address: 0x32ca10 - 0x32cb90
-void func_0032CA10_0x32ca10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0032CA10_0x32ca10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0032CA10_0x32ca10");
 #endif
@@ -120,11 +120,9 @@ void func_0032CA10_0x32ca10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
 
-    ctx->pc = 0x32ca10u;
 
 label_32ca10:
     // 0x32ca10: 0x27bdffc0  addiu       $sp, $sp, -0x40
-    ctx->pc = 0x32ca10u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967232));
 label_32ca14:
     // 0x32ca14: 0xffb00010  sd          $s0, 0x10($sp)
@@ -136,7 +134,6 @@ label_32ca18:
     WRITE64(ADD32(GPR_U32(ctx, 29), 24), GPR_U64(ctx, 17));
 label_32ca1c:
     // 0x32ca1c: 0x80882d  daddu       $s1, $a0, $zero
-    ctx->pc = 0x32ca1cu;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_32ca20:
     // 0x32ca20: 0xffb30028  sd          $s3, 0x28($sp)
@@ -185,7 +182,6 @@ label_32ca3c:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj3260_Tramp_003383B0_D358_0x326358, 0x326358u, 0x32ca40u)) {
         return;
     }
-    ctx->pc = 0x32CA40u;
 label_32ca40:
     // 0x32ca40: 0x240202d  daddu       $a0, $s2, $zero
     ctx->pc = 0x32ca40u;
@@ -213,10 +209,8 @@ label_32ca48:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00326370_0x326370, 0x326370u, 0x32ca4cu)) {
         return;
     }
-    ctx->pc = 0x32CA4Cu;
 label_32ca4c:
     // 0x32ca4c: 0x40982d  daddu       $s3, $v0, $zero
-    ctx->pc = 0x32ca4cu;
     SET_GPR_U64(ctx, 19, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_32ca50:
     // 0x32ca50: 0x8e220048  lw          $v0, 0x48($s1)
@@ -224,11 +218,9 @@ label_32ca50:
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 72)));
 label_32ca54:
     // 0x32ca54: 0x24042000  addiu       $a0, $zero, 0x2000
-    ctx->pc = 0x32ca54u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 8192));
 label_32ca58:
     // 0x32ca58: 0x28432001  slti        $v1, $v0, 0x2001
-    ctx->pc = 0x32ca58u;
     SET_GPR_U64(ctx, 3, ((int64_t)GPR_S64(ctx, 2) < (int64_t)(int32_t)8193) ? 1 : 0);
 label_32ca5c:
     // 0x32ca5c: 0x83100a  movz        $v0, $a0, $v1
@@ -289,7 +281,6 @@ label_32ca70:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj3270_GetVia4_Obj33C8_10_77D0_0x3277d0, 0x3277d0u, 0x32ca74u)) {
         return;
     }
-    ctx->pc = 0x32CA74u;
 label_32ca74:
     // 0x32ca74: 0x53102a  slt         $v0, $v0, $s3
     ctx->pc = 0x32ca74u;
@@ -345,7 +336,6 @@ label_32ca84:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj3260_GetByte_1_D778_0x326778, 0x326778u, 0x32ca88u)) {
         return;
     }
-    ctx->pc = 0x32CA88u;
 label_32ca88:
     // 0x32ca88: 0x24030003  addiu       $v1, $zero, 0x3
     ctx->pc = 0x32ca88u;
@@ -365,7 +355,6 @@ label_32ca90:
             goto label_32cadc;
         }
     }
-    ctx->pc = 0x32CA94u;
 label_32ca94:
     // 0x32ca94: 0x82220070  lb          $v0, 0x70($s1)
     ctx->pc = 0x32ca94u;
@@ -397,7 +386,6 @@ label_32ca9c:
             goto label_32cad8;
         }
     }
-    ctx->pc = 0x32CAA0u;
 label_32caa0:
     // 0x32caa0: 0x82220072  lb          $v0, 0x72($s1)
     ctx->pc = 0x32caa0u;
@@ -429,7 +417,6 @@ label_32caa8:
             goto label_32cad0;
         }
     }
-    ctx->pc = 0x32CAACu;
 label_32caac:
     // 0x32caac: 0x240202d  daddu       $a0, $s2, $zero
     ctx->pc = 0x32caacu;
@@ -457,18 +444,15 @@ label_32cab4:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj3260_Tramp_00338338_D338_0x326338, 0x326338u, 0x32cab8u)) {
         return;
     }
-    ctx->pc = 0x32CAB8u;
 label_32cab8:
     // 0x32cab8: 0xae20009c  sw          $zero, 0x9C($s1)
     ctx->pc = 0x32cab8u;
     WRITE32(ADD32(GPR_U32(ctx, 17), 156), GPR_U32(ctx, 0));
 label_32cabc:
     // 0x32cabc: 0x3c02003c  lui         $v0, 0x3C
-    ctx->pc = 0x32cabcu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
 label_32cac0:
     // 0x32cac0: 0x24427418  addiu       $v0, $v0, 0x7418
-    ctx->pc = 0x32cac0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 29720));
 label_32cac4:
     // 0x32cac4: 0x8c430000  lw          $v1, 0x0($v0)
@@ -480,7 +464,6 @@ label_32cac8:
     WRITE32(ADD32(GPR_U32(ctx, 17), 160), GPR_U32(ctx, 3));
 label_32cacc:
     // 0x32cacc: 0x24020003  addiu       $v0, $zero, 0x3
-    ctx->pc = 0x32caccu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
 label_32cad0:
     // 0x32cad0: 0xa2220001  sb          $v0, 0x1($s1)
@@ -488,7 +471,6 @@ label_32cad0:
     WRITE8(ADD32(GPR_U32(ctx, 17), 1), (uint8_t)GPR_U32(ctx, 2));
 label_32cad4:
     // 0x32cad4: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x32cad4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_32cad8:
     // 0x32cad8: 0xa2220071  sb          $v0, 0x71($s1)
@@ -517,7 +499,6 @@ label_32cae0:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj3260_GetByte_1_D778_0x326778, 0x326778u, 0x32cae4u)) {
         return;
     }
-    ctx->pc = 0x32CAE4u;
 label_32cae4:
     // 0x32cae4: 0x24030003  addiu       $v1, $zero, 0x3
     ctx->pc = 0x32cae4u;
@@ -573,10 +554,8 @@ label_32caf4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032A5B8_0x32a5b8, 0x32a5b8u, 0x32caf8u)) {
         return;
     }
-    ctx->pc = 0x32CAF8u;
 label_32caf8:
     // 0x32caf8: 0x40182d  daddu       $v1, $v0, $zero
-    ctx->pc = 0x32caf8u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_32cafc:
     // 0x32cafc: 0x8e220048  lw          $v0, 0x48($s1)
@@ -613,14 +592,11 @@ label_32cb08:
             goto label_32cb6c;
         }
     }
-    ctx->pc = 0x32CB0Cu;
 label_32cb0c:
     // 0x32cb0c: 0x26320018  addiu       $s2, $s1, 0x18
-    ctx->pc = 0x32cb0cu;
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 17), 24));
 label_32cb10:
     // 0x32cb10: 0x60882d  daddu       $s1, $v1, $zero
-    ctx->pc = 0x32cb10u;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
 label_32cb14:
     // 0x32cb14: 0x8e500000  lw          $s0, 0x0($s2)
@@ -628,15 +604,12 @@ label_32cb14:
     SET_GPR_S32(ctx, 16, (int32_t)READ32(ADD32(GPR_U32(ctx, 18), 0)));
 label_32cb18:
     // 0x32cb18: 0x26520004  addiu       $s2, $s2, 0x4
-    ctx->pc = 0x32cb18u;
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), 4));
 label_32cb1c:
     // 0x32cb1c: 0x3a0382d  daddu       $a3, $sp, $zero
-    ctx->pc = 0x32cb1cu;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
 label_32cb20:
     // 0x32cb20: 0x282d  daddu       $a1, $zero, $zero
-    ctx->pc = 0x32cb20u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_32cb24:
     // 0x32cb24: 0x8e030000  lw          $v1, 0x0($s0)
@@ -644,11 +617,9 @@ label_32cb24:
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 0)));
 label_32cb28:
     // 0x32cb28: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x32cb28u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_32cb2c:
     // 0x32cb2c: 0x260302d  daddu       $a2, $s3, $zero
-    ctx->pc = 0x32cb2cu;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 19) + (uint64_t)GPR_U64(ctx, 0));
 label_32cb30:
     // 0x32cb30: 0x8c620018  lw          $v0, 0x18($v1)
@@ -682,10 +653,8 @@ label_32cb38:
             return;
         }
     }
-    ctx->pc = 0x32CB3Cu;
 label_32cb3c:
     // 0x32cb3c: 0x282d  daddu       $a1, $zero, $zero
-    ctx->pc = 0x32cb3cu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_32cb40:
     // 0x32cb40: 0x8fa40000  lw          $a0, 0x0($sp)
@@ -714,18 +683,15 @@ label_32cb48:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x32cb4cu)) {
         return;
     }
-    ctx->pc = 0x32CB4Cu;
 label_32cb4c:
     // 0x32cb4c: 0x8e030000  lw          $v1, 0x0($s0)
     ctx->pc = 0x32cb4cu;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 0)));
 label_32cb50:
     // 0x32cb50: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x32cb50u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_32cb54:
     // 0x32cb54: 0x24050001  addiu       $a1, $zero, 0x1
-    ctx->pc = 0x32cb54u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_32cb58:
     // 0x32cb58: 0x8c620020  lw          $v0, 0x20($v1)
@@ -790,7 +756,6 @@ label_32cb68:
             goto label_32cb18;
         }
     }
-    ctx->pc = 0x32CB6Cu;
 label_32cb6c:
     // 0x32cb6c: 0xdfb00010  ld          $s0, 0x10($sp)
     ctx->pc = 0x32cb6cu;
@@ -846,7 +811,6 @@ label_32cb88:
         return;
         #endif
     }
-    ctx->pc = 0x32CB8Cu;
 label_32cb8c:
     // 0x32cb8c: 0x0  nop
     // NOP

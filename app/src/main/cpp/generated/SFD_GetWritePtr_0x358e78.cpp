@@ -13,7 +13,7 @@
 
 // Function: SFD_GetWritePtr
 // Address: 0x358e78 - 0x358ee8
-void SFD_GetWritePtr_0x358e78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFD_GetWritePtr_0x358e78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFD_GetWritePtr_0x358e78");
 #endif
@@ -50,7 +50,6 @@ void SFD_GetWritePtr_0x358e78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &Obj34D8_SetGlobalEE0B8_IfField48_0x34dec8, 0x34dec8u, 0x358e94u)) {
         return;
     }
-    ctx->pc = 0x358E94u;
 label_358e94:
     // 0x358e94: 0x3c05ff00  lui         $a1, 0xFF00
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)65280 << 16));
@@ -97,7 +96,6 @@ label_358e94:
         return;
     }
     // 0x358ec4: 0x0  nop
-    ctx->pc = 0x358ec4u;
     // NOP
 label_358ec8:
     // 0x358ec8: 0x220202d  daddu       $a0, $s1, $zero

@@ -13,7 +13,7 @@
 
 // Function: sceSifSetDma
 // Address: 0x3b2148 - 0x3b21d0
-void sceSifSetDma_0x3b2148(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSifSetDma_0x3b2148(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSifSetDma_0x3b2148");
 #endif
@@ -54,7 +54,6 @@ void sceSifSetDma_0x3b2148(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x3b2164u)) {
         return;
     }
-    ctx->pc = 0x3B2164u;
 label_3b2164:
     // 0x3b2164: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -93,10 +92,8 @@ label_3b2164:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x3b2188u)) {
         return;
     }
-    ctx->pc = 0x3B2188u;
 label_3b2188:
     // 0x3b2188: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x3b2188u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_3b218c:
     // 0x3b218c: 0x220282d  daddu       $a1, $s1, $zero
@@ -112,7 +109,6 @@ label_3b218c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceSifSetDmaInternal_0x3b2080, 0x3b2080u, 0x3b2198u)) {
         return;
     }
-    ctx->pc = 0x3B2198u;
 label_3b2198:
     // 0x3b2198: 0x10000009  b           . + 4 + (0x9 << 2)
     ctx->pc = 0x3B2198u;
@@ -129,7 +125,6 @@ label_3b2198:
             goto label_3b21c0;
         }
     }
-    ctx->pc = 0x3B21A0u;
 label_3b21a0:
     // 0x3b21a0: 0x10800004  beqz        $a0, . + 4 + (0x4 << 2)
     ctx->pc = 0x3B21A0u;
@@ -152,10 +147,8 @@ label_3b21a0:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x3b21b0u)) {
         return;
     }
-    ctx->pc = 0x3B21B0u;
 label_3b21b0:
     // 0x3b21b0: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x3b21b0u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_3b21b4:
     // 0x3b21b4: 0xc0ec018  jal         func_3B0060
@@ -169,7 +162,6 @@ label_3b21b4:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B0060u, 0x3B21B4u, 0x3B21BCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3B21BCu;
 label_3b21bc:
     // 0x3b21bc: 0xdfbf0020  ld          $ra, 0x20($sp)
     ctx->pc = 0x3b21bcu;

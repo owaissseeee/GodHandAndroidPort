@@ -13,7 +13,7 @@
 
 // Function: SFVOM_ExecServer
 // Address: 0x35d288 - 0x35d2e0
-void SFVOM_ExecServer_0x35d288(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFVOM_ExecServer_0x35d288(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFVOM_ExecServer_0x35d288");
 #endif
@@ -53,7 +53,6 @@ void SFVOM_ExecServer_0x35d288(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &GetArrayElemA0C_35A1C8_0x35a1c8, 0x35a1c8u, 0x35d2a4u)) {
         return;
     }
-    ctx->pc = 0x35D2A4u;
 label_35d2a4:
     // 0x35d2a4: 0x10400009  beqz        $v0, . + 4 + (0x9 << 2)
     ctx->pc = 0x35D2A4u;
@@ -76,7 +75,6 @@ label_35d2a4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035D2E0_0x35d2e0, 0x35d2e0u, 0x35d2b4u)) {
         return;
     }
-    ctx->pc = 0x35D2B4u;
 label_35d2b4:
     // 0x35d2b4: 0xc0d750c  jal         func_35D430
     SET_GPR_U32(ctx, 31, 0x35D2BCu);
@@ -89,7 +87,6 @@ label_35d2b4:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj35D0_ReturnZero_D430_0x35d430, 0x35d430u, 0x35d2bcu)) {
         return;
     }
-    ctx->pc = 0x35D2BCu;
 label_35d2bc:
     // 0x35d2bc: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -104,10 +101,8 @@ label_35d2bc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035D3A8_0x35d3a8, 0x35d3a8u, 0x35d2c8u)) {
         return;
     }
-    ctx->pc = 0x35D2C8u;
 label_35d2c8:
     // 0x35d2c8: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x35d2c8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_35d2cc:
     // 0x35d2cc: 0xdfb00000  ld          $s0, 0x0($sp)

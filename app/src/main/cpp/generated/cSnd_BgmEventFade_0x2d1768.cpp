@@ -13,7 +13,7 @@
 
 // Function: cSnd_BgmEventFade
 // Address: 0x2d1768 - 0x2d1800
-void cSnd_BgmEventFade_0x2d1768(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BgmEventFade_0x2d1768(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BgmEventFade_0x2d1768");
 #endif
@@ -65,7 +65,6 @@ void cSnd_BgmEventFade_0x2d1768(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_FindBgmNode_0x2d22b0, 0x2d22b0u, 0x2d1798u)) {
         return;
     }
-    ctx->pc = 0x2D1798u;
 label_2d1798:
     // 0x2d1798: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -118,7 +117,6 @@ label_2d1798:
     if (!runtime->callDirectStatic(rdram, ctx, &GetSequenceBlendWeight_373938_0x373938, 0x373938u, 0x2d17c4u)) {
         return;
     }
-    ctx->pc = 0x2D17C4u;
 label_2d17c4:
     // 0x2d17c4: 0x46140302  mul.s       $f12, $f0, $f20
     ctx->f[12] = FPU_MUL_S(ctx->f[0], ctx->f[20]);
@@ -135,7 +133,6 @@ label_2d17c4:
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateSequenceNodeWeighted_373560_0x373560, 0x373560u, 0x2d17d4u)) {
         return;
     }
-    ctx->pc = 0x2D17D4u;
 label_2d17d4:
     // 0x2d17d4: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -152,7 +149,6 @@ label_2d17d4:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_FadeTo_0x2cd4e0, 0x2cd4e0u, 0x2d17e4u)) {
         return;
     }
-    ctx->pc = 0x2D17E4u;
 label_2d17e4:
     // 0x2d17e4: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2d17e4u;

@@ -13,7 +13,7 @@
 
 // Function: cActionButtonUnit_setExit
 // Address: 0x1f6f10 - 0x1f6f58
-void cActionButtonUnit_setExit_0x1f6f10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cActionButtonUnit_setExit_0x1f6f10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cActionButtonUnit_setExit_0x1f6f10");
 #endif
@@ -78,7 +78,6 @@ label_1f6f40:
     if (!runtime->callDirectStatic(rdram, ctx, &cActionButtonEnt_reset_0x1f7228, 0x1f7228u, 0x1f6f48u)) {
         return;
     }
-    ctx->pc = 0x1F6F48u;
 label_1f6f48:
     // 0x1f6f48: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1f6f48u;

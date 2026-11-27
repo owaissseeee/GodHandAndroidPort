@@ -13,7 +13,7 @@
 
 // Function: MWSPR_SaveSprMem
 // Address: 0x346510 - 0x346578
-void MWSPR_SaveSprMem_0x346510(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MWSPR_SaveSprMem_0x346510(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MWSPR_SaveSprMem_0x346510");
 #endif
@@ -58,7 +58,6 @@ void MWSPR_SaveSprMem_0x346510(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x397100u, 0x346530u, 0x346538u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x346538u;
 label_346538:
     // 0x346538: 0x2604000f  addiu       $a0, $s0, 0xF
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 15));
@@ -85,7 +84,6 @@ label_346538:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3974D0u, 0x346550u, 0x346558u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x346558u;
 label_346558:
     // 0x346558: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

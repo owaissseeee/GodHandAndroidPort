@@ -13,7 +13,7 @@
 
 // Function: Set_bg_mode
 // Address: 0x30e5c0 - 0x30e660
-void Set_bg_mode_0x30e5c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Set_bg_mode_0x30e5c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Set_bg_mode_0x30e5c0");
 #endif
@@ -68,7 +68,6 @@ void Set_bg_mode_0x30e5c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
         return;
         #endif
     }
-    ctx->pc = 0x30E5E4u;
 label_30e5e4:
     // 0x30e5e4: 0x3c040074  lui         $a0, 0x74
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)116 << 16));
@@ -114,7 +113,6 @@ label_30e5e4:
         return;
         #endif
     }
-    ctx->pc = 0x30E618u;
 label_30e618:
     // 0x30e618: 0x52a00  sll         $a1, $a1, 8
     SET_GPR_S32(ctx, 5, (int32_t)SLL32(GPR_U32(ctx, 5), 8));

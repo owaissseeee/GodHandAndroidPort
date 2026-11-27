@@ -13,7 +13,7 @@
 
 // Function: cScenario_isOmBreak
 // Address: 0x2c5110 - 0x2c5168
-void cScenario_isOmBreak_0x2c5110(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_isOmBreak_0x2c5110(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_isOmBreak_0x2c5110");
 #endif
@@ -64,7 +64,6 @@ void cScenario_isOmBreak_0x2c5110(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BED08_0x2bed08, 0x2bed08u, 0x2c5134u)) {
         return;
     }
-    ctx->pc = 0x2C5134u;
 label_2c5134:
     // 0x2c5134: 0x24040001  addiu       $a0, $zero, 0x1
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -105,10 +104,8 @@ label_2c5134:
             goto label_2c5158;
         }
     }
-    ctx->pc = 0x2C5154u;
 label_2c5154:
     // 0x2c5154: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2c5154u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2c5158:
     // 0x2c5158: 0x7bb00010  lq          $s0, 0x10($sp)

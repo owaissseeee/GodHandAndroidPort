@@ -13,7 +13,7 @@
 
 // Function: EntPool_allocClear
 // Address: 0x149488 - 0x1494f8
-void EntPool_allocClear_0x149488(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EntPool_allocClear_0x149488(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EntPool_allocClear_0x149488");
 #endif
@@ -50,7 +50,6 @@ void EntPool_allocClear_0x149488(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A97A0_0x2a97a0, 0x2a97a0u, 0x1494a0u)) {
         return;
     }
-    ctx->pc = 0x1494A0u;
 label_1494a0:
     // 0x1494a0: 0x40882d  daddu       $s1, $v0, $zero
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -84,7 +83,6 @@ label_1494a0:
             goto label_1494e4;
         }
     }
-    ctx->pc = 0x1494B4u;
 label_1494b4:
     // 0x1494b4: 0x8e020024  lw          $v0, 0x24($s0)
     ctx->pc = 0x1494b4u;
@@ -127,7 +125,6 @@ label_1494cc:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x1494dcu)) {
         return;
     }
-    ctx->pc = 0x1494DCu;
 label_1494dc:
     // 0x1494dc: 0xc0520d6  jal         func_148358
     SET_GPR_U32(ctx, 31, 0x1494E4u);
@@ -140,7 +137,6 @@ label_1494dc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00148358_0x148358, 0x148358u, 0x1494e4u)) {
         return;
     }
-    ctx->pc = 0x1494E4u;
 label_1494e4:
     // 0x1494e4: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1494e4u;

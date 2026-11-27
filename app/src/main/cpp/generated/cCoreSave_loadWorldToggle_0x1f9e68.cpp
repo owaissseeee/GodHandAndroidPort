@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_loadWorldToggle
 // Address: 0x1f9e68 - 0x1f9e90
-void cCoreSave_loadWorldToggle_0x1f9e68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_loadWorldToggle_0x1f9e68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_loadWorldToggle_0x1f9e68");
 #endif
@@ -60,7 +60,6 @@ void cCoreSave_loadWorldToggle_0x1f9e68(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &SetGlobalToggle_375700_0x375700, 0x375700u, 0x1f9e84u)) {
         return;
     }
-    ctx->pc = 0x1F9E84u;
 label_1f9e84:
     // 0x1f9e84: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1f9e84u;

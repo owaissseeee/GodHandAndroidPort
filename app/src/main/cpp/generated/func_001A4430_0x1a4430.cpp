@@ -13,7 +13,7 @@
 
 // Function: func_001A4430
 // Address: 0x1a4430 - 0x1a4528
-void func_001A4430_0x1a4430(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001A4430_0x1a4430(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001A4430_0x1a4430");
 #endif
@@ -50,7 +50,6 @@ void func_001A4430_0x1a4430(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B6FB8_0x1b6fb8, 0x1b6fb8u, 0x1a4444u)) {
         return;
     }
-    ctx->pc = 0x1A4444u;
 label_1a4444:
     // 0x1a4444: 0x3c013f33  lui         $at, 0x3F33
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16179 << 16));
@@ -90,7 +89,6 @@ label_1a4444:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_CreateDamageTake_0x1fe218, 0x1fe218u, 0x1a447cu)) {
         return;
     }
-    ctx->pc = 0x1A447Cu;
 label_1a447c:
     // 0x1a447c: 0x10400007  beqz        $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x1A447Cu;
@@ -126,7 +124,6 @@ label_1a447c:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_AddDamageCollSphere_0x1fdaf0, 0x1fdaf0u, 0x1a449cu)) {
         return;
     }
-    ctx->pc = 0x1A449Cu;
 label_1a449c:
     // 0x1a449c: 0x2402270f  addiu       $v0, $zero, 0x270F
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 9999));
@@ -192,7 +189,6 @@ label_1a44c8:
     if (!runtime->callDirectStatic(rdram, ctx, &cOm4f_setOpenCloseRot_0x1a4fe0, 0x1a4fe0u, 0x1a44e8u)) {
         return;
     }
-    ctx->pc = 0x1A44E8u;
 label_1a44e8:
     // 0x1a44e8: 0x8e0205b8  lw          $v0, 0x5B8($s0)
     ctx->pc = 0x1a44e8u;
@@ -218,7 +214,6 @@ label_1a44e8:
     if (!runtime->callDirectStatic(rdram, ctx, &cOm4f_setCloseFix_0x1a4e88, 0x1a4e88u, 0x1a4504u)) {
         return;
     }
-    ctx->pc = 0x1A4504u;
 label_1a4504:
     // 0x1a4504: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -233,7 +228,6 @@ label_1a4504:
     if (!runtime->callDirectStatic(rdram, ctx, &cOm4f_setEventMode_0x1a4f20, 0x1a4f20u, 0x1a4510u)) {
         return;
     }
-    ctx->pc = 0x1A4510u;
 label_1a4510:
     // 0x1a4510: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1a4510u;

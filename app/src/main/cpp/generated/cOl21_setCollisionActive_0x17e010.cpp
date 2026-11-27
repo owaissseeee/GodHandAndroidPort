@@ -13,7 +13,7 @@
 
 // Function: cOl21_setCollisionActive
 // Address: 0x17e010 - 0x17e058
-void cOl21_setCollisionActive_0x17e010(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl21_setCollisionActive_0x17e010(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl21_setCollisionActive_0x17e010");
 #endif
@@ -33,7 +33,6 @@ void cOl21_setCollisionActive_0x17e010(uint8_t* rdram, R5900Context* ctx, PS2Run
     // 0x17e018: 0x24860654  addiu       $a2, $a0, 0x654
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 4), 1620));
     // 0x17e01c: 0x24070007  addiu       $a3, $zero, 0x7
-    ctx->pc = 0x17e01cu;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 0), 7));
 label_17e020:
     // 0x17e020: 0x14a90004  bne         $a1, $t1, . + 4 + (0x4 << 2)
@@ -69,13 +68,11 @@ label_17e020:
             goto label_17e03c;
         }
     }
-    ctx->pc = 0x17E034u;
 label_17e034:
     // 0x17e034: 0x8c620008  lw          $v0, 0x8($v1)
     ctx->pc = 0x17e034u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 8)));
     // 0x17e038: 0x481024  and         $v0, $v0, $t0
-    ctx->pc = 0x17e038u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 8));
 label_17e03c:
     // 0x17e03c: 0xac620008  sw          $v0, 0x8($v1)

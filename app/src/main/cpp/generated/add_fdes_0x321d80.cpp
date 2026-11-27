@@ -13,7 +13,7 @@
 
 // Function: add_fdes
 // Address: 0x321d80 - 0x321e08
-void add_fdes_0x321d80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void add_fdes_0x321d80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("add_fdes_0x321d80");
 #endif
@@ -51,7 +51,6 @@ void add_fdes_0x321d80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             goto label_321dfc;
         }
     }
-    ctx->pc = 0x321D98u;
 label_321d98:
     // 0x321d98: 0x8d020004  lw          $v0, 0x4($t0)
     ctx->pc = 0x321d98u;
@@ -152,7 +151,6 @@ label_321dec:
             goto label_321d98;
         }
     }
-    ctx->pc = 0x321DFCu;
 label_321dfc:
     // 0x321dfc: 0xacc90000  sw          $t1, 0x0($a2)
     ctx->pc = 0x321dfcu;

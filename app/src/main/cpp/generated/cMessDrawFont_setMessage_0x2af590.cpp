@@ -13,7 +13,7 @@
 
 // Function: cMessDrawFont_setMessage
 // Address: 0x2af590 - 0x2af628
-void cMessDrawFont_setMessage_0x2af590(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessDrawFont_setMessage_0x2af590(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessDrawFont_setMessage_0x2af590");
 #endif
@@ -67,7 +67,6 @@ void cMessDrawFont_setMessage_0x2af590(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &cMessage_getMessageAddr_0x2aead0, 0x2aead0u, 0x2af5c0u)) {
         return;
     }
-    ctx->pc = 0x2AF5C0u;
 label_2af5c0:
     // 0x2af5c0: 0x8e0423a4  lw          $a0, 0x23A4($s0)
     ctx->pc = 0x2af5c0u;
@@ -85,7 +84,6 @@ label_2af5c0:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessage_getRubyAddr_0x2aeb00, 0x2aeb00u, 0x2af5d0u)) {
         return;
     }
-    ctx->pc = 0x2AF5D0u;
 label_2af5d0:
     // 0x2af5d0: 0x240282d  daddu       $a1, $s2, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -106,7 +104,6 @@ label_2af5d0:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessDrawFont_setBodyData_0x2af628, 0x2af628u, 0x2af5e8u)) {
         return;
     }
-    ctx->pc = 0x2AF5E8u;
 label_2af5e8:
     // 0x2af5e8: 0x200282d  daddu       $a1, $s0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -123,7 +120,6 @@ label_2af5e8:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessDrawFont_setRubyData_0x2af638, 0x2af638u, 0x2af5f8u)) {
         return;
     }
-    ctx->pc = 0x2AF5F8u;
 label_2af5f8:
     // 0x2af5f8: 0x3c060fff  lui         $a2, 0xFFF
     SET_GPR_S32(ctx, 6, (int32_t)((uint32_t)4095 << 16));
@@ -142,7 +138,6 @@ label_2af5f8:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessDrawFont_setDrawCounter_0x2af648, 0x2af648u, 0x2af60cu)) {
         return;
     }
-    ctx->pc = 0x2AF60Cu;
 label_2af60c:
     // 0x2af60c: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x2af60cu;

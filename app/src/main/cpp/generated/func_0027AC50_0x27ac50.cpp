@@ -13,7 +13,7 @@
 
 // Function: func_0027AC50
 // Address: 0x27ac50 - 0x27ac70
-void func_0027AC50_0x27ac50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0027AC50_0x27ac50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0027AC50_0x27ac50");
 #endif
@@ -44,7 +44,6 @@ void func_0027AC50_0x27ac50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &InitTrailSpriteTableA_0x27a7f0, 0x27a7f0u, 0x27ac64u)) {
         return;
     }
-    ctx->pc = 0x27AC64u;
 label_27ac64:
     // 0x27ac64: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x27ac64u;

@@ -13,7 +13,7 @@
 
 // Function: MtxBuildTransRotScale
 // Address: 0x147ab8 - 0x147b18
-void MtxBuildTransRotScale_0x147ab8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MtxBuildTransRotScale_0x147ab8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MtxBuildTransRotScale_0x147ab8");
 #endif
@@ -57,7 +57,6 @@ void MtxBuildTransRotScale_0x147ab8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitTransVec_0x1476d0, 0x1476d0u, 0x147adcu)) {
         return;
     }
-    ctx->pc = 0x147ADCu;
 label_147adc:
     // 0x147adc: 0x220302d  daddu       $a2, $s1, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -74,7 +73,6 @@ label_147adc:
     if (!runtime->callDirectStatic(rdram, ctx, &BuildMatrixAndForward_147BB0_0x147bb0, 0x147bb0u, 0x147aecu)) {
         return;
     }
-    ctx->pc = 0x147AECu;
 label_147aec:
     // 0x147aec: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -91,7 +89,6 @@ label_147aec:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxMulScaleVec_0x147bf8, 0x147bf8u, 0x147afcu)) {
         return;
     }
-    ctx->pc = 0x147AFCu;
 label_147afc:
     // 0x147afc: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x147afcu;

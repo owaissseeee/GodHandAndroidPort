@@ -29,6 +29,8 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
     private lateinit var settings: SettingsRepository
     private lateinit var surfaceView: SurfaceView
     private lateinit var touchOverlay: TouchControllerOverlay
+    private lateinit var hapticController: HapticController
+    private var lastGameMotorState: Int = 0
     private var inputManager: InputManager? = null
     private var adpfSession: PerformanceHintManager.Session? = null
     private var adpfInitialized = false
@@ -374,13 +376,21 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         override fun doFrame(frameTimeNanos: Long) {
             if (!isFinishing && !isDestroyed) {
                 try {
+                    val allowRumble = settings.vibrationEnabled &&
+                        settings.inGameVibrationEnabled &&
+                        inGameSettingsDialog == null
+                    val packedState = NativeBridge.pollFrameState(allowRumble)
                     // Direct Menu Touch state polling
-                    val menuState = NativeBridge.getActiveMenuState()
+                    val menuState = (packedState and 0x1FFFFFL).toInt()
                     val screenId = menuState and 0xFFFF
                     val isLiveRoulette = (menuState and NativeBridge.FLAG_LIVE_ROULETTE) != 0
                     val isMenuActive = settings.menuDirectTouchEnabled && (screenId != 0) && !isLiveRoulette
+                    val isCutsceneActive = settings.menuDirectTouchEnabled &&
+                        !isMenuActive &&
+                        ((menuState and NativeBridge.FLAG_CUTSCENE_ACTIVE) != 0)
                     val wasMenuActive = touchOverlay.isMenuTouchActive
                     touchOverlay.isMenuTouchActive = isMenuActive
+                    touchOverlay.isCutsceneTouchActive = isCutsceneActive
                     if (isMenuActive) {
                         NativeBridge.getMenuDebugInfo(adpfMenuDebugArray)
                         val showDebug = settings.showMenuDebugBoxes
@@ -411,9 +421,22 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                         lastAdpfMenu0 = -1
                     }
 
+                    // Sync PS2 DualShock 2 rumble state -> background HapticController (1 atomic read/frame; zero stall)
+                    val canRumble = allowRumble && !isMenuActive
+                    if (canRumble) {
+                        val motorState = ((packedState ushr 21) and 0xFFFFL).toInt()
+                        if (motorState != lastGameMotorState) {
+                            lastGameMotorState = motorState
+                            hapticController.updateGameRumble(motorState)
+                        }
+                    } else if (lastGameMotorState != 0) {
+                        lastGameMotorState = 0
+                        hapticController.cancelGameRumble()
+                    }
+
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                         ensureAdpfSession()
-                        val duration = NativeBridge.getLastFrameWorkDurationNanos()
+                        val duration = ((packedState ushr 37) and 0x3FFFFFFL) * 1000L
                         if (duration > 0L) {
                             val reported = maxOf(duration, 30_000_000L)
                             if (reported != lastReportedAdpfNanos || (frameTimeNanos - lastAdpfReportTimeNanos) >= 250_000_000L) {
@@ -489,12 +512,21 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         enforceSixtyHzDisplayMode()
         IsoCacheProcessor(this).ensureResourcesCopied()
         settings = SettingsRepository(this)
+        hapticController = HapticController(this).apply {
+            updateConfig(
+                settings.vibrationEnabled,
+                settings.touchVibrationEnabled,
+                settings.inGameVibrationEnabled,
+                settings.vibrationStrength
+            )
+        }
 
         val root = FrameLayout(this)
         surfaceView = SurfaceView(this).apply {
             holder.addCallback(this@GameActivity)
         }
         touchOverlay = TouchControllerOverlay(this).apply {
+            hapticController = this@GameActivity.hapticController
             applySettings(settings)
             onExitClicked = {
                 showQuitConfirmationDialog()
@@ -591,6 +623,8 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
 
     private fun showInGameSettingsDialog() {
         if (isFinishing || isDestroyed) return
+        lastGameMotorState = 0
+        hapticController.cancelGameRumble()
         runOnUiThread {
             inGameSettingsDialog = SettingsDialog(
                 context = this,
@@ -630,7 +664,11 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                     hideSystemUI()
                 }
             ).apply {
-                setOnDismissListener { inGameSettingsDialog = null; hideSystemUI() }
+                setOnDismissListener {
+                    inGameSettingsDialog = null
+                    touchOverlay.applySettings(settings)
+                    hideSystemUI()
+                }
                 show()
             }
         }
@@ -708,6 +746,8 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
     }
 
     private fun handleExitToMenu() {
+        lastGameMotorState = 0
+        hapticController.release()
         NativeBridge.setAudioMuted(true)
         finish()
         Process.killProcess(Process.myPid())
@@ -833,28 +873,43 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         super.onResume()
         enforceSixtyHzDisplayMode()
         hideSystemUI()
+        settings.reload()
         touchOverlay.applySettings(settings)
         checkConnectedControllers()
         NativeBridge.setAudioMuted(false)
+        NativeBridge.setAudioChannelVolumes(
+            settings.masterVolume,
+            settings.bgmVolume,
+            settings.sfxVolume,
+            settings.voiceVolume
+        )
         android.view.Choreographer.getInstance().postFrameCallback(adpfFrameCallback)
     }
 
     override fun onPause() {
         super.onPause()
         android.view.Choreographer.getInstance().removeFrameCallback(adpfFrameCallback)
+        lastGameMotorState = 0
+        hapticController.cancelAll()
         NativeBridge.setAudioMuted(true)
     }
 
     override fun onStop() {
         super.onStop()
+        lastGameMotorState = 0
+        hapticController.cancelAll()
         NativeBridge.setAudioMuted(true)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         inputManager?.unregisterInputDeviceListener(inputDeviceListener)
+        lastGameMotorState = 0
+        hapticController.release()
         NativeBridge.setAudioMuted(true)
-        Process.killProcess(Process.myPid())
+        if (isFinishing) {
+            Process.killProcess(Process.myPid())
+        }
     }
 
     private fun hideSystemUI() {
@@ -907,12 +962,15 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             } catch (_: Throwable) {}
         }
         val rendererIdx = intent.getIntExtra("rendererIdx", settings.rendererIdx)
-        val resolutionIdx = intent.getIntExtra("resolutionIdx", settings.resolutionIdx)
+        val ultraPotatoMode = intent.getBooleanExtra("ultraPotatoMode", settings.ultraPotatoMode)
+        val rawResolutionIdx = intent.getIntExtra("resolutionIdx", settings.resolutionIdx)
+        val resolutionIdx = if (!ultraPotatoMode && rawResolutionIdx == 0) 1 else rawResolutionIdx
         val aspectIdx = intent.getIntExtra("aspectIdx", settings.aspectIdx)
         val fpsIdx = intent.getIntExtra("fpsIdx", settings.fpsIdx)
         val frameskipIdx = intent.getIntExtra("frameskipIdx", settings.frameskipIdx)
         val hudLayoutIdx = intent.getIntExtra("hudLayoutIdx", settings.hudLayoutIdx)
         NativeBridge.setHudLayout(hudLayoutIdx)
+        NativeBridge.setUltraPotatoMode(ultraPotatoMode)
 
         val cachePath = java.io.File(filesDir, "godhand_cache").absolutePath
         NativeBridge.setGameCacheDirectory(cachePath)

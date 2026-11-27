@@ -13,7 +13,7 @@
 
 // Function: sfmps_SkipNext
 // Address: 0x34e808 - 0x34e8e8
-void sfmps_SkipNext_0x34e808(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfmps_SkipNext_0x34e808(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfmps_SkipNext_0x34e808");
 #endif
@@ -96,7 +96,6 @@ void sfmps_SkipNext_0x34e808(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034E8E8_0x34e8e8, 0x34e8e8u, 0x34e858u)) {
         return;
     }
-    ctx->pc = 0x34E858u;
 label_34e858:
     // 0x34e858: 0x54400019  bnel        $v0, $zero, . + 4 + (0x19 << 2)
     ctx->pc = 0x34E858u;
@@ -113,7 +112,6 @@ label_34e858:
             goto label_34e8c0;
         }
     }
-    ctx->pc = 0x34E860u;
 label_34e860:
     // 0x34e860: 0x2a020004  slti        $v0, $s0, 0x4
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 16) < (int64_t)(int32_t)4) ? 1 : 0);
@@ -133,7 +131,6 @@ label_34e860:
         }
     }
     // 0x34e86c: 0x3c14000d  lui         $s4, 0xD
-    ctx->pc = 0x34e86cu;
     SET_GPR_S32(ctx, 20, (int32_t)((uint32_t)13 << 16));
 label_34e870:
     // 0x34e870: 0x220202d  daddu       $a0, $s1, $zero
@@ -149,7 +146,6 @@ label_34e870:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00368A28_0x368a28, 0x368a28u, 0x34e87cu)) {
         return;
     }
-    ctx->pc = 0x34E87Cu;
 label_34e87c:
     // 0x34e87c: 0x541024  and         $v0, $v0, $s4
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 20));
@@ -190,7 +186,6 @@ label_34e87c:
             goto label_34e870;
         }
     }
-    ctx->pc = 0x34E898u;
 label_34e898:
     // 0x34e898: 0x2602ffff  addiu       $v0, $s0, -0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 4294967295));
@@ -224,7 +219,6 @@ label_34e898:
     if (!runtime->callDirectStatic(rdram, ctx, &sfmps_IsEndOfRingBuf_0x34e928, 0x34e928u, 0x34e8b4u)) {
         return;
     }
-    ctx->pc = 0x34E8B4u;
 label_34e8b4:
     // 0x34e8b4: 0x2501821  addu        $v1, $s2, $s0
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 18), GPR_U32(ctx, 16)));

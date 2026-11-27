@@ -13,7 +13,7 @@
 
 // Function: cScenario_execUpCutData
 // Address: 0x2c4150 - 0x2c41c8
-void cScenario_execUpCutData_0x2c4150(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_execUpCutData_0x2c4150(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_execUpCutData_0x2c4150");
 #endif
@@ -78,7 +78,6 @@ void cScenario_execUpCutData_0x2c4150(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_taskExec_2C3890_0x2c3890, 0x2c3890u, 0x2c4188u)) {
         return;
     }
-    ctx->pc = 0x2C4188u;
 label_2c4188:
     // 0x2c4188: 0x40482d  daddu       $t1, $v0, $zero
     SET_GPR_U64(ctx, 9, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -124,7 +123,6 @@ label_2c4188:
             goto label_2c41b8;
         }
     }
-    ctx->pc = 0x2C41B0u;
 label_2c41b0:
     // 0x2c41b0: 0xc0b1072  jal         func_2C41C8
     ctx->pc = 0x2C41B0u;
@@ -132,7 +130,6 @@ label_2c41b0:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_upCutTask_0x2c41c8, 0x2c41c8u, 0x2c41b8u)) {
         return;
     }
-    ctx->pc = 0x2C41B8u;
 label_2c41b8:
     // 0x2c41b8: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2c41b8u;

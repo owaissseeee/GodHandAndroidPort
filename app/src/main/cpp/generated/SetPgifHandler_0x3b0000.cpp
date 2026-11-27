@@ -13,7 +13,7 @@
 
 // Function: SetPgifHandler
 // Address: 0x3b0000 - 0x3b0010
-void SetPgifHandler_0x3b0000(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetPgifHandler_0x3b0000(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetPgifHandler_0x3b0000");
 #endif

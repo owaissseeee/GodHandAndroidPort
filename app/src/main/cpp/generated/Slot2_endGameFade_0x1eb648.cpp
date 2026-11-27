@@ -13,7 +13,7 @@
 
 // Function: Slot2_endGameFade
 // Address: 0x1eb648 - 0x1eb718
-void Slot2_endGameFade_0x1eb648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Slot2_endGameFade_0x1eb648(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Slot2_endGameFade_0x1eb648");
 #endif
@@ -102,7 +102,6 @@ void Slot2_endGameFade_0x1eb648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_BgmEventFade_0x2d1768, 0x2d1768u, 0x1eb6a8u)) {
         return;
     }
-    ctx->pc = 0x1EB6A8u;
 label_1eb6a8:
     // 0x1eb6a8: 0x4600b306  mov.s       $f12, $f22
     ctx->f[12] = FPU_MOV_S(ctx->f[22]);
@@ -123,7 +122,6 @@ label_1eb6a8:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_BgmEventFade_0x2d1768, 0x2d1768u, 0x1eb6c0u)) {
         return;
     }
-    ctx->pc = 0x1EB6C0u;
 label_1eb6c0:
     // 0x1eb6c0: 0x24040001  addiu       $a0, $zero, 0x1
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -138,7 +136,6 @@ label_1eb6c0:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1eb6ccu)) {
         return;
     }
-    ctx->pc = 0x1EB6CCu;
 label_1eb6cc:
     // 0x1eb6cc: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
@@ -156,7 +153,6 @@ label_1eb6cc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00143A90_0x143a90, 0x143a90u, 0x1eb6dcu)) {
         return;
     }
-    ctx->pc = 0x1EB6DCu;
 label_1eb6dc:
     // 0x1eb6dc: 0x8e220054  lw          $v0, 0x54($s1)
     ctx->pc = 0x1eb6dcu;

@@ -13,7 +13,7 @@
 
 // Function: Obj33F8_Tramp_0033B658_FC70
 // Address: 0x33fc70 - 0x33fc88
-void Obj33F8_Tramp_0033B658_FC70_0x33fc70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj33F8_Tramp_0033B658_FC70_0x33fc70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj33F8_Tramp_0033B658_FC70_0x33fc70");
 #endif

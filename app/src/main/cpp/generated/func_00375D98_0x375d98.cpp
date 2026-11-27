@@ -13,7 +13,7 @@
 
 // Function: func_00375D98
 // Address: 0x375d98 - 0x375de0
-void func_00375D98_0x375d98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00375D98_0x375d98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00375D98_0x375d98");
 #endif
@@ -66,7 +66,6 @@ void func_00375D98_0x375d98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &ForwardSoundEventAll_375DE0_0x375de0, 0x375de0u, 0x375dc0u)) {
         return;
     }
-    ctx->pc = 0x375DC0u;
 label_375dc0:
     // 0x375dc0: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x375DC0u;
@@ -83,7 +82,6 @@ label_375dc0:
             goto label_375dd4;
         }
     }
-    ctx->pc = 0x375DC8u;
 label_375dc8:
     // 0x375dc8: 0xc0dd79e  jal         func_375E78
     ctx->pc = 0x375DC8u;
@@ -91,7 +89,6 @@ label_375dc8:
     if (!runtime->callDirectStatic(rdram, ctx, &BuildSoundEventEntry_375E78_0x375e78, 0x375e78u, 0x375dd0u)) {
         return;
     }
-    ctx->pc = 0x375DD0u;
 label_375dd0:
     // 0x375dd0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x375dd0u;

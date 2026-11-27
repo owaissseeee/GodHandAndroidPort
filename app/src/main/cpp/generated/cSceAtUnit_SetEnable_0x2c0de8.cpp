@@ -13,7 +13,7 @@
 
 // Function: cSceAtUnit_SetEnable
 // Address: 0x2c0de8 - 0x2c0e20
-void cSceAtUnit_SetEnable_0x2c0de8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSceAtUnit_SetEnable_0x2c0de8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSceAtUnit_SetEnable_0x2c0de8");
 #endif
@@ -69,7 +69,6 @@ void cSceAtUnit_SetEnable_0x2c0de8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_002C0E20_0x2c0e20, 0x2c0e20u, 0x2c0e14u)) {
         return;
     }
-    ctx->pc = 0x2C0E14u;
 label_2c0e14:
     // 0x2c0e14: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2c0e14u;

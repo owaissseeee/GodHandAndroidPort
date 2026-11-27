@@ -13,7 +13,7 @@
 
 // Function: SFH_IsSfdHeader
 // Address: 0x35d828 - 0x35d918
-void SFH_IsSfdHeader_0x35d828(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFH_IsSfdHeader_0x35d828(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFH_IsSfdHeader_0x35d828");
 #endif
@@ -68,7 +68,6 @@ void SFH_IsSfdHeader_0x35d828(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &Obj35D0_IsField0Zero_D7A8_0x35d7a8, 0x35d7a8u, 0x35d85cu)) {
         return;
     }
-    ctx->pc = 0x35D85Cu;
 label_35d85c:
     // 0x35d85c: 0x54530004  bnel        $v0, $s3, . + 4 + (0x4 << 2)
     ctx->pc = 0x35D85Cu;
@@ -101,7 +100,6 @@ label_35d85c:
         }
     }
     // 0x35d86c: 0x0  nop
-    ctx->pc = 0x35d86cu;
     // NOP
 label_35d870:
     // 0x35d870: 0x2c420800  sltiu       $v0, $v0, 0x800
@@ -141,7 +139,6 @@ label_35d870:
         }
     }
     // 0x35d88c: 0x0  nop
-    ctx->pc = 0x35d88cu;
     // NOP
 label_35d890:
     // 0x35d890: 0x220202d  daddu       $a0, $s1, $zero
@@ -159,7 +156,6 @@ label_35d890:
     if (!runtime->callDirectStatic(rdram, ctx, &memcmp_0x3a50b4, 0x3a50b4u, 0x35d8a0u)) {
         return;
     }
-    ctx->pc = 0x35D8A0u;
 label_35d8a0:
     // 0x35d8a0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -200,7 +196,6 @@ label_35d8a0:
             goto label_35d8fc;
         }
     }
-    ctx->pc = 0x35D8C0u;
 label_35d8c0:
     // 0x35d8c0: 0x24020002  addiu       $v0, $zero, 0x2
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
@@ -215,7 +210,6 @@ label_35d8c0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035DB38_0x35db38, 0x35db38u, 0x35d8ccu)) {
         return;
     }
-    ctx->pc = 0x35D8CCu;
 label_35d8cc:
     // 0x35d8cc: 0x1040000b  beqz        $v0, . + 4 + (0xB << 2)
     ctx->pc = 0x35D8CCu;

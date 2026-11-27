@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
+#include <ps2_recompiled_functions.h>
 #include "r000_functions.h"
 
 #include "ps2_syscalls.h"
@@ -14,20 +15,21 @@ namespace gh_r000
 {
 // Function: SubSkill__17cSkillListManager8PL_SKILL
 // Address: 0x79a7b8 - 0x79a7e8
-void SubSkill__17cSkillListManager8PL_SKILL_0x79a7b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SubSkill__17cSkillListManager8PL_SKILL_0x79a7b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SubSkill__17cSkillListManager8PL_SKILL_0x79a7b8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79a7d8u: goto label_79a7d8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x79a7b8u, 0)) {
+        switch (ctx->pc) {
+            case 0x79a7d8u: goto label_79a7d8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x79a7b8u;
+
 
     // 0x79a7b8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x79a7b8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x79a7bc: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x79a7bcu;
@@ -50,24 +52,19 @@ void SubSkill__17cSkillListManager8PL_SKILL_0x79a7b8(uint8_t* rdram, R5900Contex
             goto label_79a7d8;
         }
     }
-    ctx->pc = 0x79A7CCu;
     // 0x79a7cc: 0x3c040057  lui         $a0, 0x57
-    ctx->pc = 0x79a7ccu;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)87 << 16));
     // 0x79a7d0: 0xc07ebc8  jal         func_1FAF20
-    ctx->pc = 0x79A7D0u;
     SET_GPR_U32(ctx, 31, 0x79A7D8u);
-    ctx->pc = 0x79A7D4u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x79A7D0u;
     // 0x79a7d4: 0x24849b70  addiu       $a0, $a0, -0x6490 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 4294941552));
     ctx->in_delay_slot = false;
     ctx->pc = 0x1FAF20u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1FAF20u, 0x79A7D0u, 0x79A7D8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_setSkill_0x1faf20, 0x1FAF20u, 0x79A7D8u)) {
         return;
     }
-    ctx->pc = 0x79A7D8u;
 label_79a7d8:
     // 0x79a7d8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x79a7d8u;
@@ -91,9 +88,7 @@ label_79a7d8:
         return;
         #endif
     }
-    ctx->pc = 0x79A7E4u;
     // 0x79a7e4: 0x0  nop
-    ctx->pc = 0x79a7e4u;
     // NOP
     ctx->pc = 0x79a7e8u;
 }

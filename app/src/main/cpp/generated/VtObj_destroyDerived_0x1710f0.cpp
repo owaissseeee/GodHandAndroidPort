@@ -13,7 +13,7 @@
 
 // Function: VtObj_destroyDerived
 // Address: 0x1710f0 - 0x171140
-void VtObj_destroyDerived_0x1710f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void VtObj_destroyDerived_0x1710f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("VtObj_destroyDerived_0x1710f0");
 #endif
@@ -62,7 +62,6 @@ void VtObj_destroyDerived_0x1710f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AD288_0x2ad288, 0x2ad288u, 0x171120u)) {
         return;
     }
-    ctx->pc = 0x171120u;
 label_171120:
     // 0x171120: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -77,7 +76,6 @@ label_171120:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField214PtrThenInit_1B6F38_0x1b6f38, 0x1b6f38u, 0x17112cu)) {
         return;
     }
-    ctx->pc = 0x17112Cu;
 label_17112c:
     // 0x17112c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x17112cu;

@@ -13,7 +13,7 @@
 
 // Function: UpdateStateReady_1FF238
 // Address: 0x1ff238 - 0x1ff2e0
-void UpdateStateReady_1FF238_0x1ff238(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateStateReady_1FF238_0x1ff238(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateStateReady_1FF238_0x1ff238");
 #endif
@@ -71,7 +71,6 @@ void UpdateStateReady_1FF238_0x1ff238(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cDvd_Check_0x201098, 0x201098u, 0x1ff264u)) {
         return;
     }
-    ctx->pc = 0x1FF264u;
 label_1ff264:
     // 0x1ff264: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -137,7 +136,6 @@ label_1ff264:
             goto label_1ff2a0;
         }
     }
-    ctx->pc = 0x1FF28Cu;
 label_1ff28c:
     // 0x1ff28c: 0x8e020008  lw          $v0, 0x8($s0)
     ctx->pc = 0x1ff28cu;
@@ -182,7 +180,6 @@ label_1ff2a0:
     if (!runtime->callDirectStatic(rdram, ctx, &IsSlotArrayValid_1FF540_0x1ff540, 0x1ff540u, 0x1ff2b4u)) {
         return;
     }
-    ctx->pc = 0x1FF2B4u;
 label_1ff2b4:
     // 0x1ff2b4: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x1FF2B4u;
@@ -214,7 +211,6 @@ label_1ff2b4:
             goto label_1ff2cc;
         }
     }
-    ctx->pc = 0x1FF2C4u;
 label_1ff2c4:
     // 0x1ff2c4: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));

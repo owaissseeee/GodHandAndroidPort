@@ -14,37 +14,34 @@ namespace gh_r040
 {
 // Function: SetTimeUp__12PetitDevilId
 // Address: 0x79a070 - 0x79a0b0
-void SetTimeUp__12PetitDevilId_0x79a070(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetTimeUp__12PetitDevilId_0x79a070(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetTimeUp__12PetitDevilId_0x79a070");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79a08cu: goto label_79a08c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x79a070u, 0)) {
+        switch (ctx->pc) {
+            case 0x79a08cu: goto label_79a08c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x79a070u;
+
 
     // 0x79a070: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x79a070u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x79a074: 0x24050006  addiu       $a1, $zero, 0x6
-    ctx->pc = 0x79a074u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
     // 0x79a078: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x79a078u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 16));
     // 0x79a07c: 0x302d  daddu       $a2, $zero, $zero
-    ctx->pc = 0x79a07cu;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x79a080: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x79a080u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x79a084: 0xc1e65ac  jal         func_7996B0
-    ctx->pc = 0x79A084u;
     SET_GPR_U32(ctx, 31, 0x79A08Cu);
-    ctx->pc = 0x79A088u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x79A084u;
     // 0x79a088: 0x80802d  daddu       $s0, $a0, $zero (Delay Slot)
@@ -54,7 +51,6 @@ void SetTimeUp__12PetitDevilId_0x79a070(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x7996B0u, 0x79A084u, 0x79A08Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x79A08Cu;
 label_79a08c:
     // 0x79a08c: 0x8e020000  lw          $v0, 0x0($s0)
     ctx->pc = 0x79a08cu;
@@ -63,7 +59,6 @@ label_79a08c:
     ctx->pc = 0x79a090u;
     WRITE32(ADD32(GPR_U32(ctx, 16), 3792), GPR_U32(ctx, 0));
     // 0x79a094: 0x34420008  ori         $v0, $v0, 0x8
-    ctx->pc = 0x79a094u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)8);
     // 0x79a098: 0xae000ed4  sw          $zero, 0xED4($s0)
     ctx->pc = 0x79a098u;

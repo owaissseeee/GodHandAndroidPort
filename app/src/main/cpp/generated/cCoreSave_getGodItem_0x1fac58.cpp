@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getGodItem
 // Address: 0x1fac58 - 0x1fac68
-void cCoreSave_getGodItem_0x1fac58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getGodItem_0x1fac58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getGodItem_0x1fac58");
 #endif

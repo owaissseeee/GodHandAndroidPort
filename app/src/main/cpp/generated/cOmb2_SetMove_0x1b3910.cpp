@@ -13,7 +13,7 @@
 
 // Function: cOmb2_SetMove
 // Address: 0x1b3910 - 0x1b3978
-void cOmb2_SetMove_0x1b3910(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmb2_SetMove_0x1b3910(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmb2_SetMove_0x1b3910");
 #endif
@@ -92,7 +92,6 @@ label_1b3940:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmSub_initMove3_y_0x1c6b68, 0x1c6b68u, 0x1b3960u)) {
         return;
     }
-    ctx->pc = 0x1B3960u;
 label_1b3960:
     // 0x1b3960: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));

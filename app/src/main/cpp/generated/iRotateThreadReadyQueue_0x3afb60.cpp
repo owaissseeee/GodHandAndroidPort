@@ -13,7 +13,7 @@
 
 // Function: iRotateThreadReadyQueue
 // Address: 0x3afb60 - 0x3afb70
-void iRotateThreadReadyQueue_0x3afb60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iRotateThreadReadyQueue_0x3afb60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iRotateThreadReadyQueue_0x3afb60");
 #endif

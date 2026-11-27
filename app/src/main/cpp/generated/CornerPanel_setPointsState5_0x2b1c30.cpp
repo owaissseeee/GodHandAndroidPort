@@ -13,7 +13,7 @@
 
 // Function: CornerPanel_setPointsState5
 // Address: 0x2b1c30 - 0x2b1c80
-void CornerPanel_setPointsState5_0x2b1c30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CornerPanel_setPointsState5_0x2b1c30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CornerPanel_setPointsState5_0x2b1c30");
 #endif
@@ -69,7 +69,6 @@ void CornerPanel_setPointsState5_0x2b1c30(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B1C80_0x2b1c80, 0x2b1c80u, 0x2b1c6cu)) {
         return;
     }
-    ctx->pc = 0x2B1C6Cu;
 label_2b1c6c:
     // 0x2b1c6c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2b1c6cu;

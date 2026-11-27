@@ -13,7 +13,7 @@
 
 // Function: _$_22_IO_istream_withassign
 // Address: 0x3899d8 - 0x389ab8
-void ps2____22_IO_istream_withassign_0x3899d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2____22_IO_istream_withassign_0x3899d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2____22_IO_istream_withassign_0x3899d8");
 #endif
@@ -172,7 +172,6 @@ label_389a34:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_vec_delete_0x30f5c8, 0x30f5c8u, 0x389a8cu)) {
         return;
     }
-    ctx->pc = 0x389A8Cu;
 label_389a8c:
     // 0x389a8c: 0x32220001  andi        $v0, $s1, 0x1
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 17) & (uint64_t)(uint16_t)1);
@@ -202,7 +201,6 @@ label_389a8c:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x389aa0u)) {
         return;
     }
-    ctx->pc = 0x389AA0u;
 label_389aa0:
     // 0x389aa0: 0xdfbf0040  ld          $ra, 0x40($sp)
     ctx->pc = 0x389aa0u;

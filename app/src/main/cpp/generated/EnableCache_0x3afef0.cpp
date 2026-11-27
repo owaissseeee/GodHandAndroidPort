@@ -13,7 +13,7 @@
 
 // Function: EnableCache
 // Address: 0x3afef0 - 0x3aff00
-void EnableCache_0x3afef0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EnableCache_0x3afef0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EnableCache_0x3afef0");
 #endif

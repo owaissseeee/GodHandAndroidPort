@@ -13,7 +13,7 @@
 
 // Function: cOl29_setCloseFix
 // Address: 0x17fa78 - 0x17faf0
-void cOl29_setCloseFix_0x17fa78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl29_setCloseFix_0x17fa78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl29_setCloseFix_0x17fa78");
 #endif
@@ -54,15 +54,12 @@ void cOl29_setCloseFix_0x17fa78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
         }
     }
 
-    ctx->pc = 0x17fa78u;
 
 label_17fa78:
     // 0x17fa78: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x17fa78u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
 label_17fa7c:
     // 0x17fa7c: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x17fa7cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_17fa80:
     // 0x17fa80: 0x7fb00020  sq          $s0, 0x20($sp)
@@ -74,7 +71,6 @@ label_17fa84:
     WRITE64(ADD32(GPR_U32(ctx, 29), 16), GPR_U64(ctx, 31));
 label_17fa88:
     // 0x17fa88: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x17fa88u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_17fa8c:
     // 0x17fa8c: 0x92020764  lbu         $v0, 0x764($s0)
@@ -107,7 +103,6 @@ label_17fa94:
             goto label_17fae4;
         }
     }
-    ctx->pc = 0x17FA98u;
 label_17fa98:
     // 0x17fa98: 0x8e030214  lw          $v1, 0x214($s0)
     ctx->pc = 0x17fa98u;
@@ -148,7 +143,6 @@ label_17faa8:
             return;
         }
     }
-    ctx->pc = 0x17FAACu;
 label_17faac:
     // 0x17faac: 0xd8440000  lqc2        $vf4, 0x0($v0)
     ctx->pc = 0x17faacu;
@@ -163,7 +157,6 @@ label_17fab4:
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 532)));
 label_17fab8:
     // 0x17fab8: 0x3a0282d  daddu       $a1, $sp, $zero
-    ctx->pc = 0x17fab8u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
 label_17fabc:
     // 0x17fabc: 0x84440070  lh          $a0, 0x70($v0)
@@ -201,7 +194,6 @@ label_17fac8:
             return;
         }
     }
-    ctx->pc = 0x17FACCu;
 label_17facc:
     // 0x17facc: 0xa20002f7  sb          $zero, 0x2F7($s0)
     ctx->pc = 0x17faccu;

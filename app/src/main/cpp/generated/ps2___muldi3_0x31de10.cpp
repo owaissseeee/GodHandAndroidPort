@@ -13,7 +13,7 @@
 
 // Function: __muldi3
 // Address: 0x31de10 - 0x31de70
-void ps2___muldi3_0x31de10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___muldi3_0x31de10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___muldi3_0x31de10");
 #endif

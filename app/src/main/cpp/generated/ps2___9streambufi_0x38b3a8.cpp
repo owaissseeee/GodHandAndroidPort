@@ -13,7 +13,7 @@
 
 // Function: __9streambufi
 // Address: 0x38b3a8 - 0x38b3e0
-void ps2___9streambufi_0x38b3a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___9streambufi_0x38b3a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___9streambufi_0x38b3a8");
 #endif
@@ -51,7 +51,6 @@ void ps2___9streambufi_0x38b3a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_init_0x38cc40, 0x38cc40u, 0x38b3c8u)) {
         return;
     }
-    ctx->pc = 0x38B3C8u;
 label_38b3c8:
     // 0x38b3c8: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

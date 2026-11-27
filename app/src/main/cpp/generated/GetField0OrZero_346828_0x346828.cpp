@@ -13,7 +13,7 @@
 
 // Function: GetField0OrZero_346828
 // Address: 0x346828 - 0x346848
-void GetField0OrZero_346828_0x346828(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetField0OrZero_346828_0x346828(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetField0OrZero_346828_0x346828");
 #endif

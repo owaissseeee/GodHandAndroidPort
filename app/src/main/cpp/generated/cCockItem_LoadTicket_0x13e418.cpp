@@ -13,7 +13,7 @@
 
 // Function: cCockItem_LoadTicket
 // Address: 0x13e418 - 0x13e4f0
-void cCockItem_LoadTicket_0x13e418(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCockItem_LoadTicket_0x13e418(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCockItem_LoadTicket_0x13e418");
 #endif
@@ -87,7 +87,6 @@ void cCockItem_LoadTicket_0x13e418(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &cIDManager_getLocalFileName_0x2acfa8, 0x2acfa8u, 0x13e458u)) {
         return;
     }
-    ctx->pc = 0x13E458u;
 label_13e458:
     // 0x13e458: 0x265100b0  addiu       $s1, $s2, 0xB0
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 18), 176));
@@ -122,7 +121,6 @@ label_13e458:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x200CB0u, 0x13E484u, 0x13E48Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x13E48Cu;
 label_13e48c:
     // 0x13e48c: 0x40282d  daddu       $a1, $v0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -139,7 +137,6 @@ label_13e48c:
     if (!runtime->callDirectStatic(rdram, ctx, &cDvd_CheckWait_0x201160, 0x201160u, 0x13e49cu)) {
         return;
     }
-    ctx->pc = 0x13E49Cu;
 label_13e49c:
     // 0x13e49c: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
@@ -162,7 +159,6 @@ label_13e49c:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDManager_setIDData_0x2accf8, 0x2accf8u, 0x13e4b4u)) {
         return;
     }
-    ctx->pc = 0x13E4B4u;
 label_13e4b4:
     // 0x13e4b4: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -179,7 +175,6 @@ label_13e4b4:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_initialize_0x2a9ea0, 0x2a9ea0u, 0x13e4c4u)) {
         return;
     }
-    ctx->pc = 0x13E4C4u;
 label_13e4c4:
     // 0x13e4c4: 0xc0aaefa  jal         func_2ABBE8
     SET_GPR_U32(ctx, 31, 0x13E4CCu);
@@ -192,7 +187,6 @@ label_13e4c4:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_restartAnim_0x2abbe8, 0x2abbe8u, 0x13e4ccu)) {
         return;
     }
-    ctx->pc = 0x13E4CCu;
 label_13e4cc:
     // 0x13e4cc: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));

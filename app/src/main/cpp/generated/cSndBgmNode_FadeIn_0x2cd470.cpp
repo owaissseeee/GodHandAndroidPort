@@ -13,7 +13,7 @@
 
 // Function: cSndBgmNode_FadeIn
 // Address: 0x2cd470 - 0x2cd4a8
-void cSndBgmNode_FadeIn_0x2cd470(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndBgmNode_FadeIn_0x2cd470(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndBgmNode_FadeIn_0x2cd470");
 #endif
@@ -66,7 +66,6 @@ void cSndBgmNode_FadeIn_0x2cd470(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &func_003735E0_0x3735e0, 0x3735e0u, 0x2cd498u)) {
         return;
     }
-    ctx->pc = 0x2CD498u;
 label_2cd498:
     // 0x2cd498: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2cd498u;

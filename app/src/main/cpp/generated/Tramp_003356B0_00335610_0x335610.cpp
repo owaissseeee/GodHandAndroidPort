@@ -13,7 +13,7 @@
 
 // Function: Tramp_003356B0_00335610
 // Address: 0x335610 - 0x335638
-void Tramp_003356B0_00335610_0x335610(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp_003356B0_00335610_0x335610(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp_003356B0_00335610_0x335610");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: cSceAtManager_AtDataSet_exec
 // Address: 0x2c2790 - 0x2c2808
-void cSceAtManager_AtDataSet_exec_0x2c2790(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSceAtManager_AtDataSet_exec_0x2c2790(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSceAtManager_AtDataSet_exec_0x2c2790");
 #endif
@@ -68,7 +68,6 @@ void cSceAtManager_AtDataSet_exec_0x2c2790(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &cSceAtManager_getUnit_0x2c3118, 0x2c3118u, 0x2c27c8u)) {
         return;
     }
-    ctx->pc = 0x2C27C8u;
 label_2c27c8:
     // 0x2c27c8: 0x10400007  beqz        $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x2C27C8u;
@@ -104,7 +103,6 @@ label_2c27c8:
     if (!runtime->callDirectStatic(rdram, ctx, &cSceAtManager_AtDataSetExec_0x2c2750, 0x2c2750u, 0x2c27e8u)) {
         return;
     }
-    ctx->pc = 0x2C27E8u;
 label_2c27e8:
     // 0x2c27e8: 0x7bb00050  lq          $s0, 0x50($sp)
     ctx->pc = 0x2c27e8u;

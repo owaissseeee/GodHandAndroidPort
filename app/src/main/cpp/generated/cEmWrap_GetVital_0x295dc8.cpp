@@ -13,7 +13,7 @@
 
 // Function: cEmWrap_GetVital
 // Address: 0x295dc8 - 0x295e00
-void cEmWrap_GetVital_0x295dc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmWrap_GetVital_0x295dc8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmWrap_GetVital_0x295dc8");
 #endif
@@ -45,7 +45,6 @@ void cEmWrap_GetVital_0x295dc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &FindResolveActor_295978_0x295978, 0x295978u, 0x295ddcu)) {
         return;
     }
-    ctx->pc = 0x295DDCu;
 label_295ddc:
     // 0x295ddc: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x295DDCu;

@@ -13,7 +13,7 @@
 
 // Function: ADXPS2_LoadFcacheDvd
 // Address: 0x3291b8 - 0x329260
-void ADXPS2_LoadFcacheDvd_0x3291b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ADXPS2_LoadFcacheDvd_0x3291b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ADXPS2_LoadFcacheDvd_0x3291b8");
 #endif
@@ -71,7 +71,6 @@ void ADXPS2_LoadFcacheDvd_0x3291b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_00333CE0_0x333ce0, 0x333ce0u, 0x3291e4u)) {
         return;
     }
-    ctx->pc = 0x3291E4u;
 label_3291e4:
     // 0x3291e4: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x3291E4u;
@@ -89,7 +88,6 @@ label_3291e4:
         }
     }
     // 0x3291ec: 0x0  nop
-    ctx->pc = 0x3291ecu;
     // NOP
 label_3291f0:
     // 0x3291f0: 0x282d  daddu       $a1, $zero, $zero
@@ -107,7 +105,6 @@ label_3291f0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00333CE0_0x333ce0, 0x333ce0u, 0x329200u)) {
         return;
     }
-    ctx->pc = 0x329200u;
 label_329200:
     // 0x329200: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

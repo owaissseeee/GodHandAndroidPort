@@ -13,7 +13,7 @@
 
 // Function: M2VERR_SetCode
 // Address: 0x36d8e8 - 0x36d938
-void M2VERR_SetCode_0x36d8e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void M2VERR_SetCode_0x36d8e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("M2VERR_SetCode_0x36d8e8");
 #endif
@@ -67,7 +67,6 @@ void M2VERR_SetCode_0x36d8e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_0036D938_0x36d938, 0x36d938u, 0x36d910u)) {
         return;
     }
-    ctx->pc = 0x36D910u;
 label_36d910:
     // 0x36d910: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x36D910u;
@@ -84,7 +83,6 @@ label_36d910:
             goto label_36d924;
         }
     }
-    ctx->pc = 0x36D918u;
 label_36d918:
     // 0x36d918: 0xc0db64e  jal         func_36D938
     ctx->pc = 0x36D918u;
@@ -92,10 +90,8 @@ label_36d918:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0036D938_0x36d938, 0x36d938u, 0x36d920u)) {
         return;
     }
-    ctx->pc = 0x36D920u;
 label_36d920:
     // 0x36d920: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x36d920u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_36d924:
     // 0x36d924: 0xdfb00000  ld          $s0, 0x0($sp)

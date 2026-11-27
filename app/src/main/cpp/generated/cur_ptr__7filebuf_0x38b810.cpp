@@ -13,7 +13,7 @@
 
 // Function: cur_ptr__7filebuf
 // Address: 0x38b810 - 0x38b858
-void cur_ptr__7filebuf_0x38b810(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cur_ptr__7filebuf_0x38b810(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cur_ptr__7filebuf_0x38b810");
 #endif
@@ -105,7 +105,6 @@ label_38b830:
         return;
         #endif
     }
-    ctx->pc = 0x38B848u;
 label_38b848:
     // 0x38b848: 0x3e00008  jr          $ra
     ctx->pc = 0x38B848u;
@@ -126,7 +125,6 @@ label_38b848:
         return;
         #endif
     }
-    ctx->pc = 0x38B850u;
 label_38b850:
     // 0x38b850: 0x3e00008  jr          $ra
     ctx->pc = 0x38B850u;

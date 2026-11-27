@@ -13,7 +13,7 @@
 
 // Function: cSceAtManager_refreshUnit
 // Address: 0x2c2eb8 - 0x2c2ef8
-void cSceAtManager_refreshUnit_0x2c2eb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSceAtManager_refreshUnit_0x2c2eb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSceAtManager_refreshUnit_0x2c2eb8");
 #endif
@@ -73,7 +73,6 @@ void cSceAtManager_refreshUnit_0x2c2eb8(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_002C0E20_0x2c0e20, 0x2c0e20u, 0x2c2eecu)) {
         return;
     }
-    ctx->pc = 0x2C2EECu;
 label_2c2eec:
     // 0x2c2eec: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2c2eecu;

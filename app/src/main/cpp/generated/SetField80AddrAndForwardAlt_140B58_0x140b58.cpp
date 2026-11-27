@@ -13,7 +13,7 @@
 
 // Function: SetField80AddrAndForwardAlt_140B58
 // Address: 0x140b58 - 0x140b88
-void SetField80AddrAndForwardAlt_140B58_0x140b58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetField80AddrAndForwardAlt_140B58_0x140b58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetField80AddrAndForwardAlt_140B58_0x140b58");
 #endif
@@ -58,7 +58,6 @@ void SetField80AddrAndForwardAlt_140B58_0x140b58(uint8_t* rdram, R5900Context* c
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x140b7cu)) {
         return;
     }
-    ctx->pc = 0x140B7Cu;
 label_140b7c:
     // 0x140b7c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x140b7cu;

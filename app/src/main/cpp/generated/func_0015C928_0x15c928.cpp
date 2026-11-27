@@ -13,7 +13,7 @@
 
 // Function: func_0015C928
 // Address: 0x15c928 - 0x15cd20
-void func_0015C928_0x15c928(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0015C928_0x15c928(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0015C928_0x15c928");
 #endif
@@ -131,7 +131,6 @@ void func_0015C928_0x15c928(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x15c9c0u;
     WRITE32(ADD32(GPR_U32(ctx, 29), 216), GPR_U32(ctx, 6));
     // 0x15c9c4: 0x0  nop
-    ctx->pc = 0x15c9c4u;
     // NOP
 label_15c9c8:
     // 0x15c9c8: 0xf8400000  sqc2        $vf0, 0x0($v0)
@@ -191,7 +190,6 @@ label_15c9c8:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitRotVec_0x147728, 0x147728u, 0x15ca08u)) {
         return;
     }
-    ctx->pc = 0x15CA08u;
 label_15ca08:
     // 0x15ca08: 0x4600a807  neg.s       $f0, $f21
     ctx->f[0] = FPU_NEG_S(ctx->f[21]);
@@ -275,7 +273,6 @@ label_15ca50:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x15ca68u)) {
         return;
     }
-    ctx->pc = 0x15CA68u;
 label_15ca68:
     // 0x15ca68: 0xda040000  lqc2        $vf4, 0x0($s0)
     ctx->pc = 0x15ca68u;
@@ -335,7 +332,6 @@ label_15ca8c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x15caa4u)) {
         return;
     }
-    ctx->pc = 0x15CAA4u;
 label_15caa4:
     // 0x15caa4: 0xda040000  lqc2        $vf4, 0x0($s0)
     ctx->pc = 0x15caa4u;
@@ -382,7 +378,6 @@ label_15caa4:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x15cadcu)) {
         return;
     }
-    ctx->pc = 0x15CADCu;
 label_15cadc:
     // 0x15cadc: 0xda040000  lqc2        $vf4, 0x0($s0)
     ctx->pc = 0x15cadcu;
@@ -429,7 +424,6 @@ label_15cadc:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x15cb14u)) {
         return;
     }
-    ctx->pc = 0x15CB14u;
 label_15cb14:
     // 0x15cb14: 0xda040000  lqc2        $vf4, 0x0($s0)
     ctx->pc = 0x15cb14u;
@@ -758,7 +752,6 @@ label_15cc10:
     if (!runtime->callDirectStatic(rdram, ctx, &Gp_draw_poly4_0x15b880, 0x15b880u, 0x15ccd4u)) {
         return;
     }
-    ctx->pc = 0x15CCD4u;
 label_15ccd4:
     // 0x15ccd4: 0x7bb00170  lq          $s0, 0x170($sp)
     ctx->pc = 0x15ccd4u;

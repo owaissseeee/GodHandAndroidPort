@@ -6,6 +6,8 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
+#include <cstring>
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,7 +15,7 @@
 
 // Function: strlen
 // Address: 0x3a58dc - 0x3a5a20
-void strlen_0x3a58dc(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void strlen_0x3a58dc(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("strlen_0x3a58dc");
 #endif
@@ -26,6 +28,22 @@ void strlen_0x3a58dc(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             default: break;
         }
     }
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    if (__builtin_expect(ctx->pc == 0x3a58dcu, 1)) {
+        uint32_t avail = 0;
+        const char* const s = ps2TryFastCStr(rdram, GPR_U32(ctx, 4), avail);
+        if (__builtin_expect(s != nullptr && avail > 16u, 1)) {
+            const uint32_t safeMax = avail - 16u;
+            const size_t len = ::strnlen(s, safeMax);
+            if (__builtin_expect(len < safeMax, 1)) {
+                SET_GPR_S32(ctx, 2, static_cast<int32_t>(len));
+                ps2FastReturn(rdram, ctx, runtime, 0x3A5A18u);
+                return;
+            }
+        }
+    }
+#endif
 
 
     // 0x3a58dc: 0x30820007  andi        $v0, $a0, 0x7
@@ -125,7 +143,6 @@ void strlen_0x3a58dc(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
         }
     }
     // 0x3a5958: 0x24a50010  addiu       $a1, $a1, 0x10
-    ctx->pc = 0x3a5958u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 16));
 label_3a595c:
     // 0x3a595c: 0x78a20000  lq          $v0, 0x0($a1)
@@ -176,7 +193,6 @@ label_3a595c:
             goto label_3a5a00;
         }
     }
-    ctx->pc = 0x3A5988u;
 label_3a5988:
     // 0x3a5988: 0xdca30000  ld          $v1, 0x0($a1)
     ctx->pc = 0x3a5988u;
@@ -233,7 +249,6 @@ label_3a5988:
     // 0x3a59d8: 0x34c60101  ori         $a2, $a2, 0x101
     SET_GPR_U64(ctx, 6, GPR_U64(ctx, 6) | (uint64_t)(uint16_t)257);
     // 0x3a59dc: 0x24a50008  addiu       $a1, $a1, 0x8
-    ctx->pc = 0x3a59dcu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 8));
 label_3a59e0:
     // 0x3a59e0: 0xdca20000  ld          $v0, 0x0($a1)
@@ -266,7 +281,6 @@ label_3a59e0:
         }
     }
     // 0x3a59fc: 0xa0202d  daddu       $a0, $a1, $zero
-    ctx->pc = 0x3a59fcu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
 label_3a5a00:
     // 0x3a5a00: 0x80820000  lb          $v0, 0x0($a0)

@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getSkill
 // Address: 0x1faf58 - 0x1fafa8
-void cCoreSave_getSkill_0x1faf58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getSkill_0x1faf58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getSkill_0x1faf58");
 #endif
@@ -67,7 +67,6 @@ void cCoreSave_getSkill_0x1faf58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_1faf7c;
         }
     }
-    ctx->pc = 0x1FAF74u;
 label_1faf74:
     // 0x1faf74: 0x3e00008  jr          $ra
     ctx->pc = 0x1FAF74u;
@@ -88,7 +87,6 @@ label_1faf74:
         return;
         #endif
     }
-    ctx->pc = 0x1FAF7Cu;
 label_1faf7c:
     // 0x1faf7c: 0x3c040080  lui         $a0, 0x80
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)128 << 16));
@@ -131,7 +129,6 @@ label_1faf7c:
         return;
         #endif
     }
-    ctx->pc = 0x1FAF98u;
 label_1faf98:
     // 0x1faf98: 0x3e00008  jr          $ra
     ctx->pc = 0x1FAF98u;

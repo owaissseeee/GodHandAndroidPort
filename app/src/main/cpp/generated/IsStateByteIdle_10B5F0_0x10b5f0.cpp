@@ -13,7 +13,7 @@
 
 // Function: IsStateByteIdle_10B5F0
 // Address: 0x10b5f0 - 0x10b620
-void IsStateByteIdle_10B5F0_0x10b5f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IsStateByteIdle_10B5F0_0x10b5f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IsStateByteIdle_10B5F0_0x10b5f0");
 #endif
@@ -56,7 +56,6 @@ void IsStateByteIdle_10B5F0_0x10b5f0(uint8_t* rdram, R5900Context* ctx, PS2Runti
         return;
         #endif
     }
-    ctx->pc = 0x10B604u;
 label_10b604:
     // 0x10b604: 0x10800003  beqz        $a0, . + 4 + (0x3 << 2)
     ctx->pc = 0x10B604u;
@@ -88,10 +87,8 @@ label_10b604:
             goto label_10b618;
         }
     }
-    ctx->pc = 0x10B614u;
 label_10b614:
     // 0x10b614: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x10b614u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_10b618:
     // 0x10b618: 0x3e00008  jr          $ra

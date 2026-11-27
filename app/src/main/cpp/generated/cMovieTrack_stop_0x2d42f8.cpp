@@ -13,7 +13,7 @@
 
 // Function: cMovieTrack_stop
 // Address: 0x2d42f8 - 0x2d4340
-void cMovieTrack_stop_0x2d42f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMovieTrack_stop_0x2d42f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMovieTrack_stop_0x2d42f8");
 #endif
@@ -61,7 +61,6 @@ void cMovieTrack_stop_0x2d42f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_00345B88_0x345b88, 0x345b88u, 0x2d431cu)) {
         return;
     }
-    ctx->pc = 0x2D431Cu;
 label_2d431c:
     // 0x2d431c: 0x50400005  beql        $v0, $zero, . + 4 + (0x5 << 2)
     ctx->pc = 0x2D431Cu;
@@ -92,7 +91,6 @@ label_2d431c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00345F48_0x345f48, 0x345f48u, 0x2d4330u)) {
         return;
     }
-    ctx->pc = 0x2D4330u;
 label_2d4330:
     // 0x2d4330: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2d4330u;

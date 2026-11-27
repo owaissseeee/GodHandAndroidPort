@@ -13,7 +13,7 @@
 
 // Function: LoadAndWaitReady_1FFBF0
 // Address: 0x1ffbf0 - 0x1ffc60
-void LoadAndWaitReady_1FFBF0_0x1ffbf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void LoadAndWaitReady_1FFBF0_0x1ffbf0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("LoadAndWaitReady_1FFBF0_0x1ffbf0");
 #endif
@@ -59,7 +59,6 @@ void LoadAndWaitReady_1FFBF0_0x1ffbf0(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_00322AF8_0x322af8, 0x322af8u, 0x1ffc18u)) {
         return;
     }
-    ctx->pc = 0x1FFC18u;
 label_1ffc18:
     // 0x1ffc18: 0x1440000d  bnez        $v0, . + 4 + (0xD << 2)
     ctx->pc = 0x1FFC18u;
@@ -95,7 +94,6 @@ label_1ffc18:
             goto label_1ffc38;
         }
     }
-    ctx->pc = 0x1FFC30u;
 label_1ffc30:
     // 0x1ffc30: 0xc0e54e6  jal         func_395398
     SET_GPR_U32(ctx, 31, 0x1FFC38u);
@@ -108,7 +106,6 @@ label_1ffc30:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x395398u, 0x1FFC30u, 0x1FFC38u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1FFC38u;
 label_1ffc38:
     // 0x1ffc38: 0xc0c8c00  jal         func_323000
     SET_GPR_U32(ctx, 31, 0x1FFC40u);
@@ -121,7 +118,6 @@ label_1ffc38:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00323000_0x323000, 0x323000u, 0x1ffc40u)) {
         return;
     }
-    ctx->pc = 0x1FFC40u;
 label_1ffc40:
     // 0x1ffc40: 0x1450fffb  bne         $v0, $s0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x1FFC40u;

@@ -13,7 +13,7 @@
 
 // Function: cArea_HitCheckQuad
 // Address: 0x1f8488 - 0x1f8550
-void cArea_HitCheckQuad_0x1f8488(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cArea_HitCheckQuad_0x1f8488(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cArea_HitCheckQuad_0x1f8488");
 #endif
@@ -170,7 +170,6 @@ void cArea_HitCheckQuad_0x1f8488(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &func_001573C8_0x1573c8, 0x1573c8u, 0x1f8538u)) {
         return;
     }
-    ctx->pc = 0x1F8538u;
 label_1f8538:
     // 0x1f8538: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x1F8538u;
@@ -187,10 +186,8 @@ label_1f8538:
             goto label_1f8544;
         }
     }
-    ctx->pc = 0x1F8540u;
 label_1f8540:
     // 0x1f8540: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1f8540u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1f8544:
     // 0x1f8544: 0xdfbf0040  ld          $ra, 0x40($sp)

@@ -13,7 +13,7 @@
 
 // Function: cModel_setNodeMaterial
 // Address: 0x14b4d0 - 0x14b5d8
-void cModel_setNodeMaterial_0x14b4d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cModel_setNodeMaterial_0x14b4d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cModel_setNodeMaterial_0x14b4d0");
 #endif
@@ -128,7 +128,6 @@ void cModel_setNodeMaterial_0x14b4d0(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_14b560;
         }
     }
-    ctx->pc = 0x14B560u;
 label_14b560:
     // 0x14b560: 0x8d020380  lw          $v0, 0x380($t0)
     ctx->pc = 0x14b560u;
@@ -184,7 +183,6 @@ label_14b560:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00148BD8_0x148bd8, 0x148bd8u, 0x14b58cu)) {
         return;
     }
-    ctx->pc = 0x14B58Cu;
 label_14b58c:
     // 0x14b58c: 0x1000000f  b           . + 4 + (0xF << 2)
     ctx->pc = 0x14B58Cu;
@@ -201,7 +199,6 @@ label_14b58c:
             goto label_14b5cc;
         }
     }
-    ctx->pc = 0x14B594u;
 label_14b594:
     // 0x14b594: 0x8cc20254  lw          $v0, 0x254($a2)
     ctx->pc = 0x14b594u;
@@ -239,7 +236,6 @@ label_14b594:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00148690_0x148690, 0x148690u, 0x14b5b4u)) {
         return;
     }
-    ctx->pc = 0x14B5B4u;
 label_14b5b4:
     // 0x14b5b4: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x14B5B4u;
@@ -256,7 +252,6 @@ label_14b5b4:
             goto label_14b5cc;
         }
     }
-    ctx->pc = 0x14B5BCu;
 label_14b5bc:
     // 0x14b5bc: 0x8cc502c4  lw          $a1, 0x2C4($a2)
     ctx->pc = 0x14b5bcu;
@@ -272,7 +267,6 @@ label_14b5bc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00148690_0x148690, 0x148690u, 0x14b5c8u)) {
         return;
     }
-    ctx->pc = 0x14B5C8u;
 label_14b5c8:
     // 0x14b5c8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x14b5c8u;

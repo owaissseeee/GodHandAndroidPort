@@ -13,7 +13,7 @@
 
 // Function: cSndBgmNode_SetFlagsFade
 // Address: 0x2cd548 - 0x2cd5c0
-void cSndBgmNode_SetFlagsFade_0x2cd548(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndBgmNode_SetFlagsFade_0x2cd548(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndBgmNode_SetFlagsFade_0x2cd548");
 #endif
@@ -66,7 +66,6 @@ void cSndBgmNode_SetFlagsFade_0x2cd548(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373A58_0x373a58, 0x373a58u, 0x2cd57cu)) {
         return;
     }
-    ctx->pc = 0x2CD57Cu;
 label_2cd57c:
     // 0x2cd57c: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -90,7 +89,6 @@ label_2cd57c:
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateStateAndClearFlag_3734F0_0x3734f0, 0x3734f0u, 0x2cd590u)) {
         return;
     }
-    ctx->pc = 0x2CD590u;
 label_2cd590:
     // 0x2cd590: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -111,7 +109,6 @@ label_2cd590:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003735E0_0x3735e0, 0x3735e0u, 0x2cd5a8u)) {
         return;
     }
-    ctx->pc = 0x2CD5A8u;
 label_2cd5a8:
     // 0x2cd5a8: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2cd5a8u;

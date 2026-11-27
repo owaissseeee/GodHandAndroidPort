@@ -13,7 +13,7 @@
 
 // Function: func_003344C8
 // Address: 0x3344c8 - 0x334500
-void func_003344C8_0x3344c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003344C8_0x3344c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003344C8_0x3344c8");
 #endif
@@ -33,7 +33,6 @@ void func_003344C8_0x3344c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x3344d0: 0x24439fe0  addiu       $v1, $v0, -0x6020
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 4294942688));
     // 0x3344d4: 0x2404000c  addiu       $a0, $zero, 0xC
-    ctx->pc = 0x3344d4u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 12));
 label_3344d8:
     // 0x3344d8: 0x80620000  lb          $v0, 0x0($v1)

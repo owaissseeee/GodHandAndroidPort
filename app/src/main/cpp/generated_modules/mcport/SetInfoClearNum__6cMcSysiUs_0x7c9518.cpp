@@ -14,20 +14,21 @@ namespace gh_mcport
 {
 // Function: SetInfoClearNum__6cMcSysiUs
 // Address: 0x7c9518 - 0x7c9540
-void SetInfoClearNum__6cMcSysiUs_0x7c9518(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetInfoClearNum__6cMcSysiUs_0x7c9518(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetInfoClearNum__6cMcSysiUs_0x7c9518");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7c952cu: goto label_7c952c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7c9518u, 0)) {
+        switch (ctx->pc) {
+            case 0x7c952cu: goto label_7c952c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7c9518u;
+
 
     // 0x7c9518: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x7c9518u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x7c951c: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x7c951cu;
@@ -36,9 +37,7 @@ void SetInfoClearNum__6cMcSysiUs_0x7c9518(uint8_t* rdram, R5900Context* ctx, PS2
     ctx->pc = 0x7c9520u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x7c9524: 0xc1f23d2  jal         func_7C8F48
-    ctx->pc = 0x7C9524u;
     SET_GPR_U32(ctx, 31, 0x7C952Cu);
-    ctx->pc = 0x7C9528u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x7C9524u;
     // 0x7c9528: 0x30d0ffff  andi        $s0, $a2, 0xFFFF (Delay Slot)
@@ -48,7 +47,6 @@ void SetInfoClearNum__6cMcSysiUs_0x7c9518(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x7C8F48u, 0x7C9524u, 0x7C952Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7C952Cu;
 label_7c952c:
     // 0x7c952c: 0xa450000e  sh          $s0, 0xE($v0)
     ctx->pc = 0x7c952cu;

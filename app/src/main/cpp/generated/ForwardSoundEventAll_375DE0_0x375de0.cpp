@@ -13,7 +13,7 @@
 
 // Function: ForwardSoundEventAll_375DE0
 // Address: 0x375de0 - 0x375e78
-void ForwardSoundEventAll_375DE0_0x375de0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardSoundEventAll_375DE0_0x375de0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardSoundEventAll_375DE0_0x375de0");
 #endif
@@ -96,7 +96,6 @@ label_375e20:
     if (!runtime->callDirectStatic(rdram, ctx, &BuildSoundEventEntry_375E78_0x375e78, 0x375e78u, 0x375e34u)) {
         return;
     }
-    ctx->pc = 0x375E34u;
 label_375e34:
     // 0x375e34: 0x14530004  bne         $v0, $s3, . + 4 + (0x4 << 2)
     ctx->pc = 0x375E34u;
@@ -128,10 +127,8 @@ label_375e34:
             goto label_375e58;
         }
     }
-    ctx->pc = 0x375E44u;
 label_375e44:
     // 0x375e44: 0x261000e0  addiu       $s0, $s0, 0xE0
-    ctx->pc = 0x375e44u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 224));
 label_375e48:
     // 0x375e48: 0x214102a  slt         $v0, $s0, $s4
@@ -155,7 +152,6 @@ label_375e48:
         }
     }
     // 0x375e54: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x375e54u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_375e58:
     // 0x375e58: 0x7bb00050  lq          $s0, 0x50($sp)

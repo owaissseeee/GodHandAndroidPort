@@ -13,7 +13,7 @@
 
 // Function: PushEsp
 // Address: 0x2fb020 - 0x2fb060
-void PushEsp_0x2fb020(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void PushEsp_0x2fb020(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("PushEsp_0x2fb020");
 #endif

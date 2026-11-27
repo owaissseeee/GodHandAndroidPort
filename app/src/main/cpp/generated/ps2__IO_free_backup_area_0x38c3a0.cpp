@@ -13,7 +13,7 @@
 
 // Function: _IO_free_backup_area
 // Address: 0x38c3a0 - 0x38c3f0
-void ps2__IO_free_backup_area_0x38c3a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_free_backup_area_0x38c3a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_free_backup_area_0x38c3a0");
 #endif
@@ -57,7 +57,6 @@ void ps2__IO_free_backup_area_0x38c3a0(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_switch_to_main_get_area_0x38c280, 0x38c280u, 0x38c3c8u)) {
         return;
     }
-    ctx->pc = 0x38C3C8u;
 label_38c3c8:
     // 0x38c3c8: 0xc0e9f30  jal         func_3A7CC0
     SET_GPR_U32(ctx, 31, 0x38C3D0u);
@@ -70,7 +69,6 @@ label_38c3c8:
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateGlobalPtrWithParam_3A7CC0_0x3a7cc0, 0x3a7cc0u, 0x38c3d0u)) {
         return;
     }
-    ctx->pc = 0x38C3D0u;
 label_38c3d0:
     // 0x38c3d0: 0xae000028  sw          $zero, 0x28($s0)
     ctx->pc = 0x38c3d0u;

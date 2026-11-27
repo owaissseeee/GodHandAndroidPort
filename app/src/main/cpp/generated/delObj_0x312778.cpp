@@ -13,7 +13,7 @@
 
 // Function: delObj
 // Address: 0x312778 - 0x3127b0
-void delObj_0x312778(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void delObj_0x312778(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("delObj_0x312778");
 #endif
@@ -38,11 +38,9 @@ void delObj_0x312778(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
         }
     }
 
-    ctx->pc = 0x312778u;
 
 label_312778:
     // 0x312778: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x312778u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_31277c:
     // 0x31277c: 0x80302d  daddu       $a2, $a0, $zero
@@ -75,14 +73,12 @@ label_312784:
             goto label_3127a0;
         }
     }
-    ctx->pc = 0x312788u;
 label_312788:
     // 0x312788: 0x8cc20214  lw          $v0, 0x214($a2)
     ctx->pc = 0x312788u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 6), 532)));
 label_31278c:
     // 0x31278c: 0x24050003  addiu       $a1, $zero, 0x3
-    ctx->pc = 0x31278cu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
 label_312790:
     // 0x312790: 0x84440008  lh          $a0, 0x8($v0)
@@ -120,7 +116,6 @@ label_31279c:
             return;
         }
     }
-    ctx->pc = 0x3127A0u;
 label_3127a0:
     // 0x3127a0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3127a0u;
@@ -156,7 +151,6 @@ label_3127a8:
         return;
         #endif
     }
-    ctx->pc = 0x3127ACu;
 label_3127ac:
     // 0x3127ac: 0x0  nop
     // NOP

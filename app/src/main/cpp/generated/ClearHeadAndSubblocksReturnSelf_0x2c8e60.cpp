@@ -13,7 +13,7 @@
 
 // Function: ClearHeadAndSubblocksReturnSelf
 // Address: 0x2c8e60 - 0x2c8eb0
-void ClearHeadAndSubblocksReturnSelf_0x2c8e60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearHeadAndSubblocksReturnSelf_0x2c8e60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearHeadAndSubblocksReturnSelf_0x2c8e60");
 #endif
@@ -55,7 +55,6 @@ void ClearHeadAndSubblocksReturnSelf_0x2c8e60(uint8_t* rdram, R5900Context* ctx,
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2c8e84u)) {
         return;
     }
-    ctx->pc = 0x2C8E84u;
 label_2c8e84:
     // 0x2c8e84: 0x26040014  addiu       $a0, $s0, 0x14
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 20));
@@ -72,7 +71,6 @@ label_2c8e84:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2c8e94u)) {
         return;
     }
-    ctx->pc = 0x2C8E94u;
 label_2c8e94:
     // 0x2c8e94: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

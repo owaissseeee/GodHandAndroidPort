@@ -13,7 +13,7 @@
 
 // Function: GetSequenceResult_373770
 // Address: 0x373770 - 0x3737c8
-void GetSequenceResult_373770_0x373770(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetSequenceResult_373770_0x373770(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetSequenceResult_373770_0x373770");
 #endif
@@ -48,7 +48,6 @@ void GetSequenceResult_373770_0x373770(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373A50_0x373a50, 0x373a50u, 0x373784u)) {
         return;
     }
-    ctx->pc = 0x373784u;
 label_373784:
     // 0x373784: 0x1040000c  beqz        $v0, . + 4 + (0xC << 2)
     ctx->pc = 0x373784u;
@@ -76,7 +75,6 @@ label_373784:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373B20_0x373b20, 0x373b20u, 0x373794u)) {
         return;
     }
-    ctx->pc = 0x373794u;
 label_373794:
     // 0x373794: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -100,7 +98,6 @@ label_373794:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003748A8_0x3748a8, 0x3748a8u, 0x3737a8u)) {
         return;
     }
-    ctx->pc = 0x3737A8u;
 label_3737a8:
     // 0x3737a8: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x3737A8u;
@@ -117,7 +114,6 @@ label_3737a8:
             goto label_3737bc;
         }
     }
-    ctx->pc = 0x3737B0u;
 label_3737b0:
     // 0x3737b0: 0xc0dd05c  jal         func_374170
     SET_GPR_U32(ctx, 31, 0x3737B8u);
@@ -130,7 +126,6 @@ label_3737b0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00374170_0x374170, 0x374170u, 0x3737b8u)) {
         return;
     }
-    ctx->pc = 0x3737B8u;
 label_3737b8:
     // 0x3737b8: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x3737b8u;

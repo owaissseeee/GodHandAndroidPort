@@ -13,7 +13,7 @@
 
 // Function: cWorldLight_startFade
 // Address: 0x2d8e18 - 0x2d8eb0
-void cWorldLight_startFade_0x2d8e18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cWorldLight_startFade_0x2d8e18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cWorldLight_startFade_0x2d8e18");
 #endif
@@ -101,7 +101,6 @@ void cWorldLight_startFade_0x2d8e18(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_2d8e74;
         }
     }
-    ctx->pc = 0x2D8E70u;
 label_2d8e70:
     // 0x2d8e70: 0xace0616c  sw          $zero, 0x616C($a3)
     ctx->pc = 0x2d8e70u;

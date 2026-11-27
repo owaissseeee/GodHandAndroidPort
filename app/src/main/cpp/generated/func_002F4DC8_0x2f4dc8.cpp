@@ -13,7 +13,7 @@
 
 // Function: func_002F4DC8
 // Address: 0x2f4dc8 - 0x2f4eb8
-void func_002F4DC8_0x2f4dc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002F4DC8_0x2f4dc8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002F4DC8_0x2f4dc8");
 #endif
@@ -86,7 +86,6 @@ void func_002F4DC8_0x2f4dc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x2f4e00: 0x85102a  slt         $v0, $a0, $a1
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 4) < (int64_t)GPR_S64(ctx, 5)) ? 1 : 0);
     // 0x2f4e04: 0x40302d  daddu       $a2, $v0, $zero
-    ctx->pc = 0x2f4e04u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_2f4e08:
     // 0x2f4e08: 0x30c200ff  andi        $v0, $a2, 0xFF
@@ -126,10 +125,8 @@ label_2f4e08:
             goto label_2f4e28;
         }
     }
-    ctx->pc = 0x2F4E24u;
 label_2f4e24:
     // 0x2f4e24: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2f4e24u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2f4e28:
     // 0x2f4e28: 0x24450080  addiu       $a1, $v0, 0x80
@@ -145,7 +142,6 @@ label_2f4e28:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxCopy_0x147528, 0x147528u, 0x2f4e34u)) {
         return;
     }
-    ctx->pc = 0x2F4E34u;
 label_2f4e34:
     // 0x2f4e34: 0x260202d0  addiu       $v0, $s0, 0x2D0
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 720));
@@ -172,7 +168,6 @@ label_2f4e34:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x2f4e54u)) {
         return;
     }
-    ctx->pc = 0x2F4E54u;
 label_2f4e54:
     // 0x2f4e54: 0xda040000  lqc2        $vf4, 0x0($s0)
     ctx->pc = 0x2f4e54u;
@@ -224,7 +219,6 @@ label_2f4e54:
             goto label_2f4ea4;
         }
     }
-    ctx->pc = 0x2F4E80u;
 label_2f4e80:
     // 0x2f4e80: 0x260202d0  addiu       $v0, $s0, 0x2D0
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 720));

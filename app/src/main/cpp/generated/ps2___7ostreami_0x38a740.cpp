@@ -13,7 +13,7 @@
 
 // Function: __7ostreami
 // Address: 0x38a740 - 0x38a7e0
-void ps2___7ostreami_0x38a740(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___7ostreami_0x38a740(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___7ostreami_0x38a740");
 #endif

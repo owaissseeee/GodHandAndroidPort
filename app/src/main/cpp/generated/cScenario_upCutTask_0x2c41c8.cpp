@@ -13,7 +13,7 @@
 
 // Function: cScenario_upCutTask
 // Address: 0x2c41c8 - 0x2c42e0
-void cScenario_upCutTask_0x2c41c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_upCutTask_0x2c41c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_upCutTask_0x2c41c8");
 #endif
@@ -82,7 +82,6 @@ void cScenario_upCutTask_0x2c41c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_startCamMotion_0x2c3f10, 0x2c3f10u, 0x2c41fcu)) {
         return;
     }
-    ctx->pc = 0x2C41FCu;
 label_2c41fc:
     // 0x2c41fc: 0x8e442f84  lw          $a0, 0x2F84($s2)
     ctx->pc = 0x2c41fcu;
@@ -120,7 +119,6 @@ label_2c41fc:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_setMess_0x2c42e0, 0x2c42e0u, 0x2c421cu)) {
         return;
     }
-    ctx->pc = 0x2C421Cu;
 label_2c421c:
     // 0x2c421c: 0x16200005  bnez        $s1, . + 4 + (0x5 << 2)
     ctx->pc = 0x2C421Cu;
@@ -167,10 +165,8 @@ label_2c421c:
             goto label_2c4244;
         }
     }
-    ctx->pc = 0x2C4234u;
 label_2c4234:
     // 0x2c4234: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2c4234u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2c4238:
     // 0x2c4238: 0x16220002  bne         $s1, $v0, . + 4 + (0x2 << 2)
@@ -203,7 +199,6 @@ label_2c4244:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_startSoftEvent_0x2c39b0, 0x2c39b0u, 0x2c424cu)) {
         return;
     }
-    ctx->pc = 0x2C424Cu;
 label_2c424c:
     // 0x2c424c: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -244,7 +239,6 @@ label_2c424c:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_waitMess_0x2c43d8, 0x2c43d8u, 0x2c4274u)) {
         return;
     }
-    ctx->pc = 0x2C4274u;
 label_2c4274:
     // 0x2c4274: 0x1000000a  b           . + 4 + (0xA << 2)
     ctx->pc = 0x2C4274u;
@@ -255,7 +249,6 @@ label_2c4274:
             goto label_2c42a0;
         }
     }
-    ctx->pc = 0x2C427Cu;
 label_2c427c:
     // 0x2c427c: 0x12200008  beqz        $s1, . + 4 + (0x8 << 2)
     ctx->pc = 0x2C427Cu;
@@ -288,7 +281,6 @@ label_2c427c:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_waitCam_0x2c4078, 0x2c4078u, 0x2c42a0u)) {
         return;
     }
-    ctx->pc = 0x2C42A0u;
 label_2c42a0:
     // 0x2c42a0: 0xc0b0f04  jal         func_2C3C10
     SET_GPR_U32(ctx, 31, 0x2C42A8u);
@@ -301,7 +293,6 @@ label_2c42a0:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario__endSoftEvent_0x2c3c10, 0x2c3c10u, 0x2c42a8u)) {
         return;
     }
-    ctx->pc = 0x2C42A8u;
 label_2c42a8:
     // 0x2c42a8: 0x8e442f84  lw          $a0, 0x2F84($s2)
     ctx->pc = 0x2c42a8u;
@@ -337,7 +328,6 @@ label_2c42a8:
     if (!runtime->callDirectStatic(rdram, ctx, &cTaskWork_exit_0x2d5a48, 0x2d5a48u, 0x2c42c4u)) {
         return;
     }
-    ctx->pc = 0x2C42C4u;
 label_2c42c4:
     // 0x2c42c4: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x2c42c4u;

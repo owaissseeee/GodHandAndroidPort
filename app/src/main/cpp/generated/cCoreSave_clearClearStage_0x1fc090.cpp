@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_clearClearStage
 // Address: 0x1fc090 - 0x1fc0a8
-void cCoreSave_clearClearStage_0x1fc090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_clearClearStage_0x1fc090(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_clearClearStage_0x1fc090");
 #endif
@@ -37,7 +37,6 @@ void cCoreSave_clearClearStage_0x1fc090(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_1fc09c;
         }
     }
-    ctx->pc = 0x1FC09Cu;
 label_1fc09c:
     // 0x1fc09c: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC09Cu;

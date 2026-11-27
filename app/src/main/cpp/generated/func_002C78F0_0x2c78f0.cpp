@@ -13,7 +13,7 @@
 
 // Function: func_002C78F0
 // Address: 0x2c78f0 - 0x2c7d18
-void func_002C78F0_0x2c78f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002C78F0_0x2c78f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002C78F0_0x2c78f0");
 #endif
@@ -118,7 +118,6 @@ void func_002C78F0_0x2c78f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Cos_0x1f7fb8, 0x1f7fb8u, 0x2c7974u)) {
         return;
     }
-    ctx->pc = 0x2C7974u;
 label_2c7974:
     // 0x2c7974: 0x46000506  mov.s       $f20, $f0
     ctx->f[20] = FPU_MOV_S(ctx->f[0]);
@@ -133,7 +132,6 @@ label_2c7974:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Sin_0x1f7ef0, 0x1f7ef0u, 0x2c7980u)) {
         return;
     }
-    ctx->pc = 0x2C7980u;
 label_2c7980:
     // 0x2c7980: 0x4600b847  neg.s       $f1, $f23
     ctx->f[1] = FPU_NEG_S(ctx->f[23]);
@@ -188,7 +186,6 @@ label_2c7980:
             return;
         }
     }
-    ctx->pc = 0x2C79B8u;
 label_2c79b8:
     // 0x2c79b8: 0x3c013f00  lui         $at, 0x3F00
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16128 << 16));
@@ -296,7 +293,6 @@ label_2c79b8:
             goto label_2c7bf4;
         }
     }
-    ctx->pc = 0x2C7A58u;
 label_2c7a58:
     // 0x2c7a58: 0x4603c1c0  add.s       $f7, $f24, $f3
     ctx->f[7] = FPU_ADD_S(ctx->f[24], ctx->f[3]);
@@ -368,7 +364,6 @@ label_2c7a58:
             goto label_2c7b74;
         }
     }
-    ctx->pc = 0x2C7AB8u;
 label_2c7ab8:
     // 0x2c7ab8: 0x4603c100  add.s       $f4, $f24, $f3
     ctx->f[4] = FPU_ADD_S(ctx->f[24], ctx->f[3]);
@@ -440,7 +435,6 @@ label_2c7ab8:
             goto label_2c7b74;
         }
     }
-    ctx->pc = 0x2C7B18u;
 label_2c7b18:
     // 0x2c7b18: 0x4606c9c0  add.s       $f7, $f25, $f6
     ctx->f[7] = FPU_ADD_S(ctx->f[25], ctx->f[6]);
@@ -525,7 +519,6 @@ label_2c7b74:
             goto label_2c7bf4;
         }
     }
-    ctx->pc = 0x2C7B88u;
 label_2c7b88:
     // 0x2c7b88: 0x4603c041  sub.s       $f1, $f24, $f3
     ctx->f[1] = FPU_SUB_S(ctx->f[24], ctx->f[3]);
@@ -624,7 +617,6 @@ label_2c7bf4:
     // 0x2c7c20: 0x46020042  mul.s       $f1, $f0, $f2
     ctx->f[1] = FPU_MUL_S(ctx->f[0], ctx->f[2]);
     // 0x2c7c24: 0x0  nop
-    ctx->pc = 0x2c7c24u;
     // NOP
 label_2c7c28:
     // 0x2c7c28: 0xc4400000  lwc1        $f0, 0x0($v0)
@@ -706,7 +698,6 @@ label_2c7c28:
     if (!runtime->callDirectStatic(rdram, ctx, &Gp_draw_polyFT4_0x15bcf0, 0x15bcf0u, 0x2c7c88u)) {
         return;
     }
-    ctx->pc = 0x2C7C88u;
 label_2c7c88:
     // 0x2c7c88: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));

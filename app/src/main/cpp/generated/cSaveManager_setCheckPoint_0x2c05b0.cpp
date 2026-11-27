@@ -13,7 +13,7 @@
 
 // Function: cSaveManager_setCheckPoint
 // Address: 0x2c05b0 - 0x2c06d0
-void cSaveManager_setCheckPoint_0x2c05b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSaveManager_setCheckPoint_0x2c05b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSaveManager_setCheckPoint_0x2c05b0");
 #endif
@@ -65,7 +65,6 @@ void cSaveManager_setCheckPoint_0x2c05b0(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_snapshot_0x1f9b88, 0x1f9b88u, 0x2c05e0u)) {
         return;
     }
-    ctx->pc = 0x2C05E0u;
 label_2c05e0:
     // 0x2c05e0: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -80,7 +79,6 @@ label_2c05e0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031C350_0x31c350, 0x31c350u, 0x2c05ecu)) {
         return;
     }
-    ctx->pc = 0x2C05ECu;
 label_2c05ec:
     // 0x2c05ec: 0x8e029b70  lw          $v0, -0x6490($s0)
     ctx->pc = 0x2c05ecu;
@@ -88,7 +86,6 @@ label_2c05ec:
     // 0x2c05f0: 0x260182d  daddu       $v1, $s3, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 19) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2c05f4: 0x244414a0  addiu       $a0, $v0, 0x14A0
-    ctx->pc = 0x2c05f4u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 2), 5280));
 label_2c05f8:
     // 0x2c05f8: 0x78450000  lq          $a1, 0x0($v0)
@@ -132,7 +129,6 @@ label_2c05f8:
     // 0x2c0620: 0x34029c20  ori         $v0, $zero, 0x9C20
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)39968);
     // 0x2c0624: 0xa21021  addu        $v0, $a1, $v0
-    ctx->pc = 0x2c0624u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 5), GPR_U32(ctx, 2)));
 label_2c0628:
     // 0x2c0628: 0xdca40000  ld          $a0, 0x0($a1)

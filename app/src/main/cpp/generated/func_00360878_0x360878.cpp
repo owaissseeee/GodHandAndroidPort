@@ -13,7 +13,7 @@
 
 // Function: func_00360878
 // Address: 0x360878 - 0x360940
-void func_00360878_0x360878(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00360878_0x360878(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00360878_0x360878");
 #endif
@@ -113,7 +113,6 @@ void func_00360878_0x360878(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x3608c8: 0x3c140046  lui         $s4, 0x46
     SET_GPR_S32(ctx, 20, (int32_t)((uint32_t)70 << 16));
     // 0x3608cc: 0x0  nop
-    ctx->pc = 0x3608ccu;
     // NOP
 label_3608d0:
     // 0x3608d0: 0x200202d  daddu       $a0, $s0, $zero
@@ -131,7 +130,6 @@ label_3608d0:
     if (!runtime->callDirectStatic(rdram, ctx, &memcmp_0x3a50b4, 0x3a50b4u, 0x3608e0u)) {
         return;
     }
-    ctx->pc = 0x3608E0u;
 label_3608e0:
     // 0x3608e0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -158,7 +156,6 @@ label_3608e0:
     if (!runtime->callDirectStatic(rdram, ctx, &memcmp_0x3a50b4, 0x3a50b4u, 0x3608f8u)) {
         return;
     }
-    ctx->pc = 0x3608F8u;
 label_3608f8:
     // 0x3608f8: 0x54400006  bnel        $v0, $zero, . + 4 + (0x6 << 2)
     ctx->pc = 0x3608F8u;
@@ -189,14 +186,12 @@ label_3608f8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00360940_0x360940, 0x360940u, 0x36090cu)) {
         return;
     }
-    ctx->pc = 0x36090Cu;
 label_36090c:
     // 0x36090c: 0xae420000  sw          $v0, 0x0($s2)
     ctx->pc = 0x36090cu;
     WRITE32(ADD32(GPR_U32(ctx, 18), 0), GPR_U32(ctx, 2));
 label_360910:
     // 0x360910: 0x2631ffff  addiu       $s1, $s1, -0x1
-    ctx->pc = 0x360910u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 4294967295));
 label_360914:
     // 0x360914: 0x1620ffee  bnez        $s1, . + 4 + (-0x12 << 2)
@@ -217,7 +212,6 @@ label_360914:
             goto label_3608d0;
         }
     }
-    ctx->pc = 0x36091Cu;
 label_36091c:
     // 0x36091c: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x36091cu;

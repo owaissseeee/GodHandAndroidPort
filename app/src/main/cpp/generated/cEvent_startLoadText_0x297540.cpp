@@ -13,7 +13,7 @@
 
 // Function: cEvent_startLoadText
 // Address: 0x297540 - 0x2975d0
-void cEvent_startLoadText_0x297540(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_startLoadText_0x297540(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_startLoadText_0x297540");
 #endif
@@ -54,7 +54,6 @@ void cEvent_startLoadText_0x297540(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297B80_0x297b80, 0x297b80u, 0x297560u)) {
         return;
     }
-    ctx->pc = 0x297560u;
 label_297560:
     // 0x297560: 0x3a0202d  daddu       $a0, $sp, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -71,7 +70,6 @@ label_297560:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A6C58_0x3a6c58, 0x3a6c58u, 0x297570u)) {
         return;
     }
-    ctx->pc = 0x297570u;
 label_297570:
     // 0x297570: 0xae200014  sw          $zero, 0x14($s1)
     ctx->pc = 0x297570u;
@@ -106,7 +104,6 @@ label_297570:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x200CB0u, 0x297598u, 0x2975A0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2975A0u;
 label_2975a0:
     // 0x2975a0: 0x8e230014  lw          $v1, 0x14($s1)
     ctx->pc = 0x2975a0u;

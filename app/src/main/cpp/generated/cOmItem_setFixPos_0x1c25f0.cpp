@@ -13,7 +13,7 @@
 
 // Function: cOmItem_setFixPos
 // Address: 0x1c25f0 - 0x1c2630
-void cOmItem_setFixPos_0x1c25f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmItem_setFixPos_0x1c25f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmItem_setFixPos_0x1c25f0");
 #endif
@@ -40,11 +40,9 @@ void cOmItem_setFixPos_0x1c25f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
         }
     }
 
-    ctx->pc = 0x1c25f0u;
 
 label_1c25f0:
     // 0x1c25f0: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x1c25f0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
 label_1c25f4:
     // 0x1c25f4: 0x7fb00010  sq          $s0, 0x10($sp)
@@ -56,7 +54,6 @@ label_1c25f8:
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
 label_1c25fc:
     // 0x1c25fc: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x1c25fcu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_1c2600:
     // 0x1c2600: 0x8e020214  lw          $v0, 0x214($s0)
@@ -98,7 +95,6 @@ label_1c2610:
             return;
         }
     }
-    ctx->pc = 0x1C2614u;
 label_1c2614:
     // 0x1c2614: 0x92020676  lbu         $v0, 0x676($s0)
     ctx->pc = 0x1c2614u;
@@ -109,7 +105,6 @@ label_1c2618:
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
 label_1c261c:
     // 0x1c261c: 0x34420002  ori         $v0, $v0, 0x2
-    ctx->pc = 0x1c261cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)2);
 label_1c2620:
     // 0x1c2620: 0xa2020676  sb          $v0, 0x676($s0)

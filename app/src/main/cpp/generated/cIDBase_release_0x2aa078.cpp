@@ -13,7 +13,7 @@
 
 // Function: cIDBase_release
 // Address: 0x2aa078 - 0x2aa0d0
-void cIDBase_release_0x2aa078(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDBase_release_0x2aa078(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDBase_release_0x2aa078");
 #endif
@@ -76,7 +76,6 @@ void cIDBase_release_0x2aa078(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &func_002ACF30_0x2acf30, 0x2acf30u, 0x2aa0acu)) {
         return;
     }
-    ctx->pc = 0x2AA0ACu;
 label_2aa0ac:
     // 0x2aa0ac: 0xae000008  sw          $zero, 0x8($s0)
     ctx->pc = 0x2aa0acu;

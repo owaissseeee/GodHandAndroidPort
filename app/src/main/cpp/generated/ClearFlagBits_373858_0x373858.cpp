@@ -13,7 +13,7 @@
 
 // Function: ClearFlagBits_373858
 // Address: 0x373858 - 0x3738a0
-void ClearFlagBits_373858_0x373858(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearFlagBits_373858_0x373858(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearFlagBits_373858_0x373858");
 #endif
@@ -50,7 +50,6 @@ void ClearFlagBits_373858_0x373858(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373A50_0x373a50, 0x373a50u, 0x373874u)) {
         return;
     }
-    ctx->pc = 0x373874u;
 label_373874:
     // 0x373874: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x373874u;

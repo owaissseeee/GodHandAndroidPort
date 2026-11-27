@@ -14,7 +14,7 @@
 
 // Function: func_0018C520
 // Address: 0x18c520 - 0x18c580
-void func_0018C520_0x18c520(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0018C520_0x18c520(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0018C520_0x18c520");
 #endif
@@ -60,7 +60,6 @@ void func_0018C520_0x18c520(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_18c558;
         }
     }
-    ctx->pc = 0x18C534u;
 label_18c534:
     // 0x18c534: 0x3e00008  jr          $ra
     ctx->pc = 0x18C534u;
@@ -75,7 +74,6 @@ label_18c534:
         return;
         #endif
     }
-    ctx->pc = 0x18C53Cu;
 label_18c53c:
     // 0x18c53c: 0x2402000f  addiu       $v0, $zero, 0xF
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 15));

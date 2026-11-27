@@ -13,7 +13,7 @@
 
 // Function: FreeObjSlotD_199040
 // Address: 0x199040 - 0x1990a0
-void FreeObjSlotD_199040_0x199040(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FreeObjSlotD_199040_0x199040(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FreeObjSlotD_199040_0x199040");
 #endif
@@ -80,7 +80,6 @@ void FreeObjSlotD_199040_0x199040(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x19907cu)) {
         return;
     }
-    ctx->pc = 0x19907Cu;
 label_19907c:
     // 0x19907c: 0xae000650  sw          $zero, 0x650($s0)
     ctx->pc = 0x19907cu;
@@ -99,7 +98,6 @@ label_199080:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001C7DE0_0x1c7de0, 0x1c7de0u, 0x19908cu)) {
         return;
     }
-    ctx->pc = 0x19908Cu;
 label_19908c:
     // 0x19908c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x19908cu;

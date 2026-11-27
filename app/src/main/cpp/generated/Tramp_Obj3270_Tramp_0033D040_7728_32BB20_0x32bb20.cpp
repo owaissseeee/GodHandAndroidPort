@@ -13,7 +13,7 @@
 
 // Function: Tramp_Obj3270_Tramp_0033D040_7728_32BB20
 // Address: 0x32bb20 - 0x32bb48
-void Tramp_Obj3270_Tramp_0033D040_7728_32BB20_0x32bb20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp_Obj3270_Tramp_0033D040_7728_32BB20_0x32bb20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp_Obj3270_Tramp_0033D040_7728_32BB20_0x32bb20");
 #endif

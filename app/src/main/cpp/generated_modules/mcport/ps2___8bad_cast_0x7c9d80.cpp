@@ -14,21 +14,17 @@ namespace gh_mcport
 {
 // Function: __8bad_cast
 // Address: 0x7c9d80 - 0x7c9d98
-void ps2___8bad_cast_0x7c9d80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___8bad_cast_0x7c9d80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___8bad_cast_0x7c9d80");
 #endif
 
-    ctx->pc = 0x7c9d80u;
 
     // 0x7c9d80: 0x3c03007d  lui         $v1, 0x7D
-    ctx->pc = 0x7c9d80u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)125 << 16));
     // 0x7c9d84: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x7c9d84u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x7c9d88: 0x24630fa0  addiu       $v1, $v1, 0xFA0
-    ctx->pc = 0x7c9d88u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4000));
     // 0x7c9d8c: 0x3e00008  jr          $ra
     ctx->pc = 0x7C9D8Cu;
@@ -49,9 +45,7 @@ void ps2___8bad_cast_0x7c9d80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
         return;
         #endif
     }
-    ctx->pc = 0x7C9D94u;
     // 0x7c9d94: 0x0  nop
-    ctx->pc = 0x7c9d94u;
     // NOP
     ctx->pc = 0x7c9d98u;
 }

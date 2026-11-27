@@ -13,7 +13,7 @@
 
 // Function: func_00319CC0
 // Address: 0x319cc0 - 0x319d60
-void func_00319CC0_0x319cc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00319CC0_0x319cc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00319CC0_0x319cc0");
 #endif
@@ -65,7 +65,6 @@ void func_00319CC0_0x319cc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &GetField_2B1_14B638_0x14b638, 0x14b638u, 0x319cecu)) {
         return;
     }
-    ctx->pc = 0x319CECu;
 label_319cec:
     // 0x319cec: 0x40882d  daddu       $s1, $v0, $zero
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -87,7 +86,6 @@ label_319cec:
     // 0x319cf8: 0x3c148000  lui         $s4, 0x8000
     SET_GPR_S32(ctx, 20, (int32_t)((uint32_t)32768 << 16));
     // 0x319cfc: 0x200282d  daddu       $a1, $s0, $zero
-    ctx->pc = 0x319cfcu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_319d00:
     // 0x319d00: 0xc052dbe  jal         func_14B6F8
@@ -101,7 +99,6 @@ label_319d00:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_getMeshPtr_0x14b6f8, 0x14b6f8u, 0x319d08u)) {
         return;
     }
-    ctx->pc = 0x319D08u;
 label_319d08:
     // 0x319d08: 0x26100001  addiu       $s0, $s0, 0x1
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 1));
@@ -118,7 +115,6 @@ label_319d08:
     if (!runtime->callDirectStatic(rdram, ctx, &Forward155AE8_148F00_0x148f00, 0x148f00u, 0x319d18u)) {
         return;
     }
-    ctx->pc = 0x319D18u;
 label_319d18:
     // 0x319d18: 0x211102a  slt         $v0, $s0, $s1
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 16) < (int64_t)GPR_S64(ctx, 17)) ? 1 : 0);
@@ -141,7 +137,6 @@ label_319d18:
         }
     }
     // 0x319d24: 0x3c020074  lui         $v0, 0x74
-    ctx->pc = 0x319d24u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
 label_319d28:
     // 0x319d28: 0x240202d  daddu       $a0, $s2, $zero
@@ -164,7 +159,6 @@ label_319d28:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00155BE8_0x155be8, 0x155be8u, 0x319d40u)) {
         return;
     }
-    ctx->pc = 0x319D40u;
 label_319d40:
     // 0x319d40: 0x7bb00050  lq          $s0, 0x50($sp)
     ctx->pc = 0x319d40u;

@@ -13,7 +13,7 @@
 
 // Function: ResetObjAndReleaseIdsB
 // Address: 0x1674c8 - 0x167518
-void ResetObjAndReleaseIdsB_0x1674c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ResetObjAndReleaseIdsB_0x1674c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ResetObjAndReleaseIdsB_0x1674c8");
 #endif
@@ -48,7 +48,6 @@ void ResetObjAndReleaseIdsB_0x1674c8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Set_D_007474A0_Fields_5D8_5E0_0x1615f0, 0x1615f0u, 0x1674dcu)) {
         return;
     }
-    ctx->pc = 0x1674DCu;
 label_1674dc:
     // 0x1674dc: 0xc0aa81e  jal         func_2AA078
     SET_GPR_U32(ctx, 31, 0x1674E4u);
@@ -61,7 +60,6 @@ label_1674dc:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_release_0x2aa078, 0x2aa078u, 0x1674e4u)) {
         return;
     }
-    ctx->pc = 0x1674E4u;
 label_1674e4:
     // 0x1674e4: 0xc0aa81e  jal         func_2AA078
     SET_GPR_U32(ctx, 31, 0x1674ECu);
@@ -74,7 +72,6 @@ label_1674e4:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_release_0x2aa078, 0x2aa078u, 0x1674ecu)) {
         return;
     }
-    ctx->pc = 0x1674ECu;
 label_1674ec:
     // 0x1674ec: 0x3c05003c  lui         $a1, 0x3C
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)60 << 16));
@@ -100,7 +97,6 @@ label_1674ec:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00161590_0x161590, 0x161590u, 0x167508u)) {
         return;
     }
-    ctx->pc = 0x167508u;
 label_167508:
     // 0x167508: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x167508u;

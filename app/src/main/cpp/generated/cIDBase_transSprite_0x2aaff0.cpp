@@ -13,7 +13,7 @@
 
 // Function: cIDBase_transSprite
 // Address: 0x2aaff0 - 0x2ab0b8
-void cIDBase_transSprite_0x2aaff0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDBase_transSprite_0x2aaff0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDBase_transSprite_0x2aaff0");
 #endif
@@ -66,7 +66,6 @@ void cIDBase_transSprite_0x2aaff0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_2ab014;
         }
     }
-    ctx->pc = 0x2AB010u;
 label_2ab010:
     // 0x2ab010: 0x90820046  lbu         $v0, 0x46($a0)
     ctx->pc = 0x2ab010u;
@@ -177,7 +176,6 @@ label_2ab014:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002C70A8_0x2c70a8, 0x2c70a8u, 0x2ab0a8u)) {
         return;
     }
-    ctx->pc = 0x2AB0A8u;
 label_2ab0a8:
     // 0x2ab0a8: 0xdfbf0020  ld          $ra, 0x20($sp)
     ctx->pc = 0x2ab0a8u;

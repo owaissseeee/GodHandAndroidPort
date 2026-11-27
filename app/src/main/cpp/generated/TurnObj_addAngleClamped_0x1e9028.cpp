@@ -13,7 +13,7 @@
 
 // Function: TurnObj_addAngleClamped
 // Address: 0x1e9028 - 0x1e9078
-void TurnObj_addAngleClamped_0x1e9028(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void TurnObj_addAngleClamped_0x1e9028(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("TurnObj_addAngleClamped_0x1e9028");
 #endif
@@ -66,10 +66,8 @@ void TurnObj_addAngleClamped_0x1e9028(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_1e9058;
         }
     }
-    ctx->pc = 0x1E9054u;
 label_1e9054:
     // 0x1e9054: 0x460d0834  c.lt.s      $f1, $f13
-    ctx->pc = 0x1e9054u;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[1], ctx->f[13])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
 label_1e9058:
     // 0x1e9058: 0x0  nop
@@ -89,7 +87,6 @@ label_1e9058:
             goto label_1e9064;
         }
     }
-    ctx->pc = 0x1E9064u;
 label_1e9064:
     // 0x1e9064: 0xc07a3de  jal         func_1E8F78
     SET_GPR_U32(ctx, 31, 0x1E906Cu);
@@ -102,7 +99,6 @@ label_1e9064:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001E8F78_0x1e8f78, 0x1e8f78u, 0x1e906cu)) {
         return;
     }
-    ctx->pc = 0x1E906Cu;
 label_1e906c:
     // 0x1e906c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1e906cu;

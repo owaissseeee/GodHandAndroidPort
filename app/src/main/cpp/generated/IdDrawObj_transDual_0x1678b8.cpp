@@ -13,7 +13,7 @@
 
 // Function: IdDrawObj_transDual
 // Address: 0x1678b8 - 0x167908
-void IdDrawObj_transDual_0x1678b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IdDrawObj_transDual_0x1678b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IdDrawObj_transDual_0x1678b8");
 #endif
@@ -90,7 +90,6 @@ void IdDrawObj_transDual_0x1678b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_trans_0x2aac28, 0x2aac28u, 0x1678ecu)) {
         return;
     }
-    ctx->pc = 0x1678ECu;
 label_1678ec:
     // 0x1678ec: 0xc0aab0a  jal         func_2AAC28
     SET_GPR_U32(ctx, 31, 0x1678F4u);
@@ -103,7 +102,6 @@ label_1678ec:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_trans_0x2aac28, 0x2aac28u, 0x1678f4u)) {
         return;
     }
-    ctx->pc = 0x1678F4u;
 label_1678f4:
     // 0x1678f4: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1678f4u;

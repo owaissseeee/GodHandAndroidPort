@@ -13,7 +13,7 @@
 
 // Function: func_00331D78
 // Address: 0x331d78 - 0x331db8
-void func_00331D78_0x331d78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00331D78_0x331d78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00331D78_0x331d78");
 #endif
@@ -57,7 +57,6 @@ void func_00331D78_0x331d78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
     }
     // 0x331d9c: 0x0  nop
-    ctx->pc = 0x331d9cu;
     // NOP
 label_331da0:
     // 0x331da0: 0xdfbf0000  ld          $ra, 0x0($sp)

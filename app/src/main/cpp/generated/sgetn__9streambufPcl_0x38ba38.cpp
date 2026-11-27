@@ -13,7 +13,7 @@
 
 // Function: sgetn__9streambufPcl
 // Address: 0x38ba38 - 0x38ba68
-void sgetn__9streambufPcl_0x38ba38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sgetn__9streambufPcl_0x38ba38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sgetn__9streambufPcl_0x38ba38");
 #endif
@@ -41,7 +41,6 @@ void sgetn__9streambufPcl_0x38ba38(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_sgetn_0x38c9e8, 0x38c9e8u, 0x38ba50u)) {
         return;
     }
-    ctx->pc = 0x38BA50u;
 label_38ba50:
     // 0x38ba50: 0x2103c  dsll32      $v0, $v0, 0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) << (32 + 0));

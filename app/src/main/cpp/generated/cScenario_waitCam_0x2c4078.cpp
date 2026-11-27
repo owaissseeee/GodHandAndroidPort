@@ -13,7 +13,7 @@
 
 // Function: cScenario_waitCam
 // Address: 0x2c4078 - 0x2c40c8
-void cScenario_waitCam_0x2c4078(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_waitCam_0x2c4078(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_waitCam_0x2c4078");
 #endif
@@ -57,7 +57,6 @@ void cScenario_waitCam_0x2c4078(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
         }
     }
     // 0x2c4094: 0x0  nop
-    ctx->pc = 0x2c4094u;
     // NOP
 label_2c4098:
     // 0x2c4098: 0x8e222f84  lw          $v0, 0x2F84($s1)
@@ -75,7 +74,6 @@ label_2c4098:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D5AA0u, 0x2C409Cu, 0x2C40A4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2C40A4u;
 label_2c40a4:
     // 0x2c40a4: 0xc0b1010  jal         func_2C4040
     SET_GPR_U32(ctx, 31, 0x2C40ACu);
@@ -88,7 +86,6 @@ label_2c40a4:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_isCamEnd_0x2c4040, 0x2c4040u, 0x2c40acu)) {
         return;
     }
-    ctx->pc = 0x2C40ACu;
 label_2c40ac:
     // 0x2c40ac: 0x1040fffa  beqz        $v0, . + 4 + (-0x6 << 2)
     ctx->pc = 0x2C40ACu;

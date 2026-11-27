@@ -13,7 +13,7 @@
 
 // Function: cSeData_Init
 // Address: 0x2cf2d0 - 0x2cf310
-void cSeData_Init_0x2cf2d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSeData_Init_0x2cf2d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSeData_Init_0x2cf2d0");
 #endif

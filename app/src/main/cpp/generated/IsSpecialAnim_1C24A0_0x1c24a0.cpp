@@ -13,7 +13,7 @@
 
 // Function: IsSpecialAnim_1C24A0
 // Address: 0x1c24a0 - 0x1c24e8
-void IsSpecialAnim_1C24A0_0x1c24a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IsSpecialAnim_1C24A0_0x1c24a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IsSpecialAnim_1C24A0_0x1c24a0");
 #endif
@@ -78,7 +78,6 @@ void IsSpecialAnim_1C24A0_0x1c24a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_1c24dc;
         }
     }
-    ctx->pc = 0x1C24C8u;
 label_1c24c8:
     // 0x1c24c8: 0x240203e3  addiu       $v0, $zero, 0x3E3
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 995));
@@ -97,7 +96,6 @@ label_1c24c8:
             goto label_1c24dc;
         }
     }
-    ctx->pc = 0x1C24D4u;
 label_1c24d4:
     // 0x1c24d4: 0x3e00008  jr          $ra
     ctx->pc = 0x1C24D4u;
@@ -118,7 +116,6 @@ label_1c24d4:
         return;
         #endif
     }
-    ctx->pc = 0x1C24DCu;
 label_1c24dc:
     // 0x1c24dc: 0x3e00008  jr          $ra
     ctx->pc = 0x1C24DCu;

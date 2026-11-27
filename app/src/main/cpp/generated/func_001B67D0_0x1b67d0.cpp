@@ -13,7 +13,7 @@
 
 // Function: func_001B67D0
 // Address: 0x1b67d0 - 0x1b6968
-void func_001B67D0_0x1b67d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001B67D0_0x1b67d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001B67D0_0x1b67d0");
 #endif
@@ -64,7 +64,6 @@ void func_001B67D0_0x1b67d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B6FB8_0x1b6fb8, 0x1b6fb8u, 0x1b67f8u)) {
         return;
     }
-    ctx->pc = 0x1B67F8u;
 label_1b67f8:
     // 0x1b67f8: 0x27b20010  addiu       $s2, $sp, 0x10
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
@@ -152,7 +151,6 @@ label_1b67f8:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_CreateDamageGive_0x1fe0e8, 0x1fe0e8u, 0x1b6878u)) {
         return;
     }
-    ctx->pc = 0x1B6878u;
 label_1b6878:
     // 0x1b6878: 0x1040002d  beqz        $v0, . + 4 + (0x2D << 2)
     ctx->pc = 0x1B6878u;
@@ -192,7 +190,6 @@ label_1b6878:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_AddDamageCollSphere_0x1fdaf0, 0x1fdaf0u, 0x1b68a0u)) {
         return;
     }
-    ctx->pc = 0x1B68A0u;
 label_1b68a0:
     // 0x1b68a0: 0x8e240620  lw          $a0, 0x620($s1)
     ctx->pc = 0x1b68a0u;
@@ -212,7 +209,6 @@ label_1b68a0:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_AddDamageCollSphere_0x1fdaf0, 0x1fdaf0u, 0x1b68b4u)) {
         return;
     }
-    ctx->pc = 0x1B68B4u;
 label_1b68b4:
     // 0x1b68b4: 0x8e240620  lw          $a0, 0x620($s1)
     ctx->pc = 0x1b68b4u;
@@ -232,7 +228,6 @@ label_1b68b4:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_AddDamageCollSphere_0x1fdaf0, 0x1fdaf0u, 0x1b68c8u)) {
         return;
     }
-    ctx->pc = 0x1B68C8u;
 label_1b68c8:
     // 0x1b68c8: 0x8e240620  lw          $a0, 0x620($s1)
     ctx->pc = 0x1b68c8u;
@@ -248,7 +243,6 @@ label_1b68c8:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x1b68d4u)) {
         return;
     }
-    ctx->pc = 0x1B68D4u;
 label_1b68d4:
     // 0x1b68d4: 0x8e240620  lw          $a0, 0x620($s1)
     ctx->pc = 0x1b68d4u;

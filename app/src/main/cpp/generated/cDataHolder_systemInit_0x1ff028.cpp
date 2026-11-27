@@ -13,7 +13,7 @@
 
 // Function: cDataHolder_systemInit
 // Address: 0x1ff028 - 0x1ff090
-void cDataHolder_systemInit_0x1ff028(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDataHolder_systemInit_0x1ff028(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDataHolder_systemInit_0x1ff028");
 #endif
@@ -73,7 +73,6 @@ void cDataHolder_systemInit_0x1ff028(uint8_t* rdram, R5900Context* ctx, PS2Runti
     ctx->pc = 0x1ff068u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 24), GPR_U32(ctx, 0));
     // 0x1ff06c: 0x0  nop
-    ctx->pc = 0x1ff06cu;
     // NOP
 label_1ff070:
     // 0x1ff070: 0xac460000  sw          $a2, 0x0($v0)

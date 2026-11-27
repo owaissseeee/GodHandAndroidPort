@@ -13,7 +13,7 @@
 
 // Function: _alarm_rdata
 // Address: 0x3b2cd0 - 0x3b2d10
-void _alarm_rdata_0x3b2cd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _alarm_rdata_0x3b2cd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_alarm_rdata_0x3b2cd0");
 #endif
@@ -57,7 +57,6 @@ void _alarm_rdata_0x3b2cd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B26C8u, 0x3B2CF0u, 0x3B2CF8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3B2CF8u;
 label_3b2cf8:
     // 0x3b2cf8: 0x24030800  addiu       $v1, $zero, 0x800
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2048));

@@ -13,7 +13,7 @@
 
 // Function: cEmManage_findEma2Near
 // Address: 0x292dc8 - 0x292e80
-void cEmManage_findEma2Near_0x292dc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_findEma2Near_0x292dc8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_findEma2Near_0x292dc8");
 #endif
@@ -74,7 +74,6 @@ void cEmManage_findEma2Near_0x292dc8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     ctx->pc = 0x292df8u;
     SET_GPR_S32(ctx, 16, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 8)));
     // 0x292dfc: 0x0  nop
-    ctx->pc = 0x292dfcu;
     // NOP
 label_292e00:
     // 0x292e00: 0x52000013  beql        $s0, $zero, . + 4 + (0x13 << 2)
@@ -106,7 +105,6 @@ label_292e00:
     if (!runtime->callDirectStatic(rdram, ctx, &strcmp_0x3a5678, 0x3a5678u, 0x292e14u)) {
         return;
     }
-    ctx->pc = 0x292E14u;
 label_292e14:
     // 0x292e14: 0x5440000e  bnel        $v0, $zero, . + 4 + (0xE << 2)
     ctx->pc = 0x292E14u;
@@ -155,7 +153,6 @@ label_292e14:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0MagnitudeSqXZ_0x1f7eb0, 0x1f7eb0u, 0x292e34u)) {
         return;
     }
-    ctx->pc = 0x292E34u;
 label_292e34:
     // 0x292e34: 0x4614a042  mul.s       $f1, $f20, $f20
     ctx->f[1] = FPU_MUL_S(ctx->f[20], ctx->f[20]);
@@ -193,7 +190,6 @@ label_292e34:
             goto label_292e5c;
         }
     }
-    ctx->pc = 0x292E50u;
 label_292e50:
     // 0x292e50: 0x5620ffeb  bnel        $s1, $zero, . + 4 + (-0x15 << 2)
     ctx->pc = 0x292E50u;
@@ -213,10 +209,8 @@ label_292e50:
             goto label_292e00;
         }
     }
-    ctx->pc = 0x292E58u;
 label_292e58:
     // 0x292e58: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x292e58u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_292e5c:
     // 0x292e5c: 0x7bb00040  lq          $s0, 0x40($sp)

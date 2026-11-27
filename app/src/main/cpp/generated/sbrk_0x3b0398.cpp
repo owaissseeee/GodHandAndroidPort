@@ -13,7 +13,7 @@
 
 // Function: sbrk
 // Address: 0x3b0398 - 0x3b0448
-void sbrk_0x3b0398(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sbrk_0x3b0398(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sbrk_0x3b0398");
 #endif
@@ -63,7 +63,6 @@ void sbrk_0x3b0398(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             goto label_3b03e4;
         }
     }
-    ctx->pc = 0x3B03C0u;
 label_3b03c0:
     // 0x3b03c0: 0x42000039  di
     ctx->cop0_status &= ~0x10000; // Disable interrupts
@@ -103,7 +102,6 @@ label_3b03c0:
             goto label_3b03e8;
         }
     }
-    ctx->pc = 0x3B03E4u;
 label_3b03e4:
     // 0x3b03e4: 0x8e42ae44  lw          $v0, -0x51BC($s2)
     ctx->pc = 0x3b03e4u;
@@ -120,7 +118,6 @@ label_3b03e8:
     if (!runtime->callDirectStatic(rdram, ctx, &EndOfHeap_0x3afc80, 0x3afc80u, 0x3b03f0u)) {
         return;
     }
-    ctx->pc = 0x3B03F0u;
 label_3b03f0:
     // 0x3b03f0: 0x50102b  sltu        $v0, $v0, $s0
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)GPR_U64(ctx, 16)) ? 1 : 0);
@@ -145,7 +142,6 @@ label_3b03f0:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Get_D_003FA62C_3A4FB8_0x3a4fb8, 0x3a4fb8u, 0x3b0404u)) {
         return;
     }
-    ctx->pc = 0x3B0404u;
 label_3b0404:
     // 0x3b0404: 0x2403000c  addiu       $v1, $zero, 0xC
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 12));
@@ -165,7 +161,6 @@ label_3b0404:
         }
     }
     // 0x3b0410: 0x42000038  ei
-    ctx->pc = 0x3b0410u;
     ctx->cop0_status |= 0x10000; // Enable interrupts
 label_3b0414:
     // 0x3b0414: 0x3c02ffff  lui         $v0, 0xFFFF
@@ -185,7 +180,6 @@ label_3b0414:
             goto label_3b042c;
         }
     }
-    ctx->pc = 0x3B0420u;
 label_3b0420:
     // 0x3b0420: 0x12200002  beqz        $s1, . + 4 + (0x2 << 2)
     ctx->pc = 0x3B0420u;
@@ -203,7 +197,6 @@ label_3b0420:
         }
     }
     // 0x3b0428: 0x42000038  ei
-    ctx->pc = 0x3b0428u;
     ctx->cop0_status |= 0x10000; // Enable interrupts
 label_3b042c:
     // 0x3b042c: 0xdfbf0030  ld          $ra, 0x30($sp)

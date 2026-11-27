@@ -13,7 +13,7 @@
 
 // Function: StartTimerSystemTime
 // Address: 0x3b6b90 - 0x3b6c28
-void StartTimerSystemTime_0x3b6b90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void StartTimerSystemTime_0x3b6b90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("StartTimerSystemTime_0x3b6b90");
 #endif
@@ -45,7 +45,6 @@ void StartTimerSystemTime_0x3b6b90(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x3b6ba4u)) {
         return;
     }
-    ctx->pc = 0x3B6BA4u;
 label_3b6ba4:
     // 0x3b6ba4: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -88,7 +87,6 @@ label_3b6ba4:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x3b6bd0u)) {
         return;
     }
-    ctx->pc = 0x3B6BD0u;
 label_3b6bd0:
     // 0x3b6bd0: 0x1000000f  b           . + 4 + (0xF << 2)
     ctx->pc = 0x3B6BD0u;
@@ -105,7 +103,6 @@ label_3b6bd0:
             goto label_3b6c10;
         }
     }
-    ctx->pc = 0x3B6BD8u;
 label_3b6bd8:
     // 0x3b6bd8: 0x3c04ffff  lui         $a0, 0xFFFF
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)65535 << 16));
@@ -124,7 +121,6 @@ label_3b6bd8:
     if (!runtime->callDirectStatic(rdram, ctx, &SetT2_B0001010_3B6A10_0x3b6a10, 0x3b6a10u, 0x3b6becu)) {
         return;
     }
-    ctx->pc = 0x3B6BECu;
 label_3b6bec:
     // 0x3b6bec: 0xc0edc4c  jal         func_3B7130
     ctx->pc = 0x3B6BECu;
@@ -132,7 +128,6 @@ label_3b6bec:
     if (!runtime->callDirectStatic(rdram, ctx, &iGetTimerSystemTime_0x3b7130, 0x3b7130u, 0x3b6bf4u)) {
         return;
     }
-    ctx->pc = 0x3B6BF4u;
 label_3b6bf4:
     // 0x3b6bf4: 0xc0edb0a  jal         func_3B6C28
     SET_GPR_U32(ctx, 31, 0x3B6BFCu);
@@ -145,7 +140,6 @@ label_3b6bf4:
     if (!runtime->callDirectStatic(rdram, ctx, &SetNextComp_0x3b6c28, 0x3b6c28u, 0x3b6bfcu)) {
         return;
     }
-    ctx->pc = 0x3B6BFCu;
 label_3b6bfc:
     // 0x3b6bfc: 0x12000004  beqz        $s0, . + 4 + (0x4 << 2)
     ctx->pc = 0x3B6BFCu;
@@ -168,10 +162,8 @@ label_3b6bfc:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x3b6c0cu)) {
         return;
     }
-    ctx->pc = 0x3B6C0Cu;
 label_3b6c0c:
     // 0x3b6c0c: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x3b6c0cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_3b6c10:
     // 0x3b6c10: 0xdfbf0010  ld          $ra, 0x10($sp)

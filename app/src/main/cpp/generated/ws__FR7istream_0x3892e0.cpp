@@ -13,7 +13,7 @@
 
 // Function: ws__FR7istream
 // Address: 0x3892e0 - 0x389398
-void ws__FR7istream_0x3892e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ws__FR7istream_0x3892e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ws__FR7istream_0x3892e0");
 #endif
@@ -76,7 +76,6 @@ void ws__FR7istream_0x3892e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_389338;
         }
     }
-    ctx->pc = 0x38930Cu;
 label_38930c:
     // 0x38930c: 0x8c650004  lw          $a1, 0x4($v1)
     ctx->pc = 0x38930cu;
@@ -131,10 +130,8 @@ label_38930c:
     if (!runtime->callDirectStatic(rdram, ctx, &flush__7ostream_0x389268, 0x389268u, 0x389334u)) {
         return;
     }
-    ctx->pc = 0x389334u;
 label_389334:
     // 0x389334: 0x24040001  addiu       $a0, $zero, 0x1
-    ctx->pc = 0x389334u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_389338:
     // 0x389338: 0x10800012  beqz        $a0, . + 4 + (0x12 << 2)
@@ -166,7 +163,6 @@ label_389338:
     if (!runtime->callDirectStatic(rdram, ctx, &skip_ws__FP9streambuf_0x3875a8, 0x3875a8u, 0x38934cu)) {
         return;
     }
-    ctx->pc = 0x38934Cu;
 label_38934c:
     // 0x38934c: 0x40282d  daddu       $a1, $v0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -210,7 +206,6 @@ label_38934c:
             goto label_389380;
         }
     }
-    ctx->pc = 0x389370u;
 label_389370:
     // 0x389370: 0x52e00  sll         $a1, $a1, 24
     SET_GPR_S32(ctx, 5, (int32_t)SLL32(GPR_U32(ctx, 5), 24));
@@ -227,10 +222,8 @@ label_389370:
     if (!runtime->callDirectStatic(rdram, ctx, &sputbackc__9streambufc_0x38b460, 0x38b460u, 0x389380u)) {
         return;
     }
-    ctx->pc = 0x389380u;
 label_389380:
     // 0x389380: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x389380u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_389384:
     // 0x389384: 0xdfbf0010  ld          $ra, 0x10($sp)

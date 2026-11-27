@@ -13,7 +13,7 @@
 
 // Function: cEmManage_SetPlSorry
 // Address: 0x293110 - 0x293120
-void cEmManage_SetPlSorry_0x293110(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_SetPlSorry_0x293110(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_SetPlSorry_0x293110");
 #endif

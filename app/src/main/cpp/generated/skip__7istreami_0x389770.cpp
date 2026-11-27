@@ -13,7 +13,7 @@
 
 // Function: skip__7istreami
 // Address: 0x389770 - 0x3897a8
-void skip__7istreami_0x389770(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void skip__7istreami_0x389770(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("skip__7istreami_0x389770");
 #endif
@@ -63,10 +63,8 @@ void skip__7istreami_0x389770(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_38979c;
         }
     }
-    ctx->pc = 0x389798u;
 label_389798:
     // 0x389798: 0x621024  and         $v0, $v1, $v0
-    ctx->pc = 0x389798u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) & GPR_U64(ctx, 2));
 label_38979c:
     // 0x38979c: 0xfc820010  sd          $v0, 0x10($a0)

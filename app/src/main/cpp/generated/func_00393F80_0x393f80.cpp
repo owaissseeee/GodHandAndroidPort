@@ -13,7 +13,7 @@
 
 // Function: func_00393F80
 // Address: 0x393f80 - 0x393fd8
-void func_00393F80_0x393f80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00393F80_0x393f80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00393F80_0x393f80");
 #endif
@@ -68,7 +68,6 @@ void func_00393F80_0x393f80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x393FACu;
 label_393fac:
     // 0x393fac: 0x2442ffcf  addiu       $v0, $v0, -0x31
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967247));
@@ -115,7 +114,6 @@ label_393fac:
         return;
         #endif
     }
-    ctx->pc = 0x393FD0u;
 label_393fd0:
     // 0x393fd0: 0x3e00008  jr          $ra
     ctx->pc = 0x393FD0u;

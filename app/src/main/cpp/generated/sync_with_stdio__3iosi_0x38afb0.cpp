@@ -13,7 +13,7 @@
 
 // Function: sync_with_stdio__3iosi
 // Address: 0x38afb0 - 0x38b030
-void sync_with_stdio__3iosi_0x38afb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sync_with_stdio__3iosi_0x38afb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sync_with_stdio__3iosi_0x38afb0");
 #endif
@@ -79,7 +79,6 @@ void sync_with_stdio__3iosi_0x38afb0(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_38affc;
         }
     }
-    ctx->pc = 0x38AFE4u;
 label_38afe4:
     // 0x38afe4: 0x3c03003f  lui         $v1, 0x3F
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)63 << 16));
@@ -92,7 +91,6 @@ label_38afe4:
     // 0x38aff4: 0x24424f80  addiu       $v0, $v0, 0x4F80
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 20352));
     // 0x38aff8: 0x24844f28  addiu       $a0, $a0, 0x4F28
-    ctx->pc = 0x38aff8u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 20264));
 label_38affc:
     // 0x38affc: 0x3c06003f  lui         $a2, 0x3F
@@ -137,7 +135,6 @@ label_38affc:
         return;
         #endif
     }
-    ctx->pc = 0x38B028u;
 label_38b028:
     // 0x38b028: 0x3e00008  jr          $ra
     ctx->pc = 0x38B028u;

@@ -13,7 +13,7 @@
 
 // Function: ColiseumUi_StartFade
 // Address: 0x1f4428 - 0x1f44e0
-void ColiseumUi_StartFade_0x1f4428(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumUi_StartFade_0x1f4428(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumUi_StartFade_0x1f4428");
 #endif
@@ -78,7 +78,6 @@ void ColiseumUi_StartFade_0x1f4428(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &classFADE_kill_0x3076e0, 0x3076e0u, 0x1f4460u)) {
         return;
     }
-    ctx->pc = 0x1F4460u;
 label_1f4460:
     // 0x1f4460: 0x8e020054  lw          $v0, 0x54($s0)
     ctx->pc = 0x1f4460u;
@@ -121,7 +120,6 @@ label_1f4470:
             goto label_1f449c;
         }
     }
-    ctx->pc = 0x1F4480u;
 label_1f4480:
     // 0x1f4480: 0x26447470  addiu       $a0, $s2, 0x7470
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 18), 29808));
@@ -148,7 +146,6 @@ label_1f4480:
             goto label_1f44b0;
         }
     }
-    ctx->pc = 0x1F449Cu;
 label_1f449c:
     // 0x1f449c: 0x282d  daddu       $a1, $zero, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
@@ -159,7 +156,6 @@ label_1f449c:
     // 0x1f44a8: 0x402d  daddu       $t0, $zero, $zero
     SET_GPR_U64(ctx, 8, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1f44ac: 0x3c09ff00  lui         $t1, 0xFF00
-    ctx->pc = 0x1f44acu;
     SET_GPR_S32(ctx, 9, (int32_t)((uint32_t)65280 << 16));
 label_1f44b0:
     // 0x1f44b0: 0xc0c1c82  jal         func_307208
@@ -173,7 +169,6 @@ label_1f44b0:
     if (!runtime->callDirectStatic(rdram, ctx, &classFADE_start_0x307208, 0x307208u, 0x1f44b8u)) {
         return;
     }
-    ctx->pc = 0x1F44B8u;
 label_1f44b8:
     // 0x1f44b8: 0x8e020054  lw          $v0, 0x54($s0)
     ctx->pc = 0x1f44b8u;

@@ -13,7 +13,7 @@
 
 // Function: classPAD_WORK_Pad_act_set
 // Address: 0x31bb08 - 0x31bb80
-void classPAD_WORK_Pad_act_set_0x31bb08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void classPAD_WORK_Pad_act_set_0x31bb08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("classPAD_WORK_Pad_act_set_0x31bb08");
 #endif
@@ -53,7 +53,6 @@ void classPAD_WORK_Pad_act_set_0x31bb08(uint8_t* rdram, R5900Context* ctx, PS2Ru
     // 0x31bb20: 0x24630001  addiu       $v1, $v1, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 1));
     // 0x31bb24: 0x0  nop
-    ctx->pc = 0x31bb24u;
     // NOP
 label_31bb28:
     // 0x31bb28: 0x2c620020  sltiu       $v0, $v1, 0x20
@@ -94,7 +93,6 @@ label_31bb28:
             goto label_31bb28;
         }
     }
-    ctx->pc = 0x31BB40u;
 label_31bb40:
     // 0x31bb40: 0x24a60001  addiu       $a2, $a1, 0x1
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 5), 1));

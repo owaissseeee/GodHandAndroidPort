@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_clearGodItem
 // Address: 0x1fab28 - 0x1fab50
-void cCoreSave_clearGodItem_0x1fab28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_clearGodItem_0x1fab28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_clearGodItem_0x1fab28");
 #endif
@@ -29,7 +29,6 @@ void cCoreSave_clearGodItem_0x1fab28(uint8_t* rdram, R5900Context* ctx, PS2Runti
     // 0x1fab28: 0x282d  daddu       $a1, $zero, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1fab2c: 0x0  nop
-    ctx->pc = 0x1fab2cu;
     // NOP
 label_1fab30:
     // 0x1fab30: 0x8c820000  lw          $v0, 0x0($a0)

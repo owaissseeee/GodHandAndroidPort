@@ -14,7 +14,7 @@
 
 // Function: ScrollObj_advanceScroll
 // Address: 0x2ec310 - 0x2ec398
-void ScrollObj_advanceScroll_0x2ec310(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ScrollObj_advanceScroll_0x2ec310(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ScrollObj_advanceScroll_0x2ec310");
 #endif
@@ -46,7 +46,6 @@ void ScrollObj_advanceScroll_0x2ec310(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_002FBED0_0x2fbed0, 0x2fbed0u, 0x2ec324u)) {
         return;
     }
-    ctx->pc = 0x2EC324u;
 label_2ec324:
     // 0x2ec324: 0xc60102dc  lwc1        $f1, 0x2DC($s0)
     ctx->pc = 0x2ec324u;

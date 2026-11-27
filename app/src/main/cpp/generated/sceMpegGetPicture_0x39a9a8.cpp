@@ -13,7 +13,7 @@
 
 // Function: sceMpegGetPicture
 // Address: 0x39a9a8 - 0x39a9f0
-void sceMpegGetPicture_0x39a9a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceMpegGetPicture_0x39a9a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceMpegGetPicture_0x39a9a8");
 #endif
@@ -69,7 +69,6 @@ void sceMpegGetPicture_0x39a9a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &_getpic_0x39a140, 0x39a140u, 0x39a9e4u)) {
         return;
     }
-    ctx->pc = 0x39A9E4u;
 label_39a9e4:
     // 0x39a9e4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x39a9e4u;

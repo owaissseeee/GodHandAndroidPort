@@ -13,7 +13,7 @@
 
 // Function: func_00280688
 // Address: 0x280688 - 0x280770
-void func_00280688_0x280688(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00280688_0x280688(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00280688_0x280688");
 #endif
@@ -104,7 +104,6 @@ void func_00280688_0x280688(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_280760;
         }
     }
-    ctx->pc = 0x2806C0u;
 label_2806c0:
     // 0x2806c0: 0x10620016  beq         $v1, $v0, . + 4 + (0x16 << 2)
     ctx->pc = 0x2806C0u;
@@ -145,7 +144,6 @@ label_2806c0:
             goto label_280760;
         }
     }
-    ctx->pc = 0x2806D8u;
 label_2806d8:
     // 0x2806d8: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -176,7 +174,6 @@ label_2806d8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x280700u)) {
         return;
     }
-    ctx->pc = 0x280700u;
 label_280700:
     // 0x280700: 0x920202f6  lbu         $v0, 0x2F6($s0)
     ctx->pc = 0x280700u;
@@ -198,7 +195,6 @@ label_28070c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x28070Cu, 0x280714u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x280714u;
 label_280714:
     // 0x280714: 0x10000012  b           . + 4 + (0x12 << 2)
     ctx->pc = 0x280714u;
@@ -215,7 +211,6 @@ label_280714:
             goto label_280760;
         }
     }
-    ctx->pc = 0x28071Cu;
 label_28071c:
     // 0x28071c: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28071cu;
@@ -249,7 +244,6 @@ label_28071c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x280748u)) {
         return;
     }
-    ctx->pc = 0x280748u;
 label_280748:
     // 0x280748: 0x920202f6  lbu         $v0, 0x2F6($s0)
     ctx->pc = 0x280748u;
@@ -271,7 +265,6 @@ label_280754:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x280754u, 0x28075Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x28075Cu;
 label_28075c:
     // 0x28075c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x28075cu;

@@ -13,7 +13,7 @@
 
 // Function: SetBlendField820_1D5B90
 // Address: 0x1d5b90 - 0x1d5c38
-void SetBlendField820_1D5B90_0x1d5b90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetBlendField820_1D5B90_0x1d5b90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetBlendField820_1D5B90_0x1d5b90");
 #endif
@@ -113,7 +113,6 @@ void SetBlendField820_1D5B90_0x1d5b90(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetColorAnimSin_0x2d6910, 0x2d6910u, 0x1d5c18u)) {
         return;
     }
-    ctx->pc = 0x1D5C18u;
 label_1d5c18:
     // 0x1d5c18: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x1D5C18u;
@@ -130,7 +129,6 @@ label_1d5c18:
             goto label_1d5c2c;
         }
     }
-    ctx->pc = 0x1D5C20u;
 label_1d5c20:
     // 0x1d5c20: 0xc0b5a52  jal         func_2D6948
     SET_GPR_U32(ctx, 31, 0x1D5C28u);
@@ -143,7 +141,6 @@ label_1d5c20:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_ResetColorAnim_0x2d6948, 0x2d6948u, 0x1d5c28u)) {
         return;
     }
-    ctx->pc = 0x1D5C28u;
 label_1d5c28:
     // 0x1d5c28: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1d5c28u;

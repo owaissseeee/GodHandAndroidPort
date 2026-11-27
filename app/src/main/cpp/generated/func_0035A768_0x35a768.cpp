@@ -13,7 +13,7 @@
 
 // Function: func_0035A768
 // Address: 0x35a768 - 0x35a7a0
-void func_0035A768_0x35a768(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0035A768_0x35a768(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0035A768_0x35a768");
 #endif
@@ -59,7 +59,6 @@ void func_0035A768_0x35a768(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x35a78cu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 6), 32)));
     // 0x35a790: 0x2c420001  sltiu       $v0, $v0, 0x1
-    ctx->pc = 0x35a790u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1) ? 1 : 0);
 label_35a794:
     // 0x35a794: 0x3e00008  jr          $ra

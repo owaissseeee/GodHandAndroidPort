@@ -13,7 +13,7 @@
 
 // Function: iPutTLBEntry
 // Address: 0x3afdf0 - 0x3afe00
-void iPutTLBEntry_0x3afdf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iPutTLBEntry_0x3afdf0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iPutTLBEntry_0x3afdf0");
 #endif

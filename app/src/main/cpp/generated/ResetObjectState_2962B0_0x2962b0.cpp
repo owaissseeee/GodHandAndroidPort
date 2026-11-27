@@ -13,7 +13,7 @@
 
 // Function: ResetObjectState_2962B0
 // Address: 0x2962b0 - 0x2962f0
-void ResetObjectState_2962B0_0x2962b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ResetObjectState_2962B0_0x2962b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ResetObjectState_2962B0_0x2962b0");
 #endif
@@ -50,7 +50,6 @@ void ResetObjectState_2962B0_0x2962b0(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getBlock180_0x1f9ff0, 0x1f9ff0u, 0x2962ccu)) {
         return;
     }
-    ctx->pc = 0x2962CCu;
 label_2962cc:
     // 0x2962cc: 0xae020038  sw          $v0, 0x38($s0)
     ctx->pc = 0x2962ccu;
@@ -66,7 +65,6 @@ label_2962cc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297660_0x297660, 0x297660u, 0x2962d8u)) {
         return;
     }
-    ctx->pc = 0x2962D8u;
 label_2962d8:
     // 0x2962d8: 0xae000000  sw          $zero, 0x0($s0)
     ctx->pc = 0x2962d8u;

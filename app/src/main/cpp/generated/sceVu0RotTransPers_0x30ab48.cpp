@@ -6,6 +6,7 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,9 +14,40 @@
 
 // Function: sceVu0RotTransPers
 // Address: 0x30ab48 - 0x30aba0
-void sceVu0RotTransPers_0x30ab48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVu0RotTransPers_0x30ab48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVu0RotTransPers_0x30ab48");
+#endif
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    {
+        uint8_t* const d = ps2TryFastSpan(rdram, GPR_U32(ctx, 4) & ~0xFu, 16u);
+        const uint8_t* const m = ps2TryFastSpan(rdram, GPR_U32(ctx, 5) & ~0xFu, 64u);
+        const uint8_t* const s = ps2TryFastSpan(rdram, GPR_U32(ctx, 6) & ~0xFu, 16u);
+        if (__builtin_expect(d != nullptr && m != nullptr && s != nullptr, 1)) {
+            const float32x4_t m0 = ps2LoadVec4(m + 0);
+            const float32x4_t m1 = ps2LoadVec4(m + 16);
+            const float32x4_t m2 = ps2LoadVec4(m + 32);
+            const float32x4_t m3 = ps2LoadVec4(m + 48);
+            const float32x4_t v  = ps2LoadVec4(s);
+            float32x4_t r = vmulq_laneq_f32(m0, v, 0);
+            r = vfmaq_laneq_f32(r, m1, v, 1);
+            r = vfmaq_laneq_f32(r, m2, v, 2);
+            r = vfmaq_laneq_f32(r, m3, v, 3);
+            const float rw = vgetq_lane_f32(r, 3);
+            const float q = ps2VuDivide(ctx->vu0_status, 1.0f, rw);
+            ctx->vu0_q = q;
+            const float32x4_t scaled = vsetq_lane_f32(rw, vmulq_n_f32(r, q), 3);
+            int32x4_t i4 = vcvtq_s32_f32(vmulq_n_f32(scaled, 16.0f));
+            if (GPR_U64(ctx, 7) != 0u) {
+                const int32x4_t i0 = vcvtq_s32_f32(scaled);
+                i4 = vcombine_s32(vget_low_s32(i4), vget_high_s32(i0));
+            }
+            ps2StoreVec4I(d, i4);
+            ps2FastReturn(rdram, ctx, runtime, 0x30AB8Cu);
+            return;
+        }
+    }
 #endif
 
 
@@ -60,7 +92,6 @@ void sceVu0RotTransPers_0x30ab48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         }
     }
     // 0x30ab84: 0x4a6a497c  vftoi0.zw   $vf10, $vf9
-    ctx->pc = 0x30ab84u;
     { const __m128 src = _mm_mul_ps(ctx->vu0_vf[9], _mm_set1_ps(1.0f)); const __m128i positiveOverflow = _mm_andnot_si128(_mm_srai_epi32(_mm_castps_si128(src), 31), _mm_castps_si128(_mm_cmpnlt_ps(src, _mm_set1_ps(2147483648.0f)))); const __m128 res = _mm_castsi128_ps(_mm_xor_si128(_mm_cvttps_epi32(src), positiveOverflow)); ctx->vu0_vf[10] = _mm_blendv_ps(ctx->vu0_vf[10], res, _mm_castsi128_ps(_mm_set_epi32(-1, -1, 0, 0))); }
 label_30ab88:
     // 0x30ab88: 0xf88a0000  sqc2        $vf10, 0x0($a0)

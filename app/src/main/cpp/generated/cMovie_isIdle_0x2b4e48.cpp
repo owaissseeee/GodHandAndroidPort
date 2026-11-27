@@ -13,7 +13,7 @@
 
 // Function: cMovie_isIdle
 // Address: 0x2b4e48 - 0x2b4ec8
-void cMovie_isIdle_0x2b4e48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMovie_isIdle_0x2b4e48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMovie_isIdle_0x2b4e48");
 #endif
@@ -46,7 +46,6 @@ void cMovie_isIdle_0x2b4e48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B4A50_0x2b4a50, 0x2b4a50u, 0x2b4e5cu)) {
         return;
     }
-    ctx->pc = 0x2B4E5Cu;
 label_2b4e5c:
     // 0x2b4e5c: 0x8e100000  lw          $s0, 0x0($s0)
     ctx->pc = 0x2b4e5cu;
@@ -54,7 +53,6 @@ label_2b4e5c:
     // 0x2b4e60: 0x24040001  addiu       $a0, $zero, 0x1
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2b4e64: 0x182d  daddu       $v1, $zero, $zero
-    ctx->pc = 0x2b4e64u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2b4e68:
     // 0x2b4e68: 0x8e020000  lw          $v0, 0x0($s0)
@@ -76,7 +74,6 @@ label_2b4e68:
         }
     }
     // 0x2b4e74: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2b4e74u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2b4e78:
     // 0x2b4e78: 0x54440003  bnel        $v0, $a0, . + 4 + (0x3 << 2)
@@ -109,7 +106,6 @@ label_2b4e78:
             goto label_2b4e98;
         }
     }
-    ctx->pc = 0x2B4E88u;
 label_2b4e88:
     // 0x2b4e88: 0x28620003  slti        $v0, $v1, 0x3
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)3) ? 1 : 0);
@@ -132,7 +128,6 @@ label_2b4e88:
         }
     }
     // 0x2b4e94: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2b4e94u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2b4e98:
     // 0x2b4e98: 0x7bb00010  lq          $s0, 0x10($sp)

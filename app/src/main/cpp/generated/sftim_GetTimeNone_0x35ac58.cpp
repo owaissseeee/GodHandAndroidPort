@@ -13,7 +13,7 @@
 
 // Function: sftim_GetTimeNone
 // Address: 0x35ac58 - 0x35aca0
-void sftim_GetTimeNone_0x35ac58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sftim_GetTimeNone_0x35ac58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sftim_GetTimeNone_0x35ac58");
 #endif
@@ -50,7 +50,6 @@ void sftim_GetTimeNone_0x35ac58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035AE18_0x35ae18, 0x35ae18u, 0x35ac74u)) {
         return;
     }
-    ctx->pc = 0x35AC74u;
 label_35ac74:
     // 0x35ac74: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x35AC74u;

@@ -13,7 +13,7 @@
 
 // Function: sfset_IsCondValid
 // Address: 0x35a0a0 - 0x35a128
-void sfset_IsCondValid_0x35a0a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfset_IsCondValid_0x35a0a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfset_IsCondValid_0x35a0a0");
 #endif
@@ -89,7 +89,6 @@ void sfset_IsCondValid_0x35a0a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &Obj35C0_IsIndexedSet_1F3C_C380_0x35c380, 0x35c380u, 0x35a0dcu)) {
         return;
     }
-    ctx->pc = 0x35A0DCu;
 label_35a0dc:
     // 0x35a0dc: 0x5040000d  beql        $v0, $zero, . + 4 + (0xD << 2)
     ctx->pc = 0x35A0DCu;
@@ -106,10 +105,8 @@ label_35a0dc:
             goto label_35a114;
         }
     }
-    ctx->pc = 0x35A0E4u;
 label_35a0e4:
     // 0x35a0e4: 0x24020005  addiu       $v0, $zero, 0x5
-    ctx->pc = 0x35a0e4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 5));
 label_35a0e8:
     // 0x35a0e8: 0x16020009  bne         $s0, $v0, . + 4 + (0x9 << 2)
@@ -155,7 +152,6 @@ label_35a0e8:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj35C0_IsIndexedSet_1F3C_C380_0x35c380, 0x35c380u, 0x35a104u)) {
         return;
     }
-    ctx->pc = 0x35A104u;
 label_35a104:
     // 0x35a104: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x35A104u;
@@ -173,7 +169,6 @@ label_35a104:
         }
     }
     // 0x35a10c: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x35a10cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_35a110:
     // 0x35a110: 0xdfb00000  ld          $s0, 0x0($sp)

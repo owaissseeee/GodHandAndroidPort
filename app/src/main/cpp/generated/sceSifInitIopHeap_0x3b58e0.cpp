@@ -13,7 +13,7 @@
 
 // Function: sceSifInitIopHeap
 // Address: 0x3b58e0 - 0x3b5968
-void sceSifInitIopHeap_0x3b58e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSifInitIopHeap_0x3b58e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSifInitIopHeap_0x3b58e0");
 #endif
@@ -53,12 +53,10 @@ void sceSifInitIopHeap_0x3b58e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_3b591c;
         }
     }
-    ctx->pc = 0x3B58F8u;
 label_3b58f8:
     // 0x3b58f8: 0x3c020010  lui         $v0, 0x10
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)16 << 16));
     // 0x3b58fc: 0x2403ffff  addiu       $v1, $zero, -0x1
-    ctx->pc = 0x3b58fcu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_3b5900:
     // 0x3b5900: 0x2442ffff  addiu       $v0, $v0, -0x1
@@ -83,7 +81,6 @@ label_3b5900:
             goto label_3b5900;
         }
     }
-    ctx->pc = 0x3B591Cu;
 label_3b591c:
     // 0x3b591c: 0x263017c0  addiu       $s0, $s1, 0x17C0
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 17), 6080));
@@ -104,7 +101,6 @@ label_3b591c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B2F48u, 0x3B592Cu, 0x3B5934u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3B5934u;
 label_3b5934:
     // 0x3b5934: 0x4430003  bgezl       $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x3B5934u;
@@ -136,7 +132,6 @@ label_3b5934:
             goto label_3b5954;
         }
     }
-    ctx->pc = 0x3B5944u;
 label_3b5944:
     // 0x3b5944: 0x1040ffec  beqz        $v0, . + 4 + (-0x14 << 2)
     ctx->pc = 0x3B5944u;
@@ -160,7 +155,6 @@ label_3b5944:
     ctx->pc = 0x3b594cu;
     WRITE32(ADD32(GPR_U32(ctx, 2), 4294946548), GPR_U32(ctx, 0));
     // 0x3b5950: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x3b5950u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_3b5954:
     // 0x3b5954: 0xdfbf0020  ld          $ra, 0x20($sp)

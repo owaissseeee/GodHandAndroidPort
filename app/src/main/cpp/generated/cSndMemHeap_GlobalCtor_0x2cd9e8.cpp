@@ -13,7 +13,7 @@
 
 // Function: cSndMemHeap_GlobalCtor
 // Address: 0x2cd9e8 - 0x2cda08
-void cSndMemHeap_GlobalCtor_0x2cd9e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndMemHeap_GlobalCtor_0x2cd9e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndMemHeap_GlobalCtor_0x2cd9e8");
 #endif
@@ -44,7 +44,6 @@ void cSndMemHeap_GlobalCtor_0x2cd9e8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &cSndMemHeap_CloseAll_0x2cd9a0, 0x2cd9a0u, 0x2cd9fcu)) {
         return;
     }
-    ctx->pc = 0x2CD9FCu;
 label_2cd9fc:
     // 0x2cd9fc: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2cd9fcu;

@@ -13,7 +13,7 @@
 
 // Function: UpdateLinkedFieldsAndMove_13F1C0
 // Address: 0x13f1c0 - 0x13f208
-void UpdateLinkedFieldsAndMove_13F1C0_0x13f1c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateLinkedFieldsAndMove_13F1C0_0x13f1c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateLinkedFieldsAndMove_13F1C0_0x13f1c0");
 #endif
@@ -77,7 +77,6 @@ label_13f1f4:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_move_0x2aaa40, 0x2aaa40u, 0x13f1fcu)) {
         return;
     }
-    ctx->pc = 0x13F1FCu;
 label_13f1fc:
     // 0x13f1fc: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x13f1fcu;

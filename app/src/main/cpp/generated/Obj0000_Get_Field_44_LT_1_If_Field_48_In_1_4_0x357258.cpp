@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Get_Field_44_LT_1_If_Field_48_In_1_4
 // Address: 0x357258 - 0x357280
-void Obj0000_Get_Field_44_LT_1_If_Field_48_In_1_4_0x357258(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Get_Field_44_LT_1_If_Field_48_In_1_4_0x357258(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Get_Field_44_LT_1_If_Field_48_In_1_4_0x357258");
 #endif
@@ -45,7 +45,6 @@ void Obj0000_Get_Field_44_LT_1_If_Field_48_In_1_4_0x357258(uint8_t* rdram, R5900
     ctx->pc = 0x35726cu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 68)));
     // 0x357270: 0x2c420001  sltiu       $v0, $v0, 0x1
-    ctx->pc = 0x357270u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1) ? 1 : 0);
 label_357274:
     // 0x357274: 0x3e00008  jr          $ra

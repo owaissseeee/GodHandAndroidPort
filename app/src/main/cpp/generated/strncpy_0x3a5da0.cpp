@@ -6,6 +6,8 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
+#include <cstring>
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,7 +15,7 @@
 
 // Function: strncpy
 // Address: 0x3a5da0 - 0x3a5f68
-void strncpy_0x3a5da0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void strncpy_0x3a5da0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("strncpy_0x3a5da0");
 #endif
@@ -26,6 +28,37 @@ void strncpy_0x3a5da0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             default: break;
         }
     }
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    if (__builtin_expect(ctx->pc == 0x3a5da0u, 1)) {
+        const uint32_t n = GPR_U32(ctx, 6);
+        if (n == 0u) {
+            SET_GPR_U64(ctx, 2, GPR_U64(ctx, 4));
+            ps2FastReturn(rdram, ctx, runtime, 0x3A5F60u);
+            return;
+        }
+        uint8_t* const dst = ps2TryFastSpan(rdram, GPR_U32(ctx, 4), n);
+        uint32_t availSrc = 0;
+        const char* const src = ps2TryFastCStr(rdram, GPR_U32(ctx, 5), availSrc);
+        if (__builtin_expect(dst != nullptr && src != nullptr && availSrc > 16u, 1)) {
+            const uint32_t safeSrc = availSrc - 16u;
+            const size_t maxCheck = std::min(n, safeSrc);
+            const size_t slen = ::strnlen(src, maxCheck);
+            if (slen < safeSrc || n <= safeSrc) {
+                const uint8_t* const srcU8 = reinterpret_cast<const uint8_t*>(src);
+                const size_t copyBytes = (slen < n) ? (slen + 1u) : n;
+                if (dst + n <= srcU8 || srcU8 + copyBytes <= dst) {
+                    std::memcpy(dst, srcU8, copyBytes);
+                    if (n > copyBytes)
+                        std::memset(dst + copyBytes, 0, n - copyBytes);
+                    SET_GPR_U64(ctx, 2, GPR_U64(ctx, 4));
+                    ps2FastReturn(rdram, ctx, runtime, 0x3A5F60u);
+                    return;
+                }
+            }
+        }
+    }
+#endif
 
 
     // 0x3a5da0: 0x80402d  daddu       $t0, $a0, $zero
@@ -214,7 +247,6 @@ void strncpy_0x3a5da0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             goto label_3a5f18;
         }
     }
-    ctx->pc = 0x3A5E7Cu;
 label_3a5e7c:
     // 0x3a5e7c: 0x14400026  bnez        $v0, . + 4 + (0x26 << 2)
     ctx->pc = 0x3A5E7Cu;
@@ -283,7 +315,6 @@ label_3a5e7c:
     ctx->pc = 0x3a5ed8u;
     SET_GPR_U64(ctx, 3, READ64(ADD32(GPR_U32(ctx, 5), 0)));
     // 0x3a5edc: 0x0  nop
-    ctx->pc = 0x3a5edcu;
     // NOP
 label_3a5ee0:
     // 0x3a5ee0: 0x24c6fff8  addiu       $a2, $a2, -0x8
@@ -339,10 +370,8 @@ label_3a5ee0:
             goto label_3a5ee0;
         }
     }
-    ctx->pc = 0x3A5F14u;
 label_3a5f14:
     // 0x3a5f14: 0xe0202d  daddu       $a0, $a3, $zero
-    ctx->pc = 0x3a5f14u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 7) + (uint64_t)GPR_U64(ctx, 0));
 label_3a5f18:
     // 0x3a5f18: 0x10c00011  beqz        $a2, . + 4 + (0x11 << 2)
@@ -407,7 +436,6 @@ label_3a5f18:
             goto label_3a5f60;
         }
     }
-    ctx->pc = 0x3A5F48u;
 label_3a5f48:
     // 0x3a5f48: 0xa0800000  sb          $zero, 0x0($a0)
     ctx->pc = 0x3a5f48u;
@@ -436,7 +464,6 @@ label_3a5f48:
             goto label_3a5f48;
         }
     }
-    ctx->pc = 0x3A5F60u;
 label_3a5f60:
     // 0x3a5f60: 0x3e00008  jr          $ra
     ctx->pc = 0x3A5F60u;

@@ -13,7 +13,7 @@
 
 // Function: InitObjVtableAndTypeFull_27EE68
 // Address: 0x27ee68 - 0x27eec0
-void InitObjVtableAndTypeFull_27EE68_0x27ee68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitObjVtableAndTypeFull_27EE68_0x27ee68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitObjVtableAndTypeFull_27EE68_0x27ee68");
 #endif
@@ -45,7 +45,6 @@ void InitObjVtableAndTypeFull_27EE68_0x27ee68(uint8_t* rdram, R5900Context* ctx,
     if (!runtime->callDirectStatic(rdram, ctx, &func_0028EB00_0x28eb00, 0x28eb00u, 0x27ee7cu)) {
         return;
     }
-    ctx->pc = 0x27EE7Cu;
 label_27ee7c:
     // 0x27ee7c: 0x3c030045  lui         $v1, 0x45
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)69 << 16));

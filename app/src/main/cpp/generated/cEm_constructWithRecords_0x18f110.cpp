@@ -13,7 +13,7 @@
 
 // Function: cEm_constructWithRecords
 // Address: 0x18f110 - 0x18f1a0
-void cEm_constructWithRecords_0x18f110(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm_constructWithRecords_0x18f110(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm_constructWithRecords_0x18f110");
 #endif
@@ -56,7 +56,6 @@ void cEm_constructWithRecords_0x18f110(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &func_001C7D98_0x1c7d98, 0x1c7d98u, 0x18f130u)) {
         return;
     }
-    ctx->pc = 0x18F130u;
 label_18f130:
     // 0x18f130: 0x3c030042  lui         $v1, 0x42
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)66 << 16));
@@ -76,7 +75,6 @@ label_18f130:
     // 0x18f148: 0x26300680  addiu       $s0, $s1, 0x680
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 17), 1664));
     // 0x18f14c: 0x24120006  addiu       $s2, $zero, 0x6
-    ctx->pc = 0x18f14cu;
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
 label_18f150:
     // 0x18f150: 0xfa000000  sqc2        $vf0, 0x0($s0)
@@ -107,7 +105,6 @@ label_18f150:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Set_Byte_54_0x16f640, 0x16f640u, 0x18f170u)) {
         return;
     }
-    ctx->pc = 0x18F170u;
 label_18f170:
     // 0x18f170: 0x2652ffff  addiu       $s2, $s2, -0x1
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), 4294967295));

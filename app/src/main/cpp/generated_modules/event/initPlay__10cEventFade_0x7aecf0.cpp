@@ -14,37 +14,34 @@ namespace gh_event
 {
 // Function: initPlay__10cEventFade
 // Address: 0x7aecf0 - 0x7aed20
-void initPlay__10cEventFade_0x7aecf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void initPlay__10cEventFade_0x7aecf0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("initPlay__10cEventFade_0x7aecf0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7aed0cu: goto label_7aed0c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7aecf0u, 0)) {
+        switch (ctx->pc) {
+            case 0x7aed0cu: goto label_7aed0c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7aecf0u;
+
 
     // 0x7aecf0: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x7aecf0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x7aecf4: 0x3c05007b  lui         $a1, 0x7B
-    ctx->pc = 0x7aecf4u;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)123 << 16));
     // 0x7aecf8: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x7aecf8u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 16));
     // 0x7aecfc: 0x24a54e80  addiu       $a1, $a1, 0x4E80
-    ctx->pc = 0x7aecfcu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 20096));
     // 0x7aed00: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x7aed00u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x7aed04: 0xc1ed1ae  jal         func_7B46B8
-    ctx->pc = 0x7AED04u;
     SET_GPR_U32(ctx, 31, 0x7AED0Cu);
-    ctx->pc = 0x7AED08u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x7AED04u;
     // 0x7aed08: 0x80802d  daddu       $s0, $a0, $zero (Delay Slot)
@@ -54,7 +51,6 @@ void initPlay__10cEventFade_0x7aecf0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x7B46B8u, 0x7AED04u, 0x7AED0Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7AED0Cu;
 label_7aed0c:
     // 0x7aed0c: 0xa2000018  sb          $zero, 0x18($s0)
     ctx->pc = 0x7aed0cu;

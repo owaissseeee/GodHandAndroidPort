@@ -13,7 +13,7 @@
 
 // Function: SetEffectParts
 // Address: 0x306900 - 0x3069a8
-void SetEffectParts_0x306900(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetEffectParts_0x306900(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetEffectParts_0x306900");
 #endif
@@ -139,7 +139,6 @@ void SetEffectParts_0x306900(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x30699cu)) {
         return;
     }
-    ctx->pc = 0x30699Cu;
 label_30699c:
     // 0x30699c: 0xdfbf0080  ld          $ra, 0x80($sp)
     ctx->pc = 0x30699cu;

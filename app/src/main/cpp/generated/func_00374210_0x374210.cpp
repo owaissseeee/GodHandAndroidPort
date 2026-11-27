@@ -13,7 +13,7 @@
 
 // Function: func_00374210
 // Address: 0x374210 - 0x374318
-void func_00374210_0x374210(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00374210_0x374210(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00374210_0x374210");
 #endif
@@ -72,7 +72,6 @@ void func_00374210_0x374210(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_374248;
         }
     }
-    ctx->pc = 0x374248u;
 label_374248:
     // 0x374248: 0x24cb0001  addiu       $t3, $a2, 0x1
     SET_GPR_S32(ctx, 11, (int32_t)ADD32(GPR_U32(ctx, 6), 1));
@@ -139,7 +138,6 @@ label_374248:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031C8E0_0x31c8e0, 0x31c8e0u, 0x3742b8u)) {
         return;
     }
-    ctx->pc = 0x3742B8u;
 label_3742b8:
     // 0x3742b8: 0x1040000e  beqz        $v0, . + 4 + (0xE << 2)
     ctx->pc = 0x3742B8u;
@@ -175,7 +173,6 @@ label_3742b8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032D340_0x32d340, 0x32d340u, 0x3742d4u)) {
         return;
     }
-    ctx->pc = 0x3742D4u;
 label_3742d4:
     // 0x3742d4: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x3742D4u;
@@ -207,7 +204,6 @@ label_3742d4:
             goto label_3742f8;
         }
     }
-    ctx->pc = 0x3742E4u;
 label_3742e4:
     // 0x3742e4: 0x8e240004  lw          $a0, 0x4($s1)
     ctx->pc = 0x3742e4u;
@@ -223,14 +219,12 @@ label_3742e4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031C928_0x31c928, 0x31c928u, 0x3742f0u)) {
         return;
     }
-    ctx->pc = 0x3742F0u;
 label_3742f0:
     // 0x3742f0: 0xae200004  sw          $zero, 0x4($s1)
     ctx->pc = 0x3742f0u;
     WRITE32(ADD32(GPR_U32(ctx, 17), 4), GPR_U32(ctx, 0));
 label_3742f4:
     // 0x3742f4: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x3742f4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_3742f8:
     // 0x3742f8: 0x7bb00040  lq          $s0, 0x40($sp)

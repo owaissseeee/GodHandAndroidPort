@@ -13,7 +13,7 @@
 
 // Function: SetLinkedObjField2B_1D6D68
 // Address: 0x1d6d68 - 0x1d6db0
-void SetLinkedObjField2B_1D6D68_0x1d6d68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetLinkedObjField2B_1D6D68_0x1d6d68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetLinkedObjField2B_1D6D68_0x1d6d68");
 #endif
@@ -66,7 +66,6 @@ void SetLinkedObjField2B_1D6D68_0x1d6d68(uint8_t* rdram, R5900Context* ctx, PS2R
         return;
         #endif
     }
-    ctx->pc = 0x1D6D8Cu;
 label_1d6d8c:
     // 0x1d6d8c: 0x244301d4  addiu       $v1, $v0, 0x1D4
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 468));

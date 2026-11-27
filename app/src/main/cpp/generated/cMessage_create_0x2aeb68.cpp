@@ -13,7 +13,7 @@
 
 // Function: cMessage_create
 // Address: 0x2aeb68 - 0x2aebf8
-void cMessage_create_0x2aeb68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessage_create_0x2aeb68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessage_create_0x2aeb68");
 #endif
@@ -71,7 +71,6 @@ void cMessage_create_0x2aeb68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AEDF0_0x2aedf0, 0x2aedf0u, 0x2aeba4u)) {
         return;
     }
-    ctx->pc = 0x2AEBA4u;
 label_2aeba4:
     // 0x2aeba4: 0x200282d  daddu       $a1, $s0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -86,7 +85,6 @@ label_2aeba4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AEE40_0x2aee40, 0x2aee40u, 0x2aebb0u)) {
         return;
     }
-    ctx->pc = 0x2AEBB0u;
 label_2aebb0:
     // 0x2aebb0: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -120,7 +118,6 @@ label_2aebb0:
     if (!runtime->callDirectStatic(rdram, ctx, &ActorMove_resetMotion_0x2b2158, 0x2b2158u, 0x2aebccu)) {
         return;
     }
-    ctx->pc = 0x2AEBCCu;
 label_2aebcc:
     // 0x2aebcc: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x2AEBCCu;
@@ -137,10 +134,8 @@ label_2aebcc:
             goto label_2aebd8;
         }
     }
-    ctx->pc = 0x2AEBD4u;
 label_2aebd4:
     // 0x2aebd4: 0x3402ffff  ori         $v0, $zero, 0xFFFF
-    ctx->pc = 0x2aebd4u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
 label_2aebd8:
     // 0x2aebd8: 0x7bb00050  lq          $s0, 0x50($sp)

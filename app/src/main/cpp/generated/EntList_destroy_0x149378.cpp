@@ -13,7 +13,7 @@
 
 // Function: EntList_destroy
 // Address: 0x149378 - 0x149400
-void EntList_destroy_0x149378(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EntList_destroy_0x149378(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EntList_destroy_0x149378");
 #endif
@@ -55,7 +55,6 @@ void EntList_destroy_0x149378(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A9860_0x2a9860, 0x2a9860u, 0x149394u)) {
         return;
     }
-    ctx->pc = 0x149394u;
 label_149394:
     // 0x149394: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -77,7 +76,6 @@ label_149394:
     // 0x1493a0: 0x200282d  daddu       $a1, $s0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1493a4: 0x0  nop
-    ctx->pc = 0x1493a4u;
     // NOP
 label_1493a8:
     // 0x1493a8: 0xc0aa618  jal         func_2A9860
@@ -91,7 +89,6 @@ label_1493a8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A9860_0x2a9860, 0x2a9860u, 0x1493b0u)) {
         return;
     }
-    ctx->pc = 0x1493B0u;
 label_1493b0:
     // 0x1493b0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -108,7 +105,6 @@ label_1493b0:
     if (!runtime->callDirectStatic(rdram, ctx, &BufHolder_deletingDtor_0x1483c8, 0x1483c8u, 0x1493c0u)) {
         return;
     }
-    ctx->pc = 0x1493C0u;
 label_1493c0:
     // 0x1493c0: 0x1600fff9  bnez        $s0, . + 4 + (-0x7 << 2)
     ctx->pc = 0x1493C0u;
@@ -143,7 +139,6 @@ label_1493cc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A9790_0x2a9790, 0x2a9790u, 0x1493d4u)) {
         return;
     }
-    ctx->pc = 0x1493D4u;
 label_1493d4:
     // 0x1493d4: 0x52000005  beql        $s0, $zero, . + 4 + (0x5 << 2)
     ctx->pc = 0x1493D4u;
@@ -174,7 +169,6 @@ label_1493d4:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x1493E0u, 0x1493E8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1493E8u;
 label_1493e8:
     // 0x1493e8: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1493e8u;

@@ -13,7 +13,7 @@
 
 // Function: cOmWeapon_ckGetEnable
 // Address: 0x1d07e0 - 0x1d07e8
-void cOmWeapon_ckGetEnable_0x1d07e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmWeapon_ckGetEnable_0x1d07e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmWeapon_ckGetEnable_0x1d07e0");
 #endif

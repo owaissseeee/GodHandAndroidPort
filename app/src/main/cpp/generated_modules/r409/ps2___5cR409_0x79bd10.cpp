@@ -14,21 +14,22 @@ namespace gh_r409
 {
 // Function: __5cR409
 // Address: 0x79bd10 - 0x79be38
-void ps2___5cR409_0x79bd10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___5cR409_0x79bd10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___5cR409_0x79bd10");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79bd88u: goto label_79bd88;
-        case 0x79be18u: goto label_79be18;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x79bd10u, 0)) {
+        switch (ctx->pc) {
+            case 0x79bd88u: goto label_79bd88;
+            case 0x79be18u: goto label_79be18;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x79bd10u;
+
 
     // 0x79bd10: 0x24820030  addiu       $v0, $a0, 0x30
-    ctx->pc = 0x79bd10u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 48));
     // 0x79bd14: 0xf8800080  sqc2        $vf0, 0x80($a0)
     ctx->pc = 0x79bd14u;
@@ -76,13 +77,11 @@ void ps2___5cR409_0x79bd10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     ctx->pc = 0x79bd4cu;
     WRITE8(ADD32(GPR_U32(ctx, 4), 48), (uint8_t)GPR_U32(ctx, 0));
     // 0x79bd50: 0x282d  daddu       $a1, $zero, $zero
-    ctx->pc = 0x79bd50u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x79bd54: 0xac40013c  sw          $zero, 0x13C($v0)
     ctx->pc = 0x79bd54u;
     WRITE32(ADD32(GPR_U32(ctx, 2), 316), GPR_U32(ctx, 0));
     // 0x79bd58: 0x2483003c  addiu       $v1, $a0, 0x3C
-    ctx->pc = 0x79bd58u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), 60));
     // 0x79bd5c: 0xa0400001  sb          $zero, 0x1($v0)
     ctx->pc = 0x79bd5cu;
@@ -122,13 +121,10 @@ label_79bd88:
     ctx->pc = 0x79bd88u;
     WRITE32(ADD32(GPR_U32(ctx, 3), 0), GPR_U32(ctx, 0));
     // 0x79bd8c: 0x24a50001  addiu       $a1, $a1, 0x1
-    ctx->pc = 0x79bd8cu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 1));
     // 0x79bd90: 0x2ca20008  sltiu       $v0, $a1, 0x8
-    ctx->pc = 0x79bd90u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 5) < (uint64_t)(int64_t)(int32_t)8) ? 1 : 0);
     // 0x79bd94: 0x0  nop
-    ctx->pc = 0x79bd94u;
     // NOP
     // 0x79bd98: 0x1440fffb  bnez        $v0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x79BD98u;
@@ -148,9 +144,7 @@ label_79bd88:
             goto label_79bd88;
         }
     }
-    ctx->pc = 0x79BDA0u;
     // 0x79bda0: 0x24820190  addiu       $v0, $a0, 0x190
-    ctx->pc = 0x79bda0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 400));
     // 0x79bda4: 0xf88001e0  sqc2        $vf0, 0x1E0($a0)
     ctx->pc = 0x79bda4u;
@@ -198,13 +192,11 @@ label_79bd88:
     ctx->pc = 0x79bddcu;
     WRITE8(ADD32(GPR_U32(ctx, 4), 400), (uint8_t)GPR_U32(ctx, 0));
     // 0x79bde0: 0x282d  daddu       $a1, $zero, $zero
-    ctx->pc = 0x79bde0u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x79bde4: 0xac40013c  sw          $zero, 0x13C($v0)
     ctx->pc = 0x79bde4u;
     WRITE32(ADD32(GPR_U32(ctx, 2), 316), GPR_U32(ctx, 0));
     // 0x79bde8: 0x2483019c  addiu       $v1, $a0, 0x19C
-    ctx->pc = 0x79bde8u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), 412));
     // 0x79bdec: 0xa0400001  sb          $zero, 0x1($v0)
     ctx->pc = 0x79bdecu;
@@ -244,13 +236,10 @@ label_79be18:
     ctx->pc = 0x79be18u;
     WRITE32(ADD32(GPR_U32(ctx, 3), 0), GPR_U32(ctx, 0));
     // 0x79be1c: 0x24a50001  addiu       $a1, $a1, 0x1
-    ctx->pc = 0x79be1cu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 1));
     // 0x79be20: 0x2ca20008  sltiu       $v0, $a1, 0x8
-    ctx->pc = 0x79be20u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 5) < (uint64_t)(int64_t)(int32_t)8) ? 1 : 0);
     // 0x79be24: 0x0  nop
-    ctx->pc = 0x79be24u;
     // NOP
     // 0x79be28: 0x1440fffb  bnez        $v0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x79BE28u;
@@ -270,7 +259,6 @@ label_79be18:
             goto label_79be18;
         }
     }
-    ctx->pc = 0x79BE30u;
     // 0x79be30: 0x3e00008  jr          $ra
     ctx->pc = 0x79BE30u;
     {

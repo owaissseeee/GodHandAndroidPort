@@ -13,7 +13,7 @@
 
 // Function: cObj_R0_scenario
 // Address: 0x14e768 - 0x14e778
-void cObj_R0_scenario_0x14e768(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cObj_R0_scenario_0x14e768(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cObj_R0_scenario_0x14e768");
 #endif

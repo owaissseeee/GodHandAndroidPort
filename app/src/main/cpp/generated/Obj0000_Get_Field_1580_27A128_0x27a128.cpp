@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Get_Field_1580_27A128
 // Address: 0x27a128 - 0x27a130
-void Obj0000_Get_Field_1580_27A128_0x27a128(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Get_Field_1580_27A128_0x27a128(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Get_Field_1580_27A128_0x27a128");
 #endif

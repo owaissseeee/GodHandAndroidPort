@@ -13,7 +13,7 @@
 
 // Function: func_002D4340
 // Address: 0x2d4340 - 0x2d45b0
-void func_002D4340_0x2d4340(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002D4340_0x2d4340(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002D4340_0x2d4340");
 #endif
@@ -144,7 +144,6 @@ void func_002D4340_0x2d4340(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x2d43d4: 0x431021  addu        $v0, $v0, $v1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
     // 0x2d43d8: 0x22042  srl         $a0, $v0, 1
-    ctx->pc = 0x2d43d8u;
     SET_GPR_S32(ctx, 4, (int32_t)SRL32(GPR_U32(ctx, 2), 1));
 label_2d43dc:
     // 0x2d43dc: 0x41400  sll         $v0, $a0, 16
@@ -195,7 +194,6 @@ label_2d43dc:
     // 0x2d4420: 0x34e7ffff  ori         $a3, $a3, 0xFFFF
     SET_GPR_U64(ctx, 7, GPR_U64(ctx, 7) | (uint64_t)(uint16_t)65535);
     // 0x2d4424: 0x0  nop
-    ctx->pc = 0x2d4424u;
     // NOP
 label_2d4428:
     // 0x2d4428: 0xa71024  and         $v0, $a1, $a3
@@ -237,7 +235,6 @@ label_2d4428:
             goto label_2d4428;
         }
     }
-    ctx->pc = 0x2D4454u;
 label_2d4454:
     // 0x2d4454: 0x85050020  lh          $a1, 0x20($t0)
     ctx->pc = 0x2d4454u;
@@ -324,7 +321,6 @@ label_2d4454:
     ctx->pc = 0x2d44e0u;
     { float f = ctx->f[1]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 29), 12), bits); }
     // 0x2d44e4: 0x0  nop
-    ctx->pc = 0x2d44e4u;
     // NOP
 label_2d44e8:
     // 0x2d44e8: 0x200202d  daddu       $a0, $s0, $zero
@@ -340,7 +336,6 @@ label_2d44e8:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0FTOI4Vector_0x30a570, 0x30a570u, 0x2d44f4u)) {
         return;
     }
-    ctx->pc = 0x2D44F4u;
 label_2d44f4:
     // 0x2d44f4: 0x2652fff0  addiu       $s2, $s2, -0x10
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), 4294967280));
@@ -440,7 +435,6 @@ label_2d44f4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031A650_0x31a650, 0x31a650u, 0x2d457cu)) {
         return;
     }
-    ctx->pc = 0x2D457Cu;
 label_2d457c:
     // 0x2d457c: 0x7bb000d0  lq          $s0, 0xD0($sp)
     ctx->pc = 0x2d457cu;

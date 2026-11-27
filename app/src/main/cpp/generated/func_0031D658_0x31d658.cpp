@@ -13,7 +13,7 @@
 
 // Function: func_0031D658
 // Address: 0x31d658 - 0x31d6e8
-void func_0031D658_0x31d658(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0031D658_0x31d658(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0031D658_0x31d658");
 #endif
@@ -72,7 +72,6 @@ void func_0031D658_0x31d658(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x31d688u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 18), 0)));
     // 0x31d68c: 0x0  nop
-    ctx->pc = 0x31d68cu;
     // NOP
 label_31d690:
     // 0x31d690: 0x200302d  daddu       $a2, $s0, $zero
@@ -99,7 +98,6 @@ label_31d690:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031D3D0_0x31d3d0, 0x31d3d0u, 0x31d6b0u)) {
         return;
     }
-    ctx->pc = 0x31D6B0u;
 label_31d6b0:
     // 0x31d6b0: 0x96220008  lhu         $v0, 0x8($s1)
     ctx->pc = 0x31d6b0u;

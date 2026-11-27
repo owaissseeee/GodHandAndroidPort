@@ -13,7 +13,7 @@
 
 // Function: Obj3290_Tramp_0033E690_9040
 // Address: 0x329040 - 0x329058
-void Obj3290_Tramp_0033E690_9040_0x329040(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj3290_Tramp_0033E690_9040_0x329040(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj3290_Tramp_0033E690_9040_0x329040");
 #endif

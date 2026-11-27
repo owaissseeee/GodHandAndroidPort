@@ -13,7 +13,7 @@
 
 // Function: Entry_releaseIfReady
 // Address: 0x201a00 - 0x201a50
-void Entry_releaseIfReady_0x201a00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Entry_releaseIfReady_0x201a00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Entry_releaseIfReady_0x201a00");
 #endif
@@ -39,7 +39,6 @@ void Entry_releaseIfReady_0x201a00(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3999A8u, 0x201A08u, 0x201A10u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x201A10u;
 label_201a10:
     // 0x201a10: 0x24030014  addiu       $v1, $zero, 0x14
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 20));
@@ -73,7 +72,6 @@ label_201a10:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00323618_0x323618, 0x323618u, 0x201a2cu)) {
         return;
     }
-    ctx->pc = 0x201A2Cu;
 label_201a2c:
     // 0x201a2c: 0x50400004  beql        $v0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x201A2Cu;
@@ -101,10 +99,8 @@ label_201a2c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00323A70_0x323a70, 0x323a70u, 0x201a3cu)) {
         return;
     }
-    ctx->pc = 0x201A3Cu;
 label_201a3c:
     // 0x201a3c: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x201a3cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_201a40:
     // 0x201a40: 0xdfbf0000  ld          $ra, 0x0($sp)

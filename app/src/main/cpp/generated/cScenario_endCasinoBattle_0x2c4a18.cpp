@@ -13,7 +13,7 @@
 
 // Function: cScenario_endCasinoBattle
 // Address: 0x2c4a18 - 0x2c4a70
-void cScenario_endCasinoBattle_0x2c4a18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_endCasinoBattle_0x2c4a18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_endCasinoBattle_0x2c4a18");
 #endif
@@ -42,7 +42,6 @@ void cScenario_endCasinoBattle_0x2c4a18(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_002C0038_0x2c0038, 0x2c0038u, 0x2c4a30u)) {
         return;
     }
-    ctx->pc = 0x2C4A30u;
 label_2c4a30:
     // 0x2c4a30: 0x3c070074  lui         $a3, 0x74
     SET_GPR_S32(ctx, 7, (int32_t)((uint32_t)116 << 16));

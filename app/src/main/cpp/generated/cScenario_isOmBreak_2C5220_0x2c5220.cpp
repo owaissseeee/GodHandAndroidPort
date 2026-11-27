@@ -13,7 +13,7 @@
 
 // Function: cScenario_isOmBreak_2C5220
 // Address: 0x2c5220 - 0x2c5288
-void cScenario_isOmBreak_2C5220_0x2c5220(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_isOmBreak_2C5220_0x2c5220(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_isOmBreak_2C5220_0x2c5220");
 #endif
@@ -108,7 +108,6 @@ label_2c5248:
             goto label_2c5248;
         }
     }
-    ctx->pc = 0x2C5270u;
 label_2c5270:
     // 0x2c5270: 0x120202d  daddu       $a0, $t1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 9) + (uint64_t)GPR_U64(ctx, 0));
@@ -123,7 +122,6 @@ label_2c5270:
     if (!runtime->callDirectStatic(rdram, ctx, &ForwardCheckedRequest_2BED60_0x2bed60, 0x2bed60u, 0x2c527cu)) {
         return;
     }
-    ctx->pc = 0x2C527Cu;
 label_2c527c:
     // 0x2c527c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2c527cu;

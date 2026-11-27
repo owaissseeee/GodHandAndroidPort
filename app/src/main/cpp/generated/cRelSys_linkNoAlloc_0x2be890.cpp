@@ -13,7 +13,7 @@
 
 // Function: cRelSys_linkNoAlloc
 // Address: 0x2be890 - 0x2be8b0
-void cRelSys_linkNoAlloc_0x2be890(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cRelSys_linkNoAlloc_0x2be890(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cRelSys_linkNoAlloc_0x2be890");
 #endif
@@ -44,7 +44,6 @@ void cRelSys_linkNoAlloc_0x2be890(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &SetValueAndValidate_2BE630_0x2be630, 0x2be630u, 0x2be8a4u)) {
         return;
     }
-    ctx->pc = 0x2BE8A4u;
 label_2be8a4:
     // 0x2be8a4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2be8a4u;

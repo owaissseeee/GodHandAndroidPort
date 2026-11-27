@@ -13,7 +13,7 @@
 
 // Function: GiveOwner_createGiveVolumes
 // Address: 0x1efff8 - 0x1f00e8
-void GiveOwner_createGiveVolumes_0x1efff8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GiveOwner_createGiveVolumes_0x1efff8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GiveOwner_createGiveVolumes_0x1efff8");
 #endif
@@ -72,7 +72,6 @@ void GiveOwner_createGiveVolumes_0x1efff8(uint8_t* rdram, R5900Context* ctx, PS2
     // 0x1f0038: 0x4481a000  mtc1        $at, $f20
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[20], &bits, sizeof(bits)); }
     // 0x1f003c: 0x0  nop
-    ctx->pc = 0x1f003cu;
     // NOP
 label_1f0040:
     // 0x1f0040: 0x26a44380  addiu       $a0, $s5, 0x4380
@@ -92,7 +91,6 @@ label_1f0040:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_CreateDamageGive_0x1fe0e8, 0x1fe0e8u, 0x1f0054u)) {
         return;
     }
-    ctx->pc = 0x1F0054u;
 label_1f0054:
     // 0x1f0054: 0x26857ac0  addiu       $a1, $s4, 0x7AC0
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 20), 31424));
@@ -137,7 +135,6 @@ label_1f0054:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_AddDamageCollSphere_0x1fdaf0, 0x1fdaf0u, 0x1f0080u)) {
         return;
     }
-    ctx->pc = 0x1F0080u;
 label_1f0080:
     // 0x1f0080: 0x8e030000  lw          $v1, 0x0($s0)
     ctx->pc = 0x1f0080u;
@@ -164,7 +161,6 @@ label_1f0080:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x1f009cu)) {
         return;
     }
-    ctx->pc = 0x1F009Cu;
 label_1f009c:
     // 0x1f009c: 0x8e030000  lw          $v1, 0x0($s0)
     ctx->pc = 0x1f009cu;

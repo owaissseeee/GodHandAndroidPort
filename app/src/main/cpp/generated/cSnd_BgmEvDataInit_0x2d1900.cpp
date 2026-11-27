@@ -13,7 +13,7 @@
 
 // Function: cSnd_BgmEvDataInit
 // Address: 0x2d1900 - 0x2d1958
-void cSnd_BgmEvDataInit_0x2d1900(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BgmEvDataInit_0x2d1900(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BgmEvDataInit_0x2d1900");
 #endif
@@ -55,7 +55,6 @@ void cSnd_BgmEvDataInit_0x2d1900(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_GetBgmData_0x2d2d98, 0x2d2d98u, 0x2d1920u)) {
         return;
     }
-    ctx->pc = 0x2D1920u;
 label_2d1920:
     // 0x2d1920: 0xc0b3fe4  jal         func_2CFF90
     SET_GPR_U32(ctx, 31, 0x2D1928u);
@@ -68,7 +67,6 @@ label_2d1920:
     if (!runtime->callDirectStatic(rdram, ctx, &cBgmData_Reset_0x2cff90, 0x2cff90u, 0x2d1928u)) {
         return;
     }
-    ctx->pc = 0x2D1928u;
 label_2d1928:
     // 0x2d1928: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -83,7 +81,6 @@ label_2d1928:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_GetBgmData_0x2d2d98, 0x2d2d98u, 0x2d1934u)) {
         return;
     }
-    ctx->pc = 0x2D1934u;
 label_2d1934:
     // 0x2d1934: 0x220302d  daddu       $a2, $s1, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -100,7 +97,6 @@ label_2d1934:
     if (!runtime->callDirectStatic(rdram, ctx, &cBgmData_LoadNumbered_0x2d0128, 0x2d0128u, 0x2d1944u)) {
         return;
     }
-    ctx->pc = 0x2D1944u;
 label_2d1944:
     // 0x2d1944: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2d1944u;

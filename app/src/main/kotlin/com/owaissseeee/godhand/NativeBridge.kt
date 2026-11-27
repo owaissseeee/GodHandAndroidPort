@@ -25,7 +25,9 @@ object NativeBridge {
     external fun onSurfaceCreated(surface: Surface, width: Int, height: Int, rendererIdx: Int, resScaleIdx: Int, aspectIdx: Int, fpsIdx: Int, frameskipIdx: Int)
     external fun onSurfaceDestroyed()
     external fun updatePadState(buttonMask: Int, lx: Float, ly: Float, rx: Float, ry: Float)
+    external fun getPadVibrationState(): Int
     external fun setFrameskipMode(mode: Int)
+    external fun setUltraPotatoMode(enabled: Boolean)
     external fun setResolutionScale(resScaleIdx: Int)
     external fun setAspectRatio(aspectIdx: Int)
     external fun setHudLayout(mode: Int)
@@ -66,12 +68,15 @@ object NativeBridge {
     const val MENU_DIALOG        = 10
     const val MENU_MAP           = 11
 
-    const val FLAG_SCROLLABLE    = 1 shl 16
-    const val FLAG_LIVE_ROULETTE = 1 shl 17
+    const val FLAG_SCROLLABLE      = 1 shl 16
+    const val FLAG_LIVE_ROULETTE   = 1 shl 17
+    const val FLAG_CUTSCENE_ACTIVE = 1 shl 18
 
     external fun getActiveMenuState(): Int
+    external fun pollFrameState(canRumble: Boolean): Long
     external fun onMenuTouchEvent(action: Int, x: Float, y: Float, dx: Float, dy: Float)
     external fun onMenuBackPressed(): Boolean
+    external fun triggerCutsceneSkip()
     external fun setMenuTouchEnabled(enabled: Boolean)
     external fun getMenuDebugInfo(outArray: IntArray)
     external fun setHitboxOverride(screenId: Int, subState: Int, buttonId: Int, x0: Float, y0: Float, x1: Float, y1: Float)

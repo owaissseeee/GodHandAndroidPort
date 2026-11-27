@@ -13,7 +13,7 @@
 
 // Function: ClearLinkedTarget_12CC00
 // Address: 0x12cc00 - 0x12cc70
-void ClearLinkedTarget_12CC00_0x12cc00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearLinkedTarget_12CC00_0x12cc00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearLinkedTarget_12CC00_0x12cc00");
 #endif
@@ -108,10 +108,8 @@ void ClearLinkedTarget_12CC00_0x12cc00(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &KillEffect_306168_0x306168, 0x306168u, 0x12cc48u)) {
         return;
     }
-    ctx->pc = 0x12CC48u;
 label_12cc48:
     // 0x12cc48: 0x202d  daddu       $a0, $zero, $zero
-    ctx->pc = 0x12cc48u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_12cc4c:
     // 0x12cc4c: 0x24050061  addiu       $a1, $zero, 0x61
@@ -127,7 +125,6 @@ label_12cc4c:
     if (!runtime->callDirectStatic(rdram, ctx, &KillEffect_306168_0x306168, 0x306168u, 0x12cc58u)) {
         return;
     }
-    ctx->pc = 0x12CC58u;
 label_12cc58:
     // 0x12cc58: 0xae000644  sw          $zero, 0x644($s0)
     ctx->pc = 0x12cc58u;

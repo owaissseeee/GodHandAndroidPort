@@ -13,7 +13,7 @@
 
 // Function: cHeatSys_AddHeatGage
 // Address: 0x2a9978 - 0x2a9ad0
-void cHeatSys_AddHeatGage_0x2a9978(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cHeatSys_AddHeatGage_0x2a9978(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cHeatSys_AddHeatGage_0x2a9978");
 #endif
@@ -101,10 +101,8 @@ void cHeatSys_AddHeatGage_0x2a9978(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_2a9abc;
         }
     }
-    ctx->pc = 0x2A99C0u;
 label_2a99c0:
     // 0x2a99c0: 0x3c040057  lui         $a0, 0x57
-    ctx->pc = 0x2a99c0u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)87 << 16));
 label_2a99c4:
     // 0x2a99c4: 0x3c050400  lui         $a1, 0x400
@@ -143,7 +141,6 @@ label_2a99c4:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getGameDifficulty_0x1fa678, 0x1fa678u, 0x2a99e4u)) {
         return;
     }
-    ctx->pc = 0x2A99E4u;
 label_2a99e4:
     // 0x2a99e4: 0x14400005  bnez        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x2A99E4u;
@@ -161,7 +158,6 @@ label_2a99e4:
     // 0x2a99f4: 0x0  nop
     // NOP
     // 0x2a99f8: 0x4600a502  mul.s       $f20, $f20, $f0
-    ctx->pc = 0x2a99f8u;
     ctx->f[20] = FPU_MUL_S(ctx->f[20], ctx->f[0]);
 label_2a99fc:
     // 0x2a99fc: 0x3c0142f0  lui         $at, 0x42F0
@@ -329,7 +325,6 @@ label_2a9ab0:
     if (!runtime->callDirectStatic(rdram, ctx, &cHeatSys_UpdateHeatLv_0x2a9b50, 0x2a9b50u, 0x2a9ab8u)) {
         return;
     }
-    ctx->pc = 0x2A9AB8u;
 label_2a9ab8:
     // 0x2a9ab8: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2a9ab8u;

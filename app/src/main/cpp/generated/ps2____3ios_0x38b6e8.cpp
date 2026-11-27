@@ -13,7 +13,7 @@
 
 // Function: _$_3ios
 // Address: 0x38b6e8 - 0x38b748
-void ps2____3ios_0x38b6e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2____3ios_0x38b6e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2____3ios_0x38b6e8");
 #endif
@@ -71,7 +71,6 @@ void ps2____3ios_0x38b6e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_vec_delete_0x30f5c8, 0x30f5c8u, 0x38b71cu)) {
         return;
     }
-    ctx->pc = 0x38B71Cu;
 label_38b71c:
     // 0x38b71c: 0x32220001  andi        $v0, $s1, 0x1
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 17) & (uint64_t)(uint16_t)1);
@@ -101,7 +100,6 @@ label_38b71c:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x38b730u)) {
         return;
     }
-    ctx->pc = 0x38B730u;
 label_38b730:
     // 0x38b730: 0xdfbf0020  ld          $ra, 0x20($sp)
     ctx->pc = 0x38b730u;

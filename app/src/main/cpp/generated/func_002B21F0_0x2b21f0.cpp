@@ -13,7 +13,7 @@
 
 // Function: func_002B21F0
 // Address: 0x2b21f0 - 0x2b22e0
-void func_002B21F0_0x2b21f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002B21F0_0x2b21f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002B21F0_0x2b21f0");
 #endif
@@ -65,7 +65,6 @@ void func_002B21F0_0x2b21f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cMessage_getMessageAddr_0x2aead0, 0x2aead0u, 0x2b2220u)) {
         return;
     }
-    ctx->pc = 0x2B2220u;
 label_2b2220:
     // 0x2b2220: 0x8e0423a4  lw          $a0, 0x23A4($s0)
     ctx->pc = 0x2b2220u;
@@ -83,7 +82,6 @@ label_2b2220:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessage_getRubyAddr_0x2aeb00, 0x2aeb00u, 0x2b2230u)) {
         return;
     }
-    ctx->pc = 0x2B2230u;
 label_2b2230:
     // 0x2b2230: 0x8e230014  lw          $v1, 0x14($s1)
     ctx->pc = 0x2b2230u;
@@ -119,7 +117,6 @@ label_2b2230:
     ctx->pc = 0x2b2260u;
     WRITE32(ADD32(GPR_U32(ctx, 17), 52), GPR_U32(ctx, 0));
     // 0x2b2264: 0x0  nop
-    ctx->pc = 0x2b2264u;
     // NOP
 label_2b2268:
     // 0x2b2268: 0xa4660000  sh          $a2, 0x0($v1)

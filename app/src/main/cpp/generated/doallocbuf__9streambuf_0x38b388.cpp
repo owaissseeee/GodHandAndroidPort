@@ -13,7 +13,7 @@
 
 // Function: doallocbuf__9streambuf
 // Address: 0x38b388 - 0x38b3a8
-void doallocbuf__9streambuf_0x38b388(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void doallocbuf__9streambuf_0x38b388(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("doallocbuf__9streambuf_0x38b388");
 #endif
@@ -37,7 +37,6 @@ void doallocbuf__9streambuf_0x38b388(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0038C7F0_0x38c7f0, 0x38c7f0u, 0x38b398u)) {
         return;
     }
-    ctx->pc = 0x38B398u;
 label_38b398:
     // 0x38b398: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38b398u;

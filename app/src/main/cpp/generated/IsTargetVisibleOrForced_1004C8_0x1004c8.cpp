@@ -13,7 +13,7 @@
 
 // Function: IsTargetVisibleOrForced_1004C8
 // Address: 0x1004c8 - 0x100508
-void IsTargetVisibleOrForced_1004C8_0x1004c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IsTargetVisibleOrForced_1004C8_0x1004c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IsTargetVisibleOrForced_1004C8_0x1004c8");
 #endif
@@ -58,7 +58,6 @@ void IsTargetVisibleOrForced_1004C8_0x1004c8(uint8_t* rdram, R5900Context* ctx, 
     if (!runtime->callDirectStatic(rdram, ctx, &IsTargetVisible_14B470_0x14b470, 0x14b470u, 0x1004ecu)) {
         return;
     }
-    ctx->pc = 0x1004ECu;
 label_1004ec:
     // 0x1004ec: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x1004ECu;
@@ -75,10 +74,8 @@ label_1004ec:
             goto label_1004f8;
         }
     }
-    ctx->pc = 0x1004F4u;
 label_1004f4:
     // 0x1004f4: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1004f4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_1004f8:
     // 0x1004f8: 0xdfbf0000  ld          $ra, 0x0($sp)

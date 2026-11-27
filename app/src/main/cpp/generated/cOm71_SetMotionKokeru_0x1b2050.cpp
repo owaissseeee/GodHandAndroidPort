@@ -13,7 +13,7 @@
 
 // Function: cOm71_SetMotionKokeru
 // Address: 0x1b2050 - 0x1b20a8
-void cOm71_SetMotionKokeru_0x1b2050(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm71_SetMotionKokeru_0x1b2050(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm71_SetMotionKokeru_0x1b2050");
 #endif
@@ -66,7 +66,6 @@ void cOm71_SetMotionKokeru_0x1b2050(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x1b2088u)) {
         return;
     }
-    ctx->pc = 0x1B2088u;
 label_1b2088:
     // 0x1b2088: 0x8e020600  lw          $v0, 0x600($s0)
     ctx->pc = 0x1b2088u;

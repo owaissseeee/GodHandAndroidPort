@@ -13,7 +13,7 @@
 
 // Function: sceCdSync
 // Address: 0x398da0 - 0x398e40
-void sceCdSync_0x398da0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceCdSync_0x398da0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceCdSync_0x398da0");
 #endif
@@ -84,7 +84,6 @@ void sceCdSync_0x398da0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B1F28u, 0x398DC4u, 0x398DCCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x398DCCu;
 label_398dcc:
     // 0x398dcc: 0x3c110040  lui         $s1, 0x40
     SET_GPR_S32(ctx, 17, (int32_t)((uint32_t)64 << 16));
@@ -103,7 +102,6 @@ label_398dcc:
             goto label_398de0;
         }
     }
-    ctx->pc = 0x398DD8u;
 label_398dd8:
     // 0x398dd8: 0xc0ec2b8  jal         func_3B0AE0
     SET_GPR_U32(ctx, 31, 0x398DE0u);
@@ -116,7 +114,6 @@ label_398dd8:
     if (!runtime->callDirectStatic(rdram, ctx, &DelayThread_0x3b0ae0, 0x3b0ae0u, 0x398de0u)) {
         return;
     }
-    ctx->pc = 0x398DE0u;
 label_398de0:
     // 0x398de0: 0x8e228674  lw          $v0, -0x798C($s1)
     ctx->pc = 0x398de0u;
@@ -144,7 +141,6 @@ label_398de0:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B3328u, 0x398DECu, 0x398DF4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x398DF4u;
 label_398df4:
     // 0x398df4: 0x1440fff8  bnez        $v0, . + 4 + (-0x8 << 2)
     ctx->pc = 0x398DF4u;
@@ -179,7 +175,6 @@ label_398df4:
             goto label_398e30;
         }
     }
-    ctx->pc = 0x398E04u;
 label_398e04:
     // 0x398e04: 0x3c020040  lui         $v0, 0x40
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)64 << 16));
@@ -214,7 +209,6 @@ label_398e04:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B3328u, 0x398E18u, 0x398E20u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x398E20u;
 label_398e20:
     // 0x398e20: 0x14400002  bnez        $v0, . + 4 + (0x2 << 2)
     ctx->pc = 0x398E20u;
@@ -232,7 +226,6 @@ label_398e20:
         }
     }
     // 0x398e28: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x398e28u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_398e2c:
     // 0x398e2c: 0xdfbf0020  ld          $ra, 0x20($sp)

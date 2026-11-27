@@ -13,7 +13,7 @@
 
 // Function: cOm4f_setOpenCloseRot
 // Address: 0x1a4fe0 - 0x1a50a0
-void cOm4f_setOpenCloseRot_0x1a4fe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm4f_setOpenCloseRot_0x1a4fe0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm4f_setOpenCloseRot_0x1a4fe0");
 #endif
@@ -80,10 +80,8 @@ void cOm4f_setOpenCloseRot_0x1a4fe0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1a5014;
         }
     }
-    ctx->pc = 0x1A5010u;
 label_1a5010:
     // 0x1a5010: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1a5010u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1a5014:
     // 0x1a5014: 0x1040001f  beqz        $v0, . + 4 + (0x1F << 2)
@@ -131,10 +129,8 @@ label_1a5014:
             goto label_1a5038;
         }
     }
-    ctx->pc = 0x1A5034u;
 label_1a5034:
     // 0x1a5034: 0x182d  daddu       $v1, $zero, $zero
-    ctx->pc = 0x1a5034u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1a5038:
     // 0x1a5038: 0x10000012  b           . + 4 + (0x12 << 2)
@@ -152,7 +148,6 @@ label_1a5038:
             goto label_1a5084;
         }
     }
-    ctx->pc = 0x1A5040u;
 label_1a5040:
     // 0x1a5040: 0x908202b4  lbu         $v0, 0x2B4($a0)
     ctx->pc = 0x1a5040u;
@@ -190,10 +185,8 @@ label_1a5040:
             goto label_1a505c;
         }
     }
-    ctx->pc = 0x1A5058u;
 label_1a5058:
     // 0x1a5058: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1a5058u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1a505c:
     // 0x1a505c: 0x1040000d  beqz        $v0, . + 4 + (0xD << 2)
@@ -241,10 +234,8 @@ label_1a505c:
             goto label_1a5080;
         }
     }
-    ctx->pc = 0x1A507Cu;
 label_1a507c:
     // 0x1a507c: 0x182d  daddu       $v1, $zero, $zero
-    ctx->pc = 0x1a507cu;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1a5080:
     // 0x1a5080: 0xc4800798  lwc1        $f0, 0x798($a0)

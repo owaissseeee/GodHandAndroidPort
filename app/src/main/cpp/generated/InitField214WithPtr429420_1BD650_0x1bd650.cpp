@@ -13,7 +13,7 @@
 
 // Function: InitField214WithPtr429420_1BD650
 // Address: 0x1bd650 - 0x1bd698
-void InitField214WithPtr429420_1BD650_0x1bd650(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitField214WithPtr429420_1BD650_0x1bd650(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitField214WithPtr429420_1BD650_0x1bd650");
 #endif
@@ -57,7 +57,6 @@ void InitField214WithPtr429420_1BD650_0x1bd650(uint8_t* rdram, R5900Context* ctx
     if (!runtime->callDirectStatic(rdram, ctx, &func_001BDBB8_0x1bdbb8, 0x1bdbb8u, 0x1bd678u)) {
         return;
     }
-    ctx->pc = 0x1BD678u;
 label_1bd678:
     // 0x1bd678: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -72,7 +71,6 @@ label_1bd678:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField214PtrThenInit_1B6F38_0x1b6f38, 0x1b6f38u, 0x1bd684u)) {
         return;
     }
-    ctx->pc = 0x1BD684u;
 label_1bd684:
     // 0x1bd684: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1bd684u;

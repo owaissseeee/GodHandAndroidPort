@@ -13,7 +13,7 @@
 
 // Function: cWorldLight_Init_SatanLight
 // Address: 0x2d98c0 - 0x2d9b70
-void cWorldLight_Init_SatanLight_0x2d98c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cWorldLight_Init_SatanLight_0x2d98c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cWorldLight_Init_SatanLight_0x2d98c0");
 #endif
@@ -196,7 +196,6 @@ void cWorldLight_Init_SatanLight_0x2d98c0(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &cWorldLight_Set_LightData_0x2d90b0, 0x2d90b0u, 0x2d99c4u)) {
         return;
     }
-    ctx->pc = 0x2D99C4u;
 label_2d99c4:
     // 0x2d99c4: 0x3c013dcc  lui         $at, 0x3DCC
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15820 << 16));
@@ -325,7 +324,6 @@ label_2d99c4:
     if (!runtime->callDirectStatic(rdram, ctx, &cWorldLight_Set_LightData_0x2d90b0, 0x2d90b0u, 0x2d9a88u)) {
         return;
     }
-    ctx->pc = 0x2D9A88u;
 label_2d9a88:
     // 0x2d9a88: 0x3c01c1a9  lui         $at, 0xC1A9
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)49577 << 16));
@@ -417,7 +415,6 @@ label_2d9a88:
     if (!runtime->callDirectStatic(rdram, ctx, &cWorldLight_Set_LightData_0x2d90b0, 0x2d90b0u, 0x2d9b0cu)) {
         return;
     }
-    ctx->pc = 0x2D9B0Cu;
 label_2d9b0c:
     // 0x2d9b0c: 0x7bb000f0  lq          $s0, 0xF0($sp)
     ctx->pc = 0x2d9b0cu;

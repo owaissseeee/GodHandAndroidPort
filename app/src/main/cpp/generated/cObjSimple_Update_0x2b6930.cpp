@@ -14,7 +14,7 @@
 
 // Function: cObjSimple_Update
 // Address: 0x2b6930 - 0x2b6a40
-void cObjSimple_Update_0x2b6930(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cObjSimple_Update_0x2b6930(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cObjSimple_Update_0x2b6930");
 #endif
@@ -93,11 +93,9 @@ void cObjSimple_Update_0x2b6930(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
         }
     }
 
-    ctx->pc = 0x2b6930u;
 
 label_2b6930:
     // 0x2b6930: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x2b6930u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
 label_2b6934:
     // 0x2b6934: 0x7fb00010  sq          $s0, 0x10($sp)
@@ -109,7 +107,6 @@ label_2b6938:
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
 label_2b693c:
     // 0x2b693c: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x2b693cu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_2b6940:
     // 0x2b6940: 0x920302f4  lbu         $v1, 0x2F4($s0)
@@ -186,7 +183,6 @@ label_2b6958:
             goto label_2b6970;
         }
     }
-    ctx->pc = 0x2B695Cu;
 label_2b695c:
     // 0x2b695c: 0x8e020214  lw          $v0, 0x214($s0)
     ctx->pc = 0x2b695cu;
@@ -227,10 +223,8 @@ label_2b696c:
             return;
         }
     }
-    ctx->pc = 0x2B6970u;
 label_2b6970:
     // 0x2b6970: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x2b6970u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
 label_2b6974:
     // 0x2b6974: 0x44816000  mtc1        $at, $f12
@@ -265,7 +259,6 @@ label_2b697c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x14E4D0u, 0x2B6978u, 0x2B6980u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2B6980u;
 label_2b6980:
     // 0x2b6980: 0x920204e0  lbu         $v0, 0x4E0($s0)
     ctx->pc = 0x2b6980u;
@@ -333,7 +326,6 @@ label_2b6998:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_calcParts_0x149eb8, 0x149eb8u, 0x2b699cu)) {
         return;
     }
-    ctx->pc = 0x2B699Cu;
 label_2b699c:
     // 0x2b699c: 0x8e0204dc  lw          $v0, 0x4DC($s0)
     ctx->pc = 0x2b699cu;
@@ -389,7 +381,6 @@ label_2b69ac:
     if (!runtime->callDirectStatic(rdram, ctx, &cObjBase_KageDraw_0x14efa8, 0x14efa8u, 0x2b69b0u)) {
         return;
     }
-    ctx->pc = 0x2B69B0u;
 label_2b69b0:
     // 0x2b69b0: 0x92021390  lbu         $v0, 0x1390($s0)
     ctx->pc = 0x2b69b0u;
@@ -421,7 +412,6 @@ label_2b69b8:
             goto label_2b69cc;
         }
     }
-    ctx->pc = 0x2B69BCu;
 label_2b69bc:
     // 0x2b69bc: 0x8e041394  lw          $a0, 0x1394($s0)
     ctx->pc = 0x2b69bcu;
@@ -453,7 +443,6 @@ label_2b69c8:
     if (!runtime->callDirectStatic(rdram, ctx, &EmClothMove_0x2df860, 0x2df860u, 0x2b69ccu)) {
         return;
     }
-    ctx->pc = 0x2B69CCu;
 label_2b69cc:
     // 0x2b69cc: 0x92022fa0  lbu         $v0, 0x2FA0($s0)
     ctx->pc = 0x2b69ccu;
@@ -509,7 +498,6 @@ label_2b69dc:
     if (!runtime->callDirectStatic(rdram, ctx, &cObjSimple_MoveBust_0x2b6a40, 0x2b6a40u, 0x2b69e0u)) {
         return;
     }
-    ctx->pc = 0x2B69E0u;
 label_2b69e0:
     // 0x2b69e0: 0x92022ff0  lbu         $v0, 0x2FF0($s0)
     ctx->pc = 0x2b69e0u;
@@ -565,7 +553,6 @@ label_2b69f0:
     if (!runtime->callDirectStatic(rdram, ctx, &cObjSimple_MoveRing_0x2b79e0, 0x2b79e0u, 0x2b69f4u)) {
         return;
     }
-    ctx->pc = 0x2B69F4u;
 label_2b69f4:
     // 0x2b69f4: 0x920204d8  lbu         $v0, 0x4D8($s0)
     ctx->pc = 0x2b69f4u;
@@ -621,7 +608,6 @@ label_2b6a04:
     if (!runtime->callDirectStatic(rdram, ctx, &cObjSimple_UpdateHandMesh_0x2b6da0, 0x2b6da0u, 0x2b6a08u)) {
         return;
     }
-    ctx->pc = 0x2B6A08u;
 label_2b6a08:
     // 0x2b6a08: 0x8e0200f0  lw          $v0, 0xF0($s0)
     ctx->pc = 0x2b6a08u;
@@ -657,7 +643,6 @@ label_2b6a14:
             goto label_2b6a34;
         }
     }
-    ctx->pc = 0x2B6A18u;
 label_2b6a18:
     // 0x2b6a18: 0xc4400000  lwc1        $f0, 0x0($v0)
     ctx->pc = 0x2b6a18u;

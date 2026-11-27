@@ -13,7 +13,7 @@
 
 // Function: cOmScripted_onHit
 // Address: 0x1a62b8 - 0x1a6310
-void cOmScripted_onHit_0x1a62b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmScripted_onHit_0x1a62b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmScripted_onHit_0x1a62b8");
 #endif
@@ -48,7 +48,6 @@ void cOmScripted_onHit_0x1a62b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1B7380u, 0x1A62C8u, 0x1A62D0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1A62D0u;
 label_1a62d0:
     // 0x1a62d0: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -87,7 +86,6 @@ label_1a62d0:
             goto label_1a62ec;
         }
     }
-    ctx->pc = 0x1A62ECu;
 label_1a62ec:
     // 0x1a62ec: 0xa20302f4  sb          $v1, 0x2F4($s0)
     ctx->pc = 0x1a62ecu;

@@ -13,7 +13,7 @@
 
 // Function: _sceMpegPeepBit
 // Address: 0x39eb90 - 0x39ec20
-void _sceMpegPeepBit_0x39eb90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceMpegPeepBit_0x39eb90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceMpegPeepBit_0x39eb90");
 #endif
@@ -78,7 +78,6 @@ void _sceMpegPeepBit_0x39eb90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_39ec00;
         }
     }
-    ctx->pc = 0x39EBC0u;
 label_39ebc0:
     // 0x39ebc0: 0xc0e7b2e  jal         func_39ECB8
     SET_GPR_U32(ctx, 31, 0x39EBC8u);
@@ -91,7 +90,6 @@ label_39ebc0:
     if (!runtime->callDirectStatic(rdram, ctx, &_waitIpuIdle_0x39ecb8, 0x39ecb8u, 0x39ebc8u)) {
         return;
     }
-    ctx->pc = 0x39EBC8u;
 label_39ebc8:
     // 0x39ebc8: 0x3c021000  lui         $v0, 0x1000
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)4096 << 16));
@@ -118,7 +116,6 @@ label_39ebc8:
     if (!runtime->callDirectStatic(rdram, ctx, &_sceMpegWaitIpuIdle64_0x39e928, 0x39e928u, 0x39ebe8u)) {
         return;
     }
-    ctx->pc = 0x39EBE8u;
 label_39ebe8:
     // 0x39ebe8: 0x2103c  dsll32      $v0, $v0, 0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) << (32 + 0));

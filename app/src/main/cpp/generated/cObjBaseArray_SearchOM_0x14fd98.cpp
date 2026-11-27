@@ -13,7 +13,7 @@
 
 // Function: cObjBaseArray_SearchOM
 // Address: 0x14fd98 - 0x14fe08
-void cObjBaseArray_SearchOM_0x14fd98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cObjBaseArray_SearchOM_0x14fd98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cObjBaseArray_SearchOM_0x14fd98");
 #endif
@@ -56,7 +56,6 @@ void cObjBaseArray_SearchOM_0x14fd98(uint8_t* rdram, R5900Context* ctx, PS2Runti
     ctx->pc = 0x14fdb0u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 6), 0)));
     // 0x14fdb4: 0x0  nop
-    ctx->pc = 0x14fdb4u;
     // NOP
 label_14fdb8:
     // 0x14fdb8: 0x948302fe  lhu         $v1, 0x2FE($a0)
@@ -82,7 +81,6 @@ label_14fdb8:
     // 0x14fdc8: 0x28620500  slti        $v0, $v1, 0x500
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)1280) ? 1 : 0);
     // 0x14fdcc: 0x40382d  daddu       $a3, $v0, $zero
-    ctx->pc = 0x14fdccu;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_14fdd0:
     // 0x14fdd0: 0x30e200ff  andi        $v0, $a3, 0xFF
@@ -139,10 +137,8 @@ label_14fdd0:
         return;
         #endif
     }
-    ctx->pc = 0x14FDF0u;
 label_14fdf0:
     // 0x14fdf0: 0xc8102b  sltu        $v0, $a2, $t0
-    ctx->pc = 0x14fdf0u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 6) < (uint64_t)GPR_U64(ctx, 8)) ? 1 : 0);
 label_14fdf4:
     // 0x14fdf4: 0x5440fff0  bnel        $v0, $zero, . + 4 + (-0x10 << 2)
@@ -163,7 +159,6 @@ label_14fdf4:
             goto label_14fdb8;
         }
     }
-    ctx->pc = 0x14FDFCu;
 label_14fdfc:
     // 0x14fdfc: 0x3e00008  jr          $ra
     ctx->pc = 0x14FDFCu;

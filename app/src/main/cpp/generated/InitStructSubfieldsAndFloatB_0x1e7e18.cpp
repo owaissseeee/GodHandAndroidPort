@@ -13,7 +13,7 @@
 
 // Function: InitStructSubfieldsAndFloatB
 // Address: 0x1e7e18 - 0x1e7e68
-void InitStructSubfieldsAndFloatB_0x1e7e18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitStructSubfieldsAndFloatB_0x1e7e18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitStructSubfieldsAndFloatB_0x1e7e18");
 #endif
@@ -45,7 +45,6 @@ void InitStructSubfieldsAndFloatB_0x1e7e18(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &InitStructAndSubfields_1E8DA8_0x1e8da8, 0x1e8da8u, 0x1e7e2cu)) {
         return;
     }
-    ctx->pc = 0x1E7E2Cu;
 label_1e7e2c:
     // 0x1e7e2c: 0x3c013e09  lui         $at, 0x3E09
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15881 << 16));

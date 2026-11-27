@@ -13,7 +13,7 @@
 
 // Function: func_00150C10
 // Address: 0x150c10 - 0x150d78
-void func_00150C10_0x150c10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00150C10_0x150c10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00150C10_0x150c10");
 #endif
@@ -96,7 +96,6 @@ void func_00150C10_0x150c10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0030A298_0x30a298, 0x30a298u, 0x150c50u)) {
         return;
     }
-    ctx->pc = 0x150C50u;
 label_150c50:
     // 0x150c50: 0x8e260008  lw          $a2, 0x8($s1)
     ctx->pc = 0x150c50u;
@@ -116,7 +115,6 @@ label_150c50:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003090F8_0x3090f8, 0x3090f8u, 0x150c64u)) {
         return;
     }
-    ctx->pc = 0x150C64u;
 label_150c64:
     // 0x150c64: 0x8e280004  lw          $t0, 0x4($s1)
     ctx->pc = 0x150c64u;
@@ -170,7 +168,6 @@ label_150c64:
     ctx->pc = 0x150cb0u;
     WRITE32(ADD32(GPR_U32(ctx, 17), 8), GPR_U32(ctx, 6));
     // 0x150cb4: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x150cb4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_150cb8:
     // 0x150cb8: 0x16620026  bne         $s3, $v0, . + 4 + (0x26 << 2)
@@ -201,7 +198,6 @@ label_150cb8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00150D78_0x150d78, 0x150d78u, 0x150cccu)) {
         return;
     }
-    ctx->pc = 0x150CCCu;
 label_150ccc:
     // 0x150ccc: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -243,7 +239,6 @@ label_150ccc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00309D88_0x309d88, 0x309d88u, 0x150cf4u)) {
         return;
     }
-    ctx->pc = 0x150CF4u;
 label_150cf4:
     // 0x150cf4: 0xc0c2880  jal         func_30A200
     SET_GPR_U32(ctx, 31, 0x150CFCu);
@@ -256,7 +251,6 @@ label_150cf4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0030A200_0x30a200, 0x30a200u, 0x150cfcu)) {
         return;
     }
-    ctx->pc = 0x150CFCu;
 label_150cfc:
     // 0x150cfc: 0x8e280004  lw          $t0, 0x4($s1)
     ctx->pc = 0x150cfcu;

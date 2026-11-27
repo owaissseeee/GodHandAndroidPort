@@ -13,7 +13,7 @@
 
 // Function: VSync
 // Address: 0x3b0130 - 0x3b01c0
-void VSync_0x3b0130(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void VSync_0x3b0130(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("VSync_0x3b0130");
 #endif
@@ -40,7 +40,6 @@ void VSync_0x3b0130(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x3b0140u)) {
         return;
     }
-    ctx->pc = 0x3B0140u;
 label_3b0140:
     // 0x3b0140: 0x3c031000  lui         $v1, 0x1000
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)4096 << 16));
@@ -75,16 +74,13 @@ label_3b0140:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x3b0164u)) {
         return;
     }
-    ctx->pc = 0x3B0164u;
 label_3b0164:
     // 0x3b0164: 0x3c031000  lui         $v1, 0x1000
-    ctx->pc = 0x3b0164u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)4096 << 16));
 label_3b0168:
     // 0x3b0168: 0x3463f000  ori         $v1, $v1, 0xF000
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) | (uint64_t)(uint16_t)61440);
     // 0x3b016c: 0x0  nop
-    ctx->pc = 0x3b016cu;
     // NOP
 label_3b0170:
     // 0x3b0170: 0x8c620000  lw          $v0, 0x0($v1)
@@ -116,7 +112,6 @@ label_3b0170:
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x3b0194u)) {
         return;
     }
-    ctx->pc = 0x3B0194u;
 label_3b0194:
     // 0x3b0194: 0x3c031000  lui         $v1, 0x1000
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)4096 << 16));
@@ -155,7 +150,6 @@ label_3b0194:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B63F0u, 0x3B01B0u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x3B01B8u;
 label_3b01b8:
     // 0x3b01b8: 0x3e00008  jr          $ra
     ctx->pc = 0x3B01B8u;

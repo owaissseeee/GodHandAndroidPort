@@ -13,7 +13,7 @@
 
 // Function: _sceMpegFlush
 // Address: 0x39b810 - 0x39b8d0
-void _sceMpegFlush_0x39b810(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceMpegFlush_0x39b810(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceMpegFlush_0x39b810");
 #endif
@@ -113,7 +113,6 @@ void _sceMpegFlush_0x39b810(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x39C390u, 0x39B854u, 0x39B85Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x39B85Cu;
 label_39b85c:
     // 0x39b85c: 0x10000010  b           . + 4 + (0x10 << 2)
     ctx->pc = 0x39B85Cu;
@@ -130,7 +129,6 @@ label_39b85c:
             goto label_39b8a0;
         }
     }
-    ctx->pc = 0x39B864u;
 label_39b864:
     // 0x39b864: 0x8e030184  lw          $v1, 0x184($s0)
     ctx->pc = 0x39b864u;
@@ -168,7 +166,6 @@ label_39b864:
     if (!runtime->callDirectStatic(rdram, ctx, &_dispRefImage_0x39b130, 0x39b130u, 0x39b884u)) {
         return;
     }
-    ctx->pc = 0x39B884u;
 label_39b884:
     // 0x39b884: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x39B884u;
@@ -185,7 +182,6 @@ label_39b884:
             goto label_39b8a0;
         }
     }
-    ctx->pc = 0x39B88Cu;
 label_39b88c:
     // 0x39b88c: 0x8e0501dc  lw          $a1, 0x1DC($s0)
     ctx->pc = 0x39b88cu;
@@ -204,7 +200,6 @@ label_39b88c:
     if (!runtime->callDirectStatic(rdram, ctx, &_dispRefImageField_0x39b3f0, 0x39b3f0u, 0x39b89cu)) {
         return;
     }
-    ctx->pc = 0x39B89Cu;
 label_39b89c:
     // 0x39b89c: 0x8e020128  lw          $v0, 0x128($s0)
     ctx->pc = 0x39b89cu;

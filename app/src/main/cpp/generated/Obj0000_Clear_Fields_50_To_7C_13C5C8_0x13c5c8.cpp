@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Clear_Fields_50_To_7C_13C5C8
 // Address: 0x13c5c8 - 0x13c618
-void Obj0000_Clear_Fields_50_To_7C_13C5C8_0x13c5c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Clear_Fields_50_To_7C_13C5C8_0x13c5c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Clear_Fields_50_To_7C_13C5C8_0x13c5c8");
 #endif

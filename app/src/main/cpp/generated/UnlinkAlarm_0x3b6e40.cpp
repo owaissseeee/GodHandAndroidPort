@@ -13,7 +13,7 @@
 
 // Function: UnlinkAlarm
 // Address: 0x3b6e40 - 0x3b6e78
-void UnlinkAlarm_0x3b6e40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UnlinkAlarm_0x3b6e40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UnlinkAlarm_0x3b6e40");
 #endif
@@ -52,7 +52,6 @@ void UnlinkAlarm_0x3b6e40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
             goto label_3b6e5c;
         }
     }
-    ctx->pc = 0x3B6E54u;
 label_3b6e54:
     // 0x3b6e54: 0x3c020040  lui         $v0, 0x40
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)64 << 16));

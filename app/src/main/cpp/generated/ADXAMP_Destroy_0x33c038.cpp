@@ -13,7 +13,7 @@
 
 // Function: ADXAMP_Destroy
 // Address: 0x33c038 - 0x33c088
-void ADXAMP_Destroy_0x33c038(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ADXAMP_Destroy_0x33c038(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ADXAMP_Destroy_0x33c038");
 #endif
@@ -55,7 +55,6 @@ void ADXAMP_Destroy_0x33c038(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &Forward33B658_33E678_0x33e678, 0x33e678u, 0x33c054u)) {
         return;
     }
-    ctx->pc = 0x33C054u;
 label_33c054:
     // 0x33c054: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -72,7 +71,6 @@ label_33c054:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x33c064u)) {
         return;
     }
-    ctx->pc = 0x33C064u;
 label_33c064:
     // 0x33c064: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x33c064u;
@@ -91,7 +89,6 @@ label_33c064:
         return;
     }
     // 0x33c074: 0x0  nop
-    ctx->pc = 0x33c074u;
     // NOP
 label_33c078:
     // 0x33c078: 0xdfb00000  ld          $s0, 0x0($sp)

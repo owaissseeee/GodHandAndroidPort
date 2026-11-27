@@ -14,15 +14,13 @@ namespace gh_mcport
 {
 // Function: set_unexpected__FPFv_v
 // Address: 0x7c9ea0 - 0x7c9eb0
-void set_unexpected__FPFv_v_0x7c9ea0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void set_unexpected__FPFv_v_0x7c9ea0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("set_unexpected__FPFv_v_0x7c9ea0");
 #endif
 
-    ctx->pc = 0x7c9ea0u;
 
     // 0x7c9ea0: 0x3c03007d  lui         $v1, 0x7D
-    ctx->pc = 0x7c9ea0u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)125 << 16));
     // 0x7c9ea4: 0x8c62f908  lw          $v0, -0x6F8($v1)
     ctx->pc = 0x7c9ea4u;

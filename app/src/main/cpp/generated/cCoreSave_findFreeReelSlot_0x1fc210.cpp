@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_findFreeReelSlot
 // Address: 0x1fc210 - 0x1fc278
-void cCoreSave_findFreeReelSlot_0x1fc210(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_findFreeReelSlot_0x1fc210(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_findFreeReelSlot_0x1fc210");
 #endif
@@ -63,7 +63,6 @@ void cCoreSave_findFreeReelSlot_0x1fc210(uint8_t* rdram, R5900Context* ctx, PS2R
         return;
         #endif
     }
-    ctx->pc = 0x1FC224u;
 label_1fc224:
     // 0x1fc224: 0x2402001f  addiu       $v0, $zero, 0x1F
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 31));
@@ -89,7 +88,6 @@ label_1fc224:
     // 0x1fc238: 0x3c070100  lui         $a3, 0x100
     SET_GPR_S32(ctx, 7, (int32_t)((uint32_t)256 << 16));
     // 0x1fc23c: 0xc0102d  daddu       $v0, $a2, $zero
-    ctx->pc = 0x1fc23cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
 label_1fc240:
     // 0x1fc240: 0x22e03  sra         $a1, $v0, 24
@@ -137,7 +135,6 @@ label_1fc240:
             goto label_1fc240;
         }
     }
-    ctx->pc = 0x1FC264u;
 label_1fc264:
     // 0x1fc264: 0x2402ffff  addiu       $v0, $zero, -0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));

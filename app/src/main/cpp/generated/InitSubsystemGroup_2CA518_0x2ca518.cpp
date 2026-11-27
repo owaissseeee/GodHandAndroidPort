@@ -13,7 +13,7 @@
 
 // Function: InitSubsystemGroup_2CA518
 // Address: 0x2ca518 - 0x2ca558
-void InitSubsystemGroup_2CA518_0x2ca518(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitSubsystemGroup_2CA518_0x2ca518(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitSubsystemGroup_2CA518_0x2ca518");
 #endif
@@ -48,7 +48,6 @@ void InitSubsystemGroup_2CA518_0x2ca518(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_UpdateListener_0x2cc150, 0x2cc150u, 0x2ca52cu)) {
         return;
     }
-    ctx->pc = 0x2CA52Cu;
 label_2ca52c:
     // 0x2ca52c: 0xc0b48bc  jal         func_2D22F0
     SET_GPR_U32(ctx, 31, 0x2CA534u);
@@ -61,7 +60,6 @@ label_2ca52c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D22F0_0x2d22f0, 0x2d22f0u, 0x2ca534u)) {
         return;
     }
-    ctx->pc = 0x2CA534u;
 label_2ca534:
     // 0x2ca534: 0xc0b2c4a  jal         func_2CB128
     SET_GPR_U32(ctx, 31, 0x2CA53Cu);
@@ -74,7 +72,6 @@ label_2ca534:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002CB128_0x2cb128, 0x2cb128u, 0x2ca53cu)) {
         return;
     }
-    ctx->pc = 0x2CA53Cu;
 label_2ca53c:
     // 0x2ca53c: 0xc0b2c80  jal         func_2CB200
     SET_GPR_U32(ctx, 31, 0x2CA544u);
@@ -87,7 +84,6 @@ label_2ca53c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002CB200_0x2cb200, 0x2cb200u, 0x2ca544u)) {
         return;
     }
-    ctx->pc = 0x2CA544u;
 label_2ca544:
     // 0x2ca544: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2ca544u;

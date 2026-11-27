@@ -13,7 +13,7 @@
 
 // Function: __12ostdiostreamiP7__sFILE
 // Address: 0x393920 - 0x393ab8
-void ps2___12ostdiostreamiP7__sFILE_0x393920(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___12ostdiostreamiP7__sFILE_0x393920(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___12ostdiostreamiP7__sFILE_0x393920");
 #endif
@@ -206,7 +206,6 @@ label_3939fc:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___8stdiobufP7__sFILE_0x393540, 0x393540u, 0x393a0cu)) {
         return;
     }
-    ctx->pc = 0x393A0Cu;
 label_393a0c:
     // 0x393a0c: 0x16000004  bnez        $s0, . + 4 + (0x4 << 2)
     ctx->pc = 0x393A0Cu;
@@ -240,7 +239,6 @@ label_393a0c:
             goto label_393a24;
         }
     }
-    ctx->pc = 0x393A20u;
 label_393a20:
     // 0x393a20: 0xa0a0001a  sb          $zero, 0x1A($a1)
     ctx->pc = 0x393a20u;
@@ -288,7 +286,6 @@ label_393a24:
             goto label_393a5c;
         }
     }
-    ctx->pc = 0x393A54u;
 label_393a54:
     // 0x393a54: 0xc0c8386  jal         func_320E18
     ctx->pc = 0x393A54u;
@@ -296,7 +293,6 @@ label_393a54:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___throw_0x320e18, 0x320e18u, 0x393a5cu)) {
         return;
     }
-    ctx->pc = 0x393A5Cu;
 label_393a5c:
     // 0x393a5c: 0x1000000f  b           . + 4 + (0xF << 2)
     ctx->pc = 0x393A5Cu;
@@ -363,7 +359,6 @@ label_393a5c:
             goto label_393a54;
         }
     }
-    ctx->pc = 0x393A9Cu;
 label_393a9c:
     // 0x393a9c: 0xdfbf0050  ld          $ra, 0x50($sp)
     ctx->pc = 0x393a9cu;

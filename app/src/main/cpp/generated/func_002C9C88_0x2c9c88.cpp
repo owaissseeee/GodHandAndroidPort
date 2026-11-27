@@ -13,7 +13,7 @@
 
 // Function: func_002C9C88
 // Address: 0x2c9c88 - 0x2c9d20
-void func_002C9C88_0x2c9c88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002C9C88_0x2c9c88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002C9C88_0x2c9c88");
 #endif
@@ -100,7 +100,6 @@ label_2c9ce8:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndSeRecent_Clear_0x2cc4a0, 0x2cc4a0u, 0x2c9cf4u)) {
         return;
     }
-    ctx->pc = 0x2C9CF4u;
 label_2c9cf4:
     // 0x2c9cf4: 0x0  nop
     // NOP

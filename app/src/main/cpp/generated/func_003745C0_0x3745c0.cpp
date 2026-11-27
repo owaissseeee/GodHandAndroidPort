@@ -13,7 +13,7 @@
 
 // Function: func_003745C0
 // Address: 0x3745c0 - 0x374720
-void func_003745C0_0x3745c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003745C0_0x3745c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003745C0_0x3745c0");
 #endif
@@ -111,7 +111,6 @@ void func_003745C0_0x3745c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Get_D_0076A7A4_3756F0_0x3756f0, 0x3756f0u, 0x374634u)) {
         return;
     }
-    ctx->pc = 0x374634u;
 label_374634:
     // 0x374634: 0x24030002  addiu       $v1, $zero, 0x2
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
@@ -160,7 +159,6 @@ label_37464c:
             goto label_374660;
         }
     }
-    ctx->pc = 0x374660u;
 label_374660:
     // 0x374660: 0x2402ffff  addiu       $v0, $zero, -0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
@@ -212,7 +210,6 @@ label_374660:
     // 0x374690: 0x629821  addu        $s3, $v1, $v0
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 2)));
     // 0x374694: 0x0  nop
-    ctx->pc = 0x374694u;
     // NOP
 label_374698:
     // 0x374698: 0x8e440000  lw          $a0, 0x0($s2)
@@ -234,7 +231,6 @@ label_374698:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032EC78_0x32ec78, 0x32ec78u, 0x3746acu)) {
         return;
     }
-    ctx->pc = 0x3746ACu;
 label_3746ac:
     // 0x3746ac: 0xe6360000  swc1        $f22, 0x0($s1)
     ctx->pc = 0x3746acu;
@@ -277,7 +273,6 @@ label_3746ac:
             goto label_3746fc;
         }
     }
-    ctx->pc = 0x3746C8u;
 label_3746c8:
     // 0x3746c8: 0x4600a024  .word       0x4600A024                   # cvt.w.s     $f0, $f20 # 00000000 <InstrIdType: CPU_COP1_FPUS>
     { int32_t tmp = FPU_CVT_W_S(ctx->f[20]); std::memcpy(&ctx->f[0], &tmp, sizeof(tmp)); }
@@ -304,7 +299,6 @@ label_3746c8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032EC78_0x32ec78, 0x32ec78u, 0x3746ecu)) {
         return;
     }
-    ctx->pc = 0x3746ECu;
 label_3746ec:
     // 0x3746ec: 0x101080  sll         $v0, $s0, 2
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 16), 2));

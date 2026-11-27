@@ -13,7 +13,7 @@
 
 // Function: cCollisionSolid_constructSphere
 // Address: 0x1339f0 - 0x133a80
-void cCollisionSolid_constructSphere_0x1339f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCollisionSolid_constructSphere_0x1339f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCollisionSolid_constructSphere_0x1339f0");
 #endif
@@ -60,7 +60,6 @@ void cCollisionSolid_constructSphere_0x1339f0(uint8_t* rdram, R5900Context* ctx,
     if (!runtime->callDirectStatic(rdram, ctx, &cCollisionSolid_0x133988, 0x133988u, 0x133a1cu)) {
         return;
     }
-    ctx->pc = 0x133A1Cu;
 label_133a1c:
     // 0x133a1c: 0x3c020042  lui         $v0, 0x42
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)66 << 16));

@@ -13,7 +13,7 @@
 
 // Function: CustomIDOwner_setBob
 // Address: 0x1ed4e8 - 0x1ed548
-void CustomIDOwner_setBob_0x1ed4e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CustomIDOwner_setBob_0x1ed4e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CustomIDOwner_setBob_0x1ed4e8");
 #endif
@@ -67,7 +67,6 @@ void CustomIDOwner_setBob_0x1ed4e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMoveOffsetPosYSin_0x2d6838, 0x2d6838u, 0x1ed50cu)) {
         return;
     }
-    ctx->pc = 0x1ED50Cu;
 label_1ed50c:
     // 0x1ed50c: 0x26041154  addiu       $a0, $s0, 0x1154
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 4436));
@@ -84,7 +83,6 @@ label_1ed50c:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMoveOffsetPosYSin_0x2d6838, 0x2d6838u, 0x1ed51cu)) {
         return;
     }
-    ctx->pc = 0x1ED51Cu;
 label_1ed51c:
     // 0x1ed51c: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x1ED51Cu;
@@ -101,7 +99,6 @@ label_1ed51c:
             goto label_1ed538;
         }
     }
-    ctx->pc = 0x1ED524u;
 label_1ed524:
     // 0x1ed524: 0xc0b5a1c  jal         func_2D6870
     SET_GPR_U32(ctx, 31, 0x1ED52Cu);
@@ -114,7 +111,6 @@ label_1ed524:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_ResetMoveOffsetPos_0x2d6870, 0x2d6870u, 0x1ed52cu)) {
         return;
     }
-    ctx->pc = 0x1ED52Cu;
 label_1ed52c:
     // 0x1ed52c: 0xc0b5a1c  jal         func_2D6870
     SET_GPR_U32(ctx, 31, 0x1ED534u);
@@ -127,7 +123,6 @@ label_1ed52c:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_ResetMoveOffsetPos_0x2d6870, 0x2d6870u, 0x1ed534u)) {
         return;
     }
-    ctx->pc = 0x1ED534u;
 label_1ed534:
     // 0x1ed534: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1ed534u;

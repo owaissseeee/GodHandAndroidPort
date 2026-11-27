@@ -13,7 +13,7 @@
 
 // Function: cSndMemHeap_FindFitBlk
 // Address: 0x2cd968 - 0x2cd9a0
-void cSndMemHeap_FindFitBlk_0x2cd968(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndMemHeap_FindFitBlk_0x2cd968(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndMemHeap_FindFitBlk_0x2cd968");
 #endif
@@ -78,7 +78,6 @@ label_2cd978:
         return;
         #endif
     }
-    ctx->pc = 0x2CD98Cu;
 label_2cd98c:
     // 0x2cd98c: 0x5460fffa  bnel        $v1, $zero, . + 4 + (-0x6 << 2)
     ctx->pc = 0x2CD98Cu;
@@ -98,7 +97,6 @@ label_2cd98c:
             goto label_2cd978;
         }
     }
-    ctx->pc = 0x2CD994u;
 label_2cd994:
     // 0x2cd994: 0x3e00008  jr          $ra
     ctx->pc = 0x2CD994u;

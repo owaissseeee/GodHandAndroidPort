@@ -13,7 +13,7 @@
 
 // Function: Draw_Poly_sc
 // Address: 0x15f2b0 - 0x15f2e0
-void Draw_Poly_sc_0x15f2b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Draw_Poly_sc_0x15f2b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Draw_Poly_sc_0x15f2b0");
 #endif
@@ -48,7 +48,6 @@ void Draw_Poly_sc_0x15f2b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &Gp_draw_poly4_0x15b880, 0x15b880u, 0x15f2ccu)) {
         return;
     }
-    ctx->pc = 0x15F2CCu;
 label_15f2cc:
     // 0x15f2cc: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x15f2ccu;

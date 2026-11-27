@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Set_Short_204
 // Address: 0x16bcc0 - 0x16bce0
-void Obj0000_Set_Short_204_0x16bcc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_Short_204_0x16bcc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_Short_204_0x16bcc0");
 #endif
@@ -42,7 +42,6 @@ void Obj0000_Set_Short_204_0x16bcc0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_0016B1F8_0x16b1f8, 0x16b1f8u, 0x16bcd0u)) {
         return;
     }
-    ctx->pc = 0x16BCD0u;
 label_16bcd0:
     // 0x16bcd0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x16bcd0u;

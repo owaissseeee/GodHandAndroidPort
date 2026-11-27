@@ -13,7 +13,7 @@
 
 // Function: _decodeOrSkip
 // Address: 0x39ac10 - 0x39ac58
-void _decodeOrSkip_0x39ac10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _decodeOrSkip_0x39ac10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_decodeOrSkip_0x39ac10");
 #endif
@@ -62,7 +62,6 @@ void _decodeOrSkip_0x39ac10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &_decodeOrSkipField_0x39a720, 0x39a720u, 0x39ac38u)) {
         return;
     }
-    ctx->pc = 0x39AC38u;
 label_39ac38:
     // 0x39ac38: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x39AC38u;
@@ -79,7 +78,6 @@ label_39ac38:
             goto label_39ac4c;
         }
     }
-    ctx->pc = 0x39AC40u;
 label_39ac40:
     // 0x39ac40: 0xc0e696c  jal         func_39A5B0
     SET_GPR_U32(ctx, 31, 0x39AC48u);
@@ -92,7 +90,6 @@ label_39ac40:
     if (!runtime->callDirectStatic(rdram, ctx, &_decodeOrSkipFrame_0x39a5b0, 0x39a5b0u, 0x39ac48u)) {
         return;
     }
-    ctx->pc = 0x39AC48u;
 label_39ac48:
     // 0x39ac48: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x39ac48u;

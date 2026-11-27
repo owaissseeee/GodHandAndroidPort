@@ -13,7 +13,7 @@
 
 // Function: BuildLinkedEntry_376510
 // Address: 0x376510 - 0x376588
-void BuildLinkedEntry_376510_0x376510(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BuildLinkedEntry_376510_0x376510(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BuildLinkedEntry_376510_0x376510");
 #endif
@@ -77,7 +77,6 @@ void BuildLinkedEntry_376510_0x376510(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_376574;
         }
     }
-    ctx->pc = 0x376540u;
 label_376540:
     // 0x376540: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -92,7 +91,6 @@ label_376540:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00377FF8_0x377ff8, 0x377ff8u, 0x37654cu)) {
         return;
     }
-    ctx->pc = 0x37654Cu;
 label_37654c:
     // 0x37654c: 0xae020004  sw          $v0, 0x4($s0)
     ctx->pc = 0x37654cu;
@@ -124,10 +122,8 @@ label_37654c:
     if (!runtime->callDirectStatic(rdram, ctx, &InitRandFields_3768B0_0x3768b0, 0x3768b0u, 0x376570u)) {
         return;
     }
-    ctx->pc = 0x376570u;
 label_376570:
     // 0x376570: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x376570u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_376574:
     // 0x376574: 0x7bb00020  lq          $s0, 0x20($sp)

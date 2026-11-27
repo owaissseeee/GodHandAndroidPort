@@ -14,17 +14,19 @@ namespace gh_mcport
 {
 // Function: func_007CC6B0
 // Address: 0x7cc6b0 - 0x7cc6f8
-void func_007CC6B0_0x7cc6b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_007CC6B0_0x7cc6b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_007CC6B0_0x7cc6b0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7cc6c8u: goto label_7cc6c8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7cc6b0u, 0)) {
+        switch (ctx->pc) {
+            case 0x7cc6c8u: goto label_7cc6c8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7cc6b0u;
+
 
     // 0x7cc6b0: 0x8c850000  lw          $a1, 0x0($a0)
     ctx->pc = 0x7cc6b0u;
@@ -44,7 +46,6 @@ void func_007CC6B0_0x7cc6b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_7cc6f0;
         }
     }
-    ctx->pc = 0x7CC6BCu;
     // 0x7cc6bc: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x7CC6BCu;
     {
@@ -60,13 +61,10 @@ void func_007CC6B0_0x7cc6b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_7cc6d0;
         }
     }
-    ctx->pc = 0x7CC6C4u;
     // 0x7cc6c4: 0x0  nop
-    ctx->pc = 0x7cc6c4u;
     // NOP
 label_7cc6c8:
     // 0x7cc6c8: 0x60282d  daddu       $a1, $v1, $zero
-    ctx->pc = 0x7cc6c8u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
     // 0x7cc6cc: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x7cc6ccu;
@@ -87,7 +85,6 @@ label_7cc6d0:
             goto label_7cc6e0;
         }
     }
-    ctx->pc = 0x7CC6D8u;
     // 0x7cc6d8: 0x8c830008  lw          $v1, 0x8($a0)
     ctx->pc = 0x7cc6d8u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 8)));
@@ -96,7 +93,6 @@ label_7cc6d0:
     if (GPR_U64(ctx, 3) != 0) SET_GPR_VEC(ctx, 6, GPR_VEC(ctx, 2));
 label_7cc6e0:
     // 0x7cc6e0: 0x851021  addu        $v0, $a0, $a1
-    ctx->pc = 0x7cc6e0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 5)));
     // 0x7cc6e4: 0x8c430004  lw          $v1, 0x4($v0)
     ctx->pc = 0x7cc6e4u;
@@ -119,7 +115,6 @@ label_7cc6e0:
             goto label_7cc6c8;
         }
     }
-    ctx->pc = 0x7CC6F0u;
 label_7cc6f0:
     // 0x7cc6f0: 0x3e00008  jr          $ra
     ctx->pc = 0x7CC6F0u;

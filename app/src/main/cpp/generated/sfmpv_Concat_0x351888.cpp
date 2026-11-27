@@ -13,7 +13,7 @@
 
 // Function: sfmpv_Concat
 // Address: 0x351888 - 0x3518d8
-void sfmpv_Concat_0x351888(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfmpv_Concat_0x351888(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfmpv_Concat_0x351888");
 #endif
@@ -51,7 +51,6 @@ void sfmpv_Concat_0x351888(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_003518D8_0x3518d8, 0x3518d8u, 0x3518a4u)) {
         return;
     }
-    ctx->pc = 0x3518A4u;
 label_3518a4:
     // 0x3518a4: 0x2403ffff  addiu       $v1, $zero, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
@@ -78,10 +77,8 @@ label_3518a4:
     if (!runtime->callDirectStatic(rdram, ctx, &sfmpv_DiscardSec_0x351ab0, 0x351ab0u, 0x3518bcu)) {
         return;
     }
-    ctx->pc = 0x3518BCu;
 label_3518bc:
     // 0x3518bc: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x3518bcu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_3518c0:
     // 0x3518c0: 0xdfb00000  ld          $s0, 0x0($sp)

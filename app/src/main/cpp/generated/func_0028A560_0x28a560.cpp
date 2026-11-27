@@ -13,7 +13,7 @@
 
 // Function: func_0028A560
 // Address: 0x28a560 - 0x28a6b8
-void func_0028A560_0x28a560(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0028A560_0x28a560(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0028A560_0x28a560");
 #endif
@@ -88,7 +88,6 @@ void func_0028A560_0x28a560(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_28a6ac;
         }
     }
-    ctx->pc = 0x28A58Cu;
 label_28a58c:
     // 0x28a58c: 0x8e030564  lw          $v1, 0x564($s0)
     ctx->pc = 0x28a58cu;
@@ -155,7 +154,6 @@ label_28a58c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x28a5ccu)) {
         return;
     }
-    ctx->pc = 0x28A5CCu;
 label_28a5cc:
     // 0x28a5cc: 0x1000000d  b           . + 4 + (0xD << 2)
     ctx->pc = 0x28A5CCu;
@@ -172,7 +170,6 @@ label_28a5cc:
             goto label_28a604;
         }
     }
-    ctx->pc = 0x28A5D4u;
 label_28a5d4:
     // 0x28a5d4: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28a5d4u;
@@ -206,7 +203,6 @@ label_28a5d4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x28a600u)) {
         return;
     }
-    ctx->pc = 0x28A600u;
 label_28a600:
     // 0x28a600: 0x8e0200f0  lw          $v0, 0xF0($s0)
     ctx->pc = 0x28a600u;
@@ -324,7 +320,6 @@ label_28a638:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x28A690u, 0x28A698u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x28A698u;
 label_28a698:
     // 0x28a698: 0xc0528ac  jal         func_14A2B0
     SET_GPR_U32(ctx, 31, 0x28A6A0u);
@@ -337,7 +332,6 @@ label_28a698:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_calcNullPart_0x14a2b0, 0x14a2b0u, 0x28a6a0u)) {
         return;
     }
-    ctx->pc = 0x28A6A0u;
 label_28a6a0:
     // 0x28a6a0: 0xc0b6a6e  jal         func_2DA9B8
     SET_GPR_U32(ctx, 31, 0x28A6A8u);
@@ -350,7 +344,6 @@ label_28a6a0:
     if (!runtime->callDirectStatic(rdram, ctx, &Add_nullspeed_0x2da9b8, 0x2da9b8u, 0x28a6a8u)) {
         return;
     }
-    ctx->pc = 0x28A6A8u;
 label_28a6a8:
     // 0x28a6a8: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x28a6a8u;

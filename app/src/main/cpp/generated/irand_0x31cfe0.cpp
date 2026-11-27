@@ -14,7 +14,7 @@
 
 // Function: irand
 // Address: 0x31cfe0 - 0x31d000
-void irand_0x31cfe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void irand_0x31cfe0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("irand_0x31cfe0");
 #endif
@@ -38,7 +38,6 @@ void irand_0x31cfe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &func_0030F348_0x30f348, 0x30f348u, 0x31cff0u)) {
         return;
     }
-    ctx->pc = 0x31CFF0u;
 label_31cff0:
     // 0x31cff0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x31cff0u;

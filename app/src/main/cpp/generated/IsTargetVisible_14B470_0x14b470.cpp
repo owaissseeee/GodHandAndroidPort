@@ -13,7 +13,7 @@
 
 // Function: IsTargetVisible_14B470
 // Address: 0x14b470 - 0x14b4d0
-void IsTargetVisible_14B470_0x14b470(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IsTargetVisible_14B470_0x14b470(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IsTargetVisible_14B470_0x14b470");
 #endif
@@ -72,7 +72,6 @@ void IsTargetVisible_14B470_0x14b470(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_14b4a4;
         }
     }
-    ctx->pc = 0x14B49Cu;
 label_14b49c:
     // 0x14b49c: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x14B49Cu;
@@ -89,7 +88,6 @@ label_14b49c:
             goto label_14b4c0;
         }
     }
-    ctx->pc = 0x14B4A4u;
 label_14b4a4:
     // 0x14b4a4: 0x621024  and         $v0, $v1, $v0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) & GPR_U64(ctx, 2));
@@ -121,10 +119,8 @@ label_14b4a4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F8AD8_0x1f8ad8, 0x1f8ad8u, 0x14b4bcu)) {
         return;
     }
-    ctx->pc = 0x14B4BCu;
 label_14b4bc:
     // 0x14b4bc: 0x2c420001  sltiu       $v0, $v0, 0x1
-    ctx->pc = 0x14b4bcu;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1) ? 1 : 0);
 label_14b4c0:
     // 0x14b4c0: 0xdfbf0000  ld          $ra, 0x0($sp)

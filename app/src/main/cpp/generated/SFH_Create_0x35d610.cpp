@@ -13,7 +13,7 @@
 
 // Function: SFH_Create
 // Address: 0x35d610 - 0x35d6d8
-void SFH_Create_0x35d610(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFH_Create_0x35d610(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFH_Create_0x35d610");
 #endif
@@ -92,7 +92,6 @@ void SFH_Create_0x35d610(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     // 0x35d660: 0x802d  daddu       $s0, $zero, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x35d664: 0x211102a  slt         $v0, $s0, $s1
-    ctx->pc = 0x35d664u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 16) < (int64_t)GPR_S64(ctx, 17)) ? 1 : 0);
 label_35d668:
     // 0x35d668: 0x50400009  beql        $v0, $zero, . + 4 + (0x9 << 2)
@@ -127,7 +126,6 @@ label_35d668:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj35D0_IsField0Zero_D7A8_0x35d7a8, 0x35d7a8u, 0x35d684u)) {
         return;
     }
-    ctx->pc = 0x35D684u;
 label_35d684:
     // 0x35d684: 0x1040fff8  beqz        $v0, . + 4 + (-0x8 << 2)
     ctx->pc = 0x35D684u;
@@ -148,7 +146,6 @@ label_35d684:
         }
     }
     // 0x35d68c: 0x240202d  daddu       $a0, $s2, $zero
-    ctx->pc = 0x35d68cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
 label_35d690:
     // 0x35d690: 0x2a0282d  daddu       $a1, $s5, $zero
@@ -164,7 +161,6 @@ label_35d690:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj35D0_SetFields_1_a1_a2_D740_0x35d740, 0x35d740u, 0x35d69cu)) {
         return;
     }
-    ctx->pc = 0x35D69Cu;
 label_35d69c:
     // 0x35d69c: 0x26c46c90  addiu       $a0, $s6, 0x6C90
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 22), 27792));

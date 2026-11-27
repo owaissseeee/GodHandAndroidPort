@@ -13,7 +13,7 @@
 
 // Function: cOmDoor_initWithBox
 // Address: 0x191de8 - 0x191f30
-void cOmDoor_initWithBox_0x191de8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmDoor_initWithBox_0x191de8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmDoor_initWithBox_0x191de8");
 #endif
@@ -58,7 +58,6 @@ void cOmDoor_initWithBox_0x191de8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B6FB8_0x1b6fb8, 0x1b6fb8u, 0x191e08u)) {
         return;
     }
-    ctx->pc = 0x191E08u;
 label_191e08:
     // 0x191e08: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -147,7 +146,6 @@ label_191e08:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_CreateDamageTake_0x1fe218, 0x1fe218u, 0x191e90u)) {
         return;
     }
-    ctx->pc = 0x191E90u;
 label_191e90:
     // 0x191e90: 0x1040000b  beqz        $v0, . + 4 + (0xB << 2)
     ctx->pc = 0x191E90u;
@@ -195,7 +193,6 @@ label_191e90:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FD9D8_0x1fd9d8, 0x1fd9d8u, 0x191ec0u)) {
         return;
     }
-    ctx->pc = 0x191EC0u;
 label_191ec0:
     // 0x191ec0: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -249,7 +246,6 @@ label_191eec:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmDoor_setObjCollision_0x1bd228, 0x1bd228u, 0x191ef4u)) {
         return;
     }
-    ctx->pc = 0x191EF4u;
 label_191ef4:
     // 0x191ef4: 0x26020650  addiu       $v0, $s0, 0x650
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 1616));
@@ -271,7 +267,6 @@ label_191ef4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001BBF68_0x1bbf68, 0x1bbf68u, 0x191f0cu)) {
         return;
     }
-    ctx->pc = 0x191F0Cu;
 label_191f0c:
     // 0x191f0c: 0x7bb00070  lq          $s0, 0x70($sp)
     ctx->pc = 0x191f0cu;

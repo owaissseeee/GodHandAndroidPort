@@ -13,7 +13,7 @@
 
 // Function: sfhds_IsPrvate2PketStart
 // Address: 0x34d160 - 0x34d188
-void sfhds_IsPrvate2PketStart_0x34d160(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfhds_IsPrvate2PketStart_0x34d160(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfhds_IsPrvate2PketStart_0x34d160");
 #endif
@@ -37,7 +37,6 @@ void sfhds_IsPrvate2PketStart_0x34d160(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034D188_0x34d188, 0x34d188u, 0x34d170u)) {
         return;
     }
-    ctx->pc = 0x34D170u;
 label_34d170:
     // 0x34d170: 0x384201bf  xori        $v0, $v0, 0x1BF
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)447);

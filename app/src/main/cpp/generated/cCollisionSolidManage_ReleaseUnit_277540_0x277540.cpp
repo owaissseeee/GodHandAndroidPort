@@ -13,7 +13,7 @@
 
 // Function: cCollisionSolidManage_ReleaseUnit_277540
 // Address: 0x277540 - 0x277568
-void cCollisionSolidManage_ReleaseUnit_277540_0x277540(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCollisionSolidManage_ReleaseUnit_277540_0x277540(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCollisionSolidManage_ReleaseUnit_277540_0x277540");
 #endif
@@ -46,7 +46,6 @@ void cCollisionSolidManage_ReleaseUnit_277540_0x277540(uint8_t* rdram, R5900Cont
     if (!runtime->callDirectStatic(rdram, ctx, &cCollisionSolidManage_ReleaseUnit_0x1347e8, 0x1347e8u, 0x277558u)) {
         return;
     }
-    ctx->pc = 0x277558u;
 label_277558:
     // 0x277558: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x277558u;

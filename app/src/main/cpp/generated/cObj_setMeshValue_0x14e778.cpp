@@ -13,7 +13,7 @@
 
 // Function: cObj_setMeshValue
 // Address: 0x14e778 - 0x14e818
-void cObj_setMeshValue_0x14e778(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cObj_setMeshValue_0x14e778(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cObj_setMeshValue_0x14e778");
 #endif
@@ -65,7 +65,6 @@ void cObj_setMeshValue_0x14e778(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &GetField_2B1_14B638_0x14b638, 0x14b638u, 0x14e7a4u)) {
         return;
     }
-    ctx->pc = 0x14E7A4u;
 label_14e7a4:
     // 0x14e7a4: 0x40982d  daddu       $s3, $v0, $zero
     SET_GPR_U64(ctx, 19, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -87,7 +86,6 @@ label_14e7a4:
     // 0x14e7b0: 0x220282d  daddu       $a1, $s1, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     // 0x14e7b4: 0x0  nop
-    ctx->pc = 0x14e7b4u;
     // NOP
 label_14e7b8:
     // 0x14e7b8: 0xc052dbe  jal         func_14B6F8
@@ -101,7 +99,6 @@ label_14e7b8:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_getMeshPtr_0x14b6f8, 0x14b6f8u, 0x14e7c0u)) {
         return;
     }
-    ctx->pc = 0x14E7C0u;
 label_14e7c0:
     // 0x14e7c0: 0x26310001  addiu       $s1, $s1, 0x1
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 1));
@@ -122,7 +119,6 @@ label_14e7c0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00155D60_0x155d60, 0x155d60u, 0x14e7d8u)) {
         return;
     }
-    ctx->pc = 0x14E7D8u;
 label_14e7d8:
     // 0x14e7d8: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -139,7 +135,6 @@ label_14e7d8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00155D60_0x155d60, 0x155d60u, 0x14e7e8u)) {
         return;
     }
-    ctx->pc = 0x14E7E8u;
 label_14e7e8:
     // 0x14e7e8: 0x233102a  slt         $v0, $s1, $s3
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 17) < (int64_t)GPR_S64(ctx, 19)) ? 1 : 0);

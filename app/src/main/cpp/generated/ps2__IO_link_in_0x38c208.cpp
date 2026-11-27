@@ -13,7 +13,7 @@
 
 // Function: _IO_link_in
 // Address: 0x38c208 - 0x38c238
-void ps2__IO_link_in_0x38c208(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_link_in_0x38c208(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_link_in_0x38c208");
 #endif

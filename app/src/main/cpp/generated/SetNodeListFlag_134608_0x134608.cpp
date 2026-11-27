@@ -13,7 +13,7 @@
 
 // Function: SetNodeListFlag_134608
 // Address: 0x134608 - 0x134648
-void SetNodeListFlag_134608_0x134608(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetNodeListFlag_134608_0x134608(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetNodeListFlag_134608_0x134608");
 #endif
@@ -45,7 +45,6 @@ void SetNodeListFlag_134608_0x134608(uint8_t* rdram, R5900Context* ctx, PS2Runti
         }
     }
     // 0x134614: 0x2404fffe  addiu       $a0, $zero, -0x2
-    ctx->pc = 0x134614u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967294));
 label_134618:
     // 0x134618: 0x14a60003  bne         $a1, $a2, . + 4 + (0x3 << 2)
@@ -78,10 +77,8 @@ label_134618:
             goto label_13462c;
         }
     }
-    ctx->pc = 0x134628u;
 label_134628:
     // 0x134628: 0x441024  and         $v0, $v0, $a0
-    ctx->pc = 0x134628u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 4));
 label_13462c:
     // 0x13462c: 0xac620008  sw          $v0, 0x8($v1)
@@ -102,7 +99,6 @@ label_13462c:
             goto label_134618;
         }
     }
-    ctx->pc = 0x13463Cu;
 label_13463c:
     // 0x13463c: 0x3e00008  jr          $ra
     ctx->pc = 0x13463Cu;

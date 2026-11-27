@@ -13,7 +13,7 @@
 
 // Function: ForwardTransBySubState_146E20
 // Address: 0x146e20 - 0x146e70
-void ForwardTransBySubState_146E20_0x146e20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardTransBySubState_146E20_0x146e20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardTransBySubState_146E20_0x146e20");
 #endif
@@ -83,7 +83,6 @@ void ForwardTransBySubState_146E20_0x146e20(uint8_t* rdram, R5900Context* ctx, P
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_trans_0x2aac28, 0x2aac28u, 0x146e50u)) {
         return;
     }
-    ctx->pc = 0x146E50u;
 label_146e50:
     // 0x146e50: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x146E50u;
@@ -100,7 +99,6 @@ label_146e50:
             goto label_146e64;
         }
     }
-    ctx->pc = 0x146E58u;
 label_146e58:
     // 0x146e58: 0xc0aab0a  jal         func_2AAC28
     SET_GPR_U32(ctx, 31, 0x146E60u);
@@ -113,7 +111,6 @@ label_146e58:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_trans_0x2aac28, 0x2aac28u, 0x146e60u)) {
         return;
     }
-    ctx->pc = 0x146E60u;
 label_146e60:
     // 0x146e60: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x146e60u;

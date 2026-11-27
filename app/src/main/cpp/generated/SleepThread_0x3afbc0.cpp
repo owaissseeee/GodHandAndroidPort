@@ -13,7 +13,7 @@
 
 // Function: SleepThread
 // Address: 0x3afbc0 - 0x3afbd0
-void SleepThread_0x3afbc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SleepThread_0x3afbc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SleepThread_0x3afbc0");
 #endif

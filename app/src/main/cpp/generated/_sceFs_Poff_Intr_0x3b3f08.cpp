@@ -13,7 +13,7 @@
 
 // Function: _sceFs_Poff_Intr
 // Address: 0x3b3f08 - 0x3b3f50
-void _sceFs_Poff_Intr_0x3b3f08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceFs_Poff_Intr_0x3b3f08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceFs_Poff_Intr_0x3b3f08");
 #endif
@@ -42,11 +42,9 @@ void _sceFs_Poff_Intr_0x3b3f08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
         }
     }
 
-    ctx->pc = 0x3b3f08u;
 
 label_3b3f08:
     // 0x3b3f08: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x3b3f08u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
 label_3b3f0c:
     // 0x3b3f0c: 0x8ca30000  lw          $v1, 0x0($a1)
@@ -83,14 +81,11 @@ label_3b3f18:
             goto label_3b3f34;
         }
     }
-    ctx->pc = 0x3B3F1Cu;
 label_3b3f1c:
     // 0x3b3f1c: 0x3c020078  lui         $v0, 0x78
-    ctx->pc = 0x3b3f1cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)120 << 16));
 label_3b3f20:
     // 0x3b3f20: 0x380802d  daddu       $s0, $gp, $zero
-    ctx->pc = 0x3b3f20u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 28) + (uint64_t)GPR_U64(ctx, 0));
 label_3b3f24:
     // 0x3b3f24: 0x8c5c1780  lw          $gp, 0x1780($v0)
@@ -124,19 +119,15 @@ label_3b3f2c:
             return;
         }
     }
-    ctx->pc = 0x3B3F30u;
 label_3b3f30:
     // 0x3b3f30: 0x200e02d  daddu       $gp, $s0, $zero
-    ctx->pc = 0x3b3f30u;
     SET_GPR_U64(ctx, 28, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_3b3f34:
     // 0x3b3f34: 0xf  sync
-    ctx->pc = 0x3b3f34u;
     // SYNC instruction - memory barrier
 // In recompiled code, we don't need explicit memory barriers
 label_3b3f38:
     // 0x3b3f38: 0x42000038  ei
-    ctx->pc = 0x3b3f38u;
     ctx->cop0_status |= 0x10000; // Enable interrupts
 label_3b3f3c:
     // 0x3b3f3c: 0xdfbf0010  ld          $ra, 0x10($sp)
@@ -177,7 +168,6 @@ label_3b3f48:
         return;
         #endif
     }
-    ctx->pc = 0x3B3F4Cu;
 label_3b3f4c:
     // 0x3b3f4c: 0x0  nop
     // NOP

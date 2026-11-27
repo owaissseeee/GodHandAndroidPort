@@ -13,7 +13,7 @@
 
 // Function: CornerPanel_initState0
 // Address: 0x2b17a8 - 0x2b17f8
-void CornerPanel_initState0_0x2b17a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CornerPanel_initState0_0x2b17a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CornerPanel_initState0_0x2b17a8");
 #endif
@@ -69,7 +69,6 @@ void CornerPanel_initState0_0x2b17a8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B1C80_0x2b1c80, 0x2b1c80u, 0x2b17e4u)) {
         return;
     }
-    ctx->pc = 0x2B17E4u;
 label_2b17e4:
     // 0x2b17e4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2b17e4u;

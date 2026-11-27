@@ -13,7 +13,7 @@
 
 // Function: SetActionKickBomb
 // Address: 0x2dba00 - 0x2dba88
-void SetActionKickBomb_0x2dba00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetActionKickBomb_0x2dba00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetActionKickBomb_0x2dba00");
 #endif
@@ -40,7 +40,6 @@ void SetActionKickBomb_0x2dba00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x2dba10u)) {
         return;
     }
-    ctx->pc = 0x2DBA10u;
 label_2dba10:
     // 0x2dba10: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -68,7 +67,6 @@ label_2dba10:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_IsSet_Field_15F4_Bit_400000_10B698_0x10b698, 0x10b698u, 0x2dba28u)) {
         return;
     }
-    ctx->pc = 0x2DBA28u;
 label_2dba28:
     // 0x2dba28: 0x14400015  bnez        $v0, . + 4 + (0x15 << 2)
     ctx->pc = 0x2DBA28u;
@@ -107,7 +105,6 @@ label_2dba28:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_CkPlCatched_0x293100, 0x293100u, 0x2dba4cu)) {
         return;
     }
-    ctx->pc = 0x2DBA4Cu;
 label_2dba4c:
     // 0x2dba4c: 0x1440000c  bnez        $v0, . + 4 + (0xC << 2)
     ctx->pc = 0x2DBA4Cu;
@@ -151,7 +148,6 @@ label_2dba4c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1F7858u, 0x2DBA74u, 0x2DBA7Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2DBA7Cu;
 label_2dba7c:
     // 0x2dba7c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2dba7cu;

@@ -6,6 +6,7 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,9 +14,21 @@
 
 // Function: sceVu0CopyVector
 // Address: 0x30a538 - 0x30a548
-void sceVu0CopyVector_0x30a538(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVu0CopyVector_0x30a538(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVu0CopyVector_0x30a538");
+#endif
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    {
+        uint8_t* const d = ps2TryFastSpan(rdram, GPR_U32(ctx, 4) & ~0xFu, 16u);
+        const uint8_t* const s = ps2TryFastSpan(rdram, GPR_U32(ctx, 5) & ~0xFu, 16u);
+        if (__builtin_expect(d != nullptr && s != nullptr, 1)) {
+            ps2StoreVec4(d, ps2LoadVec4(s));
+            ps2FastReturn(rdram, ctx, runtime, 0x30A540u);
+            return;
+        }
+    }
 #endif
 
 

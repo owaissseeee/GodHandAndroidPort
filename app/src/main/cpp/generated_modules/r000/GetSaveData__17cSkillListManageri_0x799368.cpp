@@ -14,12 +14,11 @@ namespace gh_r000
 {
 // Function: GetSaveData__17cSkillListManageri
 // Address: 0x799368 - 0x7993c0
-void GetSaveData__17cSkillListManageri_0x799368(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetSaveData__17cSkillListManageri_0x799368(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetSaveData__17cSkillListManageri_0x799368");
 #endif
 
-    ctx->pc = 0x799368u;
 
     // 0x799368: 0x8c860000  lw          $a2, 0x0($a0)
     ctx->pc = 0x799368u;
@@ -33,7 +32,6 @@ void GetSaveData__17cSkillListManageri_0x799368(uint8_t* rdram, R5900Context* ct
             goto label_799394;
         }
     }
-    ctx->pc = 0x799374u;
     // 0x799374: 0x8c820010  lw          $v0, 0x10($a0)
     ctx->pc = 0x799374u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 16)));
@@ -52,7 +50,6 @@ void GetSaveData__17cSkillListManageri_0x799368(uint8_t* rdram, R5900Context* ct
             goto label_799394;
         }
     }
-    ctx->pc = 0x799380u;
     // 0x799380: 0x14400004  bnez        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x799380u;
     {
@@ -62,7 +59,6 @@ void GetSaveData__17cSkillListManageri_0x799368(uint8_t* rdram, R5900Context* ct
             goto label_799394;
         }
     }
-    ctx->pc = 0x799388u;
     // 0x799388: 0x8c82000c  lw          $v0, 0xC($a0)
     ctx->pc = 0x799388u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 12)));
@@ -81,7 +77,6 @@ void GetSaveData__17cSkillListManageri_0x799368(uint8_t* rdram, R5900Context* ct
             goto label_79939c;
         }
     }
-    ctx->pc = 0x799394u;
 label_799394:
     // 0x799394: 0x3e00008  jr          $ra
     ctx->pc = 0x799394u;
@@ -102,7 +97,6 @@ label_799394:
         return;
         #endif
     }
-    ctx->pc = 0x79939Cu;
 label_79939c:
     // 0x79939c: 0x10400006  beqz        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x79939Cu;
@@ -119,15 +113,12 @@ label_79939c:
             goto label_7993b8;
         }
     }
-    ctx->pc = 0x7993A4u;
     // 0x7993a4: 0x80620014  lb          $v0, 0x14($v1)
     ctx->pc = 0x7993a4u;
     SET_GPR_S32(ctx, 2, (int8_t)READ8(ADD32(GPR_U32(ctx, 3), 20)));
     // 0x7993a8: 0x24040024  addiu       $a0, $zero, 0x24
-    ctx->pc = 0x7993a8u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 36));
     // 0x7993ac: 0x441818  mult        $v1, $v0, $a0
-    ctx->pc = 0x7993acu;
     { int64_t result = (int64_t)GPR_S32(ctx, 2) * (int64_t)GPR_S32(ctx, 4); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 3, (int32_t)result); }
     // 0x7993b0: 0x3e00008  jr          $ra
     ctx->pc = 0x7993B0u;
@@ -148,7 +139,6 @@ label_79939c:
         return;
         #endif
     }
-    ctx->pc = 0x7993B8u;
 label_7993b8:
     // 0x7993b8: 0x3e00008  jr          $ra
     ctx->pc = 0x7993B8u;

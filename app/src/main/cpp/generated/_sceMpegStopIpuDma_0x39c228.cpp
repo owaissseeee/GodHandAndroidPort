@@ -13,7 +13,7 @@
 
 // Function: _sceMpegStopIpuDma
 // Address: 0x39c228 - 0x39c2c8
-void _sceMpegStopIpuDma_0x39c228(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceMpegStopIpuDma_0x39c228(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceMpegStopIpuDma_0x39c228");
 #endif
@@ -38,7 +38,6 @@ void _sceMpegStopIpuDma_0x39c228(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x39c238u)) {
         return;
     }
-    ctx->pc = 0x39C238u;
 label_39c238:
     // 0x39c238: 0x3c071000  lui         $a3, 0x1000
     SET_GPR_S32(ctx, 7, (int32_t)((uint32_t)4096 << 16));
@@ -105,10 +104,8 @@ label_39c238:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x39c294u)) {
         return;
     }
-    ctx->pc = 0x39C294u;
 label_39c294:
     // 0x39c294: 0x3c021000  lui         $v0, 0x1000
-    ctx->pc = 0x39c294u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)4096 << 16));
 label_39c298:
     // 0x39c298: 0x3c041000  lui         $a0, 0x1000

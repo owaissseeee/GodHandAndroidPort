@@ -13,7 +13,7 @@
 
 // Function: GetD003EE804_360720
 // Address: 0x360720 - 0x360740
-void GetD003EE804_360720_0x360720(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetD003EE804_360720_0x360720(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetD003EE804_360720_0x360720");
 #endif

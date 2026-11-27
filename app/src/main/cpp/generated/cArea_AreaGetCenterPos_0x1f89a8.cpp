@@ -13,7 +13,7 @@
 
 // Function: cArea_AreaGetCenterPos
 // Address: 0x1f89a8 - 0x1f8a40
-void cArea_AreaGetCenterPos_0x1f89a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cArea_AreaGetCenterPos_0x1f89a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cArea_AreaGetCenterPos_0x1f89a8");
 #endif
@@ -67,7 +67,6 @@ void cArea_AreaGetCenterPos_0x1f89a8(uint8_t* rdram, R5900Context* ctx, PS2Runti
         return;
         #endif
     }
-    ctx->pc = 0x1F89C8u;
 label_1f89c8:
     // 0x1f89c8: 0xc4810018  lwc1        $f1, 0x18($a0)
     ctx->pc = 0x1f89c8u;
@@ -141,7 +140,6 @@ label_1f89c8:
         return;
         #endif
     }
-    ctx->pc = 0x1F8A24u;
 label_1f8a24:
     // 0x1f8a24: 0xe4a00000  swc1        $f0, 0x0($a1)
     ctx->pc = 0x1f8a24u;

@@ -13,7 +13,7 @@
 
 // Function: PokerId_Move
 // Address: 0x1df988 - 0x1df9b8
-void PokerId_Move_0x1df988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void PokerId_Move_0x1df988(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("PokerId_Move_0x1df988");
 #endif
@@ -46,7 +46,6 @@ void PokerId_Move_0x1df988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DD1A0_0x1dd1a0, 0x1dd1a0u, 0x1df99cu)) {
         return;
     }
-    ctx->pc = 0x1DF99Cu;
 label_1df99c:
     // 0x1df99c: 0xc077b72  jal         func_1DEDC8
     SET_GPR_U32(ctx, 31, 0x1DF9A4u);
@@ -59,7 +58,6 @@ label_1df99c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DEDC8_0x1dedc8, 0x1dedc8u, 0x1df9a4u)) {
         return;
     }
-    ctx->pc = 0x1DF9A4u;
 label_1df9a4:
     // 0x1df9a4: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1df9a4u;

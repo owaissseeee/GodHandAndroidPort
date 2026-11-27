@@ -13,7 +13,7 @@
 
 // Function: func_00171140
 // Address: 0x171140 - 0x171200
-void func_00171140_0x171140(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00171140_0x171140(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00171140_0x171140");
 #endif
@@ -48,7 +48,6 @@ void func_00171140_0x171140(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B6FB8_0x1b6fb8, 0x1b6fb8u, 0x171154u)) {
         return;
     }
-    ctx->pc = 0x171154u;
 label_171154:
     // 0x171154: 0x8e0500f0  lw          $a1, 0xF0($s0)
     ctx->pc = 0x171154u;
@@ -66,7 +65,6 @@ label_171154:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001717C0_0x1717c0, 0x1717c0u, 0x171164u)) {
         return;
     }
-    ctx->pc = 0x171164u;
 label_171164:
     // 0x171164: 0x3c020042  lui         $v0, 0x42
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)66 << 16));
@@ -77,7 +75,6 @@ label_171164:
     // 0x171170: 0x182d  daddu       $v1, $zero, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x171174: 0x691021  addu        $v0, $v1, $t1
-    ctx->pc = 0x171174u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 9)));
 label_171178:
     // 0x171178: 0x24670001  addiu       $a3, $v1, 0x1
@@ -88,7 +85,6 @@ label_171178:
     // 0x171180: 0x24060005  addiu       $a2, $zero, 0x5
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 5));
     // 0x171184: 0x0  nop
-    ctx->pc = 0x171184u;
     // NOP
 label_171188:
     // 0x171188: 0x920302b4  lbu         $v1, 0x2B4($s0)
@@ -116,7 +112,6 @@ label_171188:
     // 0x17119c: 0x83102a  slt         $v0, $a0, $v1
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 4) < (int64_t)GPR_S64(ctx, 3)) ? 1 : 0);
     // 0x1711a0: 0x40282d  daddu       $a1, $v0, $zero
-    ctx->pc = 0x1711a0u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_1711a4:
     // 0x1711a4: 0x30a200ff  andi        $v0, $a1, 0xFF
@@ -156,10 +151,8 @@ label_1711a4:
             goto label_1711c4;
         }
     }
-    ctx->pc = 0x1711C0u;
 label_1711c0:
     // 0x1711c0: 0x182d  daddu       $v1, $zero, $zero
-    ctx->pc = 0x1711c0u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1711c4:
     // 0x1711c4: 0x8c620154  lw          $v0, 0x154($v1)

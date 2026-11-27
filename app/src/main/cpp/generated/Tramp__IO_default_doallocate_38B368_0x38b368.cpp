@@ -13,7 +13,7 @@
 
 // Function: Tramp__IO_default_doallocate_38B368
 // Address: 0x38b368 - 0x38b388
-void Tramp__IO_default_doallocate_38B368_0x38b368(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp__IO_default_doallocate_38B368_0x38b368(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp__IO_default_doallocate_38B368_0x38b368");
 #endif
@@ -37,7 +37,6 @@ void Tramp__IO_default_doallocate_38B368_0x38b368(uint8_t* rdram, R5900Context* 
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_default_doallocate_0x38cbf0, 0x38cbf0u, 0x38b378u)) {
         return;
     }
-    ctx->pc = 0x38B378u;
 label_38b378:
     // 0x38b378: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38b378u;

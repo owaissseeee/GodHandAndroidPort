@@ -13,7 +13,7 @@
 
 // Function: cEmWrap_SetVital
 // Address: 0x295d30 - 0x295d88
-void cEmWrap_SetVital_0x295d30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmWrap_SetVital_0x295d30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmWrap_SetVital_0x295d30");
 #endif
@@ -50,7 +50,6 @@ void cEmWrap_SetVital_0x295d30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &FindResolveActor_295978_0x295978, 0x295978u, 0x295d4cu)) {
         return;
     }
-    ctx->pc = 0x295D4Cu;
 label_295d4c:
     // 0x295d4c: 0x5040000a  beql        $v0, $zero, . + 4 + (0xA << 2)
     ctx->pc = 0x295D4Cu;
@@ -105,7 +104,6 @@ label_295d4c:
             goto label_295d74;
         }
     }
-    ctx->pc = 0x295D70u;
 label_295d70:
     // 0x295d70: 0xa491054a  sh          $s1, 0x54A($a0)
     ctx->pc = 0x295d70u;

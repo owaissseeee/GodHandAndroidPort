@@ -13,7 +13,7 @@
 
 // Function: ResetSlotArray_1FE6C8
 // Address: 0x1fe6c8 - 0x1fe748
-void ResetSlotArray_1FE6C8_0x1fe6c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ResetSlotArray_1FE6C8_0x1fe6c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ResetSlotArray_1FE6C8_0x1fe6c8");
 #endif
@@ -76,7 +76,6 @@ void ResetSlotArray_1FE6C8_0x1fe6c8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     // 0x1fe700: 0x2413ffff  addiu       $s3, $zero, -0x1
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x1fe704: 0x2028818  mult        $s1, $s0, $v0
-    ctx->pc = 0x1fe704u;
     { int64_t result = (int64_t)GPR_S32(ctx, 16) * (int64_t)GPR_S32(ctx, 2); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 17, (int32_t)result); }
 label_1fe708:
     // 0x1fe708: 0x8e440008  lw          $a0, 0x8($s2)
@@ -95,7 +94,6 @@ label_1fe708:
     if (!runtime->callDirectStatic(rdram, ctx, &cDataHolder_systemInit_0x1ff028, 0x1ff028u, 0x1fe718u)) {
         return;
     }
-    ctx->pc = 0x1FE718u;
 label_1fe718:
     // 0x1fe718: 0x1613fffb  bne         $s0, $s3, . + 4 + (-0x5 << 2)
     ctx->pc = 0x1FE718u;
@@ -115,7 +113,6 @@ label_1fe718:
             goto label_1fe708;
         }
     }
-    ctx->pc = 0x1FE720u;
 label_1fe720:
     // 0x1fe720: 0xae540000  sw          $s4, 0x0($s2)
     ctx->pc = 0x1fe720u;

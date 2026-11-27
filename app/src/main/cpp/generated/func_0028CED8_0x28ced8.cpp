@@ -13,7 +13,7 @@
 
 // Function: func_0028CED8
 // Address: 0x28ced8 - 0x28d048
-void func_0028CED8_0x28ced8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0028CED8_0x28ced8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0028CED8_0x28ced8");
 #endif
@@ -96,7 +96,6 @@ void func_0028CED8_0x28ced8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             return;
         }
     }
-    ctx->pc = 0x28CF18u;
 label_28cf18:
     // 0x28cf18: 0x8e260304  lw          $a2, 0x304($s1)
     ctx->pc = 0x28cf18u;
@@ -121,7 +120,6 @@ label_28cf18:
     if (!runtime->callDirectStatic(rdram, ctx, &cDataManager_addPinnedData_0x1fece0, 0x1fece0u, 0x28cf34u)) {
         return;
     }
-    ctx->pc = 0x28CF34u;
 label_28cf34:
     // 0x28cf34: 0x8e220304  lw          $v0, 0x304($s1)
     ctx->pc = 0x28cf34u;
@@ -148,7 +146,6 @@ label_28cf34:
     if (!runtime->callDirectStatic(rdram, ctx, &cDataManager_addPinnedData_0x1fece0, 0x1fece0u, 0x28cf54u)) {
         return;
     }
-    ctx->pc = 0x28CF54u;
 label_28cf54:
     // 0x28cf54: 0x8e230304  lw          $v1, 0x304($s1)
     ctx->pc = 0x28cf54u;
@@ -172,7 +169,6 @@ label_28cf54:
             goto label_28cfc8;
         }
     }
-    ctx->pc = 0x28CF68u;
 label_28cf68:
     // 0x28cf68: 0x8e260304  lw          $a2, 0x304($s1)
     ctx->pc = 0x28cf68u;
@@ -198,7 +194,6 @@ label_28cf68:
             goto label_28d004;
         }
     }
-    ctx->pc = 0x28CF80u;
 label_28cf80:
     // 0x28cf80: 0x8e260304  lw          $a2, 0x304($s1)
     ctx->pc = 0x28cf80u;
@@ -224,7 +219,6 @@ label_28cf80:
             goto label_28d004;
         }
     }
-    ctx->pc = 0x28CF98u;
 label_28cf98:
     // 0x28cf98: 0x8e220304  lw          $v0, 0x304($s1)
     ctx->pc = 0x28cf98u;
@@ -251,7 +245,6 @@ label_28cf98:
     if (!runtime->callDirectStatic(rdram, ctx, &cDataManager_addPinnedData_0x1fece0, 0x1fece0u, 0x28cfb8u)) {
         return;
     }
-    ctx->pc = 0x28CFB8u;
 label_28cfb8:
     // 0x28cfb8: 0x8e230304  lw          $v1, 0x304($s1)
     ctx->pc = 0x28cfb8u;
@@ -275,7 +268,6 @@ label_28cfc8:
     if (!runtime->callDirectStatic(rdram, ctx, &cDataManager_addPinnedData_0x1fece0, 0x1fece0u, 0x28cfd0u)) {
         return;
     }
-    ctx->pc = 0x28CFD0u;
 label_28cfd0:
     // 0x28cfd0: 0x10000018  b           . + 4 + (0x18 << 2)
     ctx->pc = 0x28CFD0u;
@@ -292,7 +284,6 @@ label_28cfd0:
             goto label_28d034;
         }
     }
-    ctx->pc = 0x28CFD8u;
 label_28cfd8:
     // 0x28cfd8: 0x8e260304  lw          $a2, 0x304($s1)
     ctx->pc = 0x28cfd8u;
@@ -318,7 +309,6 @@ label_28cfd8:
             goto label_28d004;
         }
     }
-    ctx->pc = 0x28CFF0u;
 label_28cff0:
     // 0x28cff0: 0x8e260304  lw          $a2, 0x304($s1)
     ctx->pc = 0x28cff0u;
@@ -344,7 +334,6 @@ label_28d004:
     if (!runtime->callDirectStatic(rdram, ctx, &cDataManager_addPinnedData_0x1fece0, 0x1fece0u, 0x28d00cu)) {
         return;
     }
-    ctx->pc = 0x28D00Cu;
 label_28d00c:
     // 0x28d00c: 0x10000009  b           . + 4 + (0x9 << 2)
     ctx->pc = 0x28D00Cu;
@@ -361,7 +350,6 @@ label_28d00c:
             goto label_28d034;
         }
     }
-    ctx->pc = 0x28D014u;
 label_28d014:
     // 0x28d014: 0x8e260304  lw          $a2, 0x304($s1)
     ctx->pc = 0x28d014u;
@@ -386,7 +374,6 @@ label_28d014:
     if (!runtime->callDirectStatic(rdram, ctx, &cDataManager_addPinnedData_0x1fece0, 0x1fece0u, 0x28d030u)) {
         return;
     }
-    ctx->pc = 0x28D030u;
 label_28d030:
     // 0x28d030: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x28d030u;

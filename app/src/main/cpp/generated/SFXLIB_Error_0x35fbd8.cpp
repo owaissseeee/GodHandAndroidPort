@@ -13,7 +13,7 @@
 
 // Function: SFXLIB_Error
 // Address: 0x35fbd8 - 0x35fc18
-void SFXLIB_Error_0x35fbd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFXLIB_Error_0x35fbd8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFXLIB_Error_0x35fbd8");
 #endif
@@ -40,15 +40,12 @@ void SFXLIB_Error_0x35fbd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
         }
     }
 
-    ctx->pc = 0x35fbd8u;
 
 label_35fbd8:
     // 0x35fbd8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x35fbd8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_35fbdc:
     // 0x35fbdc: 0x3c02003f  lui         $v0, 0x3F
-    ctx->pc = 0x35fbdcu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)63 << 16));
 label_35fbe0:
     // 0x35fbe0: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -56,11 +53,9 @@ label_35fbe0:
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
 label_35fbe4:
     // 0x35fbe4: 0x2442e340  addiu       $v0, $v0, -0x1CC0
-    ctx->pc = 0x35fbe4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294959936));
 label_35fbe8:
     // 0x35fbe8: 0xc0282d  daddu       $a1, $a2, $zero
-    ctx->pc = 0x35fbe8u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
 label_35fbec:
     // 0x35fbec: 0x8c430008  lw          $v1, 0x8($v0)
@@ -72,7 +67,6 @@ label_35fbf0:
     SET_GPR_S32(ctx, 6, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 0)));
 label_35fbf4:
     // 0x35fbf4: 0x24630001  addiu       $v1, $v1, 0x1
-    ctx->pc = 0x35fbf4u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 1));
 label_35fbf8:
     // 0x35fbf8: 0x8c440004  lw          $a0, 0x4($v0)
@@ -122,7 +116,6 @@ label_35fc08:
             return;
         }
     }
-    ctx->pc = 0x35FC0Cu;
 label_35fc0c:
     // 0x35fc0c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x35fc0cu;

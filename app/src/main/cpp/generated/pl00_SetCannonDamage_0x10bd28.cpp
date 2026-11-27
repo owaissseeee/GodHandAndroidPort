@@ -13,7 +13,7 @@
 
 // Function: pl00_SetCannonDamage
 // Address: 0x10bd28 - 0x10be10
-void pl00_SetCannonDamage_0x10bd28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void pl00_SetCannonDamage_0x10bd28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("pl00_SetCannonDamage_0x10bd28");
 #endif
@@ -93,10 +93,8 @@ void pl00_SetCannonDamage_0x10bd28(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_10bd64;
         }
     }
-    ctx->pc = 0x10BD60u;
 label_10bd60:
     // 0x10bd60: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x10bd60u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_10bd64:
     // 0x10bd64: 0x10400008  beqz        $v0, . + 4 + (0x8 << 2)
@@ -136,7 +134,6 @@ label_10bd64:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffectPos_0x306838, 0x306838u, 0x10bd88u)) {
         return;
     }
-    ctx->pc = 0x10BD88u;
 label_10bd88:
     // 0x10bd88: 0x3c040060  lui         $a0, 0x60
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)96 << 16));
@@ -165,7 +162,6 @@ label_10bd88:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x10bdb0u)) {
         return;
     }
-    ctx->pc = 0x10BDB0u;
 label_10bdb0:
     // 0x10bdb0: 0x9603054a  lhu         $v1, 0x54A($s0)
     ctx->pc = 0x10bdb0u;
@@ -220,7 +216,6 @@ label_10bdb0:
             goto label_10bdfc;
         }
     }
-    ctx->pc = 0x10BDE4u;
 label_10bde4:
     // 0x10bde4: 0x24020006  addiu       $v0, $zero, 0x6
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 6));

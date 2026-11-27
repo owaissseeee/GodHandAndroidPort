@@ -13,7 +13,7 @@
 
 // Function: func_003BA3D8
 // Address: 0x3ba3d8 - 0x3ba4f8
-void func_003BA3D8_0x3ba3d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003BA3D8_0x3ba3d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003BA3D8_0x3ba3d8");
 #endif
@@ -90,12 +90,10 @@ void func_003BA3D8_0x3ba3d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_3ba448;
         }
     }
-    ctx->pc = 0x3BA410u;
 label_3ba410:
     // 0x3ba410: 0x30c300ff  andi        $v1, $a2, 0xFF
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 6) & (uint64_t)(uint16_t)255);
     // 0x3ba414: 0x24020077  addiu       $v0, $zero, 0x77
-    ctx->pc = 0x3ba414u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 119));
 label_3ba418:
     // 0x3ba418: 0x14620009  bne         $v1, $v0, . + 4 + (0x9 << 2)
@@ -152,7 +150,6 @@ label_3ba418:
             goto label_3ba448;
         }
     }
-    ctx->pc = 0x3BA440u;
 label_3ba440:
     // 0x3ba440: 0x10000016  b           . + 4 + (0x16 << 2)
     ctx->pc = 0x3BA440u;
@@ -169,7 +166,6 @@ label_3ba440:
             goto label_3ba49c;
         }
     }
-    ctx->pc = 0x3BA448u;
 label_3ba448:
     // 0x3ba448: 0xa32821  addu        $a1, $a1, $v1
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), GPR_U32(ctx, 3)));
@@ -213,7 +209,6 @@ label_3ba448:
         }
     }
     // 0x3ba46c: 0x0  nop
-    ctx->pc = 0x3ba46cu;
     // NOP
 label_3ba470:
     // 0x3ba470: 0x3c020040  lui         $v0, 0x40
@@ -251,7 +246,6 @@ label_3ba470:
     // 0x3ba494: 0x3c040046  lui         $a0, 0x46
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)70 << 16));
     // 0x3ba498: 0x248409d8  addiu       $a0, $a0, 0x9D8
-    ctx->pc = 0x3ba498u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 2520));
 label_3ba49c:
     // 0x3ba49c: 0xc0ee778  jal         func_3B9DE0
@@ -260,7 +254,6 @@ label_3ba49c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003B9DE0_0x3b9de0, 0x3b9de0u, 0x3ba4a4u)) {
         return;
     }
-    ctx->pc = 0x3BA4A4u;
 label_3ba4a4:
     // 0x3ba4a4: 0x10000010  b           . + 4 + (0x10 << 2)
     ctx->pc = 0x3BA4A4u;
@@ -278,7 +271,6 @@ label_3ba4a4:
         }
     }
     // 0x3ba4ac: 0x0  nop
-    ctx->pc = 0x3ba4acu;
     // NOP
 label_3ba4b0:
     // 0x3ba4b0: 0xc42021  addu        $a0, $a2, $a0

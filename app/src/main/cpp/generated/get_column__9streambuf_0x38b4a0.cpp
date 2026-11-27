@@ -13,7 +13,7 @@
 
 // Function: get_column__9streambuf
 // Address: 0x38b4a0 - 0x38b4e0
-void get_column__9streambuf_0x38b4a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void get_column__9streambuf_0x38b4a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("get_column__9streambuf_0x38b4a0");
 #endif
@@ -70,7 +70,6 @@ void get_column__9streambuf_0x38b4a0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_adjust_column_0x38ce10, 0x38ce10u, 0x38b4ccu)) {
         return;
     }
-    ctx->pc = 0x38B4CCu;
 label_38b4cc:
     // 0x38b4cc: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x38B4CCu;
@@ -87,7 +86,6 @@ label_38b4cc:
             goto label_38b4d8;
         }
     }
-    ctx->pc = 0x38B4D4u;
 label_38b4d4:
     // 0x38b4d4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38b4d4u;

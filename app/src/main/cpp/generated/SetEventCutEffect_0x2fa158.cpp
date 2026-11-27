@@ -13,7 +13,7 @@
 
 // Function: SetEventCutEffect
 // Address: 0x2fa158 - 0x2fa240
-void SetEventCutEffect_0x2fa158(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetEventCutEffect_0x2fa158(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetEventCutEffect_0x2fa158");
 #endif
@@ -51,7 +51,6 @@ void SetEventCutEffect_0x2fa158(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &func_00306330_0x306330, 0x306330u, 0x2fa174u)) {
         return;
     }
-    ctx->pc = 0x2FA174u;
 label_2fa174:
     // 0x2fa174: 0xc0be84a  jal         func_2FA128
     SET_GPR_U32(ctx, 31, 0x2FA17Cu);
@@ -64,7 +63,6 @@ label_2fa174:
     if (!runtime->callDirectStatic(rdram, ctx, &EffEventIsCutDataExist_0x2fa128, 0x2fa128u, 0x2fa17cu)) {
         return;
     }
-    ctx->pc = 0x2FA17Cu;
 label_2fa17c:
     // 0x2fa17c: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -195,7 +193,6 @@ label_2fa17c:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x2fa228u)) {
         return;
     }
-    ctx->pc = 0x2FA228u;
 label_2fa228:
     // 0x2fa228: 0x7bb00090  lq          $s0, 0x90($sp)
     ctx->pc = 0x2fa228u;

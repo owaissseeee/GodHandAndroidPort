@@ -13,7 +13,7 @@
 
 // Function: cMessage_searchWorkId
 // Address: 0x2aed10 - 0x2aed40
-void cMessage_searchWorkId_0x2aed10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessage_searchWorkId_0x2aed10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessage_searchWorkId_0x2aed10");
 #endif
@@ -82,7 +82,6 @@ label_2aed20:
         return;
         #endif
     }
-    ctx->pc = 0x2AED30u;
 label_2aed30:
     // 0x2aed30: 0x5460fffb  bnel        $v1, $zero, . + 4 + (-0x5 << 2)
     ctx->pc = 0x2AED30u;
@@ -102,7 +101,6 @@ label_2aed30:
             goto label_2aed20;
         }
     }
-    ctx->pc = 0x2AED38u;
 label_2aed38:
     // 0x2aed38: 0x3e00008  jr          $ra
     ctx->pc = 0x2AED38u;

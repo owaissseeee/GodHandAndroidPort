@@ -13,7 +13,7 @@
 
 // Function: func_00383690
 // Address: 0x383690 - 0x383708
-void func_00383690_0x383690(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00383690_0x383690(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00383690_0x383690");
 #endif
@@ -92,7 +92,6 @@ void func_00383690_0x383690(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_3836fc;
         }
     }
-    ctx->pc = 0x3836C0u;
 label_3836c0:
     // 0x3836c0: 0x1062000b  beq         $v1, $v0, . + 4 + (0xB << 2)
     ctx->pc = 0x3836C0u;
@@ -118,7 +117,6 @@ label_3836c0:
             goto label_3836fc;
         }
     }
-    ctx->pc = 0x3836D0u;
 label_3836d0:
     // 0x3836d0: 0xc0e0dc2  jal         func_383708
     ctx->pc = 0x3836D0u;
@@ -126,7 +124,6 @@ label_3836d0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00383708_0x383708, 0x383708u, 0x3836d8u)) {
         return;
     }
-    ctx->pc = 0x3836D8u;
 label_3836d8:
     // 0x3836d8: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x3836D8u;
@@ -143,7 +140,6 @@ label_3836d8:
             goto label_3836fc;
         }
     }
-    ctx->pc = 0x3836E0u;
 label_3836e0:
     // 0x3836e0: 0xc0e0dfa  jal         func_3837E8
     ctx->pc = 0x3836E0u;
@@ -151,7 +147,6 @@ label_3836e0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003837E8_0x3837e8, 0x3837e8u, 0x3836e8u)) {
         return;
     }
-    ctx->pc = 0x3836E8u;
 label_3836e8:
     // 0x3836e8: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x3836E8u;
@@ -168,7 +163,6 @@ label_3836e8:
             goto label_3836fc;
         }
     }
-    ctx->pc = 0x3836F0u;
 label_3836f0:
     // 0x3836f0: 0xc0e0e12  jal         func_383848
     ctx->pc = 0x3836F0u;
@@ -176,7 +170,6 @@ label_3836f0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00383848_0x383848, 0x383848u, 0x3836f8u)) {
         return;
     }
-    ctx->pc = 0x3836F8u;
 label_3836f8:
     // 0x3836f8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3836f8u;

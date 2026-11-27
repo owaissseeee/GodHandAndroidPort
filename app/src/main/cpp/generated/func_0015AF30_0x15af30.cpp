@@ -13,7 +13,7 @@
 
 // Function: func_0015AF30
 // Address: 0x15af30 - 0x15b080
-void func_0015AF30_0x15af30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0015AF30_0x15af30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0015AF30_0x15af30");
 #endif
@@ -116,7 +116,6 @@ void func_0015AF30_0x15af30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Atan2_0x1f8180, 0x1f8180u, 0x15af88u)) {
         return;
     }
-    ctx->pc = 0x15AF88u;
 label_15af88:
     // 0x15af88: 0x46000307  neg.s       $f12, $f0
     ctx->f[12] = FPU_NEG_S(ctx->f[0]);
@@ -135,7 +134,6 @@ label_15af88:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0RotMatrixZ_0x30a650, 0x30a650u, 0x15af9cu)) {
         return;
     }
-    ctx->pc = 0x15AF9Cu;
 label_15af9c:
     // 0x15af9c: 0x10000018  b           . + 4 + (0x18 << 2)
     ctx->pc = 0x15AF9Cu;
@@ -152,7 +150,6 @@ label_15af9c:
             goto label_15b000;
         }
     }
-    ctx->pc = 0x15AFA4u;
 label_15afa4:
     // 0x15afa4: 0xc60d0000  lwc1        $f13, 0x0($s0)
     ctx->pc = 0x15afa4u;
@@ -169,7 +166,6 @@ label_15afa8:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Atan2_0x1f8180, 0x1f8180u, 0x15afb0u)) {
         return;
     }
-    ctx->pc = 0x15AFB0u;
 label_15afb0:
     // 0x15afb0: 0x3c05003c  lui         $a1, 0x3C
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)60 << 16));
@@ -188,7 +184,6 @@ label_15afb0:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0RotMatrixY_0x30a7b8, 0x30a7b8u, 0x15afc4u)) {
         return;
     }
-    ctx->pc = 0x15AFC4u;
 label_15afc4:
     // 0x15afc4: 0xc60d0000  lwc1        $f13, 0x0($s0)
     ctx->pc = 0x15afc4u;
@@ -219,7 +214,6 @@ label_15afc4:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Atan2_0x1f8180, 0x1f8180u, 0x15afecu)) {
         return;
     }
-    ctx->pc = 0x15AFECu;
 label_15afec:
     // 0x15afec: 0x46000307  neg.s       $f12, $f0
     ctx->f[12] = FPU_NEG_S(ctx->f[0]);
@@ -236,10 +230,8 @@ label_15afec:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0RotMatrixZ_0x30a650, 0x30a650u, 0x15affcu)) {
         return;
     }
-    ctx->pc = 0x15AFFCu;
 label_15affc:
     // 0x15affc: 0x27b00040  addiu       $s0, $sp, 0x40
-    ctx->pc = 0x15affcu;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 29), 64));
 label_15b000:
     // 0x15b000: 0x3a0282d  daddu       $a1, $sp, $zero
@@ -255,7 +247,6 @@ label_15b000:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0TransposeMatrix_0x30a3b0, 0x30a3b0u, 0x15b00cu)) {
         return;
     }
-    ctx->pc = 0x15B00Cu;
 label_15b00c:
     // 0x15b00c: 0x4600a306  mov.s       $f12, $f20
     ctx->f[12] = FPU_MOV_S(ctx->f[20]);
@@ -272,7 +263,6 @@ label_15b00c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0RotMatrixX_0x30a700, 0x30a700u, 0x15b01cu)) {
         return;
     }
-    ctx->pc = 0x15B01Cu;
 label_15b01c:
     // 0x15b01c: 0x3a0302d  daddu       $a2, $sp, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -289,7 +279,6 @@ label_15b01c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0MulMatrix_0x30a2e0, 0x30a2e0u, 0x15b02cu)) {
         return;
     }
-    ctx->pc = 0x15B02Cu;
 label_15b02c:
     // 0x15b02c: 0x27a40080  addiu       $a0, $sp, 0x80
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 29), 128));
@@ -306,7 +295,6 @@ label_15b02c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x15b03cu)) {
         return;
     }
-    ctx->pc = 0x15B03Cu;
 label_15b03c:
     // 0x15b03c: 0x240282d  daddu       $a1, $s2, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -323,7 +311,6 @@ label_15b03c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0SubVector_0x30a4b8, 0x30a4b8u, 0x15b04cu)) {
         return;
     }
-    ctx->pc = 0x15B04Cu;
 label_15b04c:
     // 0x15b04c: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));

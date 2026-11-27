@@ -13,7 +13,7 @@
 
 // Function: _lf_bind
 // Address: 0x3b5a80 - 0x3b5b80
-void _lf_bind_0x3b5a80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _lf_bind_0x3b5a80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_lf_bind_0x3b5a80");
 #endif
@@ -63,7 +63,6 @@ void _lf_bind_0x3b5a80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     // 0x3b5aa0: 0x3c110078  lui         $s1, 0x78
     SET_GPR_S32(ctx, 17, (int32_t)((uint32_t)120 << 16));
     // 0x3b5aa4: 0x26301b80  addiu       $s0, $s1, 0x1B80
-    ctx->pc = 0x3b5aa4u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 17), 7040));
 label_3b5aa8:
     // 0x3b5aa8: 0x3c058000  lui         $a1, 0x8000
@@ -83,7 +82,6 @@ label_3b5aa8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B2F48u, 0x3B5AB4u, 0x3B5ABCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3B5ABCu;
 label_3b5abc:
     // 0x3b5abc: 0x4430003  bgezl       $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x3B5ABCu;
@@ -115,7 +113,6 @@ label_3b5abc:
             goto label_3b5b68;
         }
     }
-    ctx->pc = 0x3B5ACCu;
 label_3b5acc:
     // 0x3b5acc: 0x10400019  beqz        $v0, . + 4 + (0x19 << 2)
     ctx->pc = 0x3B5ACCu;
@@ -163,7 +160,6 @@ label_3b5acc:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B3128u, 0x3B5AF8u, 0x3B5B00u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3B5B00u;
 label_3b5b00:
     // 0x3b5b00: 0x4410004  bgez        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x3B5B00u;
@@ -197,7 +193,6 @@ label_3b5b00:
             goto label_3b5b68;
         }
     }
-    ctx->pc = 0x3B5B14u;
 label_3b5b14:
     // 0x3b5b14: 0x26271980  addiu       $a3, $s1, 0x1980
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 17), 6528));
@@ -230,14 +225,12 @@ label_3b5b14:
             goto label_3b5b68;
         }
     }
-    ctx->pc = 0x3B5B34u;
 label_3b5b34:
     // 0x3b5b34: 0x3c020010  lui         $v0, 0x10
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)16 << 16));
     // 0x3b5b38: 0x2403ffff  addiu       $v1, $zero, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x3b5b3c: 0x0  nop
-    ctx->pc = 0x3b5b3cu;
     // NOP
 label_3b5b40:
     // 0x3b5b40: 0x2442ffff  addiu       $v0, $v0, -0x1
@@ -280,10 +273,8 @@ label_3b5b40:
             goto label_3b5aa8;
         }
     }
-    ctx->pc = 0x3B5B64u;
 label_3b5b64:
     // 0x3b5b64: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x3b5b64u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_3b5b68:
     // 0x3b5b68: 0xdfbf0040  ld          $ra, 0x40($sp)

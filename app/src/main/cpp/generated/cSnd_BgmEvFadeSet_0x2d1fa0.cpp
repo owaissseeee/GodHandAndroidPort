@@ -13,7 +13,7 @@
 
 // Function: cSnd_BgmEvFadeSet
 // Address: 0x2d1fa0 - 0x2d2088
-void cSnd_BgmEvFadeSet_0x2d1fa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BgmEvFadeSet_0x2d1fa0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BgmEvFadeSet_0x2d1fa0");
 #endif
@@ -89,7 +89,6 @@ void cSnd_BgmEvFadeSet_0x2d1fa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     // 0x2d1fe8: 0x2413ffff  addiu       $s3, $zero, -0x1
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x2d1fec: 0x0  nop
-    ctx->pc = 0x2d1fecu;
     // NOP
 label_2d1ff0:
     // 0x2d1ff0: 0x12330008  beq         $s1, $s3, . + 4 + (0x8 << 2)
@@ -139,7 +138,6 @@ label_2d1ff0:
             goto label_2d2050;
         }
     }
-    ctx->pc = 0x2D2014u;
 label_2d2014:
     // 0x2d2014: 0x4614b836  c.le.s      $f23, $f20
     ctx->fcr31 = (FPU_C_OLE_S(ctx->f[23], ctx->f[20])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -171,7 +169,6 @@ label_2d2014:
     if (!runtime->callDirectStatic(rdram, ctx, &GetSequenceBlendWeight_373938_0x373938, 0x373938u, 0x2d202cu)) {
         return;
     }
-    ctx->pc = 0x2D202Cu;
 label_2d202c:
     // 0x2d202c: 0x46140302  mul.s       $f12, $f0, $f20
     ctx->f[12] = FPU_MUL_S(ctx->f[0], ctx->f[20]);
@@ -188,7 +185,6 @@ label_2d202c:
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateSequenceNodeWeighted_373560_0x373560, 0x373560u, 0x2d203cu)) {
         return;
     }
-    ctx->pc = 0x2D203Cu;
 label_2d203c:
     // 0x2d203c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -205,7 +201,6 @@ label_2d203c:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_FadeTo_0x2cd4e0, 0x2cd4e0u, 0x2d204cu)) {
         return;
     }
-    ctx->pc = 0x2D204Cu;
 label_2d204c:
     // 0x2d204c: 0x8e100088  lw          $s0, 0x88($s0)
     ctx->pc = 0x2d204cu;
@@ -223,7 +218,6 @@ label_2d2050:
             goto label_2d1ff0;
         }
     }
-    ctx->pc = 0x2D2058u;
 label_2d2058:
     // 0x2d2058: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x2d2058u;

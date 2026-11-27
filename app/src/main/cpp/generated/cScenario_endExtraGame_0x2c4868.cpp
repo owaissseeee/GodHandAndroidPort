@@ -13,7 +13,7 @@
 
 // Function: cScenario_endExtraGame
 // Address: 0x2c4868 - 0x2c4940
-void cScenario_endExtraGame_0x2c4868(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_endExtraGame_0x2c4868(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_endExtraGame_0x2c4868");
 #endif
@@ -86,7 +86,6 @@ void cScenario_endExtraGame_0x2c4868(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x2c48a4u)) {
         return;
     }
-    ctx->pc = 0x2C48A4u;
 label_2c48a4:
     // 0x2c48a4: 0x8450054a  lh          $s0, 0x54A($v0)
     ctx->pc = 0x2c48a4u;
@@ -107,7 +106,6 @@ label_2c48a4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BFC80_0x2bfc80, 0x2bfc80u, 0x2c48b8u)) {
         return;
     }
-    ctx->pc = 0x2C48B8u;
 label_2c48b8:
     // 0x2c48b8: 0x1600000b  bnez        $s0, . + 4 + (0xB << 2)
     ctx->pc = 0x2C48B8u;
@@ -148,7 +146,6 @@ label_2c48b8:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_beginRoomJump_2C4548_0x2c4548, 0x2c4548u, 0x2c48e0u)) {
         return;
     }
-    ctx->pc = 0x2C48E0u;
 label_2c48e0:
     // 0x2c48e0: 0x1000000a  b           . + 4 + (0xA << 2)
     ctx->pc = 0x2C48E0u;
@@ -165,7 +162,6 @@ label_2c48e0:
             goto label_2c490c;
         }
     }
-    ctx->pc = 0x2C48E8u;
 label_2c48e8:
     // 0x2c48e8: 0x220282d  daddu       $a1, $s1, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -191,10 +187,8 @@ label_2c48e8:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_beginRoomJump_2C4548_0x2c4548, 0x2c4548u, 0x2c4908u)) {
         return;
     }
-    ctx->pc = 0x2C4908u;
 label_2c4908:
     // 0x2c4908: 0x3c050074  lui         $a1, 0x74
-    ctx->pc = 0x2c4908u;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)116 << 16));
 label_2c490c:
     // 0x2c490c: 0x3c040100  lui         $a0, 0x100

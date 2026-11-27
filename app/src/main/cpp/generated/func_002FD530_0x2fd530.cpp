@@ -14,7 +14,7 @@
 
 // Function: func_002FD530
 // Address: 0x2fd530 - 0x2fd610
-void func_002FD530_0x2fd530(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002FD530_0x2fd530(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002FD530_0x2fd530");
 #endif
@@ -57,7 +57,6 @@ void func_002FD530_0x2fd530(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B62F8_0x2b62f8, 0x2b62f8u, 0x2fd550u)) {
         return;
     }
-    ctx->pc = 0x2FD550u;
 label_2fd550:
     // 0x2fd550: 0xc6030178  lwc1        $f3, 0x178($s0)
     ctx->pc = 0x2fd550u;
@@ -132,7 +131,6 @@ label_2fd550:
         }
     }
     // 0x2fd5a0: 0x3c020074  lui         $v0, 0x74
-    ctx->pc = 0x2fd5a0u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
 label_2fd5a4:
     // 0x2fd5a4: 0x3c040002  lui         $a0, 0x2
@@ -164,7 +162,6 @@ label_2fd5a4:
             goto label_2fd5d4;
         }
     }
-    ctx->pc = 0x2FD5B8u;
 label_2fd5b8:
     // 0x2fd5b8: 0x3c030074  lui         $v1, 0x74
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
@@ -189,7 +186,6 @@ label_2fd5b8:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ScaleVector_0x30a4e8, 0x30a4e8u, 0x2fd5d4u)) {
         return;
     }
-    ctx->pc = 0x2FD5D4u;
 label_2fd5d4:
     // 0x2fd5d4: 0x220302d  daddu       $a2, $s1, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -206,7 +202,6 @@ label_2fd5d4:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0AddVectorXYZ_0x1f7ed8, 0x1f7ed8u, 0x2fd5e4u)) {
         return;
     }
-    ctx->pc = 0x2FD5E4u;
 label_2fd5e4:
     // 0x2fd5e4: 0xc07df68  jal         func_1F7DA0
     SET_GPR_U32(ctx, 31, 0x2FD5ECu);
@@ -219,7 +214,6 @@ label_2fd5e4:
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_vec_0x1f7da0, 0x1f7da0u, 0x2fd5ecu)) {
         return;
     }
-    ctx->pc = 0x2FD5ECu;
 label_2fd5ec:
     // 0x2fd5ec: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -234,7 +228,6 @@ label_2fd5ec:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B6230_0x2b6230, 0x2b6230u, 0x2fd5f8u)) {
         return;
     }
-    ctx->pc = 0x2FD5F8u;
 label_2fd5f8:
     // 0x2fd5f8: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x2fd5f8u;

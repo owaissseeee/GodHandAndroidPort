@@ -13,7 +13,7 @@
 
 // Function: tellg__7istream
 // Address: 0x387a60 - 0x387ab8
-void tellg__7istream_0x387a60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void tellg__7istream_0x387a60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("tellg__7istream_0x387a60");
 #endif
@@ -56,7 +56,6 @@ void tellg__7istream_0x387a60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_seekoff_0x38e3f0, 0x38e3f0u, 0x387a88u)) {
         return;
     }
-    ctx->pc = 0x387A88u;
 label_387a88:
     // 0x387a88: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));

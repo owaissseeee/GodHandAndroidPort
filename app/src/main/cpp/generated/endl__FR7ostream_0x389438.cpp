@@ -13,7 +13,7 @@
 
 // Function: endl__FR7ostream
 // Address: 0x389438 - 0x389470
-void endl__FR7ostream_0x389438(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void endl__FR7ostream_0x389438(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("endl__FR7ostream_0x389438");
 #endif
@@ -53,7 +53,6 @@ void endl__FR7ostream_0x389438(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_putc_0x38eb28, 0x38eb28u, 0x389458u)) {
         return;
     }
-    ctx->pc = 0x389458u;
 label_389458:
     // 0x389458: 0xc0e24b0  jal         func_3892C0
     SET_GPR_U32(ctx, 31, 0x389460u);
@@ -66,7 +65,6 @@ label_389458:
     if (!runtime->callDirectStatic(rdram, ctx, &Tramp_flush__7ostream_3892C0_0x3892c0, 0x3892c0u, 0x389460u)) {
         return;
     }
-    ctx->pc = 0x389460u;
 label_389460:
     // 0x389460: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x389460u;

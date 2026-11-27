@@ -13,7 +13,7 @@
 
 // Function: gbump__9streambufi
 // Address: 0x38bd60 - 0x38bd90
-void gbump__9streambufi_0x38bd60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void gbump__9streambufi_0x38bd60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("gbump__9streambufi_0x38bd60");
 #endif
@@ -63,7 +63,6 @@ void gbump__9streambufi_0x38bd60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         return;
         #endif
     }
-    ctx->pc = 0x38BD80u;
 label_38bd80:
     // 0x38bd80: 0x451021  addu        $v0, $v0, $a1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 5)));

@@ -13,7 +13,7 @@
 
 // Function: func_0031CB80
 // Address: 0x31cb80 - 0x31cc48
-void func_0031CB80_0x31cb80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0031CB80_0x31cb80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0031CB80_0x31cb80");
 #endif
@@ -52,7 +52,6 @@ void func_0031CB80_0x31cb80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x31cba8: 0x24090004  addiu       $t1, $zero, 0x4
     SET_GPR_S32(ctx, 9, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x31cbac: 0x3a0382d  daddu       $a3, $sp, $zero
-    ctx->pc = 0x31cbacu;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
 label_31cbb0:
     // 0x31cbb0: 0x84820000  lh          $v0, 0x0($a0)
@@ -112,7 +111,6 @@ label_31cbb0:
             goto label_31cc04;
         }
     }
-    ctx->pc = 0x31CBF0u;
 label_31cbf0:
     // 0x31cbf0: 0x44880000  mtc1        $t0, $f0
     { uint32_t bits = GPR_U32(ctx, 8); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
@@ -123,7 +121,6 @@ label_31cbf0:
     // 0x31cbfc: 0x46000000  add.s       $f0, $f0, $f0
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[0]);
     // 0x31cc00: 0x46030000  add.s       $f0, $f0, $f3
-    ctx->pc = 0x31cc00u;
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[3]);
 label_31cc04:
     // 0x31cc04: 0xe4e2000c  swc1        $f2, 0xC($a3)
@@ -165,7 +162,6 @@ label_31cc04:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031CA58_0x31ca58, 0x31ca58u, 0x31cc24u)) {
         return;
     }
-    ctx->pc = 0x31CC24u;
 label_31cc24:
     // 0x31cc24: 0x40282d  daddu       $a1, $v0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -180,7 +176,6 @@ label_31cc24:
     if (!runtime->callDirectStatic(rdram, ctx, &Draw_Poly_sc_0x15f2b0, 0x15f2b0u, 0x31cc30u)) {
         return;
     }
-    ctx->pc = 0x31CC30u;
 label_31cc30:
     // 0x31cc30: 0xdfbf0040  ld          $ra, 0x40($sp)
     ctx->pc = 0x31cc30u;

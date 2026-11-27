@@ -13,7 +13,7 @@
 
 // Function: GetGsHParam
 // Address: 0x3afd60 - 0x3afd70
-void GetGsHParam_0x3afd60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetGsHParam_0x3afd60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetGsHParam_0x3afd60");
 #endif

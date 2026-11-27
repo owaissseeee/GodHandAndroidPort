@@ -6,6 +6,7 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,9 +14,38 @@
 
 // Function: sceVu0InversMatrix
 // Address: 0x30a3f8 - 0x30a468
-void sceVu0InversMatrix_0x30a3f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVu0InversMatrix_0x30a3f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVu0InversMatrix_0x30a3f8");
+#endif
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    {
+        uint8_t* const d = ps2TryFastSpan(rdram, GPR_U32(ctx, 4) & ~0xFu, 64u);
+        const uint8_t* const s = ps2TryFastSpan(rdram, GPR_U32(ctx, 5) & ~0xFu, 64u);
+        if (__builtin_expect(d != nullptr && s != nullptr, 1)) {
+            const float32x4_t c0 = ps2LoadVec4(s + 0);
+            const float32x4_t c1 = ps2LoadVec4(s + 16);
+            const float32x4_t c2 = ps2LoadVec4(s + 32);
+            const float32x4_t c3 = ps2LoadVec4(s + 48);
+            const float32x4_t zero = vdupq_n_f32(0.0f);
+            const float32x4x2_t t01 = vtrnq_f32(c0, c1);
+            const float32x4x2_t t23 = vtrnq_f32(c2, zero);
+            const float32x4_t r0 = vcombine_f32(vget_low_f32(t01.val[0]), vget_low_f32(t23.val[0]));
+            const float32x4_t r1 = vcombine_f32(vget_low_f32(t01.val[1]), vget_low_f32(t23.val[1]));
+            const float32x4_t r2 = vcombine_f32(vget_high_f32(t01.val[0]), vget_high_f32(t23.val[0]));
+            float32x4_t trans = vmulq_laneq_f32(r0, c3, 0);
+            trans = vfmaq_laneq_f32(trans, r1, c3, 1);
+            trans = vfmaq_laneq_f32(trans, r2, c3, 2);
+            const float32x4_t r3 = vsetq_lane_f32(vgetq_lane_f32(c3, 3), vnegq_f32(trans), 3);
+            ps2StoreVec4(d + 0, r0);
+            ps2StoreVec4(d + 16, r1);
+            ps2StoreVec4(d + 32, r2);
+            ps2StoreVec4(d + 48, r3);
+            ps2FastReturn(rdram, ctx, runtime, 0x30A460u);
+            return;
+        }
+    }
 #endif
 
 

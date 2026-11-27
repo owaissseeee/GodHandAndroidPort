@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_isGoldFull
 // Address: 0x1fa8e0 - 0x1fa908
-void cCoreSave_isGoldFull_0x1fa8e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_isGoldFull_0x1fa8e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_isGoldFull_0x1fa8e0");
 #endif
@@ -61,7 +61,6 @@ void cCoreSave_isGoldFull_0x1fa8e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         return;
         #endif
     }
-    ctx->pc = 0x1FA8FCu;
 label_1fa8fc:
     // 0x1fa8fc: 0x3e00008  jr          $ra
     ctx->pc = 0x1FA8FCu;

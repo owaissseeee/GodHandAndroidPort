@@ -13,7 +13,7 @@
 
 // Function: cEmWrap_ckGoto
 // Address: 0x296018 - 0x296070
-void cEmWrap_ckGoto_0x296018(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmWrap_ckGoto_0x296018(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmWrap_ckGoto_0x296018");
 #endif
@@ -47,7 +47,6 @@ void cEmWrap_ckGoto_0x296018(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &FindResolveActor_295978_0x295978, 0x295978u, 0x29602cu)) {
         return;
     }
-    ctx->pc = 0x29602Cu;
 label_29602c:
     // 0x29602c: 0x10400007  beqz        $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x29602Cu;
@@ -80,7 +79,6 @@ label_29602c:
     if (!runtime->callDirectStatic(rdram, ctx, &strcmp_0x3a5678, 0x3a5678u, 0x296044u)) {
         return;
     }
-    ctx->pc = 0x296044u;
 label_296044:
     // 0x296044: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x296044u;
@@ -91,7 +89,6 @@ label_296044:
             goto label_296054;
         }
     }
-    ctx->pc = 0x29604Cu;
 label_29604c:
     // 0x29604c: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x29604Cu;
@@ -108,7 +105,6 @@ label_29604c:
             goto label_29605c;
         }
     }
-    ctx->pc = 0x296054u;
 label_296054:
     // 0x296054: 0xc09ba8a  jal         func_26EA28
     SET_GPR_U32(ctx, 31, 0x29605Cu);
@@ -121,7 +117,6 @@ label_296054:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0026EA28_0x26ea28, 0x26ea28u, 0x29605cu)) {
         return;
     }
-    ctx->pc = 0x29605Cu;
 label_29605c:
     // 0x29605c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x29605cu;

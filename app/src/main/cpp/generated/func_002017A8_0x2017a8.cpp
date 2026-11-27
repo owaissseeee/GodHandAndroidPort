@@ -13,7 +13,7 @@
 
 // Function: func_002017A8
 // Address: 0x2017a8 - 0x201840
-void func_002017A8_0x2017a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002017A8_0x2017a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002017A8_0x2017a8");
 #endif
@@ -50,7 +50,6 @@ void func_002017A8_0x2017a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x2017c8: 0x200182d  daddu       $v1, $s0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2017cc: 0x0  nop
-    ctx->pc = 0x2017ccu;
     // NOP
 label_2017d0:
     // 0x2017d0: 0x8c620000  lw          $v0, 0x0($v1)
@@ -106,7 +105,6 @@ label_2017d0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002011B0_0x2011b0, 0x2011b0u, 0x2017f8u)) {
         return;
     }
-    ctx->pc = 0x2017F8u;
 label_2017f8:
     // 0x2017f8: 0x200182d  daddu       $v1, $s0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -115,7 +113,6 @@ label_2017f8:
     // 0x201800: 0x24651100  addiu       $a1, $v1, 0x1100
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 3), 4352));
     // 0x201804: 0x0  nop
-    ctx->pc = 0x201804u;
     // NOP
 label_201808:
     // 0x201808: 0x8c620000  lw          $v0, 0x0($v1)
@@ -151,7 +148,6 @@ label_201808:
             goto label_20182c;
         }
     }
-    ctx->pc = 0x20181Cu;
 label_20181c:
     // 0x20181c: 0x65102a  slt         $v0, $v1, $a1
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)GPR_S64(ctx, 5)) ? 1 : 0);
@@ -174,7 +170,6 @@ label_20181c:
         }
     }
     // 0x201828: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x201828u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_20182c:
     // 0x20182c: 0x7bb00020  lq          $s0, 0x20($sp)

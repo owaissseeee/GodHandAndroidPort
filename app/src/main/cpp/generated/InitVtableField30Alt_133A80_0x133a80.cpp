@@ -13,7 +13,7 @@
 
 // Function: InitVtableField30Alt_133A80
 // Address: 0x133a80 - 0x133aa8
-void InitVtableField30Alt_133A80_0x133a80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitVtableField30Alt_133A80_0x133a80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitVtableField30Alt_133A80_0x133a80");
 #endif
@@ -48,7 +48,6 @@ void InitVtableField30Alt_133A80_0x133a80(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &InitVtableField30_1339C0_0x1339c0, 0x1339c0u, 0x133a9cu)) {
         return;
     }
-    ctx->pc = 0x133A9Cu;
 label_133a9c:
     // 0x133a9c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x133a9cu;

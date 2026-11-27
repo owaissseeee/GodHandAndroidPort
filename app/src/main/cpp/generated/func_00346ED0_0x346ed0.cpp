@@ -13,7 +13,7 @@
 
 // Function: func_00346ED0
 // Address: 0x346ed0 - 0x346fa0
-void func_00346ED0_0x346ed0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00346ED0_0x346ed0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00346ED0_0x346ed0");
 #endif
@@ -99,7 +99,6 @@ void func_00346ED0_0x346ed0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_00346FB0_0x346fb0, 0x346fb0u, 0x346f24u)) {
         return;
     }
-    ctx->pc = 0x346F24u;
 label_346f24:
     // 0x346f24: 0x10000018  b           . + 4 + (0x18 << 2)
     ctx->pc = 0x346F24u;
@@ -117,7 +116,6 @@ label_346f24:
         }
     }
     // 0x346f2c: 0x0  nop
-    ctx->pc = 0x346f2cu;
     // NOP
 label_346f30:
     // 0x346f30: 0x8d040000  lw          $a0, 0x0($t0)
@@ -136,7 +134,6 @@ label_346f30:
     if (!runtime->callDirectStatic(rdram, ctx, &mwPlyCalcYccPlane_0x344e18, 0x344e18u, 0x346f40u)) {
         return;
     }
-    ctx->pc = 0x346F40u;
 label_346f40:
     // 0x346f40: 0x26440004  addiu       $a0, $s2, 0x4
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 18), 4));
@@ -161,7 +158,6 @@ label_346f40:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00346FB0_0x346fb0, 0x346fb0u, 0x346f5cu)) {
         return;
     }
-    ctx->pc = 0x346F5Cu;
 label_346f5c:
     // 0x346f5c: 0x26440014  addiu       $a0, $s2, 0x14
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 18), 20));
@@ -181,7 +177,6 @@ label_346f5c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00346FB0_0x346fb0, 0x346fb0u, 0x346f70u)) {
         return;
     }
-    ctx->pc = 0x346F70u;
 label_346f70:
     // 0x346f70: 0x26440024  addiu       $a0, $s2, 0x24
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 18), 36));
@@ -201,7 +196,6 @@ label_346f70:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00346FB0_0x346fb0, 0x346fb0u, 0x346f84u)) {
         return;
     }
-    ctx->pc = 0x346F84u;
 label_346f84:
     // 0x346f84: 0xdfb00020  ld          $s0, 0x20($sp)
     ctx->pc = 0x346f84u;

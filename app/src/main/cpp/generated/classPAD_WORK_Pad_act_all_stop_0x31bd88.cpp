@@ -13,7 +13,7 @@
 
 // Function: classPAD_WORK_Pad_act_all_stop
 // Address: 0x31bd88 - 0x31bdc8
-void classPAD_WORK_Pad_act_all_stop_0x31bd88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void classPAD_WORK_Pad_act_all_stop_0x31bd88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("classPAD_WORK_Pad_act_all_stop_0x31bd88");
 #endif
@@ -33,7 +33,6 @@ void classPAD_WORK_Pad_act_all_stop_0x31bd88(uint8_t* rdram, R5900Context* ctx, 
     // 0x31bd90: 0x2403ffff  addiu       $v1, $zero, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x31bd94: 0x0  nop
-    ctx->pc = 0x31bd94u;
     // NOP
 label_31bd98:
     // 0x31bd98: 0xa0800000  sb          $zero, 0x0($a0)

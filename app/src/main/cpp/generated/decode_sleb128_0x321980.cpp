@@ -13,7 +13,7 @@
 
 // Function: decode_sleb128
 // Address: 0x321980 - 0x3219d0
-void decode_sleb128_0x321980(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void decode_sleb128_0x321980(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("decode_sleb128_0x321980");
 #endif
@@ -29,7 +29,6 @@ void decode_sleb128_0x321980(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     // 0x321980: 0x382d  daddu       $a3, $zero, $zero
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x321984: 0x402d  daddu       $t0, $zero, $zero
-    ctx->pc = 0x321984u;
     SET_GPR_U64(ctx, 8, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_321988:
     // 0x321988: 0x90860000  lbu         $a2, 0x0($a0)
@@ -98,7 +97,6 @@ label_321988:
     // 0x3219bc: 0xe21004  sllv        $v0, $v0, $a3
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), GPR_U32(ctx, 7) & 0x1F));
     // 0x3219c0: 0x1024025  or          $t0, $t0, $v0
-    ctx->pc = 0x3219c0u;
     SET_GPR_U64(ctx, 8, GPR_U64(ctx, 8) | GPR_U64(ctx, 2));
 label_3219c4:
     // 0x3219c4: 0xaca80000  sw          $t0, 0x0($a1)

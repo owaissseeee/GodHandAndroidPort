@@ -13,7 +13,7 @@
 
 // Function: _ch3dmaCSC
 // Address: 0x39bff8 - 0x39c140
-void _ch3dmaCSC_0x39bff8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _ch3dmaCSC_0x39bff8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_ch3dmaCSC_0x39bff8");
 #endif
@@ -84,7 +84,6 @@ void _ch3dmaCSC_0x39bff8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
             goto label_39c058;
         }
     }
-    ctx->pc = 0x39C044u;
 label_39c044:
     // 0x39c044: 0xad220004  sw          $v0, 0x4($t1)
     ctx->pc = 0x39c044u;
@@ -113,7 +112,6 @@ label_39c044:
         return;
         #endif
     }
-    ctx->pc = 0x39C058u;
 label_39c058:
     // 0x39c058: 0x8d230010  lw          $v1, 0x10($t1)
     ctx->pc = 0x39c058u;
@@ -203,7 +201,6 @@ label_39c058:
             goto label_39c130;
         }
     }
-    ctx->pc = 0x39C0CCu;
 label_39c0cc:
     // 0x39c0cc: 0x8d220000  lw          $v0, 0x0($t1)
     ctx->pc = 0x39c0ccu;

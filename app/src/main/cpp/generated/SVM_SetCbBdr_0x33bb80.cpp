@@ -13,7 +13,7 @@
 
 // Function: SVM_SetCbBdr
 // Address: 0x33bb80 - 0x33bbd8
-void SVM_SetCbBdr_0x33bb80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SVM_SetCbBdr_0x33bb80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SVM_SetCbBdr_0x33bb80");
 #endif
@@ -55,7 +55,6 @@ void SVM_SetCbBdr_0x33bb80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &Forward33B568_33B658_0x33b658, 0x33b658u, 0x33bba4u)) {
         return;
     }
-    ctx->pc = 0x33BBA4u;
 label_33bba4:
     // 0x33bba4: 0x3c020076  lui         $v0, 0x76
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)118 << 16));

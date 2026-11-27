@@ -13,7 +13,7 @@
 
 // Function: func_002C31D0
 // Address: 0x2c31d0 - 0x2c3280
-void func_002C31D0_0x2c31d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002C31D0_0x2c31d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002C31D0_0x2c31d0");
 #endif
@@ -59,7 +59,6 @@ void func_002C31D0_0x2c31d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x2c3200: 0x46020001  sub.s       $f0, $f0, $f2
     ctx->f[0] = FPU_SUB_S(ctx->f[0], ctx->f[2]);
     // 0x2c3204: 0x0  nop
-    ctx->pc = 0x2c3204u;
     // NOP
 label_2c3208:
     // 0x2c3208: 0x46000836  c.le.s      $f1, $f0
@@ -101,7 +100,6 @@ label_2c3208:
         return;
         #endif
     }
-    ctx->pc = 0x2C3228u;
 label_2c3228:
     // 0x2c3228: 0x3c01c049  lui         $at, 0xC049
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)49225 << 16));
@@ -135,7 +133,6 @@ label_2c3228:
     // 0x2c3258: 0x46020000  add.s       $f0, $f0, $f2
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[2]);
     // 0x2c325c: 0x0  nop
-    ctx->pc = 0x2c325cu;
     // NOP
 label_2c3260:
     // 0x2c3260: 0x46010034  c.lt.s      $f0, $f1
@@ -164,7 +161,6 @@ label_2c3260:
             goto label_2c3260;
         }
     }
-    ctx->pc = 0x2C3278u;
 label_2c3278:
     // 0x2c3278: 0x3e00008  jr          $ra
     ctx->pc = 0x2C3278u;

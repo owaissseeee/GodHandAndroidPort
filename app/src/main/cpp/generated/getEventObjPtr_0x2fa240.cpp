@@ -13,7 +13,7 @@
 
 // Function: getEventObjPtr
 // Address: 0x2fa240 - 0x2fa310
-void getEventObjPtr_0x2fa240(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getEventObjPtr_0x2fa240(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getEventObjPtr_0x2fa240");
 #endif
@@ -98,7 +98,6 @@ void getEventObjPtr_0x2fa240(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &cEvent_getObjPtr_0x297c50, 0x297c50u, 0x2fa288u)) {
         return;
     }
-    ctx->pc = 0x2FA288u;
 label_2fa288:
     // 0x2fa288: 0x5440001c  bnel        $v0, $zero, . + 4 + (0x1C << 2)
     ctx->pc = 0x2FA288u;
@@ -130,7 +129,6 @@ label_2fa288:
     if (!runtime->callDirectStatic(rdram, ctx, &cEvent_getObjPtr_0x297c50, 0x297c50u, 0x2fa2a0u)) {
         return;
     }
-    ctx->pc = 0x2FA2A0u;
 label_2fa2a0:
     // 0x2fa2a0: 0x10000016  b           . + 4 + (0x16 << 2)
     ctx->pc = 0x2FA2A0u;
@@ -147,7 +145,6 @@ label_2fa2a0:
             goto label_2fa2fc;
         }
     }
-    ctx->pc = 0x2FA2A8u;
 label_2fa2a8:
     // 0x2fa2a8: 0x14a20010  bne         $a1, $v0, . + 4 + (0x10 << 2)
     ctx->pc = 0x2FA2A8u;
@@ -185,7 +182,6 @@ label_2fa2a8:
     if (!runtime->callDirectStatic(rdram, ctx, &cEvent_getObjPtr_0x297c50, 0x297c50u, 0x2fa2ccu)) {
         return;
     }
-    ctx->pc = 0x2FA2CCu;
 label_2fa2cc:
     // 0x2fa2cc: 0x5440000b  bnel        $v0, $zero, . + 4 + (0xB << 2)
     ctx->pc = 0x2FA2CCu;
@@ -217,7 +213,6 @@ label_2fa2cc:
     if (!runtime->callDirectStatic(rdram, ctx, &cEvent_getObjPtr_0x297c50, 0x297c50u, 0x2fa2e4u)) {
         return;
     }
-    ctx->pc = 0x2FA2E4u;
 label_2fa2e4:
     // 0x2fa2e4: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x2FA2E4u;
@@ -234,7 +229,6 @@ label_2fa2e4:
             goto label_2fa2fc;
         }
     }
-    ctx->pc = 0x2FA2ECu;
 label_2fa2ec:
     // 0x2fa2ec: 0x30c600ff  andi        $a2, $a2, 0xFF
     SET_GPR_U64(ctx, 6, GPR_U64(ctx, 6) & (uint64_t)(uint16_t)255);
@@ -249,7 +243,6 @@ label_2fa2ec:
     if (!runtime->callDirectStatic(rdram, ctx, &cEvent_getObjPtr_0x297c50, 0x297c50u, 0x2fa2f8u)) {
         return;
     }
-    ctx->pc = 0x2FA2F8u;
 label_2fa2f8:
     // 0x2fa2f8: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2fa2f8u;

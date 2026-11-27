@@ -13,7 +13,7 @@
 
 // Function: func_002B45F8
 // Address: 0x2b45f8 - 0x2b4690
-void func_002B45F8_0x2b45f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002B45F8_0x2b45f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002B45F8_0x2b45f8");
 #endif
@@ -62,7 +62,6 @@ void func_002B45F8_0x2b45f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
     // 0x2b461c: 0x0  nop
-    ctx->pc = 0x2b461cu;
     // NOP
 label_2b4620:
     // 0x2b4620: 0x96030000  lhu         $v1, 0x0($s0)
@@ -111,7 +110,6 @@ label_2b4620:
             goto label_2b466c;
         }
     }
-    ctx->pc = 0x2B4644u;
 label_2b4644:
     // 0x2b4644: 0x10520009  beq         $v0, $s2, . + 4 + (0x9 << 2)
     ctx->pc = 0x2B4644u;
@@ -128,7 +126,6 @@ label_2b4644:
             goto label_2b466c;
         }
     }
-    ctx->pc = 0x2B464Cu;
 label_2b464c:
     // 0x2b464c: 0xc0abc7e  jal         func_2AF1F8
     ctx->pc = 0x2B464Cu;
@@ -136,12 +133,10 @@ label_2b464c:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessCommon_getCodeSize_0x2af1f8, 0x2af1f8u, 0x2b4654u)) {
         return;
     }
-    ctx->pc = 0x2B4654u;
 label_2b4654:
     // 0x2b4654: 0x21040  sll         $v0, $v0, 1
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 1));
     // 0x2b4658: 0x2028021  addu        $s0, $s0, $v0
-    ctx->pc = 0x2b4658u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), GPR_U32(ctx, 2)));
 label_2b465c:
     // 0x2b465c: 0xc0abc86  jal         func_2AF218
@@ -155,7 +150,6 @@ label_2b465c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AF218_0x2af218, 0x2af218u, 0x2b4664u)) {
         return;
     }
-    ctx->pc = 0x2B4664u;
 label_2b4664:
     // 0x2b4664: 0x1040ffee  beqz        $v0, . + 4 + (-0x12 << 2)
     ctx->pc = 0x2B4664u;
@@ -175,7 +169,6 @@ label_2b4664:
             goto label_2b4620;
         }
     }
-    ctx->pc = 0x2B466Cu;
 label_2b466c:
     // 0x2b466c: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x2b466cu;

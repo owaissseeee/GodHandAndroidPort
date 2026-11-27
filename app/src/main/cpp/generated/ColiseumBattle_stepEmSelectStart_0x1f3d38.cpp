@@ -13,7 +13,7 @@
 
 // Function: ColiseumBattle_stepEmSelectStart
 // Address: 0x1f3d38 - 0x1f3df0
-void ColiseumBattle_stepEmSelectStart_0x1f3d38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumBattle_stepEmSelectStart_0x1f3d38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumBattle_stepEmSelectStart_0x1f3d38");
 #endif
@@ -118,7 +118,6 @@ void ColiseumBattle_stepEmSelectStart_0x1f3d38(uint8_t* rdram, R5900Context* ctx
     if (!runtime->callDirectStatic(rdram, ctx, &ColiseumEmSelect_close_0x1f38a0, 0x1f38a0u, 0x1f3d88u)) {
         return;
     }
-    ctx->pc = 0x1F3D88u;
 label_1f3d88:
     // 0x1f3d88: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -133,7 +132,6 @@ label_1f3d88:
     if (!runtime->callDirectStatic(rdram, ctx, &ColiseumUi_StartFade_0x1f4428, 0x1f4428u, 0x1f3d94u)) {
         return;
     }
-    ctx->pc = 0x1F3D94u;
 label_1f3d94:
     // 0x1f3d94: 0x10000010  b           . + 4 + (0x10 << 2)
     ctx->pc = 0x1F3D94u;
@@ -150,7 +148,6 @@ label_1f3d94:
             goto label_1f3dd8;
         }
     }
-    ctx->pc = 0x1F3D9Cu;
 label_1f3d9c:
     // 0x1f3d9c: 0x3c030074  lui         $v1, 0x74
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
@@ -202,7 +199,6 @@ label_1f3d9c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F44E0_0x1f44e0, 0x1f44e0u, 0x1f3dd4u)) {
         return;
     }
-    ctx->pc = 0x1F3DD4u;
 label_1f3dd4:
     // 0x1f3dd4: 0x8e020008  lw          $v0, 0x8($s0)
     ctx->pc = 0x1f3dd4u;

@@ -13,7 +13,7 @@
 
 // Function: cSnd_SetBgmFadeOutTimeAll
 // Address: 0x2d0820 - 0x2d0850
-void cSnd_SetBgmFadeOutTimeAll_0x2d0820(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_SetBgmFadeOutTimeAll_0x2d0820(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_SetBgmFadeOutTimeAll_0x2d0820");
 #endif
@@ -71,7 +71,6 @@ label_2d0830:
             goto label_2d0830;
         }
     }
-    ctx->pc = 0x2D0848u;
 label_2d0848:
     // 0x2d0848: 0x3e00008  jr          $ra
     ctx->pc = 0x2D0848u;

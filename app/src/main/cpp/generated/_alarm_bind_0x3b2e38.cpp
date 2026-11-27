@@ -13,7 +13,7 @@
 
 // Function: _alarm_bind
 // Address: 0x3b2e38 - 0x3b2e78
-void _alarm_bind_0x3b2e38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _alarm_bind_0x3b2e38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_alarm_bind_0x3b2e38");
 #endif
@@ -54,7 +54,6 @@ void _alarm_bind_0x3b2e38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B26C8u, 0x3B2E58u, 0x3B2E60u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3B2E60u;
 label_3b2e60:
     // 0x3b2e60: 0x24030800  addiu       $v1, $zero, 0x800
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2048));

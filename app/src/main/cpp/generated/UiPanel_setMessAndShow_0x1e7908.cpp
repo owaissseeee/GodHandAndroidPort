@@ -13,7 +13,7 @@
 
 // Function: UiPanel_setMessAndShow
 // Address: 0x1e7908 - 0x1e7960
-void UiPanel_setMessAndShow_0x1e7908(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UiPanel_setMessAndShow_0x1e7908(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UiPanel_setMessAndShow_0x1e7908");
 #endif
@@ -54,7 +54,6 @@ void UiPanel_setMessAndShow_0x1e7908(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMessNo_0x2d6560, 0x2d6560u, 0x1e7928u)) {
         return;
     }
-    ctx->pc = 0x1E7928u;
 label_1e7928:
     // 0x1e7928: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -71,7 +70,6 @@ label_1e7928:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001E7538_0x1e7538, 0x1e7538u, 0x1e7938u)) {
         return;
     }
-    ctx->pc = 0x1E7938u;
 label_1e7938:
     // 0x1e7938: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -88,7 +86,6 @@ label_1e7938:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001E7538_0x1e7538, 0x1e7538u, 0x1e7948u)) {
         return;
     }
-    ctx->pc = 0x1E7948u;
 label_1e7948:
     // 0x1e7948: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1e7948u;

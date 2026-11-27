@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_setClearStage
 // Address: 0x1fbf90 - 0x1fbfd0
-void cCoreSave_setClearStage_0x1fbf90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setClearStage_0x1fbf90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setClearStage_0x1fbf90");
 #endif
@@ -49,7 +49,6 @@ void cCoreSave_setClearStage_0x1fbf90(uint8_t* rdram, R5900Context* ctx, PS2Runt
     // 0x1fbfa0: 0x302d  daddu       $a2, $zero, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1fbfa4: 0x24080001  addiu       $t0, $zero, 0x1
-    ctx->pc = 0x1fbfa4u;
     SET_GPR_S32(ctx, 8, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_1fbfa8:
     // 0x1fbfa8: 0xc81804  sllv        $v1, $t0, $a2

@@ -13,7 +13,7 @@
 
 // Function: RecDecode_readHeader
 // Address: 0x1599b0 - 0x159ad0
-void RecDecode_readHeader_0x1599b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void RecDecode_readHeader_0x1599b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("RecDecode_readHeader_0x1599b0");
 #endif
@@ -123,7 +123,6 @@ void RecDecode_readHeader_0x1599b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_159abc;
         }
     }
-    ctx->pc = 0x159A00u;
 label_159a00:
     // 0x159a00: 0x8cc20008  lw          $v0, 0x8($a2)
     ctx->pc = 0x159a00u;
@@ -183,7 +182,6 @@ label_159a00:
             goto label_159aa4;
         }
     }
-    ctx->pc = 0x159A3Cu;
 label_159a3c:
     // 0x159a3c: 0x8cc20008  lw          $v0, 0x8($a2)
     ctx->pc = 0x159a3cu;
@@ -243,7 +241,6 @@ label_159a3c:
             goto label_159aa4;
         }
     }
-    ctx->pc = 0x159A78u;
 label_159a78:
     // 0x159a78: 0xa21821  addu        $v1, $a1, $v0
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 5), GPR_U32(ctx, 2)));
@@ -295,7 +292,6 @@ label_159aa4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00159DA0_0x159da0, 0x159da0u, 0x159aacu)) {
         return;
     }
-    ctx->pc = 0x159AACu;
 label_159aac:
     // 0x159aac: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x159AACu;
@@ -312,7 +308,6 @@ label_159aac:
             goto label_159ac4;
         }
     }
-    ctx->pc = 0x159AB4u;
 label_159ab4:
     // 0x159ab4: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x159AB4u;
@@ -329,7 +324,6 @@ label_159ab4:
             goto label_159ac0;
         }
     }
-    ctx->pc = 0x159ABCu;
 label_159abc:
     // 0x159abc: 0xe4e00010  swc1        $f0, 0x10($a3)
     ctx->pc = 0x159abcu;

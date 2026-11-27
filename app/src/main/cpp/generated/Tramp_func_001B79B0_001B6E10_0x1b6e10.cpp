@@ -13,7 +13,7 @@
 
 // Function: Tramp_func_001B79B0_001B6E10
 // Address: 0x1b6e10 - 0x1b6e30
-void Tramp_func_001B79B0_001B6E10_0x1b6e10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp_func_001B79B0_001B6E10_0x1b6e10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp_func_001B79B0_001B6E10_0x1b6e10");
 #endif
@@ -37,7 +37,6 @@ void Tramp_func_001B79B0_001B6E10_0x1b6e10(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_dieCommon_0x1b79b0, 0x1b79b0u, 0x1b6e20u)) {
         return;
     }
-    ctx->pc = 0x1B6E20u;
 label_1b6e20:
     // 0x1b6e20: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1b6e20u;

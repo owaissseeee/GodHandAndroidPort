@@ -13,7 +13,7 @@
 
 // Function: Obj35D0_SendEvent_FF000701_D488
 // Address: 0x35d488 - 0x35d4a8
-void Obj35D0_SendEvent_FF000701_D488_0x35d488(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj35D0_SendEvent_FF000701_D488_0x35d488(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj35D0_SendEvent_FF000701_D488_0x35d488");
 #endif

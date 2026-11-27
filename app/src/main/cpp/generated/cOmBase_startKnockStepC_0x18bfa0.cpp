@@ -13,7 +13,7 @@
 
 // Function: cOmBase_startKnockStepC
 // Address: 0x18bfa0 - 0x18c048
-void cOmBase_startKnockStepC_0x18bfa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmBase_startKnockStepC_0x18bfa0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmBase_startKnockStepC_0x18bfa0");
 #endif

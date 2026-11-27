@@ -13,7 +13,7 @@
 
 // Function: cSnd_AllocVoice
 // Address: 0x2cbec0 - 0x2cbf48
-void cSnd_AllocVoice_0x2cbec0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_AllocVoice_0x2cbec0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_AllocVoice_0x2cbec0");
 #endif
@@ -49,7 +49,6 @@ void cSnd_AllocVoice_0x2cbec0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     // 0x2cbed8: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2cbedc: 0x0  nop
-    ctx->pc = 0x2cbedcu;
     // NOP
 label_2cbee0:
     // 0x2cbee0: 0xc0b3132  jal         func_2CC4C8
@@ -63,7 +62,6 @@ label_2cbee0:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_GetVoice_0x2cc4c8, 0x2cc4c8u, 0x2cbee8u)) {
         return;
     }
-    ctx->pc = 0x2CBEE8u;
 label_2cbee8:
     // 0x2cbee8: 0xc0b368e  jal         func_2CDA38
     SET_GPR_U32(ctx, 31, 0x2CBEF0u);
@@ -76,7 +74,6 @@ label_2cbee8:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndSeVoice_IsActive_0x2cda38, 0x2cda38u, 0x2cbef0u)) {
         return;
     }
-    ctx->pc = 0x2CBEF0u;
 label_2cbef0:
     // 0x2cbef0: 0x5440000b  bnel        $v0, $zero, . + 4 + (0xB << 2)
     ctx->pc = 0x2CBEF0u;
@@ -106,7 +103,6 @@ label_2cbef0:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_GetVoice_0x2cc4c8, 0x2cc4c8u, 0x2cbf04u)) {
         return;
     }
-    ctx->pc = 0x2CBF04u;
 label_2cbf04:
     // 0x2cbf04: 0xc0b3692  jal         func_2CDA48
     SET_GPR_U32(ctx, 31, 0x2CBF0Cu);
@@ -119,7 +115,6 @@ label_2cbf04:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndSeVoice_Init_0x2cda48, 0x2cda48u, 0x2cbf0cu)) {
         return;
     }
-    ctx->pc = 0x2CBF0Cu;
 label_2cbf0c:
     // 0x2cbf0c: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -134,7 +129,6 @@ label_2cbf0c:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_GetVoice_0x2cc4c8, 0x2cc4c8u, 0x2cbf18u)) {
         return;
     }
-    ctx->pc = 0x2CBF18u;
 label_2cbf18:
     // 0x2cbf18: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x2CBF18u;
@@ -151,7 +145,6 @@ label_2cbf18:
             goto label_2cbf34;
         }
     }
-    ctx->pc = 0x2CBF20u;
 label_2cbf20:
     // 0x2cbf20: 0x2a020040  slti        $v0, $s0, 0x40
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 16) < (int64_t)(int32_t)64) ? 1 : 0);

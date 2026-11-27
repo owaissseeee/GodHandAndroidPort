@@ -13,7 +13,7 @@
 
 // Function: cMc_startLoadRunRelease
 // Address: 0x2ae740 - 0x2ae788
-void cMc_startLoadRunRelease_0x2ae740(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMc_startLoadRunRelease_0x2ae740(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMc_startLoadRunRelease_0x2ae740");
 #endif
@@ -63,7 +63,6 @@ void cMc_startLoadRunRelease_0x2ae740(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cTaskManager_execute_0x2d5470, 0x2d5470u, 0x2ae778u)) {
         return;
     }
-    ctx->pc = 0x2AE778u;
 label_2ae778:
     // 0x2ae778: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2ae778u;

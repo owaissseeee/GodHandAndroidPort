@@ -13,7 +13,7 @@
 
 // Function: __start_cp_handler
 // Address: 0x321288 - 0x3212c0
-void ps2___start_cp_handler_0x321288(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___start_cp_handler_0x321288(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___start_cp_handler_0x321288");
 #endif
@@ -37,7 +37,6 @@ void ps2___start_cp_handler_0x321288(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___get_eh_info_0x320360, 0x320360u, 0x321298u)) {
         return;
     }
-    ctx->pc = 0x321298u;
 label_321298:
     // 0x321298: 0x8c430000  lw          $v1, 0x0($v0)
     ctx->pc = 0x321298u;

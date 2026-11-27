@@ -13,7 +13,7 @@
 
 // Function: cModel_addMesh
 // Address: 0x14b640 - 0x14b6f8
-void cModel_addMesh_0x14b640(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cModel_addMesh_0x14b640(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cModel_addMesh_0x14b640");
 #endif
@@ -57,7 +57,6 @@ void cModel_addMesh_0x14b640(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &GetField_2B1_14B638_0x14b638, 0x14b638u, 0x14b664u)) {
         return;
     }
-    ctx->pc = 0x14B664u;
 label_14b664:
     // 0x14b664: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x14B664u;
@@ -89,7 +88,6 @@ label_14b664:
             goto label_14b680;
         }
     }
-    ctx->pc = 0x14B674u;
 label_14b674:
     // 0x14b674: 0xc052dbe  jal         func_14B6F8
     SET_GPR_U32(ctx, 31, 0x14B67Cu);
@@ -102,7 +100,6 @@ label_14b674:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_getMeshPtr_0x14b6f8, 0x14b6f8u, 0x14b67cu)) {
         return;
     }
-    ctx->pc = 0x14B67Cu;
 label_14b67c:
     // 0x14b67c: 0xac510404  sw          $s1, 0x404($v0)
     ctx->pc = 0x14b67cu;
@@ -183,7 +180,6 @@ label_14b680:
             goto label_14b6e0;
         }
     }
-    ctx->pc = 0x14B6D0u;
 label_14b6d0:
     // 0x14b6d0: 0x26040260  addiu       $a0, $s0, 0x260
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 608));
@@ -198,7 +194,6 @@ label_14b6d0:
     if (!runtime->callDirectStatic(rdram, ctx, &Box_growToContain_0x1f91d0, 0x1f91d0u, 0x14b6dcu)) {
         return;
     }
-    ctx->pc = 0x14B6DCu;
 label_14b6dc:
     // 0x14b6dc: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x14b6dcu;

@@ -13,7 +13,7 @@
 
 // Function: func_0012CF70
 // Address: 0x12cf70 - 0x12d178
-void func_0012CF70_0x12cf70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0012CF70_0x12cf70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0012CF70_0x12cf70");
 #endif
@@ -114,7 +114,6 @@ void func_0012CF70_0x12cf70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x12cff0u)) {
         return;
     }
-    ctx->pc = 0x12CFF0u;
 label_12cff0:
     // 0x12cff0: 0x3c030042  lui         $v1, 0x42
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)66 << 16));
@@ -140,7 +139,6 @@ label_12cff0:
     // 0x12d010: 0x260200c0  addiu       $v0, $s0, 0xC0
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 192));
     // 0x12d014: 0x24030003  addiu       $v1, $zero, 0x3
-    ctx->pc = 0x12d014u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
 label_12d018:
     // 0x12d018: 0xf8400000  sqc2        $vf0, 0x0($v0)
@@ -220,7 +218,6 @@ label_12d018:
     ctx->pc = 0x12d064u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 3), 8), bits); }
     // 0x12d068: 0x26020070  addiu       $v0, $s0, 0x70
-    ctx->pc = 0x12d068u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 112));
 label_12d06c:
     // 0x12d06c: 0x10510007  beq         $v0, $s1, . + 4 + (0x7 << 2)
@@ -293,7 +290,6 @@ label_12d08c:
     ctx->pc = 0x12d0acu;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 3), 8), bits); }
     // 0x12d0b0: 0x26020090  addiu       $v0, $s0, 0x90
-    ctx->pc = 0x12d0b0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 144));
 label_12d0b4:
     // 0x12d0b4: 0x10530007  beq         $v0, $s3, . + 4 + (0x7 << 2)
@@ -347,7 +343,6 @@ label_12d0d4:
             goto label_12d0ec;
         }
     }
-    ctx->pc = 0x12D0ECu;
 label_12d0ec:
     // 0x12d0ec: 0x4600ab46  mov.s       $f13, $f21
     ctx->f[13] = FPU_MOV_S(ctx->f[21]);
@@ -371,7 +366,6 @@ label_12d0ec:
         }
     }
     // 0x12d100: 0x46006b47  neg.s       $f13, $f13
-    ctx->pc = 0x12d100u;
     ctx->f[13] = FPU_NEG_S(ctx->f[13]);
 label_12d104:
     // 0x12d104: 0xe60d00a4  swc1        $f13, 0xA4($s0)

@@ -13,7 +13,7 @@
 
 // Function: func_00330C18
 // Address: 0x330c18 - 0x330c88
-void func_00330C18_0x330c18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00330C18_0x330c18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00330C18_0x330c18");
 #endif
@@ -52,11 +52,9 @@ void func_00330C18_0x330c18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
 
-    ctx->pc = 0x330c18u;
 
 label_330c18:
     // 0x330c18: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x330c18u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_330c1c:
     // 0x330c1c: 0xffb00000  sd          $s0, 0x0($sp)
@@ -89,7 +87,6 @@ label_330c24:
             goto label_330c40;
         }
     }
-    ctx->pc = 0x330C28u;
 label_330c28:
     // 0x330c28: 0x3c040045  lui         $a0, 0x45
     ctx->pc = 0x330c28u;
@@ -145,10 +142,8 @@ label_330c38:
             goto label_330c70;
         }
     }
-    ctx->pc = 0x330C3Cu;
 label_330c3c:
     // 0x330c3c: 0x0  nop
-    ctx->pc = 0x330c3cu;
     // NOP
 label_330c40:
     // 0x330c40: 0x8c820000  lw          $v0, 0x0($a0)
@@ -242,7 +237,6 @@ label_330c5c:
             goto label_330c6c;
         }
     }
-    ctx->pc = 0x330C60u;
 label_330c60:
     // 0x330c60: 0x802d  daddu       $s0, $zero, $zero
     ctx->pc = 0x330c60u;
@@ -270,10 +264,8 @@ label_330c68:
     if (!runtime->callDirectStatic(rdram, ctx, &Tramp_003302B0_003302E0_0x3302e0, 0x3302e0u, 0x330c6cu)) {
         return;
     }
-    ctx->pc = 0x330C6Cu;
 label_330c6c:
     // 0x330c6c: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x330c6cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_330c70:
     // 0x330c70: 0xdfb00000  ld          $s0, 0x0($sp)
@@ -314,10 +306,8 @@ label_330c7c:
         return;
         #endif
     }
-    ctx->pc = 0x330C80u;
 label_330c80:
     // 0x330c80: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x330c80u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
 label_330c84:
     // 0x330c84: 0x0  nop

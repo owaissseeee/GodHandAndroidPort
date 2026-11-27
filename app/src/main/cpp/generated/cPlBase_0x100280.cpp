@@ -13,7 +13,7 @@
 
 // Function: cPlBase
 // Address: 0x100280 - 0x1002c0
-void cPlBase_0x100280(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cPlBase_0x100280(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cPlBase_0x100280");
 #endif
@@ -45,7 +45,6 @@ void cPlBase_0x100280(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &cGameObj_0x2a7338, 0x2a7338u, 0x100294u)) {
         return;
     }
-    ctx->pc = 0x100294u;
 label_100294:
     // 0x100294: 0x3c030042  lui         $v1, 0x42
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)66 << 16));

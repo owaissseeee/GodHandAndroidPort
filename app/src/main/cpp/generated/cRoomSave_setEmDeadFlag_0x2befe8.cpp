@@ -13,7 +13,7 @@
 
 // Function: cRoomSave_setEmDeadFlag
 // Address: 0x2befe8 - 0x2bf078
-void cRoomSave_setEmDeadFlag_0x2befe8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cRoomSave_setEmDeadFlag_0x2befe8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cRoomSave_setEmDeadFlag_0x2befe8");
 #endif
@@ -67,7 +67,6 @@ void cRoomSave_setEmDeadFlag_0x2befe8(uint8_t* rdram, R5900Context* ctx, PS2Runt
         }
     }
     // 0x2bf014: 0x0  nop
-    ctx->pc = 0x2bf014u;
     // NOP
 label_2bf018:
     // 0x2bf018: 0xc0afbc2  jal         func_2BEF08
@@ -81,7 +80,6 @@ label_2bf018:
     if (!runtime->callDirectStatic(rdram, ctx, &cRoomSave_getEm_0x2bef08, 0x2bef08u, 0x2bf020u)) {
         return;
     }
-    ctx->pc = 0x2BF020u;
 label_2bf020:
     // 0x2bf020: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -130,7 +128,6 @@ label_2bf020:
             goto label_2bf05c;
         }
     }
-    ctx->pc = 0x2BF044u;
 label_2bf044:
     // 0x2bf044: 0xc0afb76  jal         func_2BEDD8
     SET_GPR_U32(ctx, 31, 0x2BF04Cu);
@@ -143,7 +140,6 @@ label_2bf044:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BEDD8_0x2bedd8, 0x2bedd8u, 0x2bf04cu)) {
         return;
     }
-    ctx->pc = 0x2BF04Cu;
 label_2bf04c:
     // 0x2bf04c: 0x202102b  sltu        $v0, $s0, $v0
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 16) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
@@ -166,7 +162,6 @@ label_2bf04c:
         }
     }
     // 0x2bf058: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2bf058u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2bf05c:
     // 0x2bf05c: 0x7bb00040  lq          $s0, 0x40($sp)

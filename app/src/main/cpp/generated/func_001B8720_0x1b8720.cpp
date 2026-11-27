@@ -13,7 +13,7 @@
 
 // Function: func_001B8720
 // Address: 0x1b8720 - 0x1b8758
-void func_001B8720_0x1b8720(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001B8720_0x1b8720(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001B8720_0x1b8720");
 #endif
@@ -57,10 +57,8 @@ void func_001B8720_0x1b8720(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1b8740;
         }
     }
-    ctx->pc = 0x1B873Cu;
 label_1b873c:
     // 0x1b873c: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1b873cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1b8740:
     // 0x1b8740: 0x50400002  beql        $v0, $zero, . + 4 + (0x2 << 2)

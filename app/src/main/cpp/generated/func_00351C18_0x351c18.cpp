@@ -13,7 +13,7 @@
 
 // Function: func_00351C18
 // Address: 0x351c18 - 0x351cb0
-void func_00351C18_0x351c18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00351C18_0x351c18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00351C18_0x351c18");
 #endif
@@ -91,7 +91,6 @@ void func_00351C18_0x351c18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
     // 0x351c4c: 0x0  nop
-    ctx->pc = 0x351c4cu;
     // NOP
 label_351c50:
     // 0x351c50: 0x1460000f  bnez        $v1, . + 4 + (0xF << 2)
@@ -124,7 +123,6 @@ label_351c50:
             goto label_351ca4;
         }
     }
-    ctx->pc = 0x351C60u;
 label_351c60:
     // 0x351c60: 0x1cc0000f  bgtz        $a2, . + 4 + (0xF << 2)
     ctx->pc = 0x351C60u;
@@ -155,7 +153,6 @@ label_351c60:
         return;
     }
     // 0x351c74: 0x0  nop
-    ctx->pc = 0x351c74u;
     // NOP
 label_351c78:
     // 0x351c78: 0x1cc00009  bgtz        $a2, . + 4 + (0x9 << 2)
@@ -187,11 +184,9 @@ label_351c78:
         return;
     }
     // 0x351c8c: 0x0  nop
-    ctx->pc = 0x351c8cu;
     // NOP
 label_351c90:
     // 0x351c90: 0x100202d  daddu       $a0, $t0, $zero
-    ctx->pc = 0x351c90u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 8) + (uint64_t)GPR_U64(ctx, 0));
 label_351c94:
     // 0x351c94: 0xe0282d  daddu       $a1, $a3, $zero
@@ -206,7 +201,6 @@ label_351c94:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x34DD70u, 0x351C98u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x351CA0u;
 label_351ca0:
     // 0x351ca0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x351ca0u;

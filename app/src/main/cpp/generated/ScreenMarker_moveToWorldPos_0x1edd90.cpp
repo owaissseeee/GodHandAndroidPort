@@ -13,7 +13,7 @@
 
 // Function: ScreenMarker_moveToWorldPos
 // Address: 0x1edd90 - 0x1ede38
-void ScreenMarker_moveToWorldPos_0x1edd90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ScreenMarker_moveToWorldPos_0x1edd90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ScreenMarker_moveToWorldPos_0x1edd90");
 #endif
@@ -85,7 +85,6 @@ void ScreenMarker_moveToWorldPos_0x1edd90(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &cCamera_getScreenPos_0x138470, 0x138470u, 0x1eddd4u)) {
         return;
     }
-    ctx->pc = 0x1EDDD4u;
 label_1eddd4:
     // 0x1eddd4: 0x13b00006  beq         $sp, $s0, . + 4 + (0x6 << 2)
     ctx->pc = 0x1EDDD4u;
@@ -143,7 +142,6 @@ label_1eddf0:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetLocalPosXY_0x2d6680, 0x2d6680u, 0x1ede10u)) {
         return;
     }
-    ctx->pc = 0x1EDE10u;
 label_1ede10:
     // 0x1ede10: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -160,7 +158,6 @@ label_1ede10:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001ED700_0x1ed700, 0x1ed700u, 0x1ede20u)) {
         return;
     }
-    ctx->pc = 0x1EDE20u;
 label_1ede20:
     // 0x1ede20: 0x7bb00050  lq          $s0, 0x50($sp)
     ctx->pc = 0x1ede20u;

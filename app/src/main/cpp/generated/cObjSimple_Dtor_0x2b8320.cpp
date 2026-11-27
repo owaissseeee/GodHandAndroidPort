@@ -13,7 +13,7 @@
 
 // Function: cObjSimple_Dtor
 // Address: 0x2b8320 - 0x2b8340
-void cObjSimple_Dtor_0x2b8320(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cObjSimple_Dtor_0x2b8320(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cObjSimple_Dtor_0x2b8320");
 #endif
@@ -37,7 +37,6 @@ void cObjSimple_Dtor_0x2b8320(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &func_0014EA28_0x14ea28, 0x14ea28u, 0x2b8330u)) {
         return;
     }
-    ctx->pc = 0x2B8330u;
 label_2b8330:
     // 0x2b8330: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2b8330u;

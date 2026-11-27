@@ -13,7 +13,7 @@
 
 // Function: Poker_releaseIds
 // Address: 0x1df940 - 0x1df988
-void Poker_releaseIds_0x1df940(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Poker_releaseIds_0x1df940(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Poker_releaseIds_0x1df940");
 #endif
@@ -48,7 +48,6 @@ void Poker_releaseIds_0x1df940(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DEDA8_0x1deda8, 0x1deda8u, 0x1df958u)) {
         return;
     }
-    ctx->pc = 0x1DF958u;
 label_1df958:
     // 0x1df958: 0xc077460  jal         func_1DD180
     SET_GPR_U32(ctx, 31, 0x1DF960u);
@@ -61,7 +60,6 @@ label_1df958:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DD180_0x1dd180, 0x1dd180u, 0x1df960u)) {
         return;
     }
-    ctx->pc = 0x1DF960u;
 label_1df960:
     // 0x1df960: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));

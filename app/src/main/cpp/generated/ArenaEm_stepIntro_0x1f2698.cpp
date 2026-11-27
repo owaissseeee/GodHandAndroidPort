@@ -13,7 +13,7 @@
 
 // Function: ArenaEm_stepIntro
 // Address: 0x1f2698 - 0x1f2708
-void ArenaEm_stepIntro_0x1f2698(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ArenaEm_stepIntro_0x1f2698(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ArenaEm_stepIntro_0x1f2698");
 #endif
@@ -80,7 +80,6 @@ void ArenaEm_stepIntro_0x1f2698(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_1f26e0;
         }
     }
-    ctx->pc = 0x1F26C8u;
 label_1f26c8:
     // 0x1f26c8: 0xc07be5e  jal         func_1EF978
     SET_GPR_U32(ctx, 31, 0x1F26D0u);
@@ -93,13 +92,11 @@ label_1f26c8:
     if (!runtime->callDirectStatic(rdram, ctx, &ColiseumBattle_DefeatAllEnemies_0x1ef978, 0x1ef978u, 0x1f26d0u)) {
         return;
     }
-    ctx->pc = 0x1F26D0u;
 label_1f26d0:
     // 0x1f26d0: 0x8e020b94  lw          $v0, 0xB94($s0)
     ctx->pc = 0x1f26d0u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 2964)));
     // 0x1f26d4: 0x24420001  addiu       $v0, $v0, 0x1
-    ctx->pc = 0x1f26d4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 1));
 label_1f26d8:
     // 0x1f26d8: 0xae020b94  sw          $v0, 0xB94($s0)

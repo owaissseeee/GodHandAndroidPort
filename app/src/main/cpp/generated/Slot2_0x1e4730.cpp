@@ -13,7 +13,7 @@
 
 // Function: Slot2
 // Address: 0x1e4730 - 0x1e47c0
-void Slot2_0x1e4730(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Slot2_0x1e4730(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Slot2_0x1e4730");
 #endif
@@ -66,7 +66,6 @@ void Slot2_0x1e4730(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x1e4760u)) {
         return;
     }
-    ctx->pc = 0x1E4760u;
 label_1e4760:
     // 0x1e4760: 0x2413ffff  addiu       $s3, $zero, -0x1
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
@@ -87,7 +86,6 @@ label_1e4768:
     if (!runtime->callDirectStatic(rdram, ctx, &InitStructSubfieldsAndFloat_1E8798_0x1e8798, 0x1e8798u, 0x1e4774u)) {
         return;
     }
-    ctx->pc = 0x1E4774u;
 label_1e4774:
     // 0x1e4774: 0x0  nop
     // NOP
@@ -120,7 +118,6 @@ label_1e4774:
     if (!runtime->callDirectStatic(rdram, ctx, &InitStructZeroedFields_1E7960_0x1e7960, 0x1e7960u, 0x1e4788u)) {
         return;
     }
-    ctx->pc = 0x1E4788u;
 label_1e4788:
     // 0x1e4788: 0xc079c46  jal         func_1E7118
     SET_GPR_U32(ctx, 31, 0x1E4790u);
@@ -133,7 +130,6 @@ label_1e4788:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001E7118_0x1e7118, 0x1e7118u, 0x1e4790u)) {
         return;
     }
-    ctx->pc = 0x1E4790u;
 label_1e4790:
     // 0x1e4790: 0x3403ffff  ori         $v1, $zero, 0xFFFF
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);

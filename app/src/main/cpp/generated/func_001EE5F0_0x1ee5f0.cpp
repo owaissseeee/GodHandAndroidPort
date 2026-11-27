@@ -13,7 +13,7 @@
 
 // Function: func_001EE5F0
 // Address: 0x1ee5f0 - 0x1ee6c8
-void func_001EE5F0_0x1ee5f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001EE5F0_0x1ee5f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001EE5F0_0x1ee5f0");
 #endif
@@ -107,7 +107,6 @@ void func_001EE5F0_0x1ee5f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMessNo_0x2d6560, 0x2d6560u, 0x1ee648u)) {
         return;
     }
-    ctx->pc = 0x1EE648u;
 label_1ee648:
     // 0x1ee648: 0x26100b84  addiu       $s0, $s0, 0xB84
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 2948));
@@ -124,7 +123,6 @@ label_1ee648:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMessNo_0x2d6560, 0x2d6560u, 0x1ee658u)) {
         return;
     }
-    ctx->pc = 0x1EE658u;
 label_1ee658:
     // 0x1ee658: 0x2b18818  mult        $s1, $s5, $s1
     { int64_t result = (int64_t)GPR_S32(ctx, 21) * (int64_t)GPR_S32(ctx, 17); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 17, (int32_t)result); }
@@ -182,7 +180,6 @@ label_1ee658:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetLocalPosY_0x2d6658, 0x2d6658u, 0x1ee6a4u)) {
         return;
     }
-    ctx->pc = 0x1EE6A4u;
 label_1ee6a4:
     // 0x1ee6a4: 0x7bb00080  lq          $s0, 0x80($sp)
     ctx->pc = 0x1ee6a4u;

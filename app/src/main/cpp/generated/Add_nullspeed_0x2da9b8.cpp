@@ -13,7 +13,7 @@
 
 // Function: Add_nullspeed
 // Address: 0x2da9b8 - 0x2da9e0
-void Add_nullspeed_0x2da9b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Add_nullspeed_0x2da9b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Add_nullspeed_0x2da9b8");
 #endif
@@ -49,7 +49,6 @@ void Add_nullspeed_0x2da9b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x2da9d4u)) {
         return;
     }
-    ctx->pc = 0x2DA9D4u;
 label_2da9d4:
     // 0x2da9d4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2da9d4u;

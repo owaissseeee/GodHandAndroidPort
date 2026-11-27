@@ -13,7 +13,7 @@
 
 // Function: cEm00_setMeshHookDisplay
 // Address: 0x269ac0 - 0x269b50
-void cEm00_setMeshHookDisplay_0x269ac0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_setMeshHookDisplay_0x269ac0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_setMeshHookDisplay_0x269ac0");
 #endif
@@ -65,7 +65,6 @@ void cEm00_setMeshHookDisplay_0x269ac0(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_getMeshPtr_14B730_0x14b730, 0x14b730u, 0x269ae4u)) {
         return;
     }
-    ctx->pc = 0x269AE4u;
 label_269ae4:
     // 0x269ae4: 0x40302d  daddu       $a2, $v0, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -133,7 +132,6 @@ label_269ae4:
             goto label_269b38;
         }
     }
-    ctx->pc = 0x269B20u;
 label_269b20:
     // 0x269b20: 0x8c620380  lw          $v0, 0x380($v1)
     ctx->pc = 0x269b20u;
@@ -159,7 +157,6 @@ label_269b20:
     ctx->pc = 0x269b30u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 6), 896)));
     // 0x269b34: 0x34420001  ori         $v0, $v0, 0x1
-    ctx->pc = 0x269b34u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)1);
 label_269b38:
     // 0x269b38: 0xacc20380  sw          $v0, 0x380($a2)

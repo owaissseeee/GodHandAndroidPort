@@ -13,7 +13,7 @@
 
 // Function: ChargeObj_updateAuraEffect
 // Address: 0x268508 - 0x2685d0
-void ChargeObj_updateAuraEffect_0x268508(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ChargeObj_updateAuraEffect_0x268508(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ChargeObj_updateAuraEffect_0x268508");
 #endif
@@ -122,7 +122,6 @@ void ChargeObj_updateAuraEffect_0x268508(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_268580;
         }
     }
-    ctx->pc = 0x268568u;
 label_268568:
     // 0x268568: 0xe0302d  daddu       $a2, $a3, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 7) + (uint64_t)GPR_U64(ctx, 0));
@@ -135,7 +134,6 @@ label_268568:
     // 0x268578: 0x24050004  addiu       $a1, $zero, 0x4
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x26857c: 0x24070006  addiu       $a3, $zero, 0x6
-    ctx->pc = 0x26857cu;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
 label_268580:
     // 0x268580: 0x46006346  mov.s       $f13, $f12
@@ -153,7 +151,6 @@ label_268580:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffectParts_0x306900, 0x306900u, 0x268590u)) {
         return;
     }
-    ctx->pc = 0x268590u;
 label_268590:
     // 0x268590: 0x1000000c  b           . + 4 + (0xC << 2)
     ctx->pc = 0x268590u;
@@ -170,7 +167,6 @@ label_268590:
             goto label_2685c4;
         }
     }
-    ctx->pc = 0x268598u;
 label_268598:
     // 0x268598: 0x30620080  andi        $v0, $v1, 0x80
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) & (uint64_t)(uint16_t)128);
@@ -210,7 +206,6 @@ label_268598:
     if (!runtime->callDirectStatic(rdram, ctx, &KillEffect_0x306200, 0x306200u, 0x2685c0u)) {
         return;
     }
-    ctx->pc = 0x2685C0u;
 label_2685c0:
     // 0x2685c0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2685c0u;

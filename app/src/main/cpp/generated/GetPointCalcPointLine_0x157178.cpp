@@ -13,7 +13,7 @@
 
 // Function: GetPointCalcPointLine
 // Address: 0x157178 - 0x157220
-void GetPointCalcPointLine_0x157178(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetPointCalcPointLine_0x157178(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetPointCalcPointLine_0x157178");
 #endif

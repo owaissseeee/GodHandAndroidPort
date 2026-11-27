@@ -13,7 +13,7 @@
 
 // Function: Trans_Clipmatrix_set
 // Address: 0x1538f0 - 0x153b00
-void Trans_Clipmatrix_set_0x1538f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Trans_Clipmatrix_set_0x1538f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Trans_Clipmatrix_set_0x1538f0");
 #endif
@@ -136,7 +136,6 @@ void Trans_Clipmatrix_set_0x1538f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &tanf_0x3a1ae8, 0x3a1ae8u, 0x153994u)) {
         return;
     }
-    ctx->pc = 0x153994u;
 label_153994:
     // 0x153994: 0x3c020058  lui         $v0, 0x58
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)88 << 16));
@@ -242,7 +241,6 @@ label_153994:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0CopyMatrix_0x30a548, 0x30a548u, 0x153a4cu)) {
         return;
     }
-    ctx->pc = 0x153A4Cu;
 label_153a4c:
     // 0x153a4c: 0x4600adc7  neg.s       $f23, $f21
     ctx->f[23] = FPU_NEG_S(ctx->f[21]);
@@ -259,7 +257,6 @@ label_153a4c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0InversMatrix_0x30a3f8, 0x30a3f8u, 0x153a5cu)) {
         return;
     }
-    ctx->pc = 0x153A5Cu;
 label_153a5c:
     // 0x153a5c: 0xc0c2968  jal         func_30A5A0
     SET_GPR_U32(ctx, 31, 0x153A64u);
@@ -272,7 +269,6 @@ label_153a5c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0UnitMatrix_0x30a5a0, 0x30a5a0u, 0x153a64u)) {
         return;
     }
-    ctx->pc = 0x153A64u;
 label_153a64:
     // 0x153a64: 0x4616a582  mul.s       $f22, $f20, $f22
     ctx->f[22] = FPU_MUL_S(ctx->f[20], ctx->f[22]);

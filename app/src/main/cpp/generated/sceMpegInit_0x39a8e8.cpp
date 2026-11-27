@@ -13,7 +13,7 @@
 
 // Function: sceMpegInit
 // Address: 0x39a8e8 - 0x39a998
-void sceMpegInit_0x39a8e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceMpegInit_0x39a8e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceMpegInit_0x39a8e8");
 #endif
@@ -39,7 +39,6 @@ void sceMpegInit_0x39a8e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x39a8f8u)) {
         return;
     }
-    ctx->pc = 0x39A8F8u;
 label_39a8f8:
     // 0x39a8f8: 0x3c091000  lui         $t1, 0x1000
     SET_GPR_S32(ctx, 9, (int32_t)((uint32_t)4096 << 16));
@@ -120,10 +119,8 @@ label_39a8f8:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x39a96cu)) {
         return;
     }
-    ctx->pc = 0x39A96Cu;
 label_39a96c:
     // 0x39a96c: 0x3c021000  lui         $v0, 0x1000
-    ctx->pc = 0x39a96cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)4096 << 16));
 label_39a970:
     // 0x39a970: 0x3c031000  lui         $v1, 0x1000
@@ -147,7 +144,6 @@ label_39a970:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3BAD80u, 0x39A980u, 0x39A988u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x39A988u;
 label_39a988:
     // 0x39a988: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x39a988u;

@@ -13,7 +13,7 @@
 
 // Function: cCollisionScroll_SetLayerCollEnable
 // Address: 0x133330 - 0x1333b8
-void cCollisionScroll_SetLayerCollEnable_0x133330(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCollisionScroll_SetLayerCollEnable_0x133330(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCollisionScroll_SetLayerCollEnable_0x133330");
 #endif
@@ -69,7 +69,6 @@ void cCollisionScroll_SetLayerCollEnable_0x133330(uint8_t* rdram, R5900Context* 
     // 0x133350: 0x582d  daddu       $t3, $zero, $zero
     SET_GPR_U64(ctx, 11, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x133354: 0x354afffd  ori         $t2, $t2, 0xFFFD
-    ctx->pc = 0x133354u;
     SET_GPR_U64(ctx, 10, GPR_U64(ctx, 10) | (uint64_t)(uint16_t)65533);
 label_133358:
     // 0x133358: 0x8d030014  lw          $v1, 0x14($t0)
@@ -135,10 +134,8 @@ label_133358:
             goto label_133390;
         }
     }
-    ctx->pc = 0x13338Cu;
 label_13338c:
     // 0x13338c: 0x34420002  ori         $v0, $v0, 0x2
-    ctx->pc = 0x13338cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)2);
 label_133390:
     // 0x133390: 0xace20010  sw          $v0, 0x10($a3)
@@ -173,7 +170,6 @@ label_133398:
             goto label_133358;
         }
     }
-    ctx->pc = 0x1333ACu;
 label_1333ac:
     // 0x1333ac: 0x3e00008  jr          $ra
     ctx->pc = 0x1333ACu;

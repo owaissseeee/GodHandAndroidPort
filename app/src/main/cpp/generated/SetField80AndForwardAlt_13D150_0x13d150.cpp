@@ -13,7 +13,7 @@
 
 // Function: SetField80AndForwardAlt_13D150
 // Address: 0x13d150 - 0x13d180
-void SetField80AndForwardAlt_13D150_0x13d150(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetField80AndForwardAlt_13D150_0x13d150(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetField80AndForwardAlt_13D150_0x13d150");
 #endif
@@ -58,7 +58,6 @@ void SetField80AndForwardAlt_13D150_0x13d150(uint8_t* rdram, R5900Context* ctx, 
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x13d174u)) {
         return;
     }
-    ctx->pc = 0x13D174u;
 label_13d174:
     // 0x13d174: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x13d174u;

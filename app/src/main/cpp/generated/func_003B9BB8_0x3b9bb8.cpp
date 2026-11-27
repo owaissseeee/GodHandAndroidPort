@@ -13,7 +13,7 @@
 
 // Function: func_003B9BB8
 // Address: 0x3b9bb8 - 0x3b9bf0
-void func_003B9BB8_0x3b9bb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003B9BB8_0x3b9bb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003B9BB8_0x3b9bb8");
 #endif
@@ -61,7 +61,6 @@ void func_003B9BB8_0x3b9bb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3BA058u, 0x3B9BD8u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x3B9BE0u;
 label_3b9be0:
     // 0x3b9be0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3b9be0u;

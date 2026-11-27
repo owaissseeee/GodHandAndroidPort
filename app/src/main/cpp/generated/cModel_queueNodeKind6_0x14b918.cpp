@@ -13,7 +13,7 @@
 
 // Function: cModel_queueNodeKind6
 // Address: 0x14b918 - 0x14b9a0
-void cModel_queueNodeKind6_0x14b918(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cModel_queueNodeKind6_0x14b918(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cModel_queueNodeKind6_0x14b918");
 #endif
@@ -100,7 +100,6 @@ void cModel_queueNodeKind6_0x14b918(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031A650_0x31a650, 0x31a650u, 0x14b968u)) {
         return;
     }
-    ctx->pc = 0x14B968u;
 label_14b968:
     // 0x14b968: 0x1000000a  b           . + 4 + (0xA << 2)
     ctx->pc = 0x14B968u;
@@ -117,7 +116,6 @@ label_14b968:
             goto label_14b994;
         }
     }
-    ctx->pc = 0x14B970u;
 label_14b970:
     // 0x14b970: 0x848602ac  lh          $a2, 0x2AC($a0)
     ctx->pc = 0x14b970u;
@@ -143,7 +141,6 @@ label_14b970:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031A650_0x31a650, 0x31a650u, 0x14b990u)) {
         return;
     }
-    ctx->pc = 0x14B990u;
 label_14b990:
     // 0x14b990: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x14b990u;

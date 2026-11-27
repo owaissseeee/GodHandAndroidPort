@@ -13,7 +13,7 @@
 
 // Function: cOmDoor_setObjCollisionCenterOnly
 // Address: 0x1bda00 - 0x1bdbb8
-void cOmDoor_setObjCollisionCenterOnly_0x1bda00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmDoor_setObjCollisionCenterOnly_0x1bda00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmDoor_setObjCollisionCenterOnly_0x1bda00");
 #endif
@@ -167,7 +167,6 @@ void cOmDoor_setObjCollisionCenterOnly_0x1bda00(uint8_t* rdram, R5900Context* ct
     // 0x1bdad0: 0x27ad0090  addiu       $t5, $sp, 0x90
     SET_GPR_S32(ctx, 13, (int32_t)ADD32(GPR_U32(ctx, 29), 144));
     // 0x1bdad4: 0x27a300a0  addiu       $v1, $sp, 0xA0
-    ctx->pc = 0x1bdad4u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 29), 160));
 label_1bdad8:
     // 0x1bdad8: 0x692f0007  ldl         $t7, 0x7($t1)
@@ -253,7 +252,6 @@ label_1bdad8:
             goto label_1bdb7c;
         }
     }
-    ctx->pc = 0x1BDB2Cu;
 label_1bdb2c:
     // 0x1bdb2c: 0x252e0060  addiu       $t6, $t1, 0x60
     SET_GPR_S32(ctx, 14, (int32_t)ADD32(GPR_U32(ctx, 9), 96));
@@ -270,7 +268,6 @@ label_1bdb2c:
     // 0x1bdb44: 0x27ad0090  addiu       $t5, $sp, 0x90
     SET_GPR_S32(ctx, 13, (int32_t)ADD32(GPR_U32(ctx, 29), 144));
     // 0x1bdb48: 0x27a300a0  addiu       $v1, $sp, 0xA0
-    ctx->pc = 0x1bdb48u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 29), 160));
 label_1bdb4c:
     // 0x1bdb4c: 0xdd2f0000  ld          $t7, 0x0($t1)
@@ -318,7 +315,6 @@ label_1bdb4c:
         }
     }
     // 0x1bdb78: 0x200282d  daddu       $a1, $s0, $zero
-    ctx->pc = 0x1bdb78u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_1bdb7c:
     // 0x1bdb7c: 0xafa20000  sw          $v0, 0x0($sp)
@@ -345,7 +341,6 @@ label_1bdb7c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0012EAD8_0x12ead8, 0x12ead8u, 0x1bdb98u)) {
         return;
     }
-    ctx->pc = 0x1BDB98u;
 label_1bdb98:
     // 0x1bdb98: 0xae02077c  sw          $v0, 0x77C($s0)
     ctx->pc = 0x1bdb98u;

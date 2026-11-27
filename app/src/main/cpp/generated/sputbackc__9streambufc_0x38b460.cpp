@@ -13,7 +13,7 @@
 
 // Function: sputbackc__9streambufc
 // Address: 0x38b460 - 0x38b480
-void sputbackc__9streambufc_0x38b460(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sputbackc__9streambufc_0x38b460(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sputbackc__9streambufc_0x38b460");
 #endif
@@ -44,7 +44,6 @@ void sputbackc__9streambufc_0x38b460(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_sputbackc_0x38cd18, 0x38cd18u, 0x38b474u)) {
         return;
     }
-    ctx->pc = 0x38B474u;
 label_38b474:
     // 0x38b474: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38b474u;

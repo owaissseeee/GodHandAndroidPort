@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
+#include <ps2_recompiled_functions.h>
 #include "r301_functions.h"
 
 #include "ps2_syscalls.h"
@@ -14,29 +15,29 @@ namespace gh_r301
 {
 // Function: Move__16r301CannonGameId
 // Address: 0x79d428 - 0x79d488
-void Move__16r301CannonGameId_0x79d428(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Move__16r301CannonGameId_0x79d428(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Move__16r301CannonGameId_0x79d428");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79d44cu: goto label_79d44c;
-        case 0x79d450u: goto label_79d450;
-        case 0x79d45cu: goto label_79d45c;
-        case 0x79d470u: goto label_79d470;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x79d428u, 0)) {
+        switch (ctx->pc) {
+            case 0x79d44cu: goto label_79d44c;
+            case 0x79d450u: goto label_79d450;
+            case 0x79d45cu: goto label_79d45c;
+            case 0x79d470u: goto label_79d470;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x79d428u;
+
 
     // 0x79d428: 0x27bdffc0  addiu       $sp, $sp, -0x40
-    ctx->pc = 0x79d428u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967232));
     // 0x79d42c: 0x7fb20010  sq          $s2, 0x10($sp)
     ctx->pc = 0x79d42cu;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 18));
     // 0x79d430: 0x80902d  daddu       $s2, $a0, $zero
-    ctx->pc = 0x79d430u;
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x79d434: 0x7fb00030  sq          $s0, 0x30($sp)
     ctx->pc = 0x79d434u;
@@ -48,12 +49,9 @@ void Move__16r301CannonGameId_0x79d428(uint8_t* rdram, R5900Context* ctx, PS2Run
     ctx->pc = 0x79d43cu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x79d440: 0x24110005  addiu       $s1, $zero, 0x5
-    ctx->pc = 0x79d440u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 0), 5));
     // 0x79d444: 0xc1e7568  jal         func_79D5A0
-    ctx->pc = 0x79D444u;
     SET_GPR_U32(ctx, 31, 0x79D44Cu);
-    ctx->pc = 0x79D448u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x79D444u;
     // 0x79d448: 0x26500060  addiu       $s0, $s2, 0x60 (Delay Slot)
@@ -63,32 +61,25 @@ void Move__16r301CannonGameId_0x79d428(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x79D5A0u, 0x79D444u, 0x79D44Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x79D44Cu;
 label_79d44c:
     // 0x79d44c: 0x0  nop
-    ctx->pc = 0x79d44cu;
     // NOP
 label_79d450:
     // 0x79d450: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x79d450u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x79d454: 0xc0b5778  jal         func_2D5DE0
-    ctx->pc = 0x79D454u;
     SET_GPR_U32(ctx, 31, 0x79D45Cu);
-    ctx->pc = 0x79D458u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x79D454u;
     // 0x79d458: 0x2631ffff  addiu       $s1, $s1, -0x1 (Delay Slot)
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 4294967295));
     ctx->in_delay_slot = false;
     ctx->pc = 0x2D5DE0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D5DE0u, 0x79D454u, 0x79D45Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_Main_0x2d5de0, 0x2D5DE0u, 0x79D45Cu)) {
         return;
     }
-    ctx->pc = 0x79D45Cu;
 label_79d45c:
     // 0x79d45c: 0x0  nop
-    ctx->pc = 0x79d45cu;
     // NOP
     // 0x79d460: 0x621fffb  bgez        $s1, . + 4 + (-0x5 << 2)
     ctx->pc = 0x79D460u;
@@ -108,21 +99,17 @@ label_79d45c:
             goto label_79d450;
         }
     }
-    ctx->pc = 0x79D468u;
     // 0x79d468: 0xc0aaa90  jal         func_2AAA40
-    ctx->pc = 0x79D468u;
     SET_GPR_U32(ctx, 31, 0x79D470u);
-    ctx->pc = 0x79D46Cu;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x79D468u;
     // 0x79d46c: 0x26440010  addiu       $a0, $s2, 0x10 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 18), 16));
     ctx->in_delay_slot = false;
     ctx->pc = 0x2AAA40u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2AAA40u, 0x79D468u, 0x79D470u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_move_0x2aaa40, 0x2AAA40u, 0x79D470u)) {
         return;
     }
-    ctx->pc = 0x79D470u;
 label_79d470:
     // 0x79d470: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x79d470u;

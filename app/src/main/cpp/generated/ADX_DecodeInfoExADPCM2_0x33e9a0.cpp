@@ -13,7 +13,7 @@
 
 // Function: ADX_DecodeInfoExADPCM2
 // Address: 0x33e9a0 - 0x33ea20
-void ADX_DecodeInfoExADPCM2_0x33e9a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ADX_DecodeInfoExADPCM2_0x33e9a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ADX_DecodeInfoExADPCM2_0x33e9a0");
 #endif

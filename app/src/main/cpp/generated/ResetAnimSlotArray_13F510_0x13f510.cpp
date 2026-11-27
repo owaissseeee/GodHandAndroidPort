@@ -13,7 +13,7 @@
 
 // Function: ResetAnimSlotArray_13F510
 // Address: 0x13f510 - 0x13f558
-void ResetAnimSlotArray_13F510_0x13f510(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ResetAnimSlotArray_13F510_0x13f510(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ResetAnimSlotArray_13F510_0x13f510");
 #endif
@@ -37,7 +37,6 @@ void ResetAnimSlotArray_13F510_0x13f510(uint8_t* rdram, R5900Context* ctx, PS2Ru
     // 0x13f520: 0x3c06ffff  lui         $a2, 0xFFFF
     SET_GPR_S32(ctx, 6, (int32_t)((uint32_t)65535 << 16));
     // 0x13f524: 0x0  nop
-    ctx->pc = 0x13f524u;
     // NOP
 label_13f528:
     // 0x13f528: 0xac6001a8  sw          $zero, 0x1A8($v1)

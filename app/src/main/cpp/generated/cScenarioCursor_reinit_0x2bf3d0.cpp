@@ -13,7 +13,7 @@
 
 // Function: cScenarioCursor_reinit
 // Address: 0x2bf3d0 - 0x2bf420
-void cScenarioCursor_reinit_0x2bf3d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenarioCursor_reinit_0x2bf3d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenarioCursor_reinit_0x2bf3d0");
 #endif
@@ -47,7 +47,6 @@ void cScenarioCursor_reinit_0x2bf3d0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BF708_0x2bf708, 0x2bf708u, 0x2bf3e4u)) {
         return;
     }
-    ctx->pc = 0x2BF3E4u;
 label_2bf3e4:
     // 0x2bf3e4: 0xc0afde4  jal         func_2BF790
     SET_GPR_U32(ctx, 31, 0x2BF3ECu);
@@ -60,7 +59,6 @@ label_2bf3e4:
     if (!runtime->callDirectStatic(rdram, ctx, &SysFlags_saveAndFreeze_0x2bf790, 0x2bf790u, 0x2bf3ecu)) {
         return;
     }
-    ctx->pc = 0x2BF3ECu;
 label_2bf3ec:
     // 0x2bf3ec: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
@@ -75,7 +73,6 @@ label_2bf3ec:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002C0A08_0x2c0a08, 0x2c0a08u, 0x2bf3f8u)) {
         return;
     }
-    ctx->pc = 0x2BF3F8u;
 label_2bf3f8:
     // 0x2bf3f8: 0x82030000  lb          $v1, 0x0($s0)
     ctx->pc = 0x2bf3f8u;

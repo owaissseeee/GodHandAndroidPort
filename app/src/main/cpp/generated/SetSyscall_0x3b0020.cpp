@@ -13,7 +13,7 @@
 
 // Function: SetSyscall
 // Address: 0x3b0020 - 0x3b0030
-void SetSyscall_0x3b0020(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetSyscall_0x3b0020(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetSyscall_0x3b0020");
 #endif

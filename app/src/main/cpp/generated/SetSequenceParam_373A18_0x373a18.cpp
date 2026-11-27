@@ -13,7 +13,7 @@
 
 // Function: SetSequenceParam_373A18
 // Address: 0x373a18 - 0x373a50
-void SetSequenceParam_373A18_0x373a18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetSequenceParam_373A18_0x373a18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetSequenceParam_373A18_0x373a18");
 #endif
@@ -50,7 +50,6 @@ void SetSequenceParam_373A18_0x373a18(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373A50_0x373a50, 0x373a50u, 0x373a34u)) {
         return;
     }
-    ctx->pc = 0x373A34u;
 label_373a34:
     // 0x373a34: 0x54400001  bnel        $v0, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x373A34u;
@@ -67,7 +66,6 @@ label_373a34:
             goto label_373a3c;
         }
     }
-    ctx->pc = 0x373A3Cu;
 label_373a3c:
     // 0x373a3c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x373a3cu;

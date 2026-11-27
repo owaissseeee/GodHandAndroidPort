@@ -13,7 +13,7 @@
 
 // Function: sceDmaPutEnv
 // Address: 0x397208 - 0x3973e8
-void sceDmaPutEnv_0x397208(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceDmaPutEnv_0x397208(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceDmaPutEnv_0x397208");
 #endif
@@ -95,7 +95,6 @@ void sceDmaPutEnv_0x397208(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
         return;
         #endif
     }
-    ctx->pc = 0x397260u;
 label_397260:
     // 0x397260: 0x2c42000a  sltiu       $v0, $v0, 0xA
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)10) ? 1 : 0);
@@ -133,7 +132,6 @@ label_397260:
         return;
         #endif
     }
-    ctx->pc = 0x397274u;
 label_397274:
     // 0x397274: 0x2c42000a  sltiu       $v0, $v0, 0xA
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)10) ? 1 : 0);
@@ -171,7 +169,6 @@ label_397274:
         return;
         #endif
     }
-    ctx->pc = 0x397288u;
 label_397288:
     // 0x397288: 0x2d620007  sltiu       $v0, $t3, 0x7
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 11) < (uint64_t)(int64_t)(int32_t)7) ? 1 : 0);
@@ -209,7 +206,6 @@ label_397288:
         return;
         #endif
     }
-    ctx->pc = 0x39729Cu;
 label_39729c:
     // 0x39729c: 0x91230000  lbu         $v1, 0x0($t1)
     ctx->pc = 0x39729cu;
@@ -318,14 +314,12 @@ label_39729c:
             goto label_397344;
         }
     }
-    ctx->pc = 0x397338u;
 label_397338:
     // 0x397338: 0x3c02ffff  lui         $v0, 0xFFFF
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)65535 << 16));
     // 0x39733c: 0x3442fffd  ori         $v0, $v0, 0xFFFD
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)65533);
     // 0x397340: 0x1425024  and         $t2, $t2, $v0
-    ctx->pc = 0x397340u;
     SET_GPR_U64(ctx, 10, GPR_U64(ctx, 10) & GPR_U64(ctx, 2));
 label_397344:
     // 0x397344: 0x95220004  lhu         $v0, 0x4($t1)

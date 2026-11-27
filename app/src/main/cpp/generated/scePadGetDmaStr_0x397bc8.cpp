@@ -13,7 +13,7 @@
 
 // Function: scePadGetDmaStr
 // Address: 0x397bc8 - 0x397d20
-void scePadGetDmaStr_0x397bc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void scePadGetDmaStr_0x397bc8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("scePadGetDmaStr_0x397bc8");
 #endif
@@ -62,7 +62,6 @@ void scePadGetDmaStr_0x397bc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x397bf0u)) {
         return;
     }
-    ctx->pc = 0x397BF0u;
 label_397bf0:
     // 0x397bf0: 0x40982d  daddu       $s3, $v0, $zero
     SET_GPR_U64(ctx, 19, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -98,7 +97,6 @@ label_397bf0:
     if (!runtime->callDirectStatic(rdram, ctx, &SyncDCache_0x3b0510, 0x3b0510u, 0x397c24u)) {
         return;
     }
-    ctx->pc = 0x397C24u;
 label_397c24:
     // 0x397c24: 0x8e030058  lw          $v1, 0x58($s0)
     ctx->pc = 0x397c24u;
@@ -146,7 +144,6 @@ label_397c24:
             goto label_397cac;
         }
     }
-    ctx->pc = 0x397C50u;
 label_397c50:
     // 0x397c50: 0x68640007  ldl         $a0, 0x7($v1)
     ctx->pc = 0x397c50u;
@@ -229,7 +226,6 @@ label_397c50:
             goto label_397cf0;
         }
     }
-    ctx->pc = 0x397CACu;
 label_397cac:
     // 0x397cac: 0xdc640000  ld          $a0, 0x0($v1)
     ctx->pc = 0x397cacu;
@@ -288,12 +284,10 @@ label_397cac:
             goto label_397cf0;
         }
     }
-    ctx->pc = 0x397CE8u;
 label_397ce8:
     // 0x397ce8: 0x389c0  sll         $s1, $v1, 7
     SET_GPR_S32(ctx, 17, (int32_t)SLL32(GPR_U32(ctx, 3), 7));
     // 0x397cec: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x397cecu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_397cf0:
     // 0x397cf0: 0x16620004  bne         $s3, $v0, . + 4 + (0x4 << 2)
@@ -317,10 +311,8 @@ label_397cf0:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x397d00u)) {
         return;
     }
-    ctx->pc = 0x397D00u;
 label_397d00:
     // 0x397d00: 0x2111021  addu        $v0, $s0, $s1
-    ctx->pc = 0x397d00u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), GPR_U32(ctx, 17)));
 label_397d04:
     // 0x397d04: 0xdfbf0040  ld          $ra, 0x40($sp)

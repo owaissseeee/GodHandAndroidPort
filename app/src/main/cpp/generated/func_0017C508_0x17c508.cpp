@@ -13,7 +13,7 @@
 
 // Function: func_0017C508
 // Address: 0x17c508 - 0x17c5b0
-void func_0017C508_0x17c508(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0017C508_0x17c508(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0017C508_0x17c508");
 #endif
@@ -48,7 +48,6 @@ void func_0017C508_0x17c508(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B6FB8_0x1b6fb8, 0x1b6fb8u, 0x17c51cu)) {
         return;
     }
-    ctx->pc = 0x17C51Cu;
 label_17c51c:
     // 0x17c51c: 0x3c014087  lui         $at, 0x4087
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16519 << 16));
@@ -122,7 +121,6 @@ label_17c570:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmDoor_setObjCollisionCenterOnly_0x1bda00, 0x1bda00u, 0x17c578u)) {
         return;
     }
-    ctx->pc = 0x17C578u;
 label_17c578:
     // 0x17c578: 0xc06f5a6  jal         func_1BD698
     SET_GPR_U32(ctx, 31, 0x17C580u);
@@ -135,7 +133,6 @@ label_17c578:
     if (!runtime->callDirectStatic(rdram, ctx, &SetFlagBit_1BD698_0x1bd698, 0x1bd698u, 0x17c580u)) {
         return;
     }
-    ctx->pc = 0x17C580u;
 label_17c580:
     // 0x17c580: 0x3c014080  lui         $at, 0x4080
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16512 << 16));
@@ -152,7 +149,6 @@ label_17c580:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001BDD88_0x1bdd88, 0x1bdd88u, 0x17c590u)) {
         return;
     }
-    ctx->pc = 0x17C590u;
 label_17c590:
     // 0x17c590: 0x8e0305a0  lw          $v1, 0x5A0($s0)
     ctx->pc = 0x17c590u;

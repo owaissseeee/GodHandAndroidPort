@@ -13,7 +13,7 @@
 
 // Function: _clearEach
 // Address: 0x39a078 - 0x39a140
-void _clearEach_0x39a078(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _clearEach_0x39a078(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_clearEach_0x39a078");
 #endif
@@ -48,7 +48,6 @@ void _clearEach_0x39a078(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x39a090u)) {
         return;
     }
-    ctx->pc = 0x39A090u;
 label_39a090:
     // 0x39a090: 0x3c061000  lui         $a2, 0x1000
     SET_GPR_S32(ctx, 6, (int32_t)((uint32_t)4096 << 16));
@@ -122,10 +121,8 @@ label_39a090:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x39a0f8u)) {
         return;
     }
-    ctx->pc = 0x39A0F8u;
 label_39a0f8:
     // 0x39a0f8: 0x3c021000  lui         $v0, 0x1000
-    ctx->pc = 0x39a0f8u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)4096 << 16));
 label_39a0fc:
     // 0x39a0fc: 0x3c041000  lui         $a0, 0x1000

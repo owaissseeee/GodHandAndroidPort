@@ -13,7 +13,7 @@
 
 // Function: func_002B4228
 // Address: 0x2b4228 - 0x2b42f0
-void func_002B4228_0x2b4228(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002B4228_0x2b4228(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002B4228_0x2b4228");
 #endif
@@ -64,7 +64,6 @@ void func_002B4228_0x2b4228(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2b4274;
         }
     }
-    ctx->pc = 0x2B4254u;
 label_2b4254:
     // 0x2b4254: 0x30a20001  andi        $v0, $a1, 0x1
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)1);
@@ -81,7 +80,6 @@ label_2b4254:
     // 0x2b426c: 0x46010840  add.s       $f1, $f1, $f1
     ctx->f[1] = FPU_ADD_S(ctx->f[1], ctx->f[1]);
     // 0x2b4270: 0xa51018  mult        $v0, $a1, $a1
-    ctx->pc = 0x2b4270u;
     { int64_t result = (int64_t)GPR_S32(ctx, 5) * (int64_t)GPR_S32(ctx, 5); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 2, (int32_t)result); }
 label_2b4274:
     // 0x2b4274: 0x3c0140c0  lui         $at, 0x40C0
@@ -122,7 +120,6 @@ label_2b4274:
             goto label_2b42b8;
         }
     }
-    ctx->pc = 0x2B42A0u;
 label_2b42a0:
     // 0x2b42a0: 0x30420001  andi        $v0, $v0, 0x1
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
@@ -135,7 +132,6 @@ label_2b42a0:
     // 0x2b42b0: 0x468010a0  cvt.s.w     $f2, $f2
     { int32_t tmp; std::memcpy(&tmp, &ctx->f[2], sizeof(tmp)); ctx->f[2] = FPU_CVT_S_W(tmp); }
     // 0x2b42b4: 0x46021080  add.s       $f2, $f2, $f2
-    ctx->pc = 0x2b42b4u;
     ctx->f[2] = FPU_ADD_S(ctx->f[2], ctx->f[2]);
 label_2b42b8:
     // 0x2b42b8: 0x3c014210  lui         $at, 0x4210

@@ -13,7 +13,7 @@
 
 // Function: cCollisionManager_checkNearCollision
 // Address: 0x2b8e10 - 0x2b8f48
-void cCollisionManager_checkNearCollision_0x2b8e10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCollisionManager_checkNearCollision_0x2b8e10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCollisionManager_checkNearCollision_0x2b8e10");
 #endif
@@ -74,7 +74,6 @@ void cCollisionManager_checkNearCollision_0x2b8e10(uint8_t* rdram, R5900Context*
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B8A30_0x2b8a30, 0x2b8a30u, 0x2b8e4cu)) {
         return;
     }
-    ctx->pc = 0x2B8E4Cu;
 label_2b8e4c:
     // 0x2b8e4c: 0x40a02d  daddu       $s4, $v0, $zero
     SET_GPR_U64(ctx, 20, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -245,7 +244,6 @@ label_2b8ef0:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0LengthSq_0x1f7e28, 0x1f7e28u, 0x2b8ef8u)) {
         return;
     }
-    ctx->pc = 0x2B8EF8u;
 label_2b8ef8:
     // 0x2b8ef8: 0x46140034  c.lt.s      $f0, $f20
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[0], ctx->f[20])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -288,10 +286,8 @@ label_2b8f0c:
             goto label_2b8e78;
         }
     }
-    ctx->pc = 0x2B8F14u;
 label_2b8f14:
     // 0x2b8f14: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2b8f14u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2b8f18:
     // 0x2b8f18: 0x7bb000a0  lq          $s0, 0xA0($sp)

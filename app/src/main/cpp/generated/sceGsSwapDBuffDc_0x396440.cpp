@@ -13,7 +13,7 @@
 
 // Function: sceGsSwapDBuffDc
 // Address: 0x396440 - 0x3964a0
-void sceGsSwapDBuffDc_0x396440(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceGsSwapDBuffDc_0x396440(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceGsSwapDBuffDc_0x396440");
 #endif
@@ -58,7 +58,6 @@ void sceGsSwapDBuffDc_0x396440(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &sceGsPutDispEnv_0x3968e8, 0x3968e8u, 0x396468u)) {
         return;
     }
-    ctx->pc = 0x396468u;
 label_396468:
     // 0x396468: 0x12000005  beqz        $s0, . + 4 + (0x5 << 2)
     ctx->pc = 0x396468u;
@@ -80,7 +79,6 @@ label_396468:
     if (!runtime->callDirectStatic(rdram, ctx, &sceGsPutDrawEnv_0x396d60, 0x396d60u, 0x396478u)) {
         return;
     }
-    ctx->pc = 0x396478u;
 label_396478:
     // 0x396478: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x396478u;
@@ -97,7 +95,6 @@ label_396478:
             goto label_39648c;
         }
     }
-    ctx->pc = 0x396480u;
 label_396480:
     // 0x396480: 0xc0e5b58  jal         func_396D60
     SET_GPR_U32(ctx, 31, 0x396488u);
@@ -110,7 +107,6 @@ label_396480:
     if (!runtime->callDirectStatic(rdram, ctx, &sceGsPutDrawEnv_0x396d60, 0x396d60u, 0x396488u)) {
         return;
     }
-    ctx->pc = 0x396488u;
 label_396488:
     // 0x396488: 0xdfbf0020  ld          $ra, 0x20($sp)
     ctx->pc = 0x396488u;

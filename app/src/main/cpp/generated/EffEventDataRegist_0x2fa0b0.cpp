@@ -13,7 +13,7 @@
 
 // Function: EffEventDataRegist
 // Address: 0x2fa0b0 - 0x2fa0e8
-void EffEventDataRegist_0x2fa0b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EffEventDataRegist_0x2fa0b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EffEventDataRegist_0x2fa0b0");
 #endif
@@ -64,7 +64,6 @@ void EffEventDataRegist_0x2fa0b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &espSys_effDataRegist_0x305758, 0x305758u, 0x2fa0d8u)) {
         return;
     }
-    ctx->pc = 0x2FA0D8u;
 label_2fa0d8:
     // 0x2fa0d8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2fa0d8u;

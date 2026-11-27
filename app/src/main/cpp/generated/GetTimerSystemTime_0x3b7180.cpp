@@ -13,7 +13,7 @@
 
 // Function: GetTimerSystemTime
 // Address: 0x3b7180 - 0x3b7200
-void GetTimerSystemTime_0x3b7180(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetTimerSystemTime_0x3b7180(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetTimerSystemTime_0x3b7180");
 #endif
@@ -41,7 +41,6 @@ void GetTimerSystemTime_0x3b7180(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x3b7194u)) {
         return;
     }
-    ctx->pc = 0x3B7194u;
 label_3b7194:
     // 0x3b7194: 0x3c031000  lui         $v1, 0x1000
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)4096 << 16));
@@ -79,7 +78,6 @@ label_3b7194:
     ctx->pc = 0x3b71b8u;
     SET_GPR_ZE32(ctx, 16, READ32(ADD32(GPR_U32(ctx, 3), 0)));
     // 0x3b71bc: 0x654a0001  daddiu      $t2, $t2, 0x1
-    ctx->pc = 0x3b71bcu;
     SET_GPR_S64(ctx, 10, (int64_t)GPR_S64(ctx, 10) + (int64_t)(int32_t)1);
 label_3b71c0:
     // 0x3b71c0: 0x31080003  andi        $t0, $t0, 0x3
@@ -116,10 +114,8 @@ label_3b71c0:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x3b71e8u)) {
         return;
     }
-    ctx->pc = 0x3B71E8u;
 label_3b71e8:
     // 0x3b71e8: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x3b71e8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_3b71ec:
     // 0x3b71ec: 0xdfbf0010  ld          $ra, 0x10($sp)

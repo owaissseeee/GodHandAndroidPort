@@ -13,7 +13,7 @@
 
 // Function: func_0032F428
 // Address: 0x32f428 - 0x32f468
-void func_0032F428_0x32f428(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0032F428_0x32f428(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0032F428_0x32f428");
 #endif
@@ -46,7 +46,6 @@ void func_0032F428_0x32f428(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Obj33F8_Tramp_0033B658_FC70_0x33fc70, 0x33fc70u, 0x32f43cu)) {
         return;
     }
-    ctx->pc = 0x32F43Cu;
 label_32f43c:
     // 0x32f43c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -73,7 +72,6 @@ label_32f43c:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x32f454u)) {
         return;
     }
-    ctx->pc = 0x32F454u;
 label_32f454:
     // 0x32f454: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x32f454u;

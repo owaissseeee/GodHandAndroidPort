@@ -13,7 +13,7 @@
 
 // Function: func_002BD4B0
 // Address: 0x2bd4b0 - 0x2bd6a8
-void func_002BD4B0_0x2bd4b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002BD4B0_0x2bd4b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002BD4B0_0x2bd4b0");
 #endif
@@ -121,7 +121,6 @@ label_2bd500:
     // 0x2bd520: 0x2e0882d  daddu       $s1, $s7, $zero
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 23) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2bd524: 0x3a0802d  daddu       $s0, $sp, $zero
-    ctx->pc = 0x2bd524u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
 label_2bd528:
     // 0x2bd528: 0xda440000  lqc2        $vf4, 0x0($s2)
@@ -145,7 +144,6 @@ label_2bd528:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x2bd540u)) {
         return;
     }
-    ctx->pc = 0x2BD540u;
 label_2bd540:
     // 0x2bd540: 0xda240000  lqc2        $vf4, 0x0($s1)
     ctx->pc = 0x2bd540u;
@@ -215,7 +213,6 @@ label_2bd564:
     // 0x2bd580: 0x2404ffff  addiu       $a0, $zero, -0x1
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x2bd584: 0x0  nop
-    ctx->pc = 0x2bd584u;
     // NOP
 label_2bd588:
     // 0x2bd588: 0xf8400000  sqc2        $vf0, 0x0($v0)
@@ -253,7 +250,6 @@ label_2bd588:
     // 0x2bd5a8: 0x982d  daddu       $s3, $zero, $zero
     SET_GPR_U64(ctx, 19, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2bd5ac: 0x27b000a0  addiu       $s0, $sp, 0xA0
-    ctx->pc = 0x2bd5acu;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 29), 160));
 label_2bd5b0:
     // 0x2bd5b0: 0xda240000  lqc2        $vf4, 0x0($s1)
@@ -277,7 +273,6 @@ label_2bd5b0:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x2bd5c8u)) {
         return;
     }
-    ctx->pc = 0x2BD5C8u;
 label_2bd5c8:
     // 0x2bd5c8: 0xda440000  lqc2        $vf4, 0x0($s2)
     ctx->pc = 0x2bd5c8u;
@@ -347,7 +342,6 @@ label_2bd5ec:
     // 0x2bd608: 0x3a0802d  daddu       $s0, $sp, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2bd60c: 0x0  nop
-    ctx->pc = 0x2bd60cu;
     // NOP
 label_2bd610:
     // 0x2bd610: 0x44806000  mtc1        $zero, $f12
@@ -365,7 +359,6 @@ label_2bd610:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BB868_0x2bb868, 0x2bb868u, 0x2bd620u)) {
         return;
     }
-    ctx->pc = 0x2BD620u;
 label_2bd620:
     // 0x2bd620: 0x1052000d  beq         $v0, $s2, . + 4 + (0xD << 2)
     ctx->pc = 0x2BD620u;
@@ -407,7 +400,6 @@ label_2bd620:
     // 0x2bd638: 0x802d  daddu       $s0, $zero, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2bd63c: 0x24120001  addiu       $s2, $zero, 0x1
-    ctx->pc = 0x2bd63cu;
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2bd640:
     // 0x2bd640: 0x44806000  mtc1        $zero, $f12
@@ -425,7 +417,6 @@ label_2bd640:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BB868_0x2bb868, 0x2bb868u, 0x2bd650u)) {
         return;
     }
-    ctx->pc = 0x2BD650u;
 label_2bd650:
     // 0x2bd650: 0x14520003  bne         $v0, $s2, . + 4 + (0x3 << 2)
     ctx->pc = 0x2BD650u;
@@ -442,7 +433,6 @@ label_2bd650:
             goto label_2bd660;
         }
     }
-    ctx->pc = 0x2BD658u;
 label_2bd658:
     // 0x2bd658: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x2BD658u;
@@ -459,7 +449,6 @@ label_2bd658:
             goto label_2bd670;
         }
     }
-    ctx->pc = 0x2BD660u;
 label_2bd660:
     // 0x2bd660: 0x2e020008  sltiu       $v0, $s0, 0x8
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 16) < (uint64_t)(int64_t)(int32_t)8) ? 1 : 0);
@@ -482,7 +471,6 @@ label_2bd660:
         }
     }
     // 0x2bd66c: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2bd66cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2bd670:
     // 0x2bd670: 0x7bb001c0  lq          $s0, 0x1C0($sp)

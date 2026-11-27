@@ -13,7 +13,7 @@
 
 // Function: InitActorSetVtable_170A58
 // Address: 0x170a58 - 0x170a90
-void InitActorSetVtable_170A58_0x170a58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitActorSetVtable_170A58_0x170a58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitActorSetVtable_170A58_0x170a58");
 #endif
@@ -45,7 +45,6 @@ void InitActorSetVtable_170A58_0x170a58(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_001BFAC8_0x1bfac8, 0x1bfac8u, 0x170a6cu)) {
         return;
     }
-    ctx->pc = 0x170A6Cu;
 label_170a6c:
     // 0x170a6c: 0x3c030042  lui         $v1, 0x42
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)66 << 16));

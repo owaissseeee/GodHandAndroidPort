@@ -13,7 +13,7 @@
 
 // Function: cOmThrow_SetThrow
 // Address: 0x1c8be0 - 0x1c8cb8
-void cOmThrow_SetThrow_0x1c8be0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmThrow_SetThrow_0x1c8be0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmThrow_SetThrow_0x1c8be0");
 #endif
@@ -125,10 +125,8 @@ label_1c8c28:
             goto label_1c8c48;
         }
     }
-    ctx->pc = 0x1C8C44u;
 label_1c8c44:
     // 0x1c8c44: 0x882d  daddu       $s1, $zero, $zero
-    ctx->pc = 0x1c8c44u;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1c8c48:
     // 0x1c8c48: 0x12200015  beqz        $s1, . + 4 + (0x15 << 2)
@@ -198,7 +196,6 @@ label_1c8c78:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31D020u, 0x1C8C78u, 0x1C8C80u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1C8C80u;
 label_1c8c80:
     // 0x1c8c80: 0x3c013f06  lui         $at, 0x3F06
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16134 << 16));

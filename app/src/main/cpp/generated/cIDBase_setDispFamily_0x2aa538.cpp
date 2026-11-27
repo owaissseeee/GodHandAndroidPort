@@ -13,7 +13,7 @@
 
 // Function: cIDBase_setDispFamily
 // Address: 0x2aa538 - 0x2aa598
-void cIDBase_setDispFamily_0x2aa538(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDBase_setDispFamily_0x2aa538(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDBase_setDispFamily_0x2aa538");
 #endif
@@ -55,7 +55,6 @@ void cIDBase_setDispFamily_0x2aa538(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_getIDWork_0x2aa410, 0x2aa410u, 0x2aa558u)) {
         return;
     }
-    ctx->pc = 0x2AA558u;
 label_2aa558:
     // 0x2aa558: 0x40882d  daddu       $s1, $v0, $zero
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -74,7 +73,6 @@ label_2aa558:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_setDispParent_0x2aa598, 0x2aa598u, 0x2aa56cu)) {
         return;
     }
-    ctx->pc = 0x2AA56Cu;
 label_2aa56c:
     // 0x2aa56c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -91,7 +89,6 @@ label_2aa56c:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_setDispChildren_0x2aa5f0, 0x2aa5f0u, 0x2aa57cu)) {
         return;
     }
-    ctx->pc = 0x2AA57Cu;
 label_2aa57c:
     // 0x2aa57c: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x2aa57cu;

@@ -13,7 +13,7 @@
 
 // Function: InitObjVtableF3A0_2F5560
 // Address: 0x2f5560 - 0x2f5588
-void InitObjVtableF3A0_2F5560_0x2f5560(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitObjVtableF3A0_2F5560_0x2f5560(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitObjVtableF3A0_2F5560_0x2f5560");
 #endif
@@ -48,7 +48,6 @@ void InitObjVtableF3A0_2F5560_0x2f5560(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &func_002FBE28_0x2fbe28, 0x2fbe28u, 0x2f557cu)) {
         return;
     }
-    ctx->pc = 0x2F557Cu;
 label_2f557c:
     // 0x2f557c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2f557cu;

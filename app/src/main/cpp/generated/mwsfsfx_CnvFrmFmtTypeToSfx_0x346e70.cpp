@@ -13,7 +13,7 @@
 
 // Function: mwsfsfx_CnvFrmFmtTypeToSfx
 // Address: 0x346e70 - 0x346ed0
-void mwsfsfx_CnvFrmFmtTypeToSfx_0x346e70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void mwsfsfx_CnvFrmFmtTypeToSfx_0x346e70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("mwsfsfx_CnvFrmFmtTypeToSfx_0x346e70");
 #endif
@@ -83,11 +83,9 @@ void mwsfsfx_CnvFrmFmtTypeToSfx_0x346e70(uint8_t* rdram, R5900Context* ctx, PS2R
         }
     }
     // 0x346e9c: 0x0  nop
-    ctx->pc = 0x346e9cu;
     // NOP
 label_346ea0:
     // 0x346ea0: 0x24030003  addiu       $v1, $zero, 0x3
-    ctx->pc = 0x346ea0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
 label_346ea4:
     // 0x346ea4: 0x10820006  beq         $a0, $v0, . + 4 + (0x6 << 2)
@@ -118,10 +116,8 @@ label_346ea4:
     if (!runtime->callDirectStatic(rdram, ctx, &MWSFSVM_Error_0x348be0, 0x348be0u, 0x346eb8u)) {
         return;
     }
-    ctx->pc = 0x346EB8u;
 label_346eb8:
     // 0x346eb8: 0x24030003  addiu       $v1, $zero, 0x3
-    ctx->pc = 0x346eb8u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
 label_346ebc:
     // 0x346ebc: 0xdfbf0000  ld          $ra, 0x0($sp)

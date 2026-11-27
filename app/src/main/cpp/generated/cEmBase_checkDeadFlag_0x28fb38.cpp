@@ -13,7 +13,7 @@
 
 // Function: cEmBase_checkDeadFlag
 // Address: 0x28fb38 - 0x28fb88
-void cEmBase_checkDeadFlag_0x28fb38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmBase_checkDeadFlag_0x28fb38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmBase_checkDeadFlag_0x28fb38");
 #endif
@@ -66,7 +66,6 @@ void cEmBase_checkDeadFlag_0x28fb38(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_28fb78;
         }
     }
-    ctx->pc = 0x28FB58u;
 label_28fb58:
     // 0x28fb58: 0xc0afbd8  jal         func_2BEF60
     SET_GPR_U32(ctx, 31, 0x28FB60u);
@@ -79,7 +78,6 @@ label_28fb58:
     if (!runtime->callDirectStatic(rdram, ctx, &cRoomSave_findEm_0x2bef60, 0x2bef60u, 0x28fb60u)) {
         return;
     }
-    ctx->pc = 0x28FB60u;
 label_28fb60:
     // 0x28fb60: 0x54400003  bnel        $v0, $zero, . + 4 + (0x3 << 2)
     ctx->pc = 0x28FB60u;
@@ -111,12 +109,10 @@ label_28fb60:
             goto label_28fb78;
         }
     }
-    ctx->pc = 0x28FB70u;
 label_28fb70:
     // 0x28fb70: 0x38420001  xori        $v0, $v0, 0x1
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)1);
     // 0x28fb74: 0x2c420001  sltiu       $v0, $v0, 0x1
-    ctx->pc = 0x28fb74u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1) ? 1 : 0);
 label_28fb78:
     // 0x28fb78: 0xdfbf0000  ld          $ra, 0x0($sp)

@@ -13,7 +13,7 @@
 
 // Function: SFHDS_IsSfdHeader
 // Address: 0x34d1b8 - 0x34d210
-void SFHDS_IsSfdHeader_0x34d1b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFHDS_IsSfdHeader_0x34d1b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFHDS_IsSfdHeader_0x34d1b8");
 #endif
@@ -42,7 +42,6 @@ void SFHDS_IsSfdHeader_0x34d1b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &SFH_Create_0x35d610, 0x35d610u, 0x34d1ccu)) {
         return;
     }
-    ctx->pc = 0x34D1CCu;
 label_34d1cc:
     // 0x34d1cc: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -69,7 +68,6 @@ label_34d1cc:
     if (!runtime->callDirectStatic(rdram, ctx, &SFH_IsSfdHeader_0x35d828, 0x35d828u, 0x34d1e4u)) {
         return;
     }
-    ctx->pc = 0x34D1E4u;
 label_34d1e4:
     // 0x34d1e4: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -90,7 +88,6 @@ label_34d1e4:
     if (!runtime->callDirectStatic(rdram, ctx, &SFH_Destroy_0x35d6d8, 0x35d6d8u, 0x34d1f8u)) {
         return;
     }
-    ctx->pc = 0x34D1F8u;
 label_34d1f8:
     // 0x34d1f8: 0x8fa20000  lw          $v0, 0x0($sp)
     ctx->pc = 0x34d1f8u;

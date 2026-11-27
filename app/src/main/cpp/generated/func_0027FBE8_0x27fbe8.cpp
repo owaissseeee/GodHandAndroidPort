@@ -13,7 +13,7 @@
 
 // Function: func_0027FBE8
 // Address: 0x27fbe8 - 0x27fd00
-void func_0027FBE8_0x27fbe8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0027FBE8_0x27fbe8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0027FBE8_0x27fbe8");
 #endif
@@ -87,7 +87,6 @@ void func_0027FBE8_0x27fbe8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             return;
         }
     }
-    ctx->pc = 0x27FC24u;
 label_27fc24:
     // 0x27fc24: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x27fc24u;
@@ -121,7 +120,6 @@ label_27fc24:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x27fc50u)) {
         return;
     }
-    ctx->pc = 0x27FC50u;
 label_27fc50:
     // 0x27fc50: 0x920202f6  lbu         $v0, 0x2F6($s0)
     ctx->pc = 0x27fc50u;
@@ -148,7 +146,6 @@ label_27fc64:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x27FC64u, 0x27FC6Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x27FC6Cu;
 label_27fc6c:
     // 0x27fc6c: 0x10000021  b           . + 4 + (0x21 << 2)
     ctx->pc = 0x27FC6Cu;
@@ -165,7 +162,6 @@ label_27fc6c:
             goto label_27fcf4;
         }
     }
-    ctx->pc = 0x27FC74u;
 label_27fc74:
     // 0x27fc74: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x27fc74u;
@@ -194,7 +190,6 @@ label_27fc74:
             goto label_27fca8;
         }
     }
-    ctx->pc = 0x27FC90u;
 label_27fc90:
     // 0x27fc90: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x27fc90u;
@@ -229,7 +224,6 @@ label_27fca8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x27fcbcu)) {
         return;
     }
-    ctx->pc = 0x27FCBCu;
 label_27fcbc:
     // 0x27fcbc: 0x920202f6  lbu         $v0, 0x2F6($s0)
     ctx->pc = 0x27fcbcu;
@@ -256,7 +250,6 @@ label_27fcd0:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x27FCD0u, 0x27FCD8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x27FCD8u;
 label_27fcd8:
     // 0x27fcd8: 0x50400006  beql        $v0, $zero, . + 4 + (0x6 << 2)
     ctx->pc = 0x27FCD8u;

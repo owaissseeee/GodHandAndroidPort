@@ -13,7 +13,7 @@
 
 // Function: getItemNumInRoom
 // Address: 0x2dddf8 - 0x2ddea0
-void getItemNumInRoom_0x2dddf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getItemNumInRoom_0x2dddf8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getItemNumInRoom_0x2dddf8");
 #endif
@@ -73,7 +73,6 @@ void getItemNumInRoom_0x2dddf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     ctx->pc = 0x2dde28u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 0)));
     // 0x2dde2c: 0x0  nop
-    ctx->pc = 0x2dde2cu;
     // NOP
 label_2dde30:
     // 0x2dde30: 0x948302fe  lhu         $v1, 0x2FE($a0)
@@ -101,7 +100,6 @@ label_2dde30:
     // 0x2dde44: 0x28620500  slti        $v0, $v1, 0x500
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)1280) ? 1 : 0);
     // 0x2dde48: 0x40282d  daddu       $a1, $v0, $zero
-    ctx->pc = 0x2dde48u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_2dde4c:
     // 0x2dde4c: 0x30a200ff  andi        $v0, $a1, 0xFF
@@ -127,7 +125,6 @@ label_2dde4c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B8030_0x1b8030, 0x1b8030u, 0x2dde60u)) {
         return;
     }
-    ctx->pc = 0x2DDE60u;
 label_2dde60:
     // 0x2dde60: 0x38420001  xori        $v0, $v0, 0x1
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)1);
@@ -163,7 +160,6 @@ label_2dde70:
             goto label_2dde30;
         }
     }
-    ctx->pc = 0x2DDE80u;
 label_2dde80:
     // 0x2dde80: 0x220102d  daddu       $v0, $s1, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));

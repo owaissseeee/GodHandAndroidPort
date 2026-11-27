@@ -13,7 +13,7 @@
 
 // Function: cOmBase_initEffData241
 // Address: 0x1bdf30 - 0x1bdfa0
-void cOmBase_initEffData241_0x1bdf30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmBase_initEffData241_0x1bdf30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmBase_initEffData241_0x1bdf30");
 #endif
@@ -48,7 +48,6 @@ void cOmBase_initEffData241_0x1bdf30(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B6FB8_0x1b6fb8, 0x1b6fb8u, 0x1bdf44u)) {
         return;
     }
-    ctx->pc = 0x1BDF44u;
 label_1bdf44:
     // 0x1bdf44: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -65,7 +64,6 @@ label_1bdf44:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshDispFromLayer_0x1b7280, 0x1b7280u, 0x1bdf54u)) {
         return;
     }
-    ctx->pc = 0x1BDF54u;
 label_1bdf54:
     // 0x1bdf54: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -82,7 +80,6 @@ label_1bdf54:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshDispFromLayer_0x1b7280, 0x1b7280u, 0x1bdf64u)) {
         return;
     }
-    ctx->pc = 0x1BDF64u;
 label_1bdf64:
     // 0x1bdf64: 0x8e0205b8  lw          $v0, 0x5B8($s0)
     ctx->pc = 0x1bdf64u;
@@ -115,7 +112,6 @@ label_1bdf64:
     if (!runtime->callDirectStatic(rdram, ctx, &espSys_effDataRegist_0x305758, 0x305758u, 0x1bdf8cu)) {
         return;
     }
-    ctx->pc = 0x1BDF8Cu;
 label_1bdf8c:
     // 0x1bdf8c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1bdf8cu;

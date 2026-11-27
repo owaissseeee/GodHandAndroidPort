@@ -13,7 +13,7 @@
 
 // Function: viBufDelete
 // Address: 0x3562a0 - 0x3562f8
-void viBufDelete_0x3562a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void viBufDelete_0x3562a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("viBufDelete_0x3562a0");
 #endif
@@ -48,7 +48,6 @@ void viBufDelete_0x3562a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_00355880_0x355880, 0x355880u, 0x3562b8u)) {
         return;
     }
-    ctx->pc = 0x3562B8u;
 label_3562b8:
     // 0x3562b8: 0x3c021000  lui         $v0, 0x1000
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)4096 << 16));
@@ -82,7 +81,6 @@ label_3562b8:
     if (!runtime->callDirectStatic(rdram, ctx, &DeleteSema_0x3afcb0, 0x3afcb0u, 0x3562e4u)) {
         return;
     }
-    ctx->pc = 0x3562E4u;
 label_3562e4:
     // 0x3562e4: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));

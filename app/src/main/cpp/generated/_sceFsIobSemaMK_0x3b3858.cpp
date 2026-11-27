@@ -13,7 +13,7 @@
 
 // Function: _sceFsIobSemaMK
 // Address: 0x3b3858 - 0x3b38d0
-void _sceFsIobSemaMK_0x3b3858(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceFsIobSemaMK_0x3b3858(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceFsIobSemaMK_0x3b3858");
 #endif
@@ -82,7 +82,6 @@ void _sceFsIobSemaMK_0x3b3858(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &CreateSema_0x3afca0, 0x3afca0u, 0x3b3898u)) {
         return;
     }
-    ctx->pc = 0x3B3898u;
 label_3b3898:
     // 0x3b3898: 0x3c030046  lui         $v1, 0x46
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)70 << 16));
@@ -104,7 +103,6 @@ label_3b3898:
     if (!runtime->callDirectStatic(rdram, ctx, &CreateSema_0x3afca0, 0x3afca0u, 0x3b38b0u)) {
         return;
     }
-    ctx->pc = 0x3B38B0u;
 label_3b38b0:
     // 0x3b38b0: 0x3c030040  lui         $v1, 0x40
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)64 << 16));

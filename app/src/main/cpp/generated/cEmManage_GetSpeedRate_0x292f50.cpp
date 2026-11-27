@@ -13,7 +13,7 @@
 
 // Function: cEmManage_GetSpeedRate
 // Address: 0x292f50 - 0x292f68
-void cEmManage_GetSpeedRate_0x292f50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_GetSpeedRate_0x292f50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_GetSpeedRate_0x292f50");
 #endif

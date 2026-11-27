@@ -13,7 +13,7 @@
 
 // Function: is_reading__7filebuf
 // Address: 0x38b858 - 0x38b888
-void is_reading__7filebuf_0x38b858(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void is_reading__7filebuf_0x38b858(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("is_reading__7filebuf_0x38b858");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: before__C9type_infoRC9type_info
 // Address: 0x31f4e0 - 0x31f508
-void before__C9type_infoRC9type_info_0x31f4e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void before__C9type_infoRC9type_info_0x31f4e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("before__C9type_infoRC9type_info_0x31f4e0");
 #endif
@@ -45,7 +45,6 @@ void before__C9type_infoRC9type_info_0x31f4e0(uint8_t* rdram, R5900Context* ctx,
     if (!runtime->callDirectStatic(rdram, ctx, &strcmp_0x3a5678, 0x3a5678u, 0x31f4f4u)) {
         return;
     }
-    ctx->pc = 0x31F4F4u;
 label_31f4f4:
     // 0x31f4f4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x31f4f4u;

@@ -13,7 +13,7 @@
 
 // Function: func_001B1938
 // Address: 0x1b1938 - 0x1b19e0
-void func_001B1938_0x1b1938(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001B1938_0x1b1938(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001B1938_0x1b1938");
 #endif
@@ -79,10 +79,8 @@ void func_001B1938_0x1b1938(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1b196c;
         }
     }
-    ctx->pc = 0x1B1968u;
 label_1b1968:
     // 0x1b1968: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1b1968u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1b196c:
     // 0x1b196c: 0x10400019  beqz        $v0, . + 4 + (0x19 << 2)
@@ -128,7 +126,6 @@ label_1b196c:
             goto label_1b19a0;
         }
     }
-    ctx->pc = 0x1B19A0u;
 label_1b19a0:
     // 0x1b19a0: 0x44800800  mtc1        $zero, $f1
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }
@@ -153,7 +150,6 @@ label_1b19a0:
             goto label_1b19b8;
         }
     }
-    ctx->pc = 0x1B19B8u;
 label_1b19b8:
     // 0x1b19b8: 0x46001001  sub.s       $f0, $f2, $f0
     ctx->f[0] = FPU_SUB_S(ctx->f[2], ctx->f[0]);

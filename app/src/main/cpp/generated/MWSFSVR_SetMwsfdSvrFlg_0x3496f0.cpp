@@ -13,7 +13,7 @@
 
 // Function: MWSFSVR_SetMwsfdSvrFlg
 // Address: 0x3496f0 - 0x349718
-void MWSFSVR_SetMwsfdSvrFlg_0x3496f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MWSFSVR_SetMwsfdSvrFlg_0x3496f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MWSFSVR_SetMwsfdSvrFlg_0x3496f0");
 #endif
@@ -45,7 +45,6 @@ void MWSFSVR_SetMwsfdSvrFlg_0x3496f0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &GetD003EC7E0_3452B0_0x3452b0, 0x3452b0u, 0x349704u)) {
         return;
     }
-    ctx->pc = 0x349704u;
 label_349704:
     // 0x349704: 0xac500058  sw          $s0, 0x58($v0)
     ctx->pc = 0x349704u;

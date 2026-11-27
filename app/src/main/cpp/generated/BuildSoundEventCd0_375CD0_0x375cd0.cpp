@@ -13,7 +13,7 @@
 
 // Function: BuildSoundEventCd0_375CD0
 // Address: 0x375cd0 - 0x375d98
-void BuildSoundEventCd0_375CD0_0x375cd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BuildSoundEventCd0_375CD0_0x375cd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BuildSoundEventCd0_375CD0_0x375cd0");
 #endif
@@ -50,7 +50,6 @@ void BuildSoundEventCd0_375CD0_0x375cd0(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_00376978_0x376978, 0x376978u, 0x375cecu)) {
         return;
     }
-    ctx->pc = 0x375CECu;
 label_375cec:
     // 0x375cec: 0x40282d  daddu       $a1, $v0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -175,10 +174,8 @@ label_375cec:
             goto label_375d80;
         }
     }
-    ctx->pc = 0x375D7Cu;
 label_375d7c:
     // 0x375d7c: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x375d7cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_375d80:
     // 0x375d80: 0x7bb00020  lq          $s0, 0x20($sp)

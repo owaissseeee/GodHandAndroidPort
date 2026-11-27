@@ -13,7 +13,7 @@
 
 // Function: sfply_ChkCondDfl
 // Address: 0x3571f8 - 0x357240
-void sfply_ChkCondDfl_0x3571f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfply_ChkCondDfl_0x3571f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfply_ChkCondDfl_0x3571f8");
 #endif
@@ -65,7 +65,6 @@ void sfply_ChkCondDfl_0x3571f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
         return;
     }
     // 0x35722c: 0x0  nop
-    ctx->pc = 0x35722cu;
     // NOP
 label_357230:
     // 0x357230: 0xdfbf0000  ld          $ra, 0x0($sp)

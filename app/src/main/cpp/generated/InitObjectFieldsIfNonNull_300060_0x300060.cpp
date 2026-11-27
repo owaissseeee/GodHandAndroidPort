@@ -13,7 +13,7 @@
 
 // Function: InitObjectFieldsIfNonNull_300060
 // Address: 0x300060 - 0x300088
-void InitObjectFieldsIfNonNull_300060_0x300060(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitObjectFieldsIfNonNull_300060_0x300060(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitObjectFieldsIfNonNull_300060_0x300060");
 #endif
@@ -51,7 +51,6 @@ void InitObjectFieldsIfNonNull_300060_0x300060(uint8_t* rdram, R5900Context* ctx
     if (!runtime->callDirectStatic(rdram, ctx, &InitObjectFields_2F7110_0x2f7110, 0x2f7110u, 0x300078u)) {
         return;
     }
-    ctx->pc = 0x300078u;
 label_300078:
     // 0x300078: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x300078u;

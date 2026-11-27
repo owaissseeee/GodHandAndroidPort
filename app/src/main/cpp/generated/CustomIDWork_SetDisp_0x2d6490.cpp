@@ -13,7 +13,7 @@
 
 // Function: CustomIDWork_SetDisp
 // Address: 0x2d6490 - 0x2d64d0
-void CustomIDWork_SetDisp_0x2d6490(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CustomIDWork_SetDisp_0x2d6490(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CustomIDWork_SetDisp_0x2d6490");
 #endif
@@ -78,7 +78,6 @@ void CustomIDWork_SetDisp_0x2d6490(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         return;
         #endif
     }
-    ctx->pc = 0x2D64B8u;
 label_2d64b8:
     // 0x2d64b8: 0x3c02dfff  lui         $v0, 0xDFFF
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)57343 << 16));

@@ -13,7 +13,7 @@
 
 // Function: KeyTrack_sample
 // Address: 0x159200 - 0x159300
-void KeyTrack_sample_0x159200(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void KeyTrack_sample_0x159200(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("KeyTrack_sample_0x159200");
 #endif
@@ -98,7 +98,6 @@ void KeyTrack_sample_0x159200(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_1592f0;
         }
     }
-    ctx->pc = 0x159258u;
 label_159258:
     // 0x159258: 0x51040  sll         $v0, $a1, 1
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 5), 1));
@@ -196,7 +195,6 @@ label_159258:
             goto label_1592dc;
         }
     }
-    ctx->pc = 0x1592CCu;
 label_1592cc:
     // 0x1592cc: 0xc0b6a36  jal         func_2DA8D8
     ctx->pc = 0x1592CCu;
@@ -204,7 +202,6 @@ label_1592cc:
     if (!runtime->callDirectStatic(rdram, ctx, &Ang_blendLate_0x2da8d8, 0x2da8d8u, 0x1592d4u)) {
         return;
     }
-    ctx->pc = 0x1592D4u;
 label_1592d4:
     // 0x1592d4: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x1592D4u;
@@ -221,7 +218,6 @@ label_1592d4:
             goto label_1592f8;
         }
     }
-    ctx->pc = 0x1592DCu;
 label_1592dc:
     // 0x1592dc: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -232,7 +228,6 @@ label_1592dc:
     // 0x1592e8: 0x460e0001  sub.s       $f0, $f0, $f14
     ctx->f[0] = FPU_SUB_S(ctx->f[0], ctx->f[14]);
     // 0x1592ec: 0x46006802  mul.s       $f0, $f13, $f0
-    ctx->pc = 0x1592ecu;
     ctx->f[0] = FPU_MUL_S(ctx->f[13], ctx->f[0]);
 label_1592f0:
     // 0x1592f0: 0x46010000  add.s       $f0, $f0, $f1

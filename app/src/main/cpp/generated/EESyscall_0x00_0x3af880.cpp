@@ -13,7 +13,7 @@
 
 // Function: EESyscall_0x00
 // Address: 0x3af880 - 0x3af890
-void EESyscall_0x00_0x3af880(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EESyscall_0x00_0x3af880(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EESyscall_0x00_0x3af880");
 #endif

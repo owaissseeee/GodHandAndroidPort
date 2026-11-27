@@ -13,7 +13,7 @@
 
 // Function: IsSpecialConditionMet_12C758
 // Address: 0x12c758 - 0x12c7d0
-void IsSpecialConditionMet_12C758_0x12c758(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IsSpecialConditionMet_12C758_0x12c758(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IsSpecialConditionMet_12C758_0x12c758");
 #endif
@@ -89,7 +89,6 @@ void IsSpecialConditionMet_12C758_0x12c758(uint8_t* rdram, R5900Context* ctx, PS
             goto label_12c7c0;
         }
     }
-    ctx->pc = 0x12C78Cu;
 label_12c78c:
     // 0x12c78c: 0x1440000c  bnez        $v0, . + 4 + (0xC << 2)
     ctx->pc = 0x12C78Cu;
@@ -124,7 +123,6 @@ label_12c78c:
     if (!runtime->callDirectStatic(rdram, ctx, &FindNodeByType_2C2568_0x2c2568, 0x2c2568u, 0x12c7a8u)) {
         return;
     }
-    ctx->pc = 0x12C7A8u;
 label_12c7a8:
     // 0x12c7a8: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -149,10 +147,8 @@ label_12c7a8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002DBE98_0x2dbe98, 0x2dbe98u, 0x12c7bcu)) {
         return;
     }
-    ctx->pc = 0x12C7BCu;
 label_12c7bc:
     // 0x12c7bc: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x12c7bcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_12c7c0:
     // 0x12c7c0: 0xdfbf0000  ld          $ra, 0x0($sp)

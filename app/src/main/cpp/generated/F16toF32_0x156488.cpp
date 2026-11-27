@@ -13,7 +13,7 @@
 
 // Function: F16toF32
 // Address: 0x156488 - 0x156508
-void F16toF32_0x156488(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void F16toF32_0x156488(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("F16toF32_0x156488");
 #endif
@@ -64,7 +64,6 @@ void F16toF32_0x156488(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             goto label_1564e4;
         }
     }
-    ctx->pc = 0x1564A8u;
 label_1564a8:
     // 0x1564a8: 0x1080000b  beqz        $a0, . + 4 + (0xB << 2)
     ctx->pc = 0x1564A8u;
@@ -84,7 +83,6 @@ label_1564a8:
     // 0x1564b0: 0x30638000  andi        $v1, $v1, 0x8000
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & (uint64_t)(uint16_t)32768);
     // 0x1564b4: 0x0  nop
-    ctx->pc = 0x1564b4u;
     // NOP
 label_1564b8:
     // 0x1564b8: 0x42040  sll         $a0, $a0, 1
@@ -128,14 +126,12 @@ label_1564b8:
             goto label_1564e4;
         }
     }
-    ctx->pc = 0x1564D8u;
 label_1564d8:
     // 0x1564d8: 0x3c05ffff  lui         $a1, 0xFFFF
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)65535 << 16));
     // 0x1564dc: 0x30638000  andi        $v1, $v1, 0x8000
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & (uint64_t)(uint16_t)32768);
     // 0x1564e0: 0x34a5ff90  ori         $a1, $a1, 0xFF90
-    ctx->pc = 0x1564e0u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) | (uint64_t)(uint16_t)65424);
 label_1564e4:
     // 0x1564e4: 0x24a20070  addiu       $v0, $a1, 0x70

@@ -84,6 +84,7 @@ local.properties
 # Host build artifacts
 host_tools_build/
 build_host_recomp/
+build_host_vu1/
 tools/recomp-clang/build/
 tools/vu1_dumps/
 

@@ -13,7 +13,7 @@
 
 // Function: Obj38B8_GetSelfPtr
 // Address: 0x38bef8 - 0x38bf00
-void Obj38B8_GetSelfPtr_0x38bef8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj38B8_GetSelfPtr_0x38bef8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj38B8_GetSelfPtr_0x38bef8");
 #endif

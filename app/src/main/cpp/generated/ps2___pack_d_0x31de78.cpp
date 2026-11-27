@@ -13,7 +13,7 @@
 
 // Function: __pack_d
 // Address: 0x31de78 - 0x31dfa8
-void ps2___pack_d_0x31de78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___pack_d_0x31de78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___pack_d_0x31de78");
 #endif
@@ -65,7 +65,6 @@ void ps2___pack_d_0x31de78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
             goto label_31df48;
         }
     }
-    ctx->pc = 0x31DEA4u;
 label_31dea4:
     // 0x31dea4: 0x38620004  xori        $v0, $v1, 0x4
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) ^ (uint64_t)(uint16_t)4);
@@ -110,7 +109,6 @@ label_31dea4:
             goto label_31df48;
         }
     }
-    ctx->pc = 0x31DEC4u;
 label_31dec4:
     // 0x31dec4: 0x10a00020  beqz        $a1, . + 4 + (0x20 << 2)
     ctx->pc = 0x31DEC4u;
@@ -175,7 +173,6 @@ label_31dec4:
             goto label_31df44;
         }
     }
-    ctx->pc = 0x31DEF4u;
 label_31def4:
     // 0x31def4: 0x28620400  slti        $v0, $v1, 0x400
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)1024) ? 1 : 0);
@@ -195,7 +192,6 @@ label_31def4:
         }
     }
     // 0x31df00: 0x240707ff  addiu       $a3, $zero, 0x7FF
-    ctx->pc = 0x31df00u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 0), 2047));
 label_31df04:
     // 0x31df04: 0x10000010  b           . + 4 + (0x10 << 2)
@@ -213,7 +209,6 @@ label_31df04:
             goto label_31df48;
         }
     }
-    ctx->pc = 0x31DF0Cu;
 label_31df0c:
     // 0x31df0c: 0x24020080  addiu       $v0, $zero, 0x80
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 128));
@@ -266,11 +261,9 @@ label_31df28:
     // 0x31df3c: 0x5287a  dsrl        $a1, $a1, 1
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) >> 1);
     // 0x31df40: 0x24e70001  addiu       $a3, $a3, 0x1
-    ctx->pc = 0x31df40u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 7), 1));
 label_31df44:
     // 0x31df44: 0x52a3a  dsrl        $a1, $a1, 8
-    ctx->pc = 0x31df44u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) >> 8);
 label_31df48:
     // 0x31df48: 0x3403fff0  ori         $v1, $zero, 0xFFF0

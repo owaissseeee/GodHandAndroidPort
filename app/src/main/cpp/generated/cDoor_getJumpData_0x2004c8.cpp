@@ -13,7 +13,7 @@
 
 // Function: cDoor_getJumpData
 // Address: 0x2004c8 - 0x200638
-void cDoor_getJumpData_0x2004c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDoor_getJumpData_0x2004c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDoor_getJumpData_0x2004c8");
 #endif
@@ -86,7 +86,6 @@ void cDoor_getJumpData_0x2004c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &SearchData_0x31ccf0, 0x31ccf0u, 0x200520u)) {
         return;
     }
-    ctx->pc = 0x200520u;
 label_200520:
     // 0x200520: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -164,7 +163,6 @@ label_200520:
             goto label_200578;
         }
     }
-    ctx->pc = 0x20055Cu;
 label_20055c:
     // 0x20055c: 0x966305b0  lhu         $v1, 0x5B0($s3)
     ctx->pc = 0x20055cu;
@@ -190,7 +188,6 @@ label_20055c:
         }
     }
     // 0x200570: 0x80302d  daddu       $a2, $a0, $zero
-    ctx->pc = 0x200570u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_200574:
     // 0x200574: 0xa6060014  sh          $a2, 0x14($s0)

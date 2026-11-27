@@ -13,7 +13,7 @@
 
 // Function: BuildSoundNode_374DF8
 // Address: 0x374df8 - 0x374f30
-void BuildSoundNode_374DF8_0x374df8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BuildSoundNode_374DF8_0x374df8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BuildSoundNode_374DF8_0x374df8");
 #endif
@@ -69,7 +69,6 @@ void BuildSoundNode_374DF8_0x374df8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_0037D170_0x37d170, 0x37d170u, 0x374e28u)) {
         return;
     }
-    ctx->pc = 0x374E28u;
 label_374e28:
     // 0x374e28: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -88,7 +87,6 @@ label_374e28:
             goto label_374e3c;
         }
     }
-    ctx->pc = 0x374E34u;
 label_374e34:
     // 0x374e34: 0x10000037  b           . + 4 + (0x37 << 2)
     ctx->pc = 0x374E34u;
@@ -105,7 +103,6 @@ label_374e34:
             goto label_374f14;
         }
     }
-    ctx->pc = 0x374E3Cu;
 label_374e3c:
     // 0x374e3c: 0x12200003  beqz        $s1, . + 4 + (0x3 << 2)
     ctx->pc = 0x374E3Cu;
@@ -137,7 +134,6 @@ label_374e3c:
             goto label_374e58;
         }
     }
-    ctx->pc = 0x374E4Cu;
 label_374e4c:
     // 0x374e4c: 0xc0ddffe  jal         func_377FF8
     ctx->pc = 0x374E4Cu;
@@ -145,7 +141,6 @@ label_374e4c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00377FF8_0x377ff8, 0x377ff8u, 0x374e54u)) {
         return;
     }
-    ctx->pc = 0x374E54u;
 label_374e54:
     // 0x374e54: 0xae020004  sw          $v0, 0x4($s0)
     ctx->pc = 0x374e54u;

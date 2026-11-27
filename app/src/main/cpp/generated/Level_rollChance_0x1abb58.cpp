@@ -13,7 +13,7 @@
 
 // Function: Level_rollChance
 // Address: 0x1abb58 - 0x1abbe8
-void Level_rollChance_0x1abb58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Level_rollChance_0x1abb58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Level_rollChance_0x1abb58");
 #endif
@@ -99,7 +99,6 @@ void Level_rollChance_0x1abb58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &Rnd_0x31cef8, 0x31cef8u, 0x1abbb4u)) {
         return;
     }
-    ctx->pc = 0x1ABBB4u;
 label_1abbb4:
     // 0x1abbb4: 0x102080  sll         $a0, $s0, 2
     SET_GPR_S32(ctx, 4, (int32_t)SLL32(GPR_U32(ctx, 16), 2));
@@ -125,12 +124,10 @@ label_1abbb4:
             goto label_1abbcc;
         }
     }
-    ctx->pc = 0x1ABBCCu;
 label_1abbcc:
     // 0x1abbcc: 0x1010  mfhi        $v0
     SET_GPR_U64(ctx, 2, ctx->hi);
     // 0x1abbd0: 0x2c420001  sltiu       $v0, $v0, 0x1
-    ctx->pc = 0x1abbd0u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1) ? 1 : 0);
 label_1abbd4:
     // 0x1abbd4: 0x7bb00030  lq          $s0, 0x30($sp)

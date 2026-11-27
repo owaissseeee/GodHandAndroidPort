@@ -13,7 +13,7 @@
 
 // Function: mwPlyCalcYccPlane
 // Address: 0x344e18 - 0x344e58
-void mwPlyCalcYccPlane_0x344e18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void mwPlyCalcYccPlane_0x344e18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("mwPlyCalcYccPlane_0x344e18");
 #endif
@@ -48,7 +48,6 @@ void mwPlyCalcYccPlane_0x344e18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &SFD_CalcYccPlane_0x350248, 0x350248u, 0x344e30u)) {
         return;
     }
-    ctx->pc = 0x344E30u;
 label_344e30:
     // 0x344e30: 0x200282d  daddu       $a1, $s0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -63,7 +62,6 @@ label_344e30:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00344E58_0x344e58, 0x344e58u, 0x344e3cu)) {
         return;
     }
-    ctx->pc = 0x344E3Cu;
 label_344e3c:
     // 0x344e3c: 0xdfb00010  ld          $s0, 0x10($sp)
     ctx->pc = 0x344e3cu;

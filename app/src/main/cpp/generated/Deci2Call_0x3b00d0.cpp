@@ -13,7 +13,7 @@
 
 // Function: Deci2Call
 // Address: 0x3b00d0 - 0x3b00e0
-void Deci2Call_0x3b00d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Deci2Call_0x3b00d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Deci2Call_0x3b00d0");
 #endif

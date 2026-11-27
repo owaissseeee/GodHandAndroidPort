@@ -14,7 +14,7 @@
 
 // Function: capVu0Cos
 // Address: 0x1f7fb8 - 0x1f8080
-void capVu0Cos_0x1f7fb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void capVu0Cos_0x1f7fb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("capVu0Cos_0x1f7fb8");
 #endif
@@ -62,12 +62,10 @@ void capVu0Cos_0x1f7fb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
     // 0x1f7fe0: 0x807dffc  j           func_1F7FF0
     ctx->pc = 0x1F7FF0u;
     goto label_1f7ff0;
-    ctx->pc = 0x1F7FE8u;
 label_1f7fe8:
     // 0x1f7fe8: 0x460c0301  sub.s       $f12, $f0, $f12
     ctx->f[12] = FPU_SUB_S(ctx->f[0], ctx->f[12]);
     // 0x1f7fec: 0x382d  daddu       $a3, $zero, $zero
-    ctx->pc = 0x1f7fecu;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1f7ff0:
     // 0x1f7ff0: 0x44086000  mfc1        $t0, $f12
@@ -141,10 +139,8 @@ label_1f7ff0:
             goto label_1f806c;
         }
     }
-    ctx->pc = 0x1F8068u;
 label_1f8068:
     // 0x1f8068: 0x4b072904  vsubx.x     $vf4, $vf5, $vf7x
-    ctx->pc = 0x1f8068u;
     { __m128 res = PS2_VSUB(ctx->vu0_vf[5], _mm_shuffle_ps(ctx->vu0_vf[7], ctx->vu0_vf[7], _MM_SHUFFLE(0,0,0,0))); __m128i mask = _mm_set_epi32(0, 0, 0, -1); ctx->vu0_vf[4] = _mm_blendv_ps(ctx->vu0_vf[4], res, _mm_castsi128_ps(mask)); }
 label_1f806c:
     // 0x1f806c: 0x4b042901  vaddy.x     $vf4, $vf5, $vf4y

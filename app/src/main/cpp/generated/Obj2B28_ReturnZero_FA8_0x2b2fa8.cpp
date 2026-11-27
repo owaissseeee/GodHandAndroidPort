@@ -13,7 +13,7 @@
 
 // Function: Obj2B28_ReturnZero_FA8
 // Address: 0x2b2fa8 - 0x2b2fb0
-void Obj2B28_ReturnZero_FA8_0x2b2fa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj2B28_ReturnZero_FA8_0x2b2fa8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj2B28_ReturnZero_FA8_0x2b2fa8");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: ColiseumBattle__ctor
 // Address: 0x1ee9c8 - 0x1eea38
-void ColiseumBattle__ctor_0x1ee9c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumBattle__ctor_0x1ee9c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumBattle__ctor_0x1ee9c8");
 #endif
@@ -51,7 +51,6 @@ void ColiseumBattle__ctor_0x1ee9c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x1ee9e4u)) {
         return;
     }
-    ctx->pc = 0x1EE9E4u;
 label_1ee9e4:
     // 0x1ee9e4: 0xae000054  sw          $zero, 0x54($s0)
     ctx->pc = 0x1ee9e4u;
@@ -67,7 +66,6 @@ label_1ee9e4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F2708_0x1f2708, 0x1f2708u, 0x1ee9f0u)) {
         return;
     }
-    ctx->pc = 0x1EE9F0u;
 label_1ee9f0:
     // 0x1ee9f0: 0xae000bac  sw          $zero, 0xBAC($s0)
     ctx->pc = 0x1ee9f0u;
@@ -77,7 +75,6 @@ label_1ee9f0:
     // 0x1ee9f8: 0x26020bd0  addiu       $v0, $s0, 0xBD0
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 3024));
     // 0x1ee9fc: 0x24030008  addiu       $v1, $zero, 0x8
-    ctx->pc = 0x1ee9fcu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 8));
 label_1eea00:
     // 0x1eea00: 0xf8400000  sqc2        $vf0, 0x0($v0)

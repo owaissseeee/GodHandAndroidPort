@@ -13,7 +13,7 @@
 
 // Function: TimerUSec2BusClock
 // Address: 0x3b7638 - 0x3b76b8
-void TimerUSec2BusClock_0x3b7638(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void TimerUSec2BusClock_0x3b7638(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("TimerUSec2BusClock_0x3b7638");
 #endif
@@ -81,7 +81,6 @@ void TimerUSec2BusClock_0x3b7638(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___udivdi3_0x3b8e88, 0x3b8e88u, 0x3b7694u)) {
         return;
     }
-    ctx->pc = 0x3B7694u;
 label_3b7694:
     // 0x3b7694: 0x202102d  daddu       $v0, $s0, $v0
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 2));

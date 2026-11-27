@@ -13,7 +13,7 @@
 
 // Function: SeEmitter_update
 // Address: 0x2c8ad8 - 0x2c8b68
-void SeEmitter_update_0x2c8ad8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SeEmitter_update_0x2c8ad8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SeEmitter_update_0x2c8ad8");
 #endif
@@ -73,7 +73,6 @@ void SeEmitter_update_0x2c8ad8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_002CB198_0x2cb198, 0x2cb198u, 0x2c8b08u)) {
         return;
     }
-    ctx->pc = 0x2C8B08u;
 label_2c8b08:
     // 0x2c8b08: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -144,7 +143,6 @@ label_2c8b18:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeFadeOut_0x2cbc20, 0x2cbc20u, 0x2c8b3cu)) {
         return;
     }
-    ctx->pc = 0x2C8B3Cu;
 label_2c8b3c:
     // 0x2c8b3c: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x2C8B3Cu;
@@ -161,7 +159,6 @@ label_2c8b3c:
             goto label_2c8b54;
         }
     }
-    ctx->pc = 0x2C8B44u;
 label_2c8b44:
     // 0x2c8b44: 0x54400004  bnel        $v0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x2C8B44u;
@@ -189,7 +186,6 @@ label_2c8b44:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002C8B68_0x2c8b68, 0x2c8b68u, 0x2c8b54u)) {
         return;
     }
-    ctx->pc = 0x2C8B54u;
 label_2c8b54:
     // 0x2c8b54: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2c8b54u;

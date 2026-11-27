@@ -13,7 +13,7 @@
 
 // Function: cDamageUnit_SetDamageCollOffset
 // Address: 0x1fd888 - 0x1fd8d8
-void cDamageUnit_SetDamageCollOffset_0x1fd888(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDamageUnit_SetDamageCollOffset_0x1fd888(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDamageUnit_SetDamageCollOffset_0x1fd888");
 #endif
@@ -73,7 +73,6 @@ label_1fd8a8:
     if (!runtime->callDirectStatic(rdram, ctx, &cCollisionShape_setOffsetPos_0x2bb258, 0x2bb258u, 0x1fd8b4u)) {
         return;
     }
-    ctx->pc = 0x1FD8B4u;
 label_1fd8b4:
     // 0x1fd8b4: 0x8e100024  lw          $s0, 0x24($s0)
     ctx->pc = 0x1fd8b4u;
@@ -96,7 +95,6 @@ label_1fd8b4:
             goto label_1fd8a8;
         }
     }
-    ctx->pc = 0x1FD8C0u;
 label_1fd8c0:
     // 0x1fd8c0: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1fd8c0u;

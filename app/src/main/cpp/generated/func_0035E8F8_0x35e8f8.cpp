@@ -13,7 +13,7 @@
 
 // Function: func_0035E8F8
 // Address: 0x35e8f8 - 0x35e968
-void func_0035E8F8_0x35e8f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0035E8F8_0x35e8f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0035E8F8_0x35e8f8");
 #endif
@@ -61,7 +61,6 @@ void func_0035E8F8_0x35e8f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             return;
         }
     }
-    ctx->pc = 0x35E920u;
 label_35e920:
     // 0x35e920: 0x3e00008  jr          $ra
     ctx->pc = 0x35E920u;
@@ -82,7 +81,6 @@ label_35e920:
         return;
         #endif
     }
-    ctx->pc = 0x35E928u;
 label_35e928:
     // 0x35e928: 0x3e00008  jr          $ra
     ctx->pc = 0x35E928u;
@@ -103,7 +101,6 @@ label_35e928:
         return;
         #endif
     }
-    ctx->pc = 0x35E930u;
 label_35e930:
     // 0x35e930: 0x3e00008  jr          $ra
     ctx->pc = 0x35E930u;
@@ -124,7 +121,6 @@ label_35e930:
         return;
         #endif
     }
-    ctx->pc = 0x35E938u;
 label_35e938:
     // 0x35e938: 0x3e00008  jr          $ra
     ctx->pc = 0x35E938u;
@@ -145,7 +141,6 @@ label_35e938:
         return;
         #endif
     }
-    ctx->pc = 0x35E940u;
 label_35e940:
     // 0x35e940: 0x3e00008  jr          $ra
     ctx->pc = 0x35E940u;
@@ -166,7 +161,6 @@ label_35e940:
         return;
         #endif
     }
-    ctx->pc = 0x35E948u;
 label_35e948:
     // 0x35e948: 0x3e00008  jr          $ra
     ctx->pc = 0x35E948u;
@@ -187,7 +181,6 @@ label_35e948:
         return;
         #endif
     }
-    ctx->pc = 0x35E950u;
 label_35e950:
     // 0x35e950: 0x3e00008  jr          $ra
     ctx->pc = 0x35E950u;
@@ -208,7 +201,6 @@ label_35e950:
         return;
         #endif
     }
-    ctx->pc = 0x35E958u;
 label_35e958:
     // 0x35e958: 0x3e00008  jr          $ra
     ctx->pc = 0x35E958u;
@@ -229,7 +221,6 @@ label_35e958:
         return;
         #endif
     }
-    ctx->pc = 0x35E960u;
 label_35e960:
     // 0x35e960: 0x3e00008  jr          $ra
     ctx->pc = 0x35E960u;

@@ -13,7 +13,7 @@
 
 // Function: func_00317FF0
 // Address: 0x317ff0 - 0x318138
-void func_00317FF0_0x317ff0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00317FF0_0x317ff0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00317FF0_0x317ff0");
 #endif
@@ -132,7 +132,6 @@ label_31803c:
     if (!runtime->callDirectStatic(rdram, ctx, &memmove_0x3a51f4, 0x3a51f4u, 0x318064u)) {
         return;
     }
-    ctx->pc = 0x318064u;
 label_318064:
     // 0x318064: 0x1000002b  b           . + 4 + (0x2B << 2)
     ctx->pc = 0x318064u;
@@ -149,7 +148,6 @@ label_318064:
             goto label_318114;
         }
     }
-    ctx->pc = 0x31806Cu;
 label_31806c:
     // 0x31806c: 0x8e230004  lw          $v1, 0x4($s1)
     ctx->pc = 0x31806cu;
@@ -185,7 +183,6 @@ label_31806c:
     if (!runtime->callDirectStatic(rdram, ctx, &EnsureInitThenForward_2A9538_30EE08_0x30ee08, 0x30ee08u, 0x31809cu)) {
         return;
     }
-    ctx->pc = 0x31809Cu;
 label_31809c:
     // 0x31809c: 0x8e250004  lw          $a1, 0x4($s1)
     ctx->pc = 0x31809cu;
@@ -211,7 +208,6 @@ label_31809c:
     if (!runtime->callDirectStatic(rdram, ctx, &memmove_0x3a51f4, 0x3a51f4u, 0x3180bcu)) {
         return;
     }
-    ctx->pc = 0x3180BCu;
 label_3180bc:
     // 0x3180bc: 0x52000004  beql        $s0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x3180BCu;
@@ -261,7 +257,6 @@ label_3180d0:
     if (!runtime->callDirectStatic(rdram, ctx, &memmove_0x3a51f4, 0x3a51f4u, 0x3180f0u)) {
         return;
     }
-    ctx->pc = 0x3180F0u;
 label_3180f0:
     // 0x3180f0: 0x8e250004  lw          $a1, 0x4($s1)
     ctx->pc = 0x3180f0u;
@@ -293,10 +288,8 @@ label_3180f0:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x3180FCu, 0x318104u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x318104u;
 label_318104:
     // 0x318104: 0x2541021  addu        $v0, $s2, $s4
-    ctx->pc = 0x318104u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 18), GPR_U32(ctx, 20)));
 label_318108:
     // 0x318108: 0xae300008  sw          $s0, 0x8($s1)

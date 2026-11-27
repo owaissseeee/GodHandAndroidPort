@@ -14,7 +14,7 @@
 
 // Function: cEm00_stepFadeOutAndRelease
 // Address: 0x288c98 - 0x288d40
-void cEm00_stepFadeOutAndRelease_0x288c98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_stepFadeOutAndRelease_0x288c98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_stepFadeOutAndRelease_0x288c98");
 #endif
@@ -93,7 +93,6 @@ void cEm00_stepFadeOutAndRelease_0x288c98(uint8_t* rdram, R5900Context* ctx, PS2
             goto label_288d30;
         }
     }
-    ctx->pc = 0x288CD0u;
 label_288cd0:
     // 0x288cd0: 0xc0a3ec2  jal         func_28FB08
     SET_GPR_U32(ctx, 31, 0x288CD8u);
@@ -106,7 +105,6 @@ label_288cd0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0028FB08_0x28fb08, 0x28fb08u, 0x288cd8u)) {
         return;
     }
-    ctx->pc = 0x288CD8u;
 label_288cd8:
     // 0x288cd8: 0x920202f6  lbu         $v0, 0x2F6($s0)
     ctx->pc = 0x288cd8u;
@@ -172,7 +170,6 @@ label_288ce8:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_ReleaseEm_0x290770, 0x290770u, 0x288d20u)) {
         return;
     }
-    ctx->pc = 0x288D20u;
 label_288d20:
     // 0x288d20: 0x920302f6  lbu         $v1, 0x2F6($s0)
     ctx->pc = 0x288d20u;

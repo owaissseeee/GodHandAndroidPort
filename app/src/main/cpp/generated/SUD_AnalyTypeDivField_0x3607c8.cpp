@@ -13,7 +13,7 @@
 
 // Function: SUD_AnalyTypeDivField
 // Address: 0x3607c8 - 0x360808
-void SUD_AnalyTypeDivField_0x3607c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SUD_AnalyTypeDivField_0x3607c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SUD_AnalyTypeDivField_0x3607c8");
 #endif
@@ -58,7 +58,6 @@ void SUD_AnalyTypeDivField_0x3607c8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_3607e8;
         }
     }
-    ctx->pc = 0x3607DCu;
 label_3607dc:
     // 0x3607dc: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x3607DCu;
@@ -76,7 +75,6 @@ label_3607dc:
         }
     }
     // 0x3607e4: 0x0  nop
-    ctx->pc = 0x3607e4u;
     // NOP
 label_3607e8:
     // 0x3607e8: 0x24840012  addiu       $a0, $a0, 0x12
@@ -94,10 +92,8 @@ label_3607e8:
     if (!runtime->callDirectStatic(rdram, ctx, &strncmp_0x3a5bd8, 0x3a5bd8u, 0x3607f8u)) {
         return;
     }
-    ctx->pc = 0x3607F8u;
 label_3607f8:
     // 0x3607f8: 0x2c420001  sltiu       $v0, $v0, 0x1
-    ctx->pc = 0x3607f8u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1) ? 1 : 0);
 label_3607fc:
     // 0x3607fc: 0xdfbf0000  ld          $ra, 0x0($sp)

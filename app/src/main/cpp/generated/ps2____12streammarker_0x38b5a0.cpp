@@ -13,7 +13,7 @@
 
 // Function: _$_12streammarker
 // Address: 0x38b5a0 - 0x38b5e8
-void ps2____12streammarker_0x38b5a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2____12streammarker_0x38b5a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2____12streammarker_0x38b5a0");
 #endif
@@ -51,7 +51,6 @@ void ps2____12streammarker_0x38b5a0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_remove_marker_0x38d038, 0x38d038u, 0x38b5bcu)) {
         return;
     }
-    ctx->pc = 0x38B5BCu;
 label_38b5bc:
     // 0x38b5bc: 0x32100001  andi        $s0, $s0, 0x1
     SET_GPR_U64(ctx, 16, GPR_U64(ctx, 16) & (uint64_t)(uint16_t)1);
@@ -81,7 +80,6 @@ label_38b5bc:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x38b5d0u)) {
         return;
     }
-    ctx->pc = 0x38B5D0u;
 label_38b5d0:
     // 0x38b5d0: 0xdfbf0020  ld          $ra, 0x20($sp)
     ctx->pc = 0x38b5d0u;

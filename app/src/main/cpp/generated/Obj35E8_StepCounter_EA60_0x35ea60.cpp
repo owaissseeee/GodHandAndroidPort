@@ -13,7 +13,7 @@
 
 // Function: Obj35E8_StepCounter_EA60
 // Address: 0x35ea60 - 0x35ea88
-void Obj35E8_StepCounter_EA60_0x35ea60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj35E8_StepCounter_EA60_0x35ea60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj35E8_StepCounter_EA60_0x35ea60");
 #endif

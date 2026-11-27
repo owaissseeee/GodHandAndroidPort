@@ -13,7 +13,7 @@
 
 // Function: cEvent_startPlayFade
 // Address: 0x296738 - 0x2967b0
-void cEvent_startPlayFade_0x296738(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_startPlayFade_0x296738(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_startPlayFade_0x296738");
 #endif
@@ -131,7 +131,6 @@ void cEvent_startPlayFade_0x296738(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &classFADE_start_0x307208, 0x307208u, 0x2967a0u)) {
         return;
     }
-    ctx->pc = 0x2967A0u;
 label_2967a0:
     // 0x2967a0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2967a0u;

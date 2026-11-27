@@ -13,7 +13,7 @@
 
 // Function: Obj33C8_GetField_2C_OrZeroIfNull
 // Address: 0x33cf70 - 0x33cf88
-void Obj33C8_GetField_2C_OrZeroIfNull_0x33cf70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj33C8_GetField_2C_OrZeroIfNull_0x33cf70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj33C8_GetField_2C_OrZeroIfNull_0x33cf70");
 #endif

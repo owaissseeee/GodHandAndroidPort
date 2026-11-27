@@ -13,7 +13,7 @@
 
 // Function: iGsPutIMR
 // Address: 0x3afff0 - 0x3b0000
-void iGsPutIMR_0x3afff0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iGsPutIMR_0x3afff0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iGsPutIMR_0x3afff0");
 #endif

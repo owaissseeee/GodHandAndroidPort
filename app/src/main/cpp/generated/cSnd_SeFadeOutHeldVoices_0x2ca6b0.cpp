@@ -13,7 +13,7 @@
 
 // Function: cSnd_SeFadeOutHeldVoices
 // Address: 0x2ca6b0 - 0x2ca718
-void cSnd_SeFadeOutHeldVoices_0x2ca6b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_SeFadeOutHeldVoices_0x2ca6b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_SeFadeOutHeldVoices_0x2ca6b0");
 #endif
@@ -62,7 +62,6 @@ void cSnd_SeFadeOutHeldVoices_0x2ca6b0(uint8_t* rdram, R5900Context* ctx, PS2Run
     ctx->pc = 0x2ca6d0u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 12)));
     // 0x2ca6d4: 0x0  nop
-    ctx->pc = 0x2ca6d4u;
     // NOP
 label_2ca6d8:
     // 0x2ca6d8: 0x210fa  dsrl        $v0, $v0, 3
@@ -98,7 +97,6 @@ label_2ca6d8:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeFadeOut_0x2cbc20, 0x2cbc20u, 0x2ca6f4u)) {
         return;
     }
-    ctx->pc = 0x2CA6F4u;
 label_2ca6f4:
     // 0x2ca6f4: 0x8e100004  lw          $s0, 0x4($s0)
     ctx->pc = 0x2ca6f4u;

@@ -13,7 +13,7 @@
 
 // Function: cOl2b_setFire
 // Address: 0x1805a8 - 0x180648
-void cOl2b_setFire_0x1805a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl2b_setFire_0x1805a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl2b_setFire_0x1805a8");
 #endif
@@ -78,7 +78,6 @@ void cOl2b_setFire_0x1805a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x1805e4u)) {
         return;
     }
-    ctx->pc = 0x1805E4u;
 label_1805e4:
     // 0x1805e4: 0x920302b4  lbu         $v1, 0x2B4($s0)
     ctx->pc = 0x1805e4u;
@@ -120,10 +119,8 @@ label_1805e4:
             goto label_180608;
         }
     }
-    ctx->pc = 0x180604u;
 label_180604:
     // 0x180604: 0x482d  daddu       $t1, $zero, $zero
-    ctx->pc = 0x180604u;
     SET_GPR_U64(ctx, 9, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_180608:
     // 0x180608: 0x3c040060  lui         $a0, 0x60
@@ -151,7 +148,6 @@ label_180608:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x18062cu)) {
         return;
     }
-    ctx->pc = 0x18062Cu;
 label_18062c:
     // 0x18062c: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));

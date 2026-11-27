@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Set_Bytes_2F4_2F5_2F6_2F7_27DAF0
 // Address: 0x27daf0 - 0x27db08
-void Obj0000_Set_Bytes_2F4_2F5_2F6_2F7_27DAF0_0x27daf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_Bytes_2F4_2F5_2F6_2F7_27DAF0_0x27daf0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_Bytes_2F4_2F5_2F6_2F7_27DAF0_0x27daf0");
 #endif

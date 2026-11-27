@@ -13,7 +13,7 @@
 
 // Function: FileBuf_init
 // Address: 0x2e1348 - 0x2e13d8
-void FileBuf_init_0x2e1348(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FileBuf_init_0x2e1348(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FileBuf_init_0x2e1348");
 #endif
@@ -67,7 +67,6 @@ void FileBuf_init_0x2e1348(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &EnsureInitThenForward_2A9538_30EE08_0x30ee08, 0x30ee08u, 0x2e1380u)) {
         return;
     }
-    ctx->pc = 0x2E1380u;
 label_2e1380:
     // 0x2e1380: 0x40302d  daddu       $a2, $v0, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -110,7 +109,6 @@ label_2e1380:
     if (!runtime->callDirectStatic(rdram, ctx, &LoadEntryByValue_1FFD00_0x1ffd00, 0x1ffd00u, 0x2e13acu)) {
         return;
     }
-    ctx->pc = 0x2E13ACu;
 label_2e13ac:
     // 0x2e13ac: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x2E13ACu;
@@ -127,7 +125,6 @@ label_2e13ac:
             goto label_2e13cc;
         }
     }
-    ctx->pc = 0x2E13B4u;
 label_2e13b4:
     // 0x2e13b4: 0x3c040058  lui         $a0, 0x58
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)88 << 16));
@@ -146,7 +143,6 @@ label_2e13b4:
     if (!runtime->callDirectStatic(rdram, ctx, &LoadEntryByValue_1FFD00_0x1ffd00, 0x1ffd00u, 0x2e13c8u)) {
         return;
     }
-    ctx->pc = 0x2E13C8u;
 label_2e13c8:
     // 0x2e13c8: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2e13c8u;

@@ -13,7 +13,7 @@
 
 // Function: Obj0000_PreDec_D_003EC450_340520
 // Address: 0x340520 - 0x340538
-void Obj0000_PreDec_D_003EC450_340520_0x340520(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_PreDec_D_003EC450_340520_0x340520(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_PreDec_D_003EC450_340520_0x340520");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: cSceAtUnit_AreaSet
 // Address: 0x2c0da8 - 0x2c0dd8
-void cSceAtUnit_AreaSet_0x2c0da8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSceAtUnit_AreaSet_0x2c0da8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSceAtUnit_AreaSet_0x2c0da8");
 #endif
@@ -48,7 +48,6 @@ void cSceAtUnit_AreaSet_0x2c0da8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F88A8_0x1f88a8, 0x1f88a8u, 0x2c0dc4u)) {
         return;
     }
-    ctx->pc = 0x2C0DC4u;
 label_2c0dc4:
     // 0x2c0dc4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2c0dc4u;

@@ -14,21 +14,18 @@ namespace gh_event
 {
 // Function: isEndNormal__C11cEventActor
 // Address: 0x7a9328 - 0x7a9340
-void isEndNormal__C11cEventActor_0x7a9328(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void isEndNormal__C11cEventActor_0x7a9328(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("isEndNormal__C11cEventActor_0x7a9328");
 #endif
 
-    ctx->pc = 0x7a9328u;
 
     // 0x7a9328: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x7a9328u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x7a932c: 0x21043  sra         $v0, $v0, 1
-    ctx->pc = 0x7a932cu;
     SET_GPR_S32(ctx, 2, SRA32(GPR_S32(ctx, 2), 1));
     // 0x7a9330: 0x38420001  xori        $v0, $v0, 0x1
-    ctx->pc = 0x7a9330u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)1);
     // 0x7a9334: 0x3e00008  jr          $ra
     ctx->pc = 0x7A9334u;
@@ -49,9 +46,7 @@ void isEndNormal__C11cEventActor_0x7a9328(uint8_t* rdram, R5900Context* ctx, PS2
         return;
         #endif
     }
-    ctx->pc = 0x7A933Cu;
     // 0x7a933c: 0x0  nop
-    ctx->pc = 0x7a933cu;
     // NOP
     ctx->pc = 0x7a9340u;
 }

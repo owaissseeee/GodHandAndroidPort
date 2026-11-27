@@ -13,7 +13,7 @@
 
 // Function: TexObj_updateTexExchange
 // Address: 0x26a558 - 0x26a638
-void TexObj_updateTexExchange_0x26a558(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void TexObj_updateTexExchange_0x26a558(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("TexObj_updateTexExchange_0x26a558");
 #endif
@@ -121,7 +121,6 @@ void TexObj_updateTexExchange_0x26a558(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &func_00273F08_0x273f08, 0x273f08u, 0x26a5b8u)) {
         return;
     }
-    ctx->pc = 0x26A5B8u;
 label_26a5b8:
     // 0x26a5b8: 0x1000001b  b           . + 4 + (0x1B << 2)
     ctx->pc = 0x26A5B8u;
@@ -138,7 +137,6 @@ label_26a5b8:
             goto label_26a628;
         }
     }
-    ctx->pc = 0x26A5C0u;
 label_26a5c0:
     // 0x26a5c0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -161,7 +159,6 @@ label_26a5c0:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x26a5d8u)) {
         return;
     }
-    ctx->pc = 0x26A5D8u;
 label_26a5d8:
     // 0x26a5d8: 0x920217b0  lbu         $v0, 0x17B0($s0)
     ctx->pc = 0x26a5d8u;
@@ -238,7 +235,6 @@ label_26a600:
             goto label_26a624;
         }
     }
-    ctx->pc = 0x26A610u;
 label_26a610:
     // 0x26a610: 0x8e030254  lw          $v1, 0x254($s0)
     ctx->pc = 0x26a610u;

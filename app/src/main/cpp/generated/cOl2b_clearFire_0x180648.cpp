@@ -13,7 +13,7 @@
 
 // Function: cOl2b_clearFire
 // Address: 0x180648 - 0x180688
-void cOl2b_clearFire_0x180648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl2b_clearFire_0x180648(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl2b_clearFire_0x180648");
 #endif
@@ -67,7 +67,6 @@ void cOl2b_clearFire_0x180648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &KillEffect_306168_0x306168, 0x306168u, 0x180670u)) {
         return;
     }
-    ctx->pc = 0x180670u;
 label_180670:
     // 0x180670: 0xa2000a29  sb          $zero, 0xA29($s0)
     ctx->pc = 0x180670u;

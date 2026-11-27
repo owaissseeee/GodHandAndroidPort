@@ -13,7 +13,7 @@
 
 // Function: cDataManager_resetKind
 // Address: 0x1fed78 - 0x1fee00
-void cDataManager_resetKind_0x1fed78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDataManager_resetKind_0x1fed78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDataManager_resetKind_0x1fed78");
 #endif
@@ -72,7 +72,6 @@ void cDataManager_resetKind_0x1fed78(uint8_t* rdram, R5900Context* ctx, PS2Runti
         }
     }
     // 0x1fedac: 0x902d  daddu       $s2, $zero, $zero
-    ctx->pc = 0x1fedacu;
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1fedb0:
     // 0x1fedb0: 0x8e220008  lw          $v0, 0x8($s1)
@@ -109,7 +108,6 @@ label_1fedb0:
     if (!runtime->callDirectStatic(rdram, ctx, &ResetSlotState_1FF2E0_0x1ff2e0, 0x1ff2e0u, 0x1fedccu)) {
         return;
     }
-    ctx->pc = 0x1FEDCCu;
 label_1fedcc:
     // 0x1fedcc: 0x8e220004  lw          $v0, 0x4($s1)
     ctx->pc = 0x1fedccu;
@@ -137,7 +135,6 @@ label_1fedd0:
             goto label_1fedb0;
         }
     }
-    ctx->pc = 0x1FEDE0u;
 label_1fede0:
     // 0x1fede0: 0x7bb00050  lq          $s0, 0x50($sp)
     ctx->pc = 0x1fede0u;

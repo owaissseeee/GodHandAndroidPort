@@ -13,7 +13,7 @@
 
 // Function: snprintf_char
 // Address: 0x3b1de8 - 0x3b1e40
-void snprintf_char_0x3b1de8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void snprintf_char_0x3b1de8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("snprintf_char_0x3b1de8");
 #endif
@@ -56,7 +56,6 @@ void snprintf_char_0x3b1de8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x3B1DFCu;
 label_3b1dfc:
     // 0x3b1dfc: 0x28c20100  slti        $v0, $a2, 0x100
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 6) < (int64_t)(int32_t)256) ? 1 : 0);
@@ -117,7 +116,6 @@ label_3b1dfc:
         return;
         #endif
     }
-    ctx->pc = 0x3B1E34u;
 label_3b1e34:
     // 0x3b1e34: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

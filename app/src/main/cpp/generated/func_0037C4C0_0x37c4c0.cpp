@@ -13,7 +13,7 @@
 
 // Function: func_0037C4C0
 // Address: 0x37c4c0 - 0x37c5c8
-void func_0037C4C0_0x37c4c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0037C4C0_0x37c4c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0037C4C0_0x37c4c0");
 #endif
@@ -152,7 +152,6 @@ label_37c4e8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0037C5C8_0x37c5c8, 0x37c5c8u, 0x37c534u)) {
         return;
     }
-    ctx->pc = 0x37C534u;
 label_37c534:
     // 0x37c534: 0x32220002  andi        $v0, $s1, 0x2
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 17) & (uint64_t)(uint16_t)2);
@@ -184,7 +183,6 @@ label_37c534:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0037C5C8_0x37c5c8, 0x37c5c8u, 0x37c54cu)) {
         return;
     }
-    ctx->pc = 0x37C54Cu;
 label_37c54c:
     // 0x37c54c: 0x9202000d  lbu         $v0, 0xD($s0)
     ctx->pc = 0x37c54cu;
@@ -232,10 +230,8 @@ label_37c54c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0037C6A0_0x37c6a0, 0x37c6a0u, 0x37c56cu)) {
         return;
     }
-    ctx->pc = 0x37C56Cu;
 label_37c56c:
     // 0x37c56c: 0x32220004  andi        $v0, $s1, 0x4
-    ctx->pc = 0x37c56cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 17) & (uint64_t)(uint16_t)4);
 label_37c570:
     // 0x37c570: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
@@ -266,7 +262,6 @@ label_37c570:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0037C5F8_0x37c5f8, 0x37c5f8u, 0x37c584u)) {
         return;
     }
-    ctx->pc = 0x37C584u;
 label_37c584:
     // 0x37c584: 0x32220008  andi        $v0, $s1, 0x8
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 17) & (uint64_t)(uint16_t)8);
@@ -298,10 +293,8 @@ label_37c584:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0037C618_0x37c618, 0x37c618u, 0x37c59cu)) {
         return;
     }
-    ctx->pc = 0x37C59Cu;
 label_37c59c:
     // 0x37c59c: 0x2673ffff  addiu       $s3, $s3, -0x1
-    ctx->pc = 0x37c59cu;
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 19), 4294967295));
 label_37c5a0:
     // 0x37c5a0: 0x661ffd1  bgez        $s3, . + 4 + (-0x2F << 2)

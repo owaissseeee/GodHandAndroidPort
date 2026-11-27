@@ -13,7 +13,7 @@
 
 // Function: dpsub
 // Address: 0x31e2e0 - 0x31e348
-void dpsub_0x31e2e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void dpsub_0x31e2e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("dpsub_0x31e2e0");
 #endif
@@ -56,7 +56,6 @@ void dpsub_0x31e2e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___unpack_d_0x31dfa8, 0x31dfa8u, 0x31e300u)) {
         return;
     }
-    ctx->pc = 0x31E300u;
 label_31e300:
     // 0x31e300: 0x27b00020  addiu       $s0, $sp, 0x20
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 29), 32));
@@ -73,7 +72,6 @@ label_31e300:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___unpack_d_0x31dfa8, 0x31dfa8u, 0x31e310u)) {
         return;
     }
-    ctx->pc = 0x31E310u;
 label_31e310:
     // 0x31e310: 0x8fa20024  lw          $v0, 0x24($sp)
     ctx->pc = 0x31e310u;
@@ -97,7 +95,6 @@ label_31e310:
     if (!runtime->callDirectStatic(rdram, ctx, &_fpadd_parts_0x31e048, 0x31e048u, 0x31e32cu)) {
         return;
     }
-    ctx->pc = 0x31E32Cu;
 label_31e32c:
     // 0x31e32c: 0xc0c779e  jal         func_31DE78
     SET_GPR_U32(ctx, 31, 0x31E334u);
@@ -110,7 +107,6 @@ label_31e32c:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___pack_d_0x31de78, 0x31de78u, 0x31e334u)) {
         return;
     }
-    ctx->pc = 0x31E334u;
 label_31e334:
     // 0x31e334: 0xdfbf0080  ld          $ra, 0x80($sp)
     ctx->pc = 0x31e334u;

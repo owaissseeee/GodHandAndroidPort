@@ -13,7 +13,7 @@
 
 // Function: cSnd_SetBgmState
 // Address: 0x2d0ab8 - 0x2d0ac0
-void cSnd_SetBgmState_0x2d0ab8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_SetBgmState_0x2d0ab8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_SetBgmState_0x2d0ab8");
 #endif

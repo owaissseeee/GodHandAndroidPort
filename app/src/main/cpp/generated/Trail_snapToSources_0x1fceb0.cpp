@@ -13,7 +13,7 @@
 
 // Function: Trail_snapToSources
 // Address: 0x1fceb0 - 0x1fcf20
-void Trail_snapToSources_0x1fceb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Trail_snapToSources_0x1fceb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Trail_snapToSources_0x1fceb0");
 #endif
@@ -88,7 +88,6 @@ label_1fcec0:
     ctx->pc = 0x1fcee4u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 5), 8), bits); }
     // 0x1fcee8: 0x24a20010  addiu       $v0, $a1, 0x10
-    ctx->pc = 0x1fcee8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 5), 16));
 label_1fceec:
     // 0x1fceec: 0x50450008  beql        $v0, $a1, . + 4 + (0x8 << 2)
@@ -146,7 +145,6 @@ label_1fcf10:
             goto label_1fcec0;
         }
     }
-    ctx->pc = 0x1FCF18u;
 label_1fcf18:
     // 0x1fcf18: 0x3e00008  jr          $ra
     ctx->pc = 0x1FCF18u;

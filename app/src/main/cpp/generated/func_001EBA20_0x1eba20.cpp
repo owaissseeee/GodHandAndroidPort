@@ -13,7 +13,7 @@
 
 // Function: func_001EBA20
 // Address: 0x1eba20 - 0x1ebb78
-void func_001EBA20_0x1eba20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001EBA20_0x1eba20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001EBA20_0x1eba20");
 #endif
@@ -60,7 +60,6 @@ void func_001EBA20_0x1eba20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x1eba50: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
     // 0x1eba54: 0x4481a000  mtc1        $at, $f20
-    ctx->pc = 0x1eba54u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[20], &bits, sizeof(bits)); }
 label_1eba58:
     // 0x1eba58: 0x9e020030  lwu         $v0, 0x30($s0)
@@ -213,7 +212,6 @@ label_1eba58:
             goto label_1ebb1c;
         }
     }
-    ctx->pc = 0x1EBAF4u;
 label_1ebaf4:
     // 0x1ebaf4: 0xafa00040  sw          $zero, 0x40($sp)
     ctx->pc = 0x1ebaf4u;
@@ -284,7 +282,6 @@ label_1ebb20:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x158288u, 0x1EBB34u, 0x1EBB3Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1EBB3Cu;
 label_1ebb3c:
     // 0x1ebb3c: 0x8e020030  lw          $v0, 0x30($s0)
     ctx->pc = 0x1ebb3cu;
@@ -295,7 +292,6 @@ label_1ebb3c:
     ctx->pc = 0x1ebb44u;
     WRITE32(ADD32(GPR_U32(ctx, 16), 48), GPR_U32(ctx, 2));
     // 0x1ebb48: 0x2631ffff  addiu       $s1, $s1, -0x1
-    ctx->pc = 0x1ebb48u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 4294967295));
 label_1ebb4c:
     // 0x1ebb4c: 0x621ffc2  bgez        $s1, . + 4 + (-0x3E << 2)

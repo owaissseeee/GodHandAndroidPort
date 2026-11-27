@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getStateBit0
 // Address: 0x1fc708 - 0x1fc728
-void cCoreSave_getStateBit0_0x1fc708(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getStateBit0_0x1fc708(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getStateBit0_0x1fc708");
 #endif
@@ -53,7 +53,6 @@ void cCoreSave_getStateBit0_0x1fc708(uint8_t* rdram, R5900Context* ctx, PS2Runti
         return;
         #endif
     }
-    ctx->pc = 0x1FC720u;
 label_1fc720:
     // 0x1fc720: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC720u;

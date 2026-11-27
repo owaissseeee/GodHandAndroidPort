@@ -13,7 +13,7 @@
 
 // Function: func_001E4610
 // Address: 0x1e4610 - 0x1e4730
-void func_001E4610_0x1e4610(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001E4610_0x1e4610(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001E4610_0x1e4610");
 #endif
@@ -233,7 +233,6 @@ label_1e46b0:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e46f4u)) {
         return;
     }
-    ctx->pc = 0x1E46F4u;
 label_1e46f4:
     // 0x1e46f4: 0x8e040488  lw          $a0, 0x488($s0)
     ctx->pc = 0x1e46f4u;
@@ -249,7 +248,6 @@ label_1e46f4:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e4700u)) {
         return;
     }
-    ctx->pc = 0x1E4700u;
 label_1e4700:
     // 0x1e4700: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x1E4700u;
@@ -266,7 +264,6 @@ label_1e4700:
             goto label_1e4720;
         }
     }
-    ctx->pc = 0x1E4708u;
 label_1e4708:
     // 0x1e4708: 0xc0b6cac  jal         func_2DB2B0
     SET_GPR_U32(ctx, 31, 0x1E4710u);
@@ -279,7 +276,6 @@ label_1e4708:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e4710u)) {
         return;
     }
-    ctx->pc = 0x1E4710u;
 label_1e4710:
     // 0x1e4710: 0x8e040488  lw          $a0, 0x488($s0)
     ctx->pc = 0x1e4710u;
@@ -295,7 +291,6 @@ label_1e4710:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e471cu)) {
         return;
     }
-    ctx->pc = 0x1E471Cu;
 label_1e471c:
     // 0x1e471c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1e471cu;

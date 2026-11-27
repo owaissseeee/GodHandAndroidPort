@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_addKeyNum
 // Address: 0x1faa18 - 0x1faa68
-void cCoreSave_addKeyNum_0x1faa18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_addKeyNum_0x1faa18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_addKeyNum_0x1faa18");
 #endif
@@ -89,7 +89,6 @@ label_1faa50:
             goto label_1faa5c;
         }
     }
-    ctx->pc = 0x1FAA5Cu;
 label_1faa5c:
     // 0x1faa5c: 0x3e00008  jr          $ra
     ctx->pc = 0x1FAA5Cu;

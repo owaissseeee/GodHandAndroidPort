@@ -13,7 +13,7 @@
 
 // Function: InitZeroAndSetup_12E800
 // Address: 0x12e800 - 0x12e840
-void InitZeroAndSetup_12E800_0x12e800(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitZeroAndSetup_12E800_0x12e800(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitZeroAndSetup_12E800_0x12e800");
 #endif
@@ -68,7 +68,6 @@ void InitZeroAndSetup_12E800_0x12e800(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &ClearLinkedNodeList_12ECF0_0x12ecf0, 0x12ecf0u, 0x12e834u)) {
         return;
     }
-    ctx->pc = 0x12E834u;
 label_12e834:
     // 0x12e834: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x12e834u;

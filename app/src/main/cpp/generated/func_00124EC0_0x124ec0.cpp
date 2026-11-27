@@ -13,7 +13,7 @@
 
 // Function: func_00124EC0
 // Address: 0x124ec0 - 0x124f60
-void func_00124EC0_0x124ec0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00124EC0_0x124ec0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00124EC0_0x124ec0");
 #endif
@@ -57,7 +57,6 @@ void func_00124EC0_0x124ec0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cCamManager_setPartsCamera_0x138e38, 0x138e38u, 0x124ee8u)) {
         return;
     }
-    ctx->pc = 0x124EE8u;
 label_124ee8:
     // 0x124ee8: 0x922302b4  lbu         $v1, 0x2B4($s1)
     ctx->pc = 0x124ee8u;
@@ -101,10 +100,8 @@ label_124ee8:
             goto label_124f10;
         }
     }
-    ctx->pc = 0x124F0Cu;
 label_124f0c:
     // 0x124f0c: 0x302d  daddu       $a2, $zero, $zero
-    ctx->pc = 0x124f0cu;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_124f10:
     // 0x124f10: 0x922302b4  lbu         $v1, 0x2B4($s1)
@@ -147,10 +144,8 @@ label_124f10:
             goto label_124f34;
         }
     }
-    ctx->pc = 0x124F30u;
 label_124f30:
     // 0x124f30: 0x382d  daddu       $a3, $zero, $zero
-    ctx->pc = 0x124f30u;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_124f34:
     // 0x124f34: 0xc04e6da  jal         func_139B68
@@ -164,7 +159,6 @@ label_124f34:
     if (!runtime->callDirectStatic(rdram, ctx, &cPartsCamera_SetParts_0x139b68, 0x139b68u, 0x124f3cu)) {
         return;
     }
-    ctx->pc = 0x124F3Cu;
 label_124f3c:
     // 0x124f3c: 0x8e2215f4  lw          $v0, 0x15F4($s1)
     ctx->pc = 0x124f3cu;

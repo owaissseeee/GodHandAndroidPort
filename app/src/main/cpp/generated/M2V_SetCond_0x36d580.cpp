@@ -13,7 +13,7 @@
 
 // Function: M2V_SetCond
 // Address: 0x36d580 - 0x36d630
-void M2V_SetCond_0x36d580(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void M2V_SetCond_0x36d580(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("M2V_SetCond_0x36d580");
 #endif
@@ -80,7 +80,6 @@ void M2V_SetCond_0x36d580(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
         }
     }
     // 0x36d5b4: 0x2451cd70  addiu       $s1, $v0, -0x3290
-    ctx->pc = 0x36d5b4u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 2), 4294954352));
 label_36d5b8:
     // 0x36d5b8: 0x16000007  bnez        $s0, . + 4 + (0x7 << 2)
@@ -103,7 +102,6 @@ label_36d5b8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0036D630_0x36d630, 0x36d630u, 0x36d5c8u)) {
         return;
     }
-    ctx->pc = 0x36D5C8u;
 label_36d5c8:
     // 0x36d5c8: 0x3c020077  lui         $v0, 0x77
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)119 << 16));
@@ -123,7 +121,6 @@ label_36d5c8:
         }
     }
     // 0x36d5d4: 0x0  nop
-    ctx->pc = 0x36d5d4u;
     // NOP
 label_36d5d8:
     // 0x36d5d8: 0xc0db5a2  jal         func_36D688
@@ -137,7 +134,6 @@ label_36d5d8:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Set_D_0076A5D8_Check_Field_0_EQ_2_0x36d688, 0x36d688u, 0x36d5e0u)) {
         return;
     }
-    ctx->pc = 0x36D5E0u;
 label_36d5e0:
     // 0x36d5e0: 0x3c05ff03  lui         $a1, 0xFF03
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)65283 << 16));
@@ -180,10 +176,8 @@ label_36d5e0:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x36D8E8u, 0x36D600u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x36D608u;
 label_36d608:
     // 0x36d608: 0x26040018  addiu       $a0, $s0, 0x18
-    ctx->pc = 0x36d608u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 24));
 label_36d60c:
     // 0x36d60c: 0x121080  sll         $v0, $s2, 2

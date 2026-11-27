@@ -13,7 +13,7 @@
 
 // Function: func_00163F00
 // Address: 0x163f00 - 0x1640e8
-void func_00163F00_0x163f00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00163F00_0x163f00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00163F00_0x163f00");
 #endif
@@ -147,7 +147,6 @@ void func_00163F00_0x163f00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_164068;
         }
     }
-    ctx->pc = 0x163F88u;
 label_163f88:
     // 0x163f88: 0x1062001e  beq         $v1, $v0, . + 4 + (0x1E << 2)
     ctx->pc = 0x163F88u;
@@ -194,7 +193,6 @@ label_163f88:
             goto label_164068;
         }
     }
-    ctx->pc = 0x163FA0u;
 label_163fa0:
     // 0x163fa0: 0x3c030042  lui         $v1, 0x42
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)66 << 16));
@@ -231,7 +229,6 @@ label_163fa0:
             goto label_163ff0;
         }
     }
-    ctx->pc = 0x163FC8u;
 label_163fc8:
     // 0x163fc8: 0x3c040074  lui         $a0, 0x74
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)116 << 16));
@@ -282,7 +279,6 @@ label_163ff0:
             goto label_164064;
         }
     }
-    ctx->pc = 0x164004u;
 label_164004:
     // 0x164004: 0x3c040074  lui         $a0, 0x74
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)116 << 16));
@@ -321,7 +317,6 @@ label_164004:
             goto label_164054;
         }
     }
-    ctx->pc = 0x164030u;
 label_164030:
     // 0x164030: 0x3c020042  lui         $v0, 0x42
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)66 << 16));
@@ -408,7 +403,6 @@ label_164068:
             goto label_1640b8;
         }
     }
-    ctx->pc = 0x16408Cu;
 label_16408c:
     // 0x16408c: 0x1462000b  bne         $v1, $v0, . + 4 + (0xB << 2)
     ctx->pc = 0x16408Cu;
@@ -449,7 +443,6 @@ label_16408c:
     { float f = ctx->f[1]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 2), 60), bits); }
 label_1640b8:
     // 0x1640b8: 0x3c030074  lui         $v1, 0x74
-    ctx->pc = 0x1640b8u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
 label_1640bc:
     // 0x1640bc: 0x8c627a24  lw          $v0, 0x7A24($v1)

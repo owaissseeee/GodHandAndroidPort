@@ -13,7 +13,7 @@
 
 // Function: cModel_getMeshPtr
 // Address: 0x14b6f8 - 0x14b730
-void cModel_getMeshPtr_0x14b6f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cModel_getMeshPtr_0x14b6f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cModel_getMeshPtr_0x14b6f8");
 #endif
@@ -49,7 +49,6 @@ void cModel_getMeshPtr_0x14b6f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     ctx->pc = 0x14b708u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 1028)));
     // 0x14b70c: 0x0  nop
-    ctx->pc = 0x14b70cu;
     // NOP
 label_14b710:
     // 0x14b710: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
@@ -86,7 +85,6 @@ label_14b710:
         return;
         #endif
     }
-    ctx->pc = 0x14B720u;
 label_14b720:
     // 0x14b720: 0x5465fffb  bnel        $v1, $a1, . + 4 + (-0x5 << 2)
     ctx->pc = 0x14B720u;
@@ -106,7 +104,6 @@ label_14b720:
             goto label_14b710;
         }
     }
-    ctx->pc = 0x14B728u;
 label_14b728:
     // 0x14b728: 0x3e00008  jr          $ra
     ctx->pc = 0x14B728u;

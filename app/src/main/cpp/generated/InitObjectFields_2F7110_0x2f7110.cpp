@@ -13,7 +13,7 @@
 
 // Function: InitObjectFields_2F7110
 // Address: 0x2f7110 - 0x2f7178
-void InitObjectFields_2F7110_0x2f7110(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitObjectFields_2F7110_0x2f7110(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitObjectFields_2F7110_0x2f7110");
 #endif
@@ -45,7 +45,6 @@ void InitObjectFields_2F7110_0x2f7110(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &InitObject_2FBCC8_0x2fbcc8, 0x2fbcc8u, 0x2f7124u)) {
         return;
     }
-    ctx->pc = 0x2F7124u;
 label_2f7124:
     // 0x2f7124: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));

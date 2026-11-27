@@ -13,7 +13,7 @@
 
 // Function: CreateEventObj
 // Address: 0x312a80 - 0x312ab0
-void CreateEventObj_0x312a80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CreateEventObj_0x312a80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CreateEventObj_0x312a80");
 #endif
@@ -46,7 +46,6 @@ void CreateEventObj_0x312a80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_00312AB0_0x312ab0, 0x312ab0u, 0x312a94u)) {
         return;
     }
-    ctx->pc = 0x312A94u;
 label_312a94:
     // 0x312a94: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -61,7 +60,6 @@ label_312a94:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0030FB20_0x30fb20, 0x30fb20u, 0x312aa0u)) {
         return;
     }
-    ctx->pc = 0x312AA0u;
 label_312aa0:
     // 0x312aa0: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x312aa0u;

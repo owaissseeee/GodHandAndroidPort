@@ -14,7 +14,7 @@
 
 // Function: cOmTimed_tick
 // Address: 0x19b4d0 - 0x19b580
-void cOmTimed_tick_0x19b4d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmTimed_tick_0x19b4d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmTimed_tick_0x19b4d0");
 #endif
@@ -69,11 +69,9 @@ void cOmTimed_tick_0x19b4d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
 
-    ctx->pc = 0x19b4d0u;
 
 label_19b4d0:
     // 0x19b4d0: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x19b4d0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
 label_19b4d4:
     // 0x19b4d4: 0x7fb00020  sq          $s0, 0x20($sp)
@@ -85,7 +83,6 @@ label_19b4d8:
     WRITE64(ADD32(GPR_U32(ctx, 29), 16), GPR_U64(ctx, 31));
 label_19b4dc:
     // 0x19b4dc: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x19b4dcu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_19b4e0:
     // 0x19b4e0: 0x920302f5  lbu         $v1, 0x2F5($s0)
@@ -174,7 +171,6 @@ label_19b4f8:
             goto label_19b574;
         }
     }
-    ctx->pc = 0x19B4FCu;
 label_19b4fc:
     // 0x19b4fc: 0xfba00000  sqc2        $vf0, 0x0($sp)
     ctx->pc = 0x19b4fcu;
@@ -247,7 +243,6 @@ label_19b518:
             goto label_19b538;
         }
     }
-    ctx->pc = 0x19B51Cu;
 label_19b51c:
     // 0x19b51c: 0xc4400000  lwc1        $f0, 0x0($v0)
     ctx->pc = 0x19b51cu;
@@ -274,11 +269,9 @@ label_19b530:
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 29), 8), bits); }
 label_19b534:
     // 0x19b534: 0x2402000f  addiu       $v0, $zero, 0xF
-    ctx->pc = 0x19b534u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 15));
 label_19b538:
     // 0x19b538: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x19b538u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_19b53c:
     // 0x19b53c: 0xa6020a90  sh          $v0, 0xA90($s0)
@@ -341,7 +334,6 @@ label_19b55c:
             goto label_19b570;
         }
     }
-    ctx->pc = 0x19B560u;
 label_19b560:
     // 0x19b560: 0xa20002f7  sb          $zero, 0x2F7($s0)
     ctx->pc = 0x19b560u;

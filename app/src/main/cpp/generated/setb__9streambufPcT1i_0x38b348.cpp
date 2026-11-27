@@ -13,7 +13,7 @@
 
 // Function: setb__9streambufPcT1i
 // Address: 0x38b348 - 0x38b368
-void setb__9streambufPcT1i_0x38b348(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void setb__9streambufPcT1i_0x38b348(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("setb__9streambufPcT1i_0x38b348");
 #endif
@@ -37,7 +37,6 @@ void setb__9streambufPcT1i_0x38b348(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_0038C768_0x38c768, 0x38c768u, 0x38b358u)) {
         return;
     }
-    ctx->pc = 0x38B358u;
 label_38b358:
     // 0x38b358: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38b358u;

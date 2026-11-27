@@ -13,7 +13,7 @@
 
 // Function: cMessage_deleteAll
 // Address: 0x2aec88 - 0x2aecd0
-void cMessage_deleteAll_0x2aec88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessage_deleteAll_0x2aec88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessage_deleteAll_0x2aec88");
 #endif
@@ -56,7 +56,6 @@ void cMessage_deleteAll_0x2aec88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         }
     }
     // 0x2aeca4: 0x40282d  daddu       $a1, $v0, $zero
-    ctx->pc = 0x2aeca4u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_2aeca8:
     // 0x2aeca8: 0xc0abbc4  jal         func_2AEF10
@@ -70,7 +69,6 @@ label_2aeca8:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessage_releaseWin_0x2aef10, 0x2aef10u, 0x2aecb0u)) {
         return;
     }
-    ctx->pc = 0x2AECB0u;
 label_2aecb0:
     // 0x2aecb0: 0x0  nop
     // NOP

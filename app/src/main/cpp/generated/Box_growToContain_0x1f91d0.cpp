@@ -13,7 +13,7 @@
 
 // Function: Box_growToContain
 // Address: 0x1f91d0 - 0x1f92c0
-void Box_growToContain_0x1f91d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Box_growToContain_0x1f91d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Box_growToContain_0x1f91d0");
 #endif
@@ -71,7 +71,6 @@ void Box_growToContain_0x1f91d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_1f9208;
         }
     }
-    ctx->pc = 0x1F9208u;
 label_1f9208:
     // 0x1f9208: 0x46011800  add.s       $f0, $f3, $f1
     ctx->f[0] = FPU_ADD_S(ctx->f[3], ctx->f[1]);
@@ -96,7 +95,6 @@ label_1f9208:
             goto label_1f9220;
         }
     }
-    ctx->pc = 0x1F9220u;
 label_1f9220:
     // 0x1f9220: 0xc6030004  lwc1        $f3, 0x4($s0)
     ctx->pc = 0x1f9220u;
@@ -133,7 +131,6 @@ label_1f9220:
             goto label_1f9248;
         }
     }
-    ctx->pc = 0x1F9248u;
 label_1f9248:
     // 0x1f9248: 0x46011800  add.s       $f0, $f3, $f1
     ctx->f[0] = FPU_ADD_S(ctx->f[3], ctx->f[1]);
@@ -158,7 +155,6 @@ label_1f9248:
             goto label_1f9260;
         }
     }
-    ctx->pc = 0x1F9260u;
 label_1f9260:
     // 0x1f9260: 0xc4a30014  lwc1        $f3, 0x14($a1)
     ctx->pc = 0x1f9260u;
@@ -195,7 +191,6 @@ label_1f9260:
             goto label_1f9288;
         }
     }
-    ctx->pc = 0x1F9288u;
 label_1f9288:
     // 0x1f9288: 0x46011000  add.s       $f0, $f2, $f1
     ctx->f[0] = FPU_ADD_S(ctx->f[2], ctx->f[1]);
@@ -220,7 +215,6 @@ label_1f9288:
             goto label_1f92a0;
         }
     }
-    ctx->pc = 0x1F92A0u;
 label_1f92a0:
     // 0x1f92a0: 0xc07e2a2  jal         func_1F8A88
     SET_GPR_U32(ctx, 31, 0x1F92A8u);
@@ -233,7 +227,6 @@ label_1f92a0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F8A88_0x1f8a88, 0x1f8a88u, 0x1f92a8u)) {
         return;
     }
-    ctx->pc = 0x1F92A8u;
 label_1f92a8:
     // 0x1f92a8: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

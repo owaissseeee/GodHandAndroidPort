@@ -13,7 +13,7 @@
 
 // Function: mwPlySetMallocFn
 // Address: 0x344520 - 0x344568
-void mwPlySetMallocFn_0x344520(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void mwPlySetMallocFn_0x344520(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("mwPlySetMallocFn_0x344520");
 #endif
@@ -55,7 +55,6 @@ void mwPlySetMallocFn_0x344520(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &GetD003EC7E0_3452B0_0x3452b0, 0x3452b0u, 0x344544u)) {
         return;
     }
-    ctx->pc = 0x344544u;
 label_344544:
     // 0x344544: 0xac500030  sw          $s0, 0x30($v0)
     ctx->pc = 0x344544u;

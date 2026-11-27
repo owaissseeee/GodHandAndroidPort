@@ -13,7 +13,7 @@
 
 // Function: cCamera_reset
 // Address: 0x138240 - 0x138358
-void cCamera_reset_0x138240(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCamera_reset_0x138240(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCamera_reset_0x138240");
 #endif
@@ -151,7 +151,6 @@ label_1382c8:
     if (!runtime->callDirectStatic(rdram, ctx, &cCamera__calcRotation_0x138358, 0x138358u, 0x1382d4u)) {
         return;
     }
-    ctx->pc = 0x1382D4u;
 label_1382d4:
     // 0x1382d4: 0x26050220  addiu       $a1, $s0, 0x220
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 16), 544));
@@ -199,7 +198,6 @@ label_1382f4:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitRotVec_0x147728, 0x147728u, 0x138300u)) {
         return;
     }
-    ctx->pc = 0x138300u;
 label_138300:
     // 0x138300: 0x26020240  addiu       $v0, $s0, 0x240
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 576));
@@ -263,7 +261,6 @@ label_13832c:
     if (!runtime->callDirectStatic(rdram, ctx, &cCamera_resetVib_0x138528, 0x138528u, 0x138344u)) {
         return;
     }
-    ctx->pc = 0x138344u;
 label_138344:
     // 0x138344: 0x7bb00060  lq          $s0, 0x60($sp)
     ctx->pc = 0x138344u;

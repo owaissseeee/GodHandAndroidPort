@@ -13,7 +13,7 @@
 
 // Function: exit
 // Address: 0x31db70 - 0x31dba0
-void exit_0x31db70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void exit_0x31db70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("exit_0x31db70");
 #endif
@@ -46,7 +46,6 @@ void exit_0x31db70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___do_global_dtors_0x31da48, 0x31da48u, 0x31db84u)) {
         return;
     }
-    ctx->pc = 0x31DB84u;
 label_31db84:
     // 0x31db84: 0xc0e98ac  jal         func_3A62B0
     ctx->pc = 0x31DB84u;
@@ -54,7 +53,6 @@ label_31db84:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A62B0_0x3a62b0, 0x3a62b0u, 0x31db8cu)) {
         return;
     }
-    ctx->pc = 0x31DB8Cu;
 label_31db8c:
     // 0x31db8c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

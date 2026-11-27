@@ -13,7 +13,7 @@
 
 // Function: InitNodePool_1FE2B8
 // Address: 0x1fe2b8 - 0x1fe310
-void InitNodePool_1FE2B8_0x1fe2b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitNodePool_1FE2B8_0x1fe2b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitNodePool_1FE2B8_0x1fe2b8");
 #endif
@@ -46,7 +46,6 @@ void InitNodePool_1FE2B8_0x1fe2b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     ctx->pc = 0x1fe2d0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1fe2d4: 0x902d  daddu       $s2, $zero, $zero
-    ctx->pc = 0x1fe2d4u;
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1fe2d8:
     // 0x1fe2d8: 0x200282d  daddu       $a1, $s0, $zero
@@ -62,7 +61,6 @@ label_1fe2d8:
     if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x1fe2e4u)) {
         return;
     }
-    ctx->pc = 0x1FE2E4u;
 label_1fe2e4:
     // 0x1fe2e4: 0x26520001  addiu       $s2, $s2, 0x1
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), 1));

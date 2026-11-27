@@ -13,7 +13,7 @@
 
 // Function: cOm71_SetMotionTurn
 // Address: 0x1b1fe0 - 0x1b2018
-void cOm71_SetMotionTurn_0x1b1fe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm71_SetMotionTurn_0x1b1fe0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm71_SetMotionTurn_0x1b1fe0");
 #endif
@@ -58,7 +58,6 @@ void cOm71_SetMotionTurn_0x1b1fe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x1b200cu)) {
         return;
     }
-    ctx->pc = 0x1B200Cu;
 label_1b200c:
     // 0x1b200c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1b200cu;

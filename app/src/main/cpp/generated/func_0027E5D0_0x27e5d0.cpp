@@ -13,7 +13,7 @@
 
 // Function: func_0027E5D0
 // Address: 0x27e5d0 - 0x27e630
-void func_0027E5D0_0x27e5d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0027E5D0_0x27e5d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0027E5D0_0x27e5d0");
 #endif
@@ -64,7 +64,6 @@ void func_0027E5D0_0x27e5d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cGameObj_isClip_0x2a7448, 0x2a7448u, 0x27e5fcu)) {
         return;
     }
-    ctx->pc = 0x27E5FCu;
 label_27e5fc:
     // 0x27e5fc: 0x54400007  bnel        $v0, $zero, . + 4 + (0x7 << 2)
     ctx->pc = 0x27E5FCu;
@@ -103,10 +102,8 @@ label_27e5fc:
             goto label_27e61c;
         }
     }
-    ctx->pc = 0x27E618u;
 label_27e618:
     // 0x27e618: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x27e618u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_27e61c:
     // 0x27e61c: 0x7bb00010  lq          $s0, 0x10($sp)

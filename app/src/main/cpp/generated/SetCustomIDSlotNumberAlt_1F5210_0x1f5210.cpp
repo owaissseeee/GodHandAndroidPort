@@ -13,7 +13,7 @@
 
 // Function: SetCustomIDSlotNumberAlt_1F5210
 // Address: 0x1f5210 - 0x1f5278
-void SetCustomIDSlotNumberAlt_1F5210_0x1f5210(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetCustomIDSlotNumberAlt_1F5210_0x1f5210(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetCustomIDSlotNumberAlt_1F5210_0x1f5210");
 #endif
@@ -81,7 +81,6 @@ void SetCustomIDSlotNumberAlt_1F5210_0x1f5210(uint8_t* rdram, R5900Context* ctx,
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetNumber_0x2d6548, 0x2d6548u, 0x1f5250u)) {
         return;
     }
-    ctx->pc = 0x1F5250u;
 label_1f5250:
     // 0x1f5250: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -98,7 +97,6 @@ label_1f5250:
     if (!runtime->callDirectStatic(rdram, ctx, &SetCustomIDDispOneOrAll_1F4778_0x1f4778, 0x1f4778u, 0x1f5260u)) {
         return;
     }
-    ctx->pc = 0x1F5260u;
 label_1f5260:
     // 0x1f5260: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x1f5260u;

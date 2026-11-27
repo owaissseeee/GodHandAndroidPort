@@ -6,6 +6,7 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,7 +14,7 @@
 
 // Function: sceVu0RotMatrix
 // Address: 0x30a870 - 0x30a8c8
-void sceVu0RotMatrix_0x30a870(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVu0RotMatrix_0x30a870(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVu0RotMatrix_0x30a870");
 #endif
@@ -26,6 +27,39 @@ void sceVu0RotMatrix_0x30a870(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             default: break;
         }
     }
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    if (__builtin_expect(ctx->pc == 0x30a870u, 1)) {
+        uint8_t* const d = ps2TryFastSpan(rdram, GPR_U32(ctx, 4) & ~0xFu, 64u);
+        const uint8_t* const s = ps2TryFastSpan(rdram, GPR_U32(ctx, 5) & ~0xFu, 64u);
+        const uint8_t* const r = ps2TryFastSpan(rdram, GPR_U32(ctx, 6), 12u);
+        if (__builtin_expect(d != nullptr && s != nullptr && r != nullptr, 1)) {
+            float rx = 0.0f, ry = 0.0f, rz = 0.0f;
+            std::memcpy(&rx, r + 0, 4);
+            std::memcpy(&ry, r + 4, 4);
+            std::memcpy(&rz, r + 8, 4);
+            if (__builtin_expect(std::isfinite(rx) && std::isfinite(ry) && std::isfinite(rz) &&
+                                 std::fabs(rx) <= 3.1415927f && std::fabs(ry) <= 3.1415927f && std::fabs(rz) <= 3.1415927f, 1)) {
+                const float sx = std::sinf(rx), cx = std::cosf(rx);
+                const float sy = std::sinf(ry), cy = std::cosf(ry);
+                const float sz = std::sinf(rz), cz = std::cosf(rz);
+                auto xform = [&](const float32x4_t v) {
+                    return ps2RotVecX(ps2RotVecY(ps2RotVecZ(v, sz, cz), sy, cy), sx, cx);
+                };
+                const float32x4_t c0 = xform(ps2LoadVec4(s + 0));
+                const float32x4_t c1 = xform(ps2LoadVec4(s + 16));
+                const float32x4_t c2 = xform(ps2LoadVec4(s + 32));
+                const float32x4_t c3 = xform(ps2LoadVec4(s + 48));
+                ps2StoreVec4(d + 0, c0);
+                ps2StoreVec4(d + 16, c1);
+                ps2StoreVec4(d + 32, c2);
+                ps2StoreVec4(d + 48, c3);
+                ps2FastReturn(rdram, ctx, runtime, 0x30A8BCu);
+                return;
+            }
+        }
+    }
+#endif
 
 
     // 0x30a870: 0x27bdffd0  addiu       $sp, $sp, -0x30
@@ -54,7 +88,6 @@ void sceVu0RotMatrix_0x30a870(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0RotMatrixZ_0x30a650, 0x30a650u, 0x30a890u)) {
         return;
     }
-    ctx->pc = 0x30A890u;
 label_30a890:
     // 0x30a890: 0xc62c0004  lwc1        $f12, 0x4($s1)
     ctx->pc = 0x30a890u;
@@ -72,7 +105,6 @@ label_30a890:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0RotMatrixY_0x30a7b8, 0x30a7b8u, 0x30a8a0u)) {
         return;
     }
-    ctx->pc = 0x30A8A0u;
 label_30a8a0:
     // 0x30a8a0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -90,7 +122,6 @@ label_30a8a0:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0RotMatrixX_0x30a700, 0x30a700u, 0x30a8b0u)) {
         return;
     }
-    ctx->pc = 0x30A8B0u;
 label_30a8b0:
     // 0x30a8b0: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x30a8b0u;

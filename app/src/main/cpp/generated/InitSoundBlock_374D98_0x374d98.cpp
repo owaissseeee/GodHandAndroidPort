@@ -13,7 +13,7 @@
 
 // Function: InitSoundBlock_374D98
 // Address: 0x374d98 - 0x374df8
-void InitSoundBlock_374D98_0x374d98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitSoundBlock_374D98_0x374d98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitSoundBlock_374D98_0x374d98");
 #endif
@@ -65,7 +65,6 @@ void InitSoundBlock_374D98_0x374d98(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x374dd0u)) {
         return;
     }
-    ctx->pc = 0x374DD0u;
 label_374dd0:
     // 0x374dd0: 0x34038000  ori         $v1, $zero, 0x8000
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)32768);

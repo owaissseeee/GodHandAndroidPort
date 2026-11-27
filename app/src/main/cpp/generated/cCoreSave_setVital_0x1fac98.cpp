@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_setVital
 // Address: 0x1fac98 - 0x1facb0
-void cCoreSave_setVital_0x1fac98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setVital_0x1fac98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setVital_0x1fac98");
 #endif
@@ -37,7 +37,6 @@ void cCoreSave_setVital_0x1fac98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_1faca4;
         }
     }
-    ctx->pc = 0x1FACA4u;
 label_1faca4:
     // 0x1faca4: 0x3e00008  jr          $ra
     ctx->pc = 0x1FACA4u;

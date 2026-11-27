@@ -13,7 +13,7 @@
 
 // Function: cIDManager_setIDData
 // Address: 0x2accf8 - 0x2acd78
-void cIDManager_setIDData_0x2accf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDManager_setIDData_0x2accf8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDManager_setIDData_0x2accf8");
 #endif
@@ -69,7 +69,6 @@ void cIDManager_setIDData_0x2accf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &SearchData_0x31ccf0, 0x31ccf0u, 0x2acd34u)) {
         return;
     }
-    ctx->pc = 0x2ACD34u;
 label_2acd34:
     // 0x2acd34: 0x1080c0  sll         $s0, $s0, 3
     SET_GPR_S32(ctx, 16, (int32_t)SLL32(GPR_U32(ctx, 16), 3));
@@ -93,7 +92,6 @@ label_2acd34:
     if (!runtime->callDirectStatic(rdram, ctx, &SearchData_0x31ccf0, 0x31ccf0u, 0x2acd50u)) {
         return;
     }
-    ctx->pc = 0x2ACD50u;
 label_2acd50:
     // 0x2acd50: 0x2509021  addu        $s2, $s2, $s0
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), GPR_U32(ctx, 16)));

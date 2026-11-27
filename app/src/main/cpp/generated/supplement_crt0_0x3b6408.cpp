@@ -13,7 +13,7 @@
 
 // Function: supplement_crt0
 // Address: 0x3b6408 - 0x3b6470
-void supplement_crt0_0x3b6408(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void supplement_crt0_0x3b6408(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("supplement_crt0_0x3b6408");
 #endif
@@ -70,7 +70,6 @@ void supplement_crt0_0x3b6408(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &CreateSema_0x3afca0, 0x3afca0u, 0x3b6444u)) {
         return;
     }
-    ctx->pc = 0x3B6444u;
 label_3b6444:
     // 0x3b6444: 0x3c030040  lui         $v1, 0x40
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)64 << 16));
@@ -87,7 +86,6 @@ label_3b6444:
     if (!runtime->callDirectStatic(rdram, ctx, &CreateSema_0x3afca0, 0x3afca0u, 0x3b6454u)) {
         return;
     }
-    ctx->pc = 0x3B6454u;
 label_3b6454:
     // 0x3b6454: 0x3c030040  lui         $v1, 0x40
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)64 << 16));

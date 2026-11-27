@@ -13,7 +13,7 @@
 
 // Function: sceDmaSend
 // Address: 0x3973e8 - 0x397450
-void sceDmaSend_0x3973e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceDmaSend_0x3973e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceDmaSend_0x3973e8");
 #endif
@@ -51,7 +51,6 @@ void sceDmaSend_0x3973e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     if (!runtime->callDirectStatic(rdram, ctx, &CheckAddress_0x3970a0, 0x3970a0u, 0x397404u)) {
         return;
     }
-    ctx->pc = 0x397404u;
 label_397404:
     // 0x397404: 0x40882d  daddu       $s1, $v0, $zero
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -66,7 +65,6 @@ label_397404:
     if (!runtime->callDirectStatic(rdram, ctx, &WaitDma_0x397028, 0x397028u, 0x397410u)) {
         return;
     }
-    ctx->pc = 0x397410u;
 label_397410:
     // 0x397410: 0x3c02ffff  lui         $v0, 0xFFFF
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)65535 << 16));
@@ -90,7 +88,6 @@ label_397410:
             goto label_397424;
         }
     }
-    ctx->pc = 0x397424u;
 label_397424:
     // 0x397424: 0x8e020000  lw          $v0, 0x0($s0)
     ctx->pc = 0x397424u;

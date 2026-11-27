@@ -13,7 +13,7 @@
 
 // Function: cCamera_calcViewMatrix
 // Address: 0x138648 - 0x138740
-void cCamera_calcViewMatrix_0x138648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCamera_calcViewMatrix_0x138648(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCamera_calcViewMatrix_0x138648");
 #endif
@@ -88,7 +88,6 @@ void cCamera_calcViewMatrix_0x138648(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x13869cu)) {
         return;
     }
-    ctx->pc = 0x13869Cu;
 label_13869c:
     // 0x13869c: 0xfba00010  sqc2        $vf0, 0x10($sp)
     ctx->pc = 0x13869cu;
@@ -110,7 +109,6 @@ label_13869c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x1386b4u)) {
         return;
     }
-    ctx->pc = 0x1386B4u;
 label_1386b4:
     // 0x1386b4: 0x27a60030  addiu       $a2, $sp, 0x30
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 29), 48));
@@ -192,7 +190,6 @@ label_1386b4:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0CameraMatrix_0x30a8c8, 0x30a8c8u, 0x138720u)) {
         return;
     }
-    ctx->pc = 0x138720u;
 label_138720:
     // 0x138720: 0x7bb00080  lq          $s0, 0x80($sp)
     ctx->pc = 0x138720u;

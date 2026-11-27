@@ -13,7 +13,7 @@
 
 // Function: func_0034AA20
 // Address: 0x34aa20 - 0x34aac8
-void func_0034AA20_0x34aa20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0034AA20_0x34aa20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0034AA20_0x34aa20");
 #endif
@@ -63,7 +63,6 @@ void func_0034AA20_0x34aa20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034C890_0x34c890, 0x34c890u, 0x34aa48u)) {
         return;
     }
-    ctx->pc = 0x34AA48u;
 label_34aa48:
     // 0x34aa48: 0x8fa20000  lw          $v0, 0x0($sp)
     ctx->pc = 0x34aa48u;
@@ -93,7 +92,6 @@ label_34aa48:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034CAF8_0x34caf8, 0x34caf8u, 0x34aa64u)) {
         return;
     }
-    ctx->pc = 0x34AA64u;
 label_34aa64:
     // 0x34aa64: 0xde0409b8  ld          $a0, 0x9B8($s0)
     ctx->pc = 0x34aa64u;
@@ -109,7 +107,6 @@ label_34aa64:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034CCB0_0x34ccb0, 0x34ccb0u, 0x34aa70u)) {
         return;
     }
-    ctx->pc = 0x34AA70u;
 label_34aa70:
     // 0x34aa70: 0xde0409c0  ld          $a0, 0x9C0($s0)
     ctx->pc = 0x34aa70u;
@@ -128,7 +125,6 @@ label_34aa70:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034CCB0_0x34ccb0, 0x34ccb0u, 0x34aa80u)) {
         return;
     }
-    ctx->pc = 0x34AA80u;
 label_34aa80:
     // 0x34aa80: 0x8e240004  lw          $a0, 0x4($s1)
     ctx->pc = 0x34aa80u;
@@ -149,7 +145,6 @@ label_34aa80:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034CAF8_0x34caf8, 0x34caf8u, 0x34aa94u)) {
         return;
     }
-    ctx->pc = 0x34AA94u;
 label_34aa94:
     // 0x34aa94: 0xde0409d0  ld          $a0, 0x9D0($s0)
     ctx->pc = 0x34aa94u;
@@ -165,7 +160,6 @@ label_34aa94:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034CCB0_0x34ccb0, 0x34ccb0u, 0x34aaa0u)) {
         return;
     }
-    ctx->pc = 0x34AAA0u;
 label_34aaa0:
     // 0x34aaa0: 0xde0409d8  ld          $a0, 0x9D8($s0)
     ctx->pc = 0x34aaa0u;
@@ -184,7 +178,6 @@ label_34aaa0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034CCB0_0x34ccb0, 0x34ccb0u, 0x34aab0u)) {
         return;
     }
-    ctx->pc = 0x34AAB0u;
 label_34aab0:
     // 0x34aab0: 0xfe0209d8  sd          $v0, 0x9D8($s0)
     ctx->pc = 0x34aab0u;

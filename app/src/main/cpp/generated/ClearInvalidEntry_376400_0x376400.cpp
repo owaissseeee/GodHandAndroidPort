@@ -13,7 +13,7 @@
 
 // Function: ClearInvalidEntry_376400
 // Address: 0x376400 - 0x376438
-void ClearInvalidEntry_376400_0x376400(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearInvalidEntry_376400_0x376400(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearInvalidEntry_376400_0x376400");
 #endif
@@ -47,7 +47,6 @@ void ClearInvalidEntry_376400_0x376400(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &func_0037D0A8_0x37d0a8, 0x37d0a8u, 0x376418u)) {
         return;
     }
-    ctx->pc = 0x376418u;
 label_376418:
     // 0x376418: 0x54400004  bnel        $v0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x376418u;

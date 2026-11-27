@@ -13,7 +13,7 @@
 
 // Function: sceVu0NormalLightMatrix
 // Address: 0x30a978 - 0x30aa40
-void sceVu0NormalLightMatrix_0x30a978(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVu0NormalLightMatrix_0x30a978(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVu0NormalLightMatrix_0x30a978");
 #endif
@@ -72,7 +72,6 @@ void sceVu0NormalLightMatrix_0x30a978(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ScaleVector_0x30a4e8, 0x30a4e8u, 0x30a9b0u)) {
         return;
     }
-    ctx->pc = 0x30A9B0u;
 label_30a9b0:
     // 0x30a9b0: 0x3a0282d  daddu       $a1, $sp, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -87,7 +86,6 @@ label_30a9b0:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0Normalize_0x30a370, 0x30a370u, 0x30a9bcu)) {
         return;
     }
-    ctx->pc = 0x30A9BCu;
 label_30a9bc:
     // 0x30a9bc: 0x3a0202d  daddu       $a0, $sp, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -104,7 +102,6 @@ label_30a9bc:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ScaleVector_0x30a4e8, 0x30a4e8u, 0x30a9ccu)) {
         return;
     }
-    ctx->pc = 0x30A9CCu;
 label_30a9cc:
     // 0x30a9cc: 0x3a0282d  daddu       $a1, $sp, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -119,7 +116,6 @@ label_30a9cc:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0Normalize_0x30a370, 0x30a370u, 0x30a9d8u)) {
         return;
     }
-    ctx->pc = 0x30A9D8u;
 label_30a9d8:
     // 0x30a9d8: 0x4600a306  mov.s       $f12, $f20
     ctx->f[12] = FPU_MOV_S(ctx->f[20]);
@@ -136,7 +132,6 @@ label_30a9d8:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ScaleVector_0x30a4e8, 0x30a4e8u, 0x30a9e8u)) {
         return;
     }
-    ctx->pc = 0x30A9E8u;
 label_30a9e8:
     // 0x30a9e8: 0x26040020  addiu       $a0, $s0, 0x20
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 32));
@@ -151,7 +146,6 @@ label_30a9e8:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0Normalize_0x30a370, 0x30a370u, 0x30a9f4u)) {
         return;
     }
-    ctx->pc = 0x30A9F4u;
 label_30a9f4:
     // 0x30a9f4: 0x44800000  mtc1        $zero, $f0
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
@@ -183,7 +177,6 @@ label_30a9f4:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0TransposeMatrix_0x30a3b0, 0x30a3b0u, 0x30aa1cu)) {
         return;
     }
-    ctx->pc = 0x30AA1Cu;
 label_30aa1c:
     // 0x30aa1c: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x30aa1cu;

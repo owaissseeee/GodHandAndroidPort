@@ -13,7 +13,7 @@
 
 // Function: sj_hexstr_to_val
 // Address: 0x33ad08 - 0x33adc0
-void sj_hexstr_to_val_0x33ad08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sj_hexstr_to_val_0x33ad08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sj_hexstr_to_val_0x33ad08");
 #endif

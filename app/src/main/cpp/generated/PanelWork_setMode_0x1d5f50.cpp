@@ -13,7 +13,7 @@
 
 // Function: PanelWork_setMode
 // Address: 0x1d5f50 - 0x1d6030
-void PanelWork_setMode_0x1d5f50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void PanelWork_setMode_0x1d5f50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("PanelWork_setMode_0x1d5f50");
 #endif
@@ -109,7 +109,6 @@ void PanelWork_setMode_0x1d5f50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_1d600c;
         }
     }
-    ctx->pc = 0x1D5F8Cu;
 label_1d5f8c:
     // 0x1d5f8c: 0xc0b59be  jal         func_2D66F8
     SET_GPR_U32(ctx, 31, 0x1D5F94u);
@@ -122,7 +121,6 @@ label_1d5f8c:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetOffsetPosY_0x2d66f8, 0x2d66f8u, 0x1d5f94u)) {
         return;
     }
-    ctx->pc = 0x1D5F94u;
 label_1d5f94:
     // 0x1d5f94: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -139,7 +137,6 @@ label_1d5f94:
     if (!runtime->callDirectStatic(rdram, ctx, &SetFlagOnEntries7C_1D51B8_0x1d51b8, 0x1d51b8u, 0x1d5fa4u)) {
         return;
     }
-    ctx->pc = 0x1D5FA4u;
 label_1d5fa4:
     // 0x1d5fa4: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -156,7 +153,6 @@ label_1d5fa4:
     if (!runtime->callDirectStatic(rdram, ctx, &SetFlagOnEntries7C_1D51B8_0x1d51b8, 0x1d51b8u, 0x1d5fb4u)) {
         return;
     }
-    ctx->pc = 0x1D5FB4u;
 label_1d5fb4:
     // 0x1d5fb4: 0x1000001a  b           . + 4 + (0x1A << 2)
     ctx->pc = 0x1D5FB4u;
@@ -173,7 +169,6 @@ label_1d5fb4:
             goto label_1d6020;
         }
     }
-    ctx->pc = 0x1D5FBCu;
 label_1d5fbc:
     // 0x1d5fbc: 0x2604105c  addiu       $a0, $s0, 0x105C
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 4188));
@@ -188,7 +183,6 @@ label_1d5fbc:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetOffsetPosY_0x2d66f8, 0x2d66f8u, 0x1d5fc8u)) {
         return;
     }
-    ctx->pc = 0x1D5FC8u;
 label_1d5fc8:
     // 0x1d5fc8: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x1D5FC8u;
@@ -205,7 +199,6 @@ label_1d5fc8:
             goto label_1d5fe8;
         }
     }
-    ctx->pc = 0x1D5FD0u;
 label_1d5fd0:
     // 0x1d5fd0: 0x2604105c  addiu       $a0, $s0, 0x105C
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 4188));
@@ -224,10 +217,8 @@ label_1d5fd0:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMoveOffsetPosY_0x2d67f0, 0x2d67f0u, 0x1d5fe4u)) {
         return;
     }
-    ctx->pc = 0x1D5FE4u;
 label_1d5fe4:
     // 0x1d5fe4: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x1d5fe4u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_1d5fe8:
     // 0x1d5fe8: 0x24050021  addiu       $a1, $zero, 0x21
@@ -243,7 +234,6 @@ label_1d5fe8:
     if (!runtime->callDirectStatic(rdram, ctx, &SetFlagOnEntries7C_1D51B8_0x1d51b8, 0x1d51b8u, 0x1d5ff4u)) {
         return;
     }
-    ctx->pc = 0x1D5FF4u;
 label_1d5ff4:
     // 0x1d5ff4: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -260,7 +250,6 @@ label_1d5ff4:
     if (!runtime->callDirectStatic(rdram, ctx, &SetFlagOnEntries7C_1D51B8_0x1d51b8, 0x1d51b8u, 0x1d6004u)) {
         return;
     }
-    ctx->pc = 0x1D6004u;
 label_1d6004:
     // 0x1d6004: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x1D6004u;
@@ -277,7 +266,6 @@ label_1d6004:
             goto label_1d6020;
         }
     }
-    ctx->pc = 0x1D600Cu;
 label_1d600c:
     // 0x1d600c: 0x282d  daddu       $a1, $zero, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
@@ -294,7 +282,6 @@ label_1d600c:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMoveOffsetPosY_0x2d67f0, 0x2d67f0u, 0x1d601cu)) {
         return;
     }
-    ctx->pc = 0x1D601Cu;
 label_1d601c:
     // 0x1d601c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1d601cu;

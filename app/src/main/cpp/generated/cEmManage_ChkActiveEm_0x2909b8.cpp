@@ -13,7 +13,7 @@
 
 // Function: cEmManage_ChkActiveEm
 // Address: 0x2909b8 - 0x290a08
-void cEmManage_ChkActiveEm_0x2909b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_ChkActiveEm_0x2909b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_ChkActiveEm_0x2909b8");
 #endif
@@ -61,7 +61,6 @@ void cEmManage_ChkActiveEm_0x2909b8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         return;
         #endif
     }
-    ctx->pc = 0x2909C8u;
 label_2909c8:
     // 0x2909c8: 0x3e00008  jr          $ra
     ctx->pc = 0x2909C8u;
@@ -82,7 +81,6 @@ label_2909c8:
         return;
         #endif
     }
-    ctx->pc = 0x2909D0u;
 label_2909d0:
     // 0x2909d0: 0x1080000b  beqz        $a0, . + 4 + (0xB << 2)
     ctx->pc = 0x2909D0u;
@@ -103,7 +101,6 @@ label_2909d0:
     ctx->pc = 0x2909d8u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 8)));
     // 0x2909dc: 0x0  nop
-    ctx->pc = 0x2909dcu;
     // NOP
 label_2909e0:
     // 0x2909e0: 0x54450005  bnel        $v0, $a1, . + 4 + (0x5 << 2)
@@ -158,7 +155,6 @@ label_2909f8:
             goto label_2909e0;
         }
     }
-    ctx->pc = 0x290A00u;
 label_290a00:
     // 0x290a00: 0x3e00008  jr          $ra
     ctx->pc = 0x290A00u;

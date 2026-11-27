@@ -13,7 +13,7 @@
 
 // Function: cEm00_setGoto
 // Address: 0x26e988 - 0x26ea28
-void cEm00_setGoto_0x26e988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_setGoto_0x26e988(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_setGoto_0x26e988");
 #endif
@@ -133,7 +133,6 @@ label_26e9d8:
     if (!runtime->callDirectStatic(rdram, ctx, &cEm00_setAlphaMode_0x273d28, 0x273d28u, 0x26e9f0u)) {
         return;
     }
-    ctx->pc = 0x26E9F0u;
 label_26e9f0:
     // 0x26e9f0: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -168,7 +167,6 @@ label_26ea00:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001D0408_0x1d0408, 0x1d0408u, 0x26ea10u)) {
         return;
     }
-    ctx->pc = 0x26EA10u;
 label_26ea10:
     // 0x26ea10: 0xae000738  sw          $zero, 0x738($s0)
     ctx->pc = 0x26ea10u;

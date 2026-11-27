@@ -13,7 +13,7 @@
 
 // Function: ColiseumBattle_UpdateCountdown
 // Address: 0x1efd70 - 0x1efe70
-void ColiseumBattle_UpdateCountdown_0x1efd70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumBattle_UpdateCountdown_0x1efd70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumBattle_UpdateCountdown_0x1efd70");
 #endif
@@ -55,7 +55,6 @@ void ColiseumBattle_UpdateCountdown_0x1efd70(uint8_t* rdram, R5900Context* ctx, 
     if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_GetSpeedRate_0x292f50, 0x292f50u, 0x1efd94u)) {
         return;
     }
-    ctx->pc = 0x1EFD94u;
 label_1efd94:
     // 0x1efd94: 0xc6010b98  lwc1        $f1, 0xB98($s0)
     ctx->pc = 0x1efd94u;
@@ -173,7 +172,6 @@ label_1efdb4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F2B80_0x1f2b80, 0x1f2b80u, 0x1efe50u)) {
         return;
     }
-    ctx->pc = 0x1EFE50u;
 label_1efe50:
     // 0x1efe50: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1efe50u;

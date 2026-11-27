@@ -13,7 +13,7 @@
 
 // Function: func_0015E510
 // Address: 0x15e510 - 0x15e708
-void func_0015E510_0x15e510(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0015E510_0x15e510(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0015E510_0x15e510");
 #endif
@@ -88,7 +88,6 @@ void func_0015E510_0x15e510(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             return;
         }
     }
-    ctx->pc = 0x15E560u;
 label_15e560:
     // 0x15e560: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x15E560u;
@@ -105,7 +104,6 @@ label_15e560:
             goto label_15e584;
         }
     }
-    ctx->pc = 0x15E568u;
 label_15e568:
     // 0x15e568: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x15E568u;
@@ -122,7 +120,6 @@ label_15e568:
             goto label_15e584;
         }
     }
-    ctx->pc = 0x15E570u;
 label_15e570:
     // 0x15e570: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x15E570u;
@@ -139,14 +136,12 @@ label_15e570:
             goto label_15e584;
         }
     }
-    ctx->pc = 0x15E578u;
 label_15e578:
     // 0x15e578: 0xd17c2  srl         $v0, $t5, 31
     SET_GPR_S32(ctx, 2, (int32_t)SRL32(GPR_U32(ctx, 13), 31));
     // 0x15e57c: 0x1a21021  addu        $v0, $t5, $v0
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 13), GPR_U32(ctx, 2)));
     // 0x15e580: 0x22043  sra         $a0, $v0, 1
-    ctx->pc = 0x15e580u;
     SET_GPR_S32(ctx, 4, SRA32(GPR_S32(ctx, 2), 1));
 label_15e584:
     // 0x15e584: 0x3c020008  lui         $v0, 0x8
@@ -204,7 +199,6 @@ label_15e598:
             goto label_15e5b8;
         }
     }
-    ctx->pc = 0x15E5B8u;
 label_15e5b8:
     // 0x15e5b8: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x15E5B8u;
@@ -221,7 +215,6 @@ label_15e5b8:
             goto label_15e5c8;
         }
     }
-    ctx->pc = 0x15E5C0u;
 label_15e5c0:
     // 0x15e5c0: 0x50800001  beql        $a0, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x15E5C0u;
@@ -238,7 +231,6 @@ label_15e5c0:
             goto label_15e5c8;
         }
     }
-    ctx->pc = 0x15E5C8u;
 label_15e5c8:
     // 0x15e5c8: 0x2446000f  addiu       $a2, $v0, 0xF
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 2), 15));

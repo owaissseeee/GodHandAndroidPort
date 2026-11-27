@@ -13,7 +13,7 @@
 
 // Function: SetField5CAndForwardAlt_12DC88
 // Address: 0x12dc88 - 0x12dcb8
-void SetField5CAndForwardAlt_12DC88_0x12dc88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetField5CAndForwardAlt_12DC88_0x12dc88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetField5CAndForwardAlt_12DC88_0x12dc88");
 #endif
@@ -58,7 +58,6 @@ void SetField5CAndForwardAlt_12DC88_0x12dc88(uint8_t* rdram, R5900Context* ctx, 
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x12dcacu)) {
         return;
     }
-    ctx->pc = 0x12DCACu;
 label_12dcac:
     // 0x12dcac: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x12dcacu;

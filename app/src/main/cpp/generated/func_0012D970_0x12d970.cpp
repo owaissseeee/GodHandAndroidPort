@@ -13,7 +13,7 @@
 
 // Function: func_0012D970
 // Address: 0x12d970 - 0x12dc88
-void func_0012D970_0x12d970(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0012D970_0x12d970(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0012D970_0x12d970");
 #endif
@@ -114,7 +114,6 @@ void func_0012D970_0x12d970(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x12d9f0u)) {
         return;
     }
-    ctx->pc = 0x12D9F0u;
 label_12d9f0:
     // 0x12d9f0: 0x3c030042  lui         $v1, 0x42
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)66 << 16));
@@ -145,7 +144,6 @@ label_12d9f0:
     // 0x12da18: 0x24030007  addiu       $v1, $zero, 0x7
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 7));
     // 0x12da1c: 0x0  nop
-    ctx->pc = 0x12da1cu;
     // NOP
 label_12da20:
     // 0x12da20: 0xf8400000  sqc2        $vf0, 0x0($v0)
@@ -225,7 +223,6 @@ label_12da20:
     ctx->pc = 0x12da6cu;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 3), 8), bits); }
     // 0x12da70: 0x26020070  addiu       $v0, $s0, 0x70
-    ctx->pc = 0x12da70u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 112));
 label_12da74:
     // 0x12da74: 0x10510007  beq         $v0, $s1, . + 4 + (0x7 << 2)
@@ -298,7 +295,6 @@ label_12da94:
     ctx->pc = 0x12dab4u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 3), 8), bits); }
     // 0x12dab8: 0x26020090  addiu       $v0, $s0, 0x90
-    ctx->pc = 0x12dab8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 144));
 label_12dabc:
     // 0x12dabc: 0x50530008  beql        $v0, $s3, . + 4 + (0x8 << 2)
@@ -361,7 +357,6 @@ label_12dae0:
             goto label_12daf8;
         }
     }
-    ctx->pc = 0x12DAF8u;
 label_12daf8:
     // 0x12daf8: 0xe60000a0  swc1        $f0, 0xA0($s0)
     ctx->pc = 0x12daf8u;
@@ -388,7 +383,6 @@ label_12daf8:
             goto label_12db10;
         }
     }
-    ctx->pc = 0x12DB10u;
 label_12db10:
     // 0x12db10: 0xe60000a4  swc1        $f0, 0xA4($s0)
     ctx->pc = 0x12db10u;
@@ -415,7 +409,6 @@ label_12db10:
             goto label_12db28;
         }
     }
-    ctx->pc = 0x12DB28u;
 label_12db28:
     // 0x12db28: 0xe60000a8  swc1        $f0, 0xA8($s0)
     ctx->pc = 0x12db28u;

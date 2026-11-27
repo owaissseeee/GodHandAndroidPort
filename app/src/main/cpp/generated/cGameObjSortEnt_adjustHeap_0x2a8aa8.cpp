@@ -13,7 +13,7 @@
 
 // Function: cGameObjSortEnt_adjustHeap
 // Address: 0x2a8aa8 - 0x2a8b90
-void cGameObjSortEnt_adjustHeap_0x2a8aa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObjSortEnt_adjustHeap_0x2a8aa8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObjSortEnt_adjustHeap_0x2a8aa8");
 #endif
@@ -59,7 +59,6 @@ void cGameObjSortEnt_adjustHeap_0x2a8aa8(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_2a8b2c;
         }
     }
-    ctx->pc = 0x2A8AD0u;
 label_2a8ad0:
     // 0x2a8ad0: 0x510c0  sll         $v0, $a1, 3
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 5), 3));
@@ -91,7 +90,6 @@ label_2a8ad0:
         }
     }
     // 0x2a8af0: 0x182d  daddu       $v1, $zero, $zero
-    ctx->pc = 0x2a8af0u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2a8af4:
     // 0x2a8af4: 0xa32823  subu        $a1, $a1, $v1
@@ -139,7 +137,6 @@ label_2a8af4:
             goto label_2a8ad0;
         }
     }
-    ctx->pc = 0x2A8B2Cu;
 label_2a8b2c:
     // 0x2a8b2c: 0x14a60009  bne         $a1, $a2, . + 4 + (0x9 << 2)
     ctx->pc = 0x2A8B2Cu;
@@ -175,7 +172,6 @@ label_2a8b2c:
     ctx->pc = 0x2a8b4cu;
     { uint32_t addr = ADD32(GPR_U32(ctx, 3), 0); uint32_t aligned_addr = addr & ~7u; uint32_t offset = addr & 7u; uint32_t shift = offset << 3; uint64_t mask = 0xFFFFFFFFFFFFFFFFull << shift; uint64_t old_data = READ64(aligned_addr); uint64_t val = GPR_U64(ctx, 4); uint64_t new_data = (old_data & ~mask) | ((val << shift) & mask); WRITE64(aligned_addr, new_data); }
     // 0x2a8b50: 0x24a9ffff  addiu       $t1, $a1, -0x1
-    ctx->pc = 0x2a8b50u;
     SET_GPR_S32(ctx, 9, (int32_t)ADD32(GPR_U32(ctx, 5), 4294967295));
 label_2a8b54:
     // 0x2a8b54: 0x6bac0007  ldl         $t4, 0x7($sp)
@@ -215,7 +211,6 @@ label_2a8b54:
     if (!runtime->callDirectStatic(rdram, ctx, &cGameObjSortEnt_pushHeap_0x2a8a08, 0x2a8a08u, 0x2a8b84u)) {
         return;
     }
-    ctx->pc = 0x2A8B84u;
 label_2a8b84:
     // 0x2a8b84: 0xdfbf0020  ld          $ra, 0x20($sp)
     ctx->pc = 0x2a8b84u;

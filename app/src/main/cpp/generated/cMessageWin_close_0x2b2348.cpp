@@ -13,7 +13,7 @@
 
 // Function: cMessageWin_close
 // Address: 0x2b2348 - 0x2b2400
-void cMessageWin_close_0x2b2348(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessageWin_close_0x2b2348(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessageWin_close_0x2b2348");
 #endif
@@ -95,7 +95,6 @@ void cMessageWin_close_0x2b2348(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &cSndSeVoice_CheckEnd_0x2cb7e8, 0x2cb7e8u, 0x2b2384u)) {
         return;
     }
-    ctx->pc = 0x2B2384u;
 label_2b2384:
     // 0x2b2384: 0x2402ffff  addiu       $v0, $zero, -0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
@@ -118,7 +117,6 @@ label_2b2384:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AEF90_0x2aef90, 0x2aef90u, 0x2b239cu)) {
         return;
     }
-    ctx->pc = 0x2B239Cu;
 label_2b239c:
     // 0x2b239c: 0x14400006  bnez        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x2B239Cu;
@@ -148,7 +146,6 @@ label_2b239c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B4428_0x2b4428, 0x2b4428u, 0x2b23b0u)) {
         return;
     }
-    ctx->pc = 0x2B23B0u;
 label_2b23b0:
     // 0x2b23b0: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x2B23B0u;
@@ -159,7 +156,6 @@ label_2b23b0:
             goto label_2b23c0;
         }
     }
-    ctx->pc = 0x2B23B8u;
 label_2b23b8:
     // 0x2b23b8: 0xc0abbe6  jal         func_2AEF98
     SET_GPR_U32(ctx, 31, 0x2B23C0u);
@@ -172,7 +168,6 @@ label_2b23b8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AEF98_0x2aef98, 0x2aef98u, 0x2b23c0u)) {
         return;
     }
-    ctx->pc = 0x2B23C0u;
 label_2b23c0:
     // 0x2b23c0: 0xc0ad17a  jal         func_2B45E8
     SET_GPR_U32(ctx, 31, 0x2B23C8u);
@@ -185,7 +180,6 @@ label_2b23c0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B45E8_0x2b45e8, 0x2b45e8u, 0x2b23c8u)) {
         return;
     }
-    ctx->pc = 0x2B23C8u;
 label_2b23c8:
     // 0x2b23c8: 0x8e020014  lw          $v0, 0x14($s0)
     ctx->pc = 0x2b23c8u;

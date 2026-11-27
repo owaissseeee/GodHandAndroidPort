@@ -13,7 +13,7 @@
 
 // Function: ResetEE
 // Address: 0x3af890 - 0x3af8a0
-void ResetEE_0x3af890(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ResetEE_0x3af890(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ResetEE_0x3af890");
 #endif

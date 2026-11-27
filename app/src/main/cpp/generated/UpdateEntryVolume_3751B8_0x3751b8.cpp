@@ -13,7 +13,7 @@
 
 // Function: UpdateEntryVolume_3751B8
 // Address: 0x3751b8 - 0x3752a0
-void UpdateEntryVolume_3751B8_0x3751b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateEntryVolume_3751B8_0x3751b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateEntryVolume_3751B8_0x3751b8");
 #endif
@@ -111,7 +111,6 @@ void UpdateEntryVolume_3751B8_0x3751b8(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &func_003781F8_0x3781f8, 0x3781f8u, 0x375218u)) {
         return;
     }
-    ctx->pc = 0x375218u;
 label_375218:
     // 0x375218: 0x5052001a  beql        $v0, $s2, . + 4 + (0x1A << 2)
     ctx->pc = 0x375218u;
@@ -181,7 +180,6 @@ label_37523c:
     ctx->pc = 0x37524cu;
     WRITE16(ADD32(GPR_U32(ctx, 16), 16), (uint16_t)GPR_U32(ctx, 2));
     // 0x375250: 0x220202d  daddu       $a0, $s1, $zero
-    ctx->pc = 0x375250u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
 label_375254:
     // 0x375254: 0x200282d  daddu       $a1, $s0, $zero
@@ -197,7 +195,6 @@ label_375254:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00378398_0x378398, 0x378398u, 0x375260u)) {
         return;
     }
-    ctx->pc = 0x375260u;
 label_375260:
     // 0x375260: 0x14520003  bne         $v0, $s2, . + 4 + (0x3 << 2)
     ctx->pc = 0x375260u;
@@ -223,7 +220,6 @@ label_375260:
             goto label_375284;
         }
     }
-    ctx->pc = 0x375270u;
 label_375270:
     // 0x375270: 0x14400004  bnez        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x375270u;
@@ -248,7 +244,6 @@ label_375270:
     WRITE16(ADD32(GPR_U32(ctx, 16), 28), (uint16_t)GPR_U32(ctx, 2));
 label_375280:
     // 0x375280: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x375280u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_375284:
     // 0x375284: 0x7bb00040  lq          $s0, 0x40($sp)

@@ -13,7 +13,7 @@
 
 // Function: sceIpuRestartDMA
 // Address: 0x3bab50 - 0x3baca0
-void sceIpuRestartDMA_0x3bab50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceIpuRestartDMA_0x3bab50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceIpuRestartDMA_0x3bab50");
 #endif
@@ -137,14 +137,12 @@ void sceIpuRestartDMA_0x3bab50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &setD3_CHCR_0x3ba978, 0x3ba978u, 0x3babd4u)) {
         return;
     }
-    ctx->pc = 0x3BABD4u;
 label_3babd4:
     // 0x3babd4: 0x3c031000  lui         $v1, 0x1000
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)4096 << 16));
     // 0x3babd8: 0x34632010  ori         $v1, $v1, 0x2010
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) | (uint64_t)(uint16_t)8208);
     // 0x3babdc: 0x0  nop
-    ctx->pc = 0x3babdcu;
     // NOP
 label_3babe0:
     // 0x3babe0: 0x8c620000  lw          $v0, 0x0($v1)
@@ -289,7 +287,6 @@ label_3bac10:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3BA9F0u, 0x3BAC80u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x3BAC88u;
 label_3bac88:
     // 0x3bac88: 0xdfb30030  ld          $s3, 0x30($sp)
     ctx->pc = 0x3bac88u;

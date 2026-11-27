@@ -13,7 +13,7 @@
 
 // Function: InitRec_start
 // Address: 0x1ff470 - 0x1ff4d0
-void InitRec_start_0x1ff470(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitRec_start_0x1ff470(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitRec_start_0x1ff470");
 #endif
@@ -61,7 +61,6 @@ void InitRec_start_0x1ff470(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_003078E0_0x3078e0, 0x3078e0u, 0x1ff4a0u)) {
         return;
     }
-    ctx->pc = 0x1FF4A0u;
 label_1ff4a0:
     // 0x1ff4a0: 0x24030002  addiu       $v1, $zero, 0x2
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2));

@@ -13,7 +13,7 @@
 
 // Function: cCamManager_setSubScrCamera
 // Address: 0x138eb8 - 0x138f40
-void cCamManager_setSubScrCamera_0x138eb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCamManager_setSubScrCamera_0x138eb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCamManager_setSubScrCamera_0x138eb8");
 #endif
@@ -112,7 +112,6 @@ void cCamManager_setSubScrCamera_0x138eb8(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &func_00138CA8_0x138ca8, 0x138ca8u, 0x138f04u)) {
         return;
     }
-    ctx->pc = 0x138F04u;
 label_138f04:
     // 0x138f04: 0x8e031028  lw          $v1, 0x1028($s0)
     ctx->pc = 0x138f04u;
@@ -140,7 +139,6 @@ label_138f08:
     if (!runtime->callDirectStatic(rdram, ctx, &cCamera_reset_0x138240, 0x138240u, 0x138f20u)) {
         return;
     }
-    ctx->pc = 0x138F20u;
 label_138f20:
     // 0x138f20: 0xae131028  sw          $s3, 0x1028($s0)
     ctx->pc = 0x138f20u;

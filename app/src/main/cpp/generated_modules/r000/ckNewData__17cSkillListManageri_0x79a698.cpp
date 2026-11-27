@@ -14,20 +14,21 @@ namespace gh_r000
 {
 // Function: ckNewData__17cSkillListManageri
 // Address: 0x79a698 - 0x79a6d8
-void ckNewData__17cSkillListManageri_0x79a698(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ckNewData__17cSkillListManageri_0x79a698(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ckNewData__17cSkillListManageri_0x79a698");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79a6bcu: goto label_79a6bc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x79a698u, 0)) {
+        switch (ctx->pc) {
+            case 0x79a6bcu: goto label_79a6bc;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x79a698u;
+
 
     // 0x79a698: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x79a698u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x79a69c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x79a69cu;
@@ -50,17 +51,13 @@ void ckNewData__17cSkillListManageri_0x79a698(uint8_t* rdram, R5900Context* ctx,
             goto label_79a6c8;
         }
     }
-    ctx->pc = 0x79A6ACu;
     // 0x79a6ac: 0x3c040057  lui         $a0, 0x57
-    ctx->pc = 0x79a6acu;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)87 << 16));
     // 0x79a6b0: 0x80450014  lb          $a1, 0x14($v0)
     ctx->pc = 0x79a6b0u;
     SET_GPR_S32(ctx, 5, (int8_t)READ8(ADD32(GPR_U32(ctx, 2), 20)));
     // 0x79a6b4: 0xc07ebd6  jal         func_1FAF58
-    ctx->pc = 0x79A6B4u;
     SET_GPR_U32(ctx, 31, 0x79A6BCu);
-    ctx->pc = 0x79A6B8u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x79A6B4u;
     // 0x79a6b8: 0x24849b70  addiu       $a0, $a0, -0x6490 (Delay Slot)
@@ -70,10 +67,8 @@ void ckNewData__17cSkillListManageri_0x79a698(uint8_t* rdram, R5900Context* ctx,
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1FAF58u, 0x79A6B4u, 0x79A6BCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x79A6BCu;
 label_79a6bc:
     // 0x79a6bc: 0x38420001  xori        $v0, $v0, 0x1
-    ctx->pc = 0x79a6bcu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)1);
     // 0x79a6c0: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x79A6C0u;
@@ -90,10 +85,8 @@ label_79a6bc:
             goto label_79a6cc;
         }
     }
-    ctx->pc = 0x79A6C8u;
 label_79a6c8:
     // 0x79a6c8: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x79a6c8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_79a6cc:
     // 0x79a6cc: 0xdfbf0000  ld          $ra, 0x0($sp)

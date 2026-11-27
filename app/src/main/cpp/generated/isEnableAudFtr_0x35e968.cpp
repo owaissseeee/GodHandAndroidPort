@@ -13,7 +13,7 @@
 
 // Function: isEnableAudFtr
 // Address: 0x35e968 - 0x35e9a8
-void isEnableAudFtr_0x35e968(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void isEnableAudFtr_0x35e968(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("isEnableAudFtr_0x35e968");
 #endif
@@ -45,7 +45,6 @@ void isEnableAudFtr_0x35e968(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035E9E8_0x35e9e8, 0x35e9e8u, 0x35e97cu)) {
         return;
     }
-    ctx->pc = 0x35E97Cu;
 label_35e97c:
     // 0x35e97c: 0x240300c0  addiu       $v1, $zero, 0xC0
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 192));

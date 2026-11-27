@@ -13,7 +13,7 @@
 
 // Function: next_stack_level
 // Address: 0x320a50 - 0x320ae0
-void next_stack_level_0x320a50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void next_stack_level_0x320a50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("next_stack_level_0x320a50");
 #endif
@@ -51,7 +51,6 @@ void next_stack_level_0x320a50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___frame_state_for_0x322570, 0x322570u, 0x320a6cu)) {
         return;
     }
-    ctx->pc = 0x320A6Cu;
 label_320a6c:
     // 0x320a6c: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -85,7 +84,6 @@ label_320a6c:
             goto label_320ac8;
         }
     }
-    ctx->pc = 0x320A80u;
 label_320a80:
     // 0x320a80: 0x2241021  addu        $v0, $s1, $a0
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 17), GPR_U32(ctx, 4)));
@@ -118,7 +116,6 @@ label_320a80:
     if (!runtime->callDirectStatic(rdram, ctx, &get_reg_addr_0x320948, 0x320948u, 0x320a98u)) {
         return;
     }
-    ctx->pc = 0x320A98u;
 label_320a98:
     // 0x320a98: 0xdc430000  ld          $v1, 0x0($v0)
     ctx->pc = 0x320a98u;
@@ -142,7 +139,6 @@ label_320a98:
             goto label_320ab4;
         }
     }
-    ctx->pc = 0x320AACu;
 label_320aac:
     // 0x320aac: 0x8e220000  lw          $v0, 0x0($s1)
     ctx->pc = 0x320aacu;

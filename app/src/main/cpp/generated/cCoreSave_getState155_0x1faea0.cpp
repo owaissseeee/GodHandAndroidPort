@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getState155
 // Address: 0x1faea0 - 0x1faee0
-void cCoreSave_getState155_0x1faea0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getState155_0x1faea0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getState155_0x1faea0");
 #endif
@@ -58,7 +58,6 @@ void cCoreSave_getState155_0x1faea0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         return;
         #endif
     }
-    ctx->pc = 0x1FAEB8u;
 label_1faeb8:
     // 0x1faeb8: 0x3c040800  lui         $a0, 0x800
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)2048 << 16));

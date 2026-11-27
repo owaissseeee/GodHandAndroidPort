@@ -13,7 +13,7 @@
 
 // Function: SetEffectPos
 // Address: 0x306838 - 0x306900
-void SetEffectPos_0x306838(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetEffectPos_0x306838(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetEffectPos_0x306838");
 #endif
@@ -169,7 +169,6 @@ label_3068d8:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x3068f4u)) {
         return;
     }
-    ctx->pc = 0x3068F4u;
 label_3068f4:
     // 0x3068f4: 0xdfbf0080  ld          $ra, 0x80($sp)
     ctx->pc = 0x3068f4u;

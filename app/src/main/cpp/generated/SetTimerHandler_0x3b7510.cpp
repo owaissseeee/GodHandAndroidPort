@@ -13,7 +13,7 @@
 
 // Function: SetTimerHandler
 // Address: 0x3b7510 - 0x3b7590
-void SetTimerHandler_0x3b7510(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetTimerHandler_0x3b7510(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetTimerHandler_0x3b7510");
 #endif
@@ -65,7 +65,6 @@ void SetTimerHandler_0x3b7510(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x3b7540u)) {
         return;
     }
-    ctx->pc = 0x3B7540u;
 label_3b7540:
     // 0x3b7540: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -86,7 +85,6 @@ label_3b7540:
     if (!runtime->callDirectStatic(rdram, ctx, &iSetTimerHandler_0x3b7400, 0x3b7400u, 0x3b7558u)) {
         return;
     }
-    ctx->pc = 0x3B7558u;
 label_3b7558:
     // 0x3b7558: 0x12800003  beqz        $s4, . + 4 + (0x3 << 2)
     ctx->pc = 0x3B7558u;
@@ -109,7 +107,6 @@ label_3b7558:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x3b7568u)) {
         return;
     }
-    ctx->pc = 0x3B7568u;
 label_3b7568:
     // 0x3b7568: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

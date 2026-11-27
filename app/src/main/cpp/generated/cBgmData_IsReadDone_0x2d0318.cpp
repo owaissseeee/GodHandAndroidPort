@@ -13,7 +13,7 @@
 
 // Function: cBgmData_IsReadDone
 // Address: 0x2d0318 - 0x2d0350
-void cBgmData_IsReadDone_0x2d0318(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cBgmData_IsReadDone_0x2d0318(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cBgmData_IsReadDone_0x2d0318");
 #endif
@@ -60,7 +60,6 @@ void cBgmData_IsReadDone_0x2d0318(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &cDvd_Check_0x201098, 0x201098u, 0x2d0334u)) {
         return;
     }
-    ctx->pc = 0x2D0334u;
 label_2d0334:
     // 0x2d0334: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x2D0334u;
@@ -77,10 +76,8 @@ label_2d0334:
             goto label_2d0340;
         }
     }
-    ctx->pc = 0x2D033Cu;
 label_2d033c:
     // 0x2d033c: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2d033cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2d0340:
     // 0x2d0340: 0xdfbf0000  ld          $ra, 0x0($sp)

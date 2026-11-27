@@ -13,7 +13,7 @@
 
 // Function: ClearLinkedNodeList_12ECF0
 // Address: 0x12ecf0 - 0x12ed60
-void ClearLinkedNodeList_12ECF0_0x12ecf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearLinkedNodeList_12ECF0_0x12ecf0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearLinkedNodeList_12ECF0_0x12ecf0");
 #endif
@@ -52,11 +52,9 @@ void ClearLinkedNodeList_12ECF0_0x12ecf0(uint8_t* rdram, R5900Context* ctx, PS2R
         }
     }
 
-    ctx->pc = 0x12ecf0u;
 
 label_12ecf0:
     // 0x12ecf0: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x12ecf0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
 label_12ecf4:
     // 0x12ecf4: 0x7fb00020  sq          $s0, 0x20($sp)
@@ -68,7 +66,6 @@ label_12ecf8:
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 17));
 label_12ecfc:
     // 0x12ecfc: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x12ecfcu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_12ed00:
     // 0x12ed00: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -105,7 +102,6 @@ label_12ed0c:
             goto label_12ed4c;
         }
     }
-    ctx->pc = 0x12ED10u;
 label_12ed10:
     // 0x12ed10: 0x8e060190  lw          $a2, 0x190($s0)
     ctx->pc = 0x12ed10u;
@@ -137,14 +133,12 @@ label_12ed18:
             goto label_12ed34;
         }
     }
-    ctx->pc = 0x12ED1Cu;
 label_12ed1c:
     // 0x12ed1c: 0x8cc2005c  lw          $v0, 0x5C($a2)
     ctx->pc = 0x12ed1cu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 6), 92)));
 label_12ed20:
     // 0x12ed20: 0x24050003  addiu       $a1, $zero, 0x3
-    ctx->pc = 0x12ed20u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
 label_12ed24:
     // 0x12ed24: 0x84440008  lh          $a0, 0x8($v0)
@@ -182,7 +176,6 @@ label_12ed30:
             return;
         }
     }
-    ctx->pc = 0x12ED34u;
 label_12ed34:
     // 0x12ed34: 0x8e020194  lw          $v0, 0x194($s0)
     ctx->pc = 0x12ed34u;
@@ -225,7 +218,6 @@ label_12ed44:
             goto label_12ed10;
         }
     }
-    ctx->pc = 0x12ED48u;
 label_12ed48:
     // 0x12ed48: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x12ed48u;
@@ -269,7 +261,6 @@ label_12ed58:
         return;
         #endif
     }
-    ctx->pc = 0x12ED5Cu;
 label_12ed5c:
     // 0x12ed5c: 0x0  nop
     // NOP

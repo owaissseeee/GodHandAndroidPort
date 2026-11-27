@@ -13,7 +13,7 @@
 
 // Function: RoundFloat
 // Address: 0x157498 - 0x1574f0
-void RoundFloat_0x157498(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void RoundFloat_0x157498(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("RoundFloat_0x157498");
 #endif
@@ -83,7 +83,6 @@ void RoundFloat_0x157498(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
         return;
         #endif
     }
-    ctx->pc = 0x1574E4u;
 label_1574e4:
     // 0x1574e4: 0x3e00008  jr          $ra
     ctx->pc = 0x1574E4u;

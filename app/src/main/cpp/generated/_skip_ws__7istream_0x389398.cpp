@@ -13,7 +13,7 @@
 
 // Function: _skip_ws__7istream
 // Address: 0x389398 - 0x389400
-void _skip_ws__7istream_0x389398(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _skip_ws__7istream_0x389398(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_skip_ws__7istream_0x389398");
 #endif
@@ -51,7 +51,6 @@ void _skip_ws__7istream_0x389398(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &skip_ws__FP9streambuf_0x3875a8, 0x3875a8u, 0x3893b4u)) {
         return;
     }
-    ctx->pc = 0x3893B4u;
 label_3893b4:
     // 0x3893b4: 0x40282d  daddu       $a1, $v0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -97,7 +96,6 @@ label_3893b4:
             goto label_3893f0;
         }
     }
-    ctx->pc = 0x3893DCu;
 label_3893dc:
     // 0x3893dc: 0x52e00  sll         $a1, $a1, 24
     SET_GPR_S32(ctx, 5, (int32_t)SLL32(GPR_U32(ctx, 5), 24));
@@ -114,10 +112,8 @@ label_3893dc:
     if (!runtime->callDirectStatic(rdram, ctx, &sputbackc__9streambufc_0x38b460, 0x38b460u, 0x3893ecu)) {
         return;
     }
-    ctx->pc = 0x3893ECu;
 label_3893ec:
     // 0x3893ec: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x3893ecu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_3893f0:
     // 0x3893f0: 0xdfbf0010  ld          $ra, 0x10($sp)

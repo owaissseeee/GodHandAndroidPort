@@ -13,7 +13,7 @@
 
 // Function: cEma2_setDamage
 // Address: 0x288f00 - 0x289028
-void cEma2_setDamage_0x288f00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEma2_setDamage_0x288f00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEma2_setDamage_0x288f00");
 #endif
@@ -49,7 +49,6 @@ void cEma2_setDamage_0x288f00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x288f18u)) {
         return;
     }
-    ctx->pc = 0x288F18u;
 label_288f18:
     // 0x288f18: 0x40882d  daddu       $s1, $v0, $zero
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -96,7 +95,6 @@ label_288f18:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x288f4cu)) {
         return;
     }
-    ctx->pc = 0x288F4Cu;
 label_288f4c:
     // 0x288f4c: 0x3c030074  lui         $v1, 0x74
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
@@ -150,10 +148,8 @@ label_288f4c:
             goto label_288f88;
         }
     }
-    ctx->pc = 0x288F84u;
 label_288f84:
     // 0x288f84: 0x2442ffff  addiu       $v0, $v0, -0x1
-    ctx->pc = 0x288f84u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));
 label_288f88:
     // 0x288f88: 0xa602054a  sh          $v0, 0x54A($s0)
@@ -214,7 +210,6 @@ label_288f88:
             goto label_288fc8;
         }
     }
-    ctx->pc = 0x288FB4u;
 label_288fb4:
     // 0x288fb4: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -239,7 +234,6 @@ label_288fb4:
             goto label_28900c;
         }
     }
-    ctx->pc = 0x288FC8u;
 label_288fc8:
     // 0x288fc8: 0x1000000e  b           . + 4 + (0xE << 2)
     ctx->pc = 0x288FC8u;
@@ -256,7 +250,6 @@ label_288fc8:
             goto label_289004;
         }
     }
-    ctx->pc = 0x288FD0u;
 label_288fd0:
     // 0x288fd0: 0x30420002  andi        $v0, $v0, 0x2
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)2);
@@ -295,7 +288,6 @@ label_288fd0:
             goto label_289000;
         }
     }
-    ctx->pc = 0x288FECu;
 label_288fec:
     // 0x288fec: 0xa20002f6  sb          $zero, 0x2F6($s0)
     ctx->pc = 0x288fecu;
@@ -321,7 +313,6 @@ label_288fec:
             goto label_289010;
         }
     }
-    ctx->pc = 0x289000u;
 label_289000:
     // 0x289000: 0xa20002f7  sb          $zero, 0x2F7($s0)
     ctx->pc = 0x289000u;

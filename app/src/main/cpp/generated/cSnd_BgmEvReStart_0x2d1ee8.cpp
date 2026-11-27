@@ -13,7 +13,7 @@
 
 // Function: cSnd_BgmEvReStart
 // Address: 0x2d1ee8 - 0x2d1fa0
-void cSnd_BgmEvReStart_0x2d1ee8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BgmEvReStart_0x2d1ee8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BgmEvReStart_0x2d1ee8");
 #endif
@@ -78,7 +78,6 @@ void cSnd_BgmEvReStart_0x2d1ee8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     // 0x2d1f20: 0x24140004  addiu       $s4, $zero, 0x4
     SET_GPR_S32(ctx, 20, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x2d1f24: 0x0  nop
-    ctx->pc = 0x2d1f24u;
     // NOP
 label_2d1f28:
     // 0x2d1f28: 0x52550009  beql        $s2, $s5, . + 4 + (0x9 << 2)
@@ -164,7 +163,6 @@ label_2d1f50:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_Resume_0x2ccac8, 0x2ccac8u, 0x2d1f60u)) {
         return;
     }
-    ctx->pc = 0x2D1F60u;
 label_2d1f60:
     // 0x2d1f60: 0x6200003  bltz        $s1, . + 4 + (0x3 << 2)
     ctx->pc = 0x2D1F60u;
@@ -192,7 +190,6 @@ label_2d1f60:
     if (!runtime->callDirectStatic(rdram, ctx, &SetSequenceParam_373A18_0x373a18, 0x373a18u, 0x2d1f70u)) {
         return;
     }
-    ctx->pc = 0x2D1F70u;
 label_2d1f70:
     // 0x2d1f70: 0x8e100088  lw          $s0, 0x88($s0)
     ctx->pc = 0x2d1f70u;
@@ -210,7 +207,6 @@ label_2d1f74:
             goto label_2d1f28;
         }
     }
-    ctx->pc = 0x2D1F7Cu;
 label_2d1f7c:
     // 0x2d1f7c: 0x7bb00060  lq          $s0, 0x60($sp)
     ctx->pc = 0x2d1f7cu;

@@ -13,7 +13,7 @@
 
 // Function: SetPositionMulti_12CE60
 // Address: 0x12ce60 - 0x12ced8
-void SetPositionMulti_12CE60_0x12ce60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetPositionMulti_12CE60_0x12ce60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetPositionMulti_12CE60_0x12ce60");
 #endif
@@ -56,7 +56,6 @@ void SetPositionMulti_12CE60_0x12ce60(uint8_t* rdram, R5900Context* ctx, PS2Runt
     ctx->pc = 0x12ce80u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 2), 8), bits); }
     // 0x12ce84: 0x24820490  addiu       $v0, $a0, 0x490
-    ctx->pc = 0x12ce84u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 1168));
 label_12ce88:
     // 0x12ce88: 0x10450007  beq         $v0, $a1, . + 4 + (0x7 << 2)

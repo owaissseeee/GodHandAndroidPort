@@ -13,7 +13,7 @@
 
 // Function: Slots_runHandlerForAll
 // Address: 0x3009f8 - 0x300ae8
-void Slots_runHandlerForAll_0x3009f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Slots_runHandlerForAll_0x3009f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Slots_runHandlerForAll_0x3009f8");
 #endif
@@ -79,7 +79,6 @@ void Slots_runHandlerForAll_0x3009f8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     // 0x300a48: 0x802d  daddu       $s0, $zero, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x300a4c: 0x3c148000  lui         $s4, 0x8000
-    ctx->pc = 0x300a4cu;
     SET_GPR_S32(ctx, 20, (int32_t)((uint32_t)32768 << 16));
 label_300a50:
     // 0x300a50: 0x101142  srl         $v0, $s0, 5
@@ -169,10 +168,8 @@ label_300a50:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003039E8_0x3039e8, 0x3039e8u, 0x300aa8u)) {
         return;
     }
-    ctx->pc = 0x300AA8u;
 label_300aa8:
     // 0x300aa8: 0x26100001  addiu       $s0, $s0, 0x1
-    ctx->pc = 0x300aa8u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 1));
 label_300aac:
     // 0x300aac: 0x2a020100  slti        $v0, $s0, 0x100

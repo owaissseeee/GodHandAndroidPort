@@ -13,7 +13,7 @@
 
 // Function: KeySlotTable_set
 // Address: 0x2bb0c8 - 0x2bb138
-void KeySlotTable_set_0x2bb0c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void KeySlotTable_set_0x2bb0c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("KeySlotTable_set_0x2bb0c8");
 #endif
@@ -56,7 +56,6 @@ void KeySlotTable_set_0x2bb0c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BB068_0x2bb068, 0x2bb068u, 0x2bb0ecu)) {
         return;
     }
-    ctx->pc = 0x2BB0ECu;
 label_2bb0ec:
     // 0x2bb0ec: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x2BB0ECu;
@@ -82,7 +81,6 @@ label_2bb0ec:
             goto label_2bb118;
         }
     }
-    ctx->pc = 0x2BB0FCu;
 label_2bb0fc:
     // 0x2bb0fc: 0xc0aec26  jal         func_2BB098
     SET_GPR_U32(ctx, 31, 0x2BB104u);
@@ -95,7 +93,6 @@ label_2bb0fc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BB098_0x2bb098, 0x2bb098u, 0x2bb104u)) {
         return;
     }
-    ctx->pc = 0x2BB104u;
 label_2bb104:
     // 0x2bb104: 0x54400003  bnel        $v0, $zero, . + 4 + (0x3 << 2)
     ctx->pc = 0x2BB104u;
@@ -127,14 +124,12 @@ label_2bb104:
             goto label_2bb11c;
         }
     }
-    ctx->pc = 0x2BB114u;
 label_2bb114:
     // 0x2bb114: 0xac520000  sw          $s2, 0x0($v0)
     ctx->pc = 0x2bb114u;
     WRITE32(ADD32(GPR_U32(ctx, 2), 0), GPR_U32(ctx, 18));
 label_2bb118:
     // 0x2bb118: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2bb118u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2bb11c:
     // 0x2bb11c: 0x7bb00030  lq          $s0, 0x30($sp)

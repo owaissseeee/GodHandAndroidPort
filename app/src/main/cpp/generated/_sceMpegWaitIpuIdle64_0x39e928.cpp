@@ -13,7 +13,7 @@
 
 // Function: _sceMpegWaitIpuIdle64
 // Address: 0x39e928 - 0x39eaa8
-void _sceMpegWaitIpuIdle64_0x39e928(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceMpegWaitIpuIdle64_0x39e928(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceMpegWaitIpuIdle64_0x39e928");
 #endif
@@ -134,7 +134,6 @@ void _sceMpegWaitIpuIdle64_0x39e928(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     // 0x39e9b0: 0x36522010  ori         $s2, $s2, 0x2010
     SET_GPR_U64(ctx, 18, GPR_U64(ctx, 18) | (uint64_t)(uint16_t)8208);
     // 0x39e9b4: 0x0  nop
-    ctx->pc = 0x39e9b4u;
     // NOP
 label_39e9b8:
     // 0x39e9b8: 0x8ea40000  lw          $a0, 0x0($s5)
@@ -202,10 +201,8 @@ label_39e9b8:
             goto label_39ea24;
         }
     }
-    ctx->pc = 0x39E9F4u;
 label_39e9f4:
     // 0x39e9f4: 0x2c420020  sltiu       $v0, $v0, 0x20
-    ctx->pc = 0x39e9f4u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)32) ? 1 : 0);
 label_39e9f8:
     // 0x39e9f8: 0x1040000a  beqz        $v0, . + 4 + (0xA << 2)
@@ -252,7 +249,6 @@ label_39e9f8:
     if (!runtime->callDirectStatic(rdram, ctx, &_sceMpegDispatchMpegCbNodata_0x39ab98, 0x39ab98u, 0x39ea14u)) {
         return;
     }
-    ctx->pc = 0x39EA14u;
 label_39ea14:
     // 0x39ea14: 0x8e030878  lw          $v1, 0x878($s0)
     ctx->pc = 0x39ea14u;
@@ -273,7 +269,6 @@ label_39ea14:
         }
     }
     // 0x39ea20: 0xc0102d  daddu       $v0, $a2, $zero
-    ctx->pc = 0x39ea20u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
 label_39ea24:
     // 0x39ea24: 0x284201f5  slti        $v0, $v0, 0x1F5
@@ -304,7 +299,6 @@ label_39ea24:
     if (!runtime->callDirectStatic(rdram, ctx, &_sceMpegDispatchMpegCbNodata_0x39ab98, 0x39ab98u, 0x39ea38u)) {
         return;
     }
-    ctx->pc = 0x39EA38u;
 label_39ea38:
     // 0x39ea38: 0x8e030878  lw          $v1, 0x878($s0)
     ctx->pc = 0x39ea38u;
@@ -324,7 +318,6 @@ label_39ea38:
             goto label_39ea54;
         }
     }
-    ctx->pc = 0x39EA44u;
 label_39ea44:
     // 0x39ea44: 0xc0e708a  jal         func_39C228
     ctx->pc = 0x39EA44u;
@@ -332,7 +325,6 @@ label_39ea44:
     if (!runtime->callDirectStatic(rdram, ctx, &_sceMpegStopIpuDma_0x39c228, 0x39c228u, 0x39ea4cu)) {
         return;
     }
-    ctx->pc = 0x39EA4Cu;
 label_39ea4c:
     // 0x39ea4c: 0x10000009  b           . + 4 + (0x9 << 2)
     ctx->pc = 0x39EA4Cu;
@@ -349,7 +341,6 @@ label_39ea4c:
             goto label_39ea74;
         }
     }
-    ctx->pc = 0x39EA54u;
 label_39ea54:
     // 0x39ea54: 0xde710000  ld          $s1, 0x0($s3)
     ctx->pc = 0x39ea54u;

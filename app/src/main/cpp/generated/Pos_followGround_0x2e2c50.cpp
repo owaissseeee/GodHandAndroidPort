@@ -13,7 +13,7 @@
 
 // Function: Pos_followGround
 // Address: 0x2e2c50 - 0x2e2d40
-void Pos_followGround_0x2e2c50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Pos_followGround_0x2e2c50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Pos_followGround_0x2e2c50");
 #endif
@@ -71,7 +71,6 @@ void Pos_followGround_0x2e2c50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &StoreVecFromFieldB0_2B6160_0x2b6160, 0x2b6160u, 0x2e2c7cu)) {
         return;
     }
-    ctx->pc = 0x2E2C7Cu;
 label_2e2c7c:
     // 0x2e2c7c: 0x27a20030  addiu       $v0, $sp, 0x30
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 29), 48));
@@ -159,7 +158,6 @@ label_2e2c7c:
     if (!runtime->callDirectStatic(rdram, ctx, &ChkLine_0x131e10, 0x131e10u, 0x2e2cfcu)) {
         return;
     }
-    ctx->pc = 0x2E2CFCu;
 label_2e2cfc:
     // 0x2e2cfc: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x2E2CFCu;
@@ -208,7 +206,6 @@ label_2e2d14:
             goto label_2e2d2c;
         }
     }
-    ctx->pc = 0x2E2D24u;
 label_2e2d24:
     // 0x2e2d24: 0xc0b8a3c  jal         func_2E28F0
     SET_GPR_U32(ctx, 31, 0x2E2D2Cu);
@@ -221,7 +218,6 @@ label_2e2d24:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002E28F0_0x2e28f0, 0x2e28f0u, 0x2e2d2cu)) {
         return;
     }
-    ctx->pc = 0x2E2D2Cu;
 label_2e2d2c:
     // 0x2e2d2c: 0x7bb00090  lq          $s0, 0x90($sp)
     ctx->pc = 0x2e2d2cu;

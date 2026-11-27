@@ -13,7 +13,7 @@
 
 // Function: ForwardAndSyncPosition_102EE0
 // Address: 0x102ee0 - 0x102fe8
-void ForwardAndSyncPosition_102EE0_0x102ee0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardAndSyncPosition_102EE0_0x102ee0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardAndSyncPosition_102EE0_0x102ee0");
 #endif
@@ -51,7 +51,6 @@ void ForwardAndSyncPosition_102EE0_0x102ee0(uint8_t* rdram, R5900Context* ctx, P
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x102ef8u)) {
         return;
     }
-    ctx->pc = 0x102EF8u;
 label_102ef8:
     // 0x102ef8: 0x3c040046  lui         $a0, 0x46
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)70 << 16));
@@ -72,7 +71,6 @@ label_102ef8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1351D8u, 0x102F08u, 0x102F10u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x102F10u;
 label_102f10:
     // 0x102f10: 0x8e020250  lw          $v0, 0x250($s0)
     ctx->pc = 0x102f10u;
@@ -136,7 +134,6 @@ label_102f10:
             goto label_102fd8;
         }
     }
-    ctx->pc = 0x102F44u;
 label_102f44:
     // 0x102f44: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x102f44u;
@@ -170,7 +167,6 @@ label_102f44:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x102f70u)) {
         return;
     }
-    ctx->pc = 0x102F70u;
 label_102f70:
     // 0x102f70: 0x920202f6  lbu         $v0, 0x2F6($s0)
     ctx->pc = 0x102f70u;
@@ -221,7 +217,6 @@ label_102f80:
     ctx->pc = 0x102fa0u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 3), 8), bits); }
     // 0x102fa4: 0x26030100  addiu       $v1, $s0, 0x100
-    ctx->pc = 0x102fa4u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 16), 256));
 label_102fa8:
     // 0x102fa8: 0x26220100  addiu       $v0, $s1, 0x100
@@ -265,7 +260,6 @@ label_102fcc:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x102FCCu, 0x102FD4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x102FD4u;
 label_102fd4:
     // 0x102fd4: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x102fd4u;

@@ -13,7 +13,7 @@
 
 // Function: UpdateChildAndFreeSoundHandle
 // Address: 0x384c60 - 0x384ca0
-void UpdateChildAndFreeSoundHandle_0x384c60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateChildAndFreeSoundHandle_0x384c60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateChildAndFreeSoundHandle_0x384c60");
 #endif
@@ -48,7 +48,6 @@ void UpdateChildAndFreeSoundHandle_0x384c60(uint8_t* rdram, R5900Context* ctx, P
     if (!runtime->callDirectStatic(rdram, ctx, &func_00383438_0x383438, 0x383438u, 0x384c78u)) {
         return;
     }
-    ctx->pc = 0x384C78u;
 label_384c78:
     // 0x384c78: 0x8e0400fc  lw          $a0, 0xFC($s0)
     ctx->pc = 0x384c78u;
@@ -74,7 +73,6 @@ label_384c78:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031C900_0x31c900, 0x31c900u, 0x384c8cu)) {
         return;
     }
-    ctx->pc = 0x384C8Cu;
 label_384c8c:
     // 0x384c8c: 0xae0000fc  sw          $zero, 0xFC($s0)
     ctx->pc = 0x384c8cu;

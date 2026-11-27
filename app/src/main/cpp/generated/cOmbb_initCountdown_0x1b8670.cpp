@@ -13,7 +13,7 @@
 
 // Function: cOmbb_initCountdown
 // Address: 0x1b8670 - 0x1b8718
-void cOmbb_initCountdown_0x1b8670(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmbb_initCountdown_0x1b8670(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmbb_initCountdown_0x1b8670");
 #endif
@@ -49,7 +49,6 @@ void cOmbb_initCountdown_0x1b8670(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getGameLevel_0x1fa010, 0x1fa010u, 0x1b868cu)) {
         return;
     }
-    ctx->pc = 0x1B868Cu;
 label_1b868c:
     // 0x1b868c: 0x2443ffff  addiu       $v1, $v0, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));
@@ -96,7 +95,6 @@ label_1b868c:
             return;
         }
     }
-    ctx->pc = 0x1B86B4u;
 label_1b86b4:
     // 0x1b86b4: 0x3c014416  lui         $at, 0x4416
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)17430 << 16));
@@ -117,7 +115,6 @@ label_1b86b4:
             goto label_1b8704;
         }
     }
-    ctx->pc = 0x1B86C4u;
 label_1b86c4:
     // 0x1b86c4: 0x3c0143fa  lui         $at, 0x43FA
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)17402 << 16));
@@ -138,7 +135,6 @@ label_1b86c4:
             goto label_1b8704;
         }
     }
-    ctx->pc = 0x1B86D4u;
 label_1b86d4:
     // 0x1b86d4: 0x3c0143c8  lui         $at, 0x43C8
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)17352 << 16));
@@ -159,7 +155,6 @@ label_1b86d4:
             goto label_1b8704;
         }
     }
-    ctx->pc = 0x1B86E4u;
 label_1b86e4:
     // 0x1b86e4: 0x3c0143c8  lui         $at, 0x43C8
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)17352 << 16));
@@ -180,7 +175,6 @@ label_1b86e4:
             goto label_1b8704;
         }
     }
-    ctx->pc = 0x1B86F4u;
 label_1b86f4:
     // 0x1b86f4: 0x3c014396  lui         $at, 0x4396
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)17302 << 16));

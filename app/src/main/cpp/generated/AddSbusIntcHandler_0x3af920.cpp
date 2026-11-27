@@ -13,7 +13,7 @@
 
 // Function: AddSbusIntcHandler
 // Address: 0x3af920 - 0x3af930
-void AddSbusIntcHandler_0x3af920(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void AddSbusIntcHandler_0x3af920(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("AddSbusIntcHandler_0x3af920");
 #endif

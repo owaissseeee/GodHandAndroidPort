@@ -13,7 +13,7 @@
 
 // Function: func_001CFD60
 // Address: 0x1cfd60 - 0x1cfe88
-void func_001CFD60_0x1cfd60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001CFD60_0x1cfd60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001CFD60_0x1cfd60");
 #endif
@@ -161,10 +161,8 @@ label_1cfdac:
             goto label_1cfdec;
         }
     }
-    ctx->pc = 0x1CFDE8u;
 label_1cfde8:
     // 0x1cfde8: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1cfde8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1cfdec:
     // 0x1cfdec: 0x10400021  beqz        $v0, . + 4 + (0x21 << 2)
@@ -202,7 +200,6 @@ label_1cfdec:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_calcParts_0x149eb8, 0x149eb8u, 0x1cfe08u)) {
         return;
     }
-    ctx->pc = 0x1CFE08u;
 label_1cfe08:
     // 0x1cfe08: 0xae110690  sw          $s1, 0x690($s0)
     ctx->pc = 0x1cfe08u;
@@ -219,7 +216,6 @@ label_1cfe08:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31D000u, 0x1CFE0Cu, 0x1CFE14u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1CFE14u;
 label_1cfe14:
     // 0x1cfe14: 0x46000000  add.s       $f0, $f0, $f0
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[0]);
@@ -243,7 +239,6 @@ label_1cfe14:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31D000u, 0x1CFE28u, 0x1CFE30u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1CFE30u;
 label_1cfe30:
     // 0x1cfe30: 0x46000000  add.s       $f0, $f0, $f0
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[0]);
@@ -267,7 +262,6 @@ label_1cfe30:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31D020u, 0x1CFE44u, 0x1CFE4Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1CFE4Cu;
 label_1cfe4c:
     // 0x1cfe4c: 0x3c014049  lui         $at, 0x4049
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16457 << 16));

@@ -13,7 +13,7 @@
 
 // Function: Forward349590_349578
 // Address: 0x349578 - 0x349630
-void Forward349590_349578_0x349578(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Forward349590_349578_0x349578(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Forward349590_349578_0x349578");
 #endif
@@ -45,7 +45,6 @@ void Forward349590_349578_0x349578(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x349590u;
     goto label_349590;
     // 0x34958c: 0x0  nop
-    ctx->pc = 0x34958cu;
     // NOP
 label_349590:
     // 0x349590: 0x3c02003f  lui         $v0, 0x3F
@@ -104,7 +103,6 @@ label_349590:
     if (!runtime->callDirectStatic(rdram, ctx, &MWSFSVM_Error_0x348be0, 0x348be0u, 0x3495ccu)) {
         return;
     }
-    ctx->pc = 0x3495CCu;
 label_3495cc:
     // 0x3495cc: 0x10000012  b           . + 4 + (0x12 << 2)
     ctx->pc = 0x3495CCu;
@@ -122,7 +120,6 @@ label_3495cc:
         }
     }
     // 0x3495d4: 0x0  nop
-    ctx->pc = 0x3495d4u;
     // NOP
 label_3495d8:
     // 0x3495d8: 0x8e300000  lw          $s0, 0x0($s1)
@@ -149,7 +146,6 @@ label_3495d8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00349720_0x349720, 0x349720u, 0x3495ecu)) {
         return;
     }
-    ctx->pc = 0x3495ECu;
 label_3495ec:
     // 0x3495ec: 0x5050000a  beql        $v0, $s0, . + 4 + (0xA << 2)
     ctx->pc = 0x3495ECu;
@@ -172,7 +168,6 @@ label_3495ec:
     if (!runtime->callDirectStatic(rdram, ctx, &MWSFD_GetReqSvrBdrLib_0x349778, 0x349778u, 0x3495fcu)) {
         return;
     }
-    ctx->pc = 0x3495FCu;
 label_3495fc:
     // 0x3495fc: 0x1050fff3  beq         $v0, $s0, . + 4 + (-0xD << 2)
     ctx->pc = 0x3495FCu;
@@ -211,7 +206,6 @@ label_3495fc:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x349630u, 0x349610u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x349618u;
 label_349618:
     // 0x349618: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x349618u;

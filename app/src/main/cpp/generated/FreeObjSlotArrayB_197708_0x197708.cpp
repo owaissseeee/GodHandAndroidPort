@@ -13,7 +13,7 @@
 
 // Function: FreeObjSlotArrayB_197708
 // Address: 0x197708 - 0x1977b0
-void FreeObjSlotArrayB_197708_0x197708(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FreeObjSlotArrayB_197708_0x197708(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FreeObjSlotArrayB_197708_0x197708");
 #endif
@@ -67,7 +67,6 @@ void FreeObjSlotArrayB_197708_0x197708(uint8_t* rdram, R5900Context* ctx, PS2Run
     ctx->pc = 0x197740u;
     WRITE32(ADD32(GPR_U32(ctx, 18), 532), GPR_U32(ctx, 2));
     // 0x197744: 0x0  nop
-    ctx->pc = 0x197744u;
     // NOP
 label_197748:
     // 0x197748: 0x8e050000  lw          $a1, 0x0($s0)
@@ -99,13 +98,11 @@ label_197748:
     if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x19775cu)) {
         return;
     }
-    ctx->pc = 0x19775Cu;
 label_19775c:
     // 0x19775c: 0xae000000  sw          $zero, 0x0($s0)
     ctx->pc = 0x19775cu;
     WRITE32(ADD32(GPR_U32(ctx, 16), 0), GPR_U32(ctx, 0));
     // 0x197760: 0x2631ffff  addiu       $s1, $s1, -0x1
-    ctx->pc = 0x197760u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 4294967295));
 label_197764:
     // 0x197764: 0x621fff8  bgez        $s1, . + 4 + (-0x8 << 2)
@@ -155,7 +152,6 @@ label_197764:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_ReleaseDamageGive_0x1fe148, 0x1fe148u, 0x197780u)) {
         return;
     }
-    ctx->pc = 0x197780u;
 label_197780:
     // 0x197780: 0xae400604  sw          $zero, 0x604($s2)
     ctx->pc = 0x197780u;
@@ -174,7 +170,6 @@ label_197784:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField214PtrThenInit_1B6F38_0x1b6f38, 0x1b6f38u, 0x197790u)) {
         return;
     }
-    ctx->pc = 0x197790u;
 label_197790:
     // 0x197790: 0x7bb00050  lq          $s0, 0x50($sp)
     ctx->pc = 0x197790u;

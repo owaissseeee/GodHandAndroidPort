@@ -14,15 +14,13 @@ namespace gh_mcport
 {
 // Function: __register_frame_info
 // Address: 0x7cce48 - 0x7cce70
-void ps2___register_frame_info_0x7cce48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___register_frame_info_0x7cce48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___register_frame_info_0x7cce48");
 #endif
 
-    ctx->pc = 0x7cce48u;
 
     // 0x7cce48: 0x3c02007d  lui         $v0, 0x7D
-    ctx->pc = 0x7cce48u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)125 << 16));
     // 0x7cce4c: 0x8c431958  lw          $v1, 0x1958($v0)
     ctx->pc = 0x7cce4cu;

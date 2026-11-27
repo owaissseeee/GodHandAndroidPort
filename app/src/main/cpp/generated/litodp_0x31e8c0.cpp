@@ -13,7 +13,7 @@
 
 // Function: litodp
 // Address: 0x31e8c0 - 0x31e978
-void litodp_0x31e8c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void litodp_0x31e8c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("litodp_0x31e8c0");
 #endif
@@ -71,7 +71,6 @@ void litodp_0x31e8c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             goto label_31e964;
         }
     }
-    ctx->pc = 0x31E8E8u;
 label_31e8e8:
     // 0x31e8e8: 0x2402003c  addiu       $v0, $zero, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 60));
@@ -126,7 +125,6 @@ label_31e8e8:
             goto label_31e970;
         }
     }
-    ctx->pc = 0x31E910u;
 label_31e910:
     // 0x31e910: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x31E910u;
@@ -143,7 +141,6 @@ label_31e910:
             goto label_31e91c;
         }
     }
-    ctx->pc = 0x31E918u;
 label_31e918:
     // 0x31e918: 0xffa40010  sd          $a0, 0x10($sp)
     ctx->pc = 0x31e918u;
@@ -178,7 +175,6 @@ label_31e91c:
     // 0x31e938: 0x6313a  dsrl        $a2, $a2, 4
     SET_GPR_U64(ctx, 6, GPR_U64(ctx, 6) >> 4);
     // 0x31e93c: 0x0  nop
-    ctx->pc = 0x31e93cu;
     // NOP
 label_31e940:
     // 0x31e940: 0x51878  dsll        $v1, $a1, 1
@@ -221,7 +217,6 @@ label_31e964:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___pack_d_0x31de78, 0x31de78u, 0x31e96cu)) {
         return;
     }
-    ctx->pc = 0x31E96Cu;
 label_31e96c:
     // 0x31e96c: 0xdfbf0020  ld          $ra, 0x20($sp)
     ctx->pc = 0x31e96cu;

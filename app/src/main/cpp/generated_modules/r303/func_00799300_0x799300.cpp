@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
+#include <ps2_recompiled_functions.h>
 #include "r303_functions.h"
 
 #include "ps2_syscalls.h"
@@ -14,32 +15,30 @@ namespace gh_r303
 {
 // Function: func_00799300
 // Address: 0x799300 - 0x799328
-void func_00799300_0x799300(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00799300_0x799300(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00799300_0x799300");
 #endif
 
-    switch (ctx->pc) {
-        case 0x799318u: goto label_799318;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x799300u, 0)) {
+        switch (ctx->pc) {
+            case 0x799318u: goto label_799318;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x799300u;
+
 
     // 0x799300: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x799300u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x799304: 0x240503d9  addiu       $a1, $zero, 0x3D9
-    ctx->pc = 0x799304u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 985));
     // 0x799308: 0xffbf0010  sd          $ra, 0x10($sp)
     ctx->pc = 0x799308u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 16), GPR_U64(ctx, 31));
     // 0x79930c: 0x3a0202d  daddu       $a0, $sp, $zero
-    ctx->pc = 0x79930cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
     // 0x799310: 0xc0a578e  jal         func_295E38
-    ctx->pc = 0x799310u;
     SET_GPR_U32(ctx, 31, 0x799318u);
     ctx->pc = 0x799314u;
     ctx->in_delay_slot = true;
@@ -48,10 +47,9 @@ void func_00799300_0x799300(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     WRITE8(ADD32(GPR_U32(ctx, 29), 0), (uint8_t)GPR_U32(ctx, 0));
     ctx->in_delay_slot = false;
     ctx->pc = 0x295E38u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x295E38u, 0x799310u, 0x799318u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cEmWrap_setDropItem_0x295e38, 0x295E38u, 0x799318u)) {
         return;
     }
-    ctx->pc = 0x799318u;
 label_799318:
     // 0x799318: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x799318u;
@@ -75,9 +73,7 @@ label_799318:
         return;
         #endif
     }
-    ctx->pc = 0x799324u;
     // 0x799324: 0x0  nop
-    ctx->pc = 0x799324u;
     // NOP
     ctx->pc = 0x799328u;
 }

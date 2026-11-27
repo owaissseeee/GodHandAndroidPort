@@ -13,7 +13,7 @@
 
 // Function: ForwardIfStateActive_147460
 // Address: 0x147460 - 0x1474a0
-void ForwardIfStateActive_147460_0x147460(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardIfStateActive_147460_0x147460(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardIfStateActive_147460_0x147460");
 #endif
@@ -78,7 +78,6 @@ void ForwardIfStateActive_147460_0x147460(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_trans_0x2aac28, 0x2aac28u, 0x147494u)) {
         return;
     }
-    ctx->pc = 0x147494u;
 label_147494:
     // 0x147494: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x147494u;

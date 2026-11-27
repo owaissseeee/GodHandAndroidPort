@@ -13,7 +13,7 @@
 
 // Function: Ang_blendLate
 // Address: 0x2da8d8 - 0x2da940
-void Ang_blendLate_0x2da8d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Ang_blendLate_0x2da8d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Ang_blendLate_0x2da8d8");
 #endif
@@ -58,7 +58,6 @@ void Ang_blendLate_0x2da8d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_0x1f7d48, 0x1f7d48u, 0x2da8fcu)) {
         return;
     }
-    ctx->pc = 0x2DA8FCu;
 label_2da8fc:
     // 0x2da8fc: 0x46000506  mov.s       $f20, $f0
     ctx->f[20] = FPU_MOV_S(ctx->f[0]);
@@ -73,7 +72,6 @@ label_2da8fc:
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_0x1f7d48, 0x1f7d48u, 0x2da908u)) {
         return;
     }
-    ctx->pc = 0x2DA908u;
 label_2da908:
     // 0x2da908: 0xc07df52  jal         func_1F7D48
     SET_GPR_U32(ctx, 31, 0x2DA910u);
@@ -86,7 +84,6 @@ label_2da908:
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_0x1f7d48, 0x1f7d48u, 0x2da910u)) {
         return;
     }
-    ctx->pc = 0x2DA910u;
 label_2da910:
     // 0x2da910: 0x46160002  mul.s       $f0, $f0, $f22
     ctx->f[0] = FPU_MUL_S(ctx->f[0], ctx->f[22]);
@@ -101,7 +98,6 @@ label_2da910:
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_0x1f7d48, 0x1f7d48u, 0x2da91cu)) {
         return;
     }
-    ctx->pc = 0x2DA91Cu;
 label_2da91c:
     // 0x2da91c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2da91cu;

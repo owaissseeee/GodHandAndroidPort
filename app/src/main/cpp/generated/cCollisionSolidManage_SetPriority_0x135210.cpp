@@ -13,7 +13,7 @@
 
 // Function: cCollisionSolidManage_SetPriority
 // Address: 0x135210 - 0x135250
-void cCollisionSolidManage_SetPriority_0x135210(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCollisionSolidManage_SetPriority_0x135210(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCollisionSolidManage_SetPriority_0x135210");
 #endif
@@ -46,7 +46,6 @@ void cCollisionSolidManage_SetPriority_0x135210(uint8_t* rdram, R5900Context* ct
     if (!runtime->callDirectStatic(rdram, ctx, &func_001346C8_0x1346c8, 0x1346c8u, 0x135224u)) {
         return;
     }
-    ctx->pc = 0x135224u;
 label_135224:
     // 0x135224: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x135224u;
@@ -74,7 +73,6 @@ label_135224:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Set_Field_8_134648_0x134648, 0x134648u, 0x135234u)) {
         return;
     }
-    ctx->pc = 0x135234u;
 label_135234:
     // 0x135234: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x135234u;

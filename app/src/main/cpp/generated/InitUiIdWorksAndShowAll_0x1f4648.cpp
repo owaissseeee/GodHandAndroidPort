@@ -13,7 +13,7 @@
 
 // Function: InitUiIdWorksAndShowAll
 // Address: 0x1f4648 - 0x1f46e0
-void InitUiIdWorksAndShowAll_0x1f4648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitUiIdWorksAndShowAll_0x1f4648(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitUiIdWorksAndShowAll_0x1f4648");
 #endif
@@ -68,7 +68,6 @@ void InitUiIdWorksAndShowAll_0x1f4648(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_initialize_0x2a9ea0, 0x2a9ea0u, 0x1f467cu)) {
         return;
     }
-    ctx->pc = 0x1F467Cu;
 label_1f467c:
     // 0x1f467c: 0x26710060  addiu       $s1, $s3, 0x60
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 19), 96));
@@ -83,7 +82,6 @@ label_1f467c:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_restartAnim_0x2abbe8, 0x2abbe8u, 0x1f4688u)) {
         return;
     }
-    ctx->pc = 0x1F4688u;
 label_1f4688:
     // 0x1f4688: 0x240282d  daddu       $a1, $s2, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -98,7 +96,6 @@ label_1f4688:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_getIDWork_0x2aa410, 0x2aa410u, 0x1f4694u)) {
         return;
     }
-    ctx->pc = 0x1F4694u;
 label_1f4694:
     // 0x1f4694: 0x26520001  addiu       $s2, $s2, 0x1
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), 1));
@@ -115,7 +112,6 @@ label_1f4694:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_Initialize_0x2d5da8, 0x2d5da8u, 0x1f46a4u)) {
         return;
     }
-    ctx->pc = 0x1F46A4u;
 label_1f46a4:
     // 0x1f46a4: 0x2a42006f  slti        $v0, $s2, 0x6F
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 18) < (int64_t)(int32_t)111) ? 1 : 0);
@@ -152,7 +148,6 @@ label_1f46a4:
     if (!runtime->callDirectStatic(rdram, ctx, &SetCustomIDDispOneOrAll_1F4778_0x1f4778, 0x1f4778u, 0x1f46c0u)) {
         return;
     }
-    ctx->pc = 0x1F46C0u;
 label_1f46c0:
     // 0x1f46c0: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x1f46c0u;

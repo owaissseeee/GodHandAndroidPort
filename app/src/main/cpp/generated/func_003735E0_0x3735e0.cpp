@@ -13,7 +13,7 @@
 
 // Function: func_003735E0
 // Address: 0x3735e0 - 0x373690
-void func_003735E0_0x3735e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003735E0_0x3735e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003735E0_0x3735e0");
 #endif
@@ -63,7 +63,6 @@ void func_003735E0_0x3735e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373A50_0x373a50, 0x373a50u, 0x37360cu)) {
         return;
     }
-    ctx->pc = 0x37360Cu;
 label_37360c:
     // 0x37360c: 0x50400019  beql        $v0, $zero, . + 4 + (0x19 << 2)
     ctx->pc = 0x37360Cu;
@@ -102,7 +101,6 @@ label_37360c:
         }
     }
     // 0x373634: 0x4480a000  mtc1        $zero, $f20
-    ctx->pc = 0x373634u;
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[20], &bits, sizeof(bits)); }
 label_373638:
     // 0x373638: 0xc0dcec8  jal         func_373B20
@@ -116,7 +114,6 @@ label_373638:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373B20_0x373b20, 0x373b20u, 0x373640u)) {
         return;
     }
-    ctx->pc = 0x373640u;
 label_373640:
     // 0x373640: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -150,7 +147,6 @@ label_373640:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00374720_0x374720, 0x374720u, 0x37365cu)) {
         return;
     }
-    ctx->pc = 0x37365Cu;
 label_37365c:
     // 0x37365c: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x37365Cu;
@@ -167,7 +163,6 @@ label_37365c:
             goto label_373674;
         }
     }
-    ctx->pc = 0x373664u;
 label_373664:
     // 0x373664: 0x4600a306  mov.s       $f12, $f20
     ctx->f[12] = FPU_MOV_S(ctx->f[20]);
@@ -182,7 +177,6 @@ label_373664:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003740C8_0x3740c8, 0x3740c8u, 0x373670u)) {
         return;
     }
-    ctx->pc = 0x373670u;
 label_373670:
     // 0x373670: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x373670u;

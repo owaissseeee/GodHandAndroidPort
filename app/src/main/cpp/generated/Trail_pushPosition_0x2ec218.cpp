@@ -13,7 +13,7 @@
 
 // Function: Trail_pushPosition
 // Address: 0x2ec218 - 0x2ec310
-void Trail_pushPosition_0x2ec218(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Trail_pushPosition_0x2ec218(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Trail_pushPosition_0x2ec218");
 #endif
@@ -48,7 +48,6 @@ void Trail_pushPosition_0x2ec218(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &ScrollObj_advanceScroll_0x2ec310, 0x2ec310u, 0x2ec22cu)) {
         return;
     }
-    ctx->pc = 0x2EC22Cu;
 label_2ec22c:
     // 0x2ec22c: 0x82020249  lb          $v0, 0x249($s0)
     ctx->pc = 0x2ec22cu;
@@ -133,7 +132,6 @@ label_2ec26c:
         }
     }
     // 0x2ec274: 0x3a0202d  daddu       $a0, $sp, $zero
-    ctx->pc = 0x2ec274u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
 label_2ec278:
     // 0x2ec278: 0xc0ad858  jal         func_2B6160
@@ -147,7 +145,6 @@ label_2ec278:
     if (!runtime->callDirectStatic(rdram, ctx, &StoreVecFromFieldB0_2B6160_0x2b6160, 0x2b6160u, 0x2ec280u)) {
         return;
     }
-    ctx->pc = 0x2EC280u;
 label_2ec280:
     // 0x2ec280: 0x8e0202bc  lw          $v0, 0x2BC($s0)
     ctx->pc = 0x2ec280u;
@@ -235,7 +232,6 @@ label_2ec2a0:
     ctx->pc = 0x2ec2d0u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 700)));
     // 0x2ec2d4: 0x0  nop
-    ctx->pc = 0x2ec2d4u;
     // NOP
 label_2ec2d8:
     // 0x2ec2d8: 0x41900  sll         $v1, $a0, 4
@@ -272,7 +268,6 @@ label_2ec2d8:
             goto label_2ec2d8;
         }
     }
-    ctx->pc = 0x2EC2FCu;
 label_2ec2fc:
     // 0x2ec2fc: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2ec2fcu;

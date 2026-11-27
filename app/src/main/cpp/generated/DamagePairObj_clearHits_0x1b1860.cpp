@@ -13,7 +13,7 @@
 
 // Function: DamagePairObj_clearHits
 // Address: 0x1b1860 - 0x1b18b8
-void DamagePairObj_clearHits_0x1b1860(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void DamagePairObj_clearHits_0x1b1860(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("DamagePairObj_clearHits_0x1b1860");
 #endif
@@ -62,7 +62,6 @@ void DamagePairObj_clearHits_0x1b1860(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x1b188cu)) {
         return;
     }
-    ctx->pc = 0x1B188Cu;
 label_1b188c:
     // 0x1b188c: 0x8e030670  lw          $v1, 0x670($s0)
     ctx->pc = 0x1b188cu;
@@ -89,7 +88,6 @@ label_1b188c:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x1b18a8u)) {
         return;
     }
-    ctx->pc = 0x1B18A8u;
 label_1b18a8:
     // 0x1b18a8: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1b18a8u;

@@ -13,7 +13,7 @@
 
 // Function: cFont_setMessageTextures
 // Address: 0x2a4c38 - 0x2a4cb0
-void cFont_setMessageTextures_0x2a4c38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cFont_setMessageTextures_0x2a4c38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cFont_setMessageTextures_0x2a4c38");
 #endif
@@ -66,7 +66,6 @@ void cFont_setMessageTextures_0x2a4c38(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &SearchData_0x31ccf0, 0x31ccf0u, 0x2a4c6cu)) {
         return;
     }
-    ctx->pc = 0x2A4C6Cu;
 label_2a4c6c:
     // 0x2a4c6c: 0x8e06056c  lw          $a2, 0x56C($s0)
     ctx->pc = 0x2a4c6cu;
@@ -89,7 +88,6 @@ label_2a4c6c:
     if (!runtime->callDirectStatic(rdram, ctx, &SearchData_0x31ccf0, 0x31ccf0u, 0x2a4c84u)) {
         return;
     }
-    ctx->pc = 0x2A4C84u;
 label_2a4c84:
     // 0x2a4c84: 0x240202d  daddu       $a0, $s2, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -108,7 +106,6 @@ label_2a4c84:
     if (!runtime->callDirectStatic(rdram, ctx, &cFont_setTextureAddr_0x2a4cb0, 0x2a4cb0u, 0x2a4c98u)) {
         return;
     }
-    ctx->pc = 0x2A4C98u;
 label_2a4c98:
     // 0x2a4c98: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x2a4c98u;

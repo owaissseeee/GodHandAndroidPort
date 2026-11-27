@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Or_Field_16D0_Bit_20000000_272570
 // Address: 0x272570 - 0x272588
-void Obj0000_Or_Field_16D0_Bit_20000000_272570_0x272570(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Or_Field_16D0_Bit_20000000_272570_0x272570(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Or_Field_16D0_Bit_20000000_272570_0x272570");
 #endif

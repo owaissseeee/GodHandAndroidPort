@@ -13,7 +13,7 @@
 
 // Function: mwPlyCalcWorkCprmSfd
 // Address: 0x342f98 - 0x342ff8
-void mwPlyCalcWorkCprmSfd_0x342f98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void mwPlyCalcWorkCprmSfd_0x342f98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("mwPlyCalcWorkCprmSfd_0x342f98");
 #endif
@@ -66,7 +66,6 @@ void mwPlyCalcWorkCprmSfd_0x342f98(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &MWSFSVM_Error_0x348be0, 0x348be0u, 0x342fbcu)) {
         return;
     }
-    ctx->pc = 0x342FBCu;
 label_342fbc:
     // 0x342fbc: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x342FBCu;
@@ -84,7 +83,6 @@ label_342fbc:
         }
     }
     // 0x342fc4: 0x0  nop
-    ctx->pc = 0x342fc4u;
     // NOP
 label_342fc8:
     // 0x342fc8: 0xc0d0ba2  jal         func_342E88
@@ -93,7 +91,6 @@ label_342fc8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00342E88_0x342e88, 0x342e88u, 0x342fd0u)) {
         return;
     }
-    ctx->pc = 0x342FD0u;
 label_342fd0:
     // 0x342fd0: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -108,10 +105,8 @@ label_342fd0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00342F40_0x342f40, 0x342f40u, 0x342fdcu)) {
         return;
     }
-    ctx->pc = 0x342FDCu;
 label_342fdc:
     // 0x342fdc: 0x2021021  addu        $v0, $s0, $v0
-    ctx->pc = 0x342fdcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), GPR_U32(ctx, 2)));
 label_342fe0:
     // 0x342fe0: 0xdfb00000  ld          $s0, 0x0($sp)

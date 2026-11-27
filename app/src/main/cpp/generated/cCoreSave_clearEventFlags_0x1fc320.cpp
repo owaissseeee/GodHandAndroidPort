@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_clearEventFlags
 // Address: 0x1fc320 - 0x1fc338
-void cCoreSave_clearEventFlags_0x1fc320(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_clearEventFlags_0x1fc320(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_clearEventFlags_0x1fc320");
 #endif
@@ -37,7 +37,6 @@ void cCoreSave_clearEventFlags_0x1fc320(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_1fc32c;
         }
     }
-    ctx->pc = 0x1FC32Cu;
 label_1fc32c:
     // 0x1fc32c: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC32Cu;

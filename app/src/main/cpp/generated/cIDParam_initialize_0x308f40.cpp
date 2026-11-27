@@ -13,7 +13,7 @@
 
 // Function: cIDParam_initialize
 // Address: 0x308f40 - 0x309000
-void cIDParam_initialize_0x308f40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDParam_initialize_0x308f40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDParam_initialize_0x308f40");
 #endif
@@ -49,7 +49,6 @@ void cIDParam_initialize_0x308f40(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x308f5cu)) {
         return;
     }
-    ctx->pc = 0x308F5Cu;
 label_308f5c:
     // 0x308f5c: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));

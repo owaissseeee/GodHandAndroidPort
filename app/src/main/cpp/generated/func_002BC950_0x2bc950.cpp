@@ -13,7 +13,7 @@
 
 // Function: func_002BC950
 // Address: 0x2bc950 - 0x2bcb80
-void func_002BC950_0x2bc950(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002BC950_0x2bc950(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002BC950_0x2bc950");
 #endif
@@ -80,7 +80,6 @@ void func_002BC950_0x2bc950(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BB868_0x2bb868, 0x2bb868u, 0x2bc994u)) {
         return;
     }
-    ctx->pc = 0x2BC994u;
 label_2bc994:
     // 0x2bc994: 0x10500019  beq         $v0, $s0, . + 4 + (0x19 << 2)
     ctx->pc = 0x2BC994u;
@@ -110,7 +109,6 @@ label_2bc994:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BB868_0x2bb868, 0x2bb868u, 0x2bc9a8u)) {
         return;
     }
-    ctx->pc = 0x2BC9A8u;
 label_2bc9a8:
     // 0x2bc9a8: 0x1050006b  beq         $v0, $s0, . + 4 + (0x6B << 2)
     ctx->pc = 0x2BC9A8u;
@@ -159,7 +157,6 @@ label_2bc9a8:
     // 0x2bc9d4: 0x46000864  .word       0x46000864                   # cvt.w.s     $f1, $f1 # 00000000 <InstrIdType: CPU_COP1_FPUS>
     { int32_t tmp = FPU_CVT_W_S(ctx->f[1]); std::memcpy(&ctx->f[1], &tmp, sizeof(tmp)); }
     // 0x2bc9d8: 0x44140800  mfc1        $s4, $f1
-    ctx->pc = 0x2bc9d8u;
     { uint32_t bits; std::memcpy(&bits, &ctx->f[1], sizeof(bits)); SET_GPR_U32(ctx, 20, bits); }
 label_2bc9dc:
     // 0x2bc9dc: 0x26820001  addiu       $v0, $s4, 0x1
@@ -194,7 +191,6 @@ label_2bc9dc:
             goto label_2bca1c;
         }
     }
-    ctx->pc = 0x2BC9FCu;
 label_2bc9fc:
     // 0x2bc9fc: 0x10000056  b           . + 4 + (0x56 << 2)
     ctx->pc = 0x2BC9FCu;
@@ -211,7 +207,6 @@ label_2bc9fc:
             goto label_2bcb58;
         }
     }
-    ctx->pc = 0x2BCA04u;
 label_2bca04:
     // 0x2bca04: 0x30420001  andi        $v0, $v0, 0x1
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
@@ -224,7 +219,6 @@ label_2bca04:
     // 0x2bca14: 0x46806b60  cvt.s.w     $f13, $f13
     { int32_t tmp; std::memcpy(&tmp, &ctx->f[13], sizeof(tmp)); ctx->f[13] = FPU_CVT_S_W(tmp); }
     // 0x2bca18: 0x460d6b40  add.s       $f13, $f13, $f13
-    ctx->pc = 0x2bca18u;
     ctx->f[13] = FPU_ADD_S(ctx->f[13], ctx->f[13]);
 label_2bca1c:
     // 0x2bca1c: 0x0  nop
@@ -307,7 +301,6 @@ label_2bca70:
     if (!runtime->callDirectStatic(rdram, ctx, &Tramp_001F7DF8_00101E28_0x101e28, 0x101e28u, 0x2bca7cu)) {
         return;
     }
-    ctx->pc = 0x2BCA7Cu;
 label_2bca7c:
     // 0x2bca7c: 0x46000086  mov.s       $f2, $f0
     ctx->f[2] = FPU_MOV_S(ctx->f[0]);
@@ -443,7 +436,6 @@ label_2bcaf8:
         }
     }
     // 0x2bcb1c: 0x24110001  addiu       $s1, $zero, 0x1
-    ctx->pc = 0x2bcb1cu;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2bcb20:
     // 0x2bcb20: 0xdba40010  lqc2        $vf4, 0x10($sp)
@@ -472,7 +464,6 @@ label_2bcb20:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BB868_0x2bb868, 0x2bb868u, 0x2bcb40u)) {
         return;
     }
-    ctx->pc = 0x2BCB40u;
 label_2bcb40:
     // 0x2bcb40: 0x1051ffae  beq         $v0, $s1, . + 4 + (-0x52 << 2)
     ctx->pc = 0x2BCB40u;
@@ -506,10 +497,8 @@ label_2bcb40:
             goto label_2bcb20;
         }
     }
-    ctx->pc = 0x2BCB54u;
 label_2bcb54:
     // 0x2bcb54: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2bcb54u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2bcb58:
     // 0x2bcb58: 0x7bb00080  lq          $s0, 0x80($sp)

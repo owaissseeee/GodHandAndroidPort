@@ -13,7 +13,7 @@
 
 // Function: cBgmData_GetHeadPtr
 // Address: 0x2d04f8 - 0x2d0528
-void cBgmData_GetHeadPtr_0x2d04f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cBgmData_GetHeadPtr_0x2d04f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cBgmData_GetHeadPtr_0x2d04f8");
 #endif
@@ -45,7 +45,6 @@ void cBgmData_GetHeadPtr_0x2d04f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &cBgmData_IsReady_0x2cff68, 0x2cff68u, 0x2d050cu)) {
         return;
     }
-    ctx->pc = 0x2D050Cu;
 label_2d050c:
     // 0x2d050c: 0x10400002  beqz        $v0, . + 4 + (0x2 << 2)
     ctx->pc = 0x2D050Cu;

@@ -13,7 +13,7 @@
 
 // Function: SetFlagAndForward_325EF8
 // Address: 0x325ef8 - 0x325f20
-void SetFlagAndForward_325EF8_0x325ef8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetFlagAndForward_325EF8_0x325ef8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetFlagAndForward_325EF8_0x325ef8");
 #endif

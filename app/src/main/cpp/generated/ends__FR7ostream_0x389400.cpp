@@ -13,7 +13,7 @@
 
 // Function: ends__FR7ostream
 // Address: 0x389400 - 0x389438
-void ends__FR7ostream_0x389400(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ends__FR7ostream_0x389400(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ends__FR7ostream_0x389400");
 #endif
@@ -52,7 +52,6 @@ void ends__FR7ostream_0x389400(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_putc_0x38eb28, 0x38eb28u, 0x389420u)) {
         return;
     }
-    ctx->pc = 0x389420u;
 label_389420:
     // 0x389420: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

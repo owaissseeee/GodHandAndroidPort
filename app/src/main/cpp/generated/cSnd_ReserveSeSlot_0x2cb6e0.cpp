@@ -13,7 +13,7 @@
 
 // Function: cSnd_ReserveSeSlot
 // Address: 0x2cb6e0 - 0x2cb778
-void cSnd_ReserveSeSlot_0x2cb6e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_ReserveSeSlot_0x2cb6e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_ReserveSeSlot_0x2cb6e0");
 #endif
@@ -59,7 +59,6 @@ void cSnd_ReserveSeSlot_0x2cb6e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_FindSeSlotById_0x2cc0c0, 0x2cc0c0u, 0x2cb704u)) {
         return;
     }
-    ctx->pc = 0x2CB704u;
 label_2cb704:
     // 0x2cb704: 0x2412ffff  addiu       $s2, $zero, -0x1
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
@@ -91,7 +90,6 @@ label_2cb704:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_FindFreeSeSlot_0x2cc050, 0x2cc050u, 0x2cb71cu)) {
         return;
     }
-    ctx->pc = 0x2CB71Cu;
 label_2cb71c:
     // 0x2cb71c: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -121,7 +119,6 @@ label_2cb71c:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_GetSeData_0x2cc4b8, 0x2cc4b8u, 0x2cb730u)) {
         return;
     }
-    ctx->pc = 0x2CB730u;
 label_2cb730:
     // 0x2cb730: 0x3c077fff  lui         $a3, 0x7FFF
     SET_GPR_S32(ctx, 7, (int32_t)((uint32_t)32767 << 16));
@@ -142,7 +139,6 @@ label_2cb730:
     if (!runtime->callDirectStatic(rdram, ctx, &cSeData_LoadFromBuf_0x2cf760, 0x2cf760u, 0x2cb748u)) {
         return;
     }
-    ctx->pc = 0x2CB748u;
 label_2cb748:
     // 0x2cb748: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -161,10 +157,8 @@ label_2cb748:
             goto label_2cb758;
         }
     }
-    ctx->pc = 0x2CB754u;
 label_2cb754:
     // 0x2cb754: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x2cb754u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_2cb758:
     // 0x2cb758: 0x7bb00040  lq          $s0, 0x40($sp)

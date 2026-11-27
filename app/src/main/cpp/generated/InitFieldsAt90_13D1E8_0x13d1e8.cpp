@@ -13,7 +13,7 @@
 
 // Function: InitFieldsAt90_13D1E8
 // Address: 0x13d1e8 - 0x13d200
-void InitFieldsAt90_13D1E8_0x13d1e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitFieldsAt90_13D1E8_0x13d1e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitFieldsAt90_13D1E8_0x13d1e8");
 #endif

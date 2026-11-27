@@ -13,7 +13,7 @@
 
 // Function: cModel_removeMesh
 // Address: 0x14b798 - 0x14b810
-void cModel_removeMesh_0x14b798(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cModel_removeMesh_0x14b798(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cModel_removeMesh_0x14b798");
 #endif
@@ -53,7 +53,6 @@ void cModel_removeMesh_0x14b798(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_14b7dc;
         }
     }
-    ctx->pc = 0x14B7B8u;
 label_14b7b8:
     // 0x14b7b8: 0x922202b1  lbu         $v0, 0x2B1($s1)
     ctx->pc = 0x14b7b8u;
@@ -76,7 +75,6 @@ label_14b7b8:
     if (!runtime->callDirectStatic(rdram, ctx, &Forward1494F8_149350_0x149350, 0x149350u, 0x14b7d0u)) {
         return;
     }
-    ctx->pc = 0x14B7D0u;
 label_14b7d0:
     // 0x14b7d0: 0x200182d  daddu       $v1, $s0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -98,7 +96,6 @@ label_14b7d0:
             goto label_14b7b8;
         }
     }
-    ctx->pc = 0x14B7DCu;
 label_14b7dc:
     // 0x14b7dc: 0x44806000  mtc1        $zero, $f12
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[12], &bits, sizeof(bits)); }
@@ -123,7 +120,6 @@ label_14b7dc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F8A88_0x1f8a88, 0x1f8a88u, 0x14b7fcu)) {
         return;
     }
-    ctx->pc = 0x14B7FCu;
 label_14b7fc:
     // 0x14b7fc: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x14b7fcu;

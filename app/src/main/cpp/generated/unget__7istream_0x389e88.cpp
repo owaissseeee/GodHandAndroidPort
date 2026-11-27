@@ -13,7 +13,7 @@
 
 // Function: unget__7istream
 // Address: 0x389e88 - 0x389ed8
-void unget__7istream_0x389e88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void unget__7istream_0x389e88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("unget__7istream_0x389e88");
 #endif
@@ -68,7 +68,6 @@ void unget__7istream_0x389e88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &Tramp__IO_sungetc_38B480_0x38b480, 0x38b480u, 0x389eb0u)) {
         return;
     }
-    ctx->pc = 0x389EB0u;
 label_389eb0:
     // 0x389eb0: 0x2403ffff  addiu       $v1, $zero, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));

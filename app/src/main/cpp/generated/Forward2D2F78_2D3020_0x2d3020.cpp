@@ -13,7 +13,7 @@
 
 // Function: Forward2D2F78_2D3020
 // Address: 0x2d3020 - 0x2d3050
-void Forward2D2F78_2D3020_0x2d3020(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Forward2D2F78_2D3020_0x2d3020(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Forward2D2F78_2D3020_0x2d3020");
 #endif
@@ -50,7 +50,6 @@ void Forward2D2F78_2D3020_0x2d3020(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &ReqQueue_push_0x2d2f78, 0x2d2f78u, 0x2d3040u)) {
         return;
     }
-    ctx->pc = 0x2D3040u;
 label_2d3040:
     // 0x2d3040: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2d3040u;

@@ -13,7 +13,7 @@
 
 // Function: cSeData_HasLoadBits
 // Address: 0x2cfd38 - 0x2cfd50
-void cSeData_HasLoadBits_0x2cfd38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSeData_HasLoadBits_0x2cfd38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSeData_HasLoadBits_0x2cfd38");
 #endif

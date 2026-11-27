@@ -13,7 +13,7 @@
 
 // Function: MtxCopy
 // Address: 0x147528 - 0x147548
-void MtxCopy_0x147528(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MtxCopy_0x147528(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MtxCopy_0x147528");
 #endif
@@ -37,7 +37,6 @@ void MtxCopy_0x147528(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0CopyMatrix_0x30a548, 0x30a548u, 0x147538u)) {
         return;
     }
-    ctx->pc = 0x147538u;
 label_147538:
     // 0x147538: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x147538u;

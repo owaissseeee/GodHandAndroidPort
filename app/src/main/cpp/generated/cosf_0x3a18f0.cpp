@@ -6,6 +6,7 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,7 +14,7 @@
 
 // Function: cosf
 // Address: 0x3a18f0 - 0x3a19d8
-void cosf_0x3a18f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cosf_0x3a18f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cosf_0x3a18f0");
 #endif
@@ -29,6 +30,17 @@ void cosf_0x3a18f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             default: break;
         }
     }
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    if (__builtin_expect(ctx->pc == 0x3a18f0u, 1)) {
+        const float x = ctx->f[12];
+        if (__builtin_expect(std::isfinite(x) && std::fabs(x) < 1e6f, 1)) {
+            ctx->f[0] = std::cosf(x);
+            ps2FastReturn(rdram, ctx, runtime, 0x3A19D0u);
+            return;
+        }
+    }
+#endif
 
 
     // 0x3a18f0: 0x44026000  mfc1        $v0, $f12
@@ -72,7 +84,6 @@ void cosf_0x3a18f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___kernel_cosf_0x3a3c80, 0x3a3c80u, 0x3a1928u)) {
         return;
     }
-    ctx->pc = 0x3A1928u;
 label_3a1928:
     // 0x3a1928: 0x10000029  b           . + 4 + (0x29 << 2)
     ctx->pc = 0x3A1928u;
@@ -89,7 +100,6 @@ label_3a1928:
             goto label_3a19d0;
         }
     }
-    ctx->pc = 0x3A1930u;
 label_3a1930:
     // 0x3a1930: 0x3c027f7f  lui         $v0, 0x7F7F
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)32639 << 16));
@@ -121,7 +131,6 @@ label_3a1930:
             goto label_3a19cc;
         }
     }
-    ctx->pc = 0x3A194Cu;
 label_3a194c:
     // 0x3a194c: 0xc0e8dda  jal         func_3A3768
     SET_GPR_U32(ctx, 31, 0x3A1954u);
@@ -134,7 +143,6 @@ label_3a194c:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___ieee754_rem_pio2f_0x3a3768, 0x3a3768u, 0x3a1954u)) {
         return;
     }
-    ctx->pc = 0x3A1954u;
 label_3a1954:
     // 0x3a1954: 0x30430003  andi        $v1, $v0, 0x3
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)3);
@@ -200,7 +208,6 @@ label_3a1954:
             goto label_3a19c4;
         }
     }
-    ctx->pc = 0x3A197Cu;
 label_3a197c:
     // 0x3a197c: 0x1062000d  beq         $v1, $v0, . + 4 + (0xD << 2)
     ctx->pc = 0x3A197Cu;
@@ -232,7 +239,6 @@ label_3a197c:
             goto label_3a19c4;
         }
     }
-    ctx->pc = 0x3A198Cu;
 label_3a198c:
     // 0x3a198c: 0xc0e8f20  jal         func_3A3C80
     SET_GPR_U32(ctx, 31, 0x3A1994u);
@@ -245,7 +251,6 @@ label_3a198c:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___kernel_cosf_0x3a3c80, 0x3a3c80u, 0x3a1994u)) {
         return;
     }
-    ctx->pc = 0x3A1994u;
 label_3a1994:
     // 0x3a1994: 0x1000000e  b           . + 4 + (0xE << 2)
     ctx->pc = 0x3A1994u;
@@ -262,7 +267,6 @@ label_3a1994:
             goto label_3a19d0;
         }
     }
-    ctx->pc = 0x3A199Cu;
 label_3a199c:
     // 0x3a199c: 0xc7ac0000  lwc1        $f12, 0x0($sp)
     ctx->pc = 0x3a199cu;
@@ -280,7 +284,6 @@ label_3a199c:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___kernel_sinf_0x3a4728, 0x3a4728u, 0x3a19acu)) {
         return;
     }
-    ctx->pc = 0x3A19ACu;
 label_3a19ac:
     // 0x3a19ac: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x3A19ACu;
@@ -297,7 +300,6 @@ label_3a19ac:
             goto label_3a19cc;
         }
     }
-    ctx->pc = 0x3A19B4u;
 label_3a19b4:
     // 0x3a19b4: 0xc0e8f20  jal         func_3A3C80
     SET_GPR_U32(ctx, 31, 0x3A19BCu);
@@ -310,7 +312,6 @@ label_3a19b4:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___kernel_cosf_0x3a3c80, 0x3a3c80u, 0x3a19bcu)) {
         return;
     }
-    ctx->pc = 0x3A19BCu;
 label_3a19bc:
     // 0x3a19bc: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x3A19BCu;
@@ -327,7 +328,6 @@ label_3a19bc:
             goto label_3a19cc;
         }
     }
-    ctx->pc = 0x3A19C4u;
 label_3a19c4:
     // 0x3a19c4: 0xc0e91ca  jal         func_3A4728
     SET_GPR_U32(ctx, 31, 0x3A19CCu);
@@ -340,7 +340,6 @@ label_3a19c4:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___kernel_sinf_0x3a4728, 0x3a4728u, 0x3a19ccu)) {
         return;
     }
-    ctx->pc = 0x3A19CCu;
 label_3a19cc:
     // 0x3a19cc: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x3a19ccu;

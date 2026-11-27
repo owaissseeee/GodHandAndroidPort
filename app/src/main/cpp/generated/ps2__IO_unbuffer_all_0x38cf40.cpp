@@ -13,7 +13,7 @@
 
 // Function: _IO_unbuffer_all
 // Address: 0x38cf40 - 0x38cfa0
-void ps2__IO_unbuffer_all_0x38cf40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_unbuffer_all_0x38cf40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_unbuffer_all_0x38cf40");
 #endif
@@ -48,15 +48,12 @@ void ps2__IO_unbuffer_all_0x38cf40(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         }
     }
 
-    ctx->pc = 0x38cf40u;
 
 label_38cf40:
     // 0x38cf40: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x38cf40u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
 label_38cf44:
     // 0x38cf44: 0x3c02003f  lui         $v0, 0x3F
-    ctx->pc = 0x38cf44u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)63 << 16));
 label_38cf48:
     // 0x38cf48: 0xffb00000  sd          $s0, 0x0($sp)
@@ -93,14 +90,12 @@ label_38cf54:
             goto label_38cf90;
         }
     }
-    ctx->pc = 0x38CF58u;
 label_38cf58:
     // 0x38cf58: 0x8e020000  lw          $v0, 0x0($s0)
     ctx->pc = 0x38cf58u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 0)));
 label_38cf5c:
     // 0x38cf5c: 0x0  nop
-    ctx->pc = 0x38cf5cu;
     // NOP
 label_38cf60:
     // 0x38cf60: 0x30420002  andi        $v0, $v0, 0x2
@@ -133,18 +128,15 @@ label_38cf68:
             goto label_38cf88;
         }
     }
-    ctx->pc = 0x38CF6Cu;
 label_38cf6c:
     // 0x38cf6c: 0x8e030050  lw          $v1, 0x50($s0)
     ctx->pc = 0x38cf6cu;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 80)));
 label_38cf70:
     // 0x38cf70: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x38cf70u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_38cf74:
     // 0x38cf74: 0x282d  daddu       $a1, $zero, $zero
-    ctx->pc = 0x38cf74u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_38cf78:
     // 0x38cf78: 0x8c620054  lw          $v0, 0x54($v1)
@@ -178,7 +170,6 @@ label_38cf80:
             return;
         }
     }
-    ctx->pc = 0x38CF84u;
 label_38cf84:
     // 0x38cf84: 0x8e100034  lw          $s0, 0x34($s0)
     ctx->pc = 0x38cf84u;
@@ -213,7 +204,6 @@ label_38cf8c:
             goto label_38cf60;
         }
     }
-    ctx->pc = 0x38CF90u;
 label_38cf90:
     // 0x38cf90: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x38cf90u;

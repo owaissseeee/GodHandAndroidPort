@@ -13,7 +13,7 @@
 
 // Function: sceSifAllocIopHeap
 // Address: 0x3b5968 - 0x3b59d8
-void sceSifAllocIopHeap_0x3b5968(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSifAllocIopHeap_0x3b5968(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSifAllocIopHeap_0x3b5968");
 #endif
@@ -90,7 +90,6 @@ void sceSifAllocIopHeap_0x3b5968(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B3128u, 0x3B59B4u, 0x3B59BCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3B59BCu;
 label_3b59bc:
     // 0x3b59bc: 0x4410002  bgez        $v0, . + 4 + (0x2 << 2)
     ctx->pc = 0x3B59BCu;
@@ -107,10 +106,8 @@ label_3b59bc:
             goto label_3b59c8;
         }
     }
-    ctx->pc = 0x3B59C4u;
 label_3b59c4:
     // 0x3b59c4: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x3b59c4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_3b59c8:
     // 0x3b59c8: 0xdfbf0020  ld          $ra, 0x20($sp)

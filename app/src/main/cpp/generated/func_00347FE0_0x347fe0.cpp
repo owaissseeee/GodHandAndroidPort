@@ -13,7 +13,7 @@
 
 // Function: func_00347FE0
 // Address: 0x347fe0 - 0x348098
-void func_00347FE0_0x347fe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00347FE0_0x347fe0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00347FE0_0x347fe0");
 #endif
@@ -52,7 +52,6 @@ void func_00347FE0_0x347fe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_00346968_0x346968, 0x346968u, 0x347ffcu)) {
         return;
     }
-    ctx->pc = 0x347FFCu;
 label_347ffc:
     // 0x347ffc: 0x8e0302e4  lw          $v1, 0x2E4($s0)
     ctx->pc = 0x347ffcu;
@@ -126,7 +125,6 @@ label_347ffc:
             goto label_34807c;
         }
     }
-    ctx->pc = 0x348030u;
 label_348030:
     // 0x348030: 0x5062000d  beql        $v1, $v0, . + 4 + (0xD << 2)
     ctx->pc = 0x348030u;
@@ -158,7 +156,6 @@ label_348030:
             goto label_34807c;
         }
     }
-    ctx->pc = 0x348040u;
 label_348040:
     // 0x348040: 0xc0d1e5a  jal         func_347968
     SET_GPR_U32(ctx, 31, 0x348048u);
@@ -171,7 +168,6 @@ label_348040:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00347968_0x347968, 0x347968u, 0x348048u)) {
         return;
     }
-    ctx->pc = 0x348048u;
 label_348048:
     // 0x348048: 0x1000000c  b           . + 4 + (0xC << 2)
     ctx->pc = 0x348048u;
@@ -188,7 +184,6 @@ label_348048:
             goto label_34807c;
         }
     }
-    ctx->pc = 0x348050u;
 label_348050:
     // 0x348050: 0x8e0502ec  lw          $a1, 0x2EC($s0)
     ctx->pc = 0x348050u;
@@ -204,7 +199,6 @@ label_348050:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00347BC0_0x347bc0, 0x347bc0u, 0x34805cu)) {
         return;
     }
-    ctx->pc = 0x34805Cu;
 label_34805c:
     // 0x34805c: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x34805Cu;
@@ -222,7 +216,6 @@ label_34805c:
         }
     }
     // 0x348064: 0x0  nop
-    ctx->pc = 0x348064u;
     // NOP
 label_348068:
     // 0x348068: 0x200202d  daddu       $a0, $s0, $zero
@@ -241,7 +234,6 @@ label_348068:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00347D08_0x347d08, 0x347d08u, 0x348078u)) {
         return;
     }
-    ctx->pc = 0x348078u;
 label_348078:
     // 0x348078: 0x8e020300  lw          $v0, 0x300($s0)
     ctx->pc = 0x348078u;

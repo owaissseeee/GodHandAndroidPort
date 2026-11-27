@@ -13,7 +13,7 @@
 
 // Function: InitStateBytes_2478B8
 // Address: 0x2478b8 - 0x2478d8
-void InitStateBytes_2478B8_0x2478b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitStateBytes_2478B8_0x2478b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitStateBytes_2478B8_0x2478b8");
 #endif

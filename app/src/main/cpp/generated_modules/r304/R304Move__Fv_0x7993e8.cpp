@@ -14,12 +14,11 @@ namespace gh_r304
 {
 // Function: R304Move__Fv
 // Address: 0x7993e8 - 0x7993f0
-void R304Move__Fv_0x7993e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void R304Move__Fv_0x7993e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("R304Move__Fv_0x7993e8");
 #endif
 
-    ctx->pc = 0x7993e8u;
 
     // 0x7993e8: 0x3e00008  jr          $ra
     ctx->pc = 0x7993E8u;

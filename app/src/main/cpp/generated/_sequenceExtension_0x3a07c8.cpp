@@ -13,7 +13,7 @@
 
 // Function: _sequenceExtension
 // Address: 0x3a07c8 - 0x3a0908
-void _sequenceExtension_0x3a07c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sequenceExtension_0x3a07c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sequenceExtension_0x3a07c8");
 #endif
@@ -85,7 +85,6 @@ void _sequenceExtension_0x3a07c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &_sceMpegNextBit_0x39eaa8, 0x39eaa8u, 0x3a0818u)) {
         return;
     }
-    ctx->pc = 0x3A0818u;
 label_3a0818:
     // 0x3a0818: 0x40902d  daddu       $s2, $v0, $zero
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -135,7 +134,6 @@ label_3a0818:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x39C390u, 0x3A084Cu, 0x3A0854u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3A0854u;
 label_3a0854:
     // 0x3a0854: 0x1214c2  srl         $v0, $s2, 19
     SET_GPR_S32(ctx, 2, (int32_t)SRL32(GPR_U32(ctx, 18), 19));
@@ -159,7 +157,6 @@ label_3a0854:
     if (!runtime->callDirectStatic(rdram, ctx, &_sceMpegNextBit_0x39eaa8, 0x39eaa8u, 0x3a0870u)) {
         return;
     }
-    ctx->pc = 0x3A0870u;
 label_3a0870:
     // 0x3a0870: 0x29202  srl         $s2, $v0, 8
     SET_GPR_S32(ctx, 18, (int32_t)SRL32(GPR_U32(ctx, 2), 8));
@@ -223,7 +220,6 @@ label_3a0870:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x39C390u, 0x3A0894u, 0x3A089Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3A089Cu;
 label_3a089c:
     // 0x3a089c: 0x8e240134  lw          $a0, 0x134($s1)
     ctx->pc = 0x3a089cu;

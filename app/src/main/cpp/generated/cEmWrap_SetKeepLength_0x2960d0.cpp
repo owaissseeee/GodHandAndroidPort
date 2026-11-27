@@ -13,7 +13,7 @@
 
 // Function: cEmWrap_SetKeepLength
 // Address: 0x2960d0 - 0x296130
-void cEmWrap_SetKeepLength_0x2960d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmWrap_SetKeepLength_0x2960d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmWrap_SetKeepLength_0x2960d0");
 #endif
@@ -52,7 +52,6 @@ void cEmWrap_SetKeepLength_0x2960d0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &FindResolveActor_295978_0x295978, 0x295978u, 0x2960ecu)) {
         return;
     }
-    ctx->pc = 0x2960ECu;
 label_2960ec:
     // 0x2960ec: 0x1040000a  beqz        $v0, . + 4 + (0xA << 2)
     ctx->pc = 0x2960ECu;
@@ -85,7 +84,6 @@ label_2960ec:
     if (!runtime->callDirectStatic(rdram, ctx, &strcmp_0x3a5678, 0x3a5678u, 0x296104u)) {
         return;
     }
-    ctx->pc = 0x296104u;
 label_296104:
     // 0x296104: 0x54400005  bnel        $v0, $zero, . + 4 + (0x5 << 2)
     ctx->pc = 0x296104u;
@@ -116,7 +114,6 @@ label_296104:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0026E7A0_0x26e7a0, 0x26e7a0u, 0x296118u)) {
         return;
     }
-    ctx->pc = 0x296118u;
 label_296118:
     // 0x296118: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x296118u;

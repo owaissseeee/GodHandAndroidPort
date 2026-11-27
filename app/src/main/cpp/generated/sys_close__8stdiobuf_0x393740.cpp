@@ -13,7 +13,7 @@
 
 // Function: sys_close__8stdiobuf
 // Address: 0x393740 - 0x393770
-void sys_close__8stdiobuf_0x393740(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sys_close__8stdiobuf_0x393740(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sys_close__8stdiobuf_0x393740");
 #endif
@@ -47,7 +47,6 @@ void sys_close__8stdiobuf_0x393740(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &fclose_0x3a5f68, 0x3a5f68u, 0x393758u)) {
         return;
     }
-    ctx->pc = 0x393758u;
 label_393758:
     // 0x393758: 0xae000058  sw          $zero, 0x58($s0)
     ctx->pc = 0x393758u;

@@ -13,7 +13,7 @@
 
 // Function: viBufCreate
 // Address: 0x355910 - 0x355988
-void viBufCreate_0x355910(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void viBufCreate_0x355910(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("viBufCreate_0x355910");
 #endif
@@ -85,7 +85,6 @@ void viBufCreate_0x355910(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &CreateSema_0x3afca0, 0x3afca0u, 0x355964u)) {
         return;
     }
-    ctx->pc = 0x355964u;
 label_355964:
     // 0x355964: 0xae020040  sw          $v0, 0x40($s0)
     ctx->pc = 0x355964u;
@@ -101,7 +100,6 @@ label_355964:
     if (!runtime->callDirectStatic(rdram, ctx, &viBufReset_0x355988, 0x355988u, 0x355970u)) {
         return;
     }
-    ctx->pc = 0x355970u;
 label_355970:
     // 0x355970: 0xfe000048  sd          $zero, 0x48($s0)
     ctx->pc = 0x355970u;

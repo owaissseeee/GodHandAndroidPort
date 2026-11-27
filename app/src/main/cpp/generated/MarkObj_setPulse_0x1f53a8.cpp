@@ -13,7 +13,7 @@
 
 // Function: MarkObj_setPulse
 // Address: 0x1f53a8 - 0x1f5478
-void MarkObj_setPulse_0x1f53a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MarkObj_setPulse_0x1f53a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MarkObj_setPulse_0x1f53a8");
 #endif
@@ -72,7 +72,6 @@ void MarkObj_setPulse_0x1f53a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMoveOffsetPosXSin_0x2d67b0, 0x2d67b0u, 0x1f53d4u)) {
         return;
     }
-    ctx->pc = 0x1F53D4u;
 label_1f53d4:
     // 0x1f53d4: 0x2405ff00  addiu       $a1, $zero, -0x100
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967040));
@@ -139,7 +138,6 @@ label_1f53d4:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetColorAnimSin_0x2d6910, 0x2d6910u, 0x1f5448u)) {
         return;
     }
-    ctx->pc = 0x1F5448u;
 label_1f5448:
     // 0x1f5448: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x1F5448u;
@@ -156,7 +154,6 @@ label_1f5448:
             goto label_1f5464;
         }
     }
-    ctx->pc = 0x1F5450u;
 label_1f5450:
     // 0x1f5450: 0xc0b5a1c  jal         func_2D6870
     SET_GPR_U32(ctx, 31, 0x1F5458u);
@@ -169,7 +166,6 @@ label_1f5450:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_ResetMoveOffsetPos_0x2d6870, 0x2d6870u, 0x1f5458u)) {
         return;
     }
-    ctx->pc = 0x1F5458u;
 label_1f5458:
     // 0x1f5458: 0xc0b5a52  jal         func_2D6948
     SET_GPR_U32(ctx, 31, 0x1F5460u);
@@ -182,7 +178,6 @@ label_1f5458:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_ResetColorAnim_0x2d6948, 0x2d6948u, 0x1f5460u)) {
         return;
     }
-    ctx->pc = 0x1F5460u;
 label_1f5460:
     // 0x1f5460: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x1f5460u;

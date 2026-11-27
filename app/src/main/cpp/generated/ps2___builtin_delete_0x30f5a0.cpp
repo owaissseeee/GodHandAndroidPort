@@ -13,7 +13,7 @@
 
 // Function: __builtin_delete
 // Address: 0x30f5a0 - 0x30f5c8
-void ps2___builtin_delete_0x30f5a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___builtin_delete_0x30f5a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___builtin_delete_0x30f5a0");
 #endif
@@ -57,7 +57,6 @@ void ps2___builtin_delete_0x30f5a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x30F5B0u, 0x30F5B8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x30F5B8u;
 label_30f5b8:
     // 0x30f5b8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x30f5b8u;

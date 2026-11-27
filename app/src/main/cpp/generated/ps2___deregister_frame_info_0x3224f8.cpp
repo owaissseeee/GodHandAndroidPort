@@ -13,7 +13,7 @@
 
 // Function: __deregister_frame_info
 // Address: 0x3224f8 - 0x322570
-void ps2___deregister_frame_info_0x3224f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___deregister_frame_info_0x3224f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___deregister_frame_info_0x3224f8");
 #endif
@@ -55,7 +55,6 @@ void ps2___deregister_frame_info_0x3224f8(uint8_t* rdram, R5900Context* ctx, PS2
         }
     }
     // 0x322514: 0x0  nop
-    ctx->pc = 0x322514u;
     // NOP
 label_322518:
     // 0x322518: 0x8cb00000  lw          $s0, 0x0($a1)
@@ -108,7 +107,6 @@ label_322518:
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateGlobalPtrWithParam_3A7CC0_0x3a7cc0, 0x3a7cc0u, 0x32253cu)) {
         return;
     }
-    ctx->pc = 0x32253Cu;
 label_32253c:
     // 0x32253c: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x32253Cu;
@@ -125,7 +123,6 @@ label_32253c:
             goto label_322560;
         }
     }
-    ctx->pc = 0x322544u;
 label_322544:
     // 0x322544: 0x1440fff4  bnez        $v0, . + 4 + (-0xC << 2)
     ctx->pc = 0x322544u;
@@ -145,7 +142,6 @@ label_322544:
             goto label_322518;
         }
     }
-    ctx->pc = 0x32254Cu;
 label_32254c:
     // 0x32254c: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x32254cu;
@@ -163,10 +159,8 @@ label_32254c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3A7B48u, 0x322554u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x32255Cu;
 label_32255c:
     // 0x32255c: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x32255cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_322560:
     // 0x322560: 0xdfbf0010  ld          $ra, 0x10($sp)

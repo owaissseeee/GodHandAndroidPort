@@ -13,7 +13,7 @@
 
 // Function: cObj_Release
 // Address: 0x14e928 - 0x14e930
-void cObj_Release_0x14e928(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cObj_Release_0x14e928(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cObj_Release_0x14e928");
 #endif

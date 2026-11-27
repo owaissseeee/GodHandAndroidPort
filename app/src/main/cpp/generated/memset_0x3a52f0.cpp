@@ -6,6 +6,7 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,7 +14,7 @@
 
 // Function: memset
 // Address: 0x3a52f0 - 0x3a53a8
-void memset_0x3a52f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void memset_0x3a52f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("memset_0x3a52f0");
 #endif
@@ -26,6 +27,24 @@ void memset_0x3a52f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             default: break;
         }
     }
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    if (__builtin_expect(ctx->pc == 0x3a52f0u, 1)) {
+        const uint32_t n = GPR_U32(ctx, 6);
+        if (n == 0u) {
+            SET_GPR_U64(ctx, 2, GPR_U64(ctx, 4));
+            ps2FastReturn(rdram, ctx, runtime, 0x3A53A0u);
+            return;
+        }
+        uint8_t* const dst = ps2TryFastSpan(rdram, GPR_U32(ctx, 4), n);
+        if (__builtin_expect(dst != nullptr, 1)) {
+            std::memset(dst, static_cast<int>(GPR_U32(ctx, 5) & 0xFFu), n);
+            SET_GPR_U64(ctx, 2, GPR_U64(ctx, 4));
+            ps2FastReturn(rdram, ctx, runtime, 0x3A53A0u);
+            return;
+        }
+    }
+#endif
 
 
     // 0x3a52f0: 0x2cc20008  sltiu       $v0, $a2, 0x8
@@ -91,7 +110,6 @@ void memset_0x3a52f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
         }
     }
     // 0x3a5328: 0x70634389  pcpyld      $t0, $v1, $v1
-    ctx->pc = 0x3a5328u;
     SET_GPR_VEC(ctx, 8, PS2_PCPYLD(GPR_VEC(ctx, 3), GPR_VEC(ctx, 3)));
 label_3a532c:
     // 0x3a532c: 0x7ce80000  sq          $t0, 0x0($a3)
@@ -139,14 +157,12 @@ label_3a532c:
             goto label_3a535c;
         }
     }
-    ctx->pc = 0x3A5350u;
 label_3a5350:
     // 0x3a5350: 0x24c6fff8  addiu       $a2, $a2, -0x8
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 6), 4294967288));
     // 0x3a5354: 0x24e70008  addiu       $a3, $a3, 0x8
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 7), 8));
     // 0x3a5358: 0x2cc20008  sltiu       $v0, $a2, 0x8
-    ctx->pc = 0x3a5358u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 6) < (uint64_t)(int64_t)(int32_t)8) ? 1 : 0);
 label_3a535c:
     // 0x3a535c: 0x0  nop
@@ -170,7 +186,6 @@ label_3a535c:
         }
     }
     // 0x3a5368: 0xe0182d  daddu       $v1, $a3, $zero
-    ctx->pc = 0x3a5368u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 7) + (uint64_t)GPR_U64(ctx, 0));
 label_3a536c:
     // 0x3a536c: 0x3c02ffff  lui         $v0, 0xFFFF
@@ -191,7 +206,6 @@ label_3a536c:
     // 0x3a5380: 0x3c02ffff  lui         $v0, 0xFFFF
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)65535 << 16));
     // 0x3a5384: 0x3442ffff  ori         $v0, $v0, 0xFFFF
-    ctx->pc = 0x3a5384u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)65535);
 label_3a5388:
     // 0x3a5388: 0xa0650000  sb          $a1, 0x0($v1)
@@ -221,7 +235,6 @@ label_3a5388:
             goto label_3a5388;
         }
     }
-    ctx->pc = 0x3A53A0u;
 label_3a53a0:
     // 0x3a53a0: 0x3e00008  jr          $ra
     ctx->pc = 0x3A53A0u;

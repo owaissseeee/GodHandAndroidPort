@@ -13,7 +13,7 @@
 
 // Function: Obj1D00_SetState_7_16
 // Address: 0x1d0718 - 0x1d0738
-void Obj1D00_SetState_7_16_0x1d0718(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj1D00_SetState_7_16_0x1d0718(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj1D00_SetState_7_16_0x1d0718");
 #endif

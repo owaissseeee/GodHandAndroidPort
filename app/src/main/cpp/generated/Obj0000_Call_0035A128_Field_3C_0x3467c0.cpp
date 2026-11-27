@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Call_0035A128_Field_3C
 // Address: 0x3467c0 - 0x3467e8
-void Obj0000_Call_0035A128_Field_3C_0x3467c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Call_0035A128_Field_3C_0x3467c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Call_0035A128_Field_3C_0x3467c0");
 #endif

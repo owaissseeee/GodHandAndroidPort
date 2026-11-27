@@ -13,7 +13,7 @@
 
 // Function: func_002D4DA0
 // Address: 0x2d4da0 - 0x2d4dc8
-void func_002D4DA0_0x2d4da0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002D4DA0_0x2d4da0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002D4DA0_0x2d4da0");
 #endif
@@ -27,7 +27,6 @@ void func_002D4DA0_0x2d4da0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
 
 
     // 0x2d4da0: 0xf  sync
-    ctx->pc = 0x2d4da0u;
     // SYNC instruction - memory barrier
 // In recompiled code, we don't need explicit memory barriers
 label_2d4da4:

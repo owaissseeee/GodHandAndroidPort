@@ -78,5 +78,9 @@ namespace godhand
     void setStreamVolumes(float bgm, float voice);
     void reapplyStreamVolumes(uint8_t *rdram, R5900Context *ctx, PS2Runtime *runtime);
     bool checkStreamVolumesDirty();
+
+    // Opt-in Ultra Potato Mode (default OFF): skips shadows, reverb, and forces lowest GPU cost
+    void setUltraPotatoMode(bool enabled);
+    bool isUltraPotatoMode();
 }
 

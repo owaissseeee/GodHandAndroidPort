@@ -13,7 +13,7 @@
 
 // Function: chack_point_line
 // Address: 0x156918 - 0x1569a0
-void chack_point_line_0x156918(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void chack_point_line_0x156918(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("chack_point_line_0x156918");
 #endif
@@ -104,7 +104,6 @@ void chack_point_line_0x156918(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_156994;
         }
     }
-    ctx->pc = 0x156980u;
 label_156980:
     // 0x156980: 0x46061034  c.lt.s      $f2, $f6
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[2], ctx->f[6])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -126,7 +125,6 @@ label_156980:
         }
     }
     // 0x156990: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x156990u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_156994:
     // 0x156994: 0x3e00008  jr          $ra

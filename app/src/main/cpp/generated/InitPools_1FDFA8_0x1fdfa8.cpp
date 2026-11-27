@@ -13,7 +13,7 @@
 
 // Function: InitPools_1FDFA8
 // Address: 0x1fdfa8 - 0x1fdfd8
-void InitPools_1FDFA8_0x1fdfa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitPools_1FDFA8_0x1fdfa8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitPools_1FDFA8_0x1fdfa8");
 #endif
@@ -46,7 +46,6 @@ void InitPools_1FDFA8_0x1fdfa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &InitEntryPool_1FE188_0x1fe188, 0x1fe188u, 0x1fdfbcu)) {
         return;
     }
-    ctx->pc = 0x1FDFBCu;
 label_1fdfbc:
     // 0x1fdfbc: 0xc07f8ae  jal         func_1FE2B8
     SET_GPR_U32(ctx, 31, 0x1FDFC4u);
@@ -59,7 +58,6 @@ label_1fdfbc:
     if (!runtime->callDirectStatic(rdram, ctx, &InitNodePool_1FE2B8_0x1fe2b8, 0x1fe2b8u, 0x1fdfc4u)) {
         return;
     }
-    ctx->pc = 0x1FDFC4u;
 label_1fdfc4:
     // 0x1fdfc4: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1fdfc4u;

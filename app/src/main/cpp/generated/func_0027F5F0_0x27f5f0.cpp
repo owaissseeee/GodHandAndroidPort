@@ -13,7 +13,7 @@
 
 // Function: func_0027F5F0
 // Address: 0x27f5f0 - 0x27f6b0
-void func_0027F5F0_0x27f5f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0027F5F0_0x27f5f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0027F5F0_0x27f5f0");
 #endif
@@ -80,7 +80,6 @@ void func_0027F5F0_0x27f5f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_27f6a0;
         }
     }
-    ctx->pc = 0x27F61Cu;
 label_27f61c:
     // 0x27f61c: 0x920302f7  lbu         $v1, 0x2F7($s0)
     ctx->pc = 0x27f61cu;
@@ -115,7 +114,6 @@ label_27f61c:
             goto label_27f660;
         }
     }
-    ctx->pc = 0x27F630u;
 label_27f630:
     // 0x27f630: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -146,7 +144,6 @@ label_27f630:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x27f658u)) {
         return;
     }
-    ctx->pc = 0x27F658u;
 label_27f658:
     // 0x27f658: 0x1000000c  b           . + 4 + (0xC << 2)
     ctx->pc = 0x27F658u;
@@ -163,7 +160,6 @@ label_27f658:
             goto label_27f68c;
         }
     }
-    ctx->pc = 0x27F660u;
 label_27f660:
     // 0x27f660: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -194,7 +190,6 @@ label_27f660:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x27f688u)) {
         return;
     }
-    ctx->pc = 0x27F688u;
 label_27f688:
     // 0x27f688: 0x920202f6  lbu         $v0, 0x2F6($s0)
     ctx->pc = 0x27f688u;
@@ -217,7 +212,6 @@ label_27f694:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x27F694u, 0x27F69Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x27F69Cu;
 label_27f69c:
     // 0x27f69c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x27f69cu;

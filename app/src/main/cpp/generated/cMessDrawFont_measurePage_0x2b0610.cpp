@@ -13,7 +13,7 @@
 
 // Function: cMessDrawFont_measurePage
 // Address: 0x2b0610 - 0x2b0700
-void cMessDrawFont_measurePage_0x2b0610(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessDrawFont_measurePage_0x2b0610(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessDrawFont_measurePage_0x2b0610");
 #endif
@@ -77,7 +77,6 @@ void cMessDrawFont_measurePage_0x2b0610(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B0480_0x2b0480, 0x2b0480u, 0x2b0650u)) {
         return;
     }
-    ctx->pc = 0x2B0650u;
 label_2b0650:
     // 0x2b0650: 0x27b50010  addiu       $s5, $sp, 0x10
     SET_GPR_S32(ctx, 21, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
@@ -97,7 +96,6 @@ label_2b0650:
         }
     }
     // 0x2b065c: 0x0  nop
-    ctx->pc = 0x2b065cu;
     // NOP
 label_2b0660:
     // 0x2b0660: 0xc6410030  lwc1        $f1, 0x30($s2)
@@ -127,12 +125,10 @@ label_2b0660:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessCommon_getCodeSize_0x2af1f8, 0x2af1f8u, 0x2b0680u)) {
         return;
     }
-    ctx->pc = 0x2B0680u;
 label_2b0680:
     // 0x2b0680: 0x21040  sll         $v0, $v0, 1
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 1));
     // 0x2b0684: 0x2028021  addu        $s0, $s0, $v0
-    ctx->pc = 0x2b0684u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), GPR_U32(ctx, 2)));
 label_2b0688:
     // 0x2b0688: 0x200282d  daddu       $a1, $s0, $zero
@@ -154,7 +150,6 @@ label_2b0688:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2B0700u, 0x2B0698u, 0x2B06A0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2B06A0u;
 label_2b06a0:
     // 0x2b06a0: 0xc6600000  lwc1        $f0, 0x0($s3)
     ctx->pc = 0x2b06a0u;
@@ -207,7 +202,6 @@ label_2b06bc:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessCommon_isPageEndCode_0x2af0b8, 0x2af0b8u, 0x2b06d4u)) {
         return;
     }
-    ctx->pc = 0x2B06D4u;
 label_2b06d4:
     // 0x2b06d4: 0x1040ffe2  beqz        $v0, . + 4 + (-0x1E << 2)
     ctx->pc = 0x2B06D4u;

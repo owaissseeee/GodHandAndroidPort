@@ -13,7 +13,7 @@
 
 // Function: ObjList_queueObj
 // Address: 0x1505a8 - 0x150608
-void ObjList_queueObj_0x1505a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ObjList_queueObj_0x1505a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ObjList_queueObj_0x1505a8");
 #endif
@@ -48,11 +48,9 @@ void ObjList_queueObj_0x1505a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
         }
     }
 
-    ctx->pc = 0x1505a8u;
 
 label_1505a8:
     // 0x1505a8: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x1505a8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
 label_1505ac:
     // 0x1505ac: 0x7fb00020  sq          $s0, 0x20($sp)
@@ -64,7 +62,6 @@ label_1505b0:
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 17));
 label_1505b4:
     // 0x1505b4: 0xa0802d  daddu       $s0, $a1, $zero
-    ctx->pc = 0x1505b4u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
 label_1505b8:
     // 0x1505b8: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -97,18 +94,15 @@ label_1505c0:
             goto label_1505f4;
         }
     }
-    ctx->pc = 0x1505C4u;
 label_1505c4:
     // 0x1505c4: 0x8e22001c  lw          $v0, 0x1C($s1)
     ctx->pc = 0x1505c4u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 28)));
 label_1505c8:
     // 0x1505c8: 0x24050002  addiu       $a1, $zero, 0x2
-    ctx->pc = 0x1505c8u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
 label_1505cc:
     // 0x1505cc: 0x24420001  addiu       $v0, $v0, 0x1
-    ctx->pc = 0x1505ccu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 1));
 label_1505d0:
     // 0x1505d0: 0xae22001c  sw          $v0, 0x1C($s1)
@@ -154,7 +148,6 @@ label_1505e4:
             return;
         }
     }
-    ctx->pc = 0x1505E8u;
 label_1505e8:
     // 0x1505e8: 0x220202d  daddu       $a0, $s1, $zero
     ctx->pc = 0x1505e8u;
@@ -182,7 +175,6 @@ label_1505f0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A9800_0x2a9800, 0x2a9800u, 0x1505f4u)) {
         return;
     }
-    ctx->pc = 0x1505F4u;
 label_1505f4:
     // 0x1505f4: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1505f4u;

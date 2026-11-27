@@ -13,7 +13,7 @@
 
 // Function: cMovie_stopAllTracks
 // Address: 0x2b4da8 - 0x2b4e48
-void cMovie_stopAllTracks_0x2b4da8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMovie_stopAllTracks_0x2b4da8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMovie_stopAllTracks_0x2b4da8");
 #endif
@@ -56,7 +56,6 @@ void cMovie_stopAllTracks_0x2b4da8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x2b4dd0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2b4dd4: 0x3c140074  lui         $s4, 0x74
-    ctx->pc = 0x2b4dd4u;
     SET_GPR_S32(ctx, 20, (int32_t)((uint32_t)116 << 16));
 label_2b4dd8:
     // 0x2b4dd8: 0x8e620000  lw          $v0, 0x0($s3)
@@ -85,7 +84,6 @@ label_2b4dd8:
         }
     }
     // 0x2b4df0: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2b4df0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2b4df4:
     // 0x2b4df4: 0x304200ff  andi        $v0, $v0, 0xFF
@@ -116,10 +114,8 @@ label_2b4df4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D42E0_0x2d42e0, 0x2d42e0u, 0x2b4e08u)) {
         return;
     }
-    ctx->pc = 0x2B4E08u;
 label_2b4e08:
     // 0x2b4e08: 0x265200ac  addiu       $s2, $s2, 0xAC
-    ctx->pc = 0x2b4e08u;
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), 172));
 label_2b4e0c:
     // 0x2b4e0c: 0x2610ffff  addiu       $s0, $s0, -0x1

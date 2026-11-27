@@ -13,7 +13,7 @@
 
 // Function: cGame_gameLoop
 // Address: 0x2a6690 - 0x2a67d0
-void cGame_gameLoop_0x2a6690(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGame_gameLoop_0x2a6690(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGame_gameLoop_0x2a6690");
 #endif
@@ -96,7 +96,6 @@ void cGame_gameLoop_0x2a6690(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &cE3_exec_0x201be0, 0x201be0u, 0x2a66e0u)) {
         return;
     }
-    ctx->pc = 0x2A66E0u;
 label_2a66e0:
     // 0x2a66e0: 0xc0a9bfe  jal         func_2A6FF8
     SET_GPR_U32(ctx, 31, 0x2A66E8u);
@@ -109,7 +108,6 @@ label_2a66e0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A6FF8_0x2a6ff8, 0x2a6ff8u, 0x2a66e8u)) {
         return;
     }
-    ctx->pc = 0x2A66E8u;
 label_2a66e8:
     // 0x2a66e8: 0x2625fa74  addiu       $a1, $s1, -0x58C
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 17), 4294965876));
@@ -234,7 +232,6 @@ label_2a66e8:
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x2a6750u)) {
         return;
     }
-    ctx->pc = 0x2A6750u;
 label_2a6750:
     // 0x2a6750: 0xc04aeae  jal         func_12BAB8
     SET_GPR_U32(ctx, 31, 0x2A6758u);
@@ -247,7 +244,6 @@ label_2a6750:
     if (!runtime->callDirectStatic(rdram, ctx, &pl00_CkSubScreen_0x12bab8, 0x12bab8u, 0x2a6758u)) {
         return;
     }
-    ctx->pc = 0x2A6758u;
 label_2a6758:
     // 0x2a6758: 0x54510008  bnel        $v0, $s1, . + 4 + (0x8 << 2)
     ctx->pc = 0x2A6758u;
@@ -284,7 +280,6 @@ label_2a6758:
     if (!runtime->callDirectStatic(rdram, ctx, &cSubScr_SubScrOn_0x160020, 0x160020u, 0x2a6778u)) {
         return;
     }
-    ctx->pc = 0x2A6778u;
 label_2a6778:
     // 0x2a6778: 0x860201b0  lh          $v0, 0x1B0($s0)
     ctx->pc = 0x2a6778u;
@@ -317,7 +312,6 @@ label_2a678c:
     if (!runtime->callDirectStatic(rdram, ctx, &Move_0x30eee8, 0x30eee8u, 0x2a6794u)) {
         return;
     }
-    ctx->pc = 0x2A6794u;
 label_2a6794:
     // 0x2a6794: 0x3c02005d  lui         $v0, 0x5D
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)93 << 16));
@@ -332,7 +326,6 @@ label_2a6794:
     if (!runtime->callDirectStatic(rdram, ctx, &Trans_0x15fba8, 0x15fba8u, 0x2a67a0u)) {
         return;
     }
-    ctx->pc = 0x2A67A0u;
 label_2a67a0:
     // 0x2a67a0: 0x3c021000  lui         $v0, 0x1000
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)4096 << 16));

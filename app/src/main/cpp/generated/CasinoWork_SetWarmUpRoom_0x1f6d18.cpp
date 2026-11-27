@@ -13,7 +13,7 @@
 
 // Function: CasinoWork_SetWarmUpRoom
 // Address: 0x1f6d18 - 0x1f6d38
-void CasinoWork_SetWarmUpRoom_0x1f6d18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CasinoWork_SetWarmUpRoom_0x1f6d18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CasinoWork_SetWarmUpRoom_0x1f6d18");
 #endif

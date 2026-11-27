@@ -13,7 +13,7 @@
 
 // Function: func_002EFB68
 // Address: 0x2efb68 - 0x2efc28
-void func_002EFB68_0x2efb68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002EFB68_0x2efb68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002EFB68_0x2efb68");
 #endif
@@ -60,7 +60,6 @@ void func_002EFB68_0x2efb68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B6310_0x2b6310, 0x2b6310u, 0x2efb8cu)) {
         return;
     }
-    ctx->pc = 0x2EFB8Cu;
 label_2efb8c:
     // 0x2efb8c: 0x27b00010  addiu       $s0, $sp, 0x10
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
@@ -77,7 +76,6 @@ label_2efb8c:
     if (!runtime->callDirectStatic(rdram, ctx, &StoreVecFromFieldB0_2B6160_0x2b6160, 0x2b6160u, 0x2efb9cu)) {
         return;
     }
-    ctx->pc = 0x2EFB9Cu;
 label_2efb9c:
     // 0x2efb9c: 0x3c02005d  lui         $v0, 0x5D
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)93 << 16));
@@ -99,7 +97,6 @@ label_2efb9c:
     if (!runtime->callDirectStatic(rdram, ctx, &cCamera_getScreenPos_0x138470, 0x138470u, 0x2efbb4u)) {
         return;
     }
-    ctx->pc = 0x2EFBB4u;
 label_2efbb4:
     // 0x2efbb4: 0xc7a10028  lwc1        $f1, 0x28($sp)
     ctx->pc = 0x2efbb4u;
@@ -149,7 +146,6 @@ label_2efbb4:
     if (!runtime->callDirectStatic(rdram, ctx, &cNode_setLocalTranslation_0x2b6288, 0x2b6288u, 0x2efbecu)) {
         return;
     }
-    ctx->pc = 0x2EFBECu;
 label_2efbec:
     // 0x2efbec: 0xc0bfac6  jal         func_2FEB18
     SET_GPR_U32(ctx, 31, 0x2EFBF4u);
@@ -162,7 +158,6 @@ label_2efbec:
     if (!runtime->callDirectStatic(rdram, ctx, &LinkObj_callLockOn_0x2feb18, 0x2feb18u, 0x2efbf4u)) {
         return;
     }
-    ctx->pc = 0x2EFBF4u;
 label_2efbf4:
     // 0x2efbf4: 0x8e22011c  lw          $v0, 0x11C($s1)
     ctx->pc = 0x2efbf4u;
@@ -186,7 +181,6 @@ label_2efbf4:
     if (!runtime->callDirectStatic(rdram, ctx, &cNode_setLocalTranslation_0x2b6288, 0x2b6288u, 0x2efc10u)) {
         return;
     }
-    ctx->pc = 0x2EFC10u;
 label_2efc10:
     // 0x2efc10: 0x7bb00060  lq          $s0, 0x60($sp)
     ctx->pc = 0x2efc10u;

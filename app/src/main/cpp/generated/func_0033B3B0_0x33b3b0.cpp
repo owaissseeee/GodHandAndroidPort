@@ -13,7 +13,7 @@
 
 // Function: func_0033B3B0
 // Address: 0x33b3b0 - 0x33b428
-void func_0033B3B0_0x33b3b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0033B3B0_0x33b3b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0033B3B0_0x33b3b0");
 #endif
@@ -74,7 +74,6 @@ void func_0033B3B0_0x33b3b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &DTX_Destroy_0x332310, 0x332310u, 0x33b3e4u)) {
         return;
     }
-    ctx->pc = 0x33B3E4u;
 label_33b3e4:
     // 0x33b3e4: 0xae000000  sw          $zero, 0x0($s0)
     ctx->pc = 0x33b3e4u;
@@ -107,7 +106,6 @@ label_33b3e4:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B5A50u, 0x33B3FCu, 0x33B404u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x33B404u;
 label_33b404:
     // 0x33b404: 0xae000000  sw          $zero, 0x0($s0)
     ctx->pc = 0x33b404u;
@@ -129,7 +127,6 @@ label_33b408:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3325F8u, 0x33B410u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x33B418u;
 label_33b418:
     // 0x33b418: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x33b418u;

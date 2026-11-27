@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Set_Vtbl_D_00451008_31F360
 // Address: 0x31f360 - 0x31f378
-void Obj0000_Set_Vtbl_D_00451008_31F360_0x31f360(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_Vtbl_D_00451008_31F360_0x31f360(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_Vtbl_D_00451008_31F360_0x31f360");
 #endif

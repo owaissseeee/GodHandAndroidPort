@@ -13,7 +13,7 @@
 
 // Function: GetField_54_173900
 // Address: 0x173900 - 0x173908
-void GetField_54_173900_0x173900(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetField_54_173900_0x173900(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetField_54_173900_0x173900");
 #endif

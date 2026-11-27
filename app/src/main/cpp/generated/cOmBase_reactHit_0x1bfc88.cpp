@@ -13,7 +13,7 @@
 
 // Function: cOmBase_reactHit
 // Address: 0x1bfc88 - 0x1bfce0
-void cOmBase_reactHit_0x1bfc88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmBase_reactHit_0x1bfc88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmBase_reactHit_0x1bfc88");
 #endif
@@ -48,7 +48,6 @@ void cOmBase_reactHit_0x1bfc88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1B7380u, 0x1BFC98u, 0x1BFCA0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1BFCA0u;
 label_1bfca0:
     // 0x1bfca0: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));

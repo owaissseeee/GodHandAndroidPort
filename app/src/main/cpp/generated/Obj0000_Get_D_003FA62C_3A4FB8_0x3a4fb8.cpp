@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Get_D_003FA62C_3A4FB8
 // Address: 0x3a4fb8 - 0x3a4fc8
-void Obj0000_Get_D_003FA62C_3A4FB8_0x3a4fb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Get_D_003FA62C_3A4FB8_0x3a4fb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Get_D_003FA62C_3A4FB8_0x3a4fb8");
 #endif

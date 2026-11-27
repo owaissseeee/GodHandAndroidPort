@@ -13,7 +13,7 @@
 
 // Function: cModel_getPart
 // Address: 0x149be8 - 0x149c20
-void cModel_getPart_0x149be8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cModel_getPart_0x149be8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cModel_getPart_0x149be8");
 #endif
@@ -50,7 +50,6 @@ void cModel_getPart_0x149be8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     ctx->pc = 0x149bf8u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 324)));
     // 0x149bfc: 0x0  nop
-    ctx->pc = 0x149bfcu;
     // NOP
 label_149c00:
     // 0x149c00: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
@@ -87,7 +86,6 @@ label_149c00:
         return;
         #endif
     }
-    ctx->pc = 0x149C10u;
 label_149c10:
     // 0x149c10: 0x5464fffb  bnel        $v1, $a0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x149C10u;
@@ -107,7 +105,6 @@ label_149c10:
             goto label_149c00;
         }
     }
-    ctx->pc = 0x149C18u;
 label_149c18:
     // 0x149c18: 0x3e00008  jr          $ra
     ctx->pc = 0x149C18u;

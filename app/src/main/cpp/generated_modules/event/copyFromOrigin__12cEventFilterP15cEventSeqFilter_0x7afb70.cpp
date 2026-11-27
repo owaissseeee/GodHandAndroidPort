@@ -14,26 +14,25 @@ namespace gh_event
 {
 // Function: copyFromOrigin__12cEventFilterP15cEventSeqFilter
 // Address: 0x7afb70 - 0x7afbc8
-void copyFromOrigin__12cEventFilterP15cEventSeqFilter_0x7afb70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void copyFromOrigin__12cEventFilterP15cEventSeqFilter_0x7afb70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("copyFromOrigin__12cEventFilterP15cEventSeqFilter_0x7afb70");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7afb7cu: goto label_7afb7c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7afb70u, 0)) {
+        switch (ctx->pc) {
+            case 0x7afb7cu: goto label_7afb7c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7afb70u;
+
 
     // 0x7afb70: 0x248202e8  addiu       $v0, $a0, 0x2E8
-    ctx->pc = 0x7afb70u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 744));
     // 0x7afb74: 0x24a50010  addiu       $a1, $a1, 0x10
-    ctx->pc = 0x7afb74u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 16));
     // 0x7afb78: 0x24840028  addiu       $a0, $a0, 0x28
-    ctx->pc = 0x7afb78u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 40));
 label_7afb7c:
     // 0x7afb7c: 0xdc830000  ld          $v1, 0x0($a0)
@@ -61,7 +60,6 @@ label_7afb7c:
     ctx->pc = 0x7afb98u;
     WRITE64(ADD32(GPR_U32(ctx, 5), 24), GPR_U64(ctx, 8));
     // 0x7afb9c: 0x24840020  addiu       $a0, $a0, 0x20
-    ctx->pc = 0x7afb9cu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 32));
     // 0x7afba0: 0x1482fff6  bne         $a0, $v0, . + 4 + (-0xA << 2)
     ctx->pc = 0x7AFBA0u;
@@ -81,7 +79,6 @@ label_7afb7c:
             goto label_7afb7c;
         }
     }
-    ctx->pc = 0x7AFBA8u;
     // 0x7afba8: 0xdc820000  ld          $v0, 0x0($a0)
     ctx->pc = 0x7afba8u;
     SET_GPR_U64(ctx, 2, READ64(ADD32(GPR_U32(ctx, 4), 0)));
@@ -116,9 +113,7 @@ label_7afb7c:
         return;
         #endif
     }
-    ctx->pc = 0x7AFBC4u;
     // 0x7afbc4: 0x0  nop
-    ctx->pc = 0x7afbc4u;
     // NOP
     ctx->pc = 0x7afbc8u;
 }

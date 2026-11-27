@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_addKillEmNum
 // Address: 0x1fbe40 - 0x1fbeb8
-void cCoreSave_addKillEmNum_0x1fbe40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_addKillEmNum_0x1fbe40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_addKillEmNum_0x1fbe40");
 #endif
@@ -60,7 +60,6 @@ void cCoreSave_addKillEmNum_0x1fbe40(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getGameLevel_0x1fa010, 0x1fa010u, 0x1fbe64u)) {
         return;
     }
-    ctx->pc = 0x1FBE64u;
 label_1fbe64:
     // 0x1fbe64: 0x2445ffff  addiu       $a1, $v0, -0x1
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));

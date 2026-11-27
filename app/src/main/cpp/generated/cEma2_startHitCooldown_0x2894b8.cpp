@@ -13,7 +13,7 @@
 
 // Function: cEma2_startHitCooldown
 // Address: 0x2894b8 - 0x289610
-void cEma2_startHitCooldown_0x2894b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEma2_startHitCooldown_0x2894b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEma2_startHitCooldown_0x2894b8");
 #endif
@@ -54,7 +54,6 @@ void cEma2_startHitCooldown_0x2894b8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x2894d4u)) {
         return;
     }
-    ctx->pc = 0x2894D4u;
 label_2894d4:
     // 0x2894d4: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -167,7 +166,6 @@ label_289540:
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x289548u)) {
         return;
     }
-    ctx->pc = 0x289548u;
 label_289548:
     // 0x289548: 0x8c4200f0  lw          $v0, 0xF0($v0)
     ctx->pc = 0x289548u;
@@ -268,7 +266,6 @@ label_289574:
     if (!runtime->callDirectStatic(rdram, ctx, &ChkLine_0x131e10, 0x131e10u, 0x2895c8u)) {
         return;
     }
-    ctx->pc = 0x2895C8u;
 label_2895c8:
     // 0x2895c8: 0x1050000a  beq         $v0, $s0, . + 4 + (0xA << 2)
     ctx->pc = 0x2895C8u;
@@ -307,7 +304,6 @@ label_2895c8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1351D8u, 0x2895E4u, 0x2895ECu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2895ECu;
 label_2895ec:
     // 0x2895ec: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x2895ECu;
@@ -324,10 +320,8 @@ label_2895ec:
             goto label_2895f8;
         }
     }
-    ctx->pc = 0x2895F4u;
 label_2895f4:
     // 0x2895f4: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2895f4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2895f8:
     // 0x2895f8: 0x7bb00080  lq          $s0, 0x80($sp)

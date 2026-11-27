@@ -13,7 +13,7 @@
 
 // Function: __8iostreami
 // Address: 0x389ab8 - 0x389bd8
-void ps2___8iostreami_0x389ab8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___8iostreami_0x389ab8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___8iostreami_0x389ab8");
 #endif

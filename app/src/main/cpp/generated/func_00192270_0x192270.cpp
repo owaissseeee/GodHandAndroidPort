@@ -13,7 +13,7 @@
 
 // Function: func_00192270
 // Address: 0x192270 - 0x192458
-void func_00192270_0x192270(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00192270_0x192270(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00192270_0x192270");
 #endif
@@ -59,7 +59,6 @@ void func_00192270_0x192270(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B6FB8_0x1b6fb8, 0x1b6fb8u, 0x192290u)) {
         return;
     }
-    ctx->pc = 0x192290u;
 label_192290:
     // 0x192290: 0x3c013f00  lui         $at, 0x3F00
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16128 << 16));
@@ -145,7 +144,6 @@ label_192290:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_CreateDamageTake_0x1fe218, 0x1fe218u, 0x192314u)) {
         return;
     }
-    ctx->pc = 0x192314u;
 label_192314:
     // 0x192314: 0x1040000d  beqz        $v0, . + 4 + (0xD << 2)
     ctx->pc = 0x192314u;
@@ -199,7 +197,6 @@ label_192314:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_AddDamageCollCylinder_0x1fdc00, 0x1fdc00u, 0x19234cu)) {
         return;
     }
-    ctx->pc = 0x19234Cu;
 label_19234c:
     // 0x19234c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -216,7 +213,6 @@ label_19234c:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshDispFromLayer_0x1b7280, 0x1b7280u, 0x19235cu)) {
         return;
     }
-    ctx->pc = 0x19235Cu;
 label_19235c:
     // 0x19235c: 0x24050040  addiu       $a1, $zero, 0x40
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 64));
@@ -233,7 +229,6 @@ label_19235c:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshDispFromLayer_0x1b7280, 0x1b7280u, 0x19236cu)) {
         return;
     }
-    ctx->pc = 0x19236Cu;
 label_19236c:
     // 0x19236c: 0x2402001e  addiu       $v0, $zero, 0x1E
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 30));
@@ -265,7 +260,6 @@ label_19236c:
     ctx->pc = 0x192388u;
     SET_GPR_ZE32(ctx, 3, (uint8_t)READ8(ADD32(GPR_U32(ctx, 16), 692)));
     // 0x19238c: 0x0  nop
-    ctx->pc = 0x19238cu;
     // NOP
 label_192390:
     // 0x192390: 0x202d  daddu       $a0, $zero, $zero
@@ -290,7 +284,6 @@ label_192390:
     // 0x1923a0: 0xa3102a  slt         $v0, $a1, $v1
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 5) < (int64_t)GPR_S64(ctx, 3)) ? 1 : 0);
     // 0x1923a4: 0x40202d  daddu       $a0, $v0, $zero
-    ctx->pc = 0x1923a4u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_1923a8:
     // 0x1923a8: 0x308200ff  andi        $v0, $a0, 0xFF
@@ -330,10 +323,8 @@ label_1923a8:
             goto label_1923c8;
         }
     }
-    ctx->pc = 0x1923C4u;
 label_1923c4:
     // 0x1923c4: 0x202d  daddu       $a0, $zero, $zero
-    ctx->pc = 0x1923c4u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1923c8:
     // 0x1923c8: 0x8c820154  lw          $v0, 0x154($a0)
@@ -369,7 +360,6 @@ label_1923c8:
     // 0x1923e8: 0xa2102a  slt         $v0, $a1, $v0
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 5) < (int64_t)GPR_S64(ctx, 2)) ? 1 : 0);
     // 0x1923ec: 0x40302d  daddu       $a2, $v0, $zero
-    ctx->pc = 0x1923ecu;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_1923f0:
     // 0x1923f0: 0x30c200ff  andi        $v0, $a2, 0xFF
@@ -409,10 +399,8 @@ label_1923f0:
             goto label_192410;
         }
     }
-    ctx->pc = 0x19240Cu;
 label_19240c:
     // 0x19240c: 0x202d  daddu       $a0, $zero, $zero
-    ctx->pc = 0x19240cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_192410:
     // 0x192410: 0x8c820154  lw          $v0, 0x154($a0)
@@ -462,7 +450,6 @@ label_192410:
             goto label_192390;
         }
     }
-    ctx->pc = 0x192438u;
 label_192438:
     // 0x192438: 0x7bb00060  lq          $s0, 0x60($sp)
     ctx->pc = 0x192438u;

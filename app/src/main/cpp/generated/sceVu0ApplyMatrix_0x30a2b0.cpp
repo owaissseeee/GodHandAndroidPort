@@ -17,7 +17,7 @@
 
 // Function: sceVu0ApplyMatrix
 // Address: 0x30a2b0 - 0x30a2e0
-void sceVu0ApplyMatrix_0x30a2b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVu0ApplyMatrix_0x30a2b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVu0ApplyMatrix_0x30a2b0");
 #endif

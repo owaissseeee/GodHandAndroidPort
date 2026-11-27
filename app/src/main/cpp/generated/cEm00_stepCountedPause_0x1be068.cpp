@@ -14,7 +14,7 @@
 
 // Function: cEm00_stepCountedPause
 // Address: 0x1be068 - 0x1be198
-void cEm00_stepCountedPause_0x1be068(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_stepCountedPause_0x1be068(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_stepCountedPause_0x1be068");
 #endif
@@ -107,7 +107,6 @@ void cEm00_stepCountedPause_0x1be068(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_1be184;
         }
     }
-    ctx->pc = 0x1BE0A4u;
 label_1be0a4:
     // 0x1be0a4: 0x10640025  beq         $v1, $a0, . + 4 + (0x25 << 2)
     ctx->pc = 0x1BE0A4u;
@@ -154,7 +153,6 @@ label_1be0a4:
             goto label_1be184;
         }
     }
-    ctx->pc = 0x1BE0BCu;
 label_1be0bc:
     // 0x1be0bc: 0x24050002  addiu       $a1, $zero, 0x2
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
@@ -181,7 +179,6 @@ label_1be0bc:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x1be0e0u)) {
         return;
     }
-    ctx->pc = 0x1BE0E0u;
 label_1be0e0:
     // 0x1be0e0: 0x8e030304  lw          $v1, 0x304($s0)
     ctx->pc = 0x1be0e0u;
@@ -212,7 +209,6 @@ label_1be0e0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x1be108u)) {
         return;
     }
-    ctx->pc = 0x1BE108u;
 label_1be108:
     // 0x1be108: 0xa21102f5  sb          $s1, 0x2F5($s0)
     ctx->pc = 0x1be108u;
@@ -235,7 +231,6 @@ label_1be114:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x1BE114u, 0x1BE11Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1BE11Cu;
 label_1be11c:
     // 0x1be11c: 0x10400018  beqz        $v0, . + 4 + (0x18 << 2)
     ctx->pc = 0x1BE11Cu;
@@ -278,7 +273,6 @@ label_1be11c:
             goto label_1be180;
         }
     }
-    ctx->pc = 0x1BE13Cu;
 label_1be13c:
     // 0x1be13c: 0x8e020900  lw          $v0, 0x900($s0)
     ctx->pc = 0x1be13cu;
@@ -349,7 +343,6 @@ label_1be160:
             goto label_1be180;
         }
     }
-    ctx->pc = 0x1BE168u;
 label_1be168:
     // 0x1be168: 0xa20402f4  sb          $a0, 0x2F4($s0)
     ctx->pc = 0x1be168u;

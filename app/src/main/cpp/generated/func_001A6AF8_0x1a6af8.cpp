@@ -13,7 +13,7 @@
 
 // Function: func_001A6AF8
 // Address: 0x1a6af8 - 0x1a6cd8
-void func_001A6AF8_0x1a6af8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001A6AF8_0x1a6af8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001A6AF8_0x1a6af8");
 #endif
@@ -121,7 +121,6 @@ void func_001A6AF8_0x1a6af8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_execUpCut_0x2c40c8, 0x2c40c8u, 0x1a6b7cu)) {
         return;
     }
-    ctx->pc = 0x1A6B7Cu;
 label_1a6b7c:
     // 0x1a6b7c: 0x8e022f84  lw          $v0, 0x2F84($s0)
     ctx->pc = 0x1a6b7cu;
@@ -140,7 +139,6 @@ label_1a6b7c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D5AA0u, 0x1A6B84u, 0x1A6B8Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1A6B8Cu;
 label_1a6b8c:
     // 0x1a6b8c: 0x92420606  lbu         $v0, 0x606($s2)
     ctx->pc = 0x1a6b8cu;
@@ -182,7 +180,6 @@ label_1a6b8c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D5AA0u, 0x1A6BA8u, 0x1A6BB0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1A6BB0u;
 label_1a6bb0:
     // 0x1a6bb0: 0x3c02005d  lui         $v0, 0x5D
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)93 << 16));
@@ -228,7 +225,6 @@ label_1a6bb0:
     if (!runtime->callDirectStatic(rdram, ctx, &cHeatSys_AddHeatGage_0x2a9978, 0x2a9978u, 0x1a6be0u)) {
         return;
     }
-    ctx->pc = 0x1A6BE0u;
 label_1a6be0:
     // 0x1a6be0: 0x8e622f84  lw          $v0, 0x2F84($s3)
     ctx->pc = 0x1a6be0u;
@@ -247,7 +243,6 @@ label_1a6be0:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D5AA0u, 0x1A6BE8u, 0x1A6BF0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1A6BF0u;
 label_1a6bf0:
     // 0x1a6bf0: 0x10000016  b           . + 4 + (0x16 << 2)
     ctx->pc = 0x1A6BF0u;
@@ -264,7 +259,6 @@ label_1a6bf0:
             goto label_1a6c4c;
         }
     }
-    ctx->pc = 0x1A6BF8u;
 label_1a6bf8:
     // 0x1a6bf8: 0x241103e8  addiu       $s1, $zero, 0x3E8
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 0), 1000));
@@ -281,7 +275,6 @@ label_1a6bf8:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getClearNum_0x1fa6c0, 0x1fa6c0u, 0x1a6c08u)) {
         return;
     }
-    ctx->pc = 0x1A6C08u;
 label_1a6c08:
     // 0x1a6c08: 0x240307d0  addiu       $v1, $zero, 0x7D0
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2000));
@@ -303,7 +296,6 @@ label_1a6c08:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_addGold_0x1fa750, 0x1fa750u, 0x1a6c20u)) {
         return;
     }
-    ctx->pc = 0x1A6C20u;
 label_1a6c20:
     // 0x1a6c20: 0x8e4200f0  lw          $v0, 0xF0($s2)
     ctx->pc = 0x1a6c20u;
@@ -337,10 +329,8 @@ label_1a6c20:
     if (!runtime->callDirectStatic(rdram, ctx, &cCockGetPoint_setData_0x13e2f8, 0x13e2f8u, 0x1a6c48u)) {
         return;
     }
-    ctx->pc = 0x1A6C48u;
 label_1a6c48:
     // 0x1a6c48: 0x3c020074  lui         $v0, 0x74
-    ctx->pc = 0x1a6c48u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
 label_1a6c4c:
     // 0x1a6c4c: 0x3c043000  lui         $a0, 0x3000
@@ -389,7 +379,6 @@ label_1a6c70:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D5AA0u, 0x1A6C74u, 0x1A6C7Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1A6C7Cu;
 label_1a6c7c:
     // 0x1a6c7c: 0xde2201a0  ld          $v0, 0x1A0($s1)
     ctx->pc = 0x1a6c7cu;
@@ -443,7 +432,6 @@ label_1a6c90:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario__endSoftEvent_0x2c3c10, 0x2c3c10u, 0x1a6cb0u)) {
         return;
     }
-    ctx->pc = 0x1A6CB0u;
 label_1a6cb0:
     // 0x1a6cb0: 0x8e622f84  lw          $v0, 0x2F84($s3)
     ctx->pc = 0x1a6cb0u;
@@ -459,7 +447,6 @@ label_1a6cb0:
     if (!runtime->callDirectStatic(rdram, ctx, &cTaskWork_exit_0x2d5a48, 0x2d5a48u, 0x1a6cbcu)) {
         return;
     }
-    ctx->pc = 0x1A6CBCu;
 label_1a6cbc:
     // 0x1a6cbc: 0x7bb00050  lq          $s0, 0x50($sp)
     ctx->pc = 0x1a6cbcu;

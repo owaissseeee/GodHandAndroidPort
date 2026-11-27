@@ -13,7 +13,7 @@
 
 // Function: __ls__7ostreamUi
 // Address: 0x388aa0 - 0x388b18
-void ps2___ls__7ostreamUi_0x388aa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___ls__7ostreamUi_0x388aa0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___ls__7ostreamUi_0x388aa0");
 #endif
@@ -76,7 +76,6 @@ void ps2___ls__7ostreamUi_0x388aa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_388ae4;
         }
     }
-    ctx->pc = 0x388ACCu;
 label_388acc:
     // 0x388acc: 0x8c840004  lw          $a0, 0x4($a0)
     ctx->pc = 0x388accu;
@@ -102,10 +101,8 @@ label_388acc:
     if (!runtime->callDirectStatic(rdram, ctx, &flush__7ostream_0x389268, 0x389268u, 0x388ae0u)) {
         return;
     }
-    ctx->pc = 0x388AE0u;
 label_388ae0:
     // 0x388ae0: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x388ae0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_388ae4:
     // 0x388ae4: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
@@ -138,7 +135,6 @@ label_388ae4:
     if (!runtime->callDirectStatic(rdram, ctx, &write_int__FR7ostreamUxi_0x388660, 0x388660u, 0x388afcu)) {
         return;
     }
-    ctx->pc = 0x388AFCu;
 label_388afc:
     // 0x388afc: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

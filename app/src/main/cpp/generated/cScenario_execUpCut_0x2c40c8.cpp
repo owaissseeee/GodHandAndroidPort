@@ -13,7 +13,7 @@
 
 // Function: cScenario_execUpCut
 // Address: 0x2c40c8 - 0x2c4150
-void cScenario_execUpCut_0x2c40c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_execUpCut_0x2c40c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_execUpCut_0x2c40c8");
 #endif
@@ -78,7 +78,6 @@ void cScenario_execUpCut_0x2c40c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &SearchCameraData_0x31ce38, 0x31ce38u, 0x2c4108u)) {
         return;
     }
-    ctx->pc = 0x2C4108u;
 label_2c4108:
     // 0x2c4108: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x2C4108u;
@@ -95,12 +94,10 @@ label_2c4108:
             goto label_2c4118;
         }
     }
-    ctx->pc = 0x2C4110u;
 label_2c4110:
     // 0x2c4110: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2c4114: 0x240202d  daddu       $a0, $s2, $zero
-    ctx->pc = 0x2c4114u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
 label_2c4118:
     // 0x2c4118: 0x200282d  daddu       $a1, $s0, $zero
@@ -122,7 +119,6 @@ label_2c4118:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_execUpCutData_0x2c4150, 0x2c4150u, 0x2c4130u)) {
         return;
     }
-    ctx->pc = 0x2C4130u;
 label_2c4130:
     // 0x2c4130: 0x7bb00050  lq          $s0, 0x50($sp)
     ctx->pc = 0x2c4130u;

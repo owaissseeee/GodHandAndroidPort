@@ -13,7 +13,7 @@
 
 // Function: Scroll_showLayerBySelector
 // Address: 0x1e3240 - 0x1e3298
-void Scroll_showLayerBySelector_0x1e3240(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Scroll_showLayerBySelector_0x1e3240(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Scroll_showLayerBySelector_0x1e3240");
 #endif
@@ -52,7 +52,6 @@ void Scroll_showLayerBySelector_0x1e3240(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &func_001E3298_0x1e3298, 0x1e3298u, 0x1e325cu)) {
         return;
     }
-    ctx->pc = 0x1E325Cu;
 label_1e325c:
     // 0x1e325c: 0x52000006  beql        $s0, $zero, . + 4 + (0x6 << 2)
     ctx->pc = 0x1E325Cu;
@@ -83,7 +82,6 @@ label_1e325c:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e3270u)) {
         return;
     }
-    ctx->pc = 0x1E3270u;
 label_1e3270:
     // 0x1e3270: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x1E3270u;
@@ -100,7 +98,6 @@ label_1e3270:
             goto label_1e3284;
         }
     }
-    ctx->pc = 0x1E3278u;
 label_1e3278:
     // 0x1e3278: 0xc0b6cac  jal         func_2DB2B0
     SET_GPR_U32(ctx, 31, 0x1E3280u);
@@ -113,7 +110,6 @@ label_1e3278:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e3280u)) {
         return;
     }
-    ctx->pc = 0x1E3280u;
 label_1e3280:
     // 0x1e3280: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1e3280u;

@@ -13,7 +13,7 @@
 
 // Function: SetNodeCallback_2C2138
 // Address: 0x2c2138 - 0x2c21a0
-void SetNodeCallback_2C2138_0x2c2138(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetNodeCallback_2C2138_0x2c2138(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetNodeCallback_2C2138_0x2c2138");
 #endif
@@ -76,7 +76,6 @@ void SetNodeCallback_2C2138_0x2c2138(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_taskExec_2C38D8_0x2c38d8, 0x2c38d8u, 0x2c216cu)) {
         return;
     }
-    ctx->pc = 0x2C216Cu;
 label_2c216c:
     // 0x2c216c: 0x8e032f84  lw          $v1, 0x2F84($s0)
     ctx->pc = 0x2c216cu;
@@ -102,10 +101,8 @@ label_2c216c:
             goto label_2c2188;
         }
     }
-    ctx->pc = 0x2C2184u;
 label_2c2184:
     // 0x2c2184: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2c2184u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2c2188:
     // 0x2c2188: 0x7bb00020  lq          $s0, 0x20($sp)

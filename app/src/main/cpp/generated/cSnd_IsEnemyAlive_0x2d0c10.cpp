@@ -13,7 +13,7 @@
 
 // Function: cSnd_IsEnemyAlive
 // Address: 0x2d0c10 - 0x2d0cd0
-void cSnd_IsEnemyAlive_0x2d0c10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_IsEnemyAlive_0x2d0c10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_IsEnemyAlive_0x2d0c10");
 #endif
@@ -102,7 +102,6 @@ label_2d0c38:
     // 0x2d0c50: 0x28620300  slti        $v0, $v1, 0x300
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)768) ? 1 : 0);
     // 0x2d0c54: 0x40202d  daddu       $a0, $v0, $zero
-    ctx->pc = 0x2d0c54u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_2d0c58:
     // 0x2d0c58: 0x308200ff  andi        $v0, $a0, 0xFF
@@ -140,7 +139,6 @@ label_2d0c58:
     // 0x2d0c6c: 0x28620300  slti        $v0, $v1, 0x300
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)768) ? 1 : 0);
     // 0x2d0c70: 0x40202d  daddu       $a0, $v0, $zero
-    ctx->pc = 0x2d0c70u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_2d0c74:
     // 0x2d0c74: 0x308200ff  andi        $v0, $a0, 0xFF
@@ -171,7 +169,6 @@ label_2d0c74:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmBase_checkDeadFlag_0x28fb38, 0x28fb38u, 0x2d0c88u)) {
         return;
     }
-    ctx->pc = 0x2D0C88u;
 label_2d0c88:
     // 0x2d0c88: 0x54400007  bnel        $v0, $zero, . + 4 + (0x7 << 2)
     ctx->pc = 0x2D0C88u;
@@ -221,7 +218,6 @@ label_2d0c88:
             goto label_2d0cb4;
         }
     }
-    ctx->pc = 0x2D0CA4u;
 label_2d0ca4:
     // 0x2d0ca4: 0x8e310004  lw          $s1, 0x4($s1)
     ctx->pc = 0x2d0ca4u;
@@ -245,10 +241,8 @@ label_2d0ca8:
             goto label_2d0c38;
         }
     }
-    ctx->pc = 0x2D0CB0u;
 label_2d0cb0:
     // 0x2d0cb0: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2d0cb0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2d0cb4:
     // 0x2d0cb4: 0x7bb00030  lq          $s0, 0x30($sp)

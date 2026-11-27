@@ -13,7 +13,7 @@
 
 // Function: cEmSetParam_stopEmSet1Time
 // Address: 0x2955f0 - 0x295600
-void cEmSetParam_stopEmSet1Time_0x2955f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmSetParam_stopEmSet1Time_0x2955f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmSetParam_stopEmSet1Time_0x2955f0");
 #endif

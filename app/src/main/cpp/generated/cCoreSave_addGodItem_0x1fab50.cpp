@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_addGodItem
 // Address: 0x1fab50 - 0x1fabb0
-void cCoreSave_addGodItem_0x1fab50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_addGodItem_0x1fab50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_addGodItem_0x1fab50");
 #endif
@@ -97,7 +97,6 @@ label_1fab68:
         return;
         #endif
     }
-    ctx->pc = 0x1FAB88u;
 label_1fab88:
     // 0x1fab88: 0x2cc20006  sltiu       $v0, $a2, 0x6
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 6) < (uint64_t)(int64_t)(int32_t)6) ? 1 : 0);
@@ -133,7 +132,6 @@ label_1fab88:
             goto label_1fab68;
         }
     }
-    ctx->pc = 0x1FABA4u;
 label_1faba4:
     // 0x1faba4: 0x3e00008  jr          $ra
     ctx->pc = 0x1FABA4u;

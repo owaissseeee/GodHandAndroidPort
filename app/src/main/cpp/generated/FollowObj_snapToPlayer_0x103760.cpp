@@ -13,7 +13,7 @@
 
 // Function: FollowObj_snapToPlayer
 // Address: 0x103760 - 0x103880
-void FollowObj_snapToPlayer_0x103760(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FollowObj_snapToPlayer_0x103760(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FollowObj_snapToPlayer_0x103760");
 #endif
@@ -52,7 +52,6 @@ void FollowObj_snapToPlayer_0x103760(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x10377cu)) {
         return;
     }
-    ctx->pc = 0x10377Cu;
 label_10377c:
     // 0x10377c: 0x8c4300f0  lw          $v1, 0xF0($v0)
     ctx->pc = 0x10377cu;
@@ -97,7 +96,6 @@ label_10377c:
     ctx->pc = 0x1037a4u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 240)));
     // 0x1037a8: 0x26030490  addiu       $v1, $s0, 0x490
-    ctx->pc = 0x1037a8u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 16), 1168));
 label_1037ac:
     // 0x1037ac: 0x10620007  beq         $v1, $v0, . + 4 + (0x7 << 2)
@@ -134,7 +132,6 @@ label_1037cc:
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x1037d4u)) {
         return;
     }
-    ctx->pc = 0x1037D4u;
 label_1037d4:
     // 0x1037d4: 0x26040100  addiu       $a0, $s0, 0x100
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 256));
@@ -179,7 +176,6 @@ label_1037fc:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_calcParts_0x149eb8, 0x149eb8u, 0x103804u)) {
         return;
     }
-    ctx->pc = 0x103804u;
 label_103804:
     // 0x103804: 0x12200003  beqz        $s1, . + 4 + (0x3 << 2)
     ctx->pc = 0x103804u;
@@ -211,7 +207,6 @@ label_103804:
             goto label_103834;
         }
     }
-    ctx->pc = 0x103814u;
 label_103814:
     // 0x103814: 0x8e0214b0  lw          $v0, 0x14B0($s0)
     ctx->pc = 0x103814u;
@@ -243,7 +238,6 @@ label_103814:
             goto label_103860;
         }
     }
-    ctx->pc = 0x103834u;
 label_103834:
     // 0x103834: 0x3c02ffff  lui         $v0, 0xFFFF
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)65535 << 16));

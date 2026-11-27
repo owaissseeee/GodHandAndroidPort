@@ -13,7 +13,7 @@
 
 // Function: DIntr
 // Address: 0x3b63a0 - 0x3b63f0
-void DIntr_0x3b63a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void DIntr_0x3b63a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("DIntr_0x3b63a0");
 #endif
@@ -48,7 +48,6 @@ void DIntr_0x3b63a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
         }
     }
     // 0x3b63b4: 0x0  nop
-    ctx->pc = 0x3b63b4u;
     // NOP
 label_3b63b8:
     // 0x3b63b8: 0x42000039  di
@@ -97,7 +96,6 @@ label_3b63b8:
         return;
         #endif
     }
-    ctx->pc = 0x3B63E4u;
 label_3b63e4:
     // 0x3b63e4: 0x202d  daddu       $a0, $zero, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

@@ -13,7 +13,7 @@
 
 // Function: ResetChannelPairFields_37B5E0
 // Address: 0x37b5e0 - 0x37b620
-void ResetChannelPairFields_37B5E0_0x37b5e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ResetChannelPairFields_37B5E0_0x37b5e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ResetChannelPairFields_37B5E0_0x37b5e0");
 #endif
@@ -50,7 +50,6 @@ void ResetChannelPairFields_37B5E0_0x37b5e0(uint8_t* rdram, R5900Context* ctx, P
     if (!runtime->callDirectStatic(rdram, ctx, &func_00374980_0x374980, 0x374980u, 0x37b5fcu)) {
         return;
     }
-    ctx->pc = 0x37B5FCu;
 label_37b5fc:
     // 0x37b5fc: 0x2605018c  addiu       $a1, $s0, 0x18C
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 16), 396));
@@ -65,7 +64,6 @@ label_37b5fc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00374980_0x374980, 0x374980u, 0x37b608u)) {
         return;
     }
-    ctx->pc = 0x37B608u;
 label_37b608:
     // 0x37b608: 0xa2000029  sb          $zero, 0x29($s0)
     ctx->pc = 0x37b608u;

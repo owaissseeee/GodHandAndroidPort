@@ -13,7 +13,7 @@
 
 // Function: GetOrInitSingletonB_138B78
 // Address: 0x138b78 - 0x138bb8
-void GetOrInitSingletonB_138B78_0x138b78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetOrInitSingletonB_138B78_0x138b78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetOrInitSingletonB_138B78_0x138b78");
 #endif
@@ -68,7 +68,6 @@ void GetOrInitSingletonB_138B78_0x138b78(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031EEC8_0x31eec8, 0x31eec8u, 0x138ba4u)) {
         return;
     }
-    ctx->pc = 0x138BA4u;
 label_138ba4:
     // 0x138ba4: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

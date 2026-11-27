@@ -13,7 +13,7 @@
 
 // Function: ForwardAttackByMode_14B5D8
 // Address: 0x14b5d8 - 0x14b638
-void ForwardAttackByMode_14B5D8_0x14b5d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardAttackByMode_14B5D8_0x14b5d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardAttackByMode_14B5D8_0x14b5d8");
 #endif
@@ -90,7 +90,6 @@ void ForwardAttackByMode_14B5D8_0x14b5d8(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &func_00148BD8_0x148bd8, 0x148bd8u, 0x14b614u)) {
         return;
     }
-    ctx->pc = 0x14B614u;
 label_14b614:
     // 0x14b614: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x14B614u;
@@ -107,7 +106,6 @@ label_14b614:
             goto label_14b62c;
         }
     }
-    ctx->pc = 0x14B61Cu;
 label_14b61c:
     // 0x14b61c: 0x8c8502c4  lw          $a1, 0x2C4($a0)
     ctx->pc = 0x14b61cu;
@@ -124,7 +122,6 @@ label_14b620:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00148D30_0x148d30, 0x148d30u, 0x14b628u)) {
         return;
     }
-    ctx->pc = 0x14B628u;
 label_14b628:
     // 0x14b628: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x14b628u;

@@ -13,7 +13,7 @@
 
 // Function: cSnd_BgmEvAllSuspend
 // Address: 0x2d2088 - 0x2d20e0
-void cSnd_BgmEvAllSuspend_0x2d2088(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BgmEvAllSuspend_0x2d2088(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BgmEvAllSuspend_0x2d2088");
 #endif
@@ -77,7 +77,6 @@ label_2d20a8:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_FadeOut_0x2cd4a8, 0x2cd4a8u, 0x2d20bcu)) {
         return;
     }
-    ctx->pc = 0x2D20BCu;
 label_2d20bc:
     // 0x2d20bc: 0x8e100088  lw          $s0, 0x88($s0)
     ctx->pc = 0x2d20bcu;
@@ -100,7 +99,6 @@ label_2d20bc:
             goto label_2d20a8;
         }
     }
-    ctx->pc = 0x2D20C8u;
 label_2d20c8:
     // 0x2d20c8: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2d20c8u;

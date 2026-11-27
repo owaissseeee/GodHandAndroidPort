@@ -13,7 +13,7 @@
 
 // Function: func_001468B0
 // Address: 0x1468b0 - 0x146978
-void func_001468B0_0x1468b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001468B0_0x1468b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001468B0_0x1468b0");
 #endif
@@ -62,7 +62,6 @@ void func_001468B0_0x1468b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x1468d8u;
     WRITE8(ADD32(GPR_U32(ctx, 17), 124), (uint8_t)GPR_U32(ctx, 0));
     // 0x1468dc: 0x200282d  daddu       $a1, $s0, $zero
-    ctx->pc = 0x1468dcu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_1468e0:
     // 0x1468e0: 0xc0aa8f6  jal         func_2AA3D8
@@ -76,7 +75,6 @@ label_1468e0:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_initIDWork_0x2aa3d8, 0x2aa3d8u, 0x1468e8u)) {
         return;
     }
-    ctx->pc = 0x1468E8u;
 label_1468e8:
     // 0x1468e8: 0x26020001  addiu       $v0, $s0, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 1));
@@ -115,7 +113,6 @@ label_1468e8:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_getIDWork_0x2aa410, 0x2aa410u, 0x146908u)) {
         return;
     }
-    ctx->pc = 0x146908u;
 label_146908:
     // 0x146908: 0x802d  daddu       $s0, $zero, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
@@ -129,7 +126,6 @@ label_146908:
     ctx->pc = 0x146918u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 2), 60), bits); }
     // 0x14691c: 0x200282d  daddu       $a1, $s0, $zero
-    ctx->pc = 0x14691cu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_146920:
     // 0x146920: 0xc0aa8f6  jal         func_2AA3D8
@@ -143,7 +139,6 @@ label_146920:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_initIDWork_0x2aa3d8, 0x2aa3d8u, 0x146928u)) {
         return;
     }
-    ctx->pc = 0x146928u;
 label_146928:
     // 0x146928: 0x26020001  addiu       $v0, $s0, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 1));
@@ -182,7 +177,6 @@ label_146928:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_getIDWork_0x2aa410, 0x2aa410u, 0x146948u)) {
         return;
     }
-    ctx->pc = 0x146948u;
 label_146948:
     // 0x146948: 0x3c01c248  lui         $at, 0xC248
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)49736 << 16));

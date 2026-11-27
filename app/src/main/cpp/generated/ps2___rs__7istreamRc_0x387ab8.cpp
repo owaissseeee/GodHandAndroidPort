@@ -13,7 +13,7 @@
 
 // Function: __rs__7istreamRc
 // Address: 0x387ab8 - 0x387b78
-void ps2___rs__7istreamRc_0x387ab8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___rs__7istreamRc_0x387ab8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___rs__7istreamRc_0x387ab8");
 #endif
@@ -81,7 +81,6 @@ void ps2___rs__7istreamRc_0x387ab8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_387b28;
         }
     }
-    ctx->pc = 0x387AECu;
 label_387aec:
     // 0x387aec: 0x8c640004  lw          $a0, 0x4($v1)
     ctx->pc = 0x387aecu;
@@ -107,7 +106,6 @@ label_387aec:
     if (!runtime->callDirectStatic(rdram, ctx, &flush__7ostream_0x389268, 0x389268u, 0x387b00u)) {
         return;
     }
-    ctx->pc = 0x387B00u;
 label_387b00:
     // 0x387b00: 0x8e030000  lw          $v1, 0x0($s0)
     ctx->pc = 0x387b00u;
@@ -148,10 +146,8 @@ label_387b08:
     if (!runtime->callDirectStatic(rdram, ctx, &_skip_ws__7istream_0x389398, 0x389398u, 0x387b24u)) {
         return;
     }
-    ctx->pc = 0x387B24u;
 label_387b24:
     // 0x387b24: 0x40202d  daddu       $a0, $v0, $zero
-    ctx->pc = 0x387b24u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_387b28:
     // 0x387b28: 0x1080000d  beqz        $a0, . + 4 + (0xD << 2)
@@ -183,7 +179,6 @@ label_387b28:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_getc_0x38eae0, 0x38eae0u, 0x387b3cu)) {
         return;
     }
-    ctx->pc = 0x387B3Cu;
 label_387b3c:
     // 0x387b3c: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -217,7 +212,6 @@ label_387b3c:
     WRITE8(ADD32(GPR_U32(ctx, 3), 26), (uint8_t)GPR_U32(ctx, 2));
 label_387b5c:
     // 0x387b5c: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x387b5cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_387b60:
     // 0x387b60: 0xdfbf0020  ld          $ra, 0x20($sp)

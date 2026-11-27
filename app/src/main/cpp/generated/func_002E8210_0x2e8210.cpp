@@ -13,7 +13,7 @@
 
 // Function: func_002E8210
 // Address: 0x2e8210 - 0x2e82f8
-void func_002E8210_0x2e8210(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002E8210_0x2e8210(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002E8210_0x2e8210");
 #endif
@@ -143,7 +143,6 @@ label_2e826c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002E8038_0x2e8038, 0x2e8038u, 0x2e8290u)) {
         return;
     }
-    ctx->pc = 0x2E8290u;
 label_2e8290:
     // 0x2e8290: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x2E8290u;
@@ -160,7 +159,6 @@ label_2e8290:
             goto label_2e82ac;
         }
     }
-    ctx->pc = 0x2E8298u;
 label_2e8298:
     // 0x2e8298: 0x3c0141c8  lui         $at, 0x41C8
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16840 << 16));
@@ -177,7 +175,6 @@ label_2e8298:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002E8038_0x2e8038, 0x2e8038u, 0x2e82a8u)) {
         return;
     }
-    ctx->pc = 0x2E82A8u;
 label_2e82a8:
     // 0x2e82a8: 0xc60c02b8  lwc1        $f12, 0x2B8($s0)
     ctx->pc = 0x2e82a8u;
@@ -211,7 +208,6 @@ label_2e82ac:
     if (!runtime->callDirectStatic(rdram, ctx, &WaveObj_fillWaveTable_0x2e8168, 0x2e8168u, 0x2e82ccu)) {
         return;
     }
-    ctx->pc = 0x2E82CCu;
 label_2e82cc:
     // 0x2e82cc: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x2E82CCu;
@@ -228,7 +224,6 @@ label_2e82cc:
             goto label_2e82e8;
         }
     }
-    ctx->pc = 0x2E82D4u;
 label_2e82d4:
     // 0x2e82d4: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -245,7 +240,6 @@ label_2e82d4:
     if (!runtime->callDirectStatic(rdram, ctx, &WaveObj_fillWaveTable_0x2e8168, 0x2e8168u, 0x2e82e4u)) {
         return;
     }
-    ctx->pc = 0x2E82E4u;
 label_2e82e4:
     // 0x2e82e4: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2e82e4u;

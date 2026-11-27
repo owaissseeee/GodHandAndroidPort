@@ -13,7 +13,7 @@
 
 // Function: WayPoints_initTable
 // Address: 0x276618 - 0x276790
-void WayPoints_initTable_0x276618(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void WayPoints_initTable_0x276618(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("WayPoints_initTable_0x276618");
 #endif

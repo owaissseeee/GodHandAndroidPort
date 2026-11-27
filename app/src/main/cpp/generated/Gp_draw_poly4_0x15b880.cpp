@@ -13,7 +13,7 @@
 
 // Function: Gp_draw_poly4
 // Address: 0x15b880 - 0x15bcf0
-void Gp_draw_poly4_0x15b880(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Gp_draw_poly4_0x15b880(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Gp_draw_poly4_0x15b880");
 #endif
@@ -90,7 +90,6 @@ void Gp_draw_poly4_0x15b880(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &PostInc_D_00566E10_0015B0F0_15B0F0_0x15b0f0, 0x15b0f0u, 0x15b8ccu)) {
         return;
     }
-    ctx->pc = 0x15B8CCu;
 label_15b8cc:
     // 0x15b8cc: 0x40902d  daddu       $s2, $v0, $zero
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -124,7 +123,6 @@ label_15b8cc:
             goto label_15bcc0;
         }
     }
-    ctx->pc = 0x15B8E0u;
 label_15b8e0:
     // 0x15b8e0: 0x3c025000  lui         $v0, 0x5000
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)20480 << 16));
@@ -232,12 +230,10 @@ label_15b8e0:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0CopyMatrix_0x30a548, 0x30a548u, 0x15b978u)) {
         return;
     }
-    ctx->pc = 0x15B978u;
 label_15b978:
     // 0x15b978: 0x27b40030  addiu       $s4, $sp, 0x30
     SET_GPR_S32(ctx, 20, (int32_t)ADD32(GPR_U32(ctx, 29), 48));
     // 0x15b97c: 0x102100  sll         $a0, $s0, 4
-    ctx->pc = 0x15b97cu;
     SET_GPR_S32(ctx, 4, (int32_t)SLL32(GPR_U32(ctx, 16), 4));
 label_15b980:
     // 0x15b980: 0x220302d  daddu       $a2, $s1, $zero
@@ -259,7 +255,6 @@ label_15b980:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0RotTransPers_0x30ab48, 0x30ab48u, 0x15b998u)) {
         return;
     }
-    ctx->pc = 0x15B998u;
 label_15b998:
     // 0x15b998: 0x2610ffff  addiu       $s0, $s0, -0x1
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 4294967295));
@@ -619,7 +614,6 @@ label_15b998:
             goto label_15bcc0;
         }
     }
-    ctx->pc = 0x15BA74u;
 label_15ba74:
     // 0x15ba74: 0x26110030  addiu       $s1, $s0, 0x30
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 16), 48));
@@ -634,7 +628,6 @@ label_15ba74:
     // 0x15ba88: 0x27b00070  addiu       $s0, $sp, 0x70
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 29), 112));
     // 0x15ba8c: 0x0  nop
-    ctx->pc = 0x15ba8cu;
     // NOP
 label_15ba90:
     // 0x15ba90: 0x132100  sll         $a0, $s3, 4
@@ -654,7 +647,6 @@ label_15ba90:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0FTOI4Vector_0x30a570, 0x30a570u, 0x15baa4u)) {
         return;
     }
-    ctx->pc = 0x15BAA4u;
 label_15baa4:
     // 0x15baa4: 0x2673ffff  addiu       $s3, $s3, -0x1
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 19), 4294967295));
@@ -713,7 +705,6 @@ label_15baa4:
         }
     }
     // 0x15baec: 0x151202  srl         $v0, $s5, 8
-    ctx->pc = 0x15baecu;
     SET_GPR_S32(ctx, 2, (int32_t)SRL32(GPR_U32(ctx, 21), 8));
 label_15baf0:
     // 0x15baf0: 0x152c02  srl         $a1, $s5, 16
@@ -1044,7 +1035,6 @@ label_15bc5c:
             goto label_15bc94;
         }
     }
-    ctx->pc = 0x15BC8Cu;
 label_15bc8c:
     // 0x15bc8c: 0x8fa50084  lw          $a1, 0x84($sp)
     ctx->pc = 0x15bc8cu;
@@ -1066,7 +1056,6 @@ label_15bc94:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031A600_0x31a600, 0x31a600u, 0x15bca0u)) {
         return;
     }
-    ctx->pc = 0x15BCA0u;
 label_15bca0:
     // 0x15bca0: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x15BCA0u;
@@ -1083,7 +1072,6 @@ label_15bca0:
             goto label_15bcc0;
         }
     }
-    ctx->pc = 0x15BCA8u;
 label_15bca8:
     // 0x15bca8: 0x8fa50084  lw          $a1, 0x84($sp)
     ctx->pc = 0x15bca8u;
@@ -1104,10 +1092,8 @@ label_15bca8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031A600_0x31a600, 0x31a600u, 0x15bcbcu)) {
         return;
     }
-    ctx->pc = 0x15BCBCu;
 label_15bcbc:
     // 0x15bcbc: 0x240102d  daddu       $v0, $s2, $zero
-    ctx->pc = 0x15bcbcu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
 label_15bcc0:
     // 0x15bcc0: 0x7bb00120  lq          $s0, 0x120($sp)

@@ -13,7 +13,7 @@
 
 // Function: func_00375050
 // Address: 0x375050 - 0x3750e0
-void func_00375050_0x375050(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00375050_0x375050(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00375050_0x375050");
 #endif
@@ -52,7 +52,6 @@ void func_00375050_0x375050(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0037D170_0x37d170, 0x37d170u, 0x375070u)) {
         return;
     }
-    ctx->pc = 0x375070u;
 label_375070:
     // 0x375070: 0x40282d  daddu       $a1, $v0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -131,10 +130,8 @@ label_375070:
             goto label_3750c8;
         }
     }
-    ctx->pc = 0x3750C4u;
 label_3750c4:
     // 0x3750c4: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x3750c4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_3750c8:
     // 0x3750c8: 0x7bb00020  lq          $s0, 0x20($sp)

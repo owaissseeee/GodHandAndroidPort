@@ -13,7 +13,7 @@
 
 // Function: func_0034F830
 // Address: 0x34f830 - 0x34f8d0
-void func_0034F830_0x34f830(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0034F830_0x34f830(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0034F830_0x34f830");
 #endif
@@ -78,7 +78,6 @@ void func_0034F830_0x34f830(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034CA00_0x34ca00, 0x34ca00u, 0x34f870u)) {
         return;
     }
-    ctx->pc = 0x34F870u;
 label_34f870:
     // 0x34f870: 0x8e050014  lw          $a1, 0x14($s0)
     ctx->pc = 0x34f870u;
@@ -109,7 +108,6 @@ label_34f870:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034CA00_0x34ca00, 0x34ca00u, 0x34f884u)) {
         return;
     }
-    ctx->pc = 0x34F884u;
 label_34f884:
     // 0x34f884: 0x8e05001c  lw          $a1, 0x1C($s0)
     ctx->pc = 0x34f884u;
@@ -156,7 +154,6 @@ label_34f884:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x34CA00u, 0x34F8A8u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x34F8B0u;
 label_34f8b0:
     // 0x34f8b0: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x34f8b0u;

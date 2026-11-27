@@ -13,7 +13,7 @@
 
 // Function: func_0032A568
 // Address: 0x32a568 - 0x32a5b8
-void func_0032A568_0x32a568(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0032A568_0x32a568(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0032A568_0x32a568");
 #endif
@@ -56,7 +56,6 @@ void func_0032A568_0x32a568(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0033F130_0x33f130, 0x33f130u, 0x32a580u)) {
         return;
     }
-    ctx->pc = 0x32A580u;
 label_32a580:
     // 0x32a580: 0x10000009  b           . + 4 + (0x9 << 2)
     ctx->pc = 0x32A580u;
@@ -73,7 +72,6 @@ label_32a580:
             goto label_32a5a8;
         }
     }
-    ctx->pc = 0x32A588u;
 label_32a588:
     // 0x32a588: 0x80820001  lb          $v0, 0x1($a0)
     ctx->pc = 0x32a588u;
@@ -111,7 +109,6 @@ label_32a588:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x327788u, 0x32A5A0u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x32A5A8u;
 label_32a5a8:
     // 0x32a5a8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x32a5a8u;

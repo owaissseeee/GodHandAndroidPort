@@ -13,7 +13,7 @@
 
 // Function: cOmDoor_releaseObjCollision
 // Address: 0x1bd3f0 - 0x1bd430
-void cOmDoor_releaseObjCollision_0x1bd3f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmDoor_releaseObjCollision_0x1bd3f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmDoor_releaseObjCollision_0x1bd3f0");
 #endif
@@ -67,7 +67,6 @@ void cOmDoor_releaseObjCollision_0x1bd3f0(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &func_0012EC58_0x12ec58, 0x12ec58u, 0x1bd418u)) {
         return;
     }
-    ctx->pc = 0x1BD418u;
 label_1bd418:
     // 0x1bd418: 0xae000644  sw          $zero, 0x644($s0)
     ctx->pc = 0x1bd418u;

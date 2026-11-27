@@ -13,7 +13,7 @@
 
 // Function: cDataManager_addPinnedData
 // Address: 0x1fece0 - 0x1fed78
-void cDataManager_addPinnedData_0x1fece0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDataManager_addPinnedData_0x1fece0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDataManager_addPinnedData_0x1fece0");
 #endif
@@ -61,7 +61,6 @@ void cDataManager_addPinnedData_0x1fece0(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &cDataManager_findKind_0x1fee00, 0x1fee00u, 0x1fed08u)) {
         return;
     }
-    ctx->pc = 0x1FED08u;
 label_1fed08:
     // 0x1fed08: 0x4400003  bltz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x1FED08u;
@@ -89,7 +88,6 @@ label_1fed08:
     if (!runtime->callDirectStatic(rdram, ctx, &cDataManager_freeKind_0x1fec90, 0x1fec90u, 0x1fed18u)) {
         return;
     }
-    ctx->pc = 0x1FED18u;
 label_1fed18:
     // 0x1fed18: 0xc07fba8  jal         func_1FEEA0
     SET_GPR_U32(ctx, 31, 0x1FED20u);
@@ -102,7 +100,6 @@ label_1fed18:
     if (!runtime->callDirectStatic(rdram, ctx, &cDataManager_findFreeSlot_0x1feea0, 0x1feea0u, 0x1fed20u)) {
         return;
     }
-    ctx->pc = 0x1FED20u;
 label_1fed20:
     // 0x1fed20: 0x440000d  bltz        $v0, . + 4 + (0xD << 2)
     ctx->pc = 0x1FED20u;
@@ -139,7 +136,6 @@ label_1fed20:
     if (!runtime->callDirectStatic(rdram, ctx, &InitRec_start_0x1ff470, 0x1ff470u, 0x1fed40u)) {
         return;
     }
-    ctx->pc = 0x1FED40u;
 label_1fed40:
     // 0x1fed40: 0x8e230008  lw          $v1, 0x8($s1)
     ctx->pc = 0x1fed40u;
@@ -165,10 +161,8 @@ label_1fed40:
             goto label_1fed5c;
         }
     }
-    ctx->pc = 0x1FED58u;
 label_1fed58:
     // 0x1fed58: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1fed58u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1fed5c:
     // 0x1fed5c: 0x7bb00040  lq          $s0, 0x40($sp)

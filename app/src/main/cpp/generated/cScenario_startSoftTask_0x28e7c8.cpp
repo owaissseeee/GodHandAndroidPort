@@ -13,7 +13,7 @@
 
 // Function: cScenario_startSoftTask
 // Address: 0x28e7c8 - 0x28e858
-void cScenario_startSoftTask_0x28e7c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_startSoftTask_0x28e7c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_startSoftTask_0x28e7c8");
 #endif
@@ -55,7 +55,6 @@ void cScenario_startSoftTask_0x28e7c8(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_startSoftEvent_0x2c39b0, 0x2c39b0u, 0x28e7ecu)) {
         return;
     }
-    ctx->pc = 0x28E7ECu;
 label_28e7ec:
     // 0x28e7ec: 0x3c060074  lui         $a2, 0x74
     SET_GPR_S32(ctx, 6, (int32_t)((uint32_t)116 << 16));
@@ -91,7 +90,6 @@ label_28e7ec:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_taskExec_0x2c3920, 0x2c3920u, 0x28e81cu)) {
         return;
     }
-    ctx->pc = 0x28E81Cu;
 label_28e81c:
     // 0x28e81c: 0x4400008  bltz        $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x28E81Cu;

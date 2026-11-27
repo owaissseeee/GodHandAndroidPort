@@ -13,7 +13,7 @@
 
 // Function: sfmpvp_PutVibuf
 // Address: 0x356648 - 0x3566e8
-void sfmpvp_PutVibuf_0x356648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfmpvp_PutVibuf_0x356648(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfmpvp_PutVibuf_0x356648");
 #endif
@@ -65,7 +65,6 @@ void sfmpvp_PutVibuf_0x356648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &viBufBeginPut_0x355ac8, 0x355ac8u, 0x35667cu)) {
         return;
     }
-    ctx->pc = 0x35667Cu;
 label_35667c:
     // 0x35667c: 0x8fa40000  lw          $a0, 0x0($sp)
     ctx->pc = 0x35667cu;
@@ -110,7 +109,6 @@ label_35667c:
     if (!runtime->callDirectStatic(rdram, ctx, &copy2area_0x3569e0, 0x3569e0u, 0x3566bcu)) {
         return;
     }
-    ctx->pc = 0x3566BCu;
 label_3566bc:
     // 0x3566bc: 0x240202d  daddu       $a0, $s2, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -127,7 +125,6 @@ label_3566bc:
     if (!runtime->callDirectStatic(rdram, ctx, &viBufEndPut_0x355bb8, 0x355bb8u, 0x3566ccu)) {
         return;
     }
-    ctx->pc = 0x3566CCu;
 label_3566cc:
     // 0x3566cc: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

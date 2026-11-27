@@ -13,7 +13,7 @@
 
 // Function: Motion_seq_readSeData
 // Address: 0x2c7da8 - 0x2c7e30
-void Motion_seq_readSeData_0x2c7da8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Motion_seq_readSeData_0x2c7da8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Motion_seq_readSeData_0x2c7da8");
 #endif
@@ -62,7 +62,6 @@ void Motion_seq_readSeData_0x2c7da8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2c7dd8u)) {
         return;
     }
-    ctx->pc = 0x2C7DD8u;
 label_2c7dd8:
     // 0x2c7dd8: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -94,7 +93,6 @@ label_2c7dd8:
     if (!runtime->callDirectStatic(rdram, ctx, &memcpy_0x3a5148, 0x3a5148u, 0x2c7df0u)) {
         return;
     }
-    ctx->pc = 0x2C7DF0u;
 label_2c7df0:
     // 0x2c7df0: 0x6ba30007  ldl         $v1, 0x7($sp)
     ctx->pc = 0x2c7df0u;

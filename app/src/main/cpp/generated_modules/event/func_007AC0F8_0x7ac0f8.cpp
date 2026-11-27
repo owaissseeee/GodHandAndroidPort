@@ -14,18 +14,16 @@ namespace gh_event
 {
 // Function: func_007AC0F8
 // Address: 0x7ac0f8 - 0x7ac108
-void func_007AC0F8_0x7ac0f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_007AC0F8_0x7ac0f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_007AC0F8_0x7ac0f8");
 #endif
 
-    ctx->pc = 0x7ac0f8u;
 
     // 0x7ac0f8: 0x9082000d  lbu         $v0, 0xD($a0)
     ctx->pc = 0x7ac0f8u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 13)));
     // 0x7ac0fc: 0x21082  srl         $v0, $v0, 2
-    ctx->pc = 0x7ac0fcu;
     SET_GPR_S32(ctx, 2, (int32_t)SRL32(GPR_U32(ctx, 2), 2));
     // 0x7ac100: 0x3e00008  jr          $ra
     ctx->pc = 0x7AC100u;

@@ -13,7 +13,7 @@
 
 // Function: ForwardInitBuffer_313AD0
 // Address: 0x313ad0 - 0x313b40
-void ForwardInitBuffer_313AD0_0x313ad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardInitBuffer_313AD0_0x313ad0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardInitBuffer_313AD0_0x313ad0");
 #endif
@@ -74,7 +74,6 @@ void ForwardInitBuffer_313AD0_0x313ad0(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &EnsureInitThenForward_2A9538_30EE08_0x30ee08, 0x30ee08u, 0x313b04u)) {
         return;
     }
-    ctx->pc = 0x313B04u;
 label_313b04:
     // 0x313b04: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -106,7 +105,6 @@ label_313b04:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x313b1cu)) {
         return;
     }
-    ctx->pc = 0x313B1Cu;
 label_313b1c:
     // 0x313b1c: 0xc061a66  jal         func_186998
     SET_GPR_U32(ctx, 31, 0x313B24u);
@@ -119,7 +117,6 @@ label_313b1c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00186998_0x186998, 0x186998u, 0x313b24u)) {
         return;
     }
-    ctx->pc = 0x313B24u;
 label_313b24:
     // 0x313b24: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x313B24u;
@@ -136,7 +133,6 @@ label_313b24:
             goto label_313b34;
         }
     }
-    ctx->pc = 0x313B2Cu;
 label_313b2c:
     // 0x313b2c: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

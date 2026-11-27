@@ -14,7 +14,7 @@
 
 // Function: cObjBase_addNullSpeed
 // Address: 0x14f928 - 0x14f9f0
-void cObjBase_addNullSpeed_0x14f928(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cObjBase_addNullSpeed_0x14f928(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cObjBase_addNullSpeed_0x14f928");
 #endif
@@ -125,7 +125,6 @@ void cObjBase_addNullSpeed_0x14f928(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &VecRotVec_0x150830, 0x150830u, 0x14f9a0u)) {
         return;
     }
-    ctx->pc = 0x14F9A0u;
 label_14f9a0:
     // 0x14f9a0: 0x8e0200f0  lw          $v0, 0xF0($s0)
     ctx->pc = 0x14f9a0u;

@@ -14,12 +14,11 @@ namespace gh_r404
 {
 // Function: R404Move__Fv
 // Address: 0x799b70 - 0x799b78
-void R404Move__Fv_0x799b70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void R404Move__Fv_0x799b70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("R404Move__Fv_0x799b70");
 #endif
 
-    ctx->pc = 0x799b70u;
 
     // 0x799b70: 0x3e00008  jr          $ra
     ctx->pc = 0x799B70u;

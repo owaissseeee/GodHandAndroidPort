@@ -13,7 +13,7 @@
 
 // Function: func_00167328
 // Address: 0x167328 - 0x167360
-void func_00167328_0x167328(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00167328_0x167328(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00167328_0x167328");
 #endif
@@ -33,7 +33,6 @@ void func_00167328_0x167328(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x167330: 0x3c070800  lui         $a3, 0x800
     SET_GPR_S32(ctx, 7, (int32_t)((uint32_t)2048 << 16));
     // 0x167334: 0x0  nop
-    ctx->pc = 0x167334u;
     // NOP
 label_167338:
     // 0x167338: 0x8ca20000  lw          $v0, 0x0($a1)

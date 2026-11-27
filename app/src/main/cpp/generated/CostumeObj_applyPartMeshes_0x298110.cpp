@@ -13,7 +13,7 @@
 
 // Function: CostumeObj_applyPartMeshes
 // Address: 0x298110 - 0x2981b0
-void CostumeObj_applyPartMeshes_0x298110(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CostumeObj_applyPartMeshes_0x298110(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CostumeObj_applyPartMeshes_0x298110");
 #endif
@@ -100,7 +100,6 @@ void CostumeObj_applyPartMeshes_0x298110(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_2981a0;
         }
     }
-    ctx->pc = 0x298144u;
 label_298144:
     // 0x298144: 0x28c20010  slti        $v0, $a2, 0x10
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 6) < (int64_t)(int32_t)16) ? 1 : 0);
@@ -136,7 +135,6 @@ label_298144:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setMeshDisplay_0x14a338, 0x14a338u, 0x298164u)) {
         return;
     }
-    ctx->pc = 0x298164u;
 label_298164:
     // 0x298164: 0x3c050045  lui         $a1, 0x45
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)69 << 16));
@@ -155,7 +153,6 @@ label_298164:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setMeshDisplay_0x14a338, 0x14a338u, 0x298178u)) {
         return;
     }
-    ctx->pc = 0x298178u;
 label_298178:
     // 0x298178: 0x10000009  b           . + 4 + (0x9 << 2)
     ctx->pc = 0x298178u;
@@ -172,7 +169,6 @@ label_298178:
             goto label_2981a0;
         }
     }
-    ctx->pc = 0x298180u;
 label_298180:
     // 0x298180: 0x54400007  bnel        $v0, $zero, . + 4 + (0x7 << 2)
     ctx->pc = 0x298180u;
@@ -206,7 +202,6 @@ label_298180:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setMeshDisplay_0x14a338, 0x14a338u, 0x29819cu)) {
         return;
     }
-    ctx->pc = 0x29819Cu;
 label_29819c:
     // 0x29819c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x29819cu;

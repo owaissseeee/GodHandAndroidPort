@@ -13,7 +13,7 @@
 
 // Function: func_00160D50
 // Address: 0x160d50 - 0x160e78
-void func_00160D50_0x160d50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00160D50_0x160d50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00160D50_0x160d50");
 #endif
@@ -58,7 +58,6 @@ void func_00160D50_0x160d50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x160d80: 0x3c10003c  lui         $s0, 0x3C
     SET_GPR_S32(ctx, 16, (int32_t)((uint32_t)60 << 16));
     // 0x160d84: 0x2404ffff  addiu       $a0, $zero, -0x1
-    ctx->pc = 0x160d84u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_160d88:
     // 0x160d88: 0xf8600000  sqc2        $vf0, 0x0($v1)
@@ -177,7 +176,6 @@ label_160d88:
     if (!runtime->callDirectStatic(rdram, ctx, &Gp_draw_poly4_0x15b880, 0x15b880u, 0x160e24u)) {
         return;
     }
-    ctx->pc = 0x160E24u;
 label_160e24:
     // 0x160e24: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -209,7 +207,6 @@ label_160e3c:
     if (!runtime->callDirectStatic(rdram, ctx, &cScrSpriteDraw_drawInit_0x2c54e8, 0x2c54e8u, 0x160e44u)) {
         return;
     }
-    ctx->pc = 0x160E44u;
 label_160e44:
     // 0x160e44: 0x8e042fb0  lw          $a0, 0x2FB0($s0)
     ctx->pc = 0x160e44u;

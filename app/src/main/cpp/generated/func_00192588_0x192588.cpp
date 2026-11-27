@@ -13,7 +13,7 @@
 
 // Function: func_00192588
 // Address: 0x192588 - 0x1926a0
-void func_00192588_0x192588(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00192588_0x192588(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00192588_0x192588");
 #endif
@@ -161,7 +161,6 @@ label_1925cc:
             goto label_192614;
         }
     }
-    ctx->pc = 0x192608u;
 label_192608:
     // 0x192608: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -210,7 +209,6 @@ label_19261c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31D000u, 0x192634u, 0x19263Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x19263Cu;
 label_19263c:
     // 0x19263c: 0x3c013f4c  lui         $at, 0x3F4C
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16204 << 16));
@@ -271,7 +269,6 @@ label_19263c:
             goto label_192690;
         }
     }
-    ctx->pc = 0x19267Cu;
 label_19267c:
     // 0x19267c: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));

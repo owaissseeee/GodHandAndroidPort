@@ -13,7 +13,7 @@
 
 // Function: cIDBase_initIDWork
 // Address: 0x2aa3d8 - 0x2aa410
-void cIDBase_initIDWork_0x2aa3d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDBase_initIDWork_0x2aa3d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDBase_initIDWork_0x2aa3d8");
 #endif
@@ -46,7 +46,6 @@ void cIDBase_initIDWork_0x2aa3d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_getIDWork_0x2aa410, 0x2aa410u, 0x2aa3ecu)) {
         return;
     }
-    ctx->pc = 0x2AA3ECu;
 label_2aa3ec:
     // 0x2aa3ec: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x2AA3ECu;
@@ -77,7 +76,6 @@ label_2aa3ec:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_initEntry_0x2aa2d0, 0x2aa2d0u, 0x2aa400u)) {
         return;
     }
-    ctx->pc = 0x2AA400u;
 label_2aa400:
     // 0x2aa400: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2aa400u;

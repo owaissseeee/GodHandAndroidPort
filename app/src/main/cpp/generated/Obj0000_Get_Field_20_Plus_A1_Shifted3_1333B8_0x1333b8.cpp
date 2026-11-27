@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Get_Field_20_Plus_A1_Shifted3_1333B8
 // Address: 0x1333b8 - 0x133408
-void Obj0000_Get_Field_20_Plus_A1_Shifted3_1333B8_0x1333b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Get_Field_20_Plus_A1_Shifted3_1333B8_0x1333b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Get_Field_20_Plus_A1_Shifted3_1333B8_0x1333b8");
 #endif

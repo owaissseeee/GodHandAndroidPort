@@ -13,7 +13,7 @@
 
 // Function: Obj34D8_SetGlobalEE0B8_IfField48
 // Address: 0x34dec8 - 0x34def0
-void Obj34D8_SetGlobalEE0B8_IfField48_0x34dec8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj34D8_SetGlobalEE0B8_IfField48_0x34dec8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj34D8_SetGlobalEE0B8_IfField48_0x34dec8");
 #endif

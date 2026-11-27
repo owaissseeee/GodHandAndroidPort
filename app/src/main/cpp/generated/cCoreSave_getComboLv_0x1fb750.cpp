@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getComboLv
 // Address: 0x1fb750 - 0x1fb7d8
-void cCoreSave_getComboLv_0x1fb750(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getComboLv_0x1fb750(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getComboLv_0x1fb750");
 #endif
@@ -90,7 +90,6 @@ void cCoreSave_getComboLv_0x1fb750(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getComboMax_0x1fb830, 0x1fb830u, 0x1fb78cu)) {
         return;
     }
-    ctx->pc = 0x1FB78Cu;
 label_1fb78c:
     // 0x1fb78c: 0x202102b  sltu        $v0, $s0, $v0
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 16) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
@@ -148,10 +147,8 @@ label_1fb78c:
             goto label_1fb7bc;
         }
     }
-    ctx->pc = 0x1FB7B8u;
 label_1fb7b8:
     // 0x1fb7b8: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1fb7b8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1fb7bc:
     // 0x1fb7bc: 0x7bb00030  lq          $s0, 0x30($sp)

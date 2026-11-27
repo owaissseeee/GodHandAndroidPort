@@ -13,7 +13,7 @@
 
 // Function: PostInc_D_00566E10_0015B0F0_15B0F0
 // Address: 0x15b0f0 - 0x15b138
-void PostInc_D_00566E10_0015B0F0_15B0F0_0x15b0f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void PostInc_D_00566E10_0015B0F0_15B0F0_0x15b0f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("PostInc_D_00566E10_0015B0F0_15B0F0_0x15b0f0");
 #endif
@@ -79,7 +79,6 @@ void PostInc_D_00566E10_0015B0F0_15B0F0_0x15b0f0(uint8_t* rdram, R5900Context* c
         return;
         #endif
     }
-    ctx->pc = 0x15B130u;
 label_15b130:
     // 0x15b130: 0x3e00008  jr          $ra
     ctx->pc = 0x15B130u;

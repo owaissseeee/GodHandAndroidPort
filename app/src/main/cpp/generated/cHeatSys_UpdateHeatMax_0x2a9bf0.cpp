@@ -13,7 +13,7 @@
 
 // Function: cHeatSys_UpdateHeatMax
 // Address: 0x2a9bf0 - 0x2a9c58
-void cHeatSys_UpdateHeatMax_0x2a9bf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cHeatSys_UpdateHeatMax_0x2a9bf0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cHeatSys_UpdateHeatMax_0x2a9bf0");
 #endif
@@ -50,7 +50,6 @@ void cHeatSys_UpdateHeatMax_0x2a9bf0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getState155_0x1faea0, 0x1faea0u, 0x2a9c0cu)) {
         return;
     }
-    ctx->pc = 0x2A9C0Cu;
 label_2a9c0c:
     // 0x2a9c0c: 0x2403001e  addiu       $v1, $zero, 0x1E
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 30));
@@ -101,7 +100,6 @@ label_2a9c3c:
     if (!runtime->callDirectStatic(rdram, ctx, &cHeatSys_UpdateHeatLv_0x2a9b50, 0x2a9b50u, 0x2a9c44u)) {
         return;
     }
-    ctx->pc = 0x2A9C44u;
 label_2a9c44:
     // 0x2a9c44: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2a9c44u;

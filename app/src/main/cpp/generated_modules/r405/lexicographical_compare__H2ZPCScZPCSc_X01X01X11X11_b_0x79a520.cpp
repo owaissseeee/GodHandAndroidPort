@@ -14,17 +14,19 @@ namespace gh_r405
 {
 // Function: lexicographical_compare__H2ZPCScZPCSc_X01X01X11X11_b
 // Address: 0x79a520 - 0x79a588
-void lexicographical_compare__H2ZPCScZPCSc_X01X01X11X11_b_0x79a520(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void lexicographical_compare__H2ZPCScZPCSc_X01X01X11X11_b_0x79a520(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("lexicographical_compare__H2ZPCScZPCSc_X01X01X11X11_b_0x79a520");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79a538u: goto label_79a538;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x79a520u, 0)) {
+        switch (ctx->pc) {
+            case 0x79a538u: goto label_79a538;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x79a520u;
+
 
     // 0x79a520: 0x10850013  beq         $a0, $a1, . + 4 + (0x13 << 2)
     ctx->pc = 0x79A520u;
@@ -35,7 +37,6 @@ void lexicographical_compare__H2ZPCScZPCSc_X01X01X11X11_b_0x79a520(uint8_t* rdra
             goto label_79a570;
         }
     }
-    ctx->pc = 0x79A528u;
     // 0x79a528: 0x10c70011  beq         $a2, $a3, . + 4 + (0x11 << 2)
     ctx->pc = 0x79A528u;
     {
@@ -45,19 +46,16 @@ void lexicographical_compare__H2ZPCScZPCSc_X01X01X11X11_b_0x79a520(uint8_t* rdra
             goto label_79a570;
         }
     }
-    ctx->pc = 0x79A530u;
     // 0x79a530: 0x80880000  lb          $t0, 0x0($a0)
     ctx->pc = 0x79a530u;
     SET_GPR_S32(ctx, 8, (int8_t)READ8(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x79a534: 0x0  nop
-    ctx->pc = 0x79a534u;
     // NOP
 label_79a538:
     // 0x79a538: 0x80c30000  lb          $v1, 0x0($a2)
     ctx->pc = 0x79a538u;
     SET_GPR_S32(ctx, 3, (int8_t)READ8(ADD32(GPR_U32(ctx, 6), 0)));
     // 0x79a53c: 0x103102a  slt         $v0, $t0, $v1
-    ctx->pc = 0x79a53cu;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 8) < (int64_t)GPR_S64(ctx, 3)) ? 1 : 0);
     // 0x79a540: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x79A540u;
@@ -74,7 +72,6 @@ label_79a538:
             goto label_79a550;
         }
     }
-    ctx->pc = 0x79A548u;
     // 0x79a548: 0x3e00008  jr          $ra
     ctx->pc = 0x79A548u;
     {
@@ -94,7 +91,6 @@ label_79a538:
         return;
         #endif
     }
-    ctx->pc = 0x79A550u;
 label_79a550:
     // 0x79a550: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x79A550u;
@@ -111,7 +107,6 @@ label_79a550:
             goto label_79a560;
         }
     }
-    ctx->pc = 0x79A558u;
     // 0x79a558: 0x3e00008  jr          $ra
     ctx->pc = 0x79A558u;
     {
@@ -131,7 +126,6 @@ label_79a550:
         return;
         #endif
     }
-    ctx->pc = 0x79A560u;
 label_79a560:
     // 0x79a560: 0x10850003  beq         $a0, $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x79A560u;
@@ -148,7 +142,6 @@ label_79a560:
             goto label_79a570;
         }
     }
-    ctx->pc = 0x79A568u;
     // 0x79a568: 0x54c7fff3  bnel        $a2, $a3, . + 4 + (-0xD << 2)
     ctx->pc = 0x79A568u;
     {
@@ -167,7 +160,6 @@ label_79a560:
             goto label_79a538;
         }
     }
-    ctx->pc = 0x79A570u;
 label_79a570:
     // 0x79a570: 0x14850003  bne         $a0, $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x79A570u;
@@ -184,12 +176,9 @@ label_79a570:
             goto label_79a580;
         }
     }
-    ctx->pc = 0x79A578u;
     // 0x79a578: 0xc71026  xor         $v0, $a2, $a3
-    ctx->pc = 0x79a578u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 6) ^ GPR_U64(ctx, 7));
     // 0x79a57c: 0x2102b  sltu        $v0, $zero, $v0
-    ctx->pc = 0x79a57cu;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 0) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
 label_79a580:
     // 0x79a580: 0x3e00008  jr          $ra

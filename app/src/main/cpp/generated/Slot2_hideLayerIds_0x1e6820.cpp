@@ -13,7 +13,7 @@
 
 // Function: Slot2_hideLayerIds
 // Address: 0x1e6820 - 0x1e6870
-void Slot2_hideLayerIds_0x1e6820(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Slot2_hideLayerIds_0x1e6820(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Slot2_hideLayerIds_0x1e6820");
 #endif
@@ -46,7 +46,6 @@ void Slot2_hideLayerIds_0x1e6820(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     ctx->pc = 0x1e6838u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 0)));
     // 0x1e683c: 0x0  nop
-    ctx->pc = 0x1e683cu;
     // NOP
 label_1e6840:
     // 0x1e6840: 0x282d  daddu       $a1, $zero, $zero
@@ -64,7 +63,6 @@ label_1e6840:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e6850u)) {
         return;
     }
-    ctx->pc = 0x1E6850u;
 label_1e6850:
     // 0x1e6850: 0x623fffb  bgezl       $s1, . + 4 + (-0x5 << 2)
     ctx->pc = 0x1E6850u;

@@ -13,7 +13,7 @@
 
 // Function: cEvent_getCutNo
 // Address: 0x297b98 - 0x297ba8
-void cEvent_getCutNo_0x297b98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_getCutNo_0x297b98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_getCutNo_0x297b98");
 #endif

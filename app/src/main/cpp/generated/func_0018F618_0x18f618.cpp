@@ -14,7 +14,7 @@
 
 // Function: func_0018F618
 // Address: 0x18f618 - 0x18f858
-void func_0018F618_0x18f618(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0018F618_0x18f618(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0018F618_0x18f618");
 #endif
@@ -95,7 +95,6 @@ void func_0018F618_0x18f618(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_18f840;
         }
     }
-    ctx->pc = 0x18F64Cu;
 label_18f64c:
     // 0x18f64c: 0x3c040060  lui         $a0, 0x60
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)96 << 16));
@@ -126,7 +125,6 @@ label_18f64c:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x18f678u)) {
         return;
     }
-    ctx->pc = 0x18F678u;
 label_18f678:
     // 0x18f678: 0x260205c0  addiu       $v0, $s0, 0x5C0
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 1472));
@@ -172,7 +170,6 @@ label_18f69c:
     if (!runtime->callDirectStatic(rdram, ctx, &Tramp_001F7DF8_00101E28_0x101e28, 0x101e28u, 0x18f6a8u)) {
         return;
     }
-    ctx->pc = 0x18F6A8u;
 label_18f6a8:
     // 0x18f6a8: 0x460000c6  mov.s       $f3, $f0
     ctx->f[3] = FPU_MOV_S(ctx->f[0]);
@@ -307,7 +304,6 @@ label_18f728:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31D020u, 0x18F754u, 0x18F75Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x18F75Cu;
 label_18f75c:
     // 0x18f75c: 0xc6010660  lwc1        $f1, 0x660($s0)
     ctx->pc = 0x18f75cu;
@@ -328,7 +324,6 @@ label_18f75c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31D020u, 0x18F768u, 0x18F770u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x18F770u;
 label_18f770:
     // 0x18f770: 0x46140002  mul.s       $f0, $f0, $f20
     ctx->f[0] = FPU_MUL_S(ctx->f[0], ctx->f[20]);
@@ -386,7 +381,6 @@ label_18f7b0:
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_0x1f7d48, 0x1f7d48u, 0x18f7bcu)) {
         return;
     }
-    ctx->pc = 0x18F7BCu;
 label_18f7bc:
     // 0x18f7bc: 0xc6020670  lwc1        $f2, 0x670($s0)
     ctx->pc = 0x18f7bcu;
@@ -489,7 +483,6 @@ label_18f7bc:
             goto label_18f838;
         }
     }
-    ctx->pc = 0x18F824u;
 label_18f824:
     // 0x18f824: 0xa20002f7  sb          $zero, 0x2F7($s0)
     ctx->pc = 0x18f824u;

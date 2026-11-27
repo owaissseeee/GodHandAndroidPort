@@ -13,7 +13,7 @@
 
 // Function: StartThread
 // Address: 0x3afac0 - 0x3afad0
-void StartThread_0x3afac0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void StartThread_0x3afac0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("StartThread_0x3afac0");
 #endif

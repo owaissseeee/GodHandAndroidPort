@@ -14,12 +14,11 @@ namespace gh_r504
 {
 // Function: Move__5cR504
 // Address: 0x7992d0 - 0x7992d8
-void Move__5cR504_0x7992d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Move__5cR504_0x7992d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Move__5cR504_0x7992d0");
 #endif
 
-    ctx->pc = 0x7992d0u;
 
     // 0x7992d0: 0x3e00008  jr          $ra
     ctx->pc = 0x7992D0u;

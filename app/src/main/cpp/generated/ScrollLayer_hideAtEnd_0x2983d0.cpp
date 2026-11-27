@@ -13,7 +13,7 @@
 
 // Function: ScrollLayer_hideAtEnd
 // Address: 0x2983d0 - 0x298460
-void ScrollLayer_hideAtEnd_0x2983d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ScrollLayer_hideAtEnd_0x2983d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ScrollLayer_hideAtEnd_0x2983d0");
 #endif
@@ -72,7 +72,6 @@ void ScrollLayer_hideAtEnd_0x2983d0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_298458;
         }
     }
-    ctx->pc = 0x2983F0u;
 label_2983f0:
     // 0x2983f0: 0x44800000  mtc1        $zero, $f0
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
@@ -108,7 +107,6 @@ label_2983f0:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x298410u)) {
         return;
     }
-    ctx->pc = 0x298410u;
 label_298410:
     // 0x298410: 0x2404001f  addiu       $a0, $zero, 0x1F
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 31));
@@ -123,7 +121,6 @@ label_298410:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x29841cu)) {
         return;
     }
-    ctx->pc = 0x29841Cu;
 label_29841c:
     // 0x29841c: 0x1000000e  b           . + 4 + (0xE << 2)
     ctx->pc = 0x29841Cu;
@@ -140,7 +137,6 @@ label_29841c:
             goto label_298458;
         }
     }
-    ctx->pc = 0x298424u;
 label_298424:
     // 0x298424: 0x3c0142ca  lui         $at, 0x42CA
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)17098 << 16));
@@ -178,7 +174,6 @@ label_298424:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x298448u)) {
         return;
     }
-    ctx->pc = 0x298448u;
 label_298448:
     // 0x298448: 0x2404001f  addiu       $a0, $zero, 0x1F
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 31));
@@ -193,7 +188,6 @@ label_298448:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x298454u)) {
         return;
     }
-    ctx->pc = 0x298454u;
 label_298454:
     // 0x298454: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x298454u;

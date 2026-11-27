@@ -13,7 +13,7 @@
 
 // Function: func_002FA350
 // Address: 0x2fa350 - 0x2fa3e0
-void func_002FA350_0x2fa350(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002FA350_0x2fa350(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002FA350_0x2fa350");
 #endif
@@ -69,7 +69,6 @@ void func_002FA350_0x2fa350(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2fa398;
         }
     }
-    ctx->pc = 0x2FA398u;
 label_2fa398:
     // 0x2fa398: 0x3c020074  lui         $v0, 0x74
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));

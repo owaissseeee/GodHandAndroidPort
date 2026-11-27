@@ -13,7 +13,7 @@
 
 // Function: func_0031D2F8
 // Address: 0x31d2f8 - 0x31d3d0
-void func_0031D2F8_0x31d2f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0031D2F8_0x31d2f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0031D2F8_0x31d2f8");
 #endif
@@ -99,7 +99,6 @@ void func_0031D2F8_0x31d2f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &GetActiveState_149310_0x149310, 0x149310u, 0x31d344u)) {
         return;
     }
-    ctx->pc = 0x31D344u;
 label_31d344:
     // 0x31d344: 0x3a0202d  daddu       $a0, $sp, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -114,7 +113,6 @@ label_31d344:
     if (!runtime->callDirectStatic(rdram, ctx, &cBoundingBox_0x1f8a40, 0x1f8a40u, 0x31d350u)) {
         return;
     }
-    ctx->pc = 0x31D350u;
 label_31d350:
     // 0x31d350: 0x3c070100  lui         $a3, 0x100
     SET_GPR_S32(ctx, 7, (int32_t)((uint32_t)256 << 16));
@@ -141,7 +139,6 @@ label_31d350:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00148420_0x148420, 0x148420u, 0x31d374u)) {
         return;
     }
-    ctx->pc = 0x31D374u;
 label_31d374:
     // 0x31d374: 0x8e6a0288  lw          $t2, 0x288($s3)
     ctx->pc = 0x31d374u;
@@ -169,7 +166,6 @@ label_31d374:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001485A0_0x1485a0, 0x1485a0u, 0x31d398u)) {
         return;
     }
-    ctx->pc = 0x31D398u;
 label_31d398:
     // 0x31d398: 0x260202d  daddu       $a0, $s3, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 19) + (uint64_t)GPR_U64(ctx, 0));
@@ -186,7 +182,6 @@ label_31d398:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_addMesh_0x14b640, 0x14b640u, 0x31d3a8u)) {
         return;
     }
-    ctx->pc = 0x31D3A8u;
 label_31d3a8:
     // 0x31d3a8: 0x3a0202d  daddu       $a0, $sp, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -201,7 +196,6 @@ label_31d3a8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F8A60_0x1f8a60, 0x1f8a60u, 0x31d3b4u)) {
         return;
     }
-    ctx->pc = 0x31D3B4u;
 label_31d3b4:
     // 0x31d3b4: 0x7bb00060  lq          $s0, 0x60($sp)
     ctx->pc = 0x31d3b4u;

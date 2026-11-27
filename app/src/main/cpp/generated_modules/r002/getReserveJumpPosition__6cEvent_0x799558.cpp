@@ -14,21 +14,18 @@ namespace gh_r002
 {
 // Function: getReserveJumpPosition__6cEvent
 // Address: 0x799558 - 0x799578
-void getReserveJumpPosition__6cEvent_0x799558(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getReserveJumpPosition__6cEvent_0x799558(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getReserveJumpPosition__6cEvent_0x799558");
 #endif
 
-    ctx->pc = 0x799558u;
 
     // 0x799558: 0x8ca30038  lw          $v1, 0x38($a1)
     ctx->pc = 0x799558u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 56)));
     // 0x79955c: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x79955cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x799560: 0x24630010  addiu       $v1, $v1, 0x10
-    ctx->pc = 0x799560u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 16));
     // 0x799564: 0xd8640000  lqc2        $vf4, 0x0($v1)
     ctx->pc = 0x799564u;
@@ -49,9 +46,7 @@ void getReserveJumpPosition__6cEvent_0x799558(uint8_t* rdram, R5900Context* ctx,
         return;
         #endif
     }
-    ctx->pc = 0x799574u;
     // 0x799574: 0x0  nop
-    ctx->pc = 0x799574u;
     // NOP
     ctx->pc = 0x799578u;
 }

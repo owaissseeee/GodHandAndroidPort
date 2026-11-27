@@ -13,7 +13,7 @@
 
 // Function: cScenario_beginRoomJump_2C4548
 // Address: 0x2c4548 - 0x2c4578
-void cScenario_beginRoomJump_2C4548_0x2c4548(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_beginRoomJump_2C4548_0x2c4548(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_beginRoomJump_2C4548_0x2c4548");
 #endif
@@ -50,7 +50,6 @@ void cScenario_beginRoomJump_2C4548_0x2c4548(uint8_t* rdram, R5900Context* ctx, 
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FFEB8_0x1ffeb8, 0x1ffeb8u, 0x2c4568u)) {
         return;
     }
-    ctx->pc = 0x2C4568u;
 label_2c4568:
     // 0x2c4568: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2c4568u;

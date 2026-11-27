@@ -13,7 +13,7 @@
 
 // Function: _$_7ostream
 // Address: 0x38a838 - 0x38a8d8
-void ps2____7ostream_0x38a838(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2____7ostream_0x38a838(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2____7ostream_0x38a838");
 #endif
@@ -135,7 +135,6 @@ label_38a88c:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_vec_delete_0x30f5c8, 0x30f5c8u, 0x38a8b0u)) {
         return;
     }
-    ctx->pc = 0x38A8B0u;
 label_38a8b0:
     // 0x38a8b0: 0x32020001  andi        $v0, $s0, 0x1
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 16) & (uint64_t)(uint16_t)1);
@@ -165,7 +164,6 @@ label_38a8b0:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x38a8c4u)) {
         return;
     }
-    ctx->pc = 0x38A8C4u;
 label_38a8c4:
     // 0x38a8c4: 0xdfbf0030  ld          $ra, 0x30($sp)
     ctx->pc = 0x38a8c4u;

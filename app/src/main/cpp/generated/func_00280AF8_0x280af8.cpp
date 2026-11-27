@@ -13,7 +13,7 @@
 
 // Function: func_00280AF8
 // Address: 0x280af8 - 0x280b58
-void func_00280AF8_0x280af8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00280AF8_0x280af8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00280AF8_0x280af8");
 #endif
@@ -64,7 +64,6 @@ void func_00280AF8_0x280af8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cGameObj_isClip_0x2a7448, 0x2a7448u, 0x280b24u)) {
         return;
     }
-    ctx->pc = 0x280B24u;
 label_280b24:
     // 0x280b24: 0x54400007  bnel        $v0, $zero, . + 4 + (0x7 << 2)
     ctx->pc = 0x280B24u;
@@ -103,10 +102,8 @@ label_280b24:
             goto label_280b44;
         }
     }
-    ctx->pc = 0x280B40u;
 label_280b40:
     // 0x280b40: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x280b40u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_280b44:
     // 0x280b44: 0x7bb00010  lq          $s0, 0x10($sp)

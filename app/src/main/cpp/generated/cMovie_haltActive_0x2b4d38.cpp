@@ -13,7 +13,7 @@
 
 // Function: cMovie_haltActive
 // Address: 0x2b4d38 - 0x2b4d68
-void cMovie_haltActive_0x2b4d38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMovie_haltActive_0x2b4d38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMovie_haltActive_0x2b4d38");
 #endif
@@ -38,7 +38,6 @@ void cMovie_haltActive_0x2b4d38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B4F98_0x2b4f98, 0x2b4f98u, 0x2b4d48u)) {
         return;
     }
-    ctx->pc = 0x2B4D48u;
 label_2b4d48:
     // 0x2b4d48: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x2B4D48u;
@@ -66,7 +65,6 @@ label_2b4d48:
     if (!runtime->callDirectStatic(rdram, ctx, &cMovieTrack_stop_0x2d42f8, 0x2d42f8u, 0x2b4d58u)) {
         return;
     }
-    ctx->pc = 0x2B4D58u;
 label_2b4d58:
     // 0x2b4d58: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2b4d58u;

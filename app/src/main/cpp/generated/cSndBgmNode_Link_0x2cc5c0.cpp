@@ -13,7 +13,7 @@
 
 // Function: cSndBgmNode_Link
 // Address: 0x2cc5c0 - 0x2cc5e8
-void cSndBgmNode_Link_0x2cc5c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndBgmNode_Link_0x2cc5c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndBgmNode_Link_0x2cc5c0");
 #endif
@@ -47,7 +47,6 @@ void cSndBgmNode_Link_0x2cc5c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_2cc5dc;
         }
     }
-    ctx->pc = 0x2CC5DCu;
 label_2cc5dc:
     // 0x2cc5dc: 0x3e00008  jr          $ra
     ctx->pc = 0x2CC5DCu;

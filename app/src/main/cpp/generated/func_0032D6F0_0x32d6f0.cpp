@@ -13,7 +13,7 @@
 
 // Function: func_0032D6F0
 // Address: 0x32d6f0 - 0x32d720
-void func_0032D6F0_0x32d6f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0032D6F0_0x32d6f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0032D6F0_0x32d6f0");
 #endif
@@ -46,7 +46,6 @@ void func_0032D6F0_0x32d6f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Obj33F8_NoOp_FCA0_0x33fca0, 0x33fca0u, 0x32d704u)) {
         return;
     }
-    ctx->pc = 0x32D704u;
 label_32d704:
     // 0x32d704: 0xc0cb5c8  jal         func_32D720
     SET_GPR_U32(ctx, 31, 0x32D70Cu);
@@ -59,7 +58,6 @@ label_32d704:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032D720_0x32d720, 0x32d720u, 0x32d70cu)) {
         return;
     }
-    ctx->pc = 0x32D70Cu;
 label_32d70c:
     // 0x32d70c: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x32d70cu;

@@ -13,7 +13,7 @@
 
 // Function: ForwardIdBaseTransIfValid_13F208
 // Address: 0x13f208 - 0x13f238
-void ForwardIdBaseTransIfValid_13F208_0x13f208(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardIdBaseTransIfValid_13F208_0x13f208(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardIdBaseTransIfValid_13F208_0x13f208");
 #endif
@@ -57,7 +57,6 @@ void ForwardIdBaseTransIfValid_13F208_0x13f208(uint8_t* rdram, R5900Context* ctx
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_trans_0x2aac28, 0x2aac28u, 0x13f228u)) {
         return;
     }
-    ctx->pc = 0x13F228u;
 label_13f228:
     // 0x13f228: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x13f228u;

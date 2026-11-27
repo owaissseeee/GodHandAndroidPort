@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
+#include <ps2_recompiled_functions.h>
 #include "event_functions.h"
 
 #include "ps2_syscalls.h"
@@ -14,23 +15,23 @@ namespace gh_event
 {
 // Function: isEndMessage__13cEventMessage
 // Address: 0x7b0260 - 0x7b02a0
-void isEndMessage__13cEventMessage_0x7b0260(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void isEndMessage__13cEventMessage_0x7b0260(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("isEndMessage__13cEventMessage_0x7b0260");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7b0284u: goto label_7b0284;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7b0260u, 0)) {
+        switch (ctx->pc) {
+            case 0x7b0284u: goto label_7b0284;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7b0260u;
+
 
     // 0x7b0260: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7b0260u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x7b0264: 0x3403ffff  ori         $v1, $zero, 0xFFFF
-    ctx->pc = 0x7b0264u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     // 0x7b0268: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x7b0268u;
@@ -53,12 +54,10 @@ void isEndMessage__13cEventMessage_0x7b0260(uint8_t* rdram, R5900Context* ctx, P
             goto label_7b028c;
         }
     }
-    ctx->pc = 0x7B0278u;
     // 0x7b0278: 0x94850002  lhu         $a1, 0x2($a0)
     ctx->pc = 0x7b0278u;
     SET_GPR_ZE32(ctx, 5, (uint16_t)READ16(ADD32(GPR_U32(ctx, 4), 2)));
     // 0x7b027c: 0xc0abb44  jal         func_2AED10
-    ctx->pc = 0x7B027Cu;
     SET_GPR_U32(ctx, 31, 0x7B0284u);
     ctx->pc = 0x7B0280u;
     ctx->in_delay_slot = true;
@@ -67,10 +66,9 @@ void isEndMessage__13cEventMessage_0x7b0260(uint8_t* rdram, R5900Context* ctx, P
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 9124)));
     ctx->in_delay_slot = false;
     ctx->pc = 0x2AED10u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2AED10u, 0x7B027Cu, 0x7B0284u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cMessage_searchWorkId_0x2aed10, 0x2AED10u, 0x7B0284u)) {
         return;
     }
-    ctx->pc = 0x7B0284u;
 label_7b0284:
     // 0x7b0284: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x7B0284u;
@@ -87,10 +85,8 @@ label_7b0284:
             goto label_7b0290;
         }
     }
-    ctx->pc = 0x7B028Cu;
 label_7b028c:
     // 0x7b028c: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x7b028cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_7b0290:
     // 0x7b0290: 0xdfbf0000  ld          $ra, 0x0($sp)
@@ -115,9 +111,7 @@ label_7b0290:
         return;
         #endif
     }
-    ctx->pc = 0x7B029Cu;
     // 0x7b029c: 0x0  nop
-    ctx->pc = 0x7b029cu;
     // NOP
     ctx->pc = 0x7b02a0u;
 }

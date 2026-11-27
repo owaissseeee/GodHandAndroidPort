@@ -13,7 +13,7 @@
 
 // Function: IdScreen_refillEntries
 // Address: 0x13bcc0 - 0x13bd40
-void IdScreen_refillEntries_0x13bcc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IdScreen_refillEntries_0x13bcc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IdScreen_refillEntries_0x13bcc0");
 #endif
@@ -60,7 +60,6 @@ void IdScreen_refillEntries_0x13bcc0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_restartAnim_0x2abbe8, 0x2abbe8u, 0x13bce8u)) {
         return;
     }
-    ctx->pc = 0x13BCE8u;
 label_13bce8:
     // 0x13bce8: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -70,7 +69,6 @@ label_13bce8:
     // 0x13bcf0: 0x220282d  daddu       $a1, $s1, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     // 0x13bcf4: 0x0  nop
-    ctx->pc = 0x13bcf4u;
     // NOP
 label_13bcf8:
     // 0x13bcf8: 0xc0aa904  jal         func_2AA410
@@ -84,7 +82,6 @@ label_13bcf8:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_getIDWork_0x2aa410, 0x2aa410u, 0x13bd00u)) {
         return;
     }
-    ctx->pc = 0x13BD00u;
 label_13bd00:
     // 0x13bd00: 0x112080  sll         $a0, $s1, 2
     SET_GPR_S32(ctx, 4, (int32_t)SLL32(GPR_U32(ctx, 17), 2));

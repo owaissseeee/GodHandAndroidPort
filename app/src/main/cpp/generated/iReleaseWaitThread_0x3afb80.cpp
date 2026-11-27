@@ -13,7 +13,7 @@
 
 // Function: iReleaseWaitThread
 // Address: 0x3afb80 - 0x3afb90
-void iReleaseWaitThread_0x3afb80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iReleaseWaitThread_0x3afb80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iReleaseWaitThread_0x3afb80");
 #endif

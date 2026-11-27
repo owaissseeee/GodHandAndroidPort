@@ -13,7 +13,7 @@
 
 // Function: cDataManager_getReadyKind
 // Address: 0x28fed8 - 0x28ff80
-void cDataManager_getReadyKind_0x28fed8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDataManager_getReadyKind_0x28fed8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDataManager_getReadyKind_0x28fed8");
 #endif
@@ -81,7 +81,6 @@ void cDataManager_getReadyKind_0x28fed8(uint8_t* rdram, R5900Context* ctx, PS2Ru
     // 0x28ff18: 0x24150001  addiu       $s5, $zero, 0x1
     SET_GPR_S32(ctx, 21, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x28ff1c: 0x0  nop
-    ctx->pc = 0x28ff1cu;
     // NOP
 label_28ff20:
     // 0x28ff20: 0xc07fc8e  jal         func_1FF238
@@ -95,7 +94,6 @@ label_28ff20:
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateStateReady_1FF238_0x1ff238, 0x1ff238u, 0x28ff28u)) {
         return;
     }
-    ctx->pc = 0x28FF28u;
 label_28ff28:
     // 0x28ff28: 0x54550006  bnel        $v0, $s5, . + 4 + (0x6 << 2)
     ctx->pc = 0x28FF28u;
@@ -142,7 +140,6 @@ label_28ff28:
             goto label_28ff58;
         }
     }
-    ctx->pc = 0x28FF40u;
 label_28ff40:
     // 0x28ff40: 0x8e420004  lw          $v0, 0x4($s2)
     ctx->pc = 0x28ff40u;
@@ -170,10 +167,8 @@ label_28ff44:
             goto label_28ff20;
         }
     }
-    ctx->pc = 0x28FF54u;
 label_28ff54:
     // 0x28ff54: 0x3402ffff  ori         $v0, $zero, 0xFFFF
-    ctx->pc = 0x28ff54u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
 label_28ff58:
     // 0x28ff58: 0x7bb00060  lq          $s0, 0x60($sp)

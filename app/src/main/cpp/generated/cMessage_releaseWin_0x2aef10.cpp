@@ -13,7 +13,7 @@
 
 // Function: cMessage_releaseWin
 // Address: 0x2aef10 - 0x2aef90
-void cMessage_releaseWin_0x2aef10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessage_releaseWin_0x2aef10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessage_releaseWin_0x2aef10");
 #endif
@@ -80,7 +80,6 @@ label_2aef3c:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessageWin_close_0x2b2348, 0x2b2348u, 0x2aef44u)) {
         return;
     }
-    ctx->pc = 0x2AEF44u;
 label_2aef44:
     // 0x2aef44: 0xc0ac8c6  jal         func_2B2318
     SET_GPR_U32(ctx, 31, 0x2AEF4Cu);
@@ -93,7 +92,6 @@ label_2aef44:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B2318_0x2b2318, 0x2b2318u, 0x2aef4cu)) {
         return;
     }
-    ctx->pc = 0x2AEF4Cu;
 label_2aef4c:
     // 0x2aef4c: 0x8e460014  lw          $a2, 0x14($s2)
     ctx->pc = 0x2aef4cu;
@@ -117,7 +115,6 @@ label_2aef4c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B22E8_0x2b22e8, 0x2b22e8u, 0x2aef68u)) {
         return;
     }
-    ctx->pc = 0x2AEF68u;
 label_2aef68:
     // 0x2aef68: 0xae510014  sw          $s1, 0x14($s2)
     ctx->pc = 0x2aef68u;

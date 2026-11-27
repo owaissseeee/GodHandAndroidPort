@@ -13,7 +13,7 @@
 
 // Function: func_001E4010
 // Address: 0x1e4010 - 0x1e4200
-void func_001E4010_0x1e4010(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001E4010_0x1e4010(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001E4010_0x1e4010");
 #endif
@@ -244,7 +244,6 @@ void func_001E4010_0x1e4010(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e411cu)) {
         return;
     }
-    ctx->pc = 0x1E411Cu;
 label_1e411c:
     // 0x1e411c: 0x27a30004  addiu       $v1, $sp, 0x4
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 29), 4));
@@ -270,7 +269,6 @@ label_1e411c:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e413cu)) {
         return;
     }
-    ctx->pc = 0x1E413Cu;
 label_1e413c:
     // 0x1e413c: 0x27a30008  addiu       $v1, $sp, 0x8
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 29), 8));
@@ -296,7 +294,6 @@ label_1e413c:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e415cu)) {
         return;
     }
-    ctx->pc = 0x1E415Cu;
 label_1e415c:
     // 0x1e415c: 0x8e44042c  lw          $a0, 0x42C($s2)
     ctx->pc = 0x1e415cu;
@@ -312,7 +309,6 @@ label_1e415c:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e4168u)) {
         return;
     }
-    ctx->pc = 0x1E4168u;
 label_1e4168:
     // 0x1e4168: 0x1000001f  b           . + 4 + (0x1F << 2)
     ctx->pc = 0x1E4168u;
@@ -329,7 +325,6 @@ label_1e4168:
             goto label_1e41e8;
         }
     }
-    ctx->pc = 0x1E4170u;
 label_1e4170:
     // 0x1e4170: 0x2410000c  addiu       $s0, $zero, 0xC
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 0), 12));
@@ -359,7 +354,6 @@ label_1e4170:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e4198u)) {
         return;
     }
-    ctx->pc = 0x1E4198u;
 label_1e4198:
     // 0x1e4198: 0x27a30004  addiu       $v1, $sp, 0x4
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 29), 4));
@@ -385,7 +379,6 @@ label_1e4198:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e41b8u)) {
         return;
     }
-    ctx->pc = 0x1E41B8u;
 label_1e41b8:
     // 0x1e41b8: 0x27a30008  addiu       $v1, $sp, 0x8
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 29), 8));
@@ -411,7 +404,6 @@ label_1e41b8:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e41d8u)) {
         return;
     }
-    ctx->pc = 0x1E41D8u;
 label_1e41d8:
     // 0x1e41d8: 0x8e44042c  lw          $a0, 0x42C($s2)
     ctx->pc = 0x1e41d8u;
@@ -427,7 +419,6 @@ label_1e41d8:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e41e4u)) {
         return;
     }
-    ctx->pc = 0x1E41E4u;
 label_1e41e4:
     // 0x1e41e4: 0x7bb00070  lq          $s0, 0x70($sp)
     ctx->pc = 0x1e41e4u;

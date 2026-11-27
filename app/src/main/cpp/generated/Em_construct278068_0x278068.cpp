@@ -13,7 +13,7 @@
 
 // Function: Em_construct278068
 // Address: 0x278068 - 0x2780c0
-void Em_construct278068_0x278068(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Em_construct278068_0x278068(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Em_construct278068_0x278068");
 #endif
@@ -45,7 +45,6 @@ void Em_construct278068_0x278068(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &func_0028EB00_0x28eb00, 0x28eb00u, 0x27807cu)) {
         return;
     }
-    ctx->pc = 0x27807Cu;
 label_27807c:
     // 0x27807c: 0x3c030044  lui         $v1, 0x44
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)68 << 16));

@@ -13,7 +13,7 @@
 
 // Function: SJRMT_GetNumData
 // Address: 0x33af70 - 0x33afc0
-void SJRMT_GetNumData_0x33af70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SJRMT_GetNumData_0x33af70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SJRMT_GetNumData_0x33af70");
 #endif
@@ -67,7 +67,6 @@ void SJRMT_GetNumData_0x33af70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &DTX_CallUrpc_0x332670, 0x332670u, 0x33afacu)) {
         return;
     }
-    ctx->pc = 0x33AFACu;
 label_33afac:
     // 0x33afac: 0x8e020000  lw          $v0, 0x0($s0)
     ctx->pc = 0x33afacu;

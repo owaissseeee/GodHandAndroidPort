@@ -13,7 +13,7 @@
 
 // Function: cOmb3_SetPointTbl
 // Address: 0x1b5180 - 0x1b5190
-void cOmb3_SetPointTbl_0x1b5180(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmb3_SetPointTbl_0x1b5180(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmb3_SetPointTbl_0x1b5180");
 #endif

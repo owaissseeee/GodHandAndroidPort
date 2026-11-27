@@ -13,7 +13,7 @@
 
 // Function: cEmManage_CkBigHitEffWait
 // Address: 0x292f08 - 0x292f18
-void cEmManage_CkBigHitEffWait_0x292f08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_CkBigHitEffWait_0x292f08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_CkBigHitEffWait_0x292f08");
 #endif

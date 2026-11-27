@@ -13,7 +13,7 @@
 
 // Function: func_00149220
 // Address: 0x149220 - 0x1492c8
-void func_00149220_0x149220(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00149220_0x149220(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00149220_0x149220");
 #endif
@@ -75,7 +75,6 @@ void func_00149220_0x149220(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &F16toF32_0x156488, 0x156488u, 0x149250u)) {
         return;
     }
-    ctx->pc = 0x149250u;
 label_149250:
     // 0x149250: 0x8e020414  lw          $v0, 0x414($s0)
     ctx->pc = 0x149250u;
@@ -93,7 +92,6 @@ label_149250:
     if (!runtime->callDirectStatic(rdram, ctx, &F16toF32_0x156488, 0x156488u, 0x149260u)) {
         return;
     }
-    ctx->pc = 0x149260u;
 label_149260:
     // 0x149260: 0x46150002  mul.s       $f0, $f0, $f21
     ctx->f[0] = FPU_MUL_S(ctx->f[0], ctx->f[21]);

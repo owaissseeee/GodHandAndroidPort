@@ -13,7 +13,7 @@
 
 // Function: cOm53_start
 // Address: 0x1a7820 - 0x1a7880
-void cOm53_start_0x1a7820(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm53_start_0x1a7820(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm53_start_0x1a7820");
 #endif
@@ -47,7 +47,6 @@ void cOm53_start_0x1a7820(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B6FB8_0x1b6fb8, 0x1b6fb8u, 0x1a7834u)) {
         return;
     }
-    ctx->pc = 0x1A7834u;
 label_1a7834:
     // 0x1a7834: 0x8e0205a0  lw          $v0, 0x5A0($s0)
     ctx->pc = 0x1a7834u;
@@ -69,7 +68,6 @@ label_1a7834:
     if (!runtime->callDirectStatic(rdram, ctx, &cOm53_setRiseWaitTime_0x1a80f0, 0x1a80f0u, 0x1a784cu)) {
         return;
     }
-    ctx->pc = 0x1A784Cu;
 label_1a784c:
     // 0x1a784c: 0x44806000  mtc1        $zero, $f12
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[12], &bits, sizeof(bits)); }
@@ -84,7 +82,6 @@ label_1a784c:
     if (!runtime->callDirectStatic(rdram, ctx, &cOm53_setDownPos_0x1a80f8, 0x1a80f8u, 0x1a7858u)) {
         return;
     }
-    ctx->pc = 0x1A7858u;
 label_1a7858:
     // 0x1a7858: 0x8e0305b8  lw          $v1, 0x5B8($s0)
     ctx->pc = 0x1a7858u;

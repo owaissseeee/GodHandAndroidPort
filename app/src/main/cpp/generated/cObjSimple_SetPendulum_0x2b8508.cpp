@@ -13,7 +13,7 @@
 
 // Function: cObjSimple_SetPendulum
 // Address: 0x2b8508 - 0x2b8570
-void cObjSimple_SetPendulum_0x2b8508(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cObjSimple_SetPendulum_0x2b8508(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cObjSimple_SetPendulum_0x2b8508");
 #endif
@@ -71,7 +71,6 @@ void cObjSimple_SetPendulum_0x2b8508(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &EmClothInit_0x2de980, 0x2de980u, 0x2b8548u)) {
         return;
     }
-    ctx->pc = 0x2B8548u;
 label_2b8548:
     // 0x2b8548: 0x12000003  beqz        $s0, . + 4 + (0x3 << 2)
     ctx->pc = 0x2B8548u;
@@ -99,7 +98,6 @@ label_2b8548:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002DF938_0x2df938, 0x2df938u, 0x2b8558u)) {
         return;
     }
-    ctx->pc = 0x2B8558u;
 label_2b8558:
     // 0x2b8558: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2b8558u;

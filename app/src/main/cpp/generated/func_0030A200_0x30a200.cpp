@@ -13,7 +13,7 @@
 
 // Function: func_0030A200
 // Address: 0x30a200 - 0x30a298
-void func_0030A200_0x30a200(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0030A200_0x30a200(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0030A200_0x30a200");
 #endif
@@ -84,7 +84,6 @@ void func_0030A200_0x30a200(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x397550u, 0x30A23Cu, 0x30A244u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x30A244u;
 label_30a244:
     // 0x30a244: 0x8e050008  lw          $a1, 0x8($s0)
     ctx->pc = 0x30a244u;
@@ -102,7 +101,6 @@ label_30a244:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3973E8u, 0x30A24Cu, 0x30A254u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x30A254u;
 label_30a254:
     // 0x30a254: 0x3c041000  lui         $a0, 0x1000
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)4096 << 16));
@@ -121,7 +119,6 @@ label_30a254:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x397550u, 0x30A260u, 0x30A268u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x30A268u;
 label_30a268:
     // 0x30a268: 0x3c041000  lui         $a0, 0x1000
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)4096 << 16));
@@ -139,7 +136,6 @@ label_30a268:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3973E8u, 0x30A270u, 0x30A278u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x30A278u;
 label_30a278:
     // 0x30a278: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x30a278u;

@@ -13,7 +13,7 @@
 
 // Function: ReturnK_003EE2BC_00358A38_358A38
 // Address: 0x358a38 - 0x358a48
-void ReturnK_003EE2BC_00358A38_358A38_0x358a38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ReturnK_003EE2BC_00358A38_358A38_0x358a38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ReturnK_003EE2BC_00358A38_358A38_0x358a38");
 #endif

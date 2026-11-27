@@ -14,32 +14,31 @@ namespace gh_mcport
 {
 // Function: _$_16__func_type_info
 // Address: 0x7cb1d0 - 0x7cb1f0
-void ps2____16__func_type_info_0x7cb1d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2____16__func_type_info_0x7cb1d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2____16__func_type_info_0x7cb1d0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7cb1e0u: goto label_7cb1e0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7cb1d0u, 0)) {
+        switch (ctx->pc) {
+            case 0x7cb1e0u: goto label_7cb1e0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7cb1d0u;
+
 
     // 0x7cb1d0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7cb1d0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x7cb1d4: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x7cb1d4u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x7cb1d8: 0xc1f25e6  jal         func_7C9798
-    ctx->pc = 0x7CB1D8u;
     SET_GPR_U32(ctx, 31, 0x7CB1E0u);
     ctx->pc = 0x7C9798u;
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x7C9798u, 0x7CB1D8u, 0x7CB1E0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7CB1E0u;
 label_7cb1e0:
     // 0x7cb1e0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7cb1e0u;
@@ -63,9 +62,7 @@ label_7cb1e0:
         return;
         #endif
     }
-    ctx->pc = 0x7CB1ECu;
     // 0x7cb1ec: 0x0  nop
-    ctx->pc = 0x7cb1ecu;
     // NOP
     ctx->pc = 0x7cb1f0u;
 }

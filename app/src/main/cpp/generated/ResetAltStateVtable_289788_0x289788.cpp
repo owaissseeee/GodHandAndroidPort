@@ -13,7 +13,7 @@
 
 // Function: ResetAltStateVtable_289788
 // Address: 0x289788 - 0x2897f0
-void ResetAltStateVtable_289788_0x289788(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ResetAltStateVtable_289788_0x289788(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ResetAltStateVtable_289788_0x289788");
 #endif
@@ -59,7 +59,6 @@ void ResetAltStateVtable_289788_0x289788(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A84A8_0x2a84a8, 0x2a84a8u, 0x2897b0u)) {
         return;
     }
-    ctx->pc = 0x2897B0u;
 label_2897b0:
     // 0x2897b0: 0x8e0415b0  lw          $a0, 0x15B0($s0)
     ctx->pc = 0x2897b0u;
@@ -79,7 +78,6 @@ label_2897b0:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField_630_1C2370_0x1c2370, 0x1c2370u, 0x2897c4u)) {
         return;
     }
-    ctx->pc = 0x2897C4u;
 label_2897c4:
     // 0x2897c4: 0xae0015b0  sw          $zero, 0x15B0($s0)
     ctx->pc = 0x2897c4u;
@@ -96,7 +94,6 @@ label_2897c8:
     if (!runtime->callDirectStatic(rdram, ctx, &cCollisionSolidManage_ReleaseUnit_289E10_0x289e10, 0x289e10u, 0x2897d0u)) {
         return;
     }
-    ctx->pc = 0x2897D0u;
 label_2897d0:
     // 0x2897d0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -111,7 +108,6 @@ label_2897d0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0028EB88_0x28eb88, 0x28eb88u, 0x2897dcu)) {
         return;
     }
-    ctx->pc = 0x2897DCu;
 label_2897dc:
     // 0x2897dc: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2897dcu;

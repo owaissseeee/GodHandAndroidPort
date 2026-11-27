@@ -13,7 +13,7 @@
 
 // Function: sceGsSetDefDispEnv
 // Address: 0x396570 - 0x3968e8
-void sceGsSetDefDispEnv_0x396570(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceGsSetDefDispEnv_0x396570(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceGsSetDefDispEnv_0x396570");
 #endif
@@ -86,7 +86,6 @@ void sceGsSetDefDispEnv_0x396570(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x395388u, 0x3965BCu, 0x3965C4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3965C4u;
 label_3965c4:
     // 0x3965c4: 0x40882d  daddu       $s1, $v0, $zero
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -118,7 +117,6 @@ label_3965c4:
     if (!runtime->callDirectStatic(rdram, ctx, &checkModelVersion_0x3964c0, 0x3964c0u, 0x3965e4u)) {
         return;
     }
-    ctx->pc = 0x3965E4u;
 label_3965e4:
     // 0x3965e4: 0x10400008  beqz        $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x3965E4u;
@@ -153,7 +151,6 @@ label_3965e4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00396560_0x396560, 0x396560u, 0x396600u)) {
         return;
     }
-    ctx->pc = 0x396600u;
 label_396600:
     // 0x396600: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x396600u;
@@ -170,7 +167,6 @@ label_396600:
             goto label_39661c;
         }
     }
-    ctx->pc = 0x396608u;
 label_396608:
     // 0x396608: 0x96240002  lhu         $a0, 0x2($s1)
     ctx->pc = 0x396608u;
@@ -234,7 +230,6 @@ label_39661c:
         }
     }
     // 0x396640: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x396640u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_396644:
     // 0x396644: 0xfe620008  sd          $v0, 0x8($s3)
@@ -386,7 +381,6 @@ label_396698:
             goto label_3967b0;
         }
     }
-    ctx->pc = 0x3966F4u;
 label_3966f4:
     // 0x3966f4: 0x52000001  beql        $s0, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x3966F4u;
@@ -436,7 +430,6 @@ label_3966fc:
             goto label_3967f0;
         }
     }
-    ctx->pc = 0x396720u;
 label_396720:
     // 0x396720: 0x24020003  addiu       $v0, $zero, 0x3
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
@@ -566,12 +559,10 @@ label_39674c:
             goto label_3967b0;
         }
     }
-    ctx->pc = 0x3967A8u;
 label_3967a8:
     // 0x3967a8: 0x2642ffff  addiu       $v0, $s2, -0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 18), 4294967295));
     // 0x3967ac: 0x1431825  or          $v1, $t2, $v1
-    ctx->pc = 0x3967acu;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 10) | GPR_U64(ctx, 3));
 label_3967b0:
     // 0x3967b0: 0x2133c  dsll32      $v0, $v0, 12
@@ -597,7 +588,6 @@ label_3967b0:
             goto label_3968b8;
         }
     }
-    ctx->pc = 0x3967C8u;
 label_3967c8:
     // 0x3967c8: 0x52000001  beql        $s0, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x3967C8u;
@@ -633,7 +623,6 @@ label_3967d0:
     // 0x3967e8: 0x2831821  addu        $v1, $s4, $v1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 20), GPR_U32(ctx, 3)));
     // 0x3967ec: 0x24630024  addiu       $v1, $v1, 0x24
-    ctx->pc = 0x3967ecu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 36));
 label_3967f0:
     // 0x3967f0: 0x30630fff  andi        $v1, $v1, 0xFFF
@@ -681,7 +670,6 @@ label_3967f0:
             goto label_3968b8;
         }
     }
-    ctx->pc = 0x396834u;
 label_396834:
     // 0x396834: 0x14a2001e  bne         $a1, $v0, . + 4 + (0x1E << 2)
     ctx->pc = 0x396834u;
@@ -769,7 +757,6 @@ label_396834:
             goto label_3968b8;
         }
     }
-    ctx->pc = 0x3968B0u;
 label_3968b0:
     // 0x3968b0: 0xc0ec7ca  jal         func_3B1F28
     SET_GPR_U32(ctx, 31, 0x3968B8u);
@@ -782,7 +769,6 @@ label_3968b0:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B1F28u, 0x3968B0u, 0x3968B8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3968B8u;
 label_3968b8:
     // 0x3968b8: 0xfe600020  sd          $zero, 0x20($s3)
     ctx->pc = 0x3968b8u;

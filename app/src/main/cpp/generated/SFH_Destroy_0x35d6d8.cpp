@@ -13,7 +13,7 @@
 
 // Function: SFH_Destroy
 // Address: 0x35d6d8 - 0x35d708
-void SFH_Destroy_0x35d6d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFH_Destroy_0x35d6d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFH_Destroy_0x35d6d8");
 #endif
@@ -37,7 +37,6 @@ void SFH_Destroy_0x35d6d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &Obj35D0_ClearFields_0_4_8_C_D728_0x35d728, 0x35d728u, 0x35d6e8u)) {
         return;
     }
-    ctx->pc = 0x35D6E8u;
 label_35d6e8:
     // 0x35d6e8: 0x3c030076  lui         $v1, 0x76
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)118 << 16));

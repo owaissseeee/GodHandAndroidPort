@@ -13,7 +13,7 @@
 
 // Function: FreeSequenceNode_373D48
 // Address: 0x373d48 - 0x373d90
-void FreeSequenceNode_373D48_0x373d48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FreeSequenceNode_373D48_0x373d48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FreeSequenceNode_373D48_0x373d48");
 #endif
@@ -61,7 +61,6 @@ void FreeSequenceNode_373D48_0x373d48(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_003298C0_0x3298c0, 0x3298c0u, 0x373d6cu)) {
         return;
     }
-    ctx->pc = 0x373D6Cu;
 label_373d6c:
     // 0x373d6c: 0x3c050075  lui         $a1, 0x75
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)117 << 16));
@@ -79,7 +78,6 @@ label_373d6c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031C928_0x31c928, 0x31c928u, 0x373d7cu)) {
         return;
     }
-    ctx->pc = 0x373D7Cu;
 label_373d7c:
     // 0x373d7c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x373d7cu;

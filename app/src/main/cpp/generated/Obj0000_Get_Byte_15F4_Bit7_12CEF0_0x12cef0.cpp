@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Get_Byte_15F4_Bit7_12CEF0
 // Address: 0x12cef0 - 0x12cf08
-void Obj0000_Get_Byte_15F4_Bit7_12CEF0_0x12cef0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Get_Byte_15F4_Bit7_12CEF0_0x12cef0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Get_Byte_15F4_Bit7_12CEF0_0x12cef0");
 #endif

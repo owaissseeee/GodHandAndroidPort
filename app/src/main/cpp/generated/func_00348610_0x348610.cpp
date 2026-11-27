@@ -13,7 +13,7 @@
 
 // Function: func_00348610
 // Address: 0x348610 - 0x348670
-void func_00348610_0x348610(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00348610_0x348610(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00348610_0x348610");
 #endif
@@ -48,11 +48,9 @@ void func_00348610_0x348610(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
 
-    ctx->pc = 0x348610u;
 
 label_348610:
     // 0x348610: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x348610u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
 label_348614:
     // 0x348614: 0xffb00000  sd          $s0, 0x0($sp)
@@ -60,7 +58,6 @@ label_348614:
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 16));
 label_348618:
     // 0x348618: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x348618u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_34861c:
     // 0x34861c: 0xffb10008  sd          $s1, 0x8($sp)
@@ -93,7 +90,6 @@ label_348628:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00348968_0x348968, 0x348968u, 0x34862cu)) {
         return;
     }
-    ctx->pc = 0x34862Cu;
 label_34862c:
     // 0x34862c: 0x24030001  addiu       $v1, $zero, 0x1
     ctx->pc = 0x34862cu;
@@ -125,7 +121,6 @@ label_348634:
             goto label_34865c;
         }
     }
-    ctx->pc = 0x348638u;
 label_348638:
     // 0x348638: 0x8e020008  lw          $v0, 0x8($s0)
     ctx->pc = 0x348638u;
@@ -157,7 +152,6 @@ label_348640:
             goto label_348658;
         }
     }
-    ctx->pc = 0x348644u;
 label_348644:
     // 0x348644: 0x8c420030  lw          $v0, 0x30($v0)
     ctx->pc = 0x348644u;
@@ -218,7 +212,6 @@ label_348654:
             return;
         }
     }
-    ctx->pc = 0x348658u;
 label_348658:
     // 0x348658: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x348658u;
@@ -262,7 +255,6 @@ label_348668:
         return;
         #endif
     }
-    ctx->pc = 0x34866Cu;
 label_34866c:
     // 0x34866c: 0x0  nop
     // NOP

@@ -13,7 +13,7 @@
 
 // Function: ClearDamageCollAndState_19FD50
 // Address: 0x19fd50 - 0x19fdb0
-void ClearDamageCollAndState_19FD50_0x19fd50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearDamageCollAndState_19FD50_0x19fd50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearDamageCollAndState_19FD50_0x19fd50");
 #endif
@@ -76,7 +76,6 @@ void ClearDamageCollAndState_19FD50_0x19fd50(uint8_t* rdram, R5900Context* ctx, 
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x19fd84u)) {
         return;
     }
-    ctx->pc = 0x19FD84u;
 label_19fd84:
     // 0x19fd84: 0xde050540  ld          $a1, 0x540($s0)
     ctx->pc = 0x19fd84u;
@@ -96,7 +95,6 @@ label_19fd84:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001331B8_0x1331b8, 0x1331b8u, 0x19fd98u)) {
         return;
     }
-    ctx->pc = 0x19FD98u;
 label_19fd98:
     // 0x19fd98: 0xc071f82  jal         func_1C7E08
     SET_GPR_U32(ctx, 31, 0x19FDA0u);
@@ -109,7 +107,6 @@ label_19fd98:
     if (!runtime->callDirectStatic(rdram, ctx, &ClearStateAndFlag_1C7E08_0x1c7e08, 0x1c7e08u, 0x19fda0u)) {
         return;
     }
-    ctx->pc = 0x19FDA0u;
 label_19fda0:
     // 0x19fda0: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x19fda0u;

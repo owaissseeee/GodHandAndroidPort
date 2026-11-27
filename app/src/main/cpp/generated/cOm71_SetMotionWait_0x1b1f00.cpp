@@ -13,7 +13,7 @@
 
 // Function: cOm71_SetMotionWait
 // Address: 0x1b1f00 - 0x1b1f58
-void cOm71_SetMotionWait_0x1b1f00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm71_SetMotionWait_0x1b1f00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm71_SetMotionWait_0x1b1f00");
 #endif
@@ -64,7 +64,6 @@ void cOm71_SetMotionWait_0x1b1f00(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x1b1f34u)) {
         return;
     }
-    ctx->pc = 0x1B1F34u;
 label_1b1f34:
     // 0x1b1f34: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -81,7 +80,6 @@ label_1b1f34:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x158288u, 0x1B1F3Cu, 0x1B1F44u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1B1F44u;
 label_1b1f44:
     // 0x1b1f44: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1b1f44u;

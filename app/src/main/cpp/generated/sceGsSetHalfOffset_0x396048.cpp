@@ -13,7 +13,7 @@
 
 // Function: sceGsSetHalfOffset
 // Address: 0x396048 - 0x3960d0
-void sceGsSetHalfOffset_0x396048(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceGsSetHalfOffset_0x396048(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceGsSetHalfOffset_0x396048");
 #endif
@@ -102,10 +102,8 @@ void sceGsSetHalfOffset_0x396048(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_3960c4;
         }
     }
-    ctx->pc = 0x3960C0u;
 label_3960c0:
     // 0x3960c0: 0x6113c  dsll32      $v0, $a2, 4
-    ctx->pc = 0x3960c0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 6) << (32 + 4));
 label_3960c4:
     // 0x3960c4: 0xa21025  or          $v0, $a1, $v0

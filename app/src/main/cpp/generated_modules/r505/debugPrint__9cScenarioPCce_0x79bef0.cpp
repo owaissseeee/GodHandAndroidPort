@@ -14,15 +14,13 @@ namespace gh_r505
 {
 // Function: debugPrint__9cScenarioPCce
 // Address: 0x79bef0 - 0x79bf28
-void debugPrint__9cScenarioPCce_0x79bef0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void debugPrint__9cScenarioPCce_0x79bef0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("debugPrint__9cScenarioPCce_0x79bef0");
 #endif
 
-    ctx->pc = 0x79bef0u;
 
     // 0x79bef0: 0x27bdff90  addiu       $sp, $sp, -0x70
-    ctx->pc = 0x79bef0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967184));
     // 0x79bef4: 0xffa60040  sd          $a2, 0x40($sp)
     ctx->pc = 0x79bef4u;
@@ -73,9 +71,7 @@ void debugPrint__9cScenarioPCce_0x79bef0(uint8_t* rdram, R5900Context* ctx, PS2R
         return;
         #endif
     }
-    ctx->pc = 0x79BF24u;
     // 0x79bf24: 0x0  nop
-    ctx->pc = 0x79bf24u;
     // NOP
     ctx->pc = 0x79bf28u;
 }

@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_addGold
 // Address: 0x1fa750 - 0x1fa820
-void cCoreSave_addGold_0x1fa750(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_addGold_0x1fa750(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_addGold_0x1fa750");
 #endif
@@ -122,7 +122,6 @@ label_1fa798:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_initAddGold_0x1fa820, 0x1fa820u, 0x1fa7acu)) {
         return;
     }
-    ctx->pc = 0x1FA7ACu;
 label_1fa7ac:
     // 0x1fa7ac: 0x8e020000  lw          $v0, 0x0($s0)
     ctx->pc = 0x1fa7acu;
@@ -163,7 +162,6 @@ label_1fa7b0:
             goto label_1fa7d8;
         }
     }
-    ctx->pc = 0x1FA7D8u;
 label_1fa7d8:
     // 0x1fa7d8: 0x8e030000  lw          $v1, 0x0($s0)
     ctx->pc = 0x1fa7d8u;
@@ -186,7 +184,6 @@ label_1fa7d8:
             goto label_1fa7e8;
         }
     }
-    ctx->pc = 0x1FA7E8u;
 label_1fa7e8:
     // 0x1fa7e8: 0x3c020074  lui         $v0, 0x74
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));

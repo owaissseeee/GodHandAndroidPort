@@ -13,7 +13,7 @@
 
 // Function: Quaternion_SetRotationAxis
 // Address: 0x159fc8 - 0x15a040
-void Quaternion_SetRotationAxis_0x159fc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Quaternion_SetRotationAxis_0x159fc8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Quaternion_SetRotationAxis_0x159fc8");
 #endif
@@ -62,7 +62,6 @@ void Quaternion_SetRotationAxis_0x159fc8(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &sinf_0x3a19f8, 0x3a19f8u, 0x159ff8u)) {
         return;
     }
-    ctx->pc = 0x159FF8u;
 label_159ff8:
     // 0x159ff8: 0xc6020000  lwc1        $f2, 0x0($s0)
     ctx->pc = 0x159ff8u;
@@ -98,7 +97,6 @@ label_159ff8:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Cos_0x1f7fb8, 0x1f7fb8u, 0x15a024u)) {
         return;
     }
-    ctx->pc = 0x15A024u;
 label_15a024:
     // 0x15a024: 0xe620000c  swc1        $f0, 0xC($s1)
     ctx->pc = 0x15a024u;

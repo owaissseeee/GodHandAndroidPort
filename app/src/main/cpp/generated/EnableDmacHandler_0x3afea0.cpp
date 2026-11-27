@@ -13,7 +13,7 @@
 
 // Function: EnableDmacHandler
 // Address: 0x3afea0 - 0x3afeb0
-void EnableDmacHandler_0x3afea0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EnableDmacHandler_0x3afea0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EnableDmacHandler_0x3afea0");
 #endif

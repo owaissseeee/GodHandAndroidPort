@@ -13,7 +13,7 @@
 
 // Function: ClearDisplayText_2974F0
 // Address: 0x2974f0 - 0x297540
-void ClearDisplayText_2974F0_0x2974f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearDisplayText_2974F0_0x2974f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearDisplayText_2974F0_0x2974f0");
 #endif
@@ -69,7 +69,6 @@ void ClearDisplayText_2974F0_0x2974f0(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cRelSys_unlinkNoFree_0x2be8b0, 0x2be8b0u, 0x29751cu)) {
         return;
     }
-    ctx->pc = 0x29751Cu;
 label_29751c:
     // 0x29751c: 0x8e020008  lw          $v0, 0x8($s0)
     ctx->pc = 0x29751cu;

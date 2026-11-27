@@ -13,7 +13,7 @@
 
 // Function: __pack_f
 // Address: 0x31eb38 - 0x31ec48
-void ps2___pack_f_0x31eb38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___pack_f_0x31eb38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___pack_f_0x31eb38");
 #endif
@@ -63,7 +63,6 @@ void ps2___pack_f_0x31eb38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
             goto label_31ebf4;
         }
     }
-    ctx->pc = 0x31EB60u;
 label_31eb60:
     // 0x31eb60: 0x38620004  xori        $v0, $v1, 0x4
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) ^ (uint64_t)(uint16_t)4);
@@ -106,7 +105,6 @@ label_31eb60:
             goto label_31ebf4;
         }
     }
-    ctx->pc = 0x31EB7Cu;
 label_31eb7c:
     // 0x31eb7c: 0x10a0001e  beqz        $a1, . + 4 + (0x1E << 2)
     ctx->pc = 0x31EB7Cu;
@@ -177,7 +175,6 @@ label_31eb7c:
             goto label_31ebf0;
         }
     }
-    ctx->pc = 0x31EBACu;
 label_31ebac:
     // 0x31ebac: 0x28620080  slti        $v0, $v1, 0x80
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)128) ? 1 : 0);
@@ -196,7 +193,6 @@ label_31ebac:
             goto label_31ebc4;
         }
     }
-    ctx->pc = 0x31EBB8u;
 label_31ebb8:
     // 0x31ebb8: 0x240700ff  addiu       $a3, $zero, 0xFF
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 0), 255));
@@ -215,7 +211,6 @@ label_31ebb8:
             goto label_31ebf4;
         }
     }
-    ctx->pc = 0x31EBC4u;
 label_31ebc4:
     // 0x31ebc4: 0x24020040  addiu       $v0, $zero, 0x40
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 64));
@@ -262,15 +257,12 @@ label_31ebe0:
     // 0x31ebe8: 0x52842  srl         $a1, $a1, 1
     SET_GPR_S32(ctx, 5, (int32_t)SRL32(GPR_U32(ctx, 5), 1));
     // 0x31ebec: 0x24e70001  addiu       $a3, $a3, 0x1
-    ctx->pc = 0x31ebecu;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 7), 1));
 label_31ebf0:
     // 0x31ebf0: 0x529c2  srl         $a1, $a1, 7
-    ctx->pc = 0x31ebf0u;
     SET_GPR_S32(ctx, 5, (int32_t)SRL32(GPR_U32(ctx, 5), 7));
 label_31ebf4:
     // 0x31ebf4: 0x3c03ff80  lui         $v1, 0xFF80
-    ctx->pc = 0x31ebf4u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)65408 << 16));
 label_31ebf8:
     // 0x31ebf8: 0x3c02007f  lui         $v0, 0x7F

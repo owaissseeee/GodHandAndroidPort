@@ -13,7 +13,7 @@
 
 // Function: func_00135EC8
 // Address: 0x135ec8 - 0x136030
-void func_00135EC8_0x135ec8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00135EC8_0x135ec8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00135EC8_0x135ec8");
 #endif
@@ -93,7 +93,6 @@ void func_00135EC8_0x135ec8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0Normalize_0x30a370, 0x30a370u, 0x135f20u)) {
         return;
     }
-    ctx->pc = 0x135F20u;
 label_135f20:
     // 0x135f20: 0x220282d  daddu       $a1, $s1, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -108,7 +107,6 @@ label_135f20:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0InnerProduct_0x30a348, 0x30a348u, 0x135f2cu)) {
         return;
     }
-    ctx->pc = 0x135F2Cu;
 label_135f2c:
     // 0x135f2c: 0x46000506  mov.s       $f20, $f0
     ctx->f[20] = FPU_MOV_S(ctx->f[0]);
@@ -125,7 +123,6 @@ label_135f2c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0InnerProduct_0x30a348, 0x30a348u, 0x135f3cu)) {
         return;
     }
-    ctx->pc = 0x135F3Cu;
 label_135f3c:
     // 0x135f3c: 0x4600a501  sub.s       $f20, $f20, $f0
     ctx->f[20] = FPU_SUB_S(ctx->f[20], ctx->f[0]);
@@ -142,7 +139,6 @@ label_135f3c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0InnerProduct_0x30a348, 0x30a348u, 0x135f4cu)) {
         return;
     }
-    ctx->pc = 0x135F4Cu;
 label_135f4c:
     // 0x135f4c: 0x44800800  mtc1        $zero, $f1
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }
@@ -315,7 +311,6 @@ label_135f4c:
     { float f = ctx->f[2]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 18), 4), bits); }
 label_13600c:
     // 0x13600c: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x13600cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_136010:
     // 0x136010: 0x7bb00090  lq          $s0, 0x90($sp)

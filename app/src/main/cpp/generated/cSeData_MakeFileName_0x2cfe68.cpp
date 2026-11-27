@@ -13,7 +13,7 @@
 
 // Function: cSeData_MakeFileName
 // Address: 0x2cfe68 - 0x2cff30
-void cSeData_MakeFileName_0x2cfe68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSeData_MakeFileName_0x2cfe68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSeData_MakeFileName_0x2cfe68");
 #endif
@@ -80,7 +80,6 @@ void cSeData_MakeFileName_0x2cfe68(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             return;
         }
     }
-    ctx->pc = 0x2CFE9Cu;
 label_2cfe9c:
     // 0x2cfe9c: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
@@ -103,7 +102,6 @@ label_2cfe9c:
             goto label_2cfef0;
         }
     }
-    ctx->pc = 0x2CFEB0u;
 label_2cfeb0:
     // 0x2cfeb0: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
@@ -133,7 +131,6 @@ label_2cfeb0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A6C58_0x3a6c58, 0x3a6c58u, 0x2cfed8u)) {
         return;
     }
-    ctx->pc = 0x2CFED8u;
 label_2cfed8:
     // 0x2cfed8: 0x10000012  b           . + 4 + (0x12 << 2)
     ctx->pc = 0x2CFED8u;
@@ -150,7 +147,6 @@ label_2cfed8:
             goto label_2cff24;
         }
     }
-    ctx->pc = 0x2CFEE0u;
 label_2cfee0:
     // 0x2cfee0: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
@@ -175,7 +171,6 @@ label_2cfef0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A6C58_0x3a6c58, 0x3a6c58u, 0x2cfefcu)) {
         return;
     }
-    ctx->pc = 0x2CFEFCu;
 label_2cfefc:
     // 0x2cfefc: 0x10000009  b           . + 4 + (0x9 << 2)
     ctx->pc = 0x2CFEFCu;
@@ -192,7 +187,6 @@ label_2cfefc:
             goto label_2cff24;
         }
     }
-    ctx->pc = 0x2CFF04u;
 label_2cff04:
     // 0x2cff04: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
@@ -216,7 +210,6 @@ label_2cff04:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A6C58_0x3a6c58, 0x3a6c58u, 0x2cff20u)) {
         return;
     }
-    ctx->pc = 0x2CFF20u;
 label_2cff20:
     // 0x2cff20: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2cff20u;

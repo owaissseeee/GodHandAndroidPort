@@ -13,7 +13,7 @@
 
 // Function: __register_frame_info_table
 // Address: 0x3224d0 - 0x3224f8
-void ps2___register_frame_info_table_0x3224d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___register_frame_info_table_0x3224d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___register_frame_info_table_0x3224d0");
 #endif

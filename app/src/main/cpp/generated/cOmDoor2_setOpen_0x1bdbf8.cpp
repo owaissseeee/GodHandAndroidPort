@@ -13,7 +13,7 @@
 
 // Function: cOmDoor2_setOpen
 // Address: 0x1bdbf8 - 0x1bdc20
-void cOmDoor2_setOpen_0x1bdbf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmDoor2_setOpen_0x1bdbf8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmDoor2_setOpen_0x1bdbf8");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: setD4_CHCR
 // Address: 0x3ba9f0 - 0x3baa68
-void setD4_CHCR_0x3ba9f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void setD4_CHCR_0x3ba9f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("setD4_CHCR_0x3ba9f0");
 #endif
@@ -45,7 +45,6 @@ void setD4_CHCR_0x3ba9f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x3baa04u)) {
         return;
     }
-    ctx->pc = 0x3BAA04u;
 label_3baa04:
     // 0x3baa04: 0x3c061000  lui         $a2, 0x1000
     SET_GPR_S32(ctx, 6, (int32_t)((uint32_t)4096 << 16));
@@ -112,7 +111,6 @@ label_3baa04:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B63F0u, 0x3BAA50u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x3BAA58u;
 label_3baa58:
     // 0x3baa58: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x3baa58u;

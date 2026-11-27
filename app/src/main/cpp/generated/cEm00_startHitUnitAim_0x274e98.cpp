@@ -13,7 +13,7 @@
 
 // Function: cEm00_startHitUnitAim
 // Address: 0x274e98 - 0x274f50
-void cEm00_startHitUnitAim_0x274e98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_startHitUnitAim_0x274e98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_startHitUnitAim_0x274e98");
 #endif
@@ -96,7 +96,6 @@ void cEm00_startHitUnitAim_0x274e98(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_274f3c;
         }
     }
-    ctx->pc = 0x274ED8u;
 label_274ed8:
     // 0x274ed8: 0x3c040060  lui         $a0, 0x60
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)96 << 16));
@@ -118,7 +117,6 @@ label_274ed8:
     if (!runtime->callDirectStatic(rdram, ctx, &FindEntityAtPosition_2C2638_0x2c2638, 0x2c2638u, 0x274ef0u)) {
         return;
     }
-    ctx->pc = 0x274EF0u;
 label_274ef0:
     // 0x274ef0: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x274EF0u;
@@ -150,7 +148,6 @@ label_274ef0:
             goto label_274f3c;
         }
     }
-    ctx->pc = 0x274F00u;
 label_274f00:
     // 0x274f00: 0x105d0006  beq         $v0, $sp, . + 4 + (0x6 << 2)
     ctx->pc = 0x274F00u;

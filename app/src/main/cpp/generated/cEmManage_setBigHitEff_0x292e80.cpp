@@ -13,7 +13,7 @@
 
 // Function: cEmManage_setBigHitEff
 // Address: 0x292e80 - 0x292ef0
-void cEmManage_setBigHitEff_0x292e80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_setBigHitEff_0x292e80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_setBigHitEff_0x292e80");
 #endif
@@ -64,7 +64,6 @@ void cEmManage_setBigHitEff_0x292e80(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_CkBigHitEffWait_0x292f08, 0x292f08u, 0x292ea8u)) {
         return;
     }
-    ctx->pc = 0x292EA8u;
 label_292ea8:
     // 0x292ea8: 0x5440000d  bnel        $v0, $zero, . + 4 + (0xD << 2)
     ctx->pc = 0x292EA8u;
@@ -104,7 +103,6 @@ label_292ea8:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x292ed0u)) {
         return;
     }
-    ctx->pc = 0x292ED0u;
 label_292ed0:
     // 0x292ed0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -119,7 +117,6 @@ label_292ed0:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_SetBigHitEffWait_0x292ef0, 0x292ef0u, 0x292edcu)) {
         return;
     }
-    ctx->pc = 0x292EDCu;
 label_292edc:
     // 0x292edc: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x292edcu;

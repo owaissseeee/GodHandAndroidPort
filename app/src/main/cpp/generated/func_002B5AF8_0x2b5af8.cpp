@@ -13,7 +13,7 @@
 
 // Function: func_002B5AF8
 // Address: 0x2b5af8 - 0x2b5bb8
-void func_002B5AF8_0x2b5af8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002B5AF8_0x2b5af8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002B5AF8_0x2b5af8");
 #endif
@@ -78,7 +78,6 @@ void func_002B5AF8_0x2b5af8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B4FE8_0x2b4fe8, 0x2b4fe8u, 0x2b5b38u)) {
         return;
     }
-    ctx->pc = 0x2B5B38u;
 label_2b5b38:
     // 0x2b5b38: 0x40982d  daddu       $s3, $v0, $zero
     SET_GPR_U64(ctx, 19, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -112,7 +111,6 @@ label_2b5b38:
             goto label_2b5b94;
         }
     }
-    ctx->pc = 0x2B5B4Cu;
 label_2b5b4c:
     // 0x2b5b4c: 0xae620000  sw          $v0, 0x0($s3)
     ctx->pc = 0x2b5b4cu;
@@ -135,14 +133,12 @@ label_2b5b4c:
             goto label_2b5b94;
         }
     }
-    ctx->pc = 0x2B5B5Cu;
 label_2b5b5c:
     // 0x2b5b5c: 0x3a0802d  daddu       $s0, $sp, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2b5b60: 0x3a0882d  daddu       $s1, $sp, $zero
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2b5b64: 0x0  nop
-    ctx->pc = 0x2b5b64u;
     // NOP
 label_2b5b68:
     // 0x2b5b68: 0x8e060000  lw          $a2, 0x0($s0)
@@ -161,7 +157,6 @@ label_2b5b68:
     if (!runtime->callDirectStatic(rdram, ctx, &EnsureInitThenForward_2A9538_30EE08_0x30ee08, 0x30ee08u, 0x2b5b78u)) {
         return;
     }
-    ctx->pc = 0x2B5B78u;
 label_2b5b78:
     // 0x2b5b78: 0x1440fff4  bnez        $v0, . + 4 + (-0xC << 2)
     ctx->pc = 0x2B5B78u;
@@ -204,7 +199,6 @@ label_2b5b78:
         }
     }
     // 0x2b5b90: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2b5b90u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2b5b94:
     // 0x2b5b94: 0x7bb00060  lq          $s0, 0x60($sp)

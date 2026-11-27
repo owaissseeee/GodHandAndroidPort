@@ -13,7 +13,7 @@
 
 // Function: func_002011B0
 // Address: 0x2011b0 - 0x2011f8
-void func_002011B0_0x2011b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002011B0_0x2011b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002011B0_0x2011b0");
 #endif
@@ -56,7 +56,6 @@ void func_002011B0_0x2011b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
     // 0x2011cc: 0x0  nop
-    ctx->pc = 0x2011ccu;
     // NOP
 label_2011d0:
     // 0x2011d0: 0xc0802c8  jal         func_200B20
@@ -70,7 +69,6 @@ label_2011d0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00200B20_0x200b20, 0x200b20u, 0x2011d8u)) {
         return;
     }
-    ctx->pc = 0x2011D8u;
 label_2011d8:
     // 0x2011d8: 0x8e020000  lw          $v0, 0x0($s0)
     ctx->pc = 0x2011d8u;

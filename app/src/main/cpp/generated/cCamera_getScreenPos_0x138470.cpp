@@ -13,7 +13,7 @@
 
 // Function: cCamera_getScreenPos
 // Address: 0x138470 - 0x138528
-void cCamera_getScreenPos_0x138470(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCamera_getScreenPos_0x138470(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCamera_getScreenPos_0x138470");
 #endif
@@ -50,7 +50,6 @@ void cCamera_getScreenPos_0x138470(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x13848cu)) {
         return;
     }
-    ctx->pc = 0x13848Cu;
 label_13848c:
     // 0x13848c: 0x3c04003c  lui         $a0, 0x3C
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)60 << 16));

@@ -13,7 +13,7 @@
 
 // Function: mwrsc_WaitSprDmaEnd
 // Address: 0x346478 - 0x346498
-void mwrsc_WaitSprDmaEnd_0x346478(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void mwrsc_WaitSprDmaEnd_0x346478(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("mwrsc_WaitSprDmaEnd_0x346478");
 #endif
@@ -42,7 +42,6 @@ void mwrsc_WaitSprDmaEnd_0x346478(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &MWDMA_WaitEnd_0x346660, 0x346660u, 0x346488u)) {
         return;
     }
-    ctx->pc = 0x346488u;
 label_346488:
     // 0x346488: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x346488u;

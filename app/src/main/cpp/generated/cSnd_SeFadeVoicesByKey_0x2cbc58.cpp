@@ -13,7 +13,7 @@
 
 // Function: cSnd_SeFadeVoicesByKey
 // Address: 0x2cbc58 - 0x2cbcf0
-void cSnd_SeFadeVoicesByKey_0x2cbc58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_SeFadeVoicesByKey_0x2cbc58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_SeFadeVoicesByKey_0x2cbc58");
 #endif
@@ -118,7 +118,6 @@ label_2cbc90:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00375050_0x375050, 0x375050u, 0x2cbcb4u)) {
         return;
     }
-    ctx->pc = 0x2CBCB4u;
 label_2cbcb4:
     // 0x2cbcb4: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x2CBCB4u;
@@ -135,7 +134,6 @@ label_2cbcb4:
             goto label_2cbcc8;
         }
     }
-    ctx->pc = 0x2CBCBCu;
 label_2cbcbc:
     // 0x2cbcbc: 0xc0b390c  jal         func_2CE430
     SET_GPR_U32(ctx, 31, 0x2CBCC4u);
@@ -148,7 +146,6 @@ label_2cbcbc:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndSeVoice_Stop_0x2ce430, 0x2ce430u, 0x2cbcc4u)) {
         return;
     }
-    ctx->pc = 0x2CBCC4u;
 label_2cbcc4:
     // 0x2cbcc4: 0x8e100004  lw          $s0, 0x4($s0)
     ctx->pc = 0x2cbcc4u;
@@ -172,7 +169,6 @@ label_2cbcc8:
             goto label_2cbc90;
         }
     }
-    ctx->pc = 0x2CBCD0u;
 label_2cbcd0:
     // 0x2cbcd0: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x2cbcd0u;

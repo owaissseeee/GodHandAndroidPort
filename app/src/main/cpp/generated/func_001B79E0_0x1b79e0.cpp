@@ -13,7 +13,7 @@
 
 // Function: func_001B79E0
 // Address: 0x1b79e0 - 0x1b7a78
-void func_001B79E0_0x1b79e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001B79E0_0x1b79e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001B79E0_0x1b79e0");
 #endif
@@ -96,7 +96,6 @@ void func_001B79E0_0x1b79e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_canItemDrop_0x1b7a78, 0x1b7a78u, 0x1b7a28u)) {
         return;
     }
-    ctx->pc = 0x1B7A28u;
 label_1b7a28:
     // 0x1b7a28: 0x5451000c  bnel        $v0, $s1, . + 4 + (0xC << 2)
     ctx->pc = 0x1B7A28u;
@@ -174,7 +173,6 @@ label_1b7a5c:
     // 0x1b7a5c: 0x2123b  dsra        $v0, $v0, 8
     SET_GPR_S64(ctx, 2, GPR_S64(ctx, 2) >> 8);
     // 0x1b7a60: 0x30420001  andi        $v0, $v0, 0x1
-    ctx->pc = 0x1b7a60u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
 label_1b7a64:
     // 0x1b7a64: 0x7bb00020  lq          $s0, 0x20($sp)

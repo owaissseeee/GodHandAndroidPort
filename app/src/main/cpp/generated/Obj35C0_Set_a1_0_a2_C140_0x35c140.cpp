@@ -13,7 +13,7 @@
 
 // Function: Obj35C0_Set_a1_0_a2_C140
 // Address: 0x35c140 - 0x35c160
-void Obj35C0_Set_a1_0_a2_C140_0x35c140(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj35C0_Set_a1_0_a2_C140_0x35c140(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj35C0_Set_a1_0_a2_C140_0x35c140");
 #endif

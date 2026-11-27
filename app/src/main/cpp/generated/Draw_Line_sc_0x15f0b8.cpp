@@ -13,7 +13,7 @@
 
 // Function: Draw_Line_sc
 // Address: 0x15f0b8 - 0x15f2a8
-void Draw_Line_sc_0x15f0b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Draw_Line_sc_0x15f0b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Draw_Line_sc_0x15f0b8");
 #endif
@@ -151,7 +151,6 @@ label_15f120:
     // 0x15f148: 0x2493fff0  addiu       $s3, $a0, -0x10
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 4), 4294967280));
     // 0x15f14c: 0x0  nop
-    ctx->pc = 0x15f14cu;
     // NOP
 label_15f150:
     // 0x15f150: 0x3c03003c  lui         $v1, 0x3C
@@ -221,7 +220,6 @@ label_15f150:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0DivVector_0x30a468, 0x30a468u, 0x15f1b8u)) {
         return;
     }
-    ctx->pc = 0x15F1B8u;
 label_15f1b8:
     // 0x15f1b8: 0xc7a00050  lwc1        $f0, 0x50($sp)
     ctx->pc = 0x15f1b8u;
@@ -313,7 +311,6 @@ label_15f1b8:
             goto label_15f210;
         }
     }
-    ctx->pc = 0x15F210u;
 label_15f210:
     // 0x15f210: 0x5220000d  beql        $s1, $zero, . + 4 + (0xD << 2)
     ctx->pc = 0x15F210u;
@@ -381,10 +378,8 @@ label_15f210:
     if (!runtime->callDirectStatic(rdram, ctx, &Gp_draw_line_0x15b138, 0x15b138u, 0x15f244u)) {
         return;
     }
-    ctx->pc = 0x15F244u;
 label_15f244:
     // 0x15f244: 0x26310001  addiu       $s1, $s1, 0x1
-    ctx->pc = 0x15f244u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 1));
 label_15f248:
     // 0x15f248: 0x240b02d  daddu       $s6, $s2, $zero
@@ -411,7 +406,6 @@ label_15f248:
             goto label_15f150;
         }
     }
-    ctx->pc = 0x15F25Cu;
 label_15f25c:
     // 0x15f25c: 0x7bb000f0  lq          $s0, 0xF0($sp)
     ctx->pc = 0x15f25cu;

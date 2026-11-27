@@ -13,7 +13,7 @@
 
 // Function: func_00359848
 // Address: 0x359848 - 0x3599b0
-void func_00359848_0x359848(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00359848_0x359848(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00359848_0x359848");
 #endif
@@ -96,7 +96,6 @@ void func_00359848_0x359848(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &sfsee_IsAudioAnalyzing_0x3599b0, 0x3599b0u, 0x359894u)) {
         return;
     }
-    ctx->pc = 0x359894u;
 label_359894:
     // 0x359894: 0x5440003d  bnel        $v0, $zero, . + 4 + (0x3D << 2)
     ctx->pc = 0x359894u;
@@ -128,7 +127,6 @@ label_359894:
     if (!runtime->callDirectStatic(rdram, ctx, &sfsee_IsVideoAnalyzing_0x359a30, 0x359a30u, 0x3598acu)) {
         return;
     }
-    ctx->pc = 0x3598ACu;
 label_3598ac:
     // 0x3598ac: 0x54400037  bnel        $v0, $zero, . + 4 + (0x37 << 2)
     ctx->pc = 0x3598ACu;
@@ -156,7 +154,6 @@ label_3598ac:
     if (!runtime->callDirectStatic(rdram, ctx, &sfsee_IsMpsStream_0x359ab0, 0x359ab0u, 0x3598bcu)) {
         return;
     }
-    ctx->pc = 0x3598BCu;
 label_3598bc:
     // 0x3598bc: 0x10400022  beqz        $v0, . + 4 + (0x22 << 2)
     ctx->pc = 0x3598BCu;
@@ -250,7 +247,6 @@ label_3598bc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0036C920_0x36c920, 0x36c920u, 0x3598fcu)) {
         return;
     }
-    ctx->pc = 0x3598FCu;
 label_3598fc:
     // 0x3598fc: 0x1000000f  b           . + 4 + (0xF << 2)
     ctx->pc = 0x3598FCu;
@@ -268,7 +264,6 @@ label_3598fc:
         }
     }
     // 0x359904: 0x0  nop
-    ctx->pc = 0x359904u;
     // NOP
 label_359908:
     // 0x359908: 0xc0d36ba  jal         func_34DAE8
@@ -282,7 +277,6 @@ label_359908:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj34D8_GetTri78_Times100_0x34dae8, 0x34dae8u, 0x359910u)) {
         return;
     }
-    ctx->pc = 0x359910u;
 label_359910:
     // 0x359910: 0x2842006c  slti        $v0, $v0, 0x6C
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 2) < (int64_t)(int32_t)108) ? 1 : 0);
@@ -330,7 +324,6 @@ label_35992c:
     // 0x359934: 0x1012  mflo        $v0
     SET_GPR_U64(ctx, 2, ctx->lo);
     // 0x359938: 0x40282d  daddu       $a1, $v0, $zero
-    ctx->pc = 0x359938u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_35993c:
     // 0x35993c: 0x1000000c  b           . + 4 + (0xC << 2)
@@ -349,7 +342,6 @@ label_35993c:
         }
     }
     // 0x359944: 0x0  nop
-    ctx->pc = 0x359944u;
     // NOP
 label_359948:
     // 0x359948: 0x8fa20004  lw          $v0, 0x4($sp)
@@ -388,7 +380,6 @@ label_359948:
             goto label_359970;
         }
     }
-    ctx->pc = 0x359960u;
 label_359960:
     // 0x359960: 0x5040000a  beql        $v0, $zero, . + 4 + (0xA << 2)
     ctx->pc = 0x359960u;
@@ -433,7 +424,6 @@ label_359970:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00359DF0_0x359df0, 0x359df0u, 0x359988u)) {
         return;
     }
-    ctx->pc = 0x359988u;
 label_359988:
     // 0x359988: 0xdfb00010  ld          $s0, 0x10($sp)
     ctx->pc = 0x359988u;

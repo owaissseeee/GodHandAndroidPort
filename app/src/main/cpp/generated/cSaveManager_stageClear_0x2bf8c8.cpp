@@ -13,7 +13,7 @@
 
 // Function: cSaveManager_stageClear
 // Address: 0x2bf8c8 - 0x2bf8f8
-void cSaveManager_stageClear_0x2bf8c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSaveManager_stageClear_0x2bf8c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSaveManager_stageClear_0x2bf8c8");
 #endif
@@ -45,7 +45,6 @@ void cSaveManager_stageClear_0x2bf8c8(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_stageInit_0x1f9b10, 0x1f9b10u, 0x2bf8dcu)) {
         return;
     }
-    ctx->pc = 0x2BF8DCu;
 label_2bf8dc:
     // 0x2bf8dc: 0x3c04005f  lui         $a0, 0x5F
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)95 << 16));
@@ -60,7 +59,6 @@ label_2bf8dc:
     if (!runtime->callDirectStatic(rdram, ctx, &cRoomSave_systemInit_0x2beb80, 0x2beb80u, 0x2bf8e8u)) {
         return;
     }
-    ctx->pc = 0x2BF8E8u;
 label_2bf8e8:
     // 0x2bf8e8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2bf8e8u;

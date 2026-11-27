@@ -13,7 +13,7 @@
 
 // Function: cEmWrap_setAlphaMode
 // Address: 0x296230 - 0x2962a8
-void cEmWrap_setAlphaMode_0x296230(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmWrap_setAlphaMode_0x296230(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmWrap_setAlphaMode_0x296230");
 #endif
@@ -52,7 +52,6 @@ void cEmWrap_setAlphaMode_0x296230(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &FindResolveActor_295978_0x295978, 0x295978u, 0x29624cu)) {
         return;
     }
-    ctx->pc = 0x29624Cu;
 label_29624c:
     // 0x29624c: 0x10400010  beqz        $v0, . + 4 + (0x10 << 2)
     ctx->pc = 0x29624Cu;
@@ -85,7 +84,6 @@ label_29624c:
     if (!runtime->callDirectStatic(rdram, ctx, &strcmp_0x3a5678, 0x3a5678u, 0x296264u)) {
         return;
     }
-    ctx->pc = 0x296264u;
 label_296264:
     // 0x296264: 0x5440000b  bnel        $v0, $zero, . + 4 + (0xB << 2)
     ctx->pc = 0x296264u;
@@ -116,7 +114,6 @@ label_296264:
     if (!runtime->callDirectStatic(rdram, ctx, &cEm00_setAlphaMode_0x273d28, 0x273d28u, 0x296278u)) {
         return;
     }
-    ctx->pc = 0x296278u;
 label_296278:
     // 0x296278: 0x16200003  bnez        $s1, . + 4 + (0x3 << 2)
     ctx->pc = 0x296278u;
@@ -148,10 +145,8 @@ label_296278:
             goto label_29628c;
         }
     }
-    ctx->pc = 0x296288u;
 label_296288:
     // 0x296288: 0x24020258  addiu       $v0, $zero, 0x258
-    ctx->pc = 0x296288u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 600));
 label_29628c:
     // 0x29628c: 0xa46202ae  sh          $v0, 0x2AE($v1)

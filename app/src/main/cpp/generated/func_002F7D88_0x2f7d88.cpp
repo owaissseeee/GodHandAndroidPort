@@ -13,7 +13,7 @@
 
 // Function: func_002F7D88
 // Address: 0x2f7d88 - 0x2f7e30
-void func_002F7D88_0x2f7d88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002F7D88_0x2f7d88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002F7D88_0x2f7d88");
 #endif
@@ -83,7 +83,6 @@ void func_002F7D88_0x2f7d88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x2F7DB8u, 0x2F7DC0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2F7DC0u;
 label_2f7dc0:
     // 0x2f7dc0: 0x8e050368  lw          $a1, 0x368($s0)
     ctx->pc = 0x2f7dc0u;
@@ -115,7 +114,6 @@ label_2f7dc0:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x2F7DCCu, 0x2F7DD4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2F7DD4u;
 label_2f7dd4:
     // 0x2f7dd4: 0x8e05036c  lw          $a1, 0x36C($s0)
     ctx->pc = 0x2f7dd4u;
@@ -148,7 +146,6 @@ label_2f7dd8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x2F7DE0u, 0x2F7DE8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2F7DE8u;
 label_2f7de8:
     // 0x2f7de8: 0x8e050370  lw          $a1, 0x370($s0)
     ctx->pc = 0x2f7de8u;
@@ -181,7 +178,6 @@ label_2f7dec:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x2F7DF4u, 0x2F7DFCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2F7DFCu;
 label_2f7dfc:
     // 0x2f7dfc: 0x8e050360  lw          $a1, 0x360($s0)
     ctx->pc = 0x2f7dfcu;
@@ -214,10 +210,8 @@ label_2f7e00:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x2F7E08u, 0x2F7E10u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2F7E10u;
 label_2f7e10:
     // 0x2f7e10: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x2f7e10u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_2f7e14:
     // 0x2f7e14: 0xc0baf14  jal         func_2EBC50
@@ -231,7 +225,6 @@ label_2f7e14:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002EBC50_0x2ebc50, 0x2ebc50u, 0x2f7e1cu)) {
         return;
     }
-    ctx->pc = 0x2F7E1Cu;
 label_2f7e1c:
     // 0x2f7e1c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2f7e1cu;

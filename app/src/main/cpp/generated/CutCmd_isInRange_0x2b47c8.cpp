@@ -13,7 +13,7 @@
 
 // Function: CutCmd_isInRange
 // Address: 0x2b47c8 - 0x2b4850
-void CutCmd_isInRange_0x2b47c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CutCmd_isInRange_0x2b47c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CutCmd_isInRange_0x2b47c8");
 #endif
@@ -56,7 +56,6 @@ void CutCmd_isInRange_0x2b47c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x297B98u, 0x2B47E4u, 0x2B47ECu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2B47ECu;
 label_2b47ec:
     // 0x2b47ec: 0x92030044  lbu         $v1, 0x44($s0)
     ctx->pc = 0x2b47ecu;
@@ -89,7 +88,6 @@ label_2b47ec:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x297B98u, 0x2B47FCu, 0x2B4804u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2B4804u;
 label_2b4804:
     // 0x2b4804: 0x9203004c  lbu         $v1, 0x4C($s0)
     ctx->pc = 0x2b4804u;
@@ -122,7 +120,6 @@ label_2b4804:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x297B88u, 0x2B4814u, 0x2B481Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2B481Cu;
 label_2b481c:
     // 0x2b481c: 0xc6010050  lwc1        $f1, 0x50($s0)
     ctx->pc = 0x2b481cu;
@@ -149,7 +146,6 @@ label_2b481c:
         }
     }
     // 0x2b4834: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2b4834u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2b4838:
     // 0x2b4838: 0x7bb00020  lq          $s0, 0x20($sp)

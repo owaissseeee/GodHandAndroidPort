@@ -13,7 +13,7 @@
 
 // Function: _hi0bits
 // Address: 0x3aeb38 - 0x3aebc0
-void _hi0bits_0x3aeb38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _hi0bits_0x3aeb38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_hi0bits_0x3aeb38");
 #endif
@@ -41,7 +41,6 @@ void _hi0bits_0x3aeb38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     // 0x3aeb48: 0x24050010  addiu       $a1, $zero, 0x10
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 16));
     // 0x3aeb4c: 0x42400  sll         $a0, $a0, 16
-    ctx->pc = 0x3aeb4cu;
     SET_GPR_S32(ctx, 4, (int32_t)SLL32(GPR_U32(ctx, 4), 16));
 label_3aeb50:
     // 0x3aeb50: 0x3c02ff00  lui         $v0, 0xFF00
@@ -60,7 +59,6 @@ label_3aeb50:
     // 0x3aeb60: 0x24a50008  addiu       $a1, $a1, 0x8
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 8));
     // 0x3aeb64: 0x42200  sll         $a0, $a0, 8
-    ctx->pc = 0x3aeb64u;
     SET_GPR_S32(ctx, 4, (int32_t)SLL32(GPR_U32(ctx, 4), 8));
 label_3aeb68:
     // 0x3aeb68: 0x3c02f000  lui         $v0, 0xF000
@@ -79,7 +77,6 @@ label_3aeb68:
     // 0x3aeb78: 0x24a50004  addiu       $a1, $a1, 0x4
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 4));
     // 0x3aeb7c: 0x42100  sll         $a0, $a0, 4
-    ctx->pc = 0x3aeb7cu;
     SET_GPR_S32(ctx, 4, (int32_t)SLL32(GPR_U32(ctx, 4), 4));
 label_3aeb80:
     // 0x3aeb80: 0x3c02c000  lui         $v0, 0xC000
@@ -98,7 +95,6 @@ label_3aeb80:
     // 0x3aeb90: 0x24a50002  addiu       $a1, $a1, 0x2
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 2));
     // 0x3aeb94: 0x42080  sll         $a0, $a0, 2
-    ctx->pc = 0x3aeb94u;
     SET_GPR_S32(ctx, 4, (int32_t)SLL32(GPR_U32(ctx, 4), 2));
 label_3aeb98:
     // 0x3aeb98: 0x4800005  bltz        $a0, . + 4 + (0x5 << 2)
@@ -135,10 +131,8 @@ label_3aeb98:
             goto label_3aebb4;
         }
     }
-    ctx->pc = 0x3AEBB0u;
 label_3aebb0:
     // 0x3aebb0: 0xa0102d  daddu       $v0, $a1, $zero
-    ctx->pc = 0x3aebb0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
 label_3aebb4:
     // 0x3aebb4: 0x3e00008  jr          $ra

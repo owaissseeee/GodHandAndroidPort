@@ -13,7 +13,7 @@
 
 // Function: MtxGetScaleVec
 // Address: 0x148160 - 0x148200
-void MtxGetScaleVec_0x148160(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MtxGetScaleVec_0x148160(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MtxGetScaleVec_0x148160");
 #endif
@@ -112,7 +112,6 @@ void MtxGetScaleVec_0x148160(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_00150710_0x150710, 0x150710u, 0x1481f4u)) {
         return;
     }
-    ctx->pc = 0x1481F4u;
 label_1481f4:
     // 0x1481f4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1481f4u;

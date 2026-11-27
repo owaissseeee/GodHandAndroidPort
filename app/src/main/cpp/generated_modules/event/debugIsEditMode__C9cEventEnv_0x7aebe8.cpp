@@ -14,18 +14,16 @@ namespace gh_event
 {
 // Function: debugIsEditMode__C9cEventEnv
 // Address: 0x7aebe8 - 0x7aec38
-void debugIsEditMode__C9cEventEnv_0x7aebe8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void debugIsEditMode__C9cEventEnv_0x7aebe8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("debugIsEditMode__C9cEventEnv_0x7aebe8");
 #endif
 
-    ctx->pc = 0x7aebe8u;
 
     // 0x7aebe8: 0x8c83000c  lw          $v1, 0xC($a0)
     ctx->pc = 0x7aebe8u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 12)));
     // 0x7aebec: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x7aebecu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x7aebf0: 0x1062000d  beq         $v1, $v0, . + 4 + (0xD << 2)
     ctx->pc = 0x7AEBF0u;
@@ -42,7 +40,6 @@ void debugIsEditMode__C9cEventEnv_0x7aebe8(uint8_t* rdram, R5900Context* ctx, PS
             goto label_7aec28;
         }
     }
-    ctx->pc = 0x7AEBF8u;
     // 0x7aebf8: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x7AEBF8u;
     {
@@ -58,7 +55,6 @@ void debugIsEditMode__C9cEventEnv_0x7aebe8(uint8_t* rdram, R5900Context* ctx, PS
             goto label_7aec10;
         }
     }
-    ctx->pc = 0x7AEC00u;
     // 0x7aec00: 0x10600007  beqz        $v1, . + 4 + (0x7 << 2)
     ctx->pc = 0x7AEC00u;
     {
@@ -74,7 +70,6 @@ void debugIsEditMode__C9cEventEnv_0x7aebe8(uint8_t* rdram, R5900Context* ctx, PS
             goto label_7aec20;
         }
     }
-    ctx->pc = 0x7AEC08u;
     // 0x7aec08: 0x10000009  b           . + 4 + (0x9 << 2)
     ctx->pc = 0x7AEC08u;
     {
@@ -84,7 +79,6 @@ void debugIsEditMode__C9cEventEnv_0x7aebe8(uint8_t* rdram, R5900Context* ctx, PS
             goto label_7aec30;
         }
     }
-    ctx->pc = 0x7AEC10u;
 label_7aec10:
     // 0x7aec10: 0x10620005  beq         $v1, $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x7AEC10u;
@@ -101,7 +95,6 @@ label_7aec10:
             goto label_7aec28;
         }
     }
-    ctx->pc = 0x7AEC18u;
     // 0x7aec18: 0x14620005  bne         $v1, $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x7AEC18u;
     {
@@ -117,7 +110,6 @@ label_7aec10:
             goto label_7aec30;
         }
     }
-    ctx->pc = 0x7AEC20u;
 label_7aec20:
     // 0x7aec20: 0x3e00008  jr          $ra
     ctx->pc = 0x7AEC20u;
@@ -138,7 +130,6 @@ label_7aec20:
         return;
         #endif
     }
-    ctx->pc = 0x7AEC28u;
 label_7aec28:
     // 0x7aec28: 0x3e00008  jr          $ra
     ctx->pc = 0x7AEC28u;
@@ -159,7 +150,6 @@ label_7aec28:
         return;
         #endif
     }
-    ctx->pc = 0x7AEC30u;
 label_7aec30:
     // 0x7aec30: 0x3e00008  jr          $ra
     ctx->pc = 0x7AEC30u;

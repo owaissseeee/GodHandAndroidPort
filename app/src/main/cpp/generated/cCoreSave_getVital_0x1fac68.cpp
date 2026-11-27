@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getVital
 // Address: 0x1fac68 - 0x1fac80
-void cCoreSave_getVital_0x1fac68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getVital_0x1fac68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getVital_0x1fac68");
 #endif

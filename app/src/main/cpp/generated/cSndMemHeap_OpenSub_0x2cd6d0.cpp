@@ -13,7 +13,7 @@
 
 // Function: cSndMemHeap_OpenSub
 // Address: 0x2cd6d0 - 0x2cd740
-void cSndMemHeap_OpenSub_0x2cd6d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndMemHeap_OpenSub_0x2cd6d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndMemHeap_OpenSub_0x2cd6d0");
 #endif
@@ -64,7 +64,6 @@ void cSndMemHeap_OpenSub_0x2cd6d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2cd700u)) {
         return;
     }
-    ctx->pc = 0x2CD700u;
 label_2cd700:
     // 0x2cd700: 0xae120384  sw          $s2, 0x384($s0)
     ctx->pc = 0x2cd700u;
@@ -80,7 +79,6 @@ label_2cd700:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndMemHeap_ResetFirstBlk_0x2cd740, 0x2cd740u, 0x2cd70cu)) {
         return;
     }
-    ctx->pc = 0x2CD70Cu;
 label_2cd70c:
     // 0x2cd70c: 0xae11038c  sw          $s1, 0x38C($s0)
     ctx->pc = 0x2cd70cu;
@@ -98,7 +96,6 @@ label_2cd70c:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndMemHeap_Alloc_0x2cd7c8, 0x2cd7c8u, 0x2cd71cu)) {
         return;
     }
-    ctx->pc = 0x2CD71Cu;
 label_2cd71c:
     // 0x2cd71c: 0x8e030380  lw          $v1, 0x380($s0)
     ctx->pc = 0x2cd71cu;

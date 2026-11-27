@@ -13,7 +13,7 @@
 
 // Function: cSceAtManager_SetEnable_2C28F8
 // Address: 0x2c28f8 - 0x2c2950
-void cSceAtManager_SetEnable_2C28F8_0x2c28f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSceAtManager_SetEnable_2C28F8_0x2c28f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSceAtManager_SetEnable_2C28F8_0x2c28f8");
 #endif
@@ -62,7 +62,6 @@ void cSceAtManager_SetEnable_2C28F8_0x2c28f8(uint8_t* rdram, R5900Context* ctx, 
             goto label_2c2920;
         }
     }
-    ctx->pc = 0x2C2918u;
 label_2c2918:
     // 0x2c2918: 0x10000009  b           . + 4 + (0x9 << 2)
     ctx->pc = 0x2C2918u;
@@ -79,7 +78,6 @@ label_2c2918:
             goto label_2c2940;
         }
     }
-    ctx->pc = 0x2C2920u;
 label_2c2920:
     // 0x2c2920: 0xc0b039a  jal         func_2C0E68
     SET_GPR_U32(ctx, 31, 0x2C2928u);
@@ -92,7 +90,6 @@ label_2c2920:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002C0E68_0x2c0e68, 0x2c0e68u, 0x2c2928u)) {
         return;
     }
-    ctx->pc = 0x2C2928u;
 label_2c2928:
     // 0x2c2928: 0x14400005  bnez        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x2C2928u;
@@ -122,10 +119,8 @@ label_2c2928:
     if (!runtime->callDirectStatic(rdram, ctx, &cSceAtUnit_SetEnable_0x2c0de8, 0x2c0de8u, 0x2c293cu)) {
         return;
     }
-    ctx->pc = 0x2C293Cu;
 label_2c293c:
     // 0x2c293c: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2c293cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2c2940:
     // 0x2c2940: 0x7bb00010  lq          $s0, 0x10($sp)

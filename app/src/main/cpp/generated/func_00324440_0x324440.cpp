@@ -13,7 +13,7 @@
 
 // Function: func_00324440
 // Address: 0x324440 - 0x3244c8
-void func_00324440_0x324440(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00324440_0x324440(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00324440_0x324440");
 #endif
@@ -64,7 +64,6 @@ void func_00324440_0x324440(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0033F130_0x33f130, 0x33f130u, 0x324460u)) {
         return;
     }
-    ctx->pc = 0x324460u;
 label_324460:
     // 0x324460: 0x10000013  b           . + 4 + (0x13 << 2)
     ctx->pc = 0x324460u;
@@ -81,7 +80,6 @@ label_324460:
             goto label_3244b0;
         }
     }
-    ctx->pc = 0x324468u;
 label_324468:
     // 0x324468: 0x8e030010  lw          $v1, 0x10($s0)
     ctx->pc = 0x324468u;
@@ -118,7 +116,6 @@ label_324468:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00328F70_0x328f70, 0x328f70u, 0x324488u)) {
         return;
     }
-    ctx->pc = 0x324488u;
 label_324488:
     // 0x324488: 0xc0ca026  jal         func_328098
     SET_GPR_U32(ctx, 31, 0x324490u);
@@ -131,7 +128,6 @@ label_324488:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00328098_0x328098, 0x328098u, 0x324490u)) {
         return;
     }
-    ctx->pc = 0x324490u;
 label_324490:
     // 0x324490: 0x24030004  addiu       $v1, $zero, 0x4
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
@@ -161,7 +157,6 @@ label_324490:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00328D40_0x328d40, 0x328d40u, 0x3244a4u)) {
         return;
     }
-    ctx->pc = 0x3244A4u;
 label_3244a4:
     // 0x3244a4: 0xae020010  sw          $v0, 0x10($s0)
     ctx->pc = 0x3244a4u;
@@ -169,7 +164,6 @@ label_3244a4:
     // 0x3244a8: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     // 0x3244ac: 0x60102d  daddu       $v0, $v1, $zero
-    ctx->pc = 0x3244acu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
 label_3244b0:
     // 0x3244b0: 0xdfb00000  ld          $s0, 0x0($sp)

@@ -13,7 +13,7 @@
 
 // Function: BuildMatrixAndForward_147BB0
 // Address: 0x147bb0 - 0x147bf8
-void BuildMatrixAndForward_147BB0_0x147bb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BuildMatrixAndForward_147BB0_0x147bb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BuildMatrixAndForward_147BB0_0x147bb0");
 #endif
@@ -55,7 +55,6 @@ void BuildMatrixAndForward_147BB0_0x147bb0(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitRotQuaternion_0x1478a8, 0x1478a8u, 0x147bd4u)) {
         return;
     }
-    ctx->pc = 0x147BD4u;
 label_147bd4:
     // 0x147bd4: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -72,7 +71,6 @@ label_147bd4:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxMultiply_0x147548, 0x147548u, 0x147be4u)) {
         return;
     }
-    ctx->pc = 0x147BE4u;
 label_147be4:
     // 0x147be4: 0x7bb00060  lq          $s0, 0x60($sp)
     ctx->pc = 0x147be4u;

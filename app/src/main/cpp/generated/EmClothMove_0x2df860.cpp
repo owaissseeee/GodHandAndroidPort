@@ -11,12 +11,23 @@
 #include "ps2_log.h"
 #endif
 
+namespace godhand { bool isUltraPotatoMode(); }
+
 // Function: EmClothMove
 // Address: 0x2df860 - 0x2df938
-void EmClothMove_0x2df860(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EmClothMove_0x2df860(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EmClothMove_0x2df860");
 #endif
+
+    if (__builtin_expect(ctx->pc == 0x2df860u && godhand::isUltraPotatoMode(), 0)) {
+        const uint32_t jumpTarget = GPR_U32(ctx, 31);
+        ctx->pc = jumpTarget;
+        #if defined(PS2X_STRICT_RETURN_DIAGNOSTICS) && PS2X_STRICT_RETURN_DIAGNOSTICS
+        (void)runtime->dispatchGuestBranch(rdram, ctx, jumpTarget, 0x2df860u, 0u, PS2Runtime::GuestBranchKind::Return, "JR $ra");
+        #endif
+        return;
+    }
 
     if (__builtin_expect(ctx->pc != 0x2df860u, 0)) {
         switch (ctx->pc) {
@@ -140,7 +151,6 @@ void EmClothMove_0x2df860(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitRotY_0x147988, 0x147988u, 0x2df8b8u)) {
         return;
     }
-    ctx->pc = 0x2DF8B8u;
 label_2df8b8:
     // 0x2df8b8: 0x3c013ca3  lui         $at, 0x3CA3
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15523 << 16));
@@ -177,7 +187,6 @@ label_2df8b8:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x2df8ecu)) {
         return;
     }
-    ctx->pc = 0x2DF8ECu;
 label_2df8ec:
     // 0x2df8ec: 0x26030060  addiu       $v1, $s0, 0x60
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 16), 96));
@@ -215,7 +224,6 @@ label_2df8ec:
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 3), 8), bits); }
 label_2df910:
     // 0x2df910: 0x220202d  daddu       $a0, $s1, $zero
-    ctx->pc = 0x2df910u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
 label_2df914:
     // 0x2df914: 0x200282d  daddu       $a1, $s0, $zero
@@ -231,7 +239,6 @@ label_2df914:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00104010_0x104010, 0x104010u, 0x2df920u)) {
         return;
     }
-    ctx->pc = 0x2DF920u;
 label_2df920:
     // 0x2df920: 0x7bb00080  lq          $s0, 0x80($sp)
     ctx->pc = 0x2df920u;

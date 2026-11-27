@@ -13,7 +13,7 @@
 
 // Function: IsActorActiveOrReady_379EC0
 // Address: 0x379ec0 - 0x379f00
-void IsActorActiveOrReady_379EC0_0x379ec0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IsActorActiveOrReady_379EC0_0x379ec0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IsActorActiveOrReady_379EC0_0x379ec0");
 #endif
@@ -46,7 +46,6 @@ void IsActorActiveOrReady_379EC0_0x379ec0(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &func_00379F00_0x379f00, 0x379f00u, 0x379ed4u)) {
         return;
     }
-    ctx->pc = 0x379ED4u;
 label_379ed4:
     // 0x379ed4: 0x14400005  bnez        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x379ED4u;
@@ -74,7 +73,6 @@ label_379ed4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0037A020_0x37a020, 0x37a020u, 0x379ee4u)) {
         return;
     }
-    ctx->pc = 0x379EE4u;
 label_379ee4:
     // 0x379ee4: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x379EE4u;
@@ -91,7 +89,6 @@ label_379ee4:
             goto label_379ef0;
         }
     }
-    ctx->pc = 0x379EECu;
 label_379eec:
     // 0x379eec: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x379eecu;

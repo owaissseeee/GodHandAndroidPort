@@ -13,7 +13,7 @@
 
 // Function: ClearActorList_2C32C0
 // Address: 0x2c32c0 - 0x2c32f0
-void ClearActorList_2C32C0_0x2c32c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearActorList_2C32C0_0x2c32c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearActorList_2C32C0_0x2c32c0");
 #endif
@@ -47,7 +47,6 @@ void ClearActorList_2C32C0_0x2c32c0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &cTaskPool_killAll_0x2d56a8, 0x2d56a8u, 0x2c32d8u)) {
         return;
     }
-    ctx->pc = 0x2C32D8u;
 label_2c32d8:
     // 0x2c32d8: 0xa2000014  sb          $zero, 0x14($s0)
     ctx->pc = 0x2c32d8u;

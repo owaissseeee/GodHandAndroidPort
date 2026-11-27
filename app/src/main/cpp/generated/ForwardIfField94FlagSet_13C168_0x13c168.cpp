@@ -13,7 +13,7 @@
 
 // Function: ForwardIfField94FlagSet_13C168
 // Address: 0x13c168 - 0x13c198
-void ForwardIfField94FlagSet_13C168_0x13c168(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardIfField94FlagSet_13C168_0x13c168(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardIfField94FlagSet_13C168_0x13c168");
 #endif
@@ -59,7 +59,6 @@ void ForwardIfField94FlagSet_13C168_0x13c168(uint8_t* rdram, R5900Context* ctx, 
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_trans_0x2aac28, 0x2aac28u, 0x13c18cu)) {
         return;
     }
-    ctx->pc = 0x13C18Cu;
 label_13c18c:
     // 0x13c18c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x13c18cu;

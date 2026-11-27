@@ -13,7 +13,7 @@
 
 // Function: Forward327D00_349AA0
 // Address: 0x349aa0 - 0x349ab8
-void Forward327D00_349AA0_0x349aa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Forward327D00_349AA0_0x349aa0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Forward327D00_349AA0_0x349aa0");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: func_00334A90
 // Address: 0x334a90 - 0x334ac8
-void func_00334A90_0x334a90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00334A90_0x334a90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00334A90_0x334a90");
 #endif
@@ -58,7 +58,6 @@ void func_00334A90_0x334a90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_00334008_0x334008, 0x334008u, 0x334aacu)) {
         return;
     }
-    ctx->pc = 0x334AACu;
 label_334aac:
     // 0x334aac: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x334AACu;
@@ -76,7 +75,6 @@ label_334aac:
         }
     }
     // 0x334ab4: 0x0  nop
-    ctx->pc = 0x334ab4u;
     // NOP
 label_334ab8:
     // 0x334ab8: 0x80420002  lb          $v0, 0x2($v0)

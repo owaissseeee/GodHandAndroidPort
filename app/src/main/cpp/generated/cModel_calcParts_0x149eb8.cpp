@@ -13,7 +13,7 @@
 
 // Function: cModel_calcParts
 // Address: 0x149eb8 - 0x14a038
-void cModel_calcParts_0x149eb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cModel_calcParts_0x149eb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cModel_calcParts_0x149eb8");
 #endif
@@ -96,7 +96,6 @@ void cModel_calcParts_0x149eb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitCoord_0x147a48, 0x147a48u, 0x149f04u)) {
         return;
     }
-    ctx->pc = 0x149F04u;
 label_149f04:
     // 0x149f04: 0x26220120  addiu       $v0, $s1, 0x120
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 17), 288));
@@ -180,7 +179,6 @@ label_149f2c:
             goto label_149f64;
         }
     }
-    ctx->pc = 0x149F54u;
 label_149f54:
     // 0x149f54: 0x3c02ffff  lui         $v0, 0xFFFF
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)65535 << 16));
@@ -217,7 +215,6 @@ label_149f64:
     // 0x149f78: 0x3c130010  lui         $s3, 0x10
     SET_GPR_S32(ctx, 19, (int32_t)((uint32_t)16 << 16));
     // 0x149f7c: 0x0  nop
-    ctx->pc = 0x149f7cu;
     // NOP
 label_149f80:
     // 0x149f80: 0xc07df68  jal         func_1F7DA0
@@ -231,7 +228,6 @@ label_149f80:
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_vec_0x1f7da0, 0x1f7da0u, 0x149f88u)) {
         return;
     }
-    ctx->pc = 0x149F88u;
 label_149f88:
     // 0x149f88: 0x8e020154  lw          $v0, 0x154($s0)
     ctx->pc = 0x149f88u;
@@ -266,7 +262,6 @@ label_149f88:
     if (!runtime->callDirectStatic(rdram, ctx, &cParts_calcLocal_0x150138, 0x150138u, 0x149fa4u)) {
         return;
     }
-    ctx->pc = 0x149FA4u;
 label_149fa4:
     // 0x149fa4: 0xc62c027c  lwc1        $f12, 0x27C($s1)
     ctx->pc = 0x149fa4u;
@@ -343,7 +338,6 @@ label_149fa8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00156D70_0x156d70, 0x156d70u, 0x149fe4u)) {
         return;
     }
-    ctx->pc = 0x149FE4u;
 label_149fe4:
     // 0x149fe4: 0x8e020154  lw          $v0, 0x154($s0)
     ctx->pc = 0x149fe4u;
@@ -382,7 +376,6 @@ label_149fe8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001501D0_0x1501d0, 0x1501d0u, 0x14a004u)) {
         return;
     }
-    ctx->pc = 0x14A004u;
 label_14a004:
     // 0x14a004: 0x922202b4  lbu         $v0, 0x2B4($s1)
     ctx->pc = 0x14a004u;
@@ -410,7 +403,6 @@ label_14a008:
             goto label_149f80;
         }
     }
-    ctx->pc = 0x14A018u;
 label_14a018:
     // 0x14a018: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x14a018u;

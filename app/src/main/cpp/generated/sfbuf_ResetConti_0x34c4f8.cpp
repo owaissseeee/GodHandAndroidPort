@@ -13,7 +13,7 @@
 
 // Function: sfbuf_ResetConti
 // Address: 0x34c4f8 - 0x34c588
-void sfbuf_ResetConti_0x34c4f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfbuf_ResetConti_0x34c4f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfbuf_ResetConti_0x34c4f8");
 #endif
@@ -55,7 +55,6 @@ void sfbuf_ResetConti_0x34c4f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &sfbuf_PeekChunk_0x34c588, 0x34c588u, 0x34c520u)) {
         return;
     }
-    ctx->pc = 0x34C520u;
 label_34c520:
     // 0x34c520: 0x8e030000  lw          $v1, 0x0($s0)
     ctx->pc = 0x34c520u;

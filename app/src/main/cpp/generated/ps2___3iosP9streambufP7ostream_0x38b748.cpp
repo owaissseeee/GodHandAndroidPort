@@ -13,7 +13,7 @@
 
 // Function: __3iosP9streambufP7ostream
 // Address: 0x38b748 - 0x38b7a8
-void ps2___3iosP9streambufP7ostream_0x38b748(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___3iosP9streambufP7ostream_0x38b748(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___3iosP9streambufP7ostream_0x38b748");
 #endif
@@ -59,7 +59,6 @@ void ps2___3iosP9streambufP7ostream_0x38b748(uint8_t* rdram, R5900Context* ctx, 
             goto label_38b770;
         }
     }
-    ctx->pc = 0x38B76Cu;
 label_38b76c:
     // 0x38b76c: 0xa0e0001a  sb          $zero, 0x1A($a3)
     ctx->pc = 0x38b76cu;

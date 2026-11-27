@@ -13,7 +13,7 @@
 
 // Function: sfmps_IsEndOfRingBuf
 // Address: 0x34e928 - 0x34e988
-void sfmps_IsEndOfRingBuf_0x34e928(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfmps_IsEndOfRingBuf_0x34e928(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfmps_IsEndOfRingBuf_0x34e928");
 #endif
@@ -45,7 +45,6 @@ void sfmps_IsEndOfRingBuf_0x34e928(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034E988_0x34e988, 0x34e988u, 0x34e93cu)) {
         return;
     }
-    ctx->pc = 0x34E93Cu;
 label_34e93c:
     // 0x34e93c: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -115,7 +114,6 @@ label_34e968:
     // 0x34e970: 0x2021026  xor         $v0, $s0, $v0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 16) ^ GPR_U64(ctx, 2));
     // 0x34e974: 0x2c420001  sltiu       $v0, $v0, 0x1
-    ctx->pc = 0x34e974u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1) ? 1 : 0);
 label_34e978:
     // 0x34e978: 0xdfb00000  ld          $s0, 0x0($sp)

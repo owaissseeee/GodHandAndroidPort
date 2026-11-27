@@ -13,7 +13,7 @@
 
 // Function: cSnd_BgmFlaggedNodeKick
 // Address: 0x2d14f8 - 0x2d1578
-void cSnd_BgmFlaggedNodeKick_0x2d14f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BgmFlaggedNodeKick_0x2d14f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BgmFlaggedNodeKick_0x2d14f8");
 #endif
@@ -120,7 +120,6 @@ label_2d1528:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_SetFlagsFade_0x2cd548, 0x2cd548u, 0x2d1550u)) {
         return;
     }
-    ctx->pc = 0x2D1550u;
 label_2d1550:
     // 0x2d1550: 0x8e100088  lw          $s0, 0x88($s0)
     ctx->pc = 0x2d1550u;
@@ -144,7 +143,6 @@ label_2d1554:
             goto label_2d1528;
         }
     }
-    ctx->pc = 0x2D155Cu;
 label_2d155c:
     // 0x2d155c: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x2d155cu;

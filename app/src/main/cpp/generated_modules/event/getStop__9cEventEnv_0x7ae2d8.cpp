@@ -14,12 +14,11 @@ namespace gh_event
 {
 // Function: getStop__9cEventEnv
 // Address: 0x7ae2d8 - 0x7ae2e8
-void getStop__9cEventEnv_0x7ae2d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getStop__9cEventEnv_0x7ae2d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getStop__9cEventEnv_0x7ae2d8");
 #endif
 
-    ctx->pc = 0x7ae2d8u;
 
     // 0x7ae2d8: 0x90820029  lbu         $v0, 0x29($a0)
     ctx->pc = 0x7ae2d8u;
@@ -43,9 +42,7 @@ void getStop__9cEventEnv_0x7ae2d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         return;
         #endif
     }
-    ctx->pc = 0x7AE2E4u;
     // 0x7ae2e4: 0x0  nop
-    ctx->pc = 0x7ae2e4u;
     // NOP
     ctx->pc = 0x7ae2e8u;
 }

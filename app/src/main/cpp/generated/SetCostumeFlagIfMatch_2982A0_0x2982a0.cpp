@@ -13,7 +13,7 @@
 
 // Function: SetCostumeFlagIfMatch_2982A0
 // Address: 0x2982a0 - 0x298310
-void SetCostumeFlagIfMatch_2982A0_0x2982a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetCostumeFlagIfMatch_2982A0_0x2982a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetCostumeFlagIfMatch_2982A0_0x2982a0");
 #endif
@@ -67,7 +67,6 @@ void SetCostumeFlagIfMatch_2982A0_0x2982a0(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1FC0A8u, 0x2982C0u, 0x2982C8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2982C8u;
 label_2982c8:
     // 0x2982c8: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));

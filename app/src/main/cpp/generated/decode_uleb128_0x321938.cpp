@@ -13,7 +13,7 @@
 
 // Function: decode_uleb128
 // Address: 0x321938 - 0x321980
-void decode_uleb128_0x321938(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void decode_uleb128_0x321938(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("decode_uleb128_0x321938");
 #endif
@@ -50,7 +50,6 @@ void decode_uleb128_0x321938(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_321970;
         }
     }
-    ctx->pc = 0x321950u;
 label_321950:
     // 0x321950: 0x90830000  lbu         $v1, 0x0($a0)
     ctx->pc = 0x321950u;
@@ -83,7 +82,6 @@ label_321950:
             goto label_321950;
         }
     }
-    ctx->pc = 0x321970u;
 label_321970:
     // 0x321970: 0xaca60000  sw          $a2, 0x0($a1)
     ctx->pc = 0x321970u;

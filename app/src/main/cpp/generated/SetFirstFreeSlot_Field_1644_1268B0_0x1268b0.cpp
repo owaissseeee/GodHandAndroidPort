@@ -13,7 +13,7 @@
 
 // Function: SetFirstFreeSlot_Field_1644_1268B0
 // Address: 0x1268b0 - 0x1268f0
-void SetFirstFreeSlot_Field_1644_1268B0_0x1268b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetFirstFreeSlot_Field_1644_1268B0_0x1268b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetFirstFreeSlot_Field_1644_1268B0_0x1268b0");
 #endif
@@ -33,7 +33,6 @@ void SetFirstFreeSlot_Field_1644_1268B0_0x1268b0(uint8_t* rdram, R5900Context* c
     // 0x1268b8: 0x24831644  addiu       $v1, $a0, 0x1644
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), 5700));
     // 0x1268bc: 0x0  nop
-    ctx->pc = 0x1268bcu;
     // NOP
 label_1268c0:
     // 0x1268c0: 0x8c620000  lw          $v0, 0x0($v1)
@@ -76,7 +75,6 @@ label_1268c0:
         return;
         #endif
     }
-    ctx->pc = 0x1268D8u;
 label_1268d8:
     // 0x1268d8: 0x2cc20005  sltiu       $v0, $a2, 0x5
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 6) < (uint64_t)(int64_t)(int32_t)5) ? 1 : 0);

@@ -13,7 +13,7 @@
 
 // Function: WaitDma
 // Address: 0x397028 - 0x3970a0
-void WaitDma_0x397028(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void WaitDma_0x397028(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("WaitDma_0x397028");
 #endif
@@ -67,7 +67,6 @@ void WaitDma_0x397028(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
         }
     }
     // 0x397054: 0x2631ffff  addiu       $s1, $s1, -0x1
-    ctx->pc = 0x397054u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 4294967295));
 label_397058:
     // 0x397058: 0x6210005  bgez        $s1, . + 4 + (0x5 << 2)
@@ -90,7 +89,6 @@ label_397058:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B1F28u, 0x397060u, 0x397068u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x397068u;
 label_397068:
     // 0x397068: 0xc0e5d64  jal         func_397590
     SET_GPR_U32(ctx, 31, 0x397070u);
@@ -103,7 +101,6 @@ label_397068:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x397590u, 0x397068u, 0x397070u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x397070u;
 label_397070:
     // 0x397070: 0x8e020000  lw          $v0, 0x0($s0)
     ctx->pc = 0x397070u;
@@ -128,7 +125,6 @@ label_397070:
             goto label_397058;
         }
     }
-    ctx->pc = 0x397080u;
 label_397080:
     // 0x397080: 0xdfbf0030  ld          $ra, 0x30($sp)
     ctx->pc = 0x397080u;

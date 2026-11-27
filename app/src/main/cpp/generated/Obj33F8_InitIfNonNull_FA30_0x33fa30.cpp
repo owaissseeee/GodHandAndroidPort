@@ -13,7 +13,7 @@
 
 // Function: Obj33F8_InitIfNonNull_FA30
 // Address: 0x33fa30 - 0x33fa68
-void Obj33F8_InitIfNonNull_FA30_0x33fa30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj33F8_InitIfNonNull_FA30_0x33fa30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj33F8_InitIfNonNull_FA30_0x33fa30");
 #endif
@@ -58,7 +58,6 @@ void Obj33F8_InitIfNonNull_FA30_0x33fa30(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3A52F0u, 0x33FA50u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x33FA58u;
 label_33fa58:
     // 0x33fa58: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x33fa58u;

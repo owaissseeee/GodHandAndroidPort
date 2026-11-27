@@ -13,7 +13,7 @@
 
 // Function: Adjust_theta_vec
 // Address: 0x1f7da0 - 0x1f7df8
-void Adjust_theta_vec_0x1f7da0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Adjust_theta_vec_0x1f7da0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Adjust_theta_vec_0x1f7da0");
 #endif

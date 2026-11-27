@@ -13,7 +13,7 @@
 
 // Function: mwsfcre_CalcFrmRes
 // Address: 0x342cb0 - 0x342d00
-void mwsfcre_CalcFrmRes_0x342cb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void mwsfcre_CalcFrmRes_0x342cb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("mwsfcre_CalcFrmRes_0x342cb0");
 #endif

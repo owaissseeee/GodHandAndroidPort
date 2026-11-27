@@ -13,7 +13,7 @@
 
 // Function: DeleteThread
 // Address: 0x3afab0 - 0x3afac0
-void DeleteThread_0x3afab0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void DeleteThread_0x3afab0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("DeleteThread_0x3afab0");
 #endif

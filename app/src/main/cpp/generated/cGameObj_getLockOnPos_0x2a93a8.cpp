@@ -13,7 +13,7 @@
 
 // Function: cGameObj_getLockOnPos
 // Address: 0x2a93a8 - 0x2a93d0
-void cGameObj_getLockOnPos_0x2a93a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObj_getLockOnPos_0x2a93a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObj_getLockOnPos_0x2a93a8");
 #endif
@@ -34,11 +34,9 @@ void cGameObj_getLockOnPos_0x2a93a8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         }
     }
 
-    ctx->pc = 0x2a93a8u;
 
 label_2a93a8:
     // 0x2a93a8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2a93a8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_2a93ac:
     // 0x2a93ac: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -84,7 +82,6 @@ label_2a93c0:
             return;
         }
     }
-    ctx->pc = 0x2A93C4u;
 label_2a93c4:
     // 0x2a93c4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2a93c4u;

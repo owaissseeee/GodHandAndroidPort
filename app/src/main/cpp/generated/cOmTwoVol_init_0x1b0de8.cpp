@@ -13,7 +13,7 @@
 
 // Function: cOmTwoVol_init
 // Address: 0x1b0de8 - 0x1b0f70
-void cOmTwoVol_init_0x1b0de8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmTwoVol_init_0x1b0de8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmTwoVol_init_0x1b0de8");
 #endif
@@ -59,7 +59,6 @@ void cOmTwoVol_init_0x1b0de8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B6FB8_0x1b6fb8, 0x1b6fb8u, 0x1b0e08u)) {
         return;
     }
-    ctx->pc = 0x1B0E08u;
 label_1b0e08:
     // 0x1b0e08: 0x200902d  daddu       $s2, $s0, $zero
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -90,7 +89,6 @@ label_1b0e08:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_CreateDamageGive_0x1fe0e8, 0x1fe0e8u, 0x1b0e30u)) {
         return;
     }
-    ctx->pc = 0x1B0E30u;
 label_1b0e30:
     // 0x1b0e30: 0x922302b4  lbu         $v1, 0x2B4($s1)
     ctx->pc = 0x1b0e30u;
@@ -131,10 +129,8 @@ label_1b0e30:
             goto label_1b0e50;
         }
     }
-    ctx->pc = 0x1B0E4Cu;
 label_1b0e4c:
     // 0x1b0e4c: 0x282d  daddu       $a1, $zero, $zero
-    ctx->pc = 0x1b0e4cu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1b0e50:
     // 0x1b0e50: 0xafa00010  sw          $zero, 0x10($sp)
@@ -174,7 +170,6 @@ label_1b0e50:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_AddDamageCollSphere_0x1fdaf0, 0x1fdaf0u, 0x1b0e84u)) {
         return;
     }
-    ctx->pc = 0x1B0E84u;
 label_1b0e84:
     // 0x1b0e84: 0x8e24066c  lw          $a0, 0x66C($s1)
     ctx->pc = 0x1b0e84u;
@@ -192,7 +187,6 @@ label_1b0e84:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x1b0e94u)) {
         return;
     }
-    ctx->pc = 0x1B0E94u;
 label_1b0e94:
     // 0x1b0e94: 0x26444380  addiu       $a0, $s2, 0x4380
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 18), 17280));
@@ -209,7 +203,6 @@ label_1b0e94:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_CreateDamageGive_0x1fe0e8, 0x1fe0e8u, 0x1b0ea4u)) {
         return;
     }
-    ctx->pc = 0x1B0EA4u;
 label_1b0ea4:
     // 0x1b0ea4: 0x922302b4  lbu         $v1, 0x2B4($s1)
     ctx->pc = 0x1b0ea4u;
@@ -250,10 +243,8 @@ label_1b0ea4:
             goto label_1b0ec4;
         }
     }
-    ctx->pc = 0x1B0EC0u;
 label_1b0ec0:
     // 0x1b0ec0: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1b0ec0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1b0ec4:
     // 0x1b0ec4: 0x3c013f80  lui         $at, 0x3F80
@@ -291,7 +282,6 @@ label_1b0ec4:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_AddDamageCollSphere_0x1fdaf0, 0x1fdaf0u, 0x1b0ef4u)) {
         return;
     }
-    ctx->pc = 0x1B0EF4u;
 label_1b0ef4:
     // 0x1b0ef4: 0x8e240670  lw          $a0, 0x670($s1)
     ctx->pc = 0x1b0ef4u;
@@ -309,7 +299,6 @@ label_1b0ef4:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x1b0f04u)) {
         return;
     }
-    ctx->pc = 0x1B0F04u;
 label_1b0f04:
     // 0x1b0f04: 0x962302fe  lhu         $v1, 0x2FE($s1)
     ctx->pc = 0x1b0f04u;

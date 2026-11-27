@@ -13,7 +13,7 @@
 
 // Function: func_001CCA08
 // Address: 0x1cca08 - 0x1ccde0
-void func_001CCA08_0x1cca08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001CCA08_0x1cca08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001CCA08_0x1cca08");
 #endif
@@ -67,7 +67,6 @@ void func_001CCA08_0x1cca08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_GetSpeedRate_0x292f50, 0x292f50u, 0x1cca30u)) {
         return;
     }
-    ctx->pc = 0x1CCA30u;
 label_1cca30:
     // 0x1cca30: 0x46000506  mov.s       $f20, $f0
     ctx->f[20] = FPU_MOV_S(ctx->f[0]);
@@ -145,7 +144,6 @@ label_1cca30:
             goto label_1ccdc8;
         }
     }
-    ctx->pc = 0x1CCA68u;
 label_1cca68:
     // 0x1cca68: 0x1062004c  beq         $v1, $v0, . + 4 + (0x4C << 2)
     ctx->pc = 0x1CCA68u;
@@ -186,7 +184,6 @@ label_1cca68:
             goto label_1ccdc4;
         }
     }
-    ctx->pc = 0x1CCA80u;
 label_1cca80:
     // 0x1cca80: 0x922202f6  lbu         $v0, 0x2F6($s1)
     ctx->pc = 0x1cca80u;
@@ -339,7 +336,6 @@ label_1ccab0:
             goto label_1ccb70;
         }
     }
-    ctx->pc = 0x1CCB38u;
 label_1ccb38:
     // 0x1ccb38: 0x3c013b03  lui         $at, 0x3B03
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15107 << 16));
@@ -420,7 +416,6 @@ label_1ccb74:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmWeapon_SetBreak_0x1d0818, 0x1d0818u, 0x1ccb94u)) {
         return;
     }
-    ctx->pc = 0x1CCB94u;
 label_1ccb94:
     // 0x1ccb94: 0x1000008b  b           . + 4 + (0x8B << 2)
     ctx->pc = 0x1CCB94u;
@@ -437,7 +432,6 @@ label_1ccb94:
             goto label_1ccdc4;
         }
     }
-    ctx->pc = 0x1CCB9Cu;
 label_1ccb9c:
     // 0x1ccb9c: 0x52400028  beql        $s2, $zero, . + 4 + (0x28 << 2)
     ctx->pc = 0x1CCB9Cu;
@@ -515,7 +509,6 @@ label_1ccb9c:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Atan2_0x1f8180, 0x1f8180u, 0x1ccbf4u)) {
         return;
     }
-    ctx->pc = 0x1CCBF4u;
 label_1ccbf4:
     // 0x1ccbf4: 0xc7a20060  lwc1        $f2, 0x60($sp)
     ctx->pc = 0x1ccbf4u;
@@ -569,7 +562,6 @@ label_1ccbf4:
     if (!runtime->callDirectStatic(rdram, ctx, &sqrtf_0x3a2440, 0x3a2440u, 0x1ccc38u)) {
         return;
     }
-    ctx->pc = 0x1CCC38u;
 label_1ccc38:
     // 0x1ccc38: 0xe62006a8  swc1        $f0, 0x6A8($s1)
     ctx->pc = 0x1ccc38u;
@@ -616,7 +608,6 @@ label_1ccc6c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00294A88_0x294a88, 0x294a88u, 0x1ccc74u)) {
         return;
     }
-    ctx->pc = 0x1CCC74u;
 label_1ccc74:
     // 0x1ccc74: 0xc62c0694  lwc1        $f12, 0x694($s1)
     ctx->pc = 0x1ccc74u;
@@ -632,7 +623,6 @@ label_1ccc74:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitRotY_0x147988, 0x147988u, 0x1ccc80u)) {
         return;
     }
-    ctx->pc = 0x1CCC80u;
 label_1ccc80:
     // 0x1ccc80: 0x12400005  beqz        $s2, . + 4 + (0x5 << 2)
     ctx->pc = 0x1CCC80u;
@@ -663,10 +653,8 @@ label_1ccc80:
     if (!runtime->callDirectStatic(rdram, ctx, &CopyVec3ToField30_147C40_0x147c40, 0x147c40u, 0x1ccc94u)) {
         return;
     }
-    ctx->pc = 0x1CCC94u;
 label_1ccc94:
     // 0x1ccc94: 0x27b00070  addiu       $s0, $sp, 0x70
-    ctx->pc = 0x1ccc94u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 29), 112));
 label_1ccc98:
     // 0x1ccc98: 0x262206a0  addiu       $v0, $s1, 0x6A0
@@ -692,7 +680,6 @@ label_1ccc98:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x1cccb4u)) {
         return;
     }
-    ctx->pc = 0x1CCCB4u;
 label_1cccb4:
     // 0x1cccb4: 0xda040000  lqc2        $vf4, 0x0($s0)
     ctx->pc = 0x1cccb4u;
@@ -741,7 +728,6 @@ label_1cccb4:
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_0x1f7d48, 0x1f7d48u, 0x1cccf0u)) {
         return;
     }
-    ctx->pc = 0x1CCCF0u;
 label_1cccf0:
     // 0x1cccf0: 0xc6210678  lwc1        $f1, 0x678($s1)
     ctx->pc = 0x1cccf0u;
@@ -899,7 +885,6 @@ label_1ccd28:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmWeapon_SetBreak_0x1d0818, 0x1d0818u, 0x1ccdc0u)) {
         return;
     }
-    ctx->pc = 0x1CCDC0u;
 label_1ccdc0:
     // 0x1ccdc0: 0x7bb000c0  lq          $s0, 0xC0($sp)
     ctx->pc = 0x1ccdc0u;

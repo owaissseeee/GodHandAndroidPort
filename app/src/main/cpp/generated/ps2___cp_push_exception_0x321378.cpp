@@ -13,7 +13,7 @@
 
 // Function: __cp_push_exception
 // Address: 0x321378 - 0x321408
-void ps2___cp_push_exception_0x321378(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___cp_push_exception_0x321378(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___cp_push_exception_0x321378");
 #endif
@@ -61,7 +61,6 @@ void ps2___cp_push_exception_0x321378(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___eh_alloc_0x3212c0, 0x3212c0u, 0x3213a4u)) {
         return;
     }
-    ctx->pc = 0x3213A4u;
 label_3213a4:
     // 0x3213a4: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -108,7 +107,6 @@ label_3213a4:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___get_eh_info_0x320360, 0x320360u, 0x3213e0u)) {
         return;
     }
-    ctx->pc = 0x3213E0u;
 label_3213e0:
     // 0x3213e0: 0x8c430000  lw          $v1, 0x0($v0)
     ctx->pc = 0x3213e0u;

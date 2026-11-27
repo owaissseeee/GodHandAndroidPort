@@ -13,7 +13,7 @@
 
 // Function: cScenario_setCam
 // Address: 0x2c3ed8 - 0x2c3f10
-void cScenario_setCam_0x2c3ed8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_setCam_0x2c3ed8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_setCam_0x2c3ed8");
 #endif
@@ -48,7 +48,6 @@ void cScenario_setCam_0x2c3ed8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &SearchCameraData_0x31ce38, 0x31ce38u, 0x2c3ef0u)) {
         return;
     }
-    ctx->pc = 0x2C3EF0u;
 label_2c3ef0:
     // 0x2c3ef0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -63,7 +62,6 @@ label_2c3ef0:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_startCamMotion_0x2c3f10, 0x2c3f10u, 0x2c3efcu)) {
         return;
     }
-    ctx->pc = 0x2C3EFCu;
 label_2c3efc:
     // 0x2c3efc: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2c3efcu;

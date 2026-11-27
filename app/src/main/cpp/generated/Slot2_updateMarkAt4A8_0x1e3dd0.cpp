@@ -13,7 +13,7 @@
 
 // Function: Slot2_updateMarkAt4A8
 // Address: 0x1e3dd0 - 0x1e3e40
-void Slot2_updateMarkAt4A8_0x1e3dd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Slot2_updateMarkAt4A8_0x1e3dd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Slot2_updateMarkAt4A8_0x1e3dd0");
 #endif
@@ -110,7 +110,6 @@ void Slot2_updateMarkAt4A8_0x1e3dd0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e3e20u)) {
         return;
     }
-    ctx->pc = 0x1E3E20u;
 label_1e3e20:
     // 0x1e3e20: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x1E3E20u;
@@ -127,7 +126,6 @@ label_1e3e20:
             goto label_1e3e38;
         }
     }
-    ctx->pc = 0x1E3E28u;
 label_1e3e28:
     // 0x1e3e28: 0x8c840430  lw          $a0, 0x430($a0)
     ctx->pc = 0x1e3e28u;
@@ -143,7 +141,6 @@ label_1e3e28:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e3e34u)) {
         return;
     }
-    ctx->pc = 0x1E3E34u;
 label_1e3e34:
     // 0x1e3e34: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1e3e34u;

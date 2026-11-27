@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_clearPaper
 // Address: 0x1fc138 - 0x1fc150
-void cCoreSave_clearPaper_0x1fc138(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_clearPaper_0x1fc138(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_clearPaper_0x1fc138");
 #endif
@@ -37,7 +37,6 @@ void cCoreSave_clearPaper_0x1fc138(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_1fc144;
         }
     }
-    ctx->pc = 0x1FC144u;
 label_1fc144:
     // 0x1fc144: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC144u;

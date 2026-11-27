@@ -13,7 +13,7 @@
 
 // Function: old_find_exception_handler
 // Address: 0x320728 - 0x320800
-void old_find_exception_handler_0x320728(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void old_find_exception_handler_0x320728(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("old_find_exception_handler_0x320728");
 #endif
@@ -76,7 +76,6 @@ void old_find_exception_handler_0x320728(uint8_t* rdram, R5900Context* ctx, PS2R
     // 0x320758: 0x1a0302d  daddu       $a2, $t5, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 13) + (uint64_t)GPR_U64(ctx, 0));
     // 0x32075c: 0x0  nop
-    ctx->pc = 0x32075cu;
     // NOP
 label_320760:
     // 0x320760: 0x8cc70000  lw          $a3, 0x0($a2)
@@ -164,7 +163,6 @@ label_320760:
             goto label_3207d0;
         }
     }
-    ctx->pc = 0x3207ACu;
 label_3207ac:
     // 0x3207ac: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x3207ACu;
@@ -181,7 +179,6 @@ label_3207ac:
             goto label_3207cc;
         }
     }
-    ctx->pc = 0x3207B4u;
 label_3207b4:
     // 0x3207b4: 0x5020006  bltzl       $t0, . + 4 + (0x6 << 2)
     ctx->pc = 0x3207B4u;
@@ -218,10 +215,8 @@ label_3207b4:
             goto label_3207e0;
         }
     }
-    ctx->pc = 0x3207CCu;
 label_3207cc:
     // 0x3207cc: 0x24c6000c  addiu       $a2, $a2, 0xC
-    ctx->pc = 0x3207ccu;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 6), 12));
 label_3207d0:
     // 0x3207d0: 0x8cc20000  lw          $v0, 0x0($a2)
@@ -245,10 +240,8 @@ label_3207d0:
             goto label_320760;
         }
     }
-    ctx->pc = 0x3207DCu;
 label_3207dc:
     // 0x3207dc: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x3207dcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_3207e0:
     // 0x3207e0: 0x11020005  beq         $t0, $v0, . + 4 + (0x5 << 2)
@@ -289,7 +282,6 @@ label_3207e0:
         return;
         #endif
     }
-    ctx->pc = 0x3207F8u;
 label_3207f8:
     // 0x3207f8: 0x3e00008  jr          $ra
     ctx->pc = 0x3207F8u;

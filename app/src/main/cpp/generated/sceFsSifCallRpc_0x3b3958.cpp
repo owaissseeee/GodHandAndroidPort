@@ -13,7 +13,7 @@
 
 // Function: sceFsSifCallRpc
 // Address: 0x3b3958 - 0x3b3a48
-void sceFsSifCallRpc_0x3b3958(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceFsSifCallRpc_0x3b3958(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceFsSifCallRpc_0x3b3958");
 #endif
@@ -116,7 +116,6 @@ label_3b39b0:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B3128u, 0x3B39D0u, 0x3B39D8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3B39D8u;
 label_3b39d8:
     // 0x3b39d8: 0x287c2  srl         $s0, $v0, 31
     SET_GPR_S32(ctx, 16, (int32_t)SRL32(GPR_U32(ctx, 2), 31));
@@ -161,7 +160,6 @@ label_3b39d8:
     if (!runtime->callDirectStatic(rdram, ctx, &DelayThread_0x3b0ae0, 0x3b0ae0u, 0x3b39f4u)) {
         return;
     }
-    ctx->pc = 0x3B39F4u;
 label_3b39f4:
     // 0x3b39f4: 0x2a23007f  slti        $v1, $s1, 0x7F
     SET_GPR_U64(ctx, 3, ((int64_t)GPR_S64(ctx, 17) < (int64_t)(int32_t)127) ? 1 : 0);
@@ -180,7 +178,6 @@ label_3b39f4:
             goto label_3b3a00;
         }
     }
-    ctx->pc = 0x3B3A00u;
 label_3b3a00:
     // 0x3b3a00: 0x26520001  addiu       $s2, $s2, 0x1
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), 1));
@@ -204,7 +201,6 @@ label_3b3a00:
             goto label_3b39b0;
         }
     }
-    ctx->pc = 0x3B3A10u;
 label_3b3a10:
     // 0x3b3a10: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

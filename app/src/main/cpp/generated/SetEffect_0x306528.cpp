@@ -13,7 +13,7 @@
 
 // Function: SetEffect
 // Address: 0x306528 - 0x3066d0
-void SetEffect_0x306528(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetEffect_0x306528(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetEffect_0x306528");
 #endif
@@ -117,7 +117,6 @@ void SetEffect_0x306528(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
             goto label_306590;
         }
     }
-    ctx->pc = 0x306588u;
 label_306588:
     // 0x306588: 0x10000048  b           . + 4 + (0x48 << 2)
     ctx->pc = 0x306588u;
@@ -134,7 +133,6 @@ label_306588:
             goto label_3066ac;
         }
     }
-    ctx->pc = 0x306590u;
 label_306590:
     // 0x306590: 0x3c040074  lui         $a0, 0x74
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)116 << 16));
@@ -156,7 +154,6 @@ label_306590:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00306030_0x306030, 0x306030u, 0x3065a8u)) {
         return;
     }
-    ctx->pc = 0x3065A8u;
 label_3065a8:
     // 0x3065a8: 0x40302d  daddu       $a2, $v0, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -188,7 +185,6 @@ label_3065a8:
     if (!runtime->callDirectStatic(rdram, ctx, &getEffTypeString_0x3053c0, 0x3053c0u, 0x3065c0u)) {
         return;
     }
-    ctx->pc = 0x3065C0u;
 label_3065c0:
     // 0x3065c0: 0x1000003a  b           . + 4 + (0x3A << 2)
     ctx->pc = 0x3065C0u;
@@ -205,7 +201,6 @@ label_3065c0:
             goto label_3066ac;
         }
     }
-    ctx->pc = 0x3065C8u;
 label_3065c8:
     // 0x3065c8: 0x3c020054  lui         $v0, 0x54
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)84 << 16));
@@ -244,7 +239,6 @@ label_3065c8:
             goto label_3066ac;
         }
     }
-    ctx->pc = 0x3065E4u;
 label_3065e4:
     // 0x3065e4: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -404,7 +398,6 @@ label_30668c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003066D0_0x3066d0, 0x3066d0u, 0x3066acu)) {
         return;
     }
-    ctx->pc = 0x3066ACu;
 label_3066ac:
     // 0x3066ac: 0x7bb000f0  lq          $s0, 0xF0($sp)
     ctx->pc = 0x3066acu;

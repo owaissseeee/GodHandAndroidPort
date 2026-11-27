@@ -6,6 +6,7 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,7 +14,7 @@
 
 // Function: memcmp
 // Address: 0x3a50b4 - 0x3a5148
-void memcmp_0x3a50b4(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void memcmp_0x3a50b4(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("memcmp_0x3a50b4");
 #endif
@@ -25,6 +26,25 @@ void memcmp_0x3a50b4(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             default: break;
         }
     }
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    if (__builtin_expect(ctx->pc == 0x3a50b4u, 1)) {
+        const uint32_t n = GPR_U32(ctx, 6);
+        if (n == 0u) {
+            SET_GPR_S32(ctx, 2, 0);
+            ps2FastReturn(rdram, ctx, runtime, 0x3A5140u);
+            return;
+        }
+        const uint8_t* const p1 = ps2TryFastSpan(rdram, GPR_U32(ctx, 4), n);
+        const uint8_t* const p2 = ps2TryFastSpan(rdram, GPR_U32(ctx, 5), n);
+        if (__builtin_expect(p1 != nullptr && p2 != nullptr, 1)) {
+            const int cmp = std::memcmp(p1, p2, n);
+            SET_GPR_S32(ctx, 2, cmp);
+            ps2FastReturn(rdram, ctx, runtime, 0x3A5140u);
+            return;
+        }
+    }
+#endif
 
 
     // 0x3a50b4: 0x2cc20010  sltiu       $v0, $a2, 0x10
@@ -55,7 +75,6 @@ void memcmp_0x3a50b4(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             goto label_3a5100;
         }
     }
-    ctx->pc = 0x3A50CCu;
 label_3a50cc:
     // 0x3a50cc: 0x78830000  lq          $v1, 0x0($a0)
     ctx->pc = 0x3a50ccu;
@@ -111,7 +130,6 @@ label_3a50cc:
             goto label_3a50cc;
         }
     }
-    ctx->pc = 0x3A5100u;
 label_3a5100:
     // 0x3a5100: 0x3c02ffff  lui         $v0, 0xFFFF
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)65535 << 16));
@@ -131,7 +149,6 @@ label_3a5100:
     // 0x3a5114: 0x3c07ffff  lui         $a3, 0xFFFF
     SET_GPR_S32(ctx, 7, (int32_t)((uint32_t)65535 << 16));
     // 0x3a5118: 0x34e7ffff  ori         $a3, $a3, 0xFFFF
-    ctx->pc = 0x3a5118u;
     SET_GPR_U64(ctx, 7, GPR_U64(ctx, 7) | (uint64_t)(uint16_t)65535);
 label_3a511c:
     // 0x3a511c: 0x90830000  lbu         $v1, 0x0($a0)
@@ -174,7 +191,6 @@ label_3a511c:
         return;
         #endif
     }
-    ctx->pc = 0x3A5134u;
 label_3a5134:
     // 0x3a5134: 0x24c6ffff  addiu       $a2, $a2, -0x1
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 6), 4294967295));
@@ -196,7 +212,6 @@ label_3a5134:
             goto label_3a511c;
         }
     }
-    ctx->pc = 0x3A5140u;
 label_3a5140:
     // 0x3a5140: 0x3e00008  jr          $ra
     ctx->pc = 0x3A5140u;

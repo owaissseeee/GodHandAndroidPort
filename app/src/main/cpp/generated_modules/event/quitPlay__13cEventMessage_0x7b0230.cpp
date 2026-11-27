@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
+#include <ps2_recompiled_functions.h>
 #include "event_functions.h"
 
 #include "ps2_syscalls.h"
@@ -14,23 +15,23 @@ namespace gh_event
 {
 // Function: quitPlay__13cEventMessage
 // Address: 0x7b0230 - 0x7b0260
-void quitPlay__13cEventMessage_0x7b0230(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void quitPlay__13cEventMessage_0x7b0230(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("quitPlay__13cEventMessage_0x7b0230");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7b0254u: goto label_7b0254;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7b0230u, 0)) {
+        switch (ctx->pc) {
+            case 0x7b0254u: goto label_7b0254;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7b0230u;
+
 
     // 0x7b0230: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7b0230u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x7b0234: 0x3403ffff  ori         $v1, $zero, 0xFFFF
-    ctx->pc = 0x7b0234u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     // 0x7b0238: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x7b0238u;
@@ -53,12 +54,10 @@ void quitPlay__13cEventMessage_0x7b0230(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_7b0254;
         }
     }
-    ctx->pc = 0x7B0248u;
     // 0x7b0248: 0x94850002  lhu         $a1, 0x2($a0)
     ctx->pc = 0x7b0248u;
     SET_GPR_ZE32(ctx, 5, (uint16_t)READ16(ADD32(GPR_U32(ctx, 4), 2)));
     // 0x7b024c: 0xc0abafe  jal         func_2AEBF8
-    ctx->pc = 0x7B024Cu;
     SET_GPR_U32(ctx, 31, 0x7B0254u);
     ctx->pc = 0x7B0250u;
     ctx->in_delay_slot = true;
@@ -67,10 +66,9 @@ void quitPlay__13cEventMessage_0x7b0230(uint8_t* rdram, R5900Context* ctx, PS2Ru
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 9124)));
     ctx->in_delay_slot = false;
     ctx->pc = 0x2AEBF8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2AEBF8u, 0x7B024Cu, 0x7B0254u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cMessage_deleteWorkId_0x2aebf8, 0x2AEBF8u, 0x7B0254u)) {
         return;
     }
-    ctx->pc = 0x7B0254u;
 label_7b0254:
     // 0x7b0254: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7b0254u;

@@ -13,7 +13,7 @@
 
 // Function: cEvent__isPlaying
 // Address: 0x297c20 - 0x297c50
-void cEvent__isPlaying_0x297c20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent__isPlaying_0x297c20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent__isPlaying_0x297c20");
 #endif
@@ -61,7 +61,6 @@ void cEvent__isPlaying_0x297c20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
         return;
         #endif
     }
-    ctx->pc = 0x297C48u;
 label_297c48:
     // 0x297c48: 0x3e00008  jr          $ra
     ctx->pc = 0x297C48u;

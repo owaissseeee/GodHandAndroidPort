@@ -13,7 +13,7 @@
 
 // Function: cOmb0_SetCollision
 // Address: 0x1b35d0 - 0x1b3628
-void cOmb0_SetCollision_0x1b35d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmb0_SetCollision_0x1b35d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmb0_SetCollision_0x1b35d0");
 #endif
@@ -76,7 +76,6 @@ void cOmb0_SetCollision_0x1b35d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &cCollisionSolidManage_CreateSphere_0x134880, 0x134880u, 0x1b361cu)) {
         return;
     }
-    ctx->pc = 0x1B361Cu;
 label_1b361c:
     // 0x1b361c: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x1b361cu;

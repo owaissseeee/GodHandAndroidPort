@@ -13,7 +13,7 @@
 
 // Function: snextc__9streambuf
 // Address: 0x38b920 - 0x38b9a0
-void snextc__9streambuf_0x38b920(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void snextc__9streambuf_0x38b920(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("snextc__9streambuf_0x38b920");
 #endif
@@ -71,7 +71,6 @@ void snextc__9streambuf_0x38b920(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___underflow_0x38c5b8, 0x38c5b8u, 0x38b94cu)) {
         return;
     }
-    ctx->pc = 0x38B94Cu;
 label_38b94c:
     // 0x38b94c: 0x2403ffff  addiu       $v1, $zero, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
@@ -105,13 +104,11 @@ label_38b94c:
             goto label_38b990;
         }
     }
-    ctx->pc = 0x38B960u;
 label_38b960:
     // 0x38b960: 0x8e030008  lw          $v1, 0x8($s0)
     ctx->pc = 0x38b960u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 8)));
     // 0x38b964: 0x24820001  addiu       $v0, $a0, 0x1
-    ctx->pc = 0x38b964u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 1));
 label_38b968:
     // 0x38b968: 0x43182b  sltu        $v1, $v0, $v1
@@ -142,7 +139,6 @@ label_38b968:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___underflow_0x38c5b8, 0x38c5b8u, 0x38b97cu)) {
         return;
     }
-    ctx->pc = 0x38B97Cu;
 label_38b97c:
     // 0x38b97c: 0x2403ffff  addiu       $v1, $zero, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
@@ -161,7 +157,6 @@ label_38b97c:
             goto label_38b990;
         }
     }
-    ctx->pc = 0x38B988u;
 label_38b988:
     // 0x38b988: 0x8e020004  lw          $v0, 0x4($s0)
     ctx->pc = 0x38b988u;

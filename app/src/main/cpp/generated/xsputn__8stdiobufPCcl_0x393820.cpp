@@ -13,7 +13,7 @@
 
 // Function: xsputn__8stdiobufPCcl
 // Address: 0x393820 - 0x393878
-void xsputn__8stdiobufPCcl_0x393820(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void xsputn__8stdiobufPCcl_0x393820(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("xsputn__8stdiobufPCcl_0x393820");
 #endif
@@ -62,7 +62,6 @@ void xsputn__8stdiobufPCcl_0x393820(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &xsputn__9streambufPCcl_0x38b108, 0x38b108u, 0x393848u)) {
         return;
     }
-    ctx->pc = 0x393848u;
 label_393848:
     // 0x393848: 0x10000009  b           . + 4 + (0x9 << 2)
     ctx->pc = 0x393848u;
@@ -79,7 +78,6 @@ label_393848:
             goto label_393870;
         }
     }
-    ctx->pc = 0x393850u;
 label_393850:
     // 0x393850: 0x6303c  dsll32      $a2, $a2, 0
     SET_GPR_U64(ctx, 6, GPR_U64(ctx, 6) << (32 + 0));
@@ -98,7 +96,6 @@ label_393850:
     if (!runtime->callDirectStatic(rdram, ctx, &fwrite_0x3a68c8, 0x3a68c8u, 0x393864u)) {
         return;
     }
-    ctx->pc = 0x393864u;
 label_393864:
     // 0x393864: 0x2103c  dsll32      $v0, $v0, 0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) << (32 + 0));

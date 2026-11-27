@@ -13,7 +13,7 @@
 
 // Function: cDvd_ReadToBuffer
 // Address: 0x200b88 - 0x200cb0
-void cDvd_ReadToBuffer_0x200b88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDvd_ReadToBuffer_0x200b88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDvd_ReadToBuffer_0x200b88");
 #endif
@@ -93,7 +93,6 @@ void cDvd_ReadToBuffer_0x200b88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     // 0x200bdc: 0x3442ffc0  ori         $v0, $v0, 0xFFC0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)65472);
     // 0x200be0: 0x628824  and         $s1, $v1, $v0
-    ctx->pc = 0x200be0u;
     SET_GPR_U64(ctx, 17, GPR_U64(ctx, 3) & GPR_U64(ctx, 2));
 label_200be4:
     // 0x200be4: 0xc0805ea  jal         func_2017A8
@@ -107,7 +106,6 @@ label_200be4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002017A8_0x2017a8, 0x2017a8u, 0x200becu)) {
         return;
     }
-    ctx->pc = 0x200BECu;
 label_200bec:
     // 0x200bec: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -143,7 +141,6 @@ label_200bec:
     if (!runtime->callDirectStatic(rdram, ctx, &FindEntryValue_1FF9C0_0x1ff9c0, 0x1ff9c0u, 0x200c0cu)) {
         return;
     }
-    ctx->pc = 0x200C0Cu;
 label_200c0c:
     // 0x200c0c: 0x8e030078  lw          $v1, 0x78($s0)
     ctx->pc = 0x200c0cu;
@@ -173,7 +170,6 @@ label_200c0c:
             goto label_200c30;
         }
     }
-    ctx->pc = 0x200C28u;
 label_200c28:
     // 0x200c28: 0x10000016  b           . + 4 + (0x16 << 2)
     ctx->pc = 0x200C28u;
@@ -190,7 +186,6 @@ label_200c28:
             goto label_200c84;
         }
     }
-    ctx->pc = 0x200C30u;
 label_200c30:
     // 0x200c30: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -220,7 +215,6 @@ label_200c30:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00201788_0x201788, 0x201788u, 0x200c44u)) {
         return;
     }
-    ctx->pc = 0x200C44u;
 label_200c44:
     // 0x200c44: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x200C44u;
@@ -237,7 +231,6 @@ label_200c44:
             goto label_200c50;
         }
     }
-    ctx->pc = 0x200C4Cu;
 label_200c4c:
     // 0x200c4c: 0xae140004  sw          $s4, 0x4($s0)
     ctx->pc = 0x200c4cu;
@@ -301,7 +294,6 @@ label_200c6c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00201290_0x201290, 0x201290u, 0x200c80u)) {
         return;
     }
-    ctx->pc = 0x200C80u;
 label_200c80:
     // 0x200c80: 0x8e020004  lw          $v0, 0x4($s0)
     ctx->pc = 0x200c80u;

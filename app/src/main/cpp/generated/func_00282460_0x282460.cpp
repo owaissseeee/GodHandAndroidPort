@@ -13,7 +13,7 @@
 
 // Function: func_00282460
 // Address: 0x282460 - 0x282578
-void func_00282460_0x282460(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00282460_0x282460(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00282460_0x282460");
 #endif
@@ -80,7 +80,6 @@ void func_00282460_0x282460(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_282568;
         }
     }
-    ctx->pc = 0x28248Cu;
 label_28248c:
     // 0x28248c: 0x920202f7  lbu         $v0, 0x2F7($s0)
     ctx->pc = 0x28248cu;
@@ -142,7 +141,6 @@ label_28248c:
             goto label_2824f8;
         }
     }
-    ctx->pc = 0x2824BCu;
 label_2824bc:
     // 0x2824bc: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x2824bcu;
@@ -171,7 +169,6 @@ label_2824bc:
             goto label_2824f8;
         }
     }
-    ctx->pc = 0x2824D8u;
 label_2824d8:
     // 0x2824d8: 0x1040000d  beqz        $v0, . + 4 + (0xD << 2)
     ctx->pc = 0x2824D8u;
@@ -219,7 +216,6 @@ label_2824f8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x282508u)) {
         return;
     }
-    ctx->pc = 0x282508u;
 label_282508:
     // 0x282508: 0x1000000c  b           . + 4 + (0xC << 2)
     ctx->pc = 0x282508u;
@@ -236,7 +232,6 @@ label_282508:
             goto label_28253c;
         }
     }
-    ctx->pc = 0x282510u;
 label_282510:
     // 0x282510: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x282510u;
@@ -268,7 +263,6 @@ label_282510:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x282538u)) {
         return;
     }
-    ctx->pc = 0x282538u;
 label_282538:
     // 0x282538: 0x920202f6  lbu         $v0, 0x2F6($s0)
     ctx->pc = 0x282538u;
@@ -291,7 +285,6 @@ label_282544:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x282544u, 0x28254Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x28254Cu;
 label_28254c:
     // 0x28254c: 0x50400006  beql        $v0, $zero, . + 4 + (0x6 << 2)
     ctx->pc = 0x28254Cu;

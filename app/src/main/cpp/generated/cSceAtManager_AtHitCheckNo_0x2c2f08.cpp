@@ -13,7 +13,7 @@
 
 // Function: cSceAtManager_AtHitCheckNo
 // Address: 0x2c2f08 - 0x2c2f90
-void cSceAtManager_AtHitCheckNo_0x2c2f08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSceAtManager_AtHitCheckNo_0x2c2f08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSceAtManager_AtHitCheckNo_0x2c2f08");
 #endif
@@ -54,7 +54,6 @@ void cSceAtManager_AtHitCheckNo_0x2c2f08(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &cSceAtManager_getUnit_0x2c3118, 0x2c3118u, 0x2c2f28u)) {
         return;
     }
-    ctx->pc = 0x2C2F28u;
 label_2c2f28:
     // 0x2c2f28: 0xc6030008  lwc1        $f3, 0x8($s0)
     ctx->pc = 0x2c2f28u;
@@ -110,7 +109,6 @@ label_2c2f28:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002C1D68_0x2c1d68, 0x2c1d68u, 0x2c2f64u)) {
         return;
     }
-    ctx->pc = 0x2C2F64u;
 label_2c2f64:
     // 0x2c2f64: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -125,7 +123,6 @@ label_2c2f64:
     if (!runtime->callDirectStatic(rdram, ctx, &cArea_HitCheck_1F83E8_0x1f83e8, 0x1f83e8u, 0x2c2f70u)) {
         return;
     }
-    ctx->pc = 0x2C2F70u;
 label_2c2f70:
     // 0x2c2f70: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x2C2F70u;
@@ -142,7 +139,6 @@ label_2c2f70:
             goto label_2c2f80;
         }
     }
-    ctx->pc = 0x2C2F78u;
 label_2c2f78:
     // 0x2c2f78: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

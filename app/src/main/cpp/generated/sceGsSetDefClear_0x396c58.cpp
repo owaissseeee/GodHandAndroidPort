@@ -13,7 +13,7 @@
 
 // Function: sceGsSetDefClear
 // Address: 0x396c58 - 0x396d60
-void sceGsSetDefClear_0x396c58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceGsSetDefClear_0x396c58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceGsSetDefClear_0x396c58");
 #endif
@@ -176,7 +176,6 @@ void sceGsSetDefClear_0x396c58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_396d50;
         }
     }
-    ctx->pc = 0x396D4Cu;
 label_396d4c:
     // 0x396d4c: 0xfccb0050  sd          $t3, 0x50($a2)
     ctx->pc = 0x396d4cu;

@@ -13,7 +13,7 @@
 
 // Function: func_0034FDF0
 // Address: 0x34fdf0 - 0x34fe78
-void func_0034FDF0_0x34fdf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0034FDF0_0x34fdf0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0034FDF0_0x34fdf0");
 #endif
@@ -82,7 +82,6 @@ void func_0034FDF0_0x34fdf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x34fe40u;
     WRITE32(ADD32(GPR_U32(ctx, 5), 60), GPR_U32(ctx, 0));
     // 0x34fe44: 0x0  nop
-    ctx->pc = 0x34fe44u;
     // NOP
 label_34fe48:
     // 0x34fe48: 0x24e7ffff  addiu       $a3, $a3, -0x1

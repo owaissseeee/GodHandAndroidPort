@@ -13,7 +13,7 @@
 
 // Function: cMc_taskBody
 // Address: 0x2ae8a8 - 0x2ae940
-void cMc_taskBody_0x2ae8a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMc_taskBody_0x2ae8a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMc_taskBody_0x2ae8a8");
 #endif
@@ -72,7 +72,6 @@ void cMc_taskBody_0x2ae8a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2AE4A8u, 0x2AE8DCu, 0x2AE8E4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2AE8E4u;
 label_2ae8e4:
     // 0x2ae8e4: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x2ae8e4u;
@@ -93,7 +92,6 @@ label_2ae8e4:
             return;
         }
     }
-    ctx->pc = 0x2AE8F0u;
 label_2ae8f0:
     // 0x2ae8f0: 0xc0ab97a  jal         func_2AE5E8
     SET_GPR_U32(ctx, 31, 0x2AE8F8u);
@@ -106,7 +104,6 @@ label_2ae8f0:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2AE5E8u, 0x2AE8F0u, 0x2AE8F8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2AE8F8u;
 label_2ae8f8:
     // 0x2ae8f8: 0x8e230004  lw          $v1, 0x4($s1)
     ctx->pc = 0x2ae8f8u;
@@ -140,7 +137,6 @@ label_2ae8f8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D5958_0x2d5958, 0x2d5958u, 0x2ae924u)) {
         return;
     }
-    ctx->pc = 0x2AE924u;
 label_2ae924:
     // 0x2ae924: 0xc0b5692  jal         func_2D5A48
     SET_GPR_U32(ctx, 31, 0x2AE92Cu);
@@ -153,7 +149,6 @@ label_2ae924:
     if (!runtime->callDirectStatic(rdram, ctx, &cTaskWork_exit_0x2d5a48, 0x2d5a48u, 0x2ae92cu)) {
         return;
     }
-    ctx->pc = 0x2AE92Cu;
 label_2ae92c:
     // 0x2ae92c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2ae92cu;

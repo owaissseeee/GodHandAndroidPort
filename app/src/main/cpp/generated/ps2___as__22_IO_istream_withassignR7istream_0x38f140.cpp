@@ -13,7 +13,7 @@
 
 // Function: __as__22_IO_istream_withassignR7istream
 // Address: 0x38f140 - 0x38f1a0
-void ps2___as__22_IO_istream_withassignR7istream_0x38f140(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___as__22_IO_istream_withassignR7istream_0x38f140(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___as__22_IO_istream_withassignR7istream_0x38f140");
 #endif
@@ -66,7 +66,6 @@ void ps2___as__22_IO_istream_withassignR7istream_0x38f140(uint8_t* rdram, R5900C
             goto label_38f168;
         }
     }
-    ctx->pc = 0x38F164u;
 label_38f164:
     // 0x38f164: 0xa0c0001a  sb          $zero, 0x1A($a2)
     ctx->pc = 0x38f164u;

@@ -13,7 +13,7 @@
 
 // Function: scan__7istreamPCce
 // Address: 0x38adc8 - 0x38ae80
-void scan__7istreamPCce_0x38adc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void scan__7istreamPCce_0x38adc8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("scan__7istreamPCce_0x38adc8");
 #endif
@@ -99,7 +99,6 @@ void scan__7istreamPCce_0x38adc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_38ae50;
         }
     }
-    ctx->pc = 0x38AE14u;
 label_38ae14:
     // 0x38ae14: 0x8c640004  lw          $a0, 0x4($v1)
     ctx->pc = 0x38ae14u;
@@ -125,7 +124,6 @@ label_38ae14:
     if (!runtime->callDirectStatic(rdram, ctx, &flush__7ostream_0x389268, 0x389268u, 0x38ae28u)) {
         return;
     }
-    ctx->pc = 0x38AE28u;
 label_38ae28:
     // 0x38ae28: 0x8e030000  lw          $v1, 0x0($s0)
     ctx->pc = 0x38ae28u;
@@ -166,10 +164,8 @@ label_38ae30:
     if (!runtime->callDirectStatic(rdram, ctx, &_skip_ws__7istream_0x389398, 0x389398u, 0x38ae4cu)) {
         return;
     }
-    ctx->pc = 0x38AE4Cu;
 label_38ae4c:
     // 0x38ae4c: 0x40202d  daddu       $a0, $v0, $zero
-    ctx->pc = 0x38ae4cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_38ae50:
     // 0x38ae50: 0x10800005  beqz        $a0, . + 4 + (0x5 << 2)
@@ -203,7 +199,6 @@ label_38ae50:
     if (!runtime->callDirectStatic(rdram, ctx, &vscan__9streambufPCcPcP3ios_0x38af30, 0x38af30u, 0x38ae68u)) {
         return;
     }
-    ctx->pc = 0x38AE68u;
 label_38ae68:
     // 0x38ae68: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

@@ -13,7 +13,7 @@
 
 // Function: get_iob
 // Address: 0x3b3a48 - 0x3b3ab8
-void get_iob_0x3b3a48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void get_iob_0x3b3a48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("get_iob_0x3b3a48");
 #endif
@@ -53,7 +53,6 @@ void get_iob_0x3b3a48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &_sceFsIobSemaMK_0x3b3858, 0x3b3858u, 0x3b3a64u)) {
         return;
     }
-    ctx->pc = 0x3B3A64u;
 label_3b3a64:
     // 0x3b3a64: 0xc0ebf38  jal         func_3AFCE0
     SET_GPR_U32(ctx, 31, 0x3B3A6Cu);
@@ -66,7 +65,6 @@ label_3b3a64:
     if (!runtime->callDirectStatic(rdram, ctx, &WaitSema_0x3afce0, 0x3afce0u, 0x3b3a6cu)) {
         return;
     }
-    ctx->pc = 0x3B3A6Cu;
 label_3b3a6c:
     // 0x3b3a6c: 0x2e030020  sltiu       $v1, $s0, 0x20
     SET_GPR_U64(ctx, 3, ((uint64_t)GPR_U64(ctx, 16) < (uint64_t)(int64_t)(int32_t)32) ? 1 : 0);
@@ -96,7 +94,6 @@ label_3b3a6c:
     if (!runtime->callDirectStatic(rdram, ctx, &SignalSema_0x3afcc0, 0x3afcc0u, 0x3b3a80u)) {
         return;
     }
-    ctx->pc = 0x3B3A80u;
 label_3b3a80:
     // 0x3b3a80: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x3B3A80u;
@@ -113,7 +110,6 @@ label_3b3a80:
             goto label_3b3aa0;
         }
     }
-    ctx->pc = 0x3B3A88u;
 label_3b3a88:
     // 0x3b3a88: 0x108100  sll         $s0, $s0, 4
     SET_GPR_S32(ctx, 16, (int32_t)SLL32(GPR_U32(ctx, 16), 4));
@@ -133,10 +129,8 @@ label_3b3a88:
     if (!runtime->callDirectStatic(rdram, ctx, &SignalSema_0x3afcc0, 0x3afcc0u, 0x3b3a9cu)) {
         return;
     }
-    ctx->pc = 0x3B3A9Cu;
 label_3b3a9c:
     // 0x3b3a9c: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x3b3a9cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_3b3aa0:
     // 0x3b3aa0: 0xdfbf0020  ld          $ra, 0x20($sp)

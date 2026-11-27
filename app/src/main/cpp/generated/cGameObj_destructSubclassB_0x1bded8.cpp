@@ -13,7 +13,7 @@
 
 // Function: cGameObj_destructSubclassB
 // Address: 0x1bded8 - 0x1bdf30
-void cGameObj_destructSubclassB_0x1bded8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObj_destructSubclassB_0x1bded8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObj_destructSubclassB_0x1bded8");
 #endif
@@ -64,7 +64,6 @@ void cGameObj_destructSubclassB_0x1bded8(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &espSys_effDataRelease_0x305778, 0x305778u, 0x1bdf0cu)) {
         return;
     }
-    ctx->pc = 0x1BDF0Cu;
 label_1bdf0c:
     // 0x1bdf0c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -79,7 +78,6 @@ label_1bdf0c:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField214PtrThenInit_1B6F38_0x1b6f38, 0x1b6f38u, 0x1bdf18u)) {
         return;
     }
-    ctx->pc = 0x1BDF18u;
 label_1bdf18:
     // 0x1bdf18: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1bdf18u;

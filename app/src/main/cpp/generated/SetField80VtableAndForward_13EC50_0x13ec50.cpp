@@ -13,7 +13,7 @@
 
 // Function: SetField80VtableAndForward_13EC50
 // Address: 0x13ec50 - 0x13ec80
-void SetField80VtableAndForward_13EC50_0x13ec50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetField80VtableAndForward_13EC50_0x13ec50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetField80VtableAndForward_13EC50_0x13ec50");
 #endif
@@ -58,7 +58,6 @@ void SetField80VtableAndForward_13EC50_0x13ec50(uint8_t* rdram, R5900Context* ct
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x13ec74u)) {
         return;
     }
-    ctx->pc = 0x13EC74u;
 label_13ec74:
     // 0x13ec74: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x13ec74u;

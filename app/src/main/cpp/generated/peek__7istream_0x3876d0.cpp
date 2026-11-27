@@ -13,7 +13,7 @@
 
 // Function: peek__7istream
 // Address: 0x3876d0 - 0x387788
-void peek__7istream_0x3876d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void peek__7istream_0x3876d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("peek__7istream_0x3876d0");
 #endif
@@ -114,7 +114,6 @@ void peek__7istream_0x3876d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &flush__7ostream_0x389268, 0x389268u, 0x38771cu)) {
         return;
     }
-    ctx->pc = 0x38771Cu;
 label_38771c:
     // 0x38771c: 0x8e250000  lw          $a1, 0x0($s1)
     ctx->pc = 0x38771cu;
@@ -157,7 +156,6 @@ label_387724:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___underflow_0x38c5b8, 0x38c5b8u, 0x387740u)) {
         return;
     }
-    ctx->pc = 0x387740u;
 label_387740:
     // 0x387740: 0x2403ffff  addiu       $v1, $zero, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
@@ -212,7 +210,6 @@ label_387754:
     ctx->pc = 0x38776cu;
     WRITE8(ADD32(GPR_U32(ctx, 3), 26), (uint8_t)GPR_U32(ctx, 2));
     // 0x387770: 0xa0102d  daddu       $v0, $a1, $zero
-    ctx->pc = 0x387770u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
 label_387774:
     // 0x387774: 0xdfbf0020  ld          $ra, 0x20($sp)

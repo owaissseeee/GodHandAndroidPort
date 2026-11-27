@@ -13,7 +13,7 @@
 
 // Function: cOl29_setOpen
 // Address: 0x17f9b0 - 0x17f9d8
-void cOl29_setOpen_0x17f9b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl29_setOpen_0x17f9b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl29_setOpen_0x17f9b0");
 #endif

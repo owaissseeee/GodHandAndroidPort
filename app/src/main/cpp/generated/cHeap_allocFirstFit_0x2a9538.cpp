@@ -13,7 +13,7 @@
 
 // Function: cHeap_allocFirstFit
 // Address: 0x2a9538 - 0x2a9620
-void cHeap_allocFirstFit_0x2a9538(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cHeap_allocFirstFit_0x2a9538(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cHeap_allocFirstFit_0x2a9538");
 #endif
@@ -102,7 +102,6 @@ void cHeap_allocFirstFit_0x2a9538(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_2a95f8;
         }
     }
-    ctx->pc = 0x2A957Cu;
 label_2a957c:
     // 0x2a957c: 0xc0aa588  jal         func_2A9620
     SET_GPR_U32(ctx, 31, 0x2A9584u);
@@ -115,7 +114,6 @@ label_2a957c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9620u, 0x2A957Cu, 0x2A9584u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2A9584u;
 label_2a9584:
     // 0x2a9584: 0xae350010  sw          $s5, 0x10($s1)
     ctx->pc = 0x2a9584u;
@@ -145,7 +143,6 @@ label_2a9584:
             goto label_2a95f8;
         }
     }
-    ctx->pc = 0x2A95A0u;
 label_2a95a0:
     // 0x2a95a0: 0x12000014  beqz        $s0, . + 4 + (0x14 << 2)
     ctx->pc = 0x2A95A0u;
@@ -244,10 +241,8 @@ label_2a95ec:
             goto label_2a95b0;
         }
     }
-    ctx->pc = 0x2A95F4u;
 label_2a95f4:
     // 0x2a95f4: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2a95f4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2a95f8:
     // 0x2a95f8: 0x7bb00060  lq          $s0, 0x60($sp)

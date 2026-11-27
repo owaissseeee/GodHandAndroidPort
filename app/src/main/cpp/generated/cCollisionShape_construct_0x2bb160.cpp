@@ -13,7 +13,7 @@
 
 // Function: cCollisionShape_construct
 // Address: 0x2bb160 - 0x2bb1f0
-void cCollisionShape_construct_0x2bb160(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCollisionShape_construct_0x2bb160(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCollisionShape_construct_0x2bb160");
 #endif
@@ -101,13 +101,11 @@ void cCollisionShape_construct_0x2bb160(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_2bb1bc;
         }
     }
-    ctx->pc = 0x2BB1B4u;
 label_2bb1b4:
     // 0x2bb1b4: 0x92020004  lbu         $v0, 0x4($s0)
     ctx->pc = 0x2bb1b4u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 16), 4)));
     // 0x2bb1b8: 0x304200fd  andi        $v0, $v0, 0xFD
-    ctx->pc = 0x2bb1b8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)253);
 label_2bb1bc:
     // 0x2bb1bc: 0xa2020004  sb          $v0, 0x4($s0)
@@ -126,7 +124,6 @@ label_2bb1bc:
     if (!runtime->callDirectStatic(rdram, ctx, &cCollisionShape_setOffsetPos_0x2bb258, 0x2bb258u, 0x2bb1ccu)) {
         return;
     }
-    ctx->pc = 0x2BB1CCu;
 label_2bb1cc:
     // 0x2bb1cc: 0x220282d  daddu       $a1, $s1, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -141,7 +138,6 @@ label_2bb1cc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BB298_0x2bb298, 0x2bb298u, 0x2bb1d8u)) {
         return;
     }
-    ctx->pc = 0x2BB1D8u;
 label_2bb1d8:
     // 0x2bb1d8: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

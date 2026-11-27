@@ -13,7 +13,7 @@
 
 // Function: BlendSetup_load
 // Address: 0x144fd8 - 0x1450a0
-void BlendSetup_load_0x144fd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BlendSetup_load_0x144fd8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BlendSetup_load_0x144fd8");
 #endif
@@ -74,7 +74,6 @@ void BlendSetup_load_0x144fd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &BlendWork_copyShortTable_0x1450a0, 0x1450a0u, 0x145018u)) {
         return;
     }
-    ctx->pc = 0x145018u;
 label_145018:
     // 0x145018: 0x200282d  daddu       $a1, $s0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -91,7 +90,6 @@ label_145018:
     if (!runtime->callDirectStatic(rdram, ctx, &BlendWork_copyTable_0x145100, 0x145100u, 0x145028u)) {
         return;
     }
-    ctx->pc = 0x145028u;
 label_145028:
     // 0x145028: 0x220282d  daddu       $a1, $s1, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -108,7 +106,6 @@ label_145028:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001451A0_0x1451a0, 0x1451a0u, 0x145038u)) {
         return;
     }
-    ctx->pc = 0x145038u;
 label_145038:
     // 0x145038: 0x3c05003c  lui         $a1, 0x3C
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)60 << 16));
@@ -125,7 +122,6 @@ label_145038:
     if (!runtime->callDirectStatic(rdram, ctx, &SetFlagAfterCopy_145160_0x145160, 0x145160u, 0x145048u)) {
         return;
     }
-    ctx->pc = 0x145048u;
 label_145048:
     // 0x145048: 0x2652ffff  addiu       $s2, $s2, -0x1
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), 4294967295));
@@ -161,7 +157,6 @@ label_145048:
             goto label_145070;
         }
     }
-    ctx->pc = 0x145060u;
 label_145060:
     // 0x145060: 0x54400003  bnel        $v0, $zero, . + 4 + (0x3 << 2)
     ctx->pc = 0x145060u;

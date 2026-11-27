@@ -14,31 +14,29 @@ namespace gh_event
 {
 // Function: initPlay__8cEventSe
 // Address: 0x7b1b08 - 0x7b1b28
-void initPlay__8cEventSe_0x7b1b08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void initPlay__8cEventSe_0x7b1b08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("initPlay__8cEventSe_0x7b1b08");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7b1b1cu: goto label_7b1b1c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7b1b08u, 0)) {
+        switch (ctx->pc) {
+            case 0x7b1b1cu: goto label_7b1b1c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7b1b08u;
+
 
     // 0x7b1b08: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7b1b08u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x7b1b0c: 0x3c05007b  lui         $a1, 0x7B
-    ctx->pc = 0x7b1b0cu;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)123 << 16));
     // 0x7b1b10: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x7b1b10u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x7b1b14: 0xc1ecd02  jal         func_7B3408
-    ctx->pc = 0x7B1B14u;
     SET_GPR_U32(ctx, 31, 0x7B1B1Cu);
-    ctx->pc = 0x7B1B18u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x7B1B14u;
     // 0x7b1b18: 0x24a54ee0  addiu       $a1, $a1, 0x4EE0 (Delay Slot)
@@ -48,7 +46,6 @@ void initPlay__8cEventSe_0x7b1b08(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x7B3408u, 0x7B1B14u, 0x7B1B1Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7B1B1Cu;
 label_7b1b1c:
     // 0x7b1b1c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7b1b1cu;

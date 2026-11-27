@@ -13,7 +13,7 @@
 
 // Function: Poker_Release
 // Address: 0x1d72b0 - 0x1d72d0
-void Poker_Release_0x1d72b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Poker_Release_0x1d72b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Poker_Release_0x1d72b0");
 #endif
@@ -37,7 +37,6 @@ void Poker_Release_0x1d72b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Poker_releaseIds_0x1df940, 0x1df940u, 0x1d72c0u)) {
         return;
     }
-    ctx->pc = 0x1D72C0u;
 label_1d72c0:
     // 0x1d72c0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1d72c0u;

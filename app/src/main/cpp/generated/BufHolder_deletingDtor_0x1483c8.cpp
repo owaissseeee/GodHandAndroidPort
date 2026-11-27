@@ -13,7 +13,7 @@
 
 // Function: BufHolder_deletingDtor
 // Address: 0x1483c8 - 0x148420
-void BufHolder_deletingDtor_0x1483c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BufHolder_deletingDtor_0x1483c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BufHolder_deletingDtor_0x1483c8");
 #endif
@@ -72,10 +72,8 @@ void BufHolder_deletingDtor_0x1483c8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x1483ECu, 0x1483F4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1483F4u;
 label_1483f4:
     // 0x1483f4: 0x32220001  andi        $v0, $s1, 0x1
-    ctx->pc = 0x1483f4u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 17) & (uint64_t)(uint16_t)1);
 label_1483f8:
     // 0x1483f8: 0x50400004  beql        $v0, $zero, . + 4 + (0x4 << 2)
@@ -104,7 +102,6 @@ label_1483f8:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x148408u)) {
         return;
     }
-    ctx->pc = 0x148408u;
 label_148408:
     // 0x148408: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x148408u;

@@ -13,7 +13,7 @@
 
 // Function: ClearField5B4IfFlagUnset_1B76B0
 // Address: 0x1b76b0 - 0x1b76d8
-void ClearField5B4IfFlagUnset_1B76B0_0x1b76b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearField5B4IfFlagUnset_1B76B0_0x1b76b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearField5B4IfFlagUnset_1B76B0_0x1b76b0");
 #endif
@@ -62,7 +62,6 @@ void ClearField5B4IfFlagUnset_1B76B0_0x1b76b0(uint8_t* rdram, R5900Context* ctx,
         return;
         #endif
     }
-    ctx->pc = 0x1B76D0u;
 label_1b76d0:
     // 0x1b76d0: 0x3e00008  jr          $ra
     ctx->pc = 0x1B76D0u;

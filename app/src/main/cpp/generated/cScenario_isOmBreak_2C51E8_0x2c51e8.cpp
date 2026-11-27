@@ -13,7 +13,7 @@
 
 // Function: cScenario_isOmBreak_2C51E8
 // Address: 0x2c51e8 - 0x2c5220
-void cScenario_isOmBreak_2C51E8_0x2c51e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_isOmBreak_2C51E8_0x2c51e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_isOmBreak_2C51E8_0x2c51e8");
 #endif
@@ -50,7 +50,6 @@ void cScenario_isOmBreak_2C51E8_0x2c51e8(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &cObjBaseArray_SearchOM_0x14fd98, 0x14fd98u, 0x2c5204u)) {
         return;
     }
-    ctx->pc = 0x2C5204u;
 label_2c5204:
     // 0x2c5204: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -65,7 +64,6 @@ label_2c5204:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_isOmBreak_0x2c5110, 0x2c5110u, 0x2c5210u)) {
         return;
     }
-    ctx->pc = 0x2C5210u;
 label_2c5210:
     // 0x2c5210: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2c5210u;

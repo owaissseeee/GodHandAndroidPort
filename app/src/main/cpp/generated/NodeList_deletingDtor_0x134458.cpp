@@ -13,7 +13,7 @@
 
 // Function: NodeList_deletingDtor
 // Address: 0x134458 - 0x1344a0
-void NodeList_deletingDtor_0x134458(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void NodeList_deletingDtor_0x134458(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("NodeList_deletingDtor_0x134458");
 #endif
@@ -51,7 +51,6 @@ void NodeList_deletingDtor_0x134458(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &NodeList_clear_0x1344a0, 0x1344a0u, 0x134474u)) {
         return;
     }
-    ctx->pc = 0x134474u;
 label_134474:
     // 0x134474: 0x32100001  andi        $s0, $s0, 0x1
     SET_GPR_U64(ctx, 16, GPR_U64(ctx, 16) & (uint64_t)(uint16_t)1);
@@ -81,7 +80,6 @@ label_134474:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x134488u)) {
         return;
     }
-    ctx->pc = 0x134488u;
 label_134488:
     // 0x134488: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x134488u;

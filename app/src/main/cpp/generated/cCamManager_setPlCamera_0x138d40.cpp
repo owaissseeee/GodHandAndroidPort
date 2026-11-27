@@ -13,7 +13,7 @@
 
 // Function: cCamManager_setPlCamera
 // Address: 0x138d40 - 0x138db8
-void cCamManager_setPlCamera_0x138d40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCamManager_setPlCamera_0x138d40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCamManager_setPlCamera_0x138d40");
 #endif
@@ -108,7 +108,6 @@ void cCamManager_setPlCamera_0x138d40(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_00138CA8_0x138ca8, 0x138ca8u, 0x138d88u)) {
         return;
     }
-    ctx->pc = 0x138D88u;
 label_138d88:
     // 0x138d88: 0x8e021028  lw          $v0, 0x1028($s0)
     ctx->pc = 0x138d88u;

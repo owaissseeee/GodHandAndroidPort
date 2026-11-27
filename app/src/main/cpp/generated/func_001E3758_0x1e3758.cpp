@@ -13,7 +13,7 @@
 
 // Function: func_001E3758
 // Address: 0x1e3758 - 0x1e3858
-void func_001E3758_0x1e3758(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001E3758_0x1e3758(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001E3758_0x1e3758");
 #endif
@@ -98,7 +98,6 @@ void func_001E3758_0x1e3758(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1e384c;
         }
     }
-    ctx->pc = 0x1E3790u;
 label_1e3790:
     // 0x1e3790: 0x10a2001f  beq         $a1, $v0, . + 4 + (0x1F << 2)
     ctx->pc = 0x1E3790u;
@@ -124,7 +123,6 @@ label_1e3790:
             goto label_1e384c;
         }
     }
-    ctx->pc = 0x1E37A0u;
 label_1e37a0:
     // 0x1e37a0: 0x10e00003  beqz        $a3, . + 4 + (0x3 << 2)
     ctx->pc = 0x1E37A0u;
@@ -173,7 +171,6 @@ label_1e37b0:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e37c0u)) {
         return;
     }
-    ctx->pc = 0x1E37C0u;
 label_1e37c0:
     // 0x1e37c0: 0x9602049c  lhu         $v0, 0x49C($s0)
     ctx->pc = 0x1e37c0u;
@@ -195,7 +192,6 @@ label_1e37c0:
             goto label_1e3848;
         }
     }
-    ctx->pc = 0x1E37D0u;
 label_1e37d0:
     // 0x1e37d0: 0x10e00003  beqz        $a3, . + 4 + (0x3 << 2)
     ctx->pc = 0x1E37D0u;
@@ -244,7 +240,6 @@ label_1e37e0:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e37f0u)) {
         return;
     }
-    ctx->pc = 0x1E37F0u;
 label_1e37f0:
     // 0x1e37f0: 0x9602049e  lhu         $v0, 0x49E($s0)
     ctx->pc = 0x1e37f0u;
@@ -266,7 +261,6 @@ label_1e37f0:
             goto label_1e3848;
         }
     }
-    ctx->pc = 0x1E3800u;
 label_1e3800:
     // 0x1e3800: 0xc0b6cac  jal         func_2DB2B0
     SET_GPR_U32(ctx, 31, 0x1E3808u);
@@ -279,7 +273,6 @@ label_1e3800:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e3808u)) {
         return;
     }
-    ctx->pc = 0x1E3808u;
 label_1e3808:
     // 0x1e3808: 0x10000010  b           . + 4 + (0x10 << 2)
     ctx->pc = 0x1E3808u;
@@ -296,7 +289,6 @@ label_1e3808:
             goto label_1e384c;
         }
     }
-    ctx->pc = 0x1E3810u;
 label_1e3810:
     // 0x1e3810: 0x10e00003  beqz        $a3, . + 4 + (0x3 << 2)
     ctx->pc = 0x1E3810u;
@@ -345,7 +337,6 @@ label_1e3820:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e3830u)) {
         return;
     }
-    ctx->pc = 0x1E3830u;
 label_1e3830:
     // 0x1e3830: 0x960204a0  lhu         $v0, 0x4A0($s0)
     ctx->pc = 0x1e3830u;
@@ -367,7 +358,6 @@ label_1e3830:
             goto label_1e3848;
         }
     }
-    ctx->pc = 0x1E3840u;
 label_1e3840:
     // 0x1e3840: 0xc0b6cac  jal         func_2DB2B0
     SET_GPR_U32(ctx, 31, 0x1E3848u);
@@ -380,7 +370,6 @@ label_1e3840:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e3848u)) {
         return;
     }
-    ctx->pc = 0x1E3848u;
 label_1e3848:
     // 0x1e3848: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1e3848u;

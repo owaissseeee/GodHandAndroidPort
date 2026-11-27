@@ -13,7 +13,7 @@
 
 // Function: BlackJack_UpdateNewRound
 // Address: 0x1d1330 - 0x1d13b8
-void BlackJack_UpdateNewRound_0x1d1330(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BlackJack_UpdateNewRound_0x1d1330(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BlackJack_UpdateNewRound_0x1d1330");
 #endif
@@ -60,7 +60,6 @@ void BlackJack_UpdateNewRound_0x1d1330(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &func_001D4670_0x1d4670, 0x1d4670u, 0x1d1354u)) {
         return;
     }
-    ctx->pc = 0x1D1354u;
 label_1d1354:
     // 0x1d1354: 0xc0754a8  jal         func_1D52A0
     SET_GPR_U32(ctx, 31, 0x1D135Cu);
@@ -73,7 +72,6 @@ label_1d1354:
     if (!runtime->callDirectStatic(rdram, ctx, &BlackJackId_SetDefaultDisp_0x1d52a0, 0x1d52a0u, 0x1d135cu)) {
         return;
     }
-    ctx->pc = 0x1D135Cu;
 label_1d135c:
     // 0x1d135c: 0x282d  daddu       $a1, $zero, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
@@ -88,7 +86,6 @@ label_1d135c:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetNumber_1D5760_0x1d5760, 0x1d5760u, 0x1d1368u)) {
         return;
     }
-    ctx->pc = 0x1D1368u;
 label_1d1368:
     // 0x1d1368: 0x3c040057  lui         $a0, 0x57
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)87 << 16));
@@ -103,7 +100,6 @@ label_1d1368:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getGold_0x1fa710, 0x1fa710u, 0x1d1374u)) {
         return;
     }
-    ctx->pc = 0x1D1374u;
 label_1d1374:
     // 0x1d1374: 0x40282d  daddu       $a1, $v0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -118,7 +114,6 @@ label_1d1374:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001D5780_0x1d5780, 0x1d5780u, 0x1d1380u)) {
         return;
     }
-    ctx->pc = 0x1D1380u;
 label_1d1380:
     // 0x1d1380: 0x9e021800  lwu         $v0, 0x1800($s0)
     ctx->pc = 0x1d1380u;
@@ -143,7 +138,6 @@ label_1d1380:
         }
     }
     // 0x1d1394: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1d1394u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_1d1398:
     // 0x1d1398: 0xae001808  sw          $zero, 0x1808($s0)

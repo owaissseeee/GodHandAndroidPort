@@ -13,7 +13,7 @@
 
 // Function: Obj3260_TrampChain_D2D8
 // Address: 0x3262d8 - 0x326320
-void Obj3260_TrampChain_D2D8_0x3262d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj3260_TrampChain_D2D8_0x3262d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj3260_TrampChain_D2D8_0x3262d8");
 #endif
@@ -48,7 +48,6 @@ void Obj3260_TrampChain_D2D8_0x3262d8(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_00338338_0x338338, 0x338338u, 0x3262f0u)) {
         return;
     }
-    ctx->pc = 0x3262F0u;
 label_3262f0:
     // 0x3262f0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -63,7 +62,6 @@ label_3262f0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003382A0_0x3382a0, 0x3382a0u, 0x3262fcu)) {
         return;
     }
-    ctx->pc = 0x3262FCu;
 label_3262fc:
     // 0x3262fc: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

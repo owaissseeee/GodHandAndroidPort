@@ -13,7 +13,7 @@
 
 // Function: func_0019E650
 // Address: 0x19e650 - 0x19e670
-void func_0019E650_0x19e650(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0019E650_0x19e650(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0019E650_0x19e650");
 #endif
@@ -37,7 +37,6 @@ void func_0019E650_0x19e650(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_tickModeTableSkip381_0x1c29d0, 0x1c29d0u, 0x19e660u)) {
         return;
     }
-    ctx->pc = 0x19E660u;
 label_19e660:
     // 0x19e660: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x19e660u;

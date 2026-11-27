@@ -13,7 +13,7 @@
 
 // Function: iWakeupThread
 // Address: 0x3b0a40 - 0x3b0ae0
-void iWakeupThread_0x3b0a40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iWakeupThread_0x3b0a40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iWakeupThread_0x3b0a40");
 #endif
@@ -67,7 +67,6 @@ label_3b0a54:
     if (!runtime->callDirectStatic(rdram, ctx, &iWakeupThread_0x3afbe0, 0x3afbe0u, 0x3b0a68u)) {
         return;
     }
-    ctx->pc = 0x3B0A68u;
 label_3b0a68:
     // 0x3b0a68: 0x10000017  b           . + 4 + (0x17 << 2)
     ctx->pc = 0x3B0A68u;
@@ -84,7 +83,6 @@ label_3b0a68:
             goto label_3b0ac8;
         }
     }
-    ctx->pc = 0x3B0A70u;
 label_3b0a70:
     // 0x3b0a70: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x3B0A70u;
@@ -119,7 +117,6 @@ label_3b0a70:
             goto label_3b0a8c;
         }
     }
-    ctx->pc = 0x3B0A84u;
 label_3b0a84:
     // 0x3b0a84: 0x1000000f  b           . + 4 + (0xF << 2)
     ctx->pc = 0x3B0A84u;
@@ -136,7 +133,6 @@ label_3b0a84:
             goto label_3b0ac4;
         }
     }
-    ctx->pc = 0x3B0A8Cu;
 label_3b0a8c:
     // 0x3b0a8c: 0x3c050078  lui         $a1, 0x78
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)120 << 16));
@@ -175,10 +171,8 @@ label_3b0a8c:
     if (!runtime->callDirectStatic(rdram, ctx, &iSignalSema_0x3afcd0, 0x3afcd0u, 0x3b0ac0u)) {
         return;
     }
-    ctx->pc = 0x3B0AC0u;
 label_3b0ac0:
     // 0x3b0ac0: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x3b0ac0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_3b0ac4:
     // 0x3b0ac4: 0xdfbf0010  ld          $ra, 0x10($sp)

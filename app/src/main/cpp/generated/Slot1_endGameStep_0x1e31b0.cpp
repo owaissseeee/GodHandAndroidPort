@@ -13,7 +13,7 @@
 
 // Function: Slot1_endGameStep
 // Address: 0x1e31b0 - 0x1e3218
-void Slot1_endGameStep_0x1e31b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Slot1_endGameStep_0x1e31b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Slot1_endGameStep_0x1e31b0");
 #endif
@@ -84,7 +84,6 @@ void Slot1_endGameStep_0x1e31b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_1e3208;
         }
     }
-    ctx->pc = 0x1E31DCu;
 label_1e31dc:
     // 0x1e31dc: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
@@ -102,7 +101,6 @@ label_1e31dc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00143A90_0x143a90, 0x143a90u, 0x1e31ecu)) {
         return;
     }
-    ctx->pc = 0x1E31ECu;
 label_1e31ec:
     // 0x1e31ec: 0x8e020008  lw          $v0, 0x8($s0)
     ctx->pc = 0x1e31ecu;

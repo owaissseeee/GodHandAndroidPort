@@ -13,7 +13,7 @@
 
 // Function: func_00304C48
 // Address: 0x304c48 - 0x304d48
-void func_00304C48_0x304c48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00304C48_0x304c48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00304C48_0x304c48");
 #endif
@@ -61,7 +61,6 @@ void func_00304C48_0x304c48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
     // 0x304c6c: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x304c6cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_304c70:
     // 0x304c70: 0x304200ff  andi        $v0, $v0, 0xFF
@@ -114,7 +113,6 @@ label_304c8c:
         }
     }
     // 0x304c9c: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x304c9cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_304ca0:
     // 0x304ca0: 0x304200ff  andi        $v0, $v0, 0xFF
@@ -167,7 +165,6 @@ label_304cc0:
         }
     }
     // 0x304ccc: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x304cccu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_304cd0:
     // 0x304cd0: 0x304200ff  andi        $v0, $v0, 0xFF
@@ -220,7 +217,6 @@ label_304cf0:
         }
     }
     // 0x304cfc: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x304cfcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_304d00:
     // 0x304d00: 0x304200ff  andi        $v0, $v0, 0xFF
@@ -266,7 +262,6 @@ label_304d1c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00302918_0x302918, 0x302918u, 0x304d2cu)) {
         return;
     }
-    ctx->pc = 0x304D2Cu;
 label_304d2c:
     // 0x304d2c: 0xc0c0a70  jal         func_3029C0
     SET_GPR_U32(ctx, 31, 0x304D34u);
@@ -279,7 +274,6 @@ label_304d2c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003029C0_0x3029c0, 0x3029c0u, 0x304d34u)) {
         return;
     }
-    ctx->pc = 0x304D34u;
 label_304d34:
     // 0x304d34: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x304d34u;

@@ -13,7 +13,7 @@
 
 // Function: SetOsdConfigParam
 // Address: 0x3afd40 - 0x3afd50
-void SetOsdConfigParam_0x3afd40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetOsdConfigParam_0x3afd40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetOsdConfigParam_0x3afd40");
 #endif

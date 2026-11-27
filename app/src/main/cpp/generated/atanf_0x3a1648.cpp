@@ -6,6 +6,7 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,7 +14,7 @@
 
 // Function: atanf
 // Address: 0x3a1648 - 0x3a18f0
-void atanf_0x3a1648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void atanf_0x3a1648(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("atanf_0x3a1648");
 #endif
@@ -24,6 +25,17 @@ void atanf_0x3a1648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             default: break;
         }
     }
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    if (__builtin_expect(ctx->pc == 0x3a1648u, 1)) {
+        const float x = ctx->f[12];
+        if (__builtin_expect(std::isfinite(x), 1)) {
+            ctx->f[0] = std::atanf(x);
+            ps2FastReturn(rdram, ctx, runtime, 0x3A18E8u);
+            return;
+        }
+    }
+#endif
 
 
     // 0x3a1648: 0x27bdffd0  addiu       $sp, $sp, -0x30
@@ -95,7 +107,6 @@ void atanf_0x3a1648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
         }
     }
     // 0x3a1694: 0x0  nop
-    ctx->pc = 0x3a1694u;
     // NOP
 label_3a1698:
     // 0x3a1698: 0x1a200006  blez        $s1, . + 4 + (0x6 << 2)
@@ -136,7 +147,6 @@ label_3a1698:
             goto label_3a18dc;
         }
     }
-    ctx->pc = 0x3A16B4u;
 label_3a16b4:
     // 0x3a16b4: 0x3c030046  lui         $v1, 0x46
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)70 << 16));
@@ -163,7 +173,6 @@ label_3a16b4:
             goto label_3a18dc;
         }
     }
-    ctx->pc = 0x3A16CCu;
 label_3a16cc:
     // 0x3a16cc: 0x3c023edf  lui         $v0, 0x3EDF
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)16095 << 16));
@@ -251,7 +260,6 @@ label_3a16cc:
             goto label_3a18dc;
         }
     }
-    ctx->pc = 0x3A1720u;
 label_3a1720:
     // 0x3a1720: 0xc0e8676  jal         func_3A19D8
     ctx->pc = 0x3A1720u;
@@ -259,7 +267,6 @@ label_3a1720:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A19D8_0x3a19d8, 0x3a19d8u, 0x3a1728u)) {
         return;
     }
-    ctx->pc = 0x3A1728u;
 label_3a1728:
     // 0x3a1728: 0x3c023f97  lui         $v0, 0x3F97
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)16279 << 16));
@@ -338,7 +345,6 @@ label_3a1728:
             goto label_3a1800;
         }
     }
-    ctx->pc = 0x3A1780u;
 label_3a1780:
     // 0x3a1780: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -369,7 +375,6 @@ label_3a1780:
             goto label_3a17fc;
         }
     }
-    ctx->pc = 0x3A17A4u;
 label_3a17a4:
     // 0x3a17a4: 0x3c02401b  lui         $v0, 0x401B
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)16411 << 16));
@@ -427,7 +432,6 @@ label_3a17a4:
             goto label_3a17fc;
         }
     }
-    ctx->pc = 0x3A17E8u;
 label_3a17e8:
     // 0x3a17e8: 0x3c01bf80  lui         $at, 0xBF80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)49024 << 16));
@@ -438,11 +442,9 @@ label_3a17e8:
     // 0x3a17f4: 0x0  nop
     // NOP
     // 0x3a17f8: 0x460c0303  div.s       $f12, $f0, $f12
-    ctx->pc = 0x3a17f8u;
     ctx->f[12] = ps2FpuDivide(ctx->fcr31, ctx->f[0], ctx->f[12]);
 label_3a17fc:
     // 0x3a17fc: 0x460c6282  mul.s       $f10, $f12, $f12
-    ctx->pc = 0x3a17fcu;
     ctx->f[10] = FPU_MUL_S(ctx->f[12], ctx->f[12]);
 label_3a1800:
     // 0x3a1800: 0x3c030046  lui         $v1, 0x46
@@ -556,7 +558,6 @@ label_3a1800:
             goto label_3a18dc;
         }
     }
-    ctx->pc = 0x3A189Cu;
 label_3a189c:
     // 0x3a189c: 0x46010000  add.s       $f0, $f0, $f1
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[1]);
@@ -602,7 +603,6 @@ label_3a189c:
         }
     }
     // 0x3a18d8: 0x46000007  neg.s       $f0, $f0
-    ctx->pc = 0x3a18d8u;
     ctx->f[0] = FPU_NEG_S(ctx->f[0]);
 label_3a18dc:
     // 0x3a18dc: 0xdfbf0020  ld          $ra, 0x20($sp)

@@ -13,7 +13,7 @@
 
 // Function: PokerId__Trans
 // Address: 0x1df9b8 - 0x1dfb98
-void PokerId__Trans_0x1df9b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void PokerId__Trans_0x1df9b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("PokerId__Trans_0x1df9b8");
 #endif
@@ -62,7 +62,6 @@ void PokerId__Trans_0x1df9b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DEE20_0x1dee20, 0x1dee20u, 0x1df9e0u)) {
         return;
     }
-    ctx->pc = 0x1DF9E0u;
 label_1df9e0:
     // 0x1df9e0: 0xc07747e  jal         func_1DD1F8
     SET_GPR_U32(ctx, 31, 0x1DF9E8u);
@@ -75,7 +74,6 @@ label_1df9e0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DD1F8_0x1dd1f8, 0x1dd1f8u, 0x1df9e8u)) {
         return;
     }
-    ctx->pc = 0x1DF9E8u;
 label_1df9e8:
     // 0x1df9e8: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -97,7 +95,6 @@ label_1df9e8:
     // 0x1dfa08: 0x60902d  daddu       $s2, $v1, $zero
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1dfa0c: 0x24020003  addiu       $v0, $zero, 0x3
-    ctx->pc = 0x1dfa0cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
 label_1dfa10:
     // 0x1dfa10: 0xf8600000  sqc2        $vf0, 0x0($v1)
@@ -228,7 +225,6 @@ label_1dfa10:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDManager_getTexAddr_0x2acdc8, 0x2acdc8u, 0x1dfab8u)) {
         return;
     }
-    ctx->pc = 0x1DFAB8u;
 label_1dfab8:
     // 0x1dfab8: 0xc7a100a4  lwc1        $f1, 0xA4($sp)
     ctx->pc = 0x1dfab8u;
@@ -351,7 +347,6 @@ label_1dfab8:
     if (!runtime->callDirectStatic(rdram, ctx, &Gp_draw_polyFT4_0x15bcf0, 0x15bcf0u, 0x1dfb64u)) {
         return;
     }
-    ctx->pc = 0x1DFB64u;
 label_1dfb64:
     // 0x1dfb64: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));

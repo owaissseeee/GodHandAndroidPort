@@ -13,7 +13,7 @@
 
 // Function: cOmBase_calcParabolaVector
 // Address: 0x1b7c48 - 0x1b7de8
-void cOmBase_calcParabolaVector_0x1b7c48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmBase_calcParabolaVector_0x1b7c48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmBase_calcParabolaVector_0x1b7c48");
 #endif
@@ -106,7 +106,6 @@ void cOmBase_calcParabolaVector_0x1b7c48(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_1b7ddc;
         }
     }
-    ctx->pc = 0x1B7CA0u;
 label_1b7ca0:
     // 0x1b7ca0: 0xc4e00004  lwc1        $f0, 0x4($a3)
     ctx->pc = 0x1b7ca0u;
@@ -148,7 +147,6 @@ label_1b7ca0:
             goto label_1b7cc8;
         }
     }
-    ctx->pc = 0x1B7CC0u;
 label_1b7cc0:
     // 0x1b7cc0: 0x46026300  add.s       $f12, $f12, $f2
     ctx->f[12] = FPU_ADD_S(ctx->f[12], ctx->f[2]);

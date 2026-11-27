@@ -13,7 +13,7 @@
 
 // Function: ADX_DecodeSte4AsSte
 // Address: 0x3424a8 - 0x3427f0
-void ADX_DecodeSte4AsSte_0x3424a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ADX_DecodeSte4AsSte_0x3424a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ADX_DecodeSte4AsSte_0x3424a8");
 #endif
@@ -128,7 +128,6 @@ void ADX_DecodeSte4AsSte_0x3424a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_3427a8;
         }
     }
-    ctx->pc = 0x342530u;
 label_342530:
     // 0x342530: 0x95e30000  lhu         $v1, 0x0($t7)
     ctx->pc = 0x342530u;
@@ -269,7 +268,6 @@ label_342530:
     ctx->pc = 0x3425f8u;
     WRITE16(ADD32(GPR_U32(ctx, 4), 0), (uint16_t)GPR_U32(ctx, 2));
     // 0x3425fc: 0x0  nop
-    ctx->pc = 0x3425fcu;
     // NOP
 label_342600:
     // 0x342600: 0x91e30000  lbu         $v1, 0x0($t7)
@@ -578,7 +576,6 @@ label_342770:
             goto label_342530;
         }
     }
-    ctx->pc = 0x3427A8u;
 label_3427a8:
     // 0x3427a8: 0x8fa40004  lw          $a0, 0x4($sp)
     ctx->pc = 0x3427a8u;

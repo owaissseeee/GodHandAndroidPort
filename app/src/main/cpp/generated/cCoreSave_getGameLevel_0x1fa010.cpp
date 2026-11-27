@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getGameLevel
 // Address: 0x1fa010 - 0x1fa080
-void cCoreSave_getGameLevel_0x1fa010(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getGameLevel_0x1fa010(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getGameLevel_0x1fa010");
 #endif
@@ -65,7 +65,6 @@ void cCoreSave_getGameLevel_0x1fa010(uint8_t* rdram, R5900Context* ctx, PS2Runti
         return;
         #endif
     }
-    ctx->pc = 0x1FA028u;
 label_1fa028:
     // 0x1fa028: 0x8442001c  lh          $v0, 0x1C($v0)
     ctx->pc = 0x1fa028u;
@@ -95,7 +94,6 @@ label_1fa028:
     // 0x1fa040: 0x24a50001  addiu       $a1, $a1, 0x1
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 1));
     // 0x1fa044: 0x0  nop
-    ctx->pc = 0x1fa044u;
     // NOP
 label_1fa048:
     // 0x1fa048: 0x28a20005  slti        $v0, $a1, 0x5
@@ -144,7 +142,6 @@ label_1fa048:
             goto label_1fa048;
         }
     }
-    ctx->pc = 0x1FA06Cu;
 label_1fa06c:
     // 0x1fa06c: 0x28a30003  slti        $v1, $a1, 0x3
     SET_GPR_U64(ctx, 3, ((int64_t)GPR_S64(ctx, 5) < (int64_t)(int32_t)3) ? 1 : 0);

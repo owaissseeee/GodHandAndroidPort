@@ -14,15 +14,13 @@ namespace gh_mcport
 {
 // Function: set_terminate__FPFv_v
 // Address: 0x7c9e90 - 0x7c9ea0
-void set_terminate__FPFv_v_0x7c9e90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void set_terminate__FPFv_v_0x7c9e90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("set_terminate__FPFv_v_0x7c9e90");
 #endif
 
-    ctx->pc = 0x7c9e90u;
 
     // 0x7c9e90: 0x3c03007d  lui         $v1, 0x7D
-    ctx->pc = 0x7c9e90u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)125 << 16));
     // 0x7c9e94: 0x8c6201a0  lw          $v0, 0x1A0($v1)
     ctx->pc = 0x7c9e94u;

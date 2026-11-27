@@ -13,7 +13,7 @@
 
 // Function: cEmWrap_setSuspend
 // Address: 0x295bc0 - 0x295c10
-void cEmWrap_setSuspend_0x295bc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmWrap_setSuspend_0x295bc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmWrap_setSuspend_0x295bc0");
 #endif
@@ -44,11 +44,9 @@ void cEmWrap_setSuspend_0x295bc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         }
     }
 
-    ctx->pc = 0x295bc0u;
 
 label_295bc0:
     // 0x295bc0: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x295bc0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
 label_295bc4:
     // 0x295bc4: 0x7fb00020  sq          $s0, 0x20($sp)
@@ -60,7 +58,6 @@ label_295bc8:
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 17));
 label_295bcc:
     // 0x295bcc: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x295bccu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_295bd0:
     // 0x295bd0: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -117,7 +114,6 @@ label_295be0:
             goto label_295bfc;
         }
     }
-    ctx->pc = 0x295BE4u;
 label_295be4:
     // 0x295be4: 0x8e060004  lw          $a2, 0x4($s0)
     ctx->pc = 0x295be4u;
@@ -162,7 +158,6 @@ label_295bf8:
             return;
         }
     }
-    ctx->pc = 0x295BFCu;
 label_295bfc:
     // 0x295bfc: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x295bfcu;

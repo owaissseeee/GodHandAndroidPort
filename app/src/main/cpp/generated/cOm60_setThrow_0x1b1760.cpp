@@ -13,7 +13,7 @@
 
 // Function: cOm60_setThrow
 // Address: 0x1b1760 - 0x1b1860
-void cOm60_setThrow_0x1b1760(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm60_setThrow_0x1b1760(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm60_setThrow_0x1b1760");
 #endif
@@ -97,7 +97,6 @@ label_1b1794:
             goto label_1b17ac;
         }
     }
-    ctx->pc = 0x1B17ACu;
 label_1b17ac:
     // 0x1b17ac: 0xc4ad0008  lwc1        $f13, 0x8($a1)
     ctx->pc = 0x1b17acu;
@@ -113,7 +112,6 @@ label_1b17ac:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Atan2_0x1f8180, 0x1f8180u, 0x1b17b8u)) {
         return;
     }
-    ctx->pc = 0x1B17B8u;
 label_1b17b8:
     // 0x1b17b8: 0x8e030250  lw          $v1, 0x250($s0)
     ctx->pc = 0x1b17b8u;
@@ -191,7 +189,6 @@ label_1b17b8:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x1b1820u)) {
         return;
     }
-    ctx->pc = 0x1B1820u;
 label_1b1820:
     // 0x1b1820: 0x3c040060  lui         $a0, 0x60
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)96 << 16));
@@ -220,7 +217,6 @@ label_1b1820:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x1b1848u)) {
         return;
     }
-    ctx->pc = 0x1B1848u;
 label_1b1848:
     // 0x1b1848: 0xae020668  sw          $v0, 0x668($s0)
     ctx->pc = 0x1b1848u;

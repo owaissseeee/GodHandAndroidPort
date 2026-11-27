@@ -13,7 +13,7 @@
 
 // Function: cSeData_RegisterBank
 // Address: 0x2cfb60 - 0x2cfbc0
-void cSeData_RegisterBank_0x2cfb60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSeData_RegisterBank_0x2cfb60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSeData_RegisterBank_0x2cfb60");
 #endif
@@ -64,7 +64,6 @@ void cSeData_RegisterBank_0x2cfb60(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_00374B70_0x374b70, 0x374b70u, 0x2cfb8cu)) {
         return;
     }
-    ctx->pc = 0x2CFB8Cu;
 label_2cfb8c:
     // 0x2cfb8c: 0x8604002c  lh          $a0, 0x2C($s0)
     ctx->pc = 0x2cfb8cu;
@@ -86,7 +85,6 @@ label_2cfb8c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00375988_0x375988, 0x375988u, 0x2cfba0u)) {
         return;
     }
-    ctx->pc = 0x2CFBA0u;
 label_2cfba0:
     // 0x2cfba0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -101,7 +99,6 @@ label_2cfba0:
     if (!runtime->callDirectStatic(rdram, ctx, &cSeData_AddLoadBits_0x2cfcb0, 0x2cfcb0u, 0x2cfbacu)) {
         return;
     }
-    ctx->pc = 0x2CFBACu;
 label_2cfbac:
     // 0x2cfbac: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2cfbacu;

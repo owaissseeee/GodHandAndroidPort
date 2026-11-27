@@ -13,7 +13,7 @@
 
 // Function: BuildObjEntry_387160
 // Address: 0x387160 - 0x387270
-void BuildObjEntry_387160_0x387160(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BuildObjEntry_387160_0x387160(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BuildObjEntry_387160_0x387160");
 #endif
@@ -54,7 +54,6 @@ void BuildObjEntry_387160_0x387160(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_00377998_0x377998, 0x377998u, 0x387180u)) {
         return;
     }
-    ctx->pc = 0x387180u;
 label_387180:
     // 0x387180: 0x40302d  daddu       $a2, $v0, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -88,7 +87,6 @@ label_387180:
             goto label_387254;
         }
     }
-    ctx->pc = 0x387194u;
 label_387194:
     // 0x387194: 0x200382d  daddu       $a3, $s0, $zero
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -133,7 +131,6 @@ label_387194:
         }
     }
     // 0x3871c8: 0x24e20060  addiu       $v0, $a3, 0x60
-    ctx->pc = 0x3871c8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 7), 96));
 label_3871cc:
     // 0x3871cc: 0x68e30007  ldl         $v1, 0x7($a3)
@@ -219,10 +216,8 @@ label_3871cc:
             goto label_387254;
         }
     }
-    ctx->pc = 0x387220u;
 label_387220:
     // 0x387220: 0x24e20060  addiu       $v0, $a3, 0x60
-    ctx->pc = 0x387220u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 7), 96));
 label_387224:
     // 0x387224: 0xdce30000  ld          $v1, 0x0($a3)
@@ -270,7 +265,6 @@ label_387224:
         }
     }
     // 0x387250: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x387250u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_387254:
     // 0x387254: 0x7bb00020  lq          $s0, 0x20($sp)

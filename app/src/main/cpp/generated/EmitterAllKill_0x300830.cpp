@@ -13,7 +13,7 @@
 
 // Function: EmitterAllKill
 // Address: 0x300830 - 0x300900
-void EmitterAllKill_0x300830(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EmitterAllKill_0x300830(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EmitterAllKill_0x300830");
 #endif
@@ -69,7 +69,6 @@ void EmitterAllKill_0x300830(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     // 0x300870: 0x802d  daddu       $s0, $zero, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x300874: 0x3c128000  lui         $s2, 0x8000
-    ctx->pc = 0x300874u;
     SET_GPR_S32(ctx, 18, (int32_t)((uint32_t)32768 << 16));
 label_300878:
     // 0x300878: 0x101142  srl         $v0, $s0, 5
@@ -155,10 +154,8 @@ label_300878:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00302918_0x302918, 0x302918u, 0x3008c8u)) {
         return;
     }
-    ctx->pc = 0x3008C8u;
 label_3008c8:
     // 0x3008c8: 0x26100001  addiu       $s0, $s0, 0x1
-    ctx->pc = 0x3008c8u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 1));
 label_3008cc:
     // 0x3008cc: 0x2a020100  slti        $v0, $s0, 0x100

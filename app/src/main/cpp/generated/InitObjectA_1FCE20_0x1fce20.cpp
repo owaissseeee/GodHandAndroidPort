@@ -13,7 +13,7 @@
 
 // Function: InitObjectA_1FCE20
 // Address: 0x1fce20 - 0x1fce80
-void InitObjectA_1FCE20_0x1fce20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitObjectA_1FCE20_0x1fce20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitObjectA_1FCE20_0x1fce20");
 #endif
@@ -77,7 +77,6 @@ void InitObjectA_1FCE20_0x1fce20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FCDB8_0x1fcdb8, 0x1fcdb8u, 0x1fce68u)) {
         return;
     }
-    ctx->pc = 0x1FCE68u;
 label_1fce68:
     // 0x1fce68: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

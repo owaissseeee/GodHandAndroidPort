@@ -13,7 +13,7 @@
 
 // Function: func_002B6370
 // Address: 0x2b6370 - 0x2b6400
-void func_002B6370_0x2b6370(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002B6370_0x2b6370(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002B6370_0x2b6370");
 #endif
@@ -29,7 +29,6 @@ void func_002B6370_0x2b6370(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
 
-    ctx->pc = 0x2b6370u;
 
 label_2b6370:
     // 0x2b6370: 0x27bdffc0  addiu       $sp, $sp, -0x40
@@ -57,7 +56,6 @@ label_2b6370:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B6510_0x2b6510, 0x2b6510u, 0x2b638cu)) {
         return;
     }
-    ctx->pc = 0x2B638Cu;
 label_2b638c:
     // 0x2b638c: 0x10400016  beqz        $v0, . + 4 + (0x16 << 2)
     ctx->pc = 0x2B638Cu;
@@ -87,7 +85,6 @@ label_2b638c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B5E58_0x2b5e58, 0x2b5e58u, 0x2b63a0u)) {
         return;
     }
-    ctx->pc = 0x2B63A0u;
 label_2b63a0:
     // 0x2b63a0: 0x40882d  daddu       $s1, $v0, $zero
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -107,7 +104,6 @@ label_2b63a0:
         }
     }
     // 0x2b63ac: 0x200282d  daddu       $a1, $s0, $zero
-    ctx->pc = 0x2b63acu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_2b63b0:
     // 0x2b63b0: 0xc0ad7a4  jal         func_2B5E90
@@ -121,7 +117,6 @@ label_2b63b0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B5E90_0x2b5e90, 0x2b5e90u, 0x2b63b8u)) {
         return;
     }
-    ctx->pc = 0x2B63B8u;
 label_2b63b8:
     // 0x2b63b8: 0x26100001  addiu       $s0, $s0, 0x1
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 1));
@@ -134,7 +129,6 @@ label_2b63b8:
     ctx->in_delay_slot = false;
     ctx->pc = 0x2B6370u;
     goto label_2b6370;
-    ctx->pc = 0x2B63C4u;
 label_2b63c4:
     // 0x2b63c4: 0x211102a  slt         $v0, $s0, $s1
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 16) < (int64_t)GPR_S64(ctx, 17)) ? 1 : 0);

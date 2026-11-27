@@ -13,7 +13,7 @@
 
 // Function: SyncDCache
 // Address: 0x3b0510 - 0x3b0598
-void SyncDCache_0x3b0510(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SyncDCache_0x3b0510(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SyncDCache_0x3b0510");
 #endif
@@ -66,7 +66,6 @@ void SyncDCache_0x3b0510(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x3b0548u)) {
         return;
     }
-    ctx->pc = 0x3B0548u;
 label_3b0548:
     // 0x3b0548: 0x3c04ffff  lui         $a0, 0xFFFF
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)65535 << 16));
@@ -85,7 +84,6 @@ label_3b0548:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B0468u, 0x3B0554u, 0x3B055Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3B055Cu;
 label_3b055c:
     // 0x3b055c: 0x12000006  beqz        $s0, . + 4 + (0x6 << 2)
     ctx->pc = 0x3B055Cu;
@@ -121,7 +119,6 @@ label_3b055c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B63F0u, 0x3B0570u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x3B0578u;
 label_3b0578:
     // 0x3b0578: 0xdfb20020  ld          $s2, 0x20($sp)
     ctx->pc = 0x3b0578u;

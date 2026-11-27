@@ -13,7 +13,7 @@
 
 // Function: sceMpegAddCallback
 // Address: 0x39aad8 - 0x39ab20
-void sceMpegAddCallback_0x39aad8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceMpegAddCallback_0x39aad8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceMpegAddCallback_0x39aad8");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: xsputn__7filebufPCcl
 // Address: 0x38f0f0 - 0x38f120
-void xsputn__7filebufPCcl_0x38f0f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void xsputn__7filebufPCcl_0x38f0f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("xsputn__7filebufPCcl_0x38f0f0");
 #endif
@@ -41,7 +41,6 @@ void xsputn__7filebufPCcl_0x38f0f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_file_xsputn_0x393368, 0x393368u, 0x38f108u)) {
         return;
     }
-    ctx->pc = 0x38F108u;
 label_38f108:
     // 0x38f108: 0x2103c  dsll32      $v0, $v0, 0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) << (32 + 0));

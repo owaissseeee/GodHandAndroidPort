@@ -13,7 +13,7 @@
 
 // Function: func_00273F08
 // Address: 0x273f08 - 0x273f98
-void func_00273F08_0x273f08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00273F08_0x273f08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00273F08_0x273f08");
 #endif
@@ -97,7 +97,6 @@ void func_00273F08_0x273f08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x273f5cu)) {
         return;
     }
-    ctx->pc = 0x273F5Cu;
 label_273f5c:
     // 0x273f5c: 0x3c050043  lui         $a1, 0x43
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)67 << 16));
@@ -114,7 +113,6 @@ label_273f5c:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_getMeshPtr_14B730_0x14b730, 0x14b730u, 0x273f6cu)) {
         return;
     }
-    ctx->pc = 0x273F6Cu;
 label_273f6c:
     // 0x273f6c: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));

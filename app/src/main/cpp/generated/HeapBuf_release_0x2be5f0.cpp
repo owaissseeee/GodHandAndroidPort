@@ -13,7 +13,7 @@
 
 // Function: HeapBuf_release
 // Address: 0x2be5f0 - 0x2be630
-void HeapBuf_release_0x2be5f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void HeapBuf_release_0x2be5f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("HeapBuf_release_0x2be5f0");
 #endif
@@ -46,7 +46,6 @@ void HeapBuf_release_0x2be5f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BE6C8_0x2be6c8, 0x2be6c8u, 0x2be604u)) {
         return;
     }
-    ctx->pc = 0x2BE604u;
 label_2be604:
     // 0x2be604: 0x8e050000  lw          $a1, 0x0($s0)
     ctx->pc = 0x2be604u;
@@ -78,7 +77,6 @@ label_2be604:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x2BE610u, 0x2BE618u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2BE618u;
 label_2be618:
     // 0x2be618: 0xae000000  sw          $zero, 0x0($s0)
     ctx->pc = 0x2be618u;

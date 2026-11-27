@@ -13,7 +13,7 @@
 
 // Function: pl00_DiscardThrowObj
 // Address: 0x12b9f0 - 0x12bab8
-void pl00_DiscardThrowObj_0x12b9f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void pl00_DiscardThrowObj_0x12b9f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("pl00_DiscardThrowObj_0x12b9f0");
 #endif
@@ -80,7 +80,6 @@ void pl00_DiscardThrowObj_0x12b9f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_001C8D48_0x1c8d48, 0x1c8d48u, 0x12ba2cu)) {
         return;
     }
-    ctx->pc = 0x12BA2Cu;
 label_12ba2c:
     // 0x12ba2c: 0x8e0206a0  lw          $v0, 0x6A0($s0)
     ctx->pc = 0x12ba2cu;

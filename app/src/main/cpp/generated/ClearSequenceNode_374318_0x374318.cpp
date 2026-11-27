@@ -13,7 +13,7 @@
 
 // Function: ClearSequenceNode_374318
 // Address: 0x374318 - 0x374360
-void ClearSequenceNode_374318_0x374318(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearSequenceNode_374318_0x374318(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearSequenceNode_374318_0x374318");
 #endif
@@ -61,7 +61,6 @@ void ClearSequenceNode_374318_0x374318(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032D6F0_0x32d6f0, 0x32d6f0u, 0x37433cu)) {
         return;
     }
-    ctx->pc = 0x37433Cu;
 label_37433c:
     // 0x37433c: 0x3c050075  lui         $a1, 0x75
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)117 << 16));
@@ -79,7 +78,6 @@ label_37433c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031C928_0x31c928, 0x31c928u, 0x37434cu)) {
         return;
     }
-    ctx->pc = 0x37434Cu;
 label_37434c:
     // 0x37434c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x37434cu;

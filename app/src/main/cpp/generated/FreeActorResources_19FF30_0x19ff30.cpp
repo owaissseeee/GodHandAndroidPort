@@ -13,7 +13,7 @@
 
 // Function: FreeActorResources_19FF30
 // Address: 0x19ff30 - 0x19ff90
-void FreeActorResources_19FF30_0x19ff30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FreeActorResources_19FF30_0x19ff30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FreeActorResources_19FF30_0x19ff30");
 #endif
@@ -80,7 +80,6 @@ void FreeActorResources_19FF30_0x19ff30(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x19ff6cu)) {
         return;
     }
-    ctx->pc = 0x19FF6Cu;
 label_19ff6c:
     // 0x19ff6c: 0xae000600  sw          $zero, 0x600($s0)
     ctx->pc = 0x19ff6cu;
@@ -99,7 +98,6 @@ label_19ff70:
     if (!runtime->callDirectStatic(rdram, ctx, &ResetField214FreeField180_1C2820_0x1c2820, 0x1c2820u, 0x19ff7cu)) {
         return;
     }
-    ctx->pc = 0x19FF7Cu;
 label_19ff7c:
     // 0x19ff7c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x19ff7cu;

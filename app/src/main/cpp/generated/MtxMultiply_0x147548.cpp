@@ -13,7 +13,7 @@
 
 // Function: MtxMultiply
 // Address: 0x147548 - 0x147568
-void MtxMultiply_0x147548(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MtxMultiply_0x147548(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MtxMultiply_0x147548");
 #endif
@@ -37,7 +37,6 @@ void MtxMultiply_0x147548(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0MulMatrix_0x30a2e0, 0x30a2e0u, 0x147558u)) {
         return;
     }
-    ctx->pc = 0x147558u;
 label_147558:
     // 0x147558: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x147558u;

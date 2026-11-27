@@ -13,7 +13,7 @@
 
 // Function: sputc__9streambufi
 // Address: 0x38ba10 - 0x38ba38
-void sputc__9streambufi_0x38ba10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sputc__9streambufi_0x38ba10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sputc__9streambufi_0x38ba10");
 #endif
@@ -46,7 +46,6 @@ void sputc__9streambufi_0x38ba10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_putc_0x38eb28, 0x38eb28u, 0x38ba28u)) {
         return;
     }
-    ctx->pc = 0x38BA28u;
 label_38ba28:
     // 0x38ba28: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38ba28u;

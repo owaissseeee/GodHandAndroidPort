@@ -13,7 +13,7 @@
 
 // Function: __malloc_unlock
 // Address: 0x3a80a8 - 0x3a80e8
-void ps2___malloc_unlock_0x3a80a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___malloc_unlock_0x3a80a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___malloc_unlock_0x3a80a8");
 #endif
@@ -73,7 +73,6 @@ void ps2___malloc_unlock_0x3a80a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &SignalSema_0x3afcc0, 0x3afcc0u, 0x3a80dcu)) {
         return;
     }
-    ctx->pc = 0x3A80DCu;
 label_3a80dc:
     // 0x3a80dc: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3a80dcu;

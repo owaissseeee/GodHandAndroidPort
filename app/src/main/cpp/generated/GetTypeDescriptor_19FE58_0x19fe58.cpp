@@ -13,7 +13,7 @@
 
 // Function: GetTypeDescriptor_19FE58
 // Address: 0x19fe58 - 0x19fea8
-void GetTypeDescriptor_19FE58_0x19fe58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetTypeDescriptor_19FE58_0x19fe58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetTypeDescriptor_19FE58_0x19fe58");
 #endif
@@ -60,7 +60,6 @@ void GetTypeDescriptor_19FE58_0x19fe58(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &func_001C8F30_0x1c8f30, 0x1c8f30u, 0x19fe7cu)) {
         return;
     }
-    ctx->pc = 0x19FE7Cu;
 label_19fe7c:
     // 0x19fe7c: 0x3c050042  lui         $a1, 0x42
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)66 << 16));
@@ -81,7 +80,6 @@ label_19fe7c:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField_0_4_8_31EEA8_0x31eea8, 0x31eea8u, 0x19fe94u)) {
         return;
     }
-    ctx->pc = 0x19FE94u;
 label_19fe94:
     // 0x19fe94: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

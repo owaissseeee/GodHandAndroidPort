@@ -13,7 +13,7 @@
 
 // Function: FreeMultiSlotResources_190250
 // Address: 0x190250 - 0x1902f8
-void FreeMultiSlotResources_190250_0x190250(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FreeMultiSlotResources_190250_0x190250(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FreeMultiSlotResources_190250_0x190250");
 #endif
@@ -67,7 +67,6 @@ void FreeMultiSlotResources_190250_0x190250(uint8_t* rdram, R5900Context* ctx, P
     ctx->pc = 0x190288u;
     WRITE32(ADD32(GPR_U32(ctx, 18), 532), GPR_U32(ctx, 2));
     // 0x19028c: 0x0  nop
-    ctx->pc = 0x19028cu;
     // NOP
 label_190290:
     // 0x190290: 0x8e050000  lw          $a1, 0x0($s0)
@@ -99,13 +98,11 @@ label_190290:
     if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x1902a4u)) {
         return;
     }
-    ctx->pc = 0x1902A4u;
 label_1902a4:
     // 0x1902a4: 0xae000000  sw          $zero, 0x0($s0)
     ctx->pc = 0x1902a4u;
     WRITE32(ADD32(GPR_U32(ctx, 16), 0), GPR_U32(ctx, 0));
     // 0x1902a8: 0x2631ffff  addiu       $s1, $s1, -0x1
-    ctx->pc = 0x1902a8u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 4294967295));
 label_1902ac:
     // 0x1902ac: 0x621fff8  bgez        $s1, . + 4 + (-0x8 << 2)
@@ -155,7 +152,6 @@ label_1902ac:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_ReleaseDamageGive_0x1fe148, 0x1fe148u, 0x1902c8u)) {
         return;
     }
-    ctx->pc = 0x1902C8u;
 label_1902c8:
     // 0x1902c8: 0xae400610  sw          $zero, 0x610($s2)
     ctx->pc = 0x1902c8u;
@@ -174,7 +170,6 @@ label_1902cc:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField214PtrThenInit_1B6F38_0x1b6f38, 0x1b6f38u, 0x1902d8u)) {
         return;
     }
-    ctx->pc = 0x1902D8u;
 label_1902d8:
     // 0x1902d8: 0x7bb00050  lq          $s0, 0x50($sp)
     ctx->pc = 0x1902d8u;

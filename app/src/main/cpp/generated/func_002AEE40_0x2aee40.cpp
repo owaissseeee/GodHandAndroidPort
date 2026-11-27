@@ -13,7 +13,7 @@
 
 // Function: func_002AEE40
 // Address: 0x2aee40 - 0x2aef10
-void func_002AEE40_0x2aee40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002AEE40_0x2aee40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002AEE40_0x2aee40");
 #endif
@@ -83,7 +83,6 @@ void func_002AEE40_0x2aee40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2aeef0;
         }
     }
-    ctx->pc = 0x2AEE74u;
 label_2aee74:
     // 0x2aee74: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -98,7 +97,6 @@ label_2aee74:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B2318_0x2b2318, 0x2b2318u, 0x2aee80u)) {
         return;
     }
-    ctx->pc = 0x2AEE80u;
 label_2aee80:
     // 0x2aee80: 0xae020014  sw          $v0, 0x14($s0)
     ctx->pc = 0x2aee80u;
@@ -114,7 +112,6 @@ label_2aee80:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B2080_0x2b2080, 0x2b2080u, 0x2aee8cu)) {
         return;
     }
-    ctx->pc = 0x2AEE8Cu;
 label_2aee8c:
     // 0x2aee8c: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x2AEE8Cu;
@@ -132,7 +129,6 @@ label_2aee8c:
         }
     }
     // 0x2aee94: 0x0  nop
-    ctx->pc = 0x2aee94u;
     // NOP
 label_2aee98:
     // 0x2aee98: 0x8e660008  lw          $a2, 0x8($s3)
@@ -224,7 +220,6 @@ label_2aeed0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B22E8_0x2b22e8, 0x2b22e8u, 0x2aeee4u)) {
         return;
     }
-    ctx->pc = 0x2AEEE4u;
 label_2aeee4:
     // 0x2aeee4: 0x52600001  beql        $s3, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x2AEEE4u;
@@ -241,10 +236,8 @@ label_2aeee4:
             goto label_2aeeec;
         }
     }
-    ctx->pc = 0x2AEEECu;
 label_2aeeec:
     // 0x2aeeec: 0x220102d  daddu       $v0, $s1, $zero
-    ctx->pc = 0x2aeeecu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
 label_2aeef0:
     // 0x2aeef0: 0x7bb00040  lq          $s0, 0x40($sp)

@@ -13,7 +13,7 @@
 
 // Function: cEmNear_updateNearPlayer
 // Address: 0x279e78 - 0x279f00
-void cEmNear_updateNearPlayer_0x279e78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmNear_updateNearPlayer_0x279e78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmNear_updateNearPlayer_0x279e78");
 #endif
@@ -67,7 +67,6 @@ void cEmNear_updateNearPlayer_0x279e78(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x279ea4u)) {
         return;
     }
-    ctx->pc = 0x279EA4u;
 label_279ea4:
     // 0x279ea4: 0x8c4400f0  lw          $a0, 0xF0($v0)
     ctx->pc = 0x279ea4u;
@@ -83,7 +82,6 @@ label_279ea4:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0MagnitudeSqXZ_0x1f7eb0, 0x1f7eb0u, 0x279eb0u)) {
         return;
     }
-    ctx->pc = 0x279EB0u;
 label_279eb0:
     // 0x279eb0: 0xe6000618  swc1        $f0, 0x618($s0)
     ctx->pc = 0x279eb0u;
@@ -99,7 +97,6 @@ label_279eb0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00279FF0_0x279ff0, 0x279ff0u, 0x279ebcu)) {
         return;
     }
-    ctx->pc = 0x279EBCu;
 label_279ebc:
     // 0x279ebc: 0xc0527ae  jal         func_149EB8
     SET_GPR_U32(ctx, 31, 0x279EC4u);
@@ -112,7 +109,6 @@ label_279ebc:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_calcParts_0x149eb8, 0x149eb8u, 0x279ec4u)) {
         return;
     }
-    ctx->pc = 0x279EC4u;
 label_279ec4:
     // 0x279ec4: 0x8e0200f0  lw          $v0, 0xF0($s0)
     ctx->pc = 0x279ec4u;

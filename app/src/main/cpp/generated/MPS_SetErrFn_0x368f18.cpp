@@ -13,7 +13,7 @@
 
 // Function: MPS_SetErrFn
 // Address: 0x368f18 - 0x368fb0
-void MPS_SetErrFn_0x368f18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MPS_SetErrFn_0x368f18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MPS_SetErrFn_0x368f18");
 #endif
@@ -73,7 +73,6 @@ void MPS_SetErrFn_0x368f18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_00368FB0_0x368fb0, 0x368fb0u, 0x368f48u)) {
         return;
     }
-    ctx->pc = 0x368F48u;
 label_368f48:
     // 0x368f48: 0x10000012  b           . + 4 + (0x12 << 2)
     ctx->pc = 0x368F48u;
@@ -90,7 +89,6 @@ label_368f48:
             goto label_368f94;
         }
     }
-    ctx->pc = 0x368F50u;
 label_368f50:
     // 0x368f50: 0xc0da3f0  jal         func_368FC0
     ctx->pc = 0x368F50u;
@@ -98,7 +96,6 @@ label_368f50:
     if (!runtime->callDirectStatic(rdram, ctx, &MPSLIB_CheckHn_0x368fc0, 0x368fc0u, 0x368f58u)) {
         return;
     }
-    ctx->pc = 0x368F58u;
 label_368f58:
     // 0x368f58: 0x3c05ff02  lui         $a1, 0xFF02
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)65282 << 16));
@@ -141,7 +138,6 @@ label_368f58:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x368E90u, 0x368F78u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x368F80u;
 label_368f80:
     // 0x368f80: 0x26040004  addiu       $a0, $s0, 0x4
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 4));
@@ -158,7 +154,6 @@ label_368f80:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00368FB0_0x368fb0, 0x368fb0u, 0x368f90u)) {
         return;
     }
-    ctx->pc = 0x368F90u;
 label_368f90:
     // 0x368f90: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x368f90u;

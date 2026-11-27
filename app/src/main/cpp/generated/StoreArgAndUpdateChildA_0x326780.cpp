@@ -13,7 +13,7 @@
 
 // Function: StoreArgAndUpdateChildA
 // Address: 0x326780 - 0x3267c0
-void StoreArgAndUpdateChildA_0x326780(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void StoreArgAndUpdateChildA_0x326780(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("StoreArgAndUpdateChildA_0x326780");
 #endif
@@ -55,7 +55,6 @@ void StoreArgAndUpdateChildA_0x326780(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_0033C428_0x33c428, 0x33c428u, 0x3267a4u)) {
         return;
     }
-    ctx->pc = 0x3267A4u;
 label_3267a4:
     // 0x3267a4: 0x8e040004  lw          $a0, 0x4($s0)
     ctx->pc = 0x3267a4u;

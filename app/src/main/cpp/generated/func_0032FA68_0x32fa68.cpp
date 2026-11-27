@@ -13,7 +13,7 @@
 
 // Function: func_0032FA68
 // Address: 0x32fa68 - 0x32fad8
-void func_0032FA68_0x32fa68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0032FA68_0x32fa68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0032FA68_0x32fa68");
 #endif
@@ -86,7 +86,6 @@ void func_0032FA68_0x32fa68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_32fad0;
         }
     }
-    ctx->pc = 0x32FAC8u;
 label_32fac8:
     // 0x32fac8: 0x3e00008  jr          $ra
     ctx->pc = 0x32FAC8u;
@@ -107,7 +106,6 @@ label_32fac8:
         return;
         #endif
     }
-    ctx->pc = 0x32FAD0u;
 label_32fad0:
     // 0x32fad0: 0x3e00008  jr          $ra
     ctx->pc = 0x32FAD0u;

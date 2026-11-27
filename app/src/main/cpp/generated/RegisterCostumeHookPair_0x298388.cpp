@@ -13,7 +13,7 @@
 
 // Function: RegisterCostumeHookPair
 // Address: 0x298388 - 0x2983d0
-void RegisterCostumeHookPair_0x298388(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void RegisterCostumeHookPair_0x298388(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("RegisterCostumeHookPair_0x298388");
 #endif
@@ -54,7 +54,6 @@ void RegisterCostumeHookPair_0x298388(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297B20_0x297b20, 0x297b20u, 0x2983acu)) {
         return;
     }
-    ctx->pc = 0x2983ACu;
 label_2983ac:
     // 0x2983ac: 0x3c05002a  lui         $a1, 0x2A
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)42 << 16));
@@ -71,7 +70,6 @@ label_2983ac:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297B40_0x297b40, 0x297b40u, 0x2983bcu)) {
         return;
     }
-    ctx->pc = 0x2983BCu;
 label_2983bc:
     // 0x2983bc: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2983bcu;

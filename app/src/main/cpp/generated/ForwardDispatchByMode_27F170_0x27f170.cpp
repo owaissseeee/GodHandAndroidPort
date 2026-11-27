@@ -13,7 +13,7 @@
 
 // Function: ForwardDispatchByMode_27F170
 // Address: 0x27f170 - 0x27f1b0
-void ForwardDispatchByMode_27F170_0x27f170(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardDispatchByMode_27F170_0x27f170(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardDispatchByMode_27F170_0x27f170");
 #endif
@@ -52,7 +52,6 @@ void ForwardDispatchByMode_27F170_0x27f170(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &cCollisionSolidManage_ReleaseUnit_0x1347e8, 0x1347e8u, 0x27f190u)) {
         return;
     }
-    ctx->pc = 0x27F190u;
 label_27f190:
     // 0x27f190: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -69,7 +68,6 @@ label_27f190:
     if (!runtime->callDirectStatic(rdram, ctx, &KillEffect_0x306200, 0x306200u, 0x27f1a0u)) {
         return;
     }
-    ctx->pc = 0x27F1A0u;
 label_27f1a0:
     // 0x27f1a0: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x27f1a0u;

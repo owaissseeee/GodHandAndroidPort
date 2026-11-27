@@ -13,7 +13,7 @@
 
 // Function: func_002E1468
 // Address: 0x2e1468 - 0x2e1528
-void func_002E1468_0x2e1468(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002E1468_0x2e1468(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002E1468_0x2e1468");
 #endif
@@ -82,7 +82,6 @@ void func_002E1468_0x2e1468(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &ESLib_ESHermite_0x2e1528, 0x2e1528u, 0x2e14b4u)) {
         return;
     }
-    ctx->pc = 0x2E14B4u;
 label_2e14b4:
     // 0x2e14b4: 0xe6000000  swc1        $f0, 0x0($s0)
     ctx->pc = 0x2e14b4u;
@@ -107,7 +106,6 @@ label_2e14b4:
     if (!runtime->callDirectStatic(rdram, ctx, &ESLib_ESHermite_0x2e1528, 0x2e1528u, 0x2e14d0u)) {
         return;
     }
-    ctx->pc = 0x2E14D0u;
 label_2e14d0:
     // 0x2e14d0: 0xe6000004  swc1        $f0, 0x4($s0)
     ctx->pc = 0x2e14d0u;
@@ -132,7 +130,6 @@ label_2e14d0:
     if (!runtime->callDirectStatic(rdram, ctx, &ESLib_ESHermite_0x2e1528, 0x2e1528u, 0x2e14ecu)) {
         return;
     }
-    ctx->pc = 0x2E14ECu;
 label_2e14ec:
     // 0x2e14ec: 0xe6000008  swc1        $f0, 0x8($s0)
     ctx->pc = 0x2e14ecu;

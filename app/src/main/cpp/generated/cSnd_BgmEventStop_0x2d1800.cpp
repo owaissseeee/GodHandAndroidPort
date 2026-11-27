@@ -13,7 +13,7 @@
 
 // Function: cSnd_BgmEventStop
 // Address: 0x2d1800 - 0x2d1900
-void cSnd_BgmEventStop_0x2d1800(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BgmEventStop_0x2d1800(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BgmEventStop_0x2d1800");
 #endif
@@ -107,7 +107,6 @@ void cSnd_BgmEventStop_0x2d1800(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     ctx->pc = 0x2d1868u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 148)));
     // 0x2d186c: 0x0  nop
-    ctx->pc = 0x2d186cu;
     // NOP
 label_2d1870:
     // 0x2d1870: 0x54560008  bnel        $v0, $s6, . + 4 + (0x8 << 2)
@@ -153,7 +152,6 @@ label_2d1870:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_FadeOut_0x2cd4a8, 0x2cd4a8u, 0x2d188cu)) {
         return;
     }
-    ctx->pc = 0x2D188Cu;
 label_2d188c:
     // 0x2d188c: 0x1000000f  b           . + 4 + (0xF << 2)
     ctx->pc = 0x2D188Cu;
@@ -170,7 +168,6 @@ label_2d188c:
             goto label_2d18cc;
         }
     }
-    ctx->pc = 0x2D1894u;
 label_2d1894:
     // 0x2d1894: 0x30621000  andi        $v0, $v1, 0x1000
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) & (uint64_t)(uint16_t)4096);
@@ -239,7 +236,6 @@ label_2d1894:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_FadeIn_0x2cd470, 0x2cd470u, 0x2d18c8u)) {
         return;
     }
-    ctx->pc = 0x2D18C8u;
 label_2d18c8:
     // 0x2d18c8: 0x8e100088  lw          $s0, 0x88($s0)
     ctx->pc = 0x2d18c8u;
@@ -263,7 +259,6 @@ label_2d18cc:
             goto label_2d1870;
         }
     }
-    ctx->pc = 0x2D18D4u;
 label_2d18d4:
     // 0x2d18d4: 0x7bb00070  lq          $s0, 0x70($sp)
     ctx->pc = 0x2d18d4u;

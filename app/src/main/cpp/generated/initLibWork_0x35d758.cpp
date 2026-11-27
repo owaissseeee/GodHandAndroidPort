@@ -13,7 +13,7 @@
 
 // Function: initLibWork
 // Address: 0x35d758 - 0x35d7a8
-void initLibWork_0x35d758(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void initLibWork_0x35d758(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("initLibWork_0x35d758");
 #endif
@@ -59,7 +59,6 @@ void initLibWork_0x35d758(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     // 0x35d778: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     // 0x35d77c: 0x220202d  daddu       $a0, $s1, $zero
-    ctx->pc = 0x35d77cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
 label_35d780:
     // 0x35d780: 0x26310010  addiu       $s1, $s1, 0x10
@@ -75,7 +74,6 @@ label_35d780:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj35D0_ClearFields_0_4_8_C_D728_0x35d728, 0x35d728u, 0x35d78cu)) {
         return;
     }
-    ctx->pc = 0x35D78Cu;
 label_35d78c:
     // 0x35d78c: 0x1600fffc  bnez        $s0, . + 4 + (-0x4 << 2)
     ctx->pc = 0x35D78Cu;
@@ -95,7 +93,6 @@ label_35d78c:
             goto label_35d780;
         }
     }
-    ctx->pc = 0x35D794u;
 label_35d794:
     // 0x35d794: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x35d794u;

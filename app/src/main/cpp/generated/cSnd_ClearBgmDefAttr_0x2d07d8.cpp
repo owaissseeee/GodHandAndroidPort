@@ -13,7 +13,7 @@
 
 // Function: cSnd_ClearBgmDefAttr
 // Address: 0x2d07d8 - 0x2d0820
-void cSnd_ClearBgmDefAttr_0x2d07d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_ClearBgmDefAttr_0x2d07d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_ClearBgmDefAttr_0x2d07d8");
 #endif
@@ -51,7 +51,6 @@ void cSnd_ClearBgmDefAttr_0x2d07d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_ClearBgmAttr_0x2d0758, 0x2d0758u, 0x2d07f8u)) {
         return;
     }
-    ctx->pc = 0x2D07F8u;
 label_2d07f8:
     // 0x2d07f8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2d07f8u;

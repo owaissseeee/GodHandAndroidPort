@@ -14,7 +14,7 @@
 
 // Function: capVu0Atan2
 // Address: 0x1f8180 - 0x1f8350
-void capVu0Atan2_0x1f8180(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void capVu0Atan2_0x1f8180(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("capVu0Atan2_0x1f8180");
 #endif
@@ -93,7 +93,6 @@ void capVu0Atan2_0x1f8180(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
         return;
         #endif
     }
-    ctx->pc = 0x1F81C0u;
 label_1f81c0:
     // 0x1f81c0: 0x44800800  mtc1        $zero, $f1
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }
@@ -135,7 +134,6 @@ label_1f81c0:
         return;
         #endif
     }
-    ctx->pc = 0x1F81F4u;
 label_1f81f4:
     // 0x1f81f4: 0x46010034  c.lt.s      $f0, $f1
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[0], ctx->f[1])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -209,7 +207,6 @@ label_1f81f4:
         return;
         #endif
     }
-    ctx->pc = 0x1F8248u;
 label_1f8248:
     // 0x1f8248: 0x2442c350  addiu       $v0, $v0, -0x3CB0
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294951760));
@@ -329,7 +326,6 @@ label_1f8248:
             goto label_1f8328;
         }
     }
-    ctx->pc = 0x1F8304u;
 label_1f8304:
     // 0x1f8304: 0x3c014049  lui         $at, 0x4049
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16457 << 16));
@@ -352,7 +348,6 @@ label_1f8304:
             goto label_1f8328;
         }
     }
-    ctx->pc = 0x1F8318u;
 label_1f8318:
     // 0x1f8318: 0x46006034  c.lt.s      $f12, $f0
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[12], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -373,10 +368,8 @@ label_1f8318:
             goto label_1f8328;
         }
     }
-    ctx->pc = 0x1F8328u;
 label_1f8328:
     // 0x1f8328: 0x46000806  mov.s       $f0, $f1
-    ctx->pc = 0x1f8328u;
     ctx->f[0] = FPU_MOV_S(ctx->f[1]);
 label_1f832c:
     // 0x1f832c: 0x3e00008  jr          $ra

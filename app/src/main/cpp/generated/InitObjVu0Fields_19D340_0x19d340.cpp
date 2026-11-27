@@ -13,7 +13,7 @@
 
 // Function: InitObjVu0Fields_19D340
 // Address: 0x19d340 - 0x19d3c8
-void InitObjVu0Fields_19D340_0x19d340(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitObjVu0Fields_19D340_0x19d340(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitObjVu0Fields_19D340_0x19d340");
 #endif
@@ -60,7 +60,6 @@ void InitObjVu0Fields_19D340_0x19d340(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_001BBEB8_0x1bbeb8, 0x1bbeb8u, 0x19d368u)) {
         return;
     }
-    ctx->pc = 0x19D368u;
 label_19d368:
     // 0x19d368: 0x2413ffff  addiu       $s3, $zero, -0x1
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
@@ -100,7 +99,6 @@ label_19d378:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Set_Byte_54_0x16f640, 0x16f640u, 0x19d398u)) {
         return;
     }
-    ctx->pc = 0x19D398u;
 label_19d398:
     // 0x19d398: 0x2652ffff  addiu       $s2, $s2, -0x1
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), 4294967295));

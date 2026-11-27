@@ -13,7 +13,7 @@
 
 // Function: func_0013E970
 // Address: 0x13e970 - 0x13eba0
-void func_0013E970_0x13e970(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0013E970_0x13e970(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0013E970_0x13e970");
 #endif
@@ -317,7 +317,6 @@ label_13ea74:
             goto label_13eaac;
         }
     }
-    ctx->pc = 0x13EAA4u;
 label_13eaa4:
     // 0x13eaa4: 0x2442ffff  addiu       $v0, $v0, -0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));
@@ -395,10 +394,8 @@ label_13eaac:
             goto label_13eb08;
         }
     }
-    ctx->pc = 0x13EB04u;
 label_13eb04:
     // 0x13eb04: 0x44802000  mtc1        $zero, $f4
-    ctx->pc = 0x13eb04u;
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[4], &bits, sizeof(bits)); }
 label_13eb08:
     // 0x13eb08: 0xc4c000b8  lwc1        $f0, 0xB8($a2)
@@ -440,10 +437,8 @@ label_13eb08:
             goto label_13eb38;
         }
     }
-    ctx->pc = 0x13EB34u;
 label_13eb34:
     // 0x13eb34: 0x44801000  mtc1        $zero, $f2
-    ctx->pc = 0x13eb34u;
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[2], &bits, sizeof(bits)); }
 label_13eb38:
     // 0x13eb38: 0x8cc300c0  lw          $v1, 0xC0($a2)
@@ -520,7 +515,6 @@ label_13eb88:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_move_0x2aaa40, 0x2aaa40u, 0x13eb90u)) {
         return;
     }
-    ctx->pc = 0x13EB90u;
 label_13eb90:
     // 0x13eb90: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x13eb90u;

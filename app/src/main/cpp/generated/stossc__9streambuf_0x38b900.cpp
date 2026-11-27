@@ -13,7 +13,7 @@
 
 // Function: stossc__9streambuf
 // Address: 0x38b900 - 0x38b920
-void stossc__9streambuf_0x38b900(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void stossc__9streambuf_0x38b900(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("stossc__9streambuf_0x38b900");
 #endif

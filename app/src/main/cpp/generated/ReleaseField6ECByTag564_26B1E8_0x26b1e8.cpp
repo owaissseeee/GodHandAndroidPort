@@ -13,7 +13,7 @@
 
 // Function: ReleaseField6ECByTag564_26B1E8
 // Address: 0x26b1e8 - 0x26b240
-void ReleaseField6ECByTag564_26B1E8_0x26b1e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ReleaseField6ECByTag564_26B1E8_0x26b1e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ReleaseField6ECByTag564_26B1E8_0x26b1e8");
 #endif
@@ -73,7 +73,6 @@ void ReleaseField6ECByTag564_26B1E8_0x26b1e8(uint8_t* rdram, R5900Context* ctx, 
     if (!runtime->callDirectStatic(rdram, ctx, &cOmWeapon_SetBreak_0x1d0818, 0x1d0818u, 0x26b218u)) {
         return;
     }
-    ctx->pc = 0x26B218u;
 label_26b218:
     // 0x26b218: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x26B218u;
@@ -90,7 +89,6 @@ label_26b218:
             goto label_26b22c;
         }
     }
-    ctx->pc = 0x26B220u;
 label_26b220:
     // 0x26b220: 0xc073d2a  jal         func_1CF4A8
     ctx->pc = 0x26B220u;
@@ -98,7 +96,6 @@ label_26b220:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmWeapon_setFall_0x1cf4a8, 0x1cf4a8u, 0x26b228u)) {
         return;
     }
-    ctx->pc = 0x26B228u;
 label_26b228:
     // 0x26b228: 0xae0006ec  sw          $zero, 0x6EC($s0)
     ctx->pc = 0x26b228u;

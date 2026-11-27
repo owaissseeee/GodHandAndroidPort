@@ -13,7 +13,7 @@
 
 // Function: ForwardEntityAndExit_2C2368
 // Address: 0x2c2368 - 0x2c23e0
-void ForwardEntityAndExit_2C2368_0x2c2368(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardEntityAndExit_2C2368_0x2c2368(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardEntityAndExit_2C2368_0x2c2368");
 #endif
@@ -78,10 +78,8 @@ void ForwardEntityAndExit_2C2368_0x2c2368(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AEB50_0x2aeb50, 0x2aeb50u, 0x2c239cu)) {
         return;
     }
-    ctx->pc = 0x2C239Cu;
 label_2c239c:
     // 0x2c239c: 0x40182d  daddu       $v1, $v0, $zero
-    ctx->pc = 0x2c239cu;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_2c23a0:
     // 0x2c23a0: 0x3c10003c  lui         $s0, 0x3C
@@ -109,7 +107,6 @@ label_2c23a0:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_execUpCutData_0x2c4150, 0x2c4150u, 0x2c23c0u)) {
         return;
     }
-    ctx->pc = 0x2C23C0u;
 label_2c23c0:
     // 0x2c23c0: 0x8e022f84  lw          $v0, 0x2F84($s0)
     ctx->pc = 0x2c23c0u;
@@ -125,7 +122,6 @@ label_2c23c0:
     if (!runtime->callDirectStatic(rdram, ctx, &cTaskWork_exit_0x2d5a48, 0x2d5a48u, 0x2c23ccu)) {
         return;
     }
-    ctx->pc = 0x2C23CCu;
 label_2c23cc:
     // 0x2c23cc: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2c23ccu;

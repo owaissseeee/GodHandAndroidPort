@@ -13,7 +13,7 @@
 
 // Function: cDamageUnit_SetDamageCollActive_1FD610
 // Address: 0x1fd610 - 0x1fd668
-void cDamageUnit_SetDamageCollActive_1FD610_0x1fd610(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDamageUnit_SetDamageCollActive_1FD610_0x1fd610(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDamageUnit_SetDamageCollActive_1FD610_0x1fd610");
 #endif
@@ -106,7 +106,6 @@ label_1fd628:
         return;
         #endif
     }
-    ctx->pc = 0x1FD648u;
 label_1fd648:
     // 0x1fd648: 0x8c620000  lw          $v0, 0x0($v1)
     ctx->pc = 0x1fd648u;
@@ -132,7 +131,6 @@ label_1fd648:
         return;
         #endif
     }
-    ctx->pc = 0x1FD658u;
 label_1fd658:
     // 0x1fd658: 0x5460fff3  bnel        $v1, $zero, . + 4 + (-0xD << 2)
     ctx->pc = 0x1FD658u;
@@ -152,7 +150,6 @@ label_1fd658:
             goto label_1fd628;
         }
     }
-    ctx->pc = 0x1FD660u;
 label_1fd660:
     // 0x1fd660: 0x3e00008  jr          $ra
     ctx->pc = 0x1FD660u;

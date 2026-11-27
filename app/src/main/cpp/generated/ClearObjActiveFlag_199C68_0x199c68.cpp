@@ -13,7 +13,7 @@
 
 // Function: ClearObjActiveFlag_199C68
 // Address: 0x199c68 - 0x199cc8
-void ClearObjActiveFlag_199C68_0x199c68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearObjActiveFlag_199C68_0x199c68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearObjActiveFlag_199C68_0x199c68");
 #endif
@@ -76,7 +76,6 @@ void ClearObjActiveFlag_199C68_0x199c68(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x199c9cu)) {
         return;
     }
-    ctx->pc = 0x199C9Cu;
 label_199c9c:
     // 0x199c9c: 0xde050540  ld          $a1, 0x540($s0)
     ctx->pc = 0x199c9cu;
@@ -96,7 +95,6 @@ label_199c9c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001331B8_0x1331b8, 0x1331b8u, 0x199cb0u)) {
         return;
     }
-    ctx->pc = 0x199CB0u;
 label_199cb0:
     // 0x199cb0: 0xc071f82  jal         func_1C7E08
     SET_GPR_U32(ctx, 31, 0x199CB8u);
@@ -109,7 +107,6 @@ label_199cb0:
     if (!runtime->callDirectStatic(rdram, ctx, &ClearStateAndFlag_1C7E08_0x1c7e08, 0x1c7e08u, 0x199cb8u)) {
         return;
     }
-    ctx->pc = 0x199CB8u;
 label_199cb8:
     // 0x199cb8: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x199cb8u;

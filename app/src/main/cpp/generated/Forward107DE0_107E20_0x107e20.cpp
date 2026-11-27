@@ -13,7 +13,7 @@
 
 // Function: Forward107DE0_107E20
 // Address: 0x107e20 - 0x107e40
-void Forward107DE0_107E20_0x107e20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Forward107DE0_107E20_0x107e20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Forward107DE0_107E20_0x107e20");
 #endif
@@ -44,7 +44,6 @@ void Forward107DE0_107E20_0x107e20(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &ResetGlobalStateFields_107DE0_0x107de0, 0x107de0u, 0x107e34u)) {
         return;
     }
-    ctx->pc = 0x107E34u;
 label_107e34:
     // 0x107e34: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x107e34u;

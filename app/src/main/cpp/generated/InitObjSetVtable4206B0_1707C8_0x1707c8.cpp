@@ -13,7 +13,7 @@
 
 // Function: InitObjSetVtable4206B0_1707C8
 // Address: 0x1707c8 - 0x170800
-void InitObjSetVtable4206B0_1707C8_0x1707c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitObjSetVtable4206B0_1707C8_0x1707c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitObjSetVtable4206B0_1707C8_0x1707c8");
 #endif
@@ -45,7 +45,6 @@ void InitObjSetVtable4206B0_1707C8_0x1707c8(uint8_t* rdram, R5900Context* ctx, P
     if (!runtime->callDirectStatic(rdram, ctx, &func_001BFAC8_0x1bfac8, 0x1bfac8u, 0x1707dcu)) {
         return;
     }
-    ctx->pc = 0x1707DCu;
 label_1707dc:
     // 0x1707dc: 0x3c030042  lui         $v1, 0x42
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)66 << 16));

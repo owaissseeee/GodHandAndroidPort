@@ -13,7 +13,7 @@
 
 // Function: EffObj_startEffectAtPos
 // Address: 0x1a4218 - 0x1a4298
-void EffObj_startEffectAtPos_0x1a4218(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EffObj_startEffectAtPos_0x1a4218(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EffObj_startEffectAtPos_0x1a4218");
 #endif
@@ -56,11 +56,9 @@ void EffObj_startEffectAtPos_0x1a4218(uint8_t* rdram, R5900Context* ctx, PS2Runt
         }
     }
 
-    ctx->pc = 0x1a4218u;
 
 label_1a4218:
     // 0x1a4218: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x1a4218u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
 label_1a421c:
     // 0x1a421c: 0x7fb00020  sq          $s0, 0x20($sp)
@@ -68,7 +66,6 @@ label_1a421c:
     WRITE128(ADD32(GPR_U32(ctx, 29), 32), GPR_VEC(ctx, 16));
 label_1a4220:
     // 0x1a4220: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x1a4220u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_1a4224:
     // 0x1a4224: 0xffbf0010  sd          $ra, 0x10($sp)
@@ -146,7 +143,6 @@ label_1a4244:
             goto label_1a4264;
         }
     }
-    ctx->pc = 0x1A4248u;
 label_1a4248:
     // 0x1a4248: 0xc4400000  lwc1        $f0, 0x0($v0)
     ctx->pc = 0x1a4248u;
@@ -177,19 +173,15 @@ label_1a4260:
     SET_GPR_S32(ctx, 5, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 1516)));
 label_1a4264:
     // 0x1a4264: 0x24040001  addiu       $a0, $zero, 0x1
-    ctx->pc = 0x1a4264u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_1a4268:
     // 0x1a4268: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x1a4268u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
 label_1a426c:
     // 0x1a426c: 0x44816000  mtc1        $at, $f12
-    ctx->pc = 0x1a426cu;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[12], &bits, sizeof(bits)); }
 label_1a4270:
     // 0x1a4270: 0x302d  daddu       $a2, $zero, $zero
-    ctx->pc = 0x1a4270u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1a4274:
     // 0x1a4274: 0x3a0382d  daddu       $a3, $sp, $zero
@@ -218,7 +210,6 @@ label_1a427c:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffectPos_0x306838, 0x306838u, 0x1a4280u)) {
         return;
     }
-    ctx->pc = 0x1A4280u;
 label_1a4280:
     // 0x1a4280: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1a4280u;
@@ -258,10 +249,8 @@ label_1a428c:
         return;
         #endif
     }
-    ctx->pc = 0x1A4290u;
 label_1a4290:
     // 0x1a4290: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x1a4290u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
 label_1a4294:
     // 0x1a4294: 0x0  nop

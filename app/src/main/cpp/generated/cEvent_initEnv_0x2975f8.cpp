@@ -13,7 +13,7 @@
 
 // Function: cEvent_initEnv
 // Address: 0x2975f8 - 0x297660
-void cEvent_initEnv_0x2975f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_initEnv_0x2975f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_initEnv_0x2975f8");
 #endif
@@ -68,7 +68,6 @@ void cEvent_initEnv_0x2975f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297660_0x297660, 0x297660u, 0x297628u)) {
         return;
     }
-    ctx->pc = 0x297628u;
 label_297628:
     // 0x297628: 0xae110018  sw          $s1, 0x18($s0)
     ctx->pc = 0x297628u;
@@ -88,7 +87,6 @@ label_297628:
     if (!runtime->callDirectStatic(rdram, ctx, &cEventConfig_setEventNo_0x299320, 0x299320u, 0x29763cu)) {
         return;
     }
-    ctx->pc = 0x29763Cu;
 label_29763c:
     // 0x29763c: 0x8e020008  lw          $v0, 0x8($s0)
     ctx->pc = 0x29763cu;

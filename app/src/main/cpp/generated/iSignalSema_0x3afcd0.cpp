@@ -13,7 +13,7 @@
 
 // Function: iSignalSema
 // Address: 0x3afcd0 - 0x3afce0
-void iSignalSema_0x3afcd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iSignalSema_0x3afcd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iSignalSema_0x3afcd0");
 #endif

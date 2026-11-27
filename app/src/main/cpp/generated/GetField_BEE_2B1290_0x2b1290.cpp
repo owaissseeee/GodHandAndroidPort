@@ -13,7 +13,7 @@
 
 // Function: GetField_BEE_2B1290
 // Address: 0x2b1290 - 0x2b12a0
-void GetField_BEE_2B1290_0x2b1290(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetField_BEE_2B1290_0x2b1290(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetField_BEE_2B1290_0x2b1290");
 #endif

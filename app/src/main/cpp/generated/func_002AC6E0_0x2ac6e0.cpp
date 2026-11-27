@@ -13,7 +13,7 @@
 
 // Function: func_002AC6E0
 // Address: 0x2ac6e0 - 0x2ac878
-void func_002AC6E0_0x2ac6e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002AC6E0_0x2ac6e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002AC6E0_0x2ac6e0");
 #endif
@@ -121,7 +121,6 @@ void func_002AC6E0_0x2ac6e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x2ac750: 0x24430008  addiu       $v1, $v0, 0x8
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 8));
     // 0x2ac754: 0x0  nop
-    ctx->pc = 0x2ac754u;
     // NOP
 label_2ac758:
     // 0x2ac758: 0xc4600000  lwc1        $f0, 0x0($v1)
@@ -204,10 +203,8 @@ label_2ac758:
             goto label_2ac758;
         }
     }
-    ctx->pc = 0x2AC7BCu;
 label_2ac7bc:
     // 0x2ac7bc: 0x28c20004  slti        $v0, $a2, 0x4
-    ctx->pc = 0x2ac7bcu;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 6) < (int64_t)(int32_t)4) ? 1 : 0);
 label_2ac7c0:
     // 0x2ac7c0: 0x14400022  bnez        $v0, . + 4 + (0x22 << 2)
@@ -287,7 +284,6 @@ label_2ac7c0:
     if (!runtime->callDirectStatic(rdram, ctx, &ESLib_ESCatMullRom_0x2e1580, 0x2e1580u, 0x2ac828u)) {
         return;
     }
-    ctx->pc = 0x2AC828u;
 label_2ac828:
     // 0x2ac828: 0xe6800000  swc1        $f0, 0x0($s4)
     ctx->pc = 0x2ac828u;
@@ -314,13 +310,11 @@ label_2ac828:
     if (!runtime->callDirectStatic(rdram, ctx, &ESLib_ESCatMullRom_0x2e1580, 0x2e1580u, 0x2ac844u)) {
         return;
     }
-    ctx->pc = 0x2AC844u;
 label_2ac844:
     // 0x2ac844: 0xe6a00000  swc1        $f0, 0x0($s5)
     ctx->pc = 0x2ac844u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 21), 0), bits); }
     // 0x2ac848: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2ac848u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2ac84c:
     // 0x2ac84c: 0x7bb000e0  lq          $s0, 0xE0($sp)

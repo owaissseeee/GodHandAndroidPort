@@ -14,7 +14,7 @@
 
 // Function: fRand0_1
 // Address: 0x31d000 - 0x31d020
-void fRand0_1_0x31d000(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void fRand0_1_0x31d000(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("fRand0_1_0x31d000");
 #endif
@@ -38,7 +38,6 @@ void fRand0_1_0x31d000(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &func_0030F518_0x30f518, 0x30f518u, 0x31d010u)) {
         return;
     }
-    ctx->pc = 0x31D010u;
 label_31d010:
     // 0x31d010: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x31d010u;

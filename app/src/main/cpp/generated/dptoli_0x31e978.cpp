@@ -13,7 +13,7 @@
 
 // Function: dptoli
 // Address: 0x31e978 - 0x31ea10
-void dptoli_0x31e978(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void dptoli_0x31e978(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("dptoli_0x31e978");
 #endif
@@ -48,7 +48,6 @@ void dptoli_0x31e978(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___unpack_d_0x31dfa8, 0x31dfa8u, 0x31e990u)) {
         return;
     }
-    ctx->pc = 0x31E990u;
 label_31e990:
     // 0x31e990: 0x8fa30000  lw          $v1, 0x0($sp)
     ctx->pc = 0x31e990u;
@@ -85,7 +84,6 @@ label_31e990:
             goto label_31e9b0;
         }
     }
-    ctx->pc = 0x31E9A8u;
 label_31e9a8:
     // 0x31e9a8: 0x10000015  b           . + 4 + (0x15 << 2)
     ctx->pc = 0x31E9A8u;
@@ -102,7 +100,6 @@ label_31e9a8:
             goto label_31ea00;
         }
     }
-    ctx->pc = 0x31E9B0u;
 label_31e9b0:
     // 0x31e9b0: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x31E9B0u;
@@ -152,7 +149,6 @@ label_31e9b0:
             goto label_31e9e0;
         }
     }
-    ctx->pc = 0x31E9C8u;
 label_31e9c8:
     // 0x31e9c8: 0x8fa30004  lw          $v1, 0x4($sp)
     ctx->pc = 0x31e9c8u;
@@ -178,7 +174,6 @@ label_31e9c8:
             goto label_31ea00;
         }
     }
-    ctx->pc = 0x31E9E0u;
 label_31e9e0:
     // 0x31e9e0: 0xdfa20010  ld          $v0, 0x10($sp)
     ctx->pc = 0x31e9e0u;

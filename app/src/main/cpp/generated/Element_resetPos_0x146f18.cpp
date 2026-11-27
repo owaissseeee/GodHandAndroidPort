@@ -13,7 +13,7 @@
 
 // Function: Element_resetPos
 // Address: 0x146f18 - 0x146f70
-void Element_resetPos_0x146f18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Element_resetPos_0x146f18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Element_resetPos_0x146f18");
 #endif
@@ -45,7 +45,6 @@ void Element_resetPos_0x146f18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &ClearBytesAt74And79To7C_13C618_0x13c618, 0x13c618u, 0x146f2cu)) {
         return;
     }
-    ctx->pc = 0x146F2Cu;
 label_146f2c:
     // 0x146f2c: 0x3c020074  lui         $v0, 0x74
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
@@ -95,7 +94,6 @@ label_146f2c:
             goto label_146f60;
         }
     }
-    ctx->pc = 0x146F5Cu;
 label_146f5c:
     // 0x146f5c: 0xae000060  sw          $zero, 0x60($s0)
     ctx->pc = 0x146f5cu;

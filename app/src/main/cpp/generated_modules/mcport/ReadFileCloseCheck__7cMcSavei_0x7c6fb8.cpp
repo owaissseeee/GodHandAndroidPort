@@ -14,15 +14,13 @@ namespace gh_mcport
 {
 // Function: ReadFileCloseCheck__7cMcSavei
 // Address: 0x7c6fb8 - 0x7c7008
-void ReadFileCloseCheck__7cMcSavei_0x7c6fb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ReadFileCloseCheck__7cMcSavei_0x7c6fb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ReadFileCloseCheck__7cMcSavei_0x7c6fb8");
 #endif
 
-    ctx->pc = 0x7c6fb8u;
 
     // 0x7c6fb8: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x7c6fb8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x7c6fbc: 0x14a00003  bnez        $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x7C6FBCu;
@@ -39,7 +37,6 @@ void ReadFileCloseCheck__7cMcSavei_0x7c6fb8(uint8_t* rdram, R5900Context* ctx, P
             goto label_7c6fcc;
         }
     }
-    ctx->pc = 0x7C6FC4u;
     // 0x7c6fc4: 0x3e00008  jr          $ra
     ctx->pc = 0x7C6FC4u;
     {
@@ -59,10 +56,8 @@ void ReadFileCloseCheck__7cMcSavei_0x7c6fb8(uint8_t* rdram, R5900Context* ctx, P
         return;
         #endif
     }
-    ctx->pc = 0x7C6FCCu;
 label_7c6fcc:
     // 0x7c6fcc: 0x2402fffc  addiu       $v0, $zero, -0x4
-    ctx->pc = 0x7c6fccu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967292));
     // 0x7c6fd0: 0x10a20009  beq         $a1, $v0, . + 4 + (0x9 << 2)
     ctx->pc = 0x7C6FD0u;
@@ -79,9 +74,7 @@ label_7c6fcc:
             goto label_7c6ff8;
         }
     }
-    ctx->pc = 0x7C6FD8u;
     // 0x7c6fd8: 0x28a2fffd  slti        $v0, $a1, -0x3
-    ctx->pc = 0x7c6fd8u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 5) < (int64_t)(int32_t)4294967293) ? 1 : 0);
     // 0x7c6fdc: 0x14400006  bnez        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x7C6FDCu;
@@ -98,9 +91,7 @@ label_7c6fcc:
             goto label_7c6ff8;
         }
     }
-    ctx->pc = 0x7C6FE4u;
     // 0x7c6fe4: 0x2402fffe  addiu       $v0, $zero, -0x2
-    ctx->pc = 0x7c6fe4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967294));
     // 0x7c6fe8: 0x14a20003  bne         $a1, $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x7C6FE8u;
@@ -117,7 +108,6 @@ label_7c6fcc:
             goto label_7c6ff8;
         }
     }
-    ctx->pc = 0x7C6FF0u;
     // 0x7c6ff0: 0x3e00008  jr          $ra
     ctx->pc = 0x7C6FF0u;
     {
@@ -137,7 +127,6 @@ label_7c6fcc:
         return;
         #endif
     }
-    ctx->pc = 0x7C6FF8u;
 label_7c6ff8:
     // 0x7c6ff8: 0xac82007c  sw          $v0, 0x7C($a0)
     ctx->pc = 0x7c6ff8u;
@@ -161,9 +150,7 @@ label_7c6ff8:
         return;
         #endif
     }
-    ctx->pc = 0x7C7004u;
     // 0x7c7004: 0x0  nop
-    ctx->pc = 0x7c7004u;
     // NOP
     ctx->pc = 0x7c7008u;
 }

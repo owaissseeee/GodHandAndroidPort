@@ -13,7 +13,7 @@
 
 // Function: cOm4f_setCloseFix
 // Address: 0x1a4e88 - 0x1a4f10
-void cOm4f_setCloseFix_0x1a4e88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm4f_setCloseFix_0x1a4e88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm4f_setCloseFix_0x1a4e88");
 #endif
@@ -75,10 +75,8 @@ void cOm4f_setCloseFix_0x1a4e88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_1a4eb4;
         }
     }
-    ctx->pc = 0x1A4EB0u;
 label_1a4eb0:
     // 0x1a4eb0: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1a4eb0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1a4eb4:
     // 0x1a4eb4: 0x5040000e  beql        $v0, $zero, . + 4 + (0xE << 2)
@@ -132,10 +130,8 @@ label_1a4eb4:
             goto label_1a4ed8;
         }
     }
-    ctx->pc = 0x1A4ED4u;
 label_1a4ed4:
     // 0x1a4ed4: 0x182d  daddu       $v1, $zero, $zero
-    ctx->pc = 0x1a4ed4u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1a4ed8:
     // 0x1a4ed8: 0xc4800798  lwc1        $f0, 0x798($a0)

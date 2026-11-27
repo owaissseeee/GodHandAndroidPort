@@ -13,7 +13,7 @@
 
 // Function: SetT2
 // Address: 0x3b6990 - 0x3b6a00
-void SetT2_0x3b6990(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetT2_0x3b6990(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetT2_0x3b6990");
 #endif
@@ -48,7 +48,6 @@ void SetT2_0x3b6990(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
         }
     }
     // 0x3b69a4: 0x0  nop
-    ctx->pc = 0x3b69a4u;
     // NOP
 label_3b69a8:
     // 0x3b69a8: 0x42000039  di
@@ -78,7 +77,6 @@ label_3b69a8:
             goto label_3b69a8;
         }
     }
-    ctx->pc = 0x3B69CCu;
 label_3b69cc:
     // 0x3b69cc: 0x40026000  mfc0        $v0, Status
     SET_GPR_S32(ctx, 2, (int32_t)ctx->cop0_status);

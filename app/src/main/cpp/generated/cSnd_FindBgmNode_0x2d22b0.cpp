@@ -13,7 +13,7 @@
 
 // Function: cSnd_FindBgmNode
 // Address: 0x2d22b0 - 0x2d22f0
-void cSnd_FindBgmNode_0x2d22b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_FindBgmNode_0x2d22b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_FindBgmNode_0x2d22b0");
 #endif
@@ -96,7 +96,6 @@ label_2d22c0:
         return;
         #endif
     }
-    ctx->pc = 0x2D22E0u;
 label_2d22e0:
     // 0x2d22e0: 0x5460fff7  bnel        $v1, $zero, . + 4 + (-0x9 << 2)
     ctx->pc = 0x2D22E0u;
@@ -116,7 +115,6 @@ label_2d22e0:
             goto label_2d22c0;
         }
     }
-    ctx->pc = 0x2D22E8u;
 label_2d22e8:
     // 0x2d22e8: 0x3e00008  jr          $ra
     ctx->pc = 0x2D22E8u;

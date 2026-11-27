@@ -13,7 +13,7 @@
 
 // Function: Obj30E0_NoOp_E538
 // Address: 0x30e538 - 0x30e540
-void Obj30E0_NoOp_E538_0x30e538(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj30E0_NoOp_E538_0x30e538(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj30E0_NoOp_E538_0x30e538");
 #endif

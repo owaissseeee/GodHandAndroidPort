@@ -14,24 +14,24 @@ namespace gh_r500
 {
 // Function: R500Init__Fv
 // Address: 0x799220 - 0x799258
-void R500Init__Fv_0x799220(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void R500Init__Fv_0x799220(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("R500Init__Fv_0x799220");
 #endif
 
-    switch (ctx->pc) {
-        case 0x799238u: goto label_799238;
-        case 0x799240u: goto label_799240;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x799220u, 0)) {
+        switch (ctx->pc) {
+            case 0x799238u: goto label_799238;
+            case 0x799240u: goto label_799240;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x799220u;
+
 
     // 0x799220: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x799220u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x799224: 0x24040001  addiu       $a0, $zero, 0x1
-    ctx->pc = 0x799224u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x799228: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x799228u;
@@ -40,9 +40,7 @@ void R500Init__Fv_0x799220(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     ctx->pc = 0x79922cu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x799230: 0xc1e6460  jal         func_799180
-    ctx->pc = 0x799230u;
     SET_GPR_U32(ctx, 31, 0x799238u);
-    ctx->pc = 0x799234u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x799230u;
     // 0x799234: 0x3c10007a  lui         $s0, 0x7A (Delay Slot)
@@ -52,12 +50,9 @@ void R500Init__Fv_0x799220(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x799180u, 0x799230u, 0x799238u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x799238u;
 label_799238:
     // 0x799238: 0xc1e64a0  jal         func_799280
-    ctx->pc = 0x799238u;
     SET_GPR_U32(ctx, 31, 0x799240u);
-    ctx->pc = 0x79923Cu;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x799238u;
     // 0x79923c: 0x40202d  daddu       $a0, $v0, $zero (Delay Slot)
@@ -67,7 +62,6 @@ label_799238:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x799280u, 0x799238u, 0x799240u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x799240u;
 label_799240:
     // 0x799240: 0xae029d00  sw          $v0, -0x6300($s0)
     ctx->pc = 0x799240u;
@@ -97,9 +91,7 @@ label_799240:
         return;
         #endif
     }
-    ctx->pc = 0x799254u;
     // 0x799254: 0x0  nop
-    ctx->pc = 0x799254u;
     // NOP
     ctx->pc = 0x799258u;
 }

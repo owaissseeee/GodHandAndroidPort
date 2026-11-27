@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getReelItem
 // Address: 0x1faee0 - 0x1faf20
-void cCoreSave_getReelItem_0x1faee0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getReelItem_0x1faee0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getReelItem_0x1faee0");
 #endif
@@ -58,7 +58,6 @@ void cCoreSave_getReelItem_0x1faee0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         return;
         #endif
     }
-    ctx->pc = 0x1FAEF8u;
 label_1faef8:
     // 0x1faef8: 0x3c040800  lui         $a0, 0x800
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)2048 << 16));

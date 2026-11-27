@@ -13,7 +13,7 @@
 
 // Function: cBgmData_GetTblPtr
 // Address: 0x2d0528 - 0x2d0578
-void cBgmData_GetTblPtr_0x2d0528(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cBgmData_GetTblPtr_0x2d0528(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cBgmData_GetTblPtr_0x2d0528");
 #endif
@@ -50,7 +50,6 @@ void cBgmData_GetTblPtr_0x2d0528(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &cBgmData_IsReady_0x2cff68, 0x2cff68u, 0x2d0544u)) {
         return;
     }
-    ctx->pc = 0x2D0544u;
 label_2d0544:
     // 0x2d0544: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x2D0544u;
@@ -85,10 +84,8 @@ label_2d0544:
             goto label_2d055c;
         }
     }
-    ctx->pc = 0x2D0558u;
 label_2d0558:
     // 0x2d0558: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2d0558u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2d055c:
     // 0x2d055c: 0x7bb00020  lq          $s0, 0x20($sp)

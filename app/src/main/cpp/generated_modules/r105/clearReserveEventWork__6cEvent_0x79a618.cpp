@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
+#include <ps2_recompiled_functions.h>
 #include "r105_functions.h"
 
 #include "ps2_syscalls.h"
@@ -14,32 +15,30 @@ namespace gh_r105
 {
 // Function: clearReserveEventWork__6cEvent
 // Address: 0x79a618 - 0x79a640
-void clearReserveEventWork__6cEvent_0x79a618(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void clearReserveEventWork__6cEvent_0x79a618(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("clearReserveEventWork__6cEvent_0x79a618");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79a630u: goto label_79a630;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x79a618u, 0)) {
+        switch (ctx->pc) {
+            case 0x79a630u: goto label_79a630;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x79a618u;
+
 
     // 0x79a618: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x79a618u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x79a61c: 0x282d  daddu       $a1, $zero, $zero
-    ctx->pc = 0x79a61cu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x79a620: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x79a620u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x79a624: 0x24060030  addiu       $a2, $zero, 0x30
-    ctx->pc = 0x79a624u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 48));
     // 0x79a628: 0xc0e94bc  jal         func_3A52F0
-    ctx->pc = 0x79A628u;
     SET_GPR_U32(ctx, 31, 0x79A630u);
     ctx->pc = 0x79A62Cu;
     ctx->in_delay_slot = true;
@@ -48,10 +47,9 @@ void clearReserveEventWork__6cEvent_0x79a618(uint8_t* rdram, R5900Context* ctx, 
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 56)));
     ctx->in_delay_slot = false;
     ctx->pc = 0x3A52F0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3A52F0u, 0x79A628u, 0x79A630u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3A52F0u, 0x79A630u)) {
         return;
     }
-    ctx->pc = 0x79A630u;
 label_79a630:
     // 0x79a630: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x79a630u;
@@ -75,9 +73,7 @@ label_79a630:
         return;
         #endif
     }
-    ctx->pc = 0x79A63Cu;
     // 0x79a63c: 0x0  nop
-    ctx->pc = 0x79a63cu;
     // NOP
     ctx->pc = 0x79a640u;
 }

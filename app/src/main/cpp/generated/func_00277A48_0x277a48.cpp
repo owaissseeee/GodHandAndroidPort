@@ -13,7 +13,7 @@
 
 // Function: func_00277A48
 // Address: 0x277a48 - 0x277b18
-void func_00277A48_0x277a48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00277A48_0x277a48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00277A48_0x277a48");
 #endif
@@ -85,7 +85,6 @@ void func_00277A48_0x277a48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_277adc;
         }
     }
-    ctx->pc = 0x277A78u;
 label_277a78:
     // 0x277a78: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x277a78u;
@@ -119,7 +118,6 @@ label_277a78:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x277aa4u)) {
         return;
     }
-    ctx->pc = 0x277AA4u;
 label_277aa4:
     // 0x277aa4: 0x920202f6  lbu         $v0, 0x2F6($s0)
     ctx->pc = 0x277aa4u;
@@ -145,7 +143,6 @@ label_277ab0:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x277AB8u, 0x277AC0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x277AC0u;
 label_277ac0:
     // 0x277ac0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -160,7 +157,6 @@ label_277ac0:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x14F9F0u, 0x277AC4u, 0x277ACCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x277ACCu;
 label_277acc:
     // 0x277acc: 0x4600a306  mov.s       $f12, $f20
     ctx->f[12] = FPU_MOV_S(ctx->f[20]);
@@ -175,7 +171,6 @@ label_277acc:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x14F928u, 0x277AD0u, 0x277AD8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x277AD8u;
 label_277ad8:
     // 0x277ad8: 0x8e0400f0  lw          $a0, 0xF0($s0)
     ctx->pc = 0x277ad8u;
@@ -196,7 +191,6 @@ label_277adc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002DDAB0_0x2ddab0, 0x2ddab0u, 0x277aecu)) {
         return;
     }
-    ctx->pc = 0x277AECu;
 label_277aec:
     // 0x277aec: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x277AECu;

@@ -13,7 +13,7 @@
 
 // Function: BlackJackId_Move
 // Address: 0x1d4f78 - 0x1d4fd0
-void BlackJackId_Move_0x1d4f78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BlackJackId_Move_0x1d4f78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BlackJackId_Move_0x1d4f78");
 #endif
@@ -47,7 +47,6 @@ void BlackJackId_Move_0x1d4f78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     ctx->pc = 0x1d4f90u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1d4f94: 0x2411002c  addiu       $s1, $zero, 0x2C
-    ctx->pc = 0x1d4f94u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 0), 44));
 label_1d4f98:
     // 0x1d4f98: 0x200202d  daddu       $a0, $s0, $zero
@@ -63,7 +62,6 @@ label_1d4f98:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_Main_0x2d5de0, 0x2d5de0u, 0x1d4fa4u)) {
         return;
     }
-    ctx->pc = 0x1D4FA4u;
 label_1d4fa4:
     // 0x1d4fa4: 0x0  nop
     // NOP
@@ -96,7 +94,6 @@ label_1d4fa4:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_move_0x2aaa40, 0x2aaa40u, 0x1d4fb8u)) {
         return;
     }
-    ctx->pc = 0x1D4FB8u;
 label_1d4fb8:
     // 0x1d4fb8: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x1d4fb8u;

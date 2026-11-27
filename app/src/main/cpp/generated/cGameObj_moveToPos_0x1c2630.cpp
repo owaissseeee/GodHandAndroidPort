@@ -13,7 +13,7 @@
 
 // Function: cGameObj_moveToPos
 // Address: 0x1c2630 - 0x1c26b8
-void cGameObj_moveToPos_0x1c2630(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObj_moveToPos_0x1c2630(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObj_moveToPos_0x1c2630");
 #endif
@@ -83,7 +83,6 @@ label_1c266c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001C0450_0x1c0450, 0x1c0450u, 0x1c2674u)) {
         return;
     }
-    ctx->pc = 0x1C2674u;
 label_1c2674:
     // 0x1c2674: 0x26220490  addiu       $v0, $s1, 0x490
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 17), 1168));

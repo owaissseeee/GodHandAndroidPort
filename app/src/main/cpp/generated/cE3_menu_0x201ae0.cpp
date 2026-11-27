@@ -13,7 +13,7 @@
 
 // Function: cE3_menu
 // Address: 0x201ae0 - 0x201be0
-void cE3_menu_0x201ae0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cE3_menu_0x201ae0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cE3_menu_0x201ae0");
 #endif
@@ -118,7 +118,6 @@ void cE3_menu_0x201ae0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &printf__FiiiiiiPCce_0x2e0d60, 0x2e0d60u, 0x201b3cu)) {
         return;
     }
-    ctx->pc = 0x201B3Cu;
 label_201b3c:
     // 0x201b3c: 0x1000000b  b           . + 4 + (0xB << 2)
     ctx->pc = 0x201B3Cu;
@@ -135,7 +134,6 @@ label_201b3c:
             goto label_201b6c;
         }
     }
-    ctx->pc = 0x201B44u;
 label_201b44:
     // 0x201b44: 0x3c0a0043  lui         $t2, 0x43
     SET_GPR_S32(ctx, 10, (int32_t)((uint32_t)67 << 16));
@@ -162,10 +160,8 @@ label_201b44:
     if (!runtime->callDirectStatic(rdram, ctx, &printf__FiiiiiiPCce_0x2e0d60, 0x2e0d60u, 0x201b68u)) {
         return;
     }
-    ctx->pc = 0x201B68u;
 label_201b68:
     // 0x201b68: 0x3c030074  lui         $v1, 0x74
-    ctx->pc = 0x201b68u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
 label_201b6c:
     // 0x201b6c: 0x246374a0  addiu       $v1, $v1, 0x74A0
@@ -278,10 +274,8 @@ label_201bac:
             goto label_201bd0;
         }
     }
-    ctx->pc = 0x201BC8u;
 label_201bc8:
     // 0x201bc8: 0x182d  daddu       $v1, $zero, $zero
-    ctx->pc = 0x201bc8u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_201bcc:
     // 0x201bcc: 0xa2030002  sb          $v1, 0x2($s0)

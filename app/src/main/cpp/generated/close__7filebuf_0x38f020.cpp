@@ -13,7 +13,7 @@
 
 // Function: close__7filebuf
 // Address: 0x38f020 - 0x38f050
-void close__7filebuf_0x38f020(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void close__7filebuf_0x38f020(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("close__7filebuf_0x38f020");
 #endif
@@ -45,7 +45,6 @@ void close__7filebuf_0x38f020(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_file_close_it_0x392758, 0x392758u, 0x38f034u)) {
         return;
     }
-    ctx->pc = 0x38F034u;
 label_38f034:
     // 0x38f034: 0x2800b  movn        $s0, $zero, $v0
     ctx->pc = 0x38f034u;

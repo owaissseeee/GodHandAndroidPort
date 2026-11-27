@@ -13,7 +13,7 @@
 
 // Function: cSnd_BgmFadeOutAll
 // Address: 0x2d2178 - 0x2d2228
-void cSnd_BgmFadeOutAll_0x2d2178(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BgmFadeOutAll_0x2d2178(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BgmFadeOutAll_0x2d2178");
 #endif
@@ -123,7 +123,6 @@ label_2d21b0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373A58_0x373a58, 0x373a58u, 0x2d21d0u)) {
         return;
     }
-    ctx->pc = 0x2D21D0u;
 label_2d21d0:
     // 0x2d21d0: 0x14530007  bne         $v0, $s3, . + 4 + (0x7 << 2)
     ctx->pc = 0x2D21D0u;
@@ -155,7 +154,6 @@ label_2d21d0:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_FadeOut_0x2cd4a8, 0x2cd4a8u, 0x2d21e8u)) {
         return;
     }
-    ctx->pc = 0x2D21E8u;
 label_2d21e8:
     // 0x2d21e8: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x2D21E8u;
@@ -172,7 +170,6 @@ label_2d21e8:
             goto label_2d21fc;
         }
     }
-    ctx->pc = 0x2D21F0u;
 label_2d21f0:
     // 0x2d21f0: 0xc0b352a  jal         func_2CD4A8
     SET_GPR_U32(ctx, 31, 0x2D21F8u);
@@ -185,7 +182,6 @@ label_2d21f0:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_FadeOut_0x2cd4a8, 0x2cd4a8u, 0x2d21f8u)) {
         return;
     }
-    ctx->pc = 0x2D21F8u;
 label_2d21f8:
     // 0x2d21f8: 0x8e100088  lw          $s0, 0x88($s0)
     ctx->pc = 0x2d21f8u;
@@ -209,7 +205,6 @@ label_2d21fc:
             goto label_2d21b0;
         }
     }
-    ctx->pc = 0x2D2204u;
 label_2d2204:
     // 0x2d2204: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x2d2204u;

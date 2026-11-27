@@ -13,7 +13,7 @@
 
 // Function: UpdateObjWithVtableDispatch_2BB1F0
 // Address: 0x2bb1f0 - 0x2bb258
-void UpdateObjWithVtableDispatch_2BB1F0_0x2bb1f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateObjWithVtableDispatch_2BB1F0_0x2bb1f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateObjWithVtableDispatch_2BB1F0_0x2bb1f0");
 #endif
@@ -50,15 +50,12 @@ void UpdateObjWithVtableDispatch_2BB1F0_0x2bb1f0(uint8_t* rdram, R5900Context* c
         }
     }
 
-    ctx->pc = 0x2bb1f0u;
 
 label_2bb1f0:
     // 0x2bb1f0: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x2bb1f0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
 label_2bb1f4:
     // 0x2bb1f4: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2bb1f4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2bb1f8:
     // 0x2bb1f8: 0x7fb00010  sq          $s0, 0x10($sp)
@@ -70,7 +67,6 @@ label_2bb1fc:
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
 label_2bb200:
     // 0x2bb200: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x2bb200u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_2bb204:
     // 0x2bb204: 0x92030004  lbu         $v1, 0x4($s0)
@@ -107,10 +103,8 @@ label_2bb210:
             goto label_2bb238;
         }
     }
-    ctx->pc = 0x2BB214u;
 label_2bb214:
     // 0x2bb214: 0x3107b  dsra        $v0, $v1, 1
-    ctx->pc = 0x2bb214u;
     SET_GPR_S64(ctx, 2, GPR_S64(ctx, 3) >> 1);
 label_2bb218:
     // 0x2bb218: 0x30420001  andi        $v0, $v0, 0x1
@@ -143,7 +137,6 @@ label_2bb220:
             goto label_2bb238;
         }
     }
-    ctx->pc = 0x2BB224u;
 label_2bb224:
     // 0x2bb224: 0x8e050008  lw          $a1, 0x8($s0)
     ctx->pc = 0x2bb224u;
@@ -175,7 +168,6 @@ label_2bb230:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxMultiply_0x147548, 0x147548u, 0x2bb234u)) {
         return;
     }
-    ctx->pc = 0x2BB234u;
 label_2bb234:
     // 0x2bb234: 0x8e020100  lw          $v0, 0x100($s0)
     ctx->pc = 0x2bb234u;
@@ -216,7 +208,6 @@ label_2bb244:
             return;
         }
     }
-    ctx->pc = 0x2BB248u;
 label_2bb248:
     // 0x2bb248: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2bb248u;

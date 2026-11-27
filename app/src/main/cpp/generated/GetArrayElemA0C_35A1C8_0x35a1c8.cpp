@@ -13,7 +13,7 @@
 
 // Function: GetArrayElemA0C_35A1C8
 // Address: 0x35a1c8 - 0x35a1e0
-void GetArrayElemA0C_35A1C8_0x35a1c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetArrayElemA0C_35A1C8_0x35a1c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetArrayElemA0C_35A1C8_0x35a1c8");
 #endif

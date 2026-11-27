@@ -13,7 +13,7 @@
 
 // Function: skip_ws__FP9streambuf
 // Address: 0x3875a8 - 0x387610
-void skip_ws__FP9streambuf_0x3875a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void skip_ws__FP9streambuf_0x3875a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("skip_ws__FP9streambuf_0x3875a8");
 #endif
@@ -50,7 +50,6 @@ void skip_ws__FP9streambuf_0x3875a8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     // 0x3875c8: 0x80802d  daddu       $s0, $a0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x3875cc: 0x0  nop
-    ctx->pc = 0x3875ccu;
     // NOP
 label_3875d0:
     // 0x3875d0: 0xc0e3ab8  jal         func_38EAE0
@@ -64,7 +63,6 @@ label_3875d0:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_getc_0x38eae0, 0x38eae0u, 0x3875d8u)) {
         return;
     }
-    ctx->pc = 0x3875D8u;
 label_3875d8:
     // 0x3875d8: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -100,7 +98,6 @@ label_3875d8:
             goto label_3875d0;
         }
     }
-    ctx->pc = 0x3875F4u;
 label_3875f4:
     // 0x3875f4: 0xdfbf0030  ld          $ra, 0x30($sp)
     ctx->pc = 0x3875f4u;

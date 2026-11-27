@@ -13,7 +13,7 @@
 
 // Function: sceGsSyncV
 // Address: 0x395398 - 0x395430
-void sceGsSyncV_0x395398(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceGsSyncV_0x395398(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceGsSyncV_0x395398");
 #endif
@@ -42,7 +42,6 @@ void sceGsSyncV_0x395398(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x395388u, 0x3953A4u, 0x3953ACu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3953ACu;
 label_3953ac:
     // 0x3953ac: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -64,7 +63,6 @@ label_3953ac:
     if (!runtime->callDirectStatic(rdram, ctx, &VSync_0x3b0130, 0x3b0130u, 0x3953c4u)) {
         return;
     }
-    ctx->pc = 0x3953C4u;
 label_3953c4:
     // 0x3953c4: 0x86030000  lh          $v1, 0x0($s0)
     ctx->pc = 0x3953c4u;
@@ -116,7 +114,6 @@ label_3953c4:
             goto label_395424;
         }
     }
-    ctx->pc = 0x3953F8u;
 label_3953f8:
     // 0x3953f8: 0xc0ec070  jal         func_3B01C0
     ctx->pc = 0x3953F8u;
@@ -124,7 +121,6 @@ label_3953f8:
     if (!runtime->callDirectStatic(rdram, ctx, &VSync2_0x3b01c0, 0x3b01c0u, 0x395400u)) {
         return;
     }
-    ctx->pc = 0x395400u;
 label_395400:
     // 0x395400: 0x2137b  dsra        $v0, $v0, 13
     SET_GPR_S64(ctx, 2, GPR_S64(ctx, 2) >> 13);
@@ -153,7 +149,6 @@ label_395400:
     // 0x395418: 0x4103c  dsll32      $v0, $a0, 0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 4) << (32 + 0));
     // 0x39541c: 0x2103f  dsra32      $v0, $v0, 0
-    ctx->pc = 0x39541cu;
     SET_GPR_S64(ctx, 2, GPR_S64(ctx, 2) >> (32 + 0));
 label_395420:
     // 0x395420: 0xdfb00000  ld          $s0, 0x0($sp)

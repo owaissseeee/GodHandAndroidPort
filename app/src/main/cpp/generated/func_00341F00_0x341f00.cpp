@@ -13,7 +13,7 @@
 
 // Function: func_00341F00
 // Address: 0x341f00 - 0x3420e0
-void func_00341F00_0x341f00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00341F00_0x341f00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00341F00_0x341f00");
 #endif
@@ -168,7 +168,6 @@ label_341f70:
     ctx->pc = 0x341fc8u;
     WRITE16(ADD32(GPR_U32(ctx, 18), 0), (uint16_t)GPR_U32(ctx, 3));
     // 0x341fcc: 0x0  nop
-    ctx->pc = 0x341fccu;
     // NOP
 label_341fd0:
     // 0x341fd0: 0x91a30000  lbu         $v1, 0x0($t5)
@@ -337,7 +336,6 @@ label_342080:
             goto label_341f70;
         }
     }
-    ctx->pc = 0x3420A4u;
 label_3420a4:
     // 0x3420a4: 0xa68e0002  sh          $t6, 0x2($s4)
     ctx->pc = 0x3420a4u;

@@ -13,7 +13,7 @@
 
 // Function: cSeData_IsReadDone
 // Address: 0x2cf830 - 0x2cf868
-void cSeData_IsReadDone_0x2cf830(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSeData_IsReadDone_0x2cf830(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSeData_IsReadDone_0x2cf830");
 #endif
@@ -60,7 +60,6 @@ void cSeData_IsReadDone_0x2cf830(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &cDvd_Check_0x201098, 0x201098u, 0x2cf84cu)) {
         return;
     }
-    ctx->pc = 0x2CF84Cu;
 label_2cf84c:
     // 0x2cf84c: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x2CF84Cu;
@@ -77,10 +76,8 @@ label_2cf84c:
             goto label_2cf858;
         }
     }
-    ctx->pc = 0x2CF854u;
 label_2cf854:
     // 0x2cf854: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2cf854u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2cf858:
     // 0x2cf858: 0xdfbf0000  ld          $ra, 0x0($sp)

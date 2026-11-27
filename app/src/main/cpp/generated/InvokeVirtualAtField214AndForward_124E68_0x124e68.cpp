@@ -13,7 +13,7 @@
 
 // Function: InvokeVirtualAtField214AndForward_124E68
 // Address: 0x124e68 - 0x124ec0
-void InvokeVirtualAtField214AndForward_124E68_0x124e68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InvokeVirtualAtField214AndForward_124E68_0x124e68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InvokeVirtualAtField214AndForward_124E68_0x124e68");
 #endif
@@ -46,11 +46,9 @@ void InvokeVirtualAtField214AndForward_124E68_0x124e68(uint8_t* rdram, R5900Cont
         }
     }
 
-    ctx->pc = 0x124e68u;
 
 label_124e68:
     // 0x124e68: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x124e68u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
 label_124e6c:
     // 0x124e6c: 0x7fb00010  sq          $s0, 0x10($sp)
@@ -62,7 +60,6 @@ label_124e70:
     { float f = ctx->f[20]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 29), 32), bits); }
 label_124e74:
     // 0x124e74: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x124e74u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_124e78:
     // 0x124e78: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -99,7 +96,6 @@ label_124e84:
             goto label_124eac;
         }
     }
-    ctx->pc = 0x124E88u;
 label_124e88:
     // 0x124e88: 0x8ca30214  lw          $v1, 0x214($a1)
     ctx->pc = 0x124e88u;
@@ -140,10 +136,8 @@ label_124e98:
             return;
         }
     }
-    ctx->pc = 0x124E9Cu;
 label_124e9c:
     // 0x124e9c: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x124e9cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_124ea0:
     // 0x124ea0: 0x40282d  daddu       $a1, $v0, $zero
@@ -172,7 +166,6 @@ label_124ea8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A7498u, 0x124EA4u, 0x124EACu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x124EACu;
 label_124eac:
     // 0x124eac: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x124eacu;

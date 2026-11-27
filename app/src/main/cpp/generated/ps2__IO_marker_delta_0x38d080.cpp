@@ -13,7 +13,7 @@
 
 // Function: _IO_marker_delta
 // Address: 0x38d080 - 0x38d0b8
-void ps2__IO_marker_delta_0x38d080(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_marker_delta_0x38d080(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_marker_delta_0x38d080");
 #endif
@@ -56,7 +56,6 @@ void ps2__IO_marker_delta_0x38d080(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         return;
         #endif
     }
-    ctx->pc = 0x38D094u;
 label_38d094:
     // 0x38d094: 0x30420100  andi        $v0, $v0, 0x100
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)256);

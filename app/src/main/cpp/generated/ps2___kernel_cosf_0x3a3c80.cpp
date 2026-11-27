@@ -13,7 +13,7 @@
 
 // Function: __kernel_cosf
 // Address: 0x3a3c80 - 0x3a3dd8
-void ps2___kernel_cosf_0x3a3c80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___kernel_cosf_0x3a3c80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___kernel_cosf_0x3a3c80");
 #endif
@@ -89,7 +89,6 @@ void ps2___kernel_cosf_0x3a3c80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
         #endif
     }
     // 0x3a3ccc: 0x0  nop
-    ctx->pc = 0x3a3cccu;
     // NOP
 label_3a3cd0:
     // 0x3a3cd0: 0x3c01ad47  lui         $at, 0xAD47
@@ -206,7 +205,6 @@ label_3a3cd0:
         return;
         #endif
     }
-    ctx->pc = 0x3A3D80u;
 label_3a3d80:
     // 0x3a3d80: 0x3c023f48  lui         $v0, 0x3F48
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)16200 << 16));
@@ -238,10 +236,8 @@ label_3a3d80:
             goto label_3a3da0;
         }
     }
-    ctx->pc = 0x3A3D9Cu;
 label_3a3d9c:
     // 0x3a3d9c: 0x821021  addu        $v0, $a0, $v0
-    ctx->pc = 0x3a3d9cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 2)));
 label_3a3da0:
     // 0x3a3da0: 0x3c013f00  lui         $at, 0x3F00

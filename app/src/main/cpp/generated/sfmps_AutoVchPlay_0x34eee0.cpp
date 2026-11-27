@@ -13,7 +13,7 @@
 
 // Function: sfmps_AutoVchPlay
 // Address: 0x34eee0 - 0x34ef68
-void sfmps_AutoVchPlay_0x34eee0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfmps_AutoVchPlay_0x34eee0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfmps_AutoVchPlay_0x34eee0");
 #endif
@@ -56,7 +56,6 @@ void sfmps_AutoVchPlay_0x34eee0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &GetArrayElemA0C_35A1C8_0x35a1c8, 0x35a1c8u, 0x34ef04u)) {
         return;
     }
-    ctx->pc = 0x34EF04u;
 label_34ef04:
     // 0x34ef04: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -126,7 +125,6 @@ label_34ef04:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034FA28_0x34fa28, 0x34fa28u, 0x34ef3cu)) {
         return;
     }
-    ctx->pc = 0x34EF3Cu;
 label_34ef3c:
     // 0x34ef3c: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

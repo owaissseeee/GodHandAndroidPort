@@ -13,7 +13,7 @@
 
 // Function: ClearSlotRefs_376AE0
 // Address: 0x376ae0 - 0x376b80
-void ClearSlotRefs_376AE0_0x376ae0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearSlotRefs_376AE0_0x376ae0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearSlotRefs_376AE0_0x376ae0");
 #endif
@@ -60,7 +60,6 @@ void ClearSlotRefs_376AE0_0x376ae0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x376b10u;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 16), 0)));
     // 0x376b14: 0x0  nop
-    ctx->pc = 0x376b14u;
     // NOP
 label_376b18:
     // 0x376b18: 0x5040000d  beql        $v0, $zero, . + 4 + (0xD << 2)
@@ -132,10 +131,8 @@ label_376b18:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0037D8B8_0x37d8b8, 0x37d8b8u, 0x376b4cu)) {
         return;
     }
-    ctx->pc = 0x376B4Cu;
 label_376b4c:
     // 0x376b4c: 0x26100050  addiu       $s0, $s0, 0x50
-    ctx->pc = 0x376b4cu;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 80));
 label_376b50:
     // 0x376b50: 0x213102a  slt         $v0, $s0, $s3

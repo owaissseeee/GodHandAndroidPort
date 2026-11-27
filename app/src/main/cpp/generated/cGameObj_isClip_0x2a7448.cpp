@@ -13,7 +13,7 @@
 
 // Function: cGameObj_isClip
 // Address: 0x2a7448 - 0x2a7498
-void cGameObj_isClip_0x2a7448(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObj_isClip_0x2a7448(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObj_isClip_0x2a7448");
 #endif
@@ -76,10 +76,8 @@ void cGameObj_isClip_0x2a7448(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &IsTargetVisible_14B470_0x14b470, 0x14b470u, 0x2a7478u)) {
         return;
     }
-    ctx->pc = 0x2A7478u;
 label_2a7478:
     // 0x2a7478: 0x2102b  sltu        $v0, $zero, $v0
-    ctx->pc = 0x2a7478u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 0) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
 label_2a747c:
     // 0x2a747c: 0xdfbf0000  ld          $ra, 0x0($sp)

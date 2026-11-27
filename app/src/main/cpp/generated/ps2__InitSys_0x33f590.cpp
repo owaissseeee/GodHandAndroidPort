@@ -13,7 +13,7 @@
 
 // Function: _InitSys
 // Address: 0x33f590 - 0x33f5b8
-void ps2__InitSys_0x33f590(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__InitSys_0x33f590(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__InitSys_0x33f590");
 #endif
@@ -38,7 +38,6 @@ void ps2__InitSys_0x33f590(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &NoOp_33E6A8_0x33e6a8, 0x33e6a8u, 0x33f5a0u)) {
         return;
     }
-    ctx->pc = 0x33F5A0u;
 label_33f5a0:
     // 0x33f5a0: 0xc0cfd6e  jal         func_33F5B8
     ctx->pc = 0x33F5A0u;
@@ -46,7 +45,6 @@ label_33f5a0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0033F5B8_0x33f5b8, 0x33f5b8u, 0x33f5a8u)) {
         return;
     }
-    ctx->pc = 0x33F5A8u;
 label_33f5a8:
     // 0x33f5a8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x33f5a8u;

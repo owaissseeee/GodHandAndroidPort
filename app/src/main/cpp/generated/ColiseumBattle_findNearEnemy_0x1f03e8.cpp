@@ -13,7 +13,7 @@
 
 // Function: ColiseumBattle_findNearEnemy
 // Address: 0x1f03e8 - 0x1f0490
-void ColiseumBattle_findNearEnemy_0x1f03e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumBattle_findNearEnemy_0x1f03e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumBattle_findNearEnemy_0x1f03e8");
 #endif
@@ -71,7 +71,6 @@ void ColiseumBattle_findNearEnemy_0x1f03e8(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x1f0418u)) {
         return;
     }
-    ctx->pc = 0x1F0418u;
 label_1f0418:
     // 0x1f0418: 0x40282d  daddu       $a1, $v0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -86,10 +85,8 @@ label_1f0418:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F0360_0x1f0360, 0x1f0360u, 0x1f0424u)) {
         return;
     }
-    ctx->pc = 0x1F0424u;
 label_1f0424:
     // 0x1f0424: 0x3c020058  lui         $v0, 0x58
-    ctx->pc = 0x1f0424u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)88 << 16));
 label_1f0428:
     // 0x1f0428: 0x8c5069f0  lw          $s0, 0x69F0($v0)
@@ -152,7 +149,6 @@ label_1f0438:
     // 0x1f0450: 0x28620300  slti        $v0, $v1, 0x300
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)768) ? 1 : 0);
     // 0x1f0454: 0x40202d  daddu       $a0, $v0, $zero
-    ctx->pc = 0x1f0454u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_1f0458:
     // 0x1f0458: 0x308200ff  andi        $v0, $a0, 0xFF
@@ -183,7 +179,6 @@ label_1f0458:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F0360_0x1f0360, 0x1f0360u, 0x1f046cu)) {
         return;
     }
-    ctx->pc = 0x1F046Cu;
 label_1f046c:
     // 0x1f046c: 0x8e100004  lw          $s0, 0x4($s0)
     ctx->pc = 0x1f046cu;

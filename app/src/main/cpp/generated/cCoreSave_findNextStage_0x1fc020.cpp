@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_findNextStage
 // Address: 0x1fc020 - 0x1fc090
-void cCoreSave_findNextStage_0x1fc020(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_findNextStage_0x1fc020(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_findNextStage_0x1fc020");
 #endif
@@ -71,7 +71,6 @@ void cCoreSave_findNextStage_0x1fc020(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_1fc078;
         }
     }
-    ctx->pc = 0x1FC044u;
 label_1fc044:
     // 0x1fc044: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x1FC044u;
@@ -89,11 +88,9 @@ label_1fc044:
         }
     }
     // 0x1fc04c: 0x0  nop
-    ctx->pc = 0x1fc04cu;
     // NOP
 label_1fc050:
     // 0x1fc050: 0x305000ff  andi        $s0, $v0, 0xFF
-    ctx->pc = 0x1fc050u;
     SET_GPR_U64(ctx, 16, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)255);
 label_1fc054:
     // 0x1fc054: 0x2e020008  sltiu       $v0, $s0, 0x8
@@ -124,7 +121,6 @@ label_1fc054:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_ckClearStage_0x1fbfd0, 0x1fbfd0u, 0x1fc068u)) {
         return;
     }
-    ctx->pc = 0x1FC068u;
 label_1fc068:
     // 0x1fc068: 0x1440fff9  bnez        $v0, . + 4 + (-0x7 << 2)
     ctx->pc = 0x1FC068u;
@@ -144,12 +140,10 @@ label_1fc068:
             goto label_1fc050;
         }
     }
-    ctx->pc = 0x1FC070u;
 label_1fc070:
     // 0x1fc070: 0x101600  sll         $v0, $s0, 24
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 16), 24));
     // 0x1fc074: 0x21603  sra         $v0, $v0, 24
-    ctx->pc = 0x1fc074u;
     SET_GPR_S32(ctx, 2, SRA32(GPR_S32(ctx, 2), 24));
 label_1fc078:
     // 0x1fc078: 0x7bb00020  lq          $s0, 0x20($sp)

@@ -13,7 +13,7 @@
 
 // Function: sfadxt_IsEndDecinfo
 // Address: 0x34abd0 - 0x34abf8
-void sfadxt_IsEndDecinfo_0x34abd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfadxt_IsEndDecinfo_0x34abd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfadxt_IsEndDecinfo_0x34abd0");
 #endif
@@ -37,7 +37,6 @@ void sfadxt_IsEndDecinfo_0x34abd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &GuardedCall_00329FD0_329F98_0x329f98, 0x329f98u, 0x34abe0u)) {
         return;
     }
-    ctx->pc = 0x34ABE0u;
 label_34abe0:
     // 0x34abe0: 0x2c420002  sltiu       $v0, $v0, 0x2
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)2) ? 1 : 0);

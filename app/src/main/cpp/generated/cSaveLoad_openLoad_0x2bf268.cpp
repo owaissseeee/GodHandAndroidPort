@@ -13,7 +13,7 @@
 
 // Function: cSaveLoad_openLoad
 // Address: 0x2bf268 - 0x2bf2d0
-void cSaveLoad_openLoad_0x2bf268(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSaveLoad_openLoad_0x2bf268(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSaveLoad_openLoad_0x2bf268");
 #endif
@@ -46,7 +46,6 @@ void cSaveLoad_openLoad_0x2bf268(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BF700_0x2bf700, 0x2bf700u, 0x2bf27cu)) {
         return;
     }
-    ctx->pc = 0x2BF27Cu;
 label_2bf27c:
     // 0x2bf27c: 0x1040000f  beqz        $v0, . + 4 + (0xF << 2)
     ctx->pc = 0x2BF27Cu;
@@ -74,7 +73,6 @@ label_2bf27c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BF170_0x2bf170, 0x2bf170u, 0x2bf28cu)) {
         return;
     }
-    ctx->pc = 0x2BF28Cu;
 label_2bf28c:
     // 0x2bf28c: 0x3c040074  lui         $a0, 0x74
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)116 << 16));

@@ -13,7 +13,7 @@
 
 // Function: cEmManage_clearSlot
 // Address: 0x290028 - 0x290048
-void cEmManage_clearSlot_0x290028(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_clearSlot_0x290028(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_clearSlot_0x290028");
 #endif

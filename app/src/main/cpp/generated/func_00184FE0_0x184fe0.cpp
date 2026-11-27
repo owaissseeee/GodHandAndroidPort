@@ -13,7 +13,7 @@
 
 // Function: func_00184FE0
 // Address: 0x184fe0 - 0x1850b0
-void func_00184FE0_0x184fe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00184FE0_0x184fe0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00184FE0_0x184fe0");
 #endif
@@ -115,7 +115,6 @@ void func_00184FE0_0x184fe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1850a4;
         }
     }
-    ctx->pc = 0x18503Cu;
 label_18503c:
     // 0x18503c: 0x50820018  beql        $a0, $v0, . + 4 + (0x18 << 2)
     ctx->pc = 0x18503Cu;
@@ -147,7 +146,6 @@ label_18503c:
             goto label_1850a4;
         }
     }
-    ctx->pc = 0x18504Cu;
 label_18504c:
     // 0x18504c: 0x3c013f00  lui         $at, 0x3F00
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16128 << 16));
@@ -189,7 +187,6 @@ label_18504c:
             goto label_18508c;
         }
     }
-    ctx->pc = 0x185070u;
 label_185070:
     // 0x185070: 0x44800000  mtc1        $zero, $f0
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
@@ -215,7 +212,6 @@ label_185070:
         }
     }
     // 0x185088: 0x24050004  addiu       $a1, $zero, 0x4
-    ctx->pc = 0x185088u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
 label_18508c:
     // 0x18508c: 0xc06179a  jal         func_185E68
@@ -224,7 +220,6 @@ label_18508c:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setDispMode_0x185e68, 0x185e68u, 0x185094u)) {
         return;
     }
-    ctx->pc = 0x185094u;
 label_185094:
     // 0x185094: 0x92020659  lbu         $v0, 0x659($s0)
     ctx->pc = 0x185094u;

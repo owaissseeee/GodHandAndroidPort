@@ -13,7 +13,7 @@
 
 // Function: cPartsCamera_SetParts
 // Address: 0x139b68 - 0x139b78
-void cPartsCamera_SetParts_0x139b68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cPartsCamera_SetParts_0x139b68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cPartsCamera_SetParts_0x139b68");
 #endif

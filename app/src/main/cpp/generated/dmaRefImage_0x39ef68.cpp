@@ -13,7 +13,7 @@
 
 // Function: dmaRefImage
 // Address: 0x39ef68 - 0x39f0e8
-void dmaRefImage_0x39ef68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void dmaRefImage_0x39ef68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("dmaRefImage_0x39ef68");
 #endif
@@ -111,7 +111,6 @@ void dmaRefImage_0x39ef68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     // 0x39efd0: 0x261105a0  addiu       $s1, $s0, 0x5A0
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 16), 1440));
     // 0x39efd4: 0x0  nop
-    ctx->pc = 0x39efd4u;
     // NOP
 label_39efd8:
     // 0x39efd8: 0x24040140  addiu       $a0, $zero, 0x140
@@ -202,10 +201,8 @@ label_39efd8:
             goto label_39f05c;
         }
     }
-    ctx->pc = 0x39F058u;
 label_39f058:
     // 0x39f058: 0x261105a0  addiu       $s1, $s0, 0x5A0
-    ctx->pc = 0x39f058u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 16), 1440));
 label_39f05c:
     // 0x39f05c: 0xc0ed8e8  jal         func_3B63A0
@@ -214,7 +211,6 @@ label_39f05c:
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x39f064u)) {
         return;
     }
-    ctx->pc = 0x39F064u;
 label_39f064:
     // 0x39f064: 0xf  sync
     // SYNC instruction - memory barrier
@@ -297,7 +293,6 @@ label_39f064:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B63F0u, 0x39F0C8u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x39F0D0u;
 label_39f0d0:
     // 0x39f0d0: 0xdfb20020  ld          $s2, 0x20($sp)
     ctx->pc = 0x39f0d0u;

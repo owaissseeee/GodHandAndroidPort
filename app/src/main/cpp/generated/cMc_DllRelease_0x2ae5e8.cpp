@@ -13,7 +13,7 @@
 
 // Function: cMc_DllRelease
 // Address: 0x2ae5e8 - 0x2ae650
-void cMc_DllRelease_0x2ae5e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMc_DllRelease_0x2ae5e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMc_DllRelease_0x2ae5e8");
 #endif
@@ -77,7 +77,6 @@ void cMc_DllRelease_0x2ae5e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             return;
         }
     }
-    ctx->pc = 0x2AE614u;
 label_2ae614:
     // 0x2ae614: 0xc0e53c8  jal         func_394F20
     SET_GPR_U32(ctx, 31, 0x2AE61Cu);
@@ -90,7 +89,6 @@ label_2ae614:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00394F20_0x394f20, 0x394f20u, 0x2ae61cu)) {
         return;
     }
-    ctx->pc = 0x2AE61Cu;
 label_2ae61c:
     // 0x2ae61c: 0xa2000000  sb          $zero, 0x0($s0)
     ctx->pc = 0x2ae61cu;
@@ -127,7 +125,6 @@ label_2ae624:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x2AE630u, 0x2AE638u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2AE638u;
 label_2ae638:
     // 0x2ae638: 0xae000004  sw          $zero, 0x4($s0)
     ctx->pc = 0x2ae638u;

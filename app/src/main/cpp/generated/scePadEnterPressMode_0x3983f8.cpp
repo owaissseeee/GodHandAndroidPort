@@ -13,7 +13,7 @@
 
 // Function: scePadEnterPressMode
 // Address: 0x3983f8 - 0x398468
-void scePadEnterPressMode_0x3983f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void scePadEnterPressMode_0x3983f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("scePadEnterPressMode_0x3983f8");
 #endif
@@ -82,7 +82,6 @@ void scePadEnterPressMode_0x3983f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_398440;
         }
     }
-    ctx->pc = 0x398438u;
 label_398438:
     // 0x398438: 0xc0e60b2  jal         func_3982C8
     SET_GPR_U32(ctx, 31, 0x398440u);
@@ -95,7 +94,6 @@ label_398438:
     if (!runtime->callDirectStatic(rdram, ctx, &scePadSetButtonInfo_0x3982c8, 0x3982c8u, 0x398440u)) {
         return;
     }
-    ctx->pc = 0x398440u;
 label_398440:
     // 0x398440: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x398440u;

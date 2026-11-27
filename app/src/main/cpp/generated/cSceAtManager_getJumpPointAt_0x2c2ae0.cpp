@@ -13,7 +13,7 @@
 
 // Function: cSceAtManager_getJumpPointAt
 // Address: 0x2c2ae0 - 0x2c2b58
-void cSceAtManager_getJumpPointAt_0x2c2ae0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSceAtManager_getJumpPointAt_0x2c2ae0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSceAtManager_getJumpPointAt_0x2c2ae0");
 #endif
@@ -55,7 +55,6 @@ void cSceAtManager_getJumpPointAt_0x2c2ae0(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &cSceAtManager_getUnitList_0x2c30c0, 0x2c30c0u, 0x2c2b00u)) {
         return;
     }
-    ctx->pc = 0x2C2B00u;
 label_2c2b00:
     // 0x2c2b00: 0x24120001  addiu       $s2, $zero, 0x1
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -75,7 +74,6 @@ label_2c2b00:
         }
     }
     // 0x2c2b0c: 0x0  nop
-    ctx->pc = 0x2c2b0cu;
     // NOP
 label_2c2b10:
     // 0x2c2b10: 0x14520004  bne         $v0, $s2, . + 4 + (0x4 << 2)
@@ -105,7 +103,6 @@ label_2c2b10:
             goto label_2c2b3c;
         }
     }
-    ctx->pc = 0x2C2B24u;
 label_2c2b24:
     // 0x2c2b24: 0xc0b0c32  jal         func_2C30C8
     SET_GPR_U32(ctx, 31, 0x2C2B2Cu);
@@ -118,7 +115,6 @@ label_2c2b24:
     if (!runtime->callDirectStatic(rdram, ctx, &cSceAtManager_getNextUnit_0x2c30c8, 0x2c30c8u, 0x2c2b2cu)) {
         return;
     }
-    ctx->pc = 0x2C2B2Cu;
 label_2c2b2c:
     // 0x2c2b2c: 0x40282d  daddu       $a1, $v0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -141,7 +137,6 @@ label_2c2b2c:
         }
     }
     // 0x2c2b38: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2c2b38u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2c2b3c:
     // 0x2c2b3c: 0x7bb00030  lq          $s0, 0x30($sp)

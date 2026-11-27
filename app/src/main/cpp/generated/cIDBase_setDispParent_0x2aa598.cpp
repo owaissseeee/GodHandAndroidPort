@@ -13,7 +13,7 @@
 
 // Function: cIDBase_setDispParent
 // Address: 0x2aa598 - 0x2aa5f0
-void cIDBase_setDispParent_0x2aa598(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDBase_setDispParent_0x2aa598(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDBase_setDispParent_0x2aa598");
 #endif
@@ -25,7 +25,6 @@ void cIDBase_setDispParent_0x2aa598(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         }
     }
 
-    ctx->pc = 0x2aa598u;
 
 label_2aa598:
     // 0x2aa598: 0x27bdfff0  addiu       $sp, $sp, -0x10
@@ -86,7 +85,6 @@ label_2aa598:
             goto label_2aa5d8;
         }
     }
-    ctx->pc = 0x2AA5C4u;
 label_2aa5c4:
     // 0x2aa5c4: 0x8ce3002c  lw          $v1, 0x2C($a3)
     ctx->pc = 0x2aa5c4u;
@@ -111,7 +109,6 @@ label_2aa5d8:
     ctx->in_delay_slot = false;
     ctx->pc = 0x2AA598u;
     goto label_2aa598;
-    ctx->pc = 0x2AA5E0u;
 label_2aa5e0:
     // 0x2aa5e0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2aa5e0u;

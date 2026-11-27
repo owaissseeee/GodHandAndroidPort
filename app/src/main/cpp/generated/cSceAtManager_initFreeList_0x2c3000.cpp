@@ -13,7 +13,7 @@
 
 // Function: cSceAtManager_initFreeList
 // Address: 0x2c3000 - 0x2c3040
-void cSceAtManager_initFreeList_0x2c3000(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSceAtManager_initFreeList_0x2c3000(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSceAtManager_initFreeList_0x2c3000");
 #endif
@@ -52,7 +52,6 @@ void cSceAtManager_initFreeList_0x2c3000(uint8_t* rdram, R5900Context* ctx, PS2R
     // 0x2c3018: 0x3484ffff  ori         $a0, $a0, 0xFFFF
     SET_GPR_U64(ctx, 4, GPR_U64(ctx, 4) | (uint64_t)(uint16_t)65535);
     // 0x2c301c: 0x0  nop
-    ctx->pc = 0x2c301cu;
     // NOP
 label_2c3020:
     // 0x2c3020: 0xa41024  and         $v0, $a1, $a0
@@ -82,7 +81,6 @@ label_2c3020:
             goto label_2c3020;
         }
     }
-    ctx->pc = 0x2C3038u;
 label_2c3038:
     // 0x2c3038: 0x3e00008  jr          $ra
     ctx->pc = 0x2C3038u;

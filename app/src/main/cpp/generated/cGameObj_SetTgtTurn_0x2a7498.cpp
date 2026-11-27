@@ -14,7 +14,7 @@
 
 // Function: cGameObj_SetTgtTurn
 // Address: 0x2a7498 - 0x2a74e0
-void cGameObj_SetTgtTurn_0x2a7498(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObj_SetTgtTurn_0x2a7498(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObj_SetTgtTurn_0x2a7498");
 #endif
@@ -66,7 +66,6 @@ void cGameObj_SetTgtTurn_0x2a7498(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &Turn_dest_0x2da038, 0x2da038u, 0x2a74c0u)) {
         return;
     }
-    ctx->pc = 0x2A74C0u;
 label_2a74c0:
     // 0x2a74c0: 0xc60c0104  lwc1        $f12, 0x104($s0)
     ctx->pc = 0x2a74c0u;
@@ -82,7 +81,6 @@ label_2a74c0:
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_0x1f7d48, 0x1f7d48u, 0x2a74ccu)) {
         return;
     }
-    ctx->pc = 0x2A74CCu;
 label_2a74cc:
     // 0x2a74cc: 0xe6000104  swc1        $f0, 0x104($s0)
     ctx->pc = 0x2a74ccu;

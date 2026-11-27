@@ -13,7 +13,7 @@
 
 // Function: ColiseumBattle_throwConfetti
 // Address: 0x1f06a8 - 0x1f0778
-void ColiseumBattle_throwConfetti_0x1f06a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumBattle_throwConfetti_0x1f06a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumBattle_throwConfetti_0x1f06a8");
 #endif
@@ -72,7 +72,6 @@ void ColiseumBattle_throwConfetti_0x1f06a8(uint8_t* rdram, R5900Context* ctx, PS
     // 0x1f06e8: 0x4600b306  mov.s       $f12, $f22
     ctx->f[12] = FPU_MOV_S(ctx->f[22]);
     // 0x1f06ec: 0x0  nop
-    ctx->pc = 0x1f06ecu;
     // NOP
 label_1f06f0:
     // 0x1f06f0: 0xc0c7414  jal         func_31D050
@@ -86,7 +85,6 @@ label_1f06f0:
     if (!runtime->callDirectStatic(rdram, ctx, &frand_0x31d050, 0x31d050u, 0x1f06f8u)) {
         return;
     }
-    ctx->pc = 0x1F06F8u;
 label_1f06f8:
     // 0x1f06f8: 0x2610ffff  addiu       $s0, $s0, -0x1
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 4294967295));
@@ -105,7 +103,6 @@ label_1f06f8:
     if (!runtime->callDirectStatic(rdram, ctx, &frand_0x31d050, 0x31d050u, 0x1f070cu)) {
         return;
     }
-    ctx->pc = 0x1F070Cu;
 label_1f070c:
     // 0x1f070c: 0x3c01c048  lui         $at, 0xC048
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)49224 << 16));
@@ -139,7 +136,6 @@ label_1f070c:
     if (!runtime->callDirectStatic(rdram, ctx, &frand_0x31d050, 0x31d050u, 0x1f0738u)) {
         return;
     }
-    ctx->pc = 0x1F0738u;
 label_1f0738:
     // 0x1f0738: 0x46000306  mov.s       $f12, $f0
     ctx->f[12] = FPU_MOV_S(ctx->f[0]);
@@ -158,7 +154,6 @@ label_1f0738:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F0498_0x1f0498, 0x1f0498u, 0x1f074cu)) {
         return;
     }
-    ctx->pc = 0x1F074Cu;
 label_1f074c:
     // 0x1f074c: 0x601ffe8  bgez        $s0, . + 4 + (-0x18 << 2)
     ctx->pc = 0x1F074Cu;

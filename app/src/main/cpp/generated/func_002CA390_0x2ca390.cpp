@@ -13,7 +13,7 @@
 
 // Function: func_002CA390
 // Address: 0x2ca390 - 0x2ca470
-void func_002CA390_0x2ca390(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002CA390_0x2ca390(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002CA390_0x2ca390");
 #endif
@@ -89,7 +89,6 @@ void func_002CA390_0x2ca390(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x2ca3e0: 0x628021  addu        $s0, $v1, $v0
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 2)));
     // 0x2ca3e4: 0x0  nop
-    ctx->pc = 0x2ca3e4u;
     // NOP
 label_2ca3e8:
     // 0x2ca3e8: 0x960a0000  lhu         $t2, 0x0($s0)
@@ -148,7 +147,6 @@ label_2ca3e8:
     if (!runtime->callDirectStatic(rdram, ctx, &StoreSoundEntry_3749D8_0x3749d8, 0x3749d8u, 0x2ca430u)) {
         return;
     }
-    ctx->pc = 0x2CA430u;
 label_2ca430:
     // 0x2ca430: 0x10550006  beq         $v0, $s5, . + 4 + (0x6 << 2)
     ctx->pc = 0x2CA430u;

@@ -13,7 +13,7 @@
 
 // Function: cEm00_setDevilFlag
 // Address: 0x2755e0 - 0x275638
-void cEm00_setDevilFlag_0x2755e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_setDevilFlag_0x2755e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_setDevilFlag_0x2755e0");
 #endif
@@ -66,7 +66,6 @@ void cEm00_setDevilFlag_0x2755e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             return;
         }
     }
-    ctx->pc = 0x275610u;
 label_275610:
     // 0x275610: 0x8ca216d0  lw          $v0, 0x16D0($a1)
     ctx->pc = 0x275610u;

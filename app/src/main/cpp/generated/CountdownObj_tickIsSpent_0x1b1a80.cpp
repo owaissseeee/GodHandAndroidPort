@@ -13,7 +13,7 @@
 
 // Function: CountdownObj_tickIsSpent
 // Address: 0x1b1a80 - 0x1b1ae8
-void CountdownObj_tickIsSpent_0x1b1a80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CountdownObj_tickIsSpent_0x1b1a80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CountdownObj_tickIsSpent_0x1b1a80");
 #endif
@@ -49,7 +49,6 @@ void CountdownObj_tickIsSpent_0x1b1a80(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_GetSpeedRate_0x292f50, 0x292f50u, 0x1b1a9cu)) {
         return;
     }
-    ctx->pc = 0x1B1A9Cu;
 label_1b1a9c:
     // 0x1b1a9c: 0x46000046  mov.s       $f1, $f0
     ctx->f[1] = FPU_MOV_S(ctx->f[0]);
@@ -100,7 +99,6 @@ label_1b1ac4:
         }
     }
     // 0x1b1ad4: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1b1ad4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1b1ad8:
     // 0x1b1ad8: 0x7bb00010  lq          $s0, 0x10($sp)

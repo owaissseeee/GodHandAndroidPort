@@ -14,12 +14,11 @@ namespace gh_r110
 {
 // Function: getReserveJmpPointNo__6cEvent
 // Address: 0x7995a8 - 0x7995b8
-void getReserveJmpPointNo__6cEvent_0x7995a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getReserveJmpPointNo__6cEvent_0x7995a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getReserveJmpPointNo__6cEvent_0x7995a8");
 #endif
 
-    ctx->pc = 0x7995a8u;
 
     // 0x7995a8: 0x8c830038  lw          $v1, 0x38($a0)
     ctx->pc = 0x7995a8u;
@@ -43,9 +42,7 @@ void getReserveJmpPointNo__6cEvent_0x7995a8(uint8_t* rdram, R5900Context* ctx, P
         return;
         #endif
     }
-    ctx->pc = 0x7995B4u;
     // 0x7995b4: 0x0  nop
-    ctx->pc = 0x7995b4u;
     // NOP
     ctx->pc = 0x7995b8u;
 }

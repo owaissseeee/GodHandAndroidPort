@@ -13,7 +13,7 @@
 
 // Function: cMessDrawFont_setRubyData
 // Address: 0x2af638 - 0x2af648
-void cMessDrawFont_setRubyData_0x2af638(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessDrawFont_setRubyData_0x2af638(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessDrawFont_setRubyData_0x2af638");
 #endif

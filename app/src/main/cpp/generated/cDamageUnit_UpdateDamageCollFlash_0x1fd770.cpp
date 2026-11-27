@@ -13,7 +13,7 @@
 
 // Function: cDamageUnit_UpdateDamageCollFlash
 // Address: 0x1fd770 - 0x1fd7b0
-void cDamageUnit_UpdateDamageCollFlash_0x1fd770(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDamageUnit_UpdateDamageCollFlash_0x1fd770(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDamageUnit_UpdateDamageCollFlash_0x1fd770");
 #endif
@@ -53,7 +53,6 @@ void cDamageUnit_UpdateDamageCollFlash_0x1fd770(uint8_t* rdram, R5900Context* ct
             goto label_1fd7a4;
         }
     }
-    ctx->pc = 0x1FD788u;
 label_1fd788:
     // 0x1fd788: 0xc07f330  jal         func_1FCCC0
     SET_GPR_U32(ctx, 31, 0x1FD790u);
@@ -66,7 +65,6 @@ label_1fd788:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FCCC0_0x1fccc0, 0x1fccc0u, 0x1fd790u)) {
         return;
     }
-    ctx->pc = 0x1FD790u;
 label_1fd790:
     // 0x1fd790: 0x8e100024  lw          $s0, 0x24($s0)
     ctx->pc = 0x1fd790u;

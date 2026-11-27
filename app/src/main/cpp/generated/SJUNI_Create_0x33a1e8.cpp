@@ -13,7 +13,7 @@
 
 // Function: SJUNI_Create
 // Address: 0x33a1e8 - 0x33a2d0
-void SJUNI_Create_0x33a1e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SJUNI_Create_0x33a1e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SJUNI_Create_0x33a1e8");
 #endif
@@ -68,7 +68,6 @@ void SJUNI_Create_0x33a1e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     // 0x33a218: 0x24840001  addiu       $a0, $a0, 0x1
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 1));
     // 0x33a21c: 0x0  nop
-    ctx->pc = 0x33a21cu;
     // NOP
 label_33a220:
     // 0x33a220: 0x28820040  slti        $v0, $a0, 0x40
@@ -115,7 +114,6 @@ label_33a220:
             goto label_33a220;
         }
     }
-    ctx->pc = 0x33A244u;
 label_33a244:
     // 0x33a244: 0x24030040  addiu       $v1, $zero, 0x40
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 64));
@@ -201,10 +199,8 @@ label_33a244:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0033A4F8_0x33a4f8, 0x33a4f8u, 0x33a2b8u)) {
         return;
     }
-    ctx->pc = 0x33A2B8u;
 label_33a2b8:
     // 0x33a2b8: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x33a2b8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_33a2bc:
     // 0x33a2bc: 0xdfb00000  ld          $s0, 0x0($sp)

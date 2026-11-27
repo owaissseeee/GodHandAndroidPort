@@ -13,7 +13,7 @@
 
 // Function: __smakebuf
 // Address: 0x3a6950 - 0x3a6a20
-void ps2___smakebuf_0x3a6950(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___smakebuf_0x3a6950(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___smakebuf_0x3a6950");
 #endif
@@ -79,7 +79,6 @@ void ps2___smakebuf_0x3a6950(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_3a6a04;
         }
     }
-    ctx->pc = 0x3A6984u;
 label_3a6984:
     // 0x3a6984: 0x8605000e  lh          $a1, 0xE($s0)
     ctx->pc = 0x3a6984u;
@@ -113,7 +112,6 @@ label_3a6984:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003ADFA8_0x3adfa8, 0x3adfa8u, 0x3a699cu)) {
         return;
     }
-    ctx->pc = 0x3A699Cu;
 label_3a699c:
     // 0x3a699c: 0x440000e  bltz        $v0, . + 4 + (0xE << 2)
     ctx->pc = 0x3A699Cu;
@@ -191,14 +189,12 @@ label_3a699c:
             goto label_3a69e0;
         }
     }
-    ctx->pc = 0x3A69D8u;
 label_3a69d8:
     // 0x3a69d8: 0x9602000c  lhu         $v0, 0xC($s0)
     ctx->pc = 0x3a69d8u;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 16), 12)));
 label_3a69dc:
     // 0x3a69dc: 0x34420800  ori         $v0, $v0, 0x800
-    ctx->pc = 0x3a69dcu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)2048);
 label_3a69e0:
     // 0x3a69e0: 0xa602000c  sh          $v0, 0xC($s0)

@@ -13,7 +13,7 @@
 
 // Function: ADXT_GetOutPan
 // Address: 0x32a880 - 0x32a8c0
-void ADXT_GetOutPan_0x32a880(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ADXT_GetOutPan_0x32a880(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ADXT_GetOutPan_0x32a880");
 #endif
@@ -58,7 +58,6 @@ void ADXT_GetOutPan_0x32a880(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_0033F130_0x33f130, 0x33f130u, 0x32a89cu)) {
         return;
     }
-    ctx->pc = 0x32A89Cu;
 label_32a89c:
     // 0x32a89c: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x32A89Cu;
@@ -76,7 +75,6 @@ label_32a89c:
         }
     }
     // 0x32a8a4: 0x0  nop
-    ctx->pc = 0x32a8a4u;
     // NOP
 label_32a8a8:
     // 0x32a8a8: 0x641821  addu        $v1, $v1, $a0

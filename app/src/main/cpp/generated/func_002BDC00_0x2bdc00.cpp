@@ -13,7 +13,7 @@
 
 // Function: func_002BDC00
 // Address: 0x2bdc00 - 0x2bdd90
-void func_002BDC00_0x2bdc00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002BDC00_0x2bdc00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002BDC00_0x2bdc00");
 #endif
@@ -109,7 +109,6 @@ void func_002BDC00_0x2bdc00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BDDE0_0x2bdde0, 0x2bdde0u, 0x2bdc4cu)) {
         return;
     }
-    ctx->pc = 0x2BDC4Cu;
 label_2bdc4c:
     // 0x2bdc4c: 0x8e430004  lw          $v1, 0x4($s2)
     ctx->pc = 0x2bdc4cu;
@@ -135,7 +134,6 @@ label_2bdc4c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BDDE0_0x2bdde0, 0x2bdde0u, 0x2bdc68u)) {
         return;
     }
-    ctx->pc = 0x2BDC68u;
 label_2bdc68:
     // 0x2bdc68: 0x3c030074  lui         $v1, 0x74
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
@@ -171,7 +169,6 @@ label_2bdc68:
     if (!runtime->callDirectStatic(rdram, ctx, &classPAD_WORK_Pad_act_set_0x31bb08, 0x31bb08u, 0x2bdc9cu)) {
         return;
     }
-    ctx->pc = 0x2BDC9Cu;
 label_2bdc9c:
     // 0x2bdc9c: 0x8e420024  lw          $v0, 0x24($s2)
     ctx->pc = 0x2bdc9cu;
@@ -220,7 +217,6 @@ label_2bdc9c:
     if (!runtime->callDirectStatic(rdram, ctx, &classPAD_WORK_Pad_act_set_0x31bb08, 0x31bb08u, 0x2bdcd0u)) {
         return;
     }
-    ctx->pc = 0x2BDCD0u;
 label_2bdcd0:
     // 0x2bdcd0: 0xc6400020  lwc1        $f0, 0x20($s2)
     ctx->pc = 0x2bdcd0u;
@@ -243,7 +239,6 @@ label_2bdcd0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BDD90_0x2bdd90, 0x2bdd90u, 0x2bdce8u)) {
         return;
     }
-    ctx->pc = 0x2BDCE8u;
 label_2bdce8:
     // 0x2bdce8: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -317,7 +312,6 @@ label_2bdce8:
             goto label_2bdd6c;
         }
     }
-    ctx->pc = 0x2BDD34u;
 label_2bdd34:
     // 0x2bdd34: 0x44830000  mtc1        $v1, $f0
     { uint32_t bits = GPR_U32(ctx, 3); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
@@ -363,7 +357,6 @@ label_2bdd34:
     if (!runtime->callDirectStatic(rdram, ctx, &cPadVib_stopSeq_0x2bdfd8, 0x2bdfd8u, 0x2bdd68u)) {
         return;
     }
-    ctx->pc = 0x2BDD68u;
 label_2bdd68:
     // 0x2bdd68: 0x7bb00060  lq          $s0, 0x60($sp)
     ctx->pc = 0x2bdd68u;

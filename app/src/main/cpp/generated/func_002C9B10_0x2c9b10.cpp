@@ -13,7 +13,7 @@
 
 // Function: func_002C9B10
 // Address: 0x2c9b10 - 0x2c9b78
-void func_002C9B10_0x2c9b10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002C9B10_0x2c9b10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002C9B10_0x2c9b10");
 #endif
@@ -76,7 +76,6 @@ void func_002C9B10_0x2c9b10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1FAF58u, 0x2C9B3Cu, 0x2C9B44u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2C9B44u;
 label_2c9b44:
     // 0x2c9b44: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -111,7 +110,6 @@ label_2c9b44:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_setSkill_0x1faf20, 0x1faf20u, 0x2c9b60u)) {
         return;
     }
-    ctx->pc = 0x2C9B60u;
 label_2c9b60:
     // 0x2c9b60: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2c9b60u;

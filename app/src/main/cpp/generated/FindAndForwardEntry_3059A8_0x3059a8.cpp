@@ -13,7 +13,7 @@
 
 // Function: FindAndForwardEntry_3059A8
 // Address: 0x3059a8 - 0x305a18
-void FindAndForwardEntry_3059A8_0x3059a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FindAndForwardEntry_3059A8_0x3059a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FindAndForwardEntry_3059A8_0x3059a8");
 #endif
@@ -73,7 +73,6 @@ void FindAndForwardEntry_3059A8_0x3059a8(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_3059fc;
         }
     }
-    ctx->pc = 0x3059D0u;
 label_3059d0:
     // 0x3059d0: 0xc0c1636  jal         func_3058D8
     SET_GPR_U32(ctx, 31, 0x3059D8u);
@@ -86,7 +85,6 @@ label_3059d0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003058D8_0x3058d8, 0x3058d8u, 0x3059d8u)) {
         return;
     }
-    ctx->pc = 0x3059D8u;
 label_3059d8:
     // 0x3059d8: 0x14400006  bnez        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x3059D8u;
@@ -116,7 +114,6 @@ label_3059d8:
     if (!runtime->callDirectStatic(rdram, ctx, &getEffTypeString_0x3053c0, 0x3053c0u, 0x3059ecu)) {
         return;
     }
-    ctx->pc = 0x3059ECu;
 label_3059ec:
     // 0x3059ec: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x3059ECu;
@@ -133,7 +130,6 @@ label_3059ec:
             goto label_3059fc;
         }
     }
-    ctx->pc = 0x3059F4u;
 label_3059f4:
     // 0x3059f4: 0xc0c1616  jal         func_305858
     SET_GPR_U32(ctx, 31, 0x3059FCu);
@@ -146,7 +142,6 @@ label_3059f4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00305858_0x305858, 0x305858u, 0x3059fcu)) {
         return;
     }
-    ctx->pc = 0x3059FCu;
 label_3059fc:
     // 0x3059fc: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x3059fcu;

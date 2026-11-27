@@ -13,7 +13,7 @@
 
 // Function: func_0038D0B8
 // Address: 0x38d0b8 - 0x38d140
-void func_0038D0B8_0x38d0b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0038D0B8_0x38d0b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0038D0B8_0x38d0b8");
 #endif
@@ -104,7 +104,6 @@ void func_0038D0B8_0x38d0b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_switch_to_main_get_area_0x38c280, 0x38c280u, 0x38d0f8u)) {
         return;
     }
-    ctx->pc = 0x38D0F8u;
 label_38d0f8:
     // 0x38d0f8: 0x8e230008  lw          $v1, 0x8($s1)
     ctx->pc = 0x38d0f8u;
@@ -124,7 +123,6 @@ label_38d0f8:
             goto label_38d120;
         }
     }
-    ctx->pc = 0x38D104u;
 label_38d104:
     // 0x38d104: 0x30420100  andi        $v0, $v0, 0x100
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)256);
@@ -154,7 +152,6 @@ label_38d104:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_switch_to_backup_area_0x38c2b8, 0x38c2b8u, 0x38d118u)) {
         return;
     }
-    ctx->pc = 0x38D118u;
 label_38d118:
     // 0x38d118: 0x8e230008  lw          $v1, 0x8($s1)
     ctx->pc = 0x38d118u;
@@ -169,7 +166,6 @@ label_38d120:
     ctx->pc = 0x38d124u;
     WRITE32(ADD32(GPR_U32(ctx, 16), 4), GPR_U32(ctx, 2));
     // 0x38d128: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x38d128u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_38d12c:
     // 0x38d12c: 0xdfbf0020  ld          $ra, 0x20($sp)

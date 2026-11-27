@@ -13,7 +13,7 @@
 
 // Function: func_002AF380
 // Address: 0x2af380 - 0x2af3f8
-void func_002AF380_0x2af380(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002AF380_0x2af380(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002AF380_0x2af380");
 #endif
@@ -57,7 +57,6 @@ void func_002AF380_0x2af380(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cMessage_getMessageAddr_0x2aead0, 0x2aead0u, 0x2af3a4u)) {
         return;
     }
-    ctx->pc = 0x2AF3A4u;
 label_2af3a4:
     // 0x2af3a4: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x2AF3A4u;
@@ -75,7 +74,6 @@ label_2af3a4:
         }
     }
     // 0x2af3ac: 0x0  nop
-    ctx->pc = 0x2af3acu;
     // NOP
 label_2af3b0:
     // 0x2af3b0: 0xc0abc7e  jal         func_2AF1F8
@@ -89,12 +87,10 @@ label_2af3b0:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessCommon_getCodeSize_0x2af1f8, 0x2af1f8u, 0x2af3b8u)) {
         return;
     }
-    ctx->pc = 0x2AF3B8u;
 label_2af3b8:
     // 0x2af3b8: 0x21040  sll         $v0, $v0, 1
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 1));
     // 0x2af3bc: 0x2028021  addu        $s0, $s0, $v0
-    ctx->pc = 0x2af3bcu;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), GPR_U32(ctx, 2)));
 label_2af3c0:
     // 0x2af3c0: 0x96030000  lhu         $v1, 0x0($s0)

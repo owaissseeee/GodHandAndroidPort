@@ -13,7 +13,7 @@
 
 // Function: cGameObjSortEnt_insertionSort
 // Address: 0x2a9100 - 0x2a9210
-void cGameObjSortEnt_insertionSort_0x2a9100(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObjSortEnt_insertionSort_0x2a9100(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObjSortEnt_insertionSort_0x2a9100");
 #endif
@@ -83,7 +83,6 @@ void cGameObjSortEnt_insertionSort_0x2a9100(uint8_t* rdram, R5900Context* ctx, P
             goto label_2a91ec;
         }
     }
-    ctx->pc = 0x2A9138u;
 label_2a9138:
     // 0x2a9138: 0x6a020007  ldl         $v0, 0x7($s0)
     ctx->pc = 0x2a9138u;
@@ -123,7 +122,6 @@ label_2a9138:
         }
     }
     // 0x2a9160: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2a9160u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2a9164:
     // 0x2a9164: 0x10400013  beqz        $v0, . + 4 + (0x13 << 2)
@@ -162,7 +160,6 @@ label_2a9164:
             goto label_2a91a0;
         }
     }
-    ctx->pc = 0x2A9180u;
 label_2a9180:
     // 0x2a9180: 0x2463fff8  addiu       $v1, $v1, -0x8
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294967288));
@@ -197,7 +194,6 @@ label_2a9180:
             goto label_2a9180;
         }
     }
-    ctx->pc = 0x2A91A0u;
 label_2a91a0:
     // 0x2a91a0: 0x6ba20007  ldl         $v0, 0x7($sp)
     ctx->pc = 0x2a91a0u;
@@ -223,7 +219,6 @@ label_2a91a0:
             goto label_2a91e0;
         }
     }
-    ctx->pc = 0x2A91B4u;
 label_2a91b4:
     // 0x2a91b4: 0x6ba70007  ldl         $a3, 0x7($sp)
     ctx->pc = 0x2a91b4u;
@@ -258,10 +253,8 @@ label_2a91b4:
     if (!runtime->callDirectStatic(rdram, ctx, &cGameObjSortEnt_unguardedLinearInsert_0x2a9098, 0x2a9098u, 0x2a91dcu)) {
         return;
     }
-    ctx->pc = 0x2A91DCu;
 label_2a91dc:
     // 0x2a91dc: 0x26050008  addiu       $a1, $s0, 0x8
-    ctx->pc = 0x2a91dcu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 16), 8));
 label_2a91e0:
     // 0x2a91e0: 0xa0802d  daddu       $s0, $a1, $zero
@@ -278,7 +271,6 @@ label_2a91e0:
             goto label_2a9138;
         }
     }
-    ctx->pc = 0x2A91ECu;
 label_2a91ec:
     // 0x2a91ec: 0x7bb00070  lq          $s0, 0x70($sp)
     ctx->pc = 0x2a91ecu;

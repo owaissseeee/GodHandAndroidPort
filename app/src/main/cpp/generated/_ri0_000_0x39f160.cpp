@@ -13,7 +13,7 @@
 
 // Function: _ri0_000
 // Address: 0x39f160 - 0x39f1f8
-void _ri0_000_0x39f160(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _ri0_000_0x39f160(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_ri0_000_0x39f160");
 #endif
@@ -47,14 +47,12 @@ void _ri0_000_0x39f160(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     // 0x39f178: 0x5980000  mtsab       $t4, 0x0
     ctx->sa = ((GPR_U32(ctx, 12) ^ (uint32_t)0) & 0xF) << 3;
     // 0x39f17c: 0x2418ffff  addiu       $t8, $zero, -0x1
-    ctx->pc = 0x39f17cu;
     SET_GPR_S32(ctx, 24, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_39f180:
     // 0x39f180: 0x8c8f0008  lw          $t7, 0x8($a0)
     ctx->pc = 0x39f180u;
     SET_GPR_S32(ctx, 15, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 8)));
     // 0x39f184: 0x2419ffff  addiu       $t9, $zero, -0x1
-    ctx->pc = 0x39f184u;
     SET_GPR_S32(ctx, 25, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_39f188:
     // 0x39f188: 0xdcc80000  ld          $t0, 0x0($a2)

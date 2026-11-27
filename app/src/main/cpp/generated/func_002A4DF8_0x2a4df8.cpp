@@ -13,7 +13,7 @@
 
 // Function: func_002A4DF8
 // Address: 0x2a4df8 - 0x2a4e58
-void func_002A4DF8_0x2a4df8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002A4DF8_0x2a4df8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002A4DF8_0x2a4df8");
 #endif
@@ -47,7 +47,6 @@ void func_002A4DF8_0x2a4df8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A4ED8_0x2a4ed8, 0x2a4ed8u, 0x2a4e0cu)) {
         return;
     }
-    ctx->pc = 0x2A4E0Cu;
 label_2a4e0c:
     // 0x2a4e0c: 0x202d  daddu       $a0, $zero, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
@@ -62,7 +61,6 @@ label_2a4e0c:
     if (!runtime->callDirectStatic(rdram, ctx, &Moji_size_set_0x2e13d8, 0x2e13d8u, 0x2a4e18u)) {
         return;
     }
-    ctx->pc = 0x2A4E18u;
 label_2a4e18:
     // 0x2a4e18: 0x3c020002  lui         $v0, 0x2
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)2 << 16));
@@ -94,7 +92,6 @@ label_2a4e18:
     if (!runtime->callDirectStatic(rdram, ctx, &DebugPrintfWrapper_0x2e0da8, 0x2e0da8u, 0x2a4e44u)) {
         return;
     }
-    ctx->pc = 0x2A4E44u;
 label_2a4e44:
     // 0x2a4e44: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2a4e44u;

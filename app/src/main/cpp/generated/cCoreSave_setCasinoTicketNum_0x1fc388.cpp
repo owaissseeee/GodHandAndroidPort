@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_setCasinoTicketNum
 // Address: 0x1fc388 - 0x1fc3d0
-void cCoreSave_setCasinoTicketNum_0x1fc388(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setCasinoTicketNum_0x1fc388(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setCasinoTicketNum_0x1fc388");
 #endif
@@ -84,7 +84,6 @@ label_1fc3b8:
             goto label_1fc3c4;
         }
     }
-    ctx->pc = 0x1FC3C4u;
 label_1fc3c4:
     // 0x1fc3c4: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC3C4u;

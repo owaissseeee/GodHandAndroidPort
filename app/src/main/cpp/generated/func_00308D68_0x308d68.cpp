@@ -13,7 +13,7 @@
 
 // Function: func_00308D68
 // Address: 0x308d68 - 0x308da8
-void func_00308D68_0x308d68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00308D68_0x308d68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00308D68_0x308d68");
 #endif
@@ -29,7 +29,6 @@ void func_00308D68_0x308d68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x308d68: 0x182d  daddu       $v1, $zero, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x308d6c: 0x0  nop
-    ctx->pc = 0x308d6cu;
     // NOP
 label_308d70:
     // 0x308d70: 0x8c820000  lw          $v0, 0x0($a0)
@@ -63,7 +62,6 @@ label_308d70:
         return;
         #endif
     }
-    ctx->pc = 0x308D84u;
 label_308d84:
     // 0x308d84: 0x14450003  bne         $v0, $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x308D84u;
@@ -99,7 +97,6 @@ label_308d84:
         return;
         #endif
     }
-    ctx->pc = 0x308D94u;
 label_308d94:
     // 0x308d94: 0x28620020  slti        $v0, $v1, 0x20
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)32) ? 1 : 0);

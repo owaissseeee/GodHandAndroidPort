@@ -13,7 +13,7 @@
 
 // Function: setColorScrollLayer
 // Address: 0x2db370 - 0x2db3e8
-void setColorScrollLayer_0x2db370(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void setColorScrollLayer_0x2db370(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("setColorScrollLayer_0x2db370");
 #endif
@@ -50,7 +50,6 @@ void setColorScrollLayer_0x2db370(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     ctx->pc = 0x2db388u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 0)));
     // 0x2db38c: 0x0  nop
-    ctx->pc = 0x2db38cu;
     // NOP
 label_2db390:
     // 0x2db390: 0x906202fd  lbu         $v0, 0x2FD($v1)
@@ -131,7 +130,6 @@ label_2db3cc:
             goto label_2db390;
         }
     }
-    ctx->pc = 0x2DB3DCu;
 label_2db3dc:
     // 0x2db3dc: 0x3e00008  jr          $ra
     ctx->pc = 0x2DB3DCu;

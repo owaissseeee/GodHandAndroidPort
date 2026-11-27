@@ -13,7 +13,7 @@
 
 // Function: func_0013D288
 // Address: 0x13d288 - 0x13d338
-void func_0013D288_0x13d288(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0013D288_0x13d288(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0013D288_0x13d288");
 #endif
@@ -102,7 +102,6 @@ void func_0013D288_0x13d288(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cScrSpriteDraw_drawInit_0x2c54e8, 0x2c54e8u, 0x13d2d8u)) {
         return;
     }
-    ctx->pc = 0x13D2D8u;
 label_13d2d8:
     // 0x13d2d8: 0x8e042fb0  lw          $a0, 0x2FB0($s0)
     ctx->pc = 0x13d2d8u;
@@ -128,7 +127,6 @@ label_13d2d8:
     if (!runtime->callDirectStatic(rdram, ctx, &cScrSpriteDraw_drawPolyF_0x2c6590, 0x2c6590u, 0x13d2f8u)) {
         return;
     }
-    ctx->pc = 0x13D2F8u;
 label_13d2f8:
     // 0x13d2f8: 0x8e042fb0  lw          $a0, 0x2FB0($s0)
     ctx->pc = 0x13d2f8u;
@@ -158,7 +156,6 @@ label_13d2f8:
     if (!runtime->callDirectStatic(rdram, ctx, &cScrSpriteDraw_drawPolyF_0x2c6590, 0x2c6590u, 0x13d320u)) {
         return;
     }
-    ctx->pc = 0x13D320u;
 label_13d320:
     // 0x13d320: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x13d320u;

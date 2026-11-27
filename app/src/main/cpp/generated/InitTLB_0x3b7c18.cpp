@@ -13,7 +13,7 @@
 
 // Function: InitTLB
 // Address: 0x3b7c18 - 0x3b7c58
-void InitTLB_0x3b7c18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitTLB_0x3b7c18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitTLB_0x3b7c18");
 #endif
@@ -39,7 +39,6 @@ void InitTLB_0x3b7c18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &GetMemorySize_0x3b0100, 0x3b0100u, 0x3b7c28u)) {
         return;
     }
-    ctx->pc = 0x3B7C28u;
 label_3b7c28:
     // 0x3b7c28: 0x3c030200  lui         $v1, 0x200
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)512 << 16));
@@ -58,7 +57,6 @@ label_3b7c28:
     if (!runtime->callDirectStatic(rdram, ctx, &InitTLB32MB_0x3b7c58, 0x3b7c58u, 0x3b7c3cu)) {
         return;
     }
-    ctx->pc = 0x3B7C3Cu;
 label_3b7c3c:
     // 0x3b7c3c: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x3B7C3Cu;
@@ -75,7 +73,6 @@ label_3b7c3c:
             goto label_3b7c50;
         }
     }
-    ctx->pc = 0x3B7C44u;
 label_3b7c44:
     // 0x3b7c44: 0xc0ec044  jal         func_3B0110
     ctx->pc = 0x3B7C44u;
@@ -83,7 +80,6 @@ label_3b7c44:
     if (!runtime->callDirectStatic(rdram, ctx, &InitTLB_0x3b0110, 0x3b0110u, 0x3b7c4cu)) {
         return;
     }
-    ctx->pc = 0x3B7C4Cu;
 label_3b7c4c:
     // 0x3b7c4c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3b7c4cu;

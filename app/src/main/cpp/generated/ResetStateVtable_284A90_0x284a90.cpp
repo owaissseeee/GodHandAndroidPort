@@ -13,7 +13,7 @@
 
 // Function: ResetStateVtable_284A90
 // Address: 0x284a90 - 0x284af8
-void ResetStateVtable_284A90_0x284a90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ResetStateVtable_284A90_0x284a90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ResetStateVtable_284A90_0x284a90");
 #endif
@@ -59,7 +59,6 @@ void ResetStateVtable_284A90_0x284a90(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A84A8_0x2a84a8, 0x2a84a8u, 0x284ab8u)) {
         return;
     }
-    ctx->pc = 0x284AB8u;
 label_284ab8:
     // 0x284ab8: 0x8e0415c4  lw          $a0, 0x15C4($s0)
     ctx->pc = 0x284ab8u;
@@ -79,7 +78,6 @@ label_284ab8:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField_630_1C2370_0x1c2370, 0x1c2370u, 0x284accu)) {
         return;
     }
-    ctx->pc = 0x284ACCu;
 label_284acc:
     // 0x284acc: 0xae0015c4  sw          $zero, 0x15C4($s0)
     ctx->pc = 0x284accu;
@@ -96,7 +94,6 @@ label_284ad0:
     if (!runtime->callDirectStatic(rdram, ctx, &ChildOwner_releaseChild_0x285678, 0x285678u, 0x284ad8u)) {
         return;
     }
-    ctx->pc = 0x284AD8u;
 label_284ad8:
     // 0x284ad8: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -111,7 +108,6 @@ label_284ad8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0028EB88_0x28eb88, 0x28eb88u, 0x284ae4u)) {
         return;
     }
-    ctx->pc = 0x284AE4u;
 label_284ae4:
     // 0x284ae4: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x284ae4u;

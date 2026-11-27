@@ -13,7 +13,7 @@
 
 // Function: SJX_Create
 // Address: 0x33b428 - 0x33b520
-void SJX_Create_0x33b428(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SJX_Create_0x33b428(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SJX_Create_0x33b428");
 #endif
@@ -77,7 +77,6 @@ void SJX_Create_0x33b428(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     // 0x33b460: 0x200282d  daddu       $a1, $s0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x33b464: 0x200182d  daddu       $v1, $s0, $zero
-    ctx->pc = 0x33b464u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_33b468:
     // 0x33b468: 0x24840001  addiu       $a0, $a0, 0x1
@@ -124,7 +123,6 @@ label_33b468:
             goto label_33b468;
         }
     }
-    ctx->pc = 0x33B48Cu;
 label_33b48c:
     // 0x33b48c: 0x24030020  addiu       $v1, $zero, 0x20
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 32));
@@ -158,7 +156,6 @@ label_33b48c:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x33b4a8u)) {
         return;
     }
-    ctx->pc = 0x33B4A8u;
 label_33b4a8:
     // 0x33b4a8: 0xae130004  sw          $s3, 0x4($s0)
     ctx->pc = 0x33b4a8u;
@@ -199,7 +196,6 @@ label_33b4a8:
     if (!runtime->callDirectStatic(rdram, ctx, &DTX_CallUrpc_0x332670, 0x332670u, 0x33b4dcu)) {
         return;
     }
-    ctx->pc = 0x33B4DCu;
 label_33b4dc:
     // 0x33b4dc: 0x14400006  bnez        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x33B4DCu;
@@ -229,7 +225,6 @@ label_33b4dc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003260C8_0x3260c8, 0x3260c8u, 0x33b4f0u)) {
         return;
     }
-    ctx->pc = 0x33B4F0u;
 label_33b4f0:
     // 0x33b4f0: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x33B4F0u;
@@ -246,7 +241,6 @@ label_33b4f0:
             goto label_33b504;
         }
     }
-    ctx->pc = 0x33B4F8u;
 label_33b4f8:
     // 0x33b4f8: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));

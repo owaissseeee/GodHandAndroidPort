@@ -13,7 +13,7 @@
 
 // Function: SFTRN_Init
 // Address: 0x35bba0 - 0x35bc38
-void SFTRN_Init_0x35bba0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFTRN_Init_0x35bba0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFTRN_Init_0x35bba0");
 #endif

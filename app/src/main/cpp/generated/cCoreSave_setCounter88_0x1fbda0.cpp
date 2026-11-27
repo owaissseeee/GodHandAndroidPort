@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_setCounter88
 // Address: 0x1fbda0 - 0x1fbdd0
-void cCoreSave_setCounter88_0x1fbda0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setCounter88_0x1fbda0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setCounter88_0x1fbda0");
 #endif

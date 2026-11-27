@@ -13,7 +13,7 @@
 
 // Function: SFD_SetConcatPlay
 // Address: 0x34cce8 - 0x34cd48
-void SFD_SetConcatPlay_0x34cce8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFD_SetConcatPlay_0x34cce8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFD_SetConcatPlay_0x34cce8");
 #endif
@@ -46,7 +46,6 @@ void SFD_SetConcatPlay_0x34cce8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &Obj34D8_SetGlobalEE0B8_IfField48_0x34dec8, 0x34dec8u, 0x34ccfcu)) {
         return;
     }
-    ctx->pc = 0x34CCFCu;
 label_34ccfc:
     // 0x34ccfc: 0x3c05ff00  lui         $a1, 0xFF00
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)65280 << 16));
@@ -88,7 +87,6 @@ label_34ccfc:
         return;
     }
     // 0x34cd24: 0x0  nop
-    ctx->pc = 0x34cd24u;
     // NOP
 label_34cd28:
     // 0x34cd28: 0xc0d6800  jal         func_35A000
@@ -102,7 +100,6 @@ label_34cd28:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035A000_0x35a000, 0x35a000u, 0x34cd30u)) {
         return;
     }
-    ctx->pc = 0x34CD30u;
 label_34cd30:
     // 0x34cd30: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

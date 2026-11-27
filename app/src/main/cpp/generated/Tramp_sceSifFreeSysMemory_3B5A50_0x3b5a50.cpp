@@ -13,7 +13,7 @@
 
 // Function: Tramp_sceSifFreeSysMemory_3B5A50
 // Address: 0x3b5a50 - 0x3b5a80
-void Tramp_sceSifFreeSysMemory_3B5A50_0x3b5a50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp_sceSifFreeSysMemory_3B5A50_0x3b5a50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp_sceSifFreeSysMemory_3B5A50_0x3b5a50");
 #endif
@@ -37,7 +37,6 @@ void Tramp_sceSifFreeSysMemory_3B5A50_0x3b5a50(uint8_t* rdram, R5900Context* ctx
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B59D8u, 0x3B5A58u, 0x3B5A60u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3B5A60u;
 label_3b5a60:
     // 0x3b5a60: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3b5a60u;

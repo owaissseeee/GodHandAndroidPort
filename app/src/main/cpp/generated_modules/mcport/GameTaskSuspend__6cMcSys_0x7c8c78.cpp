@@ -14,12 +14,11 @@ namespace gh_mcport
 {
 // Function: GameTaskSuspend__6cMcSys
 // Address: 0x7c8c78 - 0x7c8c80
-void GameTaskSuspend__6cMcSys_0x7c8c78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GameTaskSuspend__6cMcSys_0x7c8c78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GameTaskSuspend__6cMcSys_0x7c8c78");
 #endif
 
-    ctx->pc = 0x7c8c78u;
 
     // 0x7c8c78: 0x3e00008  jr          $ra
     ctx->pc = 0x7C8C78u;

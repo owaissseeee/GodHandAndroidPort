@@ -13,7 +13,7 @@
 
 // Function: Obj3260_Tramp_00338818_D410
 // Address: 0x326410 - 0x326428
-void Obj3260_Tramp_00338818_D410_0x326410(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj3260_Tramp_00338818_D410_0x326410(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj3260_Tramp_00338818_D410_0x326410");
 #endif

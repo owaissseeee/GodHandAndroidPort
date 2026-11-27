@@ -13,7 +13,7 @@
 
 // Function: SetField_104_13E3F8
 // Address: 0x13e3f8 - 0x13e400
-void SetField_104_13E3F8_0x13e3f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetField_104_13E3F8_0x13e3f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetField_104_13E3F8_0x13e3f8");
 #endif

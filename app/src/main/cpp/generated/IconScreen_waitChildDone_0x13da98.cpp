@@ -13,7 +13,7 @@
 
 // Function: IconScreen_waitChildDone
 // Address: 0x13da98 - 0x13dae0
-void IconScreen_waitChildDone_0x13da98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IconScreen_waitChildDone_0x13da98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IconScreen_waitChildDone_0x13da98");
 #endif
@@ -65,7 +65,6 @@ void IconScreen_waitChildDone_0x13da98(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_move_0x2aaa40, 0x2aaa40u, 0x13dac4u)) {
         return;
     }
-    ctx->pc = 0x13DAC4u;
 label_13dac4:
     // 0x13dac4: 0x96020092  lhu         $v0, 0x92($s0)
     ctx->pc = 0x13dac4u;

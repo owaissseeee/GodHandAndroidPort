@@ -13,7 +13,7 @@
 
 // Function: func_00384BC8
 // Address: 0x384bc8 - 0x384c60
-void func_00384BC8_0x384bc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00384BC8_0x384bc8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00384BC8_0x384bc8");
 #endif
@@ -87,7 +87,6 @@ void func_00384BC8_0x384bc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_002E0DE8_0x2e0de8, 0x2e0de8u, 0x384c14u)) {
         return;
     }
-    ctx->pc = 0x384C14u;
 label_384c14:
     // 0x384c14: 0x10000010  b           . + 4 + (0x10 << 2)
     ctx->pc = 0x384C14u;
@@ -104,7 +103,6 @@ label_384c14:
             goto label_384c58;
         }
     }
-    ctx->pc = 0x384C1Cu;
 label_384c1c:
     // 0x384c1c: 0x90a30004  lbu         $v1, 0x4($a1)
     ctx->pc = 0x384c1cu;
@@ -143,7 +141,6 @@ label_384c1c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002E0DE8_0x2e0de8, 0x2e0de8u, 0x384c54u)) {
         return;
     }
-    ctx->pc = 0x384C54u;
 label_384c54:
     // 0x384c54: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x384c54u;

@@ -13,7 +13,7 @@
 
 // Function: cOmWeapon_setFall
 // Address: 0x1cf4a8 - 0x1cf6e0
-void cOmWeapon_setFall_0x1cf4a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmWeapon_setFall_0x1cf4a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmWeapon_setFall_0x1cf4a8");
 #endif
@@ -103,10 +103,8 @@ void cOmWeapon_setFall_0x1cf4a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_1cf4f0;
         }
     }
-    ctx->pc = 0x1CF4ECu;
 label_1cf4ec:
     // 0x1cf4ec: 0x182d  daddu       $v1, $zero, $zero
-    ctx->pc = 0x1cf4ecu;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1cf4f0:
     // 0x1cf4f0: 0x8e020600  lw          $v0, 0x600($s0)
@@ -319,7 +317,6 @@ label_1cf5a0:
     if (!runtime->callDirectStatic(rdram, ctx, &ChkLine_0x131e10, 0x131e10u, 0x1cf5ecu)) {
         return;
     }
-    ctx->pc = 0x1CF5ECu;
 label_1cf5ec:
     // 0x1cf5ec: 0x10400007  beqz        $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x1CF5ECu;
@@ -360,7 +357,6 @@ label_1cf5ec:
             goto label_1cf60c;
         }
     }
-    ctx->pc = 0x1CF60Cu;
 label_1cf60c:
     // 0x1cf60c: 0x12510006  beq         $s2, $s1, . + 4 + (0x6 << 2)
     ctx->pc = 0x1CF60Cu;
@@ -495,10 +491,8 @@ label_1cf64c:
             goto label_1cf698;
         }
     }
-    ctx->pc = 0x1CF694u;
 label_1cf694:
     // 0x1cf694: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1cf694u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1cf698:
     // 0x1cf698: 0x1040000a  beqz        $v0, . + 4 + (0xA << 2)
@@ -536,7 +530,6 @@ label_1cf698:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_calcParts_0x149eb8, 0x149eb8u, 0x1cf6b4u)) {
         return;
     }
-    ctx->pc = 0x1CF6B4u;
 label_1cf6b4:
     // 0x1cf6b4: 0xa20002f7  sb          $zero, 0x2F7($s0)
     ctx->pc = 0x1cf6b4u;

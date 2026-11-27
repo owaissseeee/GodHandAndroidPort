@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Set_Ptr_Field_100_D_0044BED0_2BAA30
 // Address: 0x2baa30 - 0x2baa40
-void Obj0000_Set_Ptr_Field_100_D_0044BED0_2BAA30_0x2baa30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_Ptr_Field_100_D_0044BED0_2BAA30_0x2baa30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_Ptr_Field_100_D_0044BED0_2BAA30_0x2baa30");
 #endif

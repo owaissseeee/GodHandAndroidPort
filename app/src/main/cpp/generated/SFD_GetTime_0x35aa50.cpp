@@ -13,7 +13,7 @@
 
 // Function: SFD_GetTime
 // Address: 0x35aa50 - 0x35aac8
-void SFD_GetTime_0x35aa50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFD_GetTime_0x35aa50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFD_GetTime_0x35aa50");
 #endif
@@ -55,7 +55,6 @@ void SFD_GetTime_0x35aa50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &Obj34D8_SetGlobalEE0B8_IfField48_0x34dec8, 0x34dec8u, 0x35aa74u)) {
         return;
     }
-    ctx->pc = 0x35AA74u;
 label_35aa74:
     // 0x35aa74: 0x3c05ff00  lui         $a1, 0xFF00
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)65280 << 16));
@@ -103,7 +102,6 @@ label_35aa74:
         return;
     }
     // 0x35aaa4: 0x0  nop
-    ctx->pc = 0x35aaa4u;
     // NOP
 label_35aaa8:
     // 0x35aaa8: 0x240282d  daddu       $a1, $s2, $zero

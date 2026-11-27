@@ -13,7 +13,7 @@
 
 // Function: func_0012B2E0
 // Address: 0x12b2e0 - 0x12b328
-void func_0012B2E0_0x12b2e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0012B2E0_0x12b2e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0012B2E0_0x12b2e0");
 #endif
@@ -61,7 +61,6 @@ void func_0012B2E0_0x12b2e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cOmWeapon_SetDamage_0x1d07f0, 0x1d07f0u, 0x12b304u)) {
         return;
     }
-    ctx->pc = 0x12B304u;
 label_12b304:
     // 0x12b304: 0x50400005  beql        $v0, $zero, . + 4 + (0x5 << 2)
     ctx->pc = 0x12B304u;
@@ -89,7 +88,6 @@ label_12b304:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmWeapon_SetBreak_0x1d0818, 0x1d0818u, 0x12b314u)) {
         return;
     }
-    ctx->pc = 0x12B314u;
 label_12b314:
     // 0x12b314: 0xae000698  sw          $zero, 0x698($s0)
     ctx->pc = 0x12b314u;

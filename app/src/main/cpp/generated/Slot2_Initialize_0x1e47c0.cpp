@@ -13,7 +13,7 @@
 
 // Function: Slot2_Initialize
 // Address: 0x1e47c0 - 0x1e48e0
-void Slot2_Initialize_0x1e47c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Slot2_Initialize_0x1e47c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Slot2_Initialize_0x1e47c0");
 #endif
@@ -209,7 +209,6 @@ void Slot2_Initialize_0x1e47c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_001E87E0_0x1e87e0, 0x1e87e0u, 0x1e4854u)) {
         return;
     }
-    ctx->pc = 0x1E4854u;
 label_1e4854:
     // 0x1e4854: 0x240282d  daddu       $a1, $s2, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -228,7 +227,6 @@ label_1e4854:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001E87E0_0x1e87e0, 0x1e87e0u, 0x1e4868u)) {
         return;
     }
-    ctx->pc = 0x1E4868u;
 label_1e4868:
     // 0x1e4868: 0x280302d  daddu       $a2, $s4, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 20) + (uint64_t)GPR_U64(ctx, 0));
@@ -247,7 +245,6 @@ label_1e4868:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001E87E0_0x1e87e0, 0x1e87e0u, 0x1e487cu)) {
         return;
     }
-    ctx->pc = 0x1E487Cu;
 label_1e487c:
     // 0x1e487c: 0x2e0282d  daddu       $a1, $s7, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 23) + (uint64_t)GPR_U64(ctx, 0));
@@ -262,7 +259,6 @@ label_1e487c:
     if (!runtime->callDirectStatic(rdram, ctx, &InitClearStructAndSet_1E79A8_0x1e79a8, 0x1e79a8u, 0x1e4888u)) {
         return;
     }
-    ctx->pc = 0x1E4888u;
 label_1e4888:
     // 0x1e4888: 0xa61603d0  sh          $s6, 0x3D0($s0)
     ctx->pc = 0x1e4888u;
@@ -280,7 +276,6 @@ label_1e4888:
     if (!runtime->callDirectStatic(rdram, ctx, &Slot2_showMarkLayers_0x1e67a8, 0x1e67a8u, 0x1e4898u)) {
         return;
     }
-    ctx->pc = 0x1E4898u;
 label_1e4898:
     // 0x1e4898: 0xa20003d8  sb          $zero, 0x3D8($s0)
     ctx->pc = 0x1e4898u;

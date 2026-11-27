@@ -13,7 +13,7 @@
 
 // Function: InitVtableField5C_1337E0
 // Address: 0x1337e0 - 0x133810
-void InitVtableField5C_1337E0_0x1337e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitVtableField5C_1337E0_0x1337e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitVtableField5C_1337E0_0x1337e0");
 #endif
@@ -58,7 +58,6 @@ void InitVtableField5C_1337E0_0x1337e0(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x133804u)) {
         return;
     }
-    ctx->pc = 0x133804u;
 label_133804:
     // 0x133804: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x133804u;

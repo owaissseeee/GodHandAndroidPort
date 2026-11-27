@@ -13,7 +13,7 @@
 
 // Function: func_0035ABC0
 // Address: 0x35abc0 - 0x35ac58
-void func_0035ABC0_0x35abc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0035ABC0_0x35abc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0035ABC0_0x35abc0");
 #endif
@@ -62,11 +62,9 @@ void func_0035ABC0_0x35abc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
 
-    ctx->pc = 0x35abc0u;
 
 label_35abc0:
     // 0x35abc0: 0x27bdffc0  addiu       $sp, $sp, -0x40
-    ctx->pc = 0x35abc0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967232));
 label_35abc4:
     // 0x35abc4: 0xffb10018  sd          $s1, 0x18($sp)
@@ -74,11 +72,9 @@ label_35abc4:
     WRITE64(ADD32(GPR_U32(ctx, 29), 24), GPR_U64(ctx, 17));
 label_35abc8:
     // 0x35abc8: 0x80882d  daddu       $s1, $a0, $zero
-    ctx->pc = 0x35abc8u;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_35abcc:
     // 0x35abcc: 0x3a0202d  daddu       $a0, $sp, $zero
-    ctx->pc = 0x35abccu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
 label_35abd0:
     // 0x35abd0: 0xffb00010  sd          $s0, 0x10($sp)
@@ -90,7 +86,6 @@ label_35abd4:
     WRITE64(ADD32(GPR_U32(ctx, 29), 32), GPR_U64(ctx, 18));
 label_35abd8:
     // 0x35abd8: 0xa0902d  daddu       $s2, $a1, $zero
-    ctx->pc = 0x35abd8u;
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
 label_35abdc:
     // 0x35abdc: 0xffb30028  sd          $s3, 0x28($sp)
@@ -123,7 +118,6 @@ label_35abe8:
     if (!runtime->callDirectStatic(rdram, ctx, &Thunk_func_0033B658_0x34df68, 0x34df68u, 0x35abecu)) {
         return;
     }
-    ctx->pc = 0x35ABECu;
 label_35abec:
     // 0x35abec: 0x220202d  daddu       $a0, $s1, $zero
     ctx->pc = 0x35abecu;
@@ -151,26 +145,20 @@ label_35abf4:
     if (!runtime->callDirectStatic(rdram, ctx, &GetArrayElemA0C_35A1C8_0x35a1c8, 0x35a1c8u, 0x35abf8u)) {
         return;
     }
-    ctx->pc = 0x35ABF8u;
 label_35abf8:
     // 0x35abf8: 0x220202d  daddu       $a0, $s1, $zero
-    ctx->pc = 0x35abf8u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
 label_35abfc:
     // 0x35abfc: 0x21080  sll         $v0, $v0, 2
-    ctx->pc = 0x35abfcu;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 2));
 label_35ac00:
     // 0x35ac00: 0x26300d30  addiu       $s0, $s1, 0xD30
-    ctx->pc = 0x35ac00u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 17), 3376));
 label_35ac04:
     // 0x35ac04: 0x2028021  addu        $s0, $s0, $v0
-    ctx->pc = 0x35ac04u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), GPR_U32(ctx, 2)));
 label_35ac08:
     // 0x35ac08: 0x240282d  daddu       $a1, $s2, $zero
-    ctx->pc = 0x35ac08u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
 label_35ac0c:
     // 0x35ac0c: 0x8e020000  lw          $v0, 0x0($s0)
@@ -203,10 +191,8 @@ label_35ac14:
             goto label_35ac20;
         }
     }
-    ctx->pc = 0x35AC18u;
 label_35ac18:
     // 0x35ac18: 0x3c020036  lui         $v0, 0x36
-    ctx->pc = 0x35ac18u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)54 << 16));
 label_35ac1c:
     // 0x35ac1c: 0x2442ac58  addiu       $v0, $v0, -0x53A8
@@ -228,7 +214,6 @@ label_35ac24:
             return;
         }
     }
-    ctx->pc = 0x35AC28u;
 label_35ac28:
     // 0x35ac28: 0x3a0202d  daddu       $a0, $sp, $zero
     ctx->pc = 0x35ac28u;
@@ -256,10 +241,8 @@ label_35ac30:
     if (!runtime->callDirectStatic(rdram, ctx, &Thunk_func_0033B670_0x34df80, 0x34df80u, 0x35ac34u)) {
         return;
     }
-    ctx->pc = 0x35AC34u;
 label_35ac34:
     // 0x35ac34: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x35ac34u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_35ac38:
     // 0x35ac38: 0xdfb10018  ld          $s1, 0x18($sp)
@@ -312,7 +295,6 @@ label_35ac50:
         return;
         #endif
     }
-    ctx->pc = 0x35AC54u;
 label_35ac54:
     // 0x35ac54: 0x0  nop
     // NOP

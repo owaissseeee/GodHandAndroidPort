@@ -13,7 +13,7 @@
 
 // Function: InitVtableAndForwardField_13C528
 // Address: 0x13c528 - 0x13c558
-void InitVtableAndForwardField_13C528_0x13c528(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitVtableAndForwardField_13C528_0x13c528(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitVtableAndForwardField_13C528_0x13c528");
 #endif
@@ -58,7 +58,6 @@ void InitVtableAndForwardField_13C528_0x13c528(uint8_t* rdram, R5900Context* ctx
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x13c54cu)) {
         return;
     }
-    ctx->pc = 0x13C54Cu;
 label_13c54c:
     // 0x13c54c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x13c54cu;

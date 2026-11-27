@@ -13,7 +13,7 @@
 
 // Function: CheckSlotsShort2FEAndSetByte1864_262A10
 // Address: 0x262a10 - 0x262aa8
-void CheckSlotsShort2FEAndSetByte1864_262A10_0x262a10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CheckSlotsShort2FEAndSetByte1864_262A10_0x262a10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CheckSlotsShort2FEAndSetByte1864_262A10_0x262a10");
 #endif
@@ -68,7 +68,6 @@ void CheckSlotsShort2FEAndSetByte1864_262A10_0x262a10(uint8_t* rdram, R5900Conte
         }
     }
     // 0x262a30: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x262a30u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_262a34:
     // 0x262a34: 0x24020001  addiu       $v0, $zero, 0x1
@@ -92,7 +91,6 @@ label_262a34:
         return;
         #endif
     }
-    ctx->pc = 0x262A40u;
 label_262a40:
     // 0x262a40: 0x8c420034  lw          $v0, 0x34($v0)
     ctx->pc = 0x262a40u;
@@ -219,7 +217,6 @@ label_262a80:
             goto label_262a34;
         }
     }
-    ctx->pc = 0x262A9Cu;
 label_262a9c:
     // 0x262a9c: 0x3e00008  jr          $ra
     ctx->pc = 0x262A9Cu;

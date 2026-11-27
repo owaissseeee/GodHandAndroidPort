@@ -13,7 +13,7 @@
 
 // Function: MWSFSVM_Init
 // Address: 0x3489b0 - 0x3489f0
-void MWSFSVM_Init_0x3489b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MWSFSVM_Init_0x3489b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MWSFSVM_Init_0x3489b0");
 #endif
@@ -37,7 +37,6 @@ void MWSFSVM_Init_0x3489b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_0033BE80_0x33be80, 0x33be80u, 0x3489c0u)) {
         return;
     }
-    ctx->pc = 0x3489C0u;
 label_3489c0:
     // 0x3489c0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3489c0u;

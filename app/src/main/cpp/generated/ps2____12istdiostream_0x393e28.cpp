@@ -13,7 +13,7 @@
 
 // Function: _$_12istdiostream
 // Address: 0x393e28 - 0x393f10
-void ps2____12istdiostream_0x393e28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2____12istdiostream_0x393e28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2____12istdiostream_0x393e28");
 #endif
@@ -108,7 +108,6 @@ label_393e80:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2____8stdiobuf_0x3935d0, 0x3935d0u, 0x393e8cu)) {
         return;
     }
-    ctx->pc = 0x393E8Cu;
 label_393e8c:
     // 0x393e8c: 0x8e090000  lw          $t1, 0x0($s0)
     ctx->pc = 0x393e8cu;
@@ -189,7 +188,6 @@ label_393e8c:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_vec_delete_0x30f5c8, 0x30f5c8u, 0x393ee8u)) {
         return;
     }
-    ctx->pc = 0x393EE8u;
 label_393ee8:
     // 0x393ee8: 0x32220001  andi        $v0, $s1, 0x1
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 17) & (uint64_t)(uint16_t)1);
@@ -219,7 +217,6 @@ label_393ee8:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x393efcu)) {
         return;
     }
-    ctx->pc = 0x393EFCu;
 label_393efc:
     // 0x393efc: 0xdfbf0040  ld          $ra, 0x40($sp)
     ctx->pc = 0x393efcu;

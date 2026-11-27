@@ -13,7 +13,7 @@
 
 // Function: Obj2810_SetState_D_a1
 // Address: 0x2814e8 - 0x281500
-void Obj2810_SetState_D_a1_0x2814e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj2810_SetState_D_a1_0x2814e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj2810_SetState_D_a1_0x2814e8");
 #endif

@@ -530,6 +530,7 @@ class MainActivity : ComponentActivity() {
             putExtra("hudLayoutIdx", settings.hudLayoutIdx)
             putExtra("fpsIdx", settings.fpsIdx)
             putExtra("frameskipIdx", settings.frameskipIdx)
+            putExtra("ultraPotatoMode", settings.ultraPotatoMode)
         }
         startActivity(intent)
     }

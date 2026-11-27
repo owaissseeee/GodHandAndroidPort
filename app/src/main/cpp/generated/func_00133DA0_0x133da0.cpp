@@ -13,7 +13,7 @@
 
 // Function: func_00133DA0
 // Address: 0x133da0 - 0x134270
-void func_00133DA0_0x133da0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00133DA0_0x133da0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00133DA0_0x133da0");
 #endif
@@ -207,7 +207,6 @@ label_133e50:
     if (!runtime->callDirectStatic(rdram, ctx, &Draw_Line2_0x15ef10, 0x15ef10u, 0x133e60u)) {
         return;
     }
-    ctx->pc = 0x133E60u;
 label_133e60:
     // 0x133e60: 0x13be0008  beq         $sp, $fp, . + 4 + (0x8 << 2)
     ctx->pc = 0x133E60u;
@@ -300,7 +299,6 @@ label_133eac:
     if (!runtime->callDirectStatic(rdram, ctx, &Draw_Line2_0x15ef10, 0x15ef10u, 0x133ebcu)) {
         return;
     }
-    ctx->pc = 0x133EBCu;
 label_133ebc:
     // 0x133ebc: 0x13b70008  beq         $sp, $s7, . + 4 + (0x8 << 2)
     ctx->pc = 0x133EBCu;
@@ -393,7 +391,6 @@ label_133f08:
     if (!runtime->callDirectStatic(rdram, ctx, &Draw_Line2_0x15ef10, 0x15ef10u, 0x133f18u)) {
         return;
     }
-    ctx->pc = 0x133F18u;
 label_133f18:
     // 0x133f18: 0x13b60008  beq         $sp, $s6, . + 4 + (0x8 << 2)
     ctx->pc = 0x133F18u;
@@ -484,7 +481,6 @@ label_133f60:
     if (!runtime->callDirectStatic(rdram, ctx, &Draw_Line2_0x15ef10, 0x15ef10u, 0x133f70u)) {
         return;
     }
-    ctx->pc = 0x133F70u;
 label_133f70:
     // 0x133f70: 0x26110130  addiu       $s1, $s0, 0x130
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 16), 304));
@@ -579,7 +575,6 @@ label_133fc0:
     if (!runtime->callDirectStatic(rdram, ctx, &Draw_Line2_0x15ef10, 0x15ef10u, 0x133fd0u)) {
         return;
     }
-    ctx->pc = 0x133FD0u;
 label_133fd0:
     // 0x133fd0: 0x13b40008  beq         $sp, $s4, . + 4 + (0x8 << 2)
     ctx->pc = 0x133FD0u;
@@ -672,7 +667,6 @@ label_13401c:
     if (!runtime->callDirectStatic(rdram, ctx, &Draw_Line2_0x15ef10, 0x15ef10u, 0x13402cu)) {
         return;
     }
-    ctx->pc = 0x13402Cu;
 label_13402c:
     // 0x13402c: 0x13b30008  beq         $sp, $s3, . + 4 + (0x8 << 2)
     ctx->pc = 0x13402Cu;
@@ -765,7 +759,6 @@ label_134078:
     if (!runtime->callDirectStatic(rdram, ctx, &Draw_Line2_0x15ef10, 0x15ef10u, 0x134088u)) {
         return;
     }
-    ctx->pc = 0x134088u;
 label_134088:
     // 0x134088: 0x13b20008  beq         $sp, $s2, . + 4 + (0x8 << 2)
     ctx->pc = 0x134088u;
@@ -856,7 +849,6 @@ label_1340d0:
     if (!runtime->callDirectStatic(rdram, ctx, &Draw_Line2_0x15ef10, 0x15ef10u, 0x1340e0u)) {
         return;
     }
-    ctx->pc = 0x1340E0u;
 label_1340e0:
     // 0x1340e0: 0x13b50008  beq         $sp, $s5, . + 4 + (0x8 << 2)
     ctx->pc = 0x1340E0u;
@@ -947,7 +939,6 @@ label_134128:
     if (!runtime->callDirectStatic(rdram, ctx, &Draw_Line2_0x15ef10, 0x15ef10u, 0x134138u)) {
         return;
     }
-    ctx->pc = 0x134138u;
 label_134138:
     // 0x134138: 0x13be0008  beq         $sp, $fp, . + 4 + (0x8 << 2)
     ctx->pc = 0x134138u;
@@ -1038,7 +1029,6 @@ label_134180:
     if (!runtime->callDirectStatic(rdram, ctx, &Draw_Line2_0x15ef10, 0x15ef10u, 0x134190u)) {
         return;
     }
-    ctx->pc = 0x134190u;
 label_134190:
     // 0x134190: 0x13b70008  beq         $sp, $s7, . + 4 + (0x8 << 2)
     ctx->pc = 0x134190u;
@@ -1129,7 +1119,6 @@ label_1341d8:
     if (!runtime->callDirectStatic(rdram, ctx, &Draw_Line2_0x15ef10, 0x15ef10u, 0x1341e8u)) {
         return;
     }
-    ctx->pc = 0x1341E8u;
 label_1341e8:
     // 0x1341e8: 0x13b60008  beq         $sp, $s6, . + 4 + (0x8 << 2)
     ctx->pc = 0x1341E8u;
@@ -1220,7 +1209,6 @@ label_134230:
     if (!runtime->callDirectStatic(rdram, ctx, &Draw_Line2_0x15ef10, 0x15ef10u, 0x134240u)) {
         return;
     }
-    ctx->pc = 0x134240u;
 label_134240:
     // 0x134240: 0x7bb000c0  lq          $s0, 0xC0($sp)
     ctx->pc = 0x134240u;

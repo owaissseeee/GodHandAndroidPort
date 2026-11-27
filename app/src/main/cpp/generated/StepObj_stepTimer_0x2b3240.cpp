@@ -13,7 +13,7 @@
 
 // Function: StepObj_stepTimer
 // Address: 0x2b3240 - 0x2b3338
-void StepObj_stepTimer_0x2b3240(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void StepObj_stepTimer_0x2b3240(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("StepObj_stepTimer_0x2b3240");
 #endif
@@ -86,7 +86,6 @@ void StepObj_stepTimer_0x2b3240(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_2b3290;
         }
     }
-    ctx->pc = 0x2B326Cu;
 label_2b326c:
     // 0x2b326c: 0xc0ad174  jal         func_2B45D0
     SET_GPR_U32(ctx, 31, 0x2B3274u);
@@ -99,7 +98,6 @@ label_2b326c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B45D0_0x2b45d0, 0x2b45d0u, 0x2b3274u)) {
         return;
     }
-    ctx->pc = 0x2B3274u;
 label_2b3274:
     // 0x2b3274: 0x9202000d  lbu         $v0, 0xD($s0)
     ctx->pc = 0x2b3274u;
@@ -121,12 +119,10 @@ label_2b3280:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B45D8_0x2b45d8, 0x2b45d8u, 0x2b3288u)) {
         return;
     }
-    ctx->pc = 0x2B3288u;
 label_2b3288:
     // 0x2b3288: 0x3c03003c  lui         $v1, 0x3C
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)60 << 16));
     // 0x2b328c: 0x3c020074  lui         $v0, 0x74
-    ctx->pc = 0x2b328cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
 label_2b3290:
     // 0x2b3290: 0x8c6423a4  lw          $a0, 0x23A4($v1)
@@ -248,10 +244,8 @@ label_2b32dc:
             goto label_2b3314;
         }
     }
-    ctx->pc = 0x2B3310u;
 label_2b3310:
     // 0x2b3310: 0xa22818  mult        $a1, $a1, $v0
-    ctx->pc = 0x2b3310u;
     { int64_t result = (int64_t)GPR_S32(ctx, 5) * (int64_t)GPR_S32(ctx, 2); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 5, (int32_t)result); }
 label_2b3314:
     // 0x2b3314: 0x8e020068  lw          $v0, 0x68($s0)
@@ -273,7 +267,6 @@ label_2b3318:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B3338_0x2b3338, 0x2b3338u, 0x2b3328u)) {
         return;
     }
-    ctx->pc = 0x2B3328u;
 label_2b3328:
     // 0x2b3328: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2b3328u;

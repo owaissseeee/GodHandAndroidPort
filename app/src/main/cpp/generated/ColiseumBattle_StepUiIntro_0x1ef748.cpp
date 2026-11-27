@@ -13,7 +13,7 @@
 
 // Function: ColiseumBattle_StepUiIntro
 // Address: 0x1ef748 - 0x1ef810
-void ColiseumBattle_StepUiIntro_0x1ef748(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumBattle_StepUiIntro_0x1ef748(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumBattle_StepUiIntro_0x1ef748");
 #endif
@@ -105,7 +105,6 @@ void ColiseumBattle_StepUiIntro_0x1ef748(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F3260_0x1f3260, 0x1f3260u, 0x1ef788u)) {
         return;
     }
-    ctx->pc = 0x1EF788u;
 label_1ef788:
     // 0x1ef788: 0x8e020008  lw          $v0, 0x8($s0)
     ctx->pc = 0x1ef788u;
@@ -132,7 +131,6 @@ label_1ef788:
             goto label_1ef7e4;
         }
     }
-    ctx->pc = 0x1EF7A0u;
 label_1ef7a0:
     // 0x1ef7a0: 0x8e020010  lw          $v0, 0x10($s0)
     ctx->pc = 0x1ef7a0u;
@@ -169,10 +167,8 @@ label_1ef7a0:
             goto label_1ef7bc;
         }
     }
-    ctx->pc = 0x1EF7B8u;
 label_1ef7b8:
     // 0x1ef7b8: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x1ef7b8u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_1ef7bc:
     // 0x1ef7bc: 0x306200ff  andi        $v0, $v1, 0xFF
@@ -222,7 +218,6 @@ label_1ef7e4:
     if (!runtime->callDirectStatic(rdram, ctx, &NoOp_1F0490_0x1f0490, 0x1f0490u, 0x1ef7ecu)) {
         return;
     }
-    ctx->pc = 0x1EF7ECu;
 label_1ef7ec:
     // 0x1ef7ec: 0xc07ca3c  jal         func_1F28F0
     SET_GPR_U32(ctx, 31, 0x1EF7F4u);
@@ -235,7 +230,6 @@ label_1ef7ec:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F28F0_0x1f28f0, 0x1f28f0u, 0x1ef7f4u)) {
         return;
     }
-    ctx->pc = 0x1EF7F4u;
 label_1ef7f4:
     // 0x1ef7f4: 0xc07ca64  jal         func_1F2990
     SET_GPR_U32(ctx, 31, 0x1EF7FCu);
@@ -248,7 +242,6 @@ label_1ef7f4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F2990_0x1f2990, 0x1f2990u, 0x1ef7fcu)) {
         return;
     }
-    ctx->pc = 0x1EF7FCu;
 label_1ef7fc:
     // 0x1ef7fc: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1ef7fcu;

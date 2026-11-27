@@ -13,7 +13,7 @@
 
 // Function: EffEventIsCutDataExist
 // Address: 0x2fa128 - 0x2fa158
-void EffEventIsCutDataExist_0x2fa128(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EffEventIsCutDataExist_0x2fa128(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EffEventIsCutDataExist_0x2fa128");
 #endif
@@ -48,7 +48,6 @@ void EffEventIsCutDataExist_0x2fa128(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_00306030_0x306030, 0x306030u, 0x2fa144u)) {
         return;
     }
-    ctx->pc = 0x2FA144u;
 label_2fa144:
     // 0x2fa144: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2fa144u;

@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getAllKillNpcNum
 // Address: 0x1fc5d0 - 0x1fc5e8
-void cCoreSave_getAllKillNpcNum_0x1fc5d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getAllKillNpcNum_0x1fc5d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getAllKillNpcNum_0x1fc5d0");
 #endif

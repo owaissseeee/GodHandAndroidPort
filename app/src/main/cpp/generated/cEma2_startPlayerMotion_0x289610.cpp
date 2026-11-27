@@ -13,7 +13,7 @@
 
 // Function: cEma2_startPlayerMotion
 // Address: 0x289610 - 0x2896a0
-void cEma2_startPlayerMotion_0x289610(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEma2_startPlayerMotion_0x289610(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEma2_startPlayerMotion_0x289610");
 #endif
@@ -63,7 +63,6 @@ void cEma2_startPlayerMotion_0x289610(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x28963cu)) {
         return;
     }
-    ctx->pc = 0x28963Cu;
 label_28963c:
     // 0x28963c: 0x8e030304  lw          $v1, 0x304($s0)
     ctx->pc = 0x28963cu;
@@ -91,7 +90,6 @@ label_28963c:
     if (!runtime->callDirectStatic(rdram, ctx, &fptoui_0x31ed08, 0x31ed08u, 0x28965cu)) {
         return;
     }
-    ctx->pc = 0x28965Cu;
 label_28965c:
     // 0x28965c: 0x240202d  daddu       $a0, $s2, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -116,7 +114,6 @@ label_28965c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x28967cu)) {
         return;
     }
-    ctx->pc = 0x28967Cu;
 label_28967c:
     // 0x28967c: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x28967cu;

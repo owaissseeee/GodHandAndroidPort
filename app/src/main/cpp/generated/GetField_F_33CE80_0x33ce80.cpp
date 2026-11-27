@@ -13,7 +13,7 @@
 
 // Function: GetField_F_33CE80
 // Address: 0x33ce80 - 0x33ce88
-void GetField_F_33CE80_0x33ce80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetField_F_33CE80_0x33ce80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetField_F_33CE80_0x33ce80");
 #endif

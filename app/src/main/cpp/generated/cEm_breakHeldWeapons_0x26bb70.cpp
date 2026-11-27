@@ -13,7 +13,7 @@
 
 // Function: cEm_breakHeldWeapons
 // Address: 0x26bb70 - 0x26bbd0
-void cEm_breakHeldWeapons_0x26bb70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm_breakHeldWeapons_0x26bb70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm_breakHeldWeapons_0x26bb70");
 #endif
@@ -61,7 +61,6 @@ void cEm_breakHeldWeapons_0x26bb70(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     // 0x26bb90: 0x24900710  addiu       $s0, $a0, 0x710
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 4), 1808));
     // 0x26bb94: 0x882d  daddu       $s1, $zero, $zero
-    ctx->pc = 0x26bb94u;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_26bb98:
     // 0x26bb98: 0x8e040000  lw          $a0, 0x0($s0)
@@ -88,7 +87,6 @@ label_26bb98:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmWeapon_SetBreak_0x1d0818, 0x1d0818u, 0x26bbacu)) {
         return;
     }
-    ctx->pc = 0x26BBACu;
 label_26bbac:
     // 0x26bbac: 0xae000000  sw          $zero, 0x0($s0)
     ctx->pc = 0x26bbacu;

@@ -13,7 +13,7 @@
 
 // Function: cGameObjTurn_stepTurn
 // Address: 0x1bc610 - 0x1bc6e8
-void cGameObjTurn_stepTurn_0x1bc610(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObjTurn_stepTurn_0x1bc610(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObjTurn_stepTurn_0x1bc610");
 #endif
@@ -86,7 +86,6 @@ void cGameObjTurn_stepTurn_0x1bc610(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1bc6d8;
         }
     }
-    ctx->pc = 0x1BC63Cu;
 label_1bc63c:
     // 0x1bc63c: 0x960302fe  lhu         $v1, 0x2FE($s0)
     ctx->pc = 0x1bc63cu;
@@ -148,7 +147,6 @@ label_1bc63c:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x1bc678u)) {
         return;
     }
-    ctx->pc = 0x1BC678u;
 label_1bc678:
     // 0x1bc678: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -179,7 +177,6 @@ label_1bc688:
     if (!runtime->callDirectStatic(rdram, ctx, &Turn_dest_dir_0x2da1f8, 0x2da1f8u, 0x1bc69cu)) {
         return;
     }
-    ctx->pc = 0x1BC69Cu;
 label_1bc69c:
     // 0x1bc69c: 0xc6010104  lwc1        $f1, 0x104($s0)
     ctx->pc = 0x1bc69cu;
@@ -199,7 +196,6 @@ label_1bc69c:
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_0x1f7d48, 0x1f7d48u, 0x1bc6b0u)) {
         return;
     }
-    ctx->pc = 0x1BC6B0u;
 label_1bc6b0:
     // 0x1bc6b0: 0xc6010638  lwc1        $f1, 0x638($s0)
     ctx->pc = 0x1bc6b0u;

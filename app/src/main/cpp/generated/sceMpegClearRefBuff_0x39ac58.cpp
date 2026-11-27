@@ -13,7 +13,7 @@
 
 // Function: sceMpegClearRefBuff
 // Address: 0x39ac58 - 0x39acd8
-void sceMpegClearRefBuff_0x39ac58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceMpegClearRefBuff_0x39ac58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceMpegClearRefBuff_0x39ac58");
 #endif
@@ -40,7 +40,6 @@ void sceMpegClearRefBuff_0x39ac58(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_39ac68;
         }
     }
-    ctx->pc = 0x39AC68u;
 label_39ac68:
     // 0x39ac68: 0x8c6201d8  lw          $v0, 0x1D8($v1)
     ctx->pc = 0x39ac68u;
@@ -60,7 +59,6 @@ label_39ac68:
             goto label_39ac74;
         }
     }
-    ctx->pc = 0x39AC74u;
 label_39ac74:
     // 0x39ac74: 0x8c6201e8  lw          $v0, 0x1E8($v1)
     ctx->pc = 0x39ac74u;
@@ -80,7 +78,6 @@ label_39ac74:
             goto label_39ac80;
         }
     }
-    ctx->pc = 0x39AC80u;
 label_39ac80:
     // 0x39ac80: 0x8c6201cc  lw          $v0, 0x1CC($v1)
     ctx->pc = 0x39ac80u;
@@ -100,7 +97,6 @@ label_39ac80:
             goto label_39ac8c;
         }
     }
-    ctx->pc = 0x39AC8Cu;
 label_39ac8c:
     // 0x39ac8c: 0x8c6201dc  lw          $v0, 0x1DC($v1)
     ctx->pc = 0x39ac8cu;
@@ -120,7 +116,6 @@ label_39ac8c:
             goto label_39ac98;
         }
     }
-    ctx->pc = 0x39AC98u;
 label_39ac98:
     // 0x39ac98: 0x8c6201ec  lw          $v0, 0x1EC($v1)
     ctx->pc = 0x39ac98u;
@@ -140,7 +135,6 @@ label_39ac98:
             goto label_39aca4;
         }
     }
-    ctx->pc = 0x39ACA4u;
 label_39aca4:
     // 0x39aca4: 0x3e00008  jr          $ra
     ctx->pc = 0x39ACA4u;

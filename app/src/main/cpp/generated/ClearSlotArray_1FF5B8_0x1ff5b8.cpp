@@ -13,7 +13,7 @@
 
 // Function: ClearSlotArray_1FF5B8
 // Address: 0x1ff5b8 - 0x1ff638
-void ClearSlotArray_1FF5B8_0x1ff5b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearSlotArray_1FF5B8_0x1ff5b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearSlotArray_1FF5B8_0x1ff5b8");
 #endif
@@ -56,7 +56,6 @@ void ClearSlotArray_1FF5B8_0x1ff5b8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     ctx->pc = 0x1ff5e0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1ff5e4: 0x3c140060  lui         $s4, 0x60
-    ctx->pc = 0x1ff5e4u;
     SET_GPR_S32(ctx, 20, (int32_t)((uint32_t)96 << 16));
 label_1ff5e8:
     // 0x1ff5e8: 0x8e020000  lw          $v0, 0x0($s0)
@@ -98,7 +97,6 @@ label_1ff5e8:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_CheckSeEnd_0x2cb340, 0x2cb340u, 0x1ff60cu)) {
         return;
     }
-    ctx->pc = 0x1FF60Cu;
 label_1ff60c:
     // 0x1ff60c: 0xae130000  sw          $s3, 0x0($s0)
     ctx->pc = 0x1ff60cu;

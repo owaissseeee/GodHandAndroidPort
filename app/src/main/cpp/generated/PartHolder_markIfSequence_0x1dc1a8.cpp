@@ -13,7 +13,7 @@
 
 // Function: PartHolder_markIfSequence
 // Address: 0x1dc1a8 - 0x1dc2b8
-void PartHolder_markIfSequence_0x1dc1a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void PartHolder_markIfSequence_0x1dc1a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("PartHolder_markIfSequence_0x1dc1a8");
 #endif
@@ -55,7 +55,6 @@ void PartHolder_markIfSequence_0x1dc1a8(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DBF18_0x1dbf18, 0x1dbf18u, 0x1dc1ccu)) {
         return;
     }
-    ctx->pc = 0x1DC1CCu;
 label_1dc1cc:
     // 0x1dc1cc: 0x97a20020  lhu         $v0, 0x20($sp)
     ctx->pc = 0x1dc1ccu;
@@ -122,7 +121,6 @@ label_1dc1cc:
             goto label_1dc2a8;
         }
     }
-    ctx->pc = 0x1DC1F4u;
 label_1dc1f4:
     // 0x1dc1f4: 0x27a50048  addiu       $a1, $sp, 0x48
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 29), 72));
@@ -164,7 +162,6 @@ label_1dc1f4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DBFB8_0x1dbfb8, 0x1dbfb8u, 0x1dc230u)) {
         return;
     }
-    ctx->pc = 0x1DC230u;
 label_1dc230:
     // 0x1dc230: 0x97a20030  lhu         $v0, 0x30($sp)
     ctx->pc = 0x1dc230u;
@@ -269,7 +266,6 @@ label_1dc230:
     // 0x1dc280: 0x24050004  addiu       $a1, $zero, 0x4
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x1dc284: 0x0  nop
-    ctx->pc = 0x1dc284u;
     // NOP
 label_1dc288:
     // 0x1dc288: 0x8c830000  lw          $v1, 0x0($a0)
@@ -303,7 +299,6 @@ label_1dc288:
         }
     }
     // 0x1dc2a4: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1dc2a4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_1dc2a8:
     // 0x1dc2a8: 0x7bb00060  lq          $s0, 0x60($sp)

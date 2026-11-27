@@ -13,7 +13,7 @@
 
 // Function: cIDBase_clear
 // Address: 0x2a9df8 - 0x2a9ea0
-void cIDBase_clear_0x2a9df8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDBase_clear_0x2a9df8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDBase_clear_0x2a9df8");
 #endif
@@ -105,7 +105,6 @@ label_2a9e38:
     // 0x2a9e58: 0x24050003  addiu       $a1, $zero, 0x3
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
     // 0x2a9e5c: 0x2406ffff  addiu       $a2, $zero, -0x1
-    ctx->pc = 0x2a9e5cu;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_2a9e60:
     // 0x2a9e60: 0xc4400000  lwc1        $f0, 0x0($v0)

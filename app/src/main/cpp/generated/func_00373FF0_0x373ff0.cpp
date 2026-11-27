@@ -13,7 +13,7 @@
 
 // Function: func_00373FF0
 // Address: 0x373ff0 - 0x3740c8
-void func_00373FF0_0x373ff0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00373FF0_0x373ff0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00373FF0_0x373ff0");
 #endif
@@ -98,7 +98,6 @@ void func_00373FF0_0x373ff0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Get_D_0076A7A4_3756F0_0x3756f0, 0x3756f0u, 0x374054u)) {
         return;
     }
-    ctx->pc = 0x374054u;
 label_374054:
     // 0x374054: 0x24030002  addiu       $v1, $zero, 0x2
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
@@ -147,7 +146,6 @@ label_37406c:
             goto label_374080;
         }
     }
-    ctx->pc = 0x374080u;
 label_374080:
     // 0x374080: 0x4600a024  .word       0x4600A024                   # cvt.w.s     $f0, $f20 # 00000000 <InstrIdType: CPU_COP1_FPUS>
     { int32_t tmp = FPU_CVT_W_S(ctx->f[20]); std::memcpy(&ctx->f[0], &tmp, sizeof(tmp)); }
@@ -175,7 +173,6 @@ label_374080:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032A9F0_0x32a9f0, 0x32a9f0u, 0x3740a4u)) {
         return;
     }
-    ctx->pc = 0x3740A4u;
 label_3740a4:
     // 0x3740a4: 0xe6160014  swc1        $f22, 0x14($s0)
     ctx->pc = 0x3740a4u;

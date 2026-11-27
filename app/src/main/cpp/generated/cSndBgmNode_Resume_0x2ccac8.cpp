@@ -13,7 +13,7 @@
 
 // Function: cSndBgmNode_Resume
 // Address: 0x2ccac8 - 0x2ccb10
-void cSndBgmNode_Resume_0x2ccac8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndBgmNode_Resume_0x2ccac8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndBgmNode_Resume_0x2ccac8");
 #endif
@@ -46,7 +46,6 @@ void cSndBgmNode_Resume_0x2ccac8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_IsActive_0x2cc568, 0x2cc568u, 0x2ccadcu)) {
         return;
     }
-    ctx->pc = 0x2CCADCu;
 label_2ccadc:
     // 0x2ccadc: 0x10400007  beqz        $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x2CCADCu;
@@ -83,7 +82,6 @@ label_2ccadc:
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateStateAndClearFlag_3734F0_0x3734f0, 0x3734f0u, 0x2ccafcu)) {
         return;
     }
-    ctx->pc = 0x2CCAFCu;
 label_2ccafc:
     // 0x2ccafc: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2ccafcu;

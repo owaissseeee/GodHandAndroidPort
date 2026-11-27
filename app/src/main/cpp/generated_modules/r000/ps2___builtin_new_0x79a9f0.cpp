@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
+#include <ps2_recompiled_functions.h>
 #include "r000_functions.h"
 
 #include "ps2_syscalls.h"
@@ -14,23 +15,23 @@ namespace gh_r000
 {
 // Function: __builtin_new
 // Address: 0x79a9f0 - 0x79aa18
-void ps2___builtin_new_0x79a9f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___builtin_new_0x79a9f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___builtin_new_0x79a9f0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79aa08u: goto label_79aa08;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x79a9f0u, 0)) {
+        switch (ctx->pc) {
+            case 0x79aa08u: goto label_79aa08;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x79a9f0u;
+
 
     // 0x79a9f0: 0x3c02003c  lui         $v0, 0x3C
-    ctx->pc = 0x79a9f0u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
     // 0x79a9f4: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x79a9f4u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x79a9f8: 0x8c463cf0  lw          $a2, 0x3CF0($v0)
     ctx->pc = 0x79a9f8u;
@@ -39,19 +40,16 @@ void ps2___builtin_new_0x79a9f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     ctx->pc = 0x79a9fcu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x79aa00: 0xc0c3b82  jal         func_30EE08
-    ctx->pc = 0x79AA00u;
     SET_GPR_U32(ctx, 31, 0x79AA08u);
-    ctx->pc = 0x79AA04u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x79AA00u;
     // 0x79aa04: 0x24050010  addiu       $a1, $zero, 0x10 (Delay Slot)
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 16));
     ctx->in_delay_slot = false;
     ctx->pc = 0x30EE08u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x30EE08u, 0x79AA00u, 0x79AA08u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &EnsureInitThenForward_2A9538_30EE08_0x30ee08, 0x30EE08u, 0x79AA08u)) {
         return;
     }
-    ctx->pc = 0x79AA08u;
 label_79aa08:
     // 0x79aa08: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x79aa08u;
@@ -75,9 +73,7 @@ label_79aa08:
         return;
         #endif
     }
-    ctx->pc = 0x79AA14u;
     // 0x79aa14: 0x0  nop
-    ctx->pc = 0x79aa14u;
     // NOP
     ctx->pc = 0x79aa18u;
 }

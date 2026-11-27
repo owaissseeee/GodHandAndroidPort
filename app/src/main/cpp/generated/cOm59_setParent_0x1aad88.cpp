@@ -13,7 +13,7 @@
 
 // Function: cOm59_setParent
 // Address: 0x1aad88 - 0x1aade0
-void cOm59_setParent_0x1aad88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm59_setParent_0x1aad88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm59_setParent_0x1aad88");
 #endif

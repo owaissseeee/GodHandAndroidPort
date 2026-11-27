@@ -13,7 +13,7 @@
 
 // Function: func_00357678
 // Address: 0x357678 - 0x357720
-void func_00357678_0x357678(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00357678_0x357678(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00357678_0x357678");
 #endif
@@ -75,7 +75,6 @@ void func_00357678_0x357678(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034C7F0_0x34c7f0, 0x34c7f0u, 0x3576a8u)) {
         return;
     }
-    ctx->pc = 0x3576A8u;
 label_3576a8:
     // 0x3576a8: 0x54400007  bnel        $v0, $zero, . + 4 + (0x7 << 2)
     ctx->pc = 0x3576A8u;
@@ -105,7 +104,6 @@ label_3576a8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034C7D0_0x34c7d0, 0x34c7d0u, 0x3576bcu)) {
         return;
     }
-    ctx->pc = 0x3576BCu;
 label_3576bc:
     // 0x3576bc: 0x50400001  beql        $v0, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x3576BCu;
@@ -122,7 +120,6 @@ label_3576bc:
             goto label_3576c4;
         }
     }
-    ctx->pc = 0x3576C4u;
 label_3576c4:
     // 0x3576c4: 0x8e060018  lw          $a2, 0x18($s0)
     ctx->pc = 0x3576c4u;
@@ -158,7 +155,6 @@ label_3576c8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034C7F0_0x34c7f0, 0x34c7f0u, 0x3576e0u)) {
         return;
     }
-    ctx->pc = 0x3576E0u;
 label_3576e0:
     // 0x3576e0: 0x54400008  bnel        $v0, $zero, . + 4 + (0x8 << 2)
     ctx->pc = 0x3576E0u;
@@ -188,7 +184,6 @@ label_3576e0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034C7D0_0x34c7d0, 0x34c7d0u, 0x3576f4u)) {
         return;
     }
-    ctx->pc = 0x3576F4u;
 label_3576f4:
     // 0x3576f4: 0x54400003  bnel        $v0, $zero, . + 4 + (0x3 << 2)
     ctx->pc = 0x3576F4u;
@@ -209,7 +204,6 @@ label_3576f4:
     ctx->pc = 0x3576fcu;
     WRITE32(ADD32(GPR_U32(ctx, 16), 24), GPR_U32(ctx, 0));
     // 0x357700: 0x302d  daddu       $a2, $zero, $zero
-    ctx->pc = 0x357700u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_357704:
     // 0x357704: 0x8e050014  lw          $a1, 0x14($s0)

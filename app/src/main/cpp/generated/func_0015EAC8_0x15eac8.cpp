@@ -13,7 +13,7 @@
 
 // Function: func_0015EAC8
 // Address: 0x15eac8 - 0x15ec60
-void func_0015EAC8_0x15eac8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0015EAC8_0x15eac8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0015EAC8_0x15eac8");
 #endif
@@ -186,7 +186,6 @@ void func_0015EAC8_0x15eac8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x15ebd8u;
     WRITE64(ADD32(GPR_U32(ctx, 24), 64), GPR_U64(ctx, 0));
     // 0x15ebdc: 0x0  nop
-    ctx->pc = 0x15ebdcu;
     // NOP
 label_15ebe0:
     // 0x15ebe0: 0xfc430000  sd          $v1, 0x0($v0)

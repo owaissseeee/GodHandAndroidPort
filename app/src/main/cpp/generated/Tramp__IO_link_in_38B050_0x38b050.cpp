@@ -13,7 +13,7 @@
 
 // Function: Tramp__IO_link_in_38B050
 // Address: 0x38b050 - 0x38b070
-void Tramp__IO_link_in_38B050_0x38b050(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp__IO_link_in_38B050_0x38b050(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp__IO_link_in_38B050_0x38b050");
 #endif
@@ -37,7 +37,6 @@ void Tramp__IO_link_in_38B050_0x38b050(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_link_in_0x38c208, 0x38c208u, 0x38b060u)) {
         return;
     }
-    ctx->pc = 0x38B060u;
 label_38b060:
     // 0x38b060: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38b060u;

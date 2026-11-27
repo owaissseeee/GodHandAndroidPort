@@ -13,7 +13,7 @@
 
 // Function: Quaternion_SetEulerXYZ
 // Address: 0x15a590 - 0x15a6a0
-void Quaternion_SetEulerXYZ_0x15a590(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Quaternion_SetEulerXYZ_0x15a590(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Quaternion_SetEulerXYZ_0x15a590");
 #endif
@@ -89,7 +89,6 @@ void Quaternion_SetEulerXYZ_0x15a590(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &sinf_0x3a19f8, 0x3a19f8u, 0x15a5e0u)) {
         return;
     }
-    ctx->pc = 0x15A5E0u;
 label_15a5e0:
     // 0x15a5e0: 0x46000546  mov.s       $f21, $f0
     ctx->f[21] = FPU_MOV_S(ctx->f[0]);
@@ -104,7 +103,6 @@ label_15a5e0:
     if (!runtime->callDirectStatic(rdram, ctx, &cosf_0x3a18f0, 0x3a18f0u, 0x15a5ecu)) {
         return;
     }
-    ctx->pc = 0x15A5ECu;
 label_15a5ec:
     // 0x15a5ec: 0x46000506  mov.s       $f20, $f0
     ctx->f[20] = FPU_MOV_S(ctx->f[0]);
@@ -119,7 +117,6 @@ label_15a5ec:
     if (!runtime->callDirectStatic(rdram, ctx, &sinf_0x3a19f8, 0x3a19f8u, 0x15a5f8u)) {
         return;
     }
-    ctx->pc = 0x15A5F8u;
 label_15a5f8:
     // 0x15a5f8: 0x46000646  mov.s       $f25, $f0
     ctx->f[25] = FPU_MOV_S(ctx->f[0]);
@@ -134,7 +131,6 @@ label_15a5f8:
     if (!runtime->callDirectStatic(rdram, ctx, &cosf_0x3a18f0, 0x3a18f0u, 0x15a604u)) {
         return;
     }
-    ctx->pc = 0x15A604u;
 label_15a604:
     // 0x15a604: 0x46000606  mov.s       $f24, $f0
     ctx->f[24] = FPU_MOV_S(ctx->f[0]);
@@ -149,7 +145,6 @@ label_15a604:
     if (!runtime->callDirectStatic(rdram, ctx, &sinf_0x3a19f8, 0x3a19f8u, 0x15a610u)) {
         return;
     }
-    ctx->pc = 0x15A610u;
 label_15a610:
     // 0x15a610: 0x46000586  mov.s       $f22, $f0
     ctx->f[22] = FPU_MOV_S(ctx->f[0]);
@@ -164,7 +159,6 @@ label_15a610:
     if (!runtime->callDirectStatic(rdram, ctx, &cosf_0x3a18f0, 0x3a18f0u, 0x15a61cu)) {
         return;
     }
-    ctx->pc = 0x15A61Cu;
 label_15a61c:
     // 0x15a61c: 0x4600a042  mul.s       $f1, $f20, $f0
     ctx->f[1] = FPU_MUL_S(ctx->f[20], ctx->f[0]);

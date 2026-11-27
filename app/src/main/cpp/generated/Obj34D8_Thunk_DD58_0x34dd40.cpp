@@ -13,7 +13,7 @@
 
 // Function: Obj34D8_Thunk_DD58
 // Address: 0x34dd40 - 0x34dd58
-void Obj34D8_Thunk_DD58_0x34dd40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj34D8_Thunk_DD58_0x34dd40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj34D8_Thunk_DD58_0x34dd40");
 #endif

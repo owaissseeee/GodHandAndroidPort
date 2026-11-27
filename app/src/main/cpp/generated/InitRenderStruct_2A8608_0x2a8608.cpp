@@ -13,7 +13,7 @@
 
 // Function: InitRenderStruct_2A8608
 // Address: 0x2a8608 - 0x2a8718
-void InitRenderStruct_2A8608_0x2a8608(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitRenderStruct_2A8608_0x2a8608(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitRenderStruct_2A8608_0x2a8608");
 #endif
@@ -182,7 +182,6 @@ void InitRenderStruct_2A8608_0x2a8608(uint8_t* rdram, R5900Context* ctx, PS2Runt
     ctx->pc = 0x2a86bcu;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 29), 64), bits); }
     // 0x2a86c0: 0x140302d  daddu       $a2, $t2, $zero
-    ctx->pc = 0x2a86c0u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 10) + (uint64_t)GPR_U64(ctx, 0));
 label_2a86c4:
     // 0x2a86c4: 0xa0202d  daddu       $a0, $a1, $zero
@@ -204,7 +203,6 @@ label_2a86c4:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x2a86dcu)) {
         return;
     }
-    ctx->pc = 0x2A86DCu;
 label_2a86dc:
     // 0x2a86dc: 0x1000000b  b           . + 4 + (0xB << 2)
     ctx->pc = 0x2A86DCu;
@@ -221,7 +219,6 @@ label_2a86dc:
             goto label_2a870c;
         }
     }
-    ctx->pc = 0x2A86E4u;
 label_2a86e4:
     // 0x2a86e4: 0x11400003  beqz        $t2, . + 4 + (0x3 << 2)
     ctx->pc = 0x2A86E4u;
@@ -262,7 +259,6 @@ label_2a86f4:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x2a8708u)) {
         return;
     }
-    ctx->pc = 0x2A8708u;
 label_2a8708:
     // 0x2a8708: 0xdfbf0080  ld          $ra, 0x80($sp)
     ctx->pc = 0x2a8708u;

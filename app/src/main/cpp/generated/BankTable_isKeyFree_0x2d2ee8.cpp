@@ -13,7 +13,7 @@
 
 // Function: BankTable_isKeyFree
 // Address: 0x2d2ee8 - 0x2d2f78
-void BankTable_isKeyFree_0x2d2ee8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BankTable_isKeyFree_0x2d2ee8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BankTable_isKeyFree_0x2d2ee8");
 #endif
@@ -109,12 +109,10 @@ void BankTable_isKeyFree_0x2d2ee8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_2d2f5c;
         }
     }
-    ctx->pc = 0x2D2F28u;
 label_2d2f28:
     // 0x2d2f28: 0x882d  daddu       $s1, $zero, $zero
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2d2f2c: 0x0  nop
-    ctx->pc = 0x2d2f2cu;
     // NOP
 label_2d2f30:
     // 0x2d2f30: 0xc0b4c84  jal         func_2D3210
@@ -128,7 +126,6 @@ label_2d2f30:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D3210_0x2d3210, 0x2d3210u, 0x2d2f38u)) {
         return;
     }
-    ctx->pc = 0x2D2F38u;
 label_2d2f38:
     // 0x2d2f38: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x2D2F38u;
@@ -163,7 +160,6 @@ label_2d2f38:
             goto label_2d2f5c;
         }
     }
-    ctx->pc = 0x2D2F4Cu;
 label_2d2f4c:
     // 0x2d2f4c: 0x2a220010  slti        $v0, $s1, 0x10
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 17) < (int64_t)(int32_t)16) ? 1 : 0);
@@ -186,7 +182,6 @@ label_2d2f4c:
         }
     }
     // 0x2d2f58: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2d2f58u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2d2f5c:
     // 0x2d2f5c: 0x7bb00030  lq          $s0, 0x30($sp)

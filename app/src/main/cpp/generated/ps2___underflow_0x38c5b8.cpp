@@ -13,7 +13,7 @@
 
 // Function: __underflow
 // Address: 0x38c5b8 - 0x38c688
-void ps2___underflow_0x38c5b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___underflow_0x38c5b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___underflow_0x38c5b8");
 #endif
@@ -76,11 +76,9 @@ void ps2___underflow_0x38c5b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
         }
     }
 
-    ctx->pc = 0x38c5b8u;
 
 label_38c5b8:
     // 0x38c5b8: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x38c5b8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
 label_38c5bc:
     // 0x38c5bc: 0xffb00000  sd          $s0, 0x0($sp)
@@ -92,7 +90,6 @@ label_38c5c0:
     WRITE64(ADD32(GPR_U32(ctx, 29), 16), GPR_U64(ctx, 31));
 label_38c5c4:
     // 0x38c5c4: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x38c5c4u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_38c5c8:
     // 0x38c5c8: 0x8e020000  lw          $v0, 0x0($s0)
@@ -142,7 +139,6 @@ label_38c5dc:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_switch_to_get_mode_0x38c2f0, 0x38c2f0u, 0x38c5e0u)) {
         return;
     }
-    ctx->pc = 0x38C5E0u;
 label_38c5e0:
     // 0x38c5e0: 0x2403ffff  addiu       $v1, $zero, -0x1
     ctx->pc = 0x38c5e0u;
@@ -174,7 +170,6 @@ label_38c5e8:
             goto label_38c674;
         }
     }
-    ctx->pc = 0x38C5ECu;
 label_38c5ec:
     // 0x38c5ec: 0x8e030004  lw          $v1, 0x4($s0)
     ctx->pc = 0x38c5ecu;
@@ -214,7 +209,6 @@ label_38c5fc:
             goto label_38c674;
         }
     }
-    ctx->pc = 0x38C600u;
 label_38c600:
     // 0x38c600: 0x8e020000  lw          $v0, 0x0($s0)
     ctx->pc = 0x38c600u;
@@ -274,7 +268,6 @@ label_38c614:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_switch_to_main_get_area_0x38c280, 0x38c280u, 0x38c618u)) {
         return;
     }
-    ctx->pc = 0x38C618u;
 label_38c618:
     // 0x38c618: 0x8e030004  lw          $v1, 0x4($s0)
     ctx->pc = 0x38c618u;
@@ -502,7 +495,6 @@ label_38c660:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_free_backup_area_0x38c3a0, 0x38c3a0u, 0x38c664u)) {
         return;
     }
-    ctx->pc = 0x38C664u;
 label_38c664:
     // 0x38c664: 0x8e030050  lw          $v1, 0x50($s0)
     ctx->pc = 0x38c664u;
@@ -539,7 +531,6 @@ label_38c670:
             return;
         }
     }
-    ctx->pc = 0x38C674u;
 label_38c674:
     // 0x38c674: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x38c674u;
@@ -579,7 +570,6 @@ label_38c680:
         return;
         #endif
     }
-    ctx->pc = 0x38C684u;
 label_38c684:
     // 0x38c684: 0x0  nop
     // NOP

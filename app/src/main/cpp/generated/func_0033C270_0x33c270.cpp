@@ -13,7 +13,7 @@
 
 // Function: func_0033C270
 // Address: 0x33c270 - 0x33c290
-void func_0033C270_0x33c270(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0033C270_0x33c270(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0033C270_0x33c270");
 #endif
@@ -41,7 +41,6 @@ void func_0033C270_0x33c270(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_33c284;
         }
     }
-    ctx->pc = 0x33C284u;
 label_33c284:
     // 0x33c284: 0x1812  mflo        $v1
     SET_GPR_U64(ctx, 3, ctx->lo);

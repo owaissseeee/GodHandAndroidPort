@@ -13,7 +13,7 @@
 
 // Function: cScenario_endMess
 // Address: 0x2c4390 - 0x2c43d8
-void cScenario_endMess_0x2c4390(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_endMess_0x2c4390(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_endMess_0x2c4390");
 #endif
@@ -73,7 +73,6 @@ void cScenario_endMess_0x2c4390(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &cMessage_deleteMessNo_0x2aec40, 0x2aec40u, 0x2c43c0u)) {
         return;
     }
-    ctx->pc = 0x2C43C0u;
 label_2c43c0:
     // 0x2c43c0: 0xa6110112  sh          $s1, 0x112($s0)
     ctx->pc = 0x2c43c0u;

@@ -13,7 +13,7 @@
 
 // Function: receiveDataFromIPU
 // Address: 0x39fdd8 - 0x39fe78
-void receiveDataFromIPU_0x39fdd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void receiveDataFromIPU_0x39fdd8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("receiveDataFromIPU_0x39fdd8");
 #endif
@@ -50,7 +50,6 @@ void receiveDataFromIPU_0x39fdd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x39fdf4u)) {
         return;
     }
-    ctx->pc = 0x39FDF4u;
 label_39fdf4:
     // 0x39fdf4: 0x40282d  daddu       $a1, $v0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -94,12 +93,10 @@ label_39fdf4:
             goto label_39fe24;
         }
     }
-    ctx->pc = 0x39FE1Cu;
 label_39fe1c:
     // 0x39fe1c: 0x3442ffff  ori         $v0, $v0, 0xFFFF
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)65535);
     // 0x39fe20: 0x2028024  and         $s0, $s0, $v0
-    ctx->pc = 0x39fe20u;
     SET_GPR_U64(ctx, 16, GPR_U64(ctx, 16) & GPR_U64(ctx, 2));
 label_39fe24:
     // 0x39fe24: 0x3c021000  lui         $v0, 0x1000
@@ -158,7 +155,6 @@ label_39fe24:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B63F0u, 0x39FE60u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x39FE68u;
 label_39fe68:
     // 0x39fe68: 0xdfb10010  ld          $s1, 0x10($sp)
     ctx->pc = 0x39fe68u;

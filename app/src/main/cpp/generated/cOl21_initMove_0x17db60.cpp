@@ -13,7 +13,7 @@
 
 // Function: cOl21_initMove
 // Address: 0x17db60 - 0x17dcb8
-void cOl21_initMove_0x17db60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl21_initMove_0x17db60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl21_initMove_0x17db60");
 #endif
@@ -120,7 +120,6 @@ label_17dba4:
     ctx->pc = 0x17dbc4u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 2), 8), bits); }
     // 0x17dbc8: 0x26020630  addiu       $v0, $s0, 0x630
-    ctx->pc = 0x17dbc8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 1584));
 label_17dbcc:
     // 0x17dbcc: 0x10460007  beq         $v0, $a2, . + 4 + (0x7 << 2)
@@ -179,7 +178,6 @@ label_17dbec:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31D000u, 0x17DC0Cu, 0x17DC14u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x17DC14u;
 label_17dc14:
     // 0x17dc14: 0xc7a20000  lwc1        $f2, 0x0($sp)
     ctx->pc = 0x17dc14u;
@@ -247,7 +245,6 @@ label_17dc14:
     if (!runtime->callDirectStatic(rdram, ctx, &Rnd_0x31cef8, 0x31cef8u, 0x17dc74u)) {
         return;
     }
-    ctx->pc = 0x17DC74u;
 label_17dc74:
     // 0x17dc74: 0x38420001  xori        $v0, $v0, 0x1
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)1);

@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Get_Field_3B4_Via_func_0036CD98
 // Address: 0x36c6a0 - 0x36c6c8
-void Obj0000_Get_Field_3B4_Via_func_0036CD98_0x36c6a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Get_Field_3B4_Via_func_0036CD98_0x36c6a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Get_Field_3B4_Via_func_0036CD98_0x36c6a0");
 #endif

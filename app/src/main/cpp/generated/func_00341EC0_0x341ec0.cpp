@@ -13,7 +13,7 @@
 
 // Function: func_00341EC0
 // Address: 0x341ec0 - 0x341f00
-void func_00341EC0_0x341ec0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00341EC0_0x341ec0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00341EC0_0x341ec0");
 #endif
@@ -58,7 +58,6 @@ void func_00341EC0_0x341ec0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
     }
     // 0x341ee4: 0x0  nop
-    ctx->pc = 0x341ee4u;
     // NOP
 label_341ee8:
     // 0x341ee8: 0x14620003  bne         $v1, $v0, . + 4 + (0x3 << 2)
@@ -86,7 +85,6 @@ label_341ee8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x341B98u, 0x341EF0u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x341EF8u;
 label_341ef8:
     // 0x341ef8: 0x80d0680  j           func_341A00
     ctx->in_delay_slot = true;

@@ -13,7 +13,7 @@
 
 // Function: pl00_DiscardWeapon
 // Address: 0x12ac60 - 0x12ac98
-void pl00_DiscardWeapon_0x12ac60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void pl00_DiscardWeapon_0x12ac60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("pl00_DiscardWeapon_0x12ac60");
 #endif
@@ -60,7 +60,6 @@ void pl00_DiscardWeapon_0x12ac60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &cOmWeapon_dropToGround_0x1cf8b0, 0x1cf8b0u, 0x12ac84u)) {
         return;
     }
-    ctx->pc = 0x12AC84u;
 label_12ac84:
     // 0x12ac84: 0xae000698  sw          $zero, 0x698($s0)
     ctx->pc = 0x12ac84u;

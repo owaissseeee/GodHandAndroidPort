@@ -13,7 +13,7 @@
 
 // Function: SetField2F5IfField615Active_1A7A08
 // Address: 0x1a7a08 - 0x1a7a28
-void SetField2F5IfField615Active_1A7A08_0x1a7a08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetField2F5IfField615Active_1A7A08_0x1a7a08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetField2F5IfField615Active_1A7A08_0x1a7a08");
 #endif

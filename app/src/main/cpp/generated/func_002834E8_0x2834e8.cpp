@@ -13,7 +13,7 @@
 
 // Function: func_002834E8
 // Address: 0x2834e8 - 0x283620
-void func_002834E8_0x2834e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002834E8_0x2834e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002834E8_0x2834e8");
 #endif
@@ -69,7 +69,6 @@ void func_002834E8_0x2834e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setupModel_0x149738, 0x149738u, 0x283520u)) {
         return;
     }
-    ctx->pc = 0x283520u;
 label_283520:
     // 0x283520: 0x10400038  beqz        $v0, . + 4 + (0x38 << 2)
     ctx->pc = 0x283520u;
@@ -148,10 +147,8 @@ label_283520:
             goto label_28356c;
         }
     }
-    ctx->pc = 0x283568u;
 label_283568:
     // 0x283568: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x283568u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_28356c:
     // 0x28356c: 0x10400021  beqz        $v0, . + 4 + (0x21 << 2)
@@ -199,10 +196,8 @@ label_28356c:
             goto label_283590;
         }
     }
-    ctx->pc = 0x28358Cu;
 label_28358c:
     // 0x28358c: 0x202d  daddu       $a0, $zero, $zero
-    ctx->pc = 0x28358cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_283590:
     // 0x283590: 0x3c02003c  lui         $v0, 0x3C
@@ -267,10 +262,8 @@ label_283590:
             goto label_2835d4;
         }
     }
-    ctx->pc = 0x2835D0u;
 label_2835d0:
     // 0x2835d0: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2835d0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2835d4:
     // 0x2835d4: 0xc4a0d880  lwc1        $f0, -0x2780($a1)
@@ -308,7 +301,6 @@ label_2835f4:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_calcParts_0x149eb8, 0x149eb8u, 0x2835fcu)) {
         return;
     }
-    ctx->pc = 0x2835FCu;
 label_2835fc:
     // 0x2835fc: 0xc0a0e5a  jal         func_283968
     SET_GPR_U32(ctx, 31, 0x283604u);
@@ -321,7 +313,6 @@ label_2835fc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00283968_0x283968, 0x283968u, 0x283604u)) {
         return;
     }
-    ctx->pc = 0x283604u;
 label_283604:
     // 0x283604: 0x220102d  daddu       $v0, $s1, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));

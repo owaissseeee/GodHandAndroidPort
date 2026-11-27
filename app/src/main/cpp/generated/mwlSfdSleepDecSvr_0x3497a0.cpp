@@ -13,7 +13,7 @@
 
 // Function: mwlSfdSleepDecSvr
 // Address: 0x3497a0 - 0x3497f8
-void mwlSfdSleepDecSvr_0x3497a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void mwlSfdSleepDecSvr_0x3497a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("mwlSfdSleepDecSvr_0x3497a0");
 #endif
@@ -49,7 +49,6 @@ void mwlSfdSleepDecSvr_0x3497a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &Forward3462D8_3466C0_0x3466c0, 0x3466c0u, 0x3497b4u)) {
         return;
     }
-    ctx->pc = 0x3497B4u;
 label_3497b4:
     // 0x3497b4: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -64,7 +63,6 @@ label_3497b4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00349738_0x349738, 0x349738u, 0x3497c0u)) {
         return;
     }
-    ctx->pc = 0x3497C0u;
 label_3497c0:
     // 0x3497c0: 0xc0d231e  jal         func_348C78
     ctx->pc = 0x3497C0u;
@@ -72,7 +70,6 @@ label_3497c0:
     if (!runtime->callDirectStatic(rdram, ctx, &Forward33BBD8_348C78_0x348c78, 0x348c78u, 0x3497c8u)) {
         return;
     }
-    ctx->pc = 0x3497C8u;
 label_3497c8:
     // 0x3497c8: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -87,7 +84,6 @@ label_3497c8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00349738_0x349738, 0x349738u, 0x3497d4u)) {
         return;
     }
-    ctx->pc = 0x3497D4u;
 label_3497d4:
     // 0x3497d4: 0xc0d19b6  jal         func_3466D8
     ctx->pc = 0x3497D4u;
@@ -95,7 +91,6 @@ label_3497d4:
     if (!runtime->callDirectStatic(rdram, ctx, &Forward346368_3466D8_0x3466d8, 0x3466d8u, 0x3497dcu)) {
         return;
     }
-    ctx->pc = 0x3497DCu;
 label_3497dc:
     // 0x3497dc: 0xdfbf0008  ld          $ra, 0x8($sp)
     ctx->pc = 0x3497dcu;

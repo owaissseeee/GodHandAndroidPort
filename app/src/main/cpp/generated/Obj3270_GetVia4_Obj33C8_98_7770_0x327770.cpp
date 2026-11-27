@@ -13,7 +13,7 @@
 
 // Function: Obj3270_GetVia4_Obj33C8_98_7770
 // Address: 0x327770 - 0x327788
-void Obj3270_GetVia4_Obj33C8_98_7770_0x327770(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj3270_GetVia4_Obj33C8_98_7770_0x327770(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj3270_GetVia4_Obj33C8_98_7770_0x327770");
 #endif

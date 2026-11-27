@@ -13,7 +13,7 @@
 
 // Function: SetBytes2F4Mode7_283270
 // Address: 0x283270 - 0x283288
-void SetBytes2F4Mode7_283270_0x283270(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetBytes2F4Mode7_283270_0x283270(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetBytes2F4Mode7_283270_0x283270");
 #endif

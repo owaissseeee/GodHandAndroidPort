@@ -13,7 +13,7 @@
 
 // Function: SFCON_IsVideoEndcodeSkip
 // Address: 0x34cdb0 - 0x34cdf8
-void SFCON_IsVideoEndcodeSkip_0x34cdb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFCON_IsVideoEndcodeSkip_0x34cdb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFCON_IsVideoEndcodeSkip_0x34cdb0");
 #endif
@@ -48,7 +48,6 @@ void SFCON_IsVideoEndcodeSkip_0x34cdb0(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &GetArrayElemA0C_35A1C8_0x35a1c8, 0x35a1c8u, 0x34cdc8u)) {
         return;
     }
-    ctx->pc = 0x34CDC8u;
 label_34cdc8:
     // 0x34cdc8: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -73,7 +72,6 @@ label_34cdc8:
     if (!runtime->callDirectStatic(rdram, ctx, &GetArrayElemA0C_35A1C8_0x35a1c8, 0x35a1c8u, 0x34cddcu)) {
         return;
     }
-    ctx->pc = 0x34CDDCu;
 label_34cddc:
     // 0x34cddc: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x34CDDCu;
@@ -90,7 +88,6 @@ label_34cddc:
             goto label_34cdec;
         }
     }
-    ctx->pc = 0x34CDE4u;
 label_34cde4:
     // 0x34cde4: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));

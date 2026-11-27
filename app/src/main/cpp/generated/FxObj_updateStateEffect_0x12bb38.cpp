@@ -13,7 +13,7 @@
 
 // Function: FxObj_updateStateEffect
 // Address: 0x12bb38 - 0x12bbe0
-void FxObj_updateStateEffect_0x12bb38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FxObj_updateStateEffect_0x12bb38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FxObj_updateStateEffect_0x12bb38");
 #endif
@@ -113,7 +113,6 @@ void FxObj_updateStateEffect_0x12bb38(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffectParts_0x306900, 0x306900u, 0x12bba4u)) {
         return;
     }
-    ctx->pc = 0x12BBA4u;
 label_12bba4:
     // 0x12bba4: 0x1000000b  b           . + 4 + (0xB << 2)
     ctx->pc = 0x12BBA4u;
@@ -130,7 +129,6 @@ label_12bba4:
             goto label_12bbd4;
         }
     }
-    ctx->pc = 0x12BBACu;
 label_12bbac:
     // 0x12bbac: 0x30620040  andi        $v0, $v1, 0x40
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) & (uint64_t)(uint16_t)64);
@@ -169,7 +167,6 @@ label_12bbac:
     if (!runtime->callDirectStatic(rdram, ctx, &KillEffect_0x306200, 0x306200u, 0x12bbd0u)) {
         return;
     }
-    ctx->pc = 0x12BBD0u;
 label_12bbd0:
     // 0x12bbd0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x12bbd0u;

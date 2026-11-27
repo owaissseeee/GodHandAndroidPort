@@ -13,7 +13,7 @@
 
 // Function: cScenario_runExitFunc
 // Address: 0x2c4de0 - 0x2c4e18
-void cScenario_runExitFunc_0x2c4de0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_runExitFunc_0x2c4de0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_runExitFunc_0x2c4de0");
 #endif
@@ -38,11 +38,9 @@ void cScenario_runExitFunc_0x2c4de0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         }
     }
 
-    ctx->pc = 0x2c4de0u;
 
 label_2c4de0:
     // 0x2c4de0: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x2c4de0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
 label_2c4de4:
     // 0x2c4de4: 0x7fb00010  sq          $s0, 0x10($sp)
@@ -54,7 +52,6 @@ label_2c4de8:
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
 label_2c4dec:
     // 0x2c4dec: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x2c4decu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_2c4df0:
     // 0x2c4df0: 0x8e0200f4  lw          $v0, 0xF4($s0)
@@ -116,7 +113,6 @@ label_2c4e00:
             return;
         }
     }
-    ctx->pc = 0x2C4E04u;
 label_2c4e04:
     // 0x2c4e04: 0xae0000f4  sw          $zero, 0xF4($s0)
     ctx->pc = 0x2c4e04u;

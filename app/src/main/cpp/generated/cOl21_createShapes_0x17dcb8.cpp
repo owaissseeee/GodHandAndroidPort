@@ -13,7 +13,7 @@
 
 // Function: cOl21_createShapes
 // Address: 0x17dcb8 - 0x17df88
-void cOl21_createShapes_0x17dcb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl21_createShapes_0x17dcb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl21_createShapes_0x17dcb8");
 #endif
@@ -256,7 +256,6 @@ label_17ddb8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0012E990_0x12e990, 0x12e990u, 0x17de18u)) {
         return;
     }
-    ctx->pc = 0x17DE18u;
 label_17de18:
     // 0x17de18: 0xae020000  sw          $v0, 0x0($s0)
     ctx->pc = 0x17de18u;
@@ -313,7 +312,6 @@ label_17de18:
     // 0x17de60: 0x3421999a  ori         $at, $at, 0x999A
     SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)39322);
     // 0x17de64: 0x4481b800  mtc1        $at, $f23
-    ctx->pc = 0x17de64u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[23], &bits, sizeof(bits)); }
 label_17de68:
     // 0x17de68: 0x44910000  mtc1        $s1, $f0
@@ -378,7 +376,6 @@ label_17de68:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0012E990_0x12e990, 0x12e990u, 0x17dec8u)) {
         return;
     }
-    ctx->pc = 0x17DEC8u;
 label_17dec8:
     // 0x17dec8: 0xae420000  sw          $v0, 0x0($s2)
     ctx->pc = 0x17dec8u;
@@ -466,7 +463,6 @@ label_17dec8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0012E990_0x12e990, 0x12e990u, 0x17df38u)) {
         return;
     }
-    ctx->pc = 0x17DF38u;
 label_17df38:
     // 0x17df38: 0xae820674  sw          $v0, 0x674($s4)
     ctx->pc = 0x17df38u;

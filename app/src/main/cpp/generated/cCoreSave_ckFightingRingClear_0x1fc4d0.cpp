@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_ckFightingRingClear
 // Address: 0x1fc4d0 - 0x1fc518
-void cCoreSave_ckFightingRingClear_0x1fc4d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_ckFightingRingClear_0x1fc4d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_ckFightingRingClear_0x1fc4d0");
 #endif
@@ -56,7 +56,6 @@ void cCoreSave_ckFightingRingClear_0x1fc4d0(uint8_t* rdram, R5900Context* ctx, P
         return;
         #endif
     }
-    ctx->pc = 0x1FC4E4u;
 label_1fc4e4:
     // 0x1fc4e4: 0x2c620004  sltiu       $v0, $v1, 0x4
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 3) < (uint64_t)(int64_t)(int32_t)4) ? 1 : 0);
@@ -107,7 +106,6 @@ label_1fc4e4:
         return;
         #endif
     }
-    ctx->pc = 0x1FC510u;
 label_1fc510:
     // 0x1fc510: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC510u;

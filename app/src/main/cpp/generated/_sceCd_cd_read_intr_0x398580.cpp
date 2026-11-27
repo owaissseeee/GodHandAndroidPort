@@ -13,7 +13,7 @@
 
 // Function: _sceCd_cd_read_intr
 // Address: 0x398580 - 0x398638
-void _sceCd_cd_read_intr_0x398580(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceCd_cd_read_intr_0x398580(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceCd_cd_read_intr_0x398580");
 #endif
@@ -74,7 +74,6 @@ void _sceCd_cd_read_intr_0x398580(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     // 0x3985a8: 0x1061021  addu        $v0, $t0, $a2
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 8), GPR_U32(ctx, 6)));
     // 0x3985ac: 0x0  nop
-    ctx->pc = 0x3985acu;
     // NOP
 label_3985b0:
     // 0x3985b0: 0x1462821  addu        $a1, $t2, $a2
@@ -130,7 +129,6 @@ label_3985b0:
             goto label_3985e8;
         }
     }
-    ctx->pc = 0x3985E0u;
 label_3985e0:
     // 0x3985e0: 0x3c0b0040  lui         $t3, 0x40
     SET_GPR_S32(ctx, 11, (int32_t)((uint32_t)64 << 16));
@@ -176,7 +174,6 @@ label_3985e8:
     // 0x398600: 0x24e80050  addiu       $t0, $a3, 0x50
     SET_GPR_S32(ctx, 8, (int32_t)ADD32(GPR_U32(ctx, 7), 80));
     // 0x398604: 0x1061021  addu        $v0, $t0, $a2
-    ctx->pc = 0x398604u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 8), GPR_U32(ctx, 6)));
 label_398608:
     // 0x398608: 0x1462821  addu        $a1, $t2, $a2
@@ -217,7 +214,6 @@ label_398608:
             goto label_398608;
         }
     }
-    ctx->pc = 0x398630u;
 label_398630:
     // 0x398630: 0x80e6136  j           func_3984D8
     ctx->in_delay_slot = true;

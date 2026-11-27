@@ -13,7 +13,7 @@
 
 // Function: cSnd_SetBgmLevel
 // Address: 0x2d2d68 - 0x2d2d98
-void cSnd_SetBgmLevel_0x2d2d68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_SetBgmLevel_0x2d2d68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_SetBgmLevel_0x2d2d68");
 #endif

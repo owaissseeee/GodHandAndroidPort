@@ -13,7 +13,7 @@
 
 // Function: func_00137F38
 // Address: 0x137f38 - 0x1380a8
-void func_00137F38_0x137f38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00137F38_0x137f38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00137F38_0x137f38");
 #endif
@@ -64,7 +64,6 @@ void func_00137F38_0x137f38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x137f64u)) {
         return;
     }
-    ctx->pc = 0x137F64u;
 label_137f64:
     // 0x137f64: 0x40902d  daddu       $s2, $v0, $zero
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -81,7 +80,6 @@ label_137f64:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00137BB8_0x137bb8, 0x137bb8u, 0x137f74u)) {
         return;
     }
-    ctx->pc = 0x137F74u;
 label_137f74:
     // 0x137f74: 0x8e700030  lw          $s0, 0x30($s3)
     ctx->pc = 0x137f74u;
@@ -169,7 +167,6 @@ label_137f74:
             goto label_138088;
         }
     }
-    ctx->pc = 0x137FACu;
 label_137fac:
     // 0x137fac: 0x5062001e  beql        $v1, $v0, . + 4 + (0x1E << 2)
     ctx->pc = 0x137FACu;
@@ -201,7 +198,6 @@ label_137fac:
             goto label_138088;
         }
     }
-    ctx->pc = 0x137FBCu;
 label_137fbc:
     // 0x137fbc: 0xc6010034  lwc1        $f1, 0x34($s0)
     ctx->pc = 0x137fbcu;
@@ -239,7 +235,6 @@ label_137fbc:
             goto label_138084;
         }
     }
-    ctx->pc = 0x137FE4u;
 label_137fe4:
     // 0x137fe4: 0x8e4200f0  lw          $v0, 0xF0($s2)
     ctx->pc = 0x137fe4u;
@@ -277,7 +272,6 @@ label_137fe4:
     if (!runtime->callDirectStatic(rdram, ctx, &PathHost_calcTurn_0x137cb8, 0x137cb8u, 0x138014u)) {
         return;
     }
-    ctx->pc = 0x138014u;
 label_138014:
     // 0x138014: 0xc7a00020  lwc1        $f0, 0x20($sp)
     ctx->pc = 0x138014u;
@@ -302,7 +296,6 @@ label_138014:
             goto label_138060;
         }
     }
-    ctx->pc = 0x138028u;
 label_138028:
     // 0x138028: 0xc6010034  lwc1        $f1, 0x34($s0)
     ctx->pc = 0x138028u;
@@ -340,7 +333,6 @@ label_138028:
             goto label_138084;
         }
     }
-    ctx->pc = 0x138050u;
 label_138050:
     // 0x138050: 0xc6600014  lwc1        $f0, 0x14($s3)
     ctx->pc = 0x138050u;

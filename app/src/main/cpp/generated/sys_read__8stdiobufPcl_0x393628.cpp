@@ -13,7 +13,7 @@
 
 // Function: sys_read__8stdiobufPcl
 // Address: 0x393628 - 0x3936c0
-void sys_read__8stdiobufPcl_0x393628(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sys_read__8stdiobufPcl_0x393628(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sys_read__8stdiobufPcl_0x393628");
 #endif
@@ -81,7 +81,6 @@ void sys_read__8stdiobufPcl_0x393628(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A6C10_0x3a6c10, 0x3a6c10u, 0x39365cu)) {
         return;
     }
-    ctx->pc = 0x39365Cu;
 label_39365c:
     // 0x39365c: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x39365Cu;
@@ -98,7 +97,6 @@ label_39365c:
             goto label_393674;
         }
     }
-    ctx->pc = 0x393664u;
 label_393664:
     // 0x393664: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x393664u;
@@ -144,7 +142,6 @@ label_393674:
             goto label_3936b0;
         }
     }
-    ctx->pc = 0x393688u;
 label_393688:
     // 0x393688: 0x10000009  b           . + 4 + (0x9 << 2)
     ctx->pc = 0x393688u;
@@ -161,7 +158,6 @@ label_393688:
             goto label_3936b0;
         }
     }
-    ctx->pc = 0x393690u;
 label_393690:
     // 0x393690: 0x8c870058  lw          $a3, 0x58($a0)
     ctx->pc = 0x393690u;
@@ -183,12 +179,10 @@ label_393690:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A6308_0x3a6308, 0x3a6308u, 0x3936a8u)) {
         return;
     }
-    ctx->pc = 0x3936A8u;
 label_3936a8:
     // 0x3936a8: 0x2103c  dsll32      $v0, $v0, 0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) << (32 + 0));
     // 0x3936ac: 0x2103e  dsrl32      $v0, $v0, 0
-    ctx->pc = 0x3936acu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) >> (32 + 0));
 label_3936b0:
     // 0x3936b0: 0xdfbf0010  ld          $ra, 0x10($sp)

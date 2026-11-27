@@ -13,7 +13,7 @@
 
 // Function: ClearObjSlot_19DA48
 // Address: 0x19da48 - 0x19daa8
-void ClearObjSlot_19DA48_0x19da48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearObjSlot_19DA48_0x19da48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearObjSlot_19DA48_0x19da48");
 #endif
@@ -80,7 +80,6 @@ void ClearObjSlot_19DA48_0x19da48(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x19da84u)) {
         return;
     }
-    ctx->pc = 0x19DA84u;
 label_19da84:
     // 0x19da84: 0xae000600  sw          $zero, 0x600($s0)
     ctx->pc = 0x19da84u;
@@ -99,7 +98,6 @@ label_19da88:
     if (!runtime->callDirectStatic(rdram, ctx, &ResetField214FreeField180_1C2820_0x1c2820, 0x1c2820u, 0x19da94u)) {
         return;
     }
-    ctx->pc = 0x19DA94u;
 label_19da94:
     // 0x19da94: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x19da94u;

@@ -13,7 +13,7 @@
 
 // Function: EffObj_teardown
 // Address: 0x28e068 - 0x28e0e0
-void EffObj_teardown_0x28e068(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EffObj_teardown_0x28e068(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EffObj_teardown_0x28e068");
 #endif
@@ -60,7 +60,6 @@ void EffObj_teardown_0x28e068(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A84A8_0x2a84a8, 0x2a84a8u, 0x28e090u)) {
         return;
     }
-    ctx->pc = 0x28E090u;
 label_28e090:
     // 0x28e090: 0x3c040074  lui         $a0, 0x74
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)116 << 16));
@@ -77,7 +76,6 @@ label_28e090:
     if (!runtime->callDirectStatic(rdram, ctx, &espSys_effDataRelease_0x305778, 0x305778u, 0x28e0a0u)) {
         return;
     }
-    ctx->pc = 0x28E0A0u;
 label_28e0a0:
     // 0x28e0a0: 0x8e051550  lw          $a1, 0x1550($s0)
     ctx->pc = 0x28e0a0u;
@@ -108,7 +106,6 @@ label_28e0a0:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeStop_0x2cbba0, 0x2cbba0u, 0x28e0b4u)) {
         return;
     }
-    ctx->pc = 0x28E0B4u;
 label_28e0b4:
     // 0x28e0b4: 0xc0a3906  jal         func_28E418
     SET_GPR_U32(ctx, 31, 0x28E0BCu);
@@ -121,7 +118,6 @@ label_28e0b4:
     if (!runtime->callDirectStatic(rdram, ctx, &NoOp_28E418_0x28e418, 0x28e418u, 0x28e0bcu)) {
         return;
     }
-    ctx->pc = 0x28E0BCu;
 label_28e0bc:
     // 0x28e0bc: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -136,7 +132,6 @@ label_28e0bc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0028EB88_0x28eb88, 0x28eb88u, 0x28e0c8u)) {
         return;
     }
-    ctx->pc = 0x28E0C8u;
 label_28e0c8:
     // 0x28e0c8: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x28e0c8u;

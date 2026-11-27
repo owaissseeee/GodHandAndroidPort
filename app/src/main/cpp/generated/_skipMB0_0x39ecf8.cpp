@@ -13,7 +13,7 @@
 
 // Function: _skipMB0
 // Address: 0x39ecf8 - 0x39edb8
-void _skipMB0_0x39ecf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _skipMB0_0x39ecf8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_skipMB0_0x39ecf8");
 #endif
@@ -121,7 +121,6 @@ label_39ed48:
             goto label_39ed70;
         }
     }
-    ctx->pc = 0x39ED5Cu;
 label_39ed5c:
     // 0x39ed5c: 0x8c820184  lw          $v0, 0x184($a0)
     ctx->pc = 0x39ed5cu;
@@ -170,7 +169,6 @@ label_39ed70:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x39C390u, 0x39ED84u, 0x39ED8Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x39ED8Cu;
 label_39ed8c:
     // 0x39ed8c: 0x482d  daddu       $t1, $zero, $zero
     SET_GPR_U64(ctx, 9, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

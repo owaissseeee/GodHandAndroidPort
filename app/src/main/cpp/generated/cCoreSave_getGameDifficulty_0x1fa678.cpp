@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getGameDifficulty
 // Address: 0x1fa678 - 0x1fa690
-void cCoreSave_getGameDifficulty_0x1fa678(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getGameDifficulty_0x1fa678(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getGameDifficulty_0x1fa678");
 #endif

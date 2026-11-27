@@ -13,7 +13,7 @@
 
 // Function: func_0033B978
 // Address: 0x33b978 - 0x33ba10
-void func_0033B978_0x33b978(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0033B978_0x33b978(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0033B978_0x33b978");
 #endif
@@ -61,7 +61,6 @@ void func_0033B978_0x33b978(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
     }
     // 0x33b9a4: 0x0  nop
-    ctx->pc = 0x33b9a4u;
     // NOP
 label_33b9a8:
     // 0x33b9a8: 0x14600007  bnez        $v1, . + 4 + (0x7 << 2)
@@ -97,7 +96,6 @@ label_33b9a8:
         return;
     }
     // 0x33b9c4: 0x0  nop
-    ctx->pc = 0x33b9c4u;
     // NOP
 label_33b9c8:
     // 0x33b9c8: 0x620c0  sll         $a0, $a2, 3

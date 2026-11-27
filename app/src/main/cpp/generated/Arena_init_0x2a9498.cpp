@@ -13,7 +13,7 @@
 
 // Function: Arena_init
 // Address: 0x2a9498 - 0x2a94f0
-void Arena_init_0x2a9498(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Arena_init_0x2a9498(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Arena_init_0x2a9498");
 #endif
@@ -69,7 +69,6 @@ void Arena_init_0x2a9498(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
             goto label_2a94c8;
         }
     }
-    ctx->pc = 0x2A94BCu;
 label_2a94bc:
     // 0x2a94bc: 0xae000000  sw          $zero, 0x0($s0)
     ctx->pc = 0x2a94bcu;
@@ -89,7 +88,6 @@ label_2a94bc:
             goto label_2a94d4;
         }
     }
-    ctx->pc = 0x2A94C8u;
 label_2a94c8:
     // 0x2a94c8: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -105,7 +103,6 @@ label_2a94c8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A94F0u, 0x2A94CCu, 0x2A94D4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2A94D4u;
 label_2a94d4:
     // 0x2a94d4: 0xae110008  sw          $s1, 0x8($s0)
     ctx->pc = 0x2a94d4u;

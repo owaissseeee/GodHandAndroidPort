@@ -13,7 +13,7 @@
 
 // Function: func_00200B20
 // Address: 0x200b20 - 0x200b88
-void func_00200B20_0x200b20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00200B20_0x200b20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00200B20_0x200b20");
 #endif
@@ -80,7 +80,6 @@ void func_00200B20_0x200b20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_200b70;
         }
     }
-    ctx->pc = 0x200B50u;
 label_200b50:
     // 0x200b50: 0xc0804a4  jal         func_201290
     ctx->pc = 0x200B50u;
@@ -88,7 +87,6 @@ label_200b50:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00201290_0x201290, 0x201290u, 0x200b58u)) {
         return;
     }
-    ctx->pc = 0x200B58u;
 label_200b58:
     // 0x200b58: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x200B58u;
@@ -105,7 +103,6 @@ label_200b58:
             goto label_200b7c;
         }
     }
-    ctx->pc = 0x200B60u;
 label_200b60:
     // 0x200b60: 0xc0805c6  jal         func_201718
     ctx->pc = 0x200B60u;
@@ -113,7 +110,6 @@ label_200b60:
     if (!runtime->callDirectStatic(rdram, ctx, &cDvd_pollJob_0x201718, 0x201718u, 0x200b68u)) {
         return;
     }
-    ctx->pc = 0x200B68u;
 label_200b68:
     // 0x200b68: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x200B68u;
@@ -130,7 +126,6 @@ label_200b68:
             goto label_200b7c;
         }
     }
-    ctx->pc = 0x200B70u;
 label_200b70:
     // 0x200b70: 0xc080494  jal         func_201250
     ctx->pc = 0x200B70u;
@@ -138,7 +133,6 @@ label_200b70:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00201250_0x201250, 0x201250u, 0x200b78u)) {
         return;
     }
-    ctx->pc = 0x200B78u;
 label_200b78:
     // 0x200b78: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x200b78u;

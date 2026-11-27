@@ -13,7 +13,7 @@
 
 // Function: cEvent_releaseWork
 // Address: 0x297ad0 - 0x297b20
-void cEvent_releaseWork_0x297ad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_releaseWork_0x297ad0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_releaseWork_0x297ad0");
 #endif
@@ -75,7 +75,6 @@ void cEvent_releaseWork_0x297ad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             return;
         }
     }
-    ctx->pc = 0x297AF8u;
 label_297af8:
     // 0x297af8: 0xc000000  jal         func_000000
     ctx->pc = 0x297AF8u;
@@ -93,7 +92,6 @@ label_297af8:
             return;
         }
     }
-    ctx->pc = 0x297B00u;
 label_297b00:
     // 0x297b00: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x297b00u;
@@ -114,7 +112,6 @@ label_297b00:
             return;
         }
     }
-    ctx->pc = 0x297B0Cu;
 label_297b0c:
     // 0x297b0c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x297b0cu;

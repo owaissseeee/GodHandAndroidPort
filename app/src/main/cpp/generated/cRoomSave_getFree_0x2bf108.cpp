@@ -13,7 +13,7 @@
 
 // Function: cRoomSave_getFree
 // Address: 0x2bf108 - 0x2bf130
-void cRoomSave_getFree_0x2bf108(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cRoomSave_getFree_0x2bf108(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cRoomSave_getFree_0x2bf108");
 #endif
@@ -60,7 +60,6 @@ void cRoomSave_getFree_0x2bf108(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
         return;
         #endif
     }
-    ctx->pc = 0x2BF124u;
 label_2bf124:
     // 0x2bf124: 0x24421618  addiu       $v0, $v0, 0x1618
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 5656));

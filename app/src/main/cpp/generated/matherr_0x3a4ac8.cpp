@@ -13,7 +13,7 @@
 
 // Function: matherr
 // Address: 0x3a4ac8 - 0x3a4af0
-void matherr_0x3a4ac8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void matherr_0x3a4ac8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("matherr_0x3a4ac8");
 #endif
@@ -45,7 +45,6 @@ void matherr_0x3a4ac8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &dpcmp_0x31e870, 0x31e870u, 0x3a4adcu)) {
         return;
     }
-    ctx->pc = 0x3A4ADCu;
 label_3a4adc:
     // 0x3a4adc: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3a4adcu;

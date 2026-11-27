@@ -13,7 +13,7 @@
 
 // Function: Poker__ctor
 // Address: 0x1d6fe0 - 0x1d70d0
-void Poker__ctor_0x1d6fe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Poker__ctor_0x1d6fe0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Poker__ctor_0x1d6fe0");
 #endif
@@ -63,12 +63,10 @@ void Poker__ctor_0x1d6fe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DF858_0x1df858, 0x1df858u, 0x1d7008u)) {
         return;
     }
-    ctx->pc = 0x1D7008u;
 label_1d7008:
     // 0x1d7008: 0x2413ffff  addiu       $s3, $zero, -0x1
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x1d700c: 0x0  nop
-    ctx->pc = 0x1d700cu;
     // NOP
 label_1d7010:
     // 0x1d7010: 0x200202d  daddu       $a0, $s0, $zero
@@ -84,7 +82,6 @@ label_1d7010:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Init_Fields_00_04_1D6DB0_0x1d6db0, 0x1d6db0u, 0x1d701cu)) {
         return;
     }
-    ctx->pc = 0x1D701Cu;
 label_1d701c:
     // 0x1d701c: 0x0  nop
     // NOP
@@ -117,7 +114,6 @@ label_1d701c:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Init_Fields_00_04_1D6DB0_0x1d6db0, 0x1d6db0u, 0x1d7030u)) {
         return;
     }
-    ctx->pc = 0x1D7030u;
 label_1d7030:
     // 0x1d7030: 0x24020009  addiu       $v0, $zero, 0x9
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 9));
@@ -149,7 +145,6 @@ label_1d7030:
     ctx->pc = 0x1d7058u;
     WRITE32(ADD32(GPR_U32(ctx, 17), 12344), GPR_U32(ctx, 0));
     // 0x1d705c: 0x0  nop
-    ctx->pc = 0x1d705cu;
     // NOP
 label_1d7060:
     // 0x1d7060: 0xac400000  sw          $zero, 0x0($v0)
@@ -186,7 +181,6 @@ label_1d7060:
     // 0x1d7080: 0x24040034  addiu       $a0, $zero, 0x34
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 52));
     // 0x1d7084: 0x0  nop
-    ctx->pc = 0x1d7084u;
     // NOP
 label_1d7088:
     // 0x1d7088: 0xa4440000  sh          $a0, 0x0($v0)

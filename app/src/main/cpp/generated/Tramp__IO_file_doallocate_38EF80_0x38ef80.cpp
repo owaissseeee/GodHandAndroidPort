@@ -13,7 +13,7 @@
 
 // Function: Tramp__IO_file_doallocate_38EF80
 // Address: 0x38ef80 - 0x38efa0
-void Tramp__IO_file_doallocate_38EF80_0x38ef80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp__IO_file_doallocate_38EF80_0x38ef80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp__IO_file_doallocate_38EF80_0x38ef80");
 #endif
@@ -37,7 +37,6 @@ void Tramp__IO_file_doallocate_38EF80_0x38ef80(uint8_t* rdram, R5900Context* ctx
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_file_doallocate_0x38f3d8, 0x38f3d8u, 0x38ef90u)) {
         return;
     }
-    ctx->pc = 0x38EF90u;
 label_38ef90:
     // 0x38ef90: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38ef90u;

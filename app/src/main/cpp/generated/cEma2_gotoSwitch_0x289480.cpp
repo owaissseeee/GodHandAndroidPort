@@ -13,7 +13,7 @@
 
 // Function: cEma2_gotoSwitch
 // Address: 0x289480 - 0x2894b8
-void cEma2_gotoSwitch_0x289480(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEma2_gotoSwitch_0x289480(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEma2_gotoSwitch_0x289480");
 #endif

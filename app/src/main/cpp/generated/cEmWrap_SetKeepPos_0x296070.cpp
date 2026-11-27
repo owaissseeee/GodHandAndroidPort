@@ -13,7 +13,7 @@
 
 // Function: cEmWrap_SetKeepPos
 // Address: 0x296070 - 0x2960d0
-void cEmWrap_SetKeepPos_0x296070(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmWrap_SetKeepPos_0x296070(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmWrap_SetKeepPos_0x296070");
 #endif
@@ -52,7 +52,6 @@ void cEmWrap_SetKeepPos_0x296070(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &FindResolveActor_295978_0x295978, 0x295978u, 0x29608cu)) {
         return;
     }
-    ctx->pc = 0x29608Cu;
 label_29608c:
     // 0x29608c: 0x1040000a  beqz        $v0, . + 4 + (0xA << 2)
     ctx->pc = 0x29608Cu;
@@ -85,7 +84,6 @@ label_29608c:
     if (!runtime->callDirectStatic(rdram, ctx, &strcmp_0x3a5678, 0x3a5678u, 0x2960a4u)) {
         return;
     }
-    ctx->pc = 0x2960A4u;
 label_2960a4:
     // 0x2960a4: 0x54400005  bnel        $v0, $zero, . + 4 + (0x5 << 2)
     ctx->pc = 0x2960A4u;
@@ -116,7 +114,6 @@ label_2960a4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0026E7A8_0x26e7a8, 0x26e7a8u, 0x2960b8u)) {
         return;
     }
-    ctx->pc = 0x2960B8u;
 label_2960b8:
     // 0x2960b8: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2960b8u;

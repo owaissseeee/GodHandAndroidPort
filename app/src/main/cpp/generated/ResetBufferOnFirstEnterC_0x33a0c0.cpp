@@ -13,7 +13,7 @@
 
 // Function: ResetBufferOnFirstEnterC
 // Address: 0x33a0c0 - 0x33a110
-void ResetBufferOnFirstEnterC_0x33a0c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ResetBufferOnFirstEnterC_0x33a0c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ResetBufferOnFirstEnterC_0x33a0c0");
 #endif
@@ -70,7 +70,6 @@ void ResetBufferOnFirstEnterC_0x33a0c0(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x33a0f0u)) {
         return;
     }
-    ctx->pc = 0x33A0F0u;
 label_33a0f0:
     // 0x33a0f0: 0x8e020000  lw          $v0, 0x0($s0)
     ctx->pc = 0x33a0f0u;

@@ -13,7 +13,7 @@
 
 // Function: cDataManager_useDataAddress
 // Address: 0x1fea48 - 0x1feaa0
-void cDataManager_useDataAddress_0x1fea48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDataManager_useDataAddress_0x1fea48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDataManager_useDataAddress_0x1fea48");
 #endif
@@ -49,7 +49,6 @@ void cDataManager_useDataAddress_0x1fea48(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &cDataManager_findKind_0x1fee00, 0x1fee00u, 0x1fea60u)) {
         return;
     }
-    ctx->pc = 0x1FEA60u;
 label_1fea60:
     // 0x1fea60: 0x4410003  bgez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x1FEA60u;
@@ -81,7 +80,6 @@ label_1fea60:
             goto label_1fea8c;
         }
     }
-    ctx->pc = 0x1FEA70u;
 label_1fea70:
     // 0x1fea70: 0x8e240008  lw          $a0, 0x8($s1)
     ctx->pc = 0x1fea70u;
@@ -99,7 +97,6 @@ label_1fea70:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FF090_0x1ff090, 0x1ff090u, 0x1fea80u)) {
         return;
     }
-    ctx->pc = 0x1FEA80u;
 label_1fea80:
     // 0x1fea80: 0x8e220008  lw          $v0, 0x8($s1)
     ctx->pc = 0x1fea80u;

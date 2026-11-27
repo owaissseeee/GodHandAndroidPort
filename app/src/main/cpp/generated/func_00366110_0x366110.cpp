@@ -13,7 +13,7 @@
 
 // Function: func_00366110
 // Address: 0x366110 - 0x366368
-void func_00366110_0x366110(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00366110_0x366110(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00366110_0x366110");
 #endif
@@ -77,7 +77,6 @@ void func_00366110_0x366110(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x366168: 0x482d  daddu       $t1, $zero, $zero
     SET_GPR_U64(ctx, 9, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x36616c: 0x0  nop
-    ctx->pc = 0x36616cu;
     // NOP
 label_366170:
     // 0x366170: 0x2522ff80  addiu       $v0, $t1, -0x80
@@ -172,7 +171,6 @@ label_366170:
     // 0x3661f8: 0x24090008  addiu       $t1, $zero, 0x8
     SET_GPR_S32(ctx, 9, (int32_t)ADD32(GPR_U32(ctx, 0), 8));
     // 0x3661fc: 0x0  nop
-    ctx->pc = 0x3661fcu;
     // NOP
 label_366200:
     // 0x366200: 0x2529ffff  addiu       $t1, $t1, -0x1
@@ -236,7 +234,6 @@ label_366200:
     // 0x366250: 0x3c013f00  lui         $at, 0x3F00
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16128 << 16));
     // 0x366254: 0x44810800  mtc1        $at, $f1
-    ctx->pc = 0x366254u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }
 label_366258:
     // 0x366258: 0x44890000  mtc1        $t1, $f0
@@ -296,7 +293,6 @@ label_366258:
     // 0x366298: 0x21400  sll         $v0, $v0, 16
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 16));
     // 0x36629c: 0x21403  sra         $v0, $v0, 16
-    ctx->pc = 0x36629cu;
     SET_GPR_S32(ctx, 2, SRA32(GPR_S32(ctx, 2), 16));
 label_3662a0:
     // 0x3662a0: 0xa4660006  sh          $a2, 0x6($v1)
@@ -360,7 +356,6 @@ label_3662a0:
     // 0x3662f0: 0x44810800  mtc1        $at, $f1
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }
     // 0x3662f4: 0x0  nop
-    ctx->pc = 0x3662f4u;
     // NOP
 label_3662f8:
     // 0x3662f8: 0x44890000  mtc1        $t1, $f0
@@ -420,7 +415,6 @@ label_3662f8:
     // 0x366338: 0x21400  sll         $v0, $v0, 16
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 16));
     // 0x36633c: 0x21403  sra         $v0, $v0, 16
-    ctx->pc = 0x36633cu;
     SET_GPR_S32(ctx, 2, SRA32(GPR_S32(ctx, 2), 16));
 label_366340:
     // 0x366340: 0xa4870006  sh          $a3, 0x6($a0)

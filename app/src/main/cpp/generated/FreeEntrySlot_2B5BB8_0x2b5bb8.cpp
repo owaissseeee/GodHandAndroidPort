@@ -13,7 +13,7 @@
 
 // Function: FreeEntrySlot_2B5BB8
 // Address: 0x2b5bb8 - 0x2b5c00
-void FreeEntrySlot_2B5BB8_0x2b5bb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FreeEntrySlot_2B5BB8_0x2b5bb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FreeEntrySlot_2B5BB8_0x2b5bb8");
 #endif
@@ -46,7 +46,6 @@ void FreeEntrySlot_2B5BB8_0x2b5bb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B4FE8_0x2b4fe8, 0x2b4fe8u, 0x2b5bccu)) {
         return;
     }
-    ctx->pc = 0x2B5BCCu;
 label_2b5bcc:
     // 0x2b5bcc: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -74,7 +73,6 @@ label_2b5bcc:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x2B5BDCu, 0x2B5BE4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2B5BE4u;
 label_2b5be4:
     // 0x2b5be4: 0xae000004  sw          $zero, 0x4($s0)
     ctx->pc = 0x2b5be4u;

@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_setKeyCardNum
 // Address: 0x1fa908 - 0x1fa950
-void cCoreSave_setKeyCardNum_0x1fa908(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setKeyCardNum_0x1fa908(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setKeyCardNum_0x1fa908");
 #endif
@@ -84,7 +84,6 @@ label_1fa938:
             goto label_1fa944;
         }
     }
-    ctx->pc = 0x1FA944u;
 label_1fa944:
     // 0x1fa944: 0x3e00008  jr          $ra
     ctx->pc = 0x1FA944u;

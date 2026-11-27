@@ -13,7 +13,7 @@
 
 // Function: func_002B0830
 // Address: 0x2b0830 - 0x2b0908
-void func_002B0830_0x2b0830(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002B0830_0x2b0830(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002B0830_0x2b0830");
 #endif
@@ -75,7 +75,6 @@ void func_002B0830_0x2b0830(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2b08b8;
         }
     }
-    ctx->pc = 0x2B0868u;
 label_2b0868:
     // 0x2b0868: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -92,7 +91,6 @@ label_2b0868:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B0BE0_0x2b0be0, 0x2b0be0u, 0x2b0878u)) {
         return;
     }
-    ctx->pc = 0x2B0878u;
 label_2b0878:
     // 0x2b0878: 0x46000046  mov.s       $f1, $f0
     ctx->f[1] = FPU_MOV_S(ctx->f[0]);
@@ -139,12 +137,10 @@ label_2b08a8:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessCommon_getCodeSize_0x2af1f8, 0x2af1f8u, 0x2b08b0u)) {
         return;
     }
-    ctx->pc = 0x2B08B0u;
 label_2b08b0:
     // 0x2b08b0: 0x21040  sll         $v0, $v0, 1
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 1));
     // 0x2b08b4: 0x2028021  addu        $s0, $s0, $v0
-    ctx->pc = 0x2b08b4u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), GPR_U32(ctx, 2)));
 label_2b08b8:
     // 0x2b08b8: 0x96020000  lhu         $v0, 0x0($s0)
@@ -183,7 +179,6 @@ label_2b08b8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B04C0_0x2b04c0, 0x2b04c0u, 0x2b08d4u)) {
         return;
     }
-    ctx->pc = 0x2B08D4u;
 label_2b08d4:
     // 0x2b08d4: 0xc0abc1a  jal         func_2AF068
     SET_GPR_U32(ctx, 31, 0x2B08DCu);
@@ -196,7 +191,6 @@ label_2b08d4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AF068_0x2af068, 0x2af068u, 0x2b08dcu)) {
         return;
     }
-    ctx->pc = 0x2B08DCu;
 label_2b08dc:
     // 0x2b08dc: 0x1040ffe2  beqz        $v0, . + 4 + (-0x1E << 2)
     ctx->pc = 0x2B08DCu;

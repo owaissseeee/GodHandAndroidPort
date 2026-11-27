@@ -13,7 +13,7 @@
 
 // Function: Setup_00309028_309028
 // Address: 0x309028 - 0x3090f8
-void Setup_00309028_309028_0x309028(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Setup_00309028_309028_0x309028(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Setup_00309028_309028_0x309028");
 #endif
@@ -49,7 +49,6 @@ void Setup_00309028_309028_0x309028(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x309044u)) {
         return;
     }
-    ctx->pc = 0x309044u;
 label_309044:
     // 0x309044: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));

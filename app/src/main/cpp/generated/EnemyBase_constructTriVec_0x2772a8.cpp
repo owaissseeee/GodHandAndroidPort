@@ -13,7 +13,7 @@
 
 // Function: EnemyBase_constructTriVec
 // Address: 0x2772a8 - 0x2772f8
-void EnemyBase_constructTriVec_0x2772a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EnemyBase_constructTriVec_0x2772a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EnemyBase_constructTriVec_0x2772a8");
 #endif
@@ -45,7 +45,6 @@ void EnemyBase_constructTriVec_0x2772a8(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_0028EB00_0x28eb00, 0x28eb00u, 0x2772bcu)) {
         return;
     }
-    ctx->pc = 0x2772BCu;
 label_2772bc:
     // 0x2772bc: 0x3c030044  lui         $v1, 0x44
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)68 << 16));

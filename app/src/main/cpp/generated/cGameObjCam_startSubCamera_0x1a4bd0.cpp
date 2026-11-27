@@ -13,7 +13,7 @@
 
 // Function: cGameObjCam_startSubCamera
 // Address: 0x1a4bd0 - 0x1a4cf8
-void cGameObjCam_startSubCamera_0x1a4bd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObjCam_startSubCamera_0x1a4bd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObjCam_startSubCamera_0x1a4bd0");
 #endif
@@ -98,11 +98,9 @@ void cGameObjCam_startSubCamera_0x1a4bd0(uint8_t* rdram, R5900Context* ctx, PS2R
         }
     }
 
-    ctx->pc = 0x1a4bd0u;
 
 label_1a4bd0:
     // 0x1a4bd0: 0x27bdff90  addiu       $sp, $sp, -0x70
-    ctx->pc = 0x1a4bd0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967184));
 label_1a4bd4:
     // 0x1a4bd4: 0x7fb00060  sq          $s0, 0x60($sp)
@@ -114,7 +112,6 @@ label_1a4bd8:
     WRITE128(ADD32(GPR_U32(ctx, 29), 80), GPR_VEC(ctx, 17));
 label_1a4bdc:
     // 0x1a4bdc: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x1a4bdcu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_1a4be0:
     // 0x1a4be0: 0xffbf0040  sd          $ra, 0x40($sp)
@@ -151,7 +148,6 @@ label_1a4bec:
             goto label_1a4ce0;
         }
     }
-    ctx->pc = 0x1A4BF0u;
 label_1a4bf0:
     // 0x1a4bf0: 0x282d  daddu       $a1, $zero, $zero
     ctx->pc = 0x1a4bf0u;
@@ -179,14 +175,11 @@ label_1a4bf8:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_startSoftEvent_0x2c39b0, 0x2c39b0u, 0x1a4bfcu)) {
         return;
     }
-    ctx->pc = 0x1A4BFCu;
 label_1a4bfc:
     // 0x1a4bfc: 0x3c040074  lui         $a0, 0x74
-    ctx->pc = 0x1a4bfcu;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)116 << 16));
 label_1a4c00:
     // 0x1a4c00: 0x3c030001  lui         $v1, 0x1
-    ctx->pc = 0x1a4c00u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)1 << 16));
 label_1a4c04:
     // 0x1a4c04: 0x8c827a78  lw          $v0, 0x7A78($a0)
@@ -194,7 +187,6 @@ label_1a4c04:
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 31352)));
 label_1a4c08:
     // 0x1a4c08: 0x431025  or          $v0, $v0, $v1
-    ctx->pc = 0x1a4c08u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | GPR_U64(ctx, 3));
 label_1a4c0c:
     // 0x1a4c0c: 0xac827a78  sw          $v0, 0x7A78($a0)
@@ -240,7 +232,6 @@ label_1a4c20:
             return;
         }
     }
-    ctx->pc = 0x1A4C24u;
 label_1a4c24:
     // 0x1a4c24: 0xd8440000  lqc2        $vf4, 0x0($v0)
     ctx->pc = 0x1a4c24u;
@@ -251,27 +242,21 @@ label_1a4c28:
     WRITE128(ADD32(GPR_U32(ctx, 29), 0), _mm_castps_si128(ctx->vu0_vf[4]));
 label_1a4c2c:
     // 0x1a4c2c: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x1a4c2cu;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
 label_1a4c30:
     // 0x1a4c30: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x1a4c30u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
 label_1a4c34:
     // 0x1a4c34: 0x27b10010  addiu       $s1, $sp, 0x10
-    ctx->pc = 0x1a4c34u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
 label_1a4c38:
     // 0x1a4c38: 0x3c014080  lui         $at, 0x4080
-    ctx->pc = 0x1a4c38u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16512 << 16));
 label_1a4c3c:
     // 0x1a4c3c: 0x44810800  mtc1        $at, $f1
-    ctx->pc = 0x1a4c3cu;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }
 label_1a4c40:
     // 0x1a4c40: 0x26050080  addiu       $a1, $s0, 0x80
-    ctx->pc = 0x1a4c40u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 16), 128));
 label_1a4c44:
     // 0x1a4c44: 0xe7a00010  swc1        $f0, 0x10($sp)
@@ -279,7 +264,6 @@ label_1a4c44:
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 29), 16), bits); }
 label_1a4c48:
     // 0x1a4c48: 0x27b00030  addiu       $s0, $sp, 0x30
-    ctx->pc = 0x1a4c48u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 29), 48));
 label_1a4c4c:
     // 0x1a4c4c: 0xe6210008  swc1        $f1, 0x8($s1)
@@ -328,7 +312,6 @@ label_1a4c68:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x1a4c6cu)) {
         return;
     }
-    ctx->pc = 0x1A4C6Cu;
 label_1a4c6c:
     // 0x1a4c6c: 0xda040000  lqc2        $vf4, 0x0($s0)
     ctx->pc = 0x1a4c6cu;
@@ -339,7 +322,6 @@ label_1a4c70:
     WRITE128(ADD32(GPR_U32(ctx, 29), 32), _mm_castps_si128(ctx->vu0_vf[4]));
 label_1a4c74:
     // 0x1a4c74: 0x3c020046  lui         $v0, 0x46
-    ctx->pc = 0x1a4c74u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)70 << 16));
 label_1a4c78:
     // 0x1a4c78: 0xc7a20020  lwc1        $f2, 0x20($sp)
@@ -351,7 +333,6 @@ label_1a4c7c:
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 29), 36)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
 label_1a4c80:
     // 0x1a4c80: 0x24503050  addiu       $s0, $v0, 0x3050
-    ctx->pc = 0x1a4c80u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 2), 12368));
 label_1a4c84:
     // 0x1a4c84: 0xc7a10028  lwc1        $f1, 0x28($sp)
@@ -359,7 +340,6 @@ label_1a4c84:
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 29), 40)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
 label_1a4c88:
     // 0x1a4c88: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x1a4c88u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_1a4c8c:
     // 0x1a4c8c: 0xe7a20010  swc1        $f2, 0x10($sp)
@@ -367,7 +347,6 @@ label_1a4c8c:
     { float f = ctx->f[2]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 29), 16), bits); }
 label_1a4c90:
     // 0x1a4c90: 0x282d  daddu       $a1, $zero, $zero
-    ctx->pc = 0x1a4c90u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1a4c94:
     // 0x1a4c94: 0xe7a00014  swc1        $f0, 0x14($sp)
@@ -396,7 +375,6 @@ label_1a4c9c:
     if (!runtime->callDirectStatic(rdram, ctx, &cCamManager_setSubScrCamera_0x138eb8, 0x138eb8u, 0x1a4ca0u)) {
         return;
     }
-    ctx->pc = 0x1A4CA0u;
 label_1a4ca0:
     // 0x1a4ca0: 0x26020e90  addiu       $v0, $s0, 0xE90
     ctx->pc = 0x1a4ca0u;
@@ -428,7 +406,6 @@ label_1a4ca8:
             goto label_1a4cc0;
         }
     }
-    ctx->pc = 0x1A4CACu;
 label_1a4cac:
     // 0x1a4cac: 0xc7a20004  lwc1        $f2, 0x4($sp)
     ctx->pc = 0x1a4cacu;
@@ -480,7 +457,6 @@ label_1a4cc8:
             goto label_1a4ce0;
         }
     }
-    ctx->pc = 0x1A4CCCu;
 label_1a4ccc:
     // 0x1a4ccc: 0xc7a20014  lwc1        $f2, 0x14($sp)
     ctx->pc = 0x1a4cccu;
@@ -544,7 +520,6 @@ label_1a4cf0:
         return;
         #endif
     }
-    ctx->pc = 0x1A4CF4u;
 label_1a4cf4:
     // 0x1a4cf4: 0x0  nop
     // NOP

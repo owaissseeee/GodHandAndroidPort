@@ -13,7 +13,7 @@
 
 // Function: func_0015FD18
 // Address: 0x15fd18 - 0x15fd68
-void func_0015FD18_0x15fd18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0015FD18_0x15fd18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0015FD18_0x15fd18");
 #endif
@@ -63,7 +63,6 @@ void func_0015FD18_0x15fd18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x15FD2Cu;
 label_15fd2c:
     // 0x15fd2c: 0x831821  addu        $v1, $a0, $v1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 3)));
@@ -86,12 +85,10 @@ label_15fd2c:
         return;
         #endif
     }
-    ctx->pc = 0x15FD38u;
 label_15fd38:
     // 0x15fd38: 0x80302d  daddu       $a2, $a0, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x15fd3c: 0x0  nop
-    ctx->pc = 0x15fd3cu;
     // NOP
 label_15fd40:
     // 0x15fd40: 0x8cc20000  lw          $v0, 0x0($a2)

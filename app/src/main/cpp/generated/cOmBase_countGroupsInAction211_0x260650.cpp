@@ -13,7 +13,7 @@
 
 // Function: cOmBase_countGroupsInAction211
 // Address: 0x260650 - 0x2606e8
-void cOmBase_countGroupsInAction211_0x260650(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmBase_countGroupsInAction211_0x260650(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmBase_countGroupsInAction211_0x260650");
 #endif
@@ -85,7 +85,6 @@ void cOmBase_countGroupsInAction211_0x260650(uint8_t* rdram, R5900Context* ctx, 
     if (!runtime->callDirectStatic(rdram, ctx, &func_002919C0_0x2919c0, 0x2919c0u, 0x260690u)) {
         return;
     }
-    ctx->pc = 0x260690u;
 label_260690:
     // 0x260690: 0x964502fe  lhu         $a1, 0x2FE($s2)
     ctx->pc = 0x260690u;
@@ -105,7 +104,6 @@ label_260690:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002919C0_0x2919c0, 0x2919c0u, 0x2606a4u)) {
         return;
     }
-    ctx->pc = 0x2606A4u;
 label_2606a4:
     // 0x2606a4: 0x964502fe  lhu         $a1, 0x2FE($s2)
     ctx->pc = 0x2606a4u;
@@ -125,7 +123,6 @@ label_2606a4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002919C0_0x2919c0, 0x2919c0u, 0x2606b8u)) {
         return;
     }
-    ctx->pc = 0x2606B8u;
 label_2606b8:
     // 0x2606b8: 0x964502fe  lhu         $a1, 0x2FE($s2)
     ctx->pc = 0x2606b8u;
@@ -145,10 +142,8 @@ label_2606b8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002919C0_0x2919c0, 0x2919c0u, 0x2606ccu)) {
         return;
     }
-    ctx->pc = 0x2606CCu;
 label_2606cc:
     // 0x2606cc: 0x2021021  addu        $v0, $s0, $v0
-    ctx->pc = 0x2606ccu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), GPR_U32(ctx, 2)));
 label_2606d0:
     // 0x2606d0: 0x7bb00030  lq          $s0, 0x30($sp)

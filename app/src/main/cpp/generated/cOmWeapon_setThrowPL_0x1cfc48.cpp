@@ -13,7 +13,7 @@
 
 // Function: cOmWeapon_setThrowPL
 // Address: 0x1cfc48 - 0x1cfd60
-void cOmWeapon_setThrowPL_0x1cfc48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmWeapon_setThrowPL_0x1cfc48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmWeapon_setThrowPL_0x1cfc48");
 #endif
@@ -162,10 +162,8 @@ label_1cfc98:
             goto label_1cfcd8;
         }
     }
-    ctx->pc = 0x1CFCD4u;
 label_1cfcd4:
     // 0x1cfcd4: 0x882d  daddu       $s1, $zero, $zero
-    ctx->pc = 0x1cfcd4u;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1cfcd8:
     // 0x1cfcd8: 0x5220001c  beql        $s1, $zero, . + 4 + (0x1C << 2)
@@ -201,7 +199,6 @@ label_1cfcd8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31D020u, 0x1CFCE8u, 0x1CFCF0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1CFCF0u;
 label_1cfcf0:
     // 0x1cfcf0: 0x3c013f06  lui         $at, 0x3F06
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16134 << 16));
@@ -226,7 +223,6 @@ label_1cfcf0:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_calcParts_0x149eb8, 0x149eb8u, 0x1cfd10u)) {
         return;
     }
-    ctx->pc = 0x1CFD10u;
 label_1cfd10:
     // 0x1cfd10: 0x26020640  addiu       $v0, $s0, 0x640
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 1600));
@@ -264,7 +260,6 @@ label_1cfd10:
     ctx->pc = 0x1cfd30u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 2), 8), bits); }
     // 0x1cfd34: 0x24020005  addiu       $v0, $zero, 0x5
-    ctx->pc = 0x1cfd34u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 5));
 label_1cfd38:
     // 0x1cfd38: 0xa20002f7  sb          $zero, 0x2F7($s0)

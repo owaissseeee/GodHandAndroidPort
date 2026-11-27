@@ -13,7 +13,7 @@
 
 // Function: sftrn_BuildAudio
 // Address: 0x35c080 - 0x35c120
-void sftrn_BuildAudio_0x35c080(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sftrn_BuildAudio_0x35c080(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sftrn_BuildAudio_0x35c080");
 #endif
@@ -57,7 +57,6 @@ void sftrn_BuildAudio_0x35c080(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035C200_0x35c200, 0x35c200u, 0x35c0a4u)) {
         return;
     }
-    ctx->pc = 0x35C0A4u;
 label_35c0a4:
     // 0x35c0a4: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -74,7 +73,6 @@ label_35c0a4:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj35C0_Set_a1_0_a2_C140_0x35c140, 0x35c140u, 0x35c0b4u)) {
         return;
     }
-    ctx->pc = 0x35C0B4u;
 label_35c0b4:
     // 0x35c0b4: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -104,7 +102,6 @@ label_35c0b4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035C200_0x35c200, 0x35c200u, 0x35c0d0u)) {
         return;
     }
-    ctx->pc = 0x35C0D0u;
 label_35c0d0:
     // 0x35c0d0: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -121,7 +118,6 @@ label_35c0d0:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj35C0_Set_a1_0_a2_C140_0x35c140, 0x35c140u, 0x35c0e0u)) {
         return;
     }
-    ctx->pc = 0x35C0E0u;
 label_35c0e0:
     // 0x35c0e0: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -148,7 +144,6 @@ label_35c0e0:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x35C200u, 0x35C0F8u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x35C100u;
 label_35c100:
     // 0x35c100: 0xdfb10008  ld          $s1, 0x8($sp)
     ctx->pc = 0x35c100u;

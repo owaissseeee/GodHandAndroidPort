@@ -13,7 +13,7 @@
 
 // Function: GetD003D848C_3313E0
 // Address: 0x3313e0 - 0x3313f0
-void GetD003D848C_3313E0_0x3313e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetD003D848C_3313E0_0x3313e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetD003D848C_3313E0_0x3313e0");
 #endif

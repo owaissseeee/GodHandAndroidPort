@@ -13,7 +13,7 @@
 
 // Function: InitClearStructAndSet_1E79A8
 // Address: 0x1e79a8 - 0x1e79e8
-void InitClearStructAndSet_1E79A8_0x1e79a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitClearStructAndSet_1E79A8_0x1e79a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitClearStructAndSet_1E79A8_0x1e79a8");
 #endif
@@ -54,7 +54,6 @@ void InitClearStructAndSet_1E79A8_0x1e79a8(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x1e79ccu)) {
         return;
     }
-    ctx->pc = 0x1E79CCu;
 label_1e79cc:
     // 0x1e79cc: 0xae110000  sw          $s1, 0x0($s0)
     ctx->pc = 0x1e79ccu;

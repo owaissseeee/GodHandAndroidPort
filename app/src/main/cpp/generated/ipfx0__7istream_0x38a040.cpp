@@ -13,7 +13,7 @@
 
 // Function: ipfx0__7istream
 // Address: 0x38a040 - 0x38a0c0
-void ipfx0__7istream_0x38a040(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ipfx0__7istream_0x38a040(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ipfx0__7istream_0x38a040");
 #endif
@@ -75,7 +75,6 @@ void ipfx0__7istream_0x38a040(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_38a0ac;
         }
     }
-    ctx->pc = 0x38A06Cu;
 label_38a06c:
     // 0x38a06c: 0x8ca40004  lw          $a0, 0x4($a1)
     ctx->pc = 0x38a06cu;
@@ -101,7 +100,6 @@ label_38a06c:
     if (!runtime->callDirectStatic(rdram, ctx, &flush__7ostream_0x389268, 0x389268u, 0x38a080u)) {
         return;
     }
-    ctx->pc = 0x38A080u;
 label_38a080:
     // 0x38a080: 0x8e050000  lw          $a1, 0x0($s0)
     ctx->pc = 0x38a080u;
@@ -142,7 +140,6 @@ label_38a088:
     if (!runtime->callDirectStatic(rdram, ctx, &_skip_ws__7istream_0x389398, 0x389398u, 0x38a0a4u)) {
         return;
     }
-    ctx->pc = 0x38A0A4u;
 label_38a0a4:
     // 0x38a0a4: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x38A0A4u;
@@ -159,7 +156,6 @@ label_38a0a4:
             goto label_38a0b0;
         }
     }
-    ctx->pc = 0x38A0ACu;
 label_38a0ac:
     // 0x38a0ac: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x38a0acu;

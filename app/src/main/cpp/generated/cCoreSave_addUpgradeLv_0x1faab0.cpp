@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_addUpgradeLv
 // Address: 0x1faab0 - 0x1fab28
-void cCoreSave_addUpgradeLv_0x1faab0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_addUpgradeLv_0x1faab0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_addUpgradeLv_0x1faab0");
 #endif
@@ -118,7 +118,6 @@ label_1fab0c:
             goto label_1fab20;
         }
     }
-    ctx->pc = 0x1FAB20u;
 label_1fab20:
     // 0x1fab20: 0x3e00008  jr          $ra
     ctx->pc = 0x1FAB20u;

@@ -13,7 +13,7 @@
 
 // Function: InitObjectFull_3806D8
 // Address: 0x3806d8 - 0x380720
-void InitObjectFull_3806D8_0x3806d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitObjectFull_3806D8_0x3806d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitObjectFull_3806D8_0x3806d8");
 #endif
@@ -48,7 +48,6 @@ void InitObjectFull_3806D8_0x3806d8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_00380E10_0x380e10, 0x380e10u, 0x3806ecu)) {
         return;
     }
-    ctx->pc = 0x3806ECu;
 label_3806ec:
     // 0x3806ec: 0x26050348  addiu       $a1, $s0, 0x348
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 16), 840));
@@ -65,7 +64,6 @@ label_3806ec:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00381D38_0x381d38, 0x381d38u, 0x3806fcu)) {
         return;
     }
-    ctx->pc = 0x3806FCu;
 label_3806fc:
     // 0x3806fc: 0xc0e1318  jal         func_384C60
     SET_GPR_U32(ctx, 31, 0x380704u);
@@ -78,7 +76,6 @@ label_3806fc:
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateChildAndFreeSoundHandle_0x384c60, 0x384c60u, 0x380704u)) {
         return;
     }
-    ctx->pc = 0x380704u;
 label_380704:
     // 0x380704: 0xc0e1688  jal         func_385A20
     SET_GPR_U32(ctx, 31, 0x38070Cu);
@@ -91,7 +88,6 @@ label_380704:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00385A20_0x385a20, 0x385a20u, 0x38070cu)) {
         return;
     }
-    ctx->pc = 0x38070Cu;
 label_38070c:
     // 0x38070c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x38070cu;

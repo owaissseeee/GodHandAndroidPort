@@ -13,7 +13,7 @@
 
 // Function: cMessage_getMessageAddr
 // Address: 0x2aead0 - 0x2aeb00
-void cMessage_getMessageAddr_0x2aead0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessage_getMessageAddr_0x2aead0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessage_getMessageAddr_0x2aead0");
 #endif

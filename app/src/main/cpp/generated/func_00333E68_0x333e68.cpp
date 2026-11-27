@@ -13,7 +13,7 @@
 
 // Function: func_00333E68
 // Address: 0x333e68 - 0x333e88
-void func_00333E68_0x333e68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00333E68_0x333e68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00333E68_0x333e68");
 #endif

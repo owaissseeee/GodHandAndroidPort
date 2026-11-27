@@ -13,7 +13,7 @@
 
 // Function: func_0031CF78
 // Address: 0x31cf78 - 0x31cfe0
-void func_0031CF78_0x31cf78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0031CF78_0x31cf78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0031CF78_0x31cf78");
 #endif
@@ -60,7 +60,6 @@ void func_0031CF78_0x31cf78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_31cfc4;
         }
     }
-    ctx->pc = 0x31CFA8u;
 label_31cfa8:
     // 0x31cfa8: 0x21842  srl         $v1, $v0, 1
     SET_GPR_S32(ctx, 3, (int32_t)SRL32(GPR_U32(ctx, 2), 1));
@@ -75,7 +74,6 @@ label_31cfa8:
     // 0x31cfbc: 0x46800860  cvt.s.w     $f1, $f1
     { int32_t tmp; std::memcpy(&tmp, &ctx->f[1], sizeof(tmp)); ctx->f[1] = FPU_CVT_S_W(tmp); }
     // 0x31cfc0: 0x46010840  add.s       $f1, $f1, $f1
-    ctx->pc = 0x31cfc0u;
     ctx->f[1] = FPU_ADD_S(ctx->f[1], ctx->f[1]);
 label_31cfc4:
     // 0x31cfc4: 0x3c012f80  lui         $at, 0x2F80

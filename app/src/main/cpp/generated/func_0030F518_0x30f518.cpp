@@ -13,7 +13,7 @@
 
 // Function: func_0030F518
 // Address: 0x30f518 - 0x30f550
-void func_0030F518_0x30f518(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0030F518_0x30f518(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0030F518_0x30f518");
 #endif
@@ -37,7 +37,6 @@ void func_0030F518_0x30f518(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0030F348_0x30f348, 0x30f348u, 0x30f528u)) {
         return;
     }
-    ctx->pc = 0x30F528u;
 label_30f528:
     // 0x30f528: 0x21042  srl         $v0, $v0, 1
     SET_GPR_S32(ctx, 2, (int32_t)SRL32(GPR_U32(ctx, 2), 1));

@@ -13,7 +13,7 @@
 
 // Function: func_001F2650
 // Address: 0x1f2650 - 0x1f2690
-void func_001F2650_0x1f2650(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001F2650_0x1f2650(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001F2650_0x1f2650");
 #endif
@@ -60,7 +60,6 @@ void func_001F2650_0x1f2650(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &ColiseumBattle_DefeatAllEnemies_0x1ef978, 0x1ef978u, 0x1f2674u)) {
         return;
     }
-    ctx->pc = 0x1F2674u;
 label_1f2674:
     // 0x1f2674: 0x8e020b94  lw          $v0, 0xB94($s0)
     ctx->pc = 0x1f2674u;

@@ -13,7 +13,7 @@
 
 // Function: sfply_InitMvInf
 // Address: 0x358598 - 0x358600
-void sfply_InitMvInf_0x358598(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfply_InitMvInf_0x358598(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfply_InitMvInf_0x358598");
 #endif
@@ -49,7 +49,6 @@ void sfply_InitMvInf_0x358598(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &func_00366C50_0x366c50, 0x366c50u, 0x3585b4u)) {
         return;
     }
-    ctx->pc = 0x3585B4u;
 label_3585b4:
     // 0x3585b4: 0x2403ffff  addiu       $v1, $zero, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));

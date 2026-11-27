@@ -13,7 +13,7 @@
 
 // Function: func_002AD590
 // Address: 0x2ad590 - 0x2ad748
-void func_002AD590_0x2ad590(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002AD590_0x2ad590(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002AD590_0x2ad590");
 #endif
@@ -82,7 +82,6 @@ void func_002AD590_0x2ad590(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2ad72c;
         }
     }
-    ctx->pc = 0x2AD5D8u;
 label_2ad5d8:
     // 0x2ad5d8: 0xc0ab5d2  jal         func_2AD748
     SET_GPR_U32(ctx, 31, 0x2AD5E0u);
@@ -95,7 +94,6 @@ label_2ad5d8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AD748_0x2ad748, 0x2ad748u, 0x2ad5e0u)) {
         return;
     }
-    ctx->pc = 0x2AD5E0u;
 label_2ad5e0:
     // 0x2ad5e0: 0x8e220004  lw          $v0, 0x4($s1)
     ctx->pc = 0x2ad5e0u;
@@ -121,7 +119,6 @@ label_2ad5e0:
     ctx->pc = 0x2ad5f0u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 0)));
     // 0x2ad5f4: 0x0  nop
-    ctx->pc = 0x2ad5f4u;
     // NOP
 label_2ad5f8:
     // 0x2ad5f8: 0x282d  daddu       $a1, $zero, $zero
@@ -150,7 +147,6 @@ label_2ad5f8:
     // 0x2ad610: 0x672018  mult        $a0, $v1, $a3
     { int64_t result = (int64_t)GPR_S32(ctx, 3) * (int64_t)GPR_S32(ctx, 7); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 4, (int32_t)result); }
     // 0x2ad614: 0x0  nop
-    ctx->pc = 0x2ad614u;
     // NOP
 label_2ad618:
     // 0x2ad618: 0x871021  addu        $v0, $a0, $a3
@@ -342,7 +338,6 @@ label_2ad6f0:
             goto label_2ad618;
         }
     }
-    ctx->pc = 0x2AD704u;
 label_2ad704:
     // 0x2ad704: 0x8e220004  lw          $v0, 0x4($s1)
     ctx->pc = 0x2ad704u;
@@ -369,7 +364,6 @@ label_2ad704:
             goto label_2ad5f8;
         }
     }
-    ctx->pc = 0x2AD718u;
 label_2ad718:
     // 0x2ad718: 0x8e42238c  lw          $v0, 0x238C($s2)
     ctx->pc = 0x2ad718u;
@@ -390,7 +384,6 @@ label_2ad718:
             goto label_2ad5d8;
         }
     }
-    ctx->pc = 0x2AD72Cu;
 label_2ad72c:
     // 0x2ad72c: 0x7bb00060  lq          $s0, 0x60($sp)
     ctx->pc = 0x2ad72cu;

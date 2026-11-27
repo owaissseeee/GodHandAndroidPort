@@ -13,7 +13,7 @@
 
 // Function: cSnd_BgmEvAllSignal
 // Address: 0x2d20e0 - 0x2d2178
-void cSnd_BgmEvAllSignal_0x2d20e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BgmEvAllSignal_0x2d20e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BgmEvAllSignal_0x2d20e0");
 #endif
@@ -77,7 +77,6 @@ void cSnd_BgmEvAllSignal_0x2d20e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     ctx->pc = 0x2d2118u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 152)));
     // 0x2d211c: 0x0  nop
-    ctx->pc = 0x2d211cu;
     // NOP
 label_2d2120:
     // 0x2d2120: 0x30620800  andi        $v0, $v1, 0x800
@@ -143,7 +142,6 @@ label_2d2120:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_FadeIn_0x2cd470, 0x2cd470u, 0x2d214cu)) {
         return;
     }
-    ctx->pc = 0x2D214Cu;
 label_2d214c:
     // 0x2d214c: 0x8e100088  lw          $s0, 0x88($s0)
     ctx->pc = 0x2d214cu;
@@ -166,7 +164,6 @@ label_2d214c:
             goto label_2d2120;
         }
     }
-    ctx->pc = 0x2D2158u;
 label_2d2158:
     // 0x2d2158: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x2d2158u;

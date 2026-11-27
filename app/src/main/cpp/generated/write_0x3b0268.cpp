@@ -13,7 +13,7 @@
 
 // Function: write
 // Address: 0x3b0268 - 0x3b02e8
-void write_0x3b0268(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void write_0x3b0268(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("write_0x3b0268");
 #endif
@@ -87,7 +87,6 @@ void write_0x3b0268(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F6E68_0x1f6e68, 0x1f6e68u, 0x3b02a8u)) {
         return;
     }
-    ctx->pc = 0x3B02A8u;
 label_3b02a8:
     // 0x3b02a8: 0x10400007  beqz        $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x3B02A8u;
@@ -108,7 +107,6 @@ label_3b02a8:
     ctx->pc = 0x3b02b0u;
     WRITE32(ADD32(GPR_U32(ctx, 16), 4294946368), GPR_U32(ctx, 2));
     // 0x3b02b4: 0x220202d  daddu       $a0, $s1, $zero
-    ctx->pc = 0x3b02b4u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
 label_3b02b8:
     // 0x3b02b8: 0xc07dba6  jal         func_1F6E98
@@ -122,7 +120,6 @@ label_3b02b8:
     if (!runtime->callDirectStatic(rdram, ctx, &Tramp_003B4AD8_1F6E98_0x1f6e98, 0x1f6e98u, 0x3b02c0u)) {
         return;
     }
-    ctx->pc = 0x3B02C0u;
 label_3b02c0:
     // 0x3b02c0: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x3B02C0u;
@@ -139,7 +136,6 @@ label_3b02c0:
             goto label_3b02d0;
         }
     }
-    ctx->pc = 0x3B02C8u;
 label_3b02c8:
     // 0x3b02c8: 0x2402ffff  addiu       $v0, $zero, -0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));

@@ -13,7 +13,7 @@
 
 // Function: copy_reg
 // Address: 0x3209d0 - 0x320a50
-void copy_reg_0x3209d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void copy_reg_0x3209d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("copy_reg_0x3209d0");
 #endif
@@ -57,7 +57,6 @@ void copy_reg_0x3209d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &get_reg_addr_0x320948, 0x320948u, 0x3209f4u)) {
         return;
     }
-    ctx->pc = 0x3209F4u;
 label_3209f4:
     // 0x3209f4: 0x40902d  daddu       $s2, $v0, $zero
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -76,7 +75,6 @@ label_3209f4:
     if (!runtime->callDirectStatic(rdram, ctx, &get_reg_addr_0x320948, 0x320948u, 0x320a08u)) {
         return;
     }
-    ctx->pc = 0x320A08u;
 label_320a08:
     // 0x320a08: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -120,7 +118,6 @@ label_320a2c:
     if (!runtime->callDirectStatic(rdram, ctx, &memcpy_0x3a5148, 0x3a5148u, 0x320a34u)) {
         return;
     }
-    ctx->pc = 0x320A34u;
 label_320a34:
     // 0x320a34: 0xdfbf0030  ld          $ra, 0x30($sp)
     ctx->pc = 0x320a34u;

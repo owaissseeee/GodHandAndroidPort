@@ -13,7 +13,7 @@
 
 // Function: cGameObj_isDownedEnemy
 // Address: 0x124fd8 - 0x125048
-void cGameObj_isDownedEnemy_0x124fd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObj_isDownedEnemy_0x124fd8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObj_isDownedEnemy_0x124fd8");
 #endif
@@ -56,7 +56,6 @@ void cGameObj_isDownedEnemy_0x124fd8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     // 0x124ff4: 0x28620300  slti        $v0, $v1, 0x300
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)768) ? 1 : 0);
     // 0x124ff8: 0x40302d  daddu       $a2, $v0, $zero
-    ctx->pc = 0x124ff8u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_124ffc:
     // 0x124ffc: 0x30c200ff  andi        $v0, $a2, 0xFF
@@ -94,7 +93,6 @@ label_124ffc:
     // 0x125010: 0x28620300  slti        $v0, $v1, 0x300
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)768) ? 1 : 0);
     // 0x125014: 0x40302d  daddu       $a2, $v0, $zero
-    ctx->pc = 0x125014u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_125018:
     // 0x125018: 0x30c200ff  andi        $v0, $a2, 0xFF
@@ -120,7 +118,6 @@ label_125018:
     if (!runtime->callDirectStatic(rdram, ctx, &cEm00_ckDown_0x26f0e0, 0x26f0e0u, 0x12502cu)) {
         return;
     }
-    ctx->pc = 0x12502Cu;
 label_12502c:
     // 0x12502c: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x12502Cu;
@@ -137,10 +134,8 @@ label_12502c:
             goto label_125038;
         }
     }
-    ctx->pc = 0x125034u;
 label_125034:
     // 0x125034: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x125034u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_125038:
     // 0x125038: 0xdfbf0000  ld          $ra, 0x0($sp)

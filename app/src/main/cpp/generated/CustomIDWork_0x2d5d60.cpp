@@ -13,7 +13,7 @@
 
 // Function: CustomIDWork
 // Address: 0x2d5d60 - 0x2d5d80
-void CustomIDWork_0x2d5d60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CustomIDWork_0x2d5d60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CustomIDWork_0x2d5d60");
 #endif

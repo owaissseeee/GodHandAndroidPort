@@ -13,7 +13,7 @@
 
 // Function: cHeap_free
 // Address: 0x2a9680 - 0x2a96c0
-void cHeap_free_0x2a9680(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cHeap_free_0x2a9680(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cHeap_free_0x2a9680");
 #endif
@@ -77,7 +77,6 @@ void cHeap_free_0x2a9680(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
             goto label_2a96b8;
         }
     }
-    ctx->pc = 0x2A96B8u;
 label_2a96b8:
     // 0x2a96b8: 0x3e00008  jr          $ra
     ctx->pc = 0x2A96B8u;

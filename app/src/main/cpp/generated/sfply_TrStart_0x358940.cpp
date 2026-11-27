@@ -13,7 +13,7 @@
 
 // Function: sfply_TrStart
 // Address: 0x358940 - 0x358968
-void sfply_TrStart_0x358940(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfply_TrStart_0x358940(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfply_TrStart_0x358940");
 #endif
@@ -48,7 +48,6 @@ void sfply_TrStart_0x358940(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035C2D0_0x35c2d0, 0x35c2d0u, 0x35895cu)) {
         return;
     }
-    ctx->pc = 0x35895Cu;
 label_35895c:
     // 0x35895c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x35895cu;

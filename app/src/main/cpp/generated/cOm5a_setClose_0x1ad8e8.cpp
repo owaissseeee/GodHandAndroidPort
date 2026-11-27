@@ -13,7 +13,7 @@
 
 // Function: cOm5a_setClose
 // Address: 0x1ad8e8 - 0x1ad918
-void cOm5a_setClose_0x1ad8e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm5a_setClose_0x1ad8e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm5a_setClose_0x1ad8e8");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: func_002BCCC0
 // Address: 0x2bccc0 - 0x2bcd58
-void func_002BCCC0_0x2bccc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002BCCC0_0x2bccc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002BCCC0_0x2bccc0");
 #endif
@@ -64,7 +64,6 @@ void func_002BCCC0_0x2bccc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0LengthSq_0x1f7e28, 0x1f7e28u, 0x2bccf0u)) {
         return;
     }
-    ctx->pc = 0x2BCCF0u;
 label_2bccf0:
     // 0x2bccf0: 0x46000306  mov.s       $f12, $f0
     ctx->f[12] = FPU_MOV_S(ctx->f[0]);
@@ -93,7 +92,6 @@ label_2bccf0:
     if (!runtime->callDirectStatic(rdram, ctx, &sqrtf_0x3a2440, 0x3a2440u, 0x2bcd18u)) {
         return;
     }
-    ctx->pc = 0x2BCD18u;
 label_2bcd18:
     // 0x2bcd18: 0x44807000  mtc1        $zero, $f14
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[14], &bits, sizeof(bits)); }
@@ -116,7 +114,6 @@ label_2bcd18:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BBDB8_0x2bbdb8, 0x2bbdb8u, 0x2bcd34u)) {
         return;
     }
-    ctx->pc = 0x2BCD34u;
 label_2bcd34:
     // 0x2bcd34: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2bcd34u;

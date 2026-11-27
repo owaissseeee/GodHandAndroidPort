@@ -13,7 +13,7 @@
 
 // Function: ResetSlotState_1FF2E0
 // Address: 0x1ff2e0 - 0x1ff338
-void ResetSlotState_1FF2E0_0x1ff2e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ResetSlotState_1FF2E0_0x1ff2e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ResetSlotState_1FF2E0_0x1ff2e0");
 #endif
@@ -65,7 +65,6 @@ label_1ff2f8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FF0B0_0x1ff0b0, 0x1ff0b0u, 0x1ff300u)) {
         return;
     }
-    ctx->pc = 0x1FF300u;
 label_1ff300:
     // 0x1ff300: 0x8e020004  lw          $v0, 0x4($s0)
     ctx->pc = 0x1ff300u;
@@ -96,10 +95,8 @@ label_1ff300:
     if (!runtime->callDirectStatic(rdram, ctx, &ClearSlotArray_1FF5B8_0x1ff5b8, 0x1ff5b8u, 0x1ff314u)) {
         return;
     }
-    ctx->pc = 0x1FF314u;
 label_1ff314:
     // 0x1ff314: 0x24020005  addiu       $v0, $zero, 0x5
-    ctx->pc = 0x1ff314u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 5));
 label_1ff318:
     // 0x1ff318: 0xae020000  sw          $v0, 0x0($s0)

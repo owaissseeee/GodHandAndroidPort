@@ -13,7 +13,7 @@
 
 // Function: Turn_dest_dir
 // Address: 0x2da1f8 - 0x2da2d0
-void Turn_dest_dir_0x2da1f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Turn_dest_dir_0x2da1f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Turn_dest_dir_0x2da1f8");
 #endif
@@ -51,7 +51,6 @@ void Turn_dest_dir_0x2da1f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x2da228: 0x0  nop
     // NOP
     // 0x2da22c: 0x46006b41  sub.s       $f13, $f13, $f0
-    ctx->pc = 0x2da22cu;
     ctx->f[13] = FPU_SUB_S(ctx->f[13], ctx->f[0]);
 label_2da230:
     // 0x2da230: 0x3c01c049  lui         $at, 0xC049
@@ -84,7 +83,6 @@ label_2da230:
     // 0x2da25c: 0x0  nop
     // NOP
     // 0x2da260: 0x46006b40  add.s       $f13, $f13, $f0
-    ctx->pc = 0x2da260u;
     ctx->f[13] = FPU_ADD_S(ctx->f[13], ctx->f[0]);
 label_2da264:
     // 0x2da264: 0x44800000  mtc1        $zero, $f0
@@ -142,10 +140,8 @@ label_2da264:
             goto label_2da2a0;
         }
     }
-    ctx->pc = 0x2DA29Cu;
 label_2da29c:
     // 0x2da29c: 0x46007034  c.lt.s      $f14, $f0
-    ctx->pc = 0x2da29cu;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[14], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
 label_2da2a0:
     // 0x2da2a0: 0x0  nop
@@ -183,7 +179,6 @@ label_2da2a0:
         }
     }
     // 0x2da2c4: 0x46006b87  neg.s       $f14, $f13
-    ctx->pc = 0x2da2c4u;
     ctx->f[14] = FPU_NEG_S(ctx->f[13]);
 label_2da2c8:
     // 0x2da2c8: 0x3e00008  jr          $ra

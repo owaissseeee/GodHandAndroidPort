@@ -14,31 +14,29 @@ namespace gh_event
 {
 // Function: initPlay__9cEventVib
 // Address: 0x7b23f8 - 0x7b2418
-void initPlay__9cEventVib_0x7b23f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void initPlay__9cEventVib_0x7b23f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("initPlay__9cEventVib_0x7b23f8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7b240cu: goto label_7b240c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7b23f8u, 0)) {
+        switch (ctx->pc) {
+            case 0x7b240cu: goto label_7b240c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7b23f8u;
+
 
     // 0x7b23f8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7b23f8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x7b23fc: 0x3c05007b  lui         $a1, 0x7B
-    ctx->pc = 0x7b23fcu;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)123 << 16));
     // 0x7b2400: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x7b2400u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x7b2404: 0xc1ecbd6  jal         func_7B2F58
-    ctx->pc = 0x7B2404u;
     SET_GPR_U32(ctx, 31, 0x7B240Cu);
-    ctx->pc = 0x7B2408u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x7B2404u;
     // 0x7b2408: 0x24a54ef0  addiu       $a1, $a1, 0x4EF0 (Delay Slot)
@@ -48,7 +46,6 @@ void initPlay__9cEventVib_0x7b23f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x7B2F58u, 0x7B2404u, 0x7B240Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7B240Cu;
 label_7b240c:
     // 0x7b240c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7b240cu;

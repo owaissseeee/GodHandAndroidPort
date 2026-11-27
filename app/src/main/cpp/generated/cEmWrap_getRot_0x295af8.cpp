@@ -13,7 +13,7 @@
 
 // Function: cEmWrap_getRot
 // Address: 0x295af8 - 0x295b38
-void cEmWrap_getRot_0x295af8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmWrap_getRot_0x295af8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmWrap_getRot_0x295af8");
 #endif
@@ -45,7 +45,6 @@ void cEmWrap_getRot_0x295af8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &FindResolveActor_295978_0x295978, 0x295978u, 0x295b0cu)) {
         return;
     }
-    ctx->pc = 0x295B0Cu;
 label_295b0c:
     // 0x295b0c: 0x50400004  beql        $v0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x295B0Cu;
@@ -80,10 +79,8 @@ label_295b0c:
             goto label_295b24;
         }
     }
-    ctx->pc = 0x295B20u;
 label_295b20:
     // 0x295b20: 0x24427b00  addiu       $v0, $v0, 0x7B00
-    ctx->pc = 0x295b20u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 31488));
 label_295b24:
     // 0x295b24: 0x7bb00010  lq          $s0, 0x10($sp)

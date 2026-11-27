@@ -13,7 +13,7 @@
 
 // Function: _IO_init
 // Address: 0x38cc40 - 0x38cc88
-void ps2__IO_init_0x38cc40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_init_0x38cc40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_init_0x38cc40");
 #endif

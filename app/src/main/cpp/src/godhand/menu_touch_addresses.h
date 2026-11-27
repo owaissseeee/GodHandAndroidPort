@@ -61,6 +61,9 @@ constexpr uint32_t kStaSubScrBit        = 0x08000000u;
 // Event / Cutscene state bit: 0x20000000u (Sta::kEvent, game_layout.h:94)
 constexpr uint32_t kStaEventBit         = 0x20000000u;
 
+// Pre-rendered FMV / Movie state bit: 0x00002000u (Sta::kMovie, game_layout.h:106)
+constexpr uint32_t kStaMovieBit         = 0x00002000u;
+
 // Soft event state bit: 0x00000040u (Sta::kSoftEvent, game_layout.h:109)
 constexpr uint32_t kStaSoftEventBit     = 0x00000040u;
 
@@ -265,8 +268,9 @@ enum MenuScreenId : uint32_t {
 };
 
 // Flags packed into the upper bits of getActiveMenuState():
-constexpr uint32_t MENU_FLAG_SCROLLABLE    = 1u << 16;
-constexpr uint32_t MENU_FLAG_LIVE_ROULETTE = 1u << 17;
+constexpr uint32_t MENU_FLAG_SCROLLABLE      = 1u << 16;
+constexpr uint32_t MENU_FLAG_LIVE_ROULETTE   = 1u << 17;
+constexpr uint32_t MENU_FLAG_CUTSCENE_ACTIVE = 1u << 18;
 
 // -----------------------------------------------------------------------------
 // 6. 2D Virtual Coordinate Hitbox Structures (640 x 448 Virtual Space)

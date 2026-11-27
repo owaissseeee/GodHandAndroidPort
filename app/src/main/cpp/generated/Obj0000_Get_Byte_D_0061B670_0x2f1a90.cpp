@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Get_Byte_D_0061B670
 // Address: 0x2f1a90 - 0x2f1aa0
-void Obj0000_Get_Byte_D_0061B670_0x2f1a90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Get_Byte_D_0061B670_0x2f1a90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Get_Byte_D_0061B670_0x2f1a90");
 #endif

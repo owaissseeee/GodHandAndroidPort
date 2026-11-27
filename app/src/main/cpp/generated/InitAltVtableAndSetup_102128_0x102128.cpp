@@ -13,7 +13,7 @@
 
 // Function: InitAltVtableAndSetup_102128
 // Address: 0x102128 - 0x102150
-void InitAltVtableAndSetup_102128_0x102128(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitAltVtableAndSetup_102128_0x102128(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitAltVtableAndSetup_102128_0x102128");
 #endif
@@ -48,7 +48,6 @@ void InitAltVtableAndSetup_102128_0x102128(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &InitObjectVtableAndRegister_1002C0_0x1002c0, 0x1002c0u, 0x102144u)) {
         return;
     }
-    ctx->pc = 0x102144u;
 label_102144:
     // 0x102144: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x102144u;

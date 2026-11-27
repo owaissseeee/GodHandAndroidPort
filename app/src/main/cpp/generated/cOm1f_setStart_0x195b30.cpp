@@ -13,7 +13,7 @@
 
 // Function: cOm1f_setStart
 // Address: 0x195b30 - 0x195b70
-void cOm1f_setStart_0x195b30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm1f_setStart_0x195b30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm1f_setStart_0x195b30");
 #endif
@@ -52,7 +52,6 @@ void cOm1f_setStart_0x195b30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_195b5c;
         }
     }
-    ctx->pc = 0x195B44u;
 label_195b44:
     // 0x195b44: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -84,7 +83,6 @@ label_195b44:
         return;
         #endif
     }
-    ctx->pc = 0x195B5Cu;
 label_195b5c:
     // 0x195b5c: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x195b5cu;

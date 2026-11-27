@@ -13,7 +13,7 @@
 
 // Function: SphereSquare
 // Address: 0x135d50 - 0x135ec8
-void SphereSquare_0x135d50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SphereSquare_0x135d50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SphereSquare_0x135d50");
 #endif
@@ -90,7 +90,6 @@ void SphereSquare_0x135d50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_00135348_0x135348, 0x135348u, 0x135dacu)) {
         return;
     }
-    ctx->pc = 0x135DACu;
 label_135dac:
     // 0x135dac: 0x220302d  daddu       $a2, $s1, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -111,7 +110,6 @@ label_135dac:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00135348_0x135348, 0x135348u, 0x135dc4u)) {
         return;
     }
-    ctx->pc = 0x135DC4u;
 label_135dc4:
     // 0x135dc4: 0xc6010000  lwc1        $f1, 0x0($s0)
     ctx->pc = 0x135dc4u;
@@ -227,7 +225,6 @@ label_135dc4:
             goto label_135e60;
         }
     }
-    ctx->pc = 0x135E50u;
 label_135e50:
     // 0x135e50: 0xe7a60020  swc1        $f6, 0x20($sp)
     ctx->pc = 0x135e50u;
@@ -242,7 +239,6 @@ label_135e50:
     { float f = ctx->f[8]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 29), 40), bits); }
 label_135e60:
     // 0x135e60: 0x4614a002  mul.s       $f0, $f20, $f20
-    ctx->pc = 0x135e60u;
     ctx->f[0] = FPU_MUL_S(ctx->f[20], ctx->f[20]);
 label_135e64:
     // 0x135e64: 0x46000836  c.le.s      $f1, $f0
@@ -311,7 +307,6 @@ label_135e64:
     { float f = ctx->f[2]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 20), 4), bits); }
 label_135e98:
     // 0x135e98: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x135e98u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_135e9c:
     // 0x135e9c: 0x7bb00080  lq          $s0, 0x80($sp)

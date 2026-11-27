@@ -13,7 +13,7 @@
 
 // Function: cPlayer_resetWorkRecords
 // Address: 0x141628 - 0x141678
-void cPlayer_resetWorkRecords_0x141628(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cPlayer_resetWorkRecords_0x141628(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cPlayer_resetWorkRecords_0x141628");
 #endif
@@ -52,7 +52,6 @@ void cPlayer_resetWorkRecords_0x141628(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &ClearField90_13E400_0x13e400, 0x13e400u, 0x141640u)) {
         return;
     }
-    ctx->pc = 0x141640u;
 label_141640:
     // 0x141640: 0xc04f24c  jal         func_13C930
     SET_GPR_U32(ctx, 31, 0x141648u);
@@ -65,7 +64,6 @@ label_141640:
     if (!runtime->callDirectStatic(rdram, ctx, &ResetBlendFields_13C930_0x13c930, 0x13c930u, 0x141648u)) {
         return;
     }
-    ctx->pc = 0x141648u;
 label_141648:
     // 0x141648: 0xc04fd44  jal         func_13F510
     SET_GPR_U32(ctx, 31, 0x141650u);
@@ -78,7 +76,6 @@ label_141648:
     if (!runtime->callDirectStatic(rdram, ctx, &ResetAnimSlotArray_13F510_0x13f510, 0x13f510u, 0x141650u)) {
         return;
     }
-    ctx->pc = 0x141650u;
 label_141650:
     // 0x141650: 0xc04fa42  jal         func_13E908
     SET_GPR_U32(ctx, 31, 0x141658u);
@@ -91,7 +88,6 @@ label_141650:
     if (!runtime->callDirectStatic(rdram, ctx, &IdHolder_releaseAnim_0x13e908, 0x13e908u, 0x141658u)) {
         return;
     }
-    ctx->pc = 0x141658u;
 label_141658:
     // 0x141658: 0xc051c62  jal         func_147188
     SET_GPR_U32(ctx, 31, 0x141660u);
@@ -104,7 +100,6 @@ label_141658:
     if (!runtime->callDirectStatic(rdram, ctx, &ClearActiveSlot_147188_0x147188, 0x147188u, 0x141660u)) {
         return;
     }
-    ctx->pc = 0x141660u;
 label_141660:
     // 0x141660: 0xc050d2a  jal         func_1434A8
     SET_GPR_U32(ctx, 31, 0x141668u);
@@ -117,7 +112,6 @@ label_141660:
     if (!runtime->callDirectStatic(rdram, ctx, &cCockPlBar_initData_0x1434a8, 0x1434a8u, 0x141668u)) {
         return;
     }
-    ctx->pc = 0x141668u;
 label_141668:
     // 0x141668: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x141668u;

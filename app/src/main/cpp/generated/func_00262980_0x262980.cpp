@@ -13,7 +13,7 @@
 
 // Function: func_00262980
 // Address: 0x262980 - 0x262a10
-void func_00262980_0x262980(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00262980_0x262980(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00262980_0x262980");
 #endif
@@ -77,7 +77,6 @@ void func_00262980_0x262980(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2629bc;
         }
     }
-    ctx->pc = 0x2629B0u;
 label_2629b0:
     // 0x2629b0: 0x8e030680  lw          $v1, 0x680($s0)
     ctx->pc = 0x2629b0u;
@@ -85,7 +84,6 @@ label_2629b0:
     // 0x2629b4: 0x3c014040  lui         $at, 0x4040
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16448 << 16));
     // 0x2629b8: 0x44816000  mtc1        $at, $f12
-    ctx->pc = 0x2629b8u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[12], &bits, sizeof(bits)); }
 label_2629bc:
     // 0x2629bc: 0xa4620046  sh          $v0, 0x46($v1)
@@ -105,7 +103,6 @@ label_2629bc:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollRadius_0x1fd7b0, 0x1fd7b0u, 0x2629ccu)) {
         return;
     }
-    ctx->pc = 0x2629CCu;
 label_2629cc:
     // 0x2629cc: 0x8e020680  lw          $v0, 0x680($s0)
     ctx->pc = 0x2629ccu;
@@ -126,7 +123,6 @@ label_2629cc:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x2629e0u)) {
         return;
     }
-    ctx->pc = 0x2629E0u;
 label_2629e0:
     // 0x2629e0: 0x3c050074  lui         $a1, 0x74
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)116 << 16));
@@ -144,7 +140,6 @@ label_2629e0:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageGive_SetDmgGiveHitVec_0x1fd308, 0x1fd308u, 0x2629f0u)) {
         return;
     }
-    ctx->pc = 0x2629F0u;
 label_2629f0:
     // 0x2629f0: 0x8e030680  lw          $v1, 0x680($s0)
     ctx->pc = 0x2629f0u;

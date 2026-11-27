@@ -13,7 +13,7 @@
 
 // Function: scePadSetActAlign
 // Address: 0x3981f0 - 0x3982c8
-void scePadSetActAlign_0x3981f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void scePadSetActAlign_0x3981f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("scePadSetActAlign_0x3981f0");
 #endif
@@ -66,7 +66,6 @@ void scePadSetActAlign_0x3981f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     ctx->pc = 0x398228u;
     do { uint32_t _value = static_cast<uint32_t>(GPR_U32(ctx, 17)); ps2TraceGuestWrite(rdram, 0x77C308u, 4u, _value, 0u, "WRITE32", ctx); FAST_WRITE32(0x77C308u, _value); } while (0);
     // 0x39822c: 0x0  nop
-    ctx->pc = 0x39822cu;
     // NOP
 label_398230:
     // 0x398230: 0xc51021  addu        $v0, $a2, $a1
@@ -125,7 +124,6 @@ label_398230:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B3128u, 0x398274u, 0x39827Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x39827Cu;
 label_39827c:
     // 0x39827c: 0x4430003  bgezl       $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x39827Cu;
@@ -157,7 +155,6 @@ label_39827c:
             goto label_3982b0;
         }
     }
-    ctx->pc = 0x39828Cu;
 label_39828c:
     // 0x39828c: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -191,13 +188,11 @@ label_39828c:
     if (!runtime->callDirectStatic(rdram, ctx, &scePadSetReqState_0x397e18, 0x397e18u, 0x3982a8u)) {
         return;
     }
-    ctx->pc = 0x3982A8u;
 label_3982a8:
     // 0x3982a8: 0x8e030014  lw          $v1, 0x14($s0)
     ctx->pc = 0x3982a8u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 20)));
     // 0x3982ac: 0x60102d  daddu       $v0, $v1, $zero
-    ctx->pc = 0x3982acu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
 label_3982b0:
     // 0x3982b0: 0xdfbf0040  ld          $ra, 0x40($sp)

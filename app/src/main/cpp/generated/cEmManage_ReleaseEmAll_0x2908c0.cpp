@@ -13,7 +13,7 @@
 
 // Function: cEmManage_ReleaseEmAll
 // Address: 0x2908c0 - 0x290958
-void cEmManage_ReleaseEmAll_0x2908c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_ReleaseEmAll_0x2908c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_ReleaseEmAll_0x2908c0");
 #endif
@@ -80,7 +80,6 @@ label_2908e8:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_ReleaseEm_0x290770, 0x290770u, 0x2908f4u)) {
         return;
     }
-    ctx->pc = 0x2908F4u;
 label_2908f4:
     // 0x2908f4: 0x0  nop
     // NOP
@@ -102,7 +101,6 @@ label_2908f4:
             goto label_2908e8;
         }
     }
-    ctx->pc = 0x290900u;
 label_290900:
     // 0x290900: 0x8e424c58  lw          $v0, 0x4C58($s2)
     ctx->pc = 0x290900u;
@@ -156,7 +154,6 @@ label_290918:
     if (!runtime->callDirectStatic(rdram, ctx, &ReleaseObj_0x312708, 0x312708u, 0x29092cu)) {
         return;
     }
-    ctx->pc = 0x29092Cu;
 label_29092c:
     // 0x29092c: 0x8e434c58  lw          $v1, 0x4C58($s2)
     ctx->pc = 0x29092cu;
@@ -185,7 +182,6 @@ label_290930:
             goto label_290918;
         }
     }
-    ctx->pc = 0x290940u;
 label_290940:
     // 0x290940: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x290940u;

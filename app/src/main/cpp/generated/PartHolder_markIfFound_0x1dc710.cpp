@@ -13,7 +13,7 @@
 
 // Function: PartHolder_markIfFound
 // Address: 0x1dc710 - 0x1dc798
-void PartHolder_markIfFound_0x1dc710(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void PartHolder_markIfFound_0x1dc710(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("PartHolder_markIfFound_0x1dc710");
 #endif
@@ -54,7 +54,6 @@ void PartHolder_markIfFound_0x1dc710(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DBF18_0x1dbf18, 0x1dbf18u, 0x1dc734u)) {
         return;
     }
-    ctx->pc = 0x1DC734u;
 label_1dc734:
     // 0x1dc734: 0x97a20000  lhu         $v0, 0x0($sp)
     ctx->pc = 0x1dc734u;
@@ -121,14 +120,12 @@ label_1dc734:
             goto label_1dc788;
         }
     }
-    ctx->pc = 0x1DC75Cu;
 label_1dc75c:
     // 0x1dc75c: 0x26043004  addiu       $a0, $s0, 0x3004
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 12292));
     // 0x1dc760: 0x24050004  addiu       $a1, $zero, 0x4
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x1dc764: 0x0  nop
-    ctx->pc = 0x1dc764u;
     // NOP
 label_1dc768:
     // 0x1dc768: 0x8c830000  lw          $v1, 0x0($a0)
@@ -162,7 +159,6 @@ label_1dc768:
         }
     }
     // 0x1dc784: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1dc784u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_1dc788:
     // 0x1dc788: 0x7bb00020  lq          $s0, 0x20($sp)

@@ -13,7 +13,7 @@
 
 // Function: Obj33F8_LoadU16Trio_34_FA10
 // Address: 0x33fa10 - 0x33fa30
-void Obj33F8_LoadU16Trio_34_FA10_0x33fa10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj33F8_LoadU16Trio_34_FA10_0x33fa10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj33F8_LoadU16Trio_34_FA10_0x33fa10");
 #endif

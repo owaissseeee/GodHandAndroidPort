@@ -13,7 +13,7 @@
 
 // Function: SetGsCrt
 // Address: 0x3af8a0 - 0x3af8b0
-void SetGsCrt_0x3af8a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetGsCrt_0x3af8a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetGsCrt_0x3af8a0");
 #endif

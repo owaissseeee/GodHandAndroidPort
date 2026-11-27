@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_setState154
 // Address: 0x1fad58 - 0x1fad88
-void cCoreSave_setState154_0x1fad58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setState154_0x1fad58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setState154_0x1fad58");
 #endif

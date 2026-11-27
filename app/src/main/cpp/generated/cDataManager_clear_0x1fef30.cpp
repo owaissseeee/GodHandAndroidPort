@@ -13,7 +13,7 @@
 
 // Function: cDataManager_clear
 // Address: 0x1fef30 - 0x1fefd0
-void cDataManager_clear_0x1fef30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDataManager_clear_0x1fef30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDataManager_clear_0x1fef30");
 #endif
@@ -71,7 +71,6 @@ void cDataManager_clear_0x1fef30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     // 0x1fef60: 0x2413ffff  addiu       $s3, $zero, -0x1
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x1fef64: 0x2028818  mult        $s1, $s0, $v0
-    ctx->pc = 0x1fef64u;
     { int64_t result = (int64_t)GPR_S32(ctx, 16) * (int64_t)GPR_S32(ctx, 2); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 17, (int32_t)result); }
 label_1fef68:
     // 0x1fef68: 0x8e440008  lw          $a0, 0x8($s2)
@@ -90,7 +89,6 @@ label_1fef68:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FF448_0x1ff448, 0x1ff448u, 0x1fef78u)) {
         return;
     }
-    ctx->pc = 0x1FEF78u;
 label_1fef78:
     // 0x1fef78: 0x1613fffb  bne         $s0, $s3, . + 4 + (-0x5 << 2)
     ctx->pc = 0x1FEF78u;
@@ -110,7 +108,6 @@ label_1fef78:
             goto label_1fef68;
         }
     }
-    ctx->pc = 0x1FEF80u;
 label_1fef80:
     // 0x1fef80: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x1fef80u;

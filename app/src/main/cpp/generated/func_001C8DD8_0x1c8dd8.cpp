@@ -13,7 +13,7 @@
 
 // Function: func_001C8DD8
 // Address: 0x1c8dd8 - 0x1c8e50
-void func_001C8DD8_0x1c8dd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001C8DD8_0x1c8dd8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001C8DD8_0x1c8dd8");
 #endif
@@ -54,11 +54,9 @@ void func_001C8DD8_0x1c8dd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
 
-    ctx->pc = 0x1c8dd8u;
 
 label_1c8dd8:
     // 0x1c8dd8: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x1c8dd8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
 label_1c8ddc:
     // 0x1c8ddc: 0x7fb00010  sq          $s0, 0x10($sp)
@@ -70,7 +68,6 @@ label_1c8de0:
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
 label_1c8de4:
     // 0x1c8de4: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x1c8de4u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_1c8de8:
     // 0x1c8de8: 0x8e050600  lw          $a1, 0x600($s0)
@@ -103,7 +100,6 @@ label_1c8df0:
             goto label_1c8e14;
         }
     }
-    ctx->pc = 0x1C8DF4u;
 label_1c8df4:
     // 0x1c8df4: 0x3c040057  lui         $a0, 0x57
     ctx->pc = 0x1c8df4u;
@@ -159,7 +155,6 @@ label_1c8e04:
             goto label_1c8e10;
         }
     }
-    ctx->pc = 0x1C8E08u;
 label_1c8e08:
     // 0x1c8e08: 0xae000600  sw          $zero, 0x600($s0)
     ctx->pc = 0x1c8e08u;
@@ -251,7 +246,6 @@ label_1c8e28:
             goto label_1c8e40;
         }
     }
-    ctx->pc = 0x1C8E2Cu;
 label_1c8e2c:
     // 0x1c8e2c: 0x844400a0  lh          $a0, 0xA0($v0)
     ctx->pc = 0x1c8e2cu;
@@ -288,7 +282,6 @@ label_1c8e38:
             return;
         }
     }
-    ctx->pc = 0x1C8E3Cu;
 label_1c8e3c:
     // 0x1c8e3c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1c8e3cu;
@@ -328,7 +321,6 @@ label_1c8e48:
         return;
         #endif
     }
-    ctx->pc = 0x1C8E4Cu;
 label_1c8e4c:
     // 0x1c8e4c: 0x0  nop
     // NOP

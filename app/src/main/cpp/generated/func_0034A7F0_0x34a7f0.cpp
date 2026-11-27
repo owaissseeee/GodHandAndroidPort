@@ -13,7 +13,7 @@
 
 // Function: func_0034A7F0
 // Address: 0x34a7f0 - 0x34a818
-void func_0034A7F0_0x34a7f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0034A7F0_0x34a7f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0034A7F0_0x34a7f0");
 #endif
@@ -45,7 +45,6 @@ void func_0034A7F0_0x34a7f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &GuardedCall_00329FD0_329F98_0x329f98, 0x329f98u, 0x34a804u)) {
         return;
     }
-    ctx->pc = 0x34A804u;
 label_34a804:
     // 0x34a804: 0x38420003  xori        $v0, $v0, 0x3
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)3);

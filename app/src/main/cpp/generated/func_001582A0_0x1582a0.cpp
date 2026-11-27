@@ -13,7 +13,7 @@
 
 // Function: func_001582A0
 // Address: 0x1582a0 - 0x158328
-void func_001582A0_0x1582a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001582A0_0x1582a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001582A0_0x1582a0");
 #endif
@@ -112,7 +112,6 @@ void func_001582A0_0x1582a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_158304;
         }
     }
-    ctx->pc = 0x1582ECu;
 label_1582ec:
     // 0x1582ec: 0x460c0832  c.eq.s      $f1, $f12
     ctx->fcr31 = (FPU_C_EQ_S(ctx->f[1], ctx->f[12])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -127,7 +126,6 @@ label_1582ec:
             goto label_158304;
         }
     }
-    ctx->pc = 0x1582FCu;
 label_1582fc:
     // 0x1582fc: 0xc055d5a  jal         func_157568
     SET_GPR_U32(ctx, 31, 0x158304u);
@@ -140,7 +138,6 @@ label_1582fc:
     if (!runtime->callDirectStatic(rdram, ctx, &setMotionInfo_0x157568, 0x157568u, 0x158304u)) {
         return;
     }
-    ctx->pc = 0x158304u;
 label_158304:
     // 0x158304: 0xc055f06  jal         func_157C18
     SET_GPR_U32(ctx, 31, 0x15830Cu);
@@ -153,7 +150,6 @@ label_158304:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x158304u, 0x15830Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x15830Cu;
 label_15830c:
     // 0x15830c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x15830cu;

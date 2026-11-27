@@ -13,7 +13,7 @@
 
 // Function: getLog2
 // Address: 0x309d40 - 0x309d88
-void getLog2_0x309d40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getLog2_0x309d40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getLog2_0x309d40");
 #endif
@@ -44,7 +44,6 @@ void getLog2_0x309d40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     // 0x309d48: 0x2463ffff  addiu       $v1, $v1, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294967295));
     // 0x309d4c: 0x0  nop
-    ctx->pc = 0x309d4cu;
     // NOP
 label_309d50:
     // 0x309d50: 0x18600006  blez        $v1, . + 4 + (0x6 << 2)
@@ -84,10 +83,8 @@ label_309d50:
             goto label_309d50;
         }
     }
-    ctx->pc = 0x309D68u;
 label_309d68:
     // 0x309d68: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x309d68u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_309d6c:
     // 0x309d6c: 0x621004  sllv        $v0, $v0, $v1

@@ -13,7 +13,7 @@
 
 // Function: SubInit_init
 // Address: 0x1c6a90 - 0x1c6b68
-void SubInit_init_0x1c6a90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SubInit_init_0x1c6a90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SubInit_init_0x1c6a90");
 #endif
@@ -80,7 +80,6 @@ void SubInit_init_0x1c6a90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
             goto label_1c6ae4;
         }
     }
-    ctx->pc = 0x1C6AC4u;
 label_1c6ac4:
     // 0x1c6ac4: 0x51842  srl         $v1, $a1, 1
     SET_GPR_S32(ctx, 3, (int32_t)SRL32(GPR_U32(ctx, 5), 1));
@@ -136,7 +135,6 @@ label_1c6ae4:
     ctx->pc = 0x1c6b04u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 2), 8), bits); }
     // 0x1c6b08: 0x260200a0  addiu       $v0, $s0, 0xA0
-    ctx->pc = 0x1c6b08u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 160));
 label_1c6b0c:
     // 0x1c6b0c: 0x50470008  beql        $v0, $a3, . + 4 + (0x8 << 2)
@@ -195,7 +193,6 @@ label_1c6b30:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001C7138_0x1c7138, 0x1c7138u, 0x1c6b44u)) {
         return;
     }
-    ctx->pc = 0x1C6B44u;
 label_1c6b44:
     // 0x1c6b44: 0xc071cc4  jal         func_1C7310
     SET_GPR_U32(ctx, 31, 0x1C6B4Cu);
@@ -208,7 +205,6 @@ label_1c6b44:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001C7310_0x1c7310, 0x1c7310u, 0x1c6b4cu)) {
         return;
     }
-    ctx->pc = 0x1C6B4Cu;
 label_1c6b4c:
     // 0x1c6b4c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -223,7 +219,6 @@ label_1c6b4c:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmSub_setReverse_0x1c7ca0, 0x1c7ca0u, 0x1c6b58u)) {
         return;
     }
-    ctx->pc = 0x1C6B58u;
 label_1c6b58:
     // 0x1c6b58: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1c6b58u;

@@ -49,6 +49,8 @@ namespace
     void(__cdecl *g_setAspect)(uint32_t) = nullptr; // pcsx2gs_set_aspect, when the DLL has it
     void(*g_updateWindow)(void *, uint32_t, uint32_t) = nullptr;
     void(*g_setFrameskip)(int32_t) = nullptr;
+    void(*g_setUltraPotato)(int32_t) = nullptr;
+    std::atomic<int32_t> g_ultraPotatoMode{0};
     const std::chrono::steady_clock::time_point g_processStart = std::chrono::steady_clock::now();
     HWND g_parent = nullptr;
     HWND g_child = nullptr;
@@ -58,6 +60,11 @@ namespace
     std::atomic<void*> g_currentWindow{nullptr};
     std::atomic<bool> g_windowChanged{false};
     std::atomic<bool> g_surfaceValid{true};
+#if defined(__ANDROID__)
+    std::mutex g_windowMutex;
+    ANativeWindow* g_heldHostWindow = nullptr;
+    ANativeWindow* g_activeApiWindow = nullptr;
+#endif
 
     std::atomic<int> g_frameskipMode{0}; // 0=Off (Guarantees uninterrupted 60Hz/30Hz VSync signaling)
     uint32_t g_frameskipCounter = 0;
@@ -77,6 +84,8 @@ namespace
     std::chrono::steady_clock::time_point g_lastSpikeLogTime{};
 
     std::atomic<uint64_t> g_perfGameFrames{0};
+    std::atomic<uint64_t> g_perfRawGifNs{0u};
+    std::atomic<float> g_perfLastRawGifMs{0.0f};
 
     std::atomic<float> g_statScreenFps{60.0f};
     std::atomic<float> g_statAvgFrametimeMs{16.67f};
@@ -292,6 +301,7 @@ bool GSPcsx2Backend::Requested()
         g_api = pcsx2gs_get_api(PCSX2GS_API_VERSION);
         g_setAspect = pcsx2gs_set_aspect;
         g_setFrameskip = pcsx2gs_set_frameskip;
+        g_setUltraPotato = pcsx2gs_set_ultra_potato;
         g_updateWindow = pcsx2gs_update_window;
         if (!g_api)
         {
@@ -310,6 +320,9 @@ bool GSPcsx2Backend::Requested()
                 const auto setFrameskip = reinterpret_cast<void(*)(int32_t)>(dlsym(module, "pcsx2gs_set_frameskip"));
                 if (setFrameskip)
                     g_setFrameskip = setFrameskip;
+                const auto setUltraPotato = reinterpret_cast<void(*)(int32_t)>(dlsym(module, "pcsx2gs_set_ultra_potato"));
+                if (setUltraPotato)
+                    g_setUltraPotato = setUltraPotato;
             }
         }
         if (g_api)
@@ -318,6 +331,8 @@ bool GSPcsx2Backend::Requested()
                 g_updateWindow = g_api->update_window;
             if (g_setFrameskip)
                 g_setFrameskip(g_frameskipMode.load(std::memory_order_relaxed));
+            if (g_setUltraPotato)
+                g_setUltraPotato(g_ultraPotatoMode.load(std::memory_order_relaxed));
             __android_log_print(ANDROID_LOG_INFO, "GodHandNative", "[gs] renderer: PCSX2 GS bound successfully on Android!");
             return true;
         }
@@ -363,16 +378,26 @@ void GSPcsx2Backend::AttachHostWindow(void *parentHwnd)
     if (!Requested() || !parentHwnd)
         return;
 #if defined(__ANDROID__)
-    g_parent = static_cast<HWND>(parentHwnd);
-    g_child = static_cast<HWND>(parentHwnd);
     ANativeWindow* win = static_cast<ANativeWindow*>(parentHwnd);
     int32_t width = ANativeWindow_getWidth(win);
     int32_t height = ANativeWindow_getHeight(win);
     if (width <= 0) width = 2372;
     if (height <= 0) height = 1080;
+    {
+        std::lock_guard<std::mutex> lock(g_windowMutex);
+        if (win != g_heldHostWindow) {
+            ANativeWindow_acquire(win);
+            if (g_heldHostWindow) {
+                ANativeWindow_release(g_heldHostWindow);
+            }
+            g_heldHostWindow = win;
+        }
+        g_parent = static_cast<HWND>(parentHwnd);
+        g_child = static_cast<HWND>(parentHwnd);
+        g_currentWindow.store(parentHwnd, std::memory_order_release);
+    }
     g_clientWidth.store(static_cast<uint32_t>(width));
     g_clientHeight.store(static_cast<uint32_t>(height));
-    g_currentWindow.store(parentHwnd, std::memory_order_release);
     g_windowChanged.store(true, std::memory_order_release);
     g_surfaceValid.store(true, std::memory_order_release);
     __android_log_print(ANDROID_LOG_INFO, "GodHandNative", "GSPcsx2Backend::AttachHostWindow: win=%p (%dx%d), windowChanged flagged", parentHwnd, width, height);
@@ -474,6 +499,19 @@ GSPcsx2Backend::~GSPcsx2Backend()
 {
     if (m_open && g_api)
         g_api->close();
+#if defined(__ANDROID__)
+    {
+        std::lock_guard<std::mutex> lock(g_windowMutex);
+        if (g_activeApiWindow) {
+            ANativeWindow_release(g_activeApiWindow);
+            g_activeApiWindow = nullptr;
+        }
+        if (g_heldHostWindow) {
+            ANativeWindow_release(g_heldHostWindow);
+            g_heldHostWindow = nullptr;
+        }
+    }
+#endif
 }
 
 // Opened on the GS thread at its first command, not from Initialize: the main thread (which owns the window and
@@ -484,6 +522,16 @@ bool GSPcsx2Backend::EnsureOpen()
         return true;
     if (m_failed || !g_api || !g_child)
         return false;
+#if defined(__ANDROID__)
+    ANativeWindow* openWin = nullptr;
+    {
+        std::lock_guard<std::mutex> lock(g_windowMutex);
+        if (!g_surfaceValid.load(std::memory_order_acquire) || !g_heldHostWindow)
+            return false;
+        openWin = g_heldHostWindow;
+        ANativeWindow_acquire(openWin);
+    }
+#endif
     const std::filesystem::path dir = exeDirectory();
     const std::string resources = utf8(dir / "resources");
     const std::filesystem::path cacheDir = dir / "shadercache_pcsx2";
@@ -493,7 +541,11 @@ bool GSPcsx2Backend::EnsureOpen()
     m_width = g_clientWidth.load();
     m_height = g_clientHeight.load();
     Pcsx2GsOpenParams params{};
+#if defined(__ANDROID__)
+    params.hwnd = static_cast<void*>(openWin);
+#else
     params.hwnd = g_child;
+#endif
     params.width = m_width;
     params.height = m_height;
     const char *scaleEnv = std::getenv("PS2X_GS_SCALE");
@@ -573,6 +625,21 @@ bool GSPcsx2Backend::EnsureOpen()
     m_open = g_api->open(&params) != 0;
     m_failed = !m_open;
 #if defined(__ANDROID__)
+    {
+        std::lock_guard<std::mutex> lock(g_windowMutex);
+        if (m_open) {
+            if (g_activeApiWindow && g_activeApiWindow != openWin) {
+                ANativeWindow_release(g_activeApiWindow);
+            }
+            if (g_activeApiWindow == openWin) {
+                ANativeWindow_release(openWin);
+            } else {
+                g_activeApiWindow = openWin;
+            }
+        } else {
+            ANativeWindow_release(openWin);
+        }
+    }
     __android_log_print(ANDROID_LOG_INFO, "GodHandNative", "EnsureOpen: open result m_open=%d", (int)m_open);
 #endif
     if (m_open && !m_pendingVram.empty())
@@ -741,7 +808,15 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
 
     if (g_windowChanged.exchange(false, std::memory_order_acq_rel))
     {
-        void* newHwnd = g_currentWindow.load(std::memory_order_acquire);
+        ANativeWindow* newHwnd = nullptr;
+        {
+            std::lock_guard<std::mutex> lock(g_windowMutex);
+            if (g_surfaceValid.load(std::memory_order_acquire) && g_heldHostWindow)
+            {
+                newHwnd = g_heldHostWindow;
+                ANativeWindow_acquire(newHwnd);
+            }
+        }
         const uint32_t curWidth = g_clientWidth.load(std::memory_order_relaxed);
         const uint32_t curHeight = g_clientHeight.load(std::memory_order_relaxed);
         if (newHwnd)
@@ -749,14 +824,28 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
             __android_log_print(ANDROID_LOG_INFO, "GodHandNative", "GSPcsx2Backend::VSync: Updating PCSX2 GS window to %p (%ux%u)...", newHwnd, curWidth, curHeight);
             if (g_updateWindow)
             {
-                g_updateWindow(newHwnd, curWidth, curHeight);
+                g_updateWindow(static_cast<void*>(newHwnd), curWidth, curHeight);
             }
             else if (g_api && g_api->update_window)
             {
-                g_api->update_window(newHwnd, curWidth, curHeight);
+                g_api->update_window(static_cast<void*>(newHwnd), curWidth, curHeight);
+            }
+            std::lock_guard<std::mutex> lock(g_windowMutex);
+            if (g_activeApiWindow && g_activeApiWindow != newHwnd)
+            {
+                ANativeWindow_release(g_activeApiWindow);
+            }
+            if (g_activeApiWindow == newHwnd)
+            {
+                ANativeWindow_release(newHwnd);
+            }
+            else
+            {
+                g_activeApiWindow = newHwnd;
             }
         }
     }
+#endif // __ANDROID__
     const float pendingScale = g_pendingScale.exchange(0.0f, std::memory_order_acq_rel);
     if (pendingScale > 0.0f && g_api && g_api->set_scale)
     {
@@ -901,6 +990,8 @@ void GSPcsx2Backend::VSync(const GSVSyncRegs &regs)
     // Accurate, zero-overhead frametime & FPS recording at physical present boundary
     const auto presentEnd = std::chrono::steady_clock::now();
     const float presentDurationMs = std::chrono::duration<float, std::milli>(presentEnd - presentStart).count();
+    const float rawGifMs = static_cast<float>(g_perfRawGifNs.exchange(0u, std::memory_order_relaxed)) * 1e-6f;
+    g_perfLastRawGifMs.store(rawGifMs, std::memory_order_relaxed);
     if (g_perfLastPresent.time_since_epoch().count() != 0) {
         const double deltaUs = std::chrono::duration<double, std::micro>(presentEnd - g_perfLastPresent).count();
         godhand_perf_record_work_duration(static_cast<int64_t>(deltaUs * 1000.0));
@@ -1007,41 +1098,14 @@ void ps2x::gs::setAspect(Aspect aspect)
         g_setAspect(aspect == Aspect::Stretch ? 2u : aspect == Aspect::R16_9 ? 1u : 0u);
 }
 
-#else // no pcsx2gs_api.h: the built-in GS only
-
-void ps2x::gs::setAspect(Aspect) {}
-
-bool GSPcsx2Backend::Requested() { return false; }
-void GSPcsx2Backend::AttachHostWindow(void *) {}
-void GSPcsx2Backend::HostTick() {}
-bool GSPcsx2Backend::Active() { return false; }
-void GSPcsx2Backend::SetOsd(const char *, uint32_t, float, const char *) {}
-void GSPcsx2Backend::SetMenu(void *, void *) {}
-void GSPcsx2Backend::SetMenuInput(const void *) {}
-void GSPcsx2Backend::SetHostUiVisible(bool) {}
-bool GSPcsx2Backend::HostUiVisible() { return false; }
-uint64_t GSPcsx2Backend::Presents() { return 0u; }
-GSPcsx2Backend::GSPcsx2Backend() = default;
-GSPcsx2Backend::~GSPcsx2Backend() = default;
-bool GSPcsx2Backend::EnsureOpen() { return false; }
-void GSPcsx2Backend::Initialize(uint8_t *, uint32_t) {}
-void GSPcsx2Backend::Reset() {}
-void GSPcsx2Backend::GsReset() {}
-void GSPcsx2Backend::BeginTransfer(const GSTransferCommand &) {}
-uint32_t GSPcsx2Backend::ConsumeLocalToHostBytes(uint8_t *, uint32_t) { return 0u; }
-void GSPcsx2Backend::SnapshotVram(std::vector<uint8_t> &out) const { out.clear(); }
-bool GSPcsx2Backend::ReadTransfer(const GSTransferCommand &, std::vector<uint8_t> &) { return false; }
-GSTransferSnapshot GSPcsx2Backend::GetTransferSnapshot() const { return {}; }
-void GSPcsx2Backend::RawGif(const uint8_t *, uint32_t) {}
-void GSPcsx2Backend::VSync(const GSVSyncRegs &) {}
-void GSPcsx2Backend::WriteFrameTime(std::chrono::steady_clock::time_point) {}
-
-#endif
-
 extern "C" {
 
 void godhand_perf_record_game_frame() {
     g_perfGameFrames.fetch_add(1u, std::memory_order_relaxed);
+}
+
+void godhand_perf_add_rawgif_ns(uint64_t ns) {
+    g_perfRawGifNs.fetch_add(ns, std::memory_order_relaxed);
 }
 
 bool godhand_perf_get_stats(float* outStats, int statsCount, float* outHistory, int historyCount) {
@@ -1075,12 +1139,28 @@ void godhand_set_frameskip_mode(int mode) {
     }
 }
 
-extern "C" __attribute__((visibility("default"))) float godhand_get_avg_frametime_ms() {
+#if defined(__GNUC__) || defined(__clang__)
+#define PS2_GS_API_EXPORT __attribute__((visibility("default")))
+#else
+#define PS2_GS_API_EXPORT
+#endif
+
+extern "C" PS2_GS_API_EXPORT float godhand_get_avg_frametime_ms() {
     return g_statAvgFrametimeMs.load(std::memory_order_relaxed);
 }
 
-extern "C" __attribute__((visibility("default"))) int godhand_get_frameskip_mode() {
+extern "C" PS2_GS_API_EXPORT int godhand_get_frameskip_mode() {
     return g_frameskipMode.load(std::memory_order_relaxed);
+}
+
+#undef PS2_GS_API_EXPORT
+
+extern "C" void godhand_set_ultra_potato_mode(bool enabled) {
+    const int32_t val = enabled ? 1 : 0;
+    g_ultraPotatoMode.store(val, std::memory_order_release);
+    if (g_setUltraPotato) {
+        g_setUltraPotato(val);
+    }
 }
 
 void godhand_set_resolution_scale(float scale) {
@@ -1104,16 +1184,29 @@ extern "C" void godhand_load_gs_vram(const uint8_t* src, uint32_t size) {
     }
 }
 
+#if defined(__ANDROID__)
 extern "C" void pcsx2gs_set_texture_folder(const char* dir);
+#endif
 
 extern "C" void godhand_set_texture_replacement_dir(const char* dir) {
     if (dir && *dir) {
+#if defined(_WIN32)
+        _putenv_s("PS2X_PCSX2_TEXTURE_DIR", dir);
+        _putenv_s("PS2X_PCSX2_TEXTURES", "1");
+#else
         setenv("PS2X_PCSX2_TEXTURE_DIR", dir, 1);
         setenv("PS2X_PCSX2_TEXTURES", "1", 1);
+#endif
     } else {
+#if defined(_WIN32)
+        _putenv_s("PS2X_PCSX2_TEXTURES", "0");
+#else
         setenv("PS2X_PCSX2_TEXTURES", "0", 1);
+#endif
     }
+#if defined(__ANDROID__)
     pcsx2gs_set_texture_folder(dir);
+#endif
 }
 
 void godhand_perf_set_logging_enabled(bool enabled) {
@@ -1153,11 +1246,14 @@ void godhand_perf_record_spike(
 
     ps2_audio_get_stats(&rec.audioBufferFillPct, &rec.audioUnderruns);
 
+    const float rawGifMs = g_perfLastRawGifMs.load(std::memory_order_relaxed);
+
     // Classify primary bottleneck
+    const float eeComputeThresh = (g_statGameFps.load(std::memory_order_relaxed) < 45.0f) ? 26.0f : 14.0f;
     if (totalFrametimeMs >= 100.0f) {
         std::snprintf(rec.bottleneckReason, sizeof(rec.bottleneckReason),
                       "ENGINE FREEZE / STALL (PC: 0x%08X)", rec.topGuestPc);
-    } else if (rec.eeTimeMs >= 14.0f) {
+    } else if (rec.eeTimeMs >= eeComputeThresh) {
         std::snprintf(rec.bottleneckReason, sizeof(rec.bottleneckReason),
                       "EE CPU Compute Bound (PC: 0x%08X)", rec.topGuestPc);
     } else if (rec.vu1QueueDepth >= 2u) {
@@ -1166,12 +1262,15 @@ void godhand_perf_record_spike(
     } else if (rec.gsPresentTimeMs >= 8.0f) {
         std::snprintf(rec.bottleneckReason, sizeof(rec.bottleneckReason),
                       "Vulkan Swapchain / GPU Presentation Wait");
+    } else if (rawGifMs >= 10.0f) {
+        std::snprintf(rec.bottleneckReason, sizeof(rec.bottleneckReason),
+                      "GS RawGif / Shader Compile (%.1f ms)", rawGifMs);
     } else if (rec.audioUnderruns > 0u && rec.audioBufferFillPct < 20u) {
         std::snprintf(rec.bottleneckReason, sizeof(rec.bottleneckReason),
                       "Audio Buffer Starvation (Fill: %u%%)", rec.audioBufferFillPct);
     } else {
         std::snprintf(rec.bottleneckReason, sizeof(rec.bottleneckReason),
-                      "GPU Fragment / Rasterization Load");
+                      "GS / Swapchain Pacing Stall");
     }
 
 #if defined(__ANDROID__)
@@ -1273,5 +1372,35 @@ std::string GSPcsx2Backend::TriggerDump(const std::string& directory)
     s_oneTapDump.cv.wait_for(lk, std::chrono::milliseconds(1500), [] { return s_oneTapDump.done; });
     return s_oneTapDump.savedGsPath.empty() ? (s_oneTapDump.targetDir + "/godhand_dump_captured.gs") : s_oneTapDump.savedGsPath;
 }
+
+#else // no pcsx2gs_api.h: the built-in GS only
+
+void ps2x::gs::setAspect(Aspect) {}
+
+bool GSPcsx2Backend::Requested() { return false; }
+void GSPcsx2Backend::AttachHostWindow(void *) {}
+void GSPcsx2Backend::HostTick() {}
+bool GSPcsx2Backend::Active() { return false; }
+void GSPcsx2Backend::SetOsd(const char *, uint32_t, float, const char *) {}
+void GSPcsx2Backend::SetMenu(void *, void *) {}
+void GSPcsx2Backend::SetMenuInput(const void *) {}
+void GSPcsx2Backend::SetHostUiVisible(bool) {}
+bool GSPcsx2Backend::HostUiVisible() { return false; }
+uint64_t GSPcsx2Backend::Presents() { return 0u; }
+GSPcsx2Backend::GSPcsx2Backend() = default;
+GSPcsx2Backend::~GSPcsx2Backend() = default;
+bool GSPcsx2Backend::EnsureOpen() { return false; }
+void GSPcsx2Backend::Initialize(uint8_t *, uint32_t) {}
+void GSPcsx2Backend::Reset() {}
+void GSPcsx2Backend::GsReset() {}
+void GSPcsx2Backend::BeginTransfer(const GSTransferCommand &) {}
+uint32_t GSPcsx2Backend::ConsumeLocalToHostBytes(uint8_t *, uint32_t) { return 0u; }
+void GSPcsx2Backend::SnapshotVram(std::vector<uint8_t> &out) const { out.clear(); }
+bool GSPcsx2Backend::ReadTransfer(const GSTransferCommand &, std::vector<uint8_t> &) { return false; }
+GSTransferSnapshot GSPcsx2Backend::GetTransferSnapshot() const { return {}; }
+void GSPcsx2Backend::RawGif(const uint8_t *, uint32_t) {}
+void GSPcsx2Backend::VSync(const GSVSyncRegs &) {}
+void GSPcsx2Backend::WriteFrameTime(std::chrono::steady_clock::time_point) {}
+std::string GSPcsx2Backend::TriggerDump(const std::string &) { return {}; }
 
 #endif // PS2X_HAS_PCSX2_GS

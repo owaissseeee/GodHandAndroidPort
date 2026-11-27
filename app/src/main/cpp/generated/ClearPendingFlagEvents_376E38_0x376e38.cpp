@@ -13,7 +13,7 @@
 
 // Function: ClearPendingFlagEvents_376E38
 // Address: 0x376e38 - 0x376ea0
-void ClearPendingFlagEvents_376E38_0x376e38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearPendingFlagEvents_376E38_0x376e38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearPendingFlagEvents_376E38_0x376e38");
 #endif
@@ -75,7 +75,6 @@ void ClearPendingFlagEvents_376E38_0x376e38(uint8_t* rdram, R5900Context* ctx, P
     if (!runtime->callDirectStatic(rdram, ctx, &func_0037D9B0_0x37d9b0, 0x37d9b0u, 0x376e6cu)) {
         return;
     }
-    ctx->pc = 0x376E6Cu;
 label_376e6c:
     // 0x376e6c: 0x96030022  lhu         $v1, 0x22($s0)
     ctx->pc = 0x376e6cu;
@@ -114,7 +113,6 @@ label_376e70:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0037D9B0_0x37d9b0, 0x37d9b0u, 0x376e8cu)) {
         return;
     }
-    ctx->pc = 0x376E8Cu;
 label_376e8c:
     // 0x376e8c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x376e8cu;

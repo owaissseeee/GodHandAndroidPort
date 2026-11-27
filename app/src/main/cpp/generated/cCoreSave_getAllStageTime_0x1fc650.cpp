@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getAllStageTime
 // Address: 0x1fc650 - 0x1fc6c8
-void cCoreSave_getAllStageTime_0x1fc650(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getAllStageTime_0x1fc650(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getAllStageTime_0x1fc650");
 #endif
@@ -102,7 +102,6 @@ label_1fc67c:
             goto label_1fc6ac;
         }
     }
-    ctx->pc = 0x1FC6ACu;
 label_1fc6ac:
     // 0x1fc6ac: 0x55400001  bnel        $t2, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x1FC6ACu;
@@ -119,7 +118,6 @@ label_1fc6ac:
             goto label_1fc6b4;
         }
     }
-    ctx->pc = 0x1FC6B4u;
 label_1fc6b4:
     // 0x1fc6b4: 0x54e00001  bnel        $a3, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x1FC6B4u;
@@ -136,7 +134,6 @@ label_1fc6b4:
             goto label_1fc6bc;
         }
     }
-    ctx->pc = 0x1FC6BCu;
 label_1fc6bc:
     // 0x1fc6bc: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC6BCu;

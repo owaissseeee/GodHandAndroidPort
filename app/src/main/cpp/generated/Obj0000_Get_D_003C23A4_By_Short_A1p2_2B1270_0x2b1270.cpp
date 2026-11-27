@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Get_D_003C23A4_By_Short_A1p2_2B1270
 // Address: 0x2b1270 - 0x2b1290
-void Obj0000_Get_D_003C23A4_By_Short_A1p2_2B1270_0x2b1270(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Get_D_003C23A4_By_Short_A1p2_2B1270_0x2b1270(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Get_D_003C23A4_By_Short_A1p2_2B1270_0x2b1270");
 #endif

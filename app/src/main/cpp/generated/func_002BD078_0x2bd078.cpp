@@ -13,7 +13,7 @@
 
 // Function: func_002BD078
 // Address: 0x2bd078 - 0x2bd200
-void func_002BD078_0x2bd078(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002BD078_0x2bd078(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002BD078_0x2bd078");
 #endif
@@ -95,7 +95,6 @@ void func_002BD078_0x2bd078(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &ForwardVec3At30_147C60_0x147c60, 0x147c60u, 0x2bd0d0u)) {
         return;
     }
-    ctx->pc = 0x2BD0D0u;
 label_2bd0d0:
     // 0x2bd0d0: 0x27b00030  addiu       $s0, $sp, 0x30
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 29), 48));
@@ -125,7 +124,6 @@ label_2bd0d0:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x2bd0f4u)) {
         return;
     }
-    ctx->pc = 0x2BD0F4u;
 label_2bd0f4:
     // 0x2bd0f4: 0xda040000  lqc2        $vf4, 0x0($s0)
     ctx->pc = 0x2bd0f4u;
@@ -164,7 +162,6 @@ label_2bd0f4:
     // 0x2bd128: 0x40b02d  daddu       $s6, $v0, $zero
     SET_GPR_U64(ctx, 22, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2bd12c: 0x24030007  addiu       $v1, $zero, 0x7
-    ctx->pc = 0x2bd12cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 7));
 label_2bd130:
     // 0x2bd130: 0xf8400000  sqc2        $vf0, 0x0($v0)
@@ -201,7 +198,6 @@ label_2bd130:
     // 0x2bd150: 0x982d  daddu       $s3, $zero, $zero
     SET_GPR_U64(ctx, 19, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2bd154: 0x27b20040  addiu       $s2, $sp, 0x40
-    ctx->pc = 0x2bd154u;
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 29), 64));
 label_2bd158:
     // 0x2bd158: 0xda040000  lqc2        $vf4, 0x0($s0)
@@ -225,7 +221,6 @@ label_2bd158:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x2bd170u)) {
         return;
     }
-    ctx->pc = 0x2BD170u;
 label_2bd170:
     // 0x2bd170: 0xda240000  lqc2        $vf4, 0x0($s1)
     ctx->pc = 0x2bd170u;
@@ -307,7 +302,6 @@ label_2bd194:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BC950_0x2bc950, 0x2bc950u, 0x2bd1c0u)) {
         return;
     }
-    ctx->pc = 0x2BD1C0u;
 label_2bd1c0:
     // 0x2bd1c0: 0x7bb00140  lq          $s0, 0x140($sp)
     ctx->pc = 0x2bd1c0u;

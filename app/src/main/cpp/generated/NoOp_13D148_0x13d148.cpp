@@ -13,7 +13,7 @@
 
 // Function: NoOp_13D148
 // Address: 0x13d148 - 0x13d150
-void NoOp_13D148_0x13d148(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void NoOp_13D148_0x13d148(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("NoOp_13D148_0x13d148");
 #endif

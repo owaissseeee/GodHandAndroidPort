@@ -13,7 +13,7 @@
 
 // Function: SetPackedFields10And18_14FF60
 // Address: 0x14ff60 - 0x14ff80
-void SetPackedFields10And18_14FF60_0x14ff60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetPackedFields10And18_14FF60_0x14ff60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetPackedFields10And18_14FF60_0x14ff60");
 #endif

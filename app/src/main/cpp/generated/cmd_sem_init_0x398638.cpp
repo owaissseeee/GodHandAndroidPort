@@ -13,7 +13,7 @@
 
 // Function: cmd_sem_init
 // Address: 0x398638 - 0x398720
-void cmd_sem_init_0x398638(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cmd_sem_init_0x398638(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cmd_sem_init_0x398638");
 #endif
@@ -115,16 +115,13 @@ void cmd_sem_init_0x398638(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
             goto label_39868c;
         }
     }
-    ctx->pc = 0x398680u;
 label_398680:
     // 0x398680: 0x3c100040  lui         $s0, 0x40
-    ctx->pc = 0x398680u;
     SET_GPR_S32(ctx, 16, (int32_t)((uint32_t)64 << 16));
 label_398684:
     // 0x398684: 0x3c120040  lui         $s2, 0x40
     SET_GPR_S32(ctx, 18, (int32_t)((uint32_t)64 << 16));
     // 0x398688: 0x3c020046  lui         $v0, 0x46
-    ctx->pc = 0x398688u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)70 << 16));
 label_39868c:
     // 0x39868c: 0x24030001  addiu       $v1, $zero, 0x1
@@ -150,7 +147,6 @@ label_39868c:
     if (!runtime->callDirectStatic(rdram, ctx, &CreateSema_0x3afca0, 0x3afca0u, 0x3986a8u)) {
         return;
     }
-    ctx->pc = 0x3986A8u;
 label_3986a8:
     // 0x3986a8: 0x3c030046  lui         $v1, 0x46
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)70 << 16));
@@ -172,7 +168,6 @@ label_3986a8:
     if (!runtime->callDirectStatic(rdram, ctx, &CreateSema_0x3afca0, 0x3afca0u, 0x3986c0u)) {
         return;
     }
-    ctx->pc = 0x3986C0u;
 label_3986c0:
     // 0x3986c0: 0x3c030046  lui         $v1, 0x46
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)70 << 16));
@@ -194,7 +189,6 @@ label_3986c0:
     if (!runtime->callDirectStatic(rdram, ctx, &CreateSema_0x3afca0, 0x3afca0u, 0x3986d8u)) {
         return;
     }
-    ctx->pc = 0x3986D8u;
 label_3986d8:
     // 0x3986d8: 0x3c030046  lui         $v1, 0x46
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)70 << 16));
@@ -219,7 +213,6 @@ label_3986d8:
     if (!runtime->callDirectStatic(rdram, ctx, &CreateSema_0x3afca0, 0x3afca0u, 0x3986f4u)) {
         return;
     }
-    ctx->pc = 0x3986F4u;
 label_3986f4:
     // 0x3986f4: 0x3c030040  lui         $v1, 0x40
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)64 << 16));

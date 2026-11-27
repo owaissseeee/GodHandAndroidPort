@@ -13,7 +13,7 @@
 
 // Function: EspWobble_step
 // Address: 0x2f01b8 - 0x2f02b8
-void EspWobble_step_0x2f01b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EspWobble_step_0x2f01b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EspWobble_step_0x2f01b8");
 #endif
@@ -54,7 +54,6 @@ void EspWobble_step_0x2f01b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_002FBED0_0x2fbed0, 0x2fbed0u, 0x2f01d0u)) {
         return;
     }
-    ctx->pc = 0x2F01D0u;
 label_2f01d0:
     // 0x2f01d0: 0x4480a000  mtc1        $zero, $f20
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[20], &bits, sizeof(bits)); }
@@ -91,7 +90,6 @@ label_2f01d0:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Sin_0x1f7ef0, 0x1f7ef0u, 0x2f01f0u)) {
         return;
     }
-    ctx->pc = 0x2F01F0u;
 label_2f01f0:
     // 0x2f01f0: 0xc60102c0  lwc1        $f1, 0x2C0($s0)
     ctx->pc = 0x2f01f0u;
@@ -122,7 +120,6 @@ label_2f01f0:
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_0x1f7d48, 0x1f7d48u, 0x2f0214u)) {
         return;
     }
-    ctx->pc = 0x2F0214u;
 label_2f0214:
     // 0x2f0214: 0xe60002c0  swc1        $f0, 0x2C0($s0)
     ctx->pc = 0x2f0214u;
@@ -161,7 +158,6 @@ label_2f021c:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Cos_0x1f7fb8, 0x1f7fb8u, 0x2f0234u)) {
         return;
     }
-    ctx->pc = 0x2F0234u;
 label_2f0234:
     // 0x2f0234: 0xc60102c4  lwc1        $f1, 0x2C4($s0)
     ctx->pc = 0x2f0234u;
@@ -192,7 +188,6 @@ label_2f0234:
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_0x1f7d48, 0x1f7d48u, 0x2f0258u)) {
         return;
     }
-    ctx->pc = 0x2F0258u;
 label_2f0258:
     // 0x2f0258: 0xe60002c4  swc1        $f0, 0x2C4($s0)
     ctx->pc = 0x2f0258u;
@@ -231,7 +226,6 @@ label_2f0260:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Cos_0x1f7fb8, 0x1f7fb8u, 0x2f0278u)) {
         return;
     }
-    ctx->pc = 0x2F0278u;
 label_2f0278:
     // 0x2f0278: 0xc60102d8  lwc1        $f1, 0x2D8($s0)
     ctx->pc = 0x2f0278u;
@@ -262,7 +256,6 @@ label_2f0278:
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_0x1f7d48, 0x1f7d48u, 0x2f029cu)) {
         return;
     }
-    ctx->pc = 0x2F029Cu;
 label_2f029c:
     // 0x2f029c: 0xe60002d8  swc1        $f0, 0x2D8($s0)
     ctx->pc = 0x2f029cu;

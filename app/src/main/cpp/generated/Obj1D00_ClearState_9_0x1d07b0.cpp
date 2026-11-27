@@ -13,7 +13,7 @@
 
 // Function: Obj1D00_ClearState_9
 // Address: 0x1d07b0 - 0x1d07c8
-void Obj1D00_ClearState_9_0x1d07b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj1D00_ClearState_9_0x1d07b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj1D00_ClearState_9_0x1d07b0");
 #endif

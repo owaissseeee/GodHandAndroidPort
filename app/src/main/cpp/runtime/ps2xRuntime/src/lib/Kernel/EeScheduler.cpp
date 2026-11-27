@@ -511,7 +511,9 @@ void EeScheduler::run()
 
     while (!m_stopRequested.load(std::memory_order_acquire))
     {
-        if (g_loopStats.enabled)
+        try
+        {
+            if (g_loopStats.enabled)
         {
             ++g_loopStats.iterations;
             g_loopStats.maybePrint(m_eeCycle, m_nextDeadlineCycle.load(std::memory_order_acquire),
@@ -766,6 +768,14 @@ void EeScheduler::run()
             m_currentThreadId = 0;
             m_rescheduleRequested = false;
             m_timeSliceExpired = false;
+        }
+        }
+        catch (const EeDispatcherTransfer &)
+        {
+            ++g_loopStats.transfers;
+            m_guestExecuting.store(false, std::memory_order_release);
+            m_insideInterrupt = false;
+            m_transferPending = false;
         }
     }
 

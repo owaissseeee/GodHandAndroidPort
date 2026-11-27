@@ -13,7 +13,7 @@
 
 // Function: cObjSimple_R0_Init
 // Address: 0x2b6918 - 0x2b6930
-void cObjSimple_R0_Init_0x2b6918(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cObjSimple_R0_Init_0x2b6918(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cObjSimple_R0_Init_0x2b6918");
 #endif

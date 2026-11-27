@@ -13,7 +13,7 @@
 
 // Function: func_001E7440
 // Address: 0x1e7440 - 0x1e7470
-void func_001E7440_0x1e7440(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001E7440_0x1e7440(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001E7440_0x1e7440");
 #endif
@@ -48,7 +48,6 @@ void func_001E7440_0x1e7440(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_trans_0x2aac28, 0x2aac28u, 0x1e7458u)) {
         return;
     }
-    ctx->pc = 0x1E7458u;
 label_1e7458:
     // 0x1e7458: 0xc0aab0a  jal         func_2AAC28
     SET_GPR_U32(ctx, 31, 0x1E7460u);
@@ -61,7 +60,6 @@ label_1e7458:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_trans_0x2aac28, 0x2aac28u, 0x1e7460u)) {
         return;
     }
-    ctx->pc = 0x1E7460u;
 label_1e7460:
     // 0x1e7460: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1e7460u;

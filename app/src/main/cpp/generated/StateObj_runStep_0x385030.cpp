@@ -13,7 +13,7 @@
 
 // Function: StateObj_runStep
 // Address: 0x385030 - 0x385078
-void StateObj_runStep_0x385030(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void StateObj_runStep_0x385030(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("StateObj_runStep_0x385030");
 #endif
@@ -74,7 +74,6 @@ void StateObj_runStep_0x385030(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_385070;
         }
     }
-    ctx->pc = 0x385054u;
 label_385054:
     // 0x385054: 0xc0e141e  jal         func_385078
     ctx->pc = 0x385054u;
@@ -82,7 +81,6 @@ label_385054:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00385078_0x385078, 0x385078u, 0x38505cu)) {
         return;
     }
-    ctx->pc = 0x38505Cu;
 label_38505c:
     // 0x38505c: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x38505Cu;
@@ -99,7 +97,6 @@ label_38505c:
             goto label_385070;
         }
     }
-    ctx->pc = 0x385064u;
 label_385064:
     // 0x385064: 0xc0e144e  jal         func_385138
     ctx->pc = 0x385064u;
@@ -107,7 +104,6 @@ label_385064:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00385138_0x385138, 0x385138u, 0x38506cu)) {
         return;
     }
-    ctx->pc = 0x38506Cu;
 label_38506c:
     // 0x38506c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38506cu;

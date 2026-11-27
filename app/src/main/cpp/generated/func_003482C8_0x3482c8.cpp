@@ -13,7 +13,7 @@
 
 // Function: func_003482C8
 // Address: 0x3482c8 - 0x348338
-void func_003482C8_0x3482c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003482C8_0x3482c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003482C8_0x3482c8");
 #endif
@@ -52,11 +52,9 @@ void func_003482C8_0x3482c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
 
-    ctx->pc = 0x3482c8u;
 
 label_3482c8:
     // 0x3482c8: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x3482c8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
 label_3482cc:
     // 0x3482cc: 0xffb00000  sd          $s0, 0x0($sp)
@@ -93,7 +91,6 @@ label_3482dc:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Get_Ptr_D_003EE088_Scaled_8_348920_0x348920, 0x348920u, 0x3482e0u)) {
         return;
     }
-    ctx->pc = 0x3482E0u;
 label_3482e0:
     // 0x3482e0: 0x200202d  daddu       $a0, $s0, $zero
     ctx->pc = 0x3482e0u;
@@ -121,7 +118,6 @@ label_3482e8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00348938_0x348938, 0x348938u, 0x3482ecu)) {
         return;
     }
-    ctx->pc = 0x3482ECu;
 label_3482ec:
     // 0x3482ec: 0x40202d  daddu       $a0, $v0, $zero
     ctx->pc = 0x3482ecu;
@@ -153,7 +149,6 @@ label_3482f4:
             goto label_348324;
         }
     }
-    ctx->pc = 0x3482F8u;
 label_3482f8:
     // 0x3482f8: 0x8e220004  lw          $v0, 0x4($s1)
     ctx->pc = 0x3482f8u;
@@ -213,7 +208,6 @@ label_348308:
             goto label_348320;
         }
     }
-    ctx->pc = 0x34830Cu;
 label_34830c:
     // 0x34830c: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x34830cu;
@@ -262,7 +256,6 @@ label_34831c:
             return;
         }
     }
-    ctx->pc = 0x348320u;
 label_348320:
     // 0x348320: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x348320u;
@@ -306,7 +299,6 @@ label_348330:
         return;
         #endif
     }
-    ctx->pc = 0x348334u;
 label_348334:
     // 0x348334: 0x0  nop
     // NOP

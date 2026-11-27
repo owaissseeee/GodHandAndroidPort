@@ -13,7 +13,7 @@
 
 // Function: SUD_AnalyTypeCcs
 // Address: 0x360808 - 0x360878
-void SUD_AnalyTypeCcs_0x360808(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SUD_AnalyTypeCcs_0x360808(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SUD_AnalyTypeCcs_0x360808");
 #endif
@@ -58,7 +58,6 @@ void SUD_AnalyTypeCcs_0x360808(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_360828;
         }
     }
-    ctx->pc = 0x36081Cu;
 label_36081c:
     // 0x36081c: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x36081Cu;
@@ -76,7 +75,6 @@ label_36081c:
         }
     }
     // 0x360824: 0x0  nop
-    ctx->pc = 0x360824u;
     // NOP
 label_360828:
     // 0x360828: 0x24840013  addiu       $a0, $a0, 0x13
@@ -94,10 +92,8 @@ label_360828:
     if (!runtime->callDirectStatic(rdram, ctx, &strncmp_0x3a5bd8, 0x3a5bd8u, 0x360838u)) {
         return;
     }
-    ctx->pc = 0x360838u;
 label_360838:
     // 0x360838: 0x2c420001  sltiu       $v0, $v0, 0x1
-    ctx->pc = 0x360838u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1) ? 1 : 0);
 label_36083c:
     // 0x36083c: 0xdfbf0000  ld          $ra, 0x0($sp)

@@ -13,7 +13,7 @@
 
 // Function: sftrn_ConnTrnBufA
 // Address: 0x35c180 - 0x35c1a0
-void sftrn_ConnTrnBufA_0x35c180(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sftrn_ConnTrnBufA_0x35c180(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sftrn_ConnTrnBufA_0x35c180");
 #endif

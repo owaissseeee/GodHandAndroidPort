@@ -13,7 +13,7 @@
 
 // Function: func_0013F558
 // Address: 0x13f558 - 0x13f5d0
-void func_0013F558_0x13f558(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0013F558_0x13f558(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0013F558_0x13f558");
 #endif
@@ -109,7 +109,6 @@ void func_0013F558_0x13f558(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x13f5c0u;
     WRITE8(ADD32(GPR_U32(ctx, 7), 856), (uint8_t)GPR_U32(ctx, 2));
     // 0x13f5c4: 0x0  nop
-    ctx->pc = 0x13f5c4u;
     // NOP
 label_13f5c8:
     // 0x13f5c8: 0x3e00008  jr          $ra

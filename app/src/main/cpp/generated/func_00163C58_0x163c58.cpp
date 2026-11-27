@@ -13,7 +13,7 @@
 
 // Function: func_00163C58
 // Address: 0x163c58 - 0x163f00
-void func_00163C58_0x163c58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00163C58_0x163c58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00163C58_0x163c58");
 #endif
@@ -152,7 +152,6 @@ label_163cd0:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDManager_getTexAddr_0x2acdc8, 0x2acdc8u, 0x163cfcu)) {
         return;
     }
-    ctx->pc = 0x163CFCu;
 label_163cfc:
     // 0x163cfc: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -286,7 +285,6 @@ label_163cfc:
     if (!runtime->callDirectStatic(rdram, ctx, &Gp_draw_polyFT4_0x15bcf0, 0x15bcf0u, 0x163dc4u)) {
         return;
     }
-    ctx->pc = 0x163DC4u;
 label_163dc4:
     // 0x163dc4: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -343,7 +341,6 @@ label_163de0:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDManager_getTexAddr_0x2acdc8, 0x2acdc8u, 0x163e00u)) {
         return;
     }
-    ctx->pc = 0x163E00u;
 label_163e00:
     // 0x163e00: 0x820300f0  lb          $v1, 0xF0($s0)
     ctx->pc = 0x163e00u;
@@ -471,7 +468,6 @@ label_163e00:
     if (!runtime->callDirectStatic(rdram, ctx, &Gp_draw_polyFT4_0x15bcf0, 0x15bcf0u, 0x163ebcu)) {
         return;
     }
-    ctx->pc = 0x163EBCu;
 label_163ebc:
     // 0x163ebc: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));

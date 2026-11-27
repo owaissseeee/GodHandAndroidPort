@@ -13,7 +13,7 @@
 
 // Function: PartObj_refresh
 // Address: 0x2b8850 - 0x2b8908
-void PartObj_refresh_0x2b8850(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void PartObj_refresh_0x2b8850(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("PartObj_refresh_0x2b8850");
 #endif
@@ -117,7 +117,6 @@ void PartObj_refresh_0x2b8850(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &func_001582A0_0x1582a0, 0x1582a0u, 0x2b88a8u)) {
         return;
     }
-    ctx->pc = 0x2B88A8u;
 label_2b88a8:
     // 0x2b88a8: 0x8e0202f8  lw          $v0, 0x2F8($s0)
     ctx->pc = 0x2b88a8u;
@@ -181,7 +180,6 @@ label_2b88ac:
     ctx->pc = 0x2b88e0u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 3), 8), bits); }
     // 0x2b88e4: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x2b88e4u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_2b88e8:
     // 0x2b88e8: 0xc05404a  jal         func_150128
@@ -195,7 +193,6 @@ label_2b88e8:
     if (!runtime->callDirectStatic(rdram, ctx, &cParts_setRotationOrder_0x150128, 0x150128u, 0x2b88f0u)) {
         return;
     }
-    ctx->pc = 0x2B88F0u;
 label_2b88f0:
     // 0x2b88f0: 0xc0527ae  jal         func_149EB8
     SET_GPR_U32(ctx, 31, 0x2B88F8u);
@@ -208,7 +205,6 @@ label_2b88f0:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_calcParts_0x149eb8, 0x149eb8u, 0x2b88f8u)) {
         return;
     }
-    ctx->pc = 0x2B88F8u;
 label_2b88f8:
     // 0x2b88f8: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2b88f8u;

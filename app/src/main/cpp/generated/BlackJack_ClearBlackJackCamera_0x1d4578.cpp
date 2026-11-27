@@ -13,7 +13,7 @@
 
 // Function: BlackJack_ClearBlackJackCamera
 // Address: 0x1d4578 - 0x1d45a0
-void BlackJack_ClearBlackJackCamera_0x1d4578(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BlackJack_ClearBlackJackCamera_0x1d4578(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BlackJack_ClearBlackJackCamera_0x1d4578");
 #endif
@@ -46,7 +46,6 @@ void BlackJack_ClearBlackJackCamera_0x1d4578(uint8_t* rdram, R5900Context* ctx, 
     if (!runtime->callDirectStatic(rdram, ctx, &cCamManager_setPlCamera_0x138d40, 0x138d40u, 0x1d4590u)) {
         return;
     }
-    ctx->pc = 0x1D4590u;
 label_1d4590:
     // 0x1d4590: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1d4590u;

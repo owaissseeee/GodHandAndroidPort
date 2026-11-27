@@ -13,7 +13,7 @@
 
 // Function: cOmBase_setDispModeLayers1E
 // Address: 0x1855a8 - 0x185690
-void cOmBase_setDispModeLayers1E_0x1855a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmBase_setDispModeLayers1E_0x1855a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmBase_setDispModeLayers1E_0x1855a8");
 #endif
@@ -58,7 +58,6 @@ void cOmBase_setDispModeLayers1E_0x1855a8(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshDispFromLayer_0x1b7280, 0x1b7280u, 0x1855ccu)) {
         return;
     }
-    ctx->pc = 0x1855CCu;
 label_1855cc:
     // 0x1855cc: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -75,7 +74,6 @@ label_1855cc:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshDispFromLayer_0x1b7280, 0x1b7280u, 0x1855dcu)) {
         return;
     }
-    ctx->pc = 0x1855DCu;
 label_1855dc:
     // 0x1855dc: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -139,7 +137,6 @@ label_1855dc:
             goto label_185684;
         }
     }
-    ctx->pc = 0x185600u;
 label_185600:
     // 0x185600: 0x1202000c  beq         $s0, $v0, . + 4 + (0xC << 2)
     ctx->pc = 0x185600u;
@@ -171,7 +168,6 @@ label_185600:
             goto label_185684;
         }
     }
-    ctx->pc = 0x185610u;
 label_185610:
     // 0x185610: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -190,12 +186,10 @@ label_185610:
             goto label_185624;
         }
     }
-    ctx->pc = 0x18561Cu;
 label_18561c:
     // 0x18561c: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     // 0x185620: 0x2405001f  addiu       $a1, $zero, 0x1F
-    ctx->pc = 0x185620u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 31));
 label_185624:
     // 0x185624: 0xc06dca0  jal         func_1B7280
@@ -209,7 +203,6 @@ label_185624:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshDispFromLayer_0x1b7280, 0x1b7280u, 0x18562cu)) {
         return;
     }
-    ctx->pc = 0x18562Cu;
 label_18562c:
     // 0x18562c: 0x10000014  b           . + 4 + (0x14 << 2)
     ctx->pc = 0x18562Cu;
@@ -226,7 +219,6 @@ label_18562c:
             goto label_185680;
         }
     }
-    ctx->pc = 0x185634u;
 label_185634:
     // 0x185634: 0x3c09ffff  lui         $t1, 0xFFFF
     SET_GPR_S32(ctx, 9, (int32_t)((uint32_t)65535 << 16));
@@ -251,7 +243,6 @@ label_185634:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x185654u)) {
         return;
     }
-    ctx->pc = 0x185654u;
 label_185654:
     // 0x185654: 0x3c040060  lui         $a0, 0x60
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)96 << 16));
@@ -280,7 +271,6 @@ label_185654:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x18567cu)) {
         return;
     }
-    ctx->pc = 0x18567Cu;
 label_18567c:
     // 0x18567c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x18567cu;

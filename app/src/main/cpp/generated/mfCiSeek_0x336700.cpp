@@ -13,7 +13,7 @@
 
 // Function: mfCiSeek
 // Address: 0x336700 - 0x3367c0
-void mfCiSeek_0x336700(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void mfCiSeek_0x336700(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("mfCiSeek_0x336700");
 #endif
@@ -73,7 +73,6 @@ void mfCiSeek_0x336700(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &func_00336330_0x336330, 0x336330u, 0x336730u)) {
         return;
     }
-    ctx->pc = 0x336730u;
 label_336730:
     // 0x336730: 0x1000001c  b           . + 4 + (0x1C << 2)
     ctx->pc = 0x336730u;
@@ -90,7 +89,6 @@ label_336730:
             goto label_3367a4;
         }
     }
-    ctx->pc = 0x336738u;
 label_336738:
     // 0x336738: 0xc0cd8ba  jal         func_3362E8
     ctx->pc = 0x336738u;
@@ -98,7 +96,6 @@ label_336738:
     if (!runtime->callDirectStatic(rdram, ctx, &Forward33B658_3362E8_0x3362e8, 0x3362e8u, 0x336740u)) {
         return;
     }
-    ctx->pc = 0x336740u;
 label_336740:
     // 0x336740: 0x16200003  bnez        $s1, . + 4 + (0x3 << 2)
     ctx->pc = 0x336740u;
@@ -130,7 +127,6 @@ label_336740:
             goto label_336780;
         }
     }
-    ctx->pc = 0x336750u;
 label_336750:
     // 0x336750: 0x16220005  bne         $s1, $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x336750u;
@@ -167,7 +163,6 @@ label_336750:
             goto label_336784;
         }
     }
-    ctx->pc = 0x336768u;
 label_336768:
     // 0x336768: 0x16220006  bne         $s1, $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x336768u;
@@ -204,7 +199,6 @@ label_336768:
             goto label_336784;
         }
     }
-    ctx->pc = 0x336780u;
 label_336780:
     // 0x336780: 0x8e04000c  lw          $a0, 0xC($s0)
     ctx->pc = 0x336780u;
@@ -234,7 +228,6 @@ label_336784:
     if (!runtime->callDirectStatic(rdram, ctx, &Forward33B670_336300_0x336300, 0x336300u, 0x3367a0u)) {
         return;
     }
-    ctx->pc = 0x3367A0u;
 label_3367a0:
     // 0x3367a0: 0x8e020010  lw          $v0, 0x10($s0)
     ctx->pc = 0x3367a0u;

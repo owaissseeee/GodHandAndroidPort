@@ -13,7 +13,7 @@
 
 // Function: cPlCamera_followEnd
 // Address: 0x13b450 - 0x13b5f0
-void cPlCamera_followEnd_0x13b450(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cPlCamera_followEnd_0x13b450(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cPlCamera_followEnd_0x13b450");
 #endif
@@ -48,7 +48,6 @@ void cPlCamera_followEnd_0x13b450(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x13b464u)) {
         return;
     }
-    ctx->pc = 0x13B464u;
 label_13b464:
     // 0x13b464: 0x1040005e  beqz        $v0, . + 4 + (0x5E << 2)
     ctx->pc = 0x13B464u;
@@ -120,7 +119,6 @@ label_13b494:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitRotVec_0x147728, 0x147728u, 0x13b4acu)) {
         return;
     }
-    ctx->pc = 0x13B4ACu;
 label_13b4ac:
     // 0x13b4ac: 0x8e030470  lw          $v1, 0x470($s0)
     ctx->pc = 0x13b4acu;
@@ -166,7 +164,6 @@ label_13b4ac:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x13b4e4u)) {
         return;
     }
-    ctx->pc = 0x13B4E4u;
 label_13b4e4:
     // 0x13b4e4: 0xc7a10040  lwc1        $f1, 0x40($sp)
     ctx->pc = 0x13b4e4u;
@@ -234,7 +231,6 @@ label_13b4e4:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitRotVec_0x147728, 0x147728u, 0x13b548u)) {
         return;
     }
-    ctx->pc = 0x13B548u;
 label_13b548:
     // 0x13b548: 0xc7a20020  lwc1        $f2, 0x20($sp)
     ctx->pc = 0x13b548u;
@@ -353,7 +349,6 @@ label_13b5b4:
             goto label_13b5e0;
         }
     }
-    ctx->pc = 0x13B5C8u;
 label_13b5c8:
     // 0x13b5c8: 0x8e020528  lw          $v0, 0x528($s0)
     ctx->pc = 0x13b5c8u;

@@ -13,7 +13,7 @@
 
 // Function: HideModelMgr_ClearHiddenModelList
 // Address: 0x308d40 - 0x308d68
-void HideModelMgr_ClearHiddenModelList_0x308d40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void HideModelMgr_ClearHiddenModelList_0x308d40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("HideModelMgr_ClearHiddenModelList_0x308d40");
 #endif
@@ -29,7 +29,6 @@ void HideModelMgr_ClearHiddenModelList_0x308d40(uint8_t* rdram, R5900Context* ct
     // 0x308d40: 0x2484007c  addiu       $a0, $a0, 0x7C
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 124));
     // 0x308d44: 0x2402001f  addiu       $v0, $zero, 0x1F
-    ctx->pc = 0x308d44u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 31));
 label_308d48:
     // 0x308d48: 0xac800000  sw          $zero, 0x0($a0)

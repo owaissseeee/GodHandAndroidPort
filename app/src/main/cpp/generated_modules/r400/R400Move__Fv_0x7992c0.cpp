@@ -14,12 +14,11 @@ namespace gh_r400
 {
 // Function: R400Move__Fv
 // Address: 0x7992c0 - 0x7992c8
-void R400Move__Fv_0x7992c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void R400Move__Fv_0x7992c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("R400Move__Fv_0x7992c0");
 #endif
 
-    ctx->pc = 0x7992c0u;
 
     // 0x7992c0: 0x3e00008  jr          $ra
     ctx->pc = 0x7992C0u;

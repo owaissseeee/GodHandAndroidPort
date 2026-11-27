@@ -13,7 +13,7 @@
 
 // Function: GetSingletonD007865A8_304E38
 // Address: 0x304e38 - 0x304ed0
-void GetSingletonD007865A8_304E38_0x304e38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetSingletonD007865A8_304E38_0x304e38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetSingletonD007865A8_304E38_0x304e38");
 #endif
@@ -60,7 +60,6 @@ void GetSingletonD007865A8_304E38_0x304e38(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &GetOrInit_460D58_2B6528_0x2b6528, 0x2b6528u, 0x304e5cu)) {
         return;
     }
-    ctx->pc = 0x304E5Cu;
 label_304e5c:
     // 0x304e5c: 0x3c050045  lui         $a1, 0x45
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)69 << 16));
@@ -81,7 +80,6 @@ label_304e5c:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField_0_4_8_31EEA8_0x31eea8, 0x31eea8u, 0x304e74u)) {
         return;
     }
-    ctx->pc = 0x304E74u;
 label_304e74:
     // 0x304e74: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

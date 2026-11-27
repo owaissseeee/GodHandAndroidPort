@@ -13,7 +13,7 @@
 
 // Function: SphereTriangle
 // Address: 0x135b18 - 0x135d50
-void SphereTriangle_0x135b18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SphereTriangle_0x135b18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SphereTriangle_0x135b18");
 #endif
@@ -235,7 +235,6 @@ void SphereTriangle_0x135b18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
         }
     }
     // 0x135c58: 0x46001046  mov.s       $f1, $f2
-    ctx->pc = 0x135c58u;
     ctx->f[1] = FPU_MOV_S(ctx->f[2]);
 label_135c5c:
     // 0x135c5c: 0x46000806  mov.s       $f0, $f1
@@ -260,7 +259,6 @@ label_135c5c:
         }
     }
     // 0x135c70: 0x460020c6  mov.s       $f3, $f4
-    ctx->pc = 0x135c70u;
     ctx->f[3] = FPU_MOV_S(ctx->f[4]);
 label_135c74:
     // 0x135c74: 0xc6000000  lwc1        $f0, 0x0($s0)
@@ -330,7 +328,6 @@ label_135c74:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00135348_0x135348, 0x135348u, 0x135cd0u)) {
         return;
     }
-    ctx->pc = 0x135CD0u;
 label_135cd0:
     // 0x135cd0: 0xc7a40000  lwc1        $f4, 0x0($sp)
     ctx->pc = 0x135cd0u;

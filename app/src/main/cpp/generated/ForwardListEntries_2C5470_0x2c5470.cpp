@@ -13,7 +13,7 @@
 
 // Function: ForwardListEntries_2C5470
 // Address: 0x2c5470 - 0x2c54e8
-void ForwardListEntries_2C5470_0x2c5470(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardListEntries_2C5470_0x2c5470(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardListEntries_2C5470_0x2c5470");
 #endif
@@ -91,7 +91,6 @@ void ForwardListEntries_2C5470_0x2c5470(uint8_t* rdram, R5900Context* ctx, PS2Ru
     ctx->pc = 0x2c54b0u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 0)));
     // 0x2c54b4: 0x0  nop
-    ctx->pc = 0x2c54b4u;
     // NOP
 label_2c54b8:
     // 0x2c54b8: 0xc0c6548  jal         func_319520
@@ -105,7 +104,6 @@ label_2c54b8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00319520_0x319520, 0x319520u, 0x2c54c0u)) {
         return;
     }
-    ctx->pc = 0x2C54C0u;
 label_2c54c0:
     // 0x2c54c0: 0x8e230000  lw          $v1, 0x0($s1)
     ctx->pc = 0x2c54c0u;
@@ -133,7 +131,6 @@ label_2c54c0:
             goto label_2c54b8;
         }
     }
-    ctx->pc = 0x2C54D4u;
 label_2c54d4:
     // 0x2c54d4: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2c54d4u;

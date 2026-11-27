@@ -14,34 +14,34 @@ namespace gh_mcport
 {
 // Function: __terminate
 // Address: 0x7cb350 - 0x7cb378
-void ps2___terminate_0x7cb350(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___terminate_0x7cb350(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___terminate_0x7cb350");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7cb350u: goto label_7cb350;
-        case 0x7cb354u: goto label_7cb354;
-        case 0x7cb358u: goto label_7cb358;
-        case 0x7cb35cu: goto label_7cb35c;
-        case 0x7cb360u: goto label_7cb360;
-        case 0x7cb364u: goto label_7cb364;
-        case 0x7cb368u: goto label_7cb368;
-        case 0x7cb36cu: goto label_7cb36c;
-        case 0x7cb370u: goto label_7cb370;
-        case 0x7cb374u: goto label_7cb374;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7cb350u, 0)) {
+        switch (ctx->pc) {
+            case 0x7cb350u: goto label_7cb350;
+            case 0x7cb354u: goto label_7cb354;
+            case 0x7cb358u: goto label_7cb358;
+            case 0x7cb35cu: goto label_7cb35c;
+            case 0x7cb360u: goto label_7cb360;
+            case 0x7cb364u: goto label_7cb364;
+            case 0x7cb368u: goto label_7cb368;
+            case 0x7cb36cu: goto label_7cb36c;
+            case 0x7cb370u: goto label_7cb370;
+            case 0x7cb374u: goto label_7cb374;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7cb350u;
+
 
 label_7cb350:
     // 0x7cb350: 0x3c02007d  lui         $v0, 0x7D
-    ctx->pc = 0x7cb350u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)125 << 16));
 label_7cb354:
     // 0x7cb354: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7cb354u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_7cb358:
     // 0x7cb358: 0x8c4301a0  lw          $v1, 0x1A0($v0)
@@ -67,7 +67,6 @@ label_7cb364:
             return;
         }
     }
-    ctx->pc = 0x7CB368u;
 label_7cb368:
     // 0x7cb368: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7cb368u;
@@ -103,10 +102,8 @@ label_7cb370:
         return;
         #endif
     }
-    ctx->pc = 0x7CB374u;
 label_7cb374:
     // 0x7cb374: 0x0  nop
-    ctx->pc = 0x7cb374u;
     // NOP
     ctx->pc = 0x7cb378u;
 }

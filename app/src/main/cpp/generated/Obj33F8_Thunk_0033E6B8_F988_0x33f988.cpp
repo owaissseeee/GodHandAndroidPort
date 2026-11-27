@@ -13,7 +13,7 @@
 
 // Function: Obj33F8_Thunk_0033E6B8_F988
 // Address: 0x33f988 - 0x33f9b0
-void Obj33F8_Thunk_0033E6B8_F988_0x33f988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj33F8_Thunk_0033E6B8_F988_0x33f988(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj33F8_Thunk_0033E6B8_F988_0x33f988");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_addAllStageTime
 // Address: 0x1fc630 - 0x1fc650
-void cCoreSave_addAllStageTime_0x1fc630(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_addAllStageTime_0x1fc630(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_addAllStageTime_0x1fc630");
 #endif

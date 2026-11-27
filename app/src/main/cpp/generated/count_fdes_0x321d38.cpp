@@ -13,7 +13,7 @@
 
 // Function: count_fdes
 // Address: 0x321d38 - 0x321d80
-void count_fdes_0x321d38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void count_fdes_0x321d38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("count_fdes_0x321d38");
 #endif
@@ -60,7 +60,6 @@ void count_fdes_0x321d38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
         }
     }
     // 0x321d4c: 0x0  nop
-    ctx->pc = 0x321d4cu;
     // NOP
 label_321d50:
     // 0x321d50: 0x60282d  daddu       $a1, $v1, $zero
@@ -114,7 +113,6 @@ label_321d68:
             goto label_321d50;
         }
     }
-    ctx->pc = 0x321D78u;
 label_321d78:
     // 0x321d78: 0x3e00008  jr          $ra
     ctx->pc = 0x321D78u;

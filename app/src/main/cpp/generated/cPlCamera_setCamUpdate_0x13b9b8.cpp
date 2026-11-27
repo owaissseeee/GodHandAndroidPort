@@ -13,7 +13,7 @@
 
 // Function: cPlCamera_setCamUpdate
 // Address: 0x13b9b8 - 0x13bbd8
-void cPlCamera_setCamUpdate_0x13b9b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cPlCamera_setCamUpdate_0x13b9b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cPlCamera_setCamUpdate_0x13b9b8");
 #endif
@@ -122,7 +122,6 @@ void cPlCamera_setCamUpdate_0x13b9b8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     ctx->pc = 0x13ba10u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 6), 4294946800)));
     // 0x13ba14: 0x26230200  addiu       $v1, $s1, 0x200
-    ctx->pc = 0x13ba14u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 17), 512));
 label_13ba18:
     // 0x13ba18: 0x24820200  addiu       $v0, $a0, 0x200
@@ -179,7 +178,6 @@ label_13ba40:
             goto label_13bbb4;
         }
     }
-    ctx->pc = 0x13BA48u;
 label_13ba48:
     // 0x13ba48: 0xfba00040  sqc2        $vf0, 0x40($sp)
     ctx->pc = 0x13ba48u;
@@ -202,7 +200,6 @@ label_13ba48:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitRotVec_0x147728, 0x147728u, 0x13ba60u)) {
         return;
     }
-    ctx->pc = 0x13BA60u;
 label_13ba60:
     // 0x13ba60: 0x8e2303f0  lw          $v1, 0x3F0($s1)
     ctx->pc = 0x13ba60u;
@@ -250,7 +247,6 @@ label_13ba60:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x13ba9cu)) {
         return;
     }
-    ctx->pc = 0x13BA9Cu;
 label_13ba9c:
     // 0x13ba9c: 0x26220200  addiu       $v0, $s1, 0x200
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 17), 512));
@@ -341,7 +337,6 @@ label_13babc:
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_vec_0x1f7da0, 0x1f7da0u, 0x13bb08u)) {
         return;
     }
-    ctx->pc = 0x13BB08u;
 label_13bb08:
     // 0x13bb08: 0x200282d  daddu       $a1, $s0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -358,7 +353,6 @@ label_13bb08:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitRotVec_0x147728, 0x147728u, 0x13bb18u)) {
         return;
     }
-    ctx->pc = 0x13BB18u;
 label_13bb18:
     // 0x13bb18: 0xc6200420  lwc1        $f0, 0x420($s1)
     ctx->pc = 0x13bb18u;
@@ -408,7 +402,6 @@ label_13bb18:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x13bb58u)) {
         return;
     }
-    ctx->pc = 0x13BB58u;
 label_13bb58:
     // 0x13bb58: 0x26220210  addiu       $v0, $s1, 0x210
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 17), 528));
@@ -493,7 +486,6 @@ label_13bbac:
     // 0x13bbac: 0x3c0141f8  lui         $at, 0x41F8
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16888 << 16));
     // 0x13bbb0: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x13bbb0u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
 label_13bbb4:
     // 0x13bbb4: 0x0  nop

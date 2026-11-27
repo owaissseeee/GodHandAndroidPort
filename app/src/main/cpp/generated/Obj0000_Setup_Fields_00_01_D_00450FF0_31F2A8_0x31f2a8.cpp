@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Setup_Fields_00_01_D_00450FF0_31F2A8
 // Address: 0x31f2a8 - 0x31f2c0
-void Obj0000_Setup_Fields_00_01_D_00450FF0_31F2A8_0x31f2a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Setup_Fields_00_01_D_00450FF0_31F2A8_0x31f2a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Setup_Fields_00_01_D_00450FF0_31F2A8_0x31f2a8");
 #endif

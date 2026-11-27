@@ -13,7 +13,7 @@
 
 // Function: _IO_default_xsgetn
 // Address: 0x38ca10 - 0x38cb28
-void ps2__IO_default_xsgetn_0x38ca10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_default_xsgetn_0x38ca10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_default_xsgetn_0x38ca10");
 #endif
@@ -102,7 +102,6 @@ label_38ca48:
         }
     }
     // 0x38ca6c: 0x2303e  dsrl32      $a2, $v0, 0
-    ctx->pc = 0x38ca6cu;
     SET_GPR_U64(ctx, 6, GPR_U64(ctx, 2) >> (32 + 0));
 label_38ca70:
     // 0x38ca70: 0x28c20015  slti        $v0, $a2, 0x15
@@ -139,7 +138,6 @@ label_38ca70:
     if (!runtime->callDirectStatic(rdram, ctx, &memcpy_0x3a5148, 0x3a5148u, 0x38ca90u)) {
         return;
     }
-    ctx->pc = 0x38CA90u;
 label_38ca90:
     // 0x38ca90: 0x8e420004  lw          $v0, 0x4($s2)
     ctx->pc = 0x38ca90u;
@@ -161,7 +159,6 @@ label_38ca90:
             goto label_38cae0;
         }
     }
-    ctx->pc = 0x38CAA0u;
 label_38caa0:
     // 0x38caa0: 0x18c0000f  blez        $a2, . + 4 + (0xF << 2)
     ctx->pc = 0x38CAA0u;
@@ -200,7 +197,6 @@ label_38caa0:
         }
     }
     // 0x38cabc: 0x0  nop
-    ctx->pc = 0x38cabcu;
     // NOP
 label_38cac0:
     // 0x38cac0: 0x90a20000  lbu         $v0, 0x0($a1)
@@ -232,7 +228,6 @@ label_38cac0:
     WRITE32(ADD32(GPR_U32(ctx, 18), 4), GPR_U32(ctx, 5));
 label_38cae0:
     // 0x38cae0: 0x2709823  subu        $s3, $s3, $s0
-    ctx->pc = 0x38cae0u;
     SET_GPR_S32(ctx, 19, (int32_t)SUB32(GPR_U32(ctx, 19), GPR_U32(ctx, 16)));
 label_38cae4:
     // 0x38cae4: 0x12600006  beqz        $s3, . + 4 + (0x6 << 2)
@@ -261,7 +256,6 @@ label_38cae4:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___underflow_0x38c5b8, 0x38c5b8u, 0x38caf4u)) {
         return;
     }
-    ctx->pc = 0x38CAF4u;
 label_38caf4:
     // 0x38caf4: 0x5455ffd4  bnel        $v0, $s5, . + 4 + (-0x2C << 2)
     ctx->pc = 0x38CAF4u;
@@ -282,7 +276,6 @@ label_38caf4:
         }
     }
     // 0x38cafc: 0x2931023  subu        $v0, $s4, $s3
-    ctx->pc = 0x38cafcu;
     SET_GPR_S32(ctx, 2, (int32_t)SUB32(GPR_U32(ctx, 20), GPR_U32(ctx, 19)));
 label_38cb00:
     // 0x38cb00: 0xdfbf0060  ld          $ra, 0x60($sp)

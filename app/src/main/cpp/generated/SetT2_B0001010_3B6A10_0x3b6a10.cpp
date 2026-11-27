@@ -13,7 +13,7 @@
 
 // Function: SetT2_B0001010_3B6A10
 // Address: 0x3b6a10 - 0x3b6a20
-void SetT2_B0001010_3B6A10_0x3b6a10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetT2_B0001010_3B6A10_0x3b6a10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetT2_B0001010_3B6A10_0x3b6a10");
 #endif

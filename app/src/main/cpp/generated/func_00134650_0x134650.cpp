@@ -13,7 +13,7 @@
 
 // Function: func_00134650
 // Address: 0x134650 - 0x134690
-void func_00134650_0x134650(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00134650_0x134650(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00134650_0x134650");
 #endif
@@ -34,7 +34,6 @@ void func_00134650_0x134650(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x134658: 0x24830008  addiu       $v1, $a0, 0x8
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), 8));
     // 0x13465c: 0x0  nop
-    ctx->pc = 0x13465cu;
     // NOP
 label_134660:
     // 0x134660: 0xac600000  sw          $zero, 0x0($v1)

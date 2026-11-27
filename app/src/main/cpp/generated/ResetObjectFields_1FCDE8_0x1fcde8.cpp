@@ -13,7 +13,7 @@
 
 // Function: ResetObjectFields_1FCDE8
 // Address: 0x1fcde8 - 0x1fce20
-void ResetObjectFields_1FCDE8_0x1fcde8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ResetObjectFields_1FCDE8_0x1fcde8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ResetObjectFields_1FCDE8_0x1fcde8");
 #endif
@@ -45,7 +45,6 @@ void ResetObjectFields_1FCDE8_0x1fcde8(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &ActorRec_reset_0x1fcd00, 0x1fcd00u, 0x1fcdfcu)) {
         return;
     }
-    ctx->pc = 0x1FCDFCu;
 label_1fcdfc:
     // 0x1fcdfc: 0x24020002  addiu       $v0, $zero, 0x2
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));

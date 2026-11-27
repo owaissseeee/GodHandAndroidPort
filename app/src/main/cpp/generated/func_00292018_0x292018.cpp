@@ -13,7 +13,7 @@
 
 // Function: func_00292018
 // Address: 0x292018 - 0x292030
-void func_00292018_0x292018(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00292018_0x292018(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00292018_0x292018");
 #endif
@@ -39,7 +39,6 @@ void func_00292018_0x292018(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_292028;
         }
     }
-    ctx->pc = 0x292028u;
 label_292028:
     // 0x292028: 0x3e00008  jr          $ra
     ctx->pc = 0x292028u;

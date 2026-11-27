@@ -13,7 +13,7 @@
 
 // Function: __fixdfdi
 // Address: 0x3b86d0 - 0x3b8730
-void ps2___fixdfdi_0x3b86d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___fixdfdi_0x3b86d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___fixdfdi_0x3b86d0");
 #endif
@@ -55,7 +55,6 @@ void ps2___fixdfdi_0x3b86d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &dpcmp_0x31e870, 0x31e870u, 0x3b86f0u)) {
         return;
     }
-    ctx->pc = 0x3B86F0u;
 label_3b86f0:
     // 0x3b86f0: 0x4410007  bgez        $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x3B86F0u;
@@ -83,7 +82,6 @@ label_3b86f0:
     if (!runtime->callDirectStatic(rdram, ctx, &dpsub_0x31e2e0, 0x31e2e0u, 0x3b8700u)) {
         return;
     }
-    ctx->pc = 0x3B8700u;
 label_3b8700:
     // 0x3b8700: 0xc0ee1cc  jal         func_3B8730
     SET_GPR_U32(ctx, 31, 0x3B8708u);
@@ -96,7 +94,6 @@ label_3b8700:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___fixunsdfdi_0x3b8730, 0x3b8730u, 0x3b8708u)) {
         return;
     }
-    ctx->pc = 0x3B8708u;
 label_3b8708:
     // 0x3b8708: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x3B8708u;
@@ -113,7 +110,6 @@ label_3b8708:
             goto label_3b8718;
         }
     }
-    ctx->pc = 0x3B8710u;
 label_3b8710:
     // 0x3b8710: 0xc0ee1cc  jal         func_3B8730
     SET_GPR_U32(ctx, 31, 0x3B8718u);
@@ -126,7 +122,6 @@ label_3b8710:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___fixunsdfdi_0x3b8730, 0x3b8730u, 0x3b8718u)) {
         return;
     }
-    ctx->pc = 0x3B8718u;
 label_3b8718:
     // 0x3b8718: 0xdfbf0020  ld          $ra, 0x20($sp)
     ctx->pc = 0x3b8718u;

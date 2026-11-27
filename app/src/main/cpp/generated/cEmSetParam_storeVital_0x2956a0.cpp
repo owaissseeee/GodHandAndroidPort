@@ -13,7 +13,7 @@
 
 // Function: cEmSetParam_storeVital
 // Address: 0x2956a0 - 0x2956f0
-void cEmSetParam_storeVital_0x2956a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmSetParam_storeVital_0x2956a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmSetParam_storeVital_0x2956a0");
 #endif
@@ -72,7 +72,6 @@ void cEmSetParam_storeVital_0x2956a0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &cEmSetParam_updateSetDataVital_0x2954d0, 0x2954d0u, 0x2956d0u)) {
         return;
     }
-    ctx->pc = 0x2956D0u;
 label_2956d0:
     // 0x2956d0: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x2956D0u;
@@ -89,7 +88,6 @@ label_2956d0:
             goto label_2956e4;
         }
     }
-    ctx->pc = 0x2956D8u;
 label_2956d8:
     // 0x2956d8: 0xc0a5534  jal         func_2954D0
     SET_GPR_U32(ctx, 31, 0x2956E0u);
@@ -102,7 +100,6 @@ label_2956d8:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmSetParam_updateSetDataVital_0x2954d0, 0x2954d0u, 0x2956e0u)) {
         return;
     }
-    ctx->pc = 0x2956E0u;
 label_2956e0:
     // 0x2956e0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2956e0u;

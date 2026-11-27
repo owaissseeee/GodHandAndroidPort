@@ -13,7 +13,7 @@
 
 // Function: cGiveOwner_destruct
 // Address: 0x1b0d30 - 0x1b0de8
-void cGiveOwner_destruct_0x1b0d30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGiveOwner_destruct_0x1b0d30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGiveOwner_destruct_0x1b0d30");
 #endif
@@ -86,7 +86,6 @@ void cGiveOwner_destruct_0x1b0d30(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeStop_0x2cbba0, 0x2cbba0u, 0x1b0d70u)) {
         return;
     }
-    ctx->pc = 0x1B0D70u;
 label_1b0d70:
     // 0x1b0d70: 0xae000668  sw          $zero, 0x668($s0)
     ctx->pc = 0x1b0d70u;
@@ -110,7 +109,6 @@ label_1b0d74:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_ReleaseDamageGive_0x1fe148, 0x1fe148u, 0x1b0d88u)) {
         return;
     }
-    ctx->pc = 0x1B0D88u;
 label_1b0d88:
     // 0x1b0d88: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x1B0D88u;
@@ -148,7 +146,6 @@ label_1b0d98:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_ReleaseDamageGive_0x1fe148, 0x1fe148u, 0x1b0da4u)) {
         return;
     }
-    ctx->pc = 0x1B0DA4u;
 label_1b0da4:
     // 0x1b0da4: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x1B0DA4u;
@@ -187,7 +184,6 @@ label_1b0db4:
     if (!runtime->callDirectStatic(rdram, ctx, &KillEffect_0x306200, 0x306200u, 0x1b0dc4u)) {
         return;
     }
-    ctx->pc = 0x1B0DC4u;
 label_1b0dc4:
     // 0x1b0dc4: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -202,7 +198,6 @@ label_1b0dc4:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField214PtrThenInit_1B6F38_0x1b6f38, 0x1b6f38u, 0x1b0dd0u)) {
         return;
     }
-    ctx->pc = 0x1B0DD0u;
 label_1b0dd0:
     // 0x1b0dd0: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x1b0dd0u;

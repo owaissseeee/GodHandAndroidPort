@@ -13,7 +13,7 @@
 
 // Function: cPlCamera
 // Address: 0x139bc8 - 0x139c58
-void cPlCamera_0x139bc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cPlCamera_0x139bc8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cPlCamera_0x139bc8");
 #endif
@@ -45,7 +45,6 @@ void cPlCamera_0x139bc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
     if (!runtime->callDirectStatic(rdram, ctx, &cCamera_0x1380a8, 0x1380a8u, 0x139bdcu)) {
         return;
     }
-    ctx->pc = 0x139BDCu;
 label_139bdc:
     // 0x139bdc: 0x3c030042  lui         $v1, 0x42
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)66 << 16));

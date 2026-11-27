@@ -13,7 +13,7 @@
 
 // Function: CustomIDWork_SetScaleAnimSin
 // Address: 0x2d69f0 - 0x2d6a30
-void CustomIDWork_SetScaleAnimSin_0x2d69f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CustomIDWork_SetScaleAnimSin_0x2d69f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CustomIDWork_SetScaleAnimSin_0x2d69f0");
 #endif

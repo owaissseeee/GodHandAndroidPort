@@ -13,7 +13,7 @@
 
 // Function: sys_write__8stdiobufPCcl
 // Address: 0x3936c0 - 0x393720
-void sys_write__8stdiobufPCcl_0x3936c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sys_write__8stdiobufPCcl_0x3936c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sys_write__8stdiobufPCcl_0x3936c0");
 #endif
@@ -61,7 +61,6 @@ void sys_write__8stdiobufPCcl_0x3936c0(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &fwrite_0x3a68c8, 0x3a68c8u, 0x3936f0u)) {
         return;
     }
-    ctx->pc = 0x3936F0u;
 label_3936f0:
     // 0x3936f0: 0x2103c  dsll32      $v0, $v0, 0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) << (32 + 0));

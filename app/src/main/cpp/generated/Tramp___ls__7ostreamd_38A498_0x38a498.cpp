@@ -13,7 +13,7 @@
 
 // Function: Tramp___ls__7ostreamd_38A498
 // Address: 0x38a498 - 0x38a4b8
-void Tramp___ls__7ostreamd_38A498_0x38a498(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp___ls__7ostreamd_38A498_0x38a498(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp___ls__7ostreamd_38A498_0x38a498");
 #endif
@@ -37,7 +37,6 @@ void Tramp___ls__7ostreamd_38A498_0x38a498(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___ls__7ostreamd_0x388d18, 0x388d18u, 0x38a4a8u)) {
         return;
     }
-    ctx->pc = 0x38A4A8u;
 label_38a4a8:
     // 0x38a4a8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38a4a8u;

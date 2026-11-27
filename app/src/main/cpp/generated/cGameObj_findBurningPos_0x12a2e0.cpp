@@ -13,7 +13,7 @@
 
 // Function: cGameObj_findBurningPos
 // Address: 0x12a2e0 - 0x12a3c0
-void cGameObj_findBurningPos_0x12a2e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObj_findBurningPos_0x12a2e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObj_findBurningPos_0x12a2e0");
 #endif
@@ -65,7 +65,6 @@ void cGameObj_findBurningPos_0x12a2e0(uint8_t* rdram, R5900Context* ctx, PS2Runt
     // 0x12a310: 0x882d  daddu       $s1, $zero, $zero
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x12a314: 0x266464f0  addiu       $a0, $s3, 0x64F0
-    ctx->pc = 0x12a314u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 19), 25840));
 label_12a318:
     // 0x12a318: 0xc0a5232  jal         func_2948C8
@@ -79,7 +78,6 @@ label_12a318:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002948C8_0x2948c8, 0x2948c8u, 0x12a320u)) {
         return;
     }
-    ctx->pc = 0x12A320u;
 label_12a320:
     // 0x12a320: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -109,7 +107,6 @@ label_12a320:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmbb_ckFire_0x1b8640, 0x1b8640u, 0x12a334u)) {
         return;
     }
-    ctx->pc = 0x12A334u;
 label_12a334:
     // 0x12a334: 0x50400016  beql        $v0, $zero, . + 4 + (0x16 << 2)
     ctx->pc = 0x12A334u;
@@ -137,7 +134,6 @@ label_12a334:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B8720_0x1b8720, 0x1b8720u, 0x12a344u)) {
         return;
     }
-    ctx->pc = 0x12A344u;
 label_12a344:
     // 0x12a344: 0x53a20008  beql        $sp, $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x12A344u;
@@ -187,7 +183,6 @@ label_12a368:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0MagnitudeSqXZ_0x1f7eb0, 0x1f7eb0u, 0x12a370u)) {
         return;
     }
-    ctx->pc = 0x12A370u;
 label_12a370:
     // 0x12a370: 0x4600a034  c.lt.s      $f20, $f0
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[20], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -219,7 +214,6 @@ label_12a370:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B8720_0x1b8720, 0x1b8720u, 0x12a388u)) {
         return;
     }
-    ctx->pc = 0x12A388u;
 label_12a388:
     // 0x12a388: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x12A388u;
@@ -236,7 +230,6 @@ label_12a388:
             goto label_12a3a4;
         }
     }
-    ctx->pc = 0x12A390u;
 label_12a390:
     // 0x12a390: 0x2e220002  sltiu       $v0, $s1, 0x2
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 17) < (uint64_t)(int64_t)(int32_t)2) ? 1 : 0);

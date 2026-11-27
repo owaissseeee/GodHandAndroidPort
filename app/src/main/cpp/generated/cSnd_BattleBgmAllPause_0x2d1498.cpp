@@ -13,7 +13,7 @@
 
 // Function: cSnd_BattleBgmAllPause
 // Address: 0x2d1498 - 0x2d14f8
-void cSnd_BattleBgmAllPause_0x2d1498(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BattleBgmAllPause_0x2d1498(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BattleBgmAllPause_0x2d1498");
 #endif
@@ -93,7 +93,6 @@ label_2d14c0:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_SetFlagsFadeOut_0x2cd500, 0x2cd500u, 0x2d14d4u)) {
         return;
     }
-    ctx->pc = 0x2D14D4u;
 label_2d14d4:
     // 0x2d14d4: 0x8e100088  lw          $s0, 0x88($s0)
     ctx->pc = 0x2d14d4u;
@@ -116,7 +115,6 @@ label_2d14d4:
             goto label_2d14c0;
         }
     }
-    ctx->pc = 0x2D14E0u;
 label_2d14e0:
     // 0x2d14e0: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2d14e0u;

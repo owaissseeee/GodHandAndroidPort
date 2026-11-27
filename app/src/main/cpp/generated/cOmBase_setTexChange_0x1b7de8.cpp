@@ -13,7 +13,7 @@
 
 // Function: cOmBase_setTexChange
 // Address: 0x1b7de8 - 0x1b7e50
-void cOmBase_setTexChange_0x1b7de8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmBase_setTexChange_0x1b7de8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmBase_setTexChange_0x1b7de8");
 #endif
@@ -69,7 +69,6 @@ void cOmBase_setTexChange_0x1b7de8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &SearchData_0x31ccf0, 0x31ccf0u, 0x1b7e24u)) {
         return;
     }
-    ctx->pc = 0x1B7E24u;
 label_1b7e24:
     // 0x1b7e24: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -89,7 +88,6 @@ label_1b7e24:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x1b7e38u)) {
         return;
     }
-    ctx->pc = 0x1B7E38u;
 label_1b7e38:
     // 0x1b7e38: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1b7e38u;

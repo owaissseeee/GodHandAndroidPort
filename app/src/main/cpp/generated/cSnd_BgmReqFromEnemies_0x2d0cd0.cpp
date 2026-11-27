@@ -13,7 +13,7 @@
 
 // Function: cSnd_BgmReqFromEnemies
 // Address: 0x2d0cd0 - 0x2d0d70
-void cSnd_BgmReqFromEnemies_0x2d0cd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BgmReqFromEnemies_0x2d0cd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BgmReqFromEnemies_0x2d0cd0");
 #endif
@@ -56,7 +56,6 @@ void cSnd_BgmReqFromEnemies_0x2d0cd0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_IsEnemyAlive_0x2d0c10, 0x2d0c10u, 0x2d0cf0u)) {
         return;
     }
-    ctx->pc = 0x2D0CF0u;
 label_2d0cf0:
     // 0x2d0cf0: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x2D0CF0u;
@@ -88,7 +87,6 @@ label_2d0cf0:
             goto label_2d0d54;
         }
     }
-    ctx->pc = 0x2D0D00u;
 label_2d0d00:
     // 0x2d0d00: 0xc0b4304  jal         func_2D0C10
     SET_GPR_U32(ctx, 31, 0x2D0D08u);
@@ -101,7 +99,6 @@ label_2d0d00:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_IsEnemyAlive_0x2d0c10, 0x2d0c10u, 0x2d0d08u)) {
         return;
     }
-    ctx->pc = 0x2D0D08u;
 label_2d0d08:
     // 0x2d0d08: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x2D0D08u;
@@ -133,7 +130,6 @@ label_2d0d08:
             goto label_2d0d54;
         }
     }
-    ctx->pc = 0x2D0D18u;
 label_2d0d18:
     // 0x2d0d18: 0xc0b4304  jal         func_2D0C10
     SET_GPR_U32(ctx, 31, 0x2D0D20u);
@@ -146,7 +142,6 @@ label_2d0d18:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_IsEnemyAlive_0x2d0c10, 0x2d0c10u, 0x2d0d20u)) {
         return;
     }
-    ctx->pc = 0x2D0D20u;
 label_2d0d20:
     // 0x2d0d20: 0x5440000c  bnel        $v0, $zero, . + 4 + (0xC << 2)
     ctx->pc = 0x2D0D20u;
@@ -176,7 +171,6 @@ label_2d0d20:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_IsEnemyAlive_0x2d0c10, 0x2d0c10u, 0x2d0d34u)) {
         return;
     }
-    ctx->pc = 0x2D0D34u;
 label_2d0d34:
     // 0x2d0d34: 0x54400007  bnel        $v0, $zero, . + 4 + (0x7 << 2)
     ctx->pc = 0x2D0D34u;
@@ -206,7 +200,6 @@ label_2d0d34:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_IsEnemyAlive_0x2d0c10, 0x2d0c10u, 0x2d0d48u)) {
         return;
     }
-    ctx->pc = 0x2D0D48u;
 label_2d0d48:
     // 0x2d0d48: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x2D0D48u;
@@ -224,11 +217,9 @@ label_2d0d48:
         }
     }
     // 0x2d0d50: 0x24110001  addiu       $s1, $zero, 0x1
-    ctx->pc = 0x2d0d50u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2d0d54:
     // 0x2d0d54: 0x220102d  daddu       $v0, $s1, $zero
-    ctx->pc = 0x2d0d54u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
 label_2d0d58:
     // 0x2d0d58: 0x7bb00020  lq          $s0, 0x20($sp)

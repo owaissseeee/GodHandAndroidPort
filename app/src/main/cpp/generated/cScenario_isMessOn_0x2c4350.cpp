@@ -13,7 +13,7 @@
 
 // Function: cScenario_isMessOn
 // Address: 0x2c4350 - 0x2c4390
-void cScenario_isMessOn_0x2c4350(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_isMessOn_0x2c4350(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_isMessOn_0x2c4350");
 #endif
@@ -65,7 +65,6 @@ void cScenario_isMessOn_0x2c4350(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &cMessage_ckMessage_0x2aeda0, 0x2aeda0u, 0x2c4374u)) {
         return;
     }
-    ctx->pc = 0x2C4374u;
 label_2c4374:
     // 0x2c4374: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x2C4374u;
@@ -82,7 +81,6 @@ label_2c4374:
             goto label_2c4384;
         }
     }
-    ctx->pc = 0x2C437Cu;
 label_2c437c:
     // 0x2c437c: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

@@ -13,7 +13,7 @@
 
 // Function: func_0031CF30
 // Address: 0x31cf30 - 0x31cf78
-void func_0031CF30_0x31cf30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0031CF30_0x31cf30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0031CF30_0x31cf30");
 #endif
@@ -37,7 +37,6 @@ void func_0031CF30_0x31cf30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031CF78_0x31cf78, 0x31cf78u, 0x31cf40u)) {
         return;
     }
-    ctx->pc = 0x31CF40u;
 label_31cf40:
     // 0x31cf40: 0x44800800  mtc1        $zero, $f1
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }
@@ -69,7 +68,6 @@ label_31cf40:
     // 0x31cf60: 0x0  nop
     // NOP
     // 0x31cf64: 0x46001080  add.s       $f2, $f2, $f0
-    ctx->pc = 0x31cf64u;
     ctx->f[2] = FPU_ADD_S(ctx->f[2], ctx->f[0]);
 label_31cf68:
     // 0x31cf68: 0x46001006  mov.s       $f0, $f2

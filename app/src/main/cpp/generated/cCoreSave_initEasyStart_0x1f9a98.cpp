@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_initEasyStart
 // Address: 0x1f9a98 - 0x1f9ad0
-void cCoreSave_initEasyStart_0x1f9a98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_initEasyStart_0x1f9a98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_initEasyStart_0x1f9a98");
 #endif
@@ -48,7 +48,6 @@ void cCoreSave_initEasyStart_0x1f9a98(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_setReelItemNum_0x1fae28, 0x1fae28u, 0x1f9ab0u)) {
         return;
     }
-    ctx->pc = 0x1F9AB0u;
 label_1f9ab0:
     // 0x1f9ab0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -63,7 +62,6 @@ label_1f9ab0:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_setGameLevel_0x1fa148, 0x1fa148u, 0x1f9abcu)) {
         return;
     }
-    ctx->pc = 0x1F9ABCu;
 label_1f9abc:
     // 0x1f9abc: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1f9abcu;

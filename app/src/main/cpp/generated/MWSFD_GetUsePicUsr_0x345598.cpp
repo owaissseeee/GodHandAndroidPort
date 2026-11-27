@@ -13,7 +13,7 @@
 
 // Function: MWSFD_GetUsePicUsr
 // Address: 0x345598 - 0x3455b8
-void MWSFD_GetUsePicUsr_0x345598(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MWSFD_GetUsePicUsr_0x345598(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MWSFD_GetUsePicUsr_0x345598");
 #endif
@@ -37,7 +37,6 @@ void MWSFD_GetUsePicUsr_0x345598(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &GetD003EC7E0_3452B0_0x3452b0, 0x3452b0u, 0x3455a8u)) {
         return;
     }
-    ctx->pc = 0x3455A8u;
 label_3455a8:
     // 0x3455a8: 0x8c420038  lw          $v0, 0x38($v0)
     ctx->pc = 0x3455a8u;

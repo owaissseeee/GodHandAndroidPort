@@ -14,12 +14,11 @@ namespace gh_r501
 {
 // Function: SetView__4Siteb
 // Address: 0x79f648 - 0x79f680
-void SetView__4Siteb_0x79f648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetView__4Siteb_0x79f648(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetView__4Siteb_0x79f648");
 #endif
 
-    ctx->pc = 0x79f648u;
 
     // 0x79f648: 0x10a00007  beqz        $a1, . + 4 + (0x7 << 2)
     ctx->pc = 0x79F648u;
@@ -36,18 +35,14 @@ void SetView__4Siteb_0x79f648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_79f668;
         }
     }
-    ctx->pc = 0x79F650u;
     // 0x79f650: 0x3c03f7ff  lui         $v1, 0xF7FF
-    ctx->pc = 0x79f650u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)63487 << 16));
     // 0x79f654: 0x3463ffff  ori         $v1, $v1, 0xFFFF
-    ctx->pc = 0x79f654u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) | (uint64_t)(uint16_t)65535);
     // 0x79f658: 0x8c82002c  lw          $v0, 0x2C($a0)
     ctx->pc = 0x79f658u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 44)));
     // 0x79f65c: 0x431024  and         $v0, $v0, $v1
-    ctx->pc = 0x79f65cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 3));
     // 0x79f660: 0x3e00008  jr          $ra
     ctx->pc = 0x79F660u;
@@ -68,16 +63,13 @@ void SetView__4Siteb_0x79f648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
         return;
         #endif
     }
-    ctx->pc = 0x79F668u;
 label_79f668:
     // 0x79f668: 0x3c030800  lui         $v1, 0x800
-    ctx->pc = 0x79f668u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)2048 << 16));
     // 0x79f66c: 0x8c82002c  lw          $v0, 0x2C($a0)
     ctx->pc = 0x79f66cu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 44)));
     // 0x79f670: 0x431025  or          $v0, $v0, $v1
-    ctx->pc = 0x79f670u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | GPR_U64(ctx, 3));
     // 0x79f674: 0x3e00008  jr          $ra
     ctx->pc = 0x79F674u;
@@ -98,9 +90,7 @@ label_79f668:
         return;
         #endif
     }
-    ctx->pc = 0x79F67Cu;
     // 0x79f67c: 0x0  nop
-    ctx->pc = 0x79f67cu;
     // NOP
     ctx->pc = 0x79f680u;
 }

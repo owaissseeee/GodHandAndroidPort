@@ -13,7 +13,7 @@
 
 // Function: cSndBgmNode_Init
 // Address: 0x2cc578 - 0x2cc5c0
-void cSndBgmNode_Init_0x2cc578(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndBgmNode_Init_0x2cc578(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndBgmNode_Init_0x2cc578");
 #endif
@@ -49,7 +49,6 @@ void cSndBgmNode_Init_0x2cc578(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2cc594u)) {
         return;
     }
-    ctx->pc = 0x2CC594u;
 label_2cc594:
     // 0x2cc594: 0x2403ffff  addiu       $v1, $zero, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));

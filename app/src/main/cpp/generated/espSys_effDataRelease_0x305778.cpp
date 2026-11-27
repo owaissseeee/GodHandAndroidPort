@@ -13,7 +13,7 @@
 
 // Function: espSys_effDataRelease
 // Address: 0x305778 - 0x3057a0
-void espSys_effDataRelease_0x305778(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void espSys_effDataRelease_0x305778(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("espSys_effDataRelease_0x305778");
 #endif
@@ -42,7 +42,6 @@ void espSys_effDataRelease_0x305778(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &FindAndForwardEntry_3059A8_0x3059a8, 0x3059a8u, 0x305788u)) {
         return;
     }
-    ctx->pc = 0x305788u;
 label_305788:
     // 0x305788: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x305788u;

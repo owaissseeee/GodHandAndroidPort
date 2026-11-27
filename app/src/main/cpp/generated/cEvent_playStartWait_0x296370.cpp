@@ -13,7 +13,7 @@
 
 // Function: cEvent_playStartWait
 // Address: 0x296370 - 0x296458
-void cEvent_playStartWait_0x296370(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_playStartWait_0x296370(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_playStartWait_0x296370");
 #endif
@@ -65,7 +65,6 @@ void cEvent_playStartWait_0x296370(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_002962A8_0x2962a8, 0x2962a8u, 0x296394u)) {
         return;
     }
-    ctx->pc = 0x296394u;
 label_296394:
     // 0x296394: 0x40982d  daddu       $s3, $v0, $zero
     SET_GPR_U64(ctx, 19, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -86,7 +85,6 @@ label_296394:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A6C58_0x3a6c58, 0x3a6c58u, 0x2963acu)) {
         return;
     }
-    ctx->pc = 0x2963ACu;
 label_2963ac:
     // 0x2963ac: 0x3c040058  lui         $a0, 0x58
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)88 << 16));
@@ -103,7 +101,6 @@ label_2963ac:
     if (!runtime->callDirectStatic(rdram, ctx, &cDvd_FileExist_0x2011f8, 0x2011f8u, 0x2963bcu)) {
         return;
     }
-    ctx->pc = 0x2963BCu;
 label_2963bc:
     // 0x2963bc: 0x1040001f  beqz        $v0, . + 4 + (0x1F << 2)
     ctx->pc = 0x2963BCu;
@@ -141,7 +138,6 @@ label_2963bc:
         }
     }
     // 0x2963d4: 0x0  nop
-    ctx->pc = 0x2963d4u;
     // NOP
 label_2963d8:
     // 0x2963d8: 0x24050001  addiu       $a1, $zero, 0x1
@@ -158,7 +154,6 @@ label_2963d8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D5AA0u, 0x2963DCu, 0x2963E4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2963E4u;
 label_2963e4:
     // 0x2963e4: 0x8e427a84  lw          $v0, 0x7A84($s2)
     ctx->pc = 0x2963e4u;
@@ -200,7 +195,6 @@ label_2963e8:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_startSoftEvent_0x2c39b0, 0x2c39b0u, 0x296404u)) {
         return;
     }
-    ctx->pc = 0x296404u;
 label_296404:
     // 0x296404: 0x260282d  daddu       $a1, $s3, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 19) + (uint64_t)GPR_U64(ctx, 0));
@@ -215,7 +209,6 @@ label_296404:
     if (!runtime->callDirectStatic(rdram, ctx, &cEvent_playStart_0x296458, 0x296458u, 0x296410u)) {
         return;
     }
-    ctx->pc = 0x296410u;
 label_296410:
     // 0x296410: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x296410u;
@@ -232,7 +225,6 @@ label_296410:
             goto label_296428;
         }
     }
-    ctx->pc = 0x296418u;
 label_296418:
     // 0x296418: 0x24050001  addiu       $a1, $zero, 0x1
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -248,7 +240,6 @@ label_296418:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D5AA0u, 0x29641Cu, 0x296424u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x296424u;
 label_296424:
     // 0x296424: 0x8e220008  lw          $v0, 0x8($s1)
     ctx->pc = 0x296424u;
@@ -285,7 +276,6 @@ label_296428:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario__endSoftEvent_0x2c3c10, 0x2c3c10u, 0x29643cu)) {
         return;
     }
-    ctx->pc = 0x29643Cu;
 label_29643c:
     // 0x29643c: 0x7bb00060  lq          $s0, 0x60($sp)
     ctx->pc = 0x29643cu;

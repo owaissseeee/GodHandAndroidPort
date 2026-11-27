@@ -13,7 +13,7 @@
 
 // Function: sceSifRemoveRpcQueue
 // Address: 0x3b3568 - 0x3b35f8
-void sceSifRemoveRpcQueue_0x3b3568(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSifRemoveRpcQueue_0x3b3568(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSifRemoveRpcQueue_0x3b3568");
 #endif
@@ -50,7 +50,6 @@ void sceSifRemoveRpcQueue_0x3b3568(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x3b3580u)) {
         return;
     }
-    ctx->pc = 0x3B3580u;
 label_3b3580:
     // 0x3b3580: 0x3c030078  lui         $v1, 0x78
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)120 << 16));
@@ -86,7 +85,6 @@ label_3b3580:
             goto label_3b35d8;
         }
     }
-    ctx->pc = 0x3B35A0u;
 label_3b35a0:
     // 0x3b35a0: 0x1200000d  beqz        $s0, . + 4 + (0xD << 2)
     ctx->pc = 0x3B35A0u;
@@ -116,7 +114,6 @@ label_3b35a0:
         }
     }
     // 0x3b35b4: 0x0  nop
-    ctx->pc = 0x3b35b4u;
     // NOP
 label_3b35b8:
     // 0x3b35b8: 0x60802d  daddu       $s0, $v1, $zero
@@ -165,7 +162,6 @@ label_3b35d8:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x3b35e0u)) {
         return;
     }
-    ctx->pc = 0x3B35E0u;
 label_3b35e0:
     // 0x3b35e0: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

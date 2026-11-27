@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_ckReelSlot
 // Address: 0x1fc1c8 - 0x1fc210
-void cCoreSave_ckReelSlot_0x1fc1c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_ckReelSlot_0x1fc1c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_ckReelSlot_0x1fc1c8");
 #endif
@@ -64,7 +64,6 @@ void cCoreSave_ckReelSlot_0x1fc1c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         return;
         #endif
     }
-    ctx->pc = 0x1FC1DCu;
 label_1fc1dc:
     // 0x1fc1dc: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC1DCu;
@@ -85,14 +84,12 @@ label_1fc1dc:
         return;
         #endif
     }
-    ctx->pc = 0x1FC1E4u;
 label_1fc1e4:
     // 0x1fc1e4: 0x302d  daddu       $a2, $zero, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1fc1e8: 0x861021  addu        $v0, $a0, $a2
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 6)));
     // 0x1fc1ec: 0x0  nop
-    ctx->pc = 0x1fc1ecu;
     // NOP
 label_1fc1f0:
     // 0x1fc1f0: 0x90430000  lbu         $v1, 0x0($v0)

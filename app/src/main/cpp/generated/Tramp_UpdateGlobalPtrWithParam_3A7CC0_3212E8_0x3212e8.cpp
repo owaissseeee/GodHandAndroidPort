@@ -13,7 +13,7 @@
 
 // Function: Tramp_UpdateGlobalPtrWithParam_3A7CC0_3212E8
 // Address: 0x3212e8 - 0x321308
-void Tramp_UpdateGlobalPtrWithParam_3A7CC0_3212E8_0x3212e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp_UpdateGlobalPtrWithParam_3A7CC0_3212E8_0x3212e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp_UpdateGlobalPtrWithParam_3A7CC0_3212E8_0x3212e8");
 #endif
@@ -37,7 +37,6 @@ void Tramp_UpdateGlobalPtrWithParam_3A7CC0_3212E8_0x3212e8(uint8_t* rdram, R5900
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateGlobalPtrWithParam_3A7CC0_0x3a7cc0, 0x3a7cc0u, 0x3212f8u)) {
         return;
     }
-    ctx->pc = 0x3212F8u;
 label_3212f8:
     // 0x3212f8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3212f8u;

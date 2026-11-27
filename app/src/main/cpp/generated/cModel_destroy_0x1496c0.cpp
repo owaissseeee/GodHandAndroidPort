@@ -13,7 +13,7 @@
 
 // Function: cModel_destroy
 // Address: 0x1496c0 - 0x149738
-void cModel_destroy_0x1496c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cModel_destroy_0x1496c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cModel_destroy_0x1496c0");
 #endif
@@ -82,7 +82,6 @@ void cModel_destroy_0x1496c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x1496F0u, 0x1496F8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1496F8u;
 label_1496f8:
     // 0x1496f8: 0xc052de6  jal         func_14B798
     SET_GPR_U32(ctx, 31, 0x149700u);
@@ -95,7 +94,6 @@ label_1496f8:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_removeMesh_0x14b798, 0x14b798u, 0x149700u)) {
         return;
     }
-    ctx->pc = 0x149700u;
 label_149700:
     // 0x149700: 0xc052798  jal         func_149E60
     SET_GPR_U32(ctx, 31, 0x149708u);
@@ -108,7 +106,6 @@ label_149700:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00149E60_0x149e60, 0x149e60u, 0x149708u)) {
         return;
     }
-    ctx->pc = 0x149708u;
 label_149708:
     // 0x149708: 0x26040260  addiu       $a0, $s0, 0x260
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 608));
@@ -123,7 +120,6 @@ label_149708:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F8A60_0x1f8a60, 0x1f8a60u, 0x149714u)) {
         return;
     }
-    ctx->pc = 0x149714u;
 label_149714:
     // 0x149714: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -138,7 +134,6 @@ label_149714:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00150048_0x150048, 0x150048u, 0x149720u)) {
         return;
     }
-    ctx->pc = 0x149720u;
 label_149720:
     // 0x149720: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x149720u;

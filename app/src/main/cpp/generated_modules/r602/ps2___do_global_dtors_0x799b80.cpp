@@ -14,46 +14,46 @@ namespace gh_r602
 {
 // Function: __do_global_dtors
 // Address: 0x799b80 - 0x799bd8
-void ps2___do_global_dtors_0x799b80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___do_global_dtors_0x799b80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___do_global_dtors_0x799b80");
 #endif
 
-    switch (ctx->pc) {
-        case 0x799b80u: goto label_799b80;
-        case 0x799b84u: goto label_799b84;
-        case 0x799b88u: goto label_799b88;
-        case 0x799b8cu: goto label_799b8c;
-        case 0x799b90u: goto label_799b90;
-        case 0x799b94u: goto label_799b94;
-        case 0x799b98u: goto label_799b98;
-        case 0x799b9cu: goto label_799b9c;
-        case 0x799ba0u: goto label_799ba0;
-        case 0x799ba4u: goto label_799ba4;
-        case 0x799ba8u: goto label_799ba8;
-        case 0x799bacu: goto label_799bac;
-        case 0x799bb0u: goto label_799bb0;
-        case 0x799bb4u: goto label_799bb4;
-        case 0x799bb8u: goto label_799bb8;
-        case 0x799bbcu: goto label_799bbc;
-        case 0x799bc0u: goto label_799bc0;
-        case 0x799bc4u: goto label_799bc4;
-        case 0x799bc8u: goto label_799bc8;
-        case 0x799bccu: goto label_799bcc;
-        case 0x799bd0u: goto label_799bd0;
-        case 0x799bd4u: goto label_799bd4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x799b80u, 0)) {
+        switch (ctx->pc) {
+            case 0x799b80u: goto label_799b80;
+            case 0x799b84u: goto label_799b84;
+            case 0x799b88u: goto label_799b88;
+            case 0x799b8cu: goto label_799b8c;
+            case 0x799b90u: goto label_799b90;
+            case 0x799b94u: goto label_799b94;
+            case 0x799b98u: goto label_799b98;
+            case 0x799b9cu: goto label_799b9c;
+            case 0x799ba0u: goto label_799ba0;
+            case 0x799ba4u: goto label_799ba4;
+            case 0x799ba8u: goto label_799ba8;
+            case 0x799bacu: goto label_799bac;
+            case 0x799bb0u: goto label_799bb0;
+            case 0x799bb4u: goto label_799bb4;
+            case 0x799bb8u: goto label_799bb8;
+            case 0x799bbcu: goto label_799bbc;
+            case 0x799bc0u: goto label_799bc0;
+            case 0x799bc4u: goto label_799bc4;
+            case 0x799bc8u: goto label_799bc8;
+            case 0x799bccu: goto label_799bcc;
+            case 0x799bd0u: goto label_799bd0;
+            case 0x799bd4u: goto label_799bd4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x799b80u;
+
 
 label_799b80:
     // 0x799b80: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x799b80u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
 label_799b84:
     // 0x799b84: 0x3c04007a  lui         $a0, 0x7A
-    ctx->pc = 0x799b84u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)122 << 16));
 label_799b88:
     // 0x799b88: 0xffbf0010  sd          $ra, 0x10($sp)
@@ -98,14 +98,12 @@ label_799b9c:
             goto label_799bc4;
         }
     }
-    ctx->pc = 0x799BA0u;
 label_799ba0:
     // 0x799ba0: 0x8e029d80  lw          $v0, -0x6280($s0)
     ctx->pc = 0x799ba0u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 4294942080)));
 label_799ba4:
     // 0x799ba4: 0x24420004  addiu       $v0, $v0, 0x4
-    ctx->pc = 0x799ba4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4));
 label_799ba8:
     // 0x799ba8: 0x8c43fffc  lw          $v1, -0x4($v0)
@@ -139,7 +137,6 @@ label_799bb0:
             return;
         }
     }
-    ctx->pc = 0x799BB4u;
 label_799bb4:
     // 0x799bb4: 0x8e029d80  lw          $v0, -0x6280($s0)
     ctx->pc = 0x799bb4u;
@@ -178,7 +175,6 @@ label_799bc0:
             goto label_799ba8;
         }
     }
-    ctx->pc = 0x799BC4u;
 label_799bc4:
     // 0x799bc4: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x799bc4u;
@@ -218,10 +214,8 @@ label_799bd0:
         return;
         #endif
     }
-    ctx->pc = 0x799BD4u;
 label_799bd4:
     // 0x799bd4: 0x0  nop
-    ctx->pc = 0x799bd4u;
     // NOP
     ctx->pc = 0x799bd8u;
 }

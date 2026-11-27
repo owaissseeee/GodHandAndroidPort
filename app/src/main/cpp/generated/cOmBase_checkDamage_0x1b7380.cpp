@@ -13,7 +13,7 @@
 
 // Function: cOmBase_checkDamage
 // Address: 0x1b7380 - 0x1b7568
-void cOmBase_checkDamage_0x1b7380(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmBase_checkDamage_0x1b7380(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmBase_checkDamage_0x1b7380");
 #endif
@@ -113,7 +113,6 @@ void cOmBase_checkDamage_0x1b7380(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B7568_0x1b7568, 0x1b7568u, 0x1b73d0u)) {
         return;
     }
-    ctx->pc = 0x1B73D0u;
 label_1b73d0:
     // 0x1b73d0: 0x9e2205b8  lwu         $v0, 0x5B8($s1)
     ctx->pc = 0x1b73d0u;
@@ -230,7 +229,6 @@ label_1b7408:
             goto label_1b743c;
         }
     }
-    ctx->pc = 0x1B7438u;
 label_1b7438:
     // 0x1b7438: 0xa625054a  sh          $a1, 0x54A($s1)
     ctx->pc = 0x1b7438u;
@@ -267,7 +265,6 @@ label_1b743c:
     if (!runtime->callDirectStatic(rdram, ctx, &Tramp_001F7DF8_00101E28_0x101e28, 0x101e28u, 0x1b7464u)) {
         return;
     }
-    ctx->pc = 0x1B7464u;
 label_1b7464:
     // 0x1b7464: 0x46000086  mov.s       $f2, $f0
     ctx->f[2] = FPU_MOV_S(ctx->f[0]);
@@ -456,10 +453,8 @@ label_1b7540:
             goto label_1b754c;
         }
     }
-    ctx->pc = 0x1B7548u;
 label_1b7548:
     // 0x1b7548: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1b7548u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1b754c:
     // 0x1b754c: 0x7bb00060  lq          $s0, 0x60($sp)

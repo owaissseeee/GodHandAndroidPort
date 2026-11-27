@@ -13,7 +13,7 @@
 
 // Function: do_osfx__7ostream
 // Address: 0x389548 - 0x3895b0
-void do_osfx__7ostream_0x389548(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void do_osfx__7ostream_0x389548(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("do_osfx__7ostream_0x389548");
 #endif
@@ -67,7 +67,6 @@ void do_osfx__7ostream_0x389548(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &flush__7ostream_0x389268, 0x389268u, 0x389574u)) {
         return;
     }
-    ctx->pc = 0x389574u;
 label_389574:
     // 0x389574: 0x8e030000  lw          $v1, 0x0($s0)
     ctx->pc = 0x389574u;
@@ -107,7 +106,6 @@ label_38957c:
     if (!runtime->callDirectStatic(rdram, ctx, &fflush_0x3a6020, 0x3a6020u, 0x389594u)) {
         return;
     }
-    ctx->pc = 0x389594u;
 label_389594:
     // 0x389594: 0x8e03a62c  lw          $v1, -0x59D4($s0)
     ctx->pc = 0x389594u;
@@ -123,7 +121,6 @@ label_389594:
     if (!runtime->callDirectStatic(rdram, ctx, &fflush_0x3a6020, 0x3a6020u, 0x3895a0u)) {
         return;
     }
-    ctx->pc = 0x3895A0u;
 label_3895a0:
     // 0x3895a0: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x3895a0u;

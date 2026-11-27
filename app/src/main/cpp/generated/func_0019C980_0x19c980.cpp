@@ -13,7 +13,7 @@
 
 // Function: func_0019C980
 // Address: 0x19c980 - 0x19c9f8
-void func_0019C980_0x19c980(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0019C980_0x19c980(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0019C980_0x19c980");
 #endif
@@ -48,7 +48,6 @@ void func_0019C980_0x19c980(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1B7380u, 0x19C990u, 0x19C998u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x19C998u;
 label_19c998:
     // 0x19c998: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -121,7 +120,6 @@ label_19c998:
             goto label_19c9e4;
         }
     }
-    ctx->pc = 0x19C9D8u;
 label_19c9d8:
     // 0x19c9d8: 0xa20002f7  sb          $zero, 0x2F7($s0)
     ctx->pc = 0x19c9d8u;

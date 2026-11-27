@@ -13,7 +13,7 @@
 
 // Function: Forward2AAC28_13F070
 // Address: 0x13f070 - 0x13f090
-void Forward2AAC28_13F070_0x13f070(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Forward2AAC28_13F070_0x13f070(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Forward2AAC28_13F070_0x13f070");
 #endif
@@ -37,7 +37,6 @@ void Forward2AAC28_13F070_0x13f070(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_trans_0x2aac28, 0x2aac28u, 0x13f080u)) {
         return;
     }
-    ctx->pc = 0x13F080u;
 label_13f080:
     // 0x13f080: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x13f080u;

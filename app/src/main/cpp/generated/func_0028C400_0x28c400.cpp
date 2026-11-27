@@ -13,7 +13,7 @@
 
 // Function: func_0028C400
 // Address: 0x28c400 - 0x28cb90
-void func_0028C400_0x28c400(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0028C400_0x28c400(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0028C400_0x28c400");
 #endif
@@ -141,7 +141,6 @@ void func_0028C400_0x28c400(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             return;
         }
     }
-    ctx->pc = 0x28C444u;
 label_28c444:
     // 0x28c444: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c444u;
@@ -164,7 +163,6 @@ label_28c444:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C454u;
 label_28c454:
     // 0x28c454: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c454u;
@@ -187,7 +185,6 @@ label_28c454:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C464u;
 label_28c464:
     // 0x28c464: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c464u;
@@ -210,7 +207,6 @@ label_28c464:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C474u;
 label_28c474:
     // 0x28c474: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c474u;
@@ -233,7 +229,6 @@ label_28c474:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C484u;
 label_28c484:
     // 0x28c484: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c484u;
@@ -256,7 +251,6 @@ label_28c484:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C494u;
 label_28c494:
     // 0x28c494: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c494u;
@@ -279,7 +273,6 @@ label_28c494:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C4A4u;
 label_28c4a4:
     // 0x28c4a4: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c4a4u;
@@ -302,7 +295,6 @@ label_28c4a4:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C4B4u;
 label_28c4b4:
     // 0x28c4b4: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c4b4u;
@@ -325,7 +317,6 @@ label_28c4b4:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C4C4u;
 label_28c4c4:
     // 0x28c4c4: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c4c4u;
@@ -348,7 +339,6 @@ label_28c4c4:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C4D4u;
 label_28c4d4:
     // 0x28c4d4: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c4d4u;
@@ -371,7 +361,6 @@ label_28c4d4:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C4E4u;
 label_28c4e4:
     // 0x28c4e4: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c4e4u;
@@ -394,7 +383,6 @@ label_28c4e4:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C4F4u;
 label_28c4f4:
     // 0x28c4f4: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c4f4u;
@@ -417,7 +405,6 @@ label_28c4f4:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C504u;
 label_28c504:
     // 0x28c504: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c504u;
@@ -440,7 +427,6 @@ label_28c504:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C514u;
 label_28c514:
     // 0x28c514: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c514u;
@@ -463,7 +449,6 @@ label_28c514:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C524u;
 label_28c524:
     // 0x28c524: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c524u;
@@ -486,7 +471,6 @@ label_28c524:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C534u;
 label_28c534:
     // 0x28c534: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c534u;
@@ -509,7 +493,6 @@ label_28c534:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C544u;
 label_28c544:
     // 0x28c544: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c544u;
@@ -532,7 +515,6 @@ label_28c544:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C554u;
 label_28c554:
     // 0x28c554: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c554u;
@@ -555,7 +537,6 @@ label_28c554:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C564u;
 label_28c564:
     // 0x28c564: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c564u;
@@ -578,7 +559,6 @@ label_28c564:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C574u;
 label_28c574:
     // 0x28c574: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c574u;
@@ -601,7 +581,6 @@ label_28c574:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C584u;
 label_28c584:
     // 0x28c584: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c584u;
@@ -624,7 +603,6 @@ label_28c584:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C594u;
 label_28c594:
     // 0x28c594: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c594u;
@@ -647,7 +625,6 @@ label_28c594:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C5A4u;
 label_28c5a4:
     // 0x28c5a4: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c5a4u;
@@ -670,7 +647,6 @@ label_28c5a4:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C5B4u;
 label_28c5b4:
     // 0x28c5b4: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c5b4u;
@@ -693,7 +669,6 @@ label_28c5b4:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C5C4u;
 label_28c5c4:
     // 0x28c5c4: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c5c4u;
@@ -716,7 +691,6 @@ label_28c5c4:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C5D4u;
 label_28c5d4:
     // 0x28c5d4: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c5d4u;
@@ -739,7 +713,6 @@ label_28c5d4:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C5E4u;
 label_28c5e4:
     // 0x28c5e4: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c5e4u;
@@ -762,7 +735,6 @@ label_28c5e4:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C5F4u;
 label_28c5f4:
     // 0x28c5f4: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c5f4u;
@@ -785,7 +757,6 @@ label_28c5f4:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C604u;
 label_28c604:
     // 0x28c604: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c604u;
@@ -808,7 +779,6 @@ label_28c604:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C614u;
 label_28c614:
     // 0x28c614: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c614u;
@@ -831,7 +801,6 @@ label_28c614:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C624u;
 label_28c624:
     // 0x28c624: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c624u;
@@ -854,7 +823,6 @@ label_28c624:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C634u;
 label_28c634:
     // 0x28c634: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c634u;
@@ -877,7 +845,6 @@ label_28c634:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C644u;
 label_28c644:
     // 0x28c644: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c644u;
@@ -900,7 +867,6 @@ label_28c644:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C654u;
 label_28c654:
     // 0x28c654: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c654u;
@@ -923,7 +889,6 @@ label_28c654:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C664u;
 label_28c664:
     // 0x28c664: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c664u;
@@ -946,7 +911,6 @@ label_28c664:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C674u;
 label_28c674:
     // 0x28c674: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c674u;
@@ -969,7 +933,6 @@ label_28c674:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C684u;
 label_28c684:
     // 0x28c684: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c684u;
@@ -992,7 +955,6 @@ label_28c684:
             goto label_28c6a0;
         }
     }
-    ctx->pc = 0x28C694u;
 label_28c694:
     // 0x28c694: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x28c694u;
@@ -1068,7 +1030,6 @@ label_28c6a0:
             return;
         }
     }
-    ctx->pc = 0x28C6D4u;
 label_28c6d4:
     // 0x28c6d4: 0x8e02153c  lw          $v0, 0x153C($s0)
     ctx->pc = 0x28c6d4u;
@@ -1121,7 +1082,6 @@ label_28c6d4:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28c70cu)) {
         return;
     }
-    ctx->pc = 0x28C70Cu;
 label_28c70c:
     // 0x28c70c: 0x10000110  b           . + 4 + (0x110 << 2)
     ctx->pc = 0x28C70Cu;
@@ -1138,7 +1098,6 @@ label_28c70c:
             goto label_28cb50;
         }
     }
-    ctx->pc = 0x28C714u;
 label_28c714:
     // 0x28c714: 0x8e02153c  lw          $v0, 0x153C($s0)
     ctx->pc = 0x28c714u;
@@ -1191,7 +1150,6 @@ label_28c714:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28c74cu)) {
         return;
     }
-    ctx->pc = 0x28C74Cu;
 label_28c74c:
     // 0x28c74c: 0x10000100  b           . + 4 + (0x100 << 2)
     ctx->pc = 0x28C74Cu;
@@ -1208,7 +1166,6 @@ label_28c74c:
             goto label_28cb50;
         }
     }
-    ctx->pc = 0x28C754u;
 label_28c754:
     // 0x28c754: 0x8e02153c  lw          $v0, 0x153C($s0)
     ctx->pc = 0x28c754u;
@@ -1261,7 +1218,6 @@ label_28c754:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28c78cu)) {
         return;
     }
-    ctx->pc = 0x28C78Cu;
 label_28c78c:
     // 0x28c78c: 0x100000f0  b           . + 4 + (0xF0 << 2)
     ctx->pc = 0x28C78Cu;
@@ -1278,7 +1234,6 @@ label_28c78c:
             goto label_28cb50;
         }
     }
-    ctx->pc = 0x28C794u;
 label_28c794:
     // 0x28c794: 0x8e02153c  lw          $v0, 0x153C($s0)
     ctx->pc = 0x28c794u;
@@ -1331,7 +1286,6 @@ label_28c794:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28c7ccu)) {
         return;
     }
-    ctx->pc = 0x28C7CCu;
 label_28c7cc:
     // 0x28c7cc: 0x100000e0  b           . + 4 + (0xE0 << 2)
     ctx->pc = 0x28C7CCu;
@@ -1348,7 +1302,6 @@ label_28c7cc:
             goto label_28cb50;
         }
     }
-    ctx->pc = 0x28C7D4u;
 label_28c7d4:
     // 0x28c7d4: 0x8e02153c  lw          $v0, 0x153C($s0)
     ctx->pc = 0x28c7d4u;
@@ -1401,7 +1354,6 @@ label_28c7d4:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28c80cu)) {
         return;
     }
-    ctx->pc = 0x28C80Cu;
 label_28c80c:
     // 0x28c80c: 0x100000d0  b           . + 4 + (0xD0 << 2)
     ctx->pc = 0x28C80Cu;
@@ -1418,7 +1370,6 @@ label_28c80c:
             goto label_28cb50;
         }
     }
-    ctx->pc = 0x28C814u;
 label_28c814:
     // 0x28c814: 0x8e02153c  lw          $v0, 0x153C($s0)
     ctx->pc = 0x28c814u;
@@ -1471,7 +1422,6 @@ label_28c814:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28c84cu)) {
         return;
     }
-    ctx->pc = 0x28C84Cu;
 label_28c84c:
     // 0x28c84c: 0x100000c0  b           . + 4 + (0xC0 << 2)
     ctx->pc = 0x28C84Cu;
@@ -1488,7 +1438,6 @@ label_28c84c:
             goto label_28cb50;
         }
     }
-    ctx->pc = 0x28C854u;
 label_28c854:
     // 0x28c854: 0x8e02153c  lw          $v0, 0x153C($s0)
     ctx->pc = 0x28c854u;
@@ -1541,7 +1490,6 @@ label_28c854:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28c88cu)) {
         return;
     }
-    ctx->pc = 0x28C88Cu;
 label_28c88c:
     // 0x28c88c: 0x100000b0  b           . + 4 + (0xB0 << 2)
     ctx->pc = 0x28C88Cu;
@@ -1558,7 +1506,6 @@ label_28c88c:
             goto label_28cb50;
         }
     }
-    ctx->pc = 0x28C894u;
 label_28c894:
     // 0x28c894: 0x8e02153c  lw          $v0, 0x153C($s0)
     ctx->pc = 0x28c894u;
@@ -1611,7 +1558,6 @@ label_28c894:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28c8ccu)) {
         return;
     }
-    ctx->pc = 0x28C8CCu;
 label_28c8cc:
     // 0x28c8cc: 0x100000a0  b           . + 4 + (0xA0 << 2)
     ctx->pc = 0x28C8CCu;
@@ -1628,7 +1574,6 @@ label_28c8cc:
             goto label_28cb50;
         }
     }
-    ctx->pc = 0x28C8D4u;
 label_28c8d4:
     // 0x28c8d4: 0x8e02153c  lw          $v0, 0x153C($s0)
     ctx->pc = 0x28c8d4u;
@@ -1681,7 +1626,6 @@ label_28c8d4:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28c90cu)) {
         return;
     }
-    ctx->pc = 0x28C90Cu;
 label_28c90c:
     // 0x28c90c: 0x10000090  b           . + 4 + (0x90 << 2)
     ctx->pc = 0x28C90Cu;
@@ -1698,7 +1642,6 @@ label_28c90c:
             goto label_28cb50;
         }
     }
-    ctx->pc = 0x28C914u;
 label_28c914:
     // 0x28c914: 0x8e02153c  lw          $v0, 0x153C($s0)
     ctx->pc = 0x28c914u;
@@ -1751,7 +1694,6 @@ label_28c914:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28c94cu)) {
         return;
     }
-    ctx->pc = 0x28C94Cu;
 label_28c94c:
     // 0x28c94c: 0x10000080  b           . + 4 + (0x80 << 2)
     ctx->pc = 0x28C94Cu;
@@ -1768,7 +1710,6 @@ label_28c94c:
             goto label_28cb50;
         }
     }
-    ctx->pc = 0x28C954u;
 label_28c954:
     // 0x28c954: 0x8e02153c  lw          $v0, 0x153C($s0)
     ctx->pc = 0x28c954u;
@@ -1821,7 +1762,6 @@ label_28c954:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28c98cu)) {
         return;
     }
-    ctx->pc = 0x28C98Cu;
 label_28c98c:
     // 0x28c98c: 0x10000070  b           . + 4 + (0x70 << 2)
     ctx->pc = 0x28C98Cu;
@@ -1838,7 +1778,6 @@ label_28c98c:
             goto label_28cb50;
         }
     }
-    ctx->pc = 0x28C994u;
 label_28c994:
     // 0x28c994: 0x8e02153c  lw          $v0, 0x153C($s0)
     ctx->pc = 0x28c994u;
@@ -1891,7 +1830,6 @@ label_28c994:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28c9ccu)) {
         return;
     }
-    ctx->pc = 0x28C9CCu;
 label_28c9cc:
     // 0x28c9cc: 0x10000060  b           . + 4 + (0x60 << 2)
     ctx->pc = 0x28C9CCu;
@@ -1908,7 +1846,6 @@ label_28c9cc:
             goto label_28cb50;
         }
     }
-    ctx->pc = 0x28C9D4u;
 label_28c9d4:
     // 0x28c9d4: 0x8e02153c  lw          $v0, 0x153C($s0)
     ctx->pc = 0x28c9d4u;
@@ -1961,7 +1898,6 @@ label_28c9d4:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28ca0cu)) {
         return;
     }
-    ctx->pc = 0x28CA0Cu;
 label_28ca0c:
     // 0x28ca0c: 0x10000050  b           . + 4 + (0x50 << 2)
     ctx->pc = 0x28CA0Cu;
@@ -1978,7 +1914,6 @@ label_28ca0c:
             goto label_28cb50;
         }
     }
-    ctx->pc = 0x28CA14u;
 label_28ca14:
     // 0x28ca14: 0x8e02153c  lw          $v0, 0x153C($s0)
     ctx->pc = 0x28ca14u;
@@ -2031,7 +1966,6 @@ label_28ca14:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28ca4cu)) {
         return;
     }
-    ctx->pc = 0x28CA4Cu;
 label_28ca4c:
     // 0x28ca4c: 0x10000040  b           . + 4 + (0x40 << 2)
     ctx->pc = 0x28CA4Cu;
@@ -2048,7 +1982,6 @@ label_28ca4c:
             goto label_28cb50;
         }
     }
-    ctx->pc = 0x28CA54u;
 label_28ca54:
     // 0x28ca54: 0x8e02153c  lw          $v0, 0x153C($s0)
     ctx->pc = 0x28ca54u;
@@ -2101,7 +2034,6 @@ label_28ca54:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28ca8cu)) {
         return;
     }
-    ctx->pc = 0x28CA8Cu;
 label_28ca8c:
     // 0x28ca8c: 0x10000030  b           . + 4 + (0x30 << 2)
     ctx->pc = 0x28CA8Cu;
@@ -2118,7 +2050,6 @@ label_28ca8c:
             goto label_28cb50;
         }
     }
-    ctx->pc = 0x28CA94u;
 label_28ca94:
     // 0x28ca94: 0x8e02153c  lw          $v0, 0x153C($s0)
     ctx->pc = 0x28ca94u;
@@ -2171,7 +2102,6 @@ label_28ca94:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28caccu)) {
         return;
     }
-    ctx->pc = 0x28CACCu;
 label_28cacc:
     // 0x28cacc: 0x24030271  addiu       $v1, $zero, 0x271
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 625));
@@ -2230,7 +2160,6 @@ label_28cad4:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28cb0cu)) {
         return;
     }
-    ctx->pc = 0x28CB0Cu;
 label_28cb0c:
     // 0x28cb0c: 0x24030272  addiu       $v1, $zero, 0x272
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 626));
@@ -2289,10 +2218,8 @@ label_28cb14:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setTextureExchange_0x149ad8, 0x149ad8u, 0x28cb4cu)) {
         return;
     }
-    ctx->pc = 0x28CB4Cu;
 label_28cb4c:
     // 0x28cb4c: 0x24030273  addiu       $v1, $zero, 0x273
-    ctx->pc = 0x28cb4cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 627));
 label_28cb50:
     // 0x28cb50: 0xae030564  sw          $v1, 0x564($s0)
@@ -2329,7 +2256,6 @@ label_28cb54:
             goto label_28cb78;
         }
     }
-    ctx->pc = 0x28CB64u;
 label_28cb64:
     // 0x28cb64: 0x240282d  daddu       $a1, $s2, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -2348,7 +2274,6 @@ label_28cb64:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setupModel_0x149738, 0x149738u, 0x28cb78u)) {
         return;
     }
-    ctx->pc = 0x28CB78u;
 label_28cb78:
     // 0x28cb78: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x28cb78u;

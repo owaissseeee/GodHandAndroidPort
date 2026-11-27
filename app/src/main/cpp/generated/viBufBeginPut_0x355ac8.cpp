@@ -13,7 +13,7 @@
 
 // Function: viBufBeginPut
 // Address: 0x355ac8 - 0x355bb8
-void viBufBeginPut_0x355ac8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void viBufBeginPut_0x355ac8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("viBufBeginPut_0x355ac8");
 #endif
@@ -67,7 +67,6 @@ void viBufBeginPut_0x355ac8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &WaitSema_0x3afce0, 0x3afce0u, 0x355b00u)) {
         return;
     }
-    ctx->pc = 0x355B00u;
 label_355b00:
     // 0x355b00: 0x8e03000c  lw          $v1, 0xC($s0)
     ctx->pc = 0x355b00u;
@@ -168,7 +167,6 @@ label_355b28:
         }
     }
     // 0x355b6c: 0x0  nop
-    ctx->pc = 0x355b6cu;
     // NOP
 label_355b70:
     // 0x355b70: 0x8e040000  lw          $a0, 0x0($s0)

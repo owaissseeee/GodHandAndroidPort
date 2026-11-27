@@ -13,7 +13,7 @@
 
 // Function: cIDBase_buildEntries
 // Address: 0x2aa1e0 - 0x2aa2d0
-void cIDBase_buildEntries_0x2aa1e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDBase_buildEntries_0x2aa1e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDBase_buildEntries_0x2aa1e0");
 #endif
@@ -83,7 +83,6 @@ void cIDBase_buildEntries_0x2aa1e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2aa22cu)) {
         return;
     }
-    ctx->pc = 0x2AA22Cu;
 label_2aa22c:
     // 0x2aa22c: 0x1a60001e  blez        $s3, . + 4 + (0x1E << 2)
     ctx->pc = 0x2AA22Cu;
@@ -110,7 +109,6 @@ label_2aa22c:
     ctx->pc = 0x2aa240u;
     SET_GPR_S32(ctx, 2, (int32_t)FAST_READ32(0x3C2384u));
     // 0x2aa244: 0x0  nop
-    ctx->pc = 0x2aa244u;
     // NOP
 label_2aa248:
     // 0x2aa248: 0x24b10001  addiu       $s1, $a1, 0x1
@@ -152,7 +150,6 @@ label_2aa248:
         }
     }
     // 0x2aa264: 0x0  nop
-    ctx->pc = 0x2aa264u;
     // NOP
 label_2aa268:
     // 0x2aa268: 0x8e020004  lw          $v0, 0x4($s0)
@@ -183,7 +180,6 @@ label_2aa26c:
             goto label_2aa268;
         }
     }
-    ctx->pc = 0x2AA280u;
 label_2aa280:
     // 0x2aa280: 0xb41018  mult        $v0, $a1, $s4
     { int64_t result = (int64_t)GPR_S32(ctx, 5) * (int64_t)GPR_S32(ctx, 20); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 2, (int32_t)result); }
@@ -204,7 +200,6 @@ label_2aa280:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_initEntry_0x2aa2d0, 0x2aa2d0u, 0x2aa298u)) {
         return;
     }
-    ctx->pc = 0x2AA298u;
 label_2aa298:
     // 0x2aa298: 0x220282d  daddu       $a1, $s1, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -228,7 +223,6 @@ label_2aa298:
             goto label_2aa248;
         }
     }
-    ctx->pc = 0x2AA2A8u;
 label_2aa2a8:
     // 0x2aa2a8: 0x7bb00070  lq          $s0, 0x70($sp)
     ctx->pc = 0x2aa2a8u;

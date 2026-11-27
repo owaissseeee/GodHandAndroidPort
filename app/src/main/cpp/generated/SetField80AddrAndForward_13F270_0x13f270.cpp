@@ -13,7 +13,7 @@
 
 // Function: SetField80AddrAndForward_13F270
 // Address: 0x13f270 - 0x13f2a0
-void SetField80AddrAndForward_13F270_0x13f270(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetField80AddrAndForward_13F270_0x13f270(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetField80AddrAndForward_13F270_0x13f270");
 #endif
@@ -58,7 +58,6 @@ void SetField80AddrAndForward_13F270_0x13f270(uint8_t* rdram, R5900Context* ctx,
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x13f294u)) {
         return;
     }
-    ctx->pc = 0x13F294u;
 label_13f294:
     // 0x13f294: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x13f294u;

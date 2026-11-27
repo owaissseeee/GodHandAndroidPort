@@ -13,7 +13,7 @@
 
 // Function: SpawnDamageTakeVolumeG
 // Address: 0x199e58 - 0x199f60
-void SpawnDamageTakeVolumeG_0x199e58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SpawnDamageTakeVolumeG_0x199e58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SpawnDamageTakeVolumeG_0x199e58");
 #endif
@@ -57,7 +57,6 @@ void SpawnDamageTakeVolumeG_0x199e58(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B6FB8_0x1b6fb8, 0x1b6fb8u, 0x199e78u)) {
         return;
     }
-    ctx->pc = 0x199E78u;
 label_199e78:
     // 0x199e78: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -138,7 +137,6 @@ label_199e78:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_CreateDamageTake_0x1fe218, 0x1fe218u, 0x199ef0u)) {
         return;
     }
-    ctx->pc = 0x199EF0u;
 label_199ef0:
     // 0x199ef0: 0x1040000b  beqz        $v0, . + 4 + (0xB << 2)
     ctx->pc = 0x199EF0u;
@@ -186,7 +184,6 @@ label_199ef0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FD9D8_0x1fd9d8, 0x1fd9d8u, 0x199f20u)) {
         return;
     }
-    ctx->pc = 0x199F20u;
 label_199f20:
     // 0x199f20: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -206,7 +203,6 @@ label_199f20:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001BFB28_0x1bfb28, 0x1bfb28u, 0x199f34u)) {
         return;
     }
-    ctx->pc = 0x199F34u;
 label_199f34:
     // 0x199f34: 0x8e0305b8  lw          $v1, 0x5B8($s0)
     ctx->pc = 0x199f34u;

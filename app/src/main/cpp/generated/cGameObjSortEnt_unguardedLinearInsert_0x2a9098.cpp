@@ -13,7 +13,7 @@
 
 // Function: cGameObjSortEnt_unguardedLinearInsert
 // Address: 0x2a9098 - 0x2a9100
-void cGameObjSortEnt_unguardedLinearInsert_0x2a9098(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObjSortEnt_unguardedLinearInsert_0x2a9098(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObjSortEnt_unguardedLinearInsert_0x2a9098");
 #endif
@@ -45,7 +45,6 @@ void cGameObjSortEnt_unguardedLinearInsert_0x2a9098(uint8_t* rdram, R5900Context
             goto label_2a90c0;
         }
     }
-    ctx->pc = 0x2A90A8u;
 label_2a90a8:
     // 0x2a90a8: 0x68620007  ldl         $v0, 0x7($v1)
     ctx->pc = 0x2a90a8u;
@@ -62,7 +61,6 @@ label_2a90a8:
     // 0x2a90b8: 0x60202d  daddu       $a0, $v1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2a90bc: 0x2483fff8  addiu       $v1, $a0, -0x8
-    ctx->pc = 0x2a90bcu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), 4294967288));
 label_2a90c0:
     // 0x2a90c0: 0xc7a10004  lwc1        $f1, 0x4($sp)
@@ -91,7 +89,6 @@ label_2a90c0:
         }
     }
     // 0x2a90d8: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2a90d8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2a90dc:
     // 0x2a90dc: 0x1440fff2  bnez        $v0, . + 4 + (-0xE << 2)

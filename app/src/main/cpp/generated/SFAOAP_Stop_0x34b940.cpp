@@ -13,7 +13,7 @@
 
 // Function: SFAOAP_Stop
 // Address: 0x34b940 - 0x34b988
-void SFAOAP_Stop_0x34b940(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFAOAP_Stop_0x34b940(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFAOAP_Stop_0x34b940");
 #endif
@@ -48,7 +48,6 @@ void SFAOAP_Stop_0x34b940(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &GetArrayElemA0C_35A1C8_0x35a1c8, 0x35a1c8u, 0x34b958u)) {
         return;
     }
-    ctx->pc = 0x34B958u;
 label_34b958:
     // 0x34b958: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -79,7 +78,6 @@ label_34b958:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035C2D0_0x35c2d0, 0x35c2d0u, 0x34b978u)) {
         return;
     }
-    ctx->pc = 0x34B978u;
 label_34b978:
     // 0x34b978: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x34b978u;

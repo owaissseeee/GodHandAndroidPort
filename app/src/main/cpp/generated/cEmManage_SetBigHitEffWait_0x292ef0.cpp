@@ -13,7 +13,7 @@
 
 // Function: cEmManage_SetBigHitEffWait
 // Address: 0x292ef0 - 0x292f08
-void cEmManage_SetBigHitEffWait_0x292ef0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_SetBigHitEffWait_0x292ef0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_SetBigHitEffWait_0x292ef0");
 #endif
@@ -39,7 +39,6 @@ void cEmManage_SetBigHitEffWait_0x292ef0(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_292f00;
         }
     }
-    ctx->pc = 0x292F00u;
 label_292f00:
     // 0x292f00: 0x3e00008  jr          $ra
     ctx->pc = 0x292F00u;

@@ -13,7 +13,7 @@
 
 // Function: cSpline_getPoint
 // Address: 0x2d4ef8 - 0x2d4fc0
-void cSpline_getPoint_0x2d4ef8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSpline_getPoint_0x2d4ef8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSpline_getPoint_0x2d4ef8");
 #endif
@@ -103,7 +103,6 @@ label_2d4f40:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ScaleVectorXYZ_0x30aba0, 0x30aba0u, 0x2d4f4cu)) {
         return;
     }
-    ctx->pc = 0x2D4F4Cu;
 label_2d4f4c:
     // 0x2d4f4c: 0x3a0282d  daddu       $a1, $sp, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -120,7 +119,6 @@ label_2d4f4c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0AddVector_0x30a4a0, 0x30a4a0u, 0x2d4f5cu)) {
         return;
     }
-    ctx->pc = 0x2D4F5Cu;
 label_2d4f5c:
     // 0x2d4f5c: 0x3a0202d  daddu       $a0, $sp, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -137,7 +135,6 @@ label_2d4f5c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ScaleVectorXYZ_0x30aba0, 0x30aba0u, 0x2d4f6cu)) {
         return;
     }
-    ctx->pc = 0x2D4F6Cu;
 label_2d4f6c:
     // 0x2d4f6c: 0x3a0282d  daddu       $a1, $sp, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -154,7 +151,6 @@ label_2d4f6c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0AddVector_0x30a4a0, 0x30a4a0u, 0x2d4f7cu)) {
         return;
     }
-    ctx->pc = 0x2D4F7Cu;
 label_2d4f7c:
     // 0x2d4f7c: 0x4600a306  mov.s       $f12, $f20
     ctx->f[12] = FPU_MOV_S(ctx->f[20]);
@@ -171,7 +167,6 @@ label_2d4f7c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ScaleVectorXYZ_0x30aba0, 0x30aba0u, 0x2d4f8cu)) {
         return;
     }
-    ctx->pc = 0x2D4F8Cu;
 label_2d4f8c:
     // 0x2d4f8c: 0x220302d  daddu       $a2, $s1, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -188,7 +183,6 @@ label_2d4f8c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0AddVector_0x30a4a0, 0x30a4a0u, 0x2d4f9cu)) {
         return;
     }
-    ctx->pc = 0x2D4F9Cu;
 label_2d4f9c:
     // 0x2d4f9c: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));

@@ -13,7 +13,7 @@
 
 // Function: classFADE_kill
 // Address: 0x3076e0 - 0x307718
-void classFADE_kill_0x3076e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void classFADE_kill_0x3076e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("classFADE_kill_0x3076e0");
 #endif
@@ -49,7 +49,6 @@ void classFADE_kill_0x3076e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_307704;
         }
     }
-    ctx->pc = 0x307704u;
 label_307704:
     // 0x307704: 0x3c0e82d  daddu       $sp, $fp, $zero
     SET_GPR_U64(ctx, 29, (uint64_t)GPR_U64(ctx, 30) + (uint64_t)GPR_U64(ctx, 0));

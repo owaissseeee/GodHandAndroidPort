@@ -13,7 +13,7 @@
 
 // Function: get_reg_addr
 // Address: 0x320948 - 0x3209d0
-void get_reg_addr_0x320948(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void get_reg_addr_0x320948(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("get_reg_addr_0x320948");
 #endif
@@ -63,7 +63,6 @@ void get_reg_addr_0x320948(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     // 0x320970: 0x610c0  sll         $v0, $a2, 3
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 6), 3));
     // 0x320974: 0x24040002  addiu       $a0, $zero, 0x2
-    ctx->pc = 0x320974u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
 label_320978:
     // 0x320978: 0xe21021  addu        $v0, $a3, $v0
@@ -98,7 +97,6 @@ label_320978:
             goto label_320978;
         }
     }
-    ctx->pc = 0x320998u;
 label_320998:
     // 0x320998: 0x24040001  addiu       $a0, $zero, 0x1
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -143,7 +141,6 @@ label_320998:
             goto label_3209c4;
         }
     }
-    ctx->pc = 0x3209BCu;
 label_3209bc:
     // 0x3209bc: 0xc0e9ed2  jal         func_3A7B48
     ctx->pc = 0x3209BCu;
@@ -151,7 +148,6 @@ label_3209bc:
     if (!runtime->callDirectStatic(rdram, ctx, &abort_0x3a7b48, 0x3a7b48u, 0x3209c4u)) {
         return;
     }
-    ctx->pc = 0x3209C4u;
 label_3209c4:
     // 0x3209c4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3209c4u;

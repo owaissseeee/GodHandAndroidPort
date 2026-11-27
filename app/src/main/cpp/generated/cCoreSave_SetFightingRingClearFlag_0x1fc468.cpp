@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_SetFightingRingClearFlag
 // Address: 0x1fc468 - 0x1fc4d0
-void cCoreSave_SetFightingRingClearFlag_0x1fc468(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_SetFightingRingClearFlag_0x1fc468(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_SetFightingRingClearFlag_0x1fc468");
 #endif
@@ -101,7 +101,6 @@ void cCoreSave_SetFightingRingClearFlag_0x1fc468(uint8_t* rdram, R5900Context* c
         return;
         #endif
     }
-    ctx->pc = 0x1FC4A8u;
 label_1fc4a8:
     // 0x1fc4a8: 0x24840b98  addiu       $a0, $a0, 0xB98
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 2968));

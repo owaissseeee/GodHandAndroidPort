@@ -13,7 +13,7 @@
 
 // Function: cModel_setNodeValues
 // Address: 0x319d60 - 0x319e00
-void cModel_setNodeValues_0x319d60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cModel_setNodeValues_0x319d60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cModel_setNodeValues_0x319d60");
 #endif
@@ -65,7 +65,6 @@ void cModel_setNodeValues_0x319d60(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &GetField_2B1_14B638_0x14b638, 0x14b638u, 0x319d8cu)) {
         return;
     }
-    ctx->pc = 0x319D8Cu;
 label_319d8c:
     // 0x319d8c: 0x40982d  daddu       $s3, $v0, $zero
     SET_GPR_U64(ctx, 19, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -87,7 +86,6 @@ label_319d8c:
     // 0x319d98: 0x220282d  daddu       $a1, $s1, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     // 0x319d9c: 0x0  nop
-    ctx->pc = 0x319d9cu;
     // NOP
 label_319da0:
     // 0x319da0: 0xc052dbe  jal         func_14B6F8
@@ -101,7 +99,6 @@ label_319da0:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_getMeshPtr_0x14b6f8, 0x14b6f8u, 0x319da8u)) {
         return;
     }
-    ctx->pc = 0x319DA8u;
 label_319da8:
     // 0x319da8: 0x26310001  addiu       $s1, $s1, 0x1
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 1));
@@ -122,7 +119,6 @@ label_319da8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00155D60_0x155d60, 0x155d60u, 0x319dc0u)) {
         return;
     }
-    ctx->pc = 0x319DC0u;
 label_319dc0:
     // 0x319dc0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -139,7 +135,6 @@ label_319dc0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00155D60_0x155d60, 0x155d60u, 0x319dd0u)) {
         return;
     }
-    ctx->pc = 0x319DD0u;
 label_319dd0:
     // 0x319dd0: 0x233102a  slt         $v0, $s1, $s3
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 17) < (int64_t)GPR_S64(ctx, 19)) ? 1 : 0);

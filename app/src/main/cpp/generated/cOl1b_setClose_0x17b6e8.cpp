@@ -13,7 +13,7 @@
 
 // Function: cOl1b_setClose
 // Address: 0x17b6e8 - 0x17b718
-void cOl1b_setClose_0x17b6e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl1b_setClose_0x17b6e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl1b_setClose_0x17b6e8");
 #endif

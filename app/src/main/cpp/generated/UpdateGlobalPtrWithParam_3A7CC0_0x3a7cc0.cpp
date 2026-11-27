@@ -13,7 +13,7 @@
 
 // Function: UpdateGlobalPtrWithParam_3A7CC0
 // Address: 0x3a7cc0 - 0x3a7d08
-void UpdateGlobalPtrWithParam_3A7CC0_0x3a7cc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateGlobalPtrWithParam_3A7CC0_0x3a7cc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateGlobalPtrWithParam_3A7CC0_0x3a7cc0");
 #endif
@@ -54,7 +54,6 @@ void UpdateGlobalPtrWithParam_3A7CC0_0x3a7cc0(uint8_t* rdram, R5900Context* ctx,
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___malloc_lock_0x3a8048, 0x3a8048u, 0x3a7ce0u)) {
         return;
     }
-    ctx->pc = 0x3A7CE0u;
 label_3a7ce0:
     // 0x3a7ce0: 0x8e04a62c  lw          $a0, -0x59D4($s0)
     ctx->pc = 0x3a7ce0u;
@@ -70,7 +69,6 @@ label_3a7ce0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003ACA28_0x3aca28, 0x3aca28u, 0x3a7cecu)) {
         return;
     }
-    ctx->pc = 0x3A7CECu;
 label_3a7cec:
     // 0x3a7cec: 0xc0ea02a  jal         func_3A80A8
     SET_GPR_U32(ctx, 31, 0x3A7CF4u);
@@ -83,7 +81,6 @@ label_3a7cec:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___malloc_unlock_0x3a80a8, 0x3a80a8u, 0x3a7cf4u)) {
         return;
     }
-    ctx->pc = 0x3A7CF4u;
 label_3a7cf4:
     // 0x3a7cf4: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x3a7cf4u;

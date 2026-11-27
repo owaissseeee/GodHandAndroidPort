@@ -13,7 +13,7 @@
 
 // Function: func_002B00A0
 // Address: 0x2b00a0 - 0x2b0208
-void func_002B00A0_0x2b00a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002B00A0_0x2b00a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002B00A0_0x2b00a0");
 #endif
@@ -99,7 +99,6 @@ void func_002B00A0_0x2b00a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x2b00ec: 0x46020002  mul.s       $f0, $f0, $f2
     ctx->f[0] = FPU_MUL_S(ctx->f[0], ctx->f[2]);
     // 0x2b00f0: 0x460018c0  add.s       $f3, $f3, $f0
-    ctx->pc = 0x2b00f0u;
     ctx->f[3] = FPU_ADD_S(ctx->f[3], ctx->f[0]);
 label_2b00f4:
     // 0x2b00f4: 0x3c020074  lui         $v0, 0x74
@@ -135,7 +134,6 @@ label_2b00f4:
     // 0x2b0118: 0x460018c0  add.s       $f3, $f3, $f0
     ctx->f[3] = FPU_ADD_S(ctx->f[3], ctx->f[0]);
     // 0x2b011c: 0x46003180  add.s       $f6, $f6, $f0
-    ctx->pc = 0x2b011cu;
     ctx->f[6] = FPU_ADD_S(ctx->f[6], ctx->f[0]);
 label_2b0120:
     // 0x2b0120: 0x3c014150  lui         $at, 0x4150
@@ -250,7 +248,6 @@ label_2b0120:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDManager_getTexAddr_2ACE28_0x2ace28, 0x2ace28u, 0x2b01c8u)) {
         return;
     }
-    ctx->pc = 0x2B01C8u;
 label_2b01c8:
     // 0x2b01c8: 0x24030002  addiu       $v1, $zero, 0x2
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
@@ -284,7 +281,6 @@ label_2b01c8:
     if (!runtime->callDirectStatic(rdram, ctx, &Gp_draw_polyFT4_0x15bcf0, 0x15bcf0u, 0x2b01f8u)) {
         return;
     }
-    ctx->pc = 0x2B01F8u;
 label_2b01f8:
     // 0x2b01f8: 0x7bb000b0  lq          $s0, 0xB0($sp)
     ctx->pc = 0x2b01f8u;

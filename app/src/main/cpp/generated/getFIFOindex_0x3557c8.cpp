@@ -13,7 +13,7 @@
 
 // Function: getFIFOindex
 // Address: 0x3557c8 - 0x355818
-void getFIFOindex_0x3557c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getFIFOindex_0x3557c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getFIFOindex_0x3557c8");
 #endif
@@ -67,7 +67,6 @@ void getFIFOindex_0x3557c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     ctx->pc = 0x355804u;
     if (GPR_U64(ctx, 3) != 0) SET_GPR_VEC(ctx, 2, GPR_VEC(ctx, 4));
     // 0x355808: 0x212c3  sra         $v0, $v0, 11
-    ctx->pc = 0x355808u;
     SET_GPR_S32(ctx, 2, SRA32(GPR_S32(ctx, 2), 11));
 label_35580c:
     // 0x35580c: 0x3e00008  jr          $ra

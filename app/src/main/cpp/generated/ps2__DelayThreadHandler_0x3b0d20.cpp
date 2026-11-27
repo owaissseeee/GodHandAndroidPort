@@ -13,7 +13,7 @@
 
 // Function: _DelayThreadHandler
 // Address: 0x3b0d20 - 0x3b0d48
-void ps2__DelayThreadHandler_0x3b0d20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__DelayThreadHandler_0x3b0d20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__DelayThreadHandler_0x3b0d20");
 #endif
@@ -42,7 +42,6 @@ void ps2__DelayThreadHandler_0x3b0d20(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &iSignalSema_0x3afcd0, 0x3afcd0u, 0x3b0d30u)) {
         return;
     }
-    ctx->pc = 0x3B0D30u;
 label_3b0d30:
     // 0x3b0d30: 0xf  sync
     // SYNC instruction - memory barrier

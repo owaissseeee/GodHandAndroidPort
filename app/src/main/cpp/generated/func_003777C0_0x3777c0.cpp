@@ -13,7 +13,7 @@
 
 // Function: func_003777C0
 // Address: 0x3777c0 - 0x3778d8
-void func_003777C0_0x3777c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003777C0_0x3777c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003777C0_0x3777c0");
 #endif
@@ -42,7 +42,6 @@ void func_003777C0_0x3777c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x3777d8: 0x1091018  mult        $v0, $t0, $t1
     { int64_t result = (int64_t)GPR_S32(ctx, 8) * (int64_t)GPR_S32(ctx, 9); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 2, (int32_t)result); }
     // 0x3777dc: 0x0  nop
-    ctx->pc = 0x3777dcu;
     // NOP
 label_3777e0:
     // 0x3777e0: 0x25070001  addiu       $a3, $t0, 0x1
@@ -140,7 +139,6 @@ label_3777e0:
             goto label_3778bc;
         }
     }
-    ctx->pc = 0x377828u;
 label_377828:
     // 0x377828: 0x10400002  beqz        $v0, . + 4 + (0x2 << 2)
     ctx->pc = 0x377828u;
@@ -238,7 +236,6 @@ label_377860:
     // 0x377878: 0x24030007  addiu       $v1, $zero, 0x7
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 7));
     // 0x37787c: 0x0  nop
-    ctx->pc = 0x37787cu;
     // NOP
 label_377880:
     // 0x377880: 0xac400000  sw          $zero, 0x0($v0)
@@ -283,7 +280,6 @@ label_377880:
             goto label_3778c4;
         }
     }
-    ctx->pc = 0x3778A0u;
 label_3778a0:
     // 0x3778a0: 0x94a30000  lhu         $v1, 0x0($a1)
     ctx->pc = 0x3778a0u;
@@ -322,14 +318,12 @@ label_3778a0:
             goto label_3778c4;
         }
     }
-    ctx->pc = 0x3778BCu;
 label_3778bc:
     // 0x3778bc: 0xa4a20000  sh          $v0, 0x0($a1)
     ctx->pc = 0x3778bcu;
     WRITE16(ADD32(GPR_U32(ctx, 5), 0), (uint16_t)GPR_U32(ctx, 2));
 label_3778c0:
     // 0x3778c0: 0xe0402d  daddu       $t0, $a3, $zero
-    ctx->pc = 0x3778c0u;
     SET_GPR_U64(ctx, 8, (uint64_t)GPR_U64(ctx, 7) + (uint64_t)GPR_U64(ctx, 0));
 label_3778c4:
     // 0x3778c4: 0x29020002  slti        $v0, $t0, 0x2

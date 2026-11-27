@@ -13,7 +13,7 @@
 
 // Function: cScenario_beginKurohukuBattle
 // Address: 0x2c4a70 - 0x2c4b78
-void cScenario_beginKurohukuBattle_0x2c4a70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_beginKurohukuBattle_0x2c4a70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_beginKurohukuBattle_0x2c4a70");
 #endif
@@ -149,7 +149,6 @@ label_2c4af0:
     if (!runtime->callDirectStatic(rdram, ctx, &cSaveManager_setCheckPoint_0x2c05b0, 0x2c05b0u, 0x2c4b18u)) {
         return;
     }
-    ctx->pc = 0x2C4B18u;
 label_2c4b18:
     // 0x2c4b18: 0x3c090074  lui         $t1, 0x74
     SET_GPR_S32(ctx, 9, (int32_t)((uint32_t)116 << 16));
@@ -200,7 +199,6 @@ label_2c4b18:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_beginRoomJump_2C4548_0x2c4548, 0x2c4548u, 0x2c4b60u)) {
         return;
     }
-    ctx->pc = 0x2C4B60u;
 label_2c4b60:
     // 0x2c4b60: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x2c4b60u;

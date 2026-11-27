@@ -13,7 +13,7 @@
 
 // Function: cSnd_EmSeCheck
 // Address: 0x2cb418 - 0x2cb4e8
-void cSnd_EmSeCheck_0x2cb418(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_EmSeCheck_0x2cb418(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_EmSeCheck_0x2cb418");
 #endif
@@ -67,7 +67,6 @@ void cSnd_EmSeCheck_0x2cb418(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_getEmSeGroupOwner_0x2cb3a8, 0x2cb3a8u, 0x2cb444u)) {
         return;
     }
-    ctx->pc = 0x2CB444u;
 label_2cb444:
     // 0x2cb444: 0x902d  daddu       $s2, $zero, $zero
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
@@ -83,7 +82,6 @@ label_2cb444:
     // 0x2cb458: 0x24140001  addiu       $s4, $zero, 0x1
     SET_GPR_S32(ctx, 20, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2cb45c: 0x0  nop
-    ctx->pc = 0x2cb45cu;
     // NOP
 label_2cb460:
     // 0x2cb460: 0x8e050000  lw          $a1, 0x0($s0)
@@ -100,7 +98,6 @@ label_2cb460:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_GetSeData_0x2cc4b8, 0x2cc4b8u, 0x2cb46cu)) {
         return;
     }
-    ctx->pc = 0x2CB46Cu;
 label_2cb46c:
     // 0x2cb46c: 0xc0b3f1a  jal         func_2CFC68
     SET_GPR_U32(ctx, 31, 0x2CB474u);
@@ -113,7 +110,6 @@ label_2cb46c:
     if (!runtime->callDirectStatic(rdram, ctx, &cSeData_IsAlive_0x2cfc68, 0x2cfc68u, 0x2cb474u)) {
         return;
     }
-    ctx->pc = 0x2CB474u;
 label_2cb474:
     // 0x2cb474: 0x50400010  beql        $v0, $zero, . + 4 + (0x10 << 2)
     ctx->pc = 0x2CB474u;
@@ -144,7 +140,6 @@ label_2cb474:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_GetSeData_0x2cc4b8, 0x2cc4b8u, 0x2cb488u)) {
         return;
     }
-    ctx->pc = 0x2CB488u;
 label_2cb488:
     // 0x2cb488: 0x8c43003c  lw          $v1, 0x3C($v0)
     ctx->pc = 0x2cb488u;
@@ -178,7 +173,6 @@ label_2cb488:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_GetSeData_0x2cc4b8, 0x2cc4b8u, 0x2cb4a0u)) {
         return;
     }
-    ctx->pc = 0x2CB4A0u;
 label_2cb4a0:
     // 0x2cb4a0: 0xc0b3f22  jal         func_2CFC88
     SET_GPR_U32(ctx, 31, 0x2CB4A8u);
@@ -191,7 +185,6 @@ label_2cb4a0:
     if (!runtime->callDirectStatic(rdram, ctx, &cSeData_IsFailed_0x2cfc88, 0x2cfc88u, 0x2cb4a8u)) {
         return;
     }
-    ctx->pc = 0x2CB4A8u;
 label_2cb4a8:
     // 0x2cb4a8: 0x10540003  beq         $v0, $s4, . + 4 + (0x3 << 2)
     ctx->pc = 0x2CB4A8u;
@@ -223,7 +216,6 @@ label_2cb4a8:
             goto label_2cb4c8;
         }
     }
-    ctx->pc = 0x2CB4B8u;
 label_2cb4b8:
     // 0x2cb4b8: 0x2e42000c  sltiu       $v0, $s2, 0xC
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 18) < (uint64_t)(int64_t)(int32_t)12) ? 1 : 0);
@@ -246,7 +238,6 @@ label_2cb4b8:
         }
     }
     // 0x2cb4c4: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x2cb4c4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_2cb4c8:
     // 0x2cb4c8: 0x7bb00050  lq          $s0, 0x50($sp)

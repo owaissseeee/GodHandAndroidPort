@@ -13,7 +13,7 @@
 
 // Function: cScenario_resetCam
 // Address: 0x2c3fc0 - 0x2c4040
-void cScenario_resetCam_0x2c3fc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_resetCam_0x2c3fc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_resetCam_0x2c3fc0");
 #endif
@@ -85,7 +85,6 @@ void cScenario_resetCam_0x2c3fc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &cPlCamera_setCamUpdate_0x13b9b8, 0x13b9b8u, 0x2c4004u)) {
         return;
     }
-    ctx->pc = 0x2C4004u;
 label_2c4004:
     // 0x2c4004: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -100,7 +99,6 @@ label_2c4004:
     if (!runtime->callDirectStatic(rdram, ctx, &cCamManager_setPlCamera_0x138d40, 0x138d40u, 0x2c4010u)) {
         return;
     }
-    ctx->pc = 0x2C4010u;
 label_2c4010:
     // 0x2c4010: 0xc0b6dac  jal         func_2DB6B0
     ctx->pc = 0x2C4010u;
@@ -108,7 +106,6 @@ label_2c4010:
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x2c4018u)) {
         return;
     }
-    ctx->pc = 0x2C4018u;
 label_2c4018:
     // 0x2c4018: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -125,7 +122,6 @@ label_2c4018:
     if (!runtime->callDirectStatic(rdram, ctx, &pl00_clearMotionCam_0x124f60, 0x124f60u, 0x2c4028u)) {
         return;
     }
-    ctx->pc = 0x2C4028u;
 label_2c4028:
     // 0x2c4028: 0xa2200111  sb          $zero, 0x111($s1)
     ctx->pc = 0x2c4028u;

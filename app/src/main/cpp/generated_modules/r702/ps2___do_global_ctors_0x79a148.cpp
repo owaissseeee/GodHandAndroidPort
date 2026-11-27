@@ -14,68 +14,68 @@ namespace gh_r702
 {
 // Function: __do_global_ctors
 // Address: 0x79a148 - 0x79a1f8
-void ps2___do_global_ctors_0x79a148(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___do_global_ctors_0x79a148(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___do_global_ctors_0x79a148");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79a148u: goto label_79a148;
-        case 0x79a14cu: goto label_79a14c;
-        case 0x79a150u: goto label_79a150;
-        case 0x79a154u: goto label_79a154;
-        case 0x79a158u: goto label_79a158;
-        case 0x79a15cu: goto label_79a15c;
-        case 0x79a160u: goto label_79a160;
-        case 0x79a164u: goto label_79a164;
-        case 0x79a168u: goto label_79a168;
-        case 0x79a16cu: goto label_79a16c;
-        case 0x79a170u: goto label_79a170;
-        case 0x79a174u: goto label_79a174;
-        case 0x79a178u: goto label_79a178;
-        case 0x79a17cu: goto label_79a17c;
-        case 0x79a180u: goto label_79a180;
-        case 0x79a184u: goto label_79a184;
-        case 0x79a188u: goto label_79a188;
-        case 0x79a18cu: goto label_79a18c;
-        case 0x79a190u: goto label_79a190;
-        case 0x79a194u: goto label_79a194;
-        case 0x79a198u: goto label_79a198;
-        case 0x79a19cu: goto label_79a19c;
-        case 0x79a1a0u: goto label_79a1a0;
-        case 0x79a1a4u: goto label_79a1a4;
-        case 0x79a1a8u: goto label_79a1a8;
-        case 0x79a1acu: goto label_79a1ac;
-        case 0x79a1b0u: goto label_79a1b0;
-        case 0x79a1b4u: goto label_79a1b4;
-        case 0x79a1b8u: goto label_79a1b8;
-        case 0x79a1bcu: goto label_79a1bc;
-        case 0x79a1c0u: goto label_79a1c0;
-        case 0x79a1c4u: goto label_79a1c4;
-        case 0x79a1c8u: goto label_79a1c8;
-        case 0x79a1ccu: goto label_79a1cc;
-        case 0x79a1d0u: goto label_79a1d0;
-        case 0x79a1d4u: goto label_79a1d4;
-        case 0x79a1d8u: goto label_79a1d8;
-        case 0x79a1dcu: goto label_79a1dc;
-        case 0x79a1e0u: goto label_79a1e0;
-        case 0x79a1e4u: goto label_79a1e4;
-        case 0x79a1e8u: goto label_79a1e8;
-        case 0x79a1ecu: goto label_79a1ec;
-        case 0x79a1f0u: goto label_79a1f0;
-        case 0x79a1f4u: goto label_79a1f4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x79a148u, 0)) {
+        switch (ctx->pc) {
+            case 0x79a148u: goto label_79a148;
+            case 0x79a14cu: goto label_79a14c;
+            case 0x79a150u: goto label_79a150;
+            case 0x79a154u: goto label_79a154;
+            case 0x79a158u: goto label_79a158;
+            case 0x79a15cu: goto label_79a15c;
+            case 0x79a160u: goto label_79a160;
+            case 0x79a164u: goto label_79a164;
+            case 0x79a168u: goto label_79a168;
+            case 0x79a16cu: goto label_79a16c;
+            case 0x79a170u: goto label_79a170;
+            case 0x79a174u: goto label_79a174;
+            case 0x79a178u: goto label_79a178;
+            case 0x79a17cu: goto label_79a17c;
+            case 0x79a180u: goto label_79a180;
+            case 0x79a184u: goto label_79a184;
+            case 0x79a188u: goto label_79a188;
+            case 0x79a18cu: goto label_79a18c;
+            case 0x79a190u: goto label_79a190;
+            case 0x79a194u: goto label_79a194;
+            case 0x79a198u: goto label_79a198;
+            case 0x79a19cu: goto label_79a19c;
+            case 0x79a1a0u: goto label_79a1a0;
+            case 0x79a1a4u: goto label_79a1a4;
+            case 0x79a1a8u: goto label_79a1a8;
+            case 0x79a1acu: goto label_79a1ac;
+            case 0x79a1b0u: goto label_79a1b0;
+            case 0x79a1b4u: goto label_79a1b4;
+            case 0x79a1b8u: goto label_79a1b8;
+            case 0x79a1bcu: goto label_79a1bc;
+            case 0x79a1c0u: goto label_79a1c0;
+            case 0x79a1c4u: goto label_79a1c4;
+            case 0x79a1c8u: goto label_79a1c8;
+            case 0x79a1ccu: goto label_79a1cc;
+            case 0x79a1d0u: goto label_79a1d0;
+            case 0x79a1d4u: goto label_79a1d4;
+            case 0x79a1d8u: goto label_79a1d8;
+            case 0x79a1dcu: goto label_79a1dc;
+            case 0x79a1e0u: goto label_79a1e0;
+            case 0x79a1e4u: goto label_79a1e4;
+            case 0x79a1e8u: goto label_79a1e8;
+            case 0x79a1ecu: goto label_79a1ec;
+            case 0x79a1f0u: goto label_79a1f0;
+            case 0x79a1f4u: goto label_79a1f4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x79a148u;
+
 
 label_79a148:
     // 0x79a148: 0x3c07007a  lui         $a3, 0x7A
-    ctx->pc = 0x79a148u;
     SET_GPR_S32(ctx, 7, (int32_t)((uint32_t)122 << 16));
 label_79a14c:
     // 0x79a14c: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x79a14cu;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
 label_79a150:
     // 0x79a150: 0x8ce5a284  lw          $a1, -0x5D7C($a3)
@@ -83,7 +83,6 @@ label_79a150:
     SET_GPR_S32(ctx, 5, (int32_t)READ32(ADD32(GPR_U32(ctx, 7), 4294943364)));
 label_79a154:
     // 0x79a154: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x79a154u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_79a158:
     // 0x79a158: 0xffbf0020  sd          $ra, 0x20($sp)
@@ -91,7 +90,6 @@ label_79a158:
     WRITE64(ADD32(GPR_U32(ctx, 29), 32), GPR_U64(ctx, 31));
 label_79a15c:
     // 0x79a15c: 0x24e3a284  addiu       $v1, $a3, -0x5D7C
-    ctx->pc = 0x79a15cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 7), 4294943364));
 label_79a160:
     // 0x79a160: 0xffb10010  sd          $s1, 0x10($sp)
@@ -124,7 +122,6 @@ label_79a168:
             goto label_79a1ac;
         }
     }
-    ctx->pc = 0x79A16Cu;
 label_79a16c:
     // 0x79a16c: 0x8c620004  lw          $v0, 0x4($v1)
     ctx->pc = 0x79a16cu;
@@ -156,46 +153,35 @@ label_79a174:
             goto label_79a1ac;
         }
     }
-    ctx->pc = 0x79A178u;
 label_79a178:
     // 0x79a178: 0x24060001  addiu       $a2, $zero, 0x1
-    ctx->pc = 0x79a178u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_79a17c:
     // 0x79a17c: 0xc0282d  daddu       $a1, $a2, $zero
-    ctx->pc = 0x79a17cu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
 label_79a180:
     // 0x79a180: 0x24e4a284  addiu       $a0, $a3, -0x5D7C
-    ctx->pc = 0x79a180u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 7), 4294943364));
 label_79a184:
     // 0x79a184: 0x0  nop
-    ctx->pc = 0x79a184u;
     // NOP
 label_79a188:
     // 0x79a188: 0x64a30001  daddiu      $v1, $a1, 0x1
-    ctx->pc = 0x79a188u;
     SET_GPR_S64(ctx, 3, (int64_t)GPR_S64(ctx, 5) + (int64_t)(int32_t)1);
 label_79a18c:
     // 0x79a18c: 0x60302d  daddu       $a2, $v1, $zero
-    ctx->pc = 0x79a18cu;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
 label_79a190:
     // 0x79a190: 0x6103c  dsll32      $v0, $a2, 0
-    ctx->pc = 0x79a190u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 6) << (32 + 0));
 label_79a194:
     // 0x79a194: 0x2103f  dsra32      $v0, $v0, 0
-    ctx->pc = 0x79a194u;
     SET_GPR_S64(ctx, 2, GPR_S64(ctx, 2) >> (32 + 0));
 label_79a198:
     // 0x79a198: 0x21080  sll         $v0, $v0, 2
-    ctx->pc = 0x79a198u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 2));
 label_79a19c:
     // 0x79a19c: 0x441021  addu        $v0, $v0, $a0
-    ctx->pc = 0x79a19cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 4)));
 label_79a1a0:
     // 0x79a1a0: 0x8c430000  lw          $v1, 0x0($v0)
@@ -231,10 +217,8 @@ label_79a1a8:
             goto label_79a188;
         }
     }
-    ctx->pc = 0x79A1ACu;
 label_79a1ac:
     // 0x79a1ac: 0x5883c  dsll32      $s1, $a1, 0
-    ctx->pc = 0x79a1acu;
     SET_GPR_U64(ctx, 17, GPR_U64(ctx, 5) << (32 + 0));
 label_79a1b0:
     // 0x79a1b0: 0x11883f  dsra32      $s1, $s1, 0
@@ -267,18 +251,14 @@ label_79a1b8:
             goto label_79a1e4;
         }
     }
-    ctx->pc = 0x79A1BCu;
 label_79a1bc:
     // 0x79a1bc: 0x111880  sll         $v1, $s1, 2
-    ctx->pc = 0x79a1bcu;
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 17), 2));
 label_79a1c0:
     // 0x79a1c0: 0x2442a284  addiu       $v0, $v0, -0x5D7C
-    ctx->pc = 0x79a1c0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294943364));
 label_79a1c4:
     // 0x79a1c4: 0x628021  addu        $s0, $v1, $v0
-    ctx->pc = 0x79a1c4u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 2)));
 label_79a1c8:
     // 0x79a1c8: 0x8e020000  lw          $v0, 0x0($s0)
@@ -286,7 +266,6 @@ label_79a1c8:
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 0)));
 label_79a1cc:
     // 0x79a1cc: 0x0  nop
-    ctx->pc = 0x79a1ccu;
     // NOP
 label_79a1d0:
     // 0x79a1d0: 0x2631ffff  addiu       $s1, $s1, -0x1
@@ -351,7 +330,6 @@ label_79a1e0:
             goto label_79a1d0;
         }
     }
-    ctx->pc = 0x79A1E4u;
 label_79a1e4:
     // 0x79a1e4: 0xdfbf0020  ld          $ra, 0x20($sp)
     ctx->pc = 0x79a1e4u;

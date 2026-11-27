@@ -13,7 +13,7 @@
 
 // Function: cScenario_setOmSuspend
 // Address: 0x2c5068 - 0x2c5110
-void cScenario_setOmSuspend_0x2c5068(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_setOmSuspend_0x2c5068(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_setOmSuspend_0x2c5068");
 #endif
@@ -64,7 +64,6 @@ void cScenario_setOmSuspend_0x2c5068(uint8_t* rdram, R5900Context* ctx, PS2Runti
     ctx->pc = 0x2c5090u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 7), 0)));
     // 0x2c5094: 0x0  nop
-    ctx->pc = 0x2c5094u;
     // NOP
 label_2c5098:
     // 0x2c5098: 0x948302fe  lhu         $v1, 0x2FE($a0)
@@ -90,7 +89,6 @@ label_2c5098:
     // 0x2c50a8: 0x28620500  slti        $v0, $v1, 0x500
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)1280) ? 1 : 0);
     // 0x2c50ac: 0x40302d  daddu       $a2, $v0, $zero
-    ctx->pc = 0x2c50acu;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_2c50b0:
     // 0x2c50b0: 0x30c200ff  andi        $v0, $a2, 0xFF
@@ -165,10 +163,8 @@ label_2c50b0:
             goto label_2c50e8;
         }
     }
-    ctx->pc = 0x2C50E4u;
 label_2c50e4:
     // 0x2c50e4: 0x481024  and         $v0, $v0, $t0
-    ctx->pc = 0x2c50e4u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 8));
 label_2c50e8:
     // 0x2c50e8: 0xac820250  sw          $v0, 0x250($a0)
@@ -179,7 +175,6 @@ label_2c50e8:
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 10), 19544)));
 label_2c50f0:
     // 0x2c50f0: 0x24e70004  addiu       $a3, $a3, 0x4
-    ctx->pc = 0x2c50f0u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 7), 4));
 label_2c50f4:
     // 0x2c50f4: 0x8c620008  lw          $v0, 0x8($v1)
@@ -205,7 +200,6 @@ label_2c50f4:
             goto label_2c5098;
         }
     }
-    ctx->pc = 0x2C5104u;
 label_2c5104:
     // 0x2c5104: 0x3e00008  jr          $ra
     ctx->pc = 0x2C5104u;

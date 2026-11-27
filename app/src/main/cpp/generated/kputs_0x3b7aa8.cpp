@@ -13,7 +13,7 @@
 
 // Function: kputs
 // Address: 0x3b7aa8 - 0x3b7ad8
-void kputs_0x3b7aa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void kputs_0x3b7aa8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("kputs_0x3b7aa8");
 #endif
@@ -47,7 +47,6 @@ void kputs_0x3b7aa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &Deci2Call_0x3b00d0, 0x3b00d0u, 0x3b7ac0u)) {
         return;
     }
-    ctx->pc = 0x3B7AC0u;
 label_3b7ac0:
     // 0x3b7ac0: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x3b7ac0u;

@@ -14,7 +14,7 @@
 
 // Function: func_0026A200
 // Address: 0x26a200 - 0x26a338
-void func_0026A200_0x26a200(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0026A200_0x26a200(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0026A200_0x26a200");
 #endif
@@ -119,7 +119,6 @@ label_26a258:
     // 0x26a268: 0x3a71021  addu        $v0, $sp, $a3
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 29), GPR_U32(ctx, 7)));
     // 0x26a26c: 0x0  nop
-    ctx->pc = 0x26a26cu;
     // NOP
 label_26a270:
     // 0x26a270: 0x908302b4  lbu         $v1, 0x2B4($a0)
@@ -150,7 +149,6 @@ label_26a270:
     // 0x26a288: 0xa3102a  slt         $v0, $a1, $v1
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 5) < (int64_t)GPR_S64(ctx, 3)) ? 1 : 0);
     // 0x26a28c: 0x40302d  daddu       $a2, $v0, $zero
-    ctx->pc = 0x26a28cu;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_26a290:
     // 0x26a290: 0x30c200ff  andi        $v0, $a2, 0xFF
@@ -190,10 +188,8 @@ label_26a290:
             goto label_26a2b0;
         }
     }
-    ctx->pc = 0x26A2ACu;
 label_26a2ac:
     // 0x26a2ac: 0x182d  daddu       $v1, $zero, $zero
-    ctx->pc = 0x26a2acu;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_26a2b0:
     // 0x26a2b0: 0x5060001c  beql        $v1, $zero, . + 4 + (0x1C << 2)
@@ -274,7 +270,6 @@ label_26a2b0:
             goto label_26a318;
         }
     }
-    ctx->pc = 0x26A2ECu;
 label_26a2ec:
     // 0x26a2ec: 0xc4610110  lwc1        $f1, 0x110($v1)
     ctx->pc = 0x26a2ecu;
@@ -321,7 +316,6 @@ label_26a318:
     ctx->pc = 0x26a31cu;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 3), 280), bits); }
     // 0x26a320: 0x24e70001  addiu       $a3, $a3, 0x1
-    ctx->pc = 0x26a320u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 7), 1));
 label_26a324:
     // 0x26a324: 0x2ce20007  sltiu       $v0, $a3, 0x7
@@ -344,7 +338,6 @@ label_26a324:
             goto label_26a270;
         }
     }
-    ctx->pc = 0x26A330u;
 label_26a330:
     // 0x26a330: 0x3e00008  jr          $ra
     ctx->pc = 0x26A330u;

@@ -13,7 +13,7 @@
 
 // Function: cOmScripted_startSeq
 // Address: 0x1a6a78 - 0x1a6af8
-void cOmScripted_startSeq_0x1a6a78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmScripted_startSeq_0x1a6a78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmScripted_startSeq_0x1a6a78");
 #endif
@@ -60,7 +60,6 @@ void cOmScripted_startSeq_0x1a6a78(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_startSoftEvent_0x2c39b0, 0x2c39b0u, 0x1a6aa4u)) {
         return;
     }
-    ctx->pc = 0x1A6AA4u;
 label_1a6aa4:
     // 0x1a6aa4: 0x8e042f84  lw          $a0, 0x2F84($s0)
     ctx->pc = 0x1a6aa4u;
@@ -82,7 +81,6 @@ label_1a6aa4:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_taskExec_0x2c3920, 0x2c3920u, 0x1a6abcu)) {
         return;
     }
-    ctx->pc = 0x1A6ABCu;
 label_1a6abc:
     // 0x1a6abc: 0x4400008  bltz        $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x1A6ABCu;

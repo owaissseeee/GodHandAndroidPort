@@ -13,7 +13,7 @@
 
 // Function: StreamBuf_startRead
 // Address: 0x2d3278 - 0x2d3388
-void StreamBuf_startRead_0x2d3278(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void StreamBuf_startRead_0x2d3278(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("StreamBuf_startRead_0x2d3278");
 #endif
@@ -75,7 +75,6 @@ void StreamBuf_startRead_0x2d3278(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_2d32b0;
         }
     }
-    ctx->pc = 0x2D32A4u;
 label_2d32a4:
     // 0x2d32a4: 0x8e110068  lw          $s1, 0x68($s0)
     ctx->pc = 0x2d32a4u;
@@ -122,7 +121,6 @@ label_2d32b0:
             goto label_2d336c;
         }
     }
-    ctx->pc = 0x2D32CCu;
 label_2d32cc:
     // 0x2d32cc: 0x51100  sll         $v0, $a1, 4
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 5), 4));
@@ -183,7 +181,6 @@ label_2d32cc:
             goto label_2d3320;
         }
     }
-    ctx->pc = 0x2D330Cu;
 label_2d330c:
     // 0x2d330c: 0x2032021  addu        $a0, $s0, $v1
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), GPR_U32(ctx, 3)));
@@ -223,7 +220,6 @@ label_2d3320:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B2148u, 0x2D3338u, 0x2D3340u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2D3340u;
 label_2d3340:
     // 0x2d3340: 0x2121821  addu        $v1, $s0, $s2
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 16), GPR_U32(ctx, 18)));

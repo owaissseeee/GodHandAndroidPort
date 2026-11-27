@@ -32,7 +32,7 @@
             android:process=":game"
             android:exported="true"
             android:screenOrientation="sensorLandscape"
-            android:configChanges="orientation|screenSize|screenLayout|keyboard|keyboardHidden" />
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboard|keyboardHidden|uiMode|density|fontScale|layoutDirection" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

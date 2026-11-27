@@ -13,7 +13,7 @@
 
 // Function: Slot2_SetActBtn
 // Address: 0x1e48e0 - 0x1e4920
-void Slot2_SetActBtn_0x1e48e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Slot2_SetActBtn_0x1e48e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Slot2_SetActBtn_0x1e48e0");
 #endif
@@ -58,7 +58,6 @@ void Slot2_SetActBtn_0x1e48e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1F7858u, 0x1E4908u, 0x1E4910u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1E4910u;
 label_1e4910:
     // 0x1e4910: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1e4910u;

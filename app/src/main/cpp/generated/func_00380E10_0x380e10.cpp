@@ -13,7 +13,7 @@
 
 // Function: func_00380E10
 // Address: 0x380e10 - 0x380e88
-void func_00380E10_0x380e10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00380E10_0x380e10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00380E10_0x380e10");
 #endif
@@ -44,7 +44,6 @@ void func_00380E10_0x380e10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x380e20u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x380e24: 0x24110009  addiu       $s1, $zero, 0x9
-    ctx->pc = 0x380e24u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 0), 9));
 label_380e28:
     // 0x380e28: 0x8e040030  lw          $a0, 0x30($s0)
@@ -71,7 +70,6 @@ label_380e28:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00329EA8_0x329ea8, 0x329ea8u, 0x380e3cu)) {
         return;
     }
-    ctx->pc = 0x380E3Cu;
 label_380e3c:
     // 0x380e3c: 0x9202fff0  lbu         $v0, -0x10($s0)
     ctx->pc = 0x380e3cu;
@@ -105,7 +103,6 @@ label_380e3c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032B300_0x32b300, 0x32b300u, 0x380e54u)) {
         return;
     }
-    ctx->pc = 0x380E54u;
 label_380e54:
     // 0x380e54: 0xc0ca630  jal         func_3298C0
     SET_GPR_U32(ctx, 31, 0x380E5Cu);
@@ -118,7 +115,6 @@ label_380e54:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003298C0_0x3298c0, 0x3298c0u, 0x380e5cu)) {
         return;
     }
-    ctx->pc = 0x380E5Cu;
 label_380e5c:
     // 0x380e5c: 0xae000030  sw          $zero, 0x30($s0)
     ctx->pc = 0x380e5cu;
@@ -134,10 +130,8 @@ label_380e5c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031C900_0x31c900, 0x31c900u, 0x380e68u)) {
         return;
     }
-    ctx->pc = 0x380E68u;
 label_380e68:
     // 0x380e68: 0x2631ffff  addiu       $s1, $s1, -0x1
-    ctx->pc = 0x380e68u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 4294967295));
 label_380e6c:
     // 0x380e6c: 0x621ffee  bgez        $s1, . + 4 + (-0x12 << 2)

@@ -13,7 +13,7 @@
 
 // Function: ColiseumEmSelect_Main
 // Address: 0x1f38f0 - 0x1f3930
-void ColiseumEmSelect_Main_0x1f38f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumEmSelect_Main_0x1f38f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumEmSelect_Main_0x1f38f0");
 #endif
@@ -40,15 +40,12 @@ void ColiseumEmSelect_Main_0x1f38f0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         }
     }
 
-    ctx->pc = 0x1f38f0u;
 
 label_1f38f0:
     // 0x1f38f0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1f38f0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_1f38f4:
     // 0x1f38f4: 0x3c03003c  lui         $v1, 0x3C
-    ctx->pc = 0x1f38f4u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)60 << 16));
 label_1f38f8:
     // 0x1f38f8: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -56,7 +53,6 @@ label_1f38f8:
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
 label_1f38fc:
     // 0x1f38fc: 0x2463f0a8  addiu       $v1, $v1, -0xF58
-    ctx->pc = 0x1f38fcu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294963368));
 label_1f3900:
     // 0x1f3900: 0x8c820004  lw          $v0, 0x4($a0)
@@ -64,15 +60,12 @@ label_1f3900:
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4)));
 label_1f3904:
     // 0x1f3904: 0x210c0  sll         $v0, $v0, 3
-    ctx->pc = 0x1f3904u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 3));
 label_1f3908:
     // 0x1f3908: 0x432821  addu        $a1, $v0, $v1
-    ctx->pc = 0x1f3908u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
 label_1f390c:
     // 0x1f390c: 0x621821  addu        $v1, $v1, $v0
-    ctx->pc = 0x1f390cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 2)));
 label_1f3910:
     // 0x1f3910: 0x84a60000  lh          $a2, 0x0($a1)
@@ -110,7 +103,6 @@ label_1f391c:
             return;
         }
     }
-    ctx->pc = 0x1F3920u;
 label_1f3920:
     // 0x1f3920: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1f3920u;
@@ -146,7 +138,6 @@ label_1f3928:
         return;
         #endif
     }
-    ctx->pc = 0x1F392Cu;
 label_1f392c:
     // 0x1f392c: 0x0  nop
     // NOP

@@ -13,7 +13,7 @@
 
 // Function: cRoomSave_systemInit
 // Address: 0x2beb80 - 0x2bebc8
-void cRoomSave_systemInit_0x2beb80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cRoomSave_systemInit_0x2beb80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cRoomSave_systemInit_0x2beb80");
 #endif
@@ -54,7 +54,6 @@ void cRoomSave_systemInit_0x2beb80(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2beba4u)) {
         return;
     }
-    ctx->pc = 0x2BEBA4u;
 label_2beba4:
     // 0x2beba4: 0x26040008  addiu       $a0, $s0, 0x8
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 8));
@@ -71,7 +70,6 @@ label_2beba4:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2bebb4u)) {
         return;
     }
-    ctx->pc = 0x2BEBB4u;
 label_2bebb4:
     // 0x2bebb4: 0xae000000  sw          $zero, 0x0($s0)
     ctx->pc = 0x2bebb4u;

@@ -13,7 +13,7 @@
 
 // Function: func_001E9078
 // Address: 0x1e9078 - 0x1e90f8
-void func_001E9078_0x1e9078(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001E9078_0x1e9078(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001E9078_0x1e9078");
 #endif
@@ -52,7 +52,6 @@ void func_001E9078_0x1e9078(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x1E9090u;
 label_1e9090:
     // 0x1e9090: 0x3c014265  lui         $at, 0x4265
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16997 << 16));
@@ -84,7 +83,6 @@ label_1e9090:
     // 0x1e90bc: 0x0  nop
     // NOP
     // 0x1e90c0: 0x46000840  add.s       $f1, $f1, $f0
-    ctx->pc = 0x1e90c0u;
     ctx->f[1] = FPU_ADD_S(ctx->f[1], ctx->f[0]);
 label_1e90c4:
     // 0x1e90c4: 0x3c013c23  lui         $at, 0x3C23
@@ -118,7 +116,6 @@ label_1e90c4:
             goto label_1e90ec;
         }
     }
-    ctx->pc = 0x1E90ECu;
 label_1e90ec:
     // 0x1e90ec: 0x3e00008  jr          $ra
     ctx->pc = 0x1E90ECu;

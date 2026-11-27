@@ -13,7 +13,7 @@
 
 // Function: cSndSeVoice_StartAtOrigin
 // Address: 0x2cdf18 - 0x2cdff0
-void cSndSeVoice_StartAtOrigin_0x2cdf18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndSeVoice_StartAtOrigin_0x2cdf18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndSeVoice_StartAtOrigin_0x2cdf18");
 #endif
@@ -84,7 +84,6 @@ void cSndSeVoice_StartAtOrigin_0x2cdf18(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &cSndSeVoice_IsActive_0x2cda38, 0x2cda38u, 0x2cdf6cu)) {
         return;
     }
-    ctx->pc = 0x2CDF6Cu;
 label_2cdf6c:
     // 0x2cdf6c: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -150,7 +149,6 @@ label_2cdf6c:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndSeVoice_Setup_0x2cdff0, 0x2cdff0u, 0x2cdfb8u)) {
         return;
     }
-    ctx->pc = 0x2CDFB8u;
 label_2cdfb8:
     // 0x2cdfb8: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x2CDFB8u;
@@ -167,7 +165,6 @@ label_2cdfb8:
             goto label_2cdfc8;
         }
     }
-    ctx->pc = 0x2CDFC0u;
 label_2cdfc0:
     // 0x2cdfc0: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

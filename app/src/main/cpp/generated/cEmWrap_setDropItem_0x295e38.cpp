@@ -13,7 +13,7 @@
 
 // Function: cEmWrap_setDropItem
 // Address: 0x295e38 - 0x295e78
-void cEmWrap_setDropItem_0x295e38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmWrap_setDropItem_0x295e38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmWrap_setDropItem_0x295e38");
 #endif
@@ -50,7 +50,6 @@ void cEmWrap_setDropItem_0x295e38(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &FindResolveActor_295978_0x295978, 0x295978u, 0x295e54u)) {
         return;
     }
-    ctx->pc = 0x295E54u;
 label_295e54:
     // 0x295e54: 0x50400004  beql        $v0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x295E54u;

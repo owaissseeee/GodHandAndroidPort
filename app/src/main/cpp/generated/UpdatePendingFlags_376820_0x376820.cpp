@@ -13,7 +13,7 @@
 
 // Function: UpdatePendingFlags_376820
 // Address: 0x376820 - 0x3768b0
-void UpdatePendingFlags_376820_0x376820(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdatePendingFlags_376820_0x376820(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdatePendingFlags_376820_0x376820");
 #endif
@@ -74,7 +74,6 @@ void UpdatePendingFlags_376820_0x376820(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_003780B0_0x3780b0, 0x3780b0u, 0x37684cu)) {
         return;
     }
-    ctx->pc = 0x37684Cu;
 label_37684c:
     // 0x37684c: 0x86040022  lh          $a0, 0x22($s0)
     ctx->pc = 0x37684cu;
@@ -93,7 +92,6 @@ label_37684c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003780B0_0x3780b0, 0x3780b0u, 0x37685cu)) {
         return;
     }
-    ctx->pc = 0x37685Cu;
 label_37685c:
     // 0x37685c: 0xa6020026  sh          $v0, 0x26($s0)
     ctx->pc = 0x37685cu;
@@ -111,7 +109,6 @@ label_37685c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00376D28_0x376d28, 0x376d28u, 0x37686cu)) {
         return;
     }
-    ctx->pc = 0x37686Cu;
 label_37686c:
     // 0x37686c: 0x96020012  lhu         $v0, 0x12($s0)
     ctx->pc = 0x37686cu;
@@ -145,7 +142,6 @@ label_376870:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00376D28_0x376d28, 0x376d28u, 0x376884u)) {
         return;
     }
-    ctx->pc = 0x376884u;
 label_376884:
     // 0x376884: 0x96020012  lhu         $v0, 0x12($s0)
     ctx->pc = 0x376884u;
@@ -178,7 +174,6 @@ label_376884:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00376D28_0x376d28, 0x376d28u, 0x37689cu)) {
         return;
     }
-    ctx->pc = 0x37689Cu;
 label_37689c:
     // 0x37689c: 0xa6000012  sh          $zero, 0x12($s0)
     ctx->pc = 0x37689cu;

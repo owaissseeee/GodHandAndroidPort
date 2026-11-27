@@ -13,7 +13,7 @@
 
 // Function: cSnd_flushPendingSe
 // Address: 0x2ca5d8 - 0x2ca690
-void cSnd_flushPendingSe_0x2ca5d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_flushPendingSe_0x2ca5d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_flushPendingSe_0x2ca5d8");
 #endif
@@ -78,7 +78,6 @@ void cSnd_flushPendingSe_0x2ca5d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         }
     }
     // 0x2ca614: 0x0  nop
-    ctx->pc = 0x2ca614u;
     // NOP
 label_2ca618:
     // 0x2ca618: 0xc0b36a0  jal         func_2CDA80
@@ -92,7 +91,6 @@ label_2ca618:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndSeVoice_Update_0x2cda80, 0x2cda80u, 0x2ca620u)) {
         return;
     }
-    ctx->pc = 0x2CA620u;
 label_2ca620:
     // 0x2ca620: 0x8e100004  lw          $s0, 0x4($s0)
     ctx->pc = 0x2ca620u;
@@ -111,7 +109,6 @@ label_2ca620:
             goto label_2ca618;
         }
     }
-    ctx->pc = 0x2CA630u;
 label_2ca630:
     // 0x2ca630: 0x8e2200ac  lw          $v0, 0xAC($s1)
     ctx->pc = 0x2ca630u;
@@ -157,7 +154,6 @@ label_2ca630:
     ctx->pc = 0x2ca650u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 12)));
     // 0x2ca654: 0x0  nop
-    ctx->pc = 0x2ca654u;
     // NOP
 label_2ca658:
     // 0x2ca658: 0x210ba  dsrl        $v0, $v0, 2
@@ -190,7 +186,6 @@ label_2ca658:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndSeVoice_Stop_0x2ce430, 0x2ce430u, 0x2ca670u)) {
         return;
     }
-    ctx->pc = 0x2CA670u;
 label_2ca670:
     // 0x2ca670: 0x8e100004  lw          $s0, 0x4($s0)
     ctx->pc = 0x2ca670u;

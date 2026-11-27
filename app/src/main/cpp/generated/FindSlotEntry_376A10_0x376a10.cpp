@@ -13,7 +13,7 @@
 
 // Function: FindSlotEntry_376A10
 // Address: 0x376a10 - 0x376a90
-void FindSlotEntry_376A10_0x376a10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FindSlotEntry_376A10_0x376a10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FindSlotEntry_376A10_0x376a10");
 #endif
@@ -125,7 +125,6 @@ void FindSlotEntry_376A10_0x376a10(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_376a7c;
         }
     }
-    ctx->pc = 0x376A70u;
 label_376a70:
     // 0x376a70: 0xc0ddab8  jal         func_376AE0
     SET_GPR_U32(ctx, 31, 0x376A78u);
@@ -138,10 +137,8 @@ label_376a70:
     if (!runtime->callDirectStatic(rdram, ctx, &ClearSlotRefs_376AE0_0x376ae0, 0x376ae0u, 0x376a78u)) {
         return;
     }
-    ctx->pc = 0x376A78u;
 label_376a78:
     // 0x376a78: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x376a78u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_376a7c:
     // 0x376a7c: 0x7bb00010  lq          $s0, 0x10($sp)

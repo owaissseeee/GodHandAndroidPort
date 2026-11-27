@@ -13,7 +13,7 @@
 
 // Function: sceSifGetNextRequest
 // Address: 0x3b35f8 - 0x3b3650
-void sceSifGetNextRequest_0x3b35f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSifGetNextRequest_0x3b35f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSifGetNextRequest_0x3b35f8");
 #endif
@@ -49,7 +49,6 @@ void sceSifGetNextRequest_0x3b35f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x3b3610u)) {
         return;
     }
-    ctx->pc = 0x3B3610u;
 label_3b3610:
     // 0x3b3610: 0x8e11000c  lw          $s1, 0xC($s0)
     ctx->pc = 0x3b3610u;
@@ -84,7 +83,6 @@ label_3b3610:
             goto label_3b3630;
         }
     }
-    ctx->pc = 0x3B3624u;
 label_3b3624:
     // 0x3b3624: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -101,7 +99,6 @@ label_3b3630:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x3b3638u)) {
         return;
     }
-    ctx->pc = 0x3B3638u;
 label_3b3638:
     // 0x3b3638: 0x220102d  daddu       $v0, $s1, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));

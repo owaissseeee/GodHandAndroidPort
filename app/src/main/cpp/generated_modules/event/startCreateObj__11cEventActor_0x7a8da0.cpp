@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
+#include <ps2_recompiled_functions.h>
 #include "event_functions.h"
 
 #include "ps2_syscalls.h"
@@ -14,56 +15,47 @@ namespace gh_event
 {
 // Function: startCreateObj__11cEventActor
 // Address: 0x7a8da0 - 0x7a8de8
-void startCreateObj__11cEventActor_0x7a8da0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void startCreateObj__11cEventActor_0x7a8da0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("startCreateObj__11cEventActor_0x7a8da0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7a8dd8u: goto label_7a8dd8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7a8da0u, 0)) {
+        switch (ctx->pc) {
+            case 0x7a8dd8u: goto label_7a8dd8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7a8da0u;
+
 
     // 0x7a8da0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7a8da0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x7a8da4: 0x80302d  daddu       $a2, $a0, $zero
-    ctx->pc = 0x7a8da4u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x7a8da8: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x7a8da8u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x7a8dac: 0x3c02ffff  lui         $v0, 0xFFFF
-    ctx->pc = 0x7a8dacu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)65535 << 16));
     // 0x7a8db0: 0x3442fffd  ori         $v0, $v0, 0xFFFD
-    ctx->pc = 0x7a8db0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)65533);
     // 0x7a8db4: 0x3c040075  lui         $a0, 0x75
-    ctx->pc = 0x7a8db4u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)117 << 16));
     // 0x7a8db8: 0x8cc30000  lw          $v1, 0x0($a2)
     ctx->pc = 0x7a8db8u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 6), 0)));
     // 0x7a8dbc: 0x3c05007b  lui         $a1, 0x7B
-    ctx->pc = 0x7a8dbcu;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)123 << 16));
     // 0x7a8dc0: 0x24842c00  addiu       $a0, $a0, 0x2C00
-    ctx->pc = 0x7a8dc0u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 11264));
     // 0x7a8dc4: 0x24a58de8  addiu       $a1, $a1, -0x7218
-    ctx->pc = 0x7a8dc4u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 4294938088));
     // 0x7a8dc8: 0x621824  and         $v1, $v1, $v0
-    ctx->pc = 0x7a8dc8u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 2));
     // 0x7a8dcc: 0x2407ffff  addiu       $a3, $zero, -0x1
-    ctx->pc = 0x7a8dccu;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x7a8dd0: 0xc0b553c  jal         func_2D54F0
-    ctx->pc = 0x7A8DD0u;
     SET_GPR_U32(ctx, 31, 0x7A8DD8u);
     ctx->pc = 0x7A8DD4u;
     ctx->in_delay_slot = true;
@@ -72,10 +64,9 @@ void startCreateObj__11cEventActor_0x7a8da0(uint8_t* rdram, R5900Context* ctx, P
     WRITE32(ADD32(GPR_U32(ctx, 6), 0), GPR_U32(ctx, 3));
     ctx->in_delay_slot = false;
     ctx->pc = 0x2D54F0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D54F0u, 0x7A8DD0u, 0x7A8DD8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cTaskManager_execute_2D54F0_0x2d54f0, 0x2D54F0u, 0x7A8DD8u)) {
         return;
     }
-    ctx->pc = 0x7A8DD8u;
 label_7a8dd8:
     // 0x7a8dd8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7a8dd8u;
@@ -99,9 +90,7 @@ label_7a8dd8:
         return;
         #endif
     }
-    ctx->pc = 0x7A8DE4u;
     // 0x7a8de4: 0x0  nop
-    ctx->pc = 0x7a8de4u;
     // NOP
     ctx->pc = 0x7a8de8u;
 }

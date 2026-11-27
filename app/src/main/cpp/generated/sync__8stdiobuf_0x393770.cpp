@@ -13,7 +13,7 @@
 
 // Function: sync__8stdiobuf
 // Address: 0x393770 - 0x3937d0
-void sync__8stdiobuf_0x393770(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sync__8stdiobuf_0x393770(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sync__8stdiobuf_0x393770");
 #endif
@@ -54,7 +54,6 @@ void sync__8stdiobuf_0x393770(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_do_write_0x392a80, 0x392a80u, 0x393790u)) {
         return;
     }
-    ctx->pc = 0x393790u;
 label_393790:
     // 0x393790: 0x1440000b  bnez        $v0, . + 4 + (0xB << 2)
     ctx->pc = 0x393790u;
@@ -102,7 +101,6 @@ label_393790:
     if (!runtime->callDirectStatic(rdram, ctx, &fflush_0x3a6020, 0x3a6020u, 0x3937b0u)) {
         return;
     }
-    ctx->pc = 0x3937B0u;
 label_3937b0:
     // 0x3937b0: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -122,7 +120,6 @@ label_3937b0:
         }
     }
     // 0x3937bc: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x3937bcu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_3937c0:
     // 0x3937c0: 0xdfbf0010  ld          $ra, 0x10($sp)

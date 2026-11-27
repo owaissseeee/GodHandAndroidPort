@@ -13,7 +13,7 @@
 
 // Function: func_00134520
 // Address: 0x134520 - 0x134608
-void func_00134520_0x134520(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00134520_0x134520(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00134520_0x134520");
 #endif
@@ -128,7 +128,6 @@ label_134570:
             goto label_134570;
         }
     }
-    ctx->pc = 0x134588u;
 label_134588:
     // 0x134588: 0xc0c3d54  jal         func_30F550
     SET_GPR_U32(ctx, 31, 0x134590u);
@@ -141,7 +140,6 @@ label_134588:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0030F550_0x30f550, 0x30f550u, 0x134590u)) {
         return;
     }
-    ctx->pc = 0x134590u;
 label_134590:
     // 0x134590: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -160,7 +158,6 @@ label_134590:
     if (!runtime->callDirectStatic(rdram, ctx, &cCollisionSolid_constructSphere_0x1339f0, 0x1339f0u, 0x1345a4u)) {
         return;
     }
-    ctx->pc = 0x1345A4u;
 label_1345a4:
     // 0x1345a4: 0x10000009  b           . + 4 + (0x9 << 2)
     ctx->pc = 0x1345A4u;
@@ -177,7 +174,6 @@ label_1345a4:
             goto label_1345cc;
         }
     }
-    ctx->pc = 0x1345ACu;
 label_1345ac:
     // 0x1345ac: 0xc0c3d54  jal         func_30F550
     SET_GPR_U32(ctx, 31, 0x1345B4u);
@@ -190,7 +186,6 @@ label_1345ac:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0030F550_0x30f550, 0x30f550u, 0x1345b4u)) {
         return;
     }
-    ctx->pc = 0x1345B4u;
 label_1345b4:
     // 0x1345b4: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -209,7 +204,6 @@ label_1345b4:
     if (!runtime->callDirectStatic(rdram, ctx, &cCollisionSolid_constructSphere_0x1339f0, 0x1339f0u, 0x1345c8u)) {
         return;
     }
-    ctx->pc = 0x1345C8u;
 label_1345c8:
     // 0x1345c8: 0xae020004  sw          $v0, 0x4($s0)
     ctx->pc = 0x1345c8u;

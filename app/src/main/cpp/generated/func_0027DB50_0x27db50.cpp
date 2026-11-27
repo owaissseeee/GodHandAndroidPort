@@ -13,7 +13,7 @@
 
 // Function: func_0027DB50
 // Address: 0x27db50 - 0x27dbf8
-void func_0027DB50_0x27db50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0027DB50_0x27db50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0027DB50_0x27db50");
 #endif
@@ -73,7 +73,6 @@ void func_0027DB50_0x27db50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             return;
         }
     }
-    ctx->pc = 0x27DB78u;
 label_27db78:
     // 0x27db78: 0x24020006  addiu       $v0, $zero, 0x6
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
@@ -106,12 +105,10 @@ label_27db84:
         return;
         #endif
     }
-    ctx->pc = 0x27DB90u;
 label_27db90:
     // 0x27db90: 0x24020006  addiu       $v0, $zero, 0x6
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
     // 0x27db94: 0x24030002  addiu       $v1, $zero, 0x2
-    ctx->pc = 0x27db94u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
 label_27db98:
     // 0x27db98: 0xa0c202f5  sb          $v0, 0x2F5($a2)
@@ -142,7 +139,6 @@ label_27db98:
         return;
         #endif
     }
-    ctx->pc = 0x27DBACu;
 label_27dbac:
     // 0x27dbac: 0x24020006  addiu       $v0, $zero, 0x6
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
@@ -164,7 +160,6 @@ label_27dbac:
             goto label_27db98;
         }
     }
-    ctx->pc = 0x27DBB8u;
 label_27dbb8:
     // 0x27dbb8: 0x24030006  addiu       $v1, $zero, 0x6
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
@@ -191,7 +186,6 @@ label_27dbb8:
             goto label_27db84;
         }
     }
-    ctx->pc = 0x27DBCCu;
 label_27dbcc:
     // 0x27dbcc: 0x24020006  addiu       $v0, $zero, 0x6
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
@@ -210,12 +204,10 @@ label_27dbcc:
             goto label_27dbe0;
         }
     }
-    ctx->pc = 0x27DBD8u;
 label_27dbd8:
     // 0x27dbd8: 0x24020006  addiu       $v0, $zero, 0x6
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
     // 0x27dbdc: 0x24040004  addiu       $a0, $zero, 0x4
-    ctx->pc = 0x27dbdcu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
 label_27dbe0:
     // 0x27dbe0: 0x24030001  addiu       $v1, $zero, 0x1

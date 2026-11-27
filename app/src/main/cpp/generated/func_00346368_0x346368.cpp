@@ -13,7 +13,7 @@
 
 // Function: func_00346368
 // Address: 0x346368 - 0x3463f8
-void func_00346368_0x346368(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00346368_0x346368(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00346368_0x346368");
 #endif
@@ -45,7 +45,6 @@ void func_00346368_0x346368(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &GetD003EE078_3463F8_0x3463f8, 0x3463f8u, 0x34637cu)) {
         return;
     }
-    ctx->pc = 0x34637Cu;
 label_34637c:
     // 0x34637c: 0x3c03003f  lui         $v1, 0x3F
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)63 << 16));
@@ -90,7 +89,6 @@ label_34637c:
     if (!runtime->callDirectStatic(rdram, ctx, &mwrsc_WaitSprDmaEnd_0x346478, 0x346478u, 0x3463a0u)) {
         return;
     }
-    ctx->pc = 0x3463A0u;
 label_3463a0:
     // 0x3463a0: 0x3c060076  lui         $a2, 0x76
     SET_GPR_S32(ctx, 6, (int32_t)((uint32_t)118 << 16));
@@ -109,7 +107,6 @@ label_3463a0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00346498_0x346498, 0x346498u, 0x3463b4u)) {
         return;
     }
-    ctx->pc = 0x3463B4u;
 label_3463b4:
     // 0x3463b4: 0xc0d1998  jal         func_346660
     SET_GPR_U32(ctx, 31, 0x3463BCu);
@@ -122,7 +119,6 @@ label_3463b4:
     if (!runtime->callDirectStatic(rdram, ctx, &MWDMA_WaitEnd_0x346660, 0x346660u, 0x3463bcu)) {
         return;
     }
-    ctx->pc = 0x3463BCu;
 label_3463bc:
     // 0x3463bc: 0x3c040076  lui         $a0, 0x76
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)118 << 16));
@@ -141,7 +137,6 @@ label_3463bc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00346578_0x346578, 0x346578u, 0x3463d0u)) {
         return;
     }
-    ctx->pc = 0x3463D0u;
 label_3463d0:
     // 0x3463d0: 0xc0d1998  jal         func_346660
     SET_GPR_U32(ctx, 31, 0x3463D8u);
@@ -154,7 +149,6 @@ label_3463d0:
     if (!runtime->callDirectStatic(rdram, ctx, &MWDMA_WaitEnd_0x346660, 0x346660u, 0x3463d8u)) {
         return;
     }
-    ctx->pc = 0x3463D8u;
 label_3463d8:
     // 0x3463d8: 0xae000000  sw          $zero, 0x0($s0)
     ctx->pc = 0x3463d8u;

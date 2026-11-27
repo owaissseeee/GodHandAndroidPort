@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_addReelItem
 // Address: 0x1fae40 - 0x1fae60
-void cCoreSave_addReelItem_0x1fae40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_addReelItem_0x1fae40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_addReelItem_0x1fae40");
 #endif

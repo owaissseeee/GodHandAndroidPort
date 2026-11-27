@@ -13,7 +13,7 @@
 
 // Function: InitActorVU0Slots0A0CB_170C20
 // Address: 0x170c20 - 0x170c98
-void InitActorVU0Slots0A0CB_170C20_0x170c20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitActorVU0Slots0A0CB_170C20_0x170c20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitActorVU0Slots0A0CB_170C20_0x170c20");
 #endif
@@ -69,7 +69,6 @@ void InitActorVU0Slots0A0CB_170C20_0x170c20(uint8_t* rdram, R5900Context* ctx, P
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x170c60u)) {
         return;
     }
-    ctx->pc = 0x170C60u;
 label_170c60:
     // 0x170c60: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -96,7 +95,6 @@ label_170c60:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x170c84u)) {
         return;
     }
-    ctx->pc = 0x170C84u;
 label_170c84:
     // 0x170c84: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x170c84u;

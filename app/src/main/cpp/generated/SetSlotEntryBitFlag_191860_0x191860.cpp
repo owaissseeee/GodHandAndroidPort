@@ -13,7 +13,7 @@
 
 // Function: SetSlotEntryBitFlag_191860
 // Address: 0x191860 - 0x1918d0
-void SetSlotEntryBitFlag_191860_0x191860(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetSlotEntryBitFlag_191860_0x191860(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetSlotEntryBitFlag_191860_0x191860");
 #endif
@@ -74,10 +74,8 @@ void SetSlotEntryBitFlag_191860_0x191860(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x191894u)) {
         return;
     }
-    ctx->pc = 0x191894u;
 label_191894:
     // 0x191894: 0x102142  srl         $a0, $s0, 5
-    ctx->pc = 0x191894u;
     SET_GPR_S32(ctx, 4, (int32_t)SRL32(GPR_U32(ctx, 16), 5));
 label_191898:
     // 0x191898: 0x26230f80  addiu       $v1, $s1, 0xF80

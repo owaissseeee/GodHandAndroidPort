@@ -13,7 +13,7 @@
 
 // Function: cSnd_SetBgmAttr
 // Address: 0x2d0728 - 0x2d0748
-void cSnd_SetBgmAttr_0x2d0728(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_SetBgmAttr_0x2d0728(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_SetBgmAttr_0x2d0728");
 #endif
@@ -42,7 +42,6 @@ void cSnd_SetBgmAttr_0x2d0728(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SetBgmFadeOutTimeAll_0x2d0820, 0x2d0820u, 0x2d0738u)) {
         return;
     }
-    ctx->pc = 0x2D0738u;
 label_2d0738:
     // 0x2d0738: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2d0738u;

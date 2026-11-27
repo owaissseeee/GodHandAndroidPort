@@ -13,7 +13,7 @@
 
 // Function: AllocAndInitSystem_312F00
 // Address: 0x312f00 - 0x312f70
-void AllocAndInitSystem_312F00_0x312f00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void AllocAndInitSystem_312F00_0x312f00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("AllocAndInitSystem_312F00_0x312f00");
 #endif
@@ -74,7 +74,6 @@ void AllocAndInitSystem_312F00_0x312f00(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &EnsureInitThenForward_2A9538_30EE08_0x30ee08, 0x30ee08u, 0x312f34u)) {
         return;
     }
-    ctx->pc = 0x312F34u;
 label_312f34:
     // 0x312f34: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -106,7 +105,6 @@ label_312f34:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x312f4cu)) {
         return;
     }
-    ctx->pc = 0x312F4Cu;
 label_312f4c:
     // 0x312f4c: 0xc041f90  jal         func_107E40
     SET_GPR_U32(ctx, 31, 0x312F54u);
@@ -119,7 +117,6 @@ label_312f4c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00107E40_0x107e40, 0x107e40u, 0x312f54u)) {
         return;
     }
-    ctx->pc = 0x312F54u;
 label_312f54:
     // 0x312f54: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x312F54u;
@@ -136,7 +133,6 @@ label_312f54:
             goto label_312f64;
         }
     }
-    ctx->pc = 0x312F5Cu;
 label_312f5c:
     // 0x312f5c: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

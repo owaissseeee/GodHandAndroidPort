@@ -13,7 +13,7 @@
 
 // Function: _IO_sgetn
 // Address: 0x38c9e8 - 0x38ca10
-void ps2__IO_sgetn_0x38c9e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_sgetn_0x38c9e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_sgetn_0x38c9e8");
 #endif
@@ -34,11 +34,9 @@ void ps2__IO_sgetn_0x38c9e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
 
-    ctx->pc = 0x38c9e8u;
 
 label_38c9e8:
     // 0x38c9e8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x38c9e8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_38c9ec:
     // 0x38c9ec: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -68,7 +66,6 @@ label_38c9fc:
             return;
         }
     }
-    ctx->pc = 0x38CA00u;
 label_38ca00:
     // 0x38ca00: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38ca00u;
@@ -104,7 +101,6 @@ label_38ca08:
         return;
         #endif
     }
-    ctx->pc = 0x38CA0Cu;
 label_38ca0c:
     // 0x38ca0c: 0x0  nop
     // NOP

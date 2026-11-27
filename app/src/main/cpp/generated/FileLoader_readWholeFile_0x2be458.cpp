@@ -13,7 +13,7 @@
 
 // Function: FileLoader_readWholeFile
 // Address: 0x2be458 - 0x2be4e8
-void FileLoader_readWholeFile_0x2be458(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FileLoader_readWholeFile_0x2be458(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FileLoader_readWholeFile_0x2be458");
 #endif
@@ -58,7 +58,6 @@ void FileLoader_readWholeFile_0x2be458(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2be47cu)) {
         return;
     }
-    ctx->pc = 0x2BE47Cu;
 label_2be47c:
     // 0x2be47c: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -80,7 +79,6 @@ label_2be47c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x398B90u, 0x2BE48Cu, 0x2BE494u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2BE494u;
 label_2be494:
     // 0x2be494: 0x8fb00014  lw          $s0, 0x14($sp)
     ctx->pc = 0x2be494u;
@@ -107,7 +105,6 @@ label_2be494:
     if (!runtime->callDirectStatic(rdram, ctx, &EnsureInitThenForward_2A9538_30EE08_0x30ee08, 0x30ee08u, 0x2be4b4u)) {
         return;
     }
-    ctx->pc = 0x2BE4B4u;
 label_2be4b4:
     // 0x2be4b4: 0x8fa40010  lw          $a0, 0x10($sp)
     ctx->pc = 0x2be4b4u;
@@ -130,7 +127,6 @@ label_2be4b4:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x399728u, 0x2BE4C4u, 0x2BE4CCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2BE4CCu;
 label_2be4cc:
     // 0x2be4cc: 0xc0e6368  jal         func_398DA0
     SET_GPR_U32(ctx, 31, 0x2BE4D4u);
@@ -143,7 +139,6 @@ label_2be4cc:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x398DA0u, 0x2BE4CCu, 0x2BE4D4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2BE4D4u;
 label_2be4d4:
     // 0x2be4d4: 0x7bb00060  lq          $s0, 0x60($sp)
     ctx->pc = 0x2be4d4u;

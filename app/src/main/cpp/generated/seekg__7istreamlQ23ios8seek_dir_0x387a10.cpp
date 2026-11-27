@@ -13,7 +13,7 @@
 
 // Function: seekg__7istreamlQ23ios8seek_dir
 // Address: 0x387a10 - 0x387a60
-void seekg__7istreamlQ23ios8seek_dir_0x387a10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void seekg__7istreamlQ23ios8seek_dir_0x387a10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("seekg__7istreamlQ23ios8seek_dir_0x387a10");
 #endif
@@ -52,7 +52,6 @@ void seekg__7istreamlQ23ios8seek_dir_0x387a10(uint8_t* rdram, R5900Context* ctx,
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_seekoff_0x38e3f0, 0x38e3f0u, 0x387a30u)) {
         return;
     }
-    ctx->pc = 0x387A30u;
 label_387a30:
     // 0x387a30: 0x2403ffff  addiu       $v1, $zero, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
@@ -83,7 +82,6 @@ label_387a30:
     ctx->pc = 0x387a48u;
     WRITE8(ADD32(GPR_U32(ctx, 3), 26), (uint8_t)GPR_U32(ctx, 2));
     // 0x387a4c: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x387a4cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_387a50:
     // 0x387a50: 0xdfbf0010  ld          $ra, 0x10($sp)

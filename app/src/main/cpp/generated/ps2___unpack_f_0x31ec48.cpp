@@ -13,7 +13,7 @@
 
 // Function: __unpack_f
 // Address: 0x31ec48 - 0x31ed08
-void ps2___unpack_f_0x31ec48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___unpack_f_0x31ec48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___unpack_f_0x31ec48");
 #endif
@@ -70,7 +70,6 @@ void ps2___unpack_f_0x31ec48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
         return;
         #endif
     }
-    ctx->pc = 0x31EC78u;
 label_31ec78:
     // 0x31ec78: 0x240200ff  addiu       $v0, $zero, 0xFF
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 255));
@@ -125,7 +124,6 @@ label_31ec78:
         return;
         #endif
     }
-    ctx->pc = 0x31EC98u;
 label_31ec98:
     // 0x31ec98: 0x621024  and         $v0, $v1, $v0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) & GPR_U64(ctx, 2));
@@ -159,7 +157,6 @@ label_31ec98:
             goto label_31ecb0;
         }
     }
-    ctx->pc = 0x31ECACu;
 label_31ecac:
     // 0x31ecac: 0xaca00000  sw          $zero, 0x0($a1)
     ctx->pc = 0x31ecacu;
@@ -184,7 +181,6 @@ label_31ecb0:
         return;
         #endif
     }
-    ctx->pc = 0x31ECB8u;
 label_31ecb8:
     // 0x31ecb8: 0x319c0  sll         $v1, $v1, 7
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 3), 7));

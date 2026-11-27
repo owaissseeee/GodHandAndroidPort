@@ -13,7 +13,7 @@
 
 // Function: ftoi
 // Address: 0x3b0e68 - 0x3b0ef8
-void ftoi_0x3b0e68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ftoi_0x3b0e68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ftoi_0x3b0e68");
 #endif
@@ -63,7 +63,6 @@ void ftoi_0x3b0e68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
         return;
         #endif
     }
-    ctx->pc = 0x3B0E8Cu;
 label_3b0e8c:
     // 0x3b0e8c: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x3B0E8Cu;
@@ -99,7 +98,6 @@ label_3b0e8c:
         return;
         #endif
     }
-    ctx->pc = 0x3B0E9Cu;
 label_3b0e9c:
     // 0x3b0e9c: 0x34038000  ori         $v1, $zero, 0x8000
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)32768);
@@ -168,14 +166,12 @@ label_3b0e9c:
             goto label_3b0eec;
         }
     }
-    ctx->pc = 0x3B0EE0u;
 label_3b0ee0:
     // 0x3b0ee0: 0x6103c  dsll32      $v0, $a2, 0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 6) << (32 + 0));
     // 0x3b0ee4: 0x2103f  dsra32      $v0, $v0, 0
     SET_GPR_S64(ctx, 2, GPR_S64(ctx, 2) >> (32 + 0));
     // 0x3b0ee8: 0x452814  dsllv       $a1, $a1, $v0
-    ctx->pc = 0x3b0ee8u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) << (GPR_U32(ctx, 2) & 0x3F));
 label_3b0eec:
     // 0x3b0eec: 0x5103c  dsll32      $v0, $a1, 0

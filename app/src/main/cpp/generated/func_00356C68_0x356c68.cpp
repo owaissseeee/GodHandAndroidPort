@@ -13,7 +13,7 @@
 
 // Function: func_00356C68
 // Address: 0x356c68 - 0x356e80
-void func_00356C68_0x356c68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00356C68_0x356c68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00356C68_0x356c68");
 #endif
@@ -142,7 +142,6 @@ void func_00356C68_0x356c68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_356d4c;
         }
     }
-    ctx->pc = 0x356CF8u;
 label_356cf8:
     // 0x356cf8: 0x90430000  lbu         $v1, 0x0($v0)
     ctx->pc = 0x356cf8u;
@@ -253,11 +252,9 @@ label_356cf8:
         }
     }
     // 0x356d44: 0x0  nop
-    ctx->pc = 0x356d44u;
     // NOP
 label_356d48:
     // 0x356d48: 0xa0302d  daddu       $a2, $a1, $zero
-    ctx->pc = 0x356d48u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
 label_356d4c:
     // 0x356d4c: 0x24020003  addiu       $v0, $zero, 0x3
@@ -285,7 +282,6 @@ label_356d4c:
             goto label_356cf8;
         }
     }
-    ctx->pc = 0x356D60u;
 label_356d60:
     // 0x356d60: 0x2a420003  slti        $v0, $s2, 0x3
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 18) < (int64_t)(int32_t)3) ? 1 : 0);
@@ -341,7 +337,6 @@ label_356d60:
         }
     }
     // 0x356d94: 0x0  nop
-    ctx->pc = 0x356d94u;
     // NOP
 label_356d98:
     // 0x356d98: 0x8e220008  lw          $v0, 0x8($s1)
@@ -367,7 +362,6 @@ label_356d98:
             goto label_356d60;
         }
     }
-    ctx->pc = 0x356DA8u;
 label_356da8:
     // 0x356da8: 0x9082fffd  lbu         $v0, -0x3($a0)
     ctx->pc = 0x356da8u;
@@ -400,7 +394,6 @@ label_356da8:
         }
     }
     // 0x356dc4: 0x0  nop
-    ctx->pc = 0x356dc4u;
     // NOP
 label_356dc8:
     // 0x356dc8: 0xc0da476  jal         func_3691D8
@@ -409,7 +402,6 @@ label_356dc8:
     if (!runtime->callDirectStatic(rdram, ctx, &MPV_CheckDelim_0x3691d8, 0x3691d8u, 0x356dd0u)) {
         return;
     }
-    ctx->pc = 0x356DD0u;
 label_356dd0:
     // 0x356dd0: 0x30420004  andi        $v0, $v0, 0x4
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)4);
@@ -446,7 +438,6 @@ label_356de8:
     // 0x356df4: 0x2429023  subu        $s2, $s2, $v0
     SET_GPR_S32(ctx, 18, (int32_t)SUB32(GPR_U32(ctx, 18), GPR_U32(ctx, 2)));
     // 0x356df8: 0x2a470004  slti        $a3, $s2, 0x4
-    ctx->pc = 0x356df8u;
     SET_GPR_U64(ctx, 7, ((int64_t)GPR_S64(ctx, 18) < (int64_t)(int32_t)4) ? 1 : 0);
 label_356dfc:
     // 0x356dfc: 0x14e00009  bnez        $a3, . + 4 + (0x9 << 2)
@@ -479,7 +470,6 @@ label_356dfc:
     if (!runtime->callDirectStatic(rdram, ctx, &MPV_SearchDelim_0x369370, 0x369370u, 0x356e14u)) {
         return;
     }
-    ctx->pc = 0x356E14u;
 label_356e14:
     // 0x356e14: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -502,7 +492,6 @@ label_356e14:
         }
     }
     // 0x356e20: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x356e20u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_356e24:
     // 0x356e24: 0x56a2000d  bnel        $s5, $v0, . + 4 + (0xD << 2)
@@ -531,7 +520,6 @@ label_356e24:
     if (!runtime->callDirectStatic(rdram, ctx, &SFCON_IsEndcodeSkip_0x34cd48, 0x34cd48u, 0x356e34u)) {
         return;
     }
-    ctx->pc = 0x356E34u;
 label_356e34:
     // 0x356e34: 0x54400009  bnel        $v0, $zero, . + 4 + (0x9 << 2)
     ctx->pc = 0x356E34u;
@@ -559,7 +547,6 @@ label_356e34:
     if (!runtime->callDirectStatic(rdram, ctx, &SFCON_IsVideoEndcodeSkip_0x34cdb0, 0x34cdb0u, 0x356e44u)) {
         return;
     }
-    ctx->pc = 0x356E44u;
 label_356e44:
     // 0x356e44: 0x14400005  bnez        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x356E44u;
@@ -589,7 +576,6 @@ label_356e44:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00356988_0x356988, 0x356988u, 0x356e58u)) {
         return;
     }
-    ctx->pc = 0x356E58u;
 label_356e58:
     // 0x356e58: 0xdfb00010  ld          $s0, 0x10($sp)
     ctx->pc = 0x356e58u;

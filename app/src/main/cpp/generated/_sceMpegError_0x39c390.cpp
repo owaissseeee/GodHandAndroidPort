@@ -13,7 +13,7 @@
 
 // Function: _sceMpegError
 // Address: 0x39c390 - 0x39c3e8
-void _sceMpegError_0x39c390(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceMpegError_0x39c390(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceMpegError_0x39c390");
 #endif
@@ -88,7 +88,6 @@ void _sceMpegError_0x39c390(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x39AB20u, 0x39C3C0u, 0x39C3C8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x39C3C8u;
 label_39c3c8:
     // 0x39c3c8: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x39C3C8u;
@@ -105,7 +104,6 @@ label_39c3c8:
             goto label_39c3dc;
         }
     }
-    ctx->pc = 0x39C3D0u;
 label_39c3d0:
     // 0x39c3d0: 0xc0e7086  jal         func_39C218
     SET_GPR_U32(ctx, 31, 0x39C3D8u);
@@ -118,7 +116,6 @@ label_39c3d0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0039C218_0x39c218, 0x39c218u, 0x39c3d8u)) {
         return;
     }
-    ctx->pc = 0x39C3D8u;
 label_39c3d8:
     // 0x39c3d8: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x39c3d8u;

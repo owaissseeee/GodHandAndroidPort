@@ -6,6 +6,8 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
+#include <cstring>
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,7 +15,7 @@
 
 // Function: strcmp
 // Address: 0x3a5678 - 0x3a57c4
-void strcmp_0x3a5678(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void strcmp_0x3a5678(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("strcmp_0x3a5678");
 #endif
@@ -26,6 +28,24 @@ void strcmp_0x3a5678(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             default: break;
         }
     }
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    if (__builtin_expect(ctx->pc == 0x3a5678u, 1)) {
+        uint32_t avail1 = 0, avail2 = 0;
+        const char* const s1 = ps2TryFastCStr(rdram, GPR_U32(ctx, 4), avail1);
+        const char* const s2 = ps2TryFastCStr(rdram, GPR_U32(ctx, 5), avail2);
+        const uint32_t minAvail = std::min(avail1, avail2);
+        if (__builtin_expect(s1 != nullptr && s2 != nullptr && minAvail > 16u, 1)) {
+            const uint32_t safeMax = minAvail - 16u;
+            const int cmp = std::strncmp(s1, s2, safeMax);
+            if (cmp != 0 || ::strnlen(s1, safeMax) < safeMax) {
+                SET_GPR_S32(ctx, 2, cmp);
+                ps2FastReturn(rdram, ctx, runtime, 0x3A57BCu);
+                return;
+            }
+        }
+    }
+#endif
 
 
     // 0x3a5678: 0x854025  or          $t0, $a0, $a1
@@ -127,7 +147,6 @@ void strcmp_0x3a5678(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     ctx->pc = 0x3a56f0u;
     SET_GPR_VEC(ctx, 2, READ128(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x3a56f4: 0x70021ce9  pnor        $v1, $zero, $v0
-    ctx->pc = 0x3a56f4u;
     SET_GPR_VEC(ctx, 3, PS2_PNOR(GPR_VEC(ctx, 0), GPR_VEC(ctx, 2)));
 label_3a56f8:
     // 0x3a56f8: 0x70481248  psubb       $v0, $v0, $t0
@@ -174,7 +193,6 @@ label_3a56f8:
         return;
         #endif
     }
-    ctx->pc = 0x3A571Cu;
 label_3a571c:
     // 0x3a571c: 0x24a50010  addiu       $a1, $a1, 0x10
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 16));
@@ -223,7 +241,6 @@ label_3a571c:
             goto label_3a57b0;
         }
     }
-    ctx->pc = 0x3A5744u;
 label_3a5744:
     // 0x3a5744: 0xdc830000  ld          $v1, 0x0($a0)
     ctx->pc = 0x3a5744u;
@@ -247,7 +264,6 @@ label_3a5744:
     ctx->pc = 0x3a5750u;
     SET_GPR_U64(ctx, 2, READ64(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x3a5754: 0x24027  nor         $t0, $zero, $v0
-    ctx->pc = 0x3a5754u;
     SET_GPR_U64(ctx, 8, ~(GPR_U64(ctx, 0) | GPR_U64(ctx, 2)));
 label_3a5758:
     // 0x3a5758: 0x47102f  dsubu       $v0, $v0, $a3
@@ -290,7 +306,6 @@ label_3a5758:
         return;
         #endif
     }
-    ctx->pc = 0x3A5774u;
 label_3a5774:
     // 0x3a5774: 0x24a50008  addiu       $a1, $a1, 0x8
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 8));
@@ -333,7 +348,6 @@ label_3a5774:
             goto label_3a57b0;
         }
     }
-    ctx->pc = 0x3A5790u;
 label_3a5790:
     // 0x3a5790: 0x31600  sll         $v0, $v1, 24
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 3), 24));
@@ -383,7 +397,6 @@ label_3a57b0:
             goto label_3a5790;
         }
     }
-    ctx->pc = 0x3A57B8u;
 label_3a57b8:
     // 0x3a57b8: 0x90a20000  lbu         $v0, 0x0($a1)
     ctx->pc = 0x3a57b8u;

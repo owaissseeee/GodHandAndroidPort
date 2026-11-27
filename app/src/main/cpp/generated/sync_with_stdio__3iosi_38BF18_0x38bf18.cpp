@@ -13,7 +13,7 @@
 
 // Function: sync_with_stdio__3iosi_38BF18
 // Address: 0x38bf18 - 0x38bf38
-void sync_with_stdio__3iosi_38BF18_0x38bf18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sync_with_stdio__3iosi_38BF18_0x38bf18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sync_with_stdio__3iosi_38BF18_0x38bf18");
 #endif
@@ -42,7 +42,6 @@ void sync_with_stdio__3iosi_38BF18_0x38bf18(uint8_t* rdram, R5900Context* ctx, P
     if (!runtime->callDirectStatic(rdram, ctx, &sync_with_stdio__3iosi_0x38afb0, 0x38afb0u, 0x38bf28u)) {
         return;
     }
-    ctx->pc = 0x38BF28u;
 label_38bf28:
     // 0x38bf28: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38bf28u;

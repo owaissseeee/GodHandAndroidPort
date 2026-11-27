@@ -13,7 +13,7 @@
 
 // Function: cEvent_clearSystem
 // Address: 0x297680 - 0x2977e8
-void cEvent_clearSystem_0x297680(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_clearSystem_0x297680(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_clearSystem_0x297680");
 #endif
@@ -75,7 +75,6 @@ void cEvent_clearSystem_0x297680(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2976acu)) {
         return;
     }
-    ctx->pc = 0x2976ACu;
 label_2976ac:
     // 0x2976ac: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x2976acu;
@@ -96,7 +95,6 @@ label_2976ac:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2976c0u)) {
         return;
     }
-    ctx->pc = 0x2976C0u;
 label_2976c0:
     // 0x2976c0: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x2976c0u;
@@ -117,7 +115,6 @@ label_2976c0:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2976d4u)) {
         return;
     }
-    ctx->pc = 0x2976D4u;
 label_2976d4:
     // 0x2976d4: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x2976d4u;
@@ -138,7 +135,6 @@ label_2976d4:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2976e8u)) {
         return;
     }
-    ctx->pc = 0x2976E8u;
 label_2976e8:
     // 0x2976e8: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x2976e8u;
@@ -159,7 +155,6 @@ label_2976e8:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2976fcu)) {
         return;
     }
-    ctx->pc = 0x2976FCu;
 label_2976fc:
     // 0x2976fc: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x2976fcu;
@@ -180,7 +175,6 @@ label_2976fc:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x297710u)) {
         return;
     }
-    ctx->pc = 0x297710u;
 label_297710:
     // 0x297710: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x297710u;
@@ -201,7 +195,6 @@ label_297710:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x297724u)) {
         return;
     }
-    ctx->pc = 0x297724u;
 label_297724:
     // 0x297724: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x297724u;
@@ -222,7 +215,6 @@ label_297724:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x297738u)) {
         return;
     }
-    ctx->pc = 0x297738u;
 label_297738:
     // 0x297738: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x297738u;
@@ -243,7 +235,6 @@ label_297738:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x29774cu)) {
         return;
     }
-    ctx->pc = 0x29774Cu;
 label_29774c:
     // 0x29774c: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x29774cu;
@@ -264,7 +255,6 @@ label_29774c:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x297760u)) {
         return;
     }
-    ctx->pc = 0x297760u;
 label_297760:
     // 0x297760: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x297760u;
@@ -285,7 +275,6 @@ label_297760:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x297774u)) {
         return;
     }
-    ctx->pc = 0x297774u;
 label_297774:
     // 0x297774: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x297774u;
@@ -306,7 +295,6 @@ label_297774:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x297788u)) {
         return;
     }
-    ctx->pc = 0x297788u;
 label_297788:
     // 0x297788: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x297788u;
@@ -327,7 +315,6 @@ label_297788:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x29779cu)) {
         return;
     }
-    ctx->pc = 0x29779Cu;
 label_29779c:
     // 0x29779c: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x29779cu;
@@ -348,7 +335,6 @@ label_29779c:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2977b0u)) {
         return;
     }
-    ctx->pc = 0x2977B0u;
 label_2977b0:
     // 0x2977b0: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x2977b0u;
@@ -369,7 +355,6 @@ label_2977b0:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2977c4u)) {
         return;
     }
-    ctx->pc = 0x2977C4u;
 label_2977c4:
     // 0x2977c4: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -389,7 +374,6 @@ label_2977c4:
             return;
         }
     }
-    ctx->pc = 0x2977D0u;
 label_2977d0:
     // 0x2977d0: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2977d0u;

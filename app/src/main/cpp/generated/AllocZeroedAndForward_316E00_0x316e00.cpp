@@ -13,7 +13,7 @@
 
 // Function: AllocZeroedAndForward_316E00
 // Address: 0x316e00 - 0x316e70
-void AllocZeroedAndForward_316E00_0x316e00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void AllocZeroedAndForward_316E00_0x316e00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("AllocZeroedAndForward_316E00_0x316e00");
 #endif
@@ -74,7 +74,6 @@ void AllocZeroedAndForward_316E00_0x316e00(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &EnsureInitThenForward_2A9538_30EE08_0x30ee08, 0x30ee08u, 0x316e34u)) {
         return;
     }
-    ctx->pc = 0x316E34u;
 label_316e34:
     // 0x316e34: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -106,7 +105,6 @@ label_316e34:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x316e4cu)) {
         return;
     }
-    ctx->pc = 0x316E4Cu;
 label_316e4c:
     // 0x316e4c: 0xc05c6c4  jal         func_171B10
     SET_GPR_U32(ctx, 31, 0x316E54u);
@@ -119,7 +117,6 @@ label_316e4c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00171B10_0x171b10, 0x171b10u, 0x316e54u)) {
         return;
     }
-    ctx->pc = 0x316E54u;
 label_316e54:
     // 0x316e54: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x316E54u;
@@ -136,7 +133,6 @@ label_316e54:
             goto label_316e64;
         }
     }
-    ctx->pc = 0x316E5Cu;
 label_316e5c:
     // 0x316e5c: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

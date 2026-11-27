@@ -13,7 +13,7 @@
 
 // Function: cOmBase_setMeshAlphaFromLayer
 // Address: 0x1b7220 - 0x1b7280
-void cOmBase_setMeshAlphaFromLayer_0x1b7220(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmBase_setMeshAlphaFromLayer_0x1b7220(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmBase_setMeshAlphaFromLayer_0x1b7220");
 #endif
@@ -53,7 +53,6 @@ void cOmBase_setMeshAlphaFromLayer_0x1b7220(uint8_t* rdram, R5900Context* ctx, P
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_getMeshPtr_0x14b6f8, 0x14b6f8u, 0x1b7240u)) {
         return;
     }
-    ctx->pc = 0x1B7240u;
 label_1b7240:
     // 0x1b7240: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -91,7 +90,6 @@ label_1b7250:
             goto label_1b7258;
         }
     }
-    ctx->pc = 0x1B7258u;
 label_1b7258:
     // 0x1b7258: 0x8c630404  lw          $v1, 0x404($v1)
     ctx->pc = 0x1b7258u;

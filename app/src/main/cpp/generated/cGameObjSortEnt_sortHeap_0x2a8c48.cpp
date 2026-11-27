@@ -13,7 +13,7 @@
 
 // Function: cGameObjSortEnt_sortHeap
 // Address: 0x2a8c48 - 0x2a8d30
-void cGameObjSortEnt_sortHeap_0x2a8c48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObjSortEnt_sortHeap_0x2a8c48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObjSortEnt_sortHeap_0x2a8c48");
 #endif
@@ -83,7 +83,6 @@ void cGameObjSortEnt_sortHeap_0x2a8c48(uint8_t* rdram, R5900Context* ctx, PS2Run
     // 0x2a8c90: 0x2610fff8  addiu       $s0, $s0, -0x8
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 4294967288));
     // 0x2a8c94: 0x0  nop
-    ctx->pc = 0x2a8c94u;
     // NOP
 label_2a8c98:
     // 0x2a8c98: 0x2652fff8  addiu       $s2, $s2, -0x8
@@ -153,7 +152,6 @@ label_2a8c98:
     if (!runtime->callDirectStatic(rdram, ctx, &cGameObjSortEnt_adjustHeap_0x2a8aa8, 0x2a8aa8u, 0x2a8cf4u)) {
         return;
     }
-    ctx->pc = 0x2A8CF4u;
 label_2a8cf4:
     // 0x2a8cf4: 0x2341023  subu        $v0, $s1, $s4
     SET_GPR_S32(ctx, 2, (int32_t)SUB32(GPR_U32(ctx, 17), GPR_U32(ctx, 20)));
@@ -179,7 +177,6 @@ label_2a8cf4:
             goto label_2a8c98;
         }
     }
-    ctx->pc = 0x2A8D08u;
 label_2a8d08:
     // 0x2a8d08: 0x7bb00080  lq          $s0, 0x80($sp)
     ctx->pc = 0x2a8d08u;

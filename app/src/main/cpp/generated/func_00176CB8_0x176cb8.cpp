@@ -13,7 +13,7 @@
 
 // Function: func_00176CB8
 // Address: 0x176cb8 - 0x176d60
-void func_00176CB8_0x176cb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00176CB8_0x176cb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00176CB8_0x176cb8");
 #endif
@@ -67,7 +67,6 @@ void func_00176CB8_0x176cb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x176cf0u;
     WRITE32(ADD32(GPR_U32(ctx, 18), 532), GPR_U32(ctx, 2));
     // 0x176cf4: 0x0  nop
-    ctx->pc = 0x176cf4u;
     // NOP
 label_176cf8:
     // 0x176cf8: 0x8e050000  lw          $a1, 0x0($s0)
@@ -99,13 +98,11 @@ label_176cf8:
     if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x176d0cu)) {
         return;
     }
-    ctx->pc = 0x176D0Cu;
 label_176d0c:
     // 0x176d0c: 0xae000000  sw          $zero, 0x0($s0)
     ctx->pc = 0x176d0cu;
     WRITE32(ADD32(GPR_U32(ctx, 16), 0), GPR_U32(ctx, 0));
     // 0x176d10: 0x2631ffff  addiu       $s1, $s1, -0x1
-    ctx->pc = 0x176d10u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 4294967295));
 label_176d14:
     // 0x176d14: 0x621fff8  bgez        $s1, . + 4 + (-0x8 << 2)
@@ -155,7 +152,6 @@ label_176d14:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_ReleaseDamageGive_0x1fe148, 0x1fe148u, 0x176d30u)) {
         return;
     }
-    ctx->pc = 0x176D30u;
 label_176d30:
     // 0x176d30: 0xae400608  sw          $zero, 0x608($s2)
     ctx->pc = 0x176d30u;
@@ -174,7 +170,6 @@ label_176d34:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField214PtrThenInit_1B6F38_0x1b6f38, 0x1b6f38u, 0x176d40u)) {
         return;
     }
-    ctx->pc = 0x176D40u;
 label_176d40:
     // 0x176d40: 0x7bb00050  lq          $s0, 0x50($sp)
     ctx->pc = 0x176d40u;

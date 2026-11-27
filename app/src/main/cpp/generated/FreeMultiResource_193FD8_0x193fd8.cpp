@@ -13,7 +13,7 @@
 
 // Function: FreeMultiResource_193FD8
 // Address: 0x193fd8 - 0x194080
-void FreeMultiResource_193FD8_0x193fd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FreeMultiResource_193FD8_0x193fd8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FreeMultiResource_193FD8_0x193fd8");
 #endif
@@ -83,7 +83,6 @@ void FreeMultiResource_193FD8_0x193fd8(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x194014u)) {
         return;
     }
-    ctx->pc = 0x194014u;
 label_194014:
     // 0x194014: 0xae000604  sw          $zero, 0x604($s0)
     ctx->pc = 0x194014u;
@@ -120,7 +119,6 @@ label_194018:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_ReleaseDamageGive_0x1fe148, 0x1fe148u, 0x194030u)) {
         return;
     }
-    ctx->pc = 0x194030u;
 label_194030:
     // 0x194030: 0xae000608  sw          $zero, 0x608($s0)
     ctx->pc = 0x194030u;
@@ -157,13 +155,11 @@ label_194038:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0012EC58_0x12ec58, 0x12ec58u, 0x19404cu)) {
         return;
     }
-    ctx->pc = 0x19404Cu;
 label_19404c:
     // 0x19404c: 0xae000614  sw          $zero, 0x614($s0)
     ctx->pc = 0x19404cu;
     WRITE32(ADD32(GPR_U32(ctx, 16), 1556), GPR_U32(ctx, 0));
     // 0x194050: 0x3c040074  lui         $a0, 0x74
-    ctx->pc = 0x194050u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)116 << 16));
 label_194054:
     // 0x194054: 0x24050177  addiu       $a1, $zero, 0x177
@@ -179,7 +175,6 @@ label_194054:
     if (!runtime->callDirectStatic(rdram, ctx, &espSys_effDataRelease_0x305778, 0x305778u, 0x194060u)) {
         return;
     }
-    ctx->pc = 0x194060u;
 label_194060:
     // 0x194060: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -194,7 +189,6 @@ label_194060:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField214PtrThenInit_1B6F38_0x1b6f38, 0x1b6f38u, 0x19406cu)) {
         return;
     }
-    ctx->pc = 0x19406Cu;
 label_19406c:
     // 0x19406c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x19406cu;

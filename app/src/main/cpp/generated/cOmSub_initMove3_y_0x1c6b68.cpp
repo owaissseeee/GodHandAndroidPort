@@ -13,7 +13,7 @@
 
 // Function: cOmSub_initMove3_y
 // Address: 0x1c6b68 - 0x1c6c30
-void cOmSub_initMove3_y_0x1c6b68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmSub_initMove3_y_0x1c6b68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmSub_initMove3_y_0x1c6b68");
 #endif
@@ -100,14 +100,11 @@ void cOmSub_initMove3_y_0x1c6b68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_1c6ba4;
         }
     }
-    ctx->pc = 0x1C6BA0u;
 label_1c6ba0:
     // 0x1c6ba0: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1c6ba0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1c6ba4:
     // 0x1c6ba4: 0x40402d  daddu       $t0, $v0, $zero
-    ctx->pc = 0x1c6ba4u;
     SET_GPR_U64(ctx, 8, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_1c6ba8:
     // 0x1c6ba8: 0x1100001c  beqz        $t0, . + 4 + (0x1C << 2)
@@ -152,7 +149,6 @@ label_1c6ba8:
             goto label_1c6bc8;
         }
     }
-    ctx->pc = 0x1C6BC4u;
 label_1c6bc4:
     // 0x1c6bc4: 0x8d0200f0  lw          $v0, 0xF0($t0)
     ctx->pc = 0x1c6bc4u;
@@ -200,7 +196,6 @@ label_1c6bc8:
     ctx->pc = 0x1c6bf0u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 3), 8), bits); }
     // 0x1c6bf4: 0x24830080  addiu       $v1, $a0, 0x80
-    ctx->pc = 0x1c6bf4u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), 128));
 label_1c6bf8:
     // 0x1c6bf8: 0x25020100  addiu       $v0, $t0, 0x100
@@ -244,7 +239,6 @@ label_1c6c1c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001C6C30_0x1c6c30, 0x1c6c30u, 0x1c6c24u)) {
         return;
     }
-    ctx->pc = 0x1C6C24u;
 label_1c6c24:
     // 0x1c6c24: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x1c6c24u;

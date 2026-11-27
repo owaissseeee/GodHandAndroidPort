@@ -13,7 +13,7 @@
 
 // Function: BlackJack__ctor
 // Address: 0x1d0ea8 - 0x1d0fd8
-void BlackJack__ctor_0x1d0ea8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BlackJack__ctor_0x1d0ea8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BlackJack__ctor_0x1d0ea8");
 #endif
@@ -64,12 +64,10 @@ void BlackJack__ctor_0x1d0ea8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &func_001D4D80_0x1d4d80, 0x1d4d80u, 0x1d0ed0u)) {
         return;
     }
-    ctx->pc = 0x1D0ED0u;
 label_1d0ed0:
     // 0x1d0ed0: 0x2413ffff  addiu       $s3, $zero, -0x1
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x1d0ed4: 0x0  nop
-    ctx->pc = 0x1d0ed4u;
     // NOP
 label_1d0ed8:
     // 0x1d0ed8: 0x200202d  daddu       $a0, $s0, $zero
@@ -85,7 +83,6 @@ label_1d0ed8:
     if (!runtime->callDirectStatic(rdram, ctx, &InitNode_1D0C78_0x1d0c78, 0x1d0c78u, 0x1d0ee4u)) {
         return;
     }
-    ctx->pc = 0x1D0EE4u;
 label_1d0ee4:
     // 0x1d0ee4: 0x0  nop
     // NOP
@@ -136,7 +133,6 @@ label_1d0ee4:
     ctx->pc = 0x1d0f18u;
     WRITE32(ADD32(GPR_U32(ctx, 17), 6168), GPR_U32(ctx, 0));
     // 0x1d0f1c: 0x0  nop
-    ctx->pc = 0x1d0f1cu;
     // NOP
 label_1d0f20:
     // 0x1d0f20: 0xac400000  sw          $zero, 0x0($v0)
@@ -169,7 +165,6 @@ label_1d0f20:
     // 0x1d0f38: 0x24820010  addiu       $v0, $a0, 0x10
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 16));
     // 0x1d0f3c: 0x24030004  addiu       $v1, $zero, 0x4
-    ctx->pc = 0x1d0f3cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
 label_1d0f40:
     // 0x1d0f40: 0xac400000  sw          $zero, 0x0($v0)
@@ -206,7 +201,6 @@ label_1d0f40:
     // 0x1d0f60: 0x24030004  addiu       $v1, $zero, 0x4
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x1d0f64: 0x0  nop
-    ctx->pc = 0x1d0f64u;
     // NOP
 label_1d0f68:
     // 0x1d0f68: 0xa4440000  sh          $a0, 0x0($v0)
@@ -243,7 +237,6 @@ label_1d0f68:
     // 0x1d0f88: 0x24030004  addiu       $v1, $zero, 0x4
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x1d0f8c: 0x0  nop
-    ctx->pc = 0x1d0f8cu;
     // NOP
 label_1d0f90:
     // 0x1d0f90: 0xa4440000  sh          $a0, 0x0($v0)

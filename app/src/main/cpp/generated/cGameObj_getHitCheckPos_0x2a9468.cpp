@@ -13,7 +13,7 @@
 
 // Function: cGameObj_getHitCheckPos
 // Address: 0x2a9468 - 0x2a9498
-void cGameObj_getHitCheckPos_0x2a9468(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObj_getHitCheckPos_0x2a9468(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObj_getHitCheckPos_0x2a9468");
 #endif
@@ -36,11 +36,9 @@ void cGameObj_getHitCheckPos_0x2a9468(uint8_t* rdram, R5900Context* ctx, PS2Runt
         }
     }
 
-    ctx->pc = 0x2a9468u;
 
 label_2a9468:
     // 0x2a9468: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2a9468u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_2a946c:
     // 0x2a946c: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -86,7 +84,6 @@ label_2a9480:
             return;
         }
     }
-    ctx->pc = 0x2A9484u;
 label_2a9484:
     // 0x2a9484: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2a9484u;
@@ -122,10 +119,8 @@ label_2a948c:
         return;
         #endif
     }
-    ctx->pc = 0x2A9490u;
 label_2a9490:
     // 0x2a9490: 0x2c420001  sltiu       $v0, $v0, 0x1
-    ctx->pc = 0x2a9490u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1) ? 1 : 0);
 label_2a9494:
     // 0x2a9494: 0x0  nop

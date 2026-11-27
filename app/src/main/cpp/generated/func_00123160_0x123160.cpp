@@ -13,7 +13,7 @@
 
 // Function: func_00123160
 // Address: 0x123160 - 0x123460
-void func_00123160_0x123160(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00123160_0x123160(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00123160_0x123160");
 #endif
@@ -112,7 +112,6 @@ void func_00123160_0x123160(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_123440;
         }
     }
-    ctx->pc = 0x1231B4u;
 label_1231b4:
     // 0x1231b4: 0x24050001  addiu       $a1, $zero, 0x1
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -129,7 +128,6 @@ label_1231b4:
     if (!runtime->callDirectStatic(rdram, ctx, &cCamManager_isCk_CamClass_0x138f88, 0x138f88u, 0x1231c4u)) {
         return;
     }
-    ctx->pc = 0x1231C4u;
 label_1231c4:
     // 0x1231c4: 0x50400091  beql        $v0, $zero, . + 4 + (0x91 << 2)
     ctx->pc = 0x1231C4u;
@@ -264,7 +262,6 @@ label_1231c4:
         }
     }
     // 0x12325c: 0x46002046  mov.s       $f1, $f4
-    ctx->pc = 0x12325cu;
     ctx->f[1] = FPU_MOV_S(ctx->f[4]);
 label_123260:
     // 0x123260: 0x46030834  c.lt.s      $f1, $f3
@@ -287,7 +284,6 @@ label_123260:
         }
     }
     // 0x123270: 0x46000886  mov.s       $f2, $f1
-    ctx->pc = 0x123270u;
     ctx->f[2] = FPU_MOV_S(ctx->f[1]);
 label_123274:
     // 0x123274: 0x3c013f7d  lui         $at, 0x3F7D
@@ -364,7 +360,6 @@ label_123274:
             goto label_123440;
         }
     }
-    ctx->pc = 0x1232BCu;
 label_1232bc:
     // 0x1232bc: 0x8e020250  lw          $v0, 0x250($s0)
     ctx->pc = 0x1232bcu;
@@ -408,7 +403,6 @@ label_1232bc:
             goto label_123434;
         }
     }
-    ctx->pc = 0x1232E0u;
 label_1232e0:
     // 0x1232e0: 0x54600059  bnel        $v1, $zero, . + 4 + (0x59 << 2)
     ctx->pc = 0x1232E0u;
@@ -539,7 +533,6 @@ label_1232e0:
         }
     }
     // 0x123384: 0x46002006  mov.s       $f0, $f4
-    ctx->pc = 0x123384u;
     ctx->f[0] = FPU_MOV_S(ctx->f[4]);
 label_123388:
     // 0x123388: 0x46030034  c.lt.s      $f0, $f3
@@ -562,7 +555,6 @@ label_123388:
         }
     }
     // 0x123398: 0x46000046  mov.s       $f1, $f0
-    ctx->pc = 0x123398u;
     ctx->f[1] = FPU_MOV_S(ctx->f[0]);
 label_12339c:
     // 0x12339c: 0x3c013f7d  lui         $at, 0x3F7D
@@ -639,7 +631,6 @@ label_12339c:
             goto label_123440;
         }
     }
-    ctx->pc = 0x1233E4u;
 label_1233e4:
     // 0x1233e4: 0x8e020250  lw          $v0, 0x250($s0)
     ctx->pc = 0x1233e4u;
@@ -683,7 +674,6 @@ label_1233e4:
             goto label_123434;
         }
     }
-    ctx->pc = 0x123408u;
 label_123408:
     // 0x123408: 0x8e020250  lw          $v0, 0x250($s0)
     ctx->pc = 0x123408u;
@@ -731,7 +721,6 @@ label_123434:
     ctx->pc = 0x123438u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 592)));
     // 0x12343c: 0x451024  and         $v0, $v0, $a1
-    ctx->pc = 0x12343cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 5));
 label_123440:
     // 0x123440: 0xac620250  sw          $v0, 0x250($v1)

@@ -13,7 +13,7 @@
 
 // Function: setD3_CHCR
 // Address: 0x355818 - 0x355880
-void setD3_CHCR_0x355818(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void setD3_CHCR_0x355818(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("setD3_CHCR_0x355818");
 #endif
@@ -45,7 +45,6 @@ void setD3_CHCR_0x355818(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x35582cu)) {
         return;
     }
-    ctx->pc = 0x35582Cu;
 label_35582c:
     // 0x35582c: 0x3c051000  lui         $a1, 0x1000
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)4096 << 16));

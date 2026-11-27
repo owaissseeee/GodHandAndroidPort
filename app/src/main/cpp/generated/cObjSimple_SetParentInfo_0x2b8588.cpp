@@ -13,7 +13,7 @@
 
 // Function: cObjSimple_SetParentInfo
 // Address: 0x2b8588 - 0x2b8630
-void cObjSimple_SetParentInfo_0x2b8588(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cObjSimple_SetParentInfo_0x2b8588(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cObjSimple_SetParentInfo_0x2b8588");
 #endif
@@ -70,7 +70,6 @@ void cObjSimple_SetParentInfo_0x2b8588(uint8_t* rdram, R5900Context* ctx, PS2Run
         }
     }
     // 0x2b85a8: 0xc3102a  slt         $v0, $a2, $v1
-    ctx->pc = 0x2b85a8u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 6) < (int64_t)GPR_S64(ctx, 3)) ? 1 : 0);
 label_2b85ac:
     // 0x2b85ac: 0x304200ff  andi        $v0, $v0, 0xFF
@@ -110,10 +109,8 @@ label_2b85ac:
             goto label_2b85cc;
         }
     }
-    ctx->pc = 0x2B85C8u;
 label_2b85c8:
     // 0x2b85c8: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2b85c8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2b85cc:
     // 0x2b85cc: 0x10400016  beqz        $v0, . + 4 + (0x16 << 2)
@@ -125,7 +122,6 @@ label_2b85cc:
             goto label_2b8628;
         }
     }
-    ctx->pc = 0x2B85D4u;
 label_2b85d4:
     // 0x2b85d4: 0xac8530b0  sw          $a1, 0x30B0($a0)
     ctx->pc = 0x2b85d4u;
@@ -202,7 +198,6 @@ label_2b85fc:
     ctx->pc = 0x2b861cu;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 2), 8), bits); }
     // 0x2b8620: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2b8620u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2b8624:
     // 0x2b8624: 0xa08204e0  sb          $v0, 0x4E0($a0)

@@ -13,7 +13,7 @@
 
 // Function: func_00387328
 // Address: 0x387328 - 0x387430
-void func_00387328_0x387328(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00387328_0x387328(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00387328_0x387328");
 #endif
@@ -68,7 +68,6 @@ void func_00387328_0x387328(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_00377998_0x377998, 0x377998u, 0x387360u)) {
         return;
     }
-    ctx->pc = 0x387360u;
 label_387360:
     // 0x387360: 0x40302d  daddu       $a2, $v0, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -136,7 +135,6 @@ label_387360:
     // 0x3873a8: 0x24c40026  addiu       $a0, $a2, 0x26
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 6), 38));
     // 0x3873ac: 0x24c30022  addiu       $v1, $a2, 0x22
-    ctx->pc = 0x3873acu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 6), 34));
 label_3873b0:
     // 0x3873b0: 0xa4600000  sh          $zero, 0x0($v1)
@@ -188,14 +186,12 @@ label_3873b0:
             goto label_387414;
         }
     }
-    ctx->pc = 0x3873DCu;
 label_3873dc:
     // 0x3873dc: 0x24040001  addiu       $a0, $zero, 0x1
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x3873e0: 0x282d  daddu       $a1, $zero, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x3873e4: 0x24c30026  addiu       $v1, $a2, 0x26
-    ctx->pc = 0x3873e4u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 6), 38));
 label_3873e8:
     // 0x3873e8: 0x2241024  and         $v0, $s1, $a0
@@ -248,7 +244,6 @@ label_3873fc:
     ctx->pc = 0x38740cu;
     WRITE32(ADD32(GPR_U32(ctx, 6), 64), GPR_U32(ctx, 17));
     // 0x387410: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x387410u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_387414:
     // 0x387414: 0x7bb00040  lq          $s0, 0x40($sp)

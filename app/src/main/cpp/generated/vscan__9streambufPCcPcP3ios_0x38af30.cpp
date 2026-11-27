@@ -13,7 +13,7 @@
 
 // Function: vscan__9streambufPCcPcP3ios
 // Address: 0x38af30 - 0x38af78
-void vscan__9streambufPCcPcP3ios_0x38af30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void vscan__9streambufPCcPcP3ios_0x38af30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("vscan__9streambufPCcPcP3ios_0x38af30");
 #endif
@@ -50,7 +50,6 @@ void vscan__9streambufPCcPcP3ios_0x38af30(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_vfscanf_0x38d2b8, 0x38d2b8u, 0x38af4cu)) {
         return;
     }
-    ctx->pc = 0x38AF4Cu;
 label_38af4c:
     // 0x38af4c: 0x12000005  beqz        $s0, . + 4 + (0x5 << 2)
     ctx->pc = 0x38AF4Cu;

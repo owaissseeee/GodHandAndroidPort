@@ -13,7 +13,7 @@
 
 // Function: cEvent_movePlayStep
 // Address: 0x296dd8 - 0x296ef0
-void cEvent_movePlayStep_0x296dd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_movePlayStep_0x296dd8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_movePlayStep_0x296dd8");
 #endif
@@ -93,7 +93,6 @@ void cEvent_movePlayStep_0x296dd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             return;
         }
     }
-    ctx->pc = 0x296E04u;
 label_296e04:
     // 0x296e04: 0xc000000  jal         func_000000
     ctx->pc = 0x296E04u;
@@ -111,7 +110,6 @@ label_296e04:
             return;
         }
     }
-    ctx->pc = 0x296E0Cu;
 label_296e0c:
     // 0x296e0c: 0xc000000  jal         func_000000
     ctx->pc = 0x296E0Cu;
@@ -129,7 +127,6 @@ label_296e0c:
             return;
         }
     }
-    ctx->pc = 0x296E14u;
 label_296e14:
     // 0x296e14: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x296e14u;
@@ -150,7 +147,6 @@ label_296e14:
             return;
         }
     }
-    ctx->pc = 0x296E20u;
 label_296e20:
     // 0x296e20: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x296e20u;
@@ -171,7 +167,6 @@ label_296e20:
             return;
         }
     }
-    ctx->pc = 0x296E2Cu;
 label_296e2c:
     // 0x296e2c: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x296e2cu;
@@ -192,7 +187,6 @@ label_296e2c:
             return;
         }
     }
-    ctx->pc = 0x296E38u;
 label_296e38:
     // 0x296e38: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x296e38u;
@@ -213,7 +207,6 @@ label_296e38:
             return;
         }
     }
-    ctx->pc = 0x296E44u;
 label_296e44:
     // 0x296e44: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x296e44u;
@@ -234,7 +227,6 @@ label_296e44:
             return;
         }
     }
-    ctx->pc = 0x296E50u;
 label_296e50:
     // 0x296e50: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x296e50u;
@@ -255,7 +247,6 @@ label_296e50:
             return;
         }
     }
-    ctx->pc = 0x296E5Cu;
 label_296e5c:
     // 0x296e5c: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x296e5cu;
@@ -276,7 +267,6 @@ label_296e5c:
             return;
         }
     }
-    ctx->pc = 0x296E68u;
 label_296e68:
     // 0x296e68: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x296e68u;
@@ -297,7 +287,6 @@ label_296e68:
             return;
         }
     }
-    ctx->pc = 0x296E74u;
 label_296e74:
     // 0x296e74: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x296e74u;
@@ -318,7 +307,6 @@ label_296e74:
             return;
         }
     }
-    ctx->pc = 0x296E80u;
 label_296e80:
     // 0x296e80: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x296e80u;
@@ -339,7 +327,6 @@ label_296e80:
             return;
         }
     }
-    ctx->pc = 0x296E8Cu;
 label_296e8c:
     // 0x296e8c: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x296e8cu;
@@ -360,7 +347,6 @@ label_296e8c:
             return;
         }
     }
-    ctx->pc = 0x296E98u;
 label_296e98:
     // 0x296e98: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x296e98u;
@@ -381,7 +367,6 @@ label_296e98:
             return;
         }
     }
-    ctx->pc = 0x296EA4u;
 label_296ea4:
     // 0x296ea4: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x296ea4u;
@@ -402,7 +387,6 @@ label_296ea4:
             return;
         }
     }
-    ctx->pc = 0x296EB0u;
 label_296eb0:
     // 0x296eb0: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x296eb0u;
@@ -423,7 +407,6 @@ label_296eb0:
             return;
         }
     }
-    ctx->pc = 0x296EBCu;
 label_296ebc:
     // 0x296ebc: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x296ebcu;
@@ -444,7 +427,6 @@ label_296ebc:
             return;
         }
     }
-    ctx->pc = 0x296EC8u;
 label_296ec8:
     // 0x296ec8: 0xc000000  jal         func_000000
     ctx->pc = 0x296EC8u;
@@ -462,7 +444,6 @@ label_296ec8:
             return;
         }
     }
-    ctx->pc = 0x296ED0u;
 label_296ed0:
     // 0x296ed0: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x296ED0u;
@@ -479,7 +460,6 @@ label_296ed0:
             goto label_296ee0;
         }
     }
-    ctx->pc = 0x296ED8u;
 label_296ed8:
     // 0x296ed8: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

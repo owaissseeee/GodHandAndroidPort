@@ -13,7 +13,7 @@
 
 // Function: func_0037B798
 // Address: 0x37b798 - 0x37b808
-void func_0037B798_0x37b798(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0037B798_0x37b798(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0037B798_0x37b798");
 #endif
@@ -121,7 +121,6 @@ label_37b7e8:
             goto label_37b7f4;
         }
     }
-    ctx->pc = 0x37B7F4u;
 label_37b7f4:
     // 0x37b7f4: 0x80820028  lb          $v0, 0x28($a0)
     ctx->pc = 0x37b7f4u;

@@ -13,7 +13,7 @@
 
 // Function: sceSifCheckStatRpc
 // Address: 0x3b3328 - 0x3b3368
-void sceSifCheckStatRpc_0x3b3328(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSifCheckStatRpc_0x3b3328(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSifCheckStatRpc_0x3b3328");
 #endif
@@ -60,7 +60,6 @@ void sceSifCheckStatRpc_0x3b3328(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_3b335c;
         }
     }
-    ctx->pc = 0x3B3354u;
 label_3b3354:
     // 0x3b3354: 0x3e00008  jr          $ra
     ctx->pc = 0x3B3354u;
@@ -81,7 +80,6 @@ label_3b3354:
         return;
         #endif
     }
-    ctx->pc = 0x3B335Cu;
 label_3b335c:
     // 0x3b335c: 0x3e00008  jr          $ra
     ctx->pc = 0x3B335Cu;

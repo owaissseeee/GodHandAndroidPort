@@ -13,7 +13,7 @@
 
 // Function: cOl2b_setCloseFix
 // Address: 0x180440 - 0x1804f8
-void cOl2b_setCloseFix_0x180440(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl2b_setCloseFix_0x180440(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl2b_setCloseFix_0x180440");
 #endif
@@ -53,7 +53,6 @@ void cOl2b_setCloseFix_0x180440(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     // 0x180458: 0x24468020  addiu       $a2, $v0, -0x7FE0
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 2), 4294934560));
     // 0x18045c: 0x402d  daddu       $t0, $zero, $zero
-    ctx->pc = 0x18045cu;
     SET_GPR_U64(ctx, 8, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_180460:
     // 0x180460: 0x908302b4  lbu         $v1, 0x2B4($a0)
@@ -81,7 +80,6 @@ label_180460:
     // 0x180474: 0xe3102a  slt         $v0, $a3, $v1
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 7) < (int64_t)GPR_S64(ctx, 3)) ? 1 : 0);
     // 0x180478: 0x40282d  daddu       $a1, $v0, $zero
-    ctx->pc = 0x180478u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_18047c:
     // 0x18047c: 0x30a200ff  andi        $v0, $a1, 0xFF
@@ -121,10 +119,8 @@ label_18047c:
             goto label_18049c;
         }
     }
-    ctx->pc = 0x180498u;
 label_180498:
     // 0x180498: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x180498u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_18049c:
     // 0x18049c: 0x10400009  beqz        $v0, . + 4 + (0x9 << 2)
@@ -177,7 +173,6 @@ label_18049c:
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 3), 8), bits); }
 label_1804c4:
     // 0x1804c4: 0x24e70001  addiu       $a3, $a3, 0x1
-    ctx->pc = 0x1804c4u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 7), 1));
 label_1804c8:
     // 0x1804c8: 0x28e20003  slti        $v0, $a3, 0x3

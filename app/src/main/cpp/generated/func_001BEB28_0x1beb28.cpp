@@ -13,7 +13,7 @@
 
 // Function: func_001BEB28
 // Address: 0x1beb28 - 0x1beba0
-void func_001BEB28_0x1beb28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001BEB28_0x1beb28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001BEB28_0x1beb28");
 #endif
@@ -50,7 +50,6 @@ void func_001BEB28_0x1beb28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &KeyStop_0x31afa0, 0x31afa0u, 0x1beb40u)) {
         return;
     }
-    ctx->pc = 0x1BEB40u;
 label_1beb40:
     // 0x1beb40: 0x3c100057  lui         $s0, 0x57
     SET_GPR_S32(ctx, 16, (int32_t)((uint32_t)87 << 16));
@@ -69,7 +68,6 @@ label_1beb40:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_addCasinoTicket_0x1fc3e8, 0x1fc3e8u, 0x1beb54u)) {
         return;
     }
-    ctx->pc = 0x1BEB54u;
 label_1beb54:
     // 0x1beb54: 0xc07f0f4  jal         func_1FC3D0
     SET_GPR_U32(ctx, 31, 0x1BEB5Cu);
@@ -82,7 +80,6 @@ label_1beb54:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getCasinoTicketNum_0x1fc3d0, 0x1fc3d0u, 0x1beb5cu)) {
         return;
     }
-    ctx->pc = 0x1BEB5Cu;
 label_1beb5c:
     // 0x1beb5c: 0x3c03003c  lui         $v1, 0x3C
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)60 << 16));

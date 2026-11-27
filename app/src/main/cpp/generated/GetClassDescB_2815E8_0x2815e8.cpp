@@ -13,7 +13,7 @@
 
 // Function: GetClassDescB_2815E8
 // Address: 0x2815e8 - 0x281638
-void GetClassDescB_2815E8_0x2815e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetClassDescB_2815E8_0x2815e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetClassDescB_2815E8_0x2815e8");
 #endif
@@ -60,7 +60,6 @@ void GetClassDescB_2815E8_0x2815e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_0028FDD0_0x28fdd0, 0x28fdd0u, 0x28160cu)) {
         return;
     }
-    ctx->pc = 0x28160Cu;
 label_28160c:
     // 0x28160c: 0x3c050045  lui         $a1, 0x45
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)69 << 16));
@@ -81,7 +80,6 @@ label_28160c:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField_0_4_8_31EEA8_0x31eea8, 0x31eea8u, 0x281624u)) {
         return;
     }
-    ctx->pc = 0x281624u;
 label_281624:
     // 0x281624: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

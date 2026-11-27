@@ -13,7 +13,7 @@
 
 // Function: cEvent_freeData
 // Address: 0x2962f0 - 0x296350
-void cEvent_freeData_0x2962f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_freeData_0x2962f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_freeData_0x2962f0");
 #endif
@@ -71,7 +71,6 @@ void cEvent_freeData_0x2962f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &cRelSys_unlinkNoFree_0x2be8b0, 0x2be8b0u, 0x29631cu)) {
         return;
     }
-    ctx->pc = 0x29631Cu;
 label_29631c:
     // 0x29631c: 0x8e050010  lw          $a1, 0x10($s0)
     ctx->pc = 0x29631cu;
@@ -103,7 +102,6 @@ label_29631c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x296328u, 0x296330u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x296330u;
 label_296330:
     // 0x296330: 0xae000010  sw          $zero, 0x10($s0)
     ctx->pc = 0x296330u;
@@ -120,7 +118,6 @@ label_296334:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297660_0x297660, 0x297660u, 0x29633cu)) {
         return;
     }
-    ctx->pc = 0x29633Cu;
 label_29633c:
     // 0x29633c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x29633cu;

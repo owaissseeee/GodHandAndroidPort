@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_ckClearStage
 // Address: 0x1fbfd0 - 0x1fc020
-void cCoreSave_ckClearStage_0x1fbfd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_ckClearStage_0x1fbfd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_ckClearStage_0x1fbfd0");
 #endif
@@ -54,7 +54,6 @@ void cCoreSave_ckClearStage_0x1fbfd0(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_1fbff0;
         }
     }
-    ctx->pc = 0x1FBFE8u;
 label_1fbfe8:
     // 0x1fbfe8: 0x3e00008  jr          $ra
     ctx->pc = 0x1FBFE8u;
@@ -75,7 +74,6 @@ label_1fbfe8:
         return;
         #endif
     }
-    ctx->pc = 0x1FBFF0u;
 label_1fbff0:
     // 0x1fbff0: 0x3c040008  lui         $a0, 0x8
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)8 << 16));
@@ -125,7 +123,6 @@ label_1fbff0:
         return;
         #endif
     }
-    ctx->pc = 0x1FC018u;
 label_1fc018:
     // 0x1fc018: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC018u;

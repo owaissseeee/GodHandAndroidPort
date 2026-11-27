@@ -13,7 +13,7 @@
 
 // Function: cCollisionSolidManage_ReleaseUnit
 // Address: 0x1347e8 - 0x134880
-void cCollisionSolidManage_ReleaseUnit_0x1347e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCollisionSolidManage_ReleaseUnit_0x1347e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCollisionSolidManage_ReleaseUnit_0x1347e8");
 #endif
@@ -73,7 +73,6 @@ void cCollisionSolidManage_ReleaseUnit_0x1347e8(uint8_t* rdram, R5900Context* ct
             goto label_134814;
         }
     }
-    ctx->pc = 0x134810u;
 label_134810:
     // 0x134810: 0x8e100010  lw          $s0, 0x10($s0)
     ctx->pc = 0x134810u;
@@ -160,7 +159,6 @@ label_134814:
             goto label_134844;
         }
     }
-    ctx->pc = 0x134840u;
 label_134840:
     // 0x134840: 0xae220000  sw          $v0, 0x0($s1)
     ctx->pc = 0x134840u;
@@ -177,7 +175,6 @@ label_134844:
     if (!runtime->callDirectStatic(rdram, ctx, &NodeList_clear_0x1344a0, 0x1344a0u, 0x13484cu)) {
         return;
     }
-    ctx->pc = 0x13484Cu;
 label_13484c:
     // 0x13484c: 0x12000003  beqz        $s0, . + 4 + (0x3 << 2)
     ctx->pc = 0x13484Cu;
@@ -205,7 +202,6 @@ label_13484c:
     if (!runtime->callDirectStatic(rdram, ctx, &NodeList_deletingDtor_0x134458, 0x134458u, 0x13485cu)) {
         return;
     }
-    ctx->pc = 0x13485Cu;
 label_13485c:
     // 0x13485c: 0x8e220004  lw          $v0, 0x4($s1)
     ctx->pc = 0x13485cu;

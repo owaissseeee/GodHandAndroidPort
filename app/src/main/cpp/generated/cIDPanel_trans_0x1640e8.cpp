@@ -13,7 +13,7 @@
 
 // Function: cIDPanel_trans
 // Address: 0x1640e8 - 0x164140
-void cIDPanel_trans_0x1640e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDPanel_trans_0x1640e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDPanel_trans_0x1640e8");
 #endif
@@ -82,10 +82,8 @@ void cIDPanel_trans_0x1640e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_00163C58_0x163c58, 0x163c58u, 0x16411cu)) {
         return;
     }
-    ctx->pc = 0x16411Cu;
 label_16411c:
     // 0x16411c: 0x3c040056  lui         $a0, 0x56
-    ctx->pc = 0x16411cu;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)86 << 16));
 label_164120:
     // 0x164120: 0xc05925e  jal         func_164978
@@ -99,7 +97,6 @@ label_164120:
     if (!runtime->callDirectStatic(rdram, ctx, &NoOp_164978_0x164978, 0x164978u, 0x164128u)) {
         return;
     }
-    ctx->pc = 0x164128u;
 label_164128:
     // 0x164128: 0xc0aab0a  jal         func_2AAC28
     SET_GPR_U32(ctx, 31, 0x164130u);
@@ -112,7 +109,6 @@ label_164128:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_trans_0x2aac28, 0x2aac28u, 0x164130u)) {
         return;
     }
-    ctx->pc = 0x164130u;
 label_164130:
     // 0x164130: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x164130u;

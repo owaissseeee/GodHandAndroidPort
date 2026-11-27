@@ -13,7 +13,7 @@
 
 // Function: Pos_getGroundY
 // Address: 0x2ddd18 - 0x2dddf8
-void Pos_getGroundY_0x2ddd18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Pos_getGroundY_0x2ddd18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Pos_getGroundY_0x2ddd18");
 #endif
@@ -178,7 +178,6 @@ label_2ddd7c:
     if (!runtime->callDirectStatic(rdram, ctx, &ChkLine_0x131e10, 0x131e10u, 0x2dddd8u)) {
         return;
     }
-    ctx->pc = 0x2DDDD8u;
 label_2dddd8:
     // 0x2dddd8: 0x50500001  beql        $v0, $s0, . + 4 + (0x1 << 2)
     ctx->pc = 0x2DDDD8u;
@@ -195,7 +194,6 @@ label_2dddd8:
             goto label_2ddde0;
         }
     }
-    ctx->pc = 0x2DDDE0u;
 label_2ddde0:
     // 0x2ddde0: 0x4600a006  mov.s       $f0, $f20
     ctx->f[0] = FPU_MOV_S(ctx->f[20]);

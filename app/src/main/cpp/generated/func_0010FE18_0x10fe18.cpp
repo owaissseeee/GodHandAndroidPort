@@ -13,7 +13,7 @@
 
 // Function: func_0010FE18
 // Address: 0x10fe18 - 0x10ff80
-void func_0010FE18_0x10fe18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0010FE18_0x10fe18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0010FE18_0x10fe18");
 #endif
@@ -86,7 +86,6 @@ void func_0010FE18_0x10fe18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_10ff2c;
         }
     }
-    ctx->pc = 0x10FE48u;
 label_10fe48:
     // 0x10fe48: 0xa60005e0  sh          $zero, 0x5E0($s0)
     ctx->pc = 0x10fe48u;
@@ -104,7 +103,6 @@ label_10fe48:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Clear_Fields_640_648_124E58_0x124e58, 0x124e58u, 0x10fe58u)) {
         return;
     }
-    ctx->pc = 0x10FE58u;
 label_10fe58:
     // 0x10fe58: 0xc0499dc  jal         func_126770
     SET_GPR_U32(ctx, 31, 0x10FE60u);
@@ -117,7 +115,6 @@ label_10fe58:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00126770_0x126770, 0x126770u, 0x10fe60u)) {
         return;
     }
-    ctx->pc = 0x10FE60u;
 label_10fe60:
     // 0x10fe60: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -134,7 +131,6 @@ label_10fe60:
     if (!runtime->callDirectStatic(rdram, ctx, &pl00_clearMotionCam_0x124f60, 0x124f60u, 0x10fe70u)) {
         return;
     }
-    ctx->pc = 0x10FE70u;
 label_10fe70:
     // 0x10fe70: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -157,7 +153,6 @@ label_10fe70:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Set_Fields_1668_1660_1670_1678_1680_10A408_0x10a408, 0x10a408u, 0x10fe8cu)) {
         return;
     }
-    ctx->pc = 0x10FE8Cu;
 label_10fe8c:
     // 0x10fe8c: 0x24050014  addiu       $a1, $zero, 0x14
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 20));
@@ -180,7 +175,6 @@ label_10fe8c:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Set_Fields_166C_1664_1674_167C_Short_1682_10A420_0x10a420, 0x10a420u, 0x10fea8u)) {
         return;
     }
-    ctx->pc = 0x10FEA8u;
 label_10fea8:
     // 0x10fea8: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x10fea8u;
@@ -217,7 +211,6 @@ label_10fea8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x10fed8u)) {
         return;
     }
-    ctx->pc = 0x10FED8u;
 label_10fed8:
     // 0x10fed8: 0x920202f6  lbu         $v0, 0x2F6($s0)
     ctx->pc = 0x10fed8u;
@@ -244,7 +237,6 @@ label_10feec:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x10FEECu, 0x10FEF4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x10FEF4u;
 label_10fef4:
     // 0x10fef4: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x10FEF4u;
@@ -285,7 +277,6 @@ label_10ff0c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x14F9F0u, 0x10FF18u, 0x10FF20u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x10FF20u;
 label_10ff20:
     // 0x10ff20: 0x4600a306  mov.s       $f12, $f20
     ctx->f[12] = FPU_MOV_S(ctx->f[20]);
@@ -300,7 +291,6 @@ label_10ff20:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x14F928u, 0x10FF24u, 0x10FF2Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x10FF2Cu;
 label_10ff2c:
     // 0x10ff2c: 0xc04290e  jal         func_10A438
     SET_GPR_U32(ctx, 31, 0x10FF34u);
@@ -313,7 +303,6 @@ label_10ff2c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0010A438_0x10a438, 0x10a438u, 0x10ff34u)) {
         return;
     }
-    ctx->pc = 0x10FF34u;
 label_10ff34:
     // 0x10ff34: 0x960203ac  lhu         $v0, 0x3AC($s0)
     ctx->pc = 0x10ff34u;
@@ -361,10 +350,8 @@ label_10ff34:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00129EB0_0x129eb0, 0x129eb0u, 0x10ff5cu)) {
         return;
     }
-    ctx->pc = 0x10FF5Cu;
 label_10ff5c:
     // 0x10ff5c: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x10ff5cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_10ff60:
     // 0x10ff60: 0xc048e4e  jal         func_123938
@@ -378,7 +365,6 @@ label_10ff60:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00123938_0x123938, 0x123938u, 0x10ff68u)) {
         return;
     }
-    ctx->pc = 0x10FF68u;
 label_10ff68:
     // 0x10ff68: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x10ff68u;

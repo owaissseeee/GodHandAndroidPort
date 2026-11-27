@@ -13,7 +13,7 @@
 
 // Function: func_002B1090
 // Address: 0x2b1090 - 0x2b1168
-void func_002B1090_0x2b1090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002B1090_0x2b1090(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002B1090_0x2b1090");
 #endif
@@ -67,7 +67,6 @@ void func_002B1090_0x2b1090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cMessage_getMessageAddr_0x2aead0, 0x2aead0u, 0x2b10c0u)) {
         return;
     }
-    ctx->pc = 0x2B10C0u;
 label_2b10c0:
     // 0x2b10c0: 0x4480a000  mtc1        $zero, $f20
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[20], &bits, sizeof(bits)); }
@@ -87,7 +86,6 @@ label_2b10c0:
         }
     }
     // 0x2b10cc: 0x0  nop
-    ctx->pc = 0x2b10ccu;
     // NOP
 label_2b10d0:
     // 0x2b10d0: 0x96050000  lhu         $a1, 0x0($s0)
@@ -104,7 +102,6 @@ label_2b10d0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A4B20_0x2a4b20, 0x2a4b20u, 0x2b10dcu)) {
         return;
     }
-    ctx->pc = 0x2B10DCu;
 label_2b10dc:
     // 0x2b10dc: 0xc6410000  lwc1        $f1, 0x0($s2)
     ctx->pc = 0x2b10dcu;
@@ -135,7 +132,6 @@ label_2b10dc:
     // 0x2b1108: 0x46001080  add.s       $f2, $f2, $f0
     ctx->f[2] = FPU_ADD_S(ctx->f[2], ctx->f[0]);
     // 0x2b110c: 0x4602a500  add.s       $f20, $f20, $f2
-    ctx->pc = 0x2b110cu;
     ctx->f[20] = FPU_ADD_S(ctx->f[20], ctx->f[2]);
 label_2b1110:
     // 0x2b1110: 0xc0abc7e  jal         func_2AF1F8
@@ -149,12 +145,10 @@ label_2b1110:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessCommon_getCodeSize_0x2af1f8, 0x2af1f8u, 0x2b1118u)) {
         return;
     }
-    ctx->pc = 0x2B1118u;
 label_2b1118:
     // 0x2b1118: 0x21040  sll         $v0, $v0, 1
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 1));
     // 0x2b111c: 0x2028021  addu        $s0, $s0, $v0
-    ctx->pc = 0x2b111cu;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), GPR_U32(ctx, 2)));
 label_2b1120:
     // 0x2b1120: 0x96030000  lhu         $v1, 0x0($s0)

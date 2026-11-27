@@ -14,12 +14,11 @@ namespace gh_r020
 {
 // Function: MoveDemo__5cR020
 // Address: 0x79c510 - 0x79c518
-void MoveDemo__5cR020_0x79c510(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MoveDemo__5cR020_0x79c510(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MoveDemo__5cR020_0x79c510");
 #endif
 
-    ctx->pc = 0x79c510u;
 
     // 0x79c510: 0x3e00008  jr          $ra
     ctx->pc = 0x79C510u;

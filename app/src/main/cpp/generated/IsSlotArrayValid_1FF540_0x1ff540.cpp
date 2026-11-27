@@ -13,7 +13,7 @@
 
 // Function: IsSlotArrayValid_1FF540
 // Address: 0x1ff540 - 0x1ff5b8
-void IsSlotArrayValid_1FF540_0x1ff540(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IsSlotArrayValid_1FF540_0x1ff540(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IsSlotArrayValid_1FF540_0x1ff540");
 #endif
@@ -46,7 +46,6 @@ void IsSlotArrayValid_1FF540_0x1ff540(uint8_t* rdram, R5900Context* ctx, PS2Runt
     ctx->pc = 0x1ff558u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1ff55c: 0x3c120060  lui         $s2, 0x60
-    ctx->pc = 0x1ff55cu;
     SET_GPR_S32(ctx, 18, (int32_t)((uint32_t)96 << 16));
 label_1ff560:
     // 0x1ff560: 0x8e050000  lw          $a1, 0x0($s0)
@@ -63,7 +62,6 @@ label_1ff560:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeIsLoaded_0x2cb778, 0x2cb778u, 0x1ff56cu)) {
         return;
     }
-    ctx->pc = 0x1FF56Cu;
 label_1ff56c:
     // 0x1ff56c: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x1FF56Cu;
@@ -95,7 +93,6 @@ label_1ff56c:
             goto label_1ff58c;
         }
     }
-    ctx->pc = 0x1FF57Cu;
 label_1ff57c:
     // 0x1ff57c: 0x2a22000a  slti        $v0, $s1, 0xA
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 17) < (int64_t)(int32_t)10) ? 1 : 0);
@@ -118,7 +115,6 @@ label_1ff57c:
         }
     }
     // 0x1ff588: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1ff588u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_1ff58c:
     // 0x1ff58c: 0x7bb00030  lq          $s0, 0x30($sp)

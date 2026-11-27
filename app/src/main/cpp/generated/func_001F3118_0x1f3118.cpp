@@ -13,7 +13,7 @@
 
 // Function: func_001F3118
 // Address: 0x1f3118 - 0x1f3260
-void func_001F3118_0x1f3118(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001F3118_0x1f3118(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001F3118_0x1f3118");
 #endif
@@ -147,7 +147,6 @@ void func_001F3118_0x1f3118(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetColorAnimNormal_2D68D8_0x2d68d8, 0x2d68d8u, 0x1f3198u)) {
         return;
     }
-    ctx->pc = 0x1F3198u;
 label_1f3198:
     // 0x1f3198: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -164,7 +163,6 @@ label_1f3198:
     if (!runtime->callDirectStatic(rdram, ctx, &SetCustomIDDispOneOrAll_1F29C0_0x1f29c0, 0x1f29c0u, 0x1f31a8u)) {
         return;
     }
-    ctx->pc = 0x1F31A8u;
 label_1f31a8:
     // 0x1f31a8: 0x8e020920  lw          $v0, 0x920($s0)
     ctx->pc = 0x1f31a8u;
@@ -186,7 +184,6 @@ label_1f31a8:
             goto label_1f323c;
         }
     }
-    ctx->pc = 0x1F31B8u;
 label_1f31b8:
     // 0x1f31b8: 0x8e020924  lw          $v0, 0x924($s0)
     ctx->pc = 0x1f31b8u;
@@ -271,7 +268,6 @@ label_1f31b8:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetColorAnimSin_0x2d6910, 0x2d6910u, 0x1f3238u)) {
         return;
     }
-    ctx->pc = 0x1F3238u;
 label_1f3238:
     // 0x1f3238: 0x8e020920  lw          $v0, 0x920($s0)
     ctx->pc = 0x1f3238u;
@@ -294,7 +290,6 @@ label_1f323c:
             goto label_1f324c;
         }
     }
-    ctx->pc = 0x1F3248u;
 label_1f3248:
     // 0x1f3248: 0xae020924  sw          $v0, 0x924($s0)
     ctx->pc = 0x1f3248u;

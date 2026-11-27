@@ -13,7 +13,7 @@
 
 // Function: sceSdRemoteInit
 // Address: 0x3a11f8 - 0x3a12b8
-void sceSdRemoteInit_0x3a11f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSdRemoteInit_0x3a11f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSdRemoteInit_0x3a11f8");
 #endif
@@ -61,7 +61,6 @@ void sceSdRemoteInit_0x3a11f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B2900u, 0x3A1218u, 0x3A1220u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3A1220u;
 label_3a1220:
     // 0x3a1220: 0x3c058000  lui         $a1, 0x8000
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)32768 << 16));
@@ -80,7 +79,6 @@ label_3a1220:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B2F48u, 0x3A122Cu, 0x3A1234u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3A1234u;
 label_3a1234:
     // 0x3a1234: 0x4410005  bgez        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x3A1234u;
@@ -108,7 +106,6 @@ label_3a1234:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B1F28u, 0x3A123Cu, 0x3A1244u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3A1244u;
 label_3a1244:
     // 0x3a1244: 0x10000012  b           . + 4 + (0x12 << 2)
     ctx->pc = 0x3A1244u;
@@ -125,10 +122,8 @@ label_3a1244:
             goto label_3a1290;
         }
     }
-    ctx->pc = 0x3A124Cu;
 label_3a124c:
     // 0x3a124c: 0x2403ffff  addiu       $v1, $zero, -0x1
-    ctx->pc = 0x3a124cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_3a1250:
     // 0x3a1250: 0x2442ffff  addiu       $v0, $v0, -0x1
@@ -192,10 +187,8 @@ label_3a1250:
     if (!runtime->callDirectStatic(rdram, ctx, &FlushCache_0x3aff20, 0x3aff20u, 0x3a128cu)) {
         return;
     }
-    ctx->pc = 0x3A128Cu;
 label_3a128c:
     // 0x3a128c: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x3a128cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_3a1290:
     // 0x3a1290: 0xdfbf0030  ld          $ra, 0x30($sp)

@@ -13,7 +13,7 @@
 
 // Function: func_00375AB0
 // Address: 0x375ab0 - 0x375b90
-void func_00375AB0_0x375ab0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00375AB0_0x375ab0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00375AB0_0x375ab0");
 #endif
@@ -180,7 +180,6 @@ void func_00375AB0_0x375ab0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_375b80;
         }
     }
-    ctx->pc = 0x375B74u;
 label_375b74:
     // 0x375b74: 0xc0dd6e4  jal         func_375B90
     ctx->pc = 0x375B74u;
@@ -188,10 +187,8 @@ label_375b74:
     if (!runtime->callDirectStatic(rdram, ctx, &InitSoundEntry_375B90_0x375b90, 0x375b90u, 0x375b7cu)) {
         return;
     }
-    ctx->pc = 0x375B7Cu;
 label_375b7c:
     // 0x375b7c: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x375b7cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_375b80:
     // 0x375b80: 0xdfbf0000  ld          $ra, 0x0($sp)

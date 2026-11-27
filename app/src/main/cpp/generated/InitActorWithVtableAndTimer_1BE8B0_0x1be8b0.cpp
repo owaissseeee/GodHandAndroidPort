@@ -13,7 +13,7 @@
 
 // Function: InitActorWithVtableAndTimer_1BE8B0
 // Address: 0x1be8b0 - 0x1be8f0
-void InitActorWithVtableAndTimer_1BE8B0_0x1be8b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitActorWithVtableAndTimer_1BE8B0_0x1be8b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitActorWithVtableAndTimer_1BE8B0_0x1be8b0");
 #endif
@@ -45,7 +45,6 @@ void InitActorWithVtableAndTimer_1BE8B0_0x1be8b0(uint8_t* rdram, R5900Context* c
     if (!runtime->callDirectStatic(rdram, ctx, &InitFields_1B6E90_0x1b6e90, 0x1b6e90u, 0x1be8c4u)) {
         return;
     }
-    ctx->pc = 0x1BE8C4u;
 label_1be8c4:
     // 0x1be8c4: 0x240203e9  addiu       $v0, $zero, 0x3E9
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1001));

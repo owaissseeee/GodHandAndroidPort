@@ -13,7 +13,7 @@
 
 // Function: sceSnprintf
 // Address: 0x3b1ee0 - 0x3b1f28
-void sceSnprintf_0x3b1ee0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSnprintf_0x3b1ee0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSnprintf_0x3b1ee0");
 #endif
@@ -70,7 +70,6 @@ void sceSnprintf_0x3b1ee0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &_sceSnprintf_0x3b10d0, 0x3b10d0u, 0x3b1f1cu)) {
         return;
     }
-    ctx->pc = 0x3B1F1Cu;
 label_3b1f1c:
     // 0x3b1f1c: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x3b1f1cu;

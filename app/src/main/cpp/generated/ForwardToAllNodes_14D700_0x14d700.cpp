@@ -13,7 +13,7 @@
 
 // Function: ForwardToAllNodes_14D700
 // Address: 0x14d700 - 0x14d768
-void ForwardToAllNodes_14D700_0x14d700(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardToAllNodes_14D700_0x14d700(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardToAllNodes_14D700_0x14d700");
 #endif
@@ -57,7 +57,6 @@ void ForwardToAllNodes_14D700_0x14d700(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_getMeshPtr_0x14b6f8, 0x14b6f8u, 0x14d724u)) {
         return;
     }
-    ctx->pc = 0x14D724u;
 label_14d724:
     // 0x14d724: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -79,7 +78,6 @@ label_14d724:
     // 0x14d730: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x14d734: 0x0  nop
-    ctx->pc = 0x14d734u;
     // NOP
 label_14d738:
     // 0x14d738: 0x240282d  daddu       $a1, $s2, $zero
@@ -95,7 +93,6 @@ label_14d738:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00155D98_0x155d98, 0x155d98u, 0x14d744u)) {
         return;
     }
-    ctx->pc = 0x14D744u;
 label_14d744:
     // 0x14d744: 0x8e100404  lw          $s0, 0x404($s0)
     ctx->pc = 0x14d744u;

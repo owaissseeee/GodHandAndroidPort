@@ -13,7 +13,7 @@
 
 // Function: htci_is_bgn_host
 // Address: 0x334d10 - 0x334d68
-void htci_is_bgn_host_0x334d10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void htci_is_bgn_host_0x334d10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("htci_is_bgn_host_0x334d10");
 #endif
@@ -52,7 +52,6 @@ void htci_is_bgn_host_0x334d10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x334d30u)) {
         return;
     }
-    ctx->pc = 0x334D30u;
 label_334d30:
     // 0x334d30: 0x8a020003  lwl         $v0, 0x3($s0)
     ctx->pc = 0x334d30u;
@@ -83,7 +82,6 @@ label_334d30:
     if (!runtime->callDirectStatic(rdram, ctx, &strcmp_0x3a5678, 0x3a5678u, 0x334d54u)) {
         return;
     }
-    ctx->pc = 0x334D54u;
 label_334d54:
     // 0x334d54: 0xdfb00010  ld          $s0, 0x10($sp)
     ctx->pc = 0x334d54u;

@@ -13,7 +13,7 @@
 
 // Function: cMessage_closeAll
 // Address: 0x2aecd0 - 0x2aed10
-void cMessage_closeAll_0x2aecd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessage_closeAll_0x2aecd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessage_closeAll_0x2aecd0");
 #endif
@@ -53,7 +53,6 @@ void cMessage_closeAll_0x2aecd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_2aed04;
         }
     }
-    ctx->pc = 0x2AECE8u;
 label_2aece8:
     // 0x2aece8: 0xc0ac900  jal         func_2B2400
     SET_GPR_U32(ctx, 31, 0x2AECF0u);
@@ -66,7 +65,6 @@ label_2aece8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B2400_0x2b2400, 0x2b2400u, 0x2aecf0u)) {
         return;
     }
-    ctx->pc = 0x2AECF0u;
 label_2aecf0:
     // 0x2aecf0: 0x8e100008  lw          $s0, 0x8($s0)
     ctx->pc = 0x2aecf0u;

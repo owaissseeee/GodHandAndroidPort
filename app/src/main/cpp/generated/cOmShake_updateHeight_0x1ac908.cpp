@@ -13,7 +13,7 @@
 
 // Function: cOmShake_updateHeight
 // Address: 0x1ac908 - 0x1ac980
-void cOmShake_updateHeight_0x1ac908(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmShake_updateHeight_0x1ac908(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmShake_updateHeight_0x1ac908");
 #endif
@@ -79,7 +79,6 @@ void cOmShake_updateHeight_0x1ac908(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31D020u, 0x1AC934u, 0x1AC93Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1AC93Cu;
 label_1ac93c:
     // 0x1ac93c: 0x3c013c75  lui         $at, 0x3C75
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15477 << 16));
@@ -112,7 +111,6 @@ label_1ac93c:
             goto label_1ac96c;
         }
     }
-    ctx->pc = 0x1AC960u;
 label_1ac960:
     // 0x1ac960: 0xc6000614  lwc1        $f0, 0x614($s0)
     ctx->pc = 0x1ac960u;

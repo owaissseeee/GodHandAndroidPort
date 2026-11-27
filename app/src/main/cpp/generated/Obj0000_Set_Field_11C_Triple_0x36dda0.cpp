@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Set_Field_11C_Triple
 // Address: 0x36dda0 - 0x36ddc8
-void Obj0000_Set_Field_11C_Triple_0x36dda0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_Field_11C_Triple_0x36dda0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_Field_11C_Triple_0x36dda0");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: cSndBgmNode_Update
 // Address: 0x2cd310 - 0x2cd398
-void cSndBgmNode_Update_0x2cd310(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndBgmNode_Update_0x2cd310(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndBgmNode_Update_0x2cd310");
 #endif
@@ -64,7 +64,6 @@ void cSndBgmNode_Update_0x2cd310(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_Start_0x2cd398, 0x2cd398u, 0x2cd334u)) {
         return;
     }
-    ctx->pc = 0x2CD334u;
 label_2cd334:
     // 0x2cd334: 0x50400015  beql        $v0, $zero, . + 4 + (0x15 << 2)
     ctx->pc = 0x2CD334u;
@@ -112,17 +111,14 @@ label_2cd334:
     if (!runtime->callDirectStatic(rdram, ctx, &ClearFlagBits_373858_0x373858, 0x373858u, 0x2cd354u)) {
         return;
     }
-    ctx->pc = 0x2CD354u;
 label_2cd354:
     // 0x2cd354: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2cd354u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2cd358:
     // 0x2cd358: 0xae0200b0  sw          $v0, 0xB0($s0)
     ctx->pc = 0x2cd358u;
     WRITE32(ADD32(GPR_U32(ctx, 16), 176), GPR_U32(ctx, 2));
     // 0x2cd35c: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x2cd35cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_2cd360:
     // 0x2cd360: 0xc0dcdf2  jal         func_3737C8
@@ -136,7 +132,6 @@ label_2cd360:
     if (!runtime->callDirectStatic(rdram, ctx, &IsSequenceFlagSet_3737C8_0x3737c8, 0x3737c8u, 0x2cd368u)) {
         return;
     }
-    ctx->pc = 0x2CD368u;
 label_2cd368:
     // 0x2cd368: 0x54400008  bnel        $v0, $zero, . + 4 + (0x8 << 2)
     ctx->pc = 0x2CD368u;
@@ -164,7 +159,6 @@ label_2cd368:
     if (!runtime->callDirectStatic(rdram, ctx, &GetSequenceResult_373770_0x373770, 0x373770u, 0x2cd378u)) {
         return;
     }
-    ctx->pc = 0x2CD378u;
 label_2cd378:
     // 0x2cd378: 0x54400004  bnel        $v0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x2CD378u;
@@ -192,7 +186,6 @@ label_2cd378:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_Unlink_0x2cc5e8, 0x2cc5e8u, 0x2cd388u)) {
         return;
     }
-    ctx->pc = 0x2CD388u;
 label_2cd388:
     // 0x2cd388: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2cd388u;

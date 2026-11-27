@@ -13,7 +13,7 @@
 
 // Function: CustomIDWork_SetNumber
 // Address: 0x2d6548 - 0x2d6560
-void CustomIDWork_SetNumber_0x2d6548(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CustomIDWork_SetNumber_0x2d6548(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CustomIDWork_SetNumber_0x2d6548");
 #endif
@@ -37,7 +37,6 @@ void CustomIDWork_SetNumber_0x2d6548(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_2d6554;
         }
     }
-    ctx->pc = 0x2D6554u;
 label_2d6554:
     // 0x2d6554: 0x3e00008  jr          $ra
     ctx->pc = 0x2D6554u;

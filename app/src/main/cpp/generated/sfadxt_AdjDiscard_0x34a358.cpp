@@ -13,7 +13,7 @@
 
 // Function: sfadxt_AdjDiscard
 // Address: 0x34a358 - 0x34a3e0
-void sfadxt_AdjDiscard_0x34a358(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfadxt_AdjDiscard_0x34a358(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfadxt_AdjDiscard_0x34a358");
 #endif
@@ -72,10 +72,8 @@ void sfadxt_AdjDiscard_0x34a358(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_34a394;
         }
     }
-    ctx->pc = 0x34A390u;
 label_34a390:
     // 0x34a390: 0x26310012  addiu       $s1, $s1, 0x12
-    ctx->pc = 0x34a390u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 18));
 label_34a394:
     // 0x34a394: 0x232102a  slt         $v0, $s1, $s2
@@ -112,7 +110,6 @@ label_34a394:
     if (!runtime->callDirectStatic(rdram, ctx, &ADXT_IsEndcode_0x32b7f0, 0x32b7f0u, 0x34a3b4u)) {
         return;
     }
-    ctx->pc = 0x34A3B4u;
 label_34a3b4:
     // 0x34a3b4: 0x1040fff6  beqz        $v0, . + 4 + (-0xA << 2)
     ctx->pc = 0x34A3B4u;

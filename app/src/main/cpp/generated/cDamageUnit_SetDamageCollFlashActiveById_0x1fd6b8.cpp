@@ -13,7 +13,7 @@
 
 // Function: cDamageUnit_SetDamageCollFlashActiveById
 // Address: 0x1fd6b8 - 0x1fd718
-void cDamageUnit_SetDamageCollFlashActiveById_0x1fd6b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDamageUnit_SetDamageCollFlashActiveById_0x1fd6b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDamageUnit_SetDamageCollFlashActiveById_0x1fd6b8");
 #endif
@@ -104,13 +104,11 @@ label_1fd6d8:
             goto label_1fd6fc;
         }
     }
-    ctx->pc = 0x1FD6F4u;
 label_1fd6f4:
     // 0x1fd6f4: 0x8c620000  lw          $v0, 0x0($v1)
     ctx->pc = 0x1fd6f4u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 0)));
     // 0x1fd6f8: 0x481024  and         $v0, $v0, $t0
-    ctx->pc = 0x1fd6f8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 8));
 label_1fd6fc:
     // 0x1fd6fc: 0xac620000  sw          $v0, 0x0($v1)
@@ -135,7 +133,6 @@ label_1fd6fc:
         return;
         #endif
     }
-    ctx->pc = 0x1FD708u;
 label_1fd708:
     // 0x1fd708: 0x5480fff3  bnel        $a0, $zero, . + 4 + (-0xD << 2)
     ctx->pc = 0x1FD708u;
@@ -155,7 +152,6 @@ label_1fd708:
             goto label_1fd6d8;
         }
     }
-    ctx->pc = 0x1FD710u;
 label_1fd710:
     // 0x1fd710: 0x3e00008  jr          $ra
     ctx->pc = 0x1FD710u;

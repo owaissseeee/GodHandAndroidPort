@@ -13,7 +13,7 @@
 
 // Function: Obj38B8_GetField2C
 // Address: 0x38bc28 - 0x38bc30
-void Obj38B8_GetField2C_0x38bc28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj38B8_GetField2C_0x38bc28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj38B8_GetField2C_0x38bc28");
 #endif

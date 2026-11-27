@@ -13,7 +13,7 @@
 
 // Function: Obj0000_ReturnD_003EE2C0_34AFE0
 // Address: 0x34afe0 - 0x34aff0
-void Obj0000_ReturnD_003EE2C0_34AFE0_0x34afe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_ReturnD_003EE2C0_34AFE0_0x34afe0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_ReturnD_003EE2C0_34AFE0_0x34afe0");
 #endif

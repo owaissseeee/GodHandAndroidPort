@@ -13,7 +13,7 @@
 
 // Function: cObjBase_MoveByNullSpeed
 // Address: 0x14fa60 - 0x14fb48
-void cObjBase_MoveByNullSpeed_0x14fa60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cObjBase_MoveByNullSpeed_0x14fa60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cObjBase_MoveByNullSpeed_0x14fa60");
 #endif
@@ -134,7 +134,6 @@ void cObjBase_MoveByNullSpeed_0x14fa60(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &VecRotVec_0x150830, 0x150830u, 0x14faf4u)) {
         return;
     }
-    ctx->pc = 0x14FAF4u;
 label_14faf4:
     // 0x14faf4: 0x8e0200f0  lw          $v0, 0xF0($s0)
     ctx->pc = 0x14faf4u;

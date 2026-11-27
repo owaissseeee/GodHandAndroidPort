@@ -13,7 +13,7 @@
 
 // Function: cObjBase_addNullSpeedDir
 // Address: 0x2da9e0 - 0x2daa40
-void cObjBase_addNullSpeedDir_0x2da9e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cObjBase_addNullSpeedDir_0x2da9e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cObjBase_addNullSpeedDir_0x2da9e0");
 #endif
@@ -69,7 +69,6 @@ void cObjBase_addNullSpeedDir_0x2da9e0(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitCoord_0x147a48, 0x147a48u, 0x2daa18u)) {
         return;
     }
-    ctx->pc = 0x2DAA18u;
 label_2daa18:
     // 0x2daa18: 0x8e0400f0  lw          $a0, 0xF0($s0)
     ctx->pc = 0x2daa18u;
@@ -87,7 +86,6 @@ label_2daa18:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x2daa28u)) {
         return;
     }
-    ctx->pc = 0x2DAA28u;
 label_2daa28:
     // 0x2daa28: 0x7bb00060  lq          $s0, 0x60($sp)
     ctx->pc = 0x2daa28u;

@@ -13,7 +13,7 @@
 
 // Function: ipfx1__7istream
 // Address: 0x389fe0 - 0x38a040
-void ipfx1__7istream_0x389fe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ipfx1__7istream_0x389fe0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ipfx1__7istream_0x389fe0");
 #endif
@@ -69,7 +69,6 @@ void ipfx1__7istream_0x389fe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_38a030;
         }
     }
-    ctx->pc = 0x38A004u;
 label_38a004:
     // 0x38a004: 0x8c850004  lw          $a1, 0x4($a0)
     ctx->pc = 0x38a004u;
@@ -124,10 +123,8 @@ label_38a004:
     if (!runtime->callDirectStatic(rdram, ctx, &flush__7ostream_0x389268, 0x389268u, 0x38a02cu)) {
         return;
     }
-    ctx->pc = 0x38A02Cu;
 label_38a02c:
     // 0x38a02c: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x38a02cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_38a030:
     // 0x38a030: 0xdfbf0000  ld          $ra, 0x0($sp)

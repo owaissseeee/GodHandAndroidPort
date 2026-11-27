@@ -13,7 +13,7 @@
 
 // Function: ColiseumBattle_PlCtrlOff
 // Address: 0x1efe70 - 0x1efed0
-void ColiseumBattle_PlCtrlOff_0x1efe70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumBattle_PlCtrlOff_0x1efe70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumBattle_PlCtrlOff_0x1efe70");
 #endif
@@ -55,7 +55,6 @@ void ColiseumBattle_PlCtrlOff_0x1efe70(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &KeyStop_0x31afa0, 0x31afa0u, 0x1efe8cu)) {
         return;
     }
-    ctx->pc = 0x1EFE8Cu;
 label_1efe8c:
     // 0x1efe8c: 0x8e020054  lw          $v0, 0x54($s0)
     ctx->pc = 0x1efe8cu;
@@ -75,7 +74,6 @@ label_1efe8c:
             goto label_1efebc;
         }
     }
-    ctx->pc = 0x1EFE98u;
 label_1efe98:
     // 0x1efe98: 0x3c040074  lui         $a0, 0x74
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)116 << 16));
@@ -97,7 +95,6 @@ label_1efe98:
     ctx->pc = 0x1efeb4u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 84)));
     // 0x1efeb8: 0x451024  and         $v0, $v0, $a1
-    ctx->pc = 0x1efeb8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 5));
 label_1efebc:
     // 0x1efebc: 0xae020054  sw          $v0, 0x54($s0)

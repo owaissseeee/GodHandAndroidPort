@@ -13,7 +13,7 @@
 
 // Function: cCollisionUtils_checkRectboxPoint
 // Address: 0x2bda20 - 0x2bdb78
-void cCollisionUtils_checkRectboxPoint_0x2bda20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCollisionUtils_checkRectboxPoint_0x2bda20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCollisionUtils_checkRectboxPoint_0x2bda20");
 #endif
@@ -59,7 +59,6 @@ void cCollisionUtils_checkRectboxPoint_0x2bda20(uint8_t* rdram, R5900Context* ct
     // 0x2bda58: 0x2405ffff  addiu       $a1, $zero, -0x1
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x2bda5c: 0x0  nop
-    ctx->pc = 0x2bda5cu;
     // NOP
 label_2bda60:
     // 0x2bda60: 0xf8400000  sqc2        $vf0, 0x0($v0)
@@ -256,7 +255,6 @@ label_2bda60:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BB760_0x2bb760, 0x2bb760u, 0x2bdb64u)) {
         return;
     }
-    ctx->pc = 0x2BDB64u;
 label_2bdb64:
     // 0x2bdb64: 0xdfbf0090  ld          $ra, 0x90($sp)
     ctx->pc = 0x2bdb64u;

@@ -13,7 +13,7 @@
 
 // Function: ESLib_ESCatMullRom
 // Address: 0x2e1580 - 0x2e16b0
-void ESLib_ESCatMullRom_0x2e1580(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ESLib_ESCatMullRom_0x2e1580(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ESLib_ESCatMullRom_0x2e1580");
 #endif
@@ -187,7 +187,6 @@ void ESLib_ESCatMullRom_0x2e1580(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x2e1664u)) {
         return;
     }
-    ctx->pc = 0x2E1664u;
 label_2e1664:
     // 0x2e1664: 0xc7a00040  lwc1        $f0, 0x40($sp)
     ctx->pc = 0x2e1664u;

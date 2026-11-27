@@ -13,7 +13,7 @@
 
 // Function: Obj33C8_SetFields_78_7C
 // Address: 0x33ce68 - 0x33ce80
-void Obj33C8_SetFields_78_7C_0x33ce68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj33C8_SetFields_78_7C_0x33ce68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj33C8_SetFields_78_7C_0x33ce68");
 #endif

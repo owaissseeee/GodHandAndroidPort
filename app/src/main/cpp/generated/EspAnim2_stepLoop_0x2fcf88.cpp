@@ -14,7 +14,7 @@
 
 // Function: EspAnim2_stepLoop
 // Address: 0x2fcf88 - 0x2fd078
-void EspAnim2_stepLoop_0x2fcf88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EspAnim2_stepLoop_0x2fcf88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EspAnim2_stepLoop_0x2fcf88");
 #endif
@@ -99,7 +99,6 @@ void EspAnim2_stepLoop_0x2fcf88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_2fcfe0;
         }
     }
-    ctx->pc = 0x2FCFCCu;
 label_2fcfcc:
     // 0x2fcfcc: 0x3c040002  lui         $a0, 0x2
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)2 << 16));
@@ -130,7 +129,6 @@ label_2fcfcc:
             goto label_2fcff0;
         }
     }
-    ctx->pc = 0x2FCFE0u;
 label_2fcfe0:
     // 0x2fcfe0: 0xc0be8d4  jal         func_2FA350
     SET_GPR_U32(ctx, 31, 0x2FCFE8u);
@@ -143,7 +141,6 @@ label_2fcfe0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002FA350_0x2fa350, 0x2fa350u, 0x2fcfe8u)) {
         return;
     }
-    ctx->pc = 0x2FCFE8u;
 label_2fcfe8:
     // 0x2fcfe8: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x2FCFE8u;
@@ -160,7 +157,6 @@ label_2fcfe8:
             goto label_2fd008;
         }
     }
-    ctx->pc = 0x2FCFF0u;
 label_2fcff0:
     // 0x2fcff0: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));

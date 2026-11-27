@@ -13,7 +13,7 @@
 
 // Function: func_00381010
 // Address: 0x381010 - 0x381070
-void func_00381010_0x381010(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00381010_0x381010(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00381010_0x381010");
 #endif
@@ -72,7 +72,6 @@ void func_00381010_0x381010(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_381038;
         }
     }
-    ctx->pc = 0x381034u;
 label_381034:
     // 0x381034: 0xa0860004  sb          $a2, 0x4($a0)
     ctx->pc = 0x381034u;
@@ -133,7 +132,6 @@ label_381038:
         return;
         #endif
     }
-    ctx->pc = 0x381064u;
 label_381064:
     // 0x381064: 0x3e00008  jr          $ra
     ctx->pc = 0x381064u;

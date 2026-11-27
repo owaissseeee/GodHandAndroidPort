@@ -13,7 +13,7 @@
 
 // Function: InsertAlarm
 // Address: 0x3b6db8 - 0x3b6e40
-void InsertAlarm_0x3b6db8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InsertAlarm_0x3b6db8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InsertAlarm_0x3b6db8");
 #endif
@@ -64,7 +64,6 @@ void InsertAlarm_0x3b6db8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
         }
     }
     // 0x3b6de4: 0x0  nop
-    ctx->pc = 0x3b6de4u;
     // NOP
 label_3b6de8:
     // 0x3b6de8: 0x8d050000  lw          $a1, 0x0($t0)
@@ -176,7 +175,6 @@ label_3b6e24:
         return;
         #endif
     }
-    ctx->pc = 0x3B6E34u;
 label_3b6e34:
     // 0x3b6e34: 0x3e00008  jr          $ra
     ctx->pc = 0x3B6E34u;

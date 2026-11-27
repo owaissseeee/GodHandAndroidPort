@@ -13,7 +13,7 @@
 
 // Function: ADXT_GetNumSctIbuf
 // Address: 0x32ad48 - 0x32ada8
-void ADXT_GetNumSctIbuf_0x32ad48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ADXT_GetNumSctIbuf_0x32ad48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ADXT_GetNumSctIbuf_0x32ad48");
 #endif
@@ -48,7 +48,6 @@ void ADXT_GetNumSctIbuf_0x32ad48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         }
     }
 
-    ctx->pc = 0x32ad48u;
 
 label_32ad48:
     // 0x32ad48: 0x27bdfff0  addiu       $sp, $sp, -0x10
@@ -81,7 +80,6 @@ label_32ad50:
             goto label_32ad68;
         }
     }
-    ctx->pc = 0x32AD54u;
 label_32ad54:
     // 0x32ad54: 0x3c040045  lui         $a0, 0x45
     ctx->pc = 0x32ad54u;
@@ -137,7 +135,6 @@ label_32ad64:
             goto label_32ad9c;
         }
     }
-    ctx->pc = 0x32AD68u;
 label_32ad68:
     // 0x32ad68: 0x8c830014  lw          $v1, 0x14($a0)
     ctx->pc = 0x32ad68u;
@@ -169,7 +166,6 @@ label_32ad70:
             goto label_32ad98;
         }
     }
-    ctx->pc = 0x32AD74u;
 label_32ad74:
     // 0x32ad74: 0x8c630000  lw          $v1, 0x0($v1)
     ctx->pc = 0x32ad74u;
@@ -206,14 +202,11 @@ label_32ad80:
             return;
         }
     }
-    ctx->pc = 0x32AD84u;
 label_32ad84:
     // 0x32ad84: 0x244407ff  addiu       $a0, $v0, 0x7FF
-    ctx->pc = 0x32ad84u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 2), 2047));
 label_32ad88:
     // 0x32ad88: 0x28430000  slti        $v1, $v0, 0x0
-    ctx->pc = 0x32ad88u;
     SET_GPR_U64(ctx, 3, ((int64_t)GPR_S64(ctx, 2) < (int64_t)(int32_t)0) ? 1 : 0);
 label_32ad8c:
     // 0x32ad8c: 0x83100b  movn        $v0, $a0, $v1
@@ -246,10 +239,8 @@ label_32ad94:
             goto label_32ad9c;
         }
     }
-    ctx->pc = 0x32AD98u;
 label_32ad98:
     // 0x32ad98: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x32ad98u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_32ad9c:
     // 0x32ad9c: 0xdfbf0000  ld          $ra, 0x0($sp)

@@ -13,7 +13,7 @@
 
 // Function: __unpack_d
 // Address: 0x31dfa8 - 0x31e048
-void ps2___unpack_d_0x31dfa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___unpack_d_0x31dfa8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___unpack_d_0x31dfa8");
 #endif
@@ -74,7 +74,6 @@ void ps2___unpack_d_0x31dfa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
         #endif
     }
     // 0x31dfdc: 0x0  nop
-    ctx->pc = 0x31dfdcu;
     // NOP
 label_31dfe0:
     // 0x31dfe0: 0x5482000f  bnel        $a0, $v0, . + 4 + (0xF << 2)
@@ -126,7 +125,6 @@ label_31dfe0:
         return;
         #endif
     }
-    ctx->pc = 0x31DFF8u;
 label_31dff8:
     // 0x31dff8: 0x34028000  ori         $v0, $zero, 0x8000
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)32768);
@@ -164,7 +162,6 @@ label_31dff8:
             goto label_31e018;
         }
     }
-    ctx->pc = 0x31E014u;
 label_31e014:
     // 0x31e014: 0xaca00000  sw          $zero, 0x0($a1)
     ctx->pc = 0x31e014u;
@@ -189,7 +186,6 @@ label_31e018:
         return;
         #endif
     }
-    ctx->pc = 0x31E020u;
 label_31e020:
     // 0x31e020: 0x34028000  ori         $v0, $zero, 0x8000
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)32768);

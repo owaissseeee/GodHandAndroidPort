@@ -13,7 +13,7 @@
 
 // Function: dcast__C16__user_type_infoRC9type_infoiPvPC9type_infoT3
 // Address: 0x31eee8 - 0x31ef18
-void dcast__C16__user_type_infoRC9type_infoiPvPC9type_infoT3_0x31eee8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void dcast__C16__user_type_infoRC9type_infoiPvPC9type_infoT3_0x31eee8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("dcast__C16__user_type_infoRC9type_infoiPvPC9type_infoT3_0x31eee8");
 #endif
@@ -45,7 +45,6 @@ void dcast__C16__user_type_infoRC9type_infoiPvPC9type_infoT3_0x31eee8(uint8_t* r
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___eq__C9type_infoRC9type_info_0x31ee40, 0x31ee40u, 0x31eefcu)) {
         return;
     }
-    ctx->pc = 0x31EEFCu;
 label_31eefc:
     // 0x31eefc: 0x2800a  movz        $s0, $zero, $v0
     ctx->pc = 0x31eefcu;

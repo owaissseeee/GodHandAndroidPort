@@ -13,7 +13,7 @@
 
 // Function: SearchData
 // Address: 0x31ccf0 - 0x31cdc0
-void SearchData_0x31ccf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SearchData_0x31ccf0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SearchData_0x31ccf0");
 #endif
@@ -87,7 +87,6 @@ void SearchData_0x31ccf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
             goto label_31cd94;
         }
     }
-    ctx->pc = 0x31CD2Cu;
 label_31cd2c:
     // 0x31cd2c: 0x111880  sll         $v1, $s1, 2
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 17), 2));
@@ -111,7 +110,6 @@ label_31cd2c:
             goto label_31cd94;
         }
     }
-    ctx->pc = 0x31CD40u;
 label_31cd40:
     // 0x31cd40: 0x8e720000  lw          $s2, 0x0($s3)
     ctx->pc = 0x31cd40u;
@@ -140,7 +138,6 @@ label_31cd40:
     // 0x31cd58: 0x26100004  addiu       $s0, $s0, 0x4
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 4));
     // 0x31cd5c: 0x0  nop
-    ctx->pc = 0x31cd5cu;
     // NOP
 label_31cd60:
     // 0x31cd60: 0x2c0282d  daddu       $a1, $s6, $zero
@@ -156,7 +153,6 @@ label_31cd60:
     if (!runtime->callDirectStatic(rdram, ctx, &strcmp_0x3a5678, 0x3a5678u, 0x31cd6cu)) {
         return;
     }
-    ctx->pc = 0x31CD6Cu;
 label_31cd6c:
     // 0x31cd6c: 0x54400005  bnel        $v0, $zero, . + 4 + (0x5 << 2)
     ctx->pc = 0x31CD6Cu;
@@ -194,7 +190,6 @@ label_31cd6c:
         }
     }
     // 0x31cd80: 0x26310001  addiu       $s1, $s1, 0x1
-    ctx->pc = 0x31cd80u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 1));
 label_31cd84:
     // 0x31cd84: 0x251102b  sltu        $v0, $s2, $s1
@@ -217,10 +212,8 @@ label_31cd84:
             goto label_31cd60;
         }
     }
-    ctx->pc = 0x31CD90u;
 label_31cd90:
     // 0x31cd90: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x31cd90u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_31cd94:
     // 0x31cd94: 0x7bb00070  lq          $s0, 0x70($sp)

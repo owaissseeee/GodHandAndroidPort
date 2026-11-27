@@ -13,7 +13,7 @@
 
 // Function: func_0017F828
 // Address: 0x17f828 - 0x17f990
-void func_0017F828_0x17f828(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0017F828_0x17f828(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0017F828_0x17f828");
 #endif
@@ -90,7 +90,6 @@ void func_0017F828_0x17f828(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_17f980;
         }
     }
-    ctx->pc = 0x17F858u;
 label_17f858:
     // 0x17f858: 0x92220764  lbu         $v0, 0x764($s1)
     ctx->pc = 0x17f858u;
@@ -119,7 +118,6 @@ label_17f858:
             goto label_17f96c;
         }
     }
-    ctx->pc = 0x17F86Cu;
 label_17f86c:
     // 0x17f86c: 0xfba00000  sqc2        $vf0, 0x0($sp)
     ctx->pc = 0x17f86cu;
@@ -162,7 +160,6 @@ label_17f86c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x17f8a8u)) {
         return;
     }
-    ctx->pc = 0x17F8A8u;
 label_17f8a8:
     // 0x17f8a8: 0x8e2200f0  lw          $v0, 0xF0($s1)
     ctx->pc = 0x17f8a8u;
@@ -249,7 +246,6 @@ label_17f8ec:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmSub_initMove1_pos_0x1c6898, 0x1c6898u, 0x17f914u)) {
         return;
     }
-    ctx->pc = 0x17F914u;
 label_17f914:
     // 0x17f914: 0x3c040060  lui         $a0, 0x60
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)96 << 16));
@@ -278,7 +274,6 @@ label_17f914:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x17f93cu)) {
         return;
     }
-    ctx->pc = 0x17F93Cu;
 label_17f93c:
     // 0x17f93c: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -306,7 +301,6 @@ label_17f950:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmSub_move_0x1c3f38, 0x1c3f38u, 0x17f958u)) {
         return;
     }
-    ctx->pc = 0x17F958u;
 label_17f958:
     // 0x17f958: 0x14400008  bnez        $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x17F958u;

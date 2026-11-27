@@ -13,7 +13,7 @@
 
 // Function: KeyStop
 // Address: 0x31afa0 - 0x31afe0
-void KeyStop_0x31afa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void KeyStop_0x31afa0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("KeyStop_0x31afa0");
 #endif
@@ -59,7 +59,6 @@ void KeyStop_0x31afa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031B410_0x31b410, 0x31b410u, 0x31afd0u)) {
         return;
     }
-    ctx->pc = 0x31AFD0u;
 label_31afd0:
     // 0x31afd0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x31afd0u;

@@ -13,7 +13,7 @@
 
 // Function: cScrArray_SearchScroll
 // Address: 0x2c5420 - 0x2c5470
-void cScrArray_SearchScroll_0x2c5420(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScrArray_SearchScroll_0x2c5420(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScrArray_SearchScroll_0x2c5420");
 #endif
@@ -98,7 +98,6 @@ label_2c5440:
         return;
         #endif
     }
-    ctx->pc = 0x2C5458u;
 label_2c5458:
     // 0x2c5458: 0x87102b  sltu        $v0, $a0, $a3
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 4) < (uint64_t)GPR_U64(ctx, 7)) ? 1 : 0);
@@ -120,7 +119,6 @@ label_2c5458:
             goto label_2c5440;
         }
     }
-    ctx->pc = 0x2C5464u;
 label_2c5464:
     // 0x2c5464: 0x3e00008  jr          $ra
     ctx->pc = 0x2C5464u;

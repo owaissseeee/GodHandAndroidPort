@@ -13,7 +13,7 @@
 
 // Function: Obj38B8_AddField14
 // Address: 0x38bd50 - 0x38bd60
-void Obj38B8_AddField14_0x38bd50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj38B8_AddField14_0x38bd50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj38B8_AddField14_0x38bd50");
 #endif

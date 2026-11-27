@@ -13,7 +13,7 @@
 
 // Function: SFTIM_IsStagnant
 // Address: 0x35a8a8 - 0x35a8e8
-void SFTIM_IsStagnant_0x35a8a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFTIM_IsStagnant_0x35a8a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFTIM_IsStagnant_0x35a8a8");
 #endif
@@ -46,7 +46,6 @@ void SFTIM_IsStagnant_0x35a8a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035A8E8_0x35a8e8, 0x35a8e8u, 0x35a8bcu)) {
         return;
     }
-    ctx->pc = 0x35A8BCu;
 label_35a8bc:
     // 0x35a8bc: 0x3c05ff00  lui         $a1, 0xFF00
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)65280 << 16));
@@ -76,10 +75,8 @@ label_35a8bc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034DD70_0x34dd70, 0x34dd70u, 0x35a8d0u)) {
         return;
     }
-    ctx->pc = 0x35A8D0u;
 label_35a8d0:
     // 0x35a8d0: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x35a8d0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_35a8d4:
     // 0x35a8d4: 0xdfb00000  ld          $s0, 0x0($sp)

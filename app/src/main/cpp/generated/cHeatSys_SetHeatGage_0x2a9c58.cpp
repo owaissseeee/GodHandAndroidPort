@@ -13,7 +13,7 @@
 
 // Function: cHeatSys_SetHeatGage
 // Address: 0x2a9c58 - 0x2a9c90
-void cHeatSys_SetHeatGage_0x2a9c58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cHeatSys_SetHeatGage_0x2a9c58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cHeatSys_SetHeatGage_0x2a9c58");
 #endif
@@ -65,7 +65,6 @@ void cHeatSys_SetHeatGage_0x2a9c58(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_2a9c7c;
         }
     }
-    ctx->pc = 0x2A9C78u;
 label_2a9c78:
     // 0x2a9c78: 0xe48c0004  swc1        $f12, 0x4($a0)
     ctx->pc = 0x2a9c78u;
@@ -77,7 +76,6 @@ label_2a9c7c:
     if (!runtime->callDirectStatic(rdram, ctx, &cHeatSys_UpdateHeatLv_0x2a9b50, 0x2a9b50u, 0x2a9c84u)) {
         return;
     }
-    ctx->pc = 0x2A9C84u;
 label_2a9c84:
     // 0x2a9c84: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2a9c84u;

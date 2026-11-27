@@ -13,7 +13,7 @@
 
 // Function: _IO_un_link
 // Address: 0x38c1a8 - 0x38c208
-void ps2__IO_un_link_0x38c1a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_un_link_0x38c1a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_un_link_0x38c1a8");
 #endif
@@ -97,7 +97,6 @@ void ps2__IO_un_link_0x38c1a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_38c1f4;
         }
     }
-    ctx->pc = 0x38C1D8u;
 label_38c1d8:
     // 0x38c1d8: 0x8c620034  lw          $v0, 0x34($v1)
     ctx->pc = 0x38c1d8u;

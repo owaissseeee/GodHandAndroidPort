@@ -13,7 +13,7 @@
 
 // Function: cModel_calcWorldParts
 // Address: 0x14a038 - 0x14a170
-void cModel_calcWorldParts_0x14a038(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cModel_calcWorldParts_0x14a038(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cModel_calcWorldParts_0x14a038");
 #endif
@@ -111,7 +111,6 @@ void cModel_calcWorldParts_0x14a038(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitCoord_0x147a48, 0x147a48u, 0x14a08cu)) {
         return;
     }
-    ctx->pc = 0x14A08Cu;
 label_14a08c:
     // 0x14a08c: 0x26220120  addiu       $v0, $s1, 0x120
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 17), 288));
@@ -172,7 +171,6 @@ label_14a0b4:
     // 0x14a0c0: 0x4480a000  mtc1        $zero, $f20
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[20], &bits, sizeof(bits)); }
     // 0x14a0c4: 0x3c130010  lui         $s3, 0x10
-    ctx->pc = 0x14a0c4u;
     SET_GPR_S32(ctx, 19, (int32_t)((uint32_t)16 << 16));
 label_14a0c8:
     // 0x14a0c8: 0x8e030154  lw          $v1, 0x154($s0)
@@ -250,7 +248,6 @@ label_14a0c8:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInverse_0x147568, 0x147568u, 0x14a108u)) {
         return;
     }
-    ctx->pc = 0x14A108u;
 label_14a108:
     // 0x14a108: 0x3a0202d  daddu       $a0, $sp, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -267,7 +264,6 @@ label_14a108:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0MulMatrix_0x30a2e0, 0x30a2e0u, 0x14a118u)) {
         return;
     }
-    ctx->pc = 0x14A118u;
 label_14a118:
     // 0x14a118: 0xc62c027c  lwc1        $f12, 0x27C($s1)
     ctx->pc = 0x14a118u;
@@ -287,7 +283,6 @@ label_14a118:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00156D70_0x156d70, 0x156d70u, 0x14a12cu)) {
         return;
     }
-    ctx->pc = 0x14A12Cu;
 label_14a12c:
     // 0x14a12c: 0x8e250250  lw          $a1, 0x250($s1)
     ctx->pc = 0x14a12cu;
@@ -304,7 +299,6 @@ label_14a130:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001501D0_0x1501d0, 0x1501d0u, 0x14a138u)) {
         return;
     }
-    ctx->pc = 0x14A138u;
 label_14a138:
     // 0x14a138: 0x922202b4  lbu         $v0, 0x2B4($s1)
     ctx->pc = 0x14a138u;
@@ -332,7 +326,6 @@ label_14a13c:
             goto label_14a0c8;
         }
     }
-    ctx->pc = 0x14A14Cu;
 label_14a14c:
     // 0x14a14c: 0x7bb00080  lq          $s0, 0x80($sp)
     ctx->pc = 0x14a14cu;

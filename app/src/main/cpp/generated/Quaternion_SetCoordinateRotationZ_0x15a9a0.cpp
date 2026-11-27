@@ -13,7 +13,7 @@
 
 // Function: Quaternion_SetCoordinateRotationZ
 // Address: 0x15a9a0 - 0x15aba0
-void Quaternion_SetCoordinateRotationZ_0x15a9a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Quaternion_SetCoordinateRotationZ_0x15a9a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Quaternion_SetCoordinateRotationZ_0x15a9a0");
 #endif
@@ -119,7 +119,6 @@ void Quaternion_SetCoordinateRotationZ_0x15a9a0(uint8_t* rdram, R5900Context* ct
     if (!runtime->callDirectStatic(rdram, ctx, &Tramp_001F7DF8_00101E28_0x101e28, 0x101e28u, 0x15aa2cu)) {
         return;
     }
-    ctx->pc = 0x15AA2Cu;
 label_15aa2c:
     // 0x15aa2c: 0x4600a834  c.lt.s      $f21, $f0
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[21], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -239,7 +238,6 @@ label_15aa70:
     if (!runtime->callDirectStatic(rdram, ctx, &Tramp_001F7DF8_00101E28_0x101e28, 0x101e28u, 0x15aad4u)) {
         return;
     }
-    ctx->pc = 0x15AAD4u;
 label_15aad4:
     // 0x15aad4: 0x4600a834  c.lt.s      $f21, $f0
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[21], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -315,7 +313,6 @@ label_15ab18:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0UnitMatrix_0x30a5a0, 0x30a5a0u, 0x15ab30u)) {
         return;
     }
-    ctx->pc = 0x15AB30u;
 label_15ab30:
     // 0x15ab30: 0xc7a80010  lwc1        $f8, 0x10($sp)
     ctx->pc = 0x15ab30u;
@@ -383,7 +380,6 @@ label_15ab30:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0015A190_0x15a190, 0x15a190u, 0x15ab84u)) {
         return;
     }
-    ctx->pc = 0x15AB84u;
 label_15ab84:
     // 0x15ab84: 0x7bb000b0  lq          $s0, 0xB0($sp)
     ctx->pc = 0x15ab84u;

@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_addCasinoTicket
 // Address: 0x1fc3e8 - 0x1fc438
-void cCoreSave_addCasinoTicket_0x1fc3e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_addCasinoTicket_0x1fc3e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_addCasinoTicket_0x1fc3e8");
 #endif
@@ -89,7 +89,6 @@ label_1fc420:
             goto label_1fc42c;
         }
     }
-    ctx->pc = 0x1FC42Cu;
 label_1fc42c:
     // 0x1fc42c: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC42Cu;

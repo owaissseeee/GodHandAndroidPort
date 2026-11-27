@@ -13,7 +13,7 @@
 
 // Function: SJRMT_Init
 // Address: 0x33afc0 - 0x33b010
-void SJRMT_Init_0x33afc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SJRMT_Init_0x33afc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SJRMT_Init_0x33afc0");
 #endif
@@ -69,13 +69,11 @@ void SJRMT_Init_0x33afc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     if (!runtime->callDirectStatic(rdram, ctx, &func_00332508_0x332508, 0x332508u, 0x33aff4u)) {
         return;
     }
-    ctx->pc = 0x33AFF4u;
 label_33aff4:
     // 0x33aff4: 0x8e040000  lw          $a0, 0x0($s0)
     ctx->pc = 0x33aff4u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 0)));
     // 0x33aff8: 0x24820001  addiu       $v0, $a0, 0x1
-    ctx->pc = 0x33aff8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 1));
 label_33affc:
     // 0x33affc: 0xdfbf0008  ld          $ra, 0x8($sp)

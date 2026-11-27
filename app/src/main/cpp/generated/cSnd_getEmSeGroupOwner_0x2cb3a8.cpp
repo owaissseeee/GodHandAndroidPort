@@ -13,7 +13,7 @@
 
 // Function: cSnd_getEmSeGroupOwner
 // Address: 0x2cb3a8 - 0x2cb418
-void cSnd_getEmSeGroupOwner_0x2cb3a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_getEmSeGroupOwner_0x2cb3a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_getEmSeGroupOwner_0x2cb3a8");
 #endif
@@ -38,7 +38,6 @@ void cSnd_getEmSeGroupOwner_0x2cb3a8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     // 0x2cb3b8: 0xe0402d  daddu       $t0, $a3, $zero
     SET_GPR_U64(ctx, 8, (uint64_t)GPR_U64(ctx, 7) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2cb3bc: 0x0  nop
-    ctx->pc = 0x2cb3bcu;
     // NOP
 label_2cb3c0:
     // 0x2cb3c0: 0x8ce40000  lw          $a0, 0x0($a3)
@@ -65,7 +64,6 @@ label_2cb3c0:
     // 0x2cb3d0: 0x100182d  daddu       $v1, $t0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 8) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2cb3d4: 0x240602ff  addiu       $a2, $zero, 0x2FF
-    ctx->pc = 0x2cb3d4u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 767));
 label_2cb3d8:
     // 0x2cb3d8: 0x8c820000  lw          $v0, 0x0($a0)
@@ -108,7 +106,6 @@ label_2cb3d8:
         return;
         #endif
     }
-    ctx->pc = 0x2CB3F0u;
 label_2cb3f0:
     // 0x2cb3f0: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x2cb3f0u;
@@ -126,7 +123,6 @@ label_2cb3f0:
         }
     }
     // 0x2cb3fc: 0x25290001  addiu       $t1, $t1, 0x1
-    ctx->pc = 0x2cb3fcu;
     SET_GPR_S32(ctx, 9, (int32_t)ADD32(GPR_U32(ctx, 9), 1));
 label_2cb400:
     // 0x2cb400: 0x24e70004  addiu       $a3, $a3, 0x4

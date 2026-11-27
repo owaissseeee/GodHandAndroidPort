@@ -13,7 +13,7 @@
 
 // Function: cEmWrap_release
 // Address: 0x295b38 - 0x295b80
-void cEmWrap_release_0x295b38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmWrap_release_0x295b38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmWrap_release_0x295b38");
 #endif
@@ -46,7 +46,6 @@ void cEmWrap_release_0x295b38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &FindResolveActor_295978_0x295978, 0x295978u, 0x295b4cu)) {
         return;
     }
-    ctx->pc = 0x295B4Cu;
 label_295b4c:
     // 0x295b4c: 0x10400008  beqz        $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x295B4Cu;
@@ -96,7 +95,6 @@ label_295b4c:
             goto label_295b74;
         }
     }
-    ctx->pc = 0x295B68u;
 label_295b68:
     // 0x295b68: 0xc0a41dc  jal         func_290770
     SET_GPR_U32(ctx, 31, 0x295B70u);
@@ -109,7 +107,6 @@ label_295b68:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_ReleaseEm_0x290770, 0x290770u, 0x295b70u)) {
         return;
     }
-    ctx->pc = 0x295B70u;
 label_295b70:
     // 0x295b70: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x295b70u;

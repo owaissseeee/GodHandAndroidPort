@@ -13,7 +13,7 @@
 
 // Function: func_001F8080
 // Address: 0x1f8080 - 0x1f8140
-void func_001F8080_0x1f8080(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001F8080_0x1f8080(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001F8080_0x1f8080");
 #endif
@@ -47,12 +47,10 @@ void func_001F8080_0x1f8080(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x1f80a8: 0x807e02e  j           func_1F80B8
     ctx->pc = 0x1F80B8u;
     goto label_1f80b8;
-    ctx->pc = 0x1F80B0u;
 label_1f80b0:
     // 0x1f80b0: 0x460c0301  sub.s       $f12, $f0, $f12
     ctx->f[12] = FPU_SUB_S(ctx->f[0], ctx->f[12]);
     // 0x1f80b4: 0x382d  daddu       $a3, $zero, $zero
-    ctx->pc = 0x1f80b4u;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1f80b8:
     // 0x1f80b8: 0x44086000  mfc1        $t0, $f12
@@ -126,10 +124,8 @@ label_1f80b8:
             goto label_1f8134;
         }
     }
-    ctx->pc = 0x1F8130u;
 label_1f8130:
     // 0x1f8130: 0x4b072904  vsubx.x     $vf4, $vf5, $vf7x
-    ctx->pc = 0x1f8130u;
     { __m128 res = PS2_VSUB(ctx->vu0_vf[5], _mm_shuffle_ps(ctx->vu0_vf[7], ctx->vu0_vf[7], _MM_SHUFFLE(0,0,0,0))); __m128i mask = _mm_set_epi32(0, 0, 0, -1); ctx->vu0_vf[4] = _mm_blendv_ps(ctx->vu0_vf[4], res, _mm_castsi128_ps(mask)); }
 label_1f8134:
     // 0x1f8134: 0xf8840000  sqc2        $vf4, 0x0($a0)

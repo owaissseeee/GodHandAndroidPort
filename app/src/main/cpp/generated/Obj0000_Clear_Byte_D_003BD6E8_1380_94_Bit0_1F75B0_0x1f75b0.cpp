@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Clear_Byte_D_003BD6E8_1380_94_Bit0_1F75B0
 // Address: 0x1f75b0 - 0x1f75d0
-void Obj0000_Clear_Byte_D_003BD6E8_1380_94_Bit0_1F75B0_0x1f75b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Clear_Byte_D_003BD6E8_1380_94_Bit0_1F75B0_0x1f75b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Clear_Byte_D_003BD6E8_1380_94_Bit0_1F75B0_0x1f75b0");
 #endif

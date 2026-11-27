@@ -13,7 +13,7 @@
 
 // Function: func_0013DF70
 // Address: 0x13df70 - 0x13e010
-void func_0013DF70_0x13df70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0013DF70_0x13df70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0013DF70_0x13df70");
 #endif
@@ -65,7 +65,6 @@ void func_0013DF70_0x13df70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x13dfa8: 0x4481a000  mtc1        $at, $f20
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[20], &bits, sizeof(bits)); }
     // 0x13dfac: 0x0  nop
-    ctx->pc = 0x13dfacu;
     // NOP
 label_13dfb0:
     // 0x13dfb0: 0x2348018  mult        $s0, $s1, $s4
@@ -87,7 +86,6 @@ label_13dfb0:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_initialize_0x2a9ea0, 0x2a9ea0u, 0x13dfc8u)) {
         return;
     }
-    ctx->pc = 0x13DFC8u;
 label_13dfc8:
     // 0x13dfc8: 0x2121021  addu        $v0, $s0, $s2
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), GPR_U32(ctx, 18)));

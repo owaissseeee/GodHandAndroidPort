@@ -13,7 +13,7 @@
 
 // Function: setbuf__7filebufPci
 // Address: 0x38ef60 - 0x38ef80
-void setbuf__7filebufPci_0x38ef60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void setbuf__7filebufPci_0x38ef60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("setbuf__7filebufPci_0x38ef60");
 #endif
@@ -42,7 +42,6 @@ void setbuf__7filebufPci_0x38ef60(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_file_setbuf_0x392a30, 0x392a30u, 0x38ef70u)) {
         return;
     }
-    ctx->pc = 0x38EF70u;
 label_38ef70:
     // 0x38ef70: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38ef70u;

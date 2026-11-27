@@ -13,7 +13,7 @@
 
 // Function: func_0031CE98
 // Address: 0x31ce98 - 0x31ceb8
-void func_0031CE98_0x31ce98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0031CE98_0x31ce98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0031CE98_0x31ce98");
 #endif
@@ -44,7 +44,6 @@ void func_0031CE98_0x31ce98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031CE90_0x31ce90, 0x31ce90u, 0x31ceacu)) {
         return;
     }
-    ctx->pc = 0x31CEACu;
 label_31ceac:
     // 0x31ceac: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x31ceacu;

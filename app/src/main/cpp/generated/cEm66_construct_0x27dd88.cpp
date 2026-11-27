@@ -13,7 +13,7 @@
 
 // Function: cEm66_construct
 // Address: 0x27dd88 - 0x27de18
-void cEm66_construct_0x27dd88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm66_construct_0x27dd88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm66_construct_0x27dd88");
 #endif
@@ -46,7 +46,6 @@ void cEm66_construct_0x27dd88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &func_0028EB00_0x28eb00, 0x28eb00u, 0x27dd9cu)) {
         return;
     }
-    ctx->pc = 0x27DD9Cu;
 label_27dd9c:
     // 0x27dd9c: 0x3c030045  lui         $v1, 0x45
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)69 << 16));
@@ -80,7 +79,6 @@ label_27dd9c:
     // 0x27ddc8: 0x2403002b  addiu       $v1, $zero, 0x2B
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 43));
     // 0x27ddcc: 0x0  nop
-    ctx->pc = 0x27ddccu;
     // NOP
 label_27ddd0:
     // 0x27ddd0: 0xf8400000  sqc2        $vf0, 0x0($v0)

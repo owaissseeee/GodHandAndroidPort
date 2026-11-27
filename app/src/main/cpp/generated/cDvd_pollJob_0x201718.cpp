@@ -13,7 +13,7 @@
 
 // Function: cDvd_pollJob
 // Address: 0x201718 - 0x201788
-void cDvd_pollJob_0x201718(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDvd_pollJob_0x201718(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDvd_pollJob_0x201718");
 #endif
@@ -47,7 +47,6 @@ void cDvd_pollJob_0x201718(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_002018D0_0x2018d0, 0x2018d0u, 0x20172cu)) {
         return;
     }
-    ctx->pc = 0x20172Cu;
 label_20172c:
     // 0x20172c: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -107,7 +106,6 @@ label_20172c:
             goto label_20177c;
         }
     }
-    ctx->pc = 0x201754u;
 label_201754:
     // 0x201754: 0x24020003  addiu       $v0, $zero, 0x3
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
@@ -126,7 +124,6 @@ label_201754:
             goto label_20177c;
         }
     }
-    ctx->pc = 0x201760u;
 label_201760:
     // 0x201760: 0xc08063c  jal         func_2018F0
     SET_GPR_U32(ctx, 31, 0x201768u);
@@ -139,7 +136,6 @@ label_201760:
     if (!runtime->callDirectStatic(rdram, ctx, &FreeObjectSlot_2018F0_0x2018f0, 0x2018f0u, 0x201768u)) {
         return;
     }
-    ctx->pc = 0x201768u;
 label_201768:
     // 0x201768: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -156,7 +152,6 @@ label_201768:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00201290_0x201290, 0x201290u, 0x201778u)) {
         return;
     }
-    ctx->pc = 0x201778u;
 label_201778:
     // 0x201778: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x201778u;

@@ -13,7 +13,7 @@
 
 // Function: SFH_IsExistStmId
 // Address: 0x35d918 - 0x35d988
-void SFH_IsExistStmId_0x35d918(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFH_IsExistStmId_0x35d918(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFH_IsExistStmId_0x35d918");
 #endif
@@ -59,7 +59,6 @@ void SFH_IsExistStmId_0x35d918(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &isEffectiveVer_0x35d7b8, 0x35d7b8u, 0x35d940u)) {
         return;
     }
-    ctx->pc = 0x35D940u;
 label_35d940:
     // 0x35d940: 0x220282d  daddu       $a1, $s1, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -84,7 +83,6 @@ label_35d940:
     if (!runtime->callDirectStatic(rdram, ctx, &searchStmId_0x35da58, 0x35da58u, 0x35d954u)) {
         return;
     }
-    ctx->pc = 0x35D954u;
 label_35d954:
     // 0x35d954: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x35D954u;
@@ -117,7 +115,6 @@ label_35d954:
         }
     }
     // 0x35d964: 0x0  nop
-    ctx->pc = 0x35d964u;
     // NOP
 label_35d968:
     // 0x35d968: 0xae400000  sw          $zero, 0x0($s2)

@@ -13,7 +13,7 @@
 
 // Function: UpdateSoundNodeState_377598
 // Address: 0x377598 - 0x3775e8
-void UpdateSoundNodeState_377598_0x377598(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateSoundNodeState_377598_0x377598(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateSoundNodeState_377598_0x377598");
 #endif
@@ -87,7 +87,6 @@ void UpdateSoundNodeState_377598_0x377598(uint8_t* rdram, R5900Context* ctx, PS2
             goto label_3775d8;
         }
     }
-    ctx->pc = 0x3775C8u;
 label_3775c8:
     // 0x3775c8: 0xc0ddd7c  jal         func_3775F0
     SET_GPR_U32(ctx, 31, 0x3775D0u);
@@ -100,7 +99,6 @@ label_3775c8:
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateChannelState_3775F0_0x3775f0, 0x3775f0u, 0x3775d0u)) {
         return;
     }
-    ctx->pc = 0x3775D0u;
 label_3775d0:
     // 0x3775d0: 0xc0dddc0  jal         func_377700
     SET_GPR_U32(ctx, 31, 0x3775D8u);
@@ -113,7 +111,6 @@ label_3775d0:
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateChannelOutputLevels_377700_0x377700, 0x377700u, 0x3775d8u)) {
         return;
     }
-    ctx->pc = 0x3775D8u;
 label_3775d8:
     // 0x3775d8: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x3775d8u;

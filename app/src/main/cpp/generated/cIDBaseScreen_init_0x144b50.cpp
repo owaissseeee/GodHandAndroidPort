@@ -13,7 +13,7 @@
 
 // Function: cIDBaseScreen_init
 // Address: 0x144b50 - 0x144c08
-void cIDBaseScreen_init_0x144b50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDBaseScreen_init_0x144b50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDBaseScreen_init_0x144b50");
 #endif
@@ -53,7 +53,6 @@ void cIDBaseScreen_init_0x144b50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     // 0x144b70: 0x2322018  mult        $a0, $s1, $s2
     { int64_t result = (int64_t)GPR_S32(ctx, 17) * (int64_t)GPR_S32(ctx, 18); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 4, (int32_t)result); }
     // 0x144b74: 0x0  nop
-    ctx->pc = 0x144b74u;
     // NOP
 label_144b78:
     // 0x144b78: 0x24050001  addiu       $a1, $zero, 0x1
@@ -73,7 +72,6 @@ label_144b78:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_initialize_0x2a9ea0, 0x2a9ea0u, 0x144b8cu)) {
         return;
     }
-    ctx->pc = 0x144B8Cu;
 label_144b8c:
     // 0x144b8c: 0x26230001  addiu       $v1, $s1, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 17), 1));
@@ -114,7 +112,6 @@ label_144b8c:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_initialize_0x2a9ea0, 0x2a9ea0u, 0x144bb0u)) {
         return;
     }
-    ctx->pc = 0x144BB0u;
 label_144bb0:
     // 0x144bb0: 0x26040480  addiu       $a0, $s0, 0x480
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 1152));
@@ -131,7 +128,6 @@ label_144bb0:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_initialize_0x2a9ea0, 0x2a9ea0u, 0x144bc0u)) {
         return;
     }
-    ctx->pc = 0x144BC0u;
 label_144bc0:
     // 0x144bc0: 0x3c038080  lui         $v1, 0x8080
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)32896 << 16));
@@ -153,7 +149,6 @@ label_144bc0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00144C90_0x144c90, 0x144c90u, 0x144bd8u)) {
         return;
     }
-    ctx->pc = 0x144BD8u;
 label_144bd8:
     // 0x144bd8: 0xa600041e  sh          $zero, 0x41E($s0)
     ctx->pc = 0x144bd8u;

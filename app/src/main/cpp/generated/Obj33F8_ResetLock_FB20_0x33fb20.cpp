@@ -13,7 +13,7 @@
 
 // Function: Obj33F8_ResetLock_FB20
 // Address: 0x33fb20 - 0x33fb48
-void Obj33F8_ResetLock_FB20_0x33fb20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj33F8_ResetLock_FB20_0x33fb20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj33F8_ResetLock_FB20_0x33fb20");
 #endif

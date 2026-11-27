@@ -13,7 +13,7 @@
 
 // Function: ClearFields_1614D0
 // Address: 0x1614d0 - 0x161500
-void ClearFields_1614D0_0x1614d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearFields_1614D0_0x1614d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearFields_1614D0_0x1614d0");
 #endif

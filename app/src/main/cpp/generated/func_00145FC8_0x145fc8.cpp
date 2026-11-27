@@ -13,7 +13,7 @@
 
 // Function: func_00145FC8
 // Address: 0x145fc8 - 0x146190
-void func_00145FC8_0x145fc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00145FC8_0x145fc8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00145FC8_0x145fc8");
 #endif
@@ -107,7 +107,6 @@ void func_00145FC8_0x145fc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x146010u;
 label_146010:
     // 0x146010: 0x10620039  beq         $v1, $v0, . + 4 + (0x39 << 2)
     ctx->pc = 0x146010u;
@@ -152,7 +151,6 @@ label_146010:
         return;
         #endif
     }
-    ctx->pc = 0x146028u;
 label_146028:
     // 0x146028: 0xa4a20420  sh          $v0, 0x420($a1)
     ctx->pc = 0x146028u;
@@ -329,7 +327,6 @@ label_1460d4:
         return;
         #endif
     }
-    ctx->pc = 0x1460F8u;
 label_1460f8:
     // 0x1460f8: 0x8ca20368  lw          $v0, 0x368($a1)
     ctx->pc = 0x1460f8u;
@@ -423,7 +420,6 @@ label_14611c:
         return;
         #endif
     }
-    ctx->pc = 0x146164u;
 label_146164:
     // 0x146164: 0x3c03bfff  lui         $v1, 0xBFFF
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)49151 << 16));

@@ -13,7 +13,7 @@
 
 // Function: cEmSetParam_setEmData
 // Address: 0x294c68 - 0x294ca0
-void cEmSetParam_setEmData_0x294c68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmSetParam_setEmData_0x294c68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmSetParam_setEmData_0x294c68");
 #endif
@@ -46,7 +46,6 @@ void cEmSetParam_setEmData_0x294c68(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &cEmSetParam_loadSetFile_0x294b98, 0x294b98u, 0x294c7cu)) {
         return;
     }
-    ctx->pc = 0x294C7Cu;
 label_294c7c:
     // 0x294c7c: 0x50400004  beql        $v0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x294C7Cu;
@@ -74,7 +73,6 @@ label_294c7c:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmSetParam_setEmAll_0x294ca0, 0x294ca0u, 0x294c8cu)) {
         return;
     }
-    ctx->pc = 0x294C8Cu;
 label_294c8c:
     // 0x294c8c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x294c8cu;

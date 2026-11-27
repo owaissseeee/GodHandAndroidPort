@@ -13,7 +13,7 @@
 
 // Function: func_0026AB20
 // Address: 0x26ab20 - 0x26adf8
-void func_0026AB20_0x26ab20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0026AB20_0x26ab20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0026AB20_0x26ab20");
 #endif
@@ -114,7 +114,6 @@ void func_0026AB20_0x26ab20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             return;
         }
     }
-    ctx->pc = 0x26AB78u;
 label_26ab78:
     // 0x26ab78: 0x3c013e4c  lui         $at, 0x3E4C
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15948 << 16));
@@ -164,7 +163,6 @@ label_26ab78:
             goto label_26acd4;
         }
     }
-    ctx->pc = 0x26ABBCu;
 label_26abbc:
     // 0x26abbc: 0x3c013e99  lui         $at, 0x3E99
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16025 << 16));
@@ -214,7 +212,6 @@ label_26abbc:
             goto label_26acd4;
         }
     }
-    ctx->pc = 0x26AC00u;
 label_26ac00:
     // 0x26ac00: 0xafa00000  sw          $zero, 0x0($sp)
     ctx->pc = 0x26ac00u;
@@ -243,7 +240,6 @@ label_26ac00:
             goto label_26acd8;
         }
     }
-    ctx->pc = 0x26AC18u;
 label_26ac18:
     // 0x26ac18: 0x8e020564  lw          $v0, 0x564($s0)
     ctx->pc = 0x26ac18u;
@@ -323,7 +319,6 @@ label_26ac18:
             goto label_26acdc;
         }
     }
-    ctx->pc = 0x26AC90u;
 label_26ac90:
     // 0x26ac90: 0x3c013f11  lui         $at, 0x3F11
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16145 << 16));
@@ -492,7 +487,6 @@ label_26ad0c:
             goto label_26ad58;
         }
     }
-    ctx->pc = 0x26AD38u;
 label_26ad38:
     // 0x26ad38: 0x24020223  addiu       $v0, $zero, 0x223
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 547));
@@ -541,10 +535,8 @@ label_26ad38:
             goto label_26ad58;
         }
     }
-    ctx->pc = 0x26AD54u;
 label_26ad54:
     // 0x26ad54: 0x24060012  addiu       $a2, $zero, 0x12
-    ctx->pc = 0x26ad54u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 18));
 label_26ad58:
     // 0x26ad58: 0xc7a00014  lwc1        $f0, 0x14($sp)
@@ -578,7 +570,6 @@ label_26ad6c:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmWeapon_setParent_0x1cf160, 0x1cf160u, 0x26ad80u)) {
         return;
     }
-    ctx->pc = 0x26AD80u;
 label_26ad80:
     // 0x26ad80: 0x2643fc9a  addiu       $v1, $s2, -0x366
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 18), 4294966426));
@@ -625,7 +616,6 @@ label_26ad80:
             return;
         }
     }
-    ctx->pc = 0x26ADA8u;
 label_26ada8:
     // 0x26ada8: 0x1000000c  b           . + 4 + (0xC << 2)
     ctx->pc = 0x26ADA8u;
@@ -642,7 +632,6 @@ label_26ada8:
             goto label_26addc;
         }
     }
-    ctx->pc = 0x26ADB0u;
 label_26adb0:
     // 0x26adb0: 0xc074134  jal         func_1D04D0
     SET_GPR_U32(ctx, 31, 0x26ADB8u);
@@ -655,7 +644,6 @@ label_26adb0:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj1D00_ClearState_6_0x1d04d0, 0x1d04d0u, 0x26adb8u)) {
         return;
     }
-    ctx->pc = 0x26ADB8u;
 label_26adb8:
     // 0x26adb8: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x26ADB8u;
@@ -672,7 +660,6 @@ label_26adb8:
             goto label_26addc;
         }
     }
-    ctx->pc = 0x26ADC0u;
 label_26adc0:
     // 0x26adc0: 0xc0741e6  jal         func_1D0798
     SET_GPR_U32(ctx, 31, 0x26ADC8u);
@@ -685,7 +672,6 @@ label_26adc0:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj1D00_ClearState_8_0x1d0798, 0x1d0798u, 0x26adc8u)) {
         return;
     }
-    ctx->pc = 0x26ADC8u;
 label_26adc8:
     // 0x26adc8: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x26ADC8u;
@@ -702,7 +688,6 @@ label_26adc8:
             goto label_26addc;
         }
     }
-    ctx->pc = 0x26ADD0u;
 label_26add0:
     // 0x26add0: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x26ADD0u;
@@ -719,7 +704,6 @@ label_26add0:
             goto label_26addc;
         }
     }
-    ctx->pc = 0x26ADD8u;
 label_26add8:
     // 0x26add8: 0xae110704  sw          $s1, 0x704($s0)
     ctx->pc = 0x26add8u;

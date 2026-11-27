@@ -13,7 +13,7 @@
 
 // Function: cOm71__SetTexColor
 // Address: 0x1b2118 - 0x1b21b0
-void cOm71__SetTexColor_0x1b2118(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm71__SetTexColor_0x1b2118(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm71__SetTexColor_0x1b2118");
 #endif
@@ -100,7 +100,6 @@ void cOm71__SetTexColor_0x1b2118(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             return;
         }
     }
-    ctx->pc = 0x1B215Cu;
 label_1b215c:
     // 0x1b215c: 0xc0202d  daddu       $a0, $a2, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
@@ -115,7 +114,6 @@ label_1b215c:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setTexChange_0x1b7de8, 0x1b7de8u, 0x1b2168u)) {
         return;
     }
-    ctx->pc = 0x1B2168u;
 label_1b2168:
     // 0x1b2168: 0x1000000f  b           . + 4 + (0xF << 2)
     ctx->pc = 0x1B2168u;
@@ -132,7 +130,6 @@ label_1b2168:
             goto label_1b21a8;
         }
     }
-    ctx->pc = 0x1B2170u;
 label_1b2170:
     // 0x1b2170: 0xc0202d  daddu       $a0, $a2, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
@@ -147,7 +144,6 @@ label_1b2170:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setTexChange_0x1b7de8, 0x1b7de8u, 0x1b217cu)) {
         return;
     }
-    ctx->pc = 0x1B217Cu;
 label_1b217c:
     // 0x1b217c: 0x1000000a  b           . + 4 + (0xA << 2)
     ctx->pc = 0x1B217Cu;
@@ -164,7 +160,6 @@ label_1b217c:
             goto label_1b21a8;
         }
     }
-    ctx->pc = 0x1B2184u;
 label_1b2184:
     // 0x1b2184: 0xc0202d  daddu       $a0, $a2, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
@@ -179,7 +174,6 @@ label_1b2184:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setTexChange_0x1b7de8, 0x1b7de8u, 0x1b2190u)) {
         return;
     }
-    ctx->pc = 0x1B2190u;
 label_1b2190:
     // 0x1b2190: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x1B2190u;
@@ -196,7 +190,6 @@ label_1b2190:
             goto label_1b21a8;
         }
     }
-    ctx->pc = 0x1B2198u;
 label_1b2198:
     // 0x1b2198: 0xc0202d  daddu       $a0, $a2, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
@@ -211,7 +204,6 @@ label_1b2198:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setTexChange_0x1b7de8, 0x1b7de8u, 0x1b21a4u)) {
         return;
     }
-    ctx->pc = 0x1B21A4u;
 label_1b21a4:
     // 0x1b21a4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1b21a4u;

@@ -13,7 +13,7 @@
 
 // Function: cCamera_stepVib
 // Address: 0x138558 - 0x138600
-void cCamera_stepVib_0x138558(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCamera_stepVib_0x138558(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCamera_stepVib_0x138558");
 #endif
@@ -87,7 +87,6 @@ void cCamera_stepVib_0x138558(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_0x1f7d48, 0x1f7d48u, 0x13859cu)) {
         return;
     }
-    ctx->pc = 0x13859Cu;
 label_13859c:
     // 0x13859c: 0x92020278  lbu         $v0, 0x278($s0)
     ctx->pc = 0x13859cu;
@@ -151,7 +150,6 @@ label_1385b0:
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_0x1f7d48, 0x1f7d48u, 0x1385e0u)) {
         return;
     }
-    ctx->pc = 0x1385E0u;
 label_1385e0:
     // 0x1385e0: 0x92020264  lbu         $v0, 0x264($s0)
     ctx->pc = 0x1385e0u;

@@ -13,7 +13,7 @@
 
 // Function: func_002A8718
 // Address: 0x2a8718 - 0x2a87e8
-void func_002A8718_0x2a8718(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002A8718_0x2a8718(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002A8718_0x2a8718");
 #endif
@@ -91,7 +91,6 @@ void func_002A8718_0x2a8718(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
     // 0x2a8754: 0x2414ffff  addiu       $s4, $zero, -0x1
-    ctx->pc = 0x2a8754u;
     SET_GPR_S32(ctx, 20, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_2a8758:
     // 0x2a8758: 0x8e050000  lw          $a1, 0x0($s0)
@@ -143,7 +142,6 @@ label_2a8758:
     if (!runtime->callDirectStatic(rdram, ctx, &KillEffect_0x306200, 0x306200u, 0x2a877cu)) {
         return;
     }
-    ctx->pc = 0x2A877Cu;
 label_2a877c:
     // 0x2a877c: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x2A877Cu;
@@ -160,7 +158,6 @@ label_2a877c:
             goto label_2a8790;
         }
     }
-    ctx->pc = 0x2A8784u;
 label_2a8784:
     // 0x2a8784: 0xc0c1880  jal         func_306200
     SET_GPR_U32(ctx, 31, 0x2A878Cu);
@@ -173,7 +170,6 @@ label_2a8784:
     if (!runtime->callDirectStatic(rdram, ctx, &KillEffect_0x306200, 0x306200u, 0x2a878cu)) {
         return;
     }
-    ctx->pc = 0x2A878Cu;
 label_2a878c:
     // 0x2a878c: 0x96620016  lhu         $v0, 0x16($s3)
     ctx->pc = 0x2a878cu;
@@ -201,7 +197,6 @@ label_2a8790:
             goto label_2a8758;
         }
     }
-    ctx->pc = 0x2A87A0u;
 label_2a87a0:
     // 0x2a87a0: 0x86250570  lh          $a1, 0x570($s1)
     ctx->pc = 0x2a87a0u;
@@ -237,10 +232,8 @@ label_2a87a0:
     if (!runtime->callDirectStatic(rdram, ctx, &KillEffect_0x306200, 0x306200u, 0x2a87bcu)) {
         return;
     }
-    ctx->pc = 0x2A87BCu;
 label_2a87bc:
     // 0x2a87bc: 0x24020002  addiu       $v0, $zero, 0x2
-    ctx->pc = 0x2a87bcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
 label_2a87c0:
     // 0x2a87c0: 0xa6300570  sh          $s0, 0x570($s1)

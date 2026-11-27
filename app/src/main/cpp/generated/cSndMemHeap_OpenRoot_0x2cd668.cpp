@@ -13,7 +13,7 @@
 
 // Function: cSndMemHeap_OpenRoot
 // Address: 0x2cd668 - 0x2cd6d0
-void cSndMemHeap_OpenRoot_0x2cd668(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndMemHeap_OpenRoot_0x2cd668(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndMemHeap_OpenRoot_0x2cd668");
 #endif
@@ -63,7 +63,6 @@ void cSndMemHeap_OpenRoot_0x2cd668(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2cd698u)) {
         return;
     }
-    ctx->pc = 0x2CD698u;
 label_2cd698:
     // 0x2cd698: 0xae110384  sw          $s1, 0x384($s0)
     ctx->pc = 0x2cd698u;
@@ -79,7 +78,6 @@ label_2cd698:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndMemHeap_ResetFirstBlk_0x2cd740, 0x2cd740u, 0x2cd6a4u)) {
         return;
     }
-    ctx->pc = 0x2CD6A4u;
 label_2cd6a4:
     // 0x2cd6a4: 0x8e020380  lw          $v0, 0x380($s0)
     ctx->pc = 0x2cd6a4u;

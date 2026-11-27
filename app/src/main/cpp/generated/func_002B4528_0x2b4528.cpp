@@ -13,7 +13,7 @@
 
 // Function: func_002B4528
 // Address: 0x2b4528 - 0x2b4560
-void func_002B4528_0x2b4528(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002B4528_0x2b4528(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002B4528_0x2b4528");
 #endif
@@ -48,7 +48,6 @@ void func_002B4528_0x2b4528(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &SearchCameraData_0x31ce38, 0x31ce38u, 0x2b4540u)) {
         return;
     }
-    ctx->pc = 0x2B4540u;
 label_2b4540:
     // 0x2b4540: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -65,7 +64,6 @@ label_2b4540:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B4428_0x2b4428, 0x2b4428u, 0x2b4550u)) {
         return;
     }
-    ctx->pc = 0x2B4550u;
 label_2b4550:
     // 0x2b4550: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2b4550u;

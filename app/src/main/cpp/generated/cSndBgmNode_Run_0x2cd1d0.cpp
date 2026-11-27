@@ -13,7 +13,7 @@
 
 // Function: cSndBgmNode_Run
 // Address: 0x2cd1d0 - 0x2cd310
-void cSndBgmNode_Run_0x2cd1d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndBgmNode_Run_0x2cd1d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndBgmNode_Run_0x2cd1d0");
 #endif
@@ -106,7 +106,6 @@ void cSndBgmNode_Run_0x2cd1d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_2cd300;
         }
     }
-    ctx->pc = 0x2CD20Cu;
 label_2cd20c:
     // 0x2cd20c: 0x10620035  beq         $v1, $v0, . + 4 + (0x35 << 2)
     ctx->pc = 0x2CD20Cu;
@@ -132,7 +131,6 @@ label_2cd20c:
             goto label_2cd300;
         }
     }
-    ctx->pc = 0x2CD21Cu;
 label_2cd21c:
     // 0x2cd21c: 0xc0b34e6  jal         func_2CD398
     SET_GPR_U32(ctx, 31, 0x2CD224u);
@@ -145,7 +143,6 @@ label_2cd21c:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_Start_0x2cd398, 0x2cd398u, 0x2cd224u)) {
         return;
     }
-    ctx->pc = 0x2CD224u;
 label_2cd224:
     // 0x2cd224: 0x50400036  beql        $v0, $zero, . + 4 + (0x36 << 2)
     ctx->pc = 0x2CD224u;
@@ -195,7 +192,6 @@ label_2cd224:
     if (!runtime->callDirectStatic(rdram, ctx, &SetSequenceFlags_373810_0x373810, 0x373810u, 0x2cd248u)) {
         return;
     }
-    ctx->pc = 0x2CD248u;
 label_2cd248:
     // 0x2cd248: 0x860200a2  lh          $v0, 0xA2($s0)
     ctx->pc = 0x2cd248u;
@@ -220,7 +216,6 @@ label_2cd254:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_GetBgmAttr_0x2d0770, 0x2d0770u, 0x2cd260u)) {
         return;
     }
-    ctx->pc = 0x2CD260u;
 label_2cd260:
     // 0x2cd260: 0x8e03009c  lw          $v1, 0x9C($s0)
     ctx->pc = 0x2cd260u;
@@ -255,7 +250,6 @@ label_2cd260:
     if (!runtime->callDirectStatic(rdram, ctx, &ClearFlagBits_373858_0x373858, 0x373858u, 0x2cd27cu)) {
         return;
     }
-    ctx->pc = 0x2CD27Cu;
 label_2cd27c:
     // 0x2cd27c: 0x44806000  mtc1        $zero, $f12
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[12], &bits, sizeof(bits)); }
@@ -270,7 +264,6 @@ label_2cd27c:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_FadeOut_0x2cd4a8, 0x2cd4a8u, 0x2cd288u)) {
         return;
     }
-    ctx->pc = 0x2CD288u;
 label_2cd288:
     // 0x2cd288: 0x24020002  addiu       $v0, $zero, 0x2
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
@@ -305,7 +298,6 @@ label_2cd294:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373A58_0x373a58, 0x373a58u, 0x2cd2acu)) {
         return;
     }
-    ctx->pc = 0x2CD2ACu;
 label_2cd2ac:
     // 0x2cd2ac: 0x1440000d  bnez        $v0, . + 4 + (0xD << 2)
     ctx->pc = 0x2CD2ACu;
@@ -360,7 +352,6 @@ label_2cd2ac:
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateSequenceNodeSetFlag_373488_0x373488, 0x373488u, 0x2cd2e4u)) {
         return;
     }
-    ctx->pc = 0x2CD2E4u;
 label_2cd2e4:
     // 0x2cd2e4: 0xc0dcddc  jal         func_373770
     SET_GPR_U32(ctx, 31, 0x2CD2ECu);
@@ -373,7 +364,6 @@ label_2cd2e4:
     if (!runtime->callDirectStatic(rdram, ctx, &GetSequenceResult_373770_0x373770, 0x373770u, 0x2cd2ecu)) {
         return;
     }
-    ctx->pc = 0x2CD2ECu;
 label_2cd2ec:
     // 0x2cd2ec: 0x54400004  bnel        $v0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x2CD2ECu;
@@ -401,7 +391,6 @@ label_2cd2ec:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_Unlink_0x2cc5e8, 0x2cc5e8u, 0x2cd2fcu)) {
         return;
     }
-    ctx->pc = 0x2CD2FCu;
 label_2cd2fc:
     // 0x2cd2fc: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2cd2fcu;

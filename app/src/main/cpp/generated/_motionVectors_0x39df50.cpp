@@ -13,7 +13,7 @@
 
 // Function: _motionVectors
 // Address: 0x39df50 - 0x39e0f0
-void _motionVectors_0x39df50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _motionVectors_0x39df50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_motionVectors_0x39df50");
 #endif
@@ -139,7 +139,6 @@ void _motionVectors_0x39df50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &_sceMpegNextBit_0x39eaa8, 0x39eaa8u, 0x39dfc0u)) {
         return;
     }
-    ctx->pc = 0x39DFC0u;
 label_39dfc0:
     // 0x39dfc0: 0x8fa40000  lw          $a0, 0x0($sp)
     ctx->pc = 0x39dfc0u;
@@ -166,7 +165,6 @@ label_39dfc0:
             goto label_39e080;
         }
     }
-    ctx->pc = 0x39DFD8u;
 label_39dfd8:
     // 0x39dfd8: 0x240202d  daddu       $a0, $s2, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -181,7 +179,6 @@ label_39dfd8:
     if (!runtime->callDirectStatic(rdram, ctx, &_sceMpegNextBit_0x39eaa8, 0x39eaa8u, 0x39dfe4u)) {
         return;
     }
-    ctx->pc = 0x39DFE4u;
 label_39dfe4:
     // 0x39dfe4: 0x1088c0  sll         $s1, $s0, 3
     SET_GPR_S32(ctx, 17, (int32_t)SLL32(GPR_U32(ctx, 16), 3));
@@ -220,7 +217,6 @@ label_39dfe4:
     if (!runtime->callDirectStatic(rdram, ctx, &_motionVector_0x39db28, 0x39db28u, 0x39e01cu)) {
         return;
     }
-    ctx->pc = 0x39E01Cu;
 label_39e01c:
     // 0x39e01c: 0x240202d  daddu       $a0, $s2, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -235,7 +231,6 @@ label_39e01c:
     if (!runtime->callDirectStatic(rdram, ctx, &_sceMpegNextBit_0x39eaa8, 0x39eaa8u, 0x39e028u)) {
         return;
     }
-    ctx->pc = 0x39E028u;
 label_39e028:
     // 0x39e028: 0x26310010  addiu       $s1, $s1, 0x10
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 16));
@@ -298,10 +293,8 @@ label_39e028:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x39DB28u, 0x39E078u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x39E080u;
 label_39e080:
     // 0x39e080: 0x1080c0  sll         $s0, $s0, 3
-    ctx->pc = 0x39e080u;
     SET_GPR_S32(ctx, 16, (int32_t)SLL32(GPR_U32(ctx, 16), 3));
 label_39e084:
     // 0x39e084: 0x240202d  daddu       $a0, $s2, $zero
@@ -331,7 +324,6 @@ label_39e084:
     if (!runtime->callDirectStatic(rdram, ctx, &_motionVector_0x39db28, 0x39db28u, 0x39e0acu)) {
         return;
     }
-    ctx->pc = 0x39E0ACu;
 label_39e0ac:
     // 0x39e0ac: 0x8e020000  lw          $v0, 0x0($s0)
     ctx->pc = 0x39e0acu;

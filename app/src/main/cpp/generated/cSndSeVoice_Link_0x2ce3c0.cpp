@@ -13,7 +13,7 @@
 
 // Function: cSndSeVoice_Link
 // Address: 0x2ce3c0 - 0x2ce3e8
-void cSndSeVoice_Link_0x2ce3c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndSeVoice_Link_0x2ce3c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndSeVoice_Link_0x2ce3c0");
 #endif
@@ -47,7 +47,6 @@ void cSndSeVoice_Link_0x2ce3c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_2ce3dc;
         }
     }
-    ctx->pc = 0x2CE3DCu;
 label_2ce3dc:
     // 0x2ce3dc: 0x3e00008  jr          $ra
     ctx->pc = 0x2CE3DCu;

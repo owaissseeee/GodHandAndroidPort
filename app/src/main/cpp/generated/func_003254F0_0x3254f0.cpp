@@ -13,7 +13,7 @@
 
 // Function: func_003254F0
 // Address: 0x3254f0 - 0x325578
-void func_003254F0_0x3254f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003254F0_0x3254f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003254F0_0x3254f0");
 #endif
@@ -84,7 +84,6 @@ void func_003254F0_0x3254f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &CreateThread_0x3afaa0, 0x3afaa0u, 0x325544u)) {
         return;
     }
-    ctx->pc = 0x325544u;
 label_325544:
     // 0x325544: 0xae020000  sw          $v0, 0x0($s0)
     ctx->pc = 0x325544u;
@@ -105,7 +104,6 @@ label_325544:
     if (!runtime->callDirectStatic(rdram, ctx, &StartThread_0x3b0ba8, 0x3b0ba8u, 0x325558u)) {
         return;
     }
-    ctx->pc = 0x325558u;
 label_325558:
     // 0x325558: 0x8e040000  lw          $a0, 0x0($s0)
     ctx->pc = 0x325558u;
@@ -123,7 +121,6 @@ label_325558:
     if (!runtime->callDirectStatic(rdram, ctx, &ChangeThreadPriority_0x3afb30, 0x3afb30u, 0x325568u)) {
         return;
     }
-    ctx->pc = 0x325568u;
 label_325568:
     // 0x325568: 0xdfb00030  ld          $s0, 0x30($sp)
     ctx->pc = 0x325568u;

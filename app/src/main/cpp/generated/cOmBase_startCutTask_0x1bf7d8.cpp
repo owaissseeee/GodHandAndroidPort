@@ -13,7 +13,7 @@
 
 // Function: cOmBase_startCutTask
 // Address: 0x1bf7d8 - 0x1bf8c8
-void cOmBase_startCutTask_0x1bf7d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmBase_startCutTask_0x1bf7d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmBase_startCutTask_0x1bf7d8");
 #endif
@@ -112,7 +112,6 @@ void cOmBase_startCutTask_0x1bf7d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &KeyStop_0x31afa0, 0x31afa0u, 0x1bf864u)) {
         return;
     }
-    ctx->pc = 0x1BF864u;
 label_1bf864:
     // 0x1bf864: 0x8e242f84  lw          $a0, 0x2F84($s1)
     ctx->pc = 0x1bf864u;
@@ -134,7 +133,6 @@ label_1bf864:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_taskExec_0x2c3920, 0x2c3920u, 0x1bf87cu)) {
         return;
     }
-    ctx->pc = 0x1BF87Cu;
 label_1bf87c:
     // 0x1bf87c: 0x4400008  bltz        $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x1BF87Cu;

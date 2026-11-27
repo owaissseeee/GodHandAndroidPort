@@ -13,7 +13,7 @@
 
 // Function: drawArrow
 // Address: 0x15fb98 - 0x15fba0
-void drawArrow_0x15fb98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void drawArrow_0x15fb98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("drawArrow_0x15fb98");
 #endif

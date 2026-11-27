@@ -13,7 +13,7 @@
 
 // Function: fwrite
 // Address: 0x3a68c8 - 0x3a6950
-void fwrite_0x3a68c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void fwrite_0x3a68c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("fwrite_0x3a68c8");
 #endif
@@ -77,7 +77,6 @@ void fwrite_0x3a68c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___sfvwrite_0x3ae1d0, 0x3ae1d0u, 0x3a6910u)) {
         return;
     }
-    ctx->pc = 0x3A6910u;
 label_3a6910:
     // 0x3a6910: 0x10400008  beqz        $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x3A6910u;
@@ -132,7 +131,6 @@ label_3a6920:
             goto label_3a693c;
         }
     }
-    ctx->pc = 0x3A6934u;
 label_3a6934:
     // 0x3a6934: 0x240102d  daddu       $v0, $s2, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));

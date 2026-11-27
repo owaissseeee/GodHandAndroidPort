@@ -14,7 +14,7 @@
 
 // Function: cEm00_stepFadeIn
 // Address: 0x26ea50 - 0x26eb00
-void cEm00_stepFadeIn_0x26ea50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_stepFadeIn_0x26ea50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_stepFadeIn_0x26ea50");
 #endif
@@ -78,7 +78,6 @@ void cEm00_stepFadeIn_0x26ea50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1351D8u, 0x26EA84u, 0x26EA8Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x26EA8Cu;
 label_26ea8c:
     // 0x26ea8c: 0xc6001704  lwc1        $f0, 0x1704($s0)
     ctx->pc = 0x26ea8cu;
@@ -151,7 +150,6 @@ label_26ea8c:
             goto label_26eae8;
         }
     }
-    ctx->pc = 0x26EADCu;
 label_26eadc:
     // 0x26eadc: 0x8e020250  lw          $v0, 0x250($s0)
     ctx->pc = 0x26eadcu;
@@ -163,7 +161,6 @@ label_26eadc:
     WRITE32(ADD32(GPR_U32(ctx, 16), 592), GPR_U32(ctx, 2));
 label_26eae8:
     // 0x26eae8: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x26eae8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_26eaec:
     // 0x26eaec: 0x7bb00010  lq          $s0, 0x10($sp)

@@ -13,7 +13,7 @@
 
 // Function: cSndBgmNode_SetFlagsFadeOut
 // Address: 0x2cd500 - 0x2cd548
-void cSndBgmNode_SetFlagsFadeOut_0x2cd500(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndBgmNode_SetFlagsFadeOut_0x2cd500(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndBgmNode_SetFlagsFadeOut_0x2cd500");
 #endif
@@ -65,7 +65,6 @@ void cSndBgmNode_SetFlagsFadeOut_0x2cd500(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &func_003735E0_0x3735e0, 0x3735e0u, 0x2cd538u)) {
         return;
     }
-    ctx->pc = 0x2CD538u;
 label_2cd538:
     // 0x2cd538: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2cd538u;

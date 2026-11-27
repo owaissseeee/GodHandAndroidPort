@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_saveWorldTime
 // Address: 0x1f9c30 - 0x1f9c58
-void cCoreSave_saveWorldTime_0x1f9c30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_saveWorldTime_0x1f9c30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_saveWorldTime_0x1f9c30");
 #endif

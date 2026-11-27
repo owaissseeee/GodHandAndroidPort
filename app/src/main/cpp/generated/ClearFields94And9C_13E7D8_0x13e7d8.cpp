@@ -13,7 +13,7 @@
 
 // Function: ClearFields94And9C_13E7D8
 // Address: 0x13e7d8 - 0x13e7e8
-void ClearFields94And9C_13E7D8_0x13e7d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearFields94And9C_13E7D8_0x13e7d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearFields94And9C_13E7D8_0x13e7d8");
 #endif

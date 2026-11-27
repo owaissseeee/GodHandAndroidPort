@@ -13,7 +13,7 @@
 
 // Function: sceIpuSync
 // Address: 0x3baca0 - 0x3bad08
-void sceIpuSync_0x3baca0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceIpuSync_0x3baca0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceIpuSync_0x3baca0");
 #endif
@@ -67,14 +67,12 @@ void sceIpuSync_0x3baca0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
             goto label_3bad00;
         }
     }
-    ctx->pc = 0x3BACBCu;
 label_3bacbc:
     // 0x3bacbc: 0x3c031000  lui         $v1, 0x1000
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)4096 << 16));
     // 0x3bacc0: 0x34632010  ori         $v1, $v1, 0x2010
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) | (uint64_t)(uint16_t)8208);
     // 0x3bacc4: 0x0  nop
-    ctx->pc = 0x3bacc4u;
     // NOP
 label_3bacc8:
     // 0x3bacc8: 0x8c620000  lw          $v0, 0x0($v1)
@@ -115,7 +113,6 @@ label_3bacc8:
             goto label_3bacfc;
         }
     }
-    ctx->pc = 0x3BACECu;
 label_3bacec:
     // 0x3bacec: 0x3c021000  lui         $v0, 0x1000
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)4096 << 16));
@@ -125,11 +122,9 @@ label_3bacec:
     ctx->pc = 0x3bacf4u;
     SET_GPR_S32(ctx, 3, (int32_t)runtime->Load32(rdram, ctx, 0x10002010u));
     // 0x3bacf8: 0x31fc2  srl         $v1, $v1, 31
-    ctx->pc = 0x3bacf8u;
     SET_GPR_S32(ctx, 3, (int32_t)SRL32(GPR_U32(ctx, 3), 31));
 label_3bacfc:
     // 0x3bacfc: 0x60102d  daddu       $v0, $v1, $zero
-    ctx->pc = 0x3bacfcu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
 label_3bad00:
     // 0x3bad00: 0x3e00008  jr          $ra

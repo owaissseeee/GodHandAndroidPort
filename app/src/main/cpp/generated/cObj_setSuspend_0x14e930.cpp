@@ -13,7 +13,7 @@
 
 // Function: cObj_setSuspend
 // Address: 0x14e930 - 0x14e990
-void cObj_setSuspend_0x14e930(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cObj_setSuspend_0x14e930(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cObj_setSuspend_0x14e930");
 #endif
@@ -60,7 +60,6 @@ void cObj_setSuspend_0x14e930(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
         return;
         #endif
     }
-    ctx->pc = 0x14E94Cu;
 label_14e94c:
     // 0x14e94c: 0x3c02ffff  lui         $v0, 0xFFFF
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)65535 << 16));

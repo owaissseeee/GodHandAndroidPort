@@ -13,7 +13,7 @@
 
 // Function: cDataSlot_releaseLoadedSe
 // Address: 0x1ff638 - 0x1ff6e0
-void cDataSlot_releaseLoadedSe_0x1ff638(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDataSlot_releaseLoadedSe_0x1ff638(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDataSlot_releaseLoadedSe_0x1ff638");
 #endif
@@ -66,7 +66,6 @@ void cDataSlot_releaseLoadedSe_0x1ff638(uint8_t* rdram, R5900Context* ctx, PS2Ru
     ctx->pc = 0x1ff670u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1ff674: 0x3c160060  lui         $s6, 0x60
-    ctx->pc = 0x1ff674u;
     SET_GPR_S32(ctx, 22, (int32_t)((uint32_t)96 << 16));
 label_1ff678:
     // 0x1ff678: 0x8e050000  lw          $a1, 0x0($s0)
@@ -98,7 +97,6 @@ label_1ff678:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeIsLoadOk_0x2cb830, 0x2cb830u, 0x1ff68cu)) {
         return;
     }
-    ctx->pc = 0x1FF68Cu;
 label_1ff68c:
     // 0x1ff68c: 0x10400006  beqz        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x1FF68Cu;
@@ -130,7 +128,6 @@ label_1ff68c:
     WRITE32(ADD32(GPR_U32(ctx, 17), 8), GPR_U32(ctx, 2));
 label_1ff6a8:
     // 0x1ff6a8: 0x2652ffff  addiu       $s2, $s2, -0x1
-    ctx->pc = 0x1ff6a8u;
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), 4294967295));
 label_1ff6ac:
     // 0x1ff6ac: 0x641fff2  bgez        $s2, . + 4 + (-0xE << 2)

@@ -13,7 +13,7 @@
 
 // Function: MWSFD_GetPauseBdr
 // Address: 0x3455b8 - 0x3455d8
-void MWSFD_GetPauseBdr_0x3455b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MWSFD_GetPauseBdr_0x3455b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MWSFD_GetPauseBdr_0x3455b8");
 #endif
@@ -37,7 +37,6 @@ void MWSFD_GetPauseBdr_0x3455b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &GetD003EC7E0_3452B0_0x3452b0, 0x3452b0u, 0x3455c8u)) {
         return;
     }
-    ctx->pc = 0x3455C8u;
 label_3455c8:
     // 0x3455c8: 0x8c42003c  lw          $v0, 0x3C($v0)
     ctx->pc = 0x3455c8u;

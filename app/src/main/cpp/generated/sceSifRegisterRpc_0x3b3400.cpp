@@ -13,7 +13,7 @@
 
 // Function: sceSifRegisterRpc
 // Address: 0x3b3400 - 0x3b34d0
-void sceSifRegisterRpc_0x3b3400(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSifRegisterRpc_0x3b3400(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSifRegisterRpc_0x3b3400");
 #endif
@@ -76,7 +76,6 @@ void sceSifRegisterRpc_0x3b3400(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x3b3444u)) {
         return;
     }
-    ctx->pc = 0x3B3444u;
 label_3b3444:
     // 0x3b3444: 0xaea0003c  sw          $zero, 0x3C($s5)
     ctx->pc = 0x3b3444u;
@@ -132,7 +131,6 @@ label_3b3444:
             goto label_3b34a8;
         }
     }
-    ctx->pc = 0x3B3474u;
 label_3b3474:
     // 0x3b3474: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -155,7 +153,6 @@ label_3b3474:
         }
     }
     // 0x3b3484: 0x0  nop
-    ctx->pc = 0x3b3484u;
     // NOP
 label_3b3488:
     // 0x3b3488: 0x60202d  daddu       $a0, $v1, $zero

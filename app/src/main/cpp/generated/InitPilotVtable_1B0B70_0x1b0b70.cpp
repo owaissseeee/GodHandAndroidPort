@@ -13,7 +13,7 @@
 
 // Function: InitPilotVtable_1B0B70
 // Address: 0x1b0b70 - 0x1b0ba8
-void InitPilotVtable_1B0B70_0x1b0b70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitPilotVtable_1B0B70_0x1b0b70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitPilotVtable_1B0B70_0x1b0b70");
 #endif
@@ -45,7 +45,6 @@ void InitPilotVtable_1B0B70_0x1b0b70(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_001BD580_0x1bd580, 0x1bd580u, 0x1b0b84u)) {
         return;
     }
-    ctx->pc = 0x1B0B84u;
 label_1b0b84:
     // 0x1b0b84: 0x3c030043  lui         $v1, 0x43
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)67 << 16));

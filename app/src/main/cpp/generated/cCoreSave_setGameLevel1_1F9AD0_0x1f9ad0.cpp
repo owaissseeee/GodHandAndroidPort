@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_setGameLevel1_1F9AD0
 // Address: 0x1f9ad0 - 0x1f9af0
-void cCoreSave_setGameLevel1_1F9AD0_0x1f9ad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setGameLevel1_1F9AD0_0x1f9ad0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setGameLevel1_1F9AD0_0x1f9ad0");
 #endif
@@ -42,7 +42,6 @@ void cCoreSave_setGameLevel1_1F9AD0_0x1f9ad0(uint8_t* rdram, R5900Context* ctx, 
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_setGameLevel_0x1fa148, 0x1fa148u, 0x1f9ae0u)) {
         return;
     }
-    ctx->pc = 0x1F9AE0u;
 label_1f9ae0:
     // 0x1f9ae0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1f9ae0u;

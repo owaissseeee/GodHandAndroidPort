@@ -13,7 +13,7 @@
 
 // Function: getDevice
 // Address: 0x330480 - 0x330518
-void getDevice_0x330480(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getDevice_0x330480(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getDevice_0x330480");
 #endif
@@ -64,7 +64,6 @@ void getDevice_0x330480(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
     if (!runtime->callDirectStatic(rdram, ctx, &strlen_0x3a58dc, 0x3a58dcu, 0x3304acu)) {
         return;
     }
-    ctx->pc = 0x3304ACu;
 label_3304ac:
     // 0x3304ac: 0x40982d  daddu       $s3, $v0, $zero
     SET_GPR_U64(ctx, 19, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -75,7 +74,6 @@ label_3304ac:
     // 0x3304b8: 0x2655fffc  addiu       $s5, $s2, -0x4
     SET_GPR_S32(ctx, 21, (int32_t)ADD32(GPR_U32(ctx, 18), 4294967292));
     // 0x3304bc: 0x118100  sll         $s0, $s1, 4
-    ctx->pc = 0x3304bcu;
     SET_GPR_S32(ctx, 16, (int32_t)SLL32(GPR_U32(ctx, 17), 4));
 label_3304c0:
     // 0x3304c0: 0x26310001  addiu       $s1, $s1, 0x1
@@ -95,7 +93,6 @@ label_3304c0:
     if (!runtime->callDirectStatic(rdram, ctx, &strncmp_0x3a5bd8, 0x3a5bd8u, 0x3304d4u)) {
         return;
     }
-    ctx->pc = 0x3304D4u;
 label_3304d4:
     // 0x3304d4: 0x14400004  bnez        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x3304D4u;
@@ -129,7 +126,6 @@ label_3304d4:
             goto label_3304f4;
         }
     }
-    ctx->pc = 0x3304E8u;
 label_3304e8:
     // 0x3304e8: 0x1460fff5  bnez        $v1, . + 4 + (-0xB << 2)
     ctx->pc = 0x3304E8u;
@@ -150,7 +146,6 @@ label_3304e8:
         }
     }
     // 0x3304f0: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x3304f0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_3304f4:
     // 0x3304f4: 0xdfb00000  ld          $s0, 0x0($sp)

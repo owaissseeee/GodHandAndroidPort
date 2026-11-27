@@ -13,7 +13,7 @@
 
 // Function: GetTypeDescriptorB_1A00D0
 // Address: 0x1a00d0 - 0x1a0120
-void GetTypeDescriptorB_1A00D0_0x1a00d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetTypeDescriptorB_1A00D0_0x1a00d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetTypeDescriptorB_1A00D0_0x1a00d0");
 #endif
@@ -60,7 +60,6 @@ void GetTypeDescriptorB_1A00D0_0x1a00d0(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &GetOrInitGlobal785798_1C3BE8_0x1c3be8, 0x1c3be8u, 0x1a00f4u)) {
         return;
     }
-    ctx->pc = 0x1A00F4u;
 label_1a00f4:
     // 0x1a00f4: 0x3c050042  lui         $a1, 0x42
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)66 << 16));
@@ -81,7 +80,6 @@ label_1a00f4:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField_0_4_8_31EEA8_0x31eea8, 0x31eea8u, 0x1a010cu)) {
         return;
     }
-    ctx->pc = 0x1A010Cu;
 label_1a010c:
     // 0x1a010c: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

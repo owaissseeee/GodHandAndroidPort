@@ -13,7 +13,7 @@
 
 // Function: cGameObj_isWithinRangeXZ
 // Address: 0x17e058 - 0x17e0a8
-void cGameObj_isWithinRangeXZ_0x17e058(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObj_isWithinRangeXZ_0x17e058(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObj_isWithinRangeXZ_0x17e058");
 #endif
@@ -57,7 +57,6 @@ void cGameObj_isWithinRangeXZ_0x17e058(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0MagnitudeSqXZ_0x1f7eb0, 0x1f7eb0u, 0x17e080u)) {
         return;
     }
-    ctx->pc = 0x17E080u;
 label_17e080:
     // 0x17e080: 0x46140036  c.le.s      $f0, $f20
     ctx->fcr31 = (FPU_C_OLE_S(ctx->f[0], ctx->f[20])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -78,7 +77,6 @@ label_17e080:
             goto label_17e090;
         }
     }
-    ctx->pc = 0x17E090u;
 label_17e090:
     // 0x17e090: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

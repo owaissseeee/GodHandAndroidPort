@@ -13,7 +13,7 @@
 
 // Function: SFBUF_DestroySj
 // Address: 0x34bd58 - 0x34bd98
-void SFBUF_DestroySj_0x34bd58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFBUF_DestroySj_0x34bd58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFBUF_DestroySj_0x34bd58");
 #endif
@@ -48,7 +48,6 @@ void SFBUF_DestroySj_0x34bd58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034BD98_0x34bd98, 0x34bd98u, 0x34bd70u)) {
         return;
     }
-    ctx->pc = 0x34BD70u;
 label_34bd70:
     // 0x34bd70: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -63,7 +62,6 @@ label_34bd70:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034BD98_0x34bd98, 0x34bd98u, 0x34bd7cu)) {
         return;
     }
-    ctx->pc = 0x34BD7Cu;
 label_34bd7c:
     // 0x34bd7c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

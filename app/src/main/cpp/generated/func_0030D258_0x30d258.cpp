@@ -13,7 +13,7 @@
 
 // Function: func_0030D258
 // Address: 0x30d258 - 0x30d358
-void func_0030D258_0x30d258(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0030D258_0x30d258(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0030D258_0x30d258");
 #endif
@@ -66,7 +66,6 @@ void func_0030D258_0x30d258(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x30d288u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 96), GPR_U64(ctx, 31));
     // 0x30d28c: 0x0  nop
-    ctx->pc = 0x30d28cu;
     // NOP
 label_30d290:
     // 0x30d290: 0xa0400000  sb          $zero, 0x0($v0)
@@ -130,7 +129,6 @@ label_30d290:
     // 0x30d2d0: 0x112c00  sll         $a1, $s1, 16
     SET_GPR_S32(ctx, 5, (int32_t)SLL32(GPR_U32(ctx, 17), 16));
     // 0x30d2d4: 0x0  nop
-    ctx->pc = 0x30d2d4u;
     // NOP
 label_30d2d8:
     // 0x30d2d8: 0x3a0202d  daddu       $a0, $sp, $zero
@@ -160,7 +158,6 @@ label_30d2d8:
     if (!runtime->callDirectStatic(rdram, ctx, &sceGsSetDefLoadImage_0x395430, 0x395430u, 0x30d300u)) {
         return;
     }
-    ctx->pc = 0x30D300u;
 label_30d300:
     // 0x30d300: 0x26310004  addiu       $s1, $s1, 0x4
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 4));
@@ -175,7 +172,6 @@ label_30d300:
     if (!runtime->callDirectStatic(rdram, ctx, &FlushCache_0x3aff20, 0x3aff20u, 0x30d30cu)) {
         return;
     }
-    ctx->pc = 0x30D30Cu;
 label_30d30c:
     // 0x30d30c: 0x3a0202d  daddu       $a0, $sp, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -190,7 +186,6 @@ label_30d30c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceGsExecLoadImage_0x395758, 0x395758u, 0x30d318u)) {
         return;
     }
-    ctx->pc = 0x30D318u;
 label_30d318:
     // 0x30d318: 0x202d  daddu       $a0, $zero, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
@@ -205,7 +200,6 @@ label_30d318:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003950F8_0x3950f8, 0x3950f8u, 0x30d324u)) {
         return;
     }
-    ctx->pc = 0x30D324u;
 label_30d324:
     // 0x30d324: 0x212182a  slt         $v1, $s0, $s2
     SET_GPR_U64(ctx, 3, ((int64_t)GPR_S64(ctx, 16) < (int64_t)GPR_S64(ctx, 18)) ? 1 : 0);
@@ -227,7 +221,6 @@ label_30d324:
             goto label_30d2d8;
         }
     }
-    ctx->pc = 0x30D330u;
 label_30d330:
     // 0x30d330: 0x7bb000d0  lq          $s0, 0xD0($sp)
     ctx->pc = 0x30d330u;

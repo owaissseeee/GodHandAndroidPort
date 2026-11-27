@@ -13,7 +13,7 @@
 
 // Function: sfhds_AnlySys
 // Address: 0x34d6f0 - 0x34d7a8
-void sfhds_AnlySys_0x34d6f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfhds_AnlySys_0x34d6f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfhds_AnlySys_0x34d6f0");
 #endif
@@ -60,7 +60,6 @@ void sfhds_AnlySys_0x34d6f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &sfhds_CallN_0x34da50, 0x34da50u, 0x34d714u)) {
         return;
     }
-    ctx->pc = 0x34D714u;
 label_34d714:
     // 0x34d714: 0x3c050036  lui         $a1, 0x36
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)54 << 16));
@@ -80,7 +79,6 @@ label_34d714:
     if (!runtime->callDirectStatic(rdram, ctx, &sfhds_CallN_0x34da50, 0x34da50u, 0x34d728u)) {
         return;
     }
-    ctx->pc = 0x34D728u;
 label_34d728:
     // 0x34d728: 0x3c050036  lui         $a1, 0x36
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)54 << 16));
@@ -100,7 +98,6 @@ label_34d728:
     if (!runtime->callDirectStatic(rdram, ctx, &sfhds_CallN_0x34da50, 0x34da50u, 0x34d73cu)) {
         return;
     }
-    ctx->pc = 0x34D73Cu;
 label_34d73c:
     // 0x34d73c: 0x3c050036  lui         $a1, 0x36
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)54 << 16));
@@ -120,7 +117,6 @@ label_34d73c:
     if (!runtime->callDirectStatic(rdram, ctx, &sfhds_CallN_0x34da50, 0x34da50u, 0x34d750u)) {
         return;
     }
-    ctx->pc = 0x34D750u;
 label_34d750:
     // 0x34d750: 0x3c050036  lui         $a1, 0x36
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)54 << 16));
@@ -140,7 +136,6 @@ label_34d750:
     if (!runtime->callDirectStatic(rdram, ctx, &sfhds_CallN_0x34da50, 0x34da50u, 0x34d764u)) {
         return;
     }
-    ctx->pc = 0x34D764u;
 label_34d764:
     // 0x34d764: 0x3c050036  lui         $a1, 0x36
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)54 << 16));
@@ -160,7 +155,6 @@ label_34d764:
     if (!runtime->callDirectStatic(rdram, ctx, &sfhds_CallN_0x34da50, 0x34da50u, 0x34d778u)) {
         return;
     }
-    ctx->pc = 0x34D778u;
 label_34d778:
     // 0x34d778: 0x3c050036  lui         $a1, 0x36
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)54 << 16));
@@ -180,7 +174,6 @@ label_34d778:
     if (!runtime->callDirectStatic(rdram, ctx, &sfhds_CallN_0x34da50, 0x34da50u, 0x34d78cu)) {
         return;
     }
-    ctx->pc = 0x34D78Cu;
 label_34d78c:
     // 0x34d78c: 0xae020018  sw          $v0, 0x18($s0)
     ctx->pc = 0x34d78cu;

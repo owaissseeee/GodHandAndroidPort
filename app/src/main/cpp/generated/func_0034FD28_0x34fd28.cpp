@@ -13,7 +13,7 @@
 
 // Function: func_0034FD28
 // Address: 0x34fd28 - 0x34fdf0
-void func_0034FD28_0x34fd28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0034FD28_0x34fd28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0034FD28_0x34fd28");
 #endif
@@ -60,7 +60,6 @@ void func_0034FD28_0x34fd28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034FDF0_0x34fdf0, 0x34fdf0u, 0x34fd50u)) {
         return;
     }
-    ctx->pc = 0x34FD50u;
 label_34fd50:
     // 0x34fd50: 0xc0da3fa  jal         func_368FE8
     ctx->pc = 0x34FD50u;
@@ -68,7 +67,6 @@ label_34fd50:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00368FE8_0x368fe8, 0x368fe8u, 0x34fd58u)) {
         return;
     }
-    ctx->pc = 0x34FD58u;
 label_34fd58:
     // 0x34fd58: 0x40882d  daddu       $s1, $v0, $zero
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -118,7 +116,6 @@ label_34fd58:
         return;
     }
     // 0x34fd8c: 0x0  nop
-    ctx->pc = 0x34fd8cu;
     // NOP
 label_34fd90:
     // 0x34fd90: 0x3c050035  lui         $a1, 0x35
@@ -134,7 +131,6 @@ label_34fd90:
     if (!runtime->callDirectStatic(rdram, ctx, &MPS_SetErrFn_0x368f18, 0x368f18u, 0x34fd9cu)) {
         return;
     }
-    ctx->pc = 0x34FD9Cu;
 label_34fd9c:
     // 0x34fd9c: 0x1040000c  beqz        $v0, . + 4 + (0xC << 2)
     ctx->pc = 0x34FD9Cu;
@@ -157,7 +153,6 @@ label_34fd9c:
     if (!runtime->callDirectStatic(rdram, ctx, &Tramp_MPS_Destroy_34FEE0_0x34fee0, 0x34fee0u, 0x34fdacu)) {
         return;
     }
-    ctx->pc = 0x34FDACu;
 label_34fdac:
     // 0x34fdac: 0x3c05ff00  lui         $a1, 0xFF00
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)65280 << 16));
@@ -187,7 +182,6 @@ label_34fdac:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x34DD70u, 0x34FDC8u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x34FDD0u;
 label_34fdd0:
     // 0x34fdd0: 0xae510000  sw          $s1, 0x0($s2)
     ctx->pc = 0x34fdd0u;

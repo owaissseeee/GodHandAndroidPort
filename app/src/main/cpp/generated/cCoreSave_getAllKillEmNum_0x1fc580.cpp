@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getAllKillEmNum
 // Address: 0x1fc580 - 0x1fc5b8
-void cCoreSave_getAllKillEmNum_0x1fc580(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getAllKillEmNum_0x1fc580(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getAllKillEmNum_0x1fc580");
 #endif
@@ -52,7 +52,6 @@ void cCoreSave_getAllKillEmNum_0x1fc580(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_1fc59c;
         }
     }
-    ctx->pc = 0x1FC594u;
 label_1fc594:
     // 0x1fc594: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC594u;
@@ -73,7 +72,6 @@ label_1fc594:
         return;
         #endif
     }
-    ctx->pc = 0x1FC59Cu;
 label_1fc59c:
     // 0x1fc59c: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x1FC59Cu;
@@ -111,7 +109,6 @@ label_1fc59c:
         return;
         #endif
     }
-    ctx->pc = 0x1FC5B0u;
 label_1fc5b0:
     // 0x1fc5b0: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC5B0u;

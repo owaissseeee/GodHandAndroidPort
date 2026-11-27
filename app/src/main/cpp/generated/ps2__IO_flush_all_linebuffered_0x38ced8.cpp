@@ -13,7 +13,7 @@
 
 // Function: _IO_flush_all_linebuffered
 // Address: 0x38ced8 - 0x38cf40
-void ps2__IO_flush_all_linebuffered_0x38ced8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_flush_all_linebuffered_0x38ced8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_flush_all_linebuffered_0x38ced8");
 #endif
@@ -50,15 +50,12 @@ void ps2__IO_flush_all_linebuffered_0x38ced8(uint8_t* rdram, R5900Context* ctx, 
         }
     }
 
-    ctx->pc = 0x38ced8u;
 
 label_38ced8:
     // 0x38ced8: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x38ced8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
 label_38cedc:
     // 0x38cedc: 0x3c02003f  lui         $v0, 0x3F
-    ctx->pc = 0x38cedcu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)63 << 16));
 label_38cee0:
     // 0x38cee0: 0xffb00000  sd          $s0, 0x0($sp)
@@ -99,10 +96,8 @@ label_38cef0:
             goto label_38cf2c;
         }
     }
-    ctx->pc = 0x38CEF4u;
 label_38cef4:
     // 0x38cef4: 0x24110200  addiu       $s1, $zero, 0x200
-    ctx->pc = 0x38cef4u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 0), 512));
 label_38cef8:
     // 0x38cef8: 0xde020000  ld          $v0, 0x0($s0)
@@ -110,7 +105,6 @@ label_38cef8:
     SET_GPR_U64(ctx, 2, READ64(ADD32(GPR_U32(ctx, 16), 0)));
 label_38cefc:
     // 0x38cefc: 0x0  nop
-    ctx->pc = 0x38cefcu;
     // NOP
 label_38cf00:
     // 0x38cf00: 0x30420208  andi        $v0, $v0, 0x208
@@ -143,14 +137,12 @@ label_38cf08:
             goto label_38cf24;
         }
     }
-    ctx->pc = 0x38CF0Cu;
 label_38cf0c:
     // 0x38cf0c: 0x8e030050  lw          $v1, 0x50($s0)
     ctx->pc = 0x38cf0cu;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 80)));
 label_38cf10:
     // 0x38cf10: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x38cf10u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_38cf14:
     // 0x38cf14: 0x8c620014  lw          $v0, 0x14($v1)
@@ -184,7 +176,6 @@ label_38cf1c:
             return;
         }
     }
-    ctx->pc = 0x38CF20u;
 label_38cf20:
     // 0x38cf20: 0x8e100034  lw          $s0, 0x34($s0)
     ctx->pc = 0x38cf20u;
@@ -219,7 +210,6 @@ label_38cf28:
             goto label_38cf00;
         }
     }
-    ctx->pc = 0x38CF2Cu;
 label_38cf2c:
     // 0x38cf2c: 0xdfbf0020  ld          $ra, 0x20($sp)
     ctx->pc = 0x38cf2cu;

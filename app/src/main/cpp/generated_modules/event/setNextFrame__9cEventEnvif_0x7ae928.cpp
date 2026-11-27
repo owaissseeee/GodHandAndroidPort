@@ -14,12 +14,11 @@ namespace gh_event
 {
 // Function: setNextFrame__9cEventEnvif
 // Address: 0x7ae928 - 0x7ae938
-void setNextFrame__9cEventEnvif_0x7ae928(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void setNextFrame__9cEventEnvif_0x7ae928(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("setNextFrame__9cEventEnvif_0x7ae928");
 #endif
 
-    ctx->pc = 0x7ae928u;
 
     // 0x7ae928: 0xe48c001c  swc1        $f12, 0x1C($a0)
     ctx->pc = 0x7ae928u;
@@ -43,9 +42,7 @@ void setNextFrame__9cEventEnvif_0x7ae928(uint8_t* rdram, R5900Context* ctx, PS2R
         return;
         #endif
     }
-    ctx->pc = 0x7AE934u;
     // 0x7ae934: 0x0  nop
-    ctx->pc = 0x7ae934u;
     // NOP
     ctx->pc = 0x7ae938u;
 }

@@ -13,7 +13,7 @@
 
 // Function: JukeBox
 // Address: 0x1f5a58 - 0x1f5a98
-void JukeBox_0x1f5a58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void JukeBox_0x1f5a58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("JukeBox_0x1f5a58");
 #endif
@@ -50,7 +50,6 @@ void JukeBox_0x1f5a58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_0x2a9dc0, 0x2a9dc0u, 0x1f5a74u)) {
         return;
     }
-    ctx->pc = 0x1F5A74u;
 label_1f5a74:
     // 0x1f5a74: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

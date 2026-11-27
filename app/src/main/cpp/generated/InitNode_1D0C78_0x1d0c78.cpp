@@ -13,7 +13,7 @@
 
 // Function: InitNode_1D0C78
 // Address: 0x1d0c78 - 0x1d0c98
-void InitNode_1D0C78_0x1d0c78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitNode_1D0C78_0x1d0c78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitNode_1D0C78_0x1d0c78");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: isNeedDevName
 // Address: 0x330ec0 - 0x330f10
-void isNeedDevName_0x330ec0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void isNeedDevName_0x330ec0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("isNeedDevName_0x330ec0");
 #endif
@@ -44,11 +44,9 @@ void isNeedDevName_0x330ec0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
 
-    ctx->pc = 0x330ec0u;
 
 label_330ec0:
     // 0x330ec0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x330ec0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_330ec4:
     // 0x330ec4: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -66,7 +64,6 @@ label_330ecc:
     if (!runtime->callDirectStatic(rdram, ctx, &getDevice_0x330480, 0x330480u, 0x330ed0u)) {
         return;
     }
-    ctx->pc = 0x330ED0u;
 label_330ed0:
     // 0x330ed0: 0x40182d  daddu       $v1, $v0, $zero
     ctx->pc = 0x330ed0u;
@@ -98,7 +95,6 @@ label_330ed8:
             goto label_330f08;
         }
     }
-    ctx->pc = 0x330EDCu;
 label_330edc:
     // 0x330edc: 0x8c620060  lw          $v0, 0x60($v1)
     ctx->pc = 0x330edcu;
@@ -130,10 +126,8 @@ label_330ee4:
             goto label_330f00;
         }
     }
-    ctx->pc = 0x330EE8u;
 label_330ee8:
     // 0x330ee8: 0x24050064  addiu       $a1, $zero, 0x64
-    ctx->pc = 0x330ee8u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 100));
 label_330eec:
     // 0x330eec: 0x302d  daddu       $a2, $zero, $zero
@@ -195,10 +189,8 @@ label_330efc:
             goto label_330f08;
         }
     }
-    ctx->pc = 0x330F00u;
 label_330f00:
     // 0x330f00: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x330f00u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_330f04:
     // 0x330f04: 0xdfbf0000  ld          $ra, 0x0($sp)

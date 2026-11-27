@@ -13,7 +13,7 @@
 
 // Function: cIDManager_systemInit
 // Address: 0x2acc70 - 0x2accd8
-void cIDManager_systemInit_0x2acc70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDManager_systemInit_0x2acc70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDManager_systemInit_0x2acc70");
 #endif
@@ -58,7 +58,6 @@ void cIDManager_systemInit_0x2acc70(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2acc98u)) {
         return;
     }
-    ctx->pc = 0x2ACC98u;
 label_2acc98:
     // 0x2acc98: 0x3c030001  lui         $v1, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)1 << 16));
@@ -82,7 +81,6 @@ label_2acc98:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002ACCD8_0x2accd8, 0x2accd8u, 0x2accb4u)) {
         return;
     }
-    ctx->pc = 0x2ACCB4u;
 label_2accb4:
     // 0x2accb4: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -99,7 +97,6 @@ label_2accb4:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDManager_setIDData_0x2accf8, 0x2accf8u, 0x2accc4u)) {
         return;
     }
-    ctx->pc = 0x2ACCC4u;
 label_2accc4:
     // 0x2accc4: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2accc4u;

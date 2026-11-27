@@ -13,7 +13,7 @@
 
 // Function: cEmManage_constructSlot
 // Address: 0x290000 - 0x290028
-void cEmManage_constructSlot_0x290000(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_constructSlot_0x290000(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_constructSlot_0x290000");
 #endif

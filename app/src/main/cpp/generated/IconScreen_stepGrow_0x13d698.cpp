@@ -13,7 +13,7 @@
 
 // Function: IconScreen_stepGrow
 // Address: 0x13d698 - 0x13d7b0
-void IconScreen_stepGrow_0x13d698(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IconScreen_stepGrow_0x13d698(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IconScreen_stepGrow_0x13d698");
 #endif
@@ -157,7 +157,6 @@ void IconScreen_stepGrow_0x13d698(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AC9B8_0x2ac9b8, 0x2ac9b8u, 0x13d748u)) {
         return;
     }
-    ctx->pc = 0x13D748u;
 label_13d748:
     // 0x13d748: 0x8e230098  lw          $v1, 0x98($s1)
     ctx->pc = 0x13d748u;
@@ -185,7 +184,6 @@ label_13d748:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AC9B8_0x2ac9b8, 0x2ac9b8u, 0x13d768u)) {
         return;
     }
-    ctx->pc = 0x13D768u;
 label_13d768:
     // 0x13d768: 0x8e23009c  lw          $v1, 0x9C($s1)
     ctx->pc = 0x13d768u;
@@ -213,7 +211,6 @@ label_13d768:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AC9B8_0x2ac9b8, 0x2ac9b8u, 0x13d788u)) {
         return;
     }
-    ctx->pc = 0x13D788u;
 label_13d788:
     // 0x13d788: 0x96220092  lhu         $v0, 0x92($s1)
     ctx->pc = 0x13d788u;
@@ -233,7 +230,6 @@ label_13d788:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_move_0x2aaa40, 0x2aaa40u, 0x13d79cu)) {
         return;
     }
-    ctx->pc = 0x13D79Cu;
 label_13d79c:
     // 0x13d79c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x13d79cu;

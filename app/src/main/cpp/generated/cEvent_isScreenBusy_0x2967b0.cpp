@@ -13,7 +13,7 @@
 
 // Function: cEvent_isScreenBusy
 // Address: 0x2967b0 - 0x296818
-void cEvent_isScreenBusy_0x2967b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_isScreenBusy_0x2967b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_isScreenBusy_0x2967b0");
 #endif
@@ -65,7 +65,6 @@ void cEvent_isScreenBusy_0x2967b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         return;
         #endif
     }
-    ctx->pc = 0x2967C8u;
 label_2967c8:
     // 0x2967c8: 0x8c636b34  lw          $v1, 0x6B34($v1)
     ctx->pc = 0x2967c8u;
@@ -89,7 +88,6 @@ label_2967c8:
             goto label_2967e4;
         }
     }
-    ctx->pc = 0x2967DCu;
 label_2967dc:
     // 0x2967dc: 0x3e00008  jr          $ra
     ctx->pc = 0x2967DCu;
@@ -110,7 +108,6 @@ label_2967dc:
         return;
         #endif
     }
-    ctx->pc = 0x2967E4u;
 label_2967e4:
     // 0x2967e4: 0x30420001  andi        $v0, $v0, 0x1
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
@@ -175,7 +172,6 @@ label_2967e4:
         return;
         #endif
     }
-    ctx->pc = 0x296810u;
 label_296810:
     // 0x296810: 0x3e00008  jr          $ra
     ctx->pc = 0x296810u;

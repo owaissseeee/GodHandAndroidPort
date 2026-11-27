@@ -14,7 +14,7 @@
 
 // Function: func_0017E4C8
 // Address: 0x17e4c8 - 0x17e658
-void func_0017E4C8_0x17e4c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0017E4C8_0x17e4c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0017E4C8_0x17e4c8");
 #endif
@@ -110,7 +110,6 @@ void func_0017E4C8_0x17e4c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_17e648;
         }
     }
-    ctx->pc = 0x17E508u;
 label_17e508:
     // 0x17e508: 0x10620036  beq         $v1, $v0, . + 4 + (0x36 << 2)
     ctx->pc = 0x17E508u;
@@ -157,7 +156,6 @@ label_17e508:
             goto label_17e648;
         }
     }
-    ctx->pc = 0x17E520u;
 label_17e520:
     // 0x17e520: 0x92220601  lbu         $v0, 0x601($s1)
     ctx->pc = 0x17e520u;
@@ -201,7 +199,6 @@ label_17e520:
             goto label_17e640;
         }
     }
-    ctx->pc = 0x17E540u;
 label_17e540:
     // 0x17e540: 0x26300610  addiu       $s0, $s1, 0x610
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 17), 1552));
@@ -253,7 +250,6 @@ label_17e540:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmSub_initMove1_ang_0x1c6988, 0x1c6988u, 0x17e590u)) {
         return;
     }
-    ctx->pc = 0x17E590u;
 label_17e590:
     // 0x17e590: 0x3c014000  lui         $at, 0x4000
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16384 << 16));
@@ -280,7 +276,6 @@ label_17e590:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmSub_setVibration_0x1c7d50, 0x1c7d50u, 0x17e5b4u)) {
         return;
     }
-    ctx->pc = 0x17E5B4u;
 label_17e5b4:
     // 0x17e5b4: 0x24020007  addiu       $v0, $zero, 0x7
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 7));
@@ -335,7 +330,6 @@ label_17e5c8:
             goto label_17e630;
         }
     }
-    ctx->pc = 0x17E5E4u;
 label_17e5e4:
     // 0x17e5e4: 0xc070fce  jal         func_1C3F38
     SET_GPR_U32(ctx, 31, 0x17E5ECu);
@@ -348,7 +342,6 @@ label_17e5e4:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmSub_move_0x1c3f38, 0x1c3f38u, 0x17e5ecu)) {
         return;
     }
-    ctx->pc = 0x17E5ECu;
 label_17e5ec:
     // 0x17e5ec: 0x14400015  bnez        $v0, . + 4 + (0x15 << 2)
     ctx->pc = 0x17E5ECu;
@@ -399,7 +392,6 @@ label_17e5ec:
             goto label_17e644;
         }
     }
-    ctx->pc = 0x17E618u;
 label_17e618:
     // 0x17e618: 0x86220602  lh          $v0, 0x602($s1)
     ctx->pc = 0x17e618u;

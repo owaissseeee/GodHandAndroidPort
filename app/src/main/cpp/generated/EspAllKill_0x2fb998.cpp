@@ -13,7 +13,7 @@
 
 // Function: EspAllKill
 // Address: 0x2fb998 - 0x2fba60
-void EspAllKill_0x2fb998(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EspAllKill_0x2fb998(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EspAllKill_0x2fb998");
 #endif
@@ -69,7 +69,6 @@ void EspAllKill_0x2fb998(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     // 0x2fb9d8: 0x802d  daddu       $s0, $zero, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2fb9dc: 0x3c128000  lui         $s2, 0x8000
-    ctx->pc = 0x2fb9dcu;
     SET_GPR_S32(ctx, 18, (int32_t)((uint32_t)32768 << 16));
 label_2fb9e0:
     // 0x2fb9e0: 0x101142  srl         $v0, $s0, 5
@@ -150,7 +149,6 @@ label_2fb9e0:
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateObjByIndexedOp_2FBE50_0x2fbe50, 0x2fbe50u, 0x2fba30u)) {
         return;
     }
-    ctx->pc = 0x2FBA30u;
 label_2fba30:
     // 0x2fba30: 0x2a020400  slti        $v0, $s0, 0x400
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 16) < (int64_t)(int32_t)1024) ? 1 : 0);

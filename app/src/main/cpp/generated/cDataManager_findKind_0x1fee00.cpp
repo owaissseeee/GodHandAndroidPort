@@ -13,7 +13,7 @@
 
 // Function: cDataManager_findKind
 // Address: 0x1fee00 - 0x1feea0
-void cDataManager_findKind_0x1fee00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDataManager_findKind_0x1fee00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDataManager_findKind_0x1fee00");
 #endif
@@ -76,7 +76,6 @@ void cDataManager_findKind_0x1fee00(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     // 0x1fee38: 0x2414ffff  addiu       $s4, $zero, -0x1
     SET_GPR_S32(ctx, 20, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x1fee3c: 0x2228018  mult        $s0, $s1, $v0
-    ctx->pc = 0x1fee3cu;
     { int64_t result = (int64_t)GPR_S32(ctx, 17) * (int64_t)GPR_S32(ctx, 2); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 16, (int32_t)result); }
 label_1fee40:
     // 0x1fee40: 0x8e440008  lw          $a0, 0x8($s2)
@@ -93,7 +92,6 @@ label_1fee40:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FF0D8_0x1ff0d8, 0x1ff0d8u, 0x1fee4cu)) {
         return;
     }
-    ctx->pc = 0x1FEE4Cu;
 label_1fee4c:
     // 0x1fee4c: 0x50400008  beql        $v0, $zero, . + 4 + (0x8 << 2)
     ctx->pc = 0x1FEE4Cu;
@@ -148,7 +146,6 @@ label_1fee4c:
             goto label_1fee7c;
         }
     }
-    ctx->pc = 0x1FEE70u;
 label_1fee70:
     // 0x1fee70: 0x1634fff3  bne         $s1, $s4, . + 4 + (-0xD << 2)
     ctx->pc = 0x1FEE70u;
@@ -169,7 +166,6 @@ label_1fee70:
         }
     }
     // 0x1fee78: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x1fee78u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_1fee7c:
     // 0x1fee7c: 0x7bb00050  lq          $s0, 0x50($sp)

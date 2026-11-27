@@ -13,7 +13,7 @@
 
 // Function: EESyscall_0xFC
 // Address: 0x3afa20 - 0x3afa30
-void EESyscall_0xFC_0x3afa20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EESyscall_0xFC_0x3afa20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EESyscall_0xFC_0x3afa20");
 #endif

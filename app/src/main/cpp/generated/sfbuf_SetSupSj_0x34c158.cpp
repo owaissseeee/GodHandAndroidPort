@@ -13,7 +13,7 @@
 
 // Function: sfbuf_SetSupSj
 // Address: 0x34c158 - 0x34c1f8
-void sfbuf_SetSupSj_0x34c158(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfbuf_SetSupSj_0x34c158(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfbuf_SetSupSj_0x34c158");
 #endif
@@ -65,7 +65,6 @@ void sfbuf_SetSupSj_0x34c158(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &Thunk_func_0033B658_0x34df68, 0x34df68u, 0x34c188u)) {
         return;
     }
-    ctx->pc = 0x34C188u;
 label_34c188:
     // 0x34c188: 0xae510004  sw          $s1, 0x4($s2)
     ctx->pc = 0x34c188u;
@@ -116,7 +115,6 @@ label_34c188:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034C1F8_0x34c1f8, 0x34c1f8u, 0x34c1c4u)) {
         return;
     }
-    ctx->pc = 0x34C1C4u;
 label_34c1c4:
     // 0x34c1c4: 0xae000020  sw          $zero, 0x20($s0)
     ctx->pc = 0x34c1c4u;
@@ -135,7 +133,6 @@ label_34c1c4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003592D0_0x3592d0, 0x3592d0u, 0x34c1d4u)) {
         return;
     }
-    ctx->pc = 0x34C1D4u;
 label_34c1d4:
     // 0x34c1d4: 0xc0d37e0  jal         func_34DF80
     SET_GPR_U32(ctx, 31, 0x34C1DCu);
@@ -148,7 +145,6 @@ label_34c1d4:
     if (!runtime->callDirectStatic(rdram, ctx, &Thunk_func_0033B670_0x34df80, 0x34df80u, 0x34c1dcu)) {
         return;
     }
-    ctx->pc = 0x34C1DCu;
 label_34c1dc:
     // 0x34c1dc: 0xdfb00010  ld          $s0, 0x10($sp)
     ctx->pc = 0x34c1dcu;

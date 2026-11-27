@@ -13,7 +13,7 @@
 
 // Function: func_00369078
 // Address: 0x369078 - 0x369118
-void func_00369078_0x369078(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00369078_0x369078(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00369078_0x369078");
 #endif
@@ -61,7 +61,6 @@ void func_00369078_0x369078(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_00366C50_0x366c50, 0x366c50u, 0x36909cu)) {
         return;
     }
-    ctx->pc = 0x36909Cu;
 label_36909c:
     // 0x36909c: 0xae110000  sw          $s1, 0x0($s0)
     ctx->pc = 0x36909cu;
@@ -77,7 +76,6 @@ label_36909c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00368E80_0x368e80, 0x368e80u, 0x3690a8u)) {
         return;
     }
-    ctx->pc = 0x3690A8u;
 label_3690a8:
     // 0x3690a8: 0xae110010  sw          $s1, 0x10($s0)
     ctx->pc = 0x3690a8u;
@@ -93,7 +91,6 @@ label_3690a8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00369118_0x369118, 0x369118u, 0x3690b4u)) {
         return;
     }
-    ctx->pc = 0x3690B4u;
 label_3690b4:
     // 0x3690b4: 0xc0da44c  jal         func_369130
     SET_GPR_U32(ctx, 31, 0x3690BCu);
@@ -106,7 +103,6 @@ label_3690b4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00369130_0x369130, 0x369130u, 0x3690bcu)) {
         return;
     }
-    ctx->pc = 0x3690BCu;
 label_3690bc:
     // 0x3690bc: 0xc0da44c  jal         func_369130
     SET_GPR_U32(ctx, 31, 0x3690C4u);
@@ -119,7 +115,6 @@ label_3690bc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00369130_0x369130, 0x369130u, 0x3690c4u)) {
         return;
     }
-    ctx->pc = 0x3690C4u;
 label_3690c4:
     // 0x3690c4: 0xc0da44c  jal         func_369130
     SET_GPR_U32(ctx, 31, 0x3690CCu);
@@ -132,7 +127,6 @@ label_3690c4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00369130_0x369130, 0x369130u, 0x3690ccu)) {
         return;
     }
-    ctx->pc = 0x3690CCu;
 label_3690cc:
     // 0x3690cc: 0xc0da44c  jal         func_369130
     SET_GPR_U32(ctx, 31, 0x3690D4u);
@@ -145,7 +139,6 @@ label_3690cc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00369130_0x369130, 0x369130u, 0x3690d4u)) {
         return;
     }
-    ctx->pc = 0x3690D4u;
 label_3690d4:
     // 0x3690d4: 0xc0da456  jal         func_369158
     SET_GPR_U32(ctx, 31, 0x3690DCu);
@@ -158,7 +151,6 @@ label_3690d4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00369158_0x369158, 0x369158u, 0x3690dcu)) {
         return;
     }
-    ctx->pc = 0x3690DCu;
 label_3690dc:
     // 0x3690dc: 0xae0000d0  sw          $zero, 0xD0($s0)
     ctx->pc = 0x3690dcu;

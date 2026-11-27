@@ -13,7 +13,7 @@
 
 // Function: cOmDoor_setClose
 // Address: 0x1bd120 - 0x1bd178
-void cOmDoor_setClose_0x1bd120(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmDoor_setClose_0x1bd120(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmDoor_setClose_0x1bd120");
 #endif

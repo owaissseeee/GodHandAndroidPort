@@ -232,12 +232,37 @@ private:
 		Ready,
 	};
 
+	struct TfxDescriptorKey
+	{
+		std::array<VkImageView, 7> views{};
+		std::array<u32, 7> layouts{};
+		VkSampler sampler = VK_NULL_HANDLE;
+		u8 use_input_attach = 0;
+
+		bool operator==(const TfxDescriptorKey& o) const noexcept
+		{
+			return sampler == o.sampler && use_input_attach == o.use_input_attach &&
+			       views == o.views && layouts == o.layouts;
+		}
+	};
+
+	struct TfxDescriptorCacheEntry
+	{
+		TfxDescriptorKey key{};
+		VkDescriptorSet set = VK_NULL_HANDLE;
+		u32 gen = 0;
+	};
+
+	static constexpr size_t TFX_DS_CACHE_SIZE = 256u;
+
 	struct FrameResources
 	{
 		// [0] - Init (upload) command buffer, [1] - draw command buffer
 		VkCommandPool command_pool = VK_NULL_HANDLE;
 		std::array<VkCommandBuffer, 2> command_buffers{VK_NULL_HANDLE, VK_NULL_HANDLE};
 		VkDescriptorPool descriptor_pool = VK_NULL_HANDLE; // Per-frame pool, used when push descriptors are unavailable
+		std::array<TfxDescriptorCacheEntry, TFX_DS_CACHE_SIZE> tfx_ds_cache{};
+		u32 tfx_ds_cache_gen = 1;
 		VkFence fence = VK_NULL_HANDLE;
 		u64 fence_counter = 0;
 		s32 spin_id = -1;
@@ -805,6 +830,7 @@ private:
 	u32 m_tfx_sampler_sel = 0;
 	VkDescriptorSet m_tfx_ubo_descriptor_set = VK_NULL_HANDLE;
 	VkDescriptorSet m_tfx_texture_descriptor_set = VK_NULL_HANDLE;
+	VkDescriptorSet m_bound_tfx_descriptor_set = VK_NULL_HANDLE;
 	VkDescriptorSet m_tfx_rt_descriptor_set = VK_NULL_HANDLE;
 	std::array<u32, NUM_TFX_DYNAMIC_OFFSETS> m_tfx_dynamic_offsets{};
 

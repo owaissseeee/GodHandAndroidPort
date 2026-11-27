@@ -13,7 +13,7 @@
 
 // Function: func_0035B360
 // Address: 0x35b360 - 0x35b3f8
-void func_0035B360_0x35b360(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0035B360_0x35b360(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0035B360_0x35b360");
 #endif
@@ -57,7 +57,6 @@ void func_0035B360_0x35b360(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_35b390;
         }
     }
-    ctx->pc = 0x35B390u;
 label_35b390:
     // 0x35b390: 0x10a4023  subu        $t0, $t0, $t2
     SET_GPR_S32(ctx, 8, (int32_t)SUB32(GPR_U32(ctx, 8), GPR_U32(ctx, 10)));

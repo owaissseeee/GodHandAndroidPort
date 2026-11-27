@@ -13,7 +13,7 @@
 
 // Function: cSpline_setBasePoint
 // Address: 0x2d4dc8 - 0x2d4ef8
-void cSpline_setBasePoint_0x2d4dc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSpline_setBasePoint_0x2d4dc8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSpline_setBasePoint_0x2d4dc8");
 #endif
@@ -91,7 +91,6 @@ void cSpline_setBasePoint_0x2d4dc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x2d4e20u)) {
         return;
     }
-    ctx->pc = 0x2D4E20u;
 label_2d4e20:
     // 0x2d4e20: 0xc7a30000  lwc1        $f3, 0x0($sp)
     ctx->pc = 0x2d4e20u;
@@ -155,7 +154,6 @@ label_2d4e20:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x2d4e70u)) {
         return;
     }
-    ctx->pc = 0x2D4E70u;
 label_2d4e70:
     // 0x2d4e70: 0xc7a30000  lwc1        $f3, 0x0($sp)
     ctx->pc = 0x2d4e70u;
@@ -219,7 +217,6 @@ label_2d4e70:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x2d4ec0u)) {
         return;
     }
-    ctx->pc = 0x2D4EC0u;
 label_2d4ec0:
     // 0x2d4ec0: 0xc7a10000  lwc1        $f1, 0x0($sp)
     ctx->pc = 0x2d4ec0u;

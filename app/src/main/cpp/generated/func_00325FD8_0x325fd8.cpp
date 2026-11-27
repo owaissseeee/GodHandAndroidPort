@@ -13,7 +13,7 @@
 
 // Function: func_00325FD8
 // Address: 0x325fd8 - 0x326020
-void func_00325FD8_0x325fd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00325FD8_0x325fd8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00325FD8_0x325fd8");
 #endif
@@ -42,15 +42,12 @@ void func_00325FD8_0x325fd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
 
-    ctx->pc = 0x325fd8u;
 
 label_325fd8:
     // 0x325fd8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x325fd8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_325fdc:
     // 0x325fdc: 0x3c020075  lui         $v0, 0x75
-    ctx->pc = 0x325fdcu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)117 << 16));
 label_325fe0:
     // 0x325fe0: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -58,7 +55,6 @@ label_325fe0:
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
 label_325fe4:
     // 0x325fe4: 0x24425c28  addiu       $v0, $v0, 0x5C28
-    ctx->pc = 0x325fe4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 23592));
 label_325fe8:
     // 0x325fe8: 0x8c430000  lw          $v1, 0x0($v0)
@@ -120,7 +116,6 @@ label_325ff8:
             return;
         }
     }
-    ctx->pc = 0x325FFCu;
 label_325ffc:
     // 0x325ffc: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x325ffcu;
@@ -156,14 +151,11 @@ label_326004:
         return;
         #endif
     }
-    ctx->pc = 0x326008u;
 label_326008:
     // 0x326008: 0x27bd0020  addiu       $sp, $sp, 0x20
-    ctx->pc = 0x326008u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 32));
 label_32600c:
     // 0x32600c: 0x0  nop
-    ctx->pc = 0x32600cu;
     // NOP
 label_326010:
     // 0x326010: 0x64100b  movn        $v0, $v1, $a0
@@ -171,7 +163,6 @@ label_326010:
     if (GPR_U64(ctx, 4) != 0) SET_GPR_VEC(ctx, 2, GPR_VEC(ctx, 3));
 label_326014:
     // 0x326014: 0x0  nop
-    ctx->pc = 0x326014u;
     // NOP
 label_326018:
     // 0x326018: 0x8c620000  lw          $v0, 0x0($v1)

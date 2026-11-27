@@ -13,7 +13,7 @@
 
 // Function: func_003077B0
 // Address: 0x3077b0 - 0x3077e8
-void func_003077B0_0x3077b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003077B0_0x3077b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003077B0_0x3077b0");
 #endif
@@ -46,7 +46,6 @@ void func_003077B0_0x3077b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_3077d0;
         }
     }
-    ctx->pc = 0x3077D0u;
 label_3077d0:
     // 0x3077d0: 0x3c0e82d  daddu       $sp, $fp, $zero
     SET_GPR_U64(ctx, 29, (uint64_t)GPR_U64(ctx, 30) + (uint64_t)GPR_U64(ctx, 0));

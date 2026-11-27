@@ -13,7 +13,7 @@
 
 // Function: mwsfcre_ConvBufFmtFromMwsfd
 // Address: 0x342e00 - 0x342e50
-void mwsfcre_ConvBufFmtFromMwsfd_0x342e00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void mwsfcre_ConvBufFmtFromMwsfd_0x342e00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("mwsfcre_ConvBufFmtFromMwsfd_0x342e00");
 #endif
@@ -108,10 +108,8 @@ void mwsfcre_ConvBufFmtFromMwsfd_0x342e00(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &MWSFSVM_Error_0x348be0, 0x348be0u, 0x342e3cu)) {
         return;
     }
-    ctx->pc = 0x342E3Cu;
 label_342e3c:
     // 0x342e3c: 0x24030003  addiu       $v1, $zero, 0x3
-    ctx->pc = 0x342e3cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
 label_342e40:
     // 0x342e40: 0xdfbf0000  ld          $ra, 0x0($sp)

@@ -13,7 +13,7 @@
 
 // Function: func_001501D0
 // Address: 0x1501d0 - 0x1503b8
-void func_001501D0_0x1501d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001501D0_0x1501d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001501D0_0x1501d0");
 #endif
@@ -98,7 +98,6 @@ void func_001501D0_0x1501d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &MtxMultiply_0x147548, 0x147548u, 0x15021cu)) {
         return;
     }
-    ctx->pc = 0x15021Cu;
 label_15021c:
     // 0x15021c: 0x10000042  b           . + 4 + (0x42 << 2)
     ctx->pc = 0x15021Cu;
@@ -115,7 +114,6 @@ label_15021c:
             goto label_150328;
         }
     }
-    ctx->pc = 0x150224u;
 label_150224:
     // 0x150224: 0xc6430130  lwc1        $f3, 0x130($s2)
     ctx->pc = 0x150224u;
@@ -167,7 +165,6 @@ label_150224:
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_vec_0x1f7da0, 0x1f7da0u, 0x150268u)) {
         return;
     }
-    ctx->pc = 0x150268u;
 label_150268:
     // 0x150268: 0xfba00010  sqc2        $vf0, 0x10($sp)
     ctx->pc = 0x150268u;
@@ -264,7 +261,6 @@ label_150268:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxMulTransVec_0x147b18, 0x147b18u, 0x1502f4u)) {
         return;
     }
-    ctx->pc = 0x1502F4u;
 label_1502f4:
     // 0x1502f4: 0x27a60010  addiu       $a2, $sp, 0x10
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
@@ -281,7 +277,6 @@ label_1502f4:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxMulScaleVec_0x147bf8, 0x147bf8u, 0x150304u)) {
         return;
     }
-    ctx->pc = 0x150304u;
 label_150304:
     // 0x150304: 0x3a0302d  daddu       $a2, $sp, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -300,7 +295,6 @@ label_150304:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxMulRotVec_0x147b60, 0x147b60u, 0x150318u)) {
         return;
     }
-    ctx->pc = 0x150318u;
 label_150318:
     // 0x150318: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -317,7 +311,6 @@ label_150318:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxMulScaleVec_0x147bf8, 0x147bf8u, 0x150328u)) {
         return;
     }
-    ctx->pc = 0x150328u;
 label_150328:
     // 0x150328: 0x8e420154  lw          $v0, 0x154($s2)
     ctx->pc = 0x150328u;
@@ -355,7 +348,6 @@ label_150328:
     if (!runtime->callDirectStatic(rdram, ctx, &ForwardVec3At30_147C60_0x147c60, 0x147c60u, 0x150348u)) {
         return;
     }
-    ctx->pc = 0x150348u;
 label_150348:
     // 0x150348: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
@@ -385,7 +377,6 @@ label_150348:
     if (!runtime->callDirectStatic(rdram, ctx, &Quaternion_SetRotationAxis_0x159fc8, 0x159fc8u, 0x15036cu)) {
         return;
     }
-    ctx->pc = 0x15036Cu;
 label_15036c:
     // 0x15036c: 0x27b00030  addiu       $s0, $sp, 0x30
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 29), 48));
@@ -402,7 +393,6 @@ label_15036c:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitRotQuaternion_0x1478a8, 0x1478a8u, 0x15037cu)) {
         return;
     }
-    ctx->pc = 0x15037Cu;
 label_15037c:
     // 0x15037c: 0x200282d  daddu       $a1, $s0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -419,7 +409,6 @@ label_15037c:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxMultiply_0x147548, 0x147548u, 0x15038cu)) {
         return;
     }
-    ctx->pc = 0x15038Cu;
 label_15038c:
     // 0x15038c: 0x260202d  daddu       $a0, $s3, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 19) + (uint64_t)GPR_U64(ctx, 0));
@@ -434,7 +423,6 @@ label_15038c:
     if (!runtime->callDirectStatic(rdram, ctx, &CopyVec3ToField30_147C40_0x147c40, 0x147c40u, 0x150398u)) {
         return;
     }
-    ctx->pc = 0x150398u;
 label_150398:
     // 0x150398: 0x7bb000b0  lq          $s0, 0xB0($sp)
     ctx->pc = 0x150398u;

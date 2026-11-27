@@ -13,7 +13,7 @@
 
 // Function: cSnd_BgmStageChange
 // Address: 0x2d0850 - 0x2d0938
-void cSnd_BgmStageChange_0x2d0850(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BgmStageChange_0x2d0850(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BgmStageChange_0x2d0850");
 #endif
@@ -67,7 +67,6 @@ void cSnd_BgmStageChange_0x2d0850(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_GetStageBgmReq_0x2d0d70, 0x2d0d70u, 0x2d0884u)) {
         return;
     }
-    ctx->pc = 0x2D0884u;
 label_2d0884:
     // 0x2d0884: 0x8e300018  lw          $s0, 0x18($s1)
     ctx->pc = 0x2d0884u;
@@ -141,7 +140,6 @@ label_2d0898:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_FadeOut_0x2cd4a8, 0x2cd4a8u, 0x2d08bcu)) {
         return;
     }
-    ctx->pc = 0x2D08BCu;
 label_2d08bc:
     // 0x2d08bc: 0x8e100088  lw          $s0, 0x88($s0)
     ctx->pc = 0x2d08bcu;
@@ -165,7 +163,6 @@ label_2d08c0:
             goto label_2d0898;
         }
     }
-    ctx->pc = 0x2D08C8u;
 label_2d08c8:
     // 0x2d08c8: 0x268274a0  addiu       $v0, $s4, 0x74A0
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 20), 29856));

@@ -13,7 +13,7 @@
 
 // Function: cGameObjSortEnt_partialSort
 // Address: 0x2a8d30 - 0x2a8e48
-void cGameObjSortEnt_partialSort_0x2a8d30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObjSortEnt_partialSort_0x2a8d30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObjSortEnt_partialSort_0x2a8d30");
 #endif
@@ -80,7 +80,6 @@ void cGameObjSortEnt_partialSort_0x2a8d30(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &cGameObjSortEnt_makeHeap_0x2a8b90, 0x2a8b90u, 0x2a8d78u)) {
         return;
     }
-    ctx->pc = 0x2A8D78u;
 label_2a8d78:
     // 0x2a8d78: 0x275102b  sltu        $v0, $s3, $s5
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 19) < (uint64_t)GPR_U64(ctx, 21)) ? 1 : 0);
@@ -105,7 +104,6 @@ label_2a8d78:
     ctx->pc = 0x2a8d88u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 16), 4)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x2a8d8c: 0x0  nop
-    ctx->pc = 0x2a8d8cu;
     // NOP
 label_2a8d90:
     // 0x2a8d90: 0xc6200004  lwc1        $f0, 0x4($s1)
@@ -131,7 +129,6 @@ label_2a8d90:
         }
     }
     // 0x2a8da4: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2a8da4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2a8da8:
     // 0x2a8da8: 0x10400015  beqz        $v0, . + 4 + (0x15 << 2)
@@ -210,7 +207,6 @@ label_2a8da8:
     if (!runtime->callDirectStatic(rdram, ctx, &cGameObjSortEnt_adjustHeap_0x2a8aa8, 0x2a8aa8u, 0x2a8e00u)) {
         return;
     }
-    ctx->pc = 0x2A8E00u;
 label_2a8e00:
     // 0x2a8e00: 0x26100008  addiu       $s0, $s0, 0x8
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 8));
@@ -234,7 +230,6 @@ label_2a8e00:
             goto label_2a8d90;
         }
     }
-    ctx->pc = 0x2A8E10u;
 label_2a8e10:
     // 0x2a8e10: 0x240202d  daddu       $a0, $s2, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -251,7 +246,6 @@ label_2a8e10:
     if (!runtime->callDirectStatic(rdram, ctx, &cGameObjSortEnt_sortHeap_0x2a8c48, 0x2a8c48u, 0x2a8e20u)) {
         return;
     }
-    ctx->pc = 0x2A8E20u;
 label_2a8e20:
     // 0x2a8e20: 0x7bb00090  lq          $s0, 0x90($sp)
     ctx->pc = 0x2a8e20u;

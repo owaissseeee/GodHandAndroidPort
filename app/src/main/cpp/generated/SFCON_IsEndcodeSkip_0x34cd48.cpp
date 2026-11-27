@@ -13,7 +13,7 @@
 
 // Function: SFCON_IsEndcodeSkip
 // Address: 0x34cd48 - 0x34cd68
-void SFCON_IsEndcodeSkip_0x34cd48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFCON_IsEndcodeSkip_0x34cd48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFCON_IsEndcodeSkip_0x34cd48");
 #endif
@@ -42,7 +42,6 @@ void SFCON_IsEndcodeSkip_0x34cd48(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &GetArrayElemA0C_35A1C8_0x35a1c8, 0x35a1c8u, 0x34cd58u)) {
         return;
     }
-    ctx->pc = 0x34CD58u;
 label_34cd58:
     // 0x34cd58: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x34cd58u;

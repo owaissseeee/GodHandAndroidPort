@@ -13,7 +13,7 @@
 
 // Function: cCamManager_setPartsCamera
 // Address: 0x138e38 - 0x138eb8
-void cCamManager_setPartsCamera_0x138e38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCamManager_setPartsCamera_0x138e38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCamManager_setPartsCamera_0x138e38");
 #endif
@@ -111,7 +111,6 @@ void cCamManager_setPartsCamera_0x138e38(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &func_00138CA8_0x138ca8, 0x138ca8u, 0x138e84u)) {
         return;
     }
-    ctx->pc = 0x138E84u;
 label_138e84:
     // 0x138e84: 0x8e021028  lw          $v0, 0x1028($s0)
     ctx->pc = 0x138e84u;

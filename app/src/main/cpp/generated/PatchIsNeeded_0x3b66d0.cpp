@@ -13,7 +13,7 @@
 
 // Function: PatchIsNeeded
 // Address: 0x3b66d0 - 0x3b6738
-void PatchIsNeeded_0x3b66d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void PatchIsNeeded_0x3b66d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("PatchIsNeeded_0x3b66d0");
 #endif
@@ -48,7 +48,6 @@ void PatchIsNeeded_0x3b66d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &GetOsdConfigParam_0x3afd50, 0x3afd50u, 0x3b66e4u)) {
         return;
     }
-    ctx->pc = 0x3B66E4u;
 label_3b66e4:
     // 0x3b66e4: 0x8fa30000  lw          $v1, 0x0($sp)
     ctx->pc = 0x3b66e4u;
@@ -76,7 +75,6 @@ label_3b66e4:
     if (!runtime->callDirectStatic(rdram, ctx, &SetOsdConfigParam_0x3afd40, 0x3afd40u, 0x3b6708u)) {
         return;
     }
-    ctx->pc = 0x3B6708u;
 label_3b6708:
     // 0x3b6708: 0xc0ebf54  jal         func_3AFD50
     SET_GPR_U32(ctx, 31, 0x3B6710u);
@@ -89,7 +87,6 @@ label_3b6708:
     if (!runtime->callDirectStatic(rdram, ctx, &GetOsdConfigParam_0x3afd50, 0x3afd50u, 0x3b6710u)) {
         return;
     }
-    ctx->pc = 0x3B6710u;
 label_3b6710:
     // 0x3b6710: 0xc0ebf50  jal         func_3AFD40
     SET_GPR_U32(ctx, 31, 0x3B6718u);
@@ -102,7 +99,6 @@ label_3b6710:
     if (!runtime->callDirectStatic(rdram, ctx, &SetOsdConfigParam_0x3afd40, 0x3afd40u, 0x3b6718u)) {
         return;
     }
-    ctx->pc = 0x3B6718u;
 label_3b6718:
     // 0x3b6718: 0x8fa20004  lw          $v0, 0x4($sp)
     ctx->pc = 0x3b6718u;

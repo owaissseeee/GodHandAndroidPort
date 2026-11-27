@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_saveWorldActive
 // Address: 0x1f9dd0 - 0x1f9e00
-void cCoreSave_saveWorldActive_0x1f9dd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_saveWorldActive_0x1f9dd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_saveWorldActive_0x1f9dd0");
 #endif
@@ -76,7 +76,6 @@ void cCoreSave_saveWorldActive_0x1f9dd0(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x1F9DF4u;
 label_1f9df4:
     // 0x1f9df4: 0x3e00008  jr          $ra
     ctx->pc = 0x1F9DF4u;

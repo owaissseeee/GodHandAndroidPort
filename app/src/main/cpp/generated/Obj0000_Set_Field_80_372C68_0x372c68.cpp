@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Set_Field_80_372C68
 // Address: 0x372c68 - 0x372c80
-void Obj0000_Set_Field_80_372C68_0x372c68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_Field_80_372C68_0x372c68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_Field_80_372C68_0x372c68");
 #endif

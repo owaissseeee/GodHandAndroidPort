@@ -13,7 +13,7 @@
 
 // Function: AllocZeroedAndInitObjSlots_3157B0
 // Address: 0x3157b0 - 0x315820
-void AllocZeroedAndInitObjSlots_3157B0_0x3157b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void AllocZeroedAndInitObjSlots_3157B0_0x3157b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("AllocZeroedAndInitObjSlots_3157B0_0x3157b0");
 #endif
@@ -74,7 +74,6 @@ void AllocZeroedAndInitObjSlots_3157B0_0x3157b0(uint8_t* rdram, R5900Context* ct
     if (!runtime->callDirectStatic(rdram, ctx, &EnsureInitThenForward_2A9538_30EE08_0x30ee08, 0x30ee08u, 0x3157e4u)) {
         return;
     }
-    ctx->pc = 0x3157E4u;
 label_3157e4:
     // 0x3157e4: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -106,7 +105,6 @@ label_3157e4:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x3157fcu)) {
         return;
     }
-    ctx->pc = 0x3157FCu;
 label_3157fc:
     // 0x3157fc: 0xc0682bc  jal         func_1A0AF0
     SET_GPR_U32(ctx, 31, 0x315804u);
@@ -119,7 +117,6 @@ label_3157fc:
     if (!runtime->callDirectStatic(rdram, ctx, &InitObjSlots_1A0AF0_0x1a0af0, 0x1a0af0u, 0x315804u)) {
         return;
     }
-    ctx->pc = 0x315804u;
 label_315804:
     // 0x315804: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x315804u;
@@ -136,7 +133,6 @@ label_315804:
             goto label_315814;
         }
     }
-    ctx->pc = 0x31580Cu;
 label_31580c:
     // 0x31580c: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

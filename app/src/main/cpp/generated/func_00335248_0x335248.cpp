@@ -13,7 +13,7 @@
 
 // Function: func_00335248
 // Address: 0x335248 - 0x3352d0
-void func_00335248_0x335248(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00335248_0x335248(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00335248_0x335248");
 #endif
@@ -66,7 +66,6 @@ void func_00335248_0x335248(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         #endif
     }
     // 0x33526c: 0x0  nop
-    ctx->pc = 0x33526cu;
     // NOP
 label_335270:
     // 0x335270: 0x80840000  lb          $a0, 0x0($a0)
@@ -138,7 +137,6 @@ label_335270:
         }
     }
     // 0x3352ac: 0x0  nop
-    ctx->pc = 0x3352acu;
     // NOP
 label_3352b0:
     // 0x3352b0: 0x3c04003e  lui         $a0, 0x3E

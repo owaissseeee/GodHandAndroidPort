@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getGodItemNum
 // Address: 0x1fabb0 - 0x1fac00
-void cCoreSave_getGodItemNum_0x1fabb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getGodItemNum_0x1fabb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getGodItemNum_0x1fabb0");
 #endif
@@ -54,7 +54,6 @@ void cCoreSave_getGodItemNum_0x1fabb0(uint8_t* rdram, R5900Context* ctx, PS2Runt
     // 0x1fabc8: 0x24e800a8  addiu       $t0, $a3, 0xA8
     SET_GPR_S32(ctx, 8, (int32_t)ADD32(GPR_U32(ctx, 7), 168));
     // 0x1fabcc: 0x1061021  addu        $v0, $t0, $a2
-    ctx->pc = 0x1fabccu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 8), GPR_U32(ctx, 6)));
 label_1fabd0:
     // 0x1fabd0: 0x24a40001  addiu       $a0, $a1, 0x1
@@ -104,7 +103,6 @@ label_1fabd0:
             goto label_1fabd0;
         }
     }
-    ctx->pc = 0x1FABF8u;
 label_1fabf8:
     // 0x1fabf8: 0x3e00008  jr          $ra
     ctx->pc = 0x1FABF8u;

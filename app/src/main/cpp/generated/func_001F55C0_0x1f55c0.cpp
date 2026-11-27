@@ -13,7 +13,7 @@
 
 // Function: func_001F55C0
 // Address: 0x1f55c0 - 0x1f5650
-void func_001F55C0_0x1f55c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001F55C0_0x1f55c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001F55C0_0x1f55c0");
 #endif
@@ -61,7 +61,6 @@ void func_001F55C0_0x1f55c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D65D0_0x2d65d0, 0x2d65d0u, 0x1f55ecu)) {
         return;
     }
-    ctx->pc = 0x1F55ECu;
 label_1f55ec:
     // 0x1f55ec: 0x261031c8  addiu       $s0, $s0, 0x31C8
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 12744));
@@ -78,7 +77,6 @@ label_1f55ec:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D65D0_0x2d65d0, 0x2d65d0u, 0x1f55fcu)) {
         return;
     }
-    ctx->pc = 0x1F55FCu;
 label_1f55fc:
     // 0x1f55fc: 0x44911000  mtc1        $s1, $f2
     { uint32_t bits = GPR_U32(ctx, 17); std::memcpy(&ctx->f[2], &bits, sizeof(bits)); }
@@ -118,7 +116,6 @@ label_1f55fc:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetOffsetPosY_0x2d66f8, 0x2d66f8u, 0x1f5638u)) {
         return;
     }
-    ctx->pc = 0x1F5638u;
 label_1f5638:
     // 0x1f5638: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x1f5638u;

@@ -13,7 +13,7 @@
 
 // Function: func_001BD780
 // Address: 0x1bd780 - 0x1bd8c8
-void func_001BD780_0x1bd780(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001BD780_0x1bd780(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001BD780_0x1bd780");
 #endif
@@ -81,7 +81,6 @@ void func_001BD780_0x1bd780(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1bd8b8;
         }
     }
-    ctx->pc = 0x1BD7ACu;
 label_1bd7ac:
     // 0x1bd7ac: 0x92030774  lbu         $v1, 0x774($s0)
     ctx->pc = 0x1bd7acu;
@@ -164,7 +163,6 @@ label_1bd7ac:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmSub_initMove1_pos_0x1c6898, 0x1c6898u, 0x1bd808u)) {
         return;
     }
-    ctx->pc = 0x1BD808u;
 label_1bd808:
     // 0x1bd808: 0x10000012  b           . + 4 + (0x12 << 2)
     ctx->pc = 0x1BD808u;
@@ -181,7 +179,6 @@ label_1bd808:
             goto label_1bd854;
         }
     }
-    ctx->pc = 0x1BD810u;
 label_1bd810:
     // 0x1bd810: 0x26040610  addiu       $a0, $s0, 0x610
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 1552));
@@ -226,10 +223,8 @@ label_1bd810:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmSub_initMove3_y_0x1c6b68, 0x1c6b68u, 0x1bd850u)) {
         return;
     }
-    ctx->pc = 0x1BD850u;
 label_1bd850:
     // 0x1bd850: 0x3c040060  lui         $a0, 0x60
-    ctx->pc = 0x1bd850u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)96 << 16));
 label_1bd854:
     // 0x1bd854: 0x24050002  addiu       $a1, $zero, 0x2
@@ -255,7 +250,6 @@ label_1bd854:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CB8A0_0x2cb8a0, 0x2cb8a0u, 0x1bd874u)) {
         return;
     }
-    ctx->pc = 0x1BD874u;
 label_1bd874:
     // 0x1bd874: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -283,7 +277,6 @@ label_1bd888:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmSub_move_0x1c3f38, 0x1c3f38u, 0x1bd890u)) {
         return;
     }
-    ctx->pc = 0x1BD890u;
 label_1bd890:
     // 0x1bd890: 0x54400009  bnel        $v0, $zero, . + 4 + (0x9 << 2)
     ctx->pc = 0x1BD890u;

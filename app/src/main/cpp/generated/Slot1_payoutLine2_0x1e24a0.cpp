@@ -13,7 +13,7 @@
 
 // Function: Slot1_payoutLine2
 // Address: 0x1e24a0 - 0x1e26d8
-void Slot1_payoutLine2_0x1e24a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Slot1_payoutLine2_0x1e24a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Slot1_payoutLine2_0x1e24a0");
 #endif
@@ -118,7 +118,6 @@ void Slot1_payoutLine2_0x1e24a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_1e26c4;
         }
     }
-    ctx->pc = 0x1E24E0u;
 label_1e24e0:
     // 0x1e24e0: 0x10620045  beq         $v1, $v0, . + 4 + (0x45 << 2)
     ctx->pc = 0x1E24E0u;
@@ -165,7 +164,6 @@ label_1e24e0:
             goto label_1e26c4;
         }
     }
-    ctx->pc = 0x1E24F8u;
 label_1e24f8:
     // 0x1e24f8: 0x24020009  addiu       $v0, $zero, 0x9
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 9));
@@ -194,7 +192,6 @@ label_1e24f8:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x1e2520u)) {
         return;
     }
-    ctx->pc = 0x1E2520u;
 label_1e2520:
     // 0x1e2520: 0x96250494  lhu         $a1, 0x494($s1)
     ctx->pc = 0x1e2520u;
@@ -214,7 +211,6 @@ label_1e2520:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001E4200_0x1e4200, 0x1e4200u, 0x1e2534u)) {
         return;
     }
-    ctx->pc = 0x1E2534u;
 label_1e2534:
     // 0x1e2534: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -231,7 +227,6 @@ label_1e2534:
     if (!runtime->callDirectStatic(rdram, ctx, &Slot2_setMarkLayersAt46C_0x1e3a98, 0x1e3a98u, 0x1e2544u)) {
         return;
     }
-    ctx->pc = 0x1E2544u;
 label_1e2544:
     // 0x1e2544: 0x8e22000c  lw          $v0, 0xC($s1)
     ctx->pc = 0x1e2544u;
@@ -253,7 +248,6 @@ label_1e2544:
             goto label_1e2688;
         }
     }
-    ctx->pc = 0x1E2554u;
 label_1e2554:
     // 0x1e2554: 0x8e220010  lw          $v0, 0x10($s1)
     ctx->pc = 0x1e2554u;
@@ -290,10 +284,8 @@ label_1e2554:
             goto label_1e2570;
         }
     }
-    ctx->pc = 0x1E256Cu;
 label_1e256c:
     // 0x1e256c: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x1e256cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_1e2570:
     // 0x1e2570: 0x306200ff  andi        $v0, $v1, 0xFF
@@ -332,7 +324,6 @@ label_1e2570:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_BgmEventStart_0x2d1610, 0x2d1610u, 0x1e2594u)) {
         return;
     }
-    ctx->pc = 0x1E2594u;
 label_1e2594:
     // 0x1e2594: 0x8e2303d0  lw          $v1, 0x3D0($s1)
     ctx->pc = 0x1e2594u;
@@ -361,7 +352,6 @@ label_1e2594:
             goto label_1e25b0;
         }
     }
-    ctx->pc = 0x1E25B0u;
 label_1e25b0:
     // 0x1e25b0: 0x1812  mflo        $v1
     SET_GPR_U64(ctx, 3, ctx->lo);
@@ -384,7 +374,6 @@ label_1e25b0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001E8E48_0x1e8e48, 0x1e8e48u, 0x1e25c8u)) {
         return;
     }
-    ctx->pc = 0x1E25C8u;
 label_1e25c8:
     // 0x1e25c8: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -407,7 +396,6 @@ label_1e25c8:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_0x2cb968, 0x2cb968u, 0x1e25e4u)) {
         return;
     }
-    ctx->pc = 0x1E25E4u;
 label_1e25e4:
     // 0x1e25e4: 0x8e23000c  lw          $v1, 0xC($s1)
     ctx->pc = 0x1e25e4u;
@@ -432,7 +420,6 @@ label_1e25e4:
             goto label_1e26bc;
         }
     }
-    ctx->pc = 0x1E25F8u;
 label_1e25f8:
     // 0x1e25f8: 0x8e22002c  lw          $v0, 0x2C($s1)
     ctx->pc = 0x1e25f8u;
@@ -465,7 +452,6 @@ label_1e25f8:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_isGoldFull_0x1fa8e0, 0x1fa8e0u, 0x1e2610u)) {
         return;
     }
-    ctx->pc = 0x1E2610u;
 label_1e2610:
     // 0x1e2610: 0x54400009  bnel        $v0, $zero, . + 4 + (0x9 << 2)
     ctx->pc = 0x1E2610u;
@@ -508,7 +494,6 @@ label_1e2610:
             goto label_1e2694;
         }
     }
-    ctx->pc = 0x1E2634u;
 label_1e2634:
     // 0x1e2634: 0x8e2504c8  lw          $a1, 0x4C8($s1)
     ctx->pc = 0x1e2634u;
@@ -527,7 +512,6 @@ label_1e2638:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeStop_0x2cbba0, 0x2cbba0u, 0x1e2644u)) {
         return;
     }
-    ctx->pc = 0x1E2644u;
 label_1e2644:
     // 0x1e2644: 0x8e220028  lw          $v0, 0x28($s1)
     ctx->pc = 0x1e2644u;
@@ -552,7 +536,6 @@ label_1e2644:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_addGold_0x1fa750, 0x1fa750u, 0x1e2660u)) {
         return;
     }
-    ctx->pc = 0x1E2660u;
 label_1e2660:
     // 0x1e2660: 0x96250494  lhu         $a1, 0x494($s1)
     ctx->pc = 0x1e2660u;
@@ -572,7 +555,6 @@ label_1e2660:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001E4200_0x1e4200, 0x1e4200u, 0x1e2674u)) {
         return;
     }
-    ctx->pc = 0x1E2674u;
 label_1e2674:
     // 0x1e2674: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -589,7 +571,6 @@ label_1e2674:
     if (!runtime->callDirectStatic(rdram, ctx, &Slot2_setMarkLayersAt46C_0x1e3a98, 0x1e3a98u, 0x1e2684u)) {
         return;
     }
-    ctx->pc = 0x1E2684u;
 label_1e2684:
     // 0x1e2684: 0x8e22000c  lw          $v0, 0xC($s1)
     ctx->pc = 0x1e2684u;
@@ -612,7 +593,6 @@ label_1e2688:
             goto label_1e26bc;
         }
     }
-    ctx->pc = 0x1E2694u;
 label_1e2694:
     // 0x1e2694: 0x240202d  daddu       $a0, $s2, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -627,7 +607,6 @@ label_1e2694:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_addGold_0x1fa750, 0x1fa750u, 0x1e26a0u)) {
         return;
     }
-    ctx->pc = 0x1E26A0u;
 label_1e26a0:
     // 0x1e26a0: 0x8e22002c  lw          $v0, 0x2C($s1)
     ctx->pc = 0x1e26a0u;
@@ -649,7 +628,6 @@ label_1e26a0:
             goto label_1e26bc;
         }
     }
-    ctx->pc = 0x1E26B0u;
 label_1e26b0:
     // 0x1e26b0: 0xae20000c  sw          $zero, 0xC($s1)
     ctx->pc = 0x1e26b0u;

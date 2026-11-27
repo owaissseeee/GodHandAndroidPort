@@ -13,7 +13,7 @@
 
 // Function: cE3_exec
 // Address: 0x201be0 - 0x201c28
-void cE3_exec_0x201be0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cE3_exec_0x201be0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cE3_exec_0x201be0");
 #endif
@@ -73,7 +73,6 @@ void cE3_exec_0x201be0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             goto label_201c20;
         }
     }
-    ctx->pc = 0x201C04u;
 label_201c04:
     // 0x201c04: 0xc08070a  jal         func_201C28
     ctx->pc = 0x201C04u;
@@ -81,7 +80,6 @@ label_201c04:
     if (!runtime->callDirectStatic(rdram, ctx, &cE3_stepMenuClock_0x201c28, 0x201c28u, 0x201c0cu)) {
         return;
     }
-    ctx->pc = 0x201C0Cu;
 label_201c0c:
     // 0x201c0c: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x201C0Cu;
@@ -98,7 +96,6 @@ label_201c0c:
             goto label_201c20;
         }
     }
-    ctx->pc = 0x201C14u;
 label_201c14:
     // 0x201c14: 0xc080748  jal         func_201D20
     ctx->pc = 0x201C14u;
@@ -106,7 +103,6 @@ label_201c14:
     if (!runtime->callDirectStatic(rdram, ctx, &cE3_runDemo_0x201d20, 0x201d20u, 0x201c1cu)) {
         return;
     }
-    ctx->pc = 0x201C1Cu;
 label_201c1c:
     // 0x201c1c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x201c1cu;

@@ -14,7 +14,7 @@
 
 // Function: cActionButton_setCommandList
 // Address: 0x1f7900 - 0x1f7a30
-void cActionButton_setCommandList_0x1f7900(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cActionButton_setCommandList_0x1f7900(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cActionButton_setCommandList_0x1f7900");
 #endif
@@ -79,7 +79,6 @@ void cActionButton_setCommandList_0x1f7900(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F7798_0x1f7798, 0x1f7798u, 0x1f7938u)) {
         return;
     }
-    ctx->pc = 0x1F7938u;
 label_1f7938:
     // 0x1f7938: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -113,7 +112,6 @@ label_1f7938:
             goto label_1f7a0c;
         }
     }
-    ctx->pc = 0x1F794Cu;
 label_1f794c:
     // 0x1f794c: 0x3c020057  lui         $v0, 0x57
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)87 << 16));
@@ -187,7 +185,6 @@ label_1f794c:
         }
     }
     // 0x1f79ac: 0x260382d  daddu       $a3, $s3, $zero
-    ctx->pc = 0x1f79acu;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 19) + (uint64_t)GPR_U64(ctx, 0));
 label_1f79b0:
     // 0x1f79b0: 0x8e030038  lw          $v1, 0x38($s0)
@@ -248,7 +245,6 @@ label_1f79b0:
             goto label_1f79b0;
         }
     }
-    ctx->pc = 0x1F79F8u;
 label_1f79f8:
     // 0x1f79f8: 0x280202d  daddu       $a0, $s4, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 20) + (uint64_t)GPR_U64(ctx, 0));
@@ -265,10 +261,8 @@ label_1f79f8:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Swap_Field_4_In_Scaled_A1_Entry_1F7800_0x1f7800, 0x1f7800u, 0x1f7a08u)) {
         return;
     }
-    ctx->pc = 0x1F7A08u;
 label_1f7a08:
     // 0x1f7a08: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x1f7a08u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_1f7a0c:
     // 0x1f7a0c: 0x7bb00060  lq          $s0, 0x60($sp)

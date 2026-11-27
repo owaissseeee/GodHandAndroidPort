@@ -13,7 +13,7 @@
 
 // Function: InitDamageCollPair_1B18B8
 // Address: 0x1b18b8 - 0x1b1928
-void InitDamageCollPair_1B18B8_0x1b18b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitDamageCollPair_1B18B8_0x1b18b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitDamageCollPair_1B18B8_0x1b18b8");
 #endif
@@ -69,7 +69,6 @@ void InitDamageCollPair_1B18B8_0x1b18b8(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x1b18f0u)) {
         return;
     }
-    ctx->pc = 0x1B18F0u;
 label_1b18f0:
     // 0x1b18f0: 0x8e040670  lw          $a0, 0x670($s0)
     ctx->pc = 0x1b18f0u;
@@ -98,7 +97,6 @@ label_1b18f0:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x1b1910u)) {
         return;
     }
-    ctx->pc = 0x1B1910u;
 label_1b1910:
     // 0x1b1910: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1b1910u;

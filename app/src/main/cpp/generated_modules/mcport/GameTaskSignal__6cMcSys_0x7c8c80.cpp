@@ -14,12 +14,11 @@ namespace gh_mcport
 {
 // Function: GameTaskSignal__6cMcSys
 // Address: 0x7c8c80 - 0x7c8c88
-void GameTaskSignal__6cMcSys_0x7c8c80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GameTaskSignal__6cMcSys_0x7c8c80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GameTaskSignal__6cMcSys_0x7c8c80");
 #endif
 
-    ctx->pc = 0x7c8c80u;
 
     // 0x7c8c80: 0x3e00008  jr          $ra
     ctx->pc = 0x7C8C80u;

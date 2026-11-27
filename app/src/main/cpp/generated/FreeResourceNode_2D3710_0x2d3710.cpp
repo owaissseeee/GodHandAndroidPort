@@ -13,7 +13,7 @@
 
 // Function: FreeResourceNode_2D3710
 // Address: 0x2d3710 - 0x2d3750
-void FreeResourceNode_2D3710_0x2d3710(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FreeResourceNode_2D3710_0x2d3710(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FreeResourceNode_2D3710_0x2d3710");
 #endif
@@ -55,7 +55,6 @@ void FreeResourceNode_2D3710_0x2d3710(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &Forward345EE0_345EC8_0x345ec8, 0x345ec8u, 0x2d3734u)) {
         return;
     }
-    ctx->pc = 0x2D3734u;
 label_2d3734:
     // 0x2d3734: 0xc0b503e  jal         func_2D40F8
     SET_GPR_U32(ctx, 31, 0x2D373Cu);
@@ -68,7 +67,6 @@ label_2d3734:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D40F8_0x2d40f8, 0x2d40f8u, 0x2d373cu)) {
         return;
     }
-    ctx->pc = 0x2D373Cu;
 label_2d373c:
     // 0x2d373c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2d373cu;

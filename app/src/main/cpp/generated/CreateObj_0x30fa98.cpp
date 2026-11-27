@@ -13,7 +13,7 @@
 
 // Function: CreateObj
 // Address: 0x30fa98 - 0x30fac8
-void CreateObj_0x30fa98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CreateObj_0x30fa98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CreateObj_0x30fa98");
 #endif
@@ -46,7 +46,6 @@ void CreateObj_0x30fa98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
     if (!runtime->callDirectStatic(rdram, ctx, &func_0030FAC8_0x30fac8, 0x30fac8u, 0x30faacu)) {
         return;
     }
-    ctx->pc = 0x30FAACu;
 label_30faac:
     // 0x30faac: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -61,7 +60,6 @@ label_30faac:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0030FB20_0x30fb20, 0x30fb20u, 0x30fab8u)) {
         return;
     }
-    ctx->pc = 0x30FAB8u;
 label_30fab8:
     // 0x30fab8: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x30fab8u;

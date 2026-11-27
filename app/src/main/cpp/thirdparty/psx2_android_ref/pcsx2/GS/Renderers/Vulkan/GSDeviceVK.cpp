@@ -1708,6 +1708,12 @@ void GSDeviceVK::ActivateCommandBuffer(u32 index)
 		res = vkResetDescriptorPool(m_device, resources.descriptor_pool, 0);
 		if (res != VK_SUCCESS)
 			LOG_VULKAN_ERROR(res, "vkResetDescriptorPool failed: ");
+		if (++resources.tfx_ds_cache_gen == 0u)
+		{
+			for (TfxDescriptorCacheEntry& e : resources.tfx_ds_cache)
+				e.gen = 0u;
+			resources.tfx_ds_cache_gen = 1u;
+		}
 	}
 
 	// Enable commands to be recorded to the two buffers again.
@@ -2533,47 +2539,88 @@ bool GSDeviceVK::Create(GSVSyncMode vsync_mode, bool allow_present_throttle)
 		{
 			for (u8 fog = 0; fog <= 1; ++fog)
 			{
+				for (u8 tcc = 0; tcc <= 1; ++tcc)
+				{
+					PipelineSelector p;
+					p.topology = topo;
+					p.rt = true;
+					p.ds = true;
+					p.vs.expand = GSHWDrawConfig::VSExpand::None;
+					p.vs.point_size = false;
+
+					p.ps.tfx = tfx;
+					p.ps.tcc = tcc;
+					p.ps.fog = fog;
+					p.ps.blend_hw = 1;
+					p.ps.fst = (topo == 1) ? 1 : 0;
+					p.ps.date = 0;
+					p.ps.colclip_hw = 0;
+					p.cms.wrgba = 0x0F;
+
+					p.dss.zwe = true;
+					p.dss.ztst = 2; // GEQUAL
+
+					// Prewarm opaque draw
+					p.bs.enable = 0;
+					if (GetTFXPipeline(p))
+						compiled++;
+
+					// Prewarm standard alpha blend
+					p.bs.enable = 1;
+					p.bs.src_factor = 6; // SRC_ALPHA
+					p.bs.dst_factor = 7; // ONE_MINUS_SRC_ALPHA
+					p.bs.op = 0;         // ADD
+					if (GetTFXPipeline(p))
+						compiled++;
+
+					// Prewarm particle / explosion ROAA feedback loop (when tcc=1)
+					if (tcc == 1 && m_features.framebuffer_fetch)
+					{
+						p.feedback_loop_flags = FeedbackLoopFlag_ReadAndWriteRT;
+						if (GetTFXPipeline(p))
+							compiled++;
+					}
+
+					// Prewarm additive particle / glow blend (One, One, depth test without depth write)
+					p.feedback_loop_flags = FeedbackLoopFlag_None;
+					p.dss.zwe = false;
+					p.bs.src_factor = 14; // ONE
+					p.bs.dst_factor = 14; // ONE
+					if (GetTFXPipeline(p))
+						compiled++;
+				}
+			}
+		}
+	}
+
+	// Prewarm 2D HUD / Menu / Font / Screen-fade sprites (ZTST_ALWAYS = 1, no depth write, fst 0/1, tfx 0/4)
+	for (u8 tfx_idx = 0; tfx_idx < 2; ++tfx_idx)
+	{
+		const u8 tfx = (tfx_idx == 0) ? 0 : 4; // Modulate vs None (untextured fade/UI quads)
+		for (u8 tcc = 0; tcc <= 1; ++tcc)
+		{
+			for (u8 fst = 0; fst <= 1; ++fst)
+			{
 				PipelineSelector p;
-				p.topology = topo;
+				p.topology = 1; // Sprite
 				p.rt = true;
 				p.ds = true;
-				p.vs.expand = GSHWDrawConfig::VSExpand::None;
-				p.vs.point_size = false;
-
 				p.ps.tfx = tfx;
-				p.ps.tcc = 1;
-				p.ps.fog = fog;
+				p.ps.tcc = (tfx == 4) ? 0 : tcc;
+				p.ps.fst = (tfx == 4) ? 0 : fst;
 				p.ps.blend_hw = 1;
-				p.ps.fst = 0;
-				p.ps.date = 0;
-				p.ps.colclip_hw = 0;
+				p.cms.wrgba = 0x0F;
+				p.dss.zwe = false;
+				p.dss.ztst = 1; // ZTST_ALWAYS
 
-				// Standard alpha blend
+				p.bs.enable = 0;
+				if (GetTFXPipeline(p))
+					compiled++;
+
 				p.bs.enable = 1;
 				p.bs.src_factor = 6; // SRC_ALPHA
 				p.bs.dst_factor = 7; // ONE_MINUS_SRC_ALPHA
 				p.bs.op = 0;         // ADD
-				p.cms.wrgba = 0x0F;
-
-				p.dss.zwe = true;
-				p.dss.ztst = 2; // GEQUAL
-
-				// Prewarm standard draw
-				if (GetTFXPipeline(p))
-					compiled++;
-
-				// Prewarm particle / explosion ROAA feedback loop
-				if (m_features.framebuffer_fetch)
-				{
-					p.feedback_loop_flags = FeedbackLoopFlag_ReadAndWriteRT;
-					if (GetTFXPipeline(p))
-						compiled++;
-				}
-
-				// Prewarm additive particle explosion blend (One, One)
-				p.bs.src_factor = 14; // ONE
-				p.bs.dst_factor = 14; // ONE
-				p.feedback_loop_flags = FeedbackLoopFlag_None;
 				if (GetTFXPipeline(p))
 					compiled++;
 			}
@@ -2824,7 +2871,7 @@ GSDevice::PresentResult GSDeviceVK::BeginPresent(bool frame_skip)
 
 			res = m_swap_chain->AcquireNextImage();
 		}
-		else
+		else if (res != VK_TIMEOUT)
 			LOG_VULKAN_ERROR(res, "vkAcquireNextImageKHR() failed: ");
 
 		// This can happen when multiple resize events happen in quick succession.
@@ -2887,7 +2934,7 @@ void GSDeviceVK::EndPresent()
 
 #if defined(__ANDROID__)
 	static uint32_t s_flushFrameCounter = 0;
-	if ((++s_flushFrameCounter % 300) == 0 && g_vulkan_shader_cache)
+	if ((++s_flushFrameCounter % 1800) == 0 && g_vulkan_shader_cache)
 	{
 		g_vulkan_shader_cache->FlushPipelineCache();
 	}
@@ -3211,8 +3258,10 @@ bool GSDeviceVK::CheckFeatures()
 	// hangs the tiler. Force it off so tex == ds takes a depth copy instead of an in-pass self-read.
 	m_features.test_and_sample_depth = !is_adreno;
 
-	// Use D32F depth instead of D32S8 when we have framebuffer fetch.
-	m_features.stencil_buffer &= !m_features.framebuffer_fetch;
+	// Use D32F depth instead of D32S8 when we have framebuffer fetch, or when Ultra Potato Mode is active.
+	const char* ultra_potato_env = std::getenv("PS2X_ULTRA_POTATO");
+	const bool ultra_potato = ultra_potato_env && *ultra_potato_env == '1';
+	m_features.stencil_buffer &= !(m_features.framebuffer_fetch || ultra_potato);
 
 	// Adreno/turnip hangs the GPU (A6xx hangcheck) on any stencil-bearing D32S8 depth buffer. Force
 	// stencil off so depth is created as plain D32_SFLOAT and no stencil attachment or stencil DATE
@@ -5943,6 +5992,7 @@ void GSDeviceVK::InvalidateCachedState()
 
 	m_current_pipeline_layout = PipelineLayout::Undefined;
 	m_tfx_texture_descriptor_set = VK_NULL_HANDLE;
+	m_bound_tfx_descriptor_set = VK_NULL_HANDLE;
 	m_tfx_rt_descriptor_set = VK_NULL_HANDLE;
 	m_utility_descriptor_set = VK_NULL_HANDLE;
 }
@@ -6150,6 +6200,32 @@ void GSDeviceVK::SetUtilityPushConstants(const void* data, u32 size)
 
 void GSDeviceVK::UnbindTexture(GSTextureVK* tex)
 {
+	if (!m_optional_extensions.vk_khr_push_descriptor && tex)
+	{
+		const VkImageView view = tex->GetView();
+		if (view != VK_NULL_HANDLE)
+		{
+			for (FrameResources& fr : m_frame_resources)
+			{
+				for (TfxDescriptorCacheEntry& e : fr.tfx_ds_cache)
+				{
+					if (e.gen == fr.tfx_ds_cache_gen)
+					{
+						for (u32 ti = 0; ti < NUM_TFX_TEXTURES; ti++)
+						{
+							if (e.key.views[ti] == view)
+							{
+								if (m_bound_tfx_descriptor_set == e.set)
+									m_bound_tfx_descriptor_set = VK_NULL_HANDLE;
+								e.gen = 0u;
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 	for (u32 i = 0; i < NUM_TFX_TEXTURES; i++)
 	{
 		if (m_tfx_textures[i] == tex)
@@ -6358,6 +6434,7 @@ bool GSDeviceVK::ApplyTFXState(bool already_execed)
 	if (m_current_pipeline_layout != PipelineLayout::TFX)
 	{
 		m_current_pipeline_layout = PipelineLayout::TFX;
+		m_bound_tfx_descriptor_set = VK_NULL_HANDLE;
 		flags |= DIRTY_FLAG_TFX_UBO | DIRTY_FLAG_TFX_TEXTURES | DIRTY_FLAG_VS_PUSH_CONSTANTS;
 
 		// Clear out the RT/DS binding if feedback loop isn't on, because it'll be in the wrong state and make
@@ -6384,93 +6461,143 @@ bool GSDeviceVK::ApplyTFXState(bool already_execed)
 	if (flags & DIRTY_FLAG_TFX_TEXTURES)
 	{
 		VkDescriptorSet ds = VK_NULL_HANDLE;
-		// Without push descriptors, we must write all bindings to a fresh descriptor set.
+		TfxDescriptorCacheEntry* cache_entry = nullptr;
+		u32 cache_gen = 0;
+		TfxDescriptorKey key{};
+		bool ds_cache_hit = false;
+
+		// Without push descriptors, cache descriptor sets per frame command buffer by exact binding key.
 		if (!m_optional_extensions.vk_khr_push_descriptor)
 		{
-			ds = AllocateDescriptorSetFromFramePool(m_tfx_texture_ds_layout);
-			if (ds == VK_NULL_HANDLE) [[unlikely]]
+			const u8 use_ia = (m_features.texture_barrier && !UseFeedbackLoopLayout()) ? 1 : 0;
+			key.sampler = m_tfx_sampler;
+			key.use_input_attach = use_ia;
+			for (u32 ti = 0; ti < NUM_TFX_TEXTURES; ti++)
 			{
-				if (already_execed)
+				key.views[ti] = m_tfx_textures[ti]->GetView();
+				key.layouts[ti] = static_cast<u32>(m_tfx_textures[ti]->GetVkLayout());
+			}
+			if (use_ia)
+			{
+				key.layouts[TFX_TEXTURE_RT] = VK_IMAGE_LAYOUT_GENERAL;
+				key.layouts[TFX_TEXTURE_DEPTH] = VK_IMAGE_LAYOUT_GENERAL;
+			}
+			u64 h = reinterpret_cast<u64>(key.sampler) * 0x9E3779B97F4A7C15ull ^ key.use_input_attach;
+			for (u32 ti = 0; ti < NUM_TFX_TEXTURES; ti++)
+			{
+				h ^= (reinterpret_cast<u64>(key.views[ti]) + 0x9E3779B97F4A7C15ull + (h << 6) + (h >> 2));
+				h ^= (static_cast<u64>(key.layouts[ti]) + 0x517CC1B727220A95ull + (h << 6) + (h >> 2));
+			}
+			FrameResources& fr = m_frame_resources[m_current_frame];
+			cache_gen = fr.tfx_ds_cache_gen;
+			cache_entry = &fr.tfx_ds_cache[h & (TFX_DS_CACHE_SIZE - 1)];
+			if (cache_entry->gen == cache_gen && cache_entry->set != VK_NULL_HANDLE && cache_entry->key == key)
+			{
+				if (m_bound_tfx_descriptor_set != cache_entry->set)
 				{
-					Console.Error("VK: Failed to allocate TFX texture descriptor set");
-					return false;
+					vkCmdBindDescriptorSets(cmdbuf, VK_PIPELINE_BIND_POINT_GRAPHICS, m_tfx_pipeline_layout,
+						TFX_DESCRIPTOR_SET_TEXTURES, 1, &cache_entry->set, 0, nullptr);
+					m_bound_tfx_descriptor_set = cache_entry->set;
+				}
+				ds_cache_hit = true;
+			}
+			else
+			{
+				ds = AllocateDescriptorSetFromFramePool(m_tfx_texture_ds_layout);
+				if (ds == VK_NULL_HANDLE) [[unlikely]]
+				{
+					if (already_execed)
+					{
+						Console.Error("VK: Failed to allocate TFX texture descriptor set");
+						return false;
+					}
+
+					// Frame descriptor pool exhausted — flush to reset it, then restart
+					// the render pass and re-apply all state on the fresh command buffer.
+					ExecuteCommandBufferAndRestartRenderPass(false, "Out of TFX texture descriptors");
+					return ApplyTFXState(true);
 				}
 
-				// Frame descriptor pool exhausted — flush to reset it, then restart
-				// the render pass and re-apply all state on the fresh command buffer.
-				ExecuteCommandBufferAndRestartRenderPass(false, "Out of TFX texture descriptors");
-				return ApplyTFXState(true);
+				// A fresh set contains no valid descriptors. Write every binding,
+				// including unchanged ROV images; retaining a dirty bit from the
+				// previous set is insufficient because descriptor contents are not
+				// inherited. Mali returns the null/white texture for such stale sets.
+				flags |= DIRTY_FLAG_TFX_TEXTURES;
+			}
+		}
+
+		if (!ds_cache_hit)
+		{
+			if (flags & DIRTY_FLAG_TFX_TEXTURE_TEX)
+			{
+				dsub.AddCombinedImageSamplerDescriptorWrite(ds, TFX_TEXTURE_TEXTURE,
+					m_tfx_textures[TFX_TEXTURE_TEXTURE]->GetView(), m_tfx_sampler,
+					m_tfx_textures[TFX_TEXTURE_TEXTURE]->GetVkLayout());
+			}
+			if (flags & DIRTY_FLAG_TFX_TEXTURE_PALETTE)
+			{
+				dsub.AddImageDescriptorWrite(ds, TFX_TEXTURE_PALETTE,
+					m_tfx_textures[TFX_TEXTURE_PALETTE]->GetView(), m_tfx_textures[TFX_TEXTURE_PALETTE]->GetVkLayout());
+			}
+			if (flags & DIRTY_FLAG_TFX_TEXTURE_RT)
+			{
+				if (m_features.texture_barrier && !UseFeedbackLoopLayout())
+				{
+					dsub.AddInputAttachmentDescriptorWrite(
+						ds, TFX_TEXTURE_RT, m_tfx_textures[TFX_TEXTURE_RT]->GetView(), VK_IMAGE_LAYOUT_GENERAL);
+				}
+				else
+				{
+					dsub.AddImageDescriptorWrite(ds, TFX_TEXTURE_RT, m_tfx_textures[TFX_TEXTURE_RT]->GetView(),
+						m_tfx_textures[TFX_TEXTURE_RT]->GetVkLayout());
+				}
+			}
+			if (flags & DIRTY_FLAG_TFX_TEXTURE_PRIMID)
+			{
+				dsub.AddImageDescriptorWrite(ds, TFX_TEXTURE_PRIMID,
+					m_tfx_textures[TFX_TEXTURE_PRIMID]->GetView(), m_tfx_textures[TFX_TEXTURE_PRIMID]->GetVkLayout());
+			}
+			if (flags & DIRTY_FLAG_TFX_TEXTURE_DEPTH)
+			{
+				if (m_features.texture_barrier && !UseFeedbackLoopLayout())
+				{
+					dsub.AddInputAttachmentDescriptorWrite(
+						ds, TFX_TEXTURE_DEPTH, m_tfx_textures[TFX_TEXTURE_DEPTH]->GetView(), VK_IMAGE_LAYOUT_GENERAL);
+				}
+				else
+				{
+					dsub.AddImageDescriptorWrite(ds, TFX_TEXTURE_DEPTH, m_tfx_textures[TFX_TEXTURE_DEPTH]->GetView(),
+						m_tfx_textures[TFX_TEXTURE_DEPTH]->GetVkLayout());
+				}
+			}
+			if (flags & DIRTY_FLAG_TFX_TEXTURE_RT_ROV)
+			{
+				dsub.AddImageDescriptorWrite(ds, TFX_TEXTURE_RT_ROV, m_tfx_textures[TFX_TEXTURE_RT_ROV]->GetView(),
+					m_tfx_textures[TFX_TEXTURE_RT_ROV]->GetVkLayout(), true);
+			}
+			if (flags & DIRTY_FLAG_TFX_TEXTURE_DEPTH_ROV)
+			{
+				dsub.AddImageDescriptorWrite(ds, TFX_TEXTURE_DEPTH_ROV, m_tfx_textures[TFX_TEXTURE_DEPTH_ROV]->GetView(),
+					m_tfx_textures[TFX_TEXTURE_DEPTH_ROV]->GetVkLayout(), true);
 			}
 
-			// A fresh set contains no valid descriptors. Write every binding,
-			// including unchanged ROV images; retaining a dirty bit from the
-			// previous set is insufficient because descriptor contents are not
-			// inherited. Mali returns the null/white texture for such stale sets.
-			flags |= DIRTY_FLAG_TFX_TEXTURES;
-		}
-
-		if (flags & DIRTY_FLAG_TFX_TEXTURE_TEX)
-		{
-			dsub.AddCombinedImageSamplerDescriptorWrite(ds, TFX_TEXTURE_TEXTURE,
-				m_tfx_textures[TFX_TEXTURE_TEXTURE]->GetView(), m_tfx_sampler,
-				m_tfx_textures[TFX_TEXTURE_TEXTURE]->GetVkLayout());
-		}
-		if (flags & DIRTY_FLAG_TFX_TEXTURE_PALETTE)
-		{
-			dsub.AddImageDescriptorWrite(ds, TFX_TEXTURE_PALETTE,
-				m_tfx_textures[TFX_TEXTURE_PALETTE]->GetView(), m_tfx_textures[TFX_TEXTURE_PALETTE]->GetVkLayout());
-		}
-		if (flags & DIRTY_FLAG_TFX_TEXTURE_RT)
-		{
-			if (m_features.texture_barrier && !UseFeedbackLoopLayout())
+			if (m_optional_extensions.vk_khr_push_descriptor)
 			{
-				dsub.AddInputAttachmentDescriptorWrite(
-					ds, TFX_TEXTURE_RT, m_tfx_textures[TFX_TEXTURE_RT]->GetView(), VK_IMAGE_LAYOUT_GENERAL);
+				dsub.PushUpdate(cmdbuf, VK_PIPELINE_BIND_POINT_GRAPHICS, m_tfx_pipeline_layout, TFX_DESCRIPTOR_SET_TEXTURES);
 			}
 			else
 			{
-				dsub.AddImageDescriptorWrite(ds, TFX_TEXTURE_RT, m_tfx_textures[TFX_TEXTURE_RT]->GetView(),
-					m_tfx_textures[TFX_TEXTURE_RT]->GetVkLayout());
+				dsub.Update(m_device);
+				vkCmdBindDescriptorSets(cmdbuf, VK_PIPELINE_BIND_POINT_GRAPHICS, m_tfx_pipeline_layout,
+					TFX_DESCRIPTOR_SET_TEXTURES, 1, &ds, 0, nullptr);
+				m_bound_tfx_descriptor_set = ds;
+				if (cache_entry)
+				{
+					cache_entry->key = key;
+					cache_entry->set = ds;
+					cache_entry->gen = cache_gen;
+				}
 			}
-		}
-		if (flags & DIRTY_FLAG_TFX_TEXTURE_PRIMID)
-		{
-			dsub.AddImageDescriptorWrite(ds, TFX_TEXTURE_PRIMID,
-				m_tfx_textures[TFX_TEXTURE_PRIMID]->GetView(), m_tfx_textures[TFX_TEXTURE_PRIMID]->GetVkLayout());
-		}
-		if (flags & DIRTY_FLAG_TFX_TEXTURE_DEPTH)
-		{
-			if (m_features.texture_barrier && !UseFeedbackLoopLayout())
-			{
-				dsub.AddInputAttachmentDescriptorWrite(
-					ds, TFX_TEXTURE_DEPTH, m_tfx_textures[TFX_TEXTURE_DEPTH]->GetView(), VK_IMAGE_LAYOUT_GENERAL);
-			}
-			else
-			{
-				dsub.AddImageDescriptorWrite(ds, TFX_TEXTURE_DEPTH, m_tfx_textures[TFX_TEXTURE_DEPTH]->GetView(),
-					m_tfx_textures[TFX_TEXTURE_DEPTH]->GetVkLayout());
-			}
-		}
-		if (flags & DIRTY_FLAG_TFX_TEXTURE_RT_ROV)
-		{
-			dsub.AddImageDescriptorWrite(ds, TFX_TEXTURE_RT_ROV, m_tfx_textures[TFX_TEXTURE_RT_ROV]->GetView(),
-				m_tfx_textures[TFX_TEXTURE_RT_ROV]->GetVkLayout(), true);
-		}
-		if (flags & DIRTY_FLAG_TFX_TEXTURE_DEPTH_ROV)
-		{
-			dsub.AddImageDescriptorWrite(ds, TFX_TEXTURE_DEPTH_ROV, m_tfx_textures[TFX_TEXTURE_DEPTH_ROV]->GetView(),
-				m_tfx_textures[TFX_TEXTURE_DEPTH_ROV]->GetVkLayout(), true);
-		}
-
-		if (m_optional_extensions.vk_khr_push_descriptor)
-		{
-			dsub.PushUpdate(cmdbuf, VK_PIPELINE_BIND_POINT_GRAPHICS, m_tfx_pipeline_layout, TFX_DESCRIPTOR_SET_TEXTURES);
-		}
-		else
-		{
-			dsub.Update(m_device);
-			vkCmdBindDescriptorSets(cmdbuf, VK_PIPELINE_BIND_POINT_GRAPHICS, m_tfx_pipeline_layout,
-				TFX_DESCRIPTOR_SET_TEXTURES, 1, &ds, 0, nullptr);
 		}
 	}
 
@@ -6490,6 +6617,7 @@ bool GSDeviceVK::ApplyUtilityState(bool already_execed)
 	if (m_current_pipeline_layout != PipelineLayout::Utility || flags & DIRTY_FLAG_UTILITY_TEXTURE)
 	{
 		m_current_pipeline_layout = PipelineLayout::Utility;
+		m_bound_tfx_descriptor_set = VK_NULL_HANDLE;
 
 		Vulkan::DescriptorSetUpdateBuilder dsub;
 		if (m_optional_extensions.vk_khr_push_descriptor)

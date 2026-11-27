@@ -13,7 +13,7 @@
 
 // Function: cMessage_deleteWorkId
 // Address: 0x2aebf8 - 0x2aec40
-void cMessage_deleteWorkId_0x2aebf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessage_deleteWorkId_0x2aebf8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessage_deleteWorkId_0x2aebf8");
 #endif
@@ -48,7 +48,6 @@ void cMessage_deleteWorkId_0x2aebf8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &cMessage_searchWorkId_0x2aed10, 0x2aed10u, 0x2aec10u)) {
         return;
     }
-    ctx->pc = 0x2AEC10u;
 label_2aec10:
     // 0x2aec10: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x2AEC10u;
@@ -76,7 +75,6 @@ label_2aec10:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessage_releaseWin_0x2aef10, 0x2aef10u, 0x2aec20u)) {
         return;
     }
-    ctx->pc = 0x2AEC20u;
 label_2aec20:
     // 0x2aec20: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x2AEC20u;
@@ -93,10 +91,8 @@ label_2aec20:
             goto label_2aec2c;
         }
     }
-    ctx->pc = 0x2AEC28u;
 label_2aec28:
     // 0x2aec28: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2aec28u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2aec2c:
     // 0x2aec2c: 0x7bb00010  lq          $s0, 0x10($sp)

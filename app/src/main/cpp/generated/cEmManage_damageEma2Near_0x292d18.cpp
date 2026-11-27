@@ -13,7 +13,7 @@
 
 // Function: cEmManage_damageEma2Near
 // Address: 0x292d18 - 0x292dc8
-void cEmManage_damageEma2Near_0x292d18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_damageEma2Near_0x292d18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_damageEma2Near_0x292d18");
 #endif
@@ -106,7 +106,6 @@ label_292d50:
     if (!runtime->callDirectStatic(rdram, ctx, &strcmp_0x3a5678, 0x3a5678u, 0x292d64u)) {
         return;
     }
-    ctx->pc = 0x292D64u;
 label_292d64:
     // 0x292d64: 0x5440000e  bnel        $v0, $zero, . + 4 + (0xE << 2)
     ctx->pc = 0x292D64u;
@@ -155,7 +154,6 @@ label_292d64:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0MagnitudeSqXZ_0x1f7eb0, 0x1f7eb0u, 0x292d84u)) {
         return;
     }
-    ctx->pc = 0x292D84u;
 label_292d84:
     // 0x292d84: 0x4600a034  c.lt.s      $f20, $f0
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[20], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -187,7 +185,6 @@ label_292d84:
     if (!runtime->callDirectStatic(rdram, ctx, &cEma2_setDamage_0x288f00, 0x288f00u, 0x292d9cu)) {
         return;
     }
-    ctx->pc = 0x292D9Cu;
 label_292d9c:
     // 0x292d9c: 0x8e310004  lw          $s1, 0x4($s1)
     ctx->pc = 0x292d9cu;
@@ -211,7 +208,6 @@ label_292da0:
             goto label_292d50;
         }
     }
-    ctx->pc = 0x292DA8u;
 label_292da8:
     // 0x292da8: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x292da8u;

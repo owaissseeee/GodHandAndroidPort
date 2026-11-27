@@ -13,7 +13,7 @@
 
 // Function: PushEntryAtField10000_299868
 // Address: 0x299868 - 0x2998a0
-void PushEntryAtField10000_299868_0x299868(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void PushEntryAtField10000_299868_0x299868(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("PushEntryAtField10000_299868_0x299868");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: _sceFsSemInit
 // Address: 0x3b3e70 - 0x3b3ec8
-void _sceFsSemInit_0x3b3e70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceFsSemInit_0x3b3e70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceFsSemInit_0x3b3e70");
 #endif
@@ -81,7 +81,6 @@ void _sceFsSemInit_0x3b3e70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &CreateSema_0x3afca0, 0x3afca0u, 0x3b3eb0u)) {
         return;
     }
-    ctx->pc = 0x3B3EB0u;
 label_3b3eb0:
     // 0x3b3eb0: 0xae02aee4  sw          $v0, -0x511C($s0)
     ctx->pc = 0x3b3eb0u;

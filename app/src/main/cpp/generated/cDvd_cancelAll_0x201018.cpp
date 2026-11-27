@@ -13,7 +13,7 @@
 
 // Function: cDvd_cancelAll
 // Address: 0x201018 - 0x201098
-void cDvd_cancelAll_0x201018(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDvd_cancelAll_0x201018(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDvd_cancelAll_0x201018");
 #endif
@@ -87,7 +87,6 @@ void cDvd_cancelAll_0x201018(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_00324008_0x324008, 0x324008u, 0x201050u)) {
         return;
     }
-    ctx->pc = 0x201050u;
 label_201050:
     // 0x201050: 0xc08063c  jal         func_2018F0
     SET_GPR_U32(ctx, 31, 0x201058u);
@@ -100,14 +99,12 @@ label_201050:
     if (!runtime->callDirectStatic(rdram, ctx, &FreeObjectSlot_2018F0_0x2018f0, 0x2018f0u, 0x201058u)) {
         return;
     }
-    ctx->pc = 0x201058u;
 label_201058:
     // 0x201058: 0xae200000  sw          $zero, 0x0($s1)
     ctx->pc = 0x201058u;
     WRITE32(ADD32(GPR_U32(ctx, 17), 0), GPR_U32(ctx, 0));
 label_20105c:
     // 0x20105c: 0x2412001f  addiu       $s2, $zero, 0x1F
-    ctx->pc = 0x20105cu;
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 0), 31));
 label_201060:
     // 0x201060: 0x200282d  daddu       $a1, $s0, $zero
@@ -123,7 +120,6 @@ label_201060:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00201228_0x201228, 0x201228u, 0x20106cu)) {
         return;
     }
-    ctx->pc = 0x20106Cu;
 label_20106c:
     // 0x20106c: 0x2652ffff  addiu       $s2, $s2, -0x1
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), 4294967295));

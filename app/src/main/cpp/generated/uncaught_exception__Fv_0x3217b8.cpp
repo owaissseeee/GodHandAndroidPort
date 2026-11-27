@@ -13,7 +13,7 @@
 
 // Function: uncaught_exception__Fv
 // Address: 0x3217b8 - 0x3217f0
-void uncaught_exception__Fv_0x3217b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void uncaught_exception__Fv_0x3217b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("uncaught_exception__Fv_0x3217b8");
 #endif
@@ -37,7 +37,6 @@ void uncaught_exception__Fv_0x3217b8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___get_eh_info_0x320360, 0x320360u, 0x3217c8u)) {
         return;
     }
-    ctx->pc = 0x3217C8u;
 label_3217c8:
     // 0x3217c8: 0x8c420000  lw          $v0, 0x0($v0)
     ctx->pc = 0x3217c8u;
@@ -61,7 +60,6 @@ label_3217c8:
     ctx->pc = 0x3217d4u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 20)));
     // 0x3217d8: 0x2c430001  sltiu       $v1, $v0, 0x1
-    ctx->pc = 0x3217d8u;
     SET_GPR_U64(ctx, 3, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1) ? 1 : 0);
 label_3217dc:
     // 0x3217dc: 0xdfbf0000  ld          $ra, 0x0($sp)

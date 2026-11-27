@@ -13,7 +13,7 @@
 
 // Function: cSnd_GetBgmHitScale
 // Address: 0x2d2cf0 - 0x2d2d68
-void cSnd_GetBgmHitScale_0x2d2cf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_GetBgmHitScale_0x2d2cf0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_GetBgmHitScale_0x2d2cf0");
 #endif
@@ -65,7 +65,6 @@ void cSnd_GetBgmHitScale_0x2d2cf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &strcmp_0x3a5678, 0x3a5678u, 0x2d2d14u)) {
         return;
     }
-    ctx->pc = 0x2D2D14u;
 label_2d2d14:
     // 0x2d2d14: 0x1440000c  bnez        $v0, . + 4 + (0xC << 2)
     ctx->pc = 0x2D2D14u;
@@ -116,14 +115,12 @@ label_2d2d14:
             goto label_2d2d54;
         }
     }
-    ctx->pc = 0x2D2D48u;
 label_2d2d48:
     // 0x2d2d48: 0x3c013c93  lui         $at, 0x3C93
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15507 << 16));
     // 0x2d2d4c: 0x342174bc  ori         $at, $at, 0x74BC
     SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)29884);
     // 0x2d2d50: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x2d2d50u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
 label_2d2d54:
     // 0x2d2d54: 0x7bb00010  lq          $s0, 0x10($sp)

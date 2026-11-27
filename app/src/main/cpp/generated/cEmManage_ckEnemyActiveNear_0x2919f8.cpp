@@ -13,7 +13,7 @@
 
 // Function: cEmManage_ckEnemyActiveNear
 // Address: 0x2919f8 - 0x291ac8
-void cEmManage_ckEnemyActiveNear_0x2919f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_ckEnemyActiveNear_0x2919f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_ckEnemyActiveNear_0x2919f8");
 #endif
@@ -113,7 +113,6 @@ label_291a30:
     // 0x291a48: 0x28820300  slti        $v0, $a0, 0x300
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 4) < (int64_t)(int32_t)768) ? 1 : 0);
     // 0x291a4c: 0x40282d  daddu       $a1, $v0, $zero
-    ctx->pc = 0x291a4cu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_291a50:
     // 0x291a50: 0x30a200ff  andi        $v0, $a1, 0xFF
@@ -184,7 +183,6 @@ label_291a78:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0MagnitudeSqXZ_0x1f7eb0, 0x1f7eb0u, 0x291a80u)) {
         return;
     }
-    ctx->pc = 0x291A80u;
 label_291a80:
     // 0x291a80: 0x4614a042  mul.s       $f1, $f20, $f20
     ctx->f[1] = FPU_MUL_S(ctx->f[20], ctx->f[20]);
@@ -229,10 +227,8 @@ label_291a98:
             goto label_291a30;
         }
     }
-    ctx->pc = 0x291AA0u;
 label_291aa0:
     // 0x291aa0: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x291aa0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_291aa4:
     // 0x291aa4: 0x7bb00040  lq          $s0, 0x40($sp)

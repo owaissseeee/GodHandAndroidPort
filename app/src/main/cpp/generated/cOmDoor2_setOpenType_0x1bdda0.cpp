@@ -13,7 +13,7 @@
 
 // Function: cOmDoor2_setOpenType
 // Address: 0x1bdda0 - 0x1bde00
-void cOmDoor2_setOpenType_0x1bdda0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmDoor2_setOpenType_0x1bdda0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmDoor2_setOpenType_0x1bdda0");
 #endif
@@ -84,7 +84,6 @@ void cOmDoor2_setOpenType_0x1bdda0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &cOmDoor2_setCloseFix_0x1bdce8, 0x1bdce8u, 0x1bddd8u)) {
         return;
     }
-    ctx->pc = 0x1BDDD8u;
 label_1bddd8:
     // 0x1bddd8: 0xae110778  sw          $s1, 0x778($s0)
     ctx->pc = 0x1bddd8u;
@@ -100,7 +99,6 @@ label_1bddd8:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmDoor2_setOpenFix_0x1bdc48, 0x1bdc48u, 0x1bdde4u)) {
         return;
     }
-    ctx->pc = 0x1BDDE4u;
 label_1bdde4:
     // 0x1bdde4: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x1BDDE4u;
@@ -117,7 +115,6 @@ label_1bdde4:
             goto label_1bddf0;
         }
     }
-    ctx->pc = 0x1BDDECu;
 label_1bddec:
     // 0x1bddec: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1bddecu;

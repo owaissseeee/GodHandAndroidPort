@@ -13,7 +13,7 @@
 
 // Function: BlackJackId__Trans
 // Address: 0x1d4fd0 - 0x1d51b8
-void BlackJackId__Trans_0x1d4fd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BlackJackId__Trans_0x1d4fd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BlackJackId__Trans_0x1d4fd0");
 #endif
@@ -76,7 +76,6 @@ void BlackJackId__Trans_0x1d4fd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     // 0x1d5018: 0x2405ffff  addiu       $a1, $zero, -0x1
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x1d501c: 0x0  nop
-    ctx->pc = 0x1d501cu;
     // NOP
 label_1d5020:
     // 0x1d5020: 0xf8600000  sqc2        $vf0, 0x0($v1)
@@ -207,7 +206,6 @@ label_1d5020:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDManager_getTexAddr_0x2acdc8, 0x2acdc8u, 0x1d50c8u)) {
         return;
     }
-    ctx->pc = 0x1D50C8u;
 label_1d50c8:
     // 0x1d50c8: 0xc7a100a4  lwc1        $f1, 0xA4($sp)
     ctx->pc = 0x1d50c8u;
@@ -330,7 +328,6 @@ label_1d50c8:
     if (!runtime->callDirectStatic(rdram, ctx, &Gp_draw_polyFT4_0x15bcf0, 0x15bcf0u, 0x1d5174u)) {
         return;
     }
-    ctx->pc = 0x1D5174u;
 label_1d5174:
     // 0x1d5174: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -362,7 +359,6 @@ label_1d518c:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_trans_0x2aac28, 0x2aac28u, 0x1d5194u)) {
         return;
     }
-    ctx->pc = 0x1D5194u;
 label_1d5194:
     // 0x1d5194: 0x7bb00120  lq          $s0, 0x120($sp)
     ctx->pc = 0x1d5194u;

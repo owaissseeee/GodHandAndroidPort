@@ -13,7 +13,7 @@
 
 // Function: cModel_aimIkPart
 // Address: 0x153808 - 0x1538f0
-void cModel_aimIkPart_0x153808(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cModel_aimIkPart_0x153808(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cModel_aimIkPart_0x153808");
 #endif
@@ -76,7 +76,6 @@ void cModel_aimIkPart_0x153808(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0MulMatrix_0x30a2e0, 0x30a2e0u, 0x153848u)) {
         return;
     }
-    ctx->pc = 0x153848u;
 label_153848:
     // 0x153848: 0x8e2400f0  lw          $a0, 0xF0($s1)
     ctx->pc = 0x153848u;
@@ -94,7 +93,6 @@ label_153848:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0ApplyMatrixXYZ_0x1f8350, 0x1f8350u, 0x153858u)) {
         return;
     }
-    ctx->pc = 0x153858u;
 label_153858:
     // 0x153858: 0x8e2400f0  lw          $a0, 0xF0($s1)
     ctx->pc = 0x153858u;
@@ -170,7 +168,6 @@ label_15389c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0InversMatrix_0x30a3f8, 0x30a3f8u, 0x1538acu)) {
         return;
     }
-    ctx->pc = 0x1538ACu;
 label_1538ac:
     // 0x1538ac: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -187,7 +184,6 @@ label_1538ac:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0MulMatrix_0x30a2e0, 0x30a2e0u, 0x1538bcu)) {
         return;
     }
-    ctx->pc = 0x1538BCu;
 label_1538bc:
     // 0x1538bc: 0x8e650250  lw          $a1, 0x250($s3)
     ctx->pc = 0x1538bcu;
@@ -203,7 +199,6 @@ label_1538bc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001501D0_0x1501d0, 0x1501d0u, 0x1538c8u)) {
         return;
     }
-    ctx->pc = 0x1538C8u;
 label_1538c8:
     // 0x1538c8: 0x7bb000b0  lq          $s0, 0xB0($sp)
     ctx->pc = 0x1538c8u;

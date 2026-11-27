@@ -13,7 +13,7 @@
 
 // Function: cEmManage_getNextNo
 // Address: 0x2930a8 - 0x2930b8
-void cEmManage_getNextNo_0x2930a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_getNextNo_0x2930a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_getNextNo_0x2930a8");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: cEm30_setEvent
 // Address: 0x278000 - 0x278018
-void cEm30_setEvent_0x278000(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm30_setEvent_0x278000(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm30_setEvent_0x278000");
 #endif

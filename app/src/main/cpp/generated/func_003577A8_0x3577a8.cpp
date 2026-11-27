@@ -13,7 +13,7 @@
 
 // Function: func_003577A8
 // Address: 0x3577a8 - 0x357870
-void func_003577A8_0x3577a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003577A8_0x3577a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003577A8_0x3577a8");
 #endif
@@ -126,7 +126,6 @@ void func_003577A8_0x3577a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_35784c;
         }
     }
-    ctx->pc = 0x357808u;
 label_357808:
     // 0x357808: 0x14a20010  bne         $a1, $v0, . + 4 + (0x10 << 2)
     ctx->pc = 0x357808u;
@@ -154,7 +153,6 @@ label_357808:
     if (!runtime->callDirectStatic(rdram, ctx, &GetArrayElemA0C_35A1C8_0x35a1c8, 0x35a1c8u, 0x357818u)) {
         return;
     }
-    ctx->pc = 0x357818u;
 label_357818:
     // 0x357818: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -179,7 +177,6 @@ label_357818:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Get_D_003EEA70_LT_2_360C40_0x360c40, 0x360c40u, 0x35782cu)) {
         return;
     }
-    ctx->pc = 0x35782Cu;
 label_35782c:
     // 0x35782c: 0x54400007  bnel        $v0, $zero, . + 4 + (0x7 << 2)
     ctx->pc = 0x35782Cu;
@@ -209,7 +206,6 @@ label_35782c:
     if (!runtime->callDirectStatic(rdram, ctx, &GetArrayElemA0C_35A1C8_0x35a1c8, 0x35a1c8u, 0x357840u)) {
         return;
     }
-    ctx->pc = 0x357840u;
 label_357840:
     // 0x357840: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x357840u;
@@ -227,11 +223,9 @@ label_357840:
         }
     }
     // 0x357848: 0x24100003  addiu       $s0, $zero, 0x3
-    ctx->pc = 0x357848u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
 label_35784c:
     // 0x35784c: 0x220202d  daddu       $a0, $s1, $zero
-    ctx->pc = 0x35784cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
 label_357850:
     // 0x357850: 0xdfb10008  ld          $s1, 0x8($sp)

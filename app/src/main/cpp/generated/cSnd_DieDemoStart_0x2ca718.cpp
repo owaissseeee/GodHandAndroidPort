@@ -13,7 +13,7 @@
 
 // Function: cSnd_DieDemoStart
 // Address: 0x2ca718 - 0x2ca798
-void cSnd_DieDemoStart_0x2ca718(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_DieDemoStart_0x2ca718(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_DieDemoStart_0x2ca718");
 #endif
@@ -84,7 +84,6 @@ label_2ca740:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_FadeOut_0x2cd4a8, 0x2cd4a8u, 0x2ca758u)) {
         return;
     }
-    ctx->pc = 0x2CA758u;
 label_2ca758:
     // 0x2ca758: 0x8e100088  lw          $s0, 0x88($s0)
     ctx->pc = 0x2ca758u;
@@ -107,7 +106,6 @@ label_2ca758:
             goto label_2ca740;
         }
     }
-    ctx->pc = 0x2CA764u;
 label_2ca764:
     // 0x2ca764: 0x8e2200b0  lw          $v0, 0xB0($s1)
     ctx->pc = 0x2ca764u;

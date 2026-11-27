@@ -13,7 +13,7 @@
 
 // Function: Tramp_read__7istreamPci_38A198
 // Address: 0x38a198 - 0x38a1b8
-void Tramp_read__7istreamPci_38A198_0x38a198(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp_read__7istreamPci_38A198_0x38a198(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp_read__7istreamPci_38A198_0x38a198");
 #endif
@@ -37,7 +37,6 @@ void Tramp_read__7istreamPci_38A198_0x38a198(uint8_t* rdram, R5900Context* ctx, 
     if (!runtime->callDirectStatic(rdram, ctx, &read__7istreamPci_0x387890, 0x387890u, 0x38a1a8u)) {
         return;
     }
-    ctx->pc = 0x38A1A8u;
 label_38a1a8:
     // 0x38a1a8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38a1a8u;

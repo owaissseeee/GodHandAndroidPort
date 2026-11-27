@@ -13,7 +13,7 @@
 
 // Function: func_002D9458
 // Address: 0x2d9458 - 0x2d9778
-void func_002D9458_0x2d9458(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002D9458_0x2d9458(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002D9458_0x2d9458");
 #endif
@@ -233,7 +233,6 @@ label_2d952c:
     ctx->pc = 0x2d9550u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 3), 8), bits); }
     // 0x2d9554: 0x24830050  addiu       $v1, $a0, 0x50
-    ctx->pc = 0x2d9554u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), 80));
 label_2d9558:
     // 0x2d9558: 0x24a20050  addiu       $v0, $a1, 0x50
@@ -363,7 +362,6 @@ label_2d9580:
     ctx->pc = 0x2d95f8u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 120), GPR_U32(ctx, 2));
     // 0x2d95fc: 0x0  nop
-    ctx->pc = 0x2d95fcu;
     // NOP
 label_2d9600:
     // 0x2d9600: 0x94c20000  lhu         $v0, 0x0($a2)
@@ -457,7 +455,6 @@ label_2d963c:
     ctx->pc = 0x2d9660u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 3), 8), bits); }
     // 0x2d9664: 0x24e30030  addiu       $v1, $a3, 0x30
-    ctx->pc = 0x2d9664u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 7), 48));
 label_2d9668:
     // 0x2d9668: 0x24c20030  addiu       $v0, $a2, 0x30
@@ -628,7 +625,6 @@ label_2d96c0:
     // 0x2d9728: 0x2406002f  addiu       $a2, $zero, 0x2F
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 47));
     // 0x2d972c: 0x2407ffff  addiu       $a3, $zero, -0x1
-    ctx->pc = 0x2d972cu;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_2d9730:
     // 0x2d9730: 0x68480007  ldl         $t0, 0x7($v0)

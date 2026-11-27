@@ -13,7 +13,7 @@
 
 // Function: eh_context_static
 // Address: 0x3203b0 - 0x320418
-void eh_context_static_0x3203b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void eh_context_static_0x3203b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("eh_context_static_0x3203b0");
 #endif
@@ -78,7 +78,6 @@ void eh_context_static_0x3203b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x3203ecu)) {
         return;
     }
-    ctx->pc = 0x3203ECu;
 label_3203ec:
     // 0x3203ec: 0x3c030075  lui         $v1, 0x75
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)117 << 16));
@@ -99,10 +98,8 @@ label_3203ec:
             goto label_320400;
         }
     }
-    ctx->pc = 0x3203FCu;
 label_3203fc:
     // 0x3203fc: 0x3c110075  lui         $s1, 0x75
-    ctx->pc = 0x3203fcu;
     SET_GPR_S32(ctx, 17, (int32_t)((uint32_t)117 << 16));
 label_320400:
     // 0x320400: 0x26225bf8  addiu       $v0, $s1, 0x5BF8

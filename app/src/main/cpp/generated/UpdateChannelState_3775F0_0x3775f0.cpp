@@ -13,7 +13,7 @@
 
 // Function: UpdateChannelState_3775F0
 // Address: 0x3775f0 - 0x377688
-void UpdateChannelState_3775F0_0x3775f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateChannelState_3775F0_0x3775f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateChannelState_3775F0_0x3775f0");
 #endif
@@ -63,7 +63,6 @@ void UpdateChannelState_3775F0_0x3775f0(uint8_t* rdram, R5900Context* ctx, PS2Ru
         }
     }
     // 0x377614: 0x200282d  daddu       $a1, $s0, $zero
-    ctx->pc = 0x377614u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_377618:
     // 0x377618: 0xc0ddda2  jal         func_377688
@@ -77,7 +76,6 @@ label_377618:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00377688_0x377688, 0x377688u, 0x377620u)) {
         return;
     }
-    ctx->pc = 0x377620u;
 label_377620:
     // 0x377620: 0x26100001  addiu       $s0, $s0, 0x1
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 1));
@@ -181,7 +179,6 @@ label_377650:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00377A28_0x377a28, 0x377a28u, 0x377670u)) {
         return;
     }
-    ctx->pc = 0x377670u;
 label_377670:
     // 0x377670: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x377670u;

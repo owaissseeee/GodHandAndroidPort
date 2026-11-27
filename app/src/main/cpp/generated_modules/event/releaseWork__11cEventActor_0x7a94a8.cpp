@@ -14,20 +14,21 @@ namespace gh_event
 {
 // Function: releaseWork__11cEventActor
 // Address: 0x7a94a8 - 0x7a94e0
-void releaseWork__11cEventActor_0x7a94a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void releaseWork__11cEventActor_0x7a94a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("releaseWork__11cEventActor_0x7a94a8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7a94ccu: goto label_7a94cc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7a94a8u, 0)) {
+        switch (ctx->pc) {
+            case 0x7a94ccu: goto label_7a94cc;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7a94a8u;
+
 
     // 0x7a94a8: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x7a94a8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x7a94ac: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x7a94acu;
@@ -36,7 +37,6 @@ void releaseWork__11cEventActor_0x7a94a8(uint8_t* rdram, R5900Context* ctx, PS2R
     ctx->pc = 0x7a94b0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x7a94b4: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x7a94b4u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x7a94b8: 0x8e050014  lw          $a1, 0x14($s0)
     ctx->pc = 0x7a94b8u;
@@ -56,9 +56,7 @@ void releaseWork__11cEventActor_0x7a94a8(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_7a94d0;
         }
     }
-    ctx->pc = 0x7A94C4u;
     // 0x7a94c4: 0xc0aa5a0  jal         func_2A9680
-    ctx->pc = 0x7A94C4u;
     SET_GPR_U32(ctx, 31, 0x7A94CCu);
     ctx->pc = 0x7A94C8u;
     ctx->in_delay_slot = true;
@@ -70,7 +68,6 @@ void releaseWork__11cEventActor_0x7a94a8(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x7A94C4u, 0x7A94CCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7A94CCu;
 label_7a94cc:
     // 0x7a94cc: 0xae000004  sw          $zero, 0x4($s0)
     ctx->pc = 0x7a94ccu;

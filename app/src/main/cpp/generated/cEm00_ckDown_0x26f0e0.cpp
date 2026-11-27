@@ -13,7 +13,7 @@
 
 // Function: cEm00_ckDown
 // Address: 0x26f0e0 - 0x26f120
-void cEm00_ckDown_0x26f0e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_ckDown_0x26f0e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_ckDown_0x26f0e0");
 #endif
@@ -73,7 +73,6 @@ void cEm00_ckDown_0x26f0e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
         return;
         #endif
     }
-    ctx->pc = 0x26F114u;
 label_26f114:
     // 0x26f114: 0x3e00008  jr          $ra
     ctx->pc = 0x26F114u;

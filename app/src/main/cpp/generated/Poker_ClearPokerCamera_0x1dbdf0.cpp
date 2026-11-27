@@ -13,7 +13,7 @@
 
 // Function: Poker_ClearPokerCamera
 // Address: 0x1dbdf0 - 0x1dbe18
-void Poker_ClearPokerCamera_0x1dbdf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Poker_ClearPokerCamera_0x1dbdf0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Poker_ClearPokerCamera_0x1dbdf0");
 #endif
@@ -46,7 +46,6 @@ void Poker_ClearPokerCamera_0x1dbdf0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &cCamManager_setPlCamera_0x138d40, 0x138d40u, 0x1dbe08u)) {
         return;
     }
-    ctx->pc = 0x1DBE08u;
 label_1dbe08:
     // 0x1dbe08: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1dbe08u;

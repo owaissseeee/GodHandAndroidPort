@@ -13,7 +13,7 @@
 
 // Function: SdeIssTblGet
 // Address: 0x374cb8 - 0x374d98
-void SdeIssTblGet_0x374cb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SdeIssTblGet_0x374cb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SdeIssTblGet_0x374cb8");
 #endif
@@ -180,7 +180,6 @@ void SdeIssTblGet_0x374cb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
             goto label_374d88;
         }
     }
-    ctx->pc = 0x374D7Cu;
 label_374d7c:
     // 0x374d7c: 0xc0dd366  jal         func_374D98
     ctx->pc = 0x374D7Cu;
@@ -188,10 +187,8 @@ label_374d7c:
     if (!runtime->callDirectStatic(rdram, ctx, &InitSoundBlock_374D98_0x374d98, 0x374d98u, 0x374d84u)) {
         return;
     }
-    ctx->pc = 0x374D84u;
 label_374d84:
     // 0x374d84: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x374d84u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
 label_374d88:
     // 0x374d88: 0xdfbf0000  ld          $ra, 0x0($sp)

@@ -13,7 +13,7 @@
 
 // Function: cHeatSys_UpdateHeatLv
 // Address: 0x2a9b50 - 0x2a9bc0
-void cHeatSys_UpdateHeatLv_0x2a9b50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cHeatSys_UpdateHeatLv_0x2a9b50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cHeatSys_UpdateHeatLv_0x2a9b50");
 #endif
@@ -45,7 +45,6 @@ void cHeatSys_UpdateHeatLv_0x2a9b50(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &cHeatSys_GetHeatRatio_0x2a9c98, 0x2a9c98u, 0x2a9b64u)) {
         return;
     }
-    ctx->pc = 0x2A9B64u;
 label_2a9b64:
     // 0x2a9b64: 0x46000046  mov.s       $f1, $f0
     ctx->f[1] = FPU_MOV_S(ctx->f[0]);
@@ -83,7 +82,6 @@ label_2a9b64:
             goto label_2a9bb0;
         }
     }
-    ctx->pc = 0x2A9B8Cu;
 label_2a9b8c:
     // 0x2a9b8c: 0x3c013f40  lui         $at, 0x3F40
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16192 << 16));
@@ -111,7 +109,6 @@ label_2a9b8c:
         }
     }
     // 0x2a9ba8: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2a9ba8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2a9bac:
     // 0x2a9bac: 0xae020014  sw          $v0, 0x14($s0)

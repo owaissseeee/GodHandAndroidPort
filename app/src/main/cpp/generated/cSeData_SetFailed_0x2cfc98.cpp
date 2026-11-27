@@ -13,7 +13,7 @@
 
 // Function: cSeData_SetFailed
 // Address: 0x2cfc98 - 0x2cfcb0
-void cSeData_SetFailed_0x2cfc98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSeData_SetFailed_0x2cfc98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSeData_SetFailed_0x2cfc98");
 #endif

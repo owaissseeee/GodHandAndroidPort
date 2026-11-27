@@ -13,7 +13,7 @@
 
 // Function: cOmbb_ckBomb
 // Address: 0x1b8718 - 0x1b8720
-void cOmbb_ckBomb_0x1b8718(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmbb_ckBomb_0x1b8718(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmbb_ckBomb_0x1b8718");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: cWorldLight_Get_LightData2
 // Address: 0x2d9038 - 0x2d90b0
-void cWorldLight_Get_LightData2_0x2d9038(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cWorldLight_Get_LightData2_0x2d9038(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cWorldLight_Get_LightData2_0x2d9038");
 #endif
@@ -73,7 +73,6 @@ void cWorldLight_Get_LightData2_0x2d9038(uint8_t* rdram, R5900Context* ctx, PS2R
     // 0x2d9060: 0x25080001  addiu       $t0, $t0, 0x1
     SET_GPR_S32(ctx, 8, (int32_t)ADD32(GPR_U32(ctx, 8), 1));
     // 0x2d9064: 0x0  nop
-    ctx->pc = 0x2d9064u;
     // NOP
 label_2d9068:
     // 0x2d9068: 0x109102a  slt         $v0, $t0, $t1
@@ -144,7 +143,6 @@ label_2d9094:
             goto label_2d9068;
         }
     }
-    ctx->pc = 0x2D909Cu;
 label_2d909c:
     // 0x2d909c: 0x8c830078  lw          $v1, 0x78($a0)
     ctx->pc = 0x2d909cu;

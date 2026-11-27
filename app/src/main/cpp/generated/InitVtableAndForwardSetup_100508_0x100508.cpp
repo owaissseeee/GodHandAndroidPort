@@ -13,7 +13,7 @@
 
 // Function: InitVtableAndForwardSetup_100508
 // Address: 0x100508 - 0x100530
-void InitVtableAndForwardSetup_100508_0x100508(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitVtableAndForwardSetup_100508_0x100508(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitVtableAndForwardSetup_100508_0x100508");
 #endif
@@ -48,7 +48,6 @@ void InitVtableAndForwardSetup_100508_0x100508(uint8_t* rdram, R5900Context* ctx
     if (!runtime->callDirectStatic(rdram, ctx, &func_0014EA28_0x14ea28, 0x14ea28u, 0x100524u)) {
         return;
     }
-    ctx->pc = 0x100524u;
 label_100524:
     // 0x100524: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x100524u;

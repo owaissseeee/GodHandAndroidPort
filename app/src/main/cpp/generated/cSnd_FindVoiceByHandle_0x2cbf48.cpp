@@ -13,7 +13,7 @@
 
 // Function: cSnd_FindVoiceByHandle
 // Address: 0x2cbf48 - 0x2cbf78
-void cSnd_FindVoiceByHandle_0x2cbf48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_FindVoiceByHandle_0x2cbf48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_FindVoiceByHandle_0x2cbf48");
 #endif
@@ -76,7 +76,6 @@ label_2cbf58:
         return;
         #endif
     }
-    ctx->pc = 0x2CBF68u;
 label_2cbf68:
     // 0x2cbf68: 0x5460fffb  bnel        $v1, $zero, . + 4 + (-0x5 << 2)
     ctx->pc = 0x2CBF68u;
@@ -96,7 +95,6 @@ label_2cbf68:
             goto label_2cbf58;
         }
     }
-    ctx->pc = 0x2CBF70u;
 label_2cbf70:
     // 0x2cbf70: 0x3e00008  jr          $ra
     ctx->pc = 0x2CBF70u;

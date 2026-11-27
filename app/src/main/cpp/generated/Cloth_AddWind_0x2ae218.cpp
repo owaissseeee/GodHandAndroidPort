@@ -11,12 +11,23 @@
 #include "ps2_log.h"
 #endif
 
+namespace godhand { bool isUltraPotatoMode(); }
+
 // Function: Cloth_AddWind
 // Address: 0x2ae218 - 0x2ae3d0
-void Cloth_AddWind_0x2ae218(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Cloth_AddWind_0x2ae218(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Cloth_AddWind_0x2ae218");
 #endif
+
+    if (__builtin_expect(ctx->pc == 0x2ae218u && godhand::isUltraPotatoMode(), 0)) {
+        const uint32_t jumpTarget = GPR_U32(ctx, 31);
+        ctx->pc = jumpTarget;
+        #if defined(PS2X_STRICT_RETURN_DIAGNOSTICS) && PS2X_STRICT_RETURN_DIAGNOSTICS
+        (void)runtime->dispatchGuestBranch(rdram, ctx, jumpTarget, 0x2ae218u, 0u, PS2Runtime::GuestBranchKind::Return, "JR $ra");
+        #endif
+        return;
+    }
 
     if (__builtin_expect(ctx->pc != 0x2ae218u, 0)) {
         switch (ctx->pc) {
@@ -126,7 +137,6 @@ label_2ae278:
     // 0x2ae288: 0x752018  mult        $a0, $v1, $s5
     { int64_t result = (int64_t)GPR_S32(ctx, 3) * (int64_t)GPR_S32(ctx, 21); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 4, (int32_t)result); }
     // 0x2ae28c: 0x0  nop
-    ctx->pc = 0x2ae28cu;
     // NOP
 label_2ae290:
     // 0x2ae290: 0x24030050  addiu       $v1, $zero, 0x50
@@ -193,7 +203,6 @@ label_2ae290:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0LengthSq_0x1f7e28, 0x1f7e28u, 0x2ae2dcu)) {
         return;
     }
-    ctx->pc = 0x2AE2DCu;
 label_2ae2dc:
     // 0x2ae2dc: 0x46160034  c.lt.s      $f0, $f22
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[0], ctx->f[22])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -256,7 +265,6 @@ label_2ae2dc:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Cos_0x1f7fb8, 0x1f7fb8u, 0x2ae330u)) {
         return;
     }
-    ctx->pc = 0x2AE330u;
 label_2ae330:
     // 0x2ae330: 0xda240000  lqc2        $vf4, 0x0($s1)
     ctx->pc = 0x2ae330u;
@@ -319,7 +327,6 @@ label_2ae368:
             goto label_2ae290;
         }
     }
-    ctx->pc = 0x2AE378u;
 label_2ae378:
     // 0x2ae378: 0x8e620004  lw          $v0, 0x4($s3)
     ctx->pc = 0x2ae378u;
@@ -346,7 +353,6 @@ label_2ae378:
             goto label_2ae278;
         }
     }
-    ctx->pc = 0x2AE38Cu;
 label_2ae38c:
     // 0x2ae38c: 0x7bb000c0  lq          $s0, 0xC0($sp)
     ctx->pc = 0x2ae38cu;

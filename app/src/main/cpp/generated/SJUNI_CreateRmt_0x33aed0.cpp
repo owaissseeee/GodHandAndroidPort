@@ -13,7 +13,7 @@
 
 // Function: SJUNI_CreateRmt
 // Address: 0x33aed0 - 0x33af28
-void SJUNI_CreateRmt_0x33aed0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SJUNI_CreateRmt_0x33aed0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SJUNI_CreateRmt_0x33aed0");
 #endif
@@ -70,7 +70,6 @@ void SJUNI_CreateRmt_0x33aed0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &DTX_CallUrpc_0x332670, 0x332670u, 0x33af10u)) {
         return;
     }
-    ctx->pc = 0x33AF10u;
 label_33af10:
     // 0x33af10: 0x8e020000  lw          $v0, 0x0($s0)
     ctx->pc = 0x33af10u;

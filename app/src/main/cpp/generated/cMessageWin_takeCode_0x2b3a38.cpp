@@ -13,7 +13,7 @@
 
 // Function: cMessageWin_takeCode
 // Address: 0x2b3a38 - 0x2b3ad0
-void cMessageWin_takeCode_0x2b3a38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessageWin_takeCode_0x2b3a38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessageWin_takeCode_0x2b3a38");
 #endif
@@ -53,7 +53,6 @@ void cMessageWin_takeCode_0x2b3a38(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AF218_0x2af218, 0x2af218u, 0x2b3a54u)) {
         return;
     }
-    ctx->pc = 0x2B3A54u;
 label_2b3a54:
     // 0x2b3a54: 0x8e03008c  lw          $v1, 0x8C($s0)
     ctx->pc = 0x2b3a54u;
@@ -75,7 +74,6 @@ label_2b3a54:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessCommon_getCodeSize_0x2af1f8, 0x2af1f8u, 0x2b3a68u)) {
         return;
     }
-    ctx->pc = 0x2B3A68u;
 label_2b3a68:
     // 0x2b3a68: 0x8e050014  lw          $a1, 0x14($s0)
     ctx->pc = 0x2b3a68u;
@@ -125,7 +123,6 @@ label_2b3a68:
     if (!runtime->callDirectStatic(rdram, ctx, &MessWin_closeIfNoEndCode_0x2b43b0, 0x2b43b0u, 0x2b3aacu)) {
         return;
     }
-    ctx->pc = 0x2B3AACu;
 label_2b3aac:
     // 0x2b3aac: 0xc0ad17a  jal         func_2B45E8
     SET_GPR_U32(ctx, 31, 0x2B3AB4u);
@@ -138,7 +135,6 @@ label_2b3aac:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B45E8_0x2b45e8, 0x2b45e8u, 0x2b3ab4u)) {
         return;
     }
-    ctx->pc = 0x2B3AB4u;
 label_2b3ab4:
     // 0x2b3ab4: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2b3ab4u;

@@ -13,7 +13,7 @@
 
 // Function: sfhds_AnlyUsedStmid
 // Address: 0x34d7a8 - 0x34d820
-void sfhds_AnlyUsedStmid_0x34d7a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfhds_AnlyUsedStmid_0x34d7a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfhds_AnlyUsedStmid_0x34d7a8");
 #endif
@@ -65,7 +65,6 @@ void sfhds_AnlyUsedStmid_0x34d7a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     // 0x34d7d0: 0x320500ff  andi        $a1, $s0, 0xFF
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 16) & (uint64_t)(uint16_t)255);
     // 0x34d7d4: 0x0  nop
-    ctx->pc = 0x34d7d4u;
     // NOP
 label_34d7d8:
     // 0x34d7d8: 0x240202d  daddu       $a0, $s2, $zero
@@ -81,7 +80,6 @@ label_34d7d8:
     if (!runtime->callDirectStatic(rdram, ctx, &SFH_IsExistStmId_0x35d918, 0x35d918u, 0x34d7e4u)) {
         return;
     }
-    ctx->pc = 0x34D7E4u;
 label_34d7e4:
     // 0x34d7e4: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x34D7E4u;
@@ -113,7 +111,6 @@ label_34d7e4:
             goto label_34d808;
         }
     }
-    ctx->pc = 0x34D7F4u;
 label_34d7f4:
     // 0x34d7f4: 0x26100001  addiu       $s0, $s0, 0x1
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 1));
@@ -137,10 +134,8 @@ label_34d7f4:
             goto label_34d7d8;
         }
     }
-    ctx->pc = 0x34D804u;
 label_34d804:
     // 0x34d804: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x34d804u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_34d808:
     // 0x34d808: 0xdfb00010  ld          $s0, 0x10($sp)

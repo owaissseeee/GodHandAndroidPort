@@ -13,7 +13,7 @@
 
 // Function: func_002ADC70
 // Address: 0x2adc70 - 0x2adf50
-void func_002ADC70_0x2adc70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002ADC70_0x2adc70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002ADC70_0x2adc70");
 #endif
@@ -123,7 +123,6 @@ void func_002ADC70_0x2adc70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x2adcd8: 0x27b50030  addiu       $s5, $sp, 0x30
     SET_GPR_S32(ctx, 21, (int32_t)ADD32(GPR_U32(ctx, 29), 48));
     // 0x2adcdc: 0x27b70010  addiu       $s7, $sp, 0x10
-    ctx->pc = 0x2adcdcu;
     SET_GPR_S32(ctx, 23, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
 label_2adce0:
     // 0x2adce0: 0x92620014  lbu         $v0, 0x14($s3)
@@ -216,7 +215,6 @@ label_2adce0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00136640_0x136640, 0x136640u, 0x2add50u)) {
         return;
     }
-    ctx->pc = 0x2ADD50u;
 label_2add50:
     // 0x2add50: 0xfba00030  sqc2        $vf0, 0x30($sp)
     ctx->pc = 0x2add50u;
@@ -249,7 +247,6 @@ label_2add50:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0LengthSq_0x1f7e28, 0x1f7e28u, 0x2add74u)) {
         return;
     }
-    ctx->pc = 0x2ADD74u;
 label_2add74:
     // 0x2add74: 0x46000506  mov.s       $f20, $f0
     ctx->f[20] = FPU_MOV_S(ctx->f[0]);
@@ -310,7 +307,6 @@ label_2add74:
     if (!runtime->callDirectStatic(rdram, ctx, &Tramp_001F7DF8_00101E28_0x101e28, 0x101e28u, 0x2addacu)) {
         return;
     }
-    ctx->pc = 0x2ADDACu;
 label_2addac:
     // 0x2addac: 0x46000086  mov.s       $f2, $f0
     ctx->f[2] = FPU_MOV_S(ctx->f[0]);
@@ -415,10 +411,8 @@ label_2addfc:
     if (!runtime->callDirectStatic(rdram, ctx, &sqrtf_0x3a2440, 0x3a2440u, 0x2ade2cu)) {
         return;
     }
-    ctx->pc = 0x2ADE2Cu;
 label_2ade2c:
     // 0x2ade2c: 0x4600b001  sub.s       $f0, $f22, $f0
-    ctx->pc = 0x2ade2cu;
     ctx->f[0] = FPU_SUB_S(ctx->f[22], ctx->f[0]);
 label_2ade30:
     // 0x2ade30: 0xda840000  lqc2        $vf4, 0x0($s4)
@@ -605,7 +599,6 @@ label_2adf00:
             goto label_2adce0;
         }
     }
-    ctx->pc = 0x2ADF10u;
 label_2adf10:
     // 0x2adf10: 0x7bb000f0  lq          $s0, 0xF0($sp)
     ctx->pc = 0x2adf10u;

@@ -13,7 +13,7 @@
 
 // Function: Slot2Part_stepWait
 // Address: 0x1e3128 - 0x1e31b0
-void Slot2Part_stepWait_0x1e3128(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Slot2Part_stepWait_0x1e3128(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Slot2Part_stepWait_0x1e3128");
 #endif
@@ -84,7 +84,6 @@ void Slot2Part_stepWait_0x1e3128(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_1e31a4;
         }
     }
-    ctx->pc = 0x1E3154u;
 label_1e3154:
     // 0x1e3154: 0x960204c2  lhu         $v0, 0x4C2($s0)
     ctx->pc = 0x1e3154u;
@@ -143,7 +142,6 @@ label_1e3154:
     if (!runtime->callDirectStatic(rdram, ctx, &LayerScreen_hideLayers_0x1e4520, 0x1e4520u, 0x1e3188u)) {
         return;
     }
-    ctx->pc = 0x1E3188u;
 label_1e3188:
     // 0x1e3188: 0x8e02000c  lw          $v0, 0xC($s0)
     ctx->pc = 0x1e3188u;
@@ -165,7 +163,6 @@ label_1e3188:
             goto label_1e31a0;
         }
     }
-    ctx->pc = 0x1E3198u;
 label_1e3198:
     // 0x1e3198: 0xae000004  sw          $zero, 0x4($s0)
     ctx->pc = 0x1e3198u;

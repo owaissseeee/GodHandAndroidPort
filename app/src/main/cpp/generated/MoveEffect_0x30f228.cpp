@@ -14,7 +14,7 @@
 
 // Function: MoveEffect
 // Address: 0x30f228 - 0x30f2b0
-void MoveEffect_0x30f228(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MoveEffect_0x30f228(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MoveEffect_0x30f228");
 #endif
@@ -86,7 +86,6 @@ void MoveEffect_0x30f228(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     if (!runtime->callDirectStatic(rdram, ctx, &MoveEmitter_0x300628, 0x300628u, 0x30f26cu)) {
         return;
     }
-    ctx->pc = 0x30F26Cu;
 label_30f26c:
     // 0x30f26c: 0xc0bec3a  jal         func_2FB0E8
     ctx->pc = 0x30F26Cu;
@@ -94,7 +93,6 @@ label_30f26c:
     if (!runtime->callDirectStatic(rdram, ctx, &MoveEsp_0x2fb0e8, 0x2fb0e8u, 0x30f274u)) {
         return;
     }
-    ctx->pc = 0x30F274u;
 label_30f274:
     // 0x30f274: 0x3c013f80  lui         $at, 0x3F80
     ctx->pc = 0x30f274u;

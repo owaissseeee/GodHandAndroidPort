@@ -13,7 +13,7 @@
 
 // Function: func_0034C3A8
 // Address: 0x34c3a8 - 0x34c4f8
-void func_0034C3A8_0x34c3a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0034C3A8_0x34c3a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0034C3A8_0x34c3a8");
 #endif
@@ -150,7 +150,6 @@ void func_0034C3A8_0x34c3a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
     // 0x34c42c: 0x0  nop
-    ctx->pc = 0x34c42cu;
     // NOP
 label_34c430:
     // 0x34c430: 0xc0d31a0  jal         func_34C680
@@ -164,7 +163,6 @@ label_34c430:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Call_Vtbl6_Vtbl8_Field_1_0034C680_0x34c680, 0x34c680u, 0x34c438u)) {
         return;
     }
-    ctx->pc = 0x34C438u;
 label_34c438:
     // 0x34c438: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -202,7 +200,6 @@ label_34c438:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Call_Vtbl6_Vtbl8_Field_1_0034C680_0x34c680, 0x34c680u, 0x34c45cu)) {
         return;
     }
-    ctx->pc = 0x34C45Cu;
 label_34c45c:
     // 0x34c45c: 0x50102a  slt         $v0, $v0, $s0
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 2) < (int64_t)GPR_S64(ctx, 16)) ? 1 : 0);
@@ -236,12 +233,10 @@ label_34c45c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034DD70_0x34dd70, 0x34dd70u, 0x34c478u)) {
         return;
     }
-    ctx->pc = 0x34C478u;
 label_34c478:
     // 0x34c478: 0x40b82d  daddu       $s7, $v0, $zero
     SET_GPR_U64(ctx, 23, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     // 0x34c47c: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x34c47cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_34c480:
     // 0x34c480: 0x5662000b  bnel        $s3, $v0, . + 4 + (0xB << 2)
@@ -285,7 +280,6 @@ label_34c480:
     if (!runtime->callDirectStatic(rdram, ctx, &sfbuf_ResetConti_0x34c4f8, 0x34c4f8u, 0x34c498u)) {
         return;
     }
-    ctx->pc = 0x34C498u;
 label_34c498:
     // 0x34c498: 0x8e420024  lw          $v0, 0x24($s2)
     ctx->pc = 0x34c498u;
@@ -322,7 +316,6 @@ label_34c49c:
         }
     }
     // 0x34c4ac: 0x0  nop
-    ctx->pc = 0x34c4acu;
     // NOP
 label_34c4b0:
     // 0x34c4b0: 0x4400002  bltz        $v0, . + 4 + (0x2 << 2)

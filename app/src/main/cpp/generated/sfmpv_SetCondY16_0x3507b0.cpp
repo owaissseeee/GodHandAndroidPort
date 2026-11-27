@@ -13,7 +13,7 @@
 
 // Function: sfmpv_SetCondY16
 // Address: 0x3507b0 - 0x350820
-void sfmpv_SetCondY16_0x3507b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfmpv_SetCondY16_0x3507b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfmpv_SetCondY16_0x3507b0");
 #endif
@@ -48,7 +48,6 @@ void sfmpv_SetCondY16_0x3507b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &GetArrayElemA0C_35A1C8_0x35a1c8, 0x35a1c8u, 0x3507c8u)) {
         return;
     }
-    ctx->pc = 0x3507C8u;
 label_3507c8:
     // 0x3507c8: 0x10400011  beqz        $v0, . + 4 + (0x11 << 2)
     ctx->pc = 0x3507C8u;
@@ -71,7 +70,6 @@ label_3507c8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034DB20_0x34db20, 0x34db20u, 0x3507d8u)) {
         return;
     }
-    ctx->pc = 0x3507D8u;
 label_3507d8:
     // 0x3507d8: 0x24060001  addiu       $a2, $zero, 0x1
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -126,7 +124,6 @@ label_3507d8:
             goto label_350814;
         }
     }
-    ctx->pc = 0x350800u;
 label_350800:
     // 0x350800: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x350800u;
@@ -144,7 +141,6 @@ label_350800:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3502D8u, 0x350808u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x350810u;
 label_350810:
     // 0x350810: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x350810u;

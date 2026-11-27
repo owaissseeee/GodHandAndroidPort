@@ -13,7 +13,7 @@
 
 // Function: iSetTimerAlarm
 // Address: 0x3b7898 - 0x3b7988
-void iSetTimerAlarm_0x3b7898(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iSetTimerAlarm_0x3b7898(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iSetTimerAlarm_0x3b7898");
 #endif
@@ -86,7 +86,6 @@ void iSetTimerAlarm_0x3b7898(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_3b7964;
         }
     }
-    ctx->pc = 0x3B78D4u;
 label_3b78d4:
     // 0x3b78d4: 0x3c120078  lui         $s2, 0x78
     SET_GPR_S32(ctx, 18, (int32_t)((uint32_t)120 << 16));
@@ -135,7 +134,6 @@ label_3b78ec:
             goto label_3b7964;
         }
     }
-    ctx->pc = 0x3B7900u;
 label_3b7900:
     // 0x3b7900: 0xc0edc80  jal         func_3B7200
     ctx->pc = 0x3B7900u;
@@ -143,7 +141,6 @@ label_3b7900:
     if (!runtime->callDirectStatic(rdram, ctx, &iAllocTimerCounter_0x3b7200, 0x3b7200u, 0x3b7908u)) {
         return;
     }
-    ctx->pc = 0x3B7908u;
 label_3b7908:
     // 0x3b7908: 0x40882d  daddu       $s1, $v0, $zero
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -189,7 +186,6 @@ label_3b7908:
             goto label_3b7968;
         }
     }
-    ctx->pc = 0x3B792Cu;
 label_3b792c:
     // 0x3b792c: 0x3c06003b  lui         $a2, 0x3B
     SET_GPR_S32(ctx, 6, (int32_t)((uint32_t)59 << 16));
@@ -216,7 +212,6 @@ label_3b792c:
     if (!runtime->callDirectStatic(rdram, ctx, &iSetTimerHandler_0x3b7400, 0x3b7400u, 0x3b794cu)) {
         return;
     }
-    ctx->pc = 0x3B794Cu;
 label_3b794c:
     // 0x3b794c: 0xc0edcb4  jal         func_3B72D0
     SET_GPR_U32(ctx, 31, 0x3B7954u);
@@ -229,7 +224,6 @@ label_3b794c:
     if (!runtime->callDirectStatic(rdram, ctx, &iStartTimerCounter_0x3b72d0, 0x3b72d0u, 0x3b7954u)) {
         return;
     }
-    ctx->pc = 0x3B7954u;
 label_3b7954:
     // 0x3b7954: 0x101100  sll         $v0, $s0, 4
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 16), 4));
@@ -238,7 +232,6 @@ label_3b7954:
     // 0x3b795c: 0x431025  or          $v0, $v0, $v1
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | GPR_U64(ctx, 3));
     // 0x3b7960: 0x34420001  ori         $v0, $v0, 0x1
-    ctx->pc = 0x3b7960u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)1);
 label_3b7964:
     // 0x3b7964: 0xdfbf0060  ld          $ra, 0x60($sp)

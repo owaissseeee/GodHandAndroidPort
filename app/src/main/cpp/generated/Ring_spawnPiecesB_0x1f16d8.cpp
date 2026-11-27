@@ -13,7 +13,7 @@
 
 // Function: Ring_spawnPiecesB
 // Address: 0x1f16d8 - 0x1f17d0
-void Ring_spawnPiecesB_0x1f16d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Ring_spawnPiecesB_0x1f16d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Ring_spawnPiecesB_0x1f16d8");
 #endif
@@ -87,7 +87,6 @@ void Ring_spawnPiecesB_0x1f16d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     // 0x1f1730: 0x4480b800  mtc1        $zero, $f23
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[23], &bits, sizeof(bits)); }
     // 0x1f1734: 0x0  nop
-    ctx->pc = 0x1f1734u;
     // NOP
 label_1f1738:
     // 0x1f1738: 0x44906000  mtc1        $s0, $f12
@@ -111,7 +110,6 @@ label_1f1738:
     if (!runtime->callDirectStatic(rdram, ctx, &Adjust_theta_0x1f7d48, 0x1f7d48u, 0x1f1754u)) {
         return;
     }
-    ctx->pc = 0x1F1754u;
 label_1f1754:
     // 0x1f1754: 0x46000506  mov.s       $f20, $f0
     ctx->f[20] = FPU_MOV_S(ctx->f[0]);
@@ -126,7 +124,6 @@ label_1f1754:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Sin_0x1f7ef0, 0x1f7ef0u, 0x1f1760u)) {
         return;
     }
-    ctx->pc = 0x1F1760u;
 label_1f1760:
     // 0x1f1760: 0x46160542  mul.s       $f21, $f0, $f22
     ctx->f[21] = FPU_MUL_S(ctx->f[0], ctx->f[22]);
@@ -141,7 +138,6 @@ label_1f1760:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Cos_0x1f7fb8, 0x1f7fb8u, 0x1f176cu)) {
         return;
     }
-    ctx->pc = 0x1F176Cu;
 label_1f176c:
     // 0x1f176c: 0x46160002  mul.s       $f0, $f0, $f22
     ctx->f[0] = FPU_MUL_S(ctx->f[0], ctx->f[22]);
@@ -174,7 +170,6 @@ label_1f176c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F0498_0x1f0498, 0x1f0498u, 0x1f1794u)) {
         return;
     }
-    ctx->pc = 0x1F1794u;
 label_1f1794:
     // 0x1f1794: 0x2a030005  slti        $v1, $s0, 0x5
     SET_GPR_U64(ctx, 3, ((int64_t)GPR_S64(ctx, 16) < (int64_t)(int32_t)5) ? 1 : 0);

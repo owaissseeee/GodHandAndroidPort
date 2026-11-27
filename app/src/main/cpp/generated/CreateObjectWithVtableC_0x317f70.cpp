@@ -13,7 +13,7 @@
 
 // Function: CreateObjectWithVtableC
 // Address: 0x317f70 - 0x317ff0
-void CreateObjectWithVtableC_0x317f70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CreateObjectWithVtableC_0x317f70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CreateObjectWithVtableC_0x317f70");
 #endif
@@ -74,7 +74,6 @@ void CreateObjectWithVtableC_0x317f70(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &EnsureInitThenForward_2A9538_30EE08_0x30ee08, 0x30ee08u, 0x317fa4u)) {
         return;
     }
-    ctx->pc = 0x317FA4u;
 label_317fa4:
     // 0x317fa4: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -106,7 +105,6 @@ label_317fa4:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x317fbcu)) {
         return;
     }
-    ctx->pc = 0x317FBCu;
 label_317fbc:
     // 0x317fbc: 0xc053a64  jal         func_14E990
     SET_GPR_U32(ctx, 31, 0x317FC4u);
@@ -119,7 +117,6 @@ label_317fbc:
     if (!runtime->callDirectStatic(rdram, ctx, &cObjBase_0x14e990, 0x14e990u, 0x317fc4u)) {
         return;
     }
-    ctx->pc = 0x317FC4u;
 label_317fc4:
     // 0x317fc4: 0x3c030045  lui         $v1, 0x45
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)69 << 16));
@@ -142,10 +139,8 @@ label_317fc4:
             goto label_317fdc;
         }
     }
-    ctx->pc = 0x317FD8u;
 label_317fd8:
     // 0x317fd8: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x317fd8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_317fdc:
     // 0x317fdc: 0x7bb00010  lq          $s0, 0x10($sp)

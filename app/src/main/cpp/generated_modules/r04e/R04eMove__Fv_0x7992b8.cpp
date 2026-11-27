@@ -14,12 +14,11 @@ namespace gh_r04e
 {
 // Function: R04eMove__Fv
 // Address: 0x7992b8 - 0x7992c0
-void R04eMove__Fv_0x7992b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void R04eMove__Fv_0x7992b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("R04eMove__Fv_0x7992b8");
 #endif
 
-    ctx->pc = 0x7992b8u;
 
     // 0x7992b8: 0x3e00008  jr          $ra
     ctx->pc = 0x7992B8u;

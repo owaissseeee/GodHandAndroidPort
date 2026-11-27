@@ -13,7 +13,7 @@
 
 // Function: cSnd_BgmNodeStart
 // Address: 0x2cc900 - 0x2cc9c0
-void cSnd_BgmNodeStart_0x2cc900(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BgmNodeStart_0x2cc900(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BgmNodeStart_0x2cc900");
 #endif
@@ -81,7 +81,6 @@ void cSnd_BgmNodeStart_0x2cc900(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_GetBgmData_0x2d2d98, 0x2d2d98u, 0x2cc94cu)) {
         return;
     }
-    ctx->pc = 0x2CC94Cu;
 label_2cc94c:
     // 0x2cc94c: 0xc0b3fda  jal         func_2CFF68
     SET_GPR_U32(ctx, 31, 0x2CC954u);
@@ -94,7 +93,6 @@ label_2cc94c:
     if (!runtime->callDirectStatic(rdram, ctx, &cBgmData_IsReady_0x2cff68, 0x2cff68u, 0x2cc954u)) {
         return;
     }
-    ctx->pc = 0x2CC954u;
 label_2cc954:
     // 0x2cc954: 0x1040000e  beqz        $v0, . + 4 + (0xE << 2)
     ctx->pc = 0x2CC954u;
@@ -155,7 +153,6 @@ label_2cc954:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_Setup_0x2cc728, 0x2cc728u, 0x2cc988u)) {
         return;
     }
-    ctx->pc = 0x2CC988u;
 label_2cc988:
     // 0x2cc988: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x2CC988u;
@@ -172,7 +169,6 @@ label_2cc988:
             goto label_2cc998;
         }
     }
-    ctx->pc = 0x2CC990u;
 label_2cc990:
     // 0x2cc990: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

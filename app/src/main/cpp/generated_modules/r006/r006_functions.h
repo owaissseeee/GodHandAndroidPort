@@ -8,18 +8,18 @@ class PS2Runtime;
 
 namespace gh_r006
 {
-void ps2___builtin_new_0x799180(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___builtin_vec_new_0x7991a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___builtin_delete_0x7991d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___builtin_vec_delete_0x7991f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void R006Init__Fv_0x799220(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void R006Move__Fv_0x7993c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void func_00799498_0x799498(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void func_00799BE0_0x799be0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void func_0079A168_0x79a168(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___do_global_dtors_0x79a368(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___do_global_ctors_0x79a3c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___main_0x79a470(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___lexicographical_compare_3way__H2ZPCScZPCSc_X01X01X11X11_i_0x79a490(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void lexicographical_compare__H2ZPCScZPCSc_X01X01X11X11_b_0x79a4f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
+void ps2___builtin_new_0x799180(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___builtin_vec_new_0x7991a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___builtin_delete_0x7991d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___builtin_vec_delete_0x7991f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void R006Init__Fv_0x799220(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void R006Move__Fv_0x7993c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void func_00799498_0x799498(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void func_00799BE0_0x799be0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void func_0079A168_0x79a168(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___do_global_dtors_0x79a368(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___do_global_ctors_0x79a3c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___main_0x79a470(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___lexicographical_compare_3way__H2ZPCScZPCSc_X01X01X11X11_i_0x79a490(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void lexicographical_compare__H2ZPCScZPCSc_X01X01X11X11_b_0x79a4f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
 } // namespace gh_r006

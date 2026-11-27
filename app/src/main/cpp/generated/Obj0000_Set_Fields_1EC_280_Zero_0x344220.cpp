@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Set_Fields_1EC_280_Zero
 // Address: 0x344220 - 0x344278
-void Obj0000_Set_Fields_1EC_280_Zero_0x344220(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_Fields_1EC_280_Zero_0x344220(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_Fields_1EC_280_Zero_0x344220");
 #endif
@@ -57,7 +57,6 @@ void Obj0000_Set_Fields_1EC_280_Zero_0x344220(uint8_t* rdram, R5900Context* ctx,
     ctx->pc = 0x344248u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 512), GPR_U32(ctx, 0));
     // 0x34424c: 0x0  nop
-    ctx->pc = 0x34424cu;
     // NOP
 label_344250:
     // 0x344250: 0x2508ffff  addiu       $t0, $t0, -0x1

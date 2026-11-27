@@ -13,7 +13,7 @@
 
 // Function: sceSifRemoveCmdHandler
 // Address: 0x3b2500 - 0x3b2550
-void sceSifRemoveCmdHandler_0x3b2500(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSifRemoveCmdHandler_0x3b2500(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSifRemoveCmdHandler_0x3b2500");
 #endif
@@ -72,7 +72,6 @@ void sceSifRemoveCmdHandler_0x3b2500(uint8_t* rdram, R5900Context* ctx, PS2Runti
         return;
         #endif
     }
-    ctx->pc = 0x3B2534u;
 label_3b2534:
     // 0x3b2534: 0x3c040078  lui         $a0, 0x78
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)120 << 16));

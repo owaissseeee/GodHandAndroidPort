@@ -14,23 +14,23 @@ namespace gh_event
 {
 // Function: __builtin_vec_delete
 // Address: 0x7b2890 - 0x7b28b8
-void ps2___builtin_vec_delete_0x7b2890(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___builtin_vec_delete_0x7b2890(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___builtin_vec_delete_0x7b2890");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7b28a8u: goto label_7b28a8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7b2890u, 0)) {
+        switch (ctx->pc) {
+            case 0x7b28a8u: goto label_7b28a8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7b2890u;
+
 
     // 0x7b2890: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7b2890u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x7b2894: 0x80282d  daddu       $a1, $a0, $zero
-    ctx->pc = 0x7b2894u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x7b2898: 0x10a00003  beqz        $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x7B2898u;
@@ -47,9 +47,7 @@ void ps2___builtin_vec_delete_0x7b2890(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_7b28a8;
         }
     }
-    ctx->pc = 0x7B28A0u;
     // 0x7b28a0: 0xc0aa5a0  jal         func_2A9680
-    ctx->pc = 0x7B28A0u;
     SET_GPR_U32(ctx, 31, 0x7B28A8u);
     ctx->pc = 0x7B28A4u;
     ctx->in_delay_slot = true;
@@ -61,7 +59,6 @@ void ps2___builtin_vec_delete_0x7b2890(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x7B28A0u, 0x7B28A8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7B28A8u;
 label_7b28a8:
     // 0x7b28a8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7b28a8u;
@@ -85,9 +82,7 @@ label_7b28a8:
         return;
         #endif
     }
-    ctx->pc = 0x7B28B4u;
     // 0x7b28b4: 0x0  nop
-    ctx->pc = 0x7b28b4u;
     // NOP
     ctx->pc = 0x7b28b8u;
 }

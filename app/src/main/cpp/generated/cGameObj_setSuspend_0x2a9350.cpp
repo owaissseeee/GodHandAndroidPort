@@ -13,7 +13,7 @@
 
 // Function: cGameObj_setSuspend
 // Address: 0x2a9350 - 0x2a93a8
-void cGameObj_setSuspend_0x2a9350(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObj_setSuspend_0x2a9350(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObj_setSuspend_0x2a9350");
 #endif
@@ -56,7 +56,6 @@ void cGameObj_setSuspend_0x2a9350(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_2a937c;
         }
     }
-    ctx->pc = 0x2A936Cu;
 label_2a936c:
     // 0x2a936c: 0x3c02ffff  lui         $v0, 0xFFFF
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)65535 << 16));
@@ -106,7 +105,6 @@ label_2a937c:
         return;
         #endif
     }
-    ctx->pc = 0x2A9394u;
 label_2a9394:
     // 0x2a9394: 0x2403fff7  addiu       $v1, $zero, -0x9
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967287));

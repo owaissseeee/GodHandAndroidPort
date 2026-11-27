@@ -13,7 +13,7 @@
 
 // Function: abort
 // Address: 0x3a7b48 - 0x3a7b58
-void abort_0x3a7b48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void abort_0x3a7b48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("abort_0x3a7b48");
 #endif

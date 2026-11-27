@@ -13,7 +13,7 @@
 
 // Function: CustomIDOwner_setShown
 // Address: 0x1f30b8 - 0x1f3118
-void CustomIDOwner_setShown_0x1f30b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CustomIDOwner_setShown_0x1f30b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CustomIDOwner_setShown_0x1f30b8");
 #endif
@@ -54,7 +54,6 @@ void CustomIDOwner_setShown_0x1f30b8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &SetCustomIDDispOneOrAll_1F29C0_0x1f29c0, 0x1f29c0u, 0x1f30dcu)) {
         return;
     }
-    ctx->pc = 0x1F30DCu;
 label_1f30dc:
     // 0x1f30dc: 0xae200920  sw          $zero, 0x920($s1)
     ctx->pc = 0x1f30dcu;
@@ -92,7 +91,6 @@ label_1f30dc:
             goto label_1f3100;
         }
     }
-    ctx->pc = 0x1F30F4u;
 label_1f30f4:
     // 0x1f30f4: 0x8e220000  lw          $v0, 0x0($s1)
     ctx->pc = 0x1f30f4u;
@@ -100,7 +98,6 @@ label_1f30f4:
     // 0x1f30f8: 0x2403fffd  addiu       $v1, $zero, -0x3
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967293));
     // 0x1f30fc: 0x431024  and         $v0, $v0, $v1
-    ctx->pc = 0x1f30fcu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 3));
 label_1f3100:
     // 0x1f3100: 0xae220000  sw          $v0, 0x0($s1)

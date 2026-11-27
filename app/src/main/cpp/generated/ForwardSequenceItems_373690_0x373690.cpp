@@ -13,7 +13,7 @@
 
 // Function: ForwardSequenceItems_373690
 // Address: 0x373690 - 0x373708
-void ForwardSequenceItems_373690_0x373690(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardSequenceItems_373690_0x373690(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardSequenceItems_373690_0x373690");
 #endif
@@ -57,7 +57,6 @@ void ForwardSequenceItems_373690_0x373690(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373A50_0x373a50, 0x373a50u, 0x3736b4u)) {
         return;
     }
-    ctx->pc = 0x3736B4u;
 label_3736b4:
     // 0x3736b4: 0x5040000e  beql        $v0, $zero, . + 4 + (0xE << 2)
     ctx->pc = 0x3736B4u;
@@ -107,7 +106,6 @@ label_3736b4:
     if (!runtime->callDirectStatic(rdram, ctx, &ForwardCollectionItems_374820_0x374820, 0x374820u, 0x3736d8u)) {
         return;
     }
-    ctx->pc = 0x3736D8u;
 label_3736d8:
     // 0x3736d8: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x3736D8u;
@@ -124,7 +122,6 @@ label_3736d8:
             goto label_3736f0;
         }
     }
-    ctx->pc = 0x3736E0u;
 label_3736e0:
     // 0x3736e0: 0x220282d  daddu       $a1, $s1, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -139,7 +136,6 @@ label_3736e0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00374120_0x374120, 0x374120u, 0x3736ecu)) {
         return;
     }
-    ctx->pc = 0x3736ECu;
 label_3736ec:
     // 0x3736ec: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x3736ecu;

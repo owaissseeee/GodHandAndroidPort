@@ -13,7 +13,7 @@
 
 // Function: func_0035A540
 // Address: 0x35a540 - 0x35a5e0
-void func_0035A540_0x35a540(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0035A540_0x35a540(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0035A540_0x35a540");
 #endif
@@ -61,7 +61,6 @@ void func_0035A540_0x35a540(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         #endif
     }
     // 0x35a55c: 0x0  nop
-    ctx->pc = 0x35a55cu;
     // NOP
 label_35a560:
     // 0x35a560: 0x1463823  subu        $a3, $t2, $a2
@@ -186,7 +185,6 @@ label_35a560:
         #endif
     }
     // 0x35a5cc: 0x0  nop
-    ctx->pc = 0x35a5ccu;
     // NOP
 label_35a5d0:
     // 0x35a5d0: 0xad070298  sw          $a3, 0x298($t0)

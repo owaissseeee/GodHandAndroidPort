@@ -13,7 +13,7 @@
 
 // Function: cScenario_release
 // Address: 0x2c3858 - 0x2c3890
-void cScenario_release_0x2c3858(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_release_0x2c3858(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_release_0x2c3858");
 #endif
@@ -47,7 +47,6 @@ void cScenario_release_0x2c3858(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_runExitFunc_0x2c4de0, 0x2c4de0u, 0x2c386cu)) {
         return;
     }
-    ctx->pc = 0x2C386Cu;
 label_2c386c:
     // 0x2c386c: 0xc0b0e08  jal         func_2C3820
     SET_GPR_U32(ctx, 31, 0x2C3874u);
@@ -60,7 +59,6 @@ label_2c386c:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_runRoomExitFunc_0x2c3820, 0x2c3820u, 0x2c3874u)) {
         return;
     }
-    ctx->pc = 0x2C3874u;
 label_2c3874:
     // 0x2c3874: 0xc0b55aa  jal         func_2D56A8
     SET_GPR_U32(ctx, 31, 0x2C387Cu);
@@ -73,7 +71,6 @@ label_2c3874:
     if (!runtime->callDirectStatic(rdram, ctx, &cTaskPool_killAll_0x2d56a8, 0x2d56a8u, 0x2c387cu)) {
         return;
     }
-    ctx->pc = 0x2C387Cu;
 label_2c387c:
     // 0x2c387c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2c387cu;

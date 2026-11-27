@@ -13,7 +13,7 @@
 
 // Function: cScenario_isEventStartOk
 // Address: 0x2c3e40 - 0x2c3e88
-void cScenario_isEventStartOk_0x2c3e40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_isEventStartOk_0x2c3e40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_isEventStartOk_0x2c3e40");
 #endif
@@ -59,7 +59,6 @@ void cScenario_isEventStartOk_0x2c3e40(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x2c3e64u)) {
         return;
     }
-    ctx->pc = 0x2C3E64u;
 label_2c3e64:
     // 0x2c3e64: 0xc04aebc  jal         func_12BAF0
     SET_GPR_U32(ctx, 31, 0x2C3E6Cu);
@@ -72,7 +71,6 @@ label_2c3e64:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0012BAF0_0x12baf0, 0x12baf0u, 0x2c3e6cu)) {
         return;
     }
-    ctx->pc = 0x2C3E6Cu;
 label_2c3e6c:
     // 0x2c3e6c: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x2C3E6Cu;
@@ -89,10 +87,8 @@ label_2c3e6c:
             goto label_2c3e78;
         }
     }
-    ctx->pc = 0x2C3E74u;
 label_2c3e74:
     // 0x2c3e74: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2c3e74u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2c3e78:
     // 0x2c3e78: 0xdfbf0000  ld          $ra, 0x0($sp)

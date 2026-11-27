@@ -13,7 +13,7 @@
 
 // Function: sftrn_CallTrEntry1_35BC38
 // Address: 0x35bc38 - 0x35bc50
-void sftrn_CallTrEntry1_35BC38_0x35bc38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sftrn_CallTrEntry1_35BC38_0x35bc38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sftrn_CallTrEntry1_35BC38_0x35bc38");
 #endif

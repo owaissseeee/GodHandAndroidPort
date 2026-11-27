@@ -13,7 +13,7 @@
 
 // Function: func_001E1CD0
 // Address: 0x1e1cd0 - 0x1e1d10
-void func_001E1CD0_0x1e1cd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001E1CD0_0x1e1cd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001E1CD0_0x1e1cd0");
 #endif
@@ -40,15 +40,12 @@ void func_001E1CD0_0x1e1cd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
 
-    ctx->pc = 0x1e1cd0u;
 
 label_1e1cd0:
     // 0x1e1cd0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1e1cd0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_1e1cd4:
     // 0x1e1cd4: 0x3c03003c  lui         $v1, 0x3C
-    ctx->pc = 0x1e1cd4u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)60 << 16));
 label_1e1cd8:
     // 0x1e1cd8: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -56,7 +53,6 @@ label_1e1cd8:
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
 label_1e1cdc:
     // 0x1e1cdc: 0x2463e0d8  addiu       $v1, $v1, -0x1F28
-    ctx->pc = 0x1e1cdcu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294959320));
 label_1e1ce0:
     // 0x1e1ce0: 0x8c820008  lw          $v0, 0x8($a0)
@@ -64,15 +60,12 @@ label_1e1ce0:
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 8)));
 label_1e1ce4:
     // 0x1e1ce4: 0x210c0  sll         $v0, $v0, 3
-    ctx->pc = 0x1e1ce4u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 3));
 label_1e1ce8:
     // 0x1e1ce8: 0x432821  addu        $a1, $v0, $v1
-    ctx->pc = 0x1e1ce8u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
 label_1e1cec:
     // 0x1e1cec: 0x621821  addu        $v1, $v1, $v0
-    ctx->pc = 0x1e1cecu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 2)));
 label_1e1cf0:
     // 0x1e1cf0: 0x84a60000  lh          $a2, 0x0($a1)
@@ -110,7 +103,6 @@ label_1e1cfc:
             return;
         }
     }
-    ctx->pc = 0x1E1D00u;
 label_1e1d00:
     // 0x1e1d00: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1e1d00u;
@@ -146,7 +138,6 @@ label_1e1d08:
         return;
         #endif
     }
-    ctx->pc = 0x1E1D0Cu;
 label_1e1d0c:
     // 0x1e1d0c: 0x0  nop
     // NOP

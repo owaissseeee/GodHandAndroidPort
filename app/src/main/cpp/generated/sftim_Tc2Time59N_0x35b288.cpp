@@ -13,7 +13,7 @@
 
 // Function: sftim_Tc2Time59N
 // Address: 0x35b288 - 0x35b2c0
-void sftim_Tc2Time59N_0x35b288(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sftim_Tc2Time59N_0x35b288(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sftim_Tc2Time59N_0x35b288");
 #endif
@@ -52,7 +52,6 @@ void sftim_Tc2Time59N_0x35b288(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035B188_0x35b188, 0x35b188u, 0x35b2a8u)) {
         return;
     }
-    ctx->pc = 0x35B2A8u;
 label_35b2a8:
     // 0x35b2a8: 0xae110000  sw          $s1, 0x0($s0)
     ctx->pc = 0x35b2a8u;

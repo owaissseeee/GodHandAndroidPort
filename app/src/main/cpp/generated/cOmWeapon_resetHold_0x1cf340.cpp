@@ -13,7 +13,7 @@
 
 // Function: cOmWeapon_resetHold
 // Address: 0x1cf340 - 0x1cf3a8
-void cOmWeapon_resetHold_0x1cf340(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmWeapon_resetHold_0x1cf340(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmWeapon_resetHold_0x1cf340");
 #endif
@@ -86,7 +86,6 @@ void cOmWeapon_resetHold_0x1cf340(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &func_001331B8_0x1331b8, 0x1331b8u, 0x1cf398u)) {
         return;
     }
-    ctx->pc = 0x1CF398u;
 label_1cf398:
     // 0x1cf398: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1cf398u;

@@ -13,7 +13,7 @@
 
 // Function: InitEntryPool_1FE188
 // Address: 0x1fe188 - 0x1fe1e0
-void InitEntryPool_1FE188_0x1fe188(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitEntryPool_1FE188_0x1fe188(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitEntryPool_1FE188_0x1fe188");
 #endif
@@ -50,7 +50,6 @@ void InitEntryPool_1FE188_0x1fe188(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     // 0x1fe1a8: 0x200282d  daddu       $a1, $s0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1fe1ac: 0x0  nop
-    ctx->pc = 0x1fe1acu;
     // NOP
 label_1fe1b0:
     // 0x1fe1b0: 0xc07f852  jal         func_1FE148
@@ -64,7 +63,6 @@ label_1fe1b0:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_ReleaseDamageGive_0x1fe148, 0x1fe148u, 0x1fe1b8u)) {
         return;
     }
-    ctx->pc = 0x1FE1B8u;
 label_1fe1b8:
     // 0x1fe1b8: 0x26100060  addiu       $s0, $s0, 0x60
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 96));

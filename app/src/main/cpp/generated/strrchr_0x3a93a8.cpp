@@ -13,7 +13,7 @@
 
 // Function: strrchr
 // Address: 0x3a93a8 - 0x3a93f8
-void strrchr_0x3a93a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void strrchr_0x3a93a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("strrchr_0x3a93a8");
 #endif
@@ -50,7 +50,6 @@ void strrchr_0x3a93a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             goto label_3a93e0;
         }
     }
-    ctx->pc = 0x3A93C0u;
 label_3a93c0:
     // 0x3a93c0: 0x31600  sll         $v0, $v1, 24
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 3), 24));
@@ -84,7 +83,6 @@ label_3a93c0:
             goto label_3a93c0;
         }
     }
-    ctx->pc = 0x3A93E0u;
 label_3a93e0:
     // 0x3a93e0: 0x80830000  lb          $v1, 0x0($a0)
     ctx->pc = 0x3a93e0u;

@@ -13,7 +13,7 @@
 
 // Function: SetStateDisabled_190068
 // Address: 0x190068 - 0x1900c8
-void SetStateDisabled_190068_0x190068(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetStateDisabled_190068_0x190068(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetStateDisabled_190068_0x190068");
 #endif
@@ -76,7 +76,6 @@ void SetStateDisabled_190068_0x190068(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x19009cu)) {
         return;
     }
-    ctx->pc = 0x19009Cu;
 label_19009c:
     // 0x19009c: 0xde050540  ld          $a1, 0x540($s0)
     ctx->pc = 0x19009cu;
@@ -96,7 +95,6 @@ label_19009c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001331B8_0x1331b8, 0x1331b8u, 0x1900b0u)) {
         return;
     }
-    ctx->pc = 0x1900B0u;
 label_1900b0:
     // 0x1900b0: 0xc071f82  jal         func_1C7E08
     SET_GPR_U32(ctx, 31, 0x1900B8u);
@@ -109,7 +107,6 @@ label_1900b0:
     if (!runtime->callDirectStatic(rdram, ctx, &ClearStateAndFlag_1C7E08_0x1c7e08, 0x1c7e08u, 0x1900b8u)) {
         return;
     }
-    ctx->pc = 0x1900B8u;
 label_1900b8:
     // 0x1900b8: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1900b8u;

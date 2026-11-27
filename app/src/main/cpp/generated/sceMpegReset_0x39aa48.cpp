@@ -13,7 +13,7 @@
 
 // Function: sceMpegReset
 // Address: 0x39aa48 - 0x39aad8
-void sceMpegReset_0x39aa48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceMpegReset_0x39aa48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceMpegReset_0x39aa48");
 #endif
@@ -72,7 +72,6 @@ void sceMpegReset_0x39aa48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &_clearEach_0x39a078, 0x39a078u, 0x39aa84u)) {
         return;
     }
-    ctx->pc = 0x39AA84u;
 label_39aa84:
     // 0x39aa84: 0xae000858  sw          $zero, 0x858($s0)
     ctx->pc = 0x39aa84u;

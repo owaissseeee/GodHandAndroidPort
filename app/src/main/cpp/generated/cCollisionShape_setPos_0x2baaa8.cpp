@@ -13,7 +13,7 @@
 
 // Function: cCollisionShape_setPos
 // Address: 0x2baaa8 - 0x2baaf8
-void cCollisionShape_setPos_0x2baaa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCollisionShape_setPos_0x2baaa8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCollisionShape_setPos_0x2baaa8");
 #endif
@@ -44,15 +44,12 @@ void cCollisionShape_setPos_0x2baaa8(uint8_t* rdram, R5900Context* ctx, PS2Runti
         }
     }
 
-    ctx->pc = 0x2baaa8u;
 
 label_2baaa8:
     // 0x2baaa8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2baaa8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_2baaac:
     // 0x2baaac: 0x80302d  daddu       $a2, $a0, $zero
-    ctx->pc = 0x2baaacu;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_2baab0:
     // 0x2baab0: 0x24c20110  addiu       $v0, $a2, 0x110
@@ -85,7 +82,6 @@ label_2baab8:
             goto label_2baad4;
         }
     }
-    ctx->pc = 0x2BAABCu;
 label_2baabc:
     // 0x2baabc: 0xc4a00000  lwc1        $f0, 0x0($a1)
     ctx->pc = 0x2baabcu;
@@ -150,7 +146,6 @@ label_2baae4:
             return;
         }
     }
-    ctx->pc = 0x2BAAE8u;
 label_2baae8:
     // 0x2baae8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2baae8u;
@@ -186,7 +181,6 @@ label_2baaf0:
         return;
         #endif
     }
-    ctx->pc = 0x2BAAF4u;
 label_2baaf4:
     // 0x2baaf4: 0x0  nop
     // NOP

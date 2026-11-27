@@ -13,7 +13,7 @@
 
 // Function: GetClassTypeInfo_19D760
 // Address: 0x19d760 - 0x19d7b0
-void GetClassTypeInfo_19D760_0x19d760(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetClassTypeInfo_19D760_0x19d760(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetClassTypeInfo_19D760_0x19d760");
 #endif
@@ -60,7 +60,6 @@ void GetClassTypeInfo_19D760_0x19d760(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_001C0018_0x1c0018, 0x1c0018u, 0x19d784u)) {
         return;
     }
-    ctx->pc = 0x19D784u;
 label_19d784:
     // 0x19d784: 0x3c050042  lui         $a1, 0x42
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)66 << 16));
@@ -81,7 +80,6 @@ label_19d784:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField_0_4_8_31EEA8_0x31eea8, 0x31eea8u, 0x19d79cu)) {
         return;
     }
-    ctx->pc = 0x19D79Cu;
 label_19d79c:
     // 0x19d79c: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

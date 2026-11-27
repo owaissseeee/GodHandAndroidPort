@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Get_Ptr_D_003EE088_Scaled_8_348920
 // Address: 0x348920 - 0x348938
-void Obj0000_Get_Ptr_D_003EE088_Scaled_8_348920_0x348920(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Get_Ptr_D_003EE088_Scaled_8_348920_0x348920(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Get_Ptr_D_003EE088_Scaled_8_348920_0x348920");
 #endif

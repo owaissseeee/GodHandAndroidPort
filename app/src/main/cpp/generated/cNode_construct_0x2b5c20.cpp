@@ -13,7 +13,7 @@
 
 // Function: cNode_construct
 // Address: 0x2b5c20 - 0x2b5cf0
-void cNode_construct_0x2b5c20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cNode_construct_0x2b5c20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cNode_construct_0x2b5c20");
 #endif
@@ -110,7 +110,6 @@ void cNode_construct_0x2b5c20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B5D58_0x2b5d58, 0x2b5d58u, 0x2b5c94u)) {
         return;
     }
-    ctx->pc = 0x2B5C94u;
 label_2b5c94:
     // 0x2b5c94: 0x26020050  addiu       $v0, $s0, 0x50
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 80));

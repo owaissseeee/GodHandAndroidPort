@@ -13,7 +13,7 @@
 
 // Function: StunObj_startStun
 // Address: 0x1b5430 - 0x1b54e8
-void StunObj_startStun_0x1b5430(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void StunObj_startStun_0x1b5430(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("StunObj_startStun_0x1b5430");
 #endif
@@ -64,7 +64,6 @@ void StunObj_startStun_0x1b5430(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x1b5468u)) {
         return;
     }
-    ctx->pc = 0x1B5468u;
 label_1b5468:
     // 0x1b5468: 0x44806800  mtc1        $zero, $f13
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[13], &bits, sizeof(bits)); }
@@ -87,7 +86,6 @@ label_1b5468:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshColorFromLayer_0x1b71a0, 0x1b71a0u, 0x1b5484u)) {
         return;
     }
-    ctx->pc = 0x1B5484u;
 label_1b5484:
     // 0x1b5484: 0x24020004  addiu       $v0, $zero, 0x4
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4));

@@ -13,7 +13,7 @@
 
 // Function: func_001EB9F8
 // Address: 0x1eb9f8 - 0x1eba20
-void func_001EB9F8_0x1eb9f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001EB9F8_0x1eb9f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001EB9F8_0x1eb9f8");
 #endif
@@ -46,7 +46,6 @@ void func_001EB9F8_0x1eb9f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cCamManager_setPlCamera_0x138d40, 0x138d40u, 0x1eba10u)) {
         return;
     }
-    ctx->pc = 0x1EBA10u;
 label_1eba10:
     // 0x1eba10: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1eba10u;

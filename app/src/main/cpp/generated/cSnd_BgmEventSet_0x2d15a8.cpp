@@ -13,7 +13,7 @@
 
 // Function: cSnd_BgmEventSet
 // Address: 0x2d15a8 - 0x2d1610
-void cSnd_BgmEventSet_0x2d15a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BgmEventSet_0x2d15a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BgmEventSet_0x2d15a8");
 #endif
@@ -56,7 +56,6 @@ void cSnd_BgmEventSet_0x2d15a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_AllocBgmNode_0x2d2228, 0x2d2228u, 0x2d15ccu)) {
         return;
     }
-    ctx->pc = 0x2D15CCu;
 label_2d15cc:
     // 0x2d15cc: 0x10400009  beqz        $v0, . + 4 + (0x9 << 2)
     ctx->pc = 0x2D15CCu;
@@ -96,7 +95,6 @@ label_2d15cc:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_BgmNodeSet_0x2cc9c0, 0x2cc9c0u, 0x2d15f4u)) {
         return;
     }
-    ctx->pc = 0x2D15F4u;
 label_2d15f4:
     // 0x2d15f4: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x2d15f4u;

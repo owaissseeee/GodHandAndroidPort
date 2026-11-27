@@ -13,7 +13,7 @@
 
 // Function: func_002C9818
 // Address: 0x2c9818 - 0x2c9950
-void func_002C9818_0x2c9818(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002C9818_0x2c9818(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002C9818_0x2c9818");
 #endif
@@ -107,7 +107,6 @@ void func_002C9818_0x2c9818(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1FAF58u, 0x2C9874u, 0x2C987Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2C987Cu;
 label_2c987c:
     // 0x2c987c: 0x2403ffff  addiu       $v1, $zero, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
@@ -141,10 +140,8 @@ label_2c987c:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_setSkill_0x1faf20, 0x1faf20u, 0x2c9898u)) {
         return;
     }
-    ctx->pc = 0x2C9898u;
 label_2c9898:
     // 0x2c9898: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2c9898u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2c989c:
     // 0x2c989c: 0x16a2000e  bne         $s5, $v0, . + 4 + (0xE << 2)
@@ -173,7 +170,6 @@ label_2c989c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1FAF58u, 0x2C98A4u, 0x2C98ACu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2C98ACu;
 label_2c98ac:
     // 0x2c98ac: 0x440001b  bltz        $v0, . + 4 + (0x1B << 2)
     ctx->pc = 0x2C98ACu;
@@ -232,7 +228,6 @@ label_2c98ac:
             goto label_2c9908;
         }
     }
-    ctx->pc = 0x2C98D8u;
 label_2c98d8:
     // 0x2c98d8: 0xc07ebd6  jal         func_1FAF58
     SET_GPR_U32(ctx, 31, 0x2C98E0u);
@@ -245,7 +240,6 @@ label_2c98d8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1FAF58u, 0x2C98D8u, 0x2C98E0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2C98E0u;
 label_2c98e0:
     // 0x2c98e0: 0x440000e  bltz        $v0, . + 4 + (0xE << 2)
     ctx->pc = 0x2C98E0u;

@@ -13,7 +13,7 @@
 
 // Function: _search_svdata
 // Address: 0x3b2de8 - 0x3b2e38
-void _search_svdata_0x3b2de8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _search_svdata_0x3b2de8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_search_svdata_0x3b2de8");
 #endif
@@ -62,7 +62,6 @@ label_3b2df8:
     ctx->pc = 0x3b2e00u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 0)));
     // 0x3b2e04: 0x0  nop
-    ctx->pc = 0x3b2e04u;
     // NOP
 label_3b2e08:
     // 0x3b2e08: 0x54440003  bnel        $v0, $a0, . + 4 + (0x3 << 2)
@@ -99,7 +98,6 @@ label_3b2e08:
         return;
         #endif
     }
-    ctx->pc = 0x3B2E18u;
 label_3b2e18:
     // 0x3b2e18: 0x5460fffb  bnel        $v1, $zero, . + 4 + (-0x5 << 2)
     ctx->pc = 0x3B2E18u;
@@ -141,7 +139,6 @@ label_3b2e24:
             goto label_3b2df8;
         }
     }
-    ctx->pc = 0x3B2E2Cu;
 label_3b2e2c:
     // 0x3b2e2c: 0x3e00008  jr          $ra
     ctx->pc = 0x3B2E2Cu;

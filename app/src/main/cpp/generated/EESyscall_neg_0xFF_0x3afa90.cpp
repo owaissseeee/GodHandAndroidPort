@@ -13,7 +13,7 @@
 
 // Function: EESyscall_neg_0xFF
 // Address: 0x3afa90 - 0x3afaa0
-void EESyscall_neg_0xFF_0x3afa90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EESyscall_neg_0xFF_0x3afa90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EESyscall_neg_0xFF_0x3afa90");
 #endif

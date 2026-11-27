@@ -13,7 +13,7 @@
 
 // Function: func_002CAF28
 // Address: 0x2caf28 - 0x2cb070
-void func_002CAF28_0x2caf28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002CAF28_0x2caf28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002CAF28_0x2caf28");
 #endif
@@ -98,7 +98,6 @@ void func_002CAF28_0x2caf28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
     // 0x2caf7c: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2caf7cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2caf80:
     // 0x2caf80: 0x304200ff  andi        $v0, $v0, 0xFF
@@ -121,7 +120,6 @@ label_2caf80:
     // 0x2caf98: 0x34216666  ori         $at, $at, 0x6666
     SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)26214);
     // 0x2caf9c: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x2caf9cu;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
 label_2cafa0:
     // 0x2cafa0: 0x3c013dcc  lui         $at, 0x3DCC
@@ -148,7 +146,6 @@ label_2cafa0:
             goto label_2cafe4;
         }
     }
-    ctx->pc = 0x2CAFB8u;
 label_2cafb8:
     // 0x2cafb8: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -188,7 +185,6 @@ label_2cafe4:
     // 0x2caff0: 0x24050004  addiu       $a1, $zero, 0x4
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x2caff4: 0x0  nop
-    ctx->pc = 0x2caff4u;
     // NOP
 label_2caff8:
     // 0x2caff8: 0xc4410000  lwc1        $f1, 0x0($v0)
@@ -254,7 +250,6 @@ label_2caff8:
             goto label_2cb048;
         }
     }
-    ctx->pc = 0x2CB038u;
 label_2cb038:
     // 0x2cb038: 0x46000800  add.s       $f0, $f1, $f0
     ctx->f[0] = FPU_ADD_S(ctx->f[1], ctx->f[0]);
@@ -265,7 +260,6 @@ label_2cb038:
     ctx->pc = 0x2cb040u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x2cb044: 0x46000834  c.lt.s      $f1, $f0
-    ctx->pc = 0x2cb044u;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[1], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
 label_2cb048:
     // 0x2cb048: 0x0  nop
@@ -285,7 +279,6 @@ label_2cb048:
             goto label_2cb054;
         }
     }
-    ctx->pc = 0x2CB054u;
 label_2cb054:
     // 0x2cb054: 0x24630004  addiu       $v1, $v1, 0x4
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4));

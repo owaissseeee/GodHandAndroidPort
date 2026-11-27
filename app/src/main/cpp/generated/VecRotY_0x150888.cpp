@@ -13,7 +13,7 @@
 
 // Function: VecRotY
 // Address: 0x150888 - 0x1508d8
-void VecRotY_0x150888(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void VecRotY_0x150888(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("VecRotY_0x150888");
 #endif
@@ -53,7 +53,6 @@ void VecRotY_0x150888(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitRotY_0x147988, 0x147988u, 0x1508a8u)) {
         return;
     }
-    ctx->pc = 0x1508A8u;
 label_1508a8:
     // 0x1508a8: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -70,7 +69,6 @@ label_1508a8:
     if (!runtime->callDirectStatic(rdram, ctx, &Tramp_func_0030A2B0_001508D8_0x1508d8, 0x1508d8u, 0x1508b8u)) {
         return;
     }
-    ctx->pc = 0x1508B8u;
 label_1508b8:
     // 0x1508b8: 0x7bb00060  lq          $s0, 0x60($sp)
     ctx->pc = 0x1508b8u;

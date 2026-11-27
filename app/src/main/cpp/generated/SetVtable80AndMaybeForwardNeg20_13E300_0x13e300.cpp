@@ -13,7 +13,7 @@
 
 // Function: SetVtable80AndMaybeForwardNeg20_13E300
 // Address: 0x13e300 - 0x13e330
-void SetVtable80AndMaybeForwardNeg20_13E300_0x13e300(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetVtable80AndMaybeForwardNeg20_13E300_0x13e300(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetVtable80AndMaybeForwardNeg20_13E300_0x13e300");
 #endif
@@ -58,7 +58,6 @@ void SetVtable80AndMaybeForwardNeg20_13E300_0x13e300(uint8_t* rdram, R5900Contex
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x13e324u)) {
         return;
     }
-    ctx->pc = 0x13E324u;
 label_13e324:
     // 0x13e324: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x13e324u;

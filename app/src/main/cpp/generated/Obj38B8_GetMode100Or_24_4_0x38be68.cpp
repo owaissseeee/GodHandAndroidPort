@@ -13,7 +13,7 @@
 
 // Function: Obj38B8_GetMode100Or_24_4
 // Address: 0x38be68 - 0x38be88
-void Obj38B8_GetMode100Or_24_4_0x38be68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj38B8_GetMode100Or_24_4_0x38be68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj38B8_GetMode100Or_24_4_0x38be68");
 #endif
@@ -52,7 +52,6 @@ void Obj38B8_GetMode100Or_24_4_0x38be68(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x38BE80u;
 label_38be80:
     // 0x38be80: 0x3e00008  jr          $ra
     ctx->pc = 0x38BE80u;

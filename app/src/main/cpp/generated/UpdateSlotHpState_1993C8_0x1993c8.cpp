@@ -13,7 +13,7 @@
 
 // Function: UpdateSlotHpState_1993C8
 // Address: 0x1993c8 - 0x199440
-void UpdateSlotHpState_1993C8_0x1993c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateSlotHpState_1993C8_0x1993c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateSlotHpState_1993C8_0x1993c8");
 #endif
@@ -48,7 +48,6 @@ void UpdateSlotHpState_1993C8_0x1993c8(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1B7380u, 0x1993D8u, 0x1993E0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1993E0u;
 label_1993e0:
     // 0x1993e0: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -121,7 +120,6 @@ label_1993e0:
             goto label_19942c;
         }
     }
-    ctx->pc = 0x199420u;
 label_199420:
     // 0x199420: 0xa20002f7  sb          $zero, 0x2F7($s0)
     ctx->pc = 0x199420u;

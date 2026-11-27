@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_translateSaveItem
 // Address: 0x1fb4d8 - 0x1fb6c8
-void cCoreSave_translateSaveItem_0x1fb4d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_translateSaveItem_0x1fb4d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_translateSaveItem_0x1fb4d8");
 #endif
@@ -130,7 +130,6 @@ void cCoreSave_translateSaveItem_0x1fb4d8(uint8_t* rdram, R5900Context* ctx, PS2
     ctx->pc = 0x1fb558u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 0)));
     // 0x1fb55c: 0x0  nop
-    ctx->pc = 0x1fb55cu;
     // NOP
 label_1fb560:
     // 0x1fb560: 0x138100  sll         $s0, $s3, 4
@@ -241,7 +240,6 @@ label_1fb560:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x1fb5f8u)) {
         return;
     }
-    ctx->pc = 0x1FB5F8u;
 label_1fb5f8:
     // 0x1fb5f8: 0xda440000  lqc2        $vf4, 0x0($s2)
     ctx->pc = 0x1fb5f8u;
@@ -338,7 +336,6 @@ label_1fb61c:
     ctx->pc = 0x1fb678u;
     WRITE16(ADD32(GPR_U32(ctx, 3), 12), (uint16_t)GPR_U32(ctx, 2));
     // 0x1fb67c: 0x26730001  addiu       $s3, $s3, 0x1
-    ctx->pc = 0x1fb67cu;
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 19), 1));
 label_1fb680:
     // 0x1fb680: 0x2e620080  sltiu       $v0, $s3, 0x80
@@ -361,7 +358,6 @@ label_1fb680:
             goto label_1fb560;
         }
     }
-    ctx->pc = 0x1FB68Cu;
 label_1fb68c:
     // 0x1fb68c: 0x7bb000b0  lq          $s0, 0xB0($sp)
     ctx->pc = 0x1fb68cu;

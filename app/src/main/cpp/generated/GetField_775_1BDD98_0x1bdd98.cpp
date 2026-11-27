@@ -13,7 +13,7 @@
 
 // Function: GetField_775_1BDD98
 // Address: 0x1bdd98 - 0x1bdda0
-void GetField_775_1BDD98_0x1bdd98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetField_775_1BDD98_0x1bdd98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetField_775_1BDD98_0x1bdd98");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: overflow__7filebufi
 // Address: 0x38efa0 - 0x38efc0
-void overflow__7filebufi_0x38efa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void overflow__7filebufi_0x38efa0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("overflow__7filebufi_0x38efa0");
 #endif
@@ -37,7 +37,6 @@ void overflow__7filebufi_0x38efa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &func_00392CD0_0x392cd0, 0x392cd0u, 0x38efb0u)) {
         return;
     }
-    ctx->pc = 0x38EFB0u;
 label_38efb0:
     // 0x38efb0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38efb0u;

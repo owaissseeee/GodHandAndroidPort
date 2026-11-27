@@ -13,7 +13,7 @@
 
 // Function: func_00344568
 // Address: 0x344568 - 0x344610
-void func_00344568_0x344568(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00344568_0x344568(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00344568_0x344568");
 #endif
@@ -77,7 +77,6 @@ void func_00344568_0x344568(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &MWSFSVM_Error_0x348be0, 0x348be0u, 0x34459cu)) {
         return;
     }
-    ctx->pc = 0x34459Cu;
 label_34459c:
     // 0x34459c: 0x10000017  b           . + 4 + (0x17 << 2)
     ctx->pc = 0x34459Cu;
@@ -95,7 +94,6 @@ label_34459c:
         }
     }
     // 0x3445a4: 0x0  nop
-    ctx->pc = 0x3445a4u;
     // NOP
 label_3445a8:
     // 0x3445a8: 0x4c00014  bltz        $a2, . + 4 + (0x14 << 2)
@@ -131,7 +129,6 @@ label_3445a8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00344610_0x344610, 0x344610u, 0x3445c4u)) {
         return;
     }
-    ctx->pc = 0x3445C4u;
 label_3445c4:
     // 0x3445c4: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x3445C4u;
@@ -149,7 +146,6 @@ label_3445c4:
         }
     }
     // 0x3445cc: 0x0  nop
-    ctx->pc = 0x3445ccu;
     // NOP
 label_3445d0:
     // 0x3445d0: 0xc0d1192  jal         func_344648
@@ -163,10 +159,8 @@ label_3445d0:
     if (!runtime->callDirectStatic(rdram, ctx, &mwsfcre_UsrMalloc_0x344648, 0x344648u, 0x3445d8u)) {
         return;
     }
-    ctx->pc = 0x3445D8u;
 label_3445d8:
     // 0x3445d8: 0x40802d  daddu       $s0, $v0, $zero
-    ctx->pc = 0x3445d8u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_3445dc:
     // 0x3445dc: 0x12000006  beqz        $s0, . + 4 + (0x6 << 2)
@@ -202,10 +196,8 @@ label_3445dc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00344770_0x344770, 0x344770u, 0x3445f8u)) {
         return;
     }
-    ctx->pc = 0x3445F8u;
 label_3445f8:
     // 0x3445f8: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x3445f8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_3445fc:
     // 0x3445fc: 0xdfb00000  ld          $s0, 0x0($sp)

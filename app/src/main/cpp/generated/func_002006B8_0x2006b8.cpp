@@ -13,7 +13,7 @@
 
 // Function: func_002006B8
 // Address: 0x2006b8 - 0x2008b8
-void func_002006B8_0x2006b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002006B8_0x2006b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002006B8_0x2006b8");
 #endif
@@ -168,7 +168,6 @@ void func_002006B8_0x2006b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2007dc;
         }
     }
-    ctx->pc = 0x200728u;
 label_200728:
     // 0x200728: 0x211ba  dsrl        $v0, $v0, 6
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) >> 6);
@@ -261,7 +260,6 @@ label_200728:
     ctx->pc = 0x20077cu;
     { uint32_t addr = ADD32(GPR_U32(ctx, 16), 44); uint32_t aligned_addr = addr & ~7u; uint32_t offset = addr & 7u; uint32_t shift = offset << 3; uint64_t mask = 0xFFFFFFFFFFFFFFFFull << shift; uint64_t old_data = READ64(aligned_addr); uint64_t val = GPR_U64(ctx, 4); uint64_t new_data = (old_data & ~mask) | ((val << shift) & mask); WRITE64(aligned_addr, new_data); }
     // 0x200780: 0x3c040060  lui         $a0, 0x60
-    ctx->pc = 0x200780u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)96 << 16));
 label_200784:
     // 0x200784: 0x282d  daddu       $a1, $zero, $zero
@@ -277,7 +275,6 @@ label_200784:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SetBgmState_0x2d0ab8, 0x2d0ab8u, 0x200790u)) {
         return;
     }
-    ctx->pc = 0x200790u;
 label_200790:
     // 0x200790: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
@@ -299,7 +296,6 @@ label_200790:
     if (!runtime->callDirectStatic(rdram, ctx, &cSubScr_SubScrOn_0x160020, 0x160020u, 0x2007a8u)) {
         return;
     }
-    ctx->pc = 0x2007A8u;
 label_2007a8:
     // 0x2007a8: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
@@ -314,7 +310,6 @@ label_2007a8:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_release_0x2c3858, 0x2c3858u, 0x2007b4u)) {
         return;
     }
-    ctx->pc = 0x2007B4u;
 label_2007b4:
     // 0x2007b4: 0x92020039  lbu         $v0, 0x39($s0)
     ctx->pc = 0x2007b4u;
@@ -325,7 +320,6 @@ label_2007b4:
     ctx->pc = 0x2007bcu;
     WRITE8(ADD32(GPR_U32(ctx, 16), 57), (uint8_t)GPR_U32(ctx, 2));
     // 0x2007c0: 0x3c020074  lui         $v0, 0x74
-    ctx->pc = 0x2007c0u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
 label_2007c4:
     // 0x2007c4: 0x3c040800  lui         $a0, 0x800
@@ -351,7 +345,6 @@ label_2007c4:
         }
     }
     // 0x2007d8: 0x3c02003c  lui         $v0, 0x3C
-    ctx->pc = 0x2007d8u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
 label_2007dc:
     // 0x2007dc: 0x8c43d930  lw          $v1, -0x26D0($v0)
@@ -437,7 +430,6 @@ label_2007dc:
             goto label_2008a4;
         }
     }
-    ctx->pc = 0x200840u;
 label_200840:
     // 0x200840: 0x3c030074  lui         $v1, 0x74
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
@@ -539,7 +531,6 @@ label_200840:
     { uint32_t addr = ADD32(GPR_U32(ctx, 16), 20); uint32_t aligned_addr = addr & ~7u; uint32_t offset = addr & 7u; uint32_t shift = offset << 3; uint64_t mask = 0xFFFFFFFFFFFFFFFFull << shift; uint64_t old_data = READ64(aligned_addr); uint64_t val = GPR_U64(ctx, 4); uint64_t new_data = (old_data & ~mask) | ((val << shift) & mask); WRITE64(aligned_addr, new_data); }
 label_2008a4:
     // 0x2008a4: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2008a4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2008a8:
     // 0x2008a8: 0x7bb00010  lq          $s0, 0x10($sp)

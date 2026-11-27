@@ -13,7 +13,7 @@
 
 // Function: func_001AE6A0
 // Address: 0x1ae6a0 - 0x1ae700
-void func_001AE6A0_0x1ae6a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001AE6A0_0x1ae6a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001AE6A0_0x1ae6a0");
 #endif
@@ -49,7 +49,6 @@ void func_001AE6A0_0x1ae6a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getGameLevel_0x1fa010, 0x1fa010u, 0x1ae6bcu)) {
         return;
     }
-    ctx->pc = 0x1AE6BCu;
 label_1ae6bc:
     // 0x1ae6bc: 0x28440006  slti        $a0, $v0, 0x6
     SET_GPR_U64(ctx, 4, ((int64_t)GPR_S64(ctx, 2) < (int64_t)(int32_t)6) ? 1 : 0);

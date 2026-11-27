@@ -13,7 +13,7 @@
 
 // Function: PosObj_forwardSpan
 // Address: 0x2b0420 - 0x2b0480
-void PosObj_forwardSpan_0x2b0420(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void PosObj_forwardSpan_0x2b0420(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("PosObj_forwardSpan_0x2b0420");
 #endif
@@ -62,7 +62,6 @@ void PosObj_forwardSpan_0x2b0420(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &GetField_BEE_2B1290_0x2b1290, 0x2b1290u, 0x2b044cu)) {
         return;
     }
-    ctx->pc = 0x2B044Cu;
 label_2b044c:
     // 0x2b044c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -87,7 +86,6 @@ label_2b044c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AFED0_0x2afed0, 0x2afed0u, 0x2b0468u)) {
         return;
     }
-    ctx->pc = 0x2B0468u;
 label_2b0468:
     // 0x2b0468: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x2b0468u;

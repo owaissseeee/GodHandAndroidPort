@@ -21,6 +21,7 @@
 #include <xmmintrin.h>
 
 extern "C" void godhand_set_thread_affinity_and_priority(const char* name, int primaryCore, int fallbackCore, int niceVal);
+extern "C" void godhand_perf_add_rawgif_ns(uint64_t ns);
 
 namespace
 {
@@ -183,6 +184,7 @@ void GSThreadedBackend::SetGpuByDefault(bool enabled)
 void GSThreadedBackend::Enqueue(Op op, const void *payload, uint32_t size)
 {
     std::lock_guard<std::mutex> lock(m_producerMutex);
+#if !defined(__aarch64__) && !defined(_M_ARM64)
     const uint32_t csr = _mm_getcsr();
     if (csr != m_lastMxcsr)
     {
@@ -193,6 +195,7 @@ void GSThreadedBackend::Enqueue(Op op, const void *payload, uint32_t size)
         m_open.insert(m_open.end(), reinterpret_cast<const uint8_t *>(&csrSize), reinterpret_cast<const uint8_t *>(&csrSize) + 4);
         m_open.insert(m_open.end(), reinterpret_cast<const uint8_t *>(&csr), reinterpret_cast<const uint8_t *>(&csr) + 4);
     }
+#endif
     const auto append = [&](Op kind, const void *bytes, uint32_t length)
     {
         uint8_t header[5];
@@ -382,7 +385,9 @@ void GSThreadedBackend::Execute(const std::vector<uint8_t> &chunk, GSPrimitiveBa
         switch (op)
         {
         case Op::Mxcsr:
+#if !defined(__aarch64__) && !defined(_M_ARM64)
             _mm_setcsr(readAt<uint32_t>(payload));
+#endif
             break;
         case Op::Submit:
             if (!discardDraws())
@@ -427,6 +432,8 @@ void GSThreadedBackend::Execute(const std::vector<uint8_t> &chunk, GSPrimitiveBa
             (*readAt<const std::function<void()> *>(payload))();
             break;
         case Op::RawGif:
+        {
+            const auto gifStart = std::chrono::steady_clock::now();
             // PCSX2's GIF parser loads whole qwords with aligned vector loads; the queue packs records at any byte.
             if ((reinterpret_cast<uintptr_t>(payload) & 15u) != 0u)
             {
@@ -439,7 +446,11 @@ void GSThreadedBackend::Execute(const std::vector<uint8_t> &chunk, GSPrimitiveBa
             }
             else
                 m_inner->RawGif(payload, length);
+            const auto gifEnd = std::chrono::steady_clock::now();
+            godhand_perf_add_rawgif_ns(static_cast<uint64_t>(
+                std::chrono::duration_cast<std::chrono::nanoseconds>(gifEnd - gifStart).count()));
             break;
+        }
         case Op::VSync:
             m_inner->VSync(readAt<GSVSyncRegs>(payload));
             break;

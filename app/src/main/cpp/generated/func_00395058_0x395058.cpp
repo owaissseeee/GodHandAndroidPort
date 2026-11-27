@@ -13,7 +13,7 @@
 
 // Function: func_00395058
 // Address: 0x395058 - 0x3950f8
-void func_00395058_0x395058(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00395058_0x395058(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00395058_0x395058");
 #endif
@@ -58,7 +58,6 @@ void func_00395058_0x395058(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x39508c: 0x48c4e000  ctc2.ni     $a0, $vi28
     ctx->vu0_fbrst = GPR_U32(ctx, 4) & 0x00000C0Cu;
     // 0x395090: 0x40f  sync.p
-    ctx->pc = 0x395090u;
     // SYNC instruction - memory barrier
 // In recompiled code, we don't need explicit memory barriers
 label_395094:

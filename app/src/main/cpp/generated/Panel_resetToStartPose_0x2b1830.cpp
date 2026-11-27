@@ -13,7 +13,7 @@
 
 // Function: Panel_resetToStartPose
 // Address: 0x2b1830 - 0x2b1890
-void Panel_resetToStartPose_0x2b1830(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Panel_resetToStartPose_0x2b1830(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Panel_resetToStartPose_0x2b1830");
 #endif
@@ -77,7 +77,6 @@ void Panel_resetToStartPose_0x2b1830(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B1C80_0x2b1c80, 0x2b1c80u, 0x2b1874u)) {
         return;
     }
-    ctx->pc = 0x2B1874u;
 label_2b1874:
     // 0x2b1874: 0xc0ac624  jal         func_2B1890
     SET_GPR_U32(ctx, 31, 0x2B187Cu);
@@ -90,7 +89,6 @@ label_2b1874:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B1890_0x2b1890, 0x2b1890u, 0x2b187cu)) {
         return;
     }
-    ctx->pc = 0x2B187Cu;
 label_2b187c:
     // 0x2b187c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2b187cu;

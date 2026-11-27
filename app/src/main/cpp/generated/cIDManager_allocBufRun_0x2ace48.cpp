@@ -13,7 +13,7 @@
 
 // Function: cIDManager_allocBufRun
 // Address: 0x2ace48 - 0x2acf30
-void cIDManager_allocBufRun_0x2ace48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDManager_allocBufRun_0x2ace48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDManager_allocBufRun_0x2ace48");
 #endif
@@ -177,10 +177,8 @@ void cIDManager_allocBufRun_0x2ace48(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2acf1cu)) {
         return;
     }
-    ctx->pc = 0x2ACF1Cu;
 label_2acf1c:
     // 0x2acf1c: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x2acf1cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_2acf20:
     // 0x2acf20: 0x7bb00010  lq          $s0, 0x10($sp)

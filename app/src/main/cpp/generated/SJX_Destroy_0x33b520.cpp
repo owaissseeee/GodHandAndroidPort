@@ -13,7 +13,7 @@
 
 // Function: SJX_Destroy
 // Address: 0x33b520 - 0x33b568
-void SJX_Destroy_0x33b520(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SJX_Destroy_0x33b520(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SJX_Destroy_0x33b520");
 #endif
@@ -60,7 +60,6 @@ void SJX_Destroy_0x33b520(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &DTX_CallUrpc_0x332670, 0x332670u, 0x33b550u)) {
         return;
     }
-    ctx->pc = 0x33B550u;
 label_33b550:
     // 0x33b550: 0xdfbf0018  ld          $ra, 0x18($sp)
     ctx->pc = 0x33b550u;

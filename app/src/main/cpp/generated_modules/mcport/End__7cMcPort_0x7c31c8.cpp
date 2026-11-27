@@ -14,32 +14,31 @@ namespace gh_mcport
 {
 // Function: End__7cMcPort
 // Address: 0x7c31c8 - 0x7c31e8
-void End__7cMcPort_0x7c31c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void End__7cMcPort_0x7c31c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("End__7cMcPort_0x7c31c8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7c31d8u: goto label_7c31d8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7c31c8u, 0)) {
+        switch (ctx->pc) {
+            case 0x7c31d8u: goto label_7c31d8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7c31c8u;
+
 
     // 0x7c31c8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7c31c8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x7c31cc: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x7c31ccu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x7c31d0: 0xc1f355e  jal         func_7CD578
-    ctx->pc = 0x7C31D0u;
     SET_GPR_U32(ctx, 31, 0x7C31D8u);
     ctx->pc = 0x7CD578u;
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x7CD578u, 0x7C31D0u, 0x7C31D8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7C31D8u;
 label_7c31d8:
     // 0x7c31d8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7c31d8u;
@@ -63,9 +62,7 @@ label_7c31d8:
         return;
         #endif
     }
-    ctx->pc = 0x7C31E4u;
     // 0x7c31e4: 0x0  nop
-    ctx->pc = 0x7c31e4u;
     // NOP
     ctx->pc = 0x7c31e8u;
 }

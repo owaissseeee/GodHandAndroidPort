@@ -13,7 +13,7 @@
 
 // Function: __malloc_lock
 // Address: 0x3a8048 - 0x3a80a8
-void ps2___malloc_lock_0x3a8048(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___malloc_lock_0x3a8048(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___malloc_lock_0x3a8048");
 #endif
@@ -49,7 +49,6 @@ void ps2___malloc_lock_0x3a8048(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &GetThreadId_0x3afb90, 0x3afb90u, 0x3a8060u)) {
         return;
     }
-    ctx->pc = 0x3A8060u;
 label_3a8060:
     // 0x3a8060: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -86,7 +85,6 @@ label_3a8060:
             goto label_3a8088;
         }
     }
-    ctx->pc = 0x3A8078u;
 label_3a8078:
     // 0x3a8078: 0xc0ebf38  jal         func_3AFCE0
     SET_GPR_U32(ctx, 31, 0x3A8080u);
@@ -99,7 +97,6 @@ label_3a8078:
     if (!runtime->callDirectStatic(rdram, ctx, &WaitSema_0x3afce0, 0x3afce0u, 0x3a8080u)) {
         return;
     }
-    ctx->pc = 0x3A8080u;
 label_3a8080:
     // 0x3a8080: 0x3c030040  lui         $v1, 0x40
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)64 << 16));

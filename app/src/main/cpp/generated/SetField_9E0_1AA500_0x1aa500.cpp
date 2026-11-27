@@ -13,7 +13,7 @@
 
 // Function: SetField_9E0_1AA500
 // Address: 0x1aa500 - 0x1aa510
-void SetField_9E0_1AA500_0x1aa500(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetField_9E0_1AA500_0x1aa500(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetField_9E0_1AA500_0x1aa500");
 #endif

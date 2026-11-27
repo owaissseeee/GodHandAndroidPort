@@ -13,7 +13,7 @@
 
 // Function: func_002A9210
 // Address: 0x2a9210 - 0x2a9288
-void func_002A9210_0x2a9210(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002A9210_0x2a9210(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002A9210_0x2a9210");
 #endif
@@ -61,7 +61,6 @@ void func_002A9210_0x2a9210(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
     // 0x2a9234: 0x0  nop
-    ctx->pc = 0x2a9234u;
     // NOP
 label_2a9238:
     // 0x2a9238: 0x6a020007  ldl         $v0, 0x7($s0)
@@ -101,7 +100,6 @@ label_2a9238:
     if (!runtime->callDirectStatic(rdram, ctx, &cGameObjSortEnt_unguardedLinearInsert_0x2a9098, 0x2a9098u, 0x2a9268u)) {
         return;
     }
-    ctx->pc = 0x2A9268u;
 label_2a9268:
     // 0x2a9268: 0x1611fff3  bne         $s0, $s1, . + 4 + (-0xD << 2)
     ctx->pc = 0x2A9268u;
@@ -115,7 +113,6 @@ label_2a9268:
             goto label_2a9238;
         }
     }
-    ctx->pc = 0x2A9270u;
 label_2a9270:
     // 0x2a9270: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x2a9270u;

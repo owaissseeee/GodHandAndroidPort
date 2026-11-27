@@ -13,7 +13,7 @@
 
 // Function: ClearObjResource_19D7E8
 // Address: 0x19d7e8 - 0x19d848
-void ClearObjResource_19D7E8_0x19d7e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearObjResource_19D7E8_0x19d7e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearObjResource_19D7E8_0x19d7e8");
 #endif
@@ -80,7 +80,6 @@ void ClearObjResource_19D7E8_0x19d7e8(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x19d824u)) {
         return;
     }
-    ctx->pc = 0x19D824u;
 label_19d824:
     // 0x19d824: 0xae000600  sw          $zero, 0x600($s0)
     ctx->pc = 0x19d824u;
@@ -99,7 +98,6 @@ label_19d828:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001BFB00_0x1bfb00, 0x1bfb00u, 0x19d834u)) {
         return;
     }
-    ctx->pc = 0x19D834u;
 label_19d834:
     // 0x19d834: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x19d834u;

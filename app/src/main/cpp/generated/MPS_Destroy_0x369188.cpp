@@ -13,7 +13,7 @@
 
 // Function: MPS_Destroy
 // Address: 0x369188 - 0x3691d8
-void MPS_Destroy_0x369188(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MPS_Destroy_0x369188(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MPS_Destroy_0x369188");
 #endif
@@ -45,7 +45,6 @@ void MPS_Destroy_0x369188(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &MPSLIB_CheckHn_0x368fc0, 0x368fc0u, 0x36919cu)) {
         return;
     }
-    ctx->pc = 0x36919Cu;
 label_36919c:
     // 0x36919c: 0x3c05ff02  lui         $a1, 0xFF02
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)65282 << 16));
@@ -83,7 +82,6 @@ label_36919c:
         return;
     }
     // 0x3691bc: 0x0  nop
-    ctx->pc = 0x3691bcu;
     // NOP
 label_3691c0:
     // 0x3691c0: 0x24030001  addiu       $v1, $zero, 0x1

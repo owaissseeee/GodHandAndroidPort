@@ -13,7 +13,7 @@
 
 // Function: func_0031BDC8
 // Address: 0x31bdc8 - 0x31be58
-void func_0031BDC8_0x31bdc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0031BDC8_0x31bdc8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0031BDC8_0x31bdc8");
 #endif
@@ -61,7 +61,6 @@ void func_0031BDC8_0x31bdc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x31bdf0: 0x3c080075  lui         $t0, 0x75
     SET_GPR_S32(ctx, 8, (int32_t)((uint32_t)117 << 16));
     // 0x31bdf4: 0x0  nop
-    ctx->pc = 0x31bdf4u;
     // NOP
 label_31bdf8:
     // 0x31bdf8: 0x8d225800  lw          $v0, 0x5800($t1)

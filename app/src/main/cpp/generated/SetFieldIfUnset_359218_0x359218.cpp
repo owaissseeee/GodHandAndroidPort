@@ -13,7 +13,7 @@
 
 // Function: SetFieldIfUnset_359218
 // Address: 0x359218 - 0x359270
-void SetFieldIfUnset_359218_0x359218(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetFieldIfUnset_359218_0x359218(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetFieldIfUnset_359218_0x359218");
 #endif
@@ -57,7 +57,6 @@ void SetFieldIfUnset_359218_0x359218(uint8_t* rdram, R5900Context* ctx, PS2Runti
         }
     }
     // 0x35923c: 0x0  nop
-    ctx->pc = 0x35923cu;
     // NOP
 label_359240:
     // 0x359240: 0x10650007  beq         $v1, $a1, . + 4 + (0x7 << 2)
@@ -93,7 +92,6 @@ label_359240:
         return;
     }
     // 0x35925c: 0x0  nop
-    ctx->pc = 0x35925cu;
     // NOP
 label_359260:
     // 0x359260: 0xdfbf0000  ld          $ra, 0x0($sp)

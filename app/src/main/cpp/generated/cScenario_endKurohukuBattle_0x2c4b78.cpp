@@ -13,7 +13,7 @@
 
 // Function: cScenario_endKurohukuBattle
 // Address: 0x2c4b78 - 0x2c4c58
-void cScenario_endKurohukuBattle_0x2c4b78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_endKurohukuBattle_0x2c4b78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_endKurohukuBattle_0x2c4b78");
 #endif
@@ -67,7 +67,6 @@ void cScenario_endKurohukuBattle_0x2c4b78(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &func_002C02E8_0x2c02e8, 0x2c02e8u, 0x2c4ba8u)) {
         return;
     }
-    ctx->pc = 0x2C4BA8u;
 label_2c4ba8:
     // 0x2c4ba8: 0x3c030057  lui         $v1, 0x57
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)87 << 16));
@@ -119,7 +118,6 @@ label_2c4ba8:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_beginRoomJump_2C4548_0x2c4548, 0x2c4548u, 0x2c4be4u)) {
         return;
     }
-    ctx->pc = 0x2C4BE4u;
 label_2c4be4:
     // 0x2c4be4: 0x1000000b  b           . + 4 + (0xB << 2)
     ctx->pc = 0x2C4BE4u;
@@ -136,7 +134,6 @@ label_2c4be4:
             goto label_2c4c14;
         }
     }
-    ctx->pc = 0x2C4BECu;
 label_2c4bec:
     // 0x2c4bec: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
@@ -164,7 +161,6 @@ label_2c4bec:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_beginRoomJump_2C4548_0x2c4548, 0x2c4548u, 0x2c4c10u)) {
         return;
     }
-    ctx->pc = 0x2C4C10u;
 label_2c4c10:
     // 0x2c4c10: 0x8e238240  lw          $v1, -0x7DC0($s1)
     ctx->pc = 0x2c4c10u;

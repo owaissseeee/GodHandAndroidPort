@@ -13,7 +13,7 @@
 
 // Function: BlackJack_SetBlackJackCamera
 // Address: 0x1d44d8 - 0x1d4578
-void BlackJack_SetBlackJackCamera_0x1d44d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BlackJack_SetBlackJackCamera_0x1d44d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BlackJack_SetBlackJackCamera_0x1d44d8");
 #endif
@@ -66,7 +66,6 @@ void BlackJack_SetBlackJackCamera_0x1d44d8(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &cCamManager_setSubScrCamera_0x138eb8, 0x138eb8u, 0x1d4510u)) {
         return;
     }
-    ctx->pc = 0x1D4510u;
 label_1d4510:
     // 0x1d4510: 0x26420c90  addiu       $v0, $s2, 0xC90
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 18), 3216));

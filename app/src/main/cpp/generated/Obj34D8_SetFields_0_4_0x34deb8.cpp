@@ -13,7 +13,7 @@
 
 // Function: Obj34D8_SetFields_0_4
 // Address: 0x34deb8 - 0x34dec8
-void Obj34D8_SetFields_0_4_0x34deb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj34D8_SetFields_0_4_0x34deb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj34D8_SetFields_0_4_0x34deb8");
 #endif

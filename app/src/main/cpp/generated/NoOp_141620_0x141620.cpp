@@ -13,7 +13,7 @@
 
 // Function: NoOp_141620
 // Address: 0x141620 - 0x141628
-void NoOp_141620_0x141620(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void NoOp_141620_0x141620(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("NoOp_141620_0x141620");
 #endif

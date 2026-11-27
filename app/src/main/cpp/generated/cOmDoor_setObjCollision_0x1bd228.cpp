@@ -13,7 +13,7 @@
 
 // Function: cOmDoor_setObjCollision
 // Address: 0x1bd228 - 0x1bd3f0
-void cOmDoor_setObjCollision_0x1bd228(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmDoor_setObjCollision_0x1bd228(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmDoor_setObjCollision_0x1bd228");
 #endif
@@ -173,7 +173,6 @@ void cOmDoor_setObjCollision_0x1bd228(uint8_t* rdram, R5900Context* ctx, PS2Runt
     // 0x1bd304: 0x27ad0090  addiu       $t5, $sp, 0x90
     SET_GPR_S32(ctx, 13, (int32_t)ADD32(GPR_U32(ctx, 29), 144));
     // 0x1bd308: 0x27a300a0  addiu       $v1, $sp, 0xA0
-    ctx->pc = 0x1bd308u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 29), 160));
 label_1bd30c:
     // 0x1bd30c: 0x692f0007  ldl         $t7, 0x7($t1)
@@ -259,7 +258,6 @@ label_1bd30c:
             goto label_1bd3b0;
         }
     }
-    ctx->pc = 0x1BD360u;
 label_1bd360:
     // 0x1bd360: 0x252e0060  addiu       $t6, $t1, 0x60
     SET_GPR_S32(ctx, 14, (int32_t)ADD32(GPR_U32(ctx, 9), 96));
@@ -276,7 +274,6 @@ label_1bd360:
     // 0x1bd378: 0x27ad0090  addiu       $t5, $sp, 0x90
     SET_GPR_S32(ctx, 13, (int32_t)ADD32(GPR_U32(ctx, 29), 144));
     // 0x1bd37c: 0x27a300a0  addiu       $v1, $sp, 0xA0
-    ctx->pc = 0x1bd37cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 29), 160));
 label_1bd380:
     // 0x1bd380: 0xdd2f0000  ld          $t7, 0x0($t1)
@@ -324,7 +321,6 @@ label_1bd380:
         }
     }
     // 0x1bd3ac: 0x200282d  daddu       $a1, $s0, $zero
-    ctx->pc = 0x1bd3acu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_1bd3b0:
     // 0x1bd3b0: 0xafa20000  sw          $v0, 0x0($sp)
@@ -351,7 +347,6 @@ label_1bd3b0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0012EAD8_0x12ead8, 0x12ead8u, 0x1bd3ccu)) {
         return;
     }
-    ctx->pc = 0x1BD3CCu;
 label_1bd3cc:
     // 0x1bd3cc: 0xae020644  sw          $v0, 0x644($s0)
     ctx->pc = 0x1bd3ccu;

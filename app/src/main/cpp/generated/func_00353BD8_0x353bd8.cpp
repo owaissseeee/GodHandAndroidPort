@@ -13,7 +13,7 @@
 
 // Function: func_00353BD8
 // Address: 0x353bd8 - 0x353ee0
-void func_00353BD8_0x353bd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00353BD8_0x353bd8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00353BD8_0x353bd8");
 #endif
@@ -96,7 +96,6 @@ void func_00353BD8_0x353bd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_353c40;
         }
     }
-    ctx->pc = 0x353C20u;
 label_353c20:
     // 0x353c20: 0xc0d556a  jal         func_3555A8
     ctx->pc = 0x353C20u;
@@ -104,7 +103,6 @@ label_353c20:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003555A8_0x3555a8, 0x3555a8u, 0x353c28u)) {
         return;
     }
-    ctx->pc = 0x353C28u;
 label_353c28:
     // 0x353c28: 0x14400005  bnez        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x353C28u;
@@ -140,7 +138,6 @@ label_353c28:
             goto label_353ebc;
         }
     }
-    ctx->pc = 0x353C40u;
 label_353c40:
     // 0x353c40: 0x8e8a0000  lw          $t2, 0x0($s4)
     ctx->pc = 0x353c40u;
@@ -169,7 +166,6 @@ label_353c40:
         }
     }
     // 0x353c5c: 0x26420080  addiu       $v0, $s2, 0x80
-    ctx->pc = 0x353c5cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 18), 128));
 label_353c60:
     // 0x353c60: 0x68660007  ldl         $a2, 0x7($v1)
@@ -260,11 +256,9 @@ label_353c60:
         }
     }
     // 0x353cbc: 0x0  nop
-    ctx->pc = 0x353cbcu;
     // NOP
 label_353cc0:
     // 0x353cc0: 0x26420080  addiu       $v0, $s2, 0x80
-    ctx->pc = 0x353cc0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 18), 128));
 label_353cc4:
     // 0x353cc4: 0xdc660000  ld          $a2, 0x0($v1)
@@ -390,7 +384,6 @@ label_353cfc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003556A0_0x3556a0, 0x3556a0u, 0x353d34u)) {
         return;
     }
-    ctx->pc = 0x353D34u;
 label_353d34:
     // 0x353d34: 0x8e020164  lw          $v0, 0x164($s0)
     ctx->pc = 0x353d34u;
@@ -537,7 +530,6 @@ label_353d4c:
         }
     }
     // 0x353e0c: 0x0  nop
-    ctx->pc = 0x353e0cu;
     // NOP
 label_353e10:
     // 0x353e10: 0x8e420018  lw          $v0, 0x18($s2)

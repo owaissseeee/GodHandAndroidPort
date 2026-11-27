@@ -13,7 +13,7 @@
 
 // Function: cPadVib_init
 // Address: 0x2bdb78 - 0x2bdbd0
-void cPadVib_init_0x2bdb78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cPadVib_init_0x2bdb78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cPadVib_init_0x2bdb78");
 #endif
@@ -57,7 +57,6 @@ void cPadVib_init_0x2bdb78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &cPadVib_stopSeq_0x2bdfd8, 0x2bdfd8u, 0x2bdba0u)) {
         return;
     }
-    ctx->pc = 0x2BDBA0u;
 label_2bdba0:
     // 0x2bdba0: 0x8e020010  lw          $v0, 0x10($s0)
     ctx->pc = 0x2bdba0u;

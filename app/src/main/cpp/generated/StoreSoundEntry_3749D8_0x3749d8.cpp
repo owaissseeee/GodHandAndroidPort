@@ -13,7 +13,7 @@
 
 // Function: StoreSoundEntry_3749D8
 // Address: 0x3749d8 - 0x374ae0
-void StoreSoundEntry_3749D8_0x3749d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void StoreSoundEntry_3749D8_0x3749d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("StoreSoundEntry_3749D8_0x3749d8");
 #endif
@@ -67,7 +67,6 @@ void StoreSoundEntry_3749D8_0x3749d8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     ctx->pc = 0x374a08u;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 9), 2)));
     // 0x374a0c: 0x30480001  andi        $t0, $v0, 0x1
-    ctx->pc = 0x374a0cu;
     SET_GPR_U64(ctx, 8, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
 label_374a10:
     // 0x374a10: 0x952a0000  lhu         $t2, 0x0($t1)
@@ -202,13 +201,11 @@ label_374a10:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00374AE0_0x374ae0, 0x374ae0u, 0x374ac4u)) {
         return;
     }
-    ctx->pc = 0x374AC4u;
 label_374ac4:
     // 0x374ac4: 0xae020010  sw          $v0, 0x10($s0)
     ctx->pc = 0x374ac4u;
     WRITE32(ADD32(GPR_U32(ctx, 16), 16), GPR_U32(ctx, 2));
     // 0x374ac8: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x374ac8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_374acc:
     // 0x374acc: 0x7bb00010  lq          $s0, 0x10($sp)

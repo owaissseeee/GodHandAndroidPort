@@ -13,7 +13,7 @@
 
 // Function: GetViewScrollIdAll
 // Address: 0x2db5a0 - 0x2db620
-void GetViewScrollIdAll_0x2db5a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetViewScrollIdAll_0x2db5a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetViewScrollIdAll_0x2db5a0");
 #endif
@@ -60,7 +60,6 @@ void GetViewScrollIdAll_0x2db5a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     ctx->pc = 0x2db5c0u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 0)));
     // 0x2db5c4: 0x0  nop
-    ctx->pc = 0x2db5c4u;
     // NOP
 label_2db5c8:
     // 0x2db5c8: 0x906402fd  lbu         $a0, 0x2FD($v1)
@@ -147,7 +146,6 @@ label_2db608:
             goto label_2db5c8;
         }
     }
-    ctx->pc = 0x2DB618u;
 label_2db618:
     // 0x2db618: 0x3e00008  jr          $ra
     ctx->pc = 0x2DB618u;

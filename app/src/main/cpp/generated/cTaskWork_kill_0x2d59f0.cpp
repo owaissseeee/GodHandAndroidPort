@@ -13,7 +13,7 @@
 
 // Function: cTaskWork_kill
 // Address: 0x2d59f0 - 0x2d5a48
-void cTaskWork_kill_0x2d59f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cTaskWork_kill_0x2d59f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cTaskWork_kill_0x2d59f0");
 #endif
@@ -82,7 +82,6 @@ void cTaskWork_kill_0x2d59f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &TerminateThread_0x3afaf0, 0x3afaf0u, 0x2d5a24u)) {
         return;
     }
-    ctx->pc = 0x2D5A24u;
 label_2d5a24:
     // 0x2d5a24: 0xc0ebeac  jal         func_3AFAB0
     SET_GPR_U32(ctx, 31, 0x2D5A2Cu);
@@ -95,7 +94,6 @@ label_2d5a24:
     if (!runtime->callDirectStatic(rdram, ctx, &DeleteThread_0x3afab0, 0x3afab0u, 0x2d5a2cu)) {
         return;
     }
-    ctx->pc = 0x2D5A2Cu;
 label_2d5a2c:
     // 0x2d5a2c: 0xae110004  sw          $s1, 0x4($s0)
     ctx->pc = 0x2d5a2cu;

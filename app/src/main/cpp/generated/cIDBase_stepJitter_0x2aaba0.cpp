@@ -13,7 +13,7 @@
 
 // Function: cIDBase_stepJitter
 // Address: 0x2aaba0 - 0x2aac28
-void cIDBase_stepJitter_0x2aaba0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDBase_stepJitter_0x2aaba0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDBase_stepJitter_0x2aaba0");
 #endif
@@ -59,7 +59,6 @@ void cIDBase_stepJitter_0x2aaba0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         }
     }
     // 0x2aabbc: 0x502d  daddu       $t2, $zero, $zero
-    ctx->pc = 0x2aabbcu;
     SET_GPR_U64(ctx, 10, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2aabc0:
     // 0x2aabc0: 0x8d220004  lw          $v0, 0x4($t1)
@@ -148,7 +147,6 @@ label_2aac10:
             goto label_2aabc0;
         }
     }
-    ctx->pc = 0x2AAC20u;
 label_2aac20:
     // 0x2aac20: 0x3e00008  jr          $ra
     ctx->pc = 0x2AAC20u;

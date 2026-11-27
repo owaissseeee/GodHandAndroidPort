@@ -13,7 +13,7 @@
 
 // Function: cSndBgmNode_Release
 // Address: 0x2ccb10 - 0x2ccb58
-void cSndBgmNode_Release_0x2ccb10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndBgmNode_Release_0x2ccb10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndBgmNode_Release_0x2ccb10");
 #endif
@@ -48,7 +48,6 @@ void cSndBgmNode_Release_0x2ccb10(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_IsActive_0x2cc568, 0x2cc568u, 0x2ccb24u)) {
         return;
     }
-    ctx->pc = 0x2CCB24u;
 label_2ccb24:
     // 0x2ccb24: 0x50400008  beql        $v0, $zero, . + 4 + (0x8 << 2)
     ctx->pc = 0x2CCB24u;
@@ -76,7 +75,6 @@ label_2ccb24:
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateSequenceNode_373430_0x373430, 0x373430u, 0x2ccb34u)) {
         return;
     }
-    ctx->pc = 0x2CCB34u;
 label_2ccb34:
     // 0x2ccb34: 0xc0dccf2  jal         func_3733C8
     SET_GPR_U32(ctx, 31, 0x2CCB3Cu);
@@ -89,7 +87,6 @@ label_2ccb34:
     if (!runtime->callDirectStatic(rdram, ctx, &ResetNodeData_3733C8_0x3733c8, 0x3733c8u, 0x2ccb3cu)) {
         return;
     }
-    ctx->pc = 0x2CCB3Cu;
 label_2ccb3c:
     // 0x2ccb3c: 0xc0b317a  jal         func_2CC5E8
     SET_GPR_U32(ctx, 31, 0x2CCB44u);
@@ -102,7 +99,6 @@ label_2ccb3c:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_Unlink_0x2cc5e8, 0x2cc5e8u, 0x2ccb44u)) {
         return;
     }
-    ctx->pc = 0x2CCB44u;
 label_2ccb44:
     // 0x2ccb44: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2ccb44u;

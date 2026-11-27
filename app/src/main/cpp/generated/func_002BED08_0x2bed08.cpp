@@ -13,7 +13,7 @@
 
 // Function: func_002BED08
 // Address: 0x2bed08 - 0x2bed60
-void func_002BED08_0x2bed08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002BED08_0x2bed08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002BED08_0x2bed08");
 #endif
@@ -61,7 +61,6 @@ void func_002BED08_0x2bed08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2BED18u;
 label_2bed18:
     // 0x2bed18: 0x641821  addu        $v1, $v1, $a0
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 4)));
@@ -89,14 +88,12 @@ label_2bed18:
         return;
         #endif
     }
-    ctx->pc = 0x2BED2Cu;
 label_2bed2c:
     // 0x2bed2c: 0x382d  daddu       $a3, $zero, $zero
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2bed30: 0x24860610  addiu       $a2, $a0, 0x610
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 4), 1552));
     // 0x2bed34: 0x0  nop
-    ctx->pc = 0x2bed34u;
     // NOP
 label_2bed38:
     // 0x2bed38: 0xdcc20000  ld          $v0, 0x0($a2)

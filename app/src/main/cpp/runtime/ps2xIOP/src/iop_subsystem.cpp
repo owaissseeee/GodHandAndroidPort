@@ -52,7 +52,7 @@ namespace ps2x::iop
         // True on the IOP worker thread while it runs a batch (PS2X_IOP_THREAD).
         thread_local bool t_onIopWorker = false;
 
-        uint32_t envMicros(const char *name, uint32_t fallback)
+        [[maybe_unused]] uint32_t envMicros(const char *name, uint32_t fallback)
         {
             const char *v = std::getenv(name);
             return v && *v ? static_cast<uint32_t>(std::strtoul(v, nullptr, 10)) : fallback;
@@ -75,12 +75,15 @@ namespace ps2x::iop
 #if defined(_WIN32)
                 const char *spin = std::getenv("PS2X_IOP_SPIN");
                 p.spinOnly = spin && *spin == '1';
-#endif
                 // 5 us (was 20): at ~17k batches/s the 20 us spin was ~6-8 points of a core with no FPS effect (PROGRESS §75).
                 p.workerSpinUs = envMicros("PS2X_IOP_WORKER_SPIN_US", 5u);
                 p.joinSpinUs = envMicros("PS2X_IOP_JOIN_SPIN_US", 200u);
                 std::fprintf(stderr, "[iop-thread] wait policy: %s (worker spin %u us, join spin %u us)\n",
                              p.spinOnly ? "spin (PS2X_IOP_SPIN=1)" : "spin then WaitOnAddress", p.workerSpinUs, p.joinSpinUs);
+#else
+                std::fprintf(stderr, "[iop-thread] wait policy: %s (worker spin %u us, join spin %u us)\n",
+                             "spin (PS2X_IOP_SPIN=1)", p.workerSpinUs, p.joinSpinUs);
+#endif
                 return p;
             }();
             return policy;
@@ -93,22 +96,28 @@ namespace ps2x::iop
         class DeferringHost final : public IopHost
         {
         public:
-            explicit DeferringHost(IopHost &inner) : m_inner(inner) {}
+            explicit DeferringHost(IopHost &inner) : m_inner(inner)
+            {
+                m_queue.reserve(64u);
+                m_arena.reserve(8192u);
+            }
 
             void drain()
             {
+                if (m_queue.empty())
+                    return;
                 for (Deferred &item : m_queue)
                 {
                     switch (item.kind)
                     {
                     case Deferred::Kind::Write:
-                        (void)m_inner.writeGuest(item.address, item.data.data(), item.data.size());
+                        (void)m_inner.writeGuest(item.address, item.size ? (m_arena.data() + item.offset) : nullptr, item.size);
                         break;
                     case Deferred::Kind::Zero:
                         (void)m_inner.zeroGuest(item.address, item.size);
                         break;
                     case Deferred::Kind::SifCommand:
-                        (void)m_inner.sendSifCommand(item.address, item.data.data(), item.data.size());
+                        (void)m_inner.sendSifCommand(item.address, item.size ? (m_arena.data() + item.offset) : nullptr, item.size);
                         break;
                     case Deferred::Kind::RpcComplete:
                         m_inner.completeRpc(static_cast<uint64_t>(item.size));
@@ -120,6 +129,7 @@ namespace ps2x::iop
                     }
                 }
                 m_queue.clear();
+                m_arena.clear();
             }
 
             bool readGuest(uint32_t address, void *destination, size_t size) const override { return m_inner.readGuest(address, destination, size); }
@@ -127,16 +137,15 @@ namespace ps2x::iop
             {
                 if (!t_onIopWorker)
                     return m_inner.writeGuest(address, source, size);
-                Deferred item{Deferred::Kind::Write, address, size, {}};
-                item.data.assign(static_cast<const uint8_t *>(source), static_cast<const uint8_t *>(source) + size);
-                m_queue.push_back(std::move(item));
+                const size_t off = appendArena(source, size);
+                m_queue.push_back(Deferred{Deferred::Kind::Write, address, size, off, {}});
                 return true;
             }
             bool zeroGuest(uint32_t address, size_t size) override
             {
                 if (!t_onIopWorker)
                     return m_inner.zeroGuest(address, size);
-                m_queue.push_back({Deferred::Kind::Zero, address, size, {}});
+                m_queue.push_back(Deferred{Deferred::Kind::Zero, address, size, 0u, {}});
                 return true;
             }
             bool normalizeGuestAddress(uint32_t address, uint32_t &normalized) const override { return m_inner.normalizeGuestAddress(address, normalized); }
@@ -170,16 +179,15 @@ namespace ps2x::iop
             {
                 if (!t_onIopWorker)
                     return m_inner.sendSifCommand(commandId, packet, packetSize);
-                Deferred item{Deferred::Kind::SifCommand, commandId, packetSize, {}};
-                item.data.assign(static_cast<const uint8_t *>(packet), static_cast<const uint8_t *>(packet) + packetSize);
-                m_queue.push_back(std::move(item));
+                const size_t off = appendArena(packet, packetSize);
+                m_queue.push_back(Deferred{Deferred::Kind::SifCommand, commandId, packetSize, off, {}});
                 return true;
             }
             void completeRpc(uint64_t callToken) override
             {
                 if (!t_onIopWorker)
                     return m_inner.completeRpc(callToken);
-                m_queue.push_back(Deferred{Deferred::Kind::RpcComplete, 0u, static_cast<size_t>(callToken), {}});
+                m_queue.push_back(Deferred{Deferred::Kind::RpcComplete, 0u, static_cast<size_t>(callToken), 0u, {}});
             }
             bool readPad(uint32_t port, PadInputState &state) override { return m_inner.readPad(port, state); }
             void padVibration(uint32_t port, uint8_t smallMotor, uint8_t largeMotor) override { m_inner.padVibration(port, smallMotor, largeMotor); }
@@ -199,7 +207,7 @@ namespace ps2x::iop
             {
                 if (!t_onIopWorker)
                     return m_inner.callEeRpcServer(serverData, function, std::move(send), receiveSize, std::move(done));
-                Deferred item{Deferred::Kind::Action, 0u, 0u, {}};
+                Deferred item{Deferred::Kind::Action, 0u, 0u, 0u, {}};
                 item.action = [this, serverData, function, send = std::move(send), receiveSize, done = std::move(done)]() mutable
                 {
                     if (!m_inner.callEeRpcServer(serverData, function, std::move(send), receiveSize, done))
@@ -211,6 +219,17 @@ namespace ps2x::iop
             void log(LogLevel level, std::string_view message) override { m_inner.log(level, message); }
 
         private:
+            size_t appendArena(const void *src, size_t size)
+            {
+                const size_t off = m_arena.size();
+                if (size != 0u && src)
+                {
+                    const uint8_t *bytes = static_cast<const uint8_t *>(src);
+                    m_arena.insert(m_arena.end(), bytes, bytes + size);
+                }
+                return off;
+            }
+
             struct Deferred
             {
                 enum class Kind : uint8_t
@@ -223,12 +242,13 @@ namespace ps2x::iop
                 } kind;
                 uint32_t address; // EE address, or the command id
                 size_t size;
-                std::vector<uint8_t> data;
+                size_t offset;
                 std::function<void()> action{};
             };
 
             IopHost &m_inner;
             std::vector<Deferred> m_queue; // worker appends during a batch; the EE drains after joining it
+            std::vector<uint8_t> m_arena;
         };
 
         // On by default (PS2X_IOP_THREAD=0 runs the IOP inline on the EE thread again). Urban Reign fight: 22 -> 25
@@ -408,6 +428,14 @@ namespace ps2x::iop
         void workerLoop()
         {
             t_onIopWorker = true;
+#if defined(__aarch64__) || defined(_M_ARM64)
+            {
+                uint64_t fpcr = 0;
+                __asm__ __volatile__("mrs %0, fpcr" : "=r"(fpcr));
+                fpcr |= (1ull << 24); // FZ: Flush-to-zero avoids hardware denormal stalls
+                __asm__ __volatile__("msr fpcr, %0" : : "r"(fpcr));
+            }
+#endif
 #if defined(__ANDROID__)
             godhand_set_thread_affinity_and_priority("IOPThread", 3, 3, -18);
 #elif defined(_WIN32)
@@ -420,7 +448,7 @@ namespace ps2x::iop
                 {
                     if (!waitForBatch())
                         return;
-                    runPostedBatch();
+                    runPostedBatch(postedEeCycles);
                     // Pairs with join(): either the EE sees busy == false, or we see it waiting and wake it.
                     busy.store(false, std::memory_order_seq_cst);
                     if (eeWaiting.load(std::memory_order_seq_cst))
@@ -437,8 +465,6 @@ namespace ps2x::iop
                 {
                     if (stopWorker.load(std::memory_order_acquire))
                         return;
-                    // Pure spinning (no yield: a yielded worker can take a whole OS quantum to come back, and the EE then
-                    // waits for it in join) for up to 2 ms, then sleep until the next batch.
                     PS2X_IOP_SPIN_PAUSE();
                     if (++spins < 1024u)
                         continue;
@@ -451,15 +477,15 @@ namespace ps2x::iop
                                     [this] { return busy.load(std::memory_order_acquire) || stopWorker.load(std::memory_order_acquire); });
                     workerSleeping.store(false, std::memory_order_release);
                 }
-                runPostedBatch();
+                runPostedBatch(postedEeCycles);
                 busy.store(false, std::memory_order_release);
             }
         }
 
-        void runPostedBatch()
+        void runPostedBatch(uint64_t batchEeCycles)
         {
             const auto batchStart = std::chrono::steady_clock::now();
-            emulator.runEeCycles(postedEeCycles);
+            emulator.runEeCycles(batchEeCycles);
             const auto batchEnd = std::chrono::steady_clock::now();
             // PS2X_IOP_THREAD_STATS=1: batches per second, worker busy time and EE join wait, every 5 s.
             static const bool stats = [] { const char *v = std::getenv("PS2X_IOP_THREAD_STATS"); return v && *v == '1'; }();
@@ -728,7 +754,12 @@ namespace ps2x::iop
 
     void IopSubsystem::onSifTransfer(const SifTransfer &transfer)
     {
-        m_impl->flushEeCycles();
+        // BeforeCopy syncs EE and IOP before EE writes into IOP RAM; AfterCopy follows immediately
+        // on the EE thread with zero elapsed IOP cycles, so avoid a second redundant flush/join.
+        if (transfer.phase == SifTransferPhase::BeforeCopy)
+        {
+            m_impl->flushEeCycles();
+        }
         for (auto &service : m_impl->coreServices)
         {
             if (service && m_impl->serviceActive(*service))

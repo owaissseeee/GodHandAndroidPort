@@ -13,7 +13,7 @@
 
 // Function: sceGsPutDispEnv
 // Address: 0x3968e8 - 0x3969a8
-void sceGsPutDispEnv_0x3968e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceGsPutDispEnv_0x3968e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceGsPutDispEnv_0x3968e8");
 #endif
@@ -45,7 +45,6 @@ void sceGsPutDispEnv_0x3968e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x395388u, 0x3968F4u, 0x3968FCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3968FCu;
 label_3968fc:
     // 0x3968fc: 0x84430006  lh          $v1, 0x6($v0)
     ctx->pc = 0x3968fcu;
@@ -117,7 +116,6 @@ label_3968fc:
             goto label_396998;
         }
     }
-    ctx->pc = 0x39694Cu;
 label_39694c:
     // 0x39694c: 0x3c031200  lui         $v1, 0x1200
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)4608 << 16));

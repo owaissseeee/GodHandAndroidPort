@@ -13,7 +13,7 @@
 
 // Function: SFD_SetMpvParaTbl
 // Address: 0x350150 - 0x350248
-void SFD_SetMpvParaTbl_0x350150(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFD_SetMpvParaTbl_0x350150(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFD_SetMpvParaTbl_0x350150");
 #endif
@@ -102,7 +102,6 @@ void SFD_SetMpvParaTbl_0x350150(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     ctx->pc = 0x3501b8u;
     do { uint32_t _value = static_cast<uint32_t>(GPR_U32(ctx, 0)); ps2TraceGuestWrite(rdram, 0x766BB8u, 4u, _value, 0u, "WRITE32", ctx); FAST_WRITE32(0x766BB8u, _value); } while (0);
     // 0x3501bc: 0x240affc0  addiu       $t2, $zero, -0x40
-    ctx->pc = 0x3501bcu;
     SET_GPR_S32(ctx, 10, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967232));
 label_3501c0:
     // 0x3501c0: 0x72080  sll         $a0, $a3, 2
@@ -152,7 +151,6 @@ label_3501c0:
     // 0x3501f8: 0x240affc0  addiu       $t2, $zero, -0x40
     SET_GPR_S32(ctx, 10, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967232));
     // 0x3501fc: 0x482d  daddu       $t1, $zero, $zero
-    ctx->pc = 0x3501fcu;
     SET_GPR_U64(ctx, 9, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_350200:
     // 0x350200: 0xe4102a  slt         $v0, $a3, $a0
@@ -198,7 +196,6 @@ label_350200:
             goto label_35022c;
         }
     }
-    ctx->pc = 0x350228u;
 label_350228:
     // 0x350228: 0xaca00000  sw          $zero, 0x0($a1)
     ctx->pc = 0x350228u;

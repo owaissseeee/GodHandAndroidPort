@@ -13,7 +13,7 @@
 
 // Function: func_0032AC48
 // Address: 0x32ac48 - 0x32ad10
-void func_0032AC48_0x32ac48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0032AC48_0x32ac48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0032AC48_0x32ac48");
 #endif
@@ -65,7 +65,6 @@ void func_0032AC48_0x32ac48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x33F130u, 0x32AC68u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x32AC70u;
 label_32ac70:
     // 0x32ac70: 0x44860000  mtc1        $a2, $f0
     { uint32_t bits = GPR_U32(ctx, 6); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
@@ -148,7 +147,6 @@ label_32ac70:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00328C80_0x328c80, 0x328c80u, 0x32acecu)) {
         return;
     }
-    ctx->pc = 0x32ACECu;
 label_32acec:
     // 0x32acec: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x32acecu;

@@ -13,7 +13,7 @@
 
 // Function: SetTarget_1FD530
 // Address: 0x1fd530 - 0x1fd580
-void SetTarget_1FD530_0x1fd530(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetTarget_1FD530_0x1fd530(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetTarget_1FD530_0x1fd530");
 #endif
@@ -71,7 +71,6 @@ void SetTarget_1FD530_0x1fd530(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FD988_0x1fd988, 0x1fd988u, 0x1fd55cu)) {
         return;
     }
-    ctx->pc = 0x1FD55Cu;
 label_1fd55c:
     // 0x1fd55c: 0xae000034  sw          $zero, 0x34($s0)
     ctx->pc = 0x1fd55cu;

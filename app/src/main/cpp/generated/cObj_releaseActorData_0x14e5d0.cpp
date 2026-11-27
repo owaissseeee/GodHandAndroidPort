@@ -13,7 +13,7 @@
 
 // Function: cObj_releaseActorData
 // Address: 0x14e5d0 - 0x14e690
-void cObj_releaseActorData_0x14e5d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cObj_releaseActorData_0x14e5d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cObj_releaseActorData_0x14e5d0");
 #endif
@@ -93,7 +93,6 @@ void cObj_releaseActorData_0x14e5d0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &cDataManager_isLoaded_0x1fe9b8, 0x1fe9b8u, 0x14e61cu)) {
         return;
     }
-    ctx->pc = 0x14E61Cu;
 label_14e61c:
     // 0x14e61c: 0x14520007  bne         $v0, $s2, . + 4 + (0x7 << 2)
     ctx->pc = 0x14E61Cu;
@@ -126,7 +125,6 @@ label_14e61c:
     if (!runtime->callDirectStatic(rdram, ctx, &cDataManager_resetKind_0x1fed78, 0x1fed78u, 0x14e634u)) {
         return;
     }
-    ctx->pc = 0x14E634u;
 label_14e634:
     // 0x14e634: 0x1000000c  b           . + 4 + (0xC << 2)
     ctx->pc = 0x14E634u;
@@ -143,7 +141,6 @@ label_14e634:
             goto label_14e668;
         }
     }
-    ctx->pc = 0x14E63Cu;
 label_14e63c:
     // 0x14e63c: 0x960502fe  lhu         $a1, 0x2FE($s0)
     ctx->pc = 0x14e63cu;
@@ -161,7 +158,6 @@ label_14e63c:
     if (!runtime->callDirectStatic(rdram, ctx, &cDataManager_isLoaded_0x1fe9b8, 0x1fe9b8u, 0x14e64cu)) {
         return;
     }
-    ctx->pc = 0x14E64Cu;
 label_14e64c:
     // 0x14e64c: 0x14520006  bne         $v0, $s2, . + 4 + (0x6 << 2)
     ctx->pc = 0x14E64Cu;
@@ -194,10 +190,8 @@ label_14e64c:
     if (!runtime->callDirectStatic(rdram, ctx, &cDataManager_resetKind_0x1fed78, 0x1fed78u, 0x14e664u)) {
         return;
     }
-    ctx->pc = 0x14E664u;
 label_14e664:
     // 0x14e664: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x14e664u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_14e668:
     // 0x14e668: 0xc0525b0  jal         func_1496C0
@@ -211,7 +205,6 @@ label_14e668:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_destroy_0x1496c0, 0x1496c0u, 0x14e670u)) {
         return;
     }
-    ctx->pc = 0x14E670u;
 label_14e670:
     // 0x14e670: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x14e670u;

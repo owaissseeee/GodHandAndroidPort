@@ -13,7 +13,7 @@
 
 // Function: func_001482C0
 // Address: 0x1482c0 - 0x148358
-void func_001482C0_0x1482c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001482C0_0x1482c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001482C0_0x1482c0");
 #endif
@@ -53,7 +53,6 @@ void func_001482C0_0x1482c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cosf_0x3a18f0, 0x3a18f0u, 0x1482dcu)) {
         return;
     }
-    ctx->pc = 0x1482DCu;
 label_1482dc:
     // 0x1482dc: 0x4600a306  mov.s       $f12, $f20
     ctx->f[12] = FPU_MOV_S(ctx->f[20]);
@@ -68,7 +67,6 @@ label_1482dc:
     if (!runtime->callDirectStatic(rdram, ctx, &sinf_0x3a19f8, 0x3a19f8u, 0x1482e8u)) {
         return;
     }
-    ctx->pc = 0x1482E8u;
 label_1482e8:
     // 0x1482e8: 0x46000007  neg.s       $f0, $f0
     ctx->f[0] = FPU_NEG_S(ctx->f[0]);
@@ -91,7 +89,6 @@ label_1482e8:
     if (!runtime->callDirectStatic(rdram, ctx, &sinf_0x3a19f8, 0x3a19f8u, 0x148300u)) {
         return;
     }
-    ctx->pc = 0x148300u;
 label_148300:
     // 0x148300: 0x4600a306  mov.s       $f12, $f20
     ctx->f[12] = FPU_MOV_S(ctx->f[20]);
@@ -106,7 +103,6 @@ label_148300:
     if (!runtime->callDirectStatic(rdram, ctx, &cosf_0x3a18f0, 0x3a18f0u, 0x14830cu)) {
         return;
     }
-    ctx->pc = 0x14830Cu;
 label_14830c:
     // 0x14830c: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));

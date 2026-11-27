@@ -13,7 +13,7 @@
 
 // Function: Mtx_checkLineDistanceSum
 // Address: 0x2bb670 - 0x2bb760
-void Mtx_checkLineDistanceSum_0x2bb670(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Mtx_checkLineDistanceSum_0x2bb670(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Mtx_checkLineDistanceSum_0x2bb670");
 #endif
@@ -92,7 +92,6 @@ void Mtx_checkLineDistanceSum_0x2bb670(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &ForwardVec3At30_147C60_0x147c60, 0x147c60u, 0x2bb6ccu)) {
         return;
     }
-    ctx->pc = 0x2BB6CCu;
 label_2bb6cc:
     // 0x2bb6cc: 0x27b00030  addiu       $s0, $sp, 0x30
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 29), 48));
@@ -117,7 +116,6 @@ label_2bb6cc:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x2bb6e8u)) {
         return;
     }
-    ctx->pc = 0x2BB6E8u;
 label_2bb6e8:
     // 0x2bb6e8: 0xda040000  lqc2        $vf4, 0x0($s0)
     ctx->pc = 0x2bb6e8u;
@@ -159,7 +157,6 @@ label_2bb6e8:
     if (!runtime->callDirectStatic(rdram, ctx, &LengthPositionToGivenLine_0x1566c0, 0x1566c0u, 0x2bb71cu)) {
         return;
     }
-    ctx->pc = 0x2BB71Cu;
 label_2bb71c:
     // 0x2bb71c: 0x4615a500  add.s       $f20, $f20, $f21
     ctx->f[20] = FPU_ADD_S(ctx->f[20], ctx->f[21]);
@@ -183,7 +180,6 @@ label_2bb71c:
         }
     }
     // 0x2bb730: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2bb730u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2bb734:
     // 0x2bb734: 0x7bb00080  lq          $s0, 0x80($sp)

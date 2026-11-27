@@ -14,23 +14,23 @@ namespace gh_event
 {
 // Function: movePlayDirect__10cEventFadePC13cEventSeqFade
 // Address: 0x7aedb0 - 0x7aede0
-void movePlayDirect__10cEventFadePC13cEventSeqFade_0x7aedb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void movePlayDirect__10cEventFadePC13cEventSeqFade_0x7aedb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("movePlayDirect__10cEventFadePC13cEventSeqFade_0x7aedb0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7aedd0u: goto label_7aedd0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7aedb0u, 0)) {
+        switch (ctx->pc) {
+            case 0x7aedd0u: goto label_7aedd0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7aedb0u;
+
 
     // 0x7aedb0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7aedb0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x7aedb4: 0xa0102d  daddu       $v0, $a1, $zero
-    ctx->pc = 0x7aedb4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     // 0x7aedb8: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x7aedb8u;
@@ -45,7 +45,6 @@ void movePlayDirect__10cEventFadePC13cEventSeqFade_0x7aedb0(uint8_t* rdram, R590
     ctx->pc = 0x7aedc4u;
     SET_GPR_ZE32(ctx, 6, (uint8_t)READ8(ADD32(GPR_U32(ctx, 2), 13)));
     // 0x7aedc8: 0xc1ebbe8  jal         func_7AEFA0
-    ctx->pc = 0x7AEDC8u;
     SET_GPR_U32(ctx, 31, 0x7AEDD0u);
     ctx->pc = 0x7AEDCCu;
     ctx->in_delay_slot = true;
@@ -57,7 +56,6 @@ void movePlayDirect__10cEventFadePC13cEventSeqFade_0x7aedb0(uint8_t* rdram, R590
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x7AEFA0u, 0x7AEDC8u, 0x7AEDD0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7AEDD0u;
 label_7aedd0:
     // 0x7aedd0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7aedd0u;
@@ -81,9 +79,7 @@ label_7aedd0:
         return;
         #endif
     }
-    ctx->pc = 0x7AEDDCu;
     // 0x7aeddc: 0x0  nop
-    ctx->pc = 0x7aeddcu;
     // NOP
     ctx->pc = 0x7aede0u;
 }

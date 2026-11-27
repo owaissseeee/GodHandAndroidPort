@@ -14,23 +14,23 @@ namespace gh_r203
 {
 // Function: __builtin_delete
 // Address: 0x7991d0 - 0x7991f8
-void ps2___builtin_delete_0x7991d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___builtin_delete_0x7991d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___builtin_delete_0x7991d0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7991e8u: goto label_7991e8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7991d0u, 0)) {
+        switch (ctx->pc) {
+            case 0x7991e8u: goto label_7991e8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7991d0u;
+
 
     // 0x7991d0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7991d0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x7991d4: 0x80282d  daddu       $a1, $a0, $zero
-    ctx->pc = 0x7991d4u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x7991d8: 0x10a00003  beqz        $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x7991D8u;
@@ -47,9 +47,7 @@ void ps2___builtin_delete_0x7991d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_7991e8;
         }
     }
-    ctx->pc = 0x7991E0u;
     // 0x7991e0: 0xc0aa5a0  jal         func_2A9680
-    ctx->pc = 0x7991E0u;
     SET_GPR_U32(ctx, 31, 0x7991E8u);
     ctx->pc = 0x7991E4u;
     ctx->in_delay_slot = true;
@@ -61,7 +59,6 @@ void ps2___builtin_delete_0x7991d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x7991E0u, 0x7991E8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7991E8u;
 label_7991e8:
     // 0x7991e8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7991e8u;
@@ -85,9 +82,7 @@ label_7991e8:
         return;
         #endif
     }
-    ctx->pc = 0x7991F4u;
     // 0x7991f4: 0x0  nop
-    ctx->pc = 0x7991f4u;
     // NOP
     ctx->pc = 0x7991f8u;
 }

@@ -13,7 +13,7 @@
 
 // Function: sceGsSetDefLoadImage
 // Address: 0x395430 - 0x395618
-void sceGsSetDefLoadImage_0x395430(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceGsSetDefLoadImage_0x395430(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceGsSetDefLoadImage_0x395430");
 #endif
@@ -107,7 +107,6 @@ void sceGsSetDefLoadImage_0x395430(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             return;
         }
     }
-    ctx->pc = 0x39549Cu;
 label_39549c:
     // 0x39549c: 0x1481018  mult        $v0, $t2, $t0
     { int64_t result = (int64_t)GPR_S32(ctx, 10) * (int64_t)GPR_S32(ctx, 8); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 2, (int32_t)result); }
@@ -126,7 +125,6 @@ label_39549c:
             goto label_3954dc;
         }
     }
-    ctx->pc = 0x3954A8u;
 label_3954a8:
     // 0x3954a8: 0x1481818  mult        $v1, $t2, $t0
     { int64_t result = (int64_t)GPR_S32(ctx, 10) * (int64_t)GPR_S32(ctx, 8); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 3, (int32_t)result); }
@@ -149,7 +147,6 @@ label_3954a8:
             goto label_3954dc;
         }
     }
-    ctx->pc = 0x3954BCu;
 label_3954bc:
     // 0x3954bc: 0x1481018  mult        $v0, $t2, $t0
     { int64_t result = (int64_t)GPR_S32(ctx, 10) * (int64_t)GPR_S32(ctx, 8); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 2, (int32_t)result); }
@@ -168,7 +165,6 @@ label_3954bc:
             goto label_3954dc;
         }
     }
-    ctx->pc = 0x3954C8u;
 label_3954c8:
     // 0x3954c8: 0x1481018  mult        $v0, $t2, $t0
     { int64_t result = (int64_t)GPR_S32(ctx, 10) * (int64_t)GPR_S32(ctx, 8); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 2, (int32_t)result); }
@@ -187,12 +183,10 @@ label_3954c8:
             goto label_3954dc;
         }
     }
-    ctx->pc = 0x3954D4u;
 label_3954d4:
     // 0x3954d4: 0x1481018  mult        $v0, $t2, $t0
     { int64_t result = (int64_t)GPR_S32(ctx, 10) * (int64_t)GPR_S32(ctx, 8); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 2, (int32_t)result); }
     // 0x3954d8: 0x23143  sra         $a2, $v0, 5
-    ctx->pc = 0x3954d8u;
     SET_GPR_S32(ctx, 6, SRA32(GPR_S32(ctx, 2), 5));
 label_3954dc:
     // 0x3954dc: 0x24027fff  addiu       $v0, $zero, 0x7FFF
@@ -225,7 +219,6 @@ label_3954dc:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B1F28u, 0x3954ECu, 0x3954F4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3954F4u;
 label_3954f4:
     // 0x3954f4: 0x10000044  b           . + 4 + (0x44 << 2)
     ctx->pc = 0x3954F4u;
@@ -242,7 +235,6 @@ label_3954f4:
             goto label_395608;
         }
     }
-    ctx->pc = 0x3954FCu;
 label_3954fc:
     // 0x3954fc: 0x700014a9  por         $v0, $zero, $zero
     SET_GPR_VEC(ctx, 2, PS2_POR(GPR_VEC(ctx, 0), GPR_VEC(ctx, 0)));
@@ -394,7 +386,6 @@ label_3954fc:
     // SYNC instruction - memory barrier
 // In recompiled code, we don't need explicit memory barriers
     // 0x395604: 0x24020006  addiu       $v0, $zero, 0x6
-    ctx->pc = 0x395604u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
 label_395608:
     // 0x395608: 0xdfbf0000  ld          $ra, 0x0($sp)

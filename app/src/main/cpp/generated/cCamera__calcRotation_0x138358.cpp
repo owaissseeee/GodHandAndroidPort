@@ -13,7 +13,7 @@
 
 // Function: cCamera__calcRotation
 // Address: 0x138358 - 0x138470
-void cCamera__calcRotation_0x138358(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCamera__calcRotation_0x138358(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCamera__calcRotation_0x138358");
 #endif
@@ -131,7 +131,6 @@ void cCamera__calcRotation_0x138358(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1383d8;
         }
     }
-    ctx->pc = 0x1383C8u;
 label_1383c8:
     // 0x1383c8: 0xc7ad0008  lwc1        $f13, 0x8($sp)
     ctx->pc = 0x1383c8u;
@@ -148,7 +147,6 @@ label_1383cc:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Atan2_0x1f8180, 0x1f8180u, 0x1383d4u)) {
         return;
     }
-    ctx->pc = 0x1383D4u;
 label_1383d4:
     // 0x1383d4: 0xe7a00014  swc1        $f0, 0x14($sp)
     ctx->pc = 0x1383d4u;
@@ -172,7 +170,6 @@ label_1383d8:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitRotY_0x147988, 0x147988u, 0x1383ecu)) {
         return;
     }
-    ctx->pc = 0x1383ECu;
 label_1383ec:
     // 0x1383ec: 0x200282d  daddu       $a1, $s0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -189,7 +186,6 @@ label_1383ec:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x1383fcu)) {
         return;
     }
-    ctx->pc = 0x1383FCu;
 label_1383fc:
     // 0x1383fc: 0x44800800  mtc1        $zero, $f1
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }
@@ -249,7 +245,6 @@ label_1383fc:
             goto label_138440;
         }
     }
-    ctx->pc = 0x13842Cu;
 label_13842c:
     // 0x13842c: 0xc7ac0004  lwc1        $f12, 0x4($sp)
     ctx->pc = 0x13842cu;
@@ -266,7 +261,6 @@ label_138430:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Atan2_0x1f8180, 0x1f8180u, 0x138438u)) {
         return;
     }
-    ctx->pc = 0x138438u;
 label_138438:
     // 0x138438: 0x46000007  neg.s       $f0, $f0
     ctx->f[0] = FPU_NEG_S(ctx->f[0]);

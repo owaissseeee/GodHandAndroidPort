@@ -13,7 +13,7 @@
 
 // Function: BlackJack_UpdateDealPlayer
 // Address: 0x1d3110 - 0x1d32d8
-void BlackJack_UpdateDealPlayer_0x1d3110(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BlackJack_UpdateDealPlayer_0x1d3110(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BlackJack_UpdateDealPlayer_0x1d3110");
 #endif
@@ -117,7 +117,6 @@ void BlackJack_UpdateDealPlayer_0x1d3110(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_1d32cc;
         }
     }
-    ctx->pc = 0x1D3150u;
 label_1d3150:
     // 0x1d3150: 0x24620001  addiu       $v0, $v1, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 3), 1));
@@ -141,7 +140,6 @@ label_1d3150:
             goto label_1d32c8;
         }
     }
-    ctx->pc = 0x1D3164u;
 label_1d3164:
     // 0x1d3164: 0x14400054  bnez        $v0, . + 4 + (0x54 << 2)
     ctx->pc = 0x1D3164u;
@@ -222,7 +220,6 @@ label_1d3164:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x1d31d0u)) {
         return;
     }
-    ctx->pc = 0x1D31D0u;
 label_1d31d0:
     // 0x1d31d0: 0x8e031808  lw          $v1, 0x1808($s0)
     ctx->pc = 0x1d31d0u;
@@ -249,7 +246,6 @@ label_1d31d0:
             goto label_1d32c8;
         }
     }
-    ctx->pc = 0x1D31E8u;
 label_1d31e8:
     // 0x1d31e8: 0x960317fc  lhu         $v1, 0x17FC($s0)
     ctx->pc = 0x1d31e8u;
@@ -374,7 +370,6 @@ label_1d31e8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001D4720_0x1d4720, 0x1d4720u, 0x1d3298u)) {
         return;
     }
-    ctx->pc = 0x1D3298u;
 label_1d3298:
     // 0x1d3298: 0x28420016  slti        $v0, $v0, 0x16
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 2) < (int64_t)(int32_t)22) ? 1 : 0);
@@ -415,7 +410,6 @@ label_1d3298:
             goto label_1d32c8;
         }
     }
-    ctx->pc = 0x1D32B8u;
 label_1d32b8:
     // 0x1d32b8: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x1D32B8u;
@@ -432,7 +426,6 @@ label_1d32b8:
             goto label_1d32c8;
         }
     }
-    ctx->pc = 0x1D32C0u;
 label_1d32c0:
     // 0x1d32c0: 0xae001808  sw          $zero, 0x1808($s0)
     ctx->pc = 0x1d32c0u;

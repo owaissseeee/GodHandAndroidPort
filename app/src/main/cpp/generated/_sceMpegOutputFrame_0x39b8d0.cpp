@@ -13,7 +13,7 @@
 
 // Function: _sceMpegOutputFrame
 // Address: 0x39b8d0 - 0x39b960
-void _sceMpegOutputFrame_0x39b8d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceMpegOutputFrame_0x39b8d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceMpegOutputFrame_0x39b8d0");
 #endif
@@ -104,7 +104,6 @@ label_39b904:
     if (!runtime->callDirectStatic(rdram, ctx, &_dispRefImage_0x39b130, 0x39b130u, 0x39b910u)) {
         return;
     }
-    ctx->pc = 0x39B910u;
 label_39b910:
     // 0x39b910: 0x1000000b  b           . + 4 + (0xB << 2)
     ctx->pc = 0x39B910u;
@@ -121,7 +120,6 @@ label_39b910:
             goto label_39b940;
         }
     }
-    ctx->pc = 0x39B918u;
 label_39b918:
     // 0x39b918: 0x54430004  bnel        $v0, $v1, . + 4 + (0x4 << 2)
     ctx->pc = 0x39B918u;
@@ -156,7 +154,6 @@ label_39b918:
             goto label_39b930;
         }
     }
-    ctx->pc = 0x39B92Cu;
 label_39b92c:
     // 0x39b92c: 0x8e0601e8  lw          $a2, 0x1E8($s0)
     ctx->pc = 0x39b92cu;
@@ -175,7 +172,6 @@ label_39b930:
     if (!runtime->callDirectStatic(rdram, ctx, &_dispRefImageField_0x39b3f0, 0x39b3f0u, 0x39b93cu)) {
         return;
     }
-    ctx->pc = 0x39B93Cu;
 label_39b93c:
     // 0x39b93c: 0x8e030108  lw          $v1, 0x108($s0)
     ctx->pc = 0x39b93cu;

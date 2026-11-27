@@ -6,6 +6,7 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,9 +14,22 @@
 
 // Function: sceVu0MulVector
 // Address: 0x30a4d0 - 0x30a4e8
-void sceVu0MulVector_0x30a4d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVu0MulVector_0x30a4d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVu0MulVector_0x30a4d0");
+#endif
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    {
+        uint8_t* const d = ps2TryFastSpan(rdram, GPR_U32(ctx, 4) & ~0xFu, 16u);
+        const uint8_t* const s0 = ps2TryFastSpan(rdram, GPR_U32(ctx, 5) & ~0xFu, 16u);
+        const uint8_t* const s1 = ps2TryFastSpan(rdram, GPR_U32(ctx, 6) & ~0xFu, 16u);
+        if (__builtin_expect(d != nullptr && s0 != nullptr && s1 != nullptr, 1)) {
+            ps2StoreVec4(d, vmulq_f32(ps2LoadVec4(s0), ps2LoadVec4(s1)));
+            ps2FastReturn(rdram, ctx, runtime, 0x30A4E0u);
+            return;
+        }
+    }
 #endif
 
 

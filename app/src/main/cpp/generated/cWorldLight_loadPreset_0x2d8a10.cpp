@@ -13,7 +13,7 @@
 
 // Function: cWorldLight_loadPreset
 // Address: 0x2d8a10 - 0x2d8c60
-void cWorldLight_loadPreset_0x2d8a10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cWorldLight_loadPreset_0x2d8a10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cWorldLight_loadPreset_0x2d8a10");
 #endif
@@ -305,7 +305,6 @@ label_2d8a94:
             goto label_2d8c48;
         }
     }
-    ctx->pc = 0x2D8B5Cu;
 label_2d8b5c:
     // 0x2d8b5c: 0xfba00010  sqc2        $vf0, 0x10($sp)
     ctx->pc = 0x2d8b5cu;
@@ -343,7 +342,6 @@ label_2d8b5c:
     // 0x2d8b80: 0xcd1018  mult        $v0, $a2, $t5
     { int64_t result = (int64_t)GPR_S32(ctx, 6) * (int64_t)GPR_S32(ctx, 13); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 2, (int32_t)result); }
     // 0x2d8b84: 0x0  nop
-    ctx->pc = 0x2d8b84u;
     // NOP
 label_2d8b88:
     // 0x2d8b88: 0x481821  addu        $v1, $v0, $t0
@@ -391,7 +389,6 @@ label_2d8b88:
     // 0x2d8bac: 0x27a90060  addiu       $t1, $sp, 0x60
     SET_GPR_S32(ctx, 9, (int32_t)ADD32(GPR_U32(ctx, 29), 96));
     // 0x2d8bb0: 0x258a0001  addiu       $t2, $t4, 0x1
-    ctx->pc = 0x2d8bb0u;
     SET_GPR_S32(ctx, 10, (int32_t)ADD32(GPR_U32(ctx, 12), 1));
 label_2d8bb4:
     // 0x2d8bb4: 0x78830000  lq          $v1, 0x0($a0)
@@ -446,7 +443,6 @@ label_2d8bb4:
     ctx->pc = 0x2d8becu;
     WRITE16(ADD32(GPR_U32(ctx, 2), 128), (uint16_t)GPR_U32(ctx, 14));
     // 0x2d8bf0: 0x24630080  addiu       $v1, $v1, 0x80
-    ctx->pc = 0x2d8bf0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 128));
 label_2d8bf4:
     // 0x2d8bf4: 0x78820000  lq          $v0, 0x0($a0)
@@ -515,7 +511,6 @@ label_2d8c1c:
             goto label_2d8b88;
         }
     }
-    ctx->pc = 0x2D8C30u;
 label_2d8c30:
     // 0x2d8c30: 0x3c020074  lui         $v0, 0x74
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));

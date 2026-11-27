@@ -13,7 +13,7 @@
 
 // Function: SetField380Bit2000ForTag_1B7300
 // Address: 0x1b7300 - 0x1b7380
-void SetField380Bit2000ForTag_1B7300_0x1b7300(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetField380Bit2000ForTag_1B7300_0x1b7300(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetField380Bit2000ForTag_1B7300_0x1b7300");
 #endif
@@ -53,7 +53,6 @@ void SetField380Bit2000ForTag_1B7300_0x1b7300(uint8_t* rdram, R5900Context* ctx,
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_getMeshPtr_0x14b6f8, 0x14b6f8u, 0x1b7320u)) {
         return;
     }
-    ctx->pc = 0x1B7320u;
 label_1b7320:
     // 0x1b7320: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -82,7 +81,6 @@ label_1b7320:
     ctx->pc = 0x1b7338u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 3), 1036)));
     // 0x1b733c: 0x0  nop
-    ctx->pc = 0x1b733cu;
     // NOP
 label_1b7340:
     // 0x1b7340: 0x54510008  bnel        $v0, $s1, . + 4 + (0x8 << 2)
@@ -130,10 +128,8 @@ label_1b7340:
             goto label_1b735c;
         }
     }
-    ctx->pc = 0x1B7358u;
 label_1b7358:
     // 0x1b7358: 0x34422000  ori         $v0, $v0, 0x2000
-    ctx->pc = 0x1b7358u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)8192);
 label_1b735c:
     // 0x1b735c: 0xac620380  sw          $v0, 0x380($v1)

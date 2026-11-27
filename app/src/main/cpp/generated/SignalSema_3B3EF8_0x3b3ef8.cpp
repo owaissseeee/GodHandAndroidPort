@@ -13,7 +13,7 @@
 
 // Function: SignalSema_3B3EF8
 // Address: 0x3b3ef8 - 0x3b3f08
-void SignalSema_3B3EF8_0x3b3ef8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SignalSema_3B3EF8_0x3b3ef8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SignalSema_3B3EF8_0x3b3ef8");
 #endif

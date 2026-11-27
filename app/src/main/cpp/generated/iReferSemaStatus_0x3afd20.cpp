@@ -13,7 +13,7 @@
 
 // Function: iReferSemaStatus
 // Address: 0x3afd20 - 0x3afd30
-void iReferSemaStatus_0x3afd20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iReferSemaStatus_0x3afd20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iReferSemaStatus_0x3afd20");
 #endif

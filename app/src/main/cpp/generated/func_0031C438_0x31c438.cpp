@@ -13,7 +13,7 @@
 
 // Function: func_0031C438
 // Address: 0x31c438 - 0x31c4e0
-void func_0031C438_0x31c438(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0031C438_0x31c438(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0031C438_0x31c438");
 #endif
@@ -50,7 +50,6 @@ void func_0031C438_0x31c438(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x31c450u)) {
         return;
     }
-    ctx->pc = 0x31C450u;
 label_31c450:
     // 0x31c450: 0x3c050075  lui         $a1, 0x75
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)117 << 16));
@@ -134,7 +133,6 @@ label_31c450:
     if (!runtime->callDirectStatic(rdram, ctx, &cHeatSys_UpdateHeatMax_0x2a9bf0, 0x2a9bf0u, 0x31c4bcu)) {
         return;
     }
-    ctx->pc = 0x31C4BCu;
 label_31c4bc:
     // 0x31c4bc: 0xc60c0018  lwc1        $f12, 0x18($s0)
     ctx->pc = 0x31c4bcu;
@@ -150,7 +148,6 @@ label_31c4bc:
     if (!runtime->callDirectStatic(rdram, ctx, &cHeatSys_SetHeatGage_0x2a9c58, 0x2a9c58u, 0x31c4c8u)) {
         return;
     }
-    ctx->pc = 0x31C4C8u;
 label_31c4c8:
     // 0x31c4c8: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x31c4c8u;

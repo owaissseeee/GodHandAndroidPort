@@ -13,7 +13,7 @@
 
 // Function: cSnd_SeStop
 // Address: 0x2cbba0 - 0x2cbc20
-void cSnd_SeStop_0x2cbba0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_SeStop_0x2cbba0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_SeStop_0x2cbba0");
 #endif
@@ -68,7 +68,6 @@ void cSnd_SeStop_0x2cbba0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_00375050_0x375050, 0x375050u, 0x2cbbc8u)) {
         return;
     }
-    ctx->pc = 0x2CBBC8u;
 label_2cbbc8:
     // 0x2cbbc8: 0x8e230140  lw          $v1, 0x140($s1)
     ctx->pc = 0x2cbbc8u;
@@ -104,11 +103,9 @@ label_2cbbc8:
         }
     }
     // 0x2cbbdc: 0x0  nop
-    ctx->pc = 0x2cbbdcu;
     // NOP
 label_2cbbe0:
     // 0x2cbbe0: 0x24a50001  addiu       $a1, $a1, 0x1
-    ctx->pc = 0x2cbbe0u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 1));
 label_2cbbe4:
     // 0x2cbbe4: 0x2ca20008  sltiu       $v0, $a1, 0x8

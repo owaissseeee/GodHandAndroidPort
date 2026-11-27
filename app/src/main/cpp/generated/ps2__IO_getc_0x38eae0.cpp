@@ -13,7 +13,7 @@
 
 // Function: _IO_getc
 // Address: 0x38eae0 - 0x38eb28
-void ps2__IO_getc_0x38eae0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_getc_0x38eae0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_getc_0x38eae0");
 #endif
@@ -60,7 +60,6 @@ void ps2__IO_getc_0x38eae0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_0038C688_0x38c688, 0x38c688u, 0x38eb04u)) {
         return;
     }
-    ctx->pc = 0x38EB04u;
 label_38eb04:
     // 0x38eb04: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x38EB04u;
@@ -77,7 +76,6 @@ label_38eb04:
             goto label_38eb14;
         }
     }
-    ctx->pc = 0x38EB0Cu;
 label_38eb0c:
     // 0x38eb0c: 0x90630000  lbu         $v1, 0x0($v1)
     ctx->pc = 0x38eb0cu;

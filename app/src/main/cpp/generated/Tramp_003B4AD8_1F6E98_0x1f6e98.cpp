@@ -13,7 +13,7 @@
 
 // Function: Tramp_003B4AD8_1F6E98
 // Address: 0x1f6e98 - 0x1f6ed8
-void Tramp_003B4AD8_1F6E98_0x1f6e98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp_003B4AD8_1F6E98_0x1f6e98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp_003B4AD8_1F6E98_0x1f6e98");
 #endif
@@ -56,7 +56,6 @@ void Tramp_003B4AD8_1F6E98_0x1f6e98(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B4AD8u, 0x1F6EB8u, 0x1F6EC0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1F6EC0u;
 label_1f6ec0:
     // 0x1f6ec0: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

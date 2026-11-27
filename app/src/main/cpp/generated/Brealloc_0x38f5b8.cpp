@@ -13,7 +13,7 @@
 
 // Function: Brealloc
 // Address: 0x38f5b8 - 0x38f630
-void Brealloc_0x38f5b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Brealloc_0x38f5b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Brealloc_0x38f5b8");
 #endif
@@ -63,7 +63,6 @@ void Brealloc_0x38f5b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &Balloc_0x38f4e8, 0x38f4e8u, 0x38f5dcu)) {
         return;
     }
-    ctx->pc = 0x38F5DCu;
 label_38f5dc:
     // 0x38f5dc: 0x1000000f  b           . + 4 + (0xF << 2)
     ctx->pc = 0x38F5DCu;
@@ -80,7 +79,6 @@ label_38f5dc:
             goto label_38f61c;
         }
     }
-    ctx->pc = 0x38F5E4u;
 label_38f5e4:
     // 0x38f5e4: 0x8e220004  lw          $v0, 0x4($s1)
     ctx->pc = 0x38f5e4u;
@@ -108,7 +106,6 @@ label_38f5e4:
     if (!runtime->callDirectStatic(rdram, ctx, &Balloc_0x38f4e8, 0x38f4e8u, 0x38f5fcu)) {
         return;
     }
-    ctx->pc = 0x38F5FCu;
 label_38f5fc:
     // 0x38f5fc: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -125,7 +122,6 @@ label_38f5fc:
     if (!runtime->callDirectStatic(rdram, ctx, &Bcopy_0x38f570, 0x38f570u, 0x38f60cu)) {
         return;
     }
-    ctx->pc = 0x38F60Cu;
 label_38f60c:
     // 0x38f60c: 0xc0e3d52  jal         func_38F548
     SET_GPR_U32(ctx, 31, 0x38F614u);
@@ -138,10 +134,8 @@ label_38f60c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0038F548_0x38f548, 0x38f548u, 0x38f614u)) {
         return;
     }
-    ctx->pc = 0x38F614u;
 label_38f614:
     // 0x38f614: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x38f614u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_38f618:
     // 0x38f618: 0xdfbf0020  ld          $ra, 0x20($sp)

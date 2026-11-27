@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Set_Byte_2F5_If_Field_618_GE_29
 // Address: 0x1acb50 - 0x1acb78
-void Obj0000_Set_Byte_2F5_If_Field_618_GE_29_0x1acb50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_Byte_2F5_If_Field_618_GE_29_0x1acb50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_Byte_2F5_If_Field_618_GE_29_0x1acb50");
 #endif

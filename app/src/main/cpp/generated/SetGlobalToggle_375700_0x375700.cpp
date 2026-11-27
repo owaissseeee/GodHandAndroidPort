@@ -13,7 +13,7 @@
 
 // Function: SetGlobalToggle_375700
 // Address: 0x375700 - 0x375748
-void SetGlobalToggle_375700_0x375700(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetGlobalToggle_375700_0x375700(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetGlobalToggle_375700_0x375700");
 #endif
@@ -60,7 +60,6 @@ void SetGlobalToggle_375700_0x375700(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032BA30_0x32ba30, 0x32ba30u, 0x37571cu)) {
         return;
     }
-    ctx->pc = 0x37571Cu;
 label_37571c:
     // 0x37571c: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x37571Cu;
@@ -77,7 +76,6 @@ label_37571c:
             goto label_375730;
         }
     }
-    ctx->pc = 0x375724u;
 label_375724:
     // 0x375724: 0xc0cae8c  jal         func_32BA30
     SET_GPR_U32(ctx, 31, 0x37572Cu);
@@ -90,10 +88,8 @@ label_375724:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032BA30_0x32ba30, 0x32ba30u, 0x37572cu)) {
         return;
     }
-    ctx->pc = 0x37572Cu;
 label_37572c:
     // 0x37572c: 0x3c020077  lui         $v0, 0x77
-    ctx->pc = 0x37572cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)119 << 16));
 label_375730:
     // 0x375730: 0xdfbf0000  ld          $ra, 0x0($sp)

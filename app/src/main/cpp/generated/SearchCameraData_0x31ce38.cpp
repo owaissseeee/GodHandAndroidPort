@@ -13,7 +13,7 @@
 
 // Function: SearchCameraData
 // Address: 0x31ce38 - 0x31ce90
-void SearchCameraData_0x31ce38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SearchCameraData_0x31ce38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SearchCameraData_0x31ce38");
 #endif
@@ -57,7 +57,6 @@ void SearchCameraData_0x31ce38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &SearchData_0x31ccf0, 0x31ccf0u, 0x31ce60u)) {
         return;
     }
-    ctx->pc = 0x31CE60u;
 label_31ce60:
     // 0x31ce60: 0x10400006  beqz        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x31CE60u;
@@ -87,7 +86,6 @@ label_31ce60:
     if (!runtime->callDirectStatic(rdram, ctx, &SearchData_0x31ccf0, 0x31ccf0u, 0x31ce74u)) {
         return;
     }
-    ctx->pc = 0x31CE74u;
 label_31ce74:
     // 0x31ce74: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x31CE74u;
@@ -104,7 +102,6 @@ label_31ce74:
             goto label_31ce84;
         }
     }
-    ctx->pc = 0x31CE7Cu;
 label_31ce7c:
     // 0x31ce7c: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

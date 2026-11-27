@@ -13,7 +13,7 @@
 
 // Function: WaveObj_fillWaveTable
 // Address: 0x2e8168 - 0x2e81d8
-void WaveObj_fillWaveTable_0x2e8168(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void WaveObj_fillWaveTable_0x2e8168(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("WaveObj_fillWaveTable_0x2e8168");
 #endif
@@ -58,7 +58,6 @@ void WaveObj_fillWaveTable_0x2e8168(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     // 0x2e8188: 0x24430004  addiu       $v1, $v0, 0x4
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 4));
     // 0x2e818c: 0x0  nop
-    ctx->pc = 0x2e818cu;
     // NOP
 label_2e8190:
     // 0x2e8190: 0x30a20001  andi        $v0, $a1, 0x1
@@ -94,7 +93,6 @@ label_2e8190:
             goto label_2e81c0;
         }
     }
-    ctx->pc = 0x2E81B0u;
 label_2e81b0:
     // 0x2e81b0: 0x46000824  .word       0x46000824                   # cvt.w.s     $f0, $f1 # 00000000 <InstrIdType: CPU_COP1_FPUS>
     { int32_t tmp = FPU_CVT_W_S(ctx->f[1]); std::memcpy(&ctx->f[0], &tmp, sizeof(tmp)); }
@@ -129,7 +127,6 @@ label_2e81c0:
             goto label_2e8190;
         }
     }
-    ctx->pc = 0x2E81D0u;
 label_2e81d0:
     // 0x2e81d0: 0x3e00008  jr          $ra
     ctx->pc = 0x2E81D0u;

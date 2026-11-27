@@ -13,7 +13,7 @@
 
 // Function: cMessage_getRubyAddr
 // Address: 0x2aeb00 - 0x2aeb50
-void cMessage_getRubyAddr_0x2aeb00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessage_getRubyAddr_0x2aeb00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessage_getRubyAddr_0x2aeb00");
 #endif
@@ -91,7 +91,6 @@ void cMessage_getRubyAddr_0x2aeb00(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         return;
         #endif
     }
-    ctx->pc = 0x2AEB40u;
 label_2aeb40:
     // 0x2aeb40: 0x3e00008  jr          $ra
     ctx->pc = 0x2AEB40u;
@@ -112,7 +111,6 @@ label_2aeb40:
         return;
         #endif
     }
-    ctx->pc = 0x2AEB48u;
 label_2aeb48:
     // 0x2aeb48: 0x3e00008  jr          $ra
     ctx->pc = 0x2AEB48u;

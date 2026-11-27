@@ -13,7 +13,7 @@
 
 // Function: GetBuiltPackedAddr_1FFA28
 // Address: 0x1ffa28 - 0x1ffa68
-void GetBuiltPackedAddr_1FFA28_0x1ffa28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetBuiltPackedAddr_1FFA28_0x1ffa28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetBuiltPackedAddr_1FFA28_0x1ffa28");
 #endif
@@ -46,7 +46,6 @@ void GetBuiltPackedAddr_1FFA28_0x1ffa28(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FFA68_0x1ffa68, 0x1ffa68u, 0x1ffa3cu)) {
         return;
     }
-    ctx->pc = 0x1FFA3Cu;
 label_1ffa3c:
     // 0x1ffa3c: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x1FFA3Cu;
@@ -74,7 +73,6 @@ label_1ffa3c:
     if (!runtime->callDirectStatic(rdram, ctx, &BuildPackedAddr_1FFD98_0x1ffd98, 0x1ffd98u, 0x1ffa4cu)) {
         return;
     }
-    ctx->pc = 0x1FFA4Cu;
 label_1ffa4c:
     // 0x1ffa4c: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x1FFA4Cu;
@@ -91,7 +89,6 @@ label_1ffa4c:
             goto label_1ffa5c;
         }
     }
-    ctx->pc = 0x1FFA54u;
 label_1ffa54:
     // 0x1ffa54: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

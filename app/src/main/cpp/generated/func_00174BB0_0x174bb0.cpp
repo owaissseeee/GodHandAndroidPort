@@ -13,7 +13,7 @@
 
 // Function: func_00174BB0
 // Address: 0x174bb0 - 0x174c28
-void func_00174BB0_0x174bb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00174BB0_0x174bb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00174BB0_0x174bb0");
 #endif
@@ -48,7 +48,6 @@ void func_00174BB0_0x174bb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1B7380u, 0x174BC0u, 0x174BC8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x174BC8u;
 label_174bc8:
     // 0x174bc8: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -121,7 +120,6 @@ label_174bc8:
             goto label_174c14;
         }
     }
-    ctx->pc = 0x174C08u;
 label_174c08:
     // 0x174c08: 0xa20002f7  sb          $zero, 0x2F7($s0)
     ctx->pc = 0x174c08u;

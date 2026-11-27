@@ -13,7 +13,7 @@
 
 // Function: ADX_DecodeInfoAiff
 // Address: 0x340ef8 - 0x341008
-void ADX_DecodeInfoAiff_0x340ef8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ADX_DecodeInfoAiff_0x340ef8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ADX_DecodeInfoAiff_0x340ef8");
 #endif
@@ -108,7 +108,6 @@ void ADX_DecodeInfoAiff_0x340ef8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         }
     }
     // 0x340f5c: 0x0  nop
-    ctx->pc = 0x340f5cu;
     // NOP
 label_340f60:
     // 0x340f60: 0xc0d02c0  jal         func_340B00
@@ -117,7 +116,6 @@ label_340f60:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00340B00_0x340b00, 0x340b00u, 0x340f68u)) {
         return;
     }
-    ctx->pc = 0x340F68u;
 label_340f68:
     // 0x340f68: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));

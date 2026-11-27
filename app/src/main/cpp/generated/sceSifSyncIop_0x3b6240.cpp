@@ -13,7 +13,7 @@
 
 // Function: sceSifSyncIop
 // Address: 0x3b6240 - 0x3b6290
-void sceSifSyncIop_0x3b6240(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSifSyncIop_0x3b6240(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSifSyncIop_0x3b6240");
 #endif
@@ -45,7 +45,6 @@ void sceSifSyncIop_0x3b6240(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B00B0u, 0x3B6248u, 0x3B6250u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3B6250u;
 label_3b6250:
     // 0x3b6250: 0x3c030004  lui         $v1, 0x4
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)4 << 16));
@@ -72,7 +71,6 @@ label_3b6250:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B0120u, 0x3B6260u, 0x3B6268u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3B6268u;
 label_3b6268:
     // 0x3b6268: 0x24040001  addiu       $a0, $zero, 0x1
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -87,7 +85,6 @@ label_3b6268:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B79C0u, 0x3B626Cu, 0x3B6274u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3B6274u;
 label_3b6274:
     // 0x3b6274: 0x202d  daddu       $a0, $zero, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
@@ -102,10 +99,8 @@ label_3b6274:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B79C0u, 0x3B6278u, 0x3B6280u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3B6280u;
 label_3b6280:
     // 0x3b6280: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x3b6280u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_3b6284:
     // 0x3b6284: 0xdfbf0000  ld          $ra, 0x0($sp)

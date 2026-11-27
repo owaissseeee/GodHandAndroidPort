@@ -13,7 +13,7 @@
 
 // Function: cEmSetParam_setEm
 // Address: 0x2952d0 - 0x295380
-void cEmSetParam_setEm_0x2952d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmSetParam_setEm_0x2952d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmSetParam_setEm_0x2952d0");
 #endif
@@ -77,7 +77,6 @@ void cEmSetParam_setEm_0x2952d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &cRoomSave_findEm_0x2bef60, 0x2bef60u, 0x29530cu)) {
         return;
     }
-    ctx->pc = 0x29530Cu;
 label_29530c:
     // 0x29530c: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -130,7 +129,6 @@ label_29530c:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_GetEm_0x290868, 0x290868u, 0x295334u)) {
         return;
     }
-    ctx->pc = 0x295334u;
 label_295334:
     // 0x295334: 0x50400003  beql        $v0, $zero, . + 4 + (0x3 << 2)
     ctx->pc = 0x295334u;
@@ -147,7 +145,6 @@ label_295334:
             goto label_295344;
         }
     }
-    ctx->pc = 0x29533Cu;
 label_29533c:
     // 0x29533c: 0x1000000a  b           . + 4 + (0xA << 2)
     ctx->pc = 0x29533Cu;
@@ -164,7 +161,6 @@ label_29533c:
             goto label_295368;
         }
     }
-    ctx->pc = 0x295344u;
 label_295344:
     // 0x295344: 0x711024  and         $v0, $v1, $s1
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) & GPR_U64(ctx, 17));
@@ -204,7 +200,6 @@ label_29535c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002951B0_0x2951b0, 0x2951b0u, 0x295368u)) {
         return;
     }
-    ctx->pc = 0x295368u;
 label_295368:
     // 0x295368: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x295368u;

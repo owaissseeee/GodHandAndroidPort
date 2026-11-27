@@ -13,7 +13,7 @@
 
 // Function: __assert
 // Address: 0x3a7b58 - 0x3a7b88
-void ps2___assert_0x3a7b58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___assert_0x3a7b58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___assert_0x3a7b58");
 #endif
@@ -56,7 +56,6 @@ void ps2___assert_0x3a7b58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &fiprintf_0x3ae188, 0x3ae188u, 0x3a7b80u)) {
         return;
     }
-    ctx->pc = 0x3A7B80u;
 label_3a7b80:
     // 0x3a7b80: 0xc0e9ed2  jal         func_3A7B48
     ctx->pc = 0x3A7B80u;

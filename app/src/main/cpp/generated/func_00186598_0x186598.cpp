@@ -13,7 +13,7 @@
 
 // Function: func_00186598
 // Address: 0x186598 - 0x186670
-void func_00186598_0x186598(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00186598_0x186598(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00186598_0x186598");
 #endif
@@ -61,7 +61,6 @@ void func_00186598_0x186598(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
     // 0x1865bc: 0x4600a306  mov.s       $f12, $f20
-    ctx->pc = 0x1865bcu;
     ctx->f[12] = FPU_MOV_S(ctx->f[20]);
 label_1865c0:
     // 0x1865c0: 0x3c0140a0  lui         $at, 0x40A0
@@ -89,7 +88,6 @@ label_1865c0:
             goto label_1865dc;
         }
     }
-    ctx->pc = 0x1865DCu;
 label_1865dc:
     // 0x1865dc: 0x0  nop
     // NOP
@@ -118,7 +116,6 @@ label_1865dc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031CF30_0x31cf30, 0x31cf30u, 0x186604u)) {
         return;
     }
-    ctx->pc = 0x186604u;
 label_186604:
     // 0x186604: 0x3c013d0e  lui         $at, 0x3D0E
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15630 << 16));
@@ -143,7 +140,6 @@ label_186604:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031CF30_0x31cf30, 0x31cf30u, 0x186624u)) {
         return;
     }
-    ctx->pc = 0x186624u;
 label_186624:
     // 0x186624: 0x4600a502  mul.s       $f20, $f20, $f0
     ctx->f[20] = FPU_MUL_S(ctx->f[20], ctx->f[0]);
@@ -159,7 +155,6 @@ label_186624:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31CFE0u, 0x186628u, 0x186630u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x186630u;
 label_186630:
     // 0x186630: 0x30420001  andi        $v0, $v0, 0x1
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
@@ -187,7 +182,6 @@ label_186630:
             goto label_186658;
         }
     }
-    ctx->pc = 0x186644u;
 label_186644:
     // 0x186644: 0x3c014049  lui         $at, 0x4049
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16457 << 16));

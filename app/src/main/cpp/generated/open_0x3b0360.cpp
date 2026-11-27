@@ -13,7 +13,7 @@
 
 // Function: open
 // Address: 0x3b0360 - 0x3b0388
-void open_0x3b0360(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void open_0x3b0360(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("open_0x3b0360");
 #endif
@@ -37,7 +37,6 @@ void open_0x3b0360(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Get_D_003FA62C_3A4FB8_0x3a4fb8, 0x3a4fb8u, 0x3b0370u)) {
         return;
     }
-    ctx->pc = 0x3B0370u;
 label_3b0370:
     // 0x3b0370: 0x24030005  addiu       $v1, $zero, 0x5
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 5));

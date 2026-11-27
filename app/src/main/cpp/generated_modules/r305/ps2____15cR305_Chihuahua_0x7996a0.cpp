@@ -14,23 +14,23 @@ namespace gh_r305
 {
 // Function: _$_15cR305_Chihuahua
 // Address: 0x7996a0 - 0x7996c8
-void ps2____15cR305_Chihuahua_0x7996a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2____15cR305_Chihuahua_0x7996a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2____15cR305_Chihuahua_0x7996a0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7996b8u: goto label_7996b8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7996a0u, 0)) {
+        switch (ctx->pc) {
+            case 0x7996b8u: goto label_7996b8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7996a0u;
+
 
     // 0x7996a0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7996a0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x7996a4: 0x30a50001  andi        $a1, $a1, 0x1
-    ctx->pc = 0x7996a4u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)1);
     // 0x7996a8: 0x10a00003  beqz        $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x7996A8u;
@@ -47,15 +47,12 @@ void ps2____15cR305_Chihuahua_0x7996a0(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_7996b8;
         }
     }
-    ctx->pc = 0x7996B0u;
     // 0x7996b0: 0xc1e6474  jal         func_7991D0
-    ctx->pc = 0x7996B0u;
     SET_GPR_U32(ctx, 31, 0x7996B8u);
     ctx->pc = 0x7991D0u;
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x7991D0u, 0x7996B0u, 0x7996B8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7996B8u;
 label_7996b8:
     // 0x7996b8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7996b8u;
@@ -79,9 +76,7 @@ label_7996b8:
         return;
         #endif
     }
-    ctx->pc = 0x7996C4u;
     // 0x7996c4: 0x0  nop
-    ctx->pc = 0x7996c4u;
     // NOP
     ctx->pc = 0x7996c8u;
 }

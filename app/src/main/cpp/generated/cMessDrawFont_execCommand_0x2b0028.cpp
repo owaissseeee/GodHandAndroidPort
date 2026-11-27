@@ -13,7 +13,7 @@
 
 // Function: cMessDrawFont_execCommand
 // Address: 0x2b0028 - 0x2b00a0
-void cMessDrawFont_execCommand_0x2b0028(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessDrawFont_execCommand_0x2b0028(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessDrawFont_execCommand_0x2b0028");
 #endif
@@ -99,7 +99,6 @@ void cMessDrawFont_execCommand_0x2b0028(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_2b0098;
         }
     }
-    ctx->pc = 0x2B0064u;
 label_2b0064:
     // 0x2b0064: 0x1462000c  bne         $v1, $v0, . + 4 + (0xC << 2)
     ctx->pc = 0x2B0064u;
@@ -122,7 +121,6 @@ label_2b0064:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B00A0_0x2b00a0, 0x2b00a0u, 0x2b0074u)) {
         return;
     }
-    ctx->pc = 0x2B0074u;
 label_2b0074:
     // 0x2b0074: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x2B0074u;
@@ -139,7 +137,6 @@ label_2b0074:
             goto label_2b0098;
         }
     }
-    ctx->pc = 0x2B007Cu;
 label_2b007c:
     // 0x2b007c: 0xc0ac082  jal         func_2B0208
     ctx->pc = 0x2B007Cu;
@@ -147,7 +144,6 @@ label_2b007c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B0208_0x2b0208, 0x2b0208u, 0x2b0084u)) {
         return;
     }
-    ctx->pc = 0x2B0084u;
 label_2b0084:
     // 0x2b0084: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x2B0084u;
@@ -164,7 +160,6 @@ label_2b0084:
             goto label_2b0098;
         }
     }
-    ctx->pc = 0x2B008Cu;
 label_2b008c:
     // 0x2b008c: 0xc0ac108  jal         func_2B0420
     ctx->pc = 0x2B008Cu;
@@ -172,7 +167,6 @@ label_2b008c:
     if (!runtime->callDirectStatic(rdram, ctx, &PosObj_forwardSpan_0x2b0420, 0x2b0420u, 0x2b0094u)) {
         return;
     }
-    ctx->pc = 0x2B0094u;
 label_2b0094:
     // 0x2b0094: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2b0094u;

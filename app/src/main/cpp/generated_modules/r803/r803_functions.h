@@ -8,15 +8,15 @@ class PS2Runtime;
 
 namespace gh_r803
 {
-void ps2___builtin_new_0x799180(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___builtin_vec_new_0x7991a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___builtin_delete_0x7991d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___builtin_vec_delete_0x7991f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void R803Init__Fv_0x799220(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void R803Move__Fv_0x799278(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void checkBattle__5cR803_0x799280(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void getEmNum__5cR803_0x7996d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___do_global_dtors_0x799780(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___do_global_ctors_0x7997d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___main_0x799888(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
+void ps2___builtin_new_0x799180(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___builtin_vec_new_0x7991a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___builtin_delete_0x7991d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___builtin_vec_delete_0x7991f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void R803Init__Fv_0x799220(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void R803Move__Fv_0x799278(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void checkBattle__5cR803_0x799280(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void getEmNum__5cR803_0x7996d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___do_global_dtors_0x799780(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___do_global_ctors_0x7997d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___main_0x799888(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
 } // namespace gh_r803

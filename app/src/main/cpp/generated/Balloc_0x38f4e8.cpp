@@ -13,7 +13,7 @@
 
 // Function: Balloc
 // Address: 0x38f4e8 - 0x38f548
-void Balloc_0x38f4e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Balloc_0x38f4e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Balloc_0x38f4e8");
 #endif
@@ -63,7 +63,6 @@ void Balloc_0x38f4e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A7C70_0x3a7c70, 0x3a7c70u, 0x38f51cu)) {
         return;
     }
-    ctx->pc = 0x38F51Cu;
 label_38f51c:
     // 0x38f51c: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));

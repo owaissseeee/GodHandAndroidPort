@@ -13,7 +13,7 @@
 
 // Function: UpdateObjByIndexedOp_2FBE50
 // Address: 0x2fbe50 - 0x2fbe88
-void UpdateObjByIndexedOp_2FBE50_0x2fbe50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateObjByIndexedOp_2FBE50_0x2fbe50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateObjByIndexedOp_2FBE50_0x2fbe50");
 #endif
@@ -47,7 +47,6 @@ void UpdateObjByIndexedOp_2FBE50_0x2fbe50(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B5E50_0x2b5e50, 0x2b5e50u, 0x2fbe64u)) {
         return;
     }
-    ctx->pc = 0x2FBE64u;
 label_2fbe64:
     // 0x2fbe64: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -62,7 +61,6 @@ label_2fbe64:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B5CF0_0x2b5cf0, 0x2b5cf0u, 0x2fbe70u)) {
         return;
     }
-    ctx->pc = 0x2FBE70u;
 label_2fbe70:
     // 0x2fbe70: 0xc0bec08  jal         func_2FB020
     SET_GPR_U32(ctx, 31, 0x2FBE78u);
@@ -75,7 +73,6 @@ label_2fbe70:
     if (!runtime->callDirectStatic(rdram, ctx, &PushEsp_0x2fb020, 0x2fb020u, 0x2fbe78u)) {
         return;
     }
-    ctx->pc = 0x2FBE78u;
 label_2fbe78:
     // 0x2fbe78: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2fbe78u;

@@ -13,7 +13,7 @@
 
 // Function: cSeData_SelectHeap
 // Address: 0x2cfd50 - 0x2cfe28
-void cSeData_SelectHeap_0x2cfd50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSeData_SelectHeap_0x2cfd50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSeData_SelectHeap_0x2cfd50");
 #endif
@@ -66,7 +66,6 @@ void cSeData_SelectHeap_0x2cfd50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             return;
         }
     }
-    ctx->pc = 0x2CFD7Cu;
 label_2cfd7c:
     // 0x2cfd7c: 0x3c030075  lui         $v1, 0x75
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)117 << 16));
@@ -89,7 +88,6 @@ label_2cfd7c:
             goto label_2cfe1c;
         }
     }
-    ctx->pc = 0x2CFD90u;
 label_2cfd90:
     // 0x2cfd90: 0x3c030075  lui         $v1, 0x75
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)117 << 16));
@@ -112,7 +110,6 @@ label_2cfd90:
             goto label_2cfe1c;
         }
     }
-    ctx->pc = 0x2CFDA4u;
 label_2cfda4:
     // 0x2cfda4: 0x3c020074  lui         $v0, 0x74
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
@@ -205,7 +202,6 @@ label_2cfda4:
         }
     }
     // 0x2cfde8: 0x3c020075  lui         $v0, 0x75
-    ctx->pc = 0x2cfde8u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)117 << 16));
 label_2cfdec:
     // 0x2cfdec: 0x10000002  b           . + 4 + (0x2 << 2)
@@ -223,10 +219,8 @@ label_2cfdec:
             goto label_2cfdf8;
         }
     }
-    ctx->pc = 0x2CFDF4u;
 label_2cfdf4:
     // 0x2cfdf4: 0x24424210  addiu       $v0, $v0, 0x4210
-    ctx->pc = 0x2cfdf4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 16912));
 label_2cfdf8:
     // 0x2cfdf8: 0xaca20008  sw          $v0, 0x8($a1)
@@ -255,7 +249,6 @@ label_2cfdf8:
         return;
         #endif
     }
-    ctx->pc = 0x2CFE0Cu;
 label_2cfe0c:
     // 0x2cfe0c: 0x3c030075  lui         $v1, 0x75
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)117 << 16));
@@ -264,7 +257,6 @@ label_2cfe0c:
     // 0x2cfe14: 0x24634210  addiu       $v1, $v1, 0x4210
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 16912));
     // 0x2cfe18: 0x24423310  addiu       $v0, $v0, 0x3310
-    ctx->pc = 0x2cfe18u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 13072));
 label_2cfe1c:
     // 0x2cfe1c: 0xaca2000c  sw          $v0, 0xC($a1)

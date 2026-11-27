@@ -13,7 +13,7 @@
 
 // Function: _sceMpegFlushBuf
 // Address: 0x39ec20 - 0x39ecb8
-void _sceMpegFlushBuf_0x39ec20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceMpegFlushBuf_0x39ec20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceMpegFlushBuf_0x39ec20");
 #endif
@@ -51,7 +51,6 @@ void _sceMpegFlushBuf_0x39ec20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &_waitIpuIdle_0x39ecb8, 0x39ecb8u, 0x39ec3cu)) {
         return;
     }
-    ctx->pc = 0x39EC3Cu;
 label_39ec3c:
     // 0x39ec3c: 0x3c044000  lui         $a0, 0x4000
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)16384 << 16));
@@ -117,7 +116,6 @@ label_39ec3c:
             goto label_39ec80;
         }
     }
-    ctx->pc = 0x39EC78u;
 label_39ec78:
     // 0x39ec78: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x39EC78u;
@@ -134,7 +132,6 @@ label_39ec78:
             goto label_39ec84;
         }
     }
-    ctx->pc = 0x39EC80u;
 label_39ec80:
     // 0x39ec80: 0xae220828  sw          $v0, 0x828($s1)
     ctx->pc = 0x39ec80u;
@@ -151,7 +148,6 @@ label_39ec84:
     if (!runtime->callDirectStatic(rdram, ctx, &_sceMpegWaitIpuIdle64_0x39e928, 0x39e928u, 0x39ec8cu)) {
         return;
     }
-    ctx->pc = 0x39EC8Cu;
 label_39ec8c:
     // 0x39ec8c: 0x2103c  dsll32      $v0, $v0, 0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) << (32 + 0));

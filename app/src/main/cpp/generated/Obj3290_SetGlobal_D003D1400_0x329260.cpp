@@ -13,7 +13,7 @@
 
 // Function: Obj3290_SetGlobal_D003D1400
 // Address: 0x329260 - 0x329278
-void Obj3290_SetGlobal_D003D1400_0x329260(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj3290_SetGlobal_D003D1400_0x329260(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj3290_SetGlobal_D003D1400_0x329260");
 #endif

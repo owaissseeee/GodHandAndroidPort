@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getLevelProgress
 // Address: 0x1fa080 - 0x1fa148
-void cCoreSave_getLevelProgress_0x1fa080(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getLevelProgress_0x1fa080(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getLevelProgress_0x1fa080");
 #endif
@@ -65,7 +65,6 @@ void cCoreSave_getLevelProgress_0x1fa080(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_1fa138;
         }
     }
-    ctx->pc = 0x1FA0A8u;
 label_1fa0a8:
     // 0x1fa0a8: 0xc07e804  jal         func_1FA010
     SET_GPR_U32(ctx, 31, 0x1FA0B0u);
@@ -78,7 +77,6 @@ label_1fa0a8:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getGameLevel_0x1fa010, 0x1fa010u, 0x1fa0b0u)) {
         return;
     }
-    ctx->pc = 0x1FA0B0u;
 label_1fa0b0:
     // 0x1fa0b0: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -122,7 +120,6 @@ label_1fa0b0:
             goto label_1fa0e8;
         }
     }
-    ctx->pc = 0x1FA0D8u;
 label_1fa0d8:
     // 0x1fa0d8: 0x2482fffe  addiu       $v0, $a0, -0x2
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 4294967294));
@@ -172,7 +169,6 @@ label_1fa0e8:
     // 0x1fa114: 0x3c01447a  lui         $at, 0x447A
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)17530 << 16));
     // 0x1fa118: 0x44810800  mtc1        $at, $f1
-    ctx->pc = 0x1fa118u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }
 label_1fa11c:
     // 0x1fa11c: 0x44820000  mtc1        $v0, $f0

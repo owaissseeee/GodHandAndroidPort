@@ -13,7 +13,7 @@
 
 // Function: cOmLifeCounter_checkHit
 // Address: 0x172490 - 0x172570
-void cOmLifeCounter_checkHit_0x172490(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmLifeCounter_checkHit_0x172490(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmLifeCounter_checkHit_0x172490");
 #endif
@@ -64,7 +64,6 @@ void cOmLifeCounter_checkHit_0x172490(uint8_t* rdram, R5900Context* ctx, PS2Runt
     ctx->pc = 0x1724c0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1724c4: 0x24150001  addiu       $s5, $zero, 0x1
-    ctx->pc = 0x1724c4u;
     SET_GPR_S32(ctx, 21, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_1724c8:
     // 0x1724c8: 0x8e250000  lw          $a1, 0x0($s1)
@@ -81,7 +80,6 @@ label_1724c8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1B7380u, 0x1724CCu, 0x1724D4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1724D4u;
 label_1724d4:
     // 0x1724d4: 0x54550014  bnel        $v0, $s5, . + 4 + (0x14 << 2)
     ctx->pc = 0x1724D4u;
@@ -161,7 +159,6 @@ label_1724d4:
             goto label_172524;
         }
     }
-    ctx->pc = 0x17251Cu;
 label_17251c:
     // 0x17251c: 0xc05cc6e  jal         func_1731B8
     SET_GPR_U32(ctx, 31, 0x172524u);
@@ -174,10 +171,8 @@ label_17251c:
     if (!runtime->callDirectStatic(rdram, ctx, &cEm00_startStagger_0x1731b8, 0x1731b8u, 0x172524u)) {
         return;
     }
-    ctx->pc = 0x172524u;
 label_172524:
     // 0x172524: 0x26520002  addiu       $s2, $s2, 0x2
-    ctx->pc = 0x172524u;
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), 2));
 label_172528:
     // 0x172528: 0x26730001  addiu       $s3, $s3, 0x1
@@ -215,7 +210,6 @@ label_172528:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B7EE0_0x1b7ee0, 0x1b7ee0u, 0x172544u)) {
         return;
     }
-    ctx->pc = 0x172544u;
 label_172544:
     // 0x172544: 0xc05cc96  jal         func_173258
     SET_GPR_U32(ctx, 31, 0x17254Cu);
@@ -228,7 +222,6 @@ label_172544:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00173258_0x173258, 0x173258u, 0x17254cu)) {
         return;
     }
-    ctx->pc = 0x17254Cu;
 label_17254c:
     // 0x17254c: 0x7bb00060  lq          $s0, 0x60($sp)
     ctx->pc = 0x17254cu;

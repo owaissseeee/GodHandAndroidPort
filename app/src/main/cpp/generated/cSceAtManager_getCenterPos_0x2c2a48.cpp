@@ -13,7 +13,7 @@
 
 // Function: cSceAtManager_getCenterPos
 // Address: 0x2c2a48 - 0x2c2a98
-void cSceAtManager_getCenterPos_0x2c2a48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSceAtManager_getCenterPos_0x2c2a48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSceAtManager_getCenterPos_0x2c2a48");
 #endif
@@ -61,7 +61,6 @@ void cSceAtManager_getCenterPos_0x2c2a48(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &cSceAtManager_getUnit_0x2c3118, 0x2c3118u, 0x2c2a6cu)) {
         return;
     }
-    ctx->pc = 0x2C2A6Cu;
 label_2c2a6c:
     // 0x2c2a6c: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x2C2A6Cu;
@@ -89,7 +88,6 @@ label_2c2a6c:
     if (!runtime->callDirectStatic(rdram, ctx, &cSceAtUnit_getCenterPos_0x2c0e78, 0x2c0e78u, 0x2c2a7cu)) {
         return;
     }
-    ctx->pc = 0x2C2A7Cu;
 label_2c2a7c:
     // 0x2c2a7c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2c2a7cu;

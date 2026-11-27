@@ -13,7 +13,7 @@
 
 // Function: _IO_least_marker
 // Address: 0x38c238 - 0x38c280
-void ps2__IO_least_marker_0x38c238(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_least_marker_0x38c238(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_least_marker_0x38c238");
 #endif
@@ -51,7 +51,6 @@ void ps2__IO_least_marker_0x38c238(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         }
     }
     // 0x38c24c: 0x0  nop
-    ctx->pc = 0x38c24cu;
     // NOP
 label_38c250:
     // 0x38c250: 0x8c830008  lw          $v1, 0x8($a0)
@@ -79,7 +78,6 @@ label_38c250:
             goto label_38c250;
         }
     }
-    ctx->pc = 0x38C26Cu;
 label_38c26c:
     // 0x38c26c: 0x5103c  dsll32      $v0, $a1, 0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 5) << (32 + 0));

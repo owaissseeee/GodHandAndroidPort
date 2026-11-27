@@ -13,7 +13,7 @@
 
 // Function: cE3_setEnding
 // Address: 0x201e80 - 0x201f20
-void cE3_setEnding_0x201e80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cE3_setEnding_0x201e80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cE3_setEnding_0x201e80");
 #endif
@@ -77,7 +77,6 @@ void cE3_setEnding_0x201e80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &KeyStop_0x31afa0, 0x31afa0u, 0x201ec8u)) {
         return;
     }
-    ctx->pc = 0x201EC8u;
 label_201ec8:
     // 0x201ec8: 0x8e03fff4  lw          $v1, -0xC($s0)
     ctx->pc = 0x201ec8u;
@@ -109,7 +108,6 @@ label_201ec8:
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x201ef0u)) {
         return;
     }
-    ctx->pc = 0x201EF0u;
 label_201ef0:
     // 0x201ef0: 0x3c0142c8  lui         $at, 0x42C8
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)17096 << 16));

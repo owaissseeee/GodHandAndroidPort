@@ -13,7 +13,7 @@
 
 // Function: cEm00_setEm65Separate
 // Address: 0x2761d0 - 0x2761f8
-void cEm00_setEm65Separate_0x2761d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_setEm65Separate_0x2761d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_setEm65Separate_0x2761d0");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: cOl22_setCloseFix
 // Address: 0x17e738 - 0x17e7d0
-void cOl22_setCloseFix_0x17e738(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl22_setCloseFix_0x17e738(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl22_setCloseFix_0x17e738");
 #endif
@@ -77,10 +77,8 @@ void cOl22_setCloseFix_0x17e738(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_17e768;
         }
     }
-    ctx->pc = 0x17E764u;
 label_17e764:
     // 0x17e764: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x17e764u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_17e768:
     // 0x17e768: 0x10400010  beqz        $v0, . + 4 + (0x10 << 2)
@@ -136,10 +134,8 @@ label_17e768:
             goto label_17e790;
         }
     }
-    ctx->pc = 0x17E78Cu;
 label_17e78c:
     // 0x17e78c: 0x182d  daddu       $v1, $zero, $zero
-    ctx->pc = 0x17e78cu;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_17e790:
     // 0x17e790: 0x3c013fc9  lui         $at, 0x3FC9

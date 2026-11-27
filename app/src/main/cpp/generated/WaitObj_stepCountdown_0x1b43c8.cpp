@@ -13,7 +13,7 @@
 
 // Function: WaitObj_stepCountdown
 // Address: 0x1b43c8 - 0x1b4460
-void WaitObj_stepCountdown_0x1b43c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void WaitObj_stepCountdown_0x1b43c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("WaitObj_stepCountdown_0x1b43c8");
 #endif
@@ -84,7 +84,6 @@ void WaitObj_stepCountdown_0x1b43c8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1b4454;
         }
     }
-    ctx->pc = 0x1B43F4u;
 label_1b43f4:
     // 0x1b43f4: 0xc600062c  lwc1        $f0, 0x62C($s0)
     ctx->pc = 0x1b43f4u;
@@ -142,7 +141,6 @@ label_1b4408:
             goto label_1b4450;
         }
     }
-    ctx->pc = 0x1B442Cu;
 label_1b442c:
     // 0x1b442c: 0x3c040058  lui         $a0, 0x58
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)88 << 16));
@@ -157,7 +155,6 @@ label_1b442c:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_GetSpeedRate_0x292f50, 0x292f50u, 0x1b4438u)) {
         return;
     }
-    ctx->pc = 0x1B4438u;
 label_1b4438:
     // 0x1b4438: 0x3c020074  lui         $v0, 0x74
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));

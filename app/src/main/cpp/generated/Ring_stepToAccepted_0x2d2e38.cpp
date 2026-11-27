@@ -13,7 +13,7 @@
 
 // Function: Ring_stepToAccepted
 // Address: 0x2d2e38 - 0x2d2ee8
-void Ring_stepToAccepted_0x2d2e38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Ring_stepToAccepted_0x2d2e38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Ring_stepToAccepted_0x2d2e38");
 #endif
@@ -70,7 +70,6 @@ void Ring_stepToAccepted_0x2d2e38(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_2d2ec8;
         }
     }
-    ctx->pc = 0x2D2E64u;
 label_2d2e64:
     // 0x2d2e64: 0xc0b4d2a  jal         func_2D34A8
     SET_GPR_U32(ctx, 31, 0x2D2E6Cu);
@@ -83,7 +82,6 @@ label_2d2e64:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D34A8_0x2d34a8, 0x2d34a8u, 0x2d2e6cu)) {
         return;
     }
-    ctx->pc = 0x2D2E6Cu;
 label_2d2e6c:
     // 0x2d2e6c: 0xc0b4c84  jal         func_2D3210
     SET_GPR_U32(ctx, 31, 0x2D2E74u);
@@ -96,7 +94,6 @@ label_2d2e6c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D3210_0x2d3210, 0x2d3210u, 0x2d2e74u)) {
         return;
     }
-    ctx->pc = 0x2D2E74u;
 label_2d2e74:
     // 0x2d2e74: 0x54400014  bnel        $v0, $zero, . + 4 + (0x14 << 2)
     ctx->pc = 0x2D2E74u;
@@ -159,7 +156,6 @@ label_2d2ea4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D3210_0x2d3210, 0x2d3210u, 0x2d2eacu)) {
         return;
     }
-    ctx->pc = 0x2D2EACu;
 label_2d2eac:
     // 0x2d2eac: 0x1054ffed  beq         $v0, $s4, . + 4 + (-0x13 << 2)
     ctx->pc = 0x2D2EACu;

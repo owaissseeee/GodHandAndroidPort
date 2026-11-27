@@ -13,7 +13,7 @@
 
 // Function: func_00303A20
 // Address: 0x303a20 - 0x303a30
-void func_00303A20_0x303a20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00303A20_0x303a20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00303A20_0x303a20");
 #endif

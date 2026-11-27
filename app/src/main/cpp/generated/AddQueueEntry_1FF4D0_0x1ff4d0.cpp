@@ -13,7 +13,7 @@
 
 // Function: AddQueueEntry_1FF4D0
 // Address: 0x1ff4d0 - 0x1ff540
-void AddQueueEntry_1FF4D0_0x1ff4d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void AddQueueEntry_1FF4D0_0x1ff4d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("AddQueueEntry_1FF4D0_0x1ff4d0");
 #endif
@@ -66,7 +66,6 @@ void AddQueueEntry_1FF4D0_0x1ff4d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_002CB278_0x2cb278, 0x2cb278u, 0x1ff4f8u)) {
         return;
     }
-    ctx->pc = 0x1FF4F8u;
 label_1ff4f8:
     // 0x1ff4f8: 0x8e030018  lw          $v1, 0x18($s0)
     ctx->pc = 0x1ff4f8u;

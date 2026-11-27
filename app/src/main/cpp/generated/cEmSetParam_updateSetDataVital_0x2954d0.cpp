@@ -13,7 +13,7 @@
 
 // Function: cEmSetParam_updateSetDataVital
 // Address: 0x2954d0 - 0x295510
-void cEmSetParam_updateSetDataVital_0x2954d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmSetParam_updateSetDataVital_0x2954d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmSetParam_updateSetDataVital_0x2954d0");
 #endif
@@ -49,7 +49,6 @@ void cEmSetParam_updateSetDataVital_0x2954d0(uint8_t* rdram, R5900Context* ctx, 
     if (!runtime->callDirectStatic(rdram, ctx, &cRoomSave_findEm_0x2bef60, 0x2bef60u, 0x2954ecu)) {
         return;
     }
-    ctx->pc = 0x2954ECu;
 label_2954ec:
     // 0x2954ec: 0x50400005  beql        $v0, $zero, . + 4 + (0x5 << 2)
     ctx->pc = 0x2954ECu;

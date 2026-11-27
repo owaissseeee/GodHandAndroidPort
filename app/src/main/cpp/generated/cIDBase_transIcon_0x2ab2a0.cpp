@@ -13,7 +13,7 @@
 
 // Function: cIDBase_transIcon
 // Address: 0x2ab2a0 - 0x2ab360
-void cIDBase_transIcon_0x2ab2a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDBase_transIcon_0x2ab2a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDBase_transIcon_0x2ab2a0");
 #endif
@@ -61,7 +61,6 @@ void cIDBase_transIcon_0x2ab2a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
         }
     }
     // 0x2ab2c4: 0x40282d  daddu       $a1, $v0, $zero
-    ctx->pc = 0x2ab2c4u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_2ab2c8:
     // 0x2ab2c8: 0x3c02003c  lui         $v0, 0x3C
@@ -77,7 +76,6 @@ label_2ab2c8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AED40_0x2aed40, 0x2aed40u, 0x2ab2d4u)) {
         return;
     }
-    ctx->pc = 0x2AB2D4u;
 label_2ab2d4:
     // 0x2ab2d4: 0x40302d  daddu       $a2, $v0, $zero
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -168,7 +166,6 @@ label_2ab2d4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AB9A8_0x2ab9a8, 0x2ab9a8u, 0x2ab34cu)) {
         return;
     }
-    ctx->pc = 0x2AB34Cu;
 label_2ab34c:
     // 0x2ab34c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2ab34cu;

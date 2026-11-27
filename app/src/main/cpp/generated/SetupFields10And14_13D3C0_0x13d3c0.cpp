@@ -13,7 +13,7 @@
 
 // Function: SetupFields10And14_13D3C0
 // Address: 0x13d3c0 - 0x13d400
-void SetupFields10And14_13D3C0_0x13d3c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetupFields10And14_13D3C0_0x13d3c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetupFields10And14_13D3C0_0x13d3c0");
 #endif
@@ -50,7 +50,6 @@ void SetupFields10And14_13D3C0_0x13d3c0(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_initialize_0x2a9ea0, 0x2a9ea0u, 0x13d3dcu)) {
         return;
     }
-    ctx->pc = 0x13D3DCu;
 label_13d3dc:
     // 0x13d3dc: 0x260400d0  addiu       $a0, $s0, 0xD0
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 208));
@@ -67,7 +66,6 @@ label_13d3dc:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_initialize_0x2a9ea0, 0x2a9ea0u, 0x13d3ecu)) {
         return;
     }
-    ctx->pc = 0x13D3ECu;
 label_13d3ec:
     // 0x13d3ec: 0xa6000092  sh          $zero, 0x92($s0)
     ctx->pc = 0x13d3ecu;

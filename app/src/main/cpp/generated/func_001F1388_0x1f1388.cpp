@@ -13,7 +13,7 @@
 
 // Function: func_001F1388
 // Address: 0x1f1388 - 0x1f14c8
-void func_001F1388_0x1f1388(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001F1388_0x1f1388(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001F1388_0x1f1388");
 #endif
@@ -118,7 +118,6 @@ void func_001F1388_0x1f1388(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x1f1408u;
     WRITE32(ADD32(GPR_U32(ctx, 29), 16), GPR_U32(ctx, 5));
     // 0x1f140c: 0x0  nop
-    ctx->pc = 0x1f140cu;
     // NOP
 label_1f1410:
     // 0x1f1410: 0x3c0140a0  lui         $at, 0x40A0
@@ -138,7 +137,6 @@ label_1f1410:
     if (!runtime->callDirectStatic(rdram, ctx, &frand_0x31d050, 0x31d050u, 0x1f1424u)) {
         return;
     }
-    ctx->pc = 0x1F1424u;
 label_1f1424:
     // 0x1f1424: 0x46000064  .word       0x46000064                   # cvt.w.s     $f1, $f0 # 00000000 <InstrIdType: CPU_COP1_FPUS>
     { int32_t tmp = FPU_CVT_W_S(ctx->f[0]); std::memcpy(&ctx->f[1], &tmp, sizeof(tmp)); }
@@ -161,7 +159,6 @@ label_1f1424:
     if (!runtime->callDirectStatic(rdram, ctx, &frand_0x31d050, 0x31d050u, 0x1f1440u)) {
         return;
     }
-    ctx->pc = 0x1F1440u;
 label_1f1440:
     // 0x1f1440: 0x46000506  mov.s       $f20, $f0
     ctx->f[20] = FPU_MOV_S(ctx->f[0]);
@@ -178,7 +175,6 @@ label_1f1440:
     if (!runtime->callDirectStatic(rdram, ctx, &frand_0x31d050, 0x31d050u, 0x1f1450u)) {
         return;
     }
-    ctx->pc = 0x1F1450u;
 label_1f1450:
     // 0x1f1450: 0xe7b40020  swc1        $f20, 0x20($sp)
     ctx->pc = 0x1f1450u;
@@ -212,7 +208,6 @@ label_1f1450:
     if (!runtime->callDirectStatic(rdram, ctx, &frand_0x31d050, 0x31d050u, 0x1f147cu)) {
         return;
     }
-    ctx->pc = 0x1F147Cu;
 label_1f147c:
     // 0x1f147c: 0x8e050000  lw          $a1, 0x0($s0)
     ctx->pc = 0x1f147cu;
@@ -232,7 +227,6 @@ label_1f147c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F0498_0x1f0498, 0x1f0498u, 0x1f1490u)) {
         return;
     }
-    ctx->pc = 0x1F1490u;
 label_1f1490:
     // 0x1f1490: 0x641ffdf  bgez        $s2, . + 4 + (-0x21 << 2)
     ctx->pc = 0x1F1490u;

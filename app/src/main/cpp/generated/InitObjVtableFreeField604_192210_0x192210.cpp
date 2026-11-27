@@ -13,7 +13,7 @@
 
 // Function: InitObjVtableFreeField604_192210
 // Address: 0x192210 - 0x192270
-void InitObjVtableFreeField604_192210_0x192210(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitObjVtableFreeField604_192210_0x192210(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitObjVtableFreeField604_192210_0x192210");
 #endif
@@ -80,7 +80,6 @@ void InitObjVtableFreeField604_192210_0x192210(uint8_t* rdram, R5900Context* ctx
     if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x19224cu)) {
         return;
     }
-    ctx->pc = 0x19224Cu;
 label_19224c:
     // 0x19224c: 0xae000604  sw          $zero, 0x604($s0)
     ctx->pc = 0x19224cu;
@@ -99,7 +98,6 @@ label_192250:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField214PtrThenInit_1B6F38_0x1b6f38, 0x1b6f38u, 0x19225cu)) {
         return;
     }
-    ctx->pc = 0x19225Cu;
 label_19225c:
     // 0x19225c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x19225cu;

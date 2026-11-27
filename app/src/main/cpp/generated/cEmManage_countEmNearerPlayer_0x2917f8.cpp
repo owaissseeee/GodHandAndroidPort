@@ -13,7 +13,7 @@
 
 // Function: cEmManage_countEmNearerPlayer
 // Address: 0x2917f8 - 0x2919c0
-void cEmManage_countEmNearerPlayer_0x2917f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_countEmNearerPlayer_0x2917f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_countEmNearerPlayer_0x2917f8");
 #endif
@@ -75,7 +75,6 @@ void cEmManage_countEmNearerPlayer_0x2917f8(uint8_t* rdram, R5900Context* ctx, P
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x291830u)) {
         return;
     }
-    ctx->pc = 0x291830u;
 label_291830:
     // 0x291830: 0x8c4400f0  lw          $a0, 0xF0($v0)
     ctx->pc = 0x291830u;
@@ -91,7 +90,6 @@ label_291830:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0MagnitudeSqXZ_0x1f7eb0, 0x1f7eb0u, 0x29183cu)) {
         return;
     }
-    ctx->pc = 0x29183Cu;
 label_29183c:
     // 0x29183c: 0xc0b6dac  jal         func_2DB6B0
     SET_GPR_U32(ctx, 31, 0x291844u);
@@ -104,7 +102,6 @@ label_29183c:
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x291844u)) {
         return;
     }
-    ctx->pc = 0x291844u;
 label_291844:
     // 0x291844: 0x8c4300f0  lw          $v1, 0xF0($v0)
     ctx->pc = 0x291844u;
@@ -141,7 +138,6 @@ label_291844:
             goto label_29186c;
         }
     }
-    ctx->pc = 0x29186Cu;
 label_29186c:
     // 0x29186c: 0x8e110500  lw          $s1, 0x500($s0)
     ctx->pc = 0x29186cu;
@@ -165,7 +161,6 @@ label_29186c:
     ctx->pc = 0x291878u;
     SET_GPR_S32(ctx, 16, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 8)));
     // 0x29187c: 0x0  nop
-    ctx->pc = 0x29187cu;
     // NOP
 label_291880:
     // 0x291880: 0x52000040  beql        $s0, $zero, . + 4 + (0x40 << 2)
@@ -221,7 +216,6 @@ label_291880:
     // 0x2918a0: 0x28620300  slti        $v0, $v1, 0x300
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)768) ? 1 : 0);
     // 0x2918a4: 0x40202d  daddu       $a0, $v0, $zero
-    ctx->pc = 0x2918a4u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_2918a8:
     // 0x2918a8: 0x308200ff  andi        $v0, $a0, 0xFF
@@ -282,7 +276,6 @@ label_2918a8:
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x2918d4u)) {
         return;
     }
-    ctx->pc = 0x2918D4u;
 label_2918d4:
     // 0x2918d4: 0x8c4400f0  lw          $a0, 0xF0($v0)
     ctx->pc = 0x2918d4u;
@@ -298,7 +291,6 @@ label_2918d4:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0MagnitudeSqXZ_0x1f7eb0, 0x1f7eb0u, 0x2918e0u)) {
         return;
     }
-    ctx->pc = 0x2918E0u;
 label_2918e0:
     // 0x2918e0: 0xc0b6dac  jal         func_2DB6B0
     SET_GPR_U32(ctx, 31, 0x2918E8u);
@@ -311,7 +303,6 @@ label_2918e0:
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x2918e8u)) {
         return;
     }
-    ctx->pc = 0x2918E8u;
 label_2918e8:
     // 0x2918e8: 0x8c4300f0  lw          $v1, 0xF0($v0)
     ctx->pc = 0x2918e8u;
@@ -346,7 +337,6 @@ label_2918e8:
             goto label_29190c;
         }
     }
-    ctx->pc = 0x29190Cu;
 label_29190c:
     // 0x29190c: 0x4616a034  c.lt.s      $f20, $f22
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[20], ctx->f[22])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -420,7 +410,6 @@ label_29190c:
             goto label_291980;
         }
     }
-    ctx->pc = 0x291950u;
 label_291950:
     // 0x291950: 0x3c014000  lui         $at, 0x4000
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16384 << 16));
@@ -467,7 +456,6 @@ label_291950:
         }
     }
     // 0x29197c: 0x26520001  addiu       $s2, $s2, 0x1
-    ctx->pc = 0x29197cu;
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), 1));
 label_291980:
     // 0x291980: 0x8e310004  lw          $s1, 0x4($s1)
@@ -492,7 +480,6 @@ label_291984:
             goto label_291880;
         }
     }
-    ctx->pc = 0x29198Cu;
 label_29198c:
     // 0x29198c: 0x240102d  daddu       $v0, $s2, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));

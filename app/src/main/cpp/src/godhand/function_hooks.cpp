@@ -155,10 +155,7 @@ namespace godhand
 
         for (const StreamCall &c : calls)
         {
-            const float keepF12 = ctx->f[12];
-            const uint64_t keepA0 = GPR_U64(ctx, 4);
-            const uint64_t keepA1 = GPR_U64(ctx, 5);
-            const uint64_t keepA2 = GPR_U64(ctx, 6);
+            const R5900Context keepCtx = *ctx;
 
             const bool music = isMusicNode(rdram, c.node);
             const float gain = (music ? s_musicGain : s_voicesGain).load(std::memory_order_relaxed);
@@ -184,10 +181,7 @@ namespace godhand
                 }
             }
 
-            ctx->f[12] = keepF12;
-            SET_GPR_U64(ctx, 4, keepA0);
-            SET_GPR_U64(ctx, 5, keepA1);
-            SET_GPR_U64(ctx, 6, keepA2);
+            *ctx = keepCtx;
         }
     }
 
@@ -1137,9 +1131,30 @@ namespace godhand
 
 extern "C" float godhand_get_bgm_volume();
 extern "C" void godhand_reassert_thread_affinities();
+extern "C" void godhand_set_ultra_potato_mode(bool enabled);
+
+namespace ps2x::iop
+{
+    void setReverbDisabled(bool disabled) noexcept;
+}
 
 namespace godhand
 {
+    static std::atomic<bool> g_ultraPotatoMode{false};
+
+    void setUltraPotatoMode(bool enabled)
+    {
+        g_ultraPotatoMode.store(enabled, std::memory_order_release);
+        setenv("PS2X_ULTRA_POTATO", enabled ? "1" : "0", 1);
+        ps2x::iop::setReverbDisabled(enabled);
+        godhand_set_ultra_potato_mode(enabled);
+    }
+
+    bool isUltraPotatoMode()
+    {
+        return g_ultraPotatoMode.load(std::memory_order_acquire);
+    }
+
     // God Hand's flip copy at internal resolution (see function_hooks.h). Each frame func_0030B870 builds the PATH3
     // chain at 0x752D80 that copies the drawn frame (FBP 0x70) to the displayed one (FBP 0): a sprite with RGBA k, then
     // (unless 0x7474A0+0x578 is 1) two sprites one line up and down with RGBA (0x80 - k) / 2, ALPHA Cd + Cs. k is the
@@ -1155,6 +1170,27 @@ namespace godhand
     void installGameFrameCounter(PS2Runtime &runtime)
     {
         kamite::installFramePatches(runtime);
+
+        constexpr uint32_t kKageDraw = 0x0014efa8u;
+        if (runtime.hasFunction(kKageDraw))
+        {
+            static GuestFunction s_origKageDraw = runtime.lookupFunction(kKageDraw);
+            FunctionHooks::instance().replace(
+                kKageDraw,
+                "cObjBase_KageDraw_ultra_potato",
+                [](uint8_t *rdram, R5900Context *ctx, PS2Runtime *rt) {
+                    if (__builtin_expect(g_ultraPotatoMode.load(std::memory_order_relaxed), 0))
+                    {
+                        if (ctx)
+                            ctx->pc = GPR_U32(ctx, 31);
+                        return;
+                    }
+                    if (s_origKageDraw)
+                        s_origKageDraw(rdram, ctx, rt);
+                },
+                ReplacementStatus::Native,
+                "Skips shadow blob projection/draw in Ultra Potato Mode");
+        }
 
         constexpr uint32_t kFlareDepthReadback = 0x003155F8u;
         if (runtime.hasFunction(kFlareDepthReadback))

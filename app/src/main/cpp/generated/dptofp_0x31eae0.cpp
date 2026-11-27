@@ -13,7 +13,7 @@
 
 // Function: dptofp
 // Address: 0x31eae0 - 0x31eb38
-void dptofp_0x31eae0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void dptofp_0x31eae0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("dptofp_0x31eae0");
 #endif
@@ -48,7 +48,6 @@ void dptofp_0x31eae0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___unpack_d_0x31dfa8, 0x31dfa8u, 0x31eaf8u)) {
         return;
     }
-    ctx->pc = 0x31EAF8u;
 label_31eaf8:
     // 0x31eaf8: 0xdfa20010  ld          $v0, 0x10($sp)
     ctx->pc = 0x31eaf8u;
@@ -85,7 +84,6 @@ label_31eaf8:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___make_fp_0x31eda0, 0x31eda0u, 0x31eb28u)) {
         return;
     }
-    ctx->pc = 0x31EB28u;
 label_31eb28:
     // 0x31eb28: 0xdfbf0030  ld          $ra, 0x30($sp)
     ctx->pc = 0x31eb28u;

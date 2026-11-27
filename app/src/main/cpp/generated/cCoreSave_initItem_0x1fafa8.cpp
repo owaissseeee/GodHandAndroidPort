@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_initItem
 // Address: 0x1fafa8 - 0x1faff0
-void cCoreSave_initItem_0x1fafa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_initItem_0x1fafa8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_initItem_0x1fafa8");
 #endif
@@ -49,7 +49,6 @@ void cCoreSave_initItem_0x1fafa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     // 0x1fafb8: 0x3407ffff  ori         $a3, $zero, 0xFFFF
     SET_GPR_U64(ctx, 7, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     // 0x1fafbc: 0x0  nop
-    ctx->pc = 0x1fafbcu;
     // NOP
 label_1fafc0:
     // 0x1fafc0: 0x8cc20000  lw          $v0, 0x0($a2)

@@ -13,7 +13,7 @@
 
 // Function: Call_3571D0_Then_4D048
 // Address: 0x34df20 - 0x34df40
-void Call_3571D0_Then_4D048_0x34df20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Call_3571D0_Then_4D048_0x34df20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Call_3571D0_Then_4D048_0x34df20");
 #endif
@@ -37,7 +37,6 @@ void Call_3571D0_Then_4D048_0x34df20(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_003571D0_0x3571d0, 0x3571d0u, 0x34df30u)) {
         return;
     }
-    ctx->pc = 0x34DF30u;
 label_34df30:
     // 0x34df30: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x34df30u;

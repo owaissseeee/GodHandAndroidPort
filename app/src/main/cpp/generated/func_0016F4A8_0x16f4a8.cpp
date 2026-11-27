@@ -13,7 +13,7 @@
 
 // Function: func_0016F4A8
 // Address: 0x16f4a8 - 0x16f5e8
-void func_0016F4A8_0x16f4a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0016F4A8_0x16f4a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0016F4A8_0x16f4a8");
 #endif
@@ -58,7 +58,6 @@ void func_0016F4A8_0x16f4a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B6FB8_0x1b6fb8, 0x1b6fb8u, 0x16f4c8u)) {
         return;
     }
-    ctx->pc = 0x16F4C8u;
 label_16f4c8:
     // 0x16f4c8: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -132,7 +131,6 @@ label_16f4c8:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_CreateDamageTake_0x1fe218, 0x1fe218u, 0x16f534u)) {
         return;
     }
-    ctx->pc = 0x16F534u;
 label_16f534:
     // 0x16f534: 0x1040000b  beqz        $v0, . + 4 + (0xB << 2)
     ctx->pc = 0x16F534u;
@@ -180,7 +178,6 @@ label_16f534:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FD9D8_0x1fd9d8, 0x1fd9d8u, 0x16f564u)) {
         return;
     }
-    ctx->pc = 0x16F564u;
 label_16f564:
     // 0x16f564: 0x24070258  addiu       $a3, $zero, 0x258
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 0), 600));
@@ -232,7 +229,6 @@ label_16f564:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001C28A0_0x1c28a0, 0x1c28a0u, 0x16f5a8u)) {
         return;
     }
-    ctx->pc = 0x16F5A8u;
 label_16f5a8:
     // 0x16f5a8: 0x8e030304  lw          $v1, 0x304($s0)
     ctx->pc = 0x16f5a8u;
@@ -257,7 +253,6 @@ label_16f5a8:
     if (!runtime->callDirectStatic(rdram, ctx, &espSys_effDataRegist_0x305758, 0x305758u, 0x16f5c4u)) {
         return;
     }
-    ctx->pc = 0x16F5C4u;
 label_16f5c4:
     // 0x16f5c4: 0x7bb00070  lq          $s0, 0x70($sp)
     ctx->pc = 0x16f5c4u;

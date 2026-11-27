@@ -14,12 +14,11 @@ namespace gh_r110
 {
 // Function: getReserveJumpAngY__6cEvent
 // Address: 0x799578 - 0x799588
-void getReserveJumpAngY__6cEvent_0x799578(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getReserveJumpAngY__6cEvent_0x799578(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getReserveJumpAngY__6cEvent_0x799578");
 #endif
 
-    ctx->pc = 0x799578u;
 
     // 0x799578: 0x8c820038  lw          $v0, 0x38($a0)
     ctx->pc = 0x799578u;
@@ -43,9 +42,7 @@ void getReserveJumpAngY__6cEvent_0x799578(uint8_t* rdram, R5900Context* ctx, PS2
         return;
         #endif
     }
-    ctx->pc = 0x799584u;
     // 0x799584: 0x0  nop
-    ctx->pc = 0x799584u;
     // NOP
     ctx->pc = 0x799588u;
 }

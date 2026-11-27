@@ -13,7 +13,7 @@
 
 // Function: Tramp_cOm4f_setOpen_1A4B90
 // Address: 0x1a4b90 - 0x1a4bb0
-void Tramp_cOm4f_setOpen_1A4B90_0x1a4b90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp_cOm4f_setOpen_1A4B90_0x1a4b90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp_cOm4f_setOpen_1A4B90_0x1a4b90");
 #endif
@@ -37,7 +37,6 @@ void Tramp_cOm4f_setOpen_1A4B90_0x1a4b90(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &cOm4f_setOpen_0x1a4d48, 0x1a4d48u, 0x1a4ba0u)) {
         return;
     }
-    ctx->pc = 0x1A4BA0u;
 label_1a4ba0:
     // 0x1a4ba0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1a4ba0u;

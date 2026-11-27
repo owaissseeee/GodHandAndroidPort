@@ -13,7 +13,7 @@
 
 // Function: Quaternion_GetEulerXYZ
 // Address: 0x15a3e8 - 0x15a590
-void Quaternion_GetEulerXYZ_0x15a3e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Quaternion_GetEulerXYZ_0x15a3e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Quaternion_GetEulerXYZ_0x15a3e8");
 #endif
@@ -125,7 +125,6 @@ void Quaternion_GetEulerXYZ_0x15a3e8(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_15a47c;
         }
     }
-    ctx->pc = 0x15A460u;
 label_15a460:
     // 0x15a460: 0x3c01bf80  lui         $at, 0xBF80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)49024 << 16));
@@ -152,7 +151,6 @@ label_15a460:
             goto label_15a47c;
         }
     }
-    ctx->pc = 0x15A47Cu;
 label_15a47c:
     // 0x15a47c: 0xc0e86de  jal         func_3A1B78
     ctx->pc = 0x15A47Cu;
@@ -160,7 +158,6 @@ label_15a47c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A1B78_0x3a1b78, 0x3a1b78u, 0x15a484u)) {
         return;
     }
-    ctx->pc = 0x15A484u;
 label_15a484:
     // 0x15a484: 0x46000086  mov.s       $f2, $f0
     ctx->f[2] = FPU_MOV_S(ctx->f[0]);
@@ -260,7 +257,6 @@ label_15a484:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Atan2_0x1f8180, 0x1f8180u, 0x15a504u)) {
         return;
     }
-    ctx->pc = 0x15A504u;
 label_15a504:
     // 0x15a504: 0x4616a500  add.s       $f20, $f20, $f22
     ctx->f[20] = FPU_ADD_S(ctx->f[20], ctx->f[22]);
@@ -280,7 +276,6 @@ label_15a504:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Atan2_0x1f8180, 0x1f8180u, 0x15a518u)) {
         return;
     }
-    ctx->pc = 0x15A518u;
 label_15a518:
     // 0x15a518: 0x10000012  b           . + 4 + (0x12 << 2)
     ctx->pc = 0x15A518u;
@@ -297,7 +292,6 @@ label_15a518:
             goto label_15a564;
         }
     }
-    ctx->pc = 0x15A520u;
 label_15a520:
     // 0x15a520: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -316,7 +310,6 @@ label_15a520:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Atan2_0x1f8180, 0x1f8180u, 0x15a534u)) {
         return;
     }
-    ctx->pc = 0x15A534u;
 label_15a534:
     // 0x15a534: 0x46000007  neg.s       $f0, $f0
     ctx->f[0] = FPU_NEG_S(ctx->f[0]);
@@ -338,7 +331,6 @@ label_15a534:
             goto label_15a564;
         }
     }
-    ctx->pc = 0x15A544u;
 label_15a544:
     // 0x15a544: 0x46160800  add.s       $f0, $f1, $f22
     ctx->f[0] = FPU_ADD_S(ctx->f[1], ctx->f[22]);
@@ -359,7 +351,6 @@ label_15a544:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Atan2_0x1f8180, 0x1f8180u, 0x15a55cu)) {
         return;
     }
-    ctx->pc = 0x15A55Cu;
 label_15a55c:
     // 0x15a55c: 0xe6200000  swc1        $f0, 0x0($s1)
     ctx->pc = 0x15a55cu;

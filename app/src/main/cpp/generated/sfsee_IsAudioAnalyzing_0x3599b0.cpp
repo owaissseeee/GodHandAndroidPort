@@ -13,7 +13,7 @@
 
 // Function: sfsee_IsAudioAnalyzing
 // Address: 0x3599b0 - 0x359a30
-void sfsee_IsAudioAnalyzing_0x3599b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfsee_IsAudioAnalyzing_0x3599b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfsee_IsAudioAnalyzing_0x3599b0");
 #endif
@@ -58,7 +58,6 @@ void sfsee_IsAudioAnalyzing_0x3599b0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &Obj35C0_IsIndexedSet_1F3C_C380_0x35c380, 0x35c380u, 0x3599d8u)) {
         return;
     }
-    ctx->pc = 0x3599D8u;
 label_3599d8:
     // 0x3599d8: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -83,7 +82,6 @@ label_3599d8:
     if (!runtime->callDirectStatic(rdram, ctx, &GetArrayElemA0C_35A1C8_0x35a1c8, 0x35a1c8u, 0x3599ecu)) {
         return;
     }
-    ctx->pc = 0x3599ECu;
 label_3599ec:
     // 0x3599ec: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -126,7 +124,6 @@ label_3599ec:
         }
     }
     // 0x359a0c: 0x0  nop
-    ctx->pc = 0x359a0cu;
     // NOP
 label_359a10:
     // 0x359a10: 0xae200000  sw          $zero, 0x0($s1)
@@ -134,7 +131,6 @@ label_359a10:
     WRITE32(ADD32(GPR_U32(ctx, 17), 0), GPR_U32(ctx, 0));
 label_359a14:
     // 0x359a14: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x359a14u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_359a18:
     // 0x359a18: 0xdfb00000  ld          $s0, 0x0($sp)

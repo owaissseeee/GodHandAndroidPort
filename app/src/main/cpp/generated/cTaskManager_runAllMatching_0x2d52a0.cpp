@@ -13,7 +13,7 @@
 
 // Function: cTaskManager_runAllMatching
 // Address: 0x2d52a0 - 0x2d5358
-void cTaskManager_runAllMatching_0x2d52a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cTaskManager_runAllMatching_0x2d52a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cTaskManager_runAllMatching_0x2d52a0");
 #endif
@@ -62,7 +62,6 @@ void cTaskManager_runAllMatching_0x2d52a0(uint8_t* rdram, R5900Context* ctx, PS2
         }
     }
     // 0x2d52c4: 0x902d  daddu       $s2, $zero, $zero
-    ctx->pc = 0x2d52c4u;
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2d52c8:
     // 0x2d52c8: 0x8e020000  lw          $v0, 0x0($s0)
@@ -113,7 +112,6 @@ label_2d52c8:
             goto label_2d5324;
         }
     }
-    ctx->pc = 0x2D52F4u;
 label_2d52f4:
     // 0x2d52f4: 0x3107b  dsra        $v0, $v1, 1
     SET_GPR_S64(ctx, 2, GPR_S64(ctx, 3) >> 1);
@@ -150,7 +148,6 @@ label_2d52f4:
             goto label_2d5324;
         }
     }
-    ctx->pc = 0x2D5318u;
 label_2d5318:
     // 0x2d5318: 0xc0b55f2  jal         func_2D57C8
     ctx->pc = 0x2D5318u;
@@ -158,7 +155,6 @@ label_2d5318:
     if (!runtime->callDirectStatic(rdram, ctx, &cTaskWork_step_0x2d57c8, 0x2d57c8u, 0x2d5320u)) {
         return;
     }
-    ctx->pc = 0x2D5320u;
 label_2d5320:
     // 0x2d5320: 0x9602000c  lhu         $v0, 0xC($s0)
     ctx->pc = 0x2d5320u;
@@ -186,7 +182,6 @@ label_2d5324:
             goto label_2d52c8;
         }
     }
-    ctx->pc = 0x2D5334u;
 label_2d5334:
     // 0x2d5334: 0x2402ffff  addiu       $v0, $zero, -0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));

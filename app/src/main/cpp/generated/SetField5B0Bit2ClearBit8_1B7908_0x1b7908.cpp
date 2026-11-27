@@ -13,7 +13,7 @@
 
 // Function: SetField5B0Bit2ClearBit8_1B7908
 // Address: 0x1b7908 - 0x1b79b0
-void SetField5B0Bit2ClearBit8_1B7908_0x1b7908(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetField5B0Bit2ClearBit8_1B7908_0x1b7908(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetField5B0Bit2ClearBit8_1B7908_0x1b7908");
 #endif
@@ -110,7 +110,6 @@ label_1b7954:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BECB0_0x2becb0, 0x2becb0u, 0x1b7960u)) {
         return;
     }
-    ctx->pc = 0x1B7960u;
 label_1b7960:
     // 0x1b7960: 0xde050540  ld          $a1, 0x540($s0)
     ctx->pc = 0x1b7960u;
@@ -130,7 +129,6 @@ label_1b7960:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001331B8_0x1331b8, 0x1331b8u, 0x1b7974u)) {
         return;
     }
-    ctx->pc = 0x1B7974u;
 label_1b7974:
     // 0x1b7974: 0x3c040046  lui         $a0, 0x46
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)70 << 16));
@@ -147,7 +145,6 @@ label_1b7974:
     if (!runtime->callDirectStatic(rdram, ctx, &cCollisionSolidManage_ReleaseUnit_0x1347e8, 0x1347e8u, 0x1b7984u)) {
         return;
     }
-    ctx->pc = 0x1B7984u;
 label_1b7984:
     // 0x1b7984: 0xc06deee  jal         func_1B7BB8
     SET_GPR_U32(ctx, 31, 0x1B798Cu);
@@ -160,7 +157,6 @@ label_1b7984:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B7BB8_0x1b7bb8, 0x1b7bb8u, 0x1b798cu)) {
         return;
     }
-    ctx->pc = 0x1B798Cu;
 label_1b798c:
     // 0x1b798c: 0x8e0205b0  lw          $v0, 0x5B0($s0)
     ctx->pc = 0x1b798cu;

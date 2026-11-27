@@ -13,7 +13,7 @@
 
 // Function: cDamageManage_CreateDamageGive
 // Address: 0x1fe0e8 - 0x1fe148
-void cDamageManage_CreateDamageGive_0x1fe0e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDamageManage_CreateDamageGive_0x1fe0e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDamageManage_CreateDamageGive_0x1fe0e8");
 #endif
@@ -54,7 +54,6 @@ void cDamageManage_CreateDamageGive_0x1fe0e8(uint8_t* rdram, R5900Context* ctx, 
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FE1E0_0x1fe1e0, 0x1fe1e0u, 0x1fe108u)) {
         return;
     }
-    ctx->pc = 0x1FE108u;
 label_1fe108:
     // 0x1fe108: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -86,7 +85,6 @@ label_1fe108:
     if (!runtime->callDirectStatic(rdram, ctx, &SetObjTargetAndActivate_1FD2C0_0x1fd2c0, 0x1fd2c0u, 0x1fe120u)) {
         return;
     }
-    ctx->pc = 0x1FE120u;
 label_1fe120:
     // 0x1fe120: 0x2800a  movz        $s0, $zero, $v0
     ctx->pc = 0x1fe120u;
@@ -106,10 +104,8 @@ label_1fe120:
             goto label_1fe130;
         }
     }
-    ctx->pc = 0x1FE12Cu;
 label_1fe12c:
     // 0x1fe12c: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1fe12cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1fe130:
     // 0x1fe130: 0x7bb00030  lq          $s0, 0x30($sp)

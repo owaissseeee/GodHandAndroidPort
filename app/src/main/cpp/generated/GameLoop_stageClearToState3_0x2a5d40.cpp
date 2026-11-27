@@ -13,7 +13,7 @@
 
 // Function: GameLoop_stageClearToState3
 // Address: 0x2a5d40 - 0x2a5d80
-void GameLoop_stageClearToState3_0x2a5d40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GameLoop_stageClearToState3_0x2a5d40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GameLoop_stageClearToState3_0x2a5d40");
 #endif
@@ -50,7 +50,6 @@ void GameLoop_stageClearToState3_0x2a5d40(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &cSaveManager_stageClear_0x2bf8c8, 0x2bf8c8u, 0x2a5d5cu)) {
         return;
     }
-    ctx->pc = 0x2A5D5Cu;
 label_2a5d5c:
     // 0x2a5d5c: 0x3c040060  lui         $a0, 0x60
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)96 << 16));
@@ -65,7 +64,6 @@ label_2a5d5c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002CABE0_0x2cabe0, 0x2cabe0u, 0x2a5d68u)) {
         return;
     }
-    ctx->pc = 0x2A5D68u;
 label_2a5d68:
     // 0x2a5d68: 0x24020003  addiu       $v0, $zero, 0x3
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 3));

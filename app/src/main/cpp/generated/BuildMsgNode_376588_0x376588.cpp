@@ -13,7 +13,7 @@
 
 // Function: BuildMsgNode_376588
 // Address: 0x376588 - 0x376618
-void BuildMsgNode_376588_0x376588(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BuildMsgNode_376588_0x376588(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BuildMsgNode_376588_0x376588");
 #endif
@@ -51,7 +51,6 @@ void BuildMsgNode_376588_0x376588(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &func_0037D170_0x37d170, 0x37d170u, 0x3765a4u)) {
         return;
     }
-    ctx->pc = 0x3765A4u;
 label_3765a4:
     // 0x3765a4: 0x40482d  daddu       $t1, $v0, $zero
     SET_GPR_U64(ctx, 9, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -127,7 +126,6 @@ label_3765a4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00376CF8_0x376cf8, 0x376cf8u, 0x3765fcu)) {
         return;
     }
-    ctx->pc = 0x3765FCu;
 label_3765fc:
     // 0x3765fc: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

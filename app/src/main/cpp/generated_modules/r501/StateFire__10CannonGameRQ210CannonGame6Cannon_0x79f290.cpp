@@ -14,12 +14,11 @@ namespace gh_r501
 {
 // Function: StateFire__10CannonGameRQ210CannonGame6Cannon
 // Address: 0x79f290 - 0x79f298
-void StateFire__10CannonGameRQ210CannonGame6Cannon_0x79f290(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void StateFire__10CannonGameRQ210CannonGame6Cannon_0x79f290(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("StateFire__10CannonGameRQ210CannonGame6Cannon_0x79f290");
 #endif
 
-    ctx->pc = 0x79f290u;
 
     // 0x79f290: 0x3e00008  jr          $ra
     ctx->pc = 0x79F290u;

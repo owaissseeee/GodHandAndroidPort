@@ -13,7 +13,7 @@
 
 // Function: func_00201840
 // Address: 0x201840 - 0x2018d0
-void func_00201840_0x201840(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00201840_0x201840(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00201840_0x201840");
 #endif
@@ -58,7 +58,6 @@ void func_00201840_0x201840(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_00323918_0x323918, 0x323918u, 0x201864u)) {
         return;
     }
-    ctx->pc = 0x201864u;
 label_201864:
     // 0x201864: 0x1440000c  bnez        $v0, . + 4 + (0xC << 2)
     ctx->pc = 0x201864u;
@@ -91,7 +90,6 @@ label_201864:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x20187cu)) {
         return;
     }
-    ctx->pc = 0x20187Cu;
 label_20187c:
     // 0x20187c: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -112,7 +110,6 @@ label_20187c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00201290_0x201290, 0x201290u, 0x201890u)) {
         return;
     }
-    ctx->pc = 0x201890u;
 label_201890:
     // 0x201890: 0x1000000b  b           . + 4 + (0xB << 2)
     ctx->pc = 0x201890u;
@@ -129,7 +126,6 @@ label_201890:
             goto label_2018c0;
         }
     }
-    ctx->pc = 0x201898u;
 label_201898:
     // 0x201898: 0x8e050070  lw          $a1, 0x70($s0)
     ctx->pc = 0x201898u;
@@ -160,7 +156,6 @@ label_201898:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00324258_0x324258, 0x324258u, 0x2018acu)) {
         return;
     }
-    ctx->pc = 0x2018ACu;
 label_2018ac:
     // 0x2018ac: 0x8e060080  lw          $a2, 0x80($s0)
     ctx->pc = 0x2018acu;
@@ -179,7 +174,6 @@ label_2018ac:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00323E80_0x323e80, 0x323e80u, 0x2018bcu)) {
         return;
     }
-    ctx->pc = 0x2018BCu;
 label_2018bc:
     // 0x2018bc: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2018bcu;

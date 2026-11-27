@@ -13,7 +13,7 @@
 
 // Function: func_00110E98
 // Address: 0x110e98 - 0x111010
-void func_00110E98_0x110e98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00110E98_0x110e98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00110E98_0x110e98");
 #endif
@@ -106,7 +106,6 @@ void func_00110E98_0x110e98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_110fcc;
         }
     }
-    ctx->pc = 0x110ED8u;
 label_110ed8:
     // 0x110ed8: 0xa60005e0  sh          $zero, 0x5E0($s0)
     ctx->pc = 0x110ed8u;
@@ -127,7 +126,6 @@ label_110ed8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00124540_0x124540, 0x124540u, 0x110eecu)) {
         return;
     }
-    ctx->pc = 0x110EECu;
 label_110eec:
     // 0x110eec: 0x8e0406a0  lw          $a0, 0x6A0($s0)
     ctx->pc = 0x110eecu;
@@ -175,7 +173,6 @@ label_110eec:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x110f1cu)) {
         return;
     }
-    ctx->pc = 0x110F1Cu;
 label_110f1c:
     // 0x110f1c: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x110f1cu;
@@ -209,7 +206,6 @@ label_110f1c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x110f48u)) {
         return;
     }
-    ctx->pc = 0x110F48u;
 label_110f48:
     // 0x110f48: 0x920202f6  lbu         $v0, 0x2F6($s0)
     ctx->pc = 0x110f48u;
@@ -264,7 +260,6 @@ label_110f6c:
     if (!runtime->callDirectStatic(rdram, ctx, &InvokeVirtualAtField214AndForward_124E68_0x124e68, 0x124e68u, 0x110f80u)) {
         return;
     }
-    ctx->pc = 0x110F80u;
 label_110f80:
     // 0x110f80: 0xc055f06  jal         func_157C18
     SET_GPR_U32(ctx, 31, 0x110F88u);
@@ -277,7 +272,6 @@ label_110f80:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x110F80u, 0x110F88u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x110F88u;
 label_110f88:
     // 0x110f88: 0x10400007  beqz        $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x110F88u;
@@ -299,7 +293,6 @@ label_110f88:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Clear_Fields_640_648_124E58_0x124e58, 0x124e58u, 0x110f98u)) {
         return;
     }
-    ctx->pc = 0x110F98u;
 label_110f98:
     // 0x110f98: 0xa20002f4  sb          $zero, 0x2F4($s0)
     ctx->pc = 0x110f98u;
@@ -331,7 +324,6 @@ label_110fa8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x14F9F0u, 0x110FB4u, 0x110FBCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x110FBCu;
 label_110fbc:
     // 0x110fbc: 0x4600a306  mov.s       $f12, $f20
     ctx->f[12] = FPU_MOV_S(ctx->f[20]);
@@ -346,7 +338,6 @@ label_110fbc:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x14F928u, 0x110FC0u, 0x110FC8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x110FC8u;
 label_110fc8:
     // 0x110fc8: 0x960203ac  lhu         $v0, 0x3AC($s0)
     ctx->pc = 0x110fc8u;
@@ -380,10 +371,8 @@ label_110fcc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0012B618_0x12b618, 0x12b618u, 0x110fe0u)) {
         return;
     }
-    ctx->pc = 0x110FE0u;
 label_110fe0:
     // 0x110fe0: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x110fe0u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_110fe4:
     // 0x110fe4: 0xc048e4e  jal         func_123938
@@ -397,7 +386,6 @@ label_110fe4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00123938_0x123938, 0x123938u, 0x110fecu)) {
         return;
     }
-    ctx->pc = 0x110FECu;
 label_110fec:
     // 0x110fec: 0x50400004  beql        $v0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x110FECu;
@@ -425,7 +413,6 @@ label_110fec:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Clear_Fields_640_648_124E58_0x124e58, 0x124e58u, 0x110ffcu)) {
         return;
     }
-    ctx->pc = 0x110FFCu;
 label_110ffc:
     // 0x110ffc: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x110ffcu;

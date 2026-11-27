@@ -13,7 +13,7 @@
 
 // Function: cOl0e_setFake
 // Address: 0x173820 - 0x173900
-void cOl0e_setFake_0x173820(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl0e_setFake_0x173820(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl0e_setFake_0x173820");
 #endif
@@ -108,7 +108,6 @@ void cOl0e_setFake_0x173820(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x173868u)) {
         return;
     }
-    ctx->pc = 0x173868u;
 label_173868:
     // 0x173868: 0x8e040da8  lw          $a0, 0xDA8($s0)
     ctx->pc = 0x173868u;
@@ -161,7 +160,6 @@ label_173880:
             goto label_1738cc;
         }
     }
-    ctx->pc = 0x173894u;
 label_173894:
     // 0x173894: 0x8e040600  lw          $a0, 0x600($s0)
     ctx->pc = 0x173894u;
@@ -192,7 +190,6 @@ label_173894:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x1738a8u)) {
         return;
     }
-    ctx->pc = 0x1738A8u;
 label_1738a8:
     // 0x1738a8: 0x8e030da8  lw          $v1, 0xDA8($s0)
     ctx->pc = 0x1738a8u;
@@ -229,7 +226,6 @@ label_1738c4:
     ctx->pc = 0x1738c4u;
     WRITE8(ADD32(GPR_U32(ctx, 16), 756), (uint8_t)GPR_U32(ctx, 0));
     // 0x1738c8: 0x34420100  ori         $v0, $v0, 0x100
-    ctx->pc = 0x1738c8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)256);
 label_1738cc:
     // 0x1738cc: 0xa20002f5  sb          $zero, 0x2F5($s0)

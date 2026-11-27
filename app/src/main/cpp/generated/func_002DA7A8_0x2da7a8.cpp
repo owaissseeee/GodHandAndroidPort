@@ -13,7 +13,7 @@
 
 // Function: func_002DA7A8
 // Address: 0x2da7a8 - 0x2da8d8
-void func_002DA7A8_0x2da7a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002DA7A8_0x2da7a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002DA7A8_0x2da7a8");
 #endif
@@ -89,7 +89,6 @@ void func_002DA7A8_0x2da7a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &atanf_0x3a1648, 0x3a1648u, 0x2da7fcu)) {
         return;
     }
-    ctx->pc = 0x2DA7FCu;
 label_2da7fc:
     // 0x2da7fc: 0x4615a034  c.lt.s      $f20, $f21
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[20], ctx->f[21])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -131,7 +130,6 @@ label_2da7fc:
             goto label_2da844;
         }
     }
-    ctx->pc = 0x2DA820u;
 label_2da820:
     // 0x2da820: 0x4601a834  c.lt.s      $f21, $f1
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[21], ctx->f[1])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -161,13 +159,11 @@ label_2da820:
     // 0x2da83c: 0x34210fdb  ori         $at, $at, 0xFDB
     SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)4059);
     // 0x2da840: 0x44810800  mtc1        $at, $f1
-    ctx->pc = 0x2da840u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }
 label_2da844:
     // 0x2da844: 0x0  nop
     // NOP
     // 0x2da848: 0x46160b01  sub.s       $f12, $f1, $f22
-    ctx->pc = 0x2da848u;
     ctx->f[12] = FPU_SUB_S(ctx->f[1], ctx->f[22]);
 label_2da84c:
     // 0x2da84c: 0x3c014049  lui         $at, 0x4049
@@ -200,7 +196,6 @@ label_2da84c:
     // 0x2da878: 0x0  nop
     // NOP
     // 0x2da87c: 0x46006301  sub.s       $f12, $f12, $f0
-    ctx->pc = 0x2da87cu;
     ctx->f[12] = FPU_SUB_S(ctx->f[12], ctx->f[0]);
 label_2da880:
     // 0x2da880: 0x3c01c049  lui         $at, 0xC049
@@ -239,7 +234,6 @@ label_2da880:
     // 0x2da8ac: 0x0  nop
     // NOP
     // 0x2da8b0: 0x46006300  add.s       $f12, $f12, $f0
-    ctx->pc = 0x2da8b0u;
     ctx->f[12] = FPU_ADD_S(ctx->f[12], ctx->f[0]);
 label_2da8b4:
     // 0x2da8b4: 0x46006006  mov.s       $f0, $f12

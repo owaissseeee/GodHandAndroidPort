@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_initContinueNum
 // Address: 0x1fbf60 - 0x1fbf78
-void cCoreSave_initContinueNum_0x1fbf60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_initContinueNum_0x1fbf60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_initContinueNum_0x1fbf60");
 #endif
@@ -37,7 +37,6 @@ void cCoreSave_initContinueNum_0x1fbf60(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_1fbf6c;
         }
     }
-    ctx->pc = 0x1FBF6Cu;
 label_1fbf6c:
     // 0x1fbf6c: 0x3e00008  jr          $ra
     ctx->pc = 0x1FBF6Cu;

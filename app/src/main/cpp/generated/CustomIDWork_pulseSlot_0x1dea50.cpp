@@ -13,7 +13,7 @@
 
 // Function: CustomIDWork_pulseSlot
 // Address: 0x1dea50 - 0x1deb08
-void CustomIDWork_pulseSlot_0x1dea50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CustomIDWork_pulseSlot_0x1dea50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CustomIDWork_pulseSlot_0x1dea50");
 #endif
@@ -134,7 +134,6 @@ void CustomIDWork_pulseSlot_0x1dea50(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetScaleAnimSin_0x2d69f0, 0x2d69f0u, 0x1dead4u)) {
         return;
     }
-    ctx->pc = 0x1DEAD4u;
 label_1dead4:
     // 0x1dead4: 0x1000000a  b           . + 4 + (0xA << 2)
     ctx->pc = 0x1DEAD4u;
@@ -151,7 +150,6 @@ label_1dead4:
             goto label_1deb00;
         }
     }
-    ctx->pc = 0x1DEADCu;
 label_1deadc:
     // 0x1deadc: 0x31880  sll         $v1, $v1, 2
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 3), 2));
@@ -177,7 +175,6 @@ label_1deadc:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_ResetScaleAnim_0x2d6a30, 0x2d6a30u, 0x1deafcu)) {
         return;
     }
-    ctx->pc = 0x1DEAFCu;
 label_1deafc:
     // 0x1deafc: 0xdfbf0020  ld          $ra, 0x20($sp)
     ctx->pc = 0x1deafcu;

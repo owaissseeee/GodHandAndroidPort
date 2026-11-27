@@ -13,7 +13,7 @@
 
 // Function: cGameObj
 // Address: 0x2a7338 - 0x2a73c8
-void cGameObj_0x2a7338(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObj_0x2a7338(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObj_0x2a7338");
 #endif
@@ -45,7 +45,6 @@ void cGameObj_0x2a7338(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &cObjBase_0x14e990, 0x14e990u, 0x2a734cu)) {
         return;
     }
-    ctx->pc = 0x2A734Cu;
 label_2a734c:
     // 0x2a734c: 0x3c030045  lui         $v1, 0x45
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)69 << 16));

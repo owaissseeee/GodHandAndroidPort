@@ -13,7 +13,7 @@
 
 // Function: DTX_Destroy
 // Address: 0x332310 - 0x332378
-void DTX_Destroy_0x332310(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void DTX_Destroy_0x332310(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("DTX_Destroy_0x332310");
 #endif
@@ -64,7 +64,6 @@ void DTX_Destroy_0x332310(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
             goto label_33234c;
         }
     }
-    ctx->pc = 0x332338u;
 label_332338:
     // 0x332338: 0xc0cc9de  jal         func_332778
     ctx->pc = 0x332338u;
@@ -72,7 +71,6 @@ label_332338:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00332778_0x332778, 0x332778u, 0x332340u)) {
         return;
     }
-    ctx->pc = 0x332340u;
 label_332340:
     // 0x332340: 0x82020001  lb          $v0, 0x1($s0)
     ctx->pc = 0x332340u;
@@ -89,7 +87,6 @@ label_332340:
             goto label_332338;
         }
     }
-    ctx->pc = 0x33234Cu;
 label_33234c:
     // 0x33234c: 0xc0cc824  jal         func_332090
     SET_GPR_U32(ctx, 31, 0x332354u);
@@ -102,7 +99,6 @@ label_33234c:
     if (!runtime->callDirectStatic(rdram, ctx, &dtx_destroy_rmt_0x332090, 0x332090u, 0x332354u)) {
         return;
     }
-    ctx->pc = 0x332354u;
 label_332354:
     // 0x332354: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

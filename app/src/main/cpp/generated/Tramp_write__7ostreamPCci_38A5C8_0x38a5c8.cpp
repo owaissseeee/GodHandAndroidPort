@@ -13,7 +13,7 @@
 
 // Function: Tramp_write__7ostreamPCci_38A5C8
 // Address: 0x38a5c8 - 0x38a5e8
-void Tramp_write__7ostreamPCci_38A5C8_0x38a5c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp_write__7ostreamPCci_38A5C8_0x38a5c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp_write__7ostreamPCci_38A5C8_0x38a5c8");
 #endif
@@ -37,7 +37,6 @@ void Tramp_write__7ostreamPCci_38A5C8_0x38a5c8(uint8_t* rdram, R5900Context* ctx
     if (!runtime->callDirectStatic(rdram, ctx, &write__7ostreamPCci_0x389490, 0x389490u, 0x38a5d8u)) {
         return;
     }
-    ctx->pc = 0x38A5D8u;
 label_38a5d8:
     // 0x38a5d8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38a5d8u;

@@ -13,18 +13,47 @@
 
 #if defined(__aarch64__) || defined(_M_ARM64)
 #include <arm_neon.h>
+#include "sdk_arm64_fast.h"
 #endif
 
 // Function: sceVu0OuterProduct
 // Address: 0x30a328 - 0x30a348
-void sceVu0OuterProduct_0x30a328(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVu0OuterProduct_0x30a328(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVu0OuterProduct_0x30a328");
 #endif
 
-    ctx->pc = 0x30a328u;
-
 #if defined(__aarch64__) || defined(_M_ARM64)
+    if (__builtin_expect(ctx->pc == 0x30a328u, 1)) {
+        const uint32_t a0 = GPR_U32(ctx, 4);
+        const uint32_t a1 = GPR_U32(ctx, 5);
+        const uint32_t a2 = GPR_U32(ctx, 6);
+        uint8_t* const dstPtr = ps2TryFastSpan(rdram, a0, 16u);
+        const uint8_t* const v1Ptr = ps2TryFastSpan(rdram, a1, 16u);
+        const uint8_t* const v2Ptr = ps2TryFastSpan(rdram, a2, 16u);
+        if (__builtin_expect(dstPtr && v1Ptr && v2Ptr, 1)) {
+            const float32x4_t vf4 = vld1q_f32(reinterpret_cast<const float*>(v1Ptr));
+            const float32x4_t vf5 = vld1q_f32(reinterpret_cast<const float*>(v2Ptr));
+            const float32x4_t u_yzx = __builtin_shufflevector(vf4, vf4, 1, 2, 0, 3);
+            const float32x4_t v_zxy = __builtin_shufflevector(vf5, vf5, 2, 0, 1, 3);
+            const float32x4_t v_yzx = __builtin_shufflevector(vf5, vf5, 1, 2, 0, 3);
+            const float32x4_t u_zxy = __builtin_shufflevector(vf4, vf4, 2, 0, 1, 3);
+            const float32x4_t acc_raw = vmulq_f32(u_yzx, v_zxy);
+            const float32x4_t acc = vsetq_lane_f32(0.0f, acc_raw, 3);
+            float32x4_t vf6 = vfmsq_f32(acc, v_yzx, u_zxy);
+            vf6 = vsetq_lane_f32(0.0f, vf6, 3);
+
+            vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_vf[4]), vf4);
+            vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_vf[5]), vf5);
+            vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_acc), acc);
+            vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_vf[6]), vf6);
+            vst1q_f32(reinterpret_cast<float*>(dstPtr), vf6);
+
+            ps2FastReturn(rdram, ctx, runtime, 0x30A340u);
+            return;
+        }
+    }
+    ctx->pc = 0x30a328u;
     const uint32_t a0 = GPR_U32(ctx, 4);
     const uint32_t a1 = GPR_U32(ctx, 5);
     const uint32_t a2 = GPR_U32(ctx, 6);

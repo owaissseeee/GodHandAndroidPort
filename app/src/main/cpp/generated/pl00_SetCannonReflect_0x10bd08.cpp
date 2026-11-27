@@ -13,7 +13,7 @@
 
 // Function: pl00_SetCannonReflect
 // Address: 0x10bd08 - 0x10bd28
-void pl00_SetCannonReflect_0x10bd08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void pl00_SetCannonReflect_0x10bd08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("pl00_SetCannonReflect_0x10bd08");
 #endif

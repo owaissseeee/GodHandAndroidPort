@@ -13,7 +13,7 @@
 
 // Function: Obj2B28_SetField34_To1_ReturnZero
 // Address: 0x2b2d08 - 0x2b2d18
-void Obj2B28_SetField34_To1_ReturnZero_0x2b2d08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj2B28_SetField34_To1_ReturnZero_0x2b2d08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj2B28_SetField34_To1_ReturnZero_0x2b2d08");
 #endif

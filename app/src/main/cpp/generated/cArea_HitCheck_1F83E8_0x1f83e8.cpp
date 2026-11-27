@@ -13,7 +13,7 @@
 
 // Function: cArea_HitCheck_1F83E8
 // Address: 0x1f83e8 - 0x1f8438
-void cArea_HitCheck_1F83E8_0x1f83e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cArea_HitCheck_1F83E8_0x1f83e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cArea_HitCheck_1F83E8_0x1f83e8");
 #endif
@@ -82,7 +82,6 @@ void cArea_HitCheck_1F83E8_0x1f83e8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1f842c;
         }
     }
-    ctx->pc = 0x1F8410u;
 label_1f8410:
     // 0x1f8410: 0xc07e122  jal         func_1F8488
     ctx->pc = 0x1F8410u;
@@ -90,7 +89,6 @@ label_1f8410:
     if (!runtime->callDirectStatic(rdram, ctx, &cArea_HitCheckQuad_0x1f8488, 0x1f8488u, 0x1f8418u)) {
         return;
     }
-    ctx->pc = 0x1F8418u;
 label_1f8418:
     // 0x1f8418: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x1F8418u;
@@ -107,7 +105,6 @@ label_1f8418:
             goto label_1f842c;
         }
     }
-    ctx->pc = 0x1F8420u;
 label_1f8420:
     // 0x1f8420: 0xc07e154  jal         func_1F8550
     ctx->pc = 0x1F8420u;
@@ -115,7 +112,6 @@ label_1f8420:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F8550_0x1f8550, 0x1f8550u, 0x1f8428u)) {
         return;
     }
-    ctx->pc = 0x1F8428u;
 label_1f8428:
     // 0x1f8428: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1f8428u;

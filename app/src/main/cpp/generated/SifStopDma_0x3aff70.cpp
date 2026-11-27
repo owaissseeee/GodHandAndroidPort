@@ -13,7 +13,7 @@
 
 // Function: SifStopDma
 // Address: 0x3aff70 - 0x3aff80
-void SifStopDma_0x3aff70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SifStopDma_0x3aff70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SifStopDma_0x3aff70");
 #endif

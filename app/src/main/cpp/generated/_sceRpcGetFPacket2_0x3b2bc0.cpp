@@ -13,7 +13,7 @@
 
 // Function: _sceRpcGetFPacket2
 // Address: 0x3b2bc0 - 0x3b2c00
-void _sceRpcGetFPacket2_0x3b2bc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceRpcGetFPacket2_0x3b2bc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceRpcGetFPacket2_0x3b2bc0");
 #endif
@@ -63,7 +63,6 @@ void _sceRpcGetFPacket2_0x3b2bc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_3b2bec;
         }
     }
-    ctx->pc = 0x3B2BDCu;
 label_3b2bdc:
     // 0x3b2bdc: 0xc0ecae4  jal         func_3B2B90
     ctx->pc = 0x3B2BDCu;
@@ -71,7 +70,6 @@ label_3b2bdc:
     if (!runtime->callDirectStatic(rdram, ctx, &_sceRpcGetFPacket_0x3b2b90, 0x3b2b90u, 0x3b2be4u)) {
         return;
     }
-    ctx->pc = 0x3B2BE4u;
 label_3b2be4:
     // 0x3b2be4: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x3B2BE4u;
@@ -88,7 +86,6 @@ label_3b2be4:
             goto label_3b2bf8;
         }
     }
-    ctx->pc = 0x3B2BECu;
 label_3b2bec:
     // 0x3b2bec: 0x51180  sll         $v0, $a1, 6
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 5), 6));

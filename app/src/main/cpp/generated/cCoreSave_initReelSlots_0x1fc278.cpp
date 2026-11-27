@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_initReelSlots
 // Address: 0x1fc278 - 0x1fc320
-void cCoreSave_initReelSlots_0x1fc278(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_initReelSlots_0x1fc278(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_initReelSlots_0x1fc278");
 #endif
@@ -61,7 +61,6 @@ void cCoreSave_initReelSlots_0x1fc278(uint8_t* rdram, R5900Context* ctx, PS2Runt
         }
     }
     // 0x1fc294: 0x2405001f  addiu       $a1, $zero, 0x1F
-    ctx->pc = 0x1fc294u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 31));
 label_1fc298:
     // 0x1fc298: 0x8e020000  lw          $v0, 0x0($s0)
@@ -106,7 +105,6 @@ label_1fc298:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_setReelSlot_0x1fc170, 0x1fc170u, 0x1fc2c0u)) {
         return;
     }
-    ctx->pc = 0x1FC2C0u;
 label_1fc2c0:
     // 0x1fc2c0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -123,7 +121,6 @@ label_1fc2c0:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_setReelSlot_0x1fc170, 0x1fc170u, 0x1fc2d0u)) {
         return;
     }
-    ctx->pc = 0x1FC2D0u;
 label_1fc2d0:
     // 0x1fc2d0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -140,7 +137,6 @@ label_1fc2d0:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_setReelSlot_0x1fc170, 0x1fc170u, 0x1fc2e0u)) {
         return;
     }
-    ctx->pc = 0x1FC2E0u;
 label_1fc2e0:
     // 0x1fc2e0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -157,7 +153,6 @@ label_1fc2e0:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_setReelSlot_0x1fc170, 0x1fc170u, 0x1fc2f0u)) {
         return;
     }
-    ctx->pc = 0x1FC2F0u;
 label_1fc2f0:
     // 0x1fc2f0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -174,7 +169,6 @@ label_1fc2f0:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_setReelSlot_0x1fc170, 0x1fc170u, 0x1fc300u)) {
         return;
     }
-    ctx->pc = 0x1FC300u;
 label_1fc300:
     // 0x1fc300: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -191,7 +185,6 @@ label_1fc300:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_setReelSlot_0x1fc170, 0x1fc170u, 0x1fc310u)) {
         return;
     }
-    ctx->pc = 0x1FC310u;
 label_1fc310:
     // 0x1fc310: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1fc310u;

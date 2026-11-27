@@ -13,7 +13,7 @@
 
 // Function: ADXB_EvokeExpandSte
 // Address: 0x33d320 - 0x33d378
-void ADXB_EvokeExpandSte_0x33d320(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ADXB_EvokeExpandSte_0x33d320(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ADXB_EvokeExpandSte_0x33d320");
 #endif
@@ -74,7 +74,6 @@ void ADXB_EvokeExpandSte_0x33d320(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &func_0033FAA0_0x33faa0, 0x33faa0u, 0x33d364u)) {
         return;
     }
-    ctx->pc = 0x33D364u;
 label_33d364:
     // 0x33d364: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

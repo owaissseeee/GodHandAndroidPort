@@ -13,7 +13,7 @@
 
 // Function: AdjustRowScrollPosition
 // Address: 0x381150 - 0x3812b0
-void AdjustRowScrollPosition_0x381150(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void AdjustRowScrollPosition_0x381150(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("AdjustRowScrollPosition_0x381150");
 #endif
@@ -120,7 +120,6 @@ void AdjustRowScrollPosition_0x381150(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_3811f4;
         }
     }
-    ctx->pc = 0x3811B8u;
 label_3811b8:
     // 0x3811b8: 0x2402fc40  addiu       $v0, $zero, -0x3C0
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294966336));
@@ -139,7 +138,6 @@ label_3811b8:
             goto label_3811f4;
         }
     }
-    ctx->pc = 0x3811C4u;
 label_3811c4:
     // 0x3811c4: 0x3c024000  lui         $v0, 0x4000
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)16384 << 16));
@@ -197,7 +195,6 @@ label_3811c4:
             goto label_3811f4;
         }
     }
-    ctx->pc = 0x3811F0u;
 label_3811f0:
     // 0x3811f0: 0xa6000004  sh          $zero, 0x4($s0)
     ctx->pc = 0x3811f0u;
@@ -217,7 +214,6 @@ label_3811f4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003807E0_0x3807e0, 0x3807e0u, 0x381200u)) {
         return;
     }
-    ctx->pc = 0x381200u;
 label_381200:
     // 0x381200: 0x10000020  b           . + 4 + (0x20 << 2)
     ctx->pc = 0x381200u;
@@ -234,7 +230,6 @@ label_381200:
             goto label_381284;
         }
     }
-    ctx->pc = 0x381208u;
 label_381208:
     // 0x381208: 0x30c28000  andi        $v0, $a2, 0x8000
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 6) & (uint64_t)(uint16_t)32768);
@@ -290,7 +285,6 @@ label_381208:
             goto label_381268;
         }
     }
-    ctx->pc = 0x381230u;
 label_381230:
     // 0x381230: 0x1000000d  b           . + 4 + (0xD << 2)
     ctx->pc = 0x381230u;
@@ -307,7 +301,6 @@ label_381230:
             goto label_381268;
         }
     }
-    ctx->pc = 0x381238u;
 label_381238:
     // 0x381238: 0x50400018  beql        $v0, $zero, . + 4 + (0x18 << 2)
     ctx->pc = 0x381238u;
@@ -365,7 +358,6 @@ label_381238:
             goto label_381268;
         }
     }
-    ctx->pc = 0x381264u;
 label_381264:
     // 0x381264: 0xa6050006  sh          $a1, 0x6($s0)
     ctx->pc = 0x381264u;
@@ -418,7 +410,6 @@ label_381284:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032A9F0_0x32a9f0, 0x32a9f0u, 0x381298u)) {
         return;
     }
-    ctx->pc = 0x381298u;
 label_381298:
     // 0x381298: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x381298u;

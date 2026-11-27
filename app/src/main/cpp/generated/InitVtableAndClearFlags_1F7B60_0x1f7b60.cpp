@@ -13,7 +13,7 @@
 
 // Function: InitVtableAndClearFlags_1F7B60
 // Address: 0x1f7b60 - 0x1f7b88
-void InitVtableAndClearFlags_1F7B60_0x1f7b60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitVtableAndClearFlags_1F7B60_0x1f7b60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitVtableAndClearFlags_1F7B60_0x1f7b60");
 #endif

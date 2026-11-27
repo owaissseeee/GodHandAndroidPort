@@ -13,7 +13,7 @@
 
 // Function: _IO_file_setbuf
 // Address: 0x392a30 - 0x392a80
-void ps2__IO_file_setbuf_0x392a30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_file_setbuf_0x392a30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_file_setbuf_0x392a30");
 #endif
@@ -45,7 +45,6 @@ void ps2__IO_file_setbuf_0x392a30(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_default_setbuf_0x38cb28, 0x38cb28u, 0x392a44u)) {
         return;
     }
-    ctx->pc = 0x392A44u;
 label_392a44:
     // 0x392a44: 0x54400003  bnel        $v0, $zero, . + 4 + (0x3 << 2)
     ctx->pc = 0x392A44u;
@@ -77,7 +76,6 @@ label_392a44:
             goto label_392a70;
         }
     }
-    ctx->pc = 0x392A54u;
 label_392a54:
     // 0x392a54: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

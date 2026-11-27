@@ -13,7 +13,7 @@
 
 // Function: func_0039ADD0
 // Address: 0x39add0 - 0x39ade0
-void func_0039ADD0_0x39add0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0039ADD0_0x39add0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0039ADD0_0x39add0");
 #endif

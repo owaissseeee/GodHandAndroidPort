@@ -13,7 +13,7 @@
 
 // Function: __rs__7istreamRx
 // Address: 0x3881b8 - 0x388218
-void ps2___rs__7istreamRx_0x3881b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___rs__7istreamRx_0x3881b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___rs__7istreamRx_0x3881b8");
 #endif
@@ -54,7 +54,6 @@ void ps2___rs__7istreamRx_0x3881b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &read_int__FR7istreamRUxRi_0x387cd8, 0x387cd8u, 0x3881dcu)) {
         return;
     }
-    ctx->pc = 0x3881DCu;
 label_3881dc:
     // 0x3881dc: 0x10400007  beqz        $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x3881DCu;

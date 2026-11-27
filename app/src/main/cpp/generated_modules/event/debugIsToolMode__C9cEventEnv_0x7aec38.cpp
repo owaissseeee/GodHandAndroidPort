@@ -14,18 +14,16 @@ namespace gh_event
 {
 // Function: debugIsToolMode__C9cEventEnv
 // Address: 0x7aec38 - 0x7aec80
-void debugIsToolMode__C9cEventEnv_0x7aec38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void debugIsToolMode__C9cEventEnv_0x7aec38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("debugIsToolMode__C9cEventEnv_0x7aec38");
 #endif
 
-    ctx->pc = 0x7aec38u;
 
     // 0x7aec38: 0x8c83000c  lw          $v1, 0xC($a0)
     ctx->pc = 0x7aec38u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 12)));
     // 0x7aec3c: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x7aec3cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x7aec40: 0x1062000b  beq         $v1, $v0, . + 4 + (0xB << 2)
     ctx->pc = 0x7AEC40u;
@@ -42,7 +40,6 @@ void debugIsToolMode__C9cEventEnv_0x7aec38(uint8_t* rdram, R5900Context* ctx, PS
             goto label_7aec70;
         }
     }
-    ctx->pc = 0x7AEC48u;
     // 0x7aec48: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x7AEC48u;
     {
@@ -58,7 +55,6 @@ void debugIsToolMode__C9cEventEnv_0x7aec38(uint8_t* rdram, R5900Context* ctx, PS
             goto label_7aec60;
         }
     }
-    ctx->pc = 0x7AEC50u;
     // 0x7aec50: 0x10600009  beqz        $v1, . + 4 + (0x9 << 2)
     ctx->pc = 0x7AEC50u;
     {
@@ -74,7 +70,6 @@ void debugIsToolMode__C9cEventEnv_0x7aec38(uint8_t* rdram, R5900Context* ctx, PS
             goto label_7aec78;
         }
     }
-    ctx->pc = 0x7AEC58u;
     // 0x7aec58: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x7AEC58u;
     {
@@ -84,7 +79,6 @@ void debugIsToolMode__C9cEventEnv_0x7aec38(uint8_t* rdram, R5900Context* ctx, PS
             goto label_7aec78;
         }
     }
-    ctx->pc = 0x7AEC60u;
 label_7aec60:
     // 0x7aec60: 0x10620003  beq         $v1, $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x7AEC60u;
@@ -101,7 +95,6 @@ label_7aec60:
             goto label_7aec70;
         }
     }
-    ctx->pc = 0x7AEC68u;
     // 0x7aec68: 0x14620003  bne         $v1, $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x7AEC68u;
     {
@@ -117,7 +110,6 @@ label_7aec60:
             goto label_7aec78;
         }
     }
-    ctx->pc = 0x7AEC70u;
 label_7aec70:
     // 0x7aec70: 0x3e00008  jr          $ra
     ctx->pc = 0x7AEC70u;
@@ -138,7 +130,6 @@ label_7aec70:
         return;
         #endif
     }
-    ctx->pc = 0x7AEC78u;
 label_7aec78:
     // 0x7aec78: 0x3e00008  jr          $ra
     ctx->pc = 0x7AEC78u;

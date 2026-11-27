@@ -13,7 +13,7 @@
 
 // Function: cWorldLight_Set_LightData
 // Address: 0x2d90b0 - 0x2d9158
-void cWorldLight_Set_LightData_0x2d90b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cWorldLight_Set_LightData_0x2d90b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cWorldLight_Set_LightData_0x2d90b0");
 #endif
@@ -70,7 +70,6 @@ void cWorldLight_Set_LightData_0x2d90b0(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_2d90dc;
         }
     }
-    ctx->pc = 0x2D90D4u;
 label_2d90d4:
     // 0x2d90d4: 0x1000001d  b           . + 4 + (0x1D << 2)
     ctx->pc = 0x2D90D4u;
@@ -87,7 +86,6 @@ label_2d90d4:
             goto label_2d914c;
         }
     }
-    ctx->pc = 0x2D90DCu;
 label_2d90dc:
     // 0x2d90dc: 0x622018  mult        $a0, $v1, $v0
     { int64_t result = (int64_t)GPR_S32(ctx, 3) * (int64_t)GPR_S32(ctx, 2); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 4, (int32_t)result); }
@@ -96,7 +94,6 @@ label_2d90dc:
     // 0x2d90e4: 0x861021  addu        $v0, $a0, $a2
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 6)));
     // 0x2d90e8: 0x24420080  addiu       $v0, $v0, 0x80
-    ctx->pc = 0x2d90e8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 128));
 label_2d90ec:
     // 0x2d90ec: 0x78a70000  lq          $a3, 0x0($a1)
@@ -186,10 +183,8 @@ label_2d90ec:
     if (!runtime->callDirectStatic(rdram, ctx, &cWorldLight_Light_curent_set2_0x2d8810, 0x2d8810u, 0x2d9148u)) {
         return;
     }
-    ctx->pc = 0x2D9148u;
 label_2d9148:
     // 0x2d9148: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2d9148u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2d914c:
     // 0x2d914c: 0xdfbf0000  ld          $ra, 0x0($sp)

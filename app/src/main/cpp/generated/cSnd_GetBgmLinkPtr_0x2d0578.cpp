@@ -13,7 +13,7 @@
 
 // Function: cSnd_GetBgmLinkPtr
 // Address: 0x2d0578 - 0x2d0598
-void cSnd_GetBgmLinkPtr_0x2d0578(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_GetBgmLinkPtr_0x2d0578(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_GetBgmLinkPtr_0x2d0578");
 #endif
@@ -59,7 +59,6 @@ void cSnd_GetBgmLinkPtr_0x2d0578(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         return;
         #endif
     }
-    ctx->pc = 0x2D0590u;
 label_2d0590:
     // 0x2d0590: 0x3e00008  jr          $ra
     ctx->pc = 0x2D0590u;

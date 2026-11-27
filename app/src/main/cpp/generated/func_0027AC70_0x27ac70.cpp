@@ -13,7 +13,7 @@
 
 // Function: func_0027AC70
 // Address: 0x27ac70 - 0x27ada8
-void func_0027AC70_0x27ac70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0027AC70_0x27ac70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0027AC70_0x27ac70");
 #endif
@@ -69,7 +69,6 @@ void func_0027AC70_0x27ac70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setupModel_0x149738, 0x149738u, 0x27aca8u)) {
         return;
     }
-    ctx->pc = 0x27ACA8u;
 label_27aca8:
     // 0x27aca8: 0x10400038  beqz        $v0, . + 4 + (0x38 << 2)
     ctx->pc = 0x27ACA8u;
@@ -148,10 +147,8 @@ label_27aca8:
             goto label_27acf4;
         }
     }
-    ctx->pc = 0x27ACF0u;
 label_27acf0:
     // 0x27acf0: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x27acf0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_27acf4:
     // 0x27acf4: 0x10400021  beqz        $v0, . + 4 + (0x21 << 2)
@@ -199,10 +196,8 @@ label_27acf4:
             goto label_27ad18;
         }
     }
-    ctx->pc = 0x27AD14u;
 label_27ad14:
     // 0x27ad14: 0x202d  daddu       $a0, $zero, $zero
-    ctx->pc = 0x27ad14u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_27ad18:
     // 0x27ad18: 0x3c02003c  lui         $v0, 0x3C
@@ -267,10 +262,8 @@ label_27ad18:
             goto label_27ad5c;
         }
     }
-    ctx->pc = 0x27AD58u;
 label_27ad58:
     // 0x27ad58: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x27ad58u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_27ad5c:
     // 0x27ad5c: 0xc4a0d880  lwc1        $f0, -0x2780($a1)
@@ -308,7 +301,6 @@ label_27ad7c:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_calcParts_0x149eb8, 0x149eb8u, 0x27ad84u)) {
         return;
     }
-    ctx->pc = 0x27AD84u;
 label_27ad84:
     // 0x27ad84: 0xc09ec3e  jal         func_27B0F8
     SET_GPR_U32(ctx, 31, 0x27AD8Cu);
@@ -321,7 +313,6 @@ label_27ad84:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0027B0F8_0x27b0f8, 0x27b0f8u, 0x27ad8cu)) {
         return;
     }
-    ctx->pc = 0x27AD8Cu;
 label_27ad8c:
     // 0x27ad8c: 0x220102d  daddu       $v0, $s1, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));

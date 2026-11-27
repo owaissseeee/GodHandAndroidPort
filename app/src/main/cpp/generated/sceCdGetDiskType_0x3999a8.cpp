@@ -13,7 +13,7 @@
 
 // Function: sceCdGetDiskType
 // Address: 0x3999a8 - 0x3999d0
-void sceCdGetDiskType_0x3999a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceCdGetDiskType_0x3999a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceCdGetDiskType_0x3999a8");
 #endif
@@ -37,7 +37,6 @@ void sceCdGetDiskType_0x3999a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &sceCdGetDiskType2_0x399910, 0x399910u, 0x3999b8u)) {
         return;
     }
-    ctx->pc = 0x3999B8u;
 label_3999b8:
     // 0x3999b8: 0x21827  nor         $v1, $zero, $v0
     SET_GPR_U64(ctx, 3, ~(GPR_U64(ctx, 0) | GPR_U64(ctx, 2)));

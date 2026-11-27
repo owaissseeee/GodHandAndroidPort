@@ -407,8 +407,7 @@ class SettingsDialog(
             settings.rendererIdx = pos
         }
 
-        addSpinnerRow(
-            "Internal Resolution",
+        val resOptions = if (settings.ultraPotatoMode) {
             listOf(
                 "0.5x (Super Ultra Low - 256x224 Potato Mode)",
                 "0.75x (Performance Boost - Mali / Adreno Mid-Range)",
@@ -416,12 +415,31 @@ class SettingsDialog(
                 "2.0x (1024x896 2x HD - Flagship Balanced)",
                 "3.0x (1536x1344 3x FHD+)",
                 "4.0x (2048x1792 4x QHD)"
-            ),
-            settings.resolutionIdx
+            )
+        } else {
+            listOf(
+                "0.75x (Performance Boost - Mali / Adreno Mid-Range)",
+                "1.0x (Native PS2 512x448 - Authentic Console Default)",
+                "2.0x (1024x896 2x HD - Flagship Balanced)",
+                "3.0x (1536x1344 3x FHD+)",
+                "4.0x (2048x1792 4x QHD)"
+            )
+        }
+        val resOffset = if (settings.ultraPotatoMode) 0 else 1
+        if (!settings.ultraPotatoMode && settings.resolutionIdx == 0) {
+            settings.resolutionIdx = 1
+        }
+        val selectedResPos = (settings.resolutionIdx - resOffset).coerceIn(0, resOptions.size - 1)
+
+        addSpinnerRow(
+            "Internal Resolution",
+            resOptions,
+            selectedResPos
         ) { pos ->
-            settings.resolutionIdx = pos
+            val actualIdx = pos + resOffset
+            settings.resolutionIdx = actualIdx
             if (isMidGame) {
-                NativeBridge.setResolutionScale(pos)
+                NativeBridge.setResolutionScale(actualIdx)
             }
         }
 
@@ -460,6 +478,24 @@ class SettingsDialog(
             if (isMidGame) {
                 NativeBridge.setFrameskipMode(pos)
             }
+        }
+
+        addSwitchRow(
+            "Ultra Potato Mode (Max FPS)",
+            "CPU-focused Max FPS mode: unlocks the 0.5x resolution option above, skips shadows, cloth physics, heavy emitter particles, and audio reverb, uses nearest filtering, and trims texture cache. (Default: OFF)",
+            settings.ultraPotatoMode
+        ) { enabled ->
+            settings.ultraPotatoMode = enabled
+            if (!enabled && settings.resolutionIdx == 0) {
+                settings.resolutionIdx = 1
+                if (isMidGame) {
+                    NativeBridge.setResolutionScale(1)
+                }
+            }
+            if (isMidGame) {
+                NativeBridge.setUltraPotatoMode(enabled)
+            }
+            buildTabContent()
         }
 
         addSectionHeader("HD CUSTOM TEXTURE INJECTION")
@@ -680,6 +716,59 @@ class SettingsDialog(
             settings.fpsOverlayMode
         ) { pos ->
             settings.fpsOverlayMode = pos
+        }
+
+        addSectionHeader("VIBRATIONS")
+
+        val vibSubOptionsContainer = LinearLayout(context).apply {
+            orientation = LinearLayout.VERTICAL
+            visibility = if (settings.vibrationEnabled) View.VISIBLE else View.GONE
+        }
+
+        addSwitchRow(
+            "Enable Vibrations",
+            "Master toggle for all vibration and haptic feedback.",
+            settings.vibrationEnabled
+        ) { checked ->
+            settings.vibrationEnabled = checked
+            vibSubOptionsContainer.visibility = if (checked) View.VISIBLE else View.GONE
+            onSettingsChanged?.invoke()
+        }
+
+        contentContainer.addView(vibSubOptionsContainer, LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        ))
+
+        addSwitchRow(
+            "Touch Vibrations",
+            "Very soft pulse when pressing menu debug boxes or UI buttons (gameplay buttons & sliding stay silent).",
+            settings.touchVibrationEnabled,
+            targetContainer = vibSubOptionsContainer
+        ) { checked ->
+            settings.touchVibrationEnabled = checked
+            onSettingsChanged?.invoke()
+        }
+
+        addSwitchRow(
+            "In-Game Vibration",
+            "Gentle mobile-tuned rumble synced to PS2 combat & world events.",
+            settings.inGameVibrationEnabled,
+            targetContainer = vibSubOptionsContainer
+        ) { checked ->
+            settings.inGameVibrationEnabled = checked
+            onSettingsChanged?.invoke()
+        }
+
+        addSliderRow(
+            "Vibration Strength",
+            settings.vibrationStrength,
+            min = 10,
+            max = 100,
+            unit = "%",
+            targetContainer = vibSubOptionsContainer
+        ) { pct ->
+            settings.vibrationStrength = pct
+            onSettingsChanged?.invoke()
         }
 
         if (isMidGame && onEditControlsRequested != null) {
@@ -1443,7 +1532,13 @@ class SettingsDialog(
         ).apply { setMargins(0, 0, 0, 6.dpToPx()) })
     }
 
-    private fun addSwitchRow(title: String, subtitle: String, isChecked: Boolean, onToggle: (Boolean) -> Unit) {
+    private fun addSwitchRow(
+        title: String,
+        subtitle: String,
+        isChecked: Boolean,
+        targetContainer: LinearLayout = contentContainer,
+        onToggle: (Boolean) -> Unit
+    ) {
         val row = LinearLayout(context).apply {
             orientation = LinearLayout.HORIZONTAL
             setPadding(12.dpToPx(), 8.dpToPx(), 12.dpToPx(), 8.dpToPx())
@@ -1478,12 +1573,20 @@ class SettingsDialog(
             sw.toggle()
         }
 
-        contentContainer.addView(row, LinearLayout.LayoutParams(
+        targetContainer.addView(row, LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply { setMargins(0, 0, 0, 6.dpToPx()) })
     }
 
-    private fun addSliderRow(title: String, currentVal: Int, min: Int, max: Int, unit: String, onChange: (Int) -> Unit) {
+    private fun addSliderRow(
+        title: String,
+        currentVal: Int,
+        min: Int,
+        max: Int,
+        unit: String,
+        targetContainer: LinearLayout = contentContainer,
+        onChange: (Int) -> Unit
+    ) {
         val card = LinearLayout(context).apply {
             orientation = LinearLayout.VERTICAL
             setPadding(12.dpToPx(), 8.dpToPx(), 12.dpToPx(), 8.dpToPx())
@@ -1522,7 +1625,7 @@ class SettingsDialog(
             })
         }
         card.addView(seek)
-        contentContainer.addView(card, LinearLayout.LayoutParams(
+        targetContainer.addView(card, LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply { setMargins(0, 0, 0, 6.dpToPx()) })
     }

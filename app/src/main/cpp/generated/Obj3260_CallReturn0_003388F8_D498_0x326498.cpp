@@ -13,7 +13,7 @@
 
 // Function: Obj3260_CallReturn0_003388F8_D498
 // Address: 0x326498 - 0x3264c8
-void Obj3260_CallReturn0_003388F8_D498_0x326498(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj3260_CallReturn0_003388F8_D498_0x326498(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj3260_CallReturn0_003388F8_D498_0x326498");
 #endif
@@ -37,7 +37,6 @@ void Obj3260_CallReturn0_003388F8_D498_0x326498(uint8_t* rdram, R5900Context* ct
     if (!runtime->callDirectStatic(rdram, ctx, &RefreshEntryIfActive_0x3388f8, 0x3388f8u, 0x3264a8u)) {
         return;
     }
-    ctx->pc = 0x3264A8u;
 label_3264a8:
     // 0x3264a8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3264a8u;

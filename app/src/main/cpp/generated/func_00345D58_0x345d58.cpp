@@ -13,7 +13,7 @@
 
 // Function: func_00345D58
 // Address: 0x345d58 - 0x345df0
-void func_00345D58_0x345d58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00345D58_0x345d58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00345D58_0x345d58");
 #endif
@@ -54,7 +54,6 @@ void func_00345D58_0x345d58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &GetField0OrZero_346828_0x346828, 0x346828u, 0x345d74u)) {
         return;
     }
-    ctx->pc = 0x345D74u;
 label_345d74:
     // 0x345d74: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -97,7 +96,6 @@ label_345d74:
         return;
     }
     // 0x345d9c: 0x0  nop
-    ctx->pc = 0x345d9cu;
     // NOP
 label_345da0:
     // 0x345da0: 0xc0d25fe  jal         func_3497F8
@@ -106,7 +104,6 @@ label_345da0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003497F8_0x3497f8, 0x3497f8u, 0x345da8u)) {
         return;
     }
-    ctx->pc = 0x345DA8u;
 label_345da8:
     // 0x345da8: 0xc0d177c  jal         func_345DF0
     SET_GPR_U32(ctx, 31, 0x345DB0u);
@@ -119,7 +116,6 @@ label_345da8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00345DF0_0x345df0, 0x345df0u, 0x345db0u)) {
         return;
     }
-    ctx->pc = 0x345DB0u;
 label_345db0:
     // 0x345db0: 0xae1101bc  sw          $s1, 0x1BC($s0)
     ctx->pc = 0x345db0u;
@@ -148,7 +144,6 @@ label_345db0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00345BE0_0x345be0, 0x345be0u, 0x345dd0u)) {
         return;
     }
-    ctx->pc = 0x345DD0u;
 label_345dd0:
     // 0x345dd0: 0xc0d25fe  jal         func_3497F8
     SET_GPR_U32(ctx, 31, 0x345DD8u);
@@ -161,7 +156,6 @@ label_345dd0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003497F8_0x3497f8, 0x3497f8u, 0x345dd8u)) {
         return;
     }
-    ctx->pc = 0x345DD8u;
 label_345dd8:
     // 0x345dd8: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

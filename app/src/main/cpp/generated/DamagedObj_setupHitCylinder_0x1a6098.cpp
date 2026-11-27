@@ -13,7 +13,7 @@
 
 // Function: DamagedObj_setupHitCylinder
 // Address: 0x1a6098 - 0x1a6188
-void DamagedObj_setupHitCylinder_0x1a6098(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void DamagedObj_setupHitCylinder_0x1a6098(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("DamagedObj_setupHitCylinder_0x1a6098");
 #endif
@@ -53,7 +53,6 @@ void DamagedObj_setupHitCylinder_0x1a6098(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B6FB8_0x1b6fb8, 0x1b6fb8u, 0x1a60b4u)) {
         return;
     }
-    ctx->pc = 0x1A60B4u;
 label_1a60b4:
     // 0x1a60b4: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -125,7 +124,6 @@ label_1a60b4:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_CreateDamageTake_0x1fe218, 0x1fe218u, 0x1a611cu)) {
         return;
     }
-    ctx->pc = 0x1A611Cu;
 label_1a611c:
     // 0x1a611c: 0x1040000f  beqz        $v0, . + 4 + (0xF << 2)
     ctx->pc = 0x1A611Cu;
@@ -183,7 +181,6 @@ label_1a611c:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_AddDamageCollCylinder_0x1fdc00, 0x1fdc00u, 0x1a615cu)) {
         return;
     }
-    ctx->pc = 0x1A615Cu;
 label_1a615c:
     // 0x1a615c: 0x24030028  addiu       $v1, $zero, 0x28
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 40));

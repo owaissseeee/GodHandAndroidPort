@@ -13,7 +13,7 @@
 
 // Function: kputchar
 // Address: 0x3b0d48 - 0x3b0d80
-void kputchar_0x3b0d48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void kputchar_0x3b0d48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("kputchar_0x3b0d48");
 #endif
@@ -29,7 +29,6 @@ void kputchar_0x3b0d48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     // 0x3b0d48: 0x3c031000  lui         $v1, 0x1000
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)4096 << 16));
     // 0x3b0d4c: 0x3463f130  ori         $v1, $v1, 0xF130
-    ctx->pc = 0x3b0d4cu;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) | (uint64_t)(uint16_t)61744);
 label_3b0d50:
     // 0x3b0d50: 0x8c620000  lw          $v0, 0x0($v1)

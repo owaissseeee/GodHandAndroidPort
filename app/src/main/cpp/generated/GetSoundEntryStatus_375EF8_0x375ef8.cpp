@@ -13,7 +13,7 @@
 
 // Function: GetSoundEntryStatus_375EF8
 // Address: 0x375ef8 - 0x375f68
-void GetSoundEntryStatus_375EF8_0x375ef8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetSoundEntryStatus_375EF8_0x375ef8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetSoundEntryStatus_375EF8_0x375ef8");
 #endif
@@ -46,7 +46,6 @@ void GetSoundEntryStatus_375EF8_0x375ef8(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &func_003769B0_0x3769b0, 0x3769b0u, 0x375f0cu)) {
         return;
     }
-    ctx->pc = 0x375F0Cu;
 label_375f0c:
     // 0x375f0c: 0x1440000b  bnez        $v0, . + 4 + (0xB << 2)
     ctx->pc = 0x375F0Cu;
@@ -74,7 +73,6 @@ label_375f0c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00376A90_0x376a90, 0x376a90u, 0x375f1cu)) {
         return;
     }
-    ctx->pc = 0x375F1Cu;
 label_375f1c:
     // 0x375f1c: 0x10400006  beqz        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x375F1Cu;
@@ -113,10 +111,8 @@ label_375f1c:
             goto label_375f3c;
         }
     }
-    ctx->pc = 0x375F38u;
 label_375f38:
     // 0x375f38: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x375f38u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_375f3c:
     // 0x375f3c: 0x7bb00010  lq          $s0, 0x10($sp)

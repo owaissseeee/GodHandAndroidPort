@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getComboMax
 // Address: 0x1fb830 - 0x1fb868
-void cCoreSave_getComboMax_0x1fb830(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getComboMax_0x1fb830(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getComboMax_0x1fb830");
 #endif
@@ -56,7 +56,6 @@ void cCoreSave_getComboMax_0x1fb830(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         return;
         #endif
     }
-    ctx->pc = 0x1FB844u;
 label_1fb844:
     // 0x1fb844: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x1FB844u;
@@ -96,7 +95,6 @@ label_1fb844:
         return;
         #endif
     }
-    ctx->pc = 0x1FB85Cu;
 label_1fb85c:
     // 0x1fb85c: 0x3e00008  jr          $ra
     ctx->pc = 0x1FB85Cu;

@@ -13,7 +13,7 @@
 
 // Function: Obj2810_ClearState_4
 // Address: 0x281320 - 0x281338
-void Obj2810_ClearState_4_0x281320(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj2810_ClearState_4_0x281320(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj2810_ClearState_4_0x281320");
 #endif

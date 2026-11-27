@@ -13,7 +13,7 @@
 
 // Function: Draw_Line2
 // Address: 0x15ef10 - 0x15f0b8
-void Draw_Line2_0x15ef10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Draw_Line2_0x15ef10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Draw_Line2_0x15ef10");
 #endif
@@ -142,7 +142,6 @@ label_15ef70:
     // 0x15ef90: 0x2492fff0  addiu       $s2, $a0, -0x10
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 4), 4294967280));
     // 0x15ef94: 0x0  nop
-    ctx->pc = 0x15ef94u;
     // NOP
 label_15ef98:
     // 0x15ef98: 0x882d  daddu       $s1, $zero, $zero
@@ -166,7 +165,6 @@ label_15ef98:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x15efb0u)) {
         return;
     }
-    ctx->pc = 0x15EFB0u;
 label_15efb0:
     // 0x15efb0: 0xc7ac005c  lwc1        $f12, 0x5C($sp)
     ctx->pc = 0x15efb0u;
@@ -190,7 +188,6 @@ label_15efb0:
             goto label_15efc4;
         }
     }
-    ctx->pc = 0x15EFC4u;
 label_15efc4:
     // 0x15efc4: 0x27a40050  addiu       $a0, $sp, 0x50
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 29), 80));
@@ -205,7 +202,6 @@ label_15efc4:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0DivVector_0x30a468, 0x30a468u, 0x15efd0u)) {
         return;
     }
-    ctx->pc = 0x15EFD0u;
 label_15efd0:
     // 0x15efd0: 0xc7a00050  lwc1        $f0, 0x50($sp)
     ctx->pc = 0x15efd0u;
@@ -301,7 +297,6 @@ label_15efd0:
             goto label_15f030;
         }
     }
-    ctx->pc = 0x15F030u;
 label_15f030:
     // 0x15f030: 0x5200000d  beql        $s0, $zero, . + 4 + (0xD << 2)
     ctx->pc = 0x15F030u;
@@ -369,10 +364,8 @@ label_15f030:
     if (!runtime->callDirectStatic(rdram, ctx, &Gp_draw_line_0x15b138, 0x15b138u, 0x15f064u)) {
         return;
     }
-    ctx->pc = 0x15F064u;
 label_15f064:
     // 0x15f064: 0x26100001  addiu       $s0, $s0, 0x1
-    ctx->pc = 0x15f064u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 1));
 label_15f068:
     // 0x15f068: 0x220a82d  daddu       $s5, $s1, $zero
@@ -399,7 +392,6 @@ label_15f068:
             goto label_15ef98;
         }
     }
-    ctx->pc = 0x15F07Cu;
 label_15f07c:
     // 0x15f07c: 0x7bb000e0  lq          $s0, 0xE0($sp)
     ctx->pc = 0x15f07cu;

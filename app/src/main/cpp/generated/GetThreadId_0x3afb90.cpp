@@ -13,7 +13,7 @@
 
 // Function: GetThreadId
 // Address: 0x3afb90 - 0x3afba0
-void GetThreadId_0x3afb90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetThreadId_0x3afb90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetThreadId_0x3afb90");
 #endif

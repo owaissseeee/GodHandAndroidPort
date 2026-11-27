@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Get_D_003C80A4_NE_0_325620
 // Address: 0x325620 - 0x325638
-void Obj0000_Get_D_003C80A4_NE_0_325620_0x325620(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Get_D_003C80A4_NE_0_325620_0x325620(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Get_D_003C80A4_NE_0_325620_0x325620");
 #endif

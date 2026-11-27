@@ -13,7 +13,7 @@
 
 // Function: MWSFCRE_DestroySfd
 // Address: 0x343bd0 - 0x343c18
-void MWSFCRE_DestroySfd_0x343bd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MWSFCRE_DestroySfd_0x343bd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MWSFCRE_DestroySfd_0x343bd0");
 #endif
@@ -38,7 +38,6 @@ void MWSFCRE_DestroySfd_0x343bd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &func_003587E8_0x3587e8, 0x3587e8u, 0x343be0u)) {
         return;
     }
-    ctx->pc = 0x343BE0u;
 label_343be0:
     // 0x343be0: 0x10400009  beqz        $v0, . + 4 + (0x9 << 2)
     ctx->pc = 0x343BE0u;
@@ -61,7 +60,6 @@ label_343be0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00345750_0x345750, 0x345750u, 0x343bf0u)) {
         return;
     }
-    ctx->pc = 0x343BF0u;
 label_343bf0:
     // 0x343bf0: 0x3c040045  lui         $a0, 0x45
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)69 << 16));
@@ -81,7 +79,6 @@ label_343bf0:
         return;
     }
     // 0x343c04: 0x0  nop
-    ctx->pc = 0x343c04u;
     // NOP
 label_343c08:
     // 0x343c08: 0xdfbf0000  ld          $ra, 0x0($sp)

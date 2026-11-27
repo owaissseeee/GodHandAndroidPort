@@ -13,7 +13,7 @@
 
 // Function: cBgmData_AddLoadBits
 // Address: 0x2d0350 - 0x2d0360
-void cBgmData_AddLoadBits_0x2d0350(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cBgmData_AddLoadBits_0x2d0350(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cBgmData_AddLoadBits_0x2d0350");
 #endif

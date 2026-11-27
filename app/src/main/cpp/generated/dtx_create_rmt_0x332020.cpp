@@ -13,7 +13,7 @@
 
 // Function: dtx_create_rmt
 // Address: 0x332020 - 0x332090
-void dtx_create_rmt_0x332020(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void dtx_create_rmt_0x332020(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("dtx_create_rmt_0x332020");
 #endif
@@ -84,7 +84,6 @@ void dtx_create_rmt_0x332020(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B3128u, 0x332070u, 0x332078u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x332078u;
 label_332078:
     // 0x332078: 0xdfbf0018  ld          $ra, 0x18($sp)
     ctx->pc = 0x332078u;

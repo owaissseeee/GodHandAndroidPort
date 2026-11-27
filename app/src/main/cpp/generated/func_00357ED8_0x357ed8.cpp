@@ -13,7 +13,7 @@
 
 // Function: func_00357ED8
 // Address: 0x357ed8 - 0x357f58
-void func_00357ED8_0x357ed8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00357ED8_0x357ed8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00357ED8_0x357ed8");
 #endif
@@ -48,7 +48,6 @@ void func_00357ED8_0x357ed8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_00357F58_0x357f58, 0x357f58u, 0x357eecu)) {
         return;
     }
-    ctx->pc = 0x357EECu;
 label_357eec:
     // 0x357eec: 0x14400010  bnez        $v0, . + 4 + (0x10 << 2)
     ctx->pc = 0x357EECu;
@@ -71,7 +70,6 @@ label_357eec:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00357FC8_0x357fc8, 0x357fc8u, 0x357efcu)) {
         return;
     }
-    ctx->pc = 0x357EFCu;
 label_357efc:
     // 0x357efc: 0x1440000c  bnez        $v0, . + 4 + (0xC << 2)
     ctx->pc = 0x357EFCu;
@@ -94,7 +92,6 @@ label_357efc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00358090_0x358090, 0x358090u, 0x357f0cu)) {
         return;
     }
-    ctx->pc = 0x357F0Cu;
 label_357f0c:
     // 0x357f0c: 0x14400008  bnez        $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x357F0Cu;
@@ -117,7 +114,6 @@ label_357f0c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003580E8_0x3580e8, 0x3580e8u, 0x357f1cu)) {
         return;
     }
-    ctx->pc = 0x357F1Cu;
 label_357f1c:
     // 0x357f1c: 0x14400005  bnez        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x357F1Cu;
@@ -152,10 +148,8 @@ label_357f1c:
             goto label_357f48;
         }
     }
-    ctx->pc = 0x357F30u;
 label_357f30:
     // 0x357f30: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x357f30u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_357f34:
     // 0x357f34: 0xdfb00000  ld          $s0, 0x0($sp)
@@ -175,7 +169,6 @@ label_357f34:
         return;
     }
     // 0x357f44: 0x0  nop
-    ctx->pc = 0x357f44u;
     // NOP
 label_357f48:
     // 0x357f48: 0xdfbf0008  ld          $ra, 0x8($sp)

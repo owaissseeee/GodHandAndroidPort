@@ -13,7 +13,7 @@
 
 // Function: func_00330580
 // Address: 0x330580 - 0x330648
-void func_00330580_0x330580(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00330580_0x330580(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00330580_0x330580");
 #endif
@@ -77,7 +77,6 @@ void func_00330580_0x330580(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
     }
     // 0x3305b4: 0x0  nop
-    ctx->pc = 0x3305b4u;
     // NOP
 label_3305b8:
     // 0x3305b8: 0xc0e9637  jal         func_3A58DC
@@ -86,7 +85,6 @@ label_3305b8:
     if (!runtime->callDirectStatic(rdram, ctx, &strlen_0x3a58dc, 0x3a58dcu, 0x3305c0u)) {
         return;
     }
-    ctx->pc = 0x3305C0u;
 label_3305c0:
     // 0x3305c0: 0x40882d  daddu       $s1, $v0, $zero
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -138,7 +136,6 @@ label_3305c0:
         return;
         #endif
     }
-    ctx->pc = 0x3305E8u;
 label_3305e8:
     // 0x3305e8: 0xc0cc146  jal         func_330518
     ctx->pc = 0x3305E8u;
@@ -146,7 +143,6 @@ label_3305e8:
     if (!runtime->callDirectStatic(rdram, ctx, &toUpperStr_0x330518, 0x330518u, 0x3305f0u)) {
         return;
     }
-    ctx->pc = 0x3305F0u;
 label_3305f0:
     // 0x3305f0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -161,7 +157,6 @@ label_3305f0:
     if (!runtime->callDirectStatic(rdram, ctx, &isExistDev_0x330648, 0x330648u, 0x3305fcu)) {
         return;
     }
-    ctx->pc = 0x3305FCu;
 label_3305fc:
     // 0x3305fc: 0x3c040075  lui         $a0, 0x75
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)117 << 16));
@@ -205,7 +200,6 @@ label_3305fc:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3A5148u, 0x330620u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x330628u;
 label_330628:
     // 0x330628: 0x3c040045  lui         $a0, 0x45
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)69 << 16));

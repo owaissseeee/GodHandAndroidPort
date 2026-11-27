@@ -14,7 +14,7 @@
 
 // Function: EspAnim_step
 // Address: 0x2fcac8 - 0x2fcb88
-void EspAnim_step_0x2fcac8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EspAnim_step_0x2fcac8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EspAnim_step_0x2fcac8");
 #endif
@@ -99,7 +99,6 @@ void EspAnim_step_0x2fcac8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
             goto label_2fcb1c;
         }
     }
-    ctx->pc = 0x2FCB08u;
 label_2fcb08:
     // 0x2fcb08: 0x3c040002  lui         $a0, 0x2
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)2 << 16));
@@ -130,7 +129,6 @@ label_2fcb08:
             goto label_2fcb2c;
         }
     }
-    ctx->pc = 0x2FCB1Cu;
 label_2fcb1c:
     // 0x2fcb1c: 0xc0be8d4  jal         func_2FA350
     SET_GPR_U32(ctx, 31, 0x2FCB24u);
@@ -143,7 +141,6 @@ label_2fcb1c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002FA350_0x2fa350, 0x2fa350u, 0x2fcb24u)) {
         return;
     }
-    ctx->pc = 0x2FCB24u;
 label_2fcb24:
     // 0x2fcb24: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x2FCB24u;
@@ -160,7 +157,6 @@ label_2fcb24:
             goto label_2fcb44;
         }
     }
-    ctx->pc = 0x2FCB2Cu;
 label_2fcb2c:
     // 0x2fcb2c: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -218,7 +214,6 @@ label_2fcb44:
             goto label_2fcb74;
         }
     }
-    ctx->pc = 0x2FCB68u;
 label_2fcb68:
     // 0x2fcb68: 0xc0bef94  jal         func_2FBE50
     SET_GPR_U32(ctx, 31, 0x2FCB70u);
@@ -231,10 +226,8 @@ label_2fcb68:
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateObjByIndexedOp_2FBE50_0x2fbe50, 0x2fbe50u, 0x2fcb70u)) {
         return;
     }
-    ctx->pc = 0x2FCB70u;
 label_2fcb70:
     // 0x2fcb70: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2fcb70u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_2fcb74:
     // 0x2fcb74: 0x7bb00010  lq          $s0, 0x10($sp)

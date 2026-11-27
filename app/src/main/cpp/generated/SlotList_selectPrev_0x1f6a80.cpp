@@ -13,7 +13,7 @@
 
 // Function: SlotList_selectPrev
 // Address: 0x1f6a80 - 0x1f6af8
-void SlotList_selectPrev_0x1f6a80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SlotList_selectPrev_0x1f6a80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SlotList_selectPrev_0x1f6a80");
 #endif
@@ -50,7 +50,6 @@ void SlotList_selectPrev_0x1f6a80(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     // 0x1f6a90: 0x24420010  addiu       $v0, $v0, 0x10
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 16));
     // 0x1f6a94: 0x442821  addu        $a1, $v0, $a0
-    ctx->pc = 0x1f6a94u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 4)));
 label_1f6a98:
     // 0x1f6a98: 0x8ca20000  lw          $v0, 0x0($a1)
@@ -90,7 +89,6 @@ label_1f6a98:
         return;
         #endif
     }
-    ctx->pc = 0x1F6AACu;
 label_1f6aac:
     // 0x1f6aac: 0x461fffa  bgez        $v1, . + 4 + (-0x6 << 2)
     ctx->pc = 0x1F6AACu;
@@ -110,7 +108,6 @@ label_1f6aac:
             goto label_1f6a98;
         }
     }
-    ctx->pc = 0x1F6AB4u;
 label_1f6ab4:
     // 0x1f6ab4: 0x8c83000c  lw          $v1, 0xC($a0)
     ctx->pc = 0x1f6ab4u;
@@ -137,7 +134,6 @@ label_1f6ab4:
     // 0x1f6ac8: 0x2483001c  addiu       $v1, $a0, 0x1C
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), 28));
     // 0x1f6acc: 0x0  nop
-    ctx->pc = 0x1f6accu;
     // NOP
 label_1f6ad0:
     // 0x1f6ad0: 0x8c620000  lw          $v0, 0x0($v1)
@@ -177,7 +173,6 @@ label_1f6ad0:
         return;
         #endif
     }
-    ctx->pc = 0x1F6AE4u;
 label_1f6ae4:
     // 0x1f6ae4: 0xc5102a  slt         $v0, $a2, $a1
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 6) < (int64_t)GPR_S64(ctx, 5)) ? 1 : 0);
@@ -199,7 +194,6 @@ label_1f6ae4:
             goto label_1f6ad0;
         }
     }
-    ctx->pc = 0x1F6AF0u;
 label_1f6af0:
     // 0x1f6af0: 0x3e00008  jr          $ra
     ctx->pc = 0x1F6AF0u;

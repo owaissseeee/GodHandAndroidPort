@@ -13,7 +13,7 @@
 
 // Function: is_open__3ios
 // Address: 0x38b698 - 0x38b6c0
-void is_open__3ios_0x38b698(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void is_open__3ios_0x38b698(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("is_open__3ios_0x38b698");
 #endif
@@ -45,7 +45,6 @@ void is_open__3ios_0x38b698(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x38b6ac: 0x3842000c  xori        $v0, $v0, 0xC
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)12);
     // 0x38b6b0: 0x2202b  sltu        $a0, $zero, $v0
-    ctx->pc = 0x38b6b0u;
     SET_GPR_U64(ctx, 4, ((uint64_t)GPR_U64(ctx, 0) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
 label_38b6b4:
     // 0x38b6b4: 0x3e00008  jr          $ra

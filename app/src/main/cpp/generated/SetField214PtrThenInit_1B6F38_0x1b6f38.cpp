@@ -13,7 +13,7 @@
 
 // Function: SetField214PtrThenInit_1B6F38
 // Address: 0x1b6f38 - 0x1b6fb8
-void SetField214PtrThenInit_1B6F38_0x1b6f38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetField214PtrThenInit_1B6F38_0x1b6f38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetField214PtrThenInit_1B6F38_0x1b6f38");
 #endif
@@ -70,7 +70,6 @@ void SetField214PtrThenInit_1B6F38_0x1b6f38(uint8_t* rdram, R5900Context* ctx, P
     if (!runtime->callDirectStatic(rdram, ctx, &func_001331B8_0x1331b8, 0x1331b8u, 0x1b6f70u)) {
         return;
     }
-    ctx->pc = 0x1B6F70u;
 label_1b6f70:
     // 0x1b6f70: 0x3c040046  lui         $a0, 0x46
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)70 << 16));
@@ -87,7 +86,6 @@ label_1b6f70:
     if (!runtime->callDirectStatic(rdram, ctx, &cCollisionSolidManage_ReleaseUnit_0x1347e8, 0x1347e8u, 0x1b6f80u)) {
         return;
     }
-    ctx->pc = 0x1B6F80u;
 label_1b6f80:
     // 0x1b6f80: 0xc0c49c2  jal         func_312708
     SET_GPR_U32(ctx, 31, 0x1B6F88u);
@@ -100,7 +98,6 @@ label_1b6f80:
     if (!runtime->callDirectStatic(rdram, ctx, &ReleaseObj_0x312708, 0x312708u, 0x1b6f88u)) {
         return;
     }
-    ctx->pc = 0x1B6F88u;
 label_1b6f88:
     // 0x1b6f88: 0x3c040057  lui         $a0, 0x57
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)87 << 16));
@@ -117,7 +114,6 @@ label_1b6f88:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FE370_0x1fe370, 0x1fe370u, 0x1b6f98u)) {
         return;
     }
-    ctx->pc = 0x1B6F98u;
 label_1b6f98:
     // 0x1b6f98: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -132,7 +128,6 @@ label_1b6f98:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A73C8_0x2a73c8, 0x2a73c8u, 0x1b6fa4u)) {
         return;
     }
-    ctx->pc = 0x1B6FA4u;
 label_1b6fa4:
     // 0x1b6fa4: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1b6fa4u;

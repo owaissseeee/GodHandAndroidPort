@@ -13,7 +13,7 @@
 
 // Function: BuildPackedAddr_1FFD98
 // Address: 0x1ffd98 - 0x1ffdb0
-void BuildPackedAddr_1FFD98_0x1ffd98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BuildPackedAddr_1FFD98_0x1ffd98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BuildPackedAddr_1FFD98_0x1ffd98");
 #endif

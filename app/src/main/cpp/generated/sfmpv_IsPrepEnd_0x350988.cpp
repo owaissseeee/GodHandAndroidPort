@@ -13,7 +13,7 @@
 
 // Function: sfmpv_IsPrepEnd
 // Address: 0x350988 - 0x3509e8
-void sfmpv_IsPrepEnd_0x350988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfmpv_IsPrepEnd_0x350988(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfmpv_IsPrepEnd_0x350988");
 #endif
@@ -47,7 +47,6 @@ void sfmpv_IsPrepEnd_0x350988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &func_003554E8_0x3554e8, 0x3554e8u, 0x35099cu)) {
         return;
     }
-    ctx->pc = 0x35099Cu;
 label_35099c:
     // 0x35099c: 0x14400009  bnez        $v0, . + 4 + (0x9 << 2)
     ctx->pc = 0x35099Cu;
@@ -70,7 +69,6 @@ label_35099c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003509E8_0x3509e8, 0x3509e8u, 0x3509acu)) {
         return;
     }
-    ctx->pc = 0x3509ACu;
 label_3509ac:
     // 0x3509ac: 0x10400008  beqz        $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x3509ACu;
@@ -93,7 +91,6 @@ label_3509ac:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00350A50_0x350a50, 0x350a50u, 0x3509bcu)) {
         return;
     }
-    ctx->pc = 0x3509BCu;
 label_3509bc:
     // 0x3509bc: 0x50400005  beql        $v0, $zero, . + 4 + (0x5 << 2)
     ctx->pc = 0x3509BCu;
@@ -110,7 +107,6 @@ label_3509bc:
             goto label_3509d4;
         }
     }
-    ctx->pc = 0x3509C4u;
 label_3509c4:
     // 0x3509c4: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x3509C4u;
@@ -128,11 +124,9 @@ label_3509c4:
         }
     }
     // 0x3509cc: 0x0  nop
-    ctx->pc = 0x3509ccu;
     // NOP
 label_3509d0:
     // 0x3509d0: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x3509d0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_3509d4:
     // 0x3509d4: 0xdfb00000  ld          $s0, 0x0($sp)

@@ -13,7 +13,7 @@
 
 // Function: func_002D81A0
 // Address: 0x2d81a0 - 0x2d82a0
-void func_002D81A0_0x2d81a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002D81A0_0x2d81a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002D81A0_0x2d81a0");
 #endif
@@ -52,7 +52,6 @@ void func_002D81A0_0x2d81a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x2d81c4: 0x46000864  .word       0x46000864                   # cvt.w.s     $f1, $f1 # 00000000 <InstrIdType: CPU_COP1_FPUS>
     { int32_t tmp = FPU_CVT_W_S(ctx->f[1]); std::memcpy(&ctx->f[1], &tmp, sizeof(tmp)); }
     // 0x2d81c8: 0x44080800  mfc1        $t0, $f1
-    ctx->pc = 0x2d81c8u;
     { uint32_t bits; std::memcpy(&bits, &ctx->f[1], sizeof(bits)); SET_GPR_U32(ctx, 8, bits); }
 label_2d81cc:
     // 0x2d81cc: 0x3c020001  lui         $v0, 0x1
@@ -86,7 +85,6 @@ label_2d81cc:
     // 0x2d81ec: 0x46000864  .word       0x46000864                   # cvt.w.s     $f1, $f1 # 00000000 <InstrIdType: CPU_COP1_FPUS>
     { int32_t tmp = FPU_CVT_W_S(ctx->f[1]); std::memcpy(&ctx->f[1], &tmp, sizeof(tmp)); }
     // 0x2d81f0: 0x44030800  mfc1        $v1, $f1
-    ctx->pc = 0x2d81f0u;
     { uint32_t bits; std::memcpy(&bits, &ctx->f[1], sizeof(bits)); SET_GPR_U32(ctx, 3, bits); }
 label_2d81f4:
     // 0x2d81f4: 0x3c020001  lui         $v0, 0x1
@@ -120,7 +118,6 @@ label_2d81f4:
     // 0x2d8214: 0x46000864  .word       0x46000864                   # cvt.w.s     $f1, $f1 # 00000000 <InstrIdType: CPU_COP1_FPUS>
     { int32_t tmp = FPU_CVT_W_S(ctx->f[1]); std::memcpy(&ctx->f[1], &tmp, sizeof(tmp)); }
     // 0x2d8218: 0x44040800  mfc1        $a0, $f1
-    ctx->pc = 0x2d8218u;
     { uint32_t bits; std::memcpy(&bits, &ctx->f[1], sizeof(bits)); SET_GPR_U32(ctx, 4, bits); }
 label_2d821c:
     // 0x2d821c: 0x8103c  dsll32      $v0, $t0, 0

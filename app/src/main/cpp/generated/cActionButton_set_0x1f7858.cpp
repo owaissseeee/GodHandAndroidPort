@@ -14,7 +14,7 @@
 
 // Function: cActionButton_set
 // Address: 0x1f7858 - 0x1f7900
-void cActionButton_set_0x1f7858(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cActionButton_set_0x1f7858(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cActionButton_set_0x1f7858");
 #endif
@@ -85,7 +85,6 @@ void cActionButton_set_0x1f7858(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F7798_0x1f7798, 0x1f7798u, 0x1f789cu)) {
         return;
     }
-    ctx->pc = 0x1F789Cu;
 label_1f789c:
     // 0x1f789c: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -142,7 +141,6 @@ label_1f789c:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Swap_Field_4_In_Scaled_A1_Entry_1F7800_0x1f7800, 0x1f7800u, 0x1f78d8u)) {
         return;
     }
-    ctx->pc = 0x1F78D8u;
 label_1f78d8:
     // 0x1f78d8: 0x7bb00070  lq          $s0, 0x70($sp)
     ctx->pc = 0x1f78d8u;

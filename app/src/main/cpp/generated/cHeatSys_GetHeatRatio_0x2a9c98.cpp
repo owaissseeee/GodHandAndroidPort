@@ -13,7 +13,7 @@
 
 // Function: cHeatSys_GetHeatRatio
 // Address: 0x2a9c98 - 0x2a9cc8
-void cHeatSys_GetHeatRatio_0x2a9c98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cHeatSys_GetHeatRatio_0x2a9c98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cHeatSys_GetHeatRatio_0x2a9c98");
 #endif
@@ -43,7 +43,6 @@ void cHeatSys_GetHeatRatio_0x2a9c98(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     // 0x2a9cb4: 0x0  nop
     // NOP
     // 0x2a9cb8: 0x46010003  div.s       $f0, $f0, $f1
-    ctx->pc = 0x2a9cb8u;
     ctx->f[0] = ps2FpuDivide(ctx->fcr31, ctx->f[0], ctx->f[1]);
 label_2a9cbc:
     // 0x2a9cbc: 0x3e00008  jr          $ra

@@ -13,7 +13,7 @@
 
 // Function: Quaternion_SetVectorRotation
 // Address: 0x15a878 - 0x15a9a0
-void Quaternion_SetVectorRotation_0x15a878(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Quaternion_SetVectorRotation_0x15a878(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Quaternion_SetVectorRotation_0x15a878");
 #endif
@@ -125,7 +125,6 @@ void Quaternion_SetVectorRotation_0x15a878(uint8_t* rdram, R5900Context* ctx, PS
         }
     }
     // 0x15a90c: 0x460058c6  mov.s       $f3, $f11
-    ctx->pc = 0x15a90cu;
     ctx->f[3] = FPU_MOV_S(ctx->f[11]);
 label_15a910:
     // 0x15a910: 0x46141834  c.lt.s      $f3, $f20
@@ -148,7 +147,6 @@ label_15a910:
         }
     }
     // 0x15a920: 0x46001806  mov.s       $f0, $f3
-    ctx->pc = 0x15a920u;
     ctx->f[0] = FPU_MOV_S(ctx->f[3]);
 label_15a924:
     // 0x15a924: 0x46140000  add.s       $f0, $f0, $f20
@@ -176,10 +174,8 @@ label_15a924:
     if (!runtime->callDirectStatic(rdram, ctx, &sqrtf_0x3a2440, 0x3a2440u, 0x15a948u)) {
         return;
     }
-    ctx->pc = 0x15A948u;
 label_15a948:
     // 0x15a948: 0x46000146  mov.s       $f5, $f0
-    ctx->pc = 0x15a948u;
     ctx->f[5] = FPU_MOV_S(ctx->f[0]);
 label_15a94c:
     // 0x15a94c: 0x0  nop

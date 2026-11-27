@@ -13,7 +13,7 @@
 
 // Function: cSaveLoad_openSave
 // Address: 0x2bf1a0 - 0x2bf268
-void cSaveLoad_openSave_0x2bf1a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSaveLoad_openSave_0x2bf1a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSaveLoad_openSave_0x2bf1a0");
 #endif
@@ -79,7 +79,6 @@ void cSaveLoad_openSave_0x2bf1a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_2bf1f8;
         }
     }
-    ctx->pc = 0x2BF1DCu;
 label_2bf1dc:
     // 0x2bf1dc: 0x8e24005c  lw          $a0, 0x5C($s1)
     ctx->pc = 0x2bf1dcu;
@@ -107,7 +106,6 @@ label_2bf1dc:
             goto label_2bf24c;
         }
     }
-    ctx->pc = 0x2BF1F8u;
 label_2bf1f8:
     // 0x2bf1f8: 0xc0afdc0  jal         func_2BF700
     SET_GPR_U32(ctx, 31, 0x2BF200u);
@@ -120,7 +118,6 @@ label_2bf1f8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BF700_0x2bf700, 0x2bf700u, 0x2bf200u)) {
         return;
     }
-    ctx->pc = 0x2BF200u;
 label_2bf200:
     // 0x2bf200: 0x10400012  beqz        $v0, . + 4 + (0x12 << 2)
     ctx->pc = 0x2BF200u;
@@ -148,7 +145,6 @@ label_2bf200:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BF170_0x2bf170, 0x2bf170u, 0x2bf210u)) {
         return;
     }
-    ctx->pc = 0x2BF210u;
 label_2bf210:
     // 0x2bf210: 0x2402ffff  addiu       $v0, $zero, -0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));

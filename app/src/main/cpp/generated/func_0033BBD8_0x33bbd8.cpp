@@ -13,7 +13,7 @@
 
 // Function: func_0033BBD8
 // Address: 0x33bbd8 - 0x33bc18
-void func_0033BBD8_0x33bbd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0033BBD8_0x33bbd8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0033BBD8_0x33bbd8");
 #endif
@@ -40,23 +40,18 @@ void func_0033BBD8_0x33bbd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
 
-    ctx->pc = 0x33bbd8u;
 
 label_33bbd8:
     // 0x33bbd8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x33bbd8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_33bbdc:
     // 0x33bbdc: 0x3c020076  lui         $v0, 0x76
-    ctx->pc = 0x33bbdcu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)118 << 16));
 label_33bbe0:
     // 0x33bbe0: 0x24428860  addiu       $v0, $v0, -0x77A0
-    ctx->pc = 0x33bbe0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294936672));
 label_33bbe4:
     // 0x33bbe4: 0x420c0  sll         $a0, $a0, 3
-    ctx->pc = 0x33bbe4u;
     SET_GPR_S32(ctx, 4, (int32_t)SLL32(GPR_U32(ctx, 4), 3));
 label_33bbe8:
     // 0x33bbe8: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -64,11 +59,9 @@ label_33bbe8:
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
 label_33bbec:
     // 0x33bbec: 0x441821  addu        $v1, $v0, $a0
-    ctx->pc = 0x33bbecu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 4)));
 label_33bbf0:
     // 0x33bbf0: 0x822021  addu        $a0, $a0, $v0
-    ctx->pc = 0x33bbf0u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 2)));
 label_33bbf4:
     // 0x33bbf4: 0x8c820000  lw          $v0, 0x0($a0)
@@ -130,7 +123,6 @@ label_33bc04:
             return;
         }
     }
-    ctx->pc = 0x33BC08u;
 label_33bc08:
     // 0x33bc08: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x33bc08u;
@@ -166,7 +158,6 @@ label_33bc10:
         return;
         #endif
     }
-    ctx->pc = 0x33BC14u;
 label_33bc14:
     // 0x33bc14: 0x0  nop
     // NOP

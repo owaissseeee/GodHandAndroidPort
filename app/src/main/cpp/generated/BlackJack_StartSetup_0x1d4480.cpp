@@ -13,7 +13,7 @@
 
 // Function: BlackJack_StartSetup
 // Address: 0x1d4480 - 0x1d44d8
-void BlackJack_StartSetup_0x1d4480(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BlackJack_StartSetup_0x1d4480(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BlackJack_StartSetup_0x1d4480");
 #endif
@@ -70,7 +70,6 @@ void BlackJack_StartSetup_0x1d4480(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_00143A90_0x143a90, 0x143a90u, 0x1d44acu)) {
         return;
     }
-    ctx->pc = 0x1D44ACu;
 label_1d44ac:
     // 0x1d44ac: 0x8e021800  lw          $v0, 0x1800($s0)
     ctx->pc = 0x1d44acu;

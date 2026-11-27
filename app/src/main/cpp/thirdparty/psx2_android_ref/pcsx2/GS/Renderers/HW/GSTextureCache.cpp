@@ -6064,7 +6064,7 @@ void GSTextureCache::ReplaceSourceTexture(Source* s, GSTexture* new_texture, flo
 void GSTextureCache::IncAge()
 {
 	static constexpr int max_age = 3;
-	static constexpr int max_preload_age = 180;
+	const int max_preload_age = (GSConfig.TexturePreloading == TexturePreloadingLevel::Partial) ? 45 : 180;
 
 	// You can't use m_map[page] because Source* are duplicated on several pages.
 	for (auto i = m_src.m_surfaces.begin(); i != m_src.m_surfaces.end();)

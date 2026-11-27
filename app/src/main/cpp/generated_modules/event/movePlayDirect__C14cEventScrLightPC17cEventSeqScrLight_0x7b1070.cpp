@@ -14,27 +14,22 @@ namespace gh_event
 {
 // Function: movePlayDirect__C14cEventScrLightPC17cEventSeqScrLight
 // Address: 0x7b1070 - 0x7b11a0
-void movePlayDirect__C14cEventScrLightPC17cEventSeqScrLight_0x7b1070(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void movePlayDirect__C14cEventScrLightPC17cEventSeqScrLight_0x7b1070(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("movePlayDirect__C14cEventScrLightPC17cEventSeqScrLight_0x7b1070");
 #endif
 
-    ctx->pc = 0x7b1070u;
 
     // 0x7b1070: 0xc4a1000c  lwc1        $f1, 0xC($a1)
     ctx->pc = 0x7b1070u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 12)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x7b1074: 0x3c060060  lui         $a2, 0x60
-    ctx->pc = 0x7b1074u;
     SET_GPR_S32(ctx, 6, (int32_t)((uint32_t)96 << 16));
     // 0x7b1078: 0x24c24700  addiu       $v0, $a2, 0x4700
-    ctx->pc = 0x7b1078u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 6), 18176));
     // 0x7b107c: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x7b107cu;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
     // 0x7b1080: 0x44811000  mtc1        $at, $f2
-    ctx->pc = 0x7b1080u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[2], &bits, sizeof(bits)); }
     // 0x7b1084: 0xe4410030  swc1        $f1, 0x30($v0)
     ctx->pc = 0x7b1084u;
@@ -259,9 +254,7 @@ void movePlayDirect__C14cEventScrLightPC17cEventSeqScrLight_0x7b1070(uint8_t* rd
         return;
         #endif
     }
-    ctx->pc = 0x7B119Cu;
     // 0x7b119c: 0x0  nop
-    ctx->pc = 0x7b119cu;
     // NOP
     ctx->pc = 0x7b11a0u;
 }

@@ -13,7 +13,7 @@
 
 // Function: cEvent_setTextSections
 // Address: 0x2977e8 - 0x2979f0
-void cEvent_setTextSections_0x2977e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_setTextSections_0x2977e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_setTextSections_0x2977e8");
 #endif
@@ -98,7 +98,6 @@ void cEvent_setTextSections_0x2977e8(uint8_t* rdram, R5900Context* ctx, PS2Runti
             return;
         }
     }
-    ctx->pc = 0x29782Cu;
 label_29782c:
     // 0x29782c: 0x8e250014  lw          $a1, 0x14($s1)
     ctx->pc = 0x29782cu;
@@ -135,7 +134,6 @@ label_29782c:
             return;
         }
     }
-    ctx->pc = 0x297850u;
 label_297850:
     // 0x297850: 0x8e250014  lw          $a1, 0x14($s1)
     ctx->pc = 0x297850u;
@@ -165,7 +163,6 @@ label_297850:
             return;
         }
     }
-    ctx->pc = 0x29786Cu;
 label_29786c:
     // 0x29786c: 0x8e250014  lw          $a1, 0x14($s1)
     ctx->pc = 0x29786cu;
@@ -192,7 +189,6 @@ label_29786c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297CB0_0x297cb0, 0x297cb0u, 0x297888u)) {
         return;
     }
-    ctx->pc = 0x297888u;
 label_297888:
     // 0x297888: 0x8e250014  lw          $a1, 0x14($s1)
     ctx->pc = 0x297888u;
@@ -221,7 +217,6 @@ label_297888:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297CF8_0x297cf8, 0x297cf8u, 0x2978a8u)) {
         return;
     }
-    ctx->pc = 0x2978A8u;
 label_2978a8:
     // 0x2978a8: 0x8e250014  lw          $a1, 0x14($s1)
     ctx->pc = 0x2978a8u;
@@ -249,7 +244,6 @@ label_2978a8:
             return;
         }
     }
-    ctx->pc = 0x2978C0u;
 label_2978c0:
     // 0x2978c0: 0x8e250014  lw          $a1, 0x14($s1)
     ctx->pc = 0x2978c0u;
@@ -276,7 +270,6 @@ label_2978c0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297D40_0x297d40, 0x297d40u, 0x2978dcu)) {
         return;
     }
-    ctx->pc = 0x2978DCu;
 label_2978dc:
     // 0x2978dc: 0x8e250014  lw          $a1, 0x14($s1)
     ctx->pc = 0x2978dcu;
@@ -303,7 +296,6 @@ label_2978dc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297D88_0x297d88, 0x297d88u, 0x2978f8u)) {
         return;
     }
-    ctx->pc = 0x2978F8u;
 label_2978f8:
     // 0x2978f8: 0x8e250014  lw          $a1, 0x14($s1)
     ctx->pc = 0x2978f8u;
@@ -330,7 +322,6 @@ label_2978f8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297DD0_0x297dd0, 0x297dd0u, 0x297914u)) {
         return;
     }
-    ctx->pc = 0x297914u;
 label_297914:
     // 0x297914: 0x8e250014  lw          $a1, 0x14($s1)
     ctx->pc = 0x297914u;
@@ -357,7 +348,6 @@ label_297914:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297E18_0x297e18, 0x297e18u, 0x297930u)) {
         return;
     }
-    ctx->pc = 0x297930u;
 label_297930:
     // 0x297930: 0x8e250014  lw          $a1, 0x14($s1)
     ctx->pc = 0x297930u;
@@ -384,7 +374,6 @@ label_297930:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297E60_0x297e60, 0x297e60u, 0x29794cu)) {
         return;
     }
-    ctx->pc = 0x29794Cu;
 label_29794c:
     // 0x29794c: 0x8e250014  lw          $a1, 0x14($s1)
     ctx->pc = 0x29794cu;
@@ -411,7 +400,6 @@ label_29794c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297EA8_0x297ea8, 0x297ea8u, 0x297968u)) {
         return;
     }
-    ctx->pc = 0x297968u;
 label_297968:
     // 0x297968: 0x8e250014  lw          $a1, 0x14($s1)
     ctx->pc = 0x297968u;
@@ -438,7 +426,6 @@ label_297968:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297EF0_0x297ef0, 0x297ef0u, 0x297984u)) {
         return;
     }
-    ctx->pc = 0x297984u;
 label_297984:
     // 0x297984: 0x8e250014  lw          $a1, 0x14($s1)
     ctx->pc = 0x297984u;
@@ -465,7 +452,6 @@ label_297984:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297F38_0x297f38, 0x297f38u, 0x2979a0u)) {
         return;
     }
-    ctx->pc = 0x2979A0u;
 label_2979a0:
     // 0x2979a0: 0x8e250014  lw          $a1, 0x14($s1)
     ctx->pc = 0x2979a0u;
@@ -492,7 +478,6 @@ label_2979a0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297F80_0x297f80, 0x297f80u, 0x2979bcu)) {
         return;
     }
-    ctx->pc = 0x2979BCu;
 label_2979bc:
     // 0x2979bc: 0x8e250014  lw          $a1, 0x14($s1)
     ctx->pc = 0x2979bcu;
@@ -519,7 +504,6 @@ label_2979bc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297FC8_0x297fc8, 0x297fc8u, 0x2979d8u)) {
         return;
     }
-    ctx->pc = 0x2979D8u;
 label_2979d8:
     // 0x2979d8: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2979d8u;

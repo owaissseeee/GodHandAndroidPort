@@ -13,7 +13,7 @@
 
 // Function: ChildOwner_releaseChild
 // Address: 0x285678 - 0x2856c0
-void ChildOwner_releaseChild_0x285678(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ChildOwner_releaseChild_0x285678(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ChildOwner_releaseChild_0x285678");
 #endif
@@ -52,7 +52,6 @@ void ChildOwner_releaseChild_0x285678(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cCollisionSolidManage_ReleaseUnit_0x1347e8, 0x1347e8u, 0x285698u)) {
         return;
     }
-    ctx->pc = 0x285698u;
 label_285698:
     // 0x285698: 0x8e0415ec  lw          $a0, 0x15EC($s0)
     ctx->pc = 0x285698u;
@@ -78,7 +77,6 @@ label_285698:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_dieCommon_0x1b79b0, 0x1b79b0u, 0x2856acu)) {
         return;
     }
-    ctx->pc = 0x2856ACu;
 label_2856ac:
     // 0x2856ac: 0xae0015ec  sw          $zero, 0x15EC($s0)
     ctx->pc = 0x2856acu;

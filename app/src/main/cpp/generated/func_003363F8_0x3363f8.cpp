@@ -13,7 +13,7 @@
 
 // Function: func_003363F8
 // Address: 0x3363f8 - 0x336498
-void func_003363F8_0x3363f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003363F8_0x3363f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003363F8_0x3363f8");
 #endif
@@ -53,7 +53,6 @@ void func_003363F8_0x3363f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &strlen_0x3a58dc, 0x3a58dcu, 0x336414u)) {
         return;
     }
-    ctx->pc = 0x336414u;
 label_336414:
     // 0x336414: 0x2c420012  sltiu       $v0, $v0, 0x12
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)18) ? 1 : 0);
@@ -80,7 +79,6 @@ label_336414:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00336330_0x336330, 0x336330u, 0x33642cu)) {
         return;
     }
-    ctx->pc = 0x33642Cu;
 label_33642c:
     // 0x33642c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -99,7 +97,6 @@ label_33642c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00336378_0x336378, 0x336378u, 0x336440u)) {
         return;
     }
-    ctx->pc = 0x336440u;
 label_336440:
     // 0x336440: 0x24060010  addiu       $a2, $zero, 0x10
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 16));
@@ -158,7 +155,6 @@ label_336460:
     if (!runtime->callDirectStatic(rdram, ctx, &Forward3A9228_336360_0x336360, 0x336360u, 0x336470u)) {
         return;
     }
-    ctx->pc = 0x336470u;
 label_336470:
     // 0x336470: 0x2103c  dsll32      $v0, $v0, 0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) << (32 + 0));
@@ -168,7 +164,6 @@ label_336470:
     ctx->pc = 0x336478u;
     WRITE32(ADD32(GPR_U32(ctx, 17), 0), GPR_U32(ctx, 2));
     // 0x33647c: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x33647cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_336480:
     // 0x336480: 0xdfb00010  ld          $s0, 0x10($sp)

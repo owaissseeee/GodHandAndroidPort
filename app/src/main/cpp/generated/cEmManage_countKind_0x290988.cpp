@@ -13,7 +13,7 @@
 
 // Function: cEmManage_countKind
 // Address: 0x290988 - 0x2909b8
-void cEmManage_countKind_0x290988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_countKind_0x290988(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_countKind_0x290988");
 #endif
@@ -45,7 +45,6 @@ void cEmManage_countKind_0x290988(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         }
     }
     // 0x290994: 0x0  nop
-    ctx->pc = 0x290994u;
     // NOP
 label_290998:
     // 0x290998: 0x8c82000c  lw          $v0, 0xC($a0)
@@ -76,7 +75,6 @@ label_290998:
             goto label_290998;
         }
     }
-    ctx->pc = 0x2909B0u;
 label_2909b0:
     // 0x2909b0: 0x3e00008  jr          $ra
     ctx->pc = 0x2909B0u;

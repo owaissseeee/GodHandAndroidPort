@@ -13,7 +13,7 @@
 
 // Function: __make_dp
 // Address: 0x31eab0 - 0x31eae0
-void ps2___make_dp_0x31eab0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___make_dp_0x31eab0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___make_dp_0x31eab0");
 #endif
@@ -53,7 +53,6 @@ void ps2___make_dp_0x31eab0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___pack_d_0x31de78, 0x31de78u, 0x31ead0u)) {
         return;
     }
-    ctx->pc = 0x31EAD0u;
 label_31ead0:
     // 0x31ead0: 0xdfbf0020  ld          $ra, 0x20($sp)
     ctx->pc = 0x31ead0u;

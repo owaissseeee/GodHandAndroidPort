@@ -13,7 +13,7 @@
 
 // Function: func_0012F600
 // Address: 0x12f600 - 0x12f750
-void func_0012F600_0x12f600(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0012F600_0x12f600(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0012F600_0x12f600");
 #endif
@@ -88,7 +88,6 @@ void func_0012F600_0x12f600(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x12f640: 0x354afffb  ori         $t2, $t2, 0xFFFB
     SET_GPR_U64(ctx, 10, GPR_U64(ctx, 10) | (uint64_t)(uint16_t)65531);
     // 0x12f644: 0x3529ffff  ori         $t1, $t1, 0xFFFF
-    ctx->pc = 0x12f644u;
     SET_GPR_U64(ctx, 9, GPR_U64(ctx, 9) | (uint64_t)(uint16_t)65535);
 label_12f648:
     // 0x12f648: 0x95030000  lhu         $v1, 0x0($t0)
@@ -128,7 +127,6 @@ label_12f648:
             goto label_12f648;
         }
     }
-    ctx->pc = 0x12F670u;
 label_12f670:
     // 0x12f670: 0x30c20002  andi        $v0, $a2, 0x2
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 6) & (uint64_t)(uint16_t)2);
@@ -185,7 +183,6 @@ label_12f670:
     // 0x12f6a8: 0x3529fffb  ori         $t1, $t1, 0xFFFB
     SET_GPR_U64(ctx, 9, GPR_U64(ctx, 9) | (uint64_t)(uint16_t)65531);
     // 0x12f6ac: 0x3508ffff  ori         $t0, $t0, 0xFFFF
-    ctx->pc = 0x12f6acu;
     SET_GPR_U64(ctx, 8, GPR_U64(ctx, 8) | (uint64_t)(uint16_t)65535);
 label_12f6b0:
     // 0x12f6b0: 0x94e30000  lhu         $v1, 0x0($a3)
@@ -225,7 +222,6 @@ label_12f6b0:
             goto label_12f6b0;
         }
     }
-    ctx->pc = 0x12F6D8u;
 label_12f6d8:
     // 0x12f6d8: 0x11a0001b  beqz        $t5, . + 4 + (0x1B << 2)
     ctx->pc = 0x12F6D8u;
@@ -281,7 +277,6 @@ label_12f6d8:
     // 0x12f718: 0x3508fffb  ori         $t0, $t0, 0xFFFB
     SET_GPR_U64(ctx, 8, GPR_U64(ctx, 8) | (uint64_t)(uint16_t)65531);
     // 0x12f71c: 0x34e7ffff  ori         $a3, $a3, 0xFFFF
-    ctx->pc = 0x12f71cu;
     SET_GPR_U64(ctx, 7, GPR_U64(ctx, 7) | (uint64_t)(uint16_t)65535);
 label_12f720:
     // 0x12f720: 0x94c30000  lhu         $v1, 0x0($a2)
@@ -321,7 +316,6 @@ label_12f720:
             goto label_12f720;
         }
     }
-    ctx->pc = 0x12F748u;
 label_12f748:
     // 0x12f748: 0x3e00008  jr          $ra
     ctx->pc = 0x12F748u;

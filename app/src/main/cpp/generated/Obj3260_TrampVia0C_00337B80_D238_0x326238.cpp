@@ -13,7 +13,7 @@
 
 // Function: Obj3260_TrampVia0C_00337B80_D238
 // Address: 0x326238 - 0x326250
-void Obj3260_TrampVia0C_00337B80_D238_0x326238(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj3260_TrampVia0C_00337B80_D238_0x326238(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj3260_TrampVia0C_00337B80_D238_0x326238");
 #endif

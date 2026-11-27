@@ -13,7 +13,7 @@
 
 // Function: cWorldLight_savePreset
 // Address: 0x2d82a0 - 0x2d8408
-void cWorldLight_savePreset_0x2d82a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cWorldLight_savePreset_0x2d82a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cWorldLight_savePreset_0x2d82a0");
 #endif
@@ -273,7 +273,6 @@ label_2d83b0:
     // 0x2d83c0: 0x821021  addu        $v0, $a0, $v0
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 2)));
     // 0x2d83c4: 0x24c400e0  addiu       $a0, $a2, 0xE0
-    ctx->pc = 0x2d83c4u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 6), 224));
 label_2d83c8:
     // 0x2d83c8: 0x78690000  lq          $t1, 0x0($v1)
@@ -340,7 +339,6 @@ label_2d83ec:
             goto label_2d83b0;
         }
     }
-    ctx->pc = 0x2D8400u;
 label_2d8400:
     // 0x2d8400: 0x3e00008  jr          $ra
     ctx->pc = 0x2D8400u;

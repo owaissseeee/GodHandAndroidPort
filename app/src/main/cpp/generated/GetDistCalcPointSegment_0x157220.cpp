@@ -13,7 +13,7 @@
 
 // Function: GetDistCalcPointSegment
 // Address: 0x157220 - 0x1573c8
-void GetDistCalcPointSegment_0x157220(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetDistCalcPointSegment_0x157220(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetDistCalcPointSegment_0x157220");
 #endif
@@ -106,7 +106,6 @@ void GetDistCalcPointSegment_0x157220(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0InnerProduct_0x30a348, 0x30a348u, 0x15728cu)) {
         return;
     }
-    ctx->pc = 0x15728Cu;
 label_15728c:
     // 0x15728c: 0x46000506  mov.s       $f20, $f0
     ctx->f[20] = FPU_MOV_S(ctx->f[0]);
@@ -123,7 +122,6 @@ label_15728c:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0InnerProduct_0x30a348, 0x30a348u, 0x15729cu)) {
         return;
     }
-    ctx->pc = 0x15729Cu;
 label_15729c:
     // 0x15729c: 0x0  nop
     // NOP
@@ -163,7 +161,6 @@ label_15729c:
             goto label_1572e4;
         }
     }
-    ctx->pc = 0x1572C8u;
 label_1572c8:
     // 0x1572c8: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -190,7 +187,6 @@ label_1572c8:
             goto label_1572e4;
         }
     }
-    ctx->pc = 0x1572E4u;
 label_1572e4:
     // 0x1572e4: 0x27a30040  addiu       $v1, $sp, 0x40
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 29), 64));
@@ -344,7 +340,6 @@ label_157394:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0Length_0x1f7df8, 0x1f7df8u, 0x15739cu)) {
         return;
     }
-    ctx->pc = 0x15739Cu;
 label_15739c:
     // 0x15739c: 0x7bb00090  lq          $s0, 0x90($sp)
     ctx->pc = 0x15739cu;

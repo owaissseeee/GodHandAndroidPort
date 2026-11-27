@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Set_D_00766D44_Check_Field_188_NE_2
 // Address: 0x36c5f8 - 0x36c628
-void Obj0000_Set_D_00766D44_Check_Field_188_NE_2_0x36c5f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_D_00766D44_Check_Field_188_NE_2_0x36c5f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_D_00766D44_Check_Field_188_NE_2_0x36c5f8");
 #endif

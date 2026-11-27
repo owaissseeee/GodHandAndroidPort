@@ -13,7 +13,7 @@
 
 // Function: cOmDoor_setLock
 // Address: 0x1bd178 - 0x1bd1a0
-void cOmDoor_setLock_0x1bd178(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmDoor_setLock_0x1bd178(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmDoor_setLock_0x1bd178");
 #endif
@@ -57,7 +57,6 @@ void cOmDoor_setLock_0x1bd178(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
         return;
         #endif
     }
-    ctx->pc = 0x1BD190u;
 label_1bd190:
     // 0x1bd190: 0x2403fffd  addiu       $v1, $zero, -0x3
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967293));

@@ -13,7 +13,7 @@
 
 // Function: dpcmp
 // Address: 0x31e870 - 0x31e8c0
-void dpcmp_0x31e870(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void dpcmp_0x31e870(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("dpcmp_0x31e870");
 #endif
@@ -55,7 +55,6 @@ void dpcmp_0x31e870(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___unpack_d_0x31dfa8, 0x31dfa8u, 0x31e890u)) {
         return;
     }
-    ctx->pc = 0x31E890u;
 label_31e890:
     // 0x31e890: 0x27b00020  addiu       $s0, $sp, 0x20
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 29), 32));
@@ -72,7 +71,6 @@ label_31e890:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___unpack_d_0x31dfa8, 0x31dfa8u, 0x31e8a0u)) {
         return;
     }
-    ctx->pc = 0x31E8A0u;
 label_31e8a0:
     // 0x31e8a0: 0x200282d  daddu       $a1, $s0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -87,7 +85,6 @@ label_31e8a0:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___fpcmp_parts_d_0x31e758, 0x31e758u, 0x31e8acu)) {
         return;
     }
-    ctx->pc = 0x31E8ACu;
 label_31e8ac:
     // 0x31e8ac: 0xdfbf0060  ld          $ra, 0x60($sp)
     ctx->pc = 0x31e8acu;

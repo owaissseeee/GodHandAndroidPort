@@ -13,7 +13,7 @@
 
 // Function: cOmDamaged_switchOff
 // Address: 0x1928d8 - 0x192960
-void cOmDamaged_switchOff_0x1928d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmDamaged_switchOff_0x1928d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmDamaged_switchOff_0x1928d8");
 #endif
@@ -69,10 +69,8 @@ void cOmDamaged_switchOff_0x1928d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x1928fcu)) {
         return;
     }
-    ctx->pc = 0x1928FCu;
 label_1928fc:
     // 0x1928fc: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x1928fcu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_192900:
     // 0x192900: 0x282d  daddu       $a1, $zero, $zero
@@ -88,7 +86,6 @@ label_192900:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshDispFromLayer_0x1b7280, 0x1b7280u, 0x19290cu)) {
         return;
     }
-    ctx->pc = 0x19290Cu;
 label_19290c:
     // 0x19290c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -105,7 +102,6 @@ label_19290c:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshDispFromLayer_0x1b7280, 0x1b7280u, 0x19291cu)) {
         return;
     }
-    ctx->pc = 0x19291Cu;
 label_19291c:
     // 0x19291c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -122,7 +118,6 @@ label_19291c:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField380Bit2000ForTag_1B7300_0x1b7300, 0x1b7300u, 0x19292cu)) {
         return;
     }
-    ctx->pc = 0x19292Cu;
 label_19292c:
     // 0x19292c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -139,7 +134,6 @@ label_19292c:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField380Bit2000ForTag_1B7300_0x1b7300, 0x1b7300u, 0x19293cu)) {
         return;
     }
-    ctx->pc = 0x19293Cu;
 label_19293c:
     // 0x19293c: 0x8e020250  lw          $v0, 0x250($s0)
     ctx->pc = 0x19293cu;

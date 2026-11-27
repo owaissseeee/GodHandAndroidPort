@@ -13,7 +13,7 @@
 
 // Function: InitVtblF0_2EBC28
 // Address: 0x2ebc28 - 0x2ebc50
-void InitVtblF0_2EBC28_0x2ebc28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitVtblF0_2EBC28_0x2ebc28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitVtblF0_2EBC28_0x2ebc28");
 #endif
@@ -48,7 +48,6 @@ void InitVtblF0_2EBC28_0x2ebc28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &func_002FBE28_0x2fbe28, 0x2fbe28u, 0x2ebc44u)) {
         return;
     }
-    ctx->pc = 0x2EBC44u;
 label_2ebc44:
     // 0x2ebc44: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2ebc44u;

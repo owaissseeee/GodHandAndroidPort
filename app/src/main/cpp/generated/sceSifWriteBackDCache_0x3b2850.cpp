@@ -13,7 +13,7 @@
 
 // Function: sceSifWriteBackDCache
 // Address: 0x3b2850 - 0x3b2900
-void sceSifWriteBackDCache_0x3b2850(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSifWriteBackDCache_0x3b2850(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSifWriteBackDCache_0x3b2850");
 #endif
@@ -75,7 +75,6 @@ void sceSifWriteBackDCache_0x3b2850(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_3b28a0;
         }
     }
-    ctx->pc = 0x3B2884u;
 label_3b2884:
     // 0x3b2884: 0xf  sync
     // SYNC instruction - memory barrier
@@ -197,7 +196,6 @@ label_fallthrough_0x3b28a0:
             goto label_3b28a4;
         }
     }
-    ctx->pc = 0x3B28F4u;
 label_3b28f4:
     // 0x3b28f4: 0x3e00008  jr          $ra
     ctx->pc = 0x3B28F4u;

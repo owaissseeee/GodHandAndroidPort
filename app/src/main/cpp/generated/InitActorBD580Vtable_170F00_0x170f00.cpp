@@ -13,7 +13,7 @@
 
 // Function: InitActorBD580Vtable_170F00
 // Address: 0x170f00 - 0x170f38
-void InitActorBD580Vtable_170F00_0x170f00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitActorBD580Vtable_170F00_0x170f00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitActorBD580Vtable_170F00_0x170f00");
 #endif
@@ -45,7 +45,6 @@ void InitActorBD580Vtable_170F00_0x170f00(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &func_001BD580_0x1bd580, 0x1bd580u, 0x170f14u)) {
         return;
     }
-    ctx->pc = 0x170F14u;
 label_170f14:
     // 0x170f14: 0x3c030042  lui         $v1, 0x42
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)66 << 16));

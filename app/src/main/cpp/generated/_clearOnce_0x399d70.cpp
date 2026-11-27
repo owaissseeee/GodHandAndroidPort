@@ -13,7 +13,7 @@
 
 // Function: _clearOnce
 // Address: 0x399d70 - 0x399e40
-void _clearOnce_0x399d70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _clearOnce_0x399d70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_clearOnce_0x399d70");
 #endif
@@ -111,7 +111,6 @@ void _clearOnce_0x399d70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
         return;
         #endif
     }
-    ctx->pc = 0x399DE4u;
 label_399de4:
     // 0x399de4: 0x14620012  bne         $v1, $v0, . + 4 + (0x12 << 2)
     ctx->pc = 0x399DE4u;
@@ -182,7 +181,6 @@ label_399de4:
         return;
         #endif
     }
-    ctx->pc = 0x399E30u;
 label_399e30:
     // 0x399e30: 0xe0202d  daddu       $a0, $a3, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 7) + (uint64_t)GPR_U64(ctx, 0));

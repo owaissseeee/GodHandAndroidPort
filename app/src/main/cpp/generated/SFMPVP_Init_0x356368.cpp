@@ -13,7 +13,7 @@
 
 // Function: SFMPVP_Init
 // Address: 0x356368 - 0x3563b8
-void SFMPVP_Init_0x356368(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFMPVP_Init_0x356368(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFMPVP_Init_0x356368");
 #endif
@@ -54,7 +54,6 @@ void SFMPVP_Init_0x356368(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x39A8E8u, 0x35637Cu, 0x356384u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x356384u;
 label_356384:
     // 0x356384: 0x3c040076  lui         $a0, 0x76
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)118 << 16));
@@ -77,7 +76,6 @@ label_356384:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x366B80u, 0x356398u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x3563A0u;
 label_3563a0:
     // 0x3563a0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3563a0u;

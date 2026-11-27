@@ -13,7 +13,7 @@
 
 // Function: ScrObj_reset
 // Address: 0x144c08 - 0x144c90
-void ScrObj_reset_0x144c08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ScrObj_reset_0x144c08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ScrObj_reset_0x144c08");
 #endif
@@ -57,12 +57,10 @@ void ScrObj_reset_0x144c08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_00144C90_0x144c90, 0x144c90u, 0x144c28u)) {
         return;
     }
-    ctx->pc = 0x144C28u;
 label_144c28:
     // 0x144c28: 0x24120050  addiu       $s2, $zero, 0x50
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 0), 80));
     // 0x144c2c: 0x2322018  mult        $a0, $s1, $s2
-    ctx->pc = 0x144c2cu;
     { int64_t result = (int64_t)GPR_S32(ctx, 17) * (int64_t)GPR_S32(ctx, 18); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 4, (int32_t)result); }
 label_144c30:
     // 0x144c30: 0x24840100  addiu       $a0, $a0, 0x100
@@ -78,7 +76,6 @@ label_144c30:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_resetAnim_0x2aba78, 0x2aba78u, 0x144c3cu)) {
         return;
     }
-    ctx->pc = 0x144C3Cu;
 label_144c3c:
     // 0x144c3c: 0x26220001  addiu       $v0, $s1, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 17), 1));
@@ -115,7 +112,6 @@ label_144c3c:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_resetAnim_0x2aba78, 0x2aba78u, 0x144c58u)) {
         return;
     }
-    ctx->pc = 0x144C58u;
 label_144c58:
     // 0x144c58: 0xc0aae9e  jal         func_2ABA78
     SET_GPR_U32(ctx, 31, 0x144C60u);
@@ -128,7 +124,6 @@ label_144c58:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_resetAnim_0x2aba78, 0x2aba78u, 0x144c60u)) {
         return;
     }
-    ctx->pc = 0x144C60u;
 label_144c60:
     // 0x144c60: 0xa600041e  sh          $zero, 0x41E($s0)
     ctx->pc = 0x144c60u;

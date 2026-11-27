@@ -14,23 +14,23 @@ namespace gh_mcport
 {
 // Function: __tf6cMcSys
 // Address: 0x7cf538 - 0x7cf578
-void ps2___tf6cMcSys_0x7cf538(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___tf6cMcSys_0x7cf538(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___tf6cMcSys_0x7cf538");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7cf564u: goto label_7cf564;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7cf538u, 0)) {
+        switch (ctx->pc) {
+            case 0x7cf564u: goto label_7cf564;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7cf538u;
+
 
     // 0x7cf538: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x7cf538u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x7cf53c: 0x3c03007d  lui         $v1, 0x7D
-    ctx->pc = 0x7cf53cu;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)125 << 16));
     // 0x7cf540: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x7cf540u;
@@ -39,7 +39,6 @@ void ps2___tf6cMcSys_0x7cf538(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     ctx->pc = 0x7cf544u;
     SET_GPR_S32(ctx, 2, (int32_t)FAST_READ32(0x7D1480u));
     // 0x7cf548: 0x24701480  addiu       $s0, $v1, 0x1480
-    ctx->pc = 0x7cf548u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 3), 5248));
     // 0x7cf54c: 0x14400005  bnez        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x7CF54Cu;
@@ -56,17 +55,12 @@ void ps2___tf6cMcSys_0x7cf538(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_7cf564;
         }
     }
-    ctx->pc = 0x7CF554u;
     // 0x7cf554: 0x3c05007d  lui         $a1, 0x7D
-    ctx->pc = 0x7cf554u;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)125 << 16));
     // 0x7cf558: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x7cf558u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x7cf55c: 0xc1f2614  jal         func_7C9850
-    ctx->pc = 0x7CF55Cu;
     SET_GPR_U32(ctx, 31, 0x7CF564u);
-    ctx->pc = 0x7CF560u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x7CF55Cu;
     // 0x7cf560: 0x24a509d8  addiu       $a1, $a1, 0x9D8 (Delay Slot)
@@ -76,10 +70,8 @@ void ps2___tf6cMcSys_0x7cf538(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x7C9850u, 0x7CF55Cu, 0x7CF564u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7CF564u;
 label_7cf564:
     // 0x7cf564: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x7cf564u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x7cf568: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7cf568u;

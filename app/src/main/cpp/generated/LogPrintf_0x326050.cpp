@@ -13,7 +13,7 @@
 
 // Function: LogPrintf
 // Address: 0x326050 - 0x3260c8
-void LogPrintf_0x326050(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void LogPrintf_0x326050(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("LogPrintf_0x326050");
 #endif
@@ -106,7 +106,6 @@ void LogPrintf_0x326050(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A7AE8_0x3a7ae8, 0x3a7ae8u, 0x3260b4u)) {
         return;
     }
-    ctx->pc = 0x3260B4u;
 label_3260b4:
     // 0x3260b4: 0xc0ec7ca  jal         func_3B1F28
     SET_GPR_U32(ctx, 31, 0x3260BCu);
@@ -119,7 +118,6 @@ label_3260b4:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B1F28u, 0x3260B4u, 0x3260BCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3260BCu;
 label_3260bc:
     // 0x3260bc: 0xdfbf0080  ld          $ra, 0x80($sp)
     ctx->pc = 0x3260bcu;

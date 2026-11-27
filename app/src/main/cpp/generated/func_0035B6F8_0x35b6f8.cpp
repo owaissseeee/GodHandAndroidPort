@@ -13,7 +13,7 @@
 
 // Function: func_0035B6F8
 // Address: 0x35b6f8 - 0x35b848
-void func_0035B6F8_0x35b6f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0035B6F8_0x35b6f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0035B6F8_0x35b6f8");
 #endif
@@ -78,7 +78,6 @@ void func_0035B6F8_0x35b6f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035AB98_0x35ab98, 0x35ab98u, 0x35b740u)) {
         return;
     }
-    ctx->pc = 0x35B740u;
 label_35b740:
     // 0x35b740: 0x8fa20004  lw          $v0, 0x4($sp)
     ctx->pc = 0x35b740u;
@@ -142,7 +141,6 @@ label_35b740:
         }
     }
     // 0x35b774: 0x0  nop
-    ctx->pc = 0x35b774u;
     // NOP
 label_35b778:
     // 0x35b778: 0x260282d  daddu       $a1, $s3, $zero
@@ -160,7 +158,6 @@ label_35b778:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035B848_0x35b848, 0x35b848u, 0x35b788u)) {
         return;
     }
-    ctx->pc = 0x35B788u;
 label_35b788:
     // 0x35b788: 0x10000026  b           . + 4 + (0x26 << 2)
     ctx->pc = 0x35B788u;
@@ -177,7 +174,6 @@ label_35b788:
             goto label_35b824;
         }
     }
-    ctx->pc = 0x35B790u;
 label_35b790:
     // 0x35b790: 0x8ea30008  lw          $v1, 0x8($s5)
     ctx->pc = 0x35b790u;
@@ -207,7 +203,6 @@ label_35b790:
             goto label_35b7b0;
         }
     }
-    ctx->pc = 0x35B7B0u;
 label_35b7b0:
     // 0x35b7b0: 0x44821000  mtc1        $v0, $f2
     { uint32_t bits = GPR_U32(ctx, 2); std::memcpy(&ctx->f[2], &bits, sizeof(bits)); }
@@ -273,7 +268,6 @@ label_35b7b0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035B8C0_0x35b8c0, 0x35b8c0u, 0x35b808u)) {
         return;
     }
-    ctx->pc = 0x35B808u;
 label_35b808:
     // 0x35b808: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x35B808u;
@@ -290,7 +284,6 @@ label_35b808:
             goto label_35b824;
         }
     }
-    ctx->pc = 0x35B810u;
 label_35b810:
     // 0x35b810: 0x460d0836  c.le.s      $f1, $f13
     ctx->fcr31 = (FPU_C_OLE_S(ctx->f[1], ctx->f[13])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);

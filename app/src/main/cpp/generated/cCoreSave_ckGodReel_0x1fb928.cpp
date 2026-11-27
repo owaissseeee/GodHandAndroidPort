@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_ckGodReel
 // Address: 0x1fb928 - 0x1fb980
-void cCoreSave_ckGodReel_0x1fb928(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_ckGodReel_0x1fb928(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_ckGodReel_0x1fb928");
 #endif
@@ -44,7 +44,6 @@ void cCoreSave_ckGodReel_0x1fb928(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_1fb93c;
         }
     }
-    ctx->pc = 0x1FB934u;
 label_1fb934:
     // 0x1fb934: 0x3e00008  jr          $ra
     ctx->pc = 0x1FB934u;
@@ -65,7 +64,6 @@ label_1fb934:
         return;
         #endif
     }
-    ctx->pc = 0x1FB93Cu;
 label_1fb93c:
     // 0x1fb93c: 0x0  nop
     // NOP
@@ -137,7 +135,6 @@ label_1fb93c:
         return;
         #endif
     }
-    ctx->pc = 0x1FB974u;
 label_1fb974:
     // 0x1fb974: 0x3e00008  jr          $ra
     ctx->pc = 0x1FB974u;

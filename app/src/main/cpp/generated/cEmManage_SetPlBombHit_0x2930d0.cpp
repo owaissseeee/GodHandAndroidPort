@@ -13,7 +13,7 @@
 
 // Function: cEmManage_SetPlBombHit
 // Address: 0x2930d0 - 0x2930e0
-void cEmManage_SetPlBombHit_0x2930d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_SetPlBombHit_0x2930d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_SetPlBombHit_0x2930d0");
 #endif

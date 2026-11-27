@@ -13,7 +13,7 @@
 
 // Function: getElemInfPtr
 // Address: 0x35e0f0 - 0x35e148
-void getElemInfPtr_0x35e0f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getElemInfPtr_0x35e0f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getElemInfPtr_0x35e0f0");
 #endif
@@ -50,7 +50,6 @@ void getElemInfPtr_0x35e0f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &isEffectiveVer_0x35d7b8, 0x35d7b8u, 0x35e10cu)) {
         return;
     }
-    ctx->pc = 0x35E10Cu;
 label_35e10c:
     // 0x35e10c: 0x200282d  daddu       $a1, $s0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -89,7 +88,6 @@ label_35e10c:
         return;
     }
     // 0x35e12c: 0x0  nop
-    ctx->pc = 0x35e12cu;
     // NOP
 label_35e130:
     // 0x35e130: 0xdfb00000  ld          $s0, 0x0($sp)

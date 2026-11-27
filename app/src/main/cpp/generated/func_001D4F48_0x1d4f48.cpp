@@ -13,7 +13,7 @@
 
 // Function: func_001D4F48
 // Address: 0x1d4f48 - 0x1d4f78
-void func_001D4F48_0x1d4f48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001D4F48_0x1d4f48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001D4F48_0x1d4f48");
 #endif
@@ -42,7 +42,6 @@ void func_001D4F48_0x1d4f48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_release_0x2aa078, 0x2aa078u, 0x1d4f58u)) {
         return;
     }
-    ctx->pc = 0x1D4F58u;
 label_1d4f58:
     // 0x1d4f58: 0x3c03003c  lui         $v1, 0x3C
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)60 << 16));

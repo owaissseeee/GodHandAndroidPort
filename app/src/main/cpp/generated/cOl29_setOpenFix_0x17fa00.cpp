@@ -13,7 +13,7 @@
 
 // Function: cOl29_setOpenFix
 // Address: 0x17fa00 - 0x17fa78
-void cOl29_setOpenFix_0x17fa00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl29_setOpenFix_0x17fa00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl29_setOpenFix_0x17fa00");
 #endif
@@ -54,11 +54,9 @@ void cOl29_setOpenFix_0x17fa00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
         }
     }
 
-    ctx->pc = 0x17fa00u;
 
 label_17fa00:
     // 0x17fa00: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x17fa00u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
 label_17fa04:
     // 0x17fa04: 0x7fb00020  sq          $s0, 0x20($sp)
@@ -70,7 +68,6 @@ label_17fa08:
     WRITE64(ADD32(GPR_U32(ctx, 29), 16), GPR_U64(ctx, 31));
 label_17fa0c:
     // 0x17fa0c: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x17fa0cu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_17fa10:
     // 0x17fa10: 0x92020764  lbu         $v0, 0x764($s0)
@@ -103,7 +100,6 @@ label_17fa18:
             goto label_17fa6c;
         }
     }
-    ctx->pc = 0x17FA1Cu;
 label_17fa1c:
     // 0x17fa1c: 0x8e030214  lw          $v1, 0x214($s0)
     ctx->pc = 0x17fa1cu;
@@ -144,7 +140,6 @@ label_17fa2c:
             return;
         }
     }
-    ctx->pc = 0x17FA30u;
 label_17fa30:
     // 0x17fa30: 0xd8440000  lqc2        $vf4, 0x0($v0)
     ctx->pc = 0x17fa30u;
@@ -159,7 +154,6 @@ label_17fa38:
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 532)));
 label_17fa3c:
     // 0x17fa3c: 0x3a0282d  daddu       $a1, $sp, $zero
-    ctx->pc = 0x17fa3cu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
 label_17fa40:
     // 0x17fa40: 0x84440070  lh          $a0, 0x70($v0)
@@ -197,10 +191,8 @@ label_17fa4c:
             return;
         }
     }
-    ctx->pc = 0x17FA50u;
 label_17fa50:
     // 0x17fa50: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x17fa50u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_17fa54:
     // 0x17fa54: 0xa20002f7  sb          $zero, 0x2F7($s0)

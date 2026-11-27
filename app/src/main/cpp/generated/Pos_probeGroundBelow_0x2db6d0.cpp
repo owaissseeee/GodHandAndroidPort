@@ -13,7 +13,7 @@
 
 // Function: Pos_probeGroundBelow
 // Address: 0x2db6d0 - 0x2db770
-void Pos_probeGroundBelow_0x2db6d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Pos_probeGroundBelow_0x2db6d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Pos_probeGroundBelow_0x2db6d0");
 #endif
@@ -107,7 +107,6 @@ void Pos_probeGroundBelow_0x2db6d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &ChkLine_0x131e10, 0x131e10u, 0x2db74cu)) {
         return;
     }
-    ctx->pc = 0x2DB74Cu;
 label_2db74c:
     // 0x2db74c: 0x10500002  beq         $v0, $s0, . + 4 + (0x2 << 2)
     ctx->pc = 0x2DB74Cu;

@@ -13,7 +13,7 @@
 
 // Function: SetColorRgba_1FFE60
 // Address: 0x1ffe60 - 0x1ffeb8
-void SetColorRgba_1FFE60_0x1ffe60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetColorRgba_1FFE60_0x1ffe60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetColorRgba_1FFE60_0x1ffe60");
 #endif
@@ -56,7 +56,6 @@ void SetColorRgba_1FFE60_0x1ffe60(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &cDoor_getJumpData_0x2004c8, 0x2004c8u, 0x1ffe88u)) {
         return;
     }
-    ctx->pc = 0x1FFE88u;
 label_1ffe88:
     // 0x1ffe88: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -86,7 +85,6 @@ label_1ffe88:
     if (!runtime->callDirectStatic(rdram, ctx, &cDoor_setDoorJump_0x1fff80, 0x1fff80u, 0x1ffe9cu)) {
         return;
     }
-    ctx->pc = 0x1FFE9Cu;
 label_1ffe9c:
     // 0x1ffe9c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1ffe9cu;

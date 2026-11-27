@@ -13,7 +13,7 @@
 
 // Function: cOmThrow_SetFall
 // Address: 0x1c8cb8 - 0x1c8d48
-void cOmThrow_SetFall_0x1c8cb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmThrow_SetFall_0x1c8cb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmThrow_SetFall_0x1c8cb8");
 #endif
@@ -89,10 +89,8 @@ void cOmThrow_SetFall_0x1c8cb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_1c8d08;
         }
     }
-    ctx->pc = 0x1C8D04u;
 label_1c8d04:
     // 0x1c8d04: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1c8d04u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1c8d08:
     // 0x1c8d08: 0x1040000d  beqz        $v0, . + 4 + (0xD << 2)

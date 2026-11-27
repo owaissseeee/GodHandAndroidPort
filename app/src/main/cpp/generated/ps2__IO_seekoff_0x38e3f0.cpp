@@ -13,7 +13,7 @@
 
 // Function: _IO_seekoff
 // Address: 0x38e3f0 - 0x38e490
-void ps2__IO_seekoff_0x38e3f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_seekoff_0x38e3f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_seekoff_0x38e3f0");
 #endif
@@ -64,11 +64,9 @@ void ps2__IO_seekoff_0x38e3f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
         }
     }
 
-    ctx->pc = 0x38e3f0u;
 
 label_38e3f0:
     // 0x38e3f0: 0x27bdffb0  addiu       $sp, $sp, -0x50
-    ctx->pc = 0x38e3f0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967216));
 label_38e3f4:
     // 0x38e3f4: 0xffb30030  sd          $s3, 0x30($sp)
@@ -80,7 +78,6 @@ label_38e3f8:
     WRITE64(ADD32(GPR_U32(ctx, 29), 32), GPR_U64(ctx, 18));
 label_38e3fc:
     // 0x38e3fc: 0xe0982d  daddu       $s3, $a3, $zero
-    ctx->pc = 0x38e3fcu;
     SET_GPR_U64(ctx, 19, (uint64_t)GPR_U64(ctx, 7) + (uint64_t)GPR_U64(ctx, 0));
 label_38e400:
     // 0x38e400: 0xffb10010  sd          $s1, 0x10($sp)
@@ -88,7 +85,6 @@ label_38e400:
     WRITE64(ADD32(GPR_U32(ctx, 29), 16), GPR_U64(ctx, 17));
 label_38e404:
     // 0x38e404: 0xc0902d  daddu       $s2, $a2, $zero
-    ctx->pc = 0x38e404u;
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
 label_38e408:
     // 0x38e408: 0xffb00000  sd          $s0, 0x0($sp)
@@ -100,7 +96,6 @@ label_38e40c:
     WRITE64(ADD32(GPR_U32(ctx, 29), 64), GPR_U64(ctx, 31));
 label_38e410:
     // 0x38e410: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x38e410u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_38e414:
     // 0x38e414: 0x8e020024  lw          $v0, 0x24($s0)
@@ -133,7 +128,6 @@ label_38e41c:
             goto label_38e454;
         }
     }
-    ctx->pc = 0x38E420u;
 label_38e420:
     // 0x38e420: 0x24020001  addiu       $v0, $zero, 0x1
     ctx->pc = 0x38e420u;
@@ -153,7 +147,6 @@ label_38e428:
             goto label_38e44c;
         }
     }
-    ctx->pc = 0x38E42Cu;
 label_38e42c:
     // 0x38e42c: 0x8e020000  lw          $v0, 0x0($s0)
     ctx->pc = 0x38e42cu;
@@ -177,7 +170,6 @@ label_38e438:
             goto label_38e44c;
         }
     }
-    ctx->pc = 0x38E43Cu;
 label_38e43c:
     // 0x38e43c: 0x8e020008  lw          $v0, 0x8($s0)
     ctx->pc = 0x38e43cu;
@@ -188,7 +180,6 @@ label_38e440:
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 4)));
 label_38e444:
     // 0x38e444: 0x431023  subu        $v0, $v0, $v1
-    ctx->pc = 0x38e444u;
     SET_GPR_S32(ctx, 2, (int32_t)SUB32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
 label_38e448:
     // 0x38e448: 0x222882f  dsubu       $s1, $s1, $v0
@@ -217,22 +208,18 @@ label_38e450:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_free_backup_area_0x38c3a0, 0x38c3a0u, 0x38e454u)) {
         return;
     }
-    ctx->pc = 0x38E454u;
 label_38e454:
     // 0x38e454: 0x8e030050  lw          $v1, 0x50($s0)
     ctx->pc = 0x38e454u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 80)));
 label_38e458:
     // 0x38e458: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x38e458u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_38e45c:
     // 0x38e45c: 0x220282d  daddu       $a1, $s1, $zero
-    ctx->pc = 0x38e45cu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
 label_38e460:
     // 0x38e460: 0x240302d  daddu       $a2, $s2, $zero
-    ctx->pc = 0x38e460u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
 label_38e464:
     // 0x38e464: 0x8c620044  lw          $v0, 0x44($v1)
@@ -266,7 +253,6 @@ label_38e46c:
             return;
         }
     }
-    ctx->pc = 0x38E470u;
 label_38e470:
     // 0x38e470: 0xdfbf0040  ld          $ra, 0x40($sp)
     ctx->pc = 0x38e470u;
@@ -318,7 +304,6 @@ label_38e488:
         return;
         #endif
     }
-    ctx->pc = 0x38E48Cu;
 label_38e48c:
     // 0x38e48c: 0x0  nop
     // NOP

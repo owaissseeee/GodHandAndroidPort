@@ -13,7 +13,7 @@
 
 // Function: ScrollCallback_hideLayers
 // Address: 0x298338 - 0x298388
-void ScrollCallback_hideLayers_0x298338(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ScrollCallback_hideLayers_0x298338(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ScrollCallback_hideLayers_0x298338");
 #endif
@@ -80,7 +80,6 @@ void ScrollCallback_hideLayers_0x298338(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_29837c;
         }
     }
-    ctx->pc = 0x298360u;
 label_298360:
     // 0x298360: 0x2404001e  addiu       $a0, $zero, 0x1E
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 30));
@@ -95,7 +94,6 @@ label_298360:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x29836cu)) {
         return;
     }
-    ctx->pc = 0x29836Cu;
 label_29836c:
     // 0x29836c: 0x2404001f  addiu       $a0, $zero, 0x1F
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 31));
@@ -110,7 +108,6 @@ label_29836c:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x298378u)) {
         return;
     }
-    ctx->pc = 0x298378u;
 label_298378:
     // 0x298378: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x298378u;

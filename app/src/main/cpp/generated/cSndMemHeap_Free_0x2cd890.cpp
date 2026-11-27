@@ -13,7 +13,7 @@
 
 // Function: cSndMemHeap_Free
 // Address: 0x2cd890 - 0x2cd8f8
-void cSndMemHeap_Free_0x2cd890(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndMemHeap_Free_0x2cd890(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndMemHeap_Free_0x2cd890");
 #endif
@@ -67,7 +67,6 @@ void cSndMemHeap_Free_0x2cd890(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &cSndMemHeap_FindBlk_0x2cd8f8, 0x2cd8f8u, 0x2cd8b0u)) {
         return;
     }
-    ctx->pc = 0x2CD8B0u;
 label_2cd8b0:
     // 0x2cd8b0: 0x40282d  daddu       $a1, $v0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -114,7 +113,6 @@ label_2cd8b0:
             goto label_2cd8e4;
         }
     }
-    ctx->pc = 0x2CD8E4u;
 label_2cd8e4:
     // 0x2cd8e4: 0xaca00014  sw          $zero, 0x14($a1)
     ctx->pc = 0x2cd8e4u;

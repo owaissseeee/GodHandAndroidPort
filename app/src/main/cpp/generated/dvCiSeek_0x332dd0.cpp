@@ -13,7 +13,7 @@
 
 // Function: dvCiSeek
 // Address: 0x332dd0 - 0x332e68
-void dvCiSeek_0x332dd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void dvCiSeek_0x332dd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("dvCiSeek_0x332dd0");
 #endif
@@ -58,7 +58,6 @@ void dvCiSeek_0x332dd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &func_00332808_0x332808, 0x332808u, 0x332decu)) {
         return;
     }
-    ctx->pc = 0x332DECu;
 label_332dec:
     // 0x332dec: 0x1000001a  b           . + 4 + (0x1A << 2)
     ctx->pc = 0x332DECu;
@@ -76,7 +75,6 @@ label_332dec:
         }
     }
     // 0x332df4: 0x0  nop
-    ctx->pc = 0x332df4u;
     // NOP
 label_332df8:
     // 0x332df8: 0x14c00003  bnez        $a2, . + 4 + (0x3 << 2)
@@ -109,7 +107,6 @@ label_332df8:
             goto label_332e38;
         }
     }
-    ctx->pc = 0x332E08u;
 label_332e08:
     // 0x332e08: 0x14c20005  bne         $a2, $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x332E08u;
@@ -146,7 +143,6 @@ label_332e08:
             goto label_332e3c;
         }
     }
-    ctx->pc = 0x332E20u;
 label_332e20:
     // 0x332e20: 0x14c20006  bne         $a2, $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x332E20u;
@@ -183,7 +179,6 @@ label_332e20:
             goto label_332e3c;
         }
     }
-    ctx->pc = 0x332E38u;
 label_332e38:
     // 0x332e38: 0x8ce40008  lw          $a0, 0x8($a3)
     ctx->pc = 0x332e38u;

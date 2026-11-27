@@ -13,7 +13,7 @@
 
 // Function: Forward155DC8_1563D0
 // Address: 0x1563d0 - 0x1563f0
-void Forward155DC8_1563D0_0x1563d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Forward155DC8_1563D0_0x1563d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Forward155DC8_1563D0_0x1563d0");
 #endif
@@ -44,7 +44,6 @@ void Forward155DC8_1563D0_0x1563d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_00155DC8_0x155dc8, 0x155dc8u, 0x1563e4u)) {
         return;
     }
-    ctx->pc = 0x1563E4u;
 label_1563e4:
     // 0x1563e4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1563e4u;

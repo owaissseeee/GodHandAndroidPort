@@ -13,7 +13,7 @@
 
 // Function: cWorldTime_getStageHMS
 // Address: 0x2d9de8 - 0x2d9e18
-void cWorldTime_getStageHMS_0x2d9de8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cWorldTime_getStageHMS_0x2d9de8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cWorldTime_getStageHMS_0x2d9de8");
 #endif
@@ -53,7 +53,6 @@ void cWorldTime_getStageHMS_0x2d9de8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D9D50_0x2d9d50, 0x2d9d50u, 0x2d9e0cu)) {
         return;
     }
-    ctx->pc = 0x2D9E0Cu;
 label_2d9e0c:
     // 0x2d9e0c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2d9e0cu;

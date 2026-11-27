@@ -13,7 +13,7 @@
 
 // Function: ADXB_CheckAu
 // Address: 0x341798 - 0x3417f0
-void ADXB_CheckAu_0x341798(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ADXB_CheckAu_0x341798(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ADXB_CheckAu_0x341798");
 #endif
@@ -52,7 +52,6 @@ void ADXB_CheckAu_0x341798(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &memcmp_0x3a50b4, 0x3a50b4u, 0x3417b8u)) {
         return;
     }
-    ctx->pc = 0x3417B8u;
 label_3417b8:
     // 0x3417b8: 0x3c050045  lui         $a1, 0x45
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)69 << 16));
@@ -81,7 +80,6 @@ label_3417b8:
     if (!runtime->callDirectStatic(rdram, ctx, &memcmp_0x3a50b4, 0x3a50b4u, 0x3417d4u)) {
         return;
     }
-    ctx->pc = 0x3417D4u;
 label_3417d4:
     // 0x3417d4: 0x54400002  bnel        $v0, $zero, . + 4 + (0x2 << 2)
     ctx->pc = 0x3417D4u;
@@ -98,10 +96,8 @@ label_3417d4:
             goto label_3417e0;
         }
     }
-    ctx->pc = 0x3417DCu;
 label_3417dc:
     // 0x3417dc: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x3417dcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_3417e0:
     // 0x3417e0: 0xdfb00000  ld          $s0, 0x0($sp)

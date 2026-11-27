@@ -13,7 +13,7 @@
 
 // Function: func_00201960
 // Address: 0x201960 - 0x2019f8
-void func_00201960_0x201960(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00201960_0x201960(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00201960_0x201960");
 #endif
@@ -50,7 +50,6 @@ void func_00201960_0x201960(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Obj3290_Tramp_003313E0_9298_0x329298, 0x329298u, 0x201978u)) {
         return;
     }
-    ctx->pc = 0x201978u;
 label_201978:
     // 0x201978: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -86,7 +85,6 @@ label_201978:
             goto label_2019d8;
         }
     }
-    ctx->pc = 0x201990u;
 label_201990:
     // 0x201990: 0x56230013  bnel        $s1, $v1, . + 4 + (0x13 << 2)
     ctx->pc = 0x201990u;
@@ -114,7 +112,6 @@ label_201990:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00201A50_0x201a50, 0x201a50u, 0x2019a0u)) {
         return;
     }
-    ctx->pc = 0x2019A0u;
 label_2019a0:
     // 0x2019a0: 0x5451000f  bnel        $v0, $s1, . + 4 + (0xF << 2)
     ctx->pc = 0x2019A0u;
@@ -160,7 +157,6 @@ label_2019a0:
     if (!runtime->callDirectStatic(rdram, ctx, &Entry_releaseIfReady_0x201a00, 0x201a00u, 0x2019bcu)) {
         return;
     }
-    ctx->pc = 0x2019BCu;
 label_2019bc:
     // 0x2019bc: 0x54400008  bnel        $v0, $zero, . + 4 + (0x8 << 2)
     ctx->pc = 0x2019BCu;
@@ -210,7 +206,6 @@ label_2019bc:
             goto label_2019dc;
         }
     }
-    ctx->pc = 0x2019D8u;
 label_2019d8:
     // 0x2019d8: 0xae021110  sw          $v0, 0x1110($s0)
     ctx->pc = 0x2019d8u;

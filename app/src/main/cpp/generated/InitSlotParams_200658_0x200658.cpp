@@ -13,7 +13,7 @@
 
 // Function: InitSlotParams_200658
 // Address: 0x200658 - 0x2006b0
-void InitSlotParams_200658_0x200658(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitSlotParams_200658_0x200658(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitSlotParams_200658_0x200658");
 #endif
@@ -54,7 +54,6 @@ void InitSlotParams_200658_0x200658(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x20067cu)) {
         return;
     }
-    ctx->pc = 0x20067Cu;
 label_20067c:
     // 0x20067c: 0x8e030008  lw          $v1, 0x8($s0)
     ctx->pc = 0x20067cu;
@@ -76,7 +75,6 @@ label_20067c:
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x200694u)) {
         return;
     }
-    ctx->pc = 0x200694u;
 label_200694:
     // 0x200694: 0x3c0141f0  lui         $at, 0x41F0
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16880 << 16));

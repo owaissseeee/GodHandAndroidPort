@@ -13,7 +13,7 @@
 
 // Function: InitObjStateFlags_12CD70
 // Address: 0x12cd70 - 0x12cd90
-void InitObjStateFlags_12CD70_0x12cd70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitObjStateFlags_12CD70_0x12cd70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitObjStateFlags_12CD70_0x12cd70");
 #endif

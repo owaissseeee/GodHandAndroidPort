@@ -13,7 +13,7 @@
 
 // Function: func_0032E720
 // Address: 0x32e720 - 0x32e770
-void func_0032E720_0x32e720(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0032E720_0x32e720(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0032E720_0x32e720");
 #endif
@@ -55,7 +55,6 @@ void func_0032E720_0x32e720(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0033BF18_0x33bf18, 0x33bf18u, 0x32e744u)) {
         return;
     }
-    ctx->pc = 0x32E744u;
 label_32e744:
     // 0x32e744: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x32E744u;
@@ -78,7 +77,6 @@ label_32e744:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032E770_0x32e770, 0x32e770u, 0x32e754u)) {
         return;
     }
-    ctx->pc = 0x32E754u;
 label_32e754:
     // 0x32e754: 0xae200000  sw          $zero, 0x0($s1)
     ctx->pc = 0x32e754u;

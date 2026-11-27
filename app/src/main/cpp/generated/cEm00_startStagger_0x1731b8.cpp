@@ -13,7 +13,7 @@
 
 // Function: cEm00_startStagger
 // Address: 0x1731b8 - 0x173258
-void cEm00_startStagger_0x1731b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_startStagger_0x1731b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_startStagger_0x1731b8");
 #endif
@@ -64,11 +64,9 @@ void cEm00_startStagger_0x1731b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         }
     }
 
-    ctx->pc = 0x1731b8u;
 
 label_1731b8:
     // 0x1731b8: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x1731b8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
 label_1731bc:
     // 0x1731bc: 0x7fb00020  sq          $s0, 0x20($sp)
@@ -84,7 +82,6 @@ label_1731c4:
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
 label_1731c8:
     // 0x1731c8: 0x80882d  daddu       $s1, $a0, $zero
-    ctx->pc = 0x1731c8u;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_1731cc:
     // 0x1731cc: 0x8e230214  lw          $v1, 0x214($s1)
@@ -126,22 +123,18 @@ label_1731dc:
             return;
         }
     }
-    ctx->pc = 0x1731E0u;
 label_1731e0:
     // 0x1731e0: 0xc4400004  lwc1        $f0, 0x4($v0)
     ctx->pc = 0x1731e0u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 2), 4)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
 label_1731e4:
     // 0x1731e4: 0x3c100060  lui         $s0, 0x60
-    ctx->pc = 0x1731e4u;
     SET_GPR_S32(ctx, 16, (int32_t)((uint32_t)96 << 16));
 label_1731e8:
     // 0x1731e8: 0x2610ee00  addiu       $s0, $s0, -0x1200
-    ctx->pc = 0x1731e8u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 4294962688));
 label_1731ec:
     // 0x1731ec: 0x24020006  addiu       $v0, $zero, 0x6
-    ctx->pc = 0x1731ecu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
 label_1731f0:
     // 0x1731f0: 0xe6200da4  swc1        $f0, 0xDA4($s1)
@@ -149,11 +142,9 @@ label_1731f0:
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 17), 3492), bits); }
 label_1731f4:
     // 0x1731f4: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x1731f4u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_1731f8:
     // 0x1731f8: 0x220382d  daddu       $a3, $s1, $zero
-    ctx->pc = 0x1731f8u;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
 label_1731fc:
     // 0x1731fc: 0xa6220da0  sh          $v0, 0xDA0($s1)
@@ -161,19 +152,15 @@ label_1731fc:
     WRITE16(ADD32(GPR_U32(ctx, 17), 3488), (uint16_t)GPR_U32(ctx, 2));
 label_173200:
     // 0x173200: 0x24050002  addiu       $a1, $zero, 0x2
-    ctx->pc = 0x173200u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
 label_173204:
     // 0x173204: 0x2406002d  addiu       $a2, $zero, 0x2D
-    ctx->pc = 0x173204u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 45));
 label_173208:
     // 0x173208: 0x402d  daddu       $t0, $zero, $zero
-    ctx->pc = 0x173208u;
     SET_GPR_U64(ctx, 8, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_17320c:
     // 0x17320c: 0x482d  daddu       $t1, $zero, $zero
-    ctx->pc = 0x17320cu;
     SET_GPR_U64(ctx, 9, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_173210:
     // 0x173210: 0x502d  daddu       $t2, $zero, $zero
@@ -202,30 +189,23 @@ label_173218:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x17321cu)) {
         return;
     }
-    ctx->pc = 0x17321Cu;
 label_17321c:
     // 0x17321c: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x17321cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_173220:
     // 0x173220: 0x220382d  daddu       $a3, $s1, $zero
-    ctx->pc = 0x173220u;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
 label_173224:
     // 0x173224: 0x282d  daddu       $a1, $zero, $zero
-    ctx->pc = 0x173224u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_173228:
     // 0x173228: 0x2406000a  addiu       $a2, $zero, 0xA
-    ctx->pc = 0x173228u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 10));
 label_17322c:
     // 0x17322c: 0x402d  daddu       $t0, $zero, $zero
-    ctx->pc = 0x17322cu;
     SET_GPR_U64(ctx, 8, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_173230:
     // 0x173230: 0x482d  daddu       $t1, $zero, $zero
-    ctx->pc = 0x173230u;
     SET_GPR_U64(ctx, 9, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_173234:
     // 0x173234: 0x502d  daddu       $t2, $zero, $zero
@@ -254,7 +234,6 @@ label_17323c:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x173240u)) {
         return;
     }
-    ctx->pc = 0x173240u;
 label_173240:
     // 0x173240: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x173240u;
@@ -298,7 +277,6 @@ label_173250:
         return;
         #endif
     }
-    ctx->pc = 0x173254u;
 label_173254:
     // 0x173254: 0x0  nop
     // NOP

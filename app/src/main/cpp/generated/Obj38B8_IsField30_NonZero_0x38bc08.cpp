@@ -13,7 +13,7 @@
 
 // Function: Obj38B8_IsField30_NonZero
 // Address: 0x38bc08 - 0x38bc18
-void Obj38B8_IsField30_NonZero_0x38bc08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj38B8_IsField30_NonZero_0x38bc08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj38B8_IsField30_NonZero_0x38bc08");
 #endif

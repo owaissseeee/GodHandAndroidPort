@@ -13,7 +13,7 @@
 
 // Function: ratio
 // Address: 0x390318 - 0x3903e8
-void ratio_0x390318(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ratio_0x390318(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ratio_0x390318");
 #endif
@@ -57,7 +57,6 @@ void ratio_0x390318(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     if (!runtime->callDirectStatic(rdram, ctx, &b2d_0x390078, 0x390078u, 0x39033cu)) {
         return;
     }
-    ctx->pc = 0x39033Cu;
 label_39033c:
     // 0x39033c: 0x40902d  daddu       $s2, $v0, $zero
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -74,7 +73,6 @@ label_39033c:
     if (!runtime->callDirectStatic(rdram, ctx, &b2d_0x390078, 0x390078u, 0x39034cu)) {
         return;
     }
-    ctx->pc = 0x39034Cu;
 label_39034c:
     // 0x39034c: 0x8e030010  lw          $v1, 0x10($s0)
     ctx->pc = 0x39034cu;
@@ -142,7 +140,6 @@ label_39034c:
             goto label_3903c0;
         }
     }
-    ctx->pc = 0x39039Cu;
 label_39039c:
     // 0x39039c: 0xc0182d  daddu       $v1, $a2, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
@@ -161,7 +158,6 @@ label_39039c:
     // 0x3903b8: 0x2103c  dsll32      $v0, $v0, 0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) << (32 + 0));
     // 0x3903bc: 0x623025  or          $a2, $v1, $v0
-    ctx->pc = 0x3903bcu;
     SET_GPR_U64(ctx, 6, GPR_U64(ctx, 3) | GPR_U64(ctx, 2));
 label_3903c0:
     // 0x3903c0: 0x240202d  daddu       $a0, $s2, $zero
@@ -177,7 +173,6 @@ label_3903c0:
     if (!runtime->callDirectStatic(rdram, ctx, &dpdiv_0x31e5f0, 0x31e5f0u, 0x3903ccu)) {
         return;
     }
-    ctx->pc = 0x3903CCu;
 label_3903cc:
     // 0x3903cc: 0xdfbf0040  ld          $ra, 0x40($sp)
     ctx->pc = 0x3903ccu;

@@ -13,7 +13,7 @@
 
 // Function: InitEspWork
 // Address: 0x2faa20 - 0x2faa88
-void InitEspWork_0x2faa20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitEspWork_0x2faa20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitEspWork_0x2faa20");
 #endif
@@ -51,7 +51,6 @@ void InitEspWork_0x2faa20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2faa3cu)) {
         return;
     }
-    ctx->pc = 0x2FAA3Cu;
 label_2faa3c:
     // 0x2faa3c: 0x3c040072  lui         $a0, 0x72
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)114 << 16));
@@ -70,7 +69,6 @@ label_2faa3c:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2faa50u)) {
         return;
     }
-    ctx->pc = 0x2FAA50u;
 label_2faa50:
     // 0x2faa50: 0x3c040072  lui         $a0, 0x72
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)114 << 16));
@@ -89,7 +87,6 @@ label_2faa50:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2faa64u)) {
         return;
     }
-    ctx->pc = 0x2FAA64u;
 label_2faa64:
     // 0x2faa64: 0x3c040072  lui         $a0, 0x72
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)114 << 16));
@@ -108,7 +105,6 @@ label_2faa64:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2faa78u)) {
         return;
     }
-    ctx->pc = 0x2FAA78u;
 label_2faa78:
     // 0x2faa78: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2faa78u;

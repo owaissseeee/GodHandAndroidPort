@@ -13,7 +13,7 @@
 
 // Function: cNode_setLocalScale
 // Address: 0x2b61d8 - 0x2b6230
-void cNode_setLocalScale_0x2b61d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cNode_setLocalScale_0x2b61d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cNode_setLocalScale_0x2b61d8");
 #endif
@@ -50,7 +50,6 @@ void cNode_setLocalScale_0x2b61d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B6400_0x2b6400, 0x2b6400u, 0x2b61f4u)) {
         return;
     }
-    ctx->pc = 0x2B61F4u;
 label_2b61f4:
     // 0x2b61f4: 0x26020020  addiu       $v0, $s0, 0x20
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 32));

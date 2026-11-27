@@ -13,7 +13,7 @@
 
 // Function: Tramp__IO_file_sync_38EFE0
 // Address: 0x38efe0 - 0x38f000
-void Tramp__IO_file_sync_38EFE0_0x38efe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp__IO_file_sync_38EFE0_0x38efe0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp__IO_file_sync_38EFE0_0x38efe0");
 #endif
@@ -37,7 +37,6 @@ void Tramp__IO_file_sync_38EFE0_0x38efe0(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_file_sync_0x392e48, 0x392e48u, 0x38eff0u)) {
         return;
     }
-    ctx->pc = 0x38EFF0u;
 label_38eff0:
     // 0x38eff0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38eff0u;

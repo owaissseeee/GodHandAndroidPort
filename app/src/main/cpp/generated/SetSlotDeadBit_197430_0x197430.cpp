@@ -13,7 +13,7 @@
 
 // Function: SetSlotDeadBit_197430
 // Address: 0x197430 - 0x1974a0
-void SetSlotDeadBit_197430_0x197430(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetSlotDeadBit_197430_0x197430(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetSlotDeadBit_197430_0x197430");
 #endif
@@ -74,10 +74,8 @@ void SetSlotDeadBit_197430_0x197430(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x197464u)) {
         return;
     }
-    ctx->pc = 0x197464u;
 label_197464:
     // 0x197464: 0x102142  srl         $a0, $s0, 5
-    ctx->pc = 0x197464u;
     SET_GPR_S32(ctx, 4, (int32_t)SRL32(GPR_U32(ctx, 16), 5));
 label_197468:
     // 0x197468: 0x262309d0  addiu       $v1, $s1, 0x9D0

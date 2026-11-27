@@ -13,7 +13,7 @@
 
 // Function: func_003832C8
 // Address: 0x3832c8 - 0x3833b0
-void func_003832C8_0x3832c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003832C8_0x3832c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003832C8_0x3832c8");
 #endif
@@ -113,7 +113,6 @@ label_383310:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032DCD0_0x32dcd0, 0x32dcd0u, 0x383320u)) {
         return;
     }
-    ctx->pc = 0x383320u;
 label_383320:
     // 0x383320: 0x200902d  daddu       $s2, $s0, $zero
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -137,7 +136,6 @@ label_383320:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032A6D0_0x32a6d0, 0x32a6d0u, 0x38333cu)) {
         return;
     }
-    ctx->pc = 0x38333Cu;
 label_38333c:
     // 0x38333c: 0x2b18821  addu        $s1, $s5, $s1
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 21), GPR_U32(ctx, 17)));
@@ -157,7 +155,6 @@ label_38333c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032A6D0_0x32a6d0, 0x32a6d0u, 0x383350u)) {
         return;
     }
-    ctx->pc = 0x383350u;
 label_383350:
     // 0x383350: 0x8e620008  lw          $v0, 0x8($s3)
     ctx->pc = 0x383350u;
@@ -197,7 +194,6 @@ label_383350:
             goto label_383390;
         }
     }
-    ctx->pc = 0x383368u;
 label_383368:
     // 0x383368: 0x26300034  addiu       $s0, $s1, 0x34
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 17), 52));
@@ -218,7 +214,6 @@ label_383368:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032A6D0_0x32a6d0, 0x32a6d0u, 0x38337cu)) {
         return;
     }
-    ctx->pc = 0x38337Cu;
 label_38337c:
     // 0x38337c: 0x8e040030  lw          $a0, 0x30($s0)
     ctx->pc = 0x38337cu;
@@ -236,7 +231,6 @@ label_38337c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0032A6D0_0x32a6d0, 0x32a6d0u, 0x38338cu)) {
         return;
     }
-    ctx->pc = 0x38338Cu;
 label_38338c:
     // 0x38338c: 0x7bb00060  lq          $s0, 0x60($sp)
     ctx->pc = 0x38338cu;

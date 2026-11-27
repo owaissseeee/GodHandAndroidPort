@@ -13,7 +13,7 @@
 
 // Function: cOl21_releaseShapes
 // Address: 0x17df88 - 0x17e010
-void cOl21_releaseShapes_0x17df88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl21_releaseShapes_0x17df88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl21_releaseShapes_0x17df88");
 #endif
@@ -52,7 +52,6 @@ void cOl21_releaseShapes_0x17df88(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     ctx->pc = 0x17dfa8u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x17dfac: 0x3c13005d  lui         $s3, 0x5D
-    ctx->pc = 0x17dfacu;
     SET_GPR_S32(ctx, 19, (int32_t)((uint32_t)93 << 16));
 label_17dfb0:
     // 0x17dfb0: 0x8e050000  lw          $a1, 0x0($s0)
@@ -84,13 +83,11 @@ label_17dfb0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0012EC58_0x12ec58, 0x12ec58u, 0x17dfc4u)) {
         return;
     }
-    ctx->pc = 0x17DFC4u;
 label_17dfc4:
     // 0x17dfc4: 0xae000000  sw          $zero, 0x0($s0)
     ctx->pc = 0x17dfc4u;
     WRITE32(ADD32(GPR_U32(ctx, 16), 0), GPR_U32(ctx, 0));
     // 0x17dfc8: 0x2631ffff  addiu       $s1, $s1, -0x1
-    ctx->pc = 0x17dfc8u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 4294967295));
 label_17dfcc:
     // 0x17dfcc: 0x621fff8  bgez        $s1, . + 4 + (-0x8 << 2)
@@ -142,7 +139,6 @@ label_17dfcc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0012EC58_0x12ec58, 0x12ec58u, 0x17dfecu)) {
         return;
     }
-    ctx->pc = 0x17DFECu;
 label_17dfec:
     // 0x17dfec: 0xae400674  sw          $zero, 0x674($s2)
     ctx->pc = 0x17dfecu;

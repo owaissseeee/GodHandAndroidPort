@@ -13,7 +13,7 @@
 
 // Function: cOm53_setGetOnEm
 // Address: 0x1a7ec0 - 0x1a7f20
-void cOm53_setGetOnEm_0x1a7ec0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm53_setGetOnEm_0x1a7ec0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm53_setGetOnEm_0x1a7ec0");
 #endif
@@ -38,7 +38,6 @@ void cOm53_setGetOnEm_0x1a7ec0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     ctx->pc = 0x1a7ed0u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 6), 1552)));
     // 0x1a7ed4: 0x0  nop
-    ctx->pc = 0x1a7ed4u;
     // NOP
 label_1a7ed8:
     // 0x1a7ed8: 0x471021  addu        $v0, $v0, $a3
@@ -96,7 +95,6 @@ label_1a7ed8:
         return;
         #endif
     }
-    ctx->pc = 0x1A7F0Cu;
 label_1a7f0c:
     // 0x1a7f0c: 0x2ce20010  sltiu       $v0, $a3, 0x10
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 7) < (uint64_t)(int64_t)(int32_t)16) ? 1 : 0);

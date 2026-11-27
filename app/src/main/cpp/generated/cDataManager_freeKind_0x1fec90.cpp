@@ -13,7 +13,7 @@
 
 // Function: cDataManager_freeKind
 // Address: 0x1fec90 - 0x1fece0
-void cDataManager_freeKind_0x1fec90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDataManager_freeKind_0x1fec90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDataManager_freeKind_0x1fec90");
 #endif
@@ -46,7 +46,6 @@ void cDataManager_freeKind_0x1fec90(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &cDataManager_findKind_0x1fee00, 0x1fee00u, 0x1feca4u)) {
         return;
     }
-    ctx->pc = 0x1FECA4u;
 label_1feca4:
     // 0x1feca4: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -81,7 +80,6 @@ label_1feca4:
     if (!runtime->callDirectStatic(rdram, ctx, &cDataHolder_systemInit_0x1ff028, 0x1ff028u, 0x1fecc0u)) {
         return;
     }
-    ctx->pc = 0x1FECC0u;
 label_1fecc0:
     // 0x1fecc0: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x1FECC0u;
@@ -98,10 +96,8 @@ label_1fecc0:
             goto label_1feccc;
         }
     }
-    ctx->pc = 0x1FECC8u;
 label_1fecc8:
     // 0x1fecc8: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1fecc8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1feccc:
     // 0x1feccc: 0x7bb00010  lq          $s0, 0x10($sp)

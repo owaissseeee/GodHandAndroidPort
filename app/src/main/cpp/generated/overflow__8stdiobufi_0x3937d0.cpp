@@ -13,7 +13,7 @@
 
 // Function: overflow__8stdiobufi
 // Address: 0x3937d0 - 0x393820
-void overflow__8stdiobufi_0x3937d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void overflow__8stdiobufi_0x3937d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("overflow__8stdiobufi_0x3937d0");
 #endif
@@ -51,7 +51,6 @@ void overflow__8stdiobufi_0x3937d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &overflow__7filebufi_0x38efa0, 0x38efa0u, 0x3937ecu)) {
         return;
     }
-    ctx->pc = 0x3937ECu;
 label_3937ec:
     // 0x3937ec: 0x2403ffff  addiu       $v1, $zero, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
@@ -96,7 +95,6 @@ label_3937ec:
     if (!runtime->callDirectStatic(rdram, ctx, &fflush_0x3a6020, 0x3a6020u, 0x393808u)) {
         return;
     }
-    ctx->pc = 0x393808u;
 label_393808:
     // 0x393808: 0xdfbf0020  ld          $ra, 0x20($sp)
     ctx->pc = 0x393808u;

@@ -13,7 +13,7 @@
 
 // Function: InitSoundEntry_375B90
 // Address: 0x375b90 - 0x375bf0
-void InitSoundEntry_375B90_0x375b90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitSoundEntry_375B90_0x375b90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitSoundEntry_375B90_0x375b90");
 #endif
@@ -65,7 +65,6 @@ void InitSoundEntry_375B90_0x375b90(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x375bc8u)) {
         return;
     }
-    ctx->pc = 0x375BC8u;
 label_375bc8:
     // 0x375bc8: 0x34038000  ori         $v1, $zero, 0x8000
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)32768);

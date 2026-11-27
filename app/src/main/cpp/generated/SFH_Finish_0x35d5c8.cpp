@@ -13,7 +13,7 @@
 
 // Function: SFH_Finish
 // Address: 0x35d5c8 - 0x35d610
-void SFH_Finish_0x35d5c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFH_Finish_0x35d5c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFH_Finish_0x35d5c8");
 #endif
@@ -66,7 +66,6 @@ void SFH_Finish_0x35d5c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
         return;
     }
     // 0x35d5fc: 0x0  nop
-    ctx->pc = 0x35d5fcu;
     // NOP
 label_35d600:
     // 0x35d600: 0xdfbf0000  ld          $ra, 0x0($sp)

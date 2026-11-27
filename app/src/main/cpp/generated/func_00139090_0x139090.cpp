@@ -13,7 +13,7 @@
 
 // Function: func_00139090
 // Address: 0x139090 - 0x1390b8
-void func_00139090_0x139090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00139090_0x139090(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00139090_0x139090");
 #endif
@@ -45,7 +45,6 @@ void func_00139090_0x139090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cCamera_reset_0x138240, 0x138240u, 0x1390a4u)) {
         return;
     }
-    ctx->pc = 0x1390A4u;
 label_1390a4:
     // 0x1390a4: 0xae0001c0  sw          $zero, 0x1C0($s0)
     ctx->pc = 0x1390a4u;

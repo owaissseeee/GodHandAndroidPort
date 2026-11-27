@@ -474,7 +474,12 @@ namespace ps2_stubs
                 }
             }
 
-            return std::fopen(hostPath.string().c_str(), mode);
+            FILE *fp = std::fopen(hostPath.string().c_str(), mode);
+            if (fp)
+            {
+                std::setvbuf(fp, nullptr, _IOFBF, 65536u);
+            }
+            return fp;
         }
     }
 
@@ -1290,12 +1295,9 @@ namespace ps2_stubs
             else
             {
                 const size_t bytesWritten = std::fwrite(src, 1u, static_cast<size_t>(size), it->second.file);
-                result = std::ferror(it->second.file) ? kMcResultDeniedPermit : static_cast<int32_t>(bytesWritten);
-                if (!std::ferror(it->second.file))
-                {
-                    std::fflush(it->second.file);
-                }
-                else
+                const bool hasWriteError = (std::ferror(it->second.file) != 0);
+                result = hasWriteError ? kMcResultDeniedPermit : static_cast<int32_t>(bytesWritten);
+                if (hasWriteError)
                 {
                     std::clearerr(it->second.file);
                 }

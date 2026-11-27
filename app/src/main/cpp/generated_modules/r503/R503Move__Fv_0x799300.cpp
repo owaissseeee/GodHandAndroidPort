@@ -14,23 +14,23 @@ namespace gh_r503
 {
 // Function: R503Move__Fv
 // Address: 0x799300 - 0x799328
-void R503Move__Fv_0x799300(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void R503Move__Fv_0x799300(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("R503Move__Fv_0x799300");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79931cu: goto label_79931c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x799300u, 0)) {
+        switch (ctx->pc) {
+            case 0x79931cu: goto label_79931c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x799300u;
+
 
     // 0x799300: 0x3c02007a  lui         $v0, 0x7A
-    ctx->pc = 0x799300u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)122 << 16));
     // 0x799304: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x799304u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x799308: 0x8c44a044  lw          $a0, -0x5FBC($v0)
     ctx->pc = 0x799308u;
@@ -50,15 +50,12 @@ void R503Move__Fv_0x799300(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
             goto label_79931c;
         }
     }
-    ctx->pc = 0x799314u;
     // 0x799314: 0xc1e650a  jal         func_799428
-    ctx->pc = 0x799314u;
     SET_GPR_U32(ctx, 31, 0x79931Cu);
     ctx->pc = 0x799428u;
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x799428u, 0x799314u, 0x79931Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x79931Cu;
 label_79931c:
     // 0x79931c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x79931cu;

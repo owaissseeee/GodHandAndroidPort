@@ -13,7 +13,7 @@
 
 // Function: func_0032A720
 // Address: 0x32a720 - 0x32a838
-void func_0032A720_0x32a720(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0032A720_0x32a720(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0032A720_0x32a720");
 #endif
@@ -94,7 +94,6 @@ void func_0032A720_0x32a720(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
     }
     // 0x32a76c: 0x0  nop
-    ctx->pc = 0x32a76cu;
     // NOP
 label_32a770:
     // 0x32a770: 0x820300ad  lb          $v1, 0xAD($s0)
@@ -128,7 +127,6 @@ label_32a770:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003278E8_0x3278e8, 0x3278e8u, 0x32a788u)) {
         return;
     }
-    ctx->pc = 0x32A788u;
 label_32a788:
     // 0x32a788: 0x40882d  daddu       $s1, $v0, $zero
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -150,11 +148,9 @@ label_32a788:
         }
     }
     // 0x32a798: 0x882d  daddu       $s1, $zero, $zero
-    ctx->pc = 0x32a798u;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_32a79c:
     // 0x32a79c: 0x3c03003c  lui         $v1, 0x3C
-    ctx->pc = 0x32a79cu;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)60 << 16));
 label_32a7a0:
     // 0x32a7a0: 0x8c627410  lw          $v0, 0x7410($v1)
@@ -203,7 +199,6 @@ label_32a7a0:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj3270_GetVia4_0033CE98_77A0_0x3277a0, 0x3277a0u, 0x32a7c0u)) {
         return;
     }
-    ctx->pc = 0x32A7C0u;
 label_32a7c0:
     // 0x32a7c0: 0x24030002  addiu       $v1, $zero, 0x2
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
@@ -231,7 +226,6 @@ label_32a7c0:
     if (GPR_U64(ctx, 18) != 0) SET_GPR_VEC(ctx, 6, GPR_VEC(ctx, 2));
 label_32a7d8:
     // 0x32a7d8: 0xd13021  addu        $a2, $a2, $s1
-    ctx->pc = 0x32a7d8u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 6), GPR_U32(ctx, 17)));
 label_32a7dc:
     // 0x32a7dc: 0x121040  sll         $v0, $s2, 1
@@ -275,7 +269,6 @@ label_32a7dc:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj3260_Tramp_003387C8_D3F8_0x3263f8, 0x3263f8u, 0x32a804u)) {
         return;
     }
-    ctx->pc = 0x32A804u;
 label_32a804:
     // 0x32a804: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x32A804u;
@@ -293,7 +286,6 @@ label_32a804:
         }
     }
     // 0x32a80c: 0x0  nop
-    ctx->pc = 0x32a80cu;
     // NOP
 label_32a810:
     // 0x32a810: 0xc0cfc4c  jal         func_33F130
@@ -307,7 +299,6 @@ label_32a810:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0033F130_0x33f130, 0x33f130u, 0x32a818u)) {
         return;
     }
-    ctx->pc = 0x32A818u;
 label_32a818:
     // 0x32a818: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x32a818u;

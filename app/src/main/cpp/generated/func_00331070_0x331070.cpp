@@ -13,7 +13,7 @@
 
 // Function: func_00331070
 // Address: 0x331070 - 0x331110
-void func_00331070_0x331070(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00331070_0x331070(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00331070_0x331070");
 #endif
@@ -53,7 +53,6 @@ void func_00331070_0x331070(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Forward33B568_33B688_0x33b688, 0x33b688u, 0x33108cu)) {
         return;
     }
-    ctx->pc = 0x33108Cu;
 label_33108c:
     // 0x33108c: 0x3c040045  lui         $a0, 0x45
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)69 << 16));
@@ -84,7 +83,6 @@ label_33108c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B1F28u, 0x3310A4u, 0x3310ACu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3310ACu;
 label_3310ac:
     // 0x3310ac: 0x10000014  b           . + 4 + (0x14 << 2)
     ctx->pc = 0x3310ACu;
@@ -102,7 +100,6 @@ label_3310ac:
         }
     }
     // 0x3310b4: 0x0  nop
-    ctx->pc = 0x3310b4u;
     // NOP
 label_3310b8:
     // 0x3310b8: 0x82040002  lb          $a0, 0x2($s0)
@@ -164,7 +161,6 @@ label_3310b8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B1F28u, 0x3310D4u, 0x3310DCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3310DCu;
 label_3310dc:
     // 0x3310dc: 0xc0cc3ee  jal         func_330FB8
     ctx->pc = 0x3310DCu;
@@ -172,7 +168,6 @@ label_3310dc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00330FB8_0x330fb8, 0x330fb8u, 0x3310e4u)) {
         return;
     }
-    ctx->pc = 0x3310E4u;
 label_3310e4:
     // 0x3310e4: 0x3c03003e  lui         $v1, 0x3E
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)62 << 16));

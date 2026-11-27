@@ -13,7 +13,7 @@
 
 // Function: sceDmaPause
 // Address: 0x397590 - 0x397630
-void sceDmaPause_0x397590(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceDmaPause_0x397590(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceDmaPause_0x397590");
 #endif
@@ -48,7 +48,6 @@ void sceDmaPause_0x397590(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x3975a8u)) {
         return;
     }
-    ctx->pc = 0x3975A8u;
 label_3975a8:
     // 0x3975a8: 0x40382d  daddu       $a3, $v0, $zero
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -86,7 +85,6 @@ label_3975a8:
     ctx->pc = 0x3975d0u;
     WRITE32(ADD32(GPR_U32(ctx, 2), 0), GPR_U32(ctx, 3));
     // 0x3975d4: 0x3c021000  lui         $v0, 0x1000
-    ctx->pc = 0x3975d4u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)4096 << 16));
 label_3975d8:
     // 0x3975d8: 0x3c04ffff  lui         $a0, 0xFFFF
@@ -134,10 +132,8 @@ label_3975d8:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x397610u)) {
         return;
     }
-    ctx->pc = 0x397610u;
 label_397610:
     // 0x397610: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x397610u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_397614:
     // 0x397614: 0xdfbf0020  ld          $ra, 0x20($sp)

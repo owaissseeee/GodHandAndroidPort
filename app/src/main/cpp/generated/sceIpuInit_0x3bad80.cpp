@@ -13,7 +13,7 @@
 
 // Function: sceIpuInit
 // Address: 0x3bad80 - 0x3bafb8
-void sceIpuInit_0x3bad80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceIpuInit_0x3bad80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceIpuInit_0x3bad80");
 #endif
@@ -50,7 +50,6 @@ void sceIpuInit_0x3bad80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     if (!runtime->callDirectStatic(rdram, ctx, &setD4_CHCR_0x3bad08, 0x3bad08u, 0x3bad90u)) {
         return;
     }
-    ctx->pc = 0x3BAD90u;
 label_3bad90:
     // 0x3bad90: 0x3c021000  lui         $v0, 0x1000
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)4096 << 16));
@@ -64,7 +63,6 @@ label_3bad90:
     ctx->pc = 0x3bada0u;
     runtime->Store32(rdram, ctx, 0x10002010u, GPR_U32(ctx, 3));
     // 0x3bada4: 0x34842010  ori         $a0, $a0, 0x2010
-    ctx->pc = 0x3bada4u;
     SET_GPR_U64(ctx, 4, GPR_U64(ctx, 4) | (uint64_t)(uint16_t)8208);
 label_3bada8:
     // 0x3bada8: 0x8c820000  lw          $v0, 0x0($a0)
@@ -195,7 +193,6 @@ label_3badd8:
     ctx->pc = 0x3bae58u;
     runtime->Store32(rdram, ctx, 0x10002000u, GPR_U32(ctx, 7));
     // 0x3bae5c: 0x0  nop
-    ctx->pc = 0x3bae5cu;
     // NOP
 label_3bae60:
     // 0x3bae60: 0x8d020000  lw          $v0, 0x0($t0)
@@ -235,7 +232,6 @@ label_3bae60:
     // 0x3bae90: 0x34842010  ori         $a0, $a0, 0x2010
     SET_GPR_U64(ctx, 4, GPR_U64(ctx, 4) | (uint64_t)(uint16_t)8208);
     // 0x3bae94: 0x0  nop
-    ctx->pc = 0x3bae94u;
     // NOP
 label_3bae98:
     // 0x3bae98: 0x8c820000  lw          $v0, 0x0($a0)
@@ -295,7 +291,6 @@ label_3bae98:
     ctx->pc = 0x3baee8u;
     runtime->Store32(rdram, ctx, 0x10002000u, GPR_U32(ctx, 6));
     // 0x3baeec: 0x0  nop
-    ctx->pc = 0x3baeecu;
     // NOP
 label_3baef0:
     // 0x3baef0: 0x8ce20000  lw          $v0, 0x0($a3)
@@ -335,7 +330,6 @@ label_3baef0:
     // 0x3baf20: 0x34842010  ori         $a0, $a0, 0x2010
     SET_GPR_U64(ctx, 4, GPR_U64(ctx, 4) | (uint64_t)(uint16_t)8208);
     // 0x3baf24: 0x0  nop
-    ctx->pc = 0x3baf24u;
     // NOP
 label_3baf28:
     // 0x3baf28: 0x8c820000  lw          $v0, 0x0($a0)
@@ -375,7 +369,6 @@ label_3baf28:
     // 0x3baf58: 0x34842010  ori         $a0, $a0, 0x2010
     SET_GPR_U64(ctx, 4, GPR_U64(ctx, 4) | (uint64_t)(uint16_t)8208);
     // 0x3baf5c: 0x0  nop
-    ctx->pc = 0x3baf5cu;
     // NOP
 label_3baf60:
     // 0x3baf60: 0x8c820000  lw          $v0, 0x0($a0)

@@ -13,7 +13,7 @@
 
 // Function: cOmWeapon_SetDamage
 // Address: 0x1d07f0 - 0x1d0818
-void cOmWeapon_SetDamage_0x1d07f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmWeapon_SetDamage_0x1d07f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmWeapon_SetDamage_0x1d07f0");
 #endif
@@ -58,7 +58,6 @@ void cOmWeapon_SetDamage_0x1d07f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         return;
         #endif
     }
-    ctx->pc = 0x1D0808u;
 label_1d0808:
     // 0x1d0808: 0xac800668  sw          $zero, 0x668($a0)
     ctx->pc = 0x1d0808u;

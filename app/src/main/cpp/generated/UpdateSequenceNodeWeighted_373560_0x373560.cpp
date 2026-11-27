@@ -13,7 +13,7 @@
 
 // Function: UpdateSequenceNodeWeighted_373560
 // Address: 0x373560 - 0x3735e0
-void UpdateSequenceNodeWeighted_373560_0x373560(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateSequenceNodeWeighted_373560_0x373560(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateSequenceNodeWeighted_373560_0x373560");
 #endif
@@ -58,7 +58,6 @@ void UpdateSequenceNodeWeighted_373560_0x373560(uint8_t* rdram, R5900Context* ct
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373A50_0x373a50, 0x373a50u, 0x373584u)) {
         return;
     }
-    ctx->pc = 0x373584u;
 label_373584:
     // 0x373584: 0x50400010  beql        $v0, $zero, . + 4 + (0x10 << 2)
     ctx->pc = 0x373584u;
@@ -86,7 +85,6 @@ label_373584:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373B20_0x373b20, 0x373b20u, 0x373594u)) {
         return;
     }
-    ctx->pc = 0x373594u;
 label_373594:
     // 0x373594: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -121,7 +119,6 @@ label_373594:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3745C0u, 0x3735A8u, 0x3735B0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3735B0u;
 label_3735b0:
     // 0x3735b0: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x3735B0u;
@@ -138,7 +135,6 @@ label_3735b0:
             goto label_3735c8;
         }
     }
-    ctx->pc = 0x3735B8u;
 label_3735b8:
     // 0x3735b8: 0x4600a306  mov.s       $f12, $f20
     ctx->f[12] = FPU_MOV_S(ctx->f[20]);
@@ -154,7 +150,6 @@ label_3735b8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x373FF0u, 0x3735BCu, 0x3735C4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3735C4u;
 label_3735c4:
     // 0x3735c4: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x3735c4u;

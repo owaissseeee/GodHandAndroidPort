@@ -13,7 +13,7 @@
 
 // Function: _$_9type_info
 // Address: 0x31ee10 - 0x31ee40
-void ps2____9type_info_0x31ee10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2____9type_info_0x31ee10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2____9type_info_0x31ee10");
 #endif
@@ -58,7 +58,6 @@ void ps2____9type_info_0x31ee10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x31ee34u)) {
         return;
     }
-    ctx->pc = 0x31EE34u;
 label_31ee34:
     // 0x31ee34: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x31ee34u;

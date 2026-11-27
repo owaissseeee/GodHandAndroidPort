@@ -13,7 +13,7 @@
 
 // Function: Obj38B8_GetMode100Or_C_24_v2
 // Address: 0x38be10 - 0x38be30
-void Obj38B8_GetMode100Or_C_24_v2_0x38be10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj38B8_GetMode100Or_C_24_v2_0x38be10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj38B8_GetMode100Or_C_24_v2_0x38be10");
 #endif
@@ -52,7 +52,6 @@ void Obj38B8_GetMode100Or_C_24_v2_0x38be10(uint8_t* rdram, R5900Context* ctx, PS
         return;
         #endif
     }
-    ctx->pc = 0x38BE28u;
 label_38be28:
     // 0x38be28: 0x3e00008  jr          $ra
     ctx->pc = 0x38BE28u;

@@ -13,7 +13,7 @@
 
 // Function: GetD003C80A8_325610
 // Address: 0x325610 - 0x325620
-void GetD003C80A8_325610_0x325610(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetD003C80A8_325610_0x325610(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetD003C80A8_325610_0x325610");
 #endif

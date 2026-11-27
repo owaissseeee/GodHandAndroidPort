@@ -6,6 +6,7 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,9 +14,24 @@
 
 // Function: sceVu0DivVector
 // Address: 0x30a468 - 0x30a4a0
-void sceVu0DivVector_0x30a468(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVu0DivVector_0x30a468(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVu0DivVector_0x30a468");
+#endif
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    {
+        uint8_t* const d = ps2TryFastSpan(rdram, GPR_U32(ctx, 4) & ~0xFu, 16u);
+        const uint8_t* const s = ps2TryFastSpan(rdram, GPR_U32(ctx, 5) & ~0xFu, 16u);
+        if (__builtin_expect(d != nullptr && s != nullptr, 1)) {
+            const float q = ps2VuDivide(ctx->vu0_status, 1.0f, ctx->f[12]);
+            ctx->vu0_q = q;
+            const float32x4_t res = vmulq_n_f32(ps2LoadVec4(s), q);
+            ps2StoreVec4(d, res);
+            ps2FastReturn(rdram, ctx, runtime, 0x30A484u);
+            return;
+        }
+    }
 #endif
 
 

@@ -13,7 +13,7 @@
 
 // Function: cCollisionSolid
 // Address: 0x133988 - 0x1339c0
-void cCollisionSolid_0x133988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCollisionSolid_0x133988(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCollisionSolid_0x133988");
 #endif

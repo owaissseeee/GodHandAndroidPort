@@ -13,7 +13,7 @@
 
 // Function: func_00170F38
 // Address: 0x170f38 - 0x170f60
-void func_00170F38_0x170f38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00170F38_0x170f38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00170F38_0x170f38");
 #endif
@@ -48,7 +48,6 @@ void func_00170F38_0x170f38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &InitField214WithPtr429420_1BD650_0x1bd650, 0x1bd650u, 0x170f54u)) {
         return;
     }
-    ctx->pc = 0x170F54u;
 label_170f54:
     // 0x170f54: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x170f54u;

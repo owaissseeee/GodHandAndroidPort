@@ -13,7 +13,7 @@
 
 // Function: SFD_SetCond
 // Address: 0x359ec0 - 0x359f78
-void SFD_SetCond_0x359ec0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFD_SetCond_0x359ec0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFD_SetCond_0x359ec0");
 #endif
@@ -74,7 +74,6 @@ void SFD_SetCond_0x359ec0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_00359F78_0x359f78, 0x359f78u, 0x359ef0u)) {
         return;
     }
-    ctx->pc = 0x359EF0u;
 label_359ef0:
     // 0x359ef0: 0x111080  sll         $v0, $s1, 2
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 17), 2));
@@ -100,7 +99,6 @@ label_359ef0:
             goto label_359f5c;
         }
     }
-    ctx->pc = 0x359F08u;
 label_359f08:
     // 0x359f08: 0xc0d37b2  jal         func_34DEC8
     ctx->pc = 0x359F08u;
@@ -108,7 +106,6 @@ label_359f08:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj34D8_SetGlobalEE0B8_IfField48_0x34dec8, 0x34dec8u, 0x359f10u)) {
         return;
     }
-    ctx->pc = 0x359F10u;
 label_359f10:
     // 0x359f10: 0x3c05ff00  lui         $a1, 0xFF00
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)65280 << 16));
@@ -151,7 +148,6 @@ label_359f10:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x34DD70u, 0x359F30u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x359F38u;
 label_359f38:
     // 0x359f38: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -168,7 +164,6 @@ label_359f38:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035A000_0x35a000, 0x35a000u, 0x359f48u)) {
         return;
     }
-    ctx->pc = 0x359F48u;
 label_359f48:
     // 0x359f48: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -185,7 +180,6 @@ label_359f48:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035A050_0x35a050, 0x35a050u, 0x359f58u)) {
         return;
     }
-    ctx->pc = 0x359F58u;
 label_359f58:
     // 0x359f58: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x359f58u;

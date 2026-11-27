@@ -14,7 +14,7 @@
 
 // Function: SetMotionStep
 // Address: 0x158288 - 0x1582a0
-void SetMotionStep_0x158288(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetMotionStep_0x158288(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetMotionStep_0x158288");
 #endif
@@ -47,7 +47,6 @@ void SetMotionStep_0x158288(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_158298;
         }
     }
-    ctx->pc = 0x158298u;
 label_158298:
     // 0x158298: 0x3e00008  jr          $ra
     ctx->pc = 0x158298u;

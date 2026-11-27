@@ -13,7 +13,7 @@
 
 // Function: func_002AC878
 // Address: 0x2ac878 - 0x2ac9b8
-void func_002AC878_0x2ac878(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002AC878_0x2ac878(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002AC878_0x2ac878");
 #endif
@@ -95,7 +95,6 @@ void func_002AC878_0x2ac878(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x2ac8c8: 0x24430008  addiu       $v1, $v0, 0x8
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 8));
     // 0x2ac8cc: 0x0  nop
-    ctx->pc = 0x2ac8ccu;
     // NOP
 label_2ac8d0:
     // 0x2ac8d0: 0xc4600000  lwc1        $f0, 0x0($v1)
@@ -178,10 +177,8 @@ label_2ac8d0:
             goto label_2ac8d0;
         }
     }
-    ctx->pc = 0x2AC934u;
 label_2ac934:
     // 0x2ac934: 0x29220004  slti        $v0, $t1, 0x4
-    ctx->pc = 0x2ac934u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 9) < (int64_t)(int32_t)4) ? 1 : 0);
 label_2ac938:
     // 0x2ac938: 0x1440001d  bnez        $v0, . + 4 + (0x1D << 2)

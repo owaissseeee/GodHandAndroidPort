@@ -13,7 +13,7 @@
 
 // Function: sceCdSyncS
 // Address: 0x398e40 - 0x398eb0
-void sceCdSyncS_0x398e40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceCdSyncS_0x398e40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceCdSyncS_0x398e40");
 #endif
@@ -81,7 +81,6 @@ void sceCdSyncS_0x398e40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B1F28u, 0x398E60u, 0x398E68u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x398E68u;
 label_398e68:
     // 0x398e68: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x398E68u;
@@ -98,7 +97,6 @@ label_398e68:
             goto label_398e78;
         }
     }
-    ctx->pc = 0x398E70u;
 label_398e70:
     // 0x398e70: 0xc0ec2b8  jal         func_3B0AE0
     SET_GPR_U32(ctx, 31, 0x398E78u);
@@ -111,7 +109,6 @@ label_398e70:
     if (!runtime->callDirectStatic(rdram, ctx, &DelayThread_0x3b0ae0, 0x3b0ae0u, 0x398e78u)) {
         return;
     }
-    ctx->pc = 0x398E78u;
 label_398e78:
     // 0x398e78: 0xc0eccca  jal         func_3B3328
     SET_GPR_U32(ctx, 31, 0x398E80u);
@@ -124,7 +121,6 @@ label_398e78:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B3328u, 0x398E78u, 0x398E80u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x398E80u;
 label_398e80:
     // 0x398e80: 0x1440fffb  bnez        $v0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x398E80u;
@@ -159,7 +155,6 @@ label_398e80:
             goto label_398ea0;
         }
     }
-    ctx->pc = 0x398E90u;
 label_398e90:
     // 0x398e90: 0x3c040040  lui         $a0, 0x40
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)64 << 16));
@@ -174,7 +169,6 @@ label_398e90:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B3328u, 0x398E94u, 0x398E9Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x398E9Cu;
 label_398e9c:
     // 0x398e9c: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x398e9cu;

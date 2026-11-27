@@ -13,7 +13,7 @@
 
 // Function: func_00332508
 // Address: 0x332508 - 0x3325f8
-void func_00332508_0x332508(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00332508_0x332508(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00332508_0x332508");
 #endif
@@ -79,7 +79,6 @@ void func_00332508_0x332508(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x332540u;
     SET_GPR_S32(ctx, 5, (int32_t)FAST_READ32(0x3D84A4u));
     // 0x332544: 0x0  nop
-    ctx->pc = 0x332544u;
     // NOP
 label_332548:
     // 0x332548: 0x26048d40  addiu       $a0, $s0, -0x72C0
@@ -95,7 +94,6 @@ label_332548:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B2F48u, 0x33254Cu, 0x332554u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x332554u;
 label_332554:
     // 0x332554: 0x443000c  bgezl       $v0, . + 4 + (0xC << 2)
     ctx->pc = 0x332554u;
@@ -123,10 +121,8 @@ label_332554:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003260C8_0x3260c8, 0x3260c8u, 0x332564u)) {
         return;
     }
-    ctx->pc = 0x332564u;
 label_332564:
     // 0x332564: 0x0  nop
-    ctx->pc = 0x332564u;
     // NOP
 label_332568:
     // 0x332568: 0x0  nop
@@ -152,7 +148,6 @@ label_332568:
         }
     }
     // 0x332584: 0x0  nop
-    ctx->pc = 0x332584u;
     // NOP
 label_332588:
     // 0x332588: 0x14400010  bnez        $v0, . + 4 + (0x10 << 2)
@@ -177,7 +172,6 @@ label_332588:
     // 0x332598: 0x2442fffc  addiu       $v0, $v0, -0x4
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967292));
     // 0x33259c: 0x0  nop
-    ctx->pc = 0x33259cu;
     // NOP
 label_3325a0:
     // 0x3325a0: 0x0  nop
@@ -227,11 +221,9 @@ label_3325a0:
         }
     }
     // 0x3325c4: 0x0  nop
-    ctx->pc = 0x3325c4u;
     // NOP
 label_3325c8:
     // 0x3325c8: 0x266384bc  addiu       $v1, $s3, -0x7B44
-    ctx->pc = 0x3325c8u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 19), 4294935740));
 label_3325cc:
     // 0x3325cc: 0xdfb30018  ld          $s3, 0x18($sp)

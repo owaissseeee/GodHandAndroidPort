@@ -13,7 +13,7 @@
 
 // Function: func_002BA6F8
 // Address: 0x2ba6f8 - 0x2ba748
-void func_002BA6F8_0x2ba6f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002BA6F8_0x2ba6f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002BA6F8_0x2ba6f8");
 #endif
@@ -60,7 +60,6 @@ void func_002BA6F8_0x2ba6f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &GetOrInit_460D68_2BAFA0_0x2bafa0, 0x2bafa0u, 0x2ba71cu)) {
         return;
     }
-    ctx->pc = 0x2BA71Cu;
 label_2ba71c:
     // 0x2ba71c: 0x3c050045  lui         $a1, 0x45
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)69 << 16));
@@ -81,7 +80,6 @@ label_2ba71c:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField_0_4_8_31EEA8_0x31eea8, 0x31eea8u, 0x2ba734u)) {
         return;
     }
-    ctx->pc = 0x2BA734u;
 label_2ba734:
     // 0x2ba734: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

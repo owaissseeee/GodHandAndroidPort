@@ -21,6 +21,7 @@
 #include "src/godhand/cheats_engine.h"
 #include "src/godhand/save_state_manager.h"
 #include "src/godhand/frame_patches.h"
+#include "src/godhand/function_hooks.h"
 #include "src/godhand/menu_touch_controller.h"
 #include "godhand_patches_mobile.h"
 #include "runtime/gs/gs_pcsx2_backend.h"
@@ -52,6 +53,10 @@ namespace ps2_pad {
     float getLy() { return g_touch_state.ly.load(std::memory_order_relaxed); }
     float getRx() { return g_touch_state.rx.load(std::memory_order_relaxed); }
     float getRy() { return g_touch_state.ry.load(std::memory_order_relaxed); }
+}
+
+namespace ps2_host_input {
+    uint32_t getPrimaryVibrationState() noexcept;
 }
 
 namespace godhand {
@@ -391,24 +396,20 @@ Java_com_owaissseeee_godhand_NativeBridge_unpackImsArchive(
 
 extern "C" void godhand_set_explicit_cache_dir(const char* dir);
 extern "C" void godhand_set_audio_channel_volumes(float master, float bgm, float sfx, float voice);
+extern "C" void godhand_set_audio_muted(bool muted);
+extern "C" float godhand_get_master_volume();
+extern "C" void godhand_set_audio_buffer_frames(int frames);
 
 JNIEXPORT void JNICALL
 Java_com_owaissseeee_godhand_NativeBridge_setAudioMuted(
     JNIEnv* /*env*/, jobject /*thiz*/, jboolean muted)
 {
-    if (muted) {
-        godhand_set_audio_channel_volumes(0.0f, 0.0f, 0.0f, 0.0f);
-        if (IsAudioDeviceReady()) {
-            SetMasterVolume(0.0f);
-        }
-        LOGI("NativeBridge: audio muted (master volume 0.0)");
-    } else {
-        godhand_set_audio_channel_volumes(1.0f, 1.0f, 1.0f, 1.0f);
-        if (IsAudioDeviceReady()) {
-            SetMasterVolume(1.0f);
-        }
-        LOGI("NativeBridge: audio unmuted (master volume 1.0)");
+    const bool isMuted = (muted == JNI_TRUE);
+    godhand_set_audio_muted(isMuted);
+    if (IsAudioDeviceReady()) {
+        SetMasterVolume(isMuted ? 0.0f : godhand_get_master_volume());
     }
+    LOGI("NativeBridge: audio muted=%s (preserving channel volumes)", isMuted ? "true" : "false");
 }
 
 JNIEXPORT void JNICALL
@@ -431,6 +432,7 @@ Java_com_owaissseeee_godhand_NativeBridge_setAudioConfig(
     if (bufferSizeIdx >= 0 && bufferSizeIdx < 3) {
         bufSize = s_bufSizes[bufferSizeIdx];
     }
+    godhand_set_audio_buffer_frames(bufSize);
     if (IsAudioDeviceReady()) {
         SetAudioStreamBufferSizeDefault(bufSize);
     }
@@ -459,6 +461,10 @@ Java_com_owaissseeee_godhand_NativeBridge_onSurfaceCreated(
     jint rendererIdx, jint resScaleIdx, jint aspectIdx, jint fpsIdx, jint frameskipIdx)
 {
     ANativeWindow* win = ANativeWindow_fromSurface(env, surface);
+    if (!win) {
+        LOGE("NativeBridge: onSurfaceCreated received null ANativeWindow");
+        return;
+    }
     ANativeWindow* old_win = g_native_window.exchange(win);
     if (old_win && old_win != win) {
         ANativeWindow_release(old_win);
@@ -477,9 +483,13 @@ Java_com_owaissseeee_godhand_NativeBridge_onSurfaceCreated(
     }
 
     if (!g_game_running.exchange(true)) {
+        // Retain an extra reference for the detached boot thread so an early
+        // onSurfaceDestroyed() cannot free win before AttachHostWindow() retains it.
+        ANativeWindow_acquire(win);
         g_ee_thread = std::thread([win, width, height, rendererIdx, resScaleIdx, aspectIdx, fpsIdx, frameskipIdx]() {
             LOGI("Booting God Hand EE Static Recompiled Runtime on ARM64...");
             godhand::bootAndroidRuntime(win, width, height, rendererIdx, resScaleIdx, aspectIdx, fpsIdx, frameskipIdx);
+            ANativeWindow_release(win);
         });
         g_ee_thread.detach();
     } else {
@@ -518,6 +528,13 @@ Java_com_owaissseeee_godhand_NativeBridge_updatePadState(
         // }
         s_lastLogMask = static_cast<uint32_t>(buttonMask);
     }
+}
+
+JNIEXPORT jint JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_getPadVibrationState(
+    JNIEnv* /*env*/, jobject /*thiz*/)
+{
+    return static_cast<jint>(ps2_host_input::getPrimaryVibrationState());
 }
 
 JNIEXPORT jboolean JNICALL
@@ -563,11 +580,21 @@ Java_com_owaissseeee_godhand_NativeBridge_setResolutionScale(
     JNIEnv* /*env*/, jobject /*thiz*/, jint resScaleIdx)
 {
     static const float s_scales[] = { 0.5f, 0.75f, 1.0f, 2.0f, 3.0f, 4.0f };
+    if (!godhand::isUltraPotatoMode() && resScaleIdx == 0) {
+        resScaleIdx = 1;
+    }
     float scale = 1.0f;
     if (resScaleIdx >= 0 && resScaleIdx < static_cast<int>(sizeof(s_scales) / sizeof(s_scales[0]))) {
         scale = s_scales[resScaleIdx];
     }
     godhand_set_resolution_scale(scale);
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_setUltraPotatoMode(
+    JNIEnv* /*env*/, jobject /*thiz*/, jboolean enabled)
+{
+    godhand::setUltraPotatoMode(enabled == JNI_TRUE);
 }
 
 JNIEXPORT void JNICALL
@@ -816,6 +843,20 @@ Java_com_owaissseeee_godhand_NativeBridge_getActiveMenuState(
     return static_cast<jint>(godhand::menu_touch::getActiveMenuState());
 }
 
+JNIEXPORT jlong JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_pollFrameState(
+    JNIEnv* /*env*/, jobject /*thiz*/, jboolean canRumble)
+{
+    const uint64_t menuBits = static_cast<uint64_t>(godhand::menu_touch::getActiveMenuState()) & 0x1FFFFFull;
+    const uint64_t rumbleBits = (canRumble == JNI_TRUE)
+                                    ? (static_cast<uint64_t>(ps2_host_input::getPrimaryVibrationState()) & 0xFFFFull)
+                                    : 0ull;
+    const int64_t workNs = godhand_perf_get_last_work_duration();
+    const uint64_t workUsRaw = (workNs > 0) ? (static_cast<uint64_t>(workNs) / 1000ull) : 0ull;
+    const uint64_t workUs = (workUsRaw > 0x3FFFFFFull) ? 0x3FFFFFFull : workUsRaw;
+    return static_cast<jlong>(menuBits | (rumbleBits << 21) | (workUs << 37));
+}
+
 JNIEXPORT void JNICALL
 Java_com_owaissseeee_godhand_NativeBridge_onMenuTouchEvent(
     JNIEnv* /*env*/, jobject /*thiz*/, jint action, jfloat x, jfloat y, jfloat dx, jfloat dy)
@@ -830,6 +871,13 @@ Java_com_owaissseeee_godhand_NativeBridge_onMenuBackPressed(
     JNIEnv* /*env*/, jobject /*thiz*/)
 {
     return godhand::menu_touch::handleBackPressed() ? JNI_TRUE : JNI_FALSE;
+}
+
+JNIEXPORT void JNICALL
+Java_com_owaissseeee_godhand_NativeBridge_triggerCutsceneSkip(
+    JNIEnv* /*env*/, jobject /*thiz*/)
+{
+    godhand::menu_touch::triggerCutsceneSkip();
 }
 
 JNIEXPORT void JNICALL

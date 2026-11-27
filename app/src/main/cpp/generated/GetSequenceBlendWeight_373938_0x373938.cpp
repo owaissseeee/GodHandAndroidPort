@@ -13,7 +13,7 @@
 
 // Function: GetSequenceBlendWeight_373938
 // Address: 0x373938 - 0x3739a0
-void GetSequenceBlendWeight_373938_0x373938(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetSequenceBlendWeight_373938_0x373938(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetSequenceBlendWeight_373938_0x373938");
 #endif
@@ -51,7 +51,6 @@ void GetSequenceBlendWeight_373938_0x373938(uint8_t* rdram, R5900Context* ctx, P
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373A50_0x373a50, 0x373a50u, 0x373954u)) {
         return;
     }
-    ctx->pc = 0x373954u;
 label_373954:
     // 0x373954: 0x14400004  bnez        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x373954u;
@@ -79,7 +78,6 @@ label_373954:
             goto label_37398c;
         }
     }
-    ctx->pc = 0x373968u;
 label_373968:
     // 0x373968: 0xc0dcec8  jal         func_373B20
     SET_GPR_U32(ctx, 31, 0x373970u);
@@ -92,7 +90,6 @@ label_373968:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373B20_0x373b20, 0x373b20u, 0x373970u)) {
         return;
     }
-    ctx->pc = 0x373970u;
 label_373970:
     // 0x373970: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));

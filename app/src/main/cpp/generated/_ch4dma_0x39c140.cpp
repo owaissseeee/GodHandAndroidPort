@@ -13,7 +13,7 @@
 
 // Function: _ch4dma
 // Address: 0x39c140 - 0x39c218
-void _ch4dma_0x39c140(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _ch4dma_0x39c140(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_ch4dma_0x39c140");
 #endif
@@ -72,7 +72,6 @@ void _ch4dma_0x39c140(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
         return;
         #endif
     }
-    ctx->pc = 0x39C170u;
 label_39c170:
     // 0x39c170: 0xe2102b  sltu        $v0, $a3, $v0
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 7) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
@@ -153,7 +152,6 @@ label_39c170:
             goto label_39c204;
         }
     }
-    ctx->pc = 0x39C1D4u;
 label_39c1d4:
     // 0x39c1d4: 0x8cc40004  lw          $a0, 0x4($a2)
     ctx->pc = 0x39c1d4u;

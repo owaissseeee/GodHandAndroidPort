@@ -13,7 +13,7 @@
 
 // Function: sfhds_AnlyHead
 // Address: 0x34d660 - 0x34d6f0
-void sfhds_AnlyHead_0x34d660(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfhds_AnlyHead_0x34d660(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfhds_AnlyHead_0x34d660");
 #endif
@@ -57,7 +57,6 @@ void sfhds_AnlyHead_0x34d660(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &sfhds_CallN_0x34da50, 0x34da50u, 0x34d684u)) {
         return;
     }
-    ctx->pc = 0x34D684u;
 label_34d684:
     // 0x34d684: 0x3c050036  lui         $a1, 0x36
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)54 << 16));
@@ -77,7 +76,6 @@ label_34d684:
     if (!runtime->callDirectStatic(rdram, ctx, &sfhds_CallN_0x34da50, 0x34da50u, 0x34d698u)) {
         return;
     }
-    ctx->pc = 0x34D698u;
 label_34d698:
     // 0x34d698: 0x3c050036  lui         $a1, 0x36
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)54 << 16));
@@ -97,7 +95,6 @@ label_34d698:
     if (!runtime->callDirectStatic(rdram, ctx, &sfhds_CallN_0x34da50, 0x34da50u, 0x34d6acu)) {
         return;
     }
-    ctx->pc = 0x34D6ACu;
 label_34d6ac:
     // 0x34d6ac: 0x3c050036  lui         $a1, 0x36
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)54 << 16));
@@ -134,7 +131,6 @@ label_34d6cc:
     if (!runtime->callDirectStatic(rdram, ctx, &sfhds_CallN_0x34da50, 0x34da50u, 0x34d6d4u)) {
         return;
     }
-    ctx->pc = 0x34D6D4u;
 label_34d6d4:
     // 0x34d6d4: 0xae22001c  sw          $v0, 0x1C($s1)
     ctx->pc = 0x34d6d4u;

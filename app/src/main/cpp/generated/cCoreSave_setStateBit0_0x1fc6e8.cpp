@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_setStateBit0
 // Address: 0x1fc6e8 - 0x1fc708
-void cCoreSave_setStateBit0_0x1fc6e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setStateBit0_0x1fc6e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setStateBit0_0x1fc6e8");
 #endif

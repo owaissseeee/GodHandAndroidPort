@@ -13,7 +13,7 @@
 
 // Function: func_001BD8C8
 // Address: 0x1bd8c8 - 0x1bd9e0
-void func_001BD8C8_0x1bd8c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001BD8C8_0x1bd8c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001BD8C8_0x1bd8c8");
 #endif
@@ -80,7 +80,6 @@ void func_001BD8C8_0x1bd8c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1bd9d0;
         }
     }
-    ctx->pc = 0x1BD8F4u;
 label_1bd8f4:
     // 0x1bd8f4: 0x92020774  lbu         $v0, 0x774($s0)
     ctx->pc = 0x1bd8f4u;
@@ -115,7 +114,6 @@ label_1bd8f4:
             goto label_1bd9c0;
         }
     }
-    ctx->pc = 0x1BD908u;
 label_1bd908:
     // 0x1bd908: 0x54400011  bnel        $v0, $zero, . + 4 + (0x11 << 2)
     ctx->pc = 0x1BD908u;
@@ -168,7 +166,6 @@ label_1bd908:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmSub_initMove3_y_0x1c6b68, 0x1c6b68u, 0x1bd948u)) {
         return;
     }
-    ctx->pc = 0x1BD948u;
 label_1bd948:
     // 0x1bd948: 0x10000012  b           . + 4 + (0x12 << 2)
     ctx->pc = 0x1BD948u;
@@ -185,7 +182,6 @@ label_1bd948:
             goto label_1bd994;
         }
     }
-    ctx->pc = 0x1BD950u;
 label_1bd950:
     // 0x1bd950: 0x26040610  addiu       $a0, $s0, 0x610
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 1552));
@@ -229,10 +225,8 @@ label_1bd950:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmSub_initMove1_pos_0x1c6898, 0x1c6898u, 0x1bd990u)) {
         return;
     }
-    ctx->pc = 0x1BD990u;
 label_1bd990:
     // 0x1bd990: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1bd990u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_1bd994:
     // 0x1bd994: 0xa20002f6  sb          $zero, 0x2F6($s0)
@@ -259,7 +253,6 @@ label_1bd9a4:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmSub_move_0x1c3f38, 0x1c3f38u, 0x1bd9acu)) {
         return;
     }
-    ctx->pc = 0x1BD9ACu;
 label_1bd9ac:
     // 0x1bd9ac: 0x54400008  bnel        $v0, $zero, . + 4 + (0x8 << 2)
     ctx->pc = 0x1BD9ACu;

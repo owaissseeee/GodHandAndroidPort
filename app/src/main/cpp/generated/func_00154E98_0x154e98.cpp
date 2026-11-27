@@ -13,7 +13,7 @@
 
 // Function: func_00154E98
 // Address: 0x154e98 - 0x155138
-void func_00154E98_0x154e98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00154E98_0x154e98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00154E98_0x154e98");
 #endif
@@ -144,7 +144,6 @@ void func_00154E98_0x154e98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x154f58: 0xc27021  addu        $t6, $a2, $v0
     SET_GPR_S32(ctx, 14, (int32_t)ADD32(GPR_U32(ctx, 6), GPR_U32(ctx, 2)));
     // 0x154f5c: 0x626821  addu        $t5, $v1, $v0
-    ctx->pc = 0x154f5cu;
     SET_GPR_S32(ctx, 13, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 2)));
 label_154f60:
     // 0x154f60: 0x2942001a  slti        $v0, $t2, 0x1A

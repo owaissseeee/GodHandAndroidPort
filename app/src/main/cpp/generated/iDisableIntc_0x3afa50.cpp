@@ -13,7 +13,7 @@
 
 // Function: iDisableIntc
 // Address: 0x3afa50 - 0x3afa60
-void iDisableIntc_0x3afa50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iDisableIntc_0x3afa50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iDisableIntc_0x3afa50");
 #endif

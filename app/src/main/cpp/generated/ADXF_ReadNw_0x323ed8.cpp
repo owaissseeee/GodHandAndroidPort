@@ -13,7 +13,7 @@
 
 // Function: ADXF_ReadNw
 // Address: 0x323ed8 - 0x323f18
-void ADXF_ReadNw_0x323ed8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ADXF_ReadNw_0x323ed8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ADXF_ReadNw_0x323ed8");
 #endif
@@ -58,7 +58,6 @@ void ADXF_ReadNw_0x323ed8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_0033F130_0x33f130, 0x33f130u, 0x323ef4u)) {
         return;
     }
-    ctx->pc = 0x323EF4u;
 label_323ef4:
     // 0x323ef4: 0x2402fffd  addiu       $v0, $zero, -0x3
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967293));
@@ -85,7 +84,6 @@ label_323ef4:
         #endif
     }
     // 0x323f04: 0x0  nop
-    ctx->pc = 0x323f04u;
     // NOP
 label_323f08:
     // 0x323f08: 0xdfbf0000  ld          $ra, 0x0($sp)

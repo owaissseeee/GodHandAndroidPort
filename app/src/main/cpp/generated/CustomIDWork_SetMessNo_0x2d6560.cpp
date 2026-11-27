@@ -13,7 +13,7 @@
 
 // Function: CustomIDWork_SetMessNo
 // Address: 0x2d6560 - 0x2d6578
-void CustomIDWork_SetMessNo_0x2d6560(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CustomIDWork_SetMessNo_0x2d6560(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CustomIDWork_SetMessNo_0x2d6560");
 #endif
@@ -37,7 +37,6 @@ void CustomIDWork_SetMessNo_0x2d6560(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_2d656c;
         }
     }
-    ctx->pc = 0x2D656Cu;
 label_2d656c:
     // 0x2d656c: 0x3e00008  jr          $ra
     ctx->pc = 0x2D656Cu;

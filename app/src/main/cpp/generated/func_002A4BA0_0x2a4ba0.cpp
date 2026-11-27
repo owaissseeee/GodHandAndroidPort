@@ -13,7 +13,7 @@
 
 // Function: func_002A4BA0
 // Address: 0x2a4ba0 - 0x2a4c00
-void func_002A4BA0_0x2a4ba0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002A4BA0_0x2a4ba0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002A4BA0_0x2a4ba0");
 #endif
@@ -86,7 +86,6 @@ void func_002A4BA0_0x2a4ba0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2A4BECu;
 label_2a4bec:
     // 0x2a4bec: 0x3e00008  jr          $ra
     ctx->pc = 0x2A4BECu;

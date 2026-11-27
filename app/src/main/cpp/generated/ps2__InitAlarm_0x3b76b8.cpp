@@ -13,7 +13,7 @@
 
 // Function: _InitAlarm
 // Address: 0x3b76b8 - 0x3b7708
-void ps2__InitAlarm_0x3b76b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__InitAlarm_0x3b76b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__InitAlarm_0x3b76b8");
 #endif
@@ -42,7 +42,6 @@ void ps2__InitAlarm_0x3b76b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     // 0x3b76d0: 0x244203f0  addiu       $v0, $v0, 0x3F0
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 1008));
     // 0x3b76d4: 0x0  nop
-    ctx->pc = 0x3b76d4u;
     // NOP
 label_3b76d8:
     // 0x3b76d8: 0xac430000  sw          $v1, 0x0($v0)

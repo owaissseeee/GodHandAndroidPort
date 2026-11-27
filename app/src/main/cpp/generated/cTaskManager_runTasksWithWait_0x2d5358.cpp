@@ -13,7 +13,7 @@
 
 // Function: cTaskManager_runTasksWithWait
 // Address: 0x2d5358 - 0x2d5440
-void cTaskManager_runTasksWithWait_0x2d5358(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cTaskManager_runTasksWithWait_0x2d5358(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cTaskManager_runTasksWithWait_0x2d5358");
 #endif
@@ -73,7 +73,6 @@ void cTaskManager_runTasksWithWait_0x2d5358(uint8_t* rdram, R5900Context* ctx, P
     // 0x2d5388: 0x902d  daddu       $s2, $zero, $zero
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2d538c: 0x24532c00  addiu       $s3, $v0, 0x2C00
-    ctx->pc = 0x2d538cu;
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 2), 11264));
 label_2d5390:
     // 0x2d5390: 0x8e020000  lw          $v0, 0x0($s0)
@@ -124,7 +123,6 @@ label_2d5390:
             goto label_2d5408;
         }
     }
-    ctx->pc = 0x2D53BCu;
 label_2d53bc:
     // 0x2d53bc: 0x3107b  dsra        $v0, $v1, 1
     SET_GPR_S64(ctx, 2, GPR_S64(ctx, 3) >> 1);
@@ -161,7 +159,6 @@ label_2d53bc:
             goto label_2d5408;
         }
     }
-    ctx->pc = 0x2D53E0u;
 label_2d53e0:
     // 0x2d53e0: 0xc0b55f2  jal         func_2D57C8
     SET_GPR_U32(ctx, 31, 0x2D53E8u);
@@ -174,7 +171,6 @@ label_2d53e0:
     if (!runtime->callDirectStatic(rdram, ctx, &cTaskWork_step_0x2d57c8, 0x2d57c8u, 0x2d53e8u)) {
         return;
     }
-    ctx->pc = 0x2D53E8u;
 label_2d53e8:
     // 0x2d53e8: 0x96020034  lhu         $v0, 0x34($s0)
     ctx->pc = 0x2d53e8u;
@@ -210,7 +206,6 @@ label_2d53e8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D5AA0u, 0x2D53FCu, 0x2D5404u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2D5404u;
 label_2d5404:
     // 0x2d5404: 0x9602000c  lhu         $v0, 0xC($s0)
     ctx->pc = 0x2d5404u;
@@ -238,7 +233,6 @@ label_2d5408:
             goto label_2d5390;
         }
     }
-    ctx->pc = 0x2D5418u;
 label_2d5418:
     // 0x2d5418: 0x2402ffff  addiu       $v0, $zero, -0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));

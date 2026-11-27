@@ -13,7 +13,7 @@
 
 // Function: cEmWrap_setScrCollEnable
 // Address: 0x295e78 - 0x295ee0
-void cEmWrap_setScrCollEnable_0x295e78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmWrap_setScrCollEnable_0x295e78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmWrap_setScrCollEnable_0x295e78");
 #endif
@@ -50,7 +50,6 @@ void cEmWrap_setScrCollEnable_0x295e78(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &FindResolveActor_295978_0x295978, 0x295978u, 0x295e94u)) {
         return;
     }
-    ctx->pc = 0x295E94u;
 label_295e94:
     // 0x295e94: 0x1040000c  beqz        $v0, . + 4 + (0xC << 2)
     ctx->pc = 0x295E94u;
@@ -107,7 +106,6 @@ label_295e94:
             goto label_295ec8;
         }
     }
-    ctx->pc = 0x295EBCu;
 label_295ebc:
     // 0x295ebc: 0x8c6205a0  lw          $v0, 0x5A0($v1)
     ctx->pc = 0x295ebcu;

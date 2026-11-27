@@ -13,7 +13,7 @@
 
 // Function: func_00380720
 // Address: 0x380720 - 0x3807e0
-void func_00380720_0x380720(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00380720_0x380720(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00380720_0x380720");
 #endif
@@ -55,7 +55,6 @@ void func_00380720_0x380720(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_38076c;
         }
     }
-    ctx->pc = 0x38073Cu;
 label_38073c:
     // 0x38073c: 0x44850800  mtc1        $a1, $f1
     { uint32_t bits = GPR_U32(ctx, 5); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }

@@ -14,7 +14,7 @@
 
 // Function: func_001AA478
 // Address: 0x1aa478 - 0x1aa500
-void func_001AA478_0x1aa478(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001AA478_0x1aa478(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001AA478_0x1aa478");
 #endif
@@ -109,7 +109,6 @@ void func_001AA478_0x1aa478(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshColorFromLayer_0x1b71a0, 0x1b71a0u, 0x1aa4b8u)) {
         return;
     }
-    ctx->pc = 0x1AA4B8u;
 label_1aa4b8:
     // 0x1aa4b8: 0x1000000f  b           . + 4 + (0xF << 2)
     ctx->pc = 0x1AA4B8u;
@@ -126,7 +125,6 @@ label_1aa4b8:
             goto label_1aa4f8;
         }
     }
-    ctx->pc = 0x1AA4C0u;
 label_1aa4c0:
     // 0x1aa4c0: 0x44806800  mtc1        $zero, $f13
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[13], &bits, sizeof(bits)); }
@@ -145,7 +143,6 @@ label_1aa4c0:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshColorFromLayer_0x1b71a0, 0x1b71a0u, 0x1aa4d4u)) {
         return;
     }
-    ctx->pc = 0x1AA4D4u;
 label_1aa4d4:
     // 0x1aa4d4: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x1AA4D4u;
@@ -162,7 +159,6 @@ label_1aa4d4:
             goto label_1aa4f8;
         }
     }
-    ctx->pc = 0x1AA4DCu;
 label_1aa4dc:
     // 0x1aa4dc: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -183,7 +179,6 @@ label_1aa4dc:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshColorFromLayer_0x1b71a0, 0x1b71a0u, 0x1aa4f4u)) {
         return;
     }
-    ctx->pc = 0x1AA4F4u;
 label_1aa4f4:
     // 0x1aa4f4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1aa4f4u;

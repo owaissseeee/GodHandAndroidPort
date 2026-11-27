@@ -13,7 +13,7 @@
 
 // Function: sceSifExitCmd
 // Address: 0x3b2450 - 0x3b2488
-void sceSifExitCmd_0x3b2450(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSifExitCmd_0x3b2450(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSifExitCmd_0x3b2450");
 #endif
@@ -43,7 +43,6 @@ void sceSifExitCmd_0x3b2450(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_003B07A8_0x3b07a8, 0x3b07a8u, 0x3b2460u)) {
         return;
     }
-    ctx->pc = 0x3B2460u;
 label_3b2460:
     // 0x3b2460: 0x3c030078  lui         $v1, 0x78
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)120 << 16));
@@ -60,7 +59,6 @@ label_3b2460:
     if (!runtime->callDirectStatic(rdram, ctx, &RemoveDmacHandler_0x3af9d0, 0x3af9d0u, 0x3b2470u)) {
         return;
     }
-    ctx->pc = 0x3B2470u;
 label_3b2470:
     // 0x3b2470: 0x3c030040  lui         $v1, 0x40
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)64 << 16));

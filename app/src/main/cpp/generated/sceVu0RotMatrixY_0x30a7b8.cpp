@@ -6,6 +6,7 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,7 +14,7 @@
 
 // Function: sceVu0RotMatrixY
 // Address: 0x30a7b8 - 0x30a870
-void sceVu0RotMatrixY_0x30a7b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVu0RotMatrixY_0x30a7b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVu0RotMatrixY_0x30a7b8");
 #endif
@@ -25,6 +26,28 @@ void sceVu0RotMatrixY_0x30a7b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             default: break;
         }
     }
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    if (__builtin_expect(ctx->pc == 0x30a7b8u, 1)) {
+        const float theta = ctx->f[12];
+        uint8_t* const d = ps2TryFastSpan(rdram, GPR_U32(ctx, 4) & ~0xFu, 64u);
+        const uint8_t* const s = ps2TryFastSpan(rdram, GPR_U32(ctx, 5) & ~0xFu, 64u);
+        if (__builtin_expect(d != nullptr && s != nullptr && std::isfinite(theta) && std::fabs(theta) <= 3.1415927f, 1)) {
+            const float sn = std::sinf(theta);
+            const float cs = std::cosf(theta);
+            const float32x4_t c0 = ps2RotVecY(ps2LoadVec4(s + 0), sn, cs);
+            const float32x4_t c1 = ps2RotVecY(ps2LoadVec4(s + 16), sn, cs);
+            const float32x4_t c2 = ps2RotVecY(ps2LoadVec4(s + 32), sn, cs);
+            const float32x4_t c3 = ps2RotVecY(ps2LoadVec4(s + 48), sn, cs);
+            ps2StoreVec4(d + 0, c0);
+            ps2StoreVec4(d + 16, c1);
+            ps2StoreVec4(d + 32, c2);
+            ps2StoreVec4(d + 48, c3);
+            ps2FastReturn(rdram, ctx, runtime, 0x30A864u);
+            return;
+        }
+    }
+#endif
 
 
     // 0x30a7b8: 0x44800000  mtc1        $zero, $f0
@@ -55,12 +78,10 @@ void sceVu0RotMatrixY_0x30a7b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     // 0x30a7e0: 0x80c29fc  j           func_30A7F0
     ctx->pc = 0x30A7F0u;
     goto label_30a7f0;
-    ctx->pc = 0x30A7E8u;
 label_30a7e8:
     // 0x30a7e8: 0x460c0301  sub.s       $f12, $f0, $f12
     ctx->f[12] = FPU_SUB_S(ctx->f[0], ctx->f[12]);
     // 0x30a7ec: 0x382d  daddu       $a3, $zero, $zero
-    ctx->pc = 0x30a7ecu;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_30a7f0:
     // 0x30a7f0: 0x44086000  mfc1        $t0, $f12
@@ -75,7 +96,6 @@ label_30a7f0:
     if (!runtime->callDirectStatic(rdram, ctx, &_sceVu0ecossin_0x30a5d0, 0x30a5d0u, 0x30a804u)) {
         return;
     }
-    ctx->pc = 0x30A804u;
 label_30a804:
     // 0x30a804: 0xc0f82d  daddu       $ra, $a2, $zero
     SET_GPR_U64(ctx, 31, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
@@ -102,7 +122,6 @@ label_30a804:
     // 0x30a830: 0x4a442a01  vaddy.z     $vf8, $vf5, $vf4y
     { __m128 res = PS2_VADD(ctx->vu0_vf[5], _mm_shuffle_ps(ctx->vu0_vf[4], ctx->vu0_vf[4], _MM_SHUFFLE(1,1,1,1))); __m128i mask = _mm_set_epi32(0, -1, 0, 0); ctx->vu0_vf[8] = _mm_blendv_ps(ctx->vu0_vf[8], res, _mm_castsi128_ps(mask)); }
     // 0x30a834: 0x24070004  addiu       $a3, $zero, 0x4
-    ctx->pc = 0x30a834u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
 label_30a838:
     // 0x30a838: 0xd8a40000  lqc2        $vf4, 0x0($a1)

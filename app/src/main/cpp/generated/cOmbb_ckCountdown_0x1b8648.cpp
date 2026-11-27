@@ -13,7 +13,7 @@
 
 // Function: cOmbb_ckCountdown
 // Address: 0x1b8648 - 0x1b8670
-void cOmbb_ckCountdown_0x1b8648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmbb_ckCountdown_0x1b8648(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmbb_ckCountdown_0x1b8648");
 #endif
@@ -46,7 +46,6 @@ void cOmbb_ckCountdown_0x1b8648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
         }
     }
     // 0x1b8664: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1b8664u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1b8668:
     // 0x1b8668: 0x3e00008  jr          $ra

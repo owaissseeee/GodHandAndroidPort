@@ -13,7 +13,7 @@
 
 // Function: cScenario_waitEventStartOk
 // Address: 0x2c3e88 - 0x2c3ed8
-void cScenario_waitEventStartOk_0x2c3e88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_waitEventStartOk_0x2c3e88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_waitEventStartOk_0x2c3e88");
 #endif
@@ -57,7 +57,6 @@ void cScenario_waitEventStartOk_0x2c3e88(uint8_t* rdram, R5900Context* ctx, PS2R
         }
     }
     // 0x2c3ea4: 0x0  nop
-    ctx->pc = 0x2c3ea4u;
     // NOP
 label_2c3ea8:
     // 0x2c3ea8: 0xc0b56a8  jal         func_2D5AA0
@@ -72,7 +71,6 @@ label_2c3ea8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D5AA0u, 0x2C3EA8u, 0x2C3EB0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2C3EB0u;
 label_2c3eb0:
     // 0x2c3eb0: 0xc0b0f90  jal         func_2C3E40
     SET_GPR_U32(ctx, 31, 0x2C3EB8u);
@@ -85,7 +83,6 @@ label_2c3eb0:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_isEventStartOk_0x2c3e40, 0x2c3e40u, 0x2c3eb8u)) {
         return;
     }
-    ctx->pc = 0x2C3EB8u;
 label_2c3eb8:
     // 0x2c3eb8: 0x1040fffb  beqz        $v0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x2C3EB8u;

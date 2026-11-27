@@ -13,7 +13,7 @@
 
 // Function: cIDBase_stepMoveAnim
 // Address: 0x2ac048 - 0x2ac1c0
-void cIDBase_stepMoveAnim_0x2ac048(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDBase_stepMoveAnim_0x2ac048(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDBase_stepMoveAnim_0x2ac048");
 #endif
@@ -172,7 +172,6 @@ void cIDBase_stepMoveAnim_0x2ac048(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_2ac1a8;
         }
     }
-    ctx->pc = 0x2AC0D0u;
 label_2ac0d0:
     // 0x2ac0d0: 0x960200a2  lhu         $v0, 0xA2($s0)
     ctx->pc = 0x2ac0d0u;
@@ -194,7 +193,6 @@ label_2ac0d0:
             goto label_2ac0e0;
         }
     }
-    ctx->pc = 0x2AC0E0u;
 label_2ac0e0:
     // 0x2ac0e0: 0x860500a2  lh          $a1, 0xA2($s0)
     ctx->pc = 0x2ac0e0u;
@@ -212,7 +210,6 @@ label_2ac0e0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AC650_0x2ac650, 0x2ac650u, 0x2ac0f0u)) {
         return;
     }
-    ctx->pc = 0x2AC0F0u;
 label_2ac0f0:
     // 0x2ac0f0: 0x92230067  lbu         $v1, 0x67($s1)
     ctx->pc = 0x2ac0f0u;
@@ -258,7 +255,6 @@ label_2ac0f0:
             goto label_2ac148;
         }
     }
-    ctx->pc = 0x2AC110u;
 label_2ac110:
     // 0x2ac110: 0x240202d  daddu       $a0, $s2, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -279,7 +275,6 @@ label_2ac110:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AC6E0_0x2ac6e0, 0x2ac6e0u, 0x2ac128u)) {
         return;
     }
-    ctx->pc = 0x2AC128u;
 label_2ac128:
     // 0x2ac128: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x2AC128u;
@@ -296,7 +291,6 @@ label_2ac128:
             goto label_2ac148;
         }
     }
-    ctx->pc = 0x2AC130u;
 label_2ac130:
     // 0x2ac130: 0x46000306  mov.s       $f12, $f0
     ctx->f[12] = FPU_MOV_S(ctx->f[0]);
@@ -315,10 +309,8 @@ label_2ac130:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AC878_0x2ac878, 0x2ac878u, 0x2ac144u)) {
         return;
     }
-    ctx->pc = 0x2AC144u;
 label_2ac144:
     // 0x2ac144: 0x40202d  daddu       $a0, $v0, $zero
-    ctx->pc = 0x2ac144u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_2ac148:
     // 0x2ac148: 0x1080000f  beqz        $a0, . + 4 + (0xF << 2)

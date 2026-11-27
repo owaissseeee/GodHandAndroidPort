@@ -13,7 +13,7 @@
 
 // Function: cParts_setRotationOrder
 // Address: 0x150128 - 0x150138
-void cParts_setRotationOrder_0x150128(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cParts_setRotationOrder_0x150128(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cParts_setRotationOrder_0x150128");
 #endif

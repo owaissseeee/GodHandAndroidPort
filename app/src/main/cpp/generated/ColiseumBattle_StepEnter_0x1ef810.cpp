@@ -13,7 +13,7 @@
 
 // Function: ColiseumBattle_StepEnter
 // Address: 0x1ef810 - 0x1ef8b8
-void ColiseumBattle_StepEnter_0x1ef810(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumBattle_StepEnter_0x1ef810(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumBattle_StepEnter_0x1ef810");
 #endif
@@ -118,7 +118,6 @@ void ColiseumBattle_StepEnter_0x1ef810(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &ColiseumBattle_ResetUi_0x1eec68, 0x1eec68u, 0x1ef860u)) {
         return;
     }
-    ctx->pc = 0x1EF860u;
 label_1ef860:
     // 0x1ef860: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -133,7 +132,6 @@ label_1ef860:
     if (!runtime->callDirectStatic(rdram, ctx, &ColiseumBattle_StartFade_0x1efc48, 0x1efc48u, 0x1ef86cu)) {
         return;
     }
-    ctx->pc = 0x1EF86Cu;
 label_1ef86c:
     // 0x1ef86c: 0x1000000c  b           . + 4 + (0xC << 2)
     ctx->pc = 0x1EF86Cu;
@@ -150,7 +148,6 @@ label_1ef86c:
             goto label_1ef8a0;
         }
     }
-    ctx->pc = 0x1EF874u;
 label_1ef874:
     // 0x1ef874: 0x3c030074  lui         $v1, 0x74
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
@@ -192,7 +189,6 @@ label_1ef874:
     if (!runtime->callDirectStatic(rdram, ctx, &ColiseumBattle_KillFade_0x1efd00, 0x1efd00u, 0x1ef89cu)) {
         return;
     }
-    ctx->pc = 0x1EF89Cu;
 label_1ef89c:
     // 0x1ef89c: 0x8e020008  lw          $v0, 0x8($s0)
     ctx->pc = 0x1ef89cu;

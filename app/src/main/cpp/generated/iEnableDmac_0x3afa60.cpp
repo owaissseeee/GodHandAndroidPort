@@ -13,7 +13,7 @@
 
 // Function: iEnableDmac
 // Address: 0x3afa60 - 0x3afa70
-void iEnableDmac_0x3afa60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iEnableDmac_0x3afa60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iEnableDmac_0x3afa60");
 #endif

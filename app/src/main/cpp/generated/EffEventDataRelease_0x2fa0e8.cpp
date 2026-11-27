@@ -13,7 +13,7 @@
 
 // Function: EffEventDataRelease
 // Address: 0x2fa0e8 - 0x2fa128
-void EffEventDataRelease_0x2fa0e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EffEventDataRelease_0x2fa0e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EffEventDataRelease_0x2fa0e8");
 #endif
@@ -71,7 +71,6 @@ void EffEventDataRelease_0x2fa0e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &espSys_effDataRelease_0x305778, 0x305778u, 0x2fa118u)) {
         return;
     }
-    ctx->pc = 0x2FA118u;
 label_2fa118:
     // 0x2fa118: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2fa118u;

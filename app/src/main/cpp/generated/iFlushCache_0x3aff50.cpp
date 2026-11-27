@@ -13,7 +13,7 @@
 
 // Function: iFlushCache
 // Address: 0x3aff50 - 0x3aff60
-void iFlushCache_0x3aff50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iFlushCache_0x3aff50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iFlushCache_0x3aff50");
 #endif

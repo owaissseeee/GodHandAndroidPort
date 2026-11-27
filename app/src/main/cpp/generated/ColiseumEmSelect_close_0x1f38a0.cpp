@@ -13,7 +13,7 @@
 
 // Function: ColiseumEmSelect_close
 // Address: 0x1f38a0 - 0x1f38f0
-void ColiseumEmSelect_close_0x1f38a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumEmSelect_close_0x1f38a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumEmSelect_close_0x1f38a0");
 #endif
@@ -48,7 +48,6 @@ void ColiseumEmSelect_close_0x1f38a0(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F46E0_0x1f46e0, 0x1f46e0u, 0x1f38b8u)) {
         return;
     }
-    ctx->pc = 0x1F38B8u;
 label_1f38b8:
     // 0x1f38b8: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
@@ -94,7 +93,6 @@ label_1f38b8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x1F38D8u, 0x1F38E0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1F38E0u;
 label_1f38e0:
     // 0x1f38e0: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1f38e0u;

@@ -13,7 +13,7 @@
 
 // Function: func_0028A2E8
 // Address: 0x28a2e8 - 0x28a4a0
-void func_0028A2E8_0x28a2e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0028A2E8_0x28a2e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0028A2E8_0x28a2e8");
 #endif
@@ -204,7 +204,6 @@ void func_0028A2E8_0x28a2e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_00291010_0x291010, 0x291010u, 0x28a39cu)) {
         return;
     }
-    ctx->pc = 0x28A39Cu;
 label_28a39c:
     // 0x28a39c: 0x54400005  bnel        $v0, $zero, . + 4 + (0x5 << 2)
     ctx->pc = 0x28A39Cu;
@@ -285,7 +284,6 @@ label_28a3b4:
             goto label_28a3ec;
         }
     }
-    ctx->pc = 0x28A3E8u;
 label_28a3e8:
     // 0x28a3e8: 0xa611054a  sh          $s1, 0x54A($s0)
     ctx->pc = 0x28a3e8u;
@@ -318,7 +316,6 @@ label_28a3ec:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CBA48_0x2cba48, 0x2cba48u, 0x28a414u)) {
         return;
     }
-    ctx->pc = 0x28A414u;
 label_28a414:
     // 0x28a414: 0x920302b4  lbu         $v1, 0x2B4($s0)
     ctx->pc = 0x28a414u;
@@ -360,10 +357,8 @@ label_28a414:
             goto label_28a438;
         }
     }
-    ctx->pc = 0x28A434u;
 label_28a434:
     // 0x28a434: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x28a434u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_28a438:
     // 0x28a438: 0x10400008  beqz        $v0, . + 4 + (0x8 << 2)
@@ -403,7 +398,6 @@ label_28a438:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffectPos_0x306838, 0x306838u, 0x28a45cu)) {
         return;
     }
-    ctx->pc = 0x28A45Cu;
 label_28a45c:
     // 0x28a45c: 0x3c014040  lui         $at, 0x4040
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16448 << 16));
@@ -430,7 +424,6 @@ label_28a45c:
         }
     }
     // 0x28a474: 0x24020002  addiu       $v0, $zero, 0x2
-    ctx->pc = 0x28a474u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
 label_28a478:
     // 0x28a478: 0xa20002f7  sb          $zero, 0x2F7($s0)

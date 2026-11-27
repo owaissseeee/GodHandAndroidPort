@@ -13,7 +13,7 @@
 
 // Function: DamageFiveObj_clearHits
 // Address: 0x20f310 - 0x20f3c0
-void DamageFiveObj_clearHits_0x20f310(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void DamageFiveObj_clearHits_0x20f310(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("DamageFiveObj_clearHits_0x20f310");
 #endif
@@ -65,7 +65,6 @@ void DamageFiveObj_clearHits_0x20f310(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x20f33cu)) {
         return;
     }
-    ctx->pc = 0x20F33Cu;
 label_20f33c:
     // 0x20f33c: 0x8e030678  lw          $v1, 0x678($s0)
     ctx->pc = 0x20f33cu;
@@ -92,7 +91,6 @@ label_20f33c:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x20f358u)) {
         return;
     }
-    ctx->pc = 0x20F358u;
 label_20f358:
     // 0x20f358: 0x8e030680  lw          $v1, 0x680($s0)
     ctx->pc = 0x20f358u;
@@ -119,7 +117,6 @@ label_20f358:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x20f374u)) {
         return;
     }
-    ctx->pc = 0x20F374u;
 label_20f374:
     // 0x20f374: 0x8e030688  lw          $v1, 0x688($s0)
     ctx->pc = 0x20f374u;
@@ -146,7 +143,6 @@ label_20f374:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x20f390u)) {
         return;
     }
-    ctx->pc = 0x20F390u;
 label_20f390:
     // 0x20f390: 0x8e030690  lw          $v1, 0x690($s0)
     ctx->pc = 0x20f390u;
@@ -173,7 +169,6 @@ label_20f390:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_SetDamageCollActive_0x1fd668, 0x1fd668u, 0x20f3acu)) {
         return;
     }
-    ctx->pc = 0x20F3ACu;
 label_20f3ac:
     // 0x20f3ac: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x20f3acu;

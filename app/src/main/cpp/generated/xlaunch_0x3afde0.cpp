@@ -13,7 +13,7 @@
 
 // Function: xlaunch
 // Address: 0x3afde0 - 0x3afdf0
-void xlaunch_0x3afde0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void xlaunch_0x3afde0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("xlaunch_0x3afde0");
 #endif

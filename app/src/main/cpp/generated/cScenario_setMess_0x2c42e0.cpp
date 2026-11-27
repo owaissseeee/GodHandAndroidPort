@@ -13,7 +13,7 @@
 
 // Function: cScenario_setMess
 // Address: 0x2c42e0 - 0x2c4350
-void cScenario_setMess_0x2c42e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_setMess_0x2c42e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_setMess_0x2c42e0");
 #endif
@@ -69,7 +69,6 @@ void cScenario_setMess_0x2c42e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_endMess_0x2c4390, 0x2c4390u, 0x2c4310u)) {
         return;
     }
-    ctx->pc = 0x2C4310u;
 label_2c4310:
     // 0x2c4310: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
@@ -93,7 +92,6 @@ label_2c4310:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessage_create_0x2aeb68, 0x2aeb68u, 0x2c432cu)) {
         return;
     }
-    ctx->pc = 0x2C432Cu;
 label_2c432c:
     // 0x2c432c: 0x54520001  bnel        $v0, $s2, . + 4 + (0x1 << 2)
     ctx->pc = 0x2C432Cu;
@@ -110,7 +108,6 @@ label_2c432c:
             goto label_2c4334;
         }
     }
-    ctx->pc = 0x2C4334u;
 label_2c4334:
     // 0x2c4334: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x2c4334u;

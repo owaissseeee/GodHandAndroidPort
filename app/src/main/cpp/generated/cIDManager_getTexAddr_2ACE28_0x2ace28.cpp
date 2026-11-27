@@ -13,7 +13,7 @@
 
 // Function: cIDManager_getTexAddr_2ACE28
 // Address: 0x2ace28 - 0x2ace48
-void cIDManager_getTexAddr_2ACE28_0x2ace28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDManager_getTexAddr_2ACE28_0x2ace28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDManager_getTexAddr_2ACE28_0x2ace28");
 #endif
@@ -44,7 +44,6 @@ void cIDManager_getTexAddr_2ACE28_0x2ace28(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &cIDManager_getTexAddr_0x2acdc8, 0x2acdc8u, 0x2ace3cu)) {
         return;
     }
-    ctx->pc = 0x2ACE3Cu;
 label_2ace3c:
     // 0x2ace3c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2ace3cu;

@@ -13,7 +13,7 @@
 
 // Function: GameInitObj_start
 // Address: 0x2a5b18 - 0x2a5bb8
-void GameInitObj_start_0x2a5b18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GameInitObj_start_0x2a5b18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GameInitObj_start_0x2a5b18");
 #endif
@@ -55,7 +55,6 @@ void GameInitObj_start_0x2a5b18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &cWorldTime_gameInit_0x2d9bc0, 0x2d9bc0u, 0x2a5b34u)) {
         return;
     }
-    ctx->pc = 0x2A5B34u;
 label_2a5b34:
     // 0x2a5b34: 0x3c030074  lui         $v1, 0x74
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
@@ -81,7 +80,6 @@ label_2a5b34:
     if (!runtime->callDirectStatic(rdram, ctx, &cCamManager_setPlCamera_0x138d40, 0x138d40u, 0x2a5b54u)) {
         return;
     }
-    ctx->pc = 0x2A5B54u;
 label_2a5b54:
     // 0x2a5b54: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -101,7 +99,6 @@ label_2a5b54:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_reset_0x290110, 0x290110u, 0x2a5b68u)) {
         return;
     }
-    ctx->pc = 0x2A5B68u;
 label_2a5b68:
     // 0x2a5b68: 0x3c040057  lui         $a0, 0x57
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)87 << 16));
@@ -116,7 +113,6 @@ label_2a5b68:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FDEA8_0x1fdea8, 0x1fdea8u, 0x2a5b74u)) {
         return;
     }
-    ctx->pc = 0x2A5B74u;
 label_2a5b74:
     // 0x2a5b74: 0x3c04005d  lui         $a0, 0x5D
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)93 << 16));
@@ -131,7 +127,6 @@ label_2a5b74:
     if (!runtime->callDirectStatic(rdram, ctx, &cHeatSys_Initialize_0x2a9908, 0x2a9908u, 0x2a5b80u)) {
         return;
     }
-    ctx->pc = 0x2A5B80u;
 label_2a5b80:
     // 0x2a5b80: 0x3c040057  lui         $a0, 0x57
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)87 << 16));
@@ -146,7 +141,6 @@ label_2a5b80:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Clear_Fields_00_08_0C_0E_10_12_1F6CF8_0x1f6cf8, 0x1f6cf8u, 0x2a5b8cu)) {
         return;
     }
-    ctx->pc = 0x2A5B8Cu;
 label_2a5b8c:
     // 0x2a5b8c: 0x3c040057  lui         $a0, 0x57
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)87 << 16));
@@ -161,7 +155,6 @@ label_2a5b8c:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_gameInit_0x1f98d0, 0x1f98d0u, 0x2a5b98u)) {
         return;
     }
-    ctx->pc = 0x2A5B98u;
 label_2a5b98:
     // 0x2a5b98: 0x3c013f00  lui         $at, 0x3F00
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16128 << 16));

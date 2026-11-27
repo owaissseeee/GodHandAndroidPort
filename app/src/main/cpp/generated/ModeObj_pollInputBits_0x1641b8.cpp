@@ -13,7 +13,7 @@
 
 // Function: ModeObj_pollInputBits
 // Address: 0x1641b8 - 0x164238
-void ModeObj_pollInputBits_0x1641b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ModeObj_pollInputBits_0x1641b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ModeObj_pollInputBits_0x1641b8");
 #endif
@@ -111,7 +111,6 @@ label_1641e8:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_2CB8A0_0x2cb8a0, 0x2cb8a0u, 0x16421cu)) {
         return;
     }
-    ctx->pc = 0x16421Cu;
 label_16421c:
     // 0x16421c: 0x2403ffff  addiu       $v1, $zero, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));

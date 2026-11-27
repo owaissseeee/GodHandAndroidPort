@@ -13,7 +13,7 @@
 
 // Function: cOmItem_setBlockObj
 // Address: 0x1c2558 - 0x1c25a0
-void cOmItem_setBlockObj_0x1c2558(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmItem_setBlockObj_0x1c2558(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmItem_setBlockObj_0x1c2558");
 #endif
@@ -98,7 +98,6 @@ label_1c2570:
             goto label_1c2570;
         }
     }
-    ctx->pc = 0x1C2598u;
 label_1c2598:
     // 0x1c2598: 0x3e00008  jr          $ra
     ctx->pc = 0x1C2598u;

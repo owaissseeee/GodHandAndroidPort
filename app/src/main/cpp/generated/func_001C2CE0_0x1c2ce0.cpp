@@ -13,7 +13,7 @@
 
 // Function: func_001C2CE0
 // Address: 0x1c2ce0 - 0x1c2d60
-void func_001C2CE0_0x1c2ce0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001C2CE0_0x1c2ce0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001C2CE0_0x1c2ce0");
 #endif
@@ -56,11 +56,9 @@ void func_001C2CE0_0x1c2ce0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
 
-    ctx->pc = 0x1c2ce0u;
 
 label_1c2ce0:
     // 0x1c2ce0: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x1c2ce0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
 label_1c2ce4:
     // 0x1c2ce4: 0x7fb00020  sq          $s0, 0x20($sp)
@@ -68,7 +66,6 @@ label_1c2ce4:
     WRITE128(ADD32(GPR_U32(ctx, 29), 32), GPR_VEC(ctx, 16));
 label_1c2ce8:
     // 0x1c2ce8: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x1c2ce8u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_1c2cec:
     // 0x1c2cec: 0xffbf0010  sd          $ra, 0x10($sp)
@@ -146,7 +143,6 @@ label_1c2d0c:
             goto label_1c2d2c;
         }
     }
-    ctx->pc = 0x1C2D10u;
 label_1c2d10:
     // 0x1c2d10: 0xc4400000  lwc1        $f0, 0x0($v0)
     ctx->pc = 0x1c2d10u;
@@ -202,18 +198,14 @@ label_1c2d30:
             goto label_1c2d4c;
         }
     }
-    ctx->pc = 0x1C2D34u;
 label_1c2d34:
     // 0x1c2d34: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x1c2d34u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
 label_1c2d38:
     // 0x1c2d38: 0x44816000  mtc1        $at, $f12
-    ctx->pc = 0x1c2d38u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[12], &bits, sizeof(bits)); }
 label_1c2d3c:
     // 0x1c2d3c: 0x302d  daddu       $a2, $zero, $zero
-    ctx->pc = 0x1c2d3cu;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1c2d40:
     // 0x1c2d40: 0x3a0382d  daddu       $a3, $sp, $zero
@@ -242,7 +234,6 @@ label_1c2d48:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffectPos_0x306838, 0x306838u, 0x1c2d4cu)) {
         return;
     }
-    ctx->pc = 0x1C2D4Cu;
 label_1c2d4c:
     // 0x1c2d4c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1c2d4cu;
@@ -282,7 +273,6 @@ label_1c2d58:
         return;
         #endif
     }
-    ctx->pc = 0x1C2D5Cu;
 label_1c2d5c:
     // 0x1c2d5c: 0x0  nop
     // NOP

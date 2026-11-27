@@ -13,7 +13,7 @@
 
 // Function: searchStmId
 // Address: 0x35da58 - 0x35daa0
-void searchStmId_0x35da58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void searchStmId_0x35da58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("searchStmId_0x35da58");
 #endif
@@ -49,7 +49,6 @@ void searchStmId_0x35da58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
         }
     }
     // 0x35da6c: 0x0  nop
-    ctx->pc = 0x35da6cu;
     // NOP
 label_35da70:
     // 0x35da70: 0x61180  sll         $v0, $a2, 6
@@ -98,7 +97,6 @@ label_35da88:
         }
     }
     // 0x35da94: 0x60382d  daddu       $a3, $v1, $zero
-    ctx->pc = 0x35da94u;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
 label_35da98:
     // 0x35da98: 0x3e00008  jr          $ra

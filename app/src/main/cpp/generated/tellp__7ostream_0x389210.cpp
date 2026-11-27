@@ -13,7 +13,7 @@
 
 // Function: tellp__7ostream
 // Address: 0x389210 - 0x389268
-void tellp__7ostream_0x389210(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void tellp__7ostream_0x389210(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("tellp__7ostream_0x389210");
 #endif
@@ -56,7 +56,6 @@ void tellp__7ostream_0x389210(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_seekoff_0x38e3f0, 0x38e3f0u, 0x389238u)) {
         return;
     }
-    ctx->pc = 0x389238u;
 label_389238:
     // 0x389238: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));

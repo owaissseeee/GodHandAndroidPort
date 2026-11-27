@@ -13,7 +13,7 @@
 
 // Function: AddIntcHandler
 // Address: 0x3af980 - 0x3af990
-void AddIntcHandler_0x3af980(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void AddIntcHandler_0x3af980(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("AddIntcHandler_0x3af980");
 #endif

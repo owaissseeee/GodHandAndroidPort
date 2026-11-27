@@ -13,7 +13,7 @@
 
 // Function: Slot2_showMarkLayers
 // Address: 0x1e67a8 - 0x1e6820
-void Slot2_showMarkLayers_0x1e67a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Slot2_showMarkLayers_0x1e67a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Slot2_showMarkLayers_0x1e67a8");
 #endif
@@ -55,7 +55,6 @@ void Slot2_showMarkLayers_0x1e67a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &Slot2_hideLayerIds_0x1e6820, 0x1e6820u, 0x1e67c4u)) {
         return;
     }
-    ctx->pc = 0x1E67C4u;
 label_1e67c4:
     // 0x1e67c4: 0x5200000f  beql        $s0, $zero, . + 4 + (0xF << 2)
     ctx->pc = 0x1E67C4u;
@@ -86,7 +85,6 @@ label_1e67c4:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e67d8u)) {
         return;
     }
-    ctx->pc = 0x1E67D8u;
 label_1e67d8:
     // 0x1e67d8: 0x8e2403a8  lw          $a0, 0x3A8($s1)
     ctx->pc = 0x1e67d8u;
@@ -102,7 +100,6 @@ label_1e67d8:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e67e4u)) {
         return;
     }
-    ctx->pc = 0x1E67E4u;
 label_1e67e4:
     // 0x1e67e4: 0x8e2403ac  lw          $a0, 0x3AC($s1)
     ctx->pc = 0x1e67e4u;
@@ -118,7 +115,6 @@ label_1e67e4:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e67f0u)) {
         return;
     }
-    ctx->pc = 0x1E67F0u;
 label_1e67f0:
     // 0x1e67f0: 0x8e2403b0  lw          $a0, 0x3B0($s1)
     ctx->pc = 0x1e67f0u;
@@ -134,7 +130,6 @@ label_1e67f0:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e67fcu)) {
         return;
     }
-    ctx->pc = 0x1E67FCu;
 label_1e67fc:
     // 0x1e67fc: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x1E67FCu;
@@ -151,7 +146,6 @@ label_1e67fc:
             goto label_1e6810;
         }
     }
-    ctx->pc = 0x1E6804u;
 label_1e6804:
     // 0x1e6804: 0xc0b6cac  jal         func_2DB2B0
     SET_GPR_U32(ctx, 31, 0x1E680Cu);
@@ -164,7 +158,6 @@ label_1e6804:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e680cu)) {
         return;
     }
-    ctx->pc = 0x1E680Cu;
 label_1e680c:
     // 0x1e680c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1e680cu;

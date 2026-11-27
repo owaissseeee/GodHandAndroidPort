@@ -13,7 +13,7 @@
 
 // Function: Obj34D8_Call4CA00_With1F44_ReturnZero
 // Address: 0x34dfa8 - 0x34dfd0
-void Obj34D8_Call4CA00_With1F44_ReturnZero_0x34dfa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj34D8_Call4CA00_With1F44_ReturnZero_0x34dfa8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj34D8_Call4CA00_With1F44_ReturnZero_0x34dfa8");
 #endif
@@ -44,7 +44,6 @@ void Obj34D8_Call4CA00_With1F44_ReturnZero_0x34dfa8(uint8_t* rdram, R5900Context
     if (!runtime->callDirectStatic(rdram, ctx, &func_0034CA00_0x34ca00, 0x34ca00u, 0x34dfbcu)) {
         return;
     }
-    ctx->pc = 0x34DFBCu;
 label_34dfbc:
     // 0x34dfbc: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

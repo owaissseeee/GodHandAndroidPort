@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_subGold
 // Address: 0x1fa870 - 0x1fa8e0
-void cCoreSave_subGold_0x1fa870(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_subGold_0x1fa870(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_subGold_0x1fa870");
 #endif
@@ -72,7 +72,6 @@ void cCoreSave_subGold_0x1fa870(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_1fa8a4;
         }
     }
-    ctx->pc = 0x1FA8A4u;
 label_1fa8a4:
     // 0x1fa8a4: 0x8ce30000  lw          $v1, 0x0($a3)
     ctx->pc = 0x1fa8a4u;
@@ -95,7 +94,6 @@ label_1fa8a4:
             goto label_1fa8b4;
         }
     }
-    ctx->pc = 0x1FA8B4u;
 label_1fa8b4:
     // 0x1fa8b4: 0x3c020074  lui         $v0, 0x74
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));

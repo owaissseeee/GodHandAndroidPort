@@ -14,18 +14,15 @@ namespace gh_event
 {
 // Function: getMotionNo__C12cEventMotionSc
 // Address: 0x7b04e8 - 0x7b0520
-void getMotionNo__C12cEventMotionSc_0x7b04e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getMotionNo__C12cEventMotionSc_0x7b04e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getMotionNo__C12cEventMotionSc_0x7b04e8");
 #endif
 
-    ctx->pc = 0x7b04e8u;
 
     // 0x7b04e8: 0x52e00  sll         $a1, $a1, 24
-    ctx->pc = 0x7b04e8u;
     SET_GPR_S32(ctx, 5, (int32_t)SLL32(GPR_U32(ctx, 5), 24));
     // 0x7b04ec: 0x52e03  sra         $a1, $a1, 24
-    ctx->pc = 0x7b04ecu;
     SET_GPR_S32(ctx, 5, SRA32(GPR_S32(ctx, 5), 24));
     // 0x7b04f0: 0x4a10004  bgez        $a1, . + 4 + (0x4 << 2)
     ctx->pc = 0x7B04F0u;
@@ -42,9 +39,7 @@ void getMotionNo__C12cEventMotionSc_0x7b04e8(uint8_t* rdram, R5900Context* ctx, 
             goto label_7b0504;
         }
     }
-    ctx->pc = 0x7B04F8u;
     // 0x7b04f8: 0x3c02007b  lui         $v0, 0x7B
-    ctx->pc = 0x7b04f8u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)123 << 16));
     // 0x7b04fc: 0x3e00008  jr          $ra
     ctx->pc = 0x7B04FCu;
@@ -65,22 +60,17 @@ void getMotionNo__C12cEventMotionSc_0x7b04e8(uint8_t* rdram, R5900Context* ctx, 
         return;
         #endif
     }
-    ctx->pc = 0x7B0504u;
 label_7b0504:
     // 0x7b0504: 0x24020048  addiu       $v0, $zero, 0x48
-    ctx->pc = 0x7b0504u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 72));
     // 0x7b0508: 0x3c04007b  lui         $a0, 0x7B
-    ctx->pc = 0x7b0508u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)123 << 16));
     // 0x7b050c: 0x621018  mult        $v0, $v1, $v0
-    ctx->pc = 0x7b050cu;
     { int64_t result = (int64_t)GPR_S32(ctx, 3) * (int64_t)GPR_S32(ctx, 2); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 2, (int32_t)result); }
     // 0x7b0510: 0x8c834f94  lw          $v1, 0x4F94($a0)
     ctx->pc = 0x7b0510u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 20372)));
     // 0x7b0514: 0x431021  addu        $v0, $v0, $v1
-    ctx->pc = 0x7b0514u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
     // 0x7b0518: 0x3e00008  jr          $ra
     ctx->pc = 0x7B0518u;

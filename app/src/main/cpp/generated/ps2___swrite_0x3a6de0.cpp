@@ -13,7 +13,7 @@
 
 // Function: __swrite
 // Address: 0x3a6de0 - 0x3a6e60
-void ps2___swrite_0x3a6de0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___swrite_0x3a6de0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___swrite_0x3a6de0");
 #endif
@@ -84,7 +84,6 @@ void ps2___swrite_0x3a6de0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_003AE008_0x3ae008, 0x3ae008u, 0x3a6e20u)) {
         return;
     }
-    ctx->pc = 0x3A6E20u;
 label_3a6e20:
     // 0x3a6e20: 0x9602000c  lhu         $v0, 0xC($s0)
     ctx->pc = 0x3a6e20u;
@@ -112,7 +111,6 @@ label_3a6e20:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003AE128_0x3ae128, 0x3ae128u, 0x3a6e40u)) {
         return;
     }
-    ctx->pc = 0x3A6E40u;
 label_3a6e40:
     // 0x3a6e40: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x3a6e40u;

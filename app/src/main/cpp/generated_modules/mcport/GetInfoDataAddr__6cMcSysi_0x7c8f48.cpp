@@ -14,18 +14,16 @@ namespace gh_mcport
 {
 // Function: GetInfoDataAddr__6cMcSysi
 // Address: 0x7c8f48 - 0x7c8f58
-void GetInfoDataAddr__6cMcSysi_0x7c8f48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetInfoDataAddr__6cMcSysi_0x7c8f48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetInfoDataAddr__6cMcSysi_0x7c8f48");
 #endif
 
-    ctx->pc = 0x7c8f48u;
 
     // 0x7c8f48: 0x8c820080  lw          $v0, 0x80($a0)
     ctx->pc = 0x7c8f48u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 128)));
     // 0x7c8f4c: 0x52a80  sll         $a1, $a1, 10
-    ctx->pc = 0x7c8f4cu;
     SET_GPR_S32(ctx, 5, (int32_t)SLL32(GPR_U32(ctx, 5), 10));
     // 0x7c8f50: 0x3e00008  jr          $ra
     ctx->pc = 0x7C8F50u;

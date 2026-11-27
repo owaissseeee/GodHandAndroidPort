@@ -13,7 +13,7 @@
 
 // Function: CustomIDWork_Initialize
 // Address: 0x2d5da8 - 0x2d5de0
-void CustomIDWork_Initialize_0x2d5da8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CustomIDWork_Initialize_0x2d5da8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CustomIDWork_Initialize_0x2d5da8");
 #endif

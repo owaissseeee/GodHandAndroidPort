@@ -13,7 +13,7 @@
 
 // Function: cGameObj_setRot
 // Address: 0x2a9420 - 0x2a9458
-void cGameObj_setRot_0x2a9420(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObj_setRot_0x2a9420(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObj_setRot_0x2a9420");
 #endif

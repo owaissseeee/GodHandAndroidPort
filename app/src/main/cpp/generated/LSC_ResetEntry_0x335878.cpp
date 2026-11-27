@@ -13,7 +13,7 @@
 
 // Function: LSC_ResetEntry
 // Address: 0x335878 - 0x3358b8
-void LSC_ResetEntry_0x335878(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void LSC_ResetEntry_0x335878(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("LSC_ResetEntry_0x335878");
 #endif
@@ -53,7 +53,6 @@ void LSC_ResetEntry_0x335878(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x335D40u, 0x335890u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x335898u;
 label_335898:
     // 0x335898: 0x80820001  lb          $v0, 0x1($a0)
     ctx->pc = 0x335898u;

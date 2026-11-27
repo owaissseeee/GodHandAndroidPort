@@ -13,7 +13,7 @@
 
 // Function: LinkObj_callLockOn
 // Address: 0x2feb18 - 0x2feb80
-void LinkObj_callLockOn_0x2feb18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void LinkObj_callLockOn_0x2feb18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("LinkObj_callLockOn_0x2feb18");
 #endif
@@ -50,15 +50,12 @@ void LinkObj_callLockOn_0x2feb18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         }
     }
 
-    ctx->pc = 0x2feb18u;
 
 label_2feb18:
     // 0x2feb18: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2feb18u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_2feb1c:
     // 0x2feb1c: 0x80282d  daddu       $a1, $a0, $zero
-    ctx->pc = 0x2feb1cu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_2feb20:
     // 0x2feb20: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -66,7 +63,6 @@ label_2feb20:
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
 label_2feb24:
     // 0x2feb24: 0x3c020080  lui         $v0, 0x80
-    ctx->pc = 0x2feb24u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)128 << 16));
 label_2feb28:
     // 0x2feb28: 0x8ca3011c  lw          $v1, 0x11C($a1)
@@ -103,7 +99,6 @@ label_2feb34:
             goto label_2feb78;
         }
     }
-    ctx->pc = 0x2FEB38u;
 label_2feb38:
     // 0x2feb38: 0x8ca20114  lw          $v0, 0x114($a1)
     ctx->pc = 0x2feb38u;
@@ -135,7 +130,6 @@ label_2feb40:
             goto label_2feb64;
         }
     }
-    ctx->pc = 0x2FEB44u;
 label_2feb44:
     // 0x2feb44: 0x8c420250  lw          $v0, 0x250($v0)
     ctx->pc = 0x2feb44u;
@@ -171,7 +165,6 @@ label_2feb50:
             goto label_2feb60;
         }
     }
-    ctx->pc = 0x2FEB54u;
 label_2feb54:
     // 0x2feb54: 0x30420001  andi        $v0, $v0, 0x1
     ctx->pc = 0x2feb54u;
@@ -191,7 +184,6 @@ label_2feb5c:
             goto label_2feb78;
         }
     }
-    ctx->pc = 0x2FEB60u;
 label_2feb60:
     // 0x2feb60: 0x8ca200f0  lw          $v0, 0xF0($a1)
     ctx->pc = 0x2feb60u;
@@ -232,7 +224,6 @@ label_2feb70:
             return;
         }
     }
-    ctx->pc = 0x2FEB74u;
 label_2feb74:
     // 0x2feb74: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2feb74u;

@@ -13,7 +13,7 @@
 
 // Function: AllocTimerCounter
 // Address: 0x3b7270 - 0x3b72d0
-void AllocTimerCounter_0x3b7270(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void AllocTimerCounter_0x3b7270(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("AllocTimerCounter_0x3b7270");
 #endif
@@ -45,7 +45,6 @@ void AllocTimerCounter_0x3b7270(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x3b7288u)) {
         return;
     }
-    ctx->pc = 0x3B7288u;
 label_3b7288:
     // 0x3b7288: 0xc0edc80  jal         func_3B7200
     SET_GPR_U32(ctx, 31, 0x3B7290u);
@@ -58,7 +57,6 @@ label_3b7288:
     if (!runtime->callDirectStatic(rdram, ctx, &iAllocTimerCounter_0x3b7200, 0x3b7200u, 0x3b7290u)) {
         return;
     }
-    ctx->pc = 0x3B7290u;
 label_3b7290:
     // 0x3b7290: 0x12000003  beqz        $s0, . + 4 + (0x3 << 2)
     ctx->pc = 0x3B7290u;
@@ -81,7 +79,6 @@ label_3b7290:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x3b72a0u)) {
         return;
     }
-    ctx->pc = 0x3B72A0u;
 label_3b72a0:
     // 0x3b72a0: 0x220102d  daddu       $v0, $s1, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));

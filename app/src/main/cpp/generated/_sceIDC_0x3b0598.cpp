@@ -13,7 +13,7 @@
 
 // Function: _sceIDC
 // Address: 0x3b0598 - 0x3b0640
-void _sceIDC_0x3b0598(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceIDC_0x3b0598(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceIDC_0x3b0598");
 #endif
@@ -33,7 +33,6 @@ void _sceIDC_0x3b0598(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     // 0x3b05a0: 0x34e7f000  ori         $a3, $a3, 0xF000
     SET_GPR_U64(ctx, 7, GPR_U64(ctx, 7) | (uint64_t)(uint16_t)61440);
     // 0x3b05a4: 0x0  nop
-    ctx->pc = 0x3b05a4u;
     // NOP
 label_3b05a8:
     // 0x3b05a8: 0xf  sync
@@ -78,7 +77,6 @@ label_3b05a8:
     // 0x3b05dc: 0xbcd60000  cache       0x16, 0x0($a2)
     // CACHE instruction (ignored)
     // 0x3b05e0: 0xf  sync
-    ctx->pc = 0x3b05e0u;
     // SYNC instruction - memory barrier
 // In recompiled code, we don't need explicit memory barriers
 label_3b05e4:
@@ -124,7 +122,6 @@ label_3b05e4:
     // 0x3b0618: 0xbcd60001  cache       0x16, 0x1($a2)
     // CACHE instruction (ignored)
     // 0x3b061c: 0xf  sync
-    ctx->pc = 0x3b061cu;
     // SYNC instruction - memory barrier
 // In recompiled code, we don't need explicit memory barriers
 label_3b0620:

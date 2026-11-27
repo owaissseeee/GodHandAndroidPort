@@ -13,7 +13,7 @@
 
 // Function: cSndMemHeap_Alloc
 // Address: 0x2cd7c8 - 0x2cd890
-void cSndMemHeap_Alloc_0x2cd7c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndMemHeap_Alloc_0x2cd7c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndMemHeap_Alloc_0x2cd7c8");
 #endif
@@ -62,7 +62,6 @@ void cSndMemHeap_Alloc_0x2cd7c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &cSndMemHeap_FindFitBlk_0x2cd968, 0x2cd968u, 0x2cd7f8u)) {
         return;
     }
-    ctx->pc = 0x2CD7F8u;
 label_2cd7f8:
     // 0x2cd7f8: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -92,7 +91,6 @@ label_2cd7f8:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndMemHeap_FindUnusedBlk_0x2cd930, 0x2cd930u, 0x2cd80cu)) {
         return;
     }
-    ctx->pc = 0x2CD80Cu;
 label_2cd80c:
     // 0x2cd80c: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -166,7 +164,6 @@ label_2cd80c:
             goto label_2cd858;
         }
     }
-    ctx->pc = 0x2CD858u;
 label_2cd858:
     // 0x2cd858: 0xae00000c  sw          $zero, 0xC($s0)
     ctx->pc = 0x2cd858u;

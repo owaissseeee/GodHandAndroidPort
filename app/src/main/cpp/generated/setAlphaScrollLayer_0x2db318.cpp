@@ -13,7 +13,7 @@
 
 // Function: setAlphaScrollLayer
 // Address: 0x2db318 - 0x2db370
-void setAlphaScrollLayer_0x2db318(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void setAlphaScrollLayer_0x2db318(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("setAlphaScrollLayer_0x2db318");
 #endif
@@ -50,7 +50,6 @@ void setAlphaScrollLayer_0x2db318(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     ctx->pc = 0x2db330u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 0)));
     // 0x2db334: 0x0  nop
-    ctx->pc = 0x2db334u;
     // NOP
 label_2db338:
     // 0x2db338: 0x906202fd  lbu         $v0, 0x2FD($v1)
@@ -107,7 +106,6 @@ label_2db354:
             goto label_2db338;
         }
     }
-    ctx->pc = 0x2DB364u;
 label_2db364:
     // 0x2db364: 0x3e00008  jr          $ra
     ctx->pc = 0x2DB364u;

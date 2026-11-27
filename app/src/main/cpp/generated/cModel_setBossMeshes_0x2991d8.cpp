@@ -13,7 +13,7 @@
 
 // Function: cModel_setBossMeshes
 // Address: 0x2991d8 - 0x299320
-void cModel_setBossMeshes_0x2991d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cModel_setBossMeshes_0x2991d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cModel_setBossMeshes_0x2991d8");
 #endif
@@ -130,7 +130,6 @@ void cModel_setBossMeshes_0x2991d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_299308;
         }
     }
-    ctx->pc = 0x299224u;
 label_299224:
     // 0x299224: 0x24020627  addiu       $v0, $zero, 0x627
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1575));
@@ -150,7 +149,6 @@ label_299224:
         }
     }
     // 0x299230: 0x3c050045  lui         $a1, 0x45
-    ctx->pc = 0x299230u;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)69 << 16));
 label_299234:
     // 0x299234: 0x200202d  daddu       $a0, $s0, $zero
@@ -168,7 +166,6 @@ label_299234:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setMeshDisplay_0x14a338, 0x14a338u, 0x299244u)) {
         return;
     }
-    ctx->pc = 0x299244u;
 label_299244:
     // 0x299244: 0x2a230003  slti        $v1, $s1, 0x3
     SET_GPR_U64(ctx, 3, ((int64_t)GPR_S64(ctx, 17) < (int64_t)(int32_t)3) ? 1 : 0);
@@ -244,7 +241,6 @@ label_299244:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setMeshDisplay_0x14a338, 0x14a338u, 0x299288u)) {
         return;
     }
-    ctx->pc = 0x299288u;
 label_299288:
     // 0x299288: 0x3c050045  lui         $a1, 0x45
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)69 << 16));
@@ -263,7 +259,6 @@ label_299288:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setMeshDisplay_0x14a338, 0x14a338u, 0x29929cu)) {
         return;
     }
-    ctx->pc = 0x29929Cu;
 label_29929c:
     // 0x29929c: 0x1000001a  b           . + 4 + (0x1A << 2)
     ctx->pc = 0x29929Cu;
@@ -280,10 +275,8 @@ label_29929c:
             goto label_299308;
         }
     }
-    ctx->pc = 0x2992A4u;
 label_2992a4:
     // 0x2992a4: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x2992a4u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_2992a8:
     // 0x2992a8: 0x24a5ac50  addiu       $a1, $a1, -0x53B0
@@ -299,7 +292,6 @@ label_2992a8:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setMeshDisplay_0x14a338, 0x14a338u, 0x2992b4u)) {
         return;
     }
-    ctx->pc = 0x2992B4u;
 label_2992b4:
     // 0x2992b4: 0x3c050045  lui         $a1, 0x45
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)69 << 16));
@@ -318,7 +310,6 @@ label_2992b4:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setMeshDisplay_0x14a338, 0x14a338u, 0x2992c8u)) {
         return;
     }
-    ctx->pc = 0x2992C8u;
 label_2992c8:
     // 0x2992c8: 0x1000000f  b           . + 4 + (0xF << 2)
     ctx->pc = 0x2992C8u;
@@ -335,7 +326,6 @@ label_2992c8:
             goto label_299308;
         }
     }
-    ctx->pc = 0x2992D0u;
 label_2992d0:
     // 0x2992d0: 0x2a220002  slti        $v0, $s1, 0x2
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 17) < (int64_t)(int32_t)2) ? 1 : 0);
@@ -371,7 +361,6 @@ label_2992d0:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setMeshDisplay_0x14a338, 0x14a338u, 0x2992f0u)) {
         return;
     }
-    ctx->pc = 0x2992F0u;
 label_2992f0:
     // 0x2992f0: 0x3c050045  lui         $a1, 0x45
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)69 << 16));
@@ -390,7 +379,6 @@ label_2992f0:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setMeshDisplay_0x14a338, 0x14a338u, 0x299304u)) {
         return;
     }
-    ctx->pc = 0x299304u;
 label_299304:
     // 0x299304: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x299304u;

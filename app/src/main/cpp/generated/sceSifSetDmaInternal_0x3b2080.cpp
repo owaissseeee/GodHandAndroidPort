@@ -13,7 +13,7 @@
 
 // Function: sceSifSetDmaInternal
 // Address: 0x3b2080 - 0x3b2148
-void sceSifSetDmaInternal_0x3b2080(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSifSetDmaInternal_0x3b2080(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSifSetDmaInternal_0x3b2080");
 #endif
@@ -77,7 +77,6 @@ void sceSifSetDmaInternal_0x3b2080(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &memcpy_0x3a5148, 0x3a5148u, 0x3b20b8u)) {
         return;
     }
-    ctx->pc = 0x3B20B8u;
 label_3b20b8:
     // 0x3b20b8: 0x26310001  addiu       $s1, $s1, 0x1
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 1));
@@ -145,7 +144,6 @@ label_3b20b8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B0060u, 0x3B2108u, 0x3B2110u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3B2110u;
 label_3b2110:
     // 0x3b2110: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x3B2110u;
@@ -162,7 +160,6 @@ label_3b2110:
             goto label_3b2134;
         }
     }
-    ctx->pc = 0x3B2118u;
 label_3b2118:
     // 0x3b2118: 0x220282d  daddu       $a1, $s1, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -177,7 +174,6 @@ label_3b2118:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B0070u, 0x3B211Cu, 0x3B2124u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3B2124u;
 label_3b2124:
     // 0x3b2124: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x3B2124u;
@@ -194,7 +190,6 @@ label_3b2124:
             goto label_3b2134;
         }
     }
-    ctx->pc = 0x3B212Cu;
 label_3b212c:
     // 0x3b212c: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

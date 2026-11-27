@@ -13,7 +13,7 @@
 
 // Function: Panel_slideSidePanelArrows
 // Address: 0x1df278 - 0x1df358
-void Panel_slideSidePanelArrows_0x1df278(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Panel_slideSidePanelArrows_0x1df278(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Panel_slideSidePanelArrows_0x1df278");
 #endif
@@ -109,7 +109,6 @@ void Panel_slideSidePanelArrows_0x1df278(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_1df334;
         }
     }
-    ctx->pc = 0x1DF2B4u;
 label_1df2b4:
     // 0x1df2b4: 0xc0b59b4  jal         func_2D66D0
     SET_GPR_U32(ctx, 31, 0x1DF2BCu);
@@ -122,7 +121,6 @@ label_1df2b4:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetOffsetPosX_0x2d66d0, 0x2d66d0u, 0x1df2bcu)) {
         return;
     }
-    ctx->pc = 0x1DF2BCu;
 label_1df2bc:
     // 0x1df2bc: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -139,7 +137,6 @@ label_1df2bc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DEE60_0x1dee60, 0x1dee60u, 0x1df2ccu)) {
         return;
     }
-    ctx->pc = 0x1DF2CCu;
 label_1df2cc:
     // 0x1df2cc: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -156,7 +153,6 @@ label_1df2cc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DEE60_0x1dee60, 0x1dee60u, 0x1df2dcu)) {
         return;
     }
-    ctx->pc = 0x1DF2DCu;
 label_1df2dc:
     // 0x1df2dc: 0x1000001a  b           . + 4 + (0x1A << 2)
     ctx->pc = 0x1DF2DCu;
@@ -173,7 +169,6 @@ label_1df2dc:
             goto label_1df348;
         }
     }
-    ctx->pc = 0x1DF2E4u;
 label_1df2e4:
     // 0x1df2e4: 0x26040250  addiu       $a0, $s0, 0x250
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 592));
@@ -188,7 +183,6 @@ label_1df2e4:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetOffsetPosX_0x2d66d0, 0x2d66d0u, 0x1df2f0u)) {
         return;
     }
-    ctx->pc = 0x1DF2F0u;
 label_1df2f0:
     // 0x1df2f0: 0x10000007  b           . + 4 + (0x7 << 2)
     ctx->pc = 0x1DF2F0u;
@@ -205,7 +199,6 @@ label_1df2f0:
             goto label_1df310;
         }
     }
-    ctx->pc = 0x1DF2F8u;
 label_1df2f8:
     // 0x1df2f8: 0x26040250  addiu       $a0, $s0, 0x250
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 592));
@@ -224,10 +217,8 @@ label_1df2f8:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMoveOffsetPosX_0x2d6768, 0x2d6768u, 0x1df30cu)) {
         return;
     }
-    ctx->pc = 0x1DF30Cu;
 label_1df30c:
     // 0x1df30c: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x1df30cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_1df310:
     // 0x1df310: 0x24050004  addiu       $a1, $zero, 0x4
@@ -243,7 +234,6 @@ label_1df310:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DEE60_0x1dee60, 0x1dee60u, 0x1df31cu)) {
         return;
     }
-    ctx->pc = 0x1DF31Cu;
 label_1df31c:
     // 0x1df31c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -260,7 +250,6 @@ label_1df31c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DEE60_0x1dee60, 0x1dee60u, 0x1df32cu)) {
         return;
     }
-    ctx->pc = 0x1DF32Cu;
 label_1df32c:
     // 0x1df32c: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x1DF32Cu;
@@ -277,7 +266,6 @@ label_1df32c:
             goto label_1df348;
         }
     }
-    ctx->pc = 0x1DF334u;
 label_1df334:
     // 0x1df334: 0x282d  daddu       $a1, $zero, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
@@ -294,7 +282,6 @@ label_1df334:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMoveOffsetPosX_0x2d6768, 0x2d6768u, 0x1df344u)) {
         return;
     }
-    ctx->pc = 0x1DF344u;
 label_1df344:
     // 0x1df344: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1df344u;

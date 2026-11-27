@@ -13,7 +13,7 @@
 
 // Function: GetOrInitGlobal785798_1C3BE8
 // Address: 0x1c3be8 - 0x1c3c58
-void GetOrInitGlobal785798_1C3BE8_0x1c3be8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetOrInitGlobal785798_1C3BE8_0x1c3be8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetOrInitGlobal785798_1C3BE8_0x1c3be8");
 #endif
@@ -60,7 +60,6 @@ void GetOrInitGlobal785798_1C3BE8_0x1c3be8(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &GetOrInitGlobal785878_1B8058_0x1b8058, 0x1b8058u, 0x1c3c0cu)) {
         return;
     }
-    ctx->pc = 0x1C3C0Cu;
 label_1c3c0c:
     // 0x1c3c0c: 0x3c050043  lui         $a1, 0x43
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)67 << 16));
@@ -81,7 +80,6 @@ label_1c3c0c:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField_0_4_8_31EEA8_0x31eea8, 0x31eea8u, 0x1c3c24u)) {
         return;
     }
-    ctx->pc = 0x1C3C24u;
 label_1c3c24:
     // 0x1c3c24: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

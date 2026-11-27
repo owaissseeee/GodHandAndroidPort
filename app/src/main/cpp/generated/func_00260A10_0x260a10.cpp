@@ -13,7 +13,7 @@
 
 // Function: func_00260A10
 // Address: 0x260a10 - 0x260b30
-void func_00260A10_0x260a10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00260A10_0x260a10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00260A10_0x260a10");
 #endif
@@ -108,7 +108,6 @@ label_260a58:
         }
     }
     // 0x260a64: 0xa3102a  slt         $v0, $a1, $v1
-    ctx->pc = 0x260a64u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 5) < (int64_t)GPR_S64(ctx, 3)) ? 1 : 0);
 label_260a68:
     // 0x260a68: 0x304200ff  andi        $v0, $v0, 0xFF
@@ -148,10 +147,8 @@ label_260a68:
             goto label_260a88;
         }
     }
-    ctx->pc = 0x260A84u;
 label_260a84:
     // 0x260a84: 0x982d  daddu       $s3, $zero, $zero
-    ctx->pc = 0x260a84u;
     SET_GPR_U64(ctx, 19, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_260a88:
     // 0x260a88: 0x12600023  beqz        $s3, . + 4 + (0x23 << 2)
@@ -188,7 +185,6 @@ label_260a88:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitRotY_0x147988, 0x147988u, 0x260aa4u)) {
         return;
     }
-    ctx->pc = 0x260AA4u;
 label_260aa4:
     // 0x260aa4: 0x8e2500f0  lw          $a1, 0xF0($s1)
     ctx->pc = 0x260aa4u;
@@ -204,7 +200,6 @@ label_260aa4:
     if (!runtime->callDirectStatic(rdram, ctx, &CopyVec3ToField30_147C40_0x147c40, 0x147c40u, 0x260ab0u)) {
         return;
     }
-    ctx->pc = 0x260AB0u;
 label_260ab0:
     // 0x260ab0: 0x27b10050  addiu       $s1, $sp, 0x50
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 29), 80));
@@ -221,7 +216,6 @@ label_260ab0:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInverse_0x147568, 0x147568u, 0x260ac0u)) {
         return;
     }
-    ctx->pc = 0x260AC0u;
 label_260ac0:
     // 0x260ac0: 0x27b000b0  addiu       $s0, $sp, 0xB0
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 29), 176));
@@ -249,7 +243,6 @@ label_260ac0:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x260ae0u)) {
         return;
     }
-    ctx->pc = 0x260AE0u;
 label_260ae0:
     // 0x260ae0: 0xda040000  lqc2        $vf4, 0x0($s0)
     ctx->pc = 0x260ae0u;

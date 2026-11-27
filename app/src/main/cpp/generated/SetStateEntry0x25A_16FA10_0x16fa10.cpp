@@ -13,7 +13,7 @@
 
 // Function: SetStateEntry0x25A_16FA10
 // Address: 0x16fa10 - 0x16fa80
-void SetStateEntry0x25A_16FA10_0x16fa10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetStateEntry0x25A_16FA10_0x16fa10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetStateEntry0x25A_16FA10_0x16fa10");
 #endif
@@ -81,7 +81,6 @@ void SetStateEntry0x25A_16FA10_0x16fa10(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x16fa4cu)) {
         return;
     }
-    ctx->pc = 0x16FA4Cu;
 label_16fa4c:
     // 0x16fa4c: 0xae000600  sw          $zero, 0x600($s0)
     ctx->pc = 0x16fa4cu;
@@ -102,7 +101,6 @@ label_16fa50:
     if (!runtime->callDirectStatic(rdram, ctx, &espSys_effDataRelease_0x305778, 0x305778u, 0x16fa60u)) {
         return;
     }
-    ctx->pc = 0x16FA60u;
 label_16fa60:
     // 0x16fa60: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -117,7 +115,6 @@ label_16fa60:
     if (!runtime->callDirectStatic(rdram, ctx, &ResetField214FreeField180_1C2820_0x1c2820, 0x1c2820u, 0x16fa6cu)) {
         return;
     }
-    ctx->pc = 0x16FA6Cu;
 label_16fa6c:
     // 0x16fa6c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x16fa6cu;

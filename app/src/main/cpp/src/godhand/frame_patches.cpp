@@ -1408,11 +1408,38 @@ namespace kamite
             // Option A: Set Dsp::kFilter (0x04000000u) to keep screen filters off at the engine level
             if (rdram)
             {
+                static bool s_ultraPotatoOwnedKage = false;
+                static bool s_ultraPotatoOwnedShadowChk = false;
+                const bool ultraPotato = godhand::isUltraPotatoMode();
+
                 uint32_t dspFlags = 0;
                 const uint32_t dspAddr = game::GameWork::address(game::GameWork::kFlagsDsp);
                 std::memcpy(&dspFlags, rdram + (dspAddr & (PS2_RAM_SIZE - 1u)), sizeof(dspFlags));
                 dspFlags |= game::Dsp::kFilter;
+                if (ultraPotato) {
+                    if ((dspFlags & game::Dsp::kKage) == 0u) {
+                        s_ultraPotatoOwnedKage = true;
+                        dspFlags |= game::Dsp::kKage;
+                    }
+                } else if (s_ultraPotatoOwnedKage) {
+                    s_ultraPotatoOwnedKage = false;
+                    dspFlags &= ~game::Dsp::kKage;
+                }
                 std::memcpy(rdram + (dspAddr & (PS2_RAM_SIZE - 1u)), &dspFlags, sizeof(dspFlags));
+
+                uint32_t stpFlags = 0;
+                const uint32_t stpAddr = game::GameWork::address(game::GameWork::kFlags5D8);
+                std::memcpy(&stpFlags, rdram + (stpAddr & (PS2_RAM_SIZE - 1u)), sizeof(stpFlags));
+                if (ultraPotato) {
+                    if ((stpFlags & game::Stp::kShadowChkLine) == 0u) {
+                        s_ultraPotatoOwnedShadowChk = true;
+                        stpFlags |= game::Stp::kShadowChkLine;
+                    }
+                } else if (s_ultraPotatoOwnedShadowChk) {
+                    s_ultraPotatoOwnedShadowChk = false;
+                    stpFlags &= ~game::Stp::kShadowChkLine;
+                }
+                std::memcpy(rdram + (stpAddr & (PS2_RAM_SIZE - 1u)), &stpFlags, sizeof(stpFlags));
 
                 // Permanently unlock Hard Mode (GameWork::kSaveFlags bit 0x00200000u)
                 uint32_t saveFlags = 0;

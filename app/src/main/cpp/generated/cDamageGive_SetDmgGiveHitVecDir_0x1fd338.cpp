@@ -13,7 +13,7 @@
 
 // Function: cDamageGive_SetDmgGiveHitVecDir
 // Address: 0x1fd338 - 0x1fd3b8
-void cDamageGive_SetDmgGiveHitVecDir_0x1fd338(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDamageGive_SetDmgGiveHitVecDir_0x1fd338(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDamageGive_SetDmgGiveHitVecDir_0x1fd338");
 #endif
@@ -68,7 +68,6 @@ void cDamageGive_SetDmgGiveHitVecDir_0x1fd338(uint8_t* rdram, R5900Context* ctx,
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitRotVec_0x147728, 0x147728u, 0x1fd370u)) {
         return;
     }
-    ctx->pc = 0x1FD370u;
 label_1fd370:
     // 0x1fd370: 0x27b00040  addiu       $s0, $sp, 0x40
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 29), 64));
@@ -87,7 +86,6 @@ label_1fd370:
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x1fd384u)) {
         return;
     }
-    ctx->pc = 0x1FD384u;
 label_1fd384:
     // 0x1fd384: 0x26220010  addiu       $v0, $s1, 0x10
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 17), 16));

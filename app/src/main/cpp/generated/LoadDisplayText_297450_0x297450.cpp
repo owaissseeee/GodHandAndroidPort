@@ -13,7 +13,7 @@
 
 // Function: LoadDisplayText_297450
 // Address: 0x297450 - 0x2974f0
-void LoadDisplayText_297450_0x297450(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void LoadDisplayText_297450_0x297450(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("LoadDisplayText_297450_0x297450");
 #endif
@@ -97,7 +97,6 @@ void LoadDisplayText_297450_0x297450(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A6C58_0x3a6c58, 0x3a6c58u, 0x297498u)) {
         return;
     }
-    ctx->pc = 0x297498u;
 label_297498:
     // 0x297498: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x297498u;
@@ -114,7 +113,6 @@ label_297498:
             goto label_2974bc;
         }
     }
-    ctx->pc = 0x2974A0u;
 label_2974a0:
     // 0x2974a0: 0x3c050045  lui         $a1, 0x45
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)69 << 16));
@@ -135,7 +133,6 @@ label_2974a0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003A6C58_0x3a6c58, 0x3a6c58u, 0x2974b8u)) {
         return;
     }
-    ctx->pc = 0x2974B8u;
 label_2974b8:
     // 0x2974b8: 0x8e050010  lw          $a1, 0x10($s0)
     ctx->pc = 0x2974b8u;
@@ -171,7 +168,6 @@ label_2974bc:
     if (!runtime->callDirectStatic(rdram, ctx, &cRelSys_linkNoAlloc_0x2be890, 0x2be890u, 0x2974d4u)) {
         return;
     }
-    ctx->pc = 0x2974D4u;
 label_2974d4:
     // 0x2974d4: 0x8e030008  lw          $v1, 0x8($s0)
     ctx->pc = 0x2974d4u;

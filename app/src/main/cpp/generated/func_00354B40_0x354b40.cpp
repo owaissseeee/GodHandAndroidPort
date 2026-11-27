@@ -13,7 +13,7 @@
 
 // Function: func_00354B40
 // Address: 0x354b40 - 0x354b98
-void func_00354B40_0x354b40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00354B40_0x354b40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00354B40_0x354b40");
 #endif
@@ -56,7 +56,6 @@ void func_00354B40_0x354b40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x354b68u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 24), GPR_U32(ctx, 0));
     // 0x354b6c: 0x0  nop
-    ctx->pc = 0x354b6cu;
     // NOP
 label_354b70:
     // 0x354b70: 0xe51021  addu        $v0, $a3, $a1

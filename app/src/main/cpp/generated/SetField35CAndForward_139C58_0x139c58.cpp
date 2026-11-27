@@ -13,7 +13,7 @@
 
 // Function: SetField35CAndForward_139C58
 // Address: 0x139c58 - 0x139c88
-void SetField35CAndForward_139C58_0x139c58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetField35CAndForward_139C58_0x139c58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetField35CAndForward_139C58_0x139c58");
 #endif
@@ -58,7 +58,6 @@ void SetField35CAndForward_139C58_0x139c58(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x139c7cu)) {
         return;
     }
-    ctx->pc = 0x139C7Cu;
 label_139c7c:
     // 0x139c7c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x139c7cu;

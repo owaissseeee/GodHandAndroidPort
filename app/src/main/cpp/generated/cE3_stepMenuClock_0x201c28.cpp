@@ -13,7 +13,7 @@
 
 // Function: cE3_stepMenuClock
 // Address: 0x201c28 - 0x201d20
-void cE3_stepMenuClock_0x201c28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cE3_stepMenuClock_0x201c28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cE3_stepMenuClock_0x201c28");
 #endif
@@ -159,7 +159,6 @@ label_201c78:
     if (!runtime->callDirectStatic(rdram, ctx, &cWorldTime_getGlobalHMS_0x2d9db8, 0x2d9db8u, 0x201ca0u)) {
         return;
     }
-    ctx->pc = 0x201CA0u;
 label_201ca0:
     // 0x201ca0: 0x82030002  lb          $v1, 0x2($s0)
     ctx->pc = 0x201ca0u;
@@ -197,7 +196,6 @@ label_201ca0:
     if (!runtime->callDirectStatic(rdram, ctx, &cE3_setEnding_0x201e80, 0x201e80u, 0x201cc0u)) {
         return;
     }
-    ctx->pc = 0x201CC0u;
 label_201cc0:
     // 0x201cc0: 0x82060002  lb          $a2, 0x2($s0)
     ctx->pc = 0x201cc0u;
@@ -230,7 +228,6 @@ label_201cc4:
     if (!runtime->callDirectStatic(rdram, ctx, &cScenario_debugPrint_0x201f48, 0x201f48u, 0x201ce8u)) {
         return;
     }
-    ctx->pc = 0x201CE8u;
 label_201ce8:
     // 0x201ce8: 0x3c030074  lui         $v1, 0x74
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
@@ -267,7 +264,6 @@ label_201ce8:
     if (!runtime->callDirectStatic(rdram, ctx, &cE3_setEnding_0x201e80, 0x201e80u, 0x201d08u)) {
         return;
     }
-    ctx->pc = 0x201D08u;
 label_201d08:
     // 0x201d08: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x201d08u;

@@ -13,7 +13,7 @@
 
 // Function: sfvom_IsTerm
 // Address: 0x35d360 - 0x35d3a8
-void sfvom_IsTerm_0x35d360(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfvom_IsTerm_0x35d360(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfvom_IsTerm_0x35d360");
 #endif
@@ -48,7 +48,6 @@ void sfvom_IsTerm_0x35d360(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &GetArrayElemA0C_35A1C8_0x35a1c8, 0x35a1c8u, 0x35d378u)) {
         return;
     }
-    ctx->pc = 0x35D378u;
 label_35d378:
     // 0x35d378: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x35D378u;
@@ -80,7 +79,6 @@ label_35d378:
             goto label_35d394;
         }
     }
-    ctx->pc = 0x35D388u;
 label_35d388:
     // 0x35d388: 0xc0d6e6c  jal         func_35B9B0
     ctx->pc = 0x35D388u;
@@ -88,10 +86,8 @@ label_35d388:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035B9B0_0x35b9b0, 0x35b9b0u, 0x35d390u)) {
         return;
     }
-    ctx->pc = 0x35D390u;
 label_35d390:
     // 0x35d390: 0x2102b  sltu        $v0, $zero, $v0
-    ctx->pc = 0x35d390u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 0) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
 label_35d394:
     // 0x35d394: 0xdfb00000  ld          $s0, 0x0($sp)

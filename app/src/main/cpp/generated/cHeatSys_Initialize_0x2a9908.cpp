@@ -13,7 +13,7 @@
 
 // Function: cHeatSys_Initialize
 // Address: 0x2a9908 - 0x2a9978
-void cHeatSys_Initialize_0x2a9908(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cHeatSys_Initialize_0x2a9908(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cHeatSys_Initialize_0x2a9908");
 #endif
@@ -76,7 +76,6 @@ void cHeatSys_Initialize_0x2a9908(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &cHeatSys_UpdateHeatMax_0x2a9bf0, 0x2a9bf0u, 0x2a994cu)) {
         return;
     }
-    ctx->pc = 0x2A994Cu;
 label_2a994c:
     // 0x2a994c: 0x44806000  mtc1        $zero, $f12
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[12], &bits, sizeof(bits)); }
@@ -91,7 +90,6 @@ label_2a994c:
     if (!runtime->callDirectStatic(rdram, ctx, &cHeatSys_SetHeatGage_0x2a9c58, 0x2a9c58u, 0x2a9958u)) {
         return;
     }
-    ctx->pc = 0x2A9958u;
 label_2a9958:
     // 0x2a9958: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -106,7 +104,6 @@ label_2a9958:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A9C90_0x2a9c90, 0x2a9c90u, 0x2a9964u)) {
         return;
     }
-    ctx->pc = 0x2A9964u;
 label_2a9964:
     // 0x2a9964: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2a9964u;

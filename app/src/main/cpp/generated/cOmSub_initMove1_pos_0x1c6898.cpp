@@ -13,7 +13,7 @@
 
 // Function: cOmSub_initMove1_pos
 // Address: 0x1c6898 - 0x1c6968
-void cOmSub_initMove1_pos_0x1c6898(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmSub_initMove1_pos_0x1c6898(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmSub_initMove1_pos_0x1c6898");
 #endif
@@ -100,14 +100,11 @@ void cOmSub_initMove1_pos_0x1c6898(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_1c68d4;
         }
     }
-    ctx->pc = 0x1C68D0u;
 label_1c68d0:
     // 0x1c68d0: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1c68d0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1c68d4:
     // 0x1c68d4: 0x40482d  daddu       $t1, $v0, $zero
-    ctx->pc = 0x1c68d4u;
     SET_GPR_U64(ctx, 9, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_1c68d8:
     // 0x1c68d8: 0x5120001d  beql        $t1, $zero, . + 4 + (0x1D << 2)
@@ -158,7 +155,6 @@ label_1c68d8:
             goto label_1c68f8;
         }
     }
-    ctx->pc = 0x1C68F4u;
 label_1c68f4:
     // 0x1c68f4: 0x8d2200f0  lw          $v0, 0xF0($t1)
     ctx->pc = 0x1c68f4u;
@@ -206,7 +202,6 @@ label_1c68f8:
     ctx->pc = 0x1c6920u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 3), 8), bits); }
     // 0x1c6924: 0x24830080  addiu       $v1, $a0, 0x80
-    ctx->pc = 0x1c6924u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), 128));
 label_1c6928:
     // 0x1c6928: 0x25220100  addiu       $v0, $t1, 0x100
@@ -246,7 +241,6 @@ label_1c6928:
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 3), 8), bits); }
 label_1c694c:
     // 0x1c694c: 0xe0282d  daddu       $a1, $a3, $zero
-    ctx->pc = 0x1c694cu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 7) + (uint64_t)GPR_U64(ctx, 0));
 label_1c6950:
     // 0x1c6950: 0xc071a5a  jal         func_1C6968
@@ -260,7 +254,6 @@ label_1c6950:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001C6968_0x1c6968, 0x1c6968u, 0x1c6958u)) {
         return;
     }
-    ctx->pc = 0x1C6958u;
 label_1c6958:
     // 0x1c6958: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x1c6958u;

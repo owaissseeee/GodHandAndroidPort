@@ -13,7 +13,7 @@
 
 // Function: BuildGifPacket_2A5930
 // Address: 0x2a5930 - 0x2a5998
-void BuildGifPacket_2A5930_0x2a5930(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BuildGifPacket_2A5930_0x2a5930(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BuildGifPacket_2A5930_0x2a5930");
 #endif
@@ -48,7 +48,6 @@ void BuildGifPacket_2A5930_0x2a5930(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A4F30_0x2a4f30, 0x2a4f30u, 0x2a5948u)) {
         return;
     }
-    ctx->pc = 0x2A5948u;
 label_2a5948:
     // 0x2a5948: 0x40402d  daddu       $t0, $v0, $zero
     SET_GPR_U64(ctx, 8, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -105,7 +104,6 @@ label_2a5948:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031A650_0x31a650, 0x31a650u, 0x2a5988u)) {
         return;
     }
-    ctx->pc = 0x2A5988u;
 label_2a5988:
     // 0x2a5988: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2a5988u;

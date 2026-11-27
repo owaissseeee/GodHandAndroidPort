@@ -13,7 +13,7 @@
 
 // Function: LineObj_checkWaterHit
 // Address: 0x1d0b38 - 0x1d0c10
-void LineObj_checkWaterHit_0x1d0b38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void LineObj_checkWaterHit_0x1d0b38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("LineObj_checkWaterHit_0x1d0b38");
 #endif
@@ -110,7 +110,6 @@ void LineObj_checkWaterHit_0x1d0b38(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &ChkLine_0x131e10, 0x131e10u, 0x1d0ba0u)) {
         return;
     }
-    ctx->pc = 0x1D0BA0u;
 label_1d0ba0:
     // 0x1d0ba0: 0x10400015  beqz        $v0, . + 4 + (0x15 << 2)
     ctx->pc = 0x1D0BA0u;
@@ -168,7 +167,6 @@ label_1d0ba0:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffectPos_0x306838, 0x306838u, 0x1d0bd4u)) {
         return;
     }
-    ctx->pc = 0x1D0BD4u;
 label_1d0bd4:
     // 0x1d0bd4: 0x3c040060  lui         $a0, 0x60
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)96 << 16));
@@ -194,7 +192,6 @@ label_1d0bd4:
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeCall_0x2cb968, 0x2cb968u, 0x1d0bf4u)) {
         return;
     }
-    ctx->pc = 0x1D0BF4u;
 label_1d0bf4:
     // 0x1d0bf4: 0xa2120688  sb          $s2, 0x688($s0)
     ctx->pc = 0x1d0bf4u;

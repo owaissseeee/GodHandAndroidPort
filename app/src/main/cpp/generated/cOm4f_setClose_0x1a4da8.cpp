@@ -13,7 +13,7 @@
 
 // Function: cOm4f_setClose
 // Address: 0x1a4da8 - 0x1a4e00
-void cOm4f_setClose_0x1a4da8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm4f_setClose_0x1a4da8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm4f_setClose_0x1a4da8");
 #endif
@@ -85,7 +85,6 @@ void cOm4f_setClose_0x1a4da8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &cGameObjCam_startSubCamera_0x1a4bd0, 0x1a4bd0u, 0x1a4ddcu)) {
         return;
     }
-    ctx->pc = 0x1A4DDCu;
 label_1a4ddc:
     // 0x1a4ddc: 0x24020002  addiu       $v0, $zero, 0x2
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));

@@ -13,7 +13,7 @@
 
 // Function: cOm4f_setOpen
 // Address: 0x1a4d48 - 0x1a4da8
-void cOm4f_setOpen_0x1a4d48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm4f_setOpen_0x1a4d48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm4f_setOpen_0x1a4d48");
 #endif
@@ -88,7 +88,6 @@ void cOm4f_setOpen_0x1a4d48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cGameObjCam_startSubCamera_0x1a4bd0, 0x1a4bd0u, 0x1a4d80u)) {
         return;
     }
-    ctx->pc = 0x1A4D80u;
 label_1a4d80:
     // 0x1a4d80: 0xa21102f4  sb          $s1, 0x2F4($s0)
     ctx->pc = 0x1a4d80u;

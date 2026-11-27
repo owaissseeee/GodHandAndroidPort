@@ -13,7 +13,7 @@
 
 // Function: AddToActiveList_138F40
 // Address: 0x138f40 - 0x138f88
-void AddToActiveList_138F40_0x138f40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void AddToActiveList_138F40_0x138f40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("AddToActiveList_138F40_0x138f40");
 #endif
@@ -77,7 +77,6 @@ void AddToActiveList_138F40_0x138f40(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_138f78;
         }
     }
-    ctx->pc = 0x138F6Cu;
 label_138f6c:
     // 0x138f6c: 0x8c82102c  lw          $v0, 0x102C($a0)
     ctx->pc = 0x138f6cu;

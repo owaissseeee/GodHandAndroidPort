@@ -13,7 +13,7 @@
 
 // Function: func_0015FC10
 // Address: 0x15fc10 - 0x15fcb8
-void func_0015FC10_0x15fc10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0015FC10_0x15fc10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0015FC10_0x15fc10");
 #endif
@@ -52,7 +52,6 @@ void func_0015FC10_0x15fc10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x15fc30u;
     do { uint32_t _value = static_cast<uint32_t>(GPR_U32(ctx, 3)); ps2TraceGuestWrite(rdram, 0x566E30u, 4u, _value, 0u, "WRITE32", ctx); FAST_WRITE32(0x566E30u, _value); } while (0);
     // 0x15fc34: 0x0  nop
-    ctx->pc = 0x15fc34u;
     // NOP
 label_15fc38:
     // 0x15fc38: 0x24040001  addiu       $a0, $zero, 0x1
@@ -68,7 +67,6 @@ label_15fc38:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003950F8_0x3950f8, 0x3950f8u, 0x15fc44u)) {
         return;
     }
-    ctx->pc = 0x15FC44u;
 label_15fc44:
     // 0x15fc44: 0x0  nop
     // NOP
@@ -138,7 +136,6 @@ label_15fc44:
     if (!runtime->callDirectStatic(rdram, ctx, &classCFILTER_TAG_initialize_0x299368, 0x299368u, 0x15fc88u)) {
         return;
     }
-    ctx->pc = 0x15FC88u;
 label_15fc88:
     // 0x15fc88: 0xc0a8250  jal         func_2A0940
     SET_GPR_U32(ctx, 31, 0x15FC90u);
@@ -151,7 +148,6 @@ label_15fc88:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A0940u, 0x15FC88u, 0x15FC90u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x15FC90u;
 label_15fc90:
     // 0x15fc90: 0x8e222d08  lw          $v0, 0x2D08($s1)
     ctx->pc = 0x15fc90u;

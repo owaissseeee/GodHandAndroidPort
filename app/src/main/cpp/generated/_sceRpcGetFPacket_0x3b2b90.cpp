@@ -13,7 +13,7 @@
 
 // Function: _sceRpcGetFPacket
 // Address: 0x3b2b90 - 0x3b2bc0
-void _sceRpcGetFPacket_0x3b2b90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceRpcGetFPacket_0x3b2b90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceRpcGetFPacket_0x3b2b90");
 #endif
@@ -42,7 +42,6 @@ void _sceRpcGetFPacket_0x3b2b90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_3b2ba4;
         }
     }
-    ctx->pc = 0x3B2BA4u;
 label_3b2ba4:
     // 0x3b2ba4: 0x8c850014  lw          $a1, 0x14($a0)
     ctx->pc = 0x3b2ba4u;

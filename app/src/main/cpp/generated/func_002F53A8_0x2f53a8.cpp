@@ -13,7 +13,7 @@
 
 // Function: func_002F53A8
 // Address: 0x2f53a8 - 0x2f5448
-void func_002F53A8_0x2f53a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002F53A8_0x2f53a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002F53A8_0x2f53a8");
 #endif
@@ -105,10 +105,8 @@ void func_002F53A8_0x2f53a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2f53f4;
         }
     }
-    ctx->pc = 0x2F53F0u;
 label_2f53f0:
     // 0x2f53f0: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2f53f0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2f53f4:
     // 0x2f53f4: 0x54400003  bnel        $v0, $zero, . + 4 + (0x3 << 2)
@@ -126,7 +124,6 @@ label_2f53f4:
             goto label_2f5404;
         }
     }
-    ctx->pc = 0x2F53FCu;
 label_2f53fc:
     // 0x2f53fc: 0x10000010  b           . + 4 + (0x10 << 2)
     ctx->pc = 0x2F53FCu;
@@ -143,7 +140,6 @@ label_2f53fc:
             goto label_2f5440;
         }
     }
-    ctx->pc = 0x2F5404u;
 label_2f5404:
     // 0x2f5404: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
@@ -169,7 +165,6 @@ label_2f5404:
         }
     }
     // 0x2f5418: 0x83102a  slt         $v0, $a0, $v1
-    ctx->pc = 0x2f5418u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 4) < (int64_t)GPR_S64(ctx, 3)) ? 1 : 0);
 label_2f541c:
     // 0x2f541c: 0x304200ff  andi        $v0, $v0, 0xFF
@@ -209,14 +204,11 @@ label_2f541c:
             goto label_2f543c;
         }
     }
-    ctx->pc = 0x2F5438u;
 label_2f5438:
     // 0x2f5438: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2f5438u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2f543c:
     // 0x2f543c: 0x2102b  sltu        $v0, $zero, $v0
-    ctx->pc = 0x2f543cu;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 0) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
 label_2f5440:
     // 0x2f5440: 0x3e00008  jr          $ra

@@ -13,7 +13,7 @@
 
 // Function: func_00146190
 // Address: 0x146190 - 0x146328
-void func_00146190_0x146190(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00146190_0x146190(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00146190_0x146190");
 #endif
@@ -94,7 +94,6 @@ void func_00146190_0x146190(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x1461C0u;
 label_1461c0:
     // 0x1461c0: 0x1062002a  beq         $v1, $v0, . + 4 + (0x2A << 2)
     ctx->pc = 0x1461C0u;
@@ -124,7 +123,6 @@ label_1461c0:
         return;
         #endif
     }
-    ctx->pc = 0x1461D0u;
 label_1461d0:
     // 0x1461d0: 0x3c013f80  lui         $at, 0x3F80
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
@@ -152,7 +150,6 @@ label_1461d0:
         return;
         #endif
     }
-    ctx->pc = 0x1461E4u;
 label_1461e4:
     // 0x1461e4: 0xc4c00338  lwc1        $f0, 0x338($a2)
     ctx->pc = 0x1461e4u;
@@ -266,7 +263,6 @@ label_146208:
         return;
         #endif
     }
-    ctx->pc = 0x14626Cu;
 label_14626c:
     // 0x14626c: 0x3c08bfff  lui         $t0, 0xBFFF
     SET_GPR_S32(ctx, 8, (int32_t)((uint32_t)49151 << 16));
@@ -297,7 +293,6 @@ label_14626c:
     // 0x1462a0: 0x71080  sll         $v0, $a3, 2
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 7), 2));
     // 0x1462a4: 0x0  nop
-    ctx->pc = 0x1462a4u;
     // NOP
 label_1462a8:
     // 0x1462a8: 0xe91818  mult        $v1, $a3, $t1
@@ -375,7 +370,6 @@ label_1462a8:
     ctx->pc = 0x146308u;
     WRITE32(ADD32(GPR_U32(ctx, 6), 144), GPR_U32(ctx, 2));
     // 0x14630c: 0x24e20001  addiu       $v0, $a3, 0x1
-    ctx->pc = 0x14630cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 7), 1));
 label_146310:
     // 0x146310: 0x3047ffff  andi        $a3, $v0, 0xFFFF
@@ -400,7 +394,6 @@ label_146310:
             goto label_1462a8;
         }
     }
-    ctx->pc = 0x146320u;
 label_146320:
     // 0x146320: 0x3e00008  jr          $ra
     ctx->pc = 0x146320u;

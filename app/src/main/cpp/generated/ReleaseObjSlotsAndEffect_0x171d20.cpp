@@ -13,7 +13,7 @@
 
 // Function: ReleaseObjSlotsAndEffect
 // Address: 0x171d20 - 0x171de8
-void ReleaseObjSlotsAndEffect_0x171d20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ReleaseObjSlotsAndEffect_0x171d20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ReleaseObjSlotsAndEffect_0x171d20");
 #endif
@@ -68,7 +68,6 @@ void ReleaseObjSlotsAndEffect_0x171d20(uint8_t* rdram, R5900Context* ctx, PS2Run
     ctx->pc = 0x171d58u;
     WRITE32(ADD32(GPR_U32(ctx, 17), 532), GPR_U32(ctx, 2));
     // 0x171d5c: 0x0  nop
-    ctx->pc = 0x171d5cu;
     // NOP
 label_171d60:
     // 0x171d60: 0x8e050000  lw          $a1, 0x0($s0)
@@ -100,13 +99,11 @@ label_171d60:
     if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x171d74u)) {
         return;
     }
-    ctx->pc = 0x171D74u;
 label_171d74:
     // 0x171d74: 0xae000000  sw          $zero, 0x0($s0)
     ctx->pc = 0x171d74u;
     WRITE32(ADD32(GPR_U32(ctx, 16), 0), GPR_U32(ctx, 0));
     // 0x171d78: 0x2652ffff  addiu       $s2, $s2, -0x1
-    ctx->pc = 0x171d78u;
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 18), 4294967295));
 label_171d7c:
     // 0x171d7c: 0x641fff8  bgez        $s2, . + 4 + (-0x8 << 2)
@@ -158,7 +155,6 @@ label_171d7c:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_ReleaseDamageGive_0x1fe148, 0x1fe148u, 0x171d9cu)) {
         return;
     }
-    ctx->pc = 0x171D9Cu;
 label_171d9c:
     // 0x171d9c: 0xae200604  sw          $zero, 0x604($s1)
     ctx->pc = 0x171d9cu;
@@ -193,7 +189,6 @@ label_171da4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0012EC58_0x12ec58, 0x12ec58u, 0x171db4u)) {
         return;
     }
-    ctx->pc = 0x171DB4u;
 label_171db4:
     // 0x171db4: 0xae200da8  sw          $zero, 0xDA8($s1)
     ctx->pc = 0x171db4u;
@@ -212,7 +207,6 @@ label_171db8:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField214PtrThenInit_1B6F38_0x1b6f38, 0x1b6f38u, 0x171dc4u)) {
         return;
     }
-    ctx->pc = 0x171DC4u;
 label_171dc4:
     // 0x171dc4: 0x7bb00050  lq          $s0, 0x50($sp)
     ctx->pc = 0x171dc4u;

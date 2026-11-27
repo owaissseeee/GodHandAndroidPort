@@ -13,7 +13,7 @@
 
 // Function: func_002AC298
 // Address: 0x2ac298 - 0x2ac378
-void func_002AC298_0x2ac298(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002AC298_0x2ac298(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002AC298_0x2ac298");
 #endif
@@ -164,7 +164,6 @@ void func_002AC298_0x2ac298(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2ac364;
         }
     }
-    ctx->pc = 0x2AC318u;
 label_2ac318:
     // 0x2ac318: 0x960200a4  lhu         $v0, 0xA4($s0)
     ctx->pc = 0x2ac318u;
@@ -186,7 +185,6 @@ label_2ac318:
             goto label_2ac328;
         }
     }
-    ctx->pc = 0x2AC328u;
 label_2ac328:
     // 0x2ac328: 0x860500a4  lh          $a1, 0xA4($s0)
     ctx->pc = 0x2ac328u;
@@ -204,7 +202,6 @@ label_2ac328:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AC650_0x2ac650, 0x2ac650u, 0x2ac338u)) {
         return;
     }
-    ctx->pc = 0x2AC338u;
 label_2ac338:
     // 0x2ac338: 0x3c0143b4  lui         $at, 0x43B4
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)17332 << 16));

@@ -13,7 +13,7 @@
 
 // Function: func_001B2548
 // Address: 0x1b2548 - 0x1b2648
-void func_001B2548_0x1b2548(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001B2548_0x1b2548(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001B2548_0x1b2548");
 #endif
@@ -49,7 +49,6 @@ void func_001B2548_0x1b2548(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B6FB8_0x1b6fb8, 0x1b6fb8u, 0x1b255cu)) {
         return;
     }
-    ctx->pc = 0x1B255Cu;
 label_1b255c:
     // 0x1b255c: 0x3c040057  lui         $a0, 0x57
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)87 << 16));
@@ -68,7 +67,6 @@ label_1b255c:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_CreateDamageTake_0x1fe218, 0x1fe218u, 0x1b2570u)) {
         return;
     }
-    ctx->pc = 0x1B2570u;
 label_1b2570:
     // 0x1b2570: 0x10400016  beqz        $v0, . + 4 + (0x16 << 2)
     ctx->pc = 0x1B2570u;
@@ -121,10 +119,8 @@ label_1b2570:
             goto label_1b2594;
         }
     }
-    ctx->pc = 0x1B2590u;
 label_1b2590:
     // 0x1b2590: 0x282d  daddu       $a1, $zero, $zero
-    ctx->pc = 0x1b2590u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1b2594:
     // 0x1b2594: 0x3c02003c  lui         $v0, 0x3C
@@ -156,7 +152,6 @@ label_1b2594:
     if (!runtime->callDirectStatic(rdram, ctx, &cDamageUnit_AddDamageCollSphere_0x1fdaf0, 0x1fdaf0u, 0x1b25bcu)) {
         return;
     }
-    ctx->pc = 0x1B25BCu;
 label_1b25bc:
     // 0x1b25bc: 0x8e030600  lw          $v1, 0x600($s0)
     ctx->pc = 0x1b25bcu;
@@ -227,7 +222,6 @@ label_1b25cc:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setLayerDisplay_0x14a398, 0x14a398u, 0x1b2620u)) {
         return;
     }
-    ctx->pc = 0x1B2620u;
 label_1b2620:
     // 0x1b2620: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -244,7 +238,6 @@ label_1b2620:
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_setLayerDisplay_0x14a398, 0x14a398u, 0x1b2630u)) {
         return;
     }
-    ctx->pc = 0x1B2630u;
 label_1b2630:
     // 0x1b2630: 0xa200062d  sb          $zero, 0x62D($s0)
     ctx->pc = 0x1b2630u;

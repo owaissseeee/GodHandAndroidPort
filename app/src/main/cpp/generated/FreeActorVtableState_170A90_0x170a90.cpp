@@ -13,7 +13,7 @@
 
 // Function: FreeActorVtableState_170A90
 // Address: 0x170a90 - 0x170af0
-void FreeActorVtableState_170A90_0x170a90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FreeActorVtableState_170A90_0x170a90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FreeActorVtableState_170A90_0x170a90");
 #endif
@@ -80,7 +80,6 @@ void FreeActorVtableState_170A90_0x170a90(uint8_t* rdram, R5900Context* ctx, PS2
     if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x170accu)) {
         return;
     }
-    ctx->pc = 0x170ACCu;
 label_170acc:
     // 0x170acc: 0xae000600  sw          $zero, 0x600($s0)
     ctx->pc = 0x170accu;
@@ -99,7 +98,6 @@ label_170ad0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001BFB00_0x1bfb00, 0x1bfb00u, 0x170adcu)) {
         return;
     }
-    ctx->pc = 0x170ADCu;
 label_170adc:
     // 0x170adc: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x170adcu;

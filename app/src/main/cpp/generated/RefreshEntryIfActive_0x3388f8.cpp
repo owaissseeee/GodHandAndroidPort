@@ -13,7 +13,7 @@
 
 // Function: RefreshEntryIfActive
 // Address: 0x3388f8 - 0x338960
-void RefreshEntryIfActive_0x3388f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void RefreshEntryIfActive_0x3388f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("RefreshEntryIfActive_0x3388f8");
 #endif
@@ -70,7 +70,6 @@ void RefreshEntryIfActive_0x3388f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_338930;
         }
     }
-    ctx->pc = 0x338920u;
 label_338920:
     // 0x338920: 0x3c040045  lui         $a0, 0x45
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)69 << 16));
@@ -85,10 +84,8 @@ label_338920:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003260C8_0x3260c8, 0x3260c8u, 0x33892cu)) {
         return;
     }
-    ctx->pc = 0x33892Cu;
 label_33892c:
     // 0x33892c: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x33892cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_338930:
     // 0x338930: 0xdfbf0000  ld          $ra, 0x0($sp)

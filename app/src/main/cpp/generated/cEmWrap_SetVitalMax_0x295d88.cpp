@@ -13,7 +13,7 @@
 
 // Function: cEmWrap_SetVitalMax
 // Address: 0x295d88 - 0x295dc8
-void cEmWrap_SetVitalMax_0x295d88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmWrap_SetVitalMax_0x295d88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmWrap_SetVitalMax_0x295d88");
 #endif
@@ -50,7 +50,6 @@ void cEmWrap_SetVitalMax_0x295d88(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &FindResolveActor_295978_0x295978, 0x295978u, 0x295da4u)) {
         return;
     }
-    ctx->pc = 0x295DA4u;
 label_295da4:
     // 0x295da4: 0x50400004  beql        $v0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x295DA4u;

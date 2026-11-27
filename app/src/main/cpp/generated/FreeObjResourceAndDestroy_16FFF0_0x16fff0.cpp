@@ -13,7 +13,7 @@
 
 // Function: FreeObjResourceAndDestroy_16FFF0
 // Address: 0x16fff0 - 0x170050
-void FreeObjResourceAndDestroy_16FFF0_0x16fff0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FreeObjResourceAndDestroy_16FFF0_0x16fff0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FreeObjResourceAndDestroy_16FFF0_0x16fff0");
 #endif
@@ -80,7 +80,6 @@ void FreeObjResourceAndDestroy_16FFF0_0x16fff0(uint8_t* rdram, R5900Context* ctx
     if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x17002cu)) {
         return;
     }
-    ctx->pc = 0x17002Cu;
 label_17002c:
     // 0x17002c: 0xae000600  sw          $zero, 0x600($s0)
     ctx->pc = 0x17002cu;
@@ -99,7 +98,6 @@ label_170030:
     if (!runtime->callDirectStatic(rdram, ctx, &ResetField214FreeField180_1C2820_0x1c2820, 0x1c2820u, 0x17003cu)) {
         return;
     }
-    ctx->pc = 0x17003Cu;
 label_17003c:
     // 0x17003c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x17003cu;

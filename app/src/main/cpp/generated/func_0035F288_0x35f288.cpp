@@ -13,7 +13,7 @@
 
 // Function: func_0035F288
 // Address: 0x35f288 - 0x35f3c8
-void func_0035F288_0x35f288(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0035F288_0x35f288(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0035F288_0x35f288");
 #endif
@@ -91,7 +91,6 @@ void func_0035F288_0x35f288(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
     // 0x35f2bc: 0x0  nop
-    ctx->pc = 0x35f2bcu;
     // NOP
 label_35f2c0:
     // 0x35f2c0: 0x50620019  beql        $v1, $v0, . + 4 + (0x19 << 2)
@@ -124,7 +123,6 @@ label_35f2c0:
             goto label_35f3a8;
         }
     }
-    ctx->pc = 0x35F2D0u;
 label_35f2d0:
     // 0x35f2d0: 0x8ca20004  lw          $v0, 0x4($a1)
     ctx->pc = 0x35f2d0u;
@@ -163,7 +161,6 @@ label_35f2d0:
         }
     }
     // 0x35f2f4: 0x0  nop
-    ctx->pc = 0x35f2f4u;
     // NOP
 label_35f2f8:
     // 0x35f2f8: 0x24020001  addiu       $v0, $zero, 0x1
@@ -208,7 +205,6 @@ label_35f2f8:
         }
     }
     // 0x35f324: 0x0  nop
-    ctx->pc = 0x35f324u;
     // NOP
 label_35f328:
     // 0x35f328: 0x8ca20004  lw          $v0, 0x4($a1)
@@ -308,7 +304,6 @@ label_35f328:
         }
     }
     // 0x35f3a4: 0x0  nop
-    ctx->pc = 0x35f3a4u;
     // NOP
 label_35f3a8:
     // 0x35f3a8: 0xdfbf0000  ld          $ra, 0x0($sp)
@@ -326,7 +321,6 @@ label_35f3a8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x35FBD8u, 0x35F3B0u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x35F3B8u;
 label_35f3b8:
     // 0x35f3b8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x35f3b8u;

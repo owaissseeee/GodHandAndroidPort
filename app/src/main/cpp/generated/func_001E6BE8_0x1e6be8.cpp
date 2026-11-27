@@ -13,7 +13,7 @@
 
 // Function: func_001E6BE8
 // Address: 0x1e6be8 - 0x1e6c80
-void func_001E6BE8_0x1e6be8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001E6BE8_0x1e6be8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001E6BE8_0x1e6be8");
 #endif
@@ -117,7 +117,6 @@ void func_001E6BE8_0x1e6be8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e6c40u)) {
         return;
     }
-    ctx->pc = 0x1E6C40u;
 label_1e6c40:
     // 0x1e6c40: 0x8e0403cc  lw          $a0, 0x3CC($s0)
     ctx->pc = 0x1e6c40u;
@@ -133,7 +132,6 @@ label_1e6c40:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e6c4cu)) {
         return;
     }
-    ctx->pc = 0x1E6C4Cu;
 label_1e6c4c:
     // 0x1e6c4c: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x1E6C4Cu;
@@ -150,7 +148,6 @@ label_1e6c4c:
             goto label_1e6c70;
         }
     }
-    ctx->pc = 0x1E6C54u;
 label_1e6c54:
     // 0x1e6c54: 0x8e0403c8  lw          $a0, 0x3C8($s0)
     ctx->pc = 0x1e6c54u;
@@ -166,7 +163,6 @@ label_1e6c54:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e6c60u)) {
         return;
     }
-    ctx->pc = 0x1E6C60u;
 label_1e6c60:
     // 0x1e6c60: 0x8e0403cc  lw          $a0, 0x3CC($s0)
     ctx->pc = 0x1e6c60u;
@@ -182,7 +178,6 @@ label_1e6c60:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e6c6cu)) {
         return;
     }
-    ctx->pc = 0x1E6C6Cu;
 label_1e6c6c:
     // 0x1e6c6c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1e6c6cu;

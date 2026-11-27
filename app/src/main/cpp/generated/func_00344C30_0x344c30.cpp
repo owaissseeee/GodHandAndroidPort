@@ -13,7 +13,7 @@
 
 // Function: func_00344C30
 // Address: 0x344c30 - 0x344c98
-void func_00344C30_0x344c30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00344C30_0x344c30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00344C30_0x344c30");
 #endif
@@ -83,7 +83,6 @@ void func_00344C30_0x344c30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
     // 0x344c5c: 0x0  nop
-    ctx->pc = 0x344c5cu;
     // NOP
 label_344c60:
     // 0x344c60: 0x10820009  beq         $a0, $v0, . + 4 + (0x9 << 2)
@@ -104,7 +103,6 @@ label_344c60:
     // 0x344c68: 0x24020004  addiu       $v0, $zero, 0x4
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x344c6c: 0x24030004  addiu       $v1, $zero, 0x4
-    ctx->pc = 0x344c6cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
 label_344c70:
     // 0x344c70: 0x10820006  beq         $a0, $v0, . + 4 + (0x6 << 2)
@@ -135,10 +133,8 @@ label_344c70:
     if (!runtime->callDirectStatic(rdram, ctx, &MWSFSVM_Error_0x348be0, 0x348be0u, 0x344c84u)) {
         return;
     }
-    ctx->pc = 0x344C84u;
 label_344c84:
     // 0x344c84: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x344c84u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_344c88:
     // 0x344c88: 0xdfbf0000  ld          $ra, 0x0($sp)

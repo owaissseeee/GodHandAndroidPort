@@ -13,7 +13,7 @@
 
 // Function: cSndMemHeap_Close
 // Address: 0x2cd780 - 0x2cd7c8
-void cSndMemHeap_Close_0x2cd780(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndMemHeap_Close_0x2cd780(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndMemHeap_Close_0x2cd780");
 #endif
@@ -83,7 +83,6 @@ void cSndMemHeap_Close_0x2cd780(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &cSndMemHeap_Free_0x2cd890, 0x2cd890u, 0x2cd7b0u)) {
         return;
     }
-    ctx->pc = 0x2CD7B0u;
 label_2cd7b0:
     // 0x2cd7b0: 0xae000380  sw          $zero, 0x380($s0)
     ctx->pc = 0x2cd7b0u;

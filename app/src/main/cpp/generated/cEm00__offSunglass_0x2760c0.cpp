@@ -13,7 +13,7 @@
 
 // Function: cEm00__offSunglass
 // Address: 0x2760c0 - 0x2761b0
-void cEm00__offSunglass_0x2760c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00__offSunglass_0x2760c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00__offSunglass_0x2760c0");
 #endif
@@ -70,7 +70,6 @@ void cEm00__offSunglass_0x2760c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &cModel_getMeshPtr_14B730_0x14b730, 0x14b730u, 0x2760ecu)) {
         return;
     }
-    ctx->pc = 0x2760ECu;
 label_2760ec:
     // 0x2760ec: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -130,7 +129,6 @@ label_276108:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getGameLevel_0x1fa010, 0x1fa010u, 0x276130u)) {
         return;
     }
-    ctx->pc = 0x276130u;
 label_276130:
     // 0x276130: 0x2443ffff  addiu       $v1, $v0, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));
@@ -175,7 +173,6 @@ label_276130:
             return;
         }
     }
-    ctx->pc = 0x276158u;
 label_276158:
     // 0x276158: 0x3c014396  lui         $at, 0x4396
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)17302 << 16));
@@ -196,7 +193,6 @@ label_276158:
             goto label_276188;
         }
     }
-    ctx->pc = 0x276168u;
 label_276168:
     // 0x276168: 0x3c0143e1  lui         $at, 0x43E1
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)17377 << 16));
@@ -217,7 +213,6 @@ label_276168:
             goto label_276188;
         }
     }
-    ctx->pc = 0x276178u;
 label_276178:
     // 0x276178: 0x3c014416  lui         $at, 0x4416
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)17430 << 16));

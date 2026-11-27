@@ -13,7 +13,7 @@
 
 // Function: RemoveIntcHandler
 // Address: 0x3af9a0 - 0x3af9b0
-void RemoveIntcHandler_0x3af9a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void RemoveIntcHandler_0x3af9a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("RemoveIntcHandler_0x3af9a0");
 #endif

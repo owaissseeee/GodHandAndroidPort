@@ -13,7 +13,7 @@
 
 // Function: classCFILTER_TAG_initialize
 // Address: 0x299368 - 0x2993a0
-void classCFILTER_TAG_initialize_0x299368(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void classCFILTER_TAG_initialize_0x299368(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("classCFILTER_TAG_initialize_0x299368");
 #endif

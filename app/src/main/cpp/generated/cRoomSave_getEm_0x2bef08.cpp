@@ -13,7 +13,7 @@
 
 // Function: cRoomSave_getEm
 // Address: 0x2bef08 - 0x2bef60
-void cRoomSave_getEm_0x2bef08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cRoomSave_getEm_0x2bef08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cRoomSave_getEm_0x2bef08");
 #endif
@@ -50,7 +50,6 @@ void cRoomSave_getEm_0x2bef08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BEDD8_0x2bedd8, 0x2bedd8u, 0x2bef24u)) {
         return;
     }
-    ctx->pc = 0x2BEF24u;
 label_2bef24:
     // 0x2bef24: 0x222102b  sltu        $v0, $s1, $v0
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 17) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
@@ -84,7 +83,6 @@ label_2bef24:
             goto label_2bef48;
         }
     }
-    ctx->pc = 0x2BEF38u;
 label_2bef38:
     // 0x2bef38: 0x8e030000  lw          $v1, 0x0($s0)
     ctx->pc = 0x2bef38u;
@@ -94,7 +92,6 @@ label_2bef38:
     // 0x2bef40: 0x2442000c  addiu       $v0, $v0, 0xC
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 12));
     // 0x2bef44: 0x621021  addu        $v0, $v1, $v0
-    ctx->pc = 0x2bef44u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 2)));
 label_2bef48:
     // 0x2bef48: 0x7bb00020  lq          $s0, 0x20($sp)

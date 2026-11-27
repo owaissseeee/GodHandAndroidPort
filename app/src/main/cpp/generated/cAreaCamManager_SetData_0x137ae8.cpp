@@ -13,7 +13,7 @@
 
 // Function: cAreaCamManager_SetData
 // Address: 0x137ae8 - 0x137bb8
-void cAreaCamManager_SetData_0x137ae8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cAreaCamManager_SetData_0x137ae8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cAreaCamManager_SetData_0x137ae8");
 #endif
@@ -181,7 +181,6 @@ void cAreaCamManager_SetData_0x137ae8(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_137b94;
         }
     }
-    ctx->pc = 0x137B90u;
 label_137b90:
     // 0x137b90: 0xac820000  sw          $v0, 0x0($a0)
     ctx->pc = 0x137b90u;
@@ -202,7 +201,6 @@ label_137b94:
             goto label_137ba8;
         }
     }
-    ctx->pc = 0x137B9Cu;
 label_137b9c:
     // 0x137b9c: 0xc04dea8  jal         func_137AA0
     ctx->pc = 0x137B9Cu;
@@ -210,10 +208,8 @@ label_137b9c:
     if (!runtime->callDirectStatic(rdram, ctx, &InitStructDefaults_137AA0_0x137aa0, 0x137aa0u, 0x137ba4u)) {
         return;
     }
-    ctx->pc = 0x137BA4u;
 label_137ba4:
     // 0x137ba4: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x137ba4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_137ba8:
     // 0x137ba8: 0xdfbf0000  ld          $ra, 0x0($sp)

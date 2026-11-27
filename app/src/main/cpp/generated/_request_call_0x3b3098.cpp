@@ -13,7 +13,7 @@
 
 // Function: _request_call
 // Address: 0x3b3098 - 0x3b3128
-void _request_call_0x3b3098(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _request_call_0x3b3098(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_request_call_0x3b3098");
 #endif
@@ -58,7 +58,6 @@ void _request_call_0x3b3098(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_3b30b8;
         }
     }
-    ctx->pc = 0x3B30B4u;
 label_3b30b4:
     // 0x3b30b4: 0xac45003c  sw          $a1, 0x3C($v0)
     ctx->pc = 0x3b30b4u;
@@ -144,7 +143,6 @@ label_3b30b8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B0A40u, 0x3B3114u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x3B311Cu;
 label_3b311c:
     // 0x3b311c: 0x3e00008  jr          $ra
     ctx->pc = 0x3B311Cu;

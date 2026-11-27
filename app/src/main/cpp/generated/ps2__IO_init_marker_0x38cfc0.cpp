@@ -13,7 +13,7 @@
 
 // Function: _IO_init_marker
 // Address: 0x38cfc0 - 0x38d038
-void ps2__IO_init_marker_0x38cfc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_init_marker_0x38cfc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_init_marker_0x38cfc0");
 #endif
@@ -75,13 +75,11 @@ void ps2__IO_init_marker_0x38cfc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_switch_to_get_mode_0x38c2f0, 0x38c2f0u, 0x38cff4u)) {
         return;
     }
-    ctx->pc = 0x38CFF4u;
 label_38cff4:
     // 0x38cff4: 0x8e030000  lw          $v1, 0x0($s0)
     ctx->pc = 0x38cff4u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 0)));
     // 0x38cff8: 0x30620100  andi        $v0, $v1, 0x100
-    ctx->pc = 0x38cff8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) & (uint64_t)(uint16_t)256);
 label_38cffc:
     // 0x38cffc: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
@@ -114,7 +112,6 @@ label_38cffc:
             goto label_38d010;
         }
     }
-    ctx->pc = 0x38D00Cu;
 label_38d00c:
     // 0x38d00c: 0x8e03000c  lw          $v1, 0xC($s0)
     ctx->pc = 0x38d00cu;

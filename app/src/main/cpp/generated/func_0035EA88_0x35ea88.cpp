@@ -13,7 +13,7 @@
 
 // Function: func_0035EA88
 // Address: 0x35ea88 - 0x35eb60
-void func_0035EA88_0x35ea88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0035EA88_0x35ea88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0035EA88_0x35ea88");
 #endif
@@ -145,7 +145,6 @@ void func_0035EA88_0x35ea88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_35eb44;
         }
     }
-    ctx->pc = 0x35EAD8u;
 label_35ead8:
     // 0x35ead8: 0x1062001d  beq         $v1, $v0, . + 4 + (0x1D << 2)
     ctx->pc = 0x35EAD8u;
@@ -192,7 +191,6 @@ label_35ead8:
             goto label_35eb44;
         }
     }
-    ctx->pc = 0x35EAF0u;
 label_35eaf0:
     // 0x35eaf0: 0x10620018  beq         $v1, $v0, . + 4 + (0x18 << 2)
     ctx->pc = 0x35EAF0u;
@@ -273,7 +271,6 @@ label_35eaf0:
             goto label_35eb44;
         }
     }
-    ctx->pc = 0x35EB20u;
 label_35eb20:
     // 0x35eb20: 0x1062000b  beq         $v1, $v0, . + 4 + (0xB << 2)
     ctx->pc = 0x35EB20u;
@@ -320,7 +317,6 @@ label_35eb20:
             goto label_35eb54;
         }
     }
-    ctx->pc = 0x35EB38u;
 label_35eb38:
     // 0x35eb38: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x35EB38u;
@@ -337,10 +333,8 @@ label_35eb38:
             goto label_35eb54;
         }
     }
-    ctx->pc = 0x35EB40u;
 label_35eb40:
     // 0x35eb40: 0x202d  daddu       $a0, $zero, $zero
-    ctx->pc = 0x35eb40u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_35eb44:
     // 0x35eb44: 0x24c69c70  addiu       $a2, $a2, -0x6390
@@ -356,10 +350,8 @@ label_35eb44:
     if (!runtime->callDirectStatic(rdram, ctx, &SFXLIB_Error_0x35fbd8, 0x35fbd8u, 0x35eb50u)) {
         return;
     }
-    ctx->pc = 0x35EB50u;
 label_35eb50:
     // 0x35eb50: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x35eb50u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_35eb54:
     // 0x35eb54: 0xdfbf0000  ld          $ra, 0x0($sp)

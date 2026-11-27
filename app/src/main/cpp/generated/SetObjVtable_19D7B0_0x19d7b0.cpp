@@ -13,7 +13,7 @@
 
 // Function: SetObjVtable_19D7B0
 // Address: 0x19d7b0 - 0x19d7e8
-void SetObjVtable_19D7B0_0x19d7b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetObjVtable_19D7B0_0x19d7b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetObjVtable_19D7B0_0x19d7b0");
 #endif
@@ -45,7 +45,6 @@ void SetObjVtable_19D7B0_0x19d7b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &func_001BFAC8_0x1bfac8, 0x1bfac8u, 0x19d7c4u)) {
         return;
     }
-    ctx->pc = 0x19D7C4u;
 label_19d7c4:
     // 0x19d7c4: 0x3c030042  lui         $v1, 0x42
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)66 << 16));

@@ -13,7 +13,7 @@
 
 // Function: EmThrower_throwHeld
 // Address: 0x26a938 - 0x26aa30
-void EmThrower_throwHeld_0x26a938(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EmThrower_throwHeld_0x26a938(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EmThrower_throwHeld_0x26a938");
 #endif
@@ -103,7 +103,6 @@ void EmThrower_throwHeld_0x26a938(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31D020u, 0x26A988u, 0x26A990u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x26A990u;
 label_26a990:
     // 0x26a990: 0xc0c7408  jal         func_31D020
     SET_GPR_U32(ctx, 31, 0x26A998u);
@@ -116,7 +115,6 @@ label_26a990:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31D020u, 0x26A990u, 0x26A998u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x26A998u;
 label_26a998:
     // 0x26a998: 0x3c013c23  lui         $at, 0x3C23
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15395 << 16));
@@ -143,7 +141,6 @@ label_26a998:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31D020u, 0x26A9B4u, 0x26A9BCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x26A9BCu;
 label_26a9bc:
     // 0x26a9bc: 0x46150002  mul.s       $f0, $f0, $f21
     ctx->f[0] = FPU_MUL_S(ctx->f[0], ctx->f[21]);
@@ -170,7 +167,6 @@ label_26a9bc:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0ApplyMatrixXYZ_0x1f8350, 0x1f8350u, 0x26a9dcu)) {
         return;
     }
-    ctx->pc = 0x26A9DCu;
 label_26a9dc:
     // 0x26a9dc: 0x12400006  beqz        $s2, . + 4 + (0x6 << 2)
     ctx->pc = 0x26A9DCu;
@@ -200,7 +196,6 @@ label_26a9dc:
     if (!runtime->callDirectStatic(rdram, ctx, &cOm60_setThrow_0x1b1760, 0x1b1760u, 0x26a9f0u)) {
         return;
     }
-    ctx->pc = 0x26A9F0u;
 label_26a9f0:
     // 0x26a9f0: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x26A9F0u;
@@ -217,7 +212,6 @@ label_26a9f0:
             goto label_26aa0c;
         }
     }
-    ctx->pc = 0x26A9F8u;
 label_26a9f8:
     // 0x26a9f8: 0x3c014316  lui         $at, 0x4316
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)17174 << 16));
@@ -234,7 +228,6 @@ label_26a9f8:
     if (!runtime->callDirectStatic(rdram, ctx, &cOm60_setThrow_0x1b1760, 0x1b1760u, 0x26aa08u)) {
         return;
     }
-    ctx->pc = 0x26AA08u;
 label_26aa08:
     // 0x26aa08: 0x7bb00040  lq          $s0, 0x40($sp)
     ctx->pc = 0x26aa08u;

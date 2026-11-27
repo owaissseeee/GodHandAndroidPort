@@ -13,7 +13,7 @@
 
 // Function: SFD_CalcYccPlane
 // Address: 0x350248 - 0x3502d8
-void SFD_CalcYccPlane_0x350248(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFD_CalcYccPlane_0x350248(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFD_CalcYccPlane_0x350248");
 #endif

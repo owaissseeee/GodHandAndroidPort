@@ -13,7 +13,7 @@
 
 // Function: ReqQueue_push
 // Address: 0x2d2f78 - 0x2d3020
-void ReqQueue_push_0x2d2f78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ReqQueue_push_0x2d2f78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ReqQueue_push_0x2d2f78");
 #endif
@@ -73,7 +73,6 @@ void ReqQueue_push_0x2d2f78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D3110_0x2d3110, 0x2d3110u, 0x2d2fb4u)) {
         return;
     }
-    ctx->pc = 0x2D2FB4u;
 label_2d2fb4:
     // 0x2d2fb4: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -103,7 +102,6 @@ label_2d2fb4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D3190_0x2d3190, 0x2d3190u, 0x2d2fc8u)) {
         return;
     }
-    ctx->pc = 0x2D2FC8u;
 label_2d2fc8:
     // 0x2d2fc8: 0x40902d  daddu       $s2, $v0, $zero
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -128,7 +126,6 @@ label_2d2fc8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D3240_0x2d3240, 0x2d3240u, 0x2d2fe8u)) {
         return;
     }
-    ctx->pc = 0x2D2FE8u;
 label_2d2fe8:
     // 0x2d2fe8: 0x8e220000  lw          $v0, 0x0($s1)
     ctx->pc = 0x2d2fe8u;
@@ -148,10 +145,8 @@ label_2d2fe8:
             goto label_2d2ff4;
         }
     }
-    ctx->pc = 0x2D2FF4u;
 label_2d2ff4:
     // 0x2d2ff4: 0x240102d  daddu       $v0, $s2, $zero
-    ctx->pc = 0x2d2ff4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
 label_2d2ff8:
     // 0x2d2ff8: 0x7bb00070  lq          $s0, 0x70($sp)

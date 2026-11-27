@@ -13,7 +13,7 @@
 
 // Function: pl00_CannonGameMode
 // Address: 0x10bcc0 - 0x10bd08
-void pl00_CannonGameMode_0x10bcc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void pl00_CannonGameMode_0x10bcc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("pl00_CannonGameMode_0x10bcc0");
 #endif
@@ -76,7 +76,6 @@ void pl00_CannonGameMode_0x10bcc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_10bcf8;
         }
     }
-    ctx->pc = 0x10BCF0u;
 label_10bcf0:
     // 0x10bcf0: 0xc04b106  jal         func_12C418
     ctx->pc = 0x10BCF0u;
@@ -84,7 +83,6 @@ label_10bcf0:
     if (!runtime->callDirectStatic(rdram, ctx, &pl00_reset_0x12c418, 0x12c418u, 0x10bcf8u)) {
         return;
     }
-    ctx->pc = 0x10BCF8u;
 label_10bcf8:
     // 0x10bcf8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x10bcf8u;

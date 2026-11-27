@@ -13,7 +13,7 @@
 
 // Function: cOl22_setOpen
 // Address: 0x17e678 - 0x17e6a0
-void cOl22_setOpen_0x17e678(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl22_setOpen_0x17e678(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl22_setOpen_0x17e678");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: cSceAtManager_clearCursor
 // Address: 0x2c14f8 - 0x2c1540
-void cSceAtManager_clearCursor_0x2c14f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSceAtManager_clearCursor_0x2c14f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSceAtManager_clearCursor_0x2c14f8");
 #endif
@@ -78,7 +78,6 @@ void cSceAtManager_clearCursor_0x2c14f8(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_002C1618_0x2c1618, 0x2c1618u, 0x2c1530u)) {
         return;
     }
-    ctx->pc = 0x2C1530u;
 label_2c1530:
     // 0x2c1530: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2c1530u;

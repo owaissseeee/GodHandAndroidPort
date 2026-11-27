@@ -13,7 +13,7 @@
 
 // Function: cOmSub_move_1B38D0
 // Address: 0x1b38d0 - 0x1b38f0
-void cOmSub_move_1B38D0_0x1b38d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmSub_move_1B38D0_0x1b38d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmSub_move_1B38D0_0x1b38d0");
 #endif
@@ -42,7 +42,6 @@ void cOmSub_move_1B38D0_0x1b38d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &cOmSub_move_0x1c3f38, 0x1c3f38u, 0x1b38e0u)) {
         return;
     }
-    ctx->pc = 0x1B38E0u;
 label_1b38e0:
     // 0x1b38e0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1b38e0u;

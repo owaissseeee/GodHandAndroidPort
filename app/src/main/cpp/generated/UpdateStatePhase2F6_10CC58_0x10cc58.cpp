@@ -13,7 +13,7 @@
 
 // Function: UpdateStatePhase2F6_10CC58
 // Address: 0x10cc58 - 0x10cd38
-void UpdateStatePhase2F6_10CC58_0x10cc58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateStatePhase2F6_10CC58_0x10cc58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateStatePhase2F6_10CC58_0x10cc58");
 #endif
@@ -81,7 +81,6 @@ void UpdateStatePhase2F6_10CC58_0x10cc58(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_10cd1c;
         }
     }
-    ctx->pc = 0x10CC84u;
 label_10cc84:
     // 0x10cc84: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x10cc84u;
@@ -121,7 +120,6 @@ label_10cc84:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x10ccb8u)) {
         return;
     }
-    ctx->pc = 0x10CCB8u;
 label_10ccb8:
     // 0x10ccb8: 0x920202f6  lbu         $v0, 0x2F6($s0)
     ctx->pc = 0x10ccb8u;
@@ -182,7 +180,6 @@ label_10cccc:
     if (!runtime->callDirectStatic(rdram, ctx, &InvokeVirtualAtField214AndForward_124E68_0x124e68, 0x124e68u, 0x10ccfcu)) {
         return;
     }
-    ctx->pc = 0x10CCFCu;
 label_10ccfc:
     // 0x10ccfc: 0xc055f06  jal         func_157C18
     SET_GPR_U32(ctx, 31, 0x10CD04u);
@@ -195,7 +192,6 @@ label_10ccfc:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x10CCFCu, 0x10CD04u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x10CD04u;
 label_10cd04:
     // 0x10cd04: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x10CD04u;
@@ -236,7 +232,6 @@ label_10cd1c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00123938_0x123938, 0x123938u, 0x10cd24u)) {
         return;
     }
-    ctx->pc = 0x10CD24u;
 label_10cd24:
     // 0x10cd24: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x10cd24u;

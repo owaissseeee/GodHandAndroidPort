@@ -13,7 +13,7 @@
 
 // Function: cIDBase_linkParents
 // Address: 0x2aa480 - 0x2aa538
-void cIDBase_linkParents_0x2aa480(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDBase_linkParents_0x2aa480(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDBase_linkParents_0x2aa480");
 #endif
@@ -50,7 +50,6 @@ void cIDBase_linkParents_0x2aa480(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     // 0x2aa490: 0x240c00ac  addiu       $t4, $zero, 0xAC
     SET_GPR_S32(ctx, 12, (int32_t)ADD32(GPR_U32(ctx, 0), 172));
     // 0x2aa494: 0x10d1818  mult        $v1, $t0, $t5
-    ctx->pc = 0x2aa494u;
     { int64_t result = (int64_t)GPR_S32(ctx, 8) * (int64_t)GPR_S32(ctx, 13); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 3, (int32_t)result); }
 label_2aa498:
     // 0x2aa498: 0x8c820004  lw          $v0, 0x4($a0)
@@ -94,7 +93,6 @@ label_2aa498:
             goto label_2aa518;
         }
     }
-    ctx->pc = 0x2AA4B8u;
 label_2aa4b8:
     // 0x2aa4b8: 0x54a20003  bnel        $a1, $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x2AA4B8u;
@@ -130,7 +128,6 @@ label_2aa4b8:
         return;
         #endif
     }
-    ctx->pc = 0x2AA4C8u;
 label_2aa4c8:
     // 0x2aa4c8: 0x382d  daddu       $a3, $zero, $zero
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
@@ -154,7 +151,6 @@ label_2aa4c8:
     // 0x2aa4d8: 0x482d  daddu       $t1, $zero, $zero
     SET_GPR_U64(ctx, 9, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2aa4dc: 0x0  nop
-    ctx->pc = 0x2aa4dcu;
     // NOP
 label_2aa4e0:
     // 0x2aa4e0: 0x51070009  beql        $t0, $a3, . + 4 + (0x9 << 2)
@@ -200,7 +196,6 @@ label_2aa4e0:
             goto label_2aa504;
         }
     }
-    ctx->pc = 0x2AA504u;
 label_2aa504:
     // 0x2aa504: 0x8c82000c  lw          $v0, 0xC($a0)
     ctx->pc = 0x2aa504u;
@@ -228,7 +223,6 @@ label_2aa508:
             goto label_2aa4e0;
         }
     }
-    ctx->pc = 0x2AA518u;
 label_2aa518:
     // 0x2aa518: 0x8c82000c  lw          $v0, 0xC($a0)
     ctx->pc = 0x2aa518u;
@@ -255,7 +249,6 @@ label_2aa518:
             goto label_2aa498;
         }
     }
-    ctx->pc = 0x2AA52Cu;
 label_2aa52c:
     // 0x2aa52c: 0x3e00008  jr          $ra
     ctx->pc = 0x2AA52Cu;

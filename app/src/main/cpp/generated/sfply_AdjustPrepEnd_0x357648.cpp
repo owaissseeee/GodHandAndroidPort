@@ -13,7 +13,7 @@
 
 // Function: sfply_AdjustPrepEnd
 // Address: 0x357648 - 0x357678
-void sfply_AdjustPrepEnd_0x357648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sfply_AdjustPrepEnd_0x357648(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sfply_AdjustPrepEnd_0x357648");
 #endif
@@ -46,7 +46,6 @@ void sfply_AdjustPrepEnd_0x357648(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &func_00357678_0x357678, 0x357678u, 0x35765cu)) {
         return;
     }
-    ctx->pc = 0x35765Cu;
 label_35765c:
     // 0x35765c: 0xc0d5dc8  jal         func_357720
     SET_GPR_U32(ctx, 31, 0x357664u);
@@ -59,7 +58,6 @@ label_35765c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00357720_0x357720, 0x357720u, 0x357664u)) {
         return;
     }
-    ctx->pc = 0x357664u;
 label_357664:
     // 0x357664: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

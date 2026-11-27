@@ -13,7 +13,7 @@
 
 // Function: MessWin_closeIfNoEndCode
 // Address: 0x2b43b0 - 0x2b4428
-void MessWin_closeIfNoEndCode_0x2b43b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MessWin_closeIfNoEndCode_0x2b43b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MessWin_closeIfNoEndCode_0x2b43b0");
 #endif
@@ -52,7 +52,6 @@ void MessWin_closeIfNoEndCode_0x2b43b0(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B45F8_0x2b45f8, 0x2b45f8u, 0x2b43ccu)) {
         return;
     }
-    ctx->pc = 0x2B43CCu;
 label_2b43cc:
     // 0x2b43cc: 0x54400012  bnel        $v0, $zero, . + 4 + (0x12 << 2)
     ctx->pc = 0x2B43CCu;
@@ -85,7 +84,6 @@ label_2b43cc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B45F8_0x2b45f8, 0x2b45f8u, 0x2b43e4u)) {
         return;
     }
-    ctx->pc = 0x2B43E4u;
 label_2b43e4:
     // 0x2b43e4: 0x5440000c  bnel        $v0, $zero, . + 4 + (0xC << 2)
     ctx->pc = 0x2B43E4u;
@@ -118,7 +116,6 @@ label_2b43e4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B45F8_0x2b45f8, 0x2b45f8u, 0x2b43fcu)) {
         return;
     }
-    ctx->pc = 0x2B43FCu;
 label_2b43fc:
     // 0x2b43fc: 0x54400006  bnel        $v0, $zero, . + 4 + (0x6 << 2)
     ctx->pc = 0x2B43FCu;
@@ -150,7 +147,6 @@ label_2b43fc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B4428_0x2b4428, 0x2b4428u, 0x2b4414u)) {
         return;
     }
-    ctx->pc = 0x2B4414u;
 label_2b4414:
     // 0x2b4414: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2b4414u;

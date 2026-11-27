@@ -14,7 +14,7 @@
 
 // Function: cOmBase_shakeHeight
 // Address: 0x1810a0 - 0x181118
-void cOmBase_shakeHeight_0x1810a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmBase_shakeHeight_0x1810a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmBase_shakeHeight_0x1810a0");
 #endif
@@ -87,7 +87,6 @@ void cOmBase_shakeHeight_0x1810a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31D020u, 0x1810CCu, 0x1810D4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1810D4u;
 label_1810d4:
     // 0x1810d4: 0x3c013c75  lui         $at, 0x3C75
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15477 << 16));
@@ -120,7 +119,6 @@ label_1810d4:
             goto label_181104;
         }
     }
-    ctx->pc = 0x1810F8u;
 label_1810f8:
     // 0x1810f8: 0xc6000604  lwc1        $f0, 0x604($s0)
     ctx->pc = 0x1810f8u;

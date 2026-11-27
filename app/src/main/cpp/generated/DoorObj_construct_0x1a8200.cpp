@@ -13,7 +13,7 @@
 
 // Function: DoorObj_construct
 // Address: 0x1a8200 - 0x1a82d8
-void DoorObj_construct_0x1a8200(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void DoorObj_construct_0x1a8200(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("DoorObj_construct_0x1a8200");
 #endif
@@ -50,7 +50,6 @@ void DoorObj_construct_0x1a8200(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B6FB8_0x1b6fb8, 0x1b6fb8u, 0x1a8218u)) {
         return;
     }
-    ctx->pc = 0x1A8218u;
 label_1a8218:
     // 0x1a8218: 0x24110001  addiu       $s1, $zero, 0x1
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -152,7 +151,6 @@ label_1a8294:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmDoor_setObjCollision_0x1bd228, 0x1bd228u, 0x1a829cu)) {
         return;
     }
-    ctx->pc = 0x1A829Cu;
 label_1a829c:
     // 0x1a829c: 0xa2110624  sb          $s1, 0x624($s0)
     ctx->pc = 0x1a829cu;
@@ -172,7 +170,6 @@ label_1a829c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001BBF68_0x1bbf68, 0x1bbf68u, 0x1a82b0u)) {
         return;
     }
-    ctx->pc = 0x1A82B0u;
 label_1a82b0:
     // 0x1a82b0: 0x8e0305b8  lw          $v1, 0x5B8($s0)
     ctx->pc = 0x1a82b0u;

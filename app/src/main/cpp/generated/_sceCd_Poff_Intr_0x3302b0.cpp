@@ -13,7 +13,7 @@
 
 // Function: _sceCd_Poff_Intr
 // Address: 0x3302b0 - 0x3302e0
-void _sceCd_Poff_Intr_0x3302b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceCd_Poff_Intr_0x3302b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceCd_Poff_Intr_0x3302b0");
 #endif
@@ -36,15 +36,12 @@ void _sceCd_Poff_Intr_0x3302b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
         }
     }
 
-    ctx->pc = 0x3302b0u;
 
 label_3302b0:
     // 0x3302b0: 0x3c02003e  lui         $v0, 0x3E
-    ctx->pc = 0x3302b0u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)62 << 16));
 label_3302b4:
     // 0x3302b4: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x3302b4u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_3302b8:
     // 0x3302b8: 0x8c438404  lw          $v1, -0x7BFC($v0)
@@ -77,7 +74,6 @@ label_3302c0:
             goto label_3302d0;
         }
     }
-    ctx->pc = 0x3302C4u;
 label_3302c4:
     // 0x3302c4: 0x3c02003e  lui         $v0, 0x3E
     ctx->pc = 0x3302c4u;
@@ -110,7 +106,6 @@ label_3302cc:
             return;
         }
     }
-    ctx->pc = 0x3302D0u;
 label_3302d0:
     // 0x3302d0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3302d0u;
@@ -146,7 +141,6 @@ label_3302d8:
         return;
         #endif
     }
-    ctx->pc = 0x3302DCu;
 label_3302dc:
     // 0x3302dc: 0x0  nop
     // NOP

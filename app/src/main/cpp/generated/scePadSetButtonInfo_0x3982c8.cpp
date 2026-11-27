@@ -13,7 +13,7 @@
 
 // Function: scePadSetButtonInfo
 // Address: 0x3982c8 - 0x398378
-void scePadSetButtonInfo_0x3982c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void scePadSetButtonInfo_0x3982c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("scePadSetButtonInfo_0x3982c8");
 #endif
@@ -93,7 +93,6 @@ void scePadSetButtonInfo_0x3982c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B3128u, 0x398324u, 0x39832Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x39832Cu;
 label_39832c:
     // 0x39832c: 0x4430003  bgezl       $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x39832Cu;
@@ -125,7 +124,6 @@ label_39832c:
             goto label_398360;
         }
     }
-    ctx->pc = 0x39833Cu;
 label_39833c:
     // 0x39833c: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -159,13 +157,11 @@ label_39833c:
     if (!runtime->callDirectStatic(rdram, ctx, &scePadSetReqState_0x397e18, 0x397e18u, 0x398358u)) {
         return;
     }
-    ctx->pc = 0x398358u;
 label_398358:
     // 0x398358: 0x8e030010  lw          $v1, 0x10($s0)
     ctx->pc = 0x398358u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 16)));
     // 0x39835c: 0x60102d  daddu       $v0, $v1, $zero
-    ctx->pc = 0x39835cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
 label_398360:
     // 0x398360: 0xdfbf0040  ld          $ra, 0x40($sp)

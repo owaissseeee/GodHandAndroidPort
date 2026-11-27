@@ -13,7 +13,7 @@
 
 // Function: scePadInfoPressMode
 // Address: 0x398378 - 0x3983f8
-void scePadInfoPressMode_0x398378(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void scePadInfoPressMode_0x398378(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("scePadInfoPressMode_0x398378");
 #endif
@@ -79,7 +79,6 @@ void scePadInfoPressMode_0x398378(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &scePadGetDmaStr_0x397bc8, 0x397bc8u, 0x3983b8u)) {
         return;
     }
-    ctx->pc = 0x3983B8u;
 label_3983b8:
     // 0x3983b8: 0x93a30072  lbu         $v1, 0x72($sp)
     ctx->pc = 0x3983b8u;
@@ -101,7 +100,6 @@ label_3983b8:
             goto label_3983d0;
         }
     }
-    ctx->pc = 0x3983C8u;
 label_3983c8:
     // 0x3983c8: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x3983C8u;
@@ -118,7 +116,6 @@ label_3983c8:
             goto label_3983ec;
         }
     }
-    ctx->pc = 0x3983D0u;
 label_3983d0:
     // 0x3983d0: 0x2c420002  sltiu       $v0, $v0, 0x2
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)2) ? 1 : 0);
@@ -160,7 +157,6 @@ label_3983d0:
             goto label_3983c8;
         }
     }
-    ctx->pc = 0x3983ECu;
 label_3983ec:
     // 0x3983ec: 0xdfbf0080  ld          $ra, 0x80($sp)
     ctx->pc = 0x3983ecu;

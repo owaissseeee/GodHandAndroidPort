@@ -13,7 +13,7 @@
 
 // Function: _IO_file_init
 // Address: 0x392718 - 0x392758
-void ps2__IO_file_init_0x392718(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_file_init_0x392718(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_file_init_0x392718");
 #endif
@@ -57,7 +57,6 @@ void ps2__IO_file_init_0x392718(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_link_in_0x38c208, 0x38c208u, 0x392740u)) {
         return;
     }
-    ctx->pc = 0x392740u;
 label_392740:
     // 0x392740: 0x2402ffff  addiu       $v0, $zero, -0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));

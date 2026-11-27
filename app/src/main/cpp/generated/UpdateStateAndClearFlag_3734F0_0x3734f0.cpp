@@ -13,7 +13,7 @@
 
 // Function: UpdateStateAndClearFlag_3734F0
 // Address: 0x3734f0 - 0x373560
-void UpdateStateAndClearFlag_3734F0_0x3734f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateStateAndClearFlag_3734F0_0x3734f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateStateAndClearFlag_3734F0_0x3734f0");
 #endif
@@ -48,7 +48,6 @@ void UpdateStateAndClearFlag_3734F0_0x3734f0(uint8_t* rdram, R5900Context* ctx, 
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373A50_0x373a50, 0x373a50u, 0x373504u)) {
         return;
     }
-    ctx->pc = 0x373504u;
 label_373504:
     // 0x373504: 0x50400012  beql        $v0, $zero, . + 4 + (0x12 << 2)
     ctx->pc = 0x373504u;
@@ -76,7 +75,6 @@ label_373504:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373B20_0x373b20, 0x373b20u, 0x373514u)) {
         return;
     }
-    ctx->pc = 0x373514u;
 label_373514:
     // 0x373514: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -100,7 +98,6 @@ label_373514:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00374598_0x374598, 0x374598u, 0x373528u)) {
         return;
     }
-    ctx->pc = 0x373528u;
 label_373528:
     // 0x373528: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x373528u;
@@ -117,7 +114,6 @@ label_373528:
             goto label_37353c;
         }
     }
-    ctx->pc = 0x373530u;
 label_373530:
     // 0x373530: 0xc0dcff2  jal         func_373FC8
     SET_GPR_U32(ctx, 31, 0x373538u);
@@ -130,7 +126,6 @@ label_373530:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373FC8_0x373fc8, 0x373fc8u, 0x373538u)) {
         return;
     }
-    ctx->pc = 0x373538u;
 label_373538:
     // 0x373538: 0x8e03004c  lw          $v1, 0x4C($s0)
     ctx->pc = 0x373538u;

@@ -40,6 +40,8 @@ class MenuTouchHandler(context: Context) {
     private var isFlingActive = false
     private var lastFlingY = 0
 
+    var onCleanTapCheck: ((x: Float, y: Float) -> Unit)? = null
+
     private val flingCallback = object : Choreographer.FrameCallback {
         override fun doFrame(frameTimeNanos: Long) {
             if (!isFlingActive) return
@@ -151,6 +153,7 @@ class MenuTouchHandler(context: Context) {
                     NativeBridge.onMenuTouchEvent(ACTION_CANCEL, x, y, 0f, 0f)
                 } else {
                     // Clean tap without drag: confirm selection
+                    onCleanTapCheck?.invoke(x, y)
                     NativeBridge.onMenuTouchEvent(ACTION_UP, x, y, 0f, 0f)
                 }
 

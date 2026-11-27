@@ -13,7 +13,7 @@
 
 // Function: func_00150F68
 // Address: 0x150f68 - 0x151168
-void func_00150F68_0x150f68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00150F68_0x150f68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00150F68_0x150f68");
 #endif
@@ -77,7 +77,6 @@ void func_00150F68_0x150f68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_15115c;
         }
     }
-    ctx->pc = 0x150F9Cu;
 label_150f9c:
     // 0x150f9c: 0x8dc6003c  lw          $a2, 0x3C($t6)
     ctx->pc = 0x150f9cu;
@@ -114,7 +113,6 @@ label_150f9c:
             goto label_15115c;
         }
     }
-    ctx->pc = 0x150FB4u;
 label_150fb4:
     // 0x150fb4: 0x24020180  addiu       $v0, $zero, 0x180
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 384));
@@ -202,7 +200,6 @@ label_150fb4:
             goto label_151160;
         }
     }
-    ctx->pc = 0x151004u;
 label_151004:
     // 0x151004: 0x11a20007  beq         $t5, $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x151004u;
@@ -234,7 +231,6 @@ label_151004:
             goto label_151160;
         }
     }
-    ctx->pc = 0x151014u;
 label_151014:
     // 0x151014: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x151014u;
@@ -251,7 +247,6 @@ label_151014:
             goto label_151030;
         }
     }
-    ctx->pc = 0x15101Cu;
 label_15101c:
     // 0x15101c: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x15101Cu;
@@ -268,14 +263,12 @@ label_15101c:
             goto label_151030;
         }
     }
-    ctx->pc = 0x151024u;
 label_151024:
     // 0x151024: 0x1817c2  srl         $v0, $t8, 31
     SET_GPR_S32(ctx, 2, (int32_t)SRL32(GPR_U32(ctx, 24), 31));
     // 0x151028: 0x3021021  addu        $v0, $t8, $v0
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 24), GPR_U32(ctx, 2)));
     // 0x15102c: 0x27843  sra         $t7, $v0, 1
-    ctx->pc = 0x15102cu;
     SET_GPR_S32(ctx, 15, SRA32(GPR_S32(ctx, 2), 1));
 label_151030:
     // 0x151030: 0x1ea0018  mult        $zero, $t7, $t2
@@ -327,7 +320,6 @@ label_151030:
             goto label_15107c;
         }
     }
-    ctx->pc = 0x15107Cu;
 label_15107c:
     // 0x15107c: 0x4203c  dsll32      $a0, $a0, 0
     SET_GPR_U64(ctx, 4, GPR_U64(ctx, 4) << (32 + 0));
@@ -415,7 +407,6 @@ label_15107c:
             goto label_151108;
         }
     }
-    ctx->pc = 0x1510F0u;
 label_1510f0:
     // 0x1510f0: 0x1c0382d  daddu       $a3, $t6, $zero
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 14) + (uint64_t)GPR_U64(ctx, 0));
@@ -440,7 +431,6 @@ label_1510f0:
             goto label_151124;
         }
     }
-    ctx->pc = 0x151108u;
 label_151108:
     // 0x151108: 0x1722000a  bne         $t9, $v0, . + 4 + (0xA << 2)
     ctx->pc = 0x151108u;
@@ -466,7 +456,6 @@ label_151108:
     // 0x15111c: 0x24050006  addiu       $a1, $zero, 0x6
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
     // 0x151120: 0x24060008  addiu       $a2, $zero, 0x8
-    ctx->pc = 0x151120u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 8));
 label_151124:
     // 0x151124: 0xc0c6994  jal         func_31A650
@@ -480,7 +469,6 @@ label_151124:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031A650_0x31a650, 0x31a650u, 0x15112cu)) {
         return;
     }
-    ctx->pc = 0x15112Cu;
 label_15112c:
     // 0x15112c: 0x1000000b  b           . + 4 + (0xB << 2)
     ctx->pc = 0x15112Cu;
@@ -497,7 +485,6 @@ label_15112c:
             goto label_15115c;
         }
     }
-    ctx->pc = 0x151134u;
 label_151134:
     // 0x151134: 0x17220009  bne         $t9, $v0, . + 4 + (0x9 << 2)
     ctx->pc = 0x151134u;
@@ -535,10 +522,8 @@ label_151134:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031A650_0x31a650, 0x31a650u, 0x151158u)) {
         return;
     }
-    ctx->pc = 0x151158u;
 label_151158:
     // 0x151158: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x151158u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_15115c:
     // 0x15115c: 0xdfbf0000  ld          $ra, 0x0($sp)

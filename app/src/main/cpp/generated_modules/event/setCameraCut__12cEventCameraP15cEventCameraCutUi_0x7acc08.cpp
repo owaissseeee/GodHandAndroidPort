@@ -14,23 +14,24 @@ namespace gh_event
 {
 // Function: setCameraCut__12cEventCameraP15cEventCameraCutUi
 // Address: 0x7acc08 - 0x7acc58
-void setCameraCut__12cEventCameraP15cEventCameraCutUi_0x7acc08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void setCameraCut__12cEventCameraP15cEventCameraCutUi_0x7acc08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("setCameraCut__12cEventCameraP15cEventCameraCutUi_0x7acc08");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7acc20u: goto label_7acc20;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7acc08u, 0)) {
+        switch (ctx->pc) {
+            case 0x7acc20u: goto label_7acc20;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7acc08u;
+
 
     // 0x7acc08: 0xac850014  sw          $a1, 0x14($a0)
     ctx->pc = 0x7acc08u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 20), GPR_U32(ctx, 5));
     // 0x7acc0c: 0x3c02007b  lui         $v0, 0x7B
-    ctx->pc = 0x7acc0cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)123 << 16));
     // 0x7acc10: 0x8c425288  lw          $v0, 0x5288($v0)
     ctx->pc = 0x7acc10u;
@@ -50,9 +51,7 @@ void setCameraCut__12cEventCameraP15cEventCameraCutUi_0x7acc08(uint8_t* rdram, R
             goto label_7acc4c;
         }
     }
-    ctx->pc = 0x7ACC1Cu;
     // 0x7acc1c: 0x0  nop
-    ctx->pc = 0x7acc1cu;
     // NOP
 label_7acc20:
     // 0x7acc20: 0x8ca20004  lw          $v0, 0x4($a1)
@@ -73,7 +72,6 @@ label_7acc20:
             goto label_7acc30;
         }
     }
-    ctx->pc = 0x7ACC2Cu;
     // 0x7acc2c: 0xaca20004  sw          $v0, 0x4($a1)
     ctx->pc = 0x7acc2cu;
     WRITE32(ADD32(GPR_U32(ctx, 5), 4), GPR_U32(ctx, 2));
@@ -96,13 +94,11 @@ label_7acc30:
             goto label_7acc40;
         }
     }
-    ctx->pc = 0x7ACC3Cu;
     // 0x7acc3c: 0xaca20008  sw          $v0, 0x8($a1)
     ctx->pc = 0x7acc3cu;
     WRITE32(ADD32(GPR_U32(ctx, 5), 8), GPR_U32(ctx, 2));
 label_7acc40:
     // 0x7acc40: 0x2463ffff  addiu       $v1, $v1, -0x1
-    ctx->pc = 0x7acc40u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294967295));
     // 0x7acc44: 0x1460fff6  bnez        $v1, . + 4 + (-0xA << 2)
     ctx->pc = 0x7ACC44u;
@@ -122,7 +118,6 @@ label_7acc40:
             goto label_7acc20;
         }
     }
-    ctx->pc = 0x7ACC4Cu;
 label_7acc4c:
     // 0x7acc4c: 0x3e00008  jr          $ra
     ctx->pc = 0x7ACC4Cu;
@@ -137,9 +132,7 @@ label_7acc4c:
         return;
         #endif
     }
-    ctx->pc = 0x7ACC54u;
     // 0x7acc54: 0x0  nop
-    ctx->pc = 0x7acc54u;
     // NOP
     ctx->pc = 0x7acc58u;
 }

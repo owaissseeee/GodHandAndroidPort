@@ -13,7 +13,7 @@
 
 // Function: cOmSub_setVibration
 // Address: 0x1c7d50 - 0x1c7d98
-void cOmSub_setVibration_0x1c7d50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmSub_setVibration_0x1c7d50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmSub_setVibration_0x1c7d50");
 #endif

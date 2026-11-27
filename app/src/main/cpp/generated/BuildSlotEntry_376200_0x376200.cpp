@@ -13,7 +13,7 @@
 
 // Function: BuildSlotEntry_376200
 // Address: 0x376200 - 0x376260
-void BuildSlotEntry_376200_0x376200(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BuildSlotEntry_376200_0x376200(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BuildSlotEntry_376200_0x376200");
 #endif
@@ -49,7 +49,6 @@ void BuildSlotEntry_376200_0x376200(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_00376A90_0x376a90, 0x376a90u, 0x376218u)) {
         return;
     }
-    ctx->pc = 0x376218u;
 label_376218:
     // 0x376218: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -91,7 +90,6 @@ label_376218:
     if (!runtime->callDirectStatic(rdram, ctx, &SetSlotEntry_376260_0x376260, 0x376260u, 0x376238u)) {
         return;
     }
-    ctx->pc = 0x376238u;
 label_376238:
     // 0x376238: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x376238u;
@@ -108,7 +106,6 @@ label_376238:
             goto label_37624c;
         }
     }
-    ctx->pc = 0x376240u;
 label_376240:
     // 0x376240: 0xc0dd8b6  jal         func_3762D8
     SET_GPR_U32(ctx, 31, 0x376248u);
@@ -121,10 +118,8 @@ label_376240:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003762D8_0x3762d8, 0x3762d8u, 0x376248u)) {
         return;
     }
-    ctx->pc = 0x376248u;
 label_376248:
     // 0x376248: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x376248u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_37624c:
     // 0x37624c: 0x7bb00010  lq          $s0, 0x10($sp)

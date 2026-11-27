@@ -13,7 +13,7 @@
 
 // Function: func_0028EB00
 // Address: 0x28eb00 - 0x28eb88
-void func_0028EB00_0x28eb00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0028EB00_0x28eb00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0028EB00_0x28eb00");
 #endif
@@ -46,7 +46,6 @@ void func_0028EB00_0x28eb00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cGameObj_0x2a7338, 0x2a7338u, 0x28eb14u)) {
         return;
     }
-    ctx->pc = 0x28EB14u;
 label_28eb14:
     // 0x28eb14: 0x3c020045  lui         $v0, 0x45
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)69 << 16));
@@ -62,7 +61,6 @@ label_28eb14:
     // 0x28eb28: 0x24040001  addiu       $a0, $zero, 0x1
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x28eb2c: 0x0  nop
-    ctx->pc = 0x28eb2cu;
     // NOP
 label_28eb30:
     // 0x28eb30: 0xf8600000  sqc2        $vf0, 0x0($v1)

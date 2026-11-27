@@ -13,7 +13,7 @@
 
 // Function: RegisterScrollLayerHooks
 // Address: 0x2987b0 - 0x2987f8
-void RegisterScrollLayerHooks_0x2987b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void RegisterScrollLayerHooks_0x2987b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("RegisterScrollLayerHooks_0x2987b0");
 #endif
@@ -54,7 +54,6 @@ void RegisterScrollLayerHooks_0x2987b0(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297B20_0x297b20, 0x297b20u, 0x2987d4u)) {
         return;
     }
-    ctx->pc = 0x2987D4u;
 label_2987d4:
     // 0x2987d4: 0x3c05002a  lui         $a1, 0x2A
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)42 << 16));
@@ -71,7 +70,6 @@ label_2987d4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00297B40_0x297b40, 0x297b40u, 0x2987e4u)) {
         return;
     }
-    ctx->pc = 0x2987E4u;
 label_2987e4:
     // 0x2987e4: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2987e4u;

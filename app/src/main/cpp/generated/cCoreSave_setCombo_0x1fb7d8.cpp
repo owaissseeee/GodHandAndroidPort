@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_setCombo
 // Address: 0x1fb7d8 - 0x1fb830
-void cCoreSave_setCombo_0x1fb7d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setCombo_0x1fb7d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setCombo_0x1fb7d8");
 #endif

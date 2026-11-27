@@ -13,7 +13,7 @@
 
 // Function: Motion_seq_readEffectData
 // Address: 0x2c7f00 - 0x2c7f88
-void Motion_seq_readEffectData_0x2c7f00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Motion_seq_readEffectData_0x2c7f00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Motion_seq_readEffectData_0x2c7f00");
 #endif
@@ -62,7 +62,6 @@ void Motion_seq_readEffectData_0x2c7f00(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2c7f30u)) {
         return;
     }
-    ctx->pc = 0x2C7F30u;
 label_2c7f30:
     // 0x2c7f30: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -94,7 +93,6 @@ label_2c7f30:
     if (!runtime->callDirectStatic(rdram, ctx, &memcpy_0x3a5148, 0x3a5148u, 0x2c7f48u)) {
         return;
     }
-    ctx->pc = 0x2C7F48u;
 label_2c7f48:
     // 0x2c7f48: 0x6ba30007  ldl         $v1, 0x7($sp)
     ctx->pc = 0x2c7f48u;

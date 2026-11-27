@@ -13,7 +13,7 @@
 
 // Function: ColiseumBattle_spawnWave
 // Address: 0x1f05f8 - 0x1f06a8
-void ColiseumBattle_spawnWave_0x1f05f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumBattle_spawnWave_0x1f05f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumBattle_spawnWave_0x1f05f8");
 #endif
@@ -87,7 +87,6 @@ void ColiseumBattle_spawnWave_0x1f05f8(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_1f0698;
         }
     }
-    ctx->pc = 0x1F0624u;
 label_1f0624:
     // 0x1f0624: 0x3c020058  lui         $v0, 0x58
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)88 << 16));
@@ -107,7 +106,6 @@ label_1f0624:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmWrap_StartAction_0x295ce8, 0x295ce8u, 0x1f0638u)) {
         return;
     }
-    ctx->pc = 0x1F0638u;
 label_1f0638:
     // 0x1f0638: 0x24020001  addiu       $v0, $zero, 0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -128,7 +126,6 @@ label_1f0638:
             goto label_1f0680;
         }
     }
-    ctx->pc = 0x1F0648u;
 label_1f0648:
     // 0x1f0648: 0x28420002  slti        $v0, $v0, 0x2
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 2) < (int64_t)(int32_t)2) ? 1 : 0);
@@ -162,7 +159,6 @@ label_1f0648:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmWrap_StartAction_0x295ce8, 0x295ce8u, 0x1f0664u)) {
         return;
     }
-    ctx->pc = 0x1F0664u;
 label_1f0664:
     // 0x1f0664: 0x24020003  addiu       $v0, $zero, 0x3
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
@@ -179,7 +175,6 @@ label_1f0664:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmWrap_StartAction_0x295ce8, 0x295ce8u, 0x1f0674u)) {
         return;
     }
-    ctx->pc = 0x1F0674u;
 label_1f0674:
     // 0x1f0674: 0x24020004  addiu       $v0, $zero, 0x4
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
@@ -195,7 +190,6 @@ label_1f0680:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmWrap_StartAction_0x295ce8, 0x295ce8u, 0x1f0688u)) {
         return;
     }
-    ctx->pc = 0x1F0688u;
 label_1f0688:
     // 0x1f0688: 0x8e020b94  lw          $v0, 0xB94($s0)
     ctx->pc = 0x1f0688u;

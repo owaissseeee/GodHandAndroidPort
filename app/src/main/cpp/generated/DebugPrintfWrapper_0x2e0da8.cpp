@@ -13,7 +13,7 @@
 
 // Function: DebugPrintfWrapper
 // Address: 0x2e0da8 - 0x2e0de8
-void DebugPrintfWrapper_0x2e0da8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void DebugPrintfWrapper_0x2e0da8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("DebugPrintfWrapper_0x2e0da8");
 #endif
@@ -66,7 +66,6 @@ void DebugPrintfWrapper_0x2e0da8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &func_002E0C80_0x2e0c80, 0x2e0c80u, 0x2e0ddcu)) {
         return;
     }
-    ctx->pc = 0x2E0DDCu;
 label_2e0ddc:
     // 0x2e0ddc: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2e0ddcu;

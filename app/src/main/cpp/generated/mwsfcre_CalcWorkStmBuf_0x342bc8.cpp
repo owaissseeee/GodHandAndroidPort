@@ -13,7 +13,7 @@
 
 // Function: mwsfcre_CalcWorkStmBuf
 // Address: 0x342bc8 - 0x342cb0
-void mwsfcre_CalcWorkStmBuf_0x342bc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void mwsfcre_CalcWorkStmBuf_0x342bc8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("mwsfcre_CalcWorkStmBuf_0x342bc8");
 #endif
@@ -90,7 +90,6 @@ void mwsfcre_CalcWorkStmBuf_0x342bc8(uint8_t* rdram, R5900Context* ctx, PS2Runti
         }
     }
     // 0x342c1c: 0x0  nop
-    ctx->pc = 0x342c1cu;
     // NOP
 label_342c20:
     // 0x342c20: 0x24020003  addiu       $v0, $zero, 0x3
@@ -162,7 +161,6 @@ label_342c58:
         return;
         #endif
     }
-    ctx->pc = 0x342C68u;
 label_342c68:
     // 0x342c68: 0x25843fff  addiu       $a0, $t4, 0x3FFF
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 12), 16383));

@@ -13,7 +13,7 @@
 
 // Function: cNowLoading_taskBody
 // Address: 0x2b6600 - 0x2b6688
-void cNowLoading_taskBody_0x2b6600(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cNowLoading_taskBody_0x2b6600(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cNowLoading_taskBody_0x2b6600");
 #endif
@@ -65,7 +65,6 @@ void cNowLoading_taskBody_0x2b6600(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_0013ED28_0x13ed28, 0x13ed28u, 0x2b662cu)) {
         return;
     }
-    ctx->pc = 0x2B662Cu;
 label_2b662c:
     // 0x2b662c: 0x3c020075  lui         $v0, 0x75
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)117 << 16));
@@ -86,7 +85,6 @@ label_2b6638:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0013EE58_0x13ee58, 0x13ee58u, 0x2b6640u)) {
         return;
     }
-    ctx->pc = 0x2B6640u;
 label_2b6640:
     // 0x2b6640: 0x8e44d6e8  lw          $a0, -0x2918($s2)
     ctx->pc = 0x2b6640u;
@@ -102,7 +100,6 @@ label_2b6640:
     if (!runtime->callDirectStatic(rdram, ctx, &Forward2AAC28_13F070_0x13f070, 0x13f070u, 0x2b664cu)) {
         return;
     }
-    ctx->pc = 0x2B664Cu;
 label_2b664c:
     // 0x2b664c: 0x92222555  lbu         $v0, 0x2555($s1)
     ctx->pc = 0x2b664cu;
@@ -154,7 +151,6 @@ label_2b664c:
     if (!runtime->callDirectStatic(rdram, ctx, &cTaskWork_exit_0x2d5a48, 0x2d5a48u, 0x2b6670u)) {
         return;
     }
-    ctx->pc = 0x2B6670u;
 label_2b6670:
     // 0x2b6670: 0x8e040004  lw          $a0, 0x4($s0)
     ctx->pc = 0x2b6670u;
@@ -171,7 +167,6 @@ label_2b6674:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D5AA0u, 0x2B6674u, 0x2B667Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2B667Cu;
 label_2b667c:
     // 0x2b667c: 0x1000ffee  b           . + 4 + (-0x12 << 2)
     ctx->pc = 0x2B667Cu;

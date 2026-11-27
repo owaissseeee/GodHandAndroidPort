@@ -13,7 +13,7 @@
 
 // Function: _$_8stdiobuf
 // Address: 0x3935d0 - 0x393628
-void ps2____8stdiobuf_0x3935d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2____8stdiobuf_0x3935d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2____8stdiobuf_0x3935d0");
 #endif
@@ -66,7 +66,6 @@ void ps2____8stdiobuf_0x3935d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_do_write_0x392a80, 0x392a80u, 0x393604u)) {
         return;
     }
-    ctx->pc = 0x393604u;
 label_393604:
     // 0x393604: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -81,7 +80,6 @@ label_393604:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2____7filebuf_0x38ed40, 0x38ed40u, 0x393610u)) {
         return;
     }
-    ctx->pc = 0x393610u;
 label_393610:
     // 0x393610: 0xdfbf0020  ld          $ra, 0x20($sp)
     ctx->pc = 0x393610u;

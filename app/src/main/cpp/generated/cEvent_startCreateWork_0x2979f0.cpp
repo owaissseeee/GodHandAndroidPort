@@ -13,7 +13,7 @@
 
 // Function: cEvent_startCreateWork
 // Address: 0x2979f0 - 0x297a68
-void cEvent_startCreateWork_0x2979f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_startCreateWork_0x2979f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_startCreateWork_0x2979f0");
 #endif
@@ -61,7 +61,6 @@ void cEvent_startCreateWork_0x2979f0(uint8_t* rdram, R5900Context* ctx, PS2Runti
             return;
         }
     }
-    ctx->pc = 0x297A10u;
 label_297a10:
     // 0x297a10: 0x10400006  beqz        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x297A10u;
@@ -97,7 +96,6 @@ label_297a10:
             return;
         }
     }
-    ctx->pc = 0x297A24u;
 label_297a24:
     // 0x297a24: 0x14400006  bnez        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x297A24u;
@@ -108,7 +106,6 @@ label_297a24:
             goto label_297a40;
         }
     }
-    ctx->pc = 0x297A2Cu;
 label_297a2c:
     // 0x297a2c: 0x8e220008  lw          $v0, 0x8($s1)
     ctx->pc = 0x297a2cu;
@@ -132,7 +129,6 @@ label_297a2c:
             goto label_297a50;
         }
     }
-    ctx->pc = 0x297A40u;
 label_297a40:
     // 0x297a40: 0xc000000  jal         func_000000
     ctx->pc = 0x297A40u;
@@ -150,7 +146,6 @@ label_297a40:
             return;
         }
     }
-    ctx->pc = 0x297A48u;
 label_297a48:
     // 0x297a48: 0xc000000  jal         func_000000
     ctx->pc = 0x297A48u;
@@ -168,7 +163,6 @@ label_297a48:
             return;
         }
     }
-    ctx->pc = 0x297A50u;
 label_297a50:
     // 0x297a50: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x297a50u;

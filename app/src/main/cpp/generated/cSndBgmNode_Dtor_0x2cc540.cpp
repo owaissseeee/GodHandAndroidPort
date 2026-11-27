@@ -13,7 +13,7 @@
 
 // Function: cSndBgmNode_Dtor
 // Address: 0x2cc540 - 0x2cc568
-void cSndBgmNode_Dtor_0x2cc540(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndBgmNode_Dtor_0x2cc540(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndBgmNode_Dtor_0x2cc540");
 #endif
@@ -48,7 +48,6 @@ void cSndBgmNode_Dtor_0x2cc540(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_00372C80_0x372c80, 0x372c80u, 0x2cc55cu)) {
         return;
     }
-    ctx->pc = 0x2CC55Cu;
 label_2cc55c:
     // 0x2cc55c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2cc55cu;

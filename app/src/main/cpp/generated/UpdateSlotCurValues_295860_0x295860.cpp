@@ -13,7 +13,7 @@
 
 // Function: UpdateSlotCurValues_295860
 // Address: 0x295860 - 0x295928
-void UpdateSlotCurValues_295860_0x295860(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateSlotCurValues_295860_0x295860(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateSlotCurValues_295860_0x295860");
 #endif
@@ -86,14 +86,12 @@ void UpdateSlotCurValues_295860_0x295860(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_295908;
         }
     }
-    ctx->pc = 0x29589Cu;
 label_29589c:
     // 0x29589c: 0x902d  daddu       $s2, $zero, $zero
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2958a0: 0x26300010  addiu       $s0, $s1, 0x10
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 17), 16));
     // 0x2958a4: 0x0  nop
-    ctx->pc = 0x2958a4u;
     // NOP
 label_2958a8:
     // 0x2958a8: 0x92020013  lbu         $v0, 0x13($s0)
@@ -125,7 +123,6 @@ label_2958a8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002951B0_0x2951b0, 0x2951b0u, 0x2958bcu)) {
         return;
     }
-    ctx->pc = 0x2958BCu;
 label_2958bc:
     // 0x2958bc: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -167,7 +164,6 @@ label_2958bc:
             goto label_2958e0;
         }
     }
-    ctx->pc = 0x2958DCu;
 label_2958dc:
     // 0x2958dc: 0xa464054a  sh          $a0, 0x54A($v1)
     ctx->pc = 0x2958dcu;
@@ -210,7 +206,6 @@ label_2958f4:
         }
     }
     // 0x295904: 0x13102b  sltu        $v0, $zero, $s3
-    ctx->pc = 0x295904u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 0) < (uint64_t)GPR_U64(ctx, 19)) ? 1 : 0);
 label_295908:
     // 0x295908: 0x7bb00040  lq          $s0, 0x40($sp)

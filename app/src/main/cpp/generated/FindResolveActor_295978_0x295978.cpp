@@ -13,7 +13,7 @@
 
 // Function: FindResolveActor_295978
 // Address: 0x295978 - 0x2959b0
-void FindResolveActor_295978_0x295978(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FindResolveActor_295978_0x295978(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FindResolveActor_295978_0x295978");
 #endif
@@ -52,7 +52,6 @@ void FindResolveActor_295978_0x295978(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_GetEm_0x290868, 0x290868u, 0x295998u)) {
         return;
     }
-    ctx->pc = 0x295998u;
 label_295998:
     // 0x295998: 0xae020004  sw          $v0, 0x4($s0)
     ctx->pc = 0x295998u;

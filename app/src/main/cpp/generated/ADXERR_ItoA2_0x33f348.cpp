@@ -13,7 +13,7 @@
 
 // Function: ADXERR_ItoA2
 // Address: 0x33f348 - 0x33f3d0
-void ADXERR_ItoA2_0x33f348(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ADXERR_ItoA2_0x33f348(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ADXERR_ItoA2_0x33f348");
 #endif
@@ -63,7 +63,6 @@ void ADXERR_ItoA2_0x33f348(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &ADXERR_ItoA_0x33f240, 0x33f240u, 0x33f374u)) {
         return;
     }
-    ctx->pc = 0x33F374u;
 label_33f374:
     // 0x33f374: 0xc0e9637  jal         func_3A58DC
     SET_GPR_U32(ctx, 31, 0x33F37Cu);
@@ -76,7 +75,6 @@ label_33f374:
     if (!runtime->callDirectStatic(rdram, ctx, &strlen_0x3a58dc, 0x3a58dcu, 0x33f37cu)) {
         return;
     }
-    ctx->pc = 0x33F37Cu;
 label_33f37c:
     // 0x33f37c: 0x3c050045  lui         $a1, 0x45
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)69 << 16));
@@ -97,7 +95,6 @@ label_33f37c:
     if (!runtime->callDirectStatic(rdram, ctx, &strncat_0x3a5a20, 0x3a5a20u, 0x33f394u)) {
         return;
     }
-    ctx->pc = 0x33F394u;
 label_33f394:
     // 0x33f394: 0xc0e9637  jal         func_3A58DC
     SET_GPR_U32(ctx, 31, 0x33F39Cu);
@@ -110,7 +107,6 @@ label_33f394:
     if (!runtime->callDirectStatic(rdram, ctx, &strlen_0x3a58dc, 0x3a58dcu, 0x33f39cu)) {
         return;
     }
-    ctx->pc = 0x33F39Cu;
 label_33f39c:
     // 0x33f39c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -125,7 +121,6 @@ label_33f39c:
     if (!runtime->callDirectStatic(rdram, ctx, &strlen_0x3a58dc, 0x3a58dcu, 0x33f3a8u)) {
         return;
     }
-    ctx->pc = 0x33F3A8u;
 label_33f3a8:
     // 0x33f3a8: 0xdfb10008  ld          $s1, 0x8($sp)
     ctx->pc = 0x33f3a8u;

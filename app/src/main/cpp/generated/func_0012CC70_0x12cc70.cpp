@@ -13,7 +13,7 @@
 
 // Function: func_0012CC70
 // Address: 0x12cc70 - 0x12cd70
-void func_0012CC70_0x12cc70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0012CC70_0x12cc70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0012CC70_0x12cc70");
 #endif
@@ -126,7 +126,6 @@ void func_0012CC70_0x12cc70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x12ccd0u)) {
         return;
     }
-    ctx->pc = 0x12CCD0u;
 label_12ccd0:
     // 0x12ccd0: 0x10000024  b           . + 4 + (0x24 << 2)
     ctx->pc = 0x12CCD0u;
@@ -143,7 +142,6 @@ label_12ccd0:
             goto label_12cd64;
         }
     }
-    ctx->pc = 0x12CCD8u;
 label_12ccd8:
     // 0x12ccd8: 0x3c09ffff  lui         $t1, 0xFFFF
     SET_GPR_S32(ctx, 9, (int32_t)((uint32_t)65535 << 16));
@@ -164,7 +162,6 @@ label_12ccd8:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x12ccf0u)) {
         return;
     }
-    ctx->pc = 0x12CCF0u;
 label_12ccf0:
     // 0x12ccf0: 0x8e100644  lw          $s0, 0x644($s0)
     ctx->pc = 0x12ccf0u;
@@ -206,7 +203,6 @@ label_12ccf0:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x12cd18u)) {
         return;
     }
-    ctx->pc = 0x12CD18u;
 label_12cd18:
     // 0x12cd18: 0x8e06074c  lw          $a2, 0x74C($s0)
     ctx->pc = 0x12cd18u;
@@ -245,7 +241,6 @@ label_12cd18:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x12cd3cu)) {
         return;
     }
-    ctx->pc = 0x12CD3Cu;
 label_12cd3c:
     // 0x12cd3c: 0x8e060750  lw          $a2, 0x750($s0)
     ctx->pc = 0x12cd3cu;
@@ -284,7 +279,6 @@ label_12cd3c:
     if (!runtime->callDirectStatic(rdram, ctx, &SetEffect_0x306528, 0x306528u, 0x12cd60u)) {
         return;
     }
-    ctx->pc = 0x12CD60u;
 label_12cd60:
     // 0x12cd60: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x12cd60u;

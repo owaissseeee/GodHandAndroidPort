@@ -13,7 +13,7 @@
 
 // Function: cTaskWork_exit
 // Address: 0x2d5a48 - 0x2d5aa0
-void cTaskWork_exit_0x2d5a48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cTaskWork_exit_0x2d5a48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cTaskWork_exit_0x2d5a48");
 #endif
@@ -75,7 +75,6 @@ void cTaskWork_exit_0x2d5a48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &ChangeThreadPriority_0x3afb30, 0x3afb30u, 0x2d5a78u)) {
         return;
     }
-    ctx->pc = 0x2D5A78u;
 label_2d5a78:
     // 0x2d5a78: 0x8e030000  lw          $v1, 0x0($s0)
     ctx->pc = 0x2d5a78u;
@@ -91,7 +90,6 @@ label_2d5a78:
     if (!runtime->callDirectStatic(rdram, ctx, &SignalSema_0x3afcc0, 0x3afcc0u, 0x2d5a84u)) {
         return;
     }
-    ctx->pc = 0x2D5A84u;
 label_2d5a84:
     // 0x2d5a84: 0xc0ebeb8  jal         func_3AFAE0
     SET_GPR_U32(ctx, 31, 0x2D5A8Cu);
@@ -104,7 +102,6 @@ label_2d5a84:
     if (!runtime->callDirectStatic(rdram, ctx, &ExitDeleteThread_0x3afae0, 0x3afae0u, 0x2d5a8cu)) {
         return;
     }
-    ctx->pc = 0x2D5A8Cu;
 label_2d5a8c:
     // 0x2d5a8c: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2d5a8cu;

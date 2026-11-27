@@ -13,7 +13,7 @@
 
 // Function: cDvd_Check
 // Address: 0x201098 - 0x201108
-void cDvd_Check_0x201098(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDvd_Check_0x201098(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDvd_Check_0x201098");
 #endif
@@ -61,7 +61,6 @@ void cDvd_Check_0x201098(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
         return;
         #endif
     }
-    ctx->pc = 0x2010A8u;
 label_2010a8:
     // 0x2010a8: 0x10400008  beqz        $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x2010A8u;
@@ -115,7 +114,6 @@ label_2010a8:
         return;
         #endif
     }
-    ctx->pc = 0x2010C4u;
 label_2010c4:
     // 0x2010c4: 0x3e00008  jr          $ra
     ctx->pc = 0x2010C4u;
@@ -136,16 +134,13 @@ label_2010c4:
         return;
         #endif
     }
-    ctx->pc = 0x2010CCu;
 label_2010cc:
     // 0x2010cc: 0x24830008  addiu       $v1, $a0, 0x8
-    ctx->pc = 0x2010ccu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), 8));
 label_2010d0:
     // 0x2010d0: 0x24840004  addiu       $a0, $a0, 0x4
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 4));
     // 0x2010d4: 0x0  nop
-    ctx->pc = 0x2010d4u;
     // NOP
 label_2010d8:
     // 0x2010d8: 0x8c820000  lw          $v0, 0x0($a0)
@@ -181,7 +176,6 @@ label_2010d8:
             goto label_2010c4;
         }
     }
-    ctx->pc = 0x2010F0u;
 label_2010f0:
     // 0x2010f0: 0x86102a  slt         $v0, $a0, $a2
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 4) < (int64_t)GPR_S64(ctx, 6)) ? 1 : 0);

@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_ckEventFlag
 // Address: 0x1fc360 - 0x1fc388
-void cCoreSave_ckEventFlag_0x1fc360(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_ckEventFlag_0x1fc360(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_ckEventFlag_0x1fc360");
 #endif
@@ -63,7 +63,6 @@ void cCoreSave_ckEventFlag_0x1fc360(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         return;
         #endif
     }
-    ctx->pc = 0x1FC380u;
 label_1fc380:
     // 0x1fc380: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC380u;

@@ -13,7 +13,7 @@
 
 // Function: Moji_size_set
 // Address: 0x2e13d8 - 0x2e1468
-void Moji_size_set_0x2e13d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Moji_size_set_0x2e13d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Moji_size_set_0x2e13d8");
 #endif
@@ -75,10 +75,8 @@ void Moji_size_set_0x2e13d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2E13FCu;
 label_2e13fc:
     // 0x2e13fc: 0x3c020062  lui         $v0, 0x62
-    ctx->pc = 0x2e13fcu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)98 << 16));
 label_2e1400:
     // 0x2e1400: 0x24030008  addiu       $v1, $zero, 0x8

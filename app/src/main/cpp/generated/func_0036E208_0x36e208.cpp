@@ -13,7 +13,7 @@
 
 // Function: func_0036E208
 // Address: 0x36e208 - 0x36e2b8
-void func_0036E208_0x36e208(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0036E208_0x36e208(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0036E208_0x36e208");
 #endif
@@ -91,7 +91,6 @@ void func_0036E208_0x36e208(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         }
     }
     // 0x36e25c: 0x0  nop
-    ctx->pc = 0x36e25cu;
     // NOP
 label_36e260:
     // 0x36e260: 0x8d230118  lw          $v1, 0x118($t1)
@@ -132,11 +131,9 @@ label_36e260:
         }
     }
     // 0x36e27c: 0x0  nop
-    ctx->pc = 0x36e27cu;
     // NOP
 label_36e280:
     // 0x36e280: 0x21142  srl         $v0, $v0, 5
-    ctx->pc = 0x36e280u;
     SET_GPR_S32(ctx, 2, (int32_t)SRL32(GPR_U32(ctx, 2), 5));
 label_36e284:
     // 0x36e284: 0xad2202d0  sw          $v0, 0x2D0($t1)

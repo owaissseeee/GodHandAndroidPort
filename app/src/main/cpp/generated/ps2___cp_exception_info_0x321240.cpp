@@ -13,7 +13,7 @@
 
 // Function: __cp_exception_info
 // Address: 0x321240 - 0x321268
-void ps2___cp_exception_info_0x321240(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___cp_exception_info_0x321240(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___cp_exception_info_0x321240");
 #endif
@@ -37,7 +37,6 @@ void ps2___cp_exception_info_0x321240(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___get_eh_info_0x320360, 0x320360u, 0x321250u)) {
         return;
     }
-    ctx->pc = 0x321250u;
 label_321250:
     // 0x321250: 0x8c420000  lw          $v0, 0x0($v0)
     ctx->pc = 0x321250u;

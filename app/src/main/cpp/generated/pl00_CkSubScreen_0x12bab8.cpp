@@ -13,7 +13,7 @@
 
 // Function: pl00_CkSubScreen
 // Address: 0x12bab8 - 0x12baf0
-void pl00_CkSubScreen_0x12bab8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void pl00_CkSubScreen_0x12bab8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("pl00_CkSubScreen_0x12bab8");
 #endif
@@ -44,7 +44,6 @@ void pl00_CkSubScreen_0x12bab8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_12bacc;
         }
     }
-    ctx->pc = 0x12BAC4u;
 label_12bac4:
     // 0x12bac4: 0x3e00008  jr          $ra
     ctx->pc = 0x12BAC4u;
@@ -65,7 +64,6 @@ label_12bac4:
         return;
         #endif
     }
-    ctx->pc = 0x12BACCu;
 label_12bacc:
     // 0x12bacc: 0x28820004  slti        $v0, $a0, 0x4
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 4) < (int64_t)(int32_t)4) ? 1 : 0);

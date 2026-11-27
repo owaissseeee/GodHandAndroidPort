@@ -13,7 +13,7 @@
 
 // Function: func_00161590
 // Address: 0x161590 - 0x1615d0
-void func_00161590_0x161590(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00161590_0x161590(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00161590_0x161590");
 #endif
@@ -49,7 +49,6 @@ void func_00161590_0x161590(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A94F0u, 0x1615A4u, 0x1615ACu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1615ACu;
 label_1615ac:
     // 0x1615ac: 0x2402ffff  addiu       $v0, $zero, -0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));

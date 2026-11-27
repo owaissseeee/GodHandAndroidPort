@@ -13,7 +13,7 @@
 
 // Function: ResetBlendFields_13C930
 // Address: 0x13c930 - 0x13c950
-void ResetBlendFields_13C930_0x13c930(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ResetBlendFields_13C930_0x13c930(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ResetBlendFields_13C930_0x13c930");
 #endif

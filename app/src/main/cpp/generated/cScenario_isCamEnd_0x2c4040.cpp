@@ -13,7 +13,7 @@
 
 // Function: cScenario_isCamEnd
 // Address: 0x2c4040 - 0x2c4078
-void cScenario_isCamEnd_0x2c4040(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_isCamEnd_0x2c4040(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_isCamEnd_0x2c4040");
 #endif
@@ -56,7 +56,6 @@ void cScenario_isCamEnd_0x2c4040(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         return;
         #endif
     }
-    ctx->pc = 0x2C4054u;
 label_2c4054:
     // 0x2c4054: 0x8c623964  lw          $v0, 0x3964($v1)
     ctx->pc = 0x2c4054u;
@@ -97,7 +96,6 @@ label_2c4054:
         return;
         #endif
     }
-    ctx->pc = 0x2C406Cu;
 label_2c406c:
     // 0x2c406c: 0x3e00008  jr          $ra
     ctx->pc = 0x2C406Cu;

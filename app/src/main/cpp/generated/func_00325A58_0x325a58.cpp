@@ -13,7 +13,7 @@
 
 // Function: func_00325A58
 // Address: 0x325a58 - 0x325b90
-void func_00325A58_0x325a58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00325A58_0x325a58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00325A58_0x325a58");
 #endif
@@ -86,7 +86,6 @@ void func_00325A58_0x325a58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x325a98: 0x3c15003d  lui         $s5, 0x3D
     SET_GPR_S32(ctx, 21, (int32_t)((uint32_t)61 << 16));
     // 0x325a9c: 0x26a28190  addiu       $v0, $s5, -0x7E70
-    ctx->pc = 0x325a9cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 21), 4294934928));
 label_325aa0:
     // 0x325aa0: 0xdc430000  ld          $v1, 0x0($v0)
@@ -134,7 +133,6 @@ label_325aa0:
         }
     }
     // 0x325ac4: 0x0  nop
-    ctx->pc = 0x325ac4u;
     // NOP
 label_325ac8:
     // 0x325ac8: 0x3c15003d  lui         $s5, 0x3D
@@ -177,7 +175,6 @@ label_325ac8:
     // 0x325af8: 0x26d08144  addiu       $s0, $s6, -0x7EBC
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 22), 4294934852));
     // 0x325afc: 0x0  nop
-    ctx->pc = 0x325afcu;
     // NOP
 label_325b00:
     // 0x325b00: 0xfe720000  sd          $s2, 0x0($s3)
@@ -196,7 +193,6 @@ label_325b00:
     if (!runtime->callDirectStatic(rdram, ctx, &ChangeThreadPriority_0x3afb30, 0x3afb30u, 0x325b10u)) {
         return;
     }
-    ctx->pc = 0x325B10u;
 label_325b10:
     // 0x325b10: 0xc0ebef4  jal         func_3AFBD0
     SET_GPR_U32(ctx, 31, 0x325B18u);
@@ -209,7 +205,6 @@ label_325b10:
     if (!runtime->callDirectStatic(rdram, ctx, &WakeupThread_0x3afbd0, 0x3afbd0u, 0x325b18u)) {
         return;
     }
-    ctx->pc = 0x325B18u;
 label_325b18:
     // 0x325b18: 0xc0c94be  jal         func_3252F8
     SET_GPR_U32(ctx, 31, 0x325B20u);
@@ -222,7 +217,6 @@ label_325b18:
     if (!runtime->callDirectStatic(rdram, ctx, &adxm_ResumeThread_0x3252f8, 0x3252f8u, 0x325b20u)) {
         return;
     }
-    ctx->pc = 0x325B20u;
 label_325b20:
     // 0x325b20: 0x8e230000  lw          $v1, 0x0($s1)
     ctx->pc = 0x325b20u;
@@ -268,10 +262,8 @@ label_325b20:
             goto label_325b4c;
         }
     }
-    ctx->pc = 0x325B40u;
 label_325b40:
     // 0x325b40: 0x3c16003d  lui         $s6, 0x3D
-    ctx->pc = 0x325b40u;
     SET_GPR_S32(ctx, 22, (int32_t)((uint32_t)61 << 16));
 label_325b44:
     // 0x325b44: 0x26a28190  addiu       $v0, $s5, -0x7E70

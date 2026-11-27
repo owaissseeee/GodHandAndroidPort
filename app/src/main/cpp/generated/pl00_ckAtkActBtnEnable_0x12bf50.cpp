@@ -13,7 +13,7 @@
 
 // Function: pl00_ckAtkActBtnEnable
 // Address: 0x12bf50 - 0x12bfb8
-void pl00_ckAtkActBtnEnable_0x12bf50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void pl00_ckAtkActBtnEnable_0x12bf50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("pl00_ckAtkActBtnEnable_0x12bf50");
 #endif
@@ -84,7 +84,6 @@ void pl00_ckAtkActBtnEnable_0x12bf50(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_IsSet_Field_15F4_Bit_400000_10B698_0x10b698, 0x10b698u, 0x12bf80u)) {
         return;
     }
-    ctx->pc = 0x12BF80u;
 label_12bf80:
     // 0x12bf80: 0x14400008  bnez        $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x12BF80u;
@@ -114,7 +113,6 @@ label_12bf80:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_CkPlCatched_0x293100, 0x293100u, 0x12bf94u)) {
         return;
     }
-    ctx->pc = 0x12BF94u;
 label_12bf94:
     // 0x12bf94: 0x54400003  bnel        $v0, $zero, . + 4 + (0x3 << 2)
     ctx->pc = 0x12BF94u;
@@ -135,7 +133,6 @@ label_12bf94:
     ctx->pc = 0x12bf9cu;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 16), 5621)));
     // 0x12bfa0: 0x30420001  andi        $v0, $v0, 0x1
-    ctx->pc = 0x12bfa0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
 label_12bfa4:
     // 0x12bfa4: 0x7bb00010  lq          $s0, 0x10($sp)

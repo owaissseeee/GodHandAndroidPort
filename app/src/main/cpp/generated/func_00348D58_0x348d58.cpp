@@ -13,7 +13,7 @@
 
 // Function: func_00348D58
 // Address: 0x348d58 - 0x348dd8
-void func_00348D58_0x348d58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00348D58_0x348d58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00348D58_0x348d58");
 #endif
@@ -70,7 +70,6 @@ void func_00348D58_0x348d58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_00348FF0_0x348ff0, 0x348ff0u, 0x348d88u)) {
         return;
     }
-    ctx->pc = 0x348D88u;
 label_348d88:
     // 0x348d88: 0x50510001  beql        $v0, $s1, . + 4 + (0x1 << 2)
     ctx->pc = 0x348D88u;
@@ -87,7 +86,6 @@ label_348d88:
             goto label_348d90;
         }
     }
-    ctx->pc = 0x348D90u;
 label_348d90:
     // 0x348d90: 0xc0d2376  jal         func_348DD8
     SET_GPR_U32(ctx, 31, 0x348D98u);
@@ -100,7 +98,6 @@ label_348d90:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00348DD8_0x348dd8, 0x348dd8u, 0x348d98u)) {
         return;
     }
-    ctx->pc = 0x348D98u;
 label_348d98:
     // 0x348d98: 0xc0d67a0  jal         func_359E80
     SET_GPR_U32(ctx, 31, 0x348DA0u);
@@ -113,7 +110,6 @@ label_348d98:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00359E80_0x359e80, 0x359e80u, 0x348da0u)) {
         return;
     }
-    ctx->pc = 0x348DA0u;
 label_348da0:
     // 0x348da0: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -149,7 +145,6 @@ label_348da0:
             goto label_348dc4;
         }
     }
-    ctx->pc = 0x348DB8u;
 label_348db8:
     // 0x348db8: 0x24020002  addiu       $v0, $zero, 0x2
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));

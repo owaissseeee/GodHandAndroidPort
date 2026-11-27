@@ -13,7 +13,7 @@
 
 // Function: CustomIDWork_SetChildNoDisp
 // Address: 0x2d6510 - 0x2d6548
-void CustomIDWork_SetChildNoDisp_0x2d6510(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CustomIDWork_SetChildNoDisp_0x2d6510(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CustomIDWork_SetChildNoDisp_0x2d6510");
 #endif
@@ -67,7 +67,6 @@ void CustomIDWork_SetChildNoDisp_0x2d6510(uint8_t* rdram, R5900Context* ctx, PS2
         return;
         #endif
     }
-    ctx->pc = 0x2D6530u;
 label_2d6530:
     // 0x2d6530: 0x2403fff7  addiu       $v1, $zero, -0x9
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967287));

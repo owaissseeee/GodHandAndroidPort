@@ -13,7 +13,7 @@
 
 // Function: sceSifAddCmdHandler
 // Address: 0x3b2488 - 0x3b2500
-void sceSifAddCmdHandler_0x3b2488(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSifAddCmdHandler_0x3b2488(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSifAddCmdHandler_0x3b2488");
 #endif
@@ -78,7 +78,6 @@ void sceSifAddCmdHandler_0x3b2488(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_3b24f4;
         }
     }
-    ctx->pc = 0x3B24CCu;
 label_3b24cc:
     // 0x3b24cc: 0x2403000c  addiu       $v1, $zero, 0xC
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 12));

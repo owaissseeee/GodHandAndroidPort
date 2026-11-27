@@ -13,7 +13,7 @@
 
 // Function: InitObjVtableFC98_3051D8
 // Address: 0x3051d8 - 0x305200
-void InitObjVtableFC98_3051D8_0x3051d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitObjVtableFC98_3051D8_0x3051d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitObjVtableFC98_3051D8_0x3051d8");
 #endif
@@ -48,7 +48,6 @@ void InitObjVtableFC98_3051D8_0x3051d8(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &func_003028E8_0x3028e8, 0x3028e8u, 0x3051f4u)) {
         return;
     }
-    ctx->pc = 0x3051F4u;
 label_3051f4:
     // 0x3051f4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3051f4u;

@@ -13,7 +13,7 @@
 
 // Function: cEmManage_getTop
 // Address: 0x293130 - 0x293138
-void cEmManage_getTop_0x293130(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_getTop_0x293130(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_getTop_0x293130");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: cTaskPool_killAll
 // Address: 0x2d56a8 - 0x2d5708
-void cTaskPool_killAll_0x2d56a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cTaskPool_killAll_0x2d56a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cTaskPool_killAll_0x2d56a8");
 #endif
@@ -62,7 +62,6 @@ void cTaskPool_killAll_0x2d56a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
         }
     }
     // 0x2d56cc: 0x902d  daddu       $s2, $zero, $zero
-    ctx->pc = 0x2d56ccu;
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2d56d0:
     // 0x2d56d0: 0x8e240000  lw          $a0, 0x0($s1)
@@ -81,7 +80,6 @@ label_2d56d0:
     if (!runtime->callDirectStatic(rdram, ctx, &cTaskWork_kill_0x2d59f0, 0x2d59f0u, 0x2d56e0u)) {
         return;
     }
-    ctx->pc = 0x2D56E0u;
 label_2d56e0:
     // 0x2d56e0: 0x9622000c  lhu         $v0, 0xC($s1)
     ctx->pc = 0x2d56e0u;
@@ -106,7 +104,6 @@ label_2d56e0:
             goto label_2d56d0;
         }
     }
-    ctx->pc = 0x2D56F0u;
 label_2d56f0:
     // 0x2d56f0: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x2d56f0u;

@@ -13,7 +13,7 @@
 
 // Function: func_002B1168
 // Address: 0x2b1168 - 0x2b1270
-void func_002B1168_0x2b1168(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002B1168_0x2b1168(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002B1168_0x2b1168");
 #endif
@@ -67,7 +67,6 @@ void func_002B1168_0x2b1168(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cMessage_getMessageAddr_0x2aead0, 0x2aead0u, 0x2b1198u)) {
         return;
     }
-    ctx->pc = 0x2B1198u;
 label_2b1198:
     // 0x2b1198: 0x4480a000  mtc1        $zero, $f20
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[20], &bits, sizeof(bits)); }
@@ -87,7 +86,6 @@ label_2b1198:
         }
     }
     // 0x2b11a4: 0x0  nop
-    ctx->pc = 0x2b11a4u;
     // NOP
 label_2b11a8:
     // 0x2b11a8: 0x96050000  lhu         $a1, 0x0($s0)
@@ -104,7 +102,6 @@ label_2b11a8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A4B88_0x2a4b88, 0x2a4b88u, 0x2b11b4u)) {
         return;
     }
-    ctx->pc = 0x2B11B4u;
 label_2b11b4:
     // 0x2b11b4: 0xc6400000  lwc1        $f0, 0x0($s2)
     ctx->pc = 0x2b11b4u;
@@ -146,7 +143,6 @@ label_2b11b4:
             goto label_2b11e8;
         }
     }
-    ctx->pc = 0x2B11E8u;
 label_2b11e8:
     // 0x2b11e8: 0xc0abc7e  jal         func_2AF1F8
     SET_GPR_U32(ctx, 31, 0x2B11F0u);
@@ -159,12 +155,10 @@ label_2b11e8:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessCommon_getCodeSize_0x2af1f8, 0x2af1f8u, 0x2b11f0u)) {
         return;
     }
-    ctx->pc = 0x2B11F0u;
 label_2b11f0:
     // 0x2b11f0: 0x21040  sll         $v0, $v0, 1
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 1));
     // 0x2b11f4: 0x2028021  addu        $s0, $s0, $v0
-    ctx->pc = 0x2b11f4u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), GPR_U32(ctx, 2)));
 label_2b11f8:
     // 0x2b11f8: 0x96030000  lhu         $v1, 0x0($s0)
@@ -243,7 +237,6 @@ label_2b11f8:
     // 0x2b1240: 0x4600a500  add.s       $f20, $f20, $f0
     ctx->f[20] = FPU_ADD_S(ctx->f[20], ctx->f[0]);
     // 0x2b1244: 0x4600a006  mov.s       $f0, $f20
-    ctx->pc = 0x2b1244u;
     ctx->f[0] = FPU_MOV_S(ctx->f[20]);
 label_2b1248:
     // 0x2b1248: 0x7bb00030  lq          $s0, 0x30($sp)

@@ -13,7 +13,7 @@
 
 // Function: func_00384B10
 // Address: 0x384b10 - 0x384b98
-void func_00384B10_0x384b10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00384B10_0x384b10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00384B10_0x384b10");
 #endif
@@ -78,7 +78,6 @@ void func_00384B10_0x384b10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_00384BC8_0x384bc8, 0x384bc8u, 0x384b3cu)) {
         return;
     }
-    ctx->pc = 0x384B3Cu;
 label_384b3c:
     // 0x384b3c: 0x10000013  b           . + 4 + (0x13 << 2)
     ctx->pc = 0x384B3Cu;
@@ -95,7 +94,6 @@ label_384b3c:
             goto label_384b8c;
         }
     }
-    ctx->pc = 0x384B44u;
 label_384b44:
     // 0x384b44: 0x24a30034  addiu       $v1, $a1, 0x34
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 5), 52));
@@ -128,7 +126,6 @@ label_384b44:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00384B98_0x384b98, 0x384b98u, 0x384b5cu)) {
         return;
     }
-    ctx->pc = 0x384B5Cu;
 label_384b5c:
     // 0x384b5c: 0x1000000b  b           . + 4 + (0xB << 2)
     ctx->pc = 0x384B5Cu;
@@ -145,7 +142,6 @@ label_384b5c:
             goto label_384b8c;
         }
     }
-    ctx->pc = 0x384B64u;
 label_384b64:
     // 0x384b64: 0x30420002  andi        $v0, $v0, 0x2
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)2);
@@ -169,7 +165,6 @@ label_384b64:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00384BC8_0x384bc8, 0x384bc8u, 0x384b78u)) {
         return;
     }
-    ctx->pc = 0x384B78u;
 label_384b78:
     // 0x384b78: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x384B78u;
@@ -186,7 +181,6 @@ label_384b78:
             goto label_384b8c;
         }
     }
-    ctx->pc = 0x384B80u;
 label_384b80:
     // 0x384b80: 0xc0e12e6  jal         func_384B98
     SET_GPR_U32(ctx, 31, 0x384B88u);
@@ -199,7 +193,6 @@ label_384b80:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00384B98_0x384b98, 0x384b98u, 0x384b88u)) {
         return;
     }
-    ctx->pc = 0x384B88u;
 label_384b88:
     // 0x384b88: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x384b88u;

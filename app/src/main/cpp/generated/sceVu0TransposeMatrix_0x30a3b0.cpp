@@ -6,6 +6,7 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,9 +14,30 @@
 
 // Function: sceVu0TransposeMatrix
 // Address: 0x30a3b0 - 0x30a3f8
-void sceVu0TransposeMatrix_0x30a3b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVu0TransposeMatrix_0x30a3b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVu0TransposeMatrix_0x30a3b0");
+#endif
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    {
+        uint8_t* const d = ps2TryFastSpan(rdram, GPR_U32(ctx, 4) & ~0xFu, 64u);
+        const uint8_t* const s = ps2TryFastSpan(rdram, GPR_U32(ctx, 5) & ~0xFu, 64u);
+        if (__builtin_expect(d != nullptr && s != nullptr, 1)) {
+            const float32x4_t c0 = ps2LoadVec4(s + 0);
+            const float32x4_t c1 = ps2LoadVec4(s + 16);
+            const float32x4_t c2 = ps2LoadVec4(s + 32);
+            const float32x4_t c3 = ps2LoadVec4(s + 48);
+            const float32x4x2_t t01 = vtrnq_f32(c0, c1);
+            const float32x4x2_t t23 = vtrnq_f32(c2, c3);
+            ps2StoreVec4(d + 0,  vcombine_f32(vget_low_f32(t01.val[0]), vget_low_f32(t23.val[0])));
+            ps2StoreVec4(d + 16, vcombine_f32(vget_low_f32(t01.val[1]), vget_low_f32(t23.val[1])));
+            ps2StoreVec4(d + 32, vcombine_f32(vget_high_f32(t01.val[0]), vget_high_f32(t23.val[0])));
+            ps2StoreVec4(d + 48, vcombine_f32(vget_high_f32(t01.val[1]), vget_high_f32(t23.val[1])));
+            ps2FastReturn(rdram, ctx, runtime, 0x30A3F0u);
+            return;
+        }
+    }
 #endif
 
 

@@ -13,7 +13,7 @@
 
 // Function: cModel_nodeLayerScreen
 // Address: 0x14be38 - 0x14bef8
-void cModel_nodeLayerScreen_0x14be38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cModel_nodeLayerScreen_0x14be38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cModel_nodeLayerScreen_0x14be38");
 #endif
@@ -123,7 +123,6 @@ void cModel_nodeLayerScreen_0x14be38(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_14bed0;
         }
     }
-    ctx->pc = 0x14BED0u;
 label_14bed0:
     // 0x14bed0: 0x8d020380  lw          $v0, 0x380($t0)
     ctx->pc = 0x14bed0u;

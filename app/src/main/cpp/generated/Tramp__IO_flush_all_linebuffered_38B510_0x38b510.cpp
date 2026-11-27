@@ -13,7 +13,7 @@
 
 // Function: Tramp__IO_flush_all_linebuffered_38B510
 // Address: 0x38b510 - 0x38b530
-void Tramp__IO_flush_all_linebuffered_38B510_0x38b510(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp__IO_flush_all_linebuffered_38B510_0x38b510(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp__IO_flush_all_linebuffered_38B510_0x38b510");
 #endif
@@ -37,7 +37,6 @@ void Tramp__IO_flush_all_linebuffered_38B510_0x38b510(uint8_t* rdram, R5900Conte
     if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_flush_all_linebuffered_0x38ced8, 0x38ced8u, 0x38b520u)) {
         return;
     }
-    ctx->pc = 0x38B520u;
 label_38b520:
     // 0x38b520: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38b520u;

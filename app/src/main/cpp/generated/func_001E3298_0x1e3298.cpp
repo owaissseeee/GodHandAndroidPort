@@ -13,7 +13,7 @@
 
 // Function: func_001E3298
 // Address: 0x1e3298 - 0x1e32e8
-void func_001E3298_0x1e3298(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001E3298_0x1e3298(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001E3298_0x1e3298");
 #endif
@@ -46,7 +46,6 @@ void func_001E3298_0x1e3298(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x1e32b0u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 0)));
     // 0x1e32b4: 0x0  nop
-    ctx->pc = 0x1e32b4u;
     // NOP
 label_1e32b8:
     // 0x1e32b8: 0x282d  daddu       $a1, $zero, $zero
@@ -64,7 +63,6 @@ label_1e32b8:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e32c8u)) {
         return;
     }
-    ctx->pc = 0x1E32C8u;
 label_1e32c8:
     // 0x1e32c8: 0x623fffb  bgezl       $s1, . + 4 + (-0x5 << 2)
     ctx->pc = 0x1E32C8u;

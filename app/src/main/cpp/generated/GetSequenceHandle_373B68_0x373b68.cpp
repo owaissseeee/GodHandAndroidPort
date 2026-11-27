@@ -13,7 +13,7 @@
 
 // Function: GetSequenceHandle_373B68
 // Address: 0x373b68 - 0x373ba8
-void GetSequenceHandle_373B68_0x373b68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetSequenceHandle_373B68_0x373b68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetSequenceHandle_373B68_0x373b68");
 #endif
@@ -46,7 +46,6 @@ void GetSequenceHandle_373B68_0x373b68(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373A50_0x373a50, 0x373a50u, 0x373b7cu)) {
         return;
     }
-    ctx->pc = 0x373B7Cu;
 label_373b7c:
     // 0x373b7c: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x373B7Cu;
@@ -74,7 +73,6 @@ label_373b7c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00373B20_0x373b20, 0x373b20u, 0x373b8cu)) {
         return;
     }
-    ctx->pc = 0x373B8Cu;
 label_373b8c:
     // 0x373b8c: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));

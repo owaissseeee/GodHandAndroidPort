@@ -13,7 +13,7 @@
 
 // Function: cOmSized_startLarge
 // Address: 0x171b70 - 0x171c20
-void cOmSized_startLarge_0x171b70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmSized_startLarge_0x171b70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmSized_startLarge_0x171b70");
 #endif
@@ -51,7 +51,6 @@ void cOmSized_startLarge_0x171b70(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B6FB8_0x1b6fb8, 0x1b6fb8u, 0x171b88u)) {
         return;
     }
-    ctx->pc = 0x171B88u;
 label_171b88:
     // 0x171b88: 0x3c01404c  lui         $at, 0x404C
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16460 << 16));
@@ -125,7 +124,6 @@ label_171bdc:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmDoor_setObjCollisionCenterOnly_0x1bda00, 0x1bda00u, 0x171be4u)) {
         return;
     }
-    ctx->pc = 0x171BE4u;
 label_171be4:
     // 0x171be4: 0xc06f5a6  jal         func_1BD698
     SET_GPR_U32(ctx, 31, 0x171BECu);
@@ -138,7 +136,6 @@ label_171be4:
     if (!runtime->callDirectStatic(rdram, ctx, &SetFlagBit_1BD698_0x1bd698, 0x1bd698u, 0x171becu)) {
         return;
     }
-    ctx->pc = 0x171BECu;
 label_171bec:
     // 0x171bec: 0x4600a306  mov.s       $f12, $f20
     ctx->f[12] = FPU_MOV_S(ctx->f[20]);
@@ -153,7 +150,6 @@ label_171bec:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001BDD88_0x1bdd88, 0x1bdd88u, 0x171bf8u)) {
         return;
     }
-    ctx->pc = 0x171BF8u;
 label_171bf8:
     // 0x171bf8: 0x8e0305a0  lw          $v1, 0x5A0($s0)
     ctx->pc = 0x171bf8u;

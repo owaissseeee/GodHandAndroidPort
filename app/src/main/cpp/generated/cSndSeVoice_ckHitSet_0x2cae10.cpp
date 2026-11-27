@@ -13,7 +13,7 @@
 
 // Function: cSndSeVoice_ckHitSet
 // Address: 0x2cae10 - 0x2caf28
-void cSndSeVoice_ckHitSet_0x2cae10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndSeVoice_ckHitSet_0x2cae10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndSeVoice_ckHitSet_0x2cae10");
 #endif
@@ -80,7 +80,6 @@ void cSndSeVoice_ckHitSet_0x2cae10(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_2caf08;
         }
     }
-    ctx->pc = 0x2CAE40u;
 label_2cae40:
     // 0x2cae40: 0x3c013f8c  lui         $at, 0x3F8C
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16268 << 16));
@@ -127,7 +126,6 @@ label_2cae40:
             goto label_2caf08;
         }
     }
-    ctx->pc = 0x2CAE6Cu;
 label_2cae6c:
     // 0x2cae6c: 0x90830008  lbu         $v1, 0x8($a0)
     ctx->pc = 0x2cae6cu;
@@ -162,7 +160,6 @@ label_2cae6c:
             goto label_2caf08;
         }
     }
-    ctx->pc = 0x2CAE80u;
 label_2cae80:
     // 0x2cae80: 0x10000021  b           . + 4 + (0x21 << 2)
     ctx->pc = 0x2CAE80u;
@@ -179,7 +176,6 @@ label_2cae80:
             goto label_2caf08;
         }
     }
-    ctx->pc = 0x2CAE88u;
 label_2cae88:
     // 0x2cae88: 0xc4a30008  lwc1        $f3, 0x8($a1)
     ctx->pc = 0x2cae88u;
@@ -232,7 +228,6 @@ label_2cae88:
             goto label_2caf04;
         }
     }
-    ctx->pc = 0x2CAEC8u;
 label_2caec8:
     // 0x2caec8: 0x8e020034  lw          $v0, 0x34($s0)
     ctx->pc = 0x2caec8u;
@@ -267,7 +262,6 @@ label_2caec8:
     if (!runtime->callDirectStatic(rdram, ctx, &HitNode_dispatchByKind_0x2c0a98, 0x2c0a98u, 0x2caee4u)) {
         return;
     }
-    ctx->pc = 0x2CAEE4u;
 label_2caee4:
     // 0x2caee4: 0x5440ffe6  bnel        $v0, $zero, . + 4 + (-0x1A << 2)
     ctx->pc = 0x2CAEE4u;
@@ -316,10 +310,8 @@ label_2caef0:
             goto label_2caec8;
         }
     }
-    ctx->pc = 0x2CAF04u;
 label_2caf04:
     // 0x2caf04: 0x260102d  daddu       $v0, $s3, $zero
-    ctx->pc = 0x2caf04u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 19) + (uint64_t)GPR_U64(ctx, 0));
 label_2caf08:
     // 0x2caf08: 0x7bb00050  lq          $s0, 0x50($sp)

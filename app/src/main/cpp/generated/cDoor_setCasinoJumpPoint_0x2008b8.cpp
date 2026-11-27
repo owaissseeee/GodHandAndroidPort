@@ -13,7 +13,7 @@
 
 // Function: cDoor_setCasinoJumpPoint
 // Address: 0x2008b8 - 0x2009b0
-void cDoor_setCasinoJumpPoint_0x2008b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDoor_setCasinoJumpPoint_0x2008b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDoor_setCasinoJumpPoint_0x2008b8");
 #endif
@@ -68,7 +68,6 @@ void cDoor_setCasinoJumpPoint_0x2008b8(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &cRoomJump_setTblAddr_0x2be990, 0x2be990u, 0x2008f0u)) {
         return;
     }
-    ctx->pc = 0x2008F0u;
 label_2008f0:
     // 0x2008f0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -85,7 +84,6 @@ label_2008f0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BEB00_0x2beb00, 0x2beb00u, 0x200900u)) {
         return;
     }
-    ctx->pc = 0x200900u;
 label_200900:
     // 0x200900: 0x5040001e  beql        $v0, $zero, . + 4 + (0x1E << 2)
     ctx->pc = 0x200900u;
@@ -169,7 +167,6 @@ label_200900:
             goto label_200988;
         }
     }
-    ctx->pc = 0x200960u;
 label_200960:
     // 0x200960: 0x3c013c8e  lui         $at, 0x3C8E
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15502 << 16));
@@ -196,7 +193,6 @@ label_200960:
             goto label_200988;
         }
     }
-    ctx->pc = 0x20097Cu;
 label_20097c:
     // 0x20097c: 0xae400020  sw          $zero, 0x20($s2)
     ctx->pc = 0x20097cu;

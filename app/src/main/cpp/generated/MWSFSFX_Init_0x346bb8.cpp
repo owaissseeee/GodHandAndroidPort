@@ -13,7 +13,7 @@
 
 // Function: MWSFSFX_Init
 // Address: 0x346bb8 - 0x346be0
-void MWSFSFX_Init_0x346bb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MWSFSFX_Init_0x346bb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MWSFSFX_Init_0x346bb8");
 #endif
@@ -37,7 +37,6 @@ void MWSFSFX_Init_0x346bb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035F838_0x35f838, 0x35f838u, 0x346bc8u)) {
         return;
     }
-    ctx->pc = 0x346BC8u;
 label_346bc8:
     // 0x346bc8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x346bc8u;

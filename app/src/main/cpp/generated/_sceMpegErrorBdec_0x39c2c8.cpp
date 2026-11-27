@@ -13,7 +13,7 @@
 
 // Function: _sceMpegErrorBdec
 // Address: 0x39c2c8 - 0x39c390
-void _sceMpegErrorBdec_0x39c2c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _sceMpegErrorBdec_0x39c2c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_sceMpegErrorBdec_0x39c2c8");
 #endif
@@ -53,7 +53,6 @@ void _sceMpegErrorBdec_0x39c2c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x39C390u, 0x39C2DCu, 0x39C2E4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x39C2E4u;
 label_39c2e4:
     // 0x39c2e4: 0x24020002  addiu       $v0, $zero, 0x2
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
@@ -74,7 +73,6 @@ label_39c2e4:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x39AB20u, 0x39C2F0u, 0x39C2F8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x39C2F8u;
 label_39c2f8:
     // 0x39c2f8: 0x3c031000  lui         $v1, 0x1000
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)4096 << 16));
@@ -104,7 +102,6 @@ label_39c2f8:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x39AB20u, 0x39C314u, 0x39C31Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x39C31Cu;
 label_39c31c:
     // 0x39c31c: 0xc0ed8e8  jal         func_3B63A0
     ctx->pc = 0x39C31Cu;
@@ -112,7 +109,6 @@ label_39c31c:
     if (!runtime->callDirectStatic(rdram, ctx, &DIntr_0x3b63a0, 0x3b63a0u, 0x39c324u)) {
         return;
     }
-    ctx->pc = 0x39C324u;
 label_39c324:
     // 0x39c324: 0x3c061000  lui         $a2, 0x1000
     SET_GPR_S32(ctx, 6, (int32_t)((uint32_t)4096 << 16));
@@ -172,10 +168,8 @@ label_39c324:
     if (!runtime->callDirectStatic(rdram, ctx, &EIntr_0x3b63f0, 0x3b63f0u, 0x39c374u)) {
         return;
     }
-    ctx->pc = 0x39C374u;
 label_39c374:
     // 0x39c374: 0x3c021000  lui         $v0, 0x1000
-    ctx->pc = 0x39c374u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)4096 << 16));
 label_39c378:
     // 0x39c378: 0xdfbf0030  ld          $ra, 0x30($sp)

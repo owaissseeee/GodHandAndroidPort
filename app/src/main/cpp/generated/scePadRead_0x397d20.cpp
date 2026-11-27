@@ -13,7 +13,7 @@
 
 // Function: scePadRead
 // Address: 0x397d20 - 0x397d98
-void scePadRead_0x397d20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void scePadRead_0x397d20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("scePadRead_0x397d20");
 #endif
@@ -86,7 +86,6 @@ void scePadRead_0x397d20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
             goto label_397d84;
         }
     }
-    ctx->pc = 0x397D64u;
 label_397d64:
     // 0x397d64: 0xe0202d  daddu       $a0, $a3, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 7) + (uint64_t)GPR_U64(ctx, 0));
@@ -101,7 +100,6 @@ label_397d64:
     if (!runtime->callDirectStatic(rdram, ctx, &scePadGetDmaStr_0x397bc8, 0x397bc8u, 0x397d70u)) {
         return;
     }
-    ctx->pc = 0x397D70u;
 label_397d70:
     // 0x397d70: 0x8fa60060  lw          $a2, 0x60($sp)
     ctx->pc = 0x397d70u;
@@ -119,7 +117,6 @@ label_397d70:
     if (!runtime->callDirectStatic(rdram, ctx, &memcpy_0x3a5148, 0x3a5148u, 0x397d80u)) {
         return;
     }
-    ctx->pc = 0x397D80u;
 label_397d80:
     // 0x397d80: 0x8fa20060  lw          $v0, 0x60($sp)
     ctx->pc = 0x397d80u;

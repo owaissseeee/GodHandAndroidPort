@@ -13,7 +13,7 @@
 
 // Function: cMessDrawFont_isListedCode
 // Address: 0x2b0eb8 - 0x2b0f20
-void cMessDrawFont_isListedCode_0x2b0eb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessDrawFont_isListedCode_0x2b0eb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessDrawFont_isListedCode_0x2b0eb8");
 #endif
@@ -53,7 +53,6 @@ void cMessDrawFont_isListedCode_0x2b0eb8(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &cMessage_getMessageAddr_0x2aead0, 0x2aead0u, 0x2b0ed8u)) {
         return;
     }
-    ctx->pc = 0x2B0ED8u;
 label_2b0ed8:
     // 0x2b0ed8: 0x96050000  lhu         $a1, 0x0($s0)
     ctx->pc = 0x2b0ed8u;
@@ -63,7 +62,6 @@ label_2b0ed8:
     // 0x2b0ee0: 0x202d  daddu       $a0, $zero, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2b0ee4: 0x0  nop
-    ctx->pc = 0x2b0ee4u;
     // NOP
 label_2b0ee8:
     // 0x2b0ee8: 0x94620000  lhu         $v0, 0x0($v1)
@@ -99,7 +97,6 @@ label_2b0ee8:
             goto label_2b0f0c;
         }
     }
-    ctx->pc = 0x2B0EFCu;
 label_2b0efc:
     // 0x2b0efc: 0x2c82000a  sltiu       $v0, $a0, 0xA
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 4) < (uint64_t)(int64_t)(int32_t)10) ? 1 : 0);
@@ -122,7 +119,6 @@ label_2b0efc:
         }
     }
     // 0x2b0f08: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2b0f08u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2b0f0c:
     // 0x2b0f0c: 0x7bb00010  lq          $s0, 0x10($sp)

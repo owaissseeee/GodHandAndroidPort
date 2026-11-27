@@ -13,7 +13,7 @@
 
 // Function: cSnd_CheckSeEnd
 // Address: 0x2cb340 - 0x2cb3a8
-void cSnd_CheckSeEnd_0x2cb340(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_CheckSeEnd_0x2cb340(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_CheckSeEnd_0x2cb340");
 #endif
@@ -52,7 +52,6 @@ void cSnd_CheckSeEnd_0x2cb340(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_GetSeData_0x2cc4b8, 0x2cc4b8u, 0x2cb35cu)) {
         return;
     }
-    ctx->pc = 0x2CB35Cu;
 label_2cb35c:
     // 0x2cb35c: 0x8c43003c  lw          $v1, 0x3C($v0)
     ctx->pc = 0x2cb35cu;
@@ -87,7 +86,6 @@ label_2cb35c:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndSeVoice_CheckEnd_0x2cb7e8, 0x2cb7e8u, 0x2cb378u)) {
         return;
     }
-    ctx->pc = 0x2CB378u;
 label_2cb378:
     // 0x2cb378: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x2CB378u;
@@ -104,7 +102,6 @@ label_2cb378:
             goto label_2cb38c;
         }
     }
-    ctx->pc = 0x2CB380u;
 label_2cb380:
     // 0x2cb380: 0xc0b2dfa  jal         func_2CB7E8
     SET_GPR_U32(ctx, 31, 0x2CB388u);
@@ -117,7 +114,6 @@ label_2cb380:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndSeVoice_CheckEnd_0x2cb7e8, 0x2cb7e8u, 0x2cb388u)) {
         return;
     }
-    ctx->pc = 0x2CB388u;
 label_2cb388:
     // 0x2cb388: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2cb388u;

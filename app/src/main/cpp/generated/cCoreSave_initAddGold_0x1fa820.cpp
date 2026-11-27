@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_initAddGold
 // Address: 0x1fa820 - 0x1fa838
-void cCoreSave_initAddGold_0x1fa820(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_initAddGold_0x1fa820(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_initAddGold_0x1fa820");
 #endif
@@ -37,7 +37,6 @@ void cCoreSave_initAddGold_0x1fa820(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1fa82c;
         }
     }
-    ctx->pc = 0x1FA82Cu;
 label_1fa82c:
     // 0x1fa82c: 0x3e00008  jr          $ra
     ctx->pc = 0x1FA82Cu;

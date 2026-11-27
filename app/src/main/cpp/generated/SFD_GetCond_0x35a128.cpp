@@ -13,7 +13,7 @@
 
 // Function: SFD_GetCond
 // Address: 0x35a128 - 0x35a1c8
-void SFD_GetCond_0x35a128(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFD_GetCond_0x35a128(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFD_GetCond_0x35a128");
 #endif
@@ -85,7 +85,6 @@ void SFD_GetCond_0x35a128(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
         }
     }
     // 0x35a164: 0x0  nop
-    ctx->pc = 0x35a164u;
     // NOP
 label_35a168:
     // 0x35a168: 0xc0d37b2  jal         func_34DEC8
@@ -94,7 +93,6 @@ label_35a168:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj34D8_SetGlobalEE0B8_IfField48_0x34dec8, 0x34dec8u, 0x35a170u)) {
         return;
     }
-    ctx->pc = 0x35A170u;
 label_35a170:
     // 0x35a170: 0x3c05ff00  lui         $a1, 0xFF00
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)65280 << 16));
@@ -137,7 +135,6 @@ label_35a170:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x34DD70u, 0x35A190u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x35A198u;
 label_35a198:
     // 0x35a198: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -152,7 +149,6 @@ label_35a198:
     if (!runtime->callDirectStatic(rdram, ctx, &GetArrayElemA0C_35A1C8_0x35a1c8, 0x35a1c8u, 0x35a1a4u)) {
         return;
     }
-    ctx->pc = 0x35A1A4u;
 label_35a1a4:
     // 0x35a1a4: 0xae420000  sw          $v0, 0x0($s2)
     ctx->pc = 0x35a1a4u;

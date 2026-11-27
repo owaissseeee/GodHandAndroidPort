@@ -13,7 +13,7 @@
 
 // Function: func_00377AC0
 // Address: 0x377ac0 - 0x377bc8
-void func_00377AC0_0x377ac0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00377AC0_0x377ac0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00377AC0_0x377ac0");
 #endif
@@ -50,7 +50,6 @@ void func_00377AC0_0x377ac0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x377ae8u;
     SET_GPR_ZE32(ctx, 2, (uint16_t)FAST_READ16(0x76CF20u));
     // 0x377aec: 0x0  nop
-    ctx->pc = 0x377aecu;
     // NOP
 label_377af0:
     // 0x377af0: 0x5040002f  beql        $v0, $zero, . + 4 + (0x2F << 2)
@@ -154,7 +153,6 @@ label_377af0:
             goto label_377bb0;
         }
     }
-    ctx->pc = 0x377B30u;
 label_377b30:
     // 0x377b30: 0x94c50006  lhu         $a1, 0x6($a2)
     ctx->pc = 0x377b30u;
@@ -204,7 +202,6 @@ label_377b30:
             goto label_377bac;
         }
     }
-    ctx->pc = 0x377B70u;
 label_377b70:
     // 0x377b70: 0x94c40006  lhu         $a0, 0x6($a2)
     ctx->pc = 0x377b70u;
@@ -242,7 +239,6 @@ label_377b70:
     WRITE16(ADD32(GPR_U32(ctx, 6), 44), (uint16_t)GPR_U32(ctx, 3));
 label_377bac:
     // 0x377bac: 0x24c60050  addiu       $a2, $a2, 0x50
-    ctx->pc = 0x377bacu;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 6), 80));
 label_377bb0:
     // 0x377bb0: 0xce102a  slt         $v0, $a2, $t6

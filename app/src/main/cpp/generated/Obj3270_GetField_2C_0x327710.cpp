@@ -13,7 +13,7 @@
 
 // Function: Obj3270_GetField_2C
 // Address: 0x327710 - 0x327718
-void Obj3270_GetField_2C_0x327710(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj3270_GetField_2C_0x327710(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj3270_GetField_2C_0x327710");
 #endif

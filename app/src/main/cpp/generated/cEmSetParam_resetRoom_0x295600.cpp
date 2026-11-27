@@ -13,7 +13,7 @@
 
 // Function: cEmSetParam_resetRoom
 // Address: 0x295600 - 0x295660
-void cEmSetParam_resetRoom_0x295600(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmSetParam_resetRoom_0x295600(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmSetParam_resetRoom_0x295600");
 #endif
@@ -96,7 +96,6 @@ void cEmSetParam_resetRoom_0x295600(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x295648u)) {
         return;
     }
-    ctx->pc = 0x295648u;
 label_295648:
     // 0x295648: 0x3403ffff  ori         $v1, $zero, 0xFFFF
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);

@@ -13,7 +13,7 @@
 
 // Function: Binit
 // Address: 0x38f4c0 - 0x38f4e8
-void Binit_0x38f4c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Binit_0x38f4c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Binit_0x38f4c0");
 #endif

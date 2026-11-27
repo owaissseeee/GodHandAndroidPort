@@ -13,7 +13,7 @@
 
 // Function: HitBox_containsPoint
 // Address: 0x1f9070 - 0x1f91d0
-void HitBox_containsPoint_0x1f9070(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void HitBox_containsPoint_0x1f9070(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("HitBox_containsPoint_0x1f9070");
 #endif
@@ -105,7 +105,6 @@ void HitBox_containsPoint_0x1f9070(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &sceVu0ApplyMatrix_0x30a2b0, 0x30a2b0u, 0x1f90e0u)) {
         return;
     }
-    ctx->pc = 0x1F90E0u;
 label_1f90e0:
     // 0x1f90e0: 0xda040000  lqc2        $vf4, 0x0($s0)
     ctx->pc = 0x1f90e0u;
@@ -297,10 +296,8 @@ label_1f9108:
             goto label_1f91ac;
         }
     }
-    ctx->pc = 0x1F91A4u;
 label_1f91a4:
     // 0x1f91a4: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1f91a4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1f91a8:
     // 0x1f91a8: 0x7bb00060  lq          $s0, 0x60($sp)

@@ -13,7 +13,7 @@
 
 // Function: sceSifLoadModule
 // Address: 0x3b60a0 - 0x3b60e8
-void sceSifLoadModule_0x3b60a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSifLoadModule_0x3b60a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSifLoadModule_0x3b60a0");
 #endif
@@ -44,7 +44,6 @@ void sceSifLoadModule_0x3b60a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &_sceSifLoadModule_0x3b5e78, 0x3b5e78u, 0x3b60b4u)) {
         return;
     }
-    ctx->pc = 0x3B60B4u;
 label_3b60b4:
     // 0x3b60b4: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x3b60b4u;

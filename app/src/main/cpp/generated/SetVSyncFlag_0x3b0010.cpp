@@ -13,7 +13,7 @@
 
 // Function: SetVSyncFlag
 // Address: 0x3b0010 - 0x3b0020
-void SetVSyncFlag_0x3b0010(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetVSyncFlag_0x3b0010(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetVSyncFlag_0x3b0010");
 #endif

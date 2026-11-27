@@ -13,7 +13,7 @@
 
 // Function: MWDMA_WaitEnd
 // Address: 0x346660 - 0x3466a8
-void MWDMA_WaitEnd_0x346660(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MWDMA_WaitEnd_0x346660(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MWDMA_WaitEnd_0x346660");
 #endif
@@ -42,14 +42,12 @@ void MWDMA_WaitEnd_0x346660(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x397100u, 0x34666Cu, 0x346674u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x346674u;
 label_346674:
     // 0x346674: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     // 0x346678: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x34667c: 0x0  nop
-    ctx->pc = 0x34667cu;
     // NOP
 label_346680:
     // 0x346680: 0x24050001  addiu       $a1, $zero, 0x1
@@ -65,7 +63,6 @@ label_346680:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x397550u, 0x346684u, 0x34668Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x34668Cu;
 label_34668c:
     // 0x34668c: 0x1440fffc  bnez        $v0, . + 4 + (-0x4 << 2)
     ctx->pc = 0x34668Cu;

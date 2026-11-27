@@ -13,7 +13,7 @@
 
 // Function: GetD003E9D5C_33C718
 // Address: 0x33c718 - 0x33c728
-void GetD003E9D5C_33C718_0x33c718(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetD003E9D5C_33C718_0x33c718(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetD003E9D5C_33C718_0x33c718");
 #endif

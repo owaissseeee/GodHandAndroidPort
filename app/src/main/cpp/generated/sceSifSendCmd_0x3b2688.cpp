@@ -13,7 +13,7 @@
 
 // Function: sceSifSendCmd
 // Address: 0x3b2688 - 0x3b26c8
-void sceSifSendCmd_0x3b2688(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceSifSendCmd_0x3b2688(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceSifSendCmd_0x3b2688");
 #endif
@@ -58,7 +58,6 @@ void sceSifSendCmd_0x3b2688(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &_sceSifSendCmd_0x3b2550, 0x3b2550u, 0x3b26b8u)) {
         return;
     }
-    ctx->pc = 0x3B26B8u;
 label_3b26b8:
     // 0x3b26b8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3b26b8u;

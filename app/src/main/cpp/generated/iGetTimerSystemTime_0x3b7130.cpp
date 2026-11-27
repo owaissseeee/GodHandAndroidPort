@@ -13,7 +13,7 @@
 
 // Function: iGetTimerSystemTime
 // Address: 0x3b7130 - 0x3b7180
-void iGetTimerSystemTime_0x3b7130(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iGetTimerSystemTime_0x3b7130(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iGetTimerSystemTime_0x3b7130");
 #endif
@@ -55,7 +55,6 @@ void iGetTimerSystemTime_0x3b7130(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     ctx->pc = 0x3b7154u;
     SET_GPR_ZE32(ctx, 2, READ32(ADD32(GPR_U32(ctx, 3), 0)));
     // 0x3b7158: 0x654a0001  daddiu      $t2, $t2, 0x1
-    ctx->pc = 0x3b7158u;
     SET_GPR_S64(ctx, 10, (int64_t)GPR_S64(ctx, 10) + (int64_t)(int32_t)1);
 label_3b715c:
     // 0x3b715c: 0x31080003  andi        $t0, $t0, 0x3

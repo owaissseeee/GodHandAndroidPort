@@ -13,7 +13,7 @@
 
 // Function: cEvent_isLoadEnd
 // Address: 0x297428 - 0x297450
-void cEvent_isLoadEnd_0x297428(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_isLoadEnd_0x297428(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_isLoadEnd_0x297428");
 #endif
@@ -47,7 +47,6 @@ void cEvent_isLoadEnd_0x297428(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &cDvd_Check_0x201098, 0x201098u, 0x297440u)) {
         return;
     }
-    ctx->pc = 0x297440u;
 label_297440:
     // 0x297440: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x297440u;

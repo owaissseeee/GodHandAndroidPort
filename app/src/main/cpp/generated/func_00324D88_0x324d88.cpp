@@ -13,7 +13,7 @@
 
 // Function: func_00324D88
 // Address: 0x324d88 - 0x324e70
-void func_00324D88_0x324d88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00324D88_0x324d88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00324D88_0x324d88");
 #endif
@@ -100,12 +100,10 @@ void func_00324D88_0x324d88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &ChangeThreadPriority_0x3afb30, 0x3afb30u, 0x324de0u)) {
         return;
     }
-    ctx->pc = 0x324DE0u;
 label_324de0:
     // 0x324de0: 0x802d  daddu       $s0, $zero, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x324de4: 0x0  nop
-    ctx->pc = 0x324de4u;
     // NOP
 label_324de8:
     // 0x324de8: 0xc0c94a4  jal         func_325290
@@ -119,7 +117,6 @@ label_324de8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00325290_0x325290, 0x325290u, 0x324df0u)) {
         return;
     }
-    ctx->pc = 0x324DF0u;
 label_324df0:
     // 0x324df0: 0xc0c94be  jal         func_3252F8
     SET_GPR_U32(ctx, 31, 0x324DF8u);
@@ -132,7 +129,6 @@ label_324df0:
     if (!runtime->callDirectStatic(rdram, ctx, &adxm_ResumeThread_0x3252f8, 0x3252f8u, 0x324df8u)) {
         return;
     }
-    ctx->pc = 0x324DF8u;
 label_324df8:
     // 0x324df8: 0x250182a  slt         $v1, $s2, $s0
     SET_GPR_U64(ctx, 3, ((int64_t)GPR_S64(ctx, 18) < (int64_t)GPR_S64(ctx, 16)) ? 1 : 0);
@@ -177,7 +173,6 @@ label_324df8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0033B790_0x33b790, 0x33b790u, 0x324e18u)) {
         return;
     }
-    ctx->pc = 0x324E18u;
 label_324e18:
     // 0x324e18: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -215,7 +210,6 @@ label_324e18:
         return;
     }
     // 0x324e44: 0x0  nop
-    ctx->pc = 0x324e44u;
     // NOP
 label_324e48:
     // 0x324e48: 0xdfb00000  ld          $s0, 0x0($sp)

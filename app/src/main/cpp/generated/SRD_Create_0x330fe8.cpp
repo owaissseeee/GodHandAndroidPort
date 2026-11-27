@@ -13,7 +13,7 @@
 
 // Function: SRD_Create
 // Address: 0x330fe8 - 0x331070
-void SRD_Create_0x330fe8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SRD_Create_0x330fe8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SRD_Create_0x330fe8");
 #endif
@@ -50,7 +50,6 @@ void SRD_Create_0x330fe8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     if (!runtime->callDirectStatic(rdram, ctx, &Forward33B568_33B688_0x33b688, 0x33b688u, 0x331000u)) {
         return;
     }
-    ctx->pc = 0x331000u;
 label_331000:
     // 0x331000: 0x3c02003e  lui         $v0, 0x3E
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)62 << 16));
@@ -74,7 +73,6 @@ label_331000:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00330FB8_0x330fb8, 0x330fb8u, 0x33101cu)) {
         return;
     }
-    ctx->pc = 0x33101Cu;
 label_33101c:
     // 0x33101c: 0x24040001  addiu       $a0, $zero, 0x1
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -113,7 +111,6 @@ label_33104c:
     if (!runtime->callDirectStatic(rdram, ctx, &Forward33B5C8_33B6B8_0x33b6b8, 0x33b6b8u, 0x331054u)) {
         return;
     }
-    ctx->pc = 0x331054u;
 label_331054:
     // 0x331054: 0x220102d  daddu       $v0, $s1, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));

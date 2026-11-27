@@ -13,7 +13,7 @@
 
 // Function: cEvent_playStart
 // Address: 0x296458 - 0x296530
-void cEvent_playStart_0x296458(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_playStart_0x296458(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_playStart_0x296458");
 #endif
@@ -47,7 +47,6 @@ void cEvent_playStart_0x296458(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &cEvent_initEnv_0x2975f8, 0x2975f8u, 0x29646cu)) {
         return;
     }
-    ctx->pc = 0x29646Cu;
 label_29646c:
     // 0x29646c: 0x3c040074  lui         $a0, 0x74
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)116 << 16));
@@ -80,7 +79,6 @@ label_29646c:
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x296494u)) {
         return;
     }
-    ctx->pc = 0x296494u;
 label_296494:
     // 0x296494: 0x8c4300f0  lw          $v1, 0xF0($v0)
     ctx->pc = 0x296494u;
@@ -193,7 +191,6 @@ label_2964c0:
     if (!runtime->callDirectStatic(rdram, ctx, &classFADE_start_0x307208, 0x307208u, 0x296518u)) {
         return;
     }
-    ctx->pc = 0x296518u;
 label_296518:
     // 0x296518: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x296518u;

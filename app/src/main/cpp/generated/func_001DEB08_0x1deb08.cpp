@@ -13,7 +13,7 @@
 
 // Function: func_001DEB08
 // Address: 0x1deb08 - 0x1debe8
-void func_001DEB08_0x1deb08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001DEB08_0x1deb08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001DEB08_0x1deb08");
 #endif
@@ -154,7 +154,6 @@ void func_001DEB08_0x1deb08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetColorAnimSin_0x2d6910, 0x2d6910u, 0x1debb4u)) {
         return;
     }
-    ctx->pc = 0x1DEBB4u;
 label_1debb4:
     // 0x1debb4: 0x1000000a  b           . + 4 + (0xA << 2)
     ctx->pc = 0x1DEBB4u;
@@ -171,7 +170,6 @@ label_1debb4:
             goto label_1debe0;
         }
     }
-    ctx->pc = 0x1DEBBCu;
 label_1debbc:
     // 0x1debbc: 0x31880  sll         $v1, $v1, 2
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 3), 2));
@@ -197,7 +195,6 @@ label_1debbc:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_ResetColorAnim_0x2d6948, 0x2d6948u, 0x1debdcu)) {
         return;
     }
-    ctx->pc = 0x1DEBDCu;
 label_1debdc:
     // 0x1debdc: 0xdfbf0020  ld          $ra, 0x20($sp)
     ctx->pc = 0x1debdcu;

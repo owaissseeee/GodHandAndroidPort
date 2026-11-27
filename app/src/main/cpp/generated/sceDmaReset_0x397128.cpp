@@ -13,7 +13,7 @@
 
 // Function: sceDmaReset
 // Address: 0x397128 - 0x397208
-void sceDmaReset_0x397128(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceDmaReset_0x397128(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceDmaReset_0x397128");
 #endif
@@ -59,7 +59,6 @@ void sceDmaReset_0x397128(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime
     // 0x397158: 0x24040009  addiu       $a0, $zero, 0x9
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 9));
     // 0x39715c: 0x30b10001  andi        $s1, $a1, 0x1
-    ctx->pc = 0x39715cu;
     SET_GPR_U64(ctx, 17, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)1);
 label_397160:
     // 0x397160: 0x8cc20000  lw          $v0, 0x0($a2)
@@ -102,7 +101,6 @@ label_397160:
     ctx->pc = 0x397184u;
     WRITE32(ADD32(GPR_U32(ctx, 2), 64), GPR_U32(ctx, 0));
     // 0x397188: 0x24630004  addiu       $v1, $v1, 0x4
-    ctx->pc = 0x397188u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4));
 label_39718c:
     // 0x39718c: 0x2484ffff  addiu       $a0, $a0, -0x1
@@ -156,7 +154,6 @@ label_39718c:
     if (!runtime->callDirectStatic(rdram, ctx, &memclr_0x3970c8, 0x3970c8u, 0x3971c4u)) {
         return;
     }
-    ctx->pc = 0x3971C4u;
 label_3971c4:
     // 0x3971c4: 0xc0e5c82  jal         func_397208
     SET_GPR_U32(ctx, 31, 0x3971CCu);
@@ -169,7 +166,6 @@ label_3971c4:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x397208u, 0x3971C4u, 0x3971CCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x3971CCu;
 label_3971cc:
     // 0x3971cc: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -201,7 +197,6 @@ label_3971cc:
     ctx->pc = 0x3971e8u;
     runtime->Store32(rdram, ctx, 0x1000E000u, GPR_U32(ctx, 2));
     // 0x3971ec: 0x220102d  daddu       $v0, $s1, $zero
-    ctx->pc = 0x3971ecu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
 label_3971f0:
     // 0x3971f0: 0xdfbf0040  ld          $ra, 0x40($sp)

@@ -13,7 +13,7 @@
 
 // Function: Obj293_OrByte_5A4
 // Address: 0x293738 - 0x293750
-void Obj293_OrByte_5A4_0x293738(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj293_OrByte_5A4_0x293738(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj293_OrByte_5A4_0x293738");
 #endif

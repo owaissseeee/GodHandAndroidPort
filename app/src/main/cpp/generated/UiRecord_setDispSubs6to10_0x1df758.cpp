@@ -13,7 +13,7 @@
 
 // Function: UiRecord_setDispSubs6to10
 // Address: 0x1df758 - 0x1df7d0
-void UiRecord_setDispSubs6to10_0x1df758(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UiRecord_setDispSubs6to10_0x1df758(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UiRecord_setDispSubs6to10_0x1df758");
 #endif
@@ -58,7 +58,6 @@ void UiRecord_setDispSubs6to10_0x1df758(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DEE60_0x1dee60, 0x1dee60u, 0x1df77cu)) {
         return;
     }
-    ctx->pc = 0x1DF77Cu;
 label_1df77c:
     // 0x1df77c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -75,7 +74,6 @@ label_1df77c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DEE60_0x1dee60, 0x1dee60u, 0x1df78cu)) {
         return;
     }
-    ctx->pc = 0x1DF78Cu;
 label_1df78c:
     // 0x1df78c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -92,7 +90,6 @@ label_1df78c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DEE60_0x1dee60, 0x1dee60u, 0x1df79cu)) {
         return;
     }
-    ctx->pc = 0x1DF79Cu;
 label_1df79c:
     // 0x1df79c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -109,7 +106,6 @@ label_1df79c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DEE60_0x1dee60, 0x1dee60u, 0x1df7acu)) {
         return;
     }
-    ctx->pc = 0x1DF7ACu;
 label_1df7ac:
     // 0x1df7ac: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -126,7 +122,6 @@ label_1df7ac:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001DEE60_0x1dee60, 0x1dee60u, 0x1df7bcu)) {
         return;
     }
-    ctx->pc = 0x1DF7BCu;
 label_1df7bc:
     // 0x1df7bc: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1df7bcu;

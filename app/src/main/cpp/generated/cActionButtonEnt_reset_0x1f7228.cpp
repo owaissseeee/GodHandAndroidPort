@@ -13,7 +13,7 @@
 
 // Function: cActionButtonEnt_reset
 // Address: 0x1f7228 - 0x1f72c0
-void cActionButtonEnt_reset_0x1f7228(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cActionButtonEnt_reset_0x1f7228(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cActionButtonEnt_reset_0x1f7228");
 #endif
@@ -51,7 +51,6 @@ void cActionButtonEnt_reset_0x1f7228(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F7820_0x1f7820, 0x1f7820u, 0x1f7248u)) {
         return;
     }
-    ctx->pc = 0x1F7248u;
 label_1f7248:
     // 0x1f7248: 0x8e030000  lw          $v1, 0x0($s0)
     ctx->pc = 0x1f7248u;

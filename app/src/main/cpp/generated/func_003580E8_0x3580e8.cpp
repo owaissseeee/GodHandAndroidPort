@@ -13,7 +13,7 @@
 
 // Function: func_003580E8
 // Address: 0x3580e8 - 0x3581e0
-void func_003580E8_0x3580e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003580E8_0x3580e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003580E8_0x3580e8");
 #endif
@@ -113,7 +113,6 @@ void func_003580E8_0x3580e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035AAC8_0x35aac8, 0x35aac8u, 0x358134u)) {
         return;
     }
-    ctx->pc = 0x358134u;
 label_358134:
     // 0x358134: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x358134u;
@@ -130,7 +129,6 @@ label_358134:
             goto label_358148;
         }
     }
-    ctx->pc = 0x35813Cu;
 label_35813c:
     // 0x35813c: 0x10000022  b           . + 4 + (0x22 << 2)
     ctx->pc = 0x35813Cu;
@@ -148,7 +146,6 @@ label_35813c:
         }
     }
     // 0x358144: 0x0  nop
-    ctx->pc = 0x358144u;
     // NOP
 label_358148:
     // 0x358148: 0x460001f  bltz        $v1, . + 4 + (0x1F << 2)
@@ -177,7 +174,6 @@ label_358148:
     if (!runtime->callDirectStatic(rdram, ctx, &GetArrayElemA0C_35A1C8_0x35a1c8, 0x35a1c8u, 0x358158u)) {
         return;
     }
-    ctx->pc = 0x358158u;
 label_358158:
     // 0x358158: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -228,7 +224,6 @@ label_358158:
             goto label_35818c;
         }
     }
-    ctx->pc = 0x35818Cu;
 label_35818c:
     // 0x35818c: 0x1812  mflo        $v1
     SET_GPR_U64(ctx, 3, ctx->lo);
@@ -255,7 +250,6 @@ label_35818c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035A000_0x35a000, 0x35a000u, 0x3581b0u)) {
         return;
     }
-    ctx->pc = 0x3581B0u;
 label_3581b0:
     // 0x3581b0: 0x8fa60000  lw          $a2, 0x0($sp)
     ctx->pc = 0x3581b0u;
@@ -277,10 +271,8 @@ label_3581b4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035AEC8_0x35aec8, 0x35aec8u, 0x3581c4u)) {
         return;
     }
-    ctx->pc = 0x3581C4u;
 label_3581c4:
     // 0x3581c4: 0x2102b  sltu        $v0, $zero, $v0
-    ctx->pc = 0x3581c4u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 0) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
 label_3581c8:
     // 0x3581c8: 0xdfb00010  ld          $s0, 0x10($sp)

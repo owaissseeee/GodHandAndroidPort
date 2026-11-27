@@ -14,30 +14,30 @@ namespace gh_mcport
 {
 // Function: terminate__Fv
 // Address: 0x7c9e68 - 0x7c9e80
-void terminate__Fv_0x7c9e68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void terminate__Fv_0x7c9e68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("terminate__Fv_0x7c9e68");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7c9e68u: goto label_7c9e68;
-        case 0x7c9e6cu: goto label_7c9e6c;
-        case 0x7c9e70u: goto label_7c9e70;
-        case 0x7c9e74u: goto label_7c9e74;
-        case 0x7c9e78u: goto label_7c9e78;
-        case 0x7c9e7cu: goto label_7c9e7c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7c9e68u, 0)) {
+        switch (ctx->pc) {
+            case 0x7c9e68u: goto label_7c9e68;
+            case 0x7c9e6cu: goto label_7c9e6c;
+            case 0x7c9e70u: goto label_7c9e70;
+            case 0x7c9e74u: goto label_7c9e74;
+            case 0x7c9e78u: goto label_7c9e78;
+            case 0x7c9e7cu: goto label_7c9e7c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7c9e68u;
+
 
 label_7c9e68:
     // 0x7c9e68: 0x3c02007d  lui         $v0, 0x7D
-    ctx->pc = 0x7c9e68u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)125 << 16));
 label_7c9e6c:
     // 0x7c9e6c: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7c9e6cu;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_7c9e70:
     // 0x7c9e70: 0x8c4301a0  lw          $v1, 0x1A0($v0)

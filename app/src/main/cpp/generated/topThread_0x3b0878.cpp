@@ -13,7 +13,7 @@
 
 // Function: topThread
 // Address: 0x3b0878 - 0x3b0950
-void topThread_0x3b0878(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void topThread_0x3b0878(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("topThread_0x3b0878");
 #endif
@@ -70,7 +70,6 @@ void topThread_0x3b0878(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) 
     ctx->pc = 0x3b08b0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 112), GPR_U64(ctx, 31));
     // 0x3b08b4: 0x26300009  addiu       $s0, $s1, 0x9
-    ctx->pc = 0x3b08b4u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 17), 9));
 label_3b08b8:
     // 0x3b08b8: 0xc0ebf38  jal         func_3AFCE0
@@ -84,7 +83,6 @@ label_3b08b8:
     if (!runtime->callDirectStatic(rdram, ctx, &WaitSema_0x3afce0, 0x3afce0u, 0x3b08c0u)) {
         return;
     }
-    ctx->pc = 0x3B08C0u;
 label_3b08c0:
     // 0x3b08c0: 0x8e230000  lw          $v1, 0x0($s1)
     ctx->pc = 0x3b08c0u;
@@ -159,7 +157,6 @@ label_3b08c0:
             goto label_3b0940;
         }
     }
-    ctx->pc = 0x3B0900u;
 label_3b0900:
     // 0x3b0900: 0x1053000b  beq         $v0, $s3, . + 4 + (0xB << 2)
     ctx->pc = 0x3B0900u;
@@ -185,7 +182,6 @@ label_3b0900:
             goto label_3b0940;
         }
     }
-    ctx->pc = 0x3B0910u;
 label_3b0910:
     // 0x3b0910: 0xc0ebef4  jal         func_3AFBD0
     SET_GPR_U32(ctx, 31, 0x3B0918u);
@@ -198,7 +194,6 @@ label_3b0910:
     if (!runtime->callDirectStatic(rdram, ctx, &WakeupThread_0x3afbd0, 0x3afbd0u, 0x3b0918u)) {
         return;
     }
-    ctx->pc = 0x3B0918u;
 label_3b0918:
     // 0x3b0918: 0x1000ffe7  b           . + 4 + (-0x19 << 2)
     ctx->pc = 0x3B0918u;
@@ -212,7 +207,6 @@ label_3b0918:
             goto label_3b08b8;
         }
     }
-    ctx->pc = 0x3B0920u;
 label_3b0920:
     // 0x3b0920: 0xc0ebed4  jal         func_3AFB50
     SET_GPR_U32(ctx, 31, 0x3B0928u);
@@ -225,7 +219,6 @@ label_3b0920:
     if (!runtime->callDirectStatic(rdram, ctx, &RotateThreadReadyQueue_0x3afb50, 0x3afb50u, 0x3b0928u)) {
         return;
     }
-    ctx->pc = 0x3B0928u;
 label_3b0928:
     // 0x3b0928: 0x1000ffe3  b           . + 4 + (-0x1D << 2)
     ctx->pc = 0x3B0928u;
@@ -239,7 +232,6 @@ label_3b0928:
             goto label_3b08b8;
         }
     }
-    ctx->pc = 0x3B0930u;
 label_3b0930:
     // 0x3b0930: 0xc0ebf04  jal         func_3AFC10
     SET_GPR_U32(ctx, 31, 0x3B0938u);
@@ -252,7 +244,6 @@ label_3b0930:
     if (!runtime->callDirectStatic(rdram, ctx, &SuspendThread_0x3afc10, 0x3afc10u, 0x3b0938u)) {
         return;
     }
-    ctx->pc = 0x3B0938u;
 label_3b0938:
     // 0x3b0938: 0x1000ffdf  b           . + 4 + (-0x21 << 2)
     ctx->pc = 0x3B0938u;
@@ -266,7 +257,6 @@ label_3b0938:
             goto label_3b08b8;
         }
     }
-    ctx->pc = 0x3B0940u;
 label_3b0940:
     // 0x3b0940: 0xc0ec7ea  jal         func_3B1FA8
     ctx->pc = 0x3B0940u;
@@ -274,7 +264,6 @@ label_3b0940:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003B1FA8_0x3b1fa8, 0x3b1fa8u, 0x3b0948u)) {
         return;
     }
-    ctx->pc = 0x3B0948u;
 label_3b0948:
     // 0x3b0948: 0x1000ffdb  b           . + 4 + (-0x25 << 2)
     ctx->pc = 0x3B0948u;

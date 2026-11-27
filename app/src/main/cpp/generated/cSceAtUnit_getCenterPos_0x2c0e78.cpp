@@ -13,7 +13,7 @@
 
 // Function: cSceAtUnit_getCenterPos
 // Address: 0x2c0e78 - 0x2c0ed0
-void cSceAtUnit_getCenterPos_0x2c0e78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSceAtUnit_getCenterPos_0x2c0e78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSceAtUnit_getCenterPos_0x2c0e78");
 #endif
@@ -67,7 +67,6 @@ void cSceAtUnit_getCenterPos_0x2c0e78(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->callDirectStatic(rdram, ctx, &cArea_AreaGetCenterPos_0x1f89a8, 0x1f89a8u, 0x2c0ea0u)) {
         return;
     }
-    ctx->pc = 0x2C0EA0u;
 label_2c0ea0:
     // 0x2c0ea0: 0xc6000004  lwc1        $f0, 0x4($s0)
     ctx->pc = 0x2c0ea0u;

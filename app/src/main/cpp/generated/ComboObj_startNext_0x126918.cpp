@@ -13,7 +13,7 @@
 
 // Function: ComboObj_startNext
 // Address: 0x126918 - 0x1269e0
-void ComboObj_startNext_0x126918(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ComboObj_startNext_0x126918(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ComboObj_startNext_0x126918");
 #endif
@@ -65,7 +65,6 @@ void ComboObj_startNext_0x126918(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getComboMax_0x1fb830, 0x1fb830u, 0x126948u)) {
         return;
     }
-    ctx->pc = 0x126948u;
 label_126948:
     // 0x126948: 0x202802a  slt         $s0, $s0, $v0
     SET_GPR_U64(ctx, 16, ((int64_t)GPR_S64(ctx, 16) < (int64_t)GPR_S64(ctx, 2)) ? 1 : 0);
@@ -107,7 +106,6 @@ label_126960:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getCombo_0x1fb6c8, 0x1fb6c8u, 0x12696cu)) {
         return;
     }
-    ctx->pc = 0x12696Cu;
 label_12696c:
     // 0x12696c: 0x962505e2  lhu         $a1, 0x5E2($s1)
     ctx->pc = 0x12696cu;
@@ -128,7 +126,6 @@ label_12696c:
     if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_getComboLv_0x1fb750, 0x1fb750u, 0x126980u)) {
         return;
     }
-    ctx->pc = 0x126980u;
 label_126980:
     // 0x126980: 0x24030014  addiu       $v1, $zero, 0x14
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 20));
@@ -169,7 +166,6 @@ label_126980:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001269E0_0x1269e0, 0x1269e0u, 0x1269b8u)) {
         return;
     }
-    ctx->pc = 0x1269B8u;
 label_1269b8:
     // 0x1269b8: 0x962305e0  lhu         $v1, 0x5E0($s1)
     ctx->pc = 0x1269b8u;

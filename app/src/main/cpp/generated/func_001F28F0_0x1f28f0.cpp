@@ -13,7 +13,7 @@
 
 // Function: func_001F28F0
 // Address: 0x1f28f0 - 0x1f2990
-void func_001F28F0_0x1f28f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001F28F0_0x1f28f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001F28F0_0x1f28f0");
 #endif
@@ -61,7 +61,6 @@ void func_001F28F0_0x1f28f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F2D60_0x1f2d60, 0x1f2d60u, 0x1f2910u)) {
         return;
     }
-    ctx->pc = 0x1F2910u;
 label_1f2910:
     // 0x1f2910: 0x26300060  addiu       $s0, $s1, 0x60
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 17), 96));
@@ -76,7 +75,6 @@ label_1f2910:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F3118_0x1f3118, 0x1f3118u, 0x1f291cu)) {
         return;
     }
-    ctx->pc = 0x1F291Cu;
 label_1f291c:
     // 0x1f291c: 0xc07cca8  jal         func_1F32A0
     SET_GPR_U32(ctx, 31, 0x1F2924u);
@@ -89,10 +87,8 @@ label_1f291c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001F32A0_0x1f32a0, 0x1f32a0u, 0x1f2924u)) {
         return;
     }
-    ctx->pc = 0x1F2924u;
 label_1f2924:
     // 0x1f2924: 0x0  nop
-    ctx->pc = 0x1f2924u;
     // NOP
 label_1f2928:
     // 0x1f2928: 0x200202d  daddu       $a0, $s0, $zero
@@ -108,7 +104,6 @@ label_1f2928:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_Main_0x2d5de0, 0x2d5de0u, 0x1f2934u)) {
         return;
     }
-    ctx->pc = 0x1F2934u;
 label_1f2934:
     // 0x1f2934: 0x0  nop
     // NOP
@@ -145,12 +140,10 @@ label_1f2934:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_move_0x2aaa40, 0x2aaa40u, 0x1f2950u)) {
         return;
     }
-    ctx->pc = 0x1F2950u;
 label_1f2950:
     // 0x1f2950: 0x24110002  addiu       $s1, $zero, 0x2
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x1f2954: 0x0  nop
-    ctx->pc = 0x1f2954u;
     // NOP
 label_1f2958:
     // 0x1f2958: 0x200202d  daddu       $a0, $s0, $zero
@@ -166,7 +159,6 @@ label_1f2958:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_Main_0x2d5de0, 0x2d5de0u, 0x1f2964u)) {
         return;
     }
-    ctx->pc = 0x1F2964u;
 label_1f2964:
     // 0x1f2964: 0x0  nop
     // NOP
@@ -199,7 +191,6 @@ label_1f2964:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_move_0x2aaa40, 0x2aaa40u, 0x1f2978u)) {
         return;
     }
-    ctx->pc = 0x1F2978u;
 label_1f2978:
     // 0x1f2978: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x1f2978u;

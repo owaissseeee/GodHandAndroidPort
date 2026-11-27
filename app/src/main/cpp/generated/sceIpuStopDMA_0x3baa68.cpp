@@ -13,7 +13,7 @@
 
 // Function: sceIpuStopDMA
 // Address: 0x3baa68 - 0x3bab50
-void sceIpuStopDMA_0x3baa68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceIpuStopDMA_0x3baa68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceIpuStopDMA_0x3baa68");
 #endif
@@ -49,7 +49,6 @@ void sceIpuStopDMA_0x3baa68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &setD4_CHCR_0x3ba9f0, 0x3ba9f0u, 0x3baa80u)) {
         return;
     }
-    ctx->pc = 0x3BAA80u;
 label_3baa80:
     // 0x3baa80: 0x3c021000  lui         $v0, 0x1000
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)4096 << 16));
@@ -130,7 +129,6 @@ label_3baac8:
     if (!runtime->callDirectStatic(rdram, ctx, &setD3_CHCR_0x3ba978, 0x3ba978u, 0x3baaecu)) {
         return;
     }
-    ctx->pc = 0x3BAAECu;
 label_3baaec:
     // 0x3baaec: 0x3c021000  lui         $v0, 0x1000
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)4096 << 16));

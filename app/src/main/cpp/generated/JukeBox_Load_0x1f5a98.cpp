@@ -13,7 +13,7 @@
 
 // Function: JukeBox_Load
 // Address: 0x1f5a98 - 0x1f5c48
-void JukeBox_Load_0x1f5a98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void JukeBox_Load_0x1f5a98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("JukeBox_Load_0x1f5a98");
 #endif
@@ -70,7 +70,6 @@ void JukeBox_Load_0x1f5a98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &cIDManager_getLocalFileName_0x2acfa8, 0x2acfa8u, 0x1f5accu)) {
         return;
     }
-    ctx->pc = 0x1F5ACCu;
 label_1f5acc:
     // 0x1f5acc: 0x26320030  addiu       $s2, $s1, 0x30
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 17), 48));
@@ -105,7 +104,6 @@ label_1f5acc:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x200CB0u, 0x1F5AF8u, 0x1F5B00u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1F5B00u;
 label_1f5b00:
     // 0x1f5b00: 0x40282d  daddu       $a1, $v0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -120,7 +118,6 @@ label_1f5b00:
     if (!runtime->callDirectStatic(rdram, ctx, &cDvd_CheckWait_0x201160, 0x201160u, 0x1f5b0cu)) {
         return;
     }
-    ctx->pc = 0x1F5B0Cu;
 label_1f5b0c:
     // 0x1f5b0c: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
@@ -143,7 +140,6 @@ label_1f5b0c:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDManager_setIDData_0x2accf8, 0x2accf8u, 0x1f5b24u)) {
         return;
     }
-    ctx->pc = 0x1F5B24u;
 label_1f5b24:
     // 0x1f5b24: 0x240202d  daddu       $a0, $s2, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -160,7 +156,6 @@ label_1f5b24:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_initialize_0x2a9ea0, 0x2a9ea0u, 0x1f5b34u)) {
         return;
     }
-    ctx->pc = 0x1F5B34u;
 label_1f5b34:
     // 0x1f5b34: 0x10400006  beqz        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x1F5B34u;
@@ -190,7 +185,6 @@ label_1f5b34:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_setPackedMessData_0x2a9f30, 0x2a9f30u, 0x1f5b48u)) {
         return;
     }
-    ctx->pc = 0x1F5B48u;
 label_1f5b48:
     // 0x1f5b48: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x1F5B48u;
@@ -207,7 +201,6 @@ label_1f5b48:
             goto label_1f5b58;
         }
     }
-    ctx->pc = 0x1F5B50u;
 label_1f5b50:
     // 0x1f5b50: 0x10000036  b           . + 4 + (0x36 << 2)
     ctx->pc = 0x1F5B50u;
@@ -224,7 +217,6 @@ label_1f5b50:
             goto label_1f5c2c;
         }
     }
-    ctx->pc = 0x1F5B58u;
 label_1f5b58:
     // 0x1f5b58: 0x24060001  addiu       $a2, $zero, 0x1
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -324,7 +316,6 @@ label_1f5b9c:
             goto label_1f5bc8;
         }
     }
-    ctx->pc = 0x1F5BC4u;
 label_1f5bc4:
     // 0x1f5bc4: 0xae200014  sw          $zero, 0x14($s1)
     ctx->pc = 0x1f5bc4u;
@@ -369,7 +360,6 @@ label_1f5bc8:
             goto label_1f5bec;
         }
     }
-    ctx->pc = 0x1F5BE8u;
 label_1f5be8:
     // 0x1f5be8: 0xae200018  sw          $zero, 0x18($s1)
     ctx->pc = 0x1f5be8u;
@@ -414,7 +404,6 @@ label_1f5bec:
             goto label_1f5c10;
         }
     }
-    ctx->pc = 0x1F5C0Cu;
 label_1f5c0c:
     // 0x1f5c0c: 0xae20001c  sw          $zero, 0x1C($s1)
     ctx->pc = 0x1f5c0cu;
@@ -431,7 +420,6 @@ label_1f5c10:
     if (!runtime->callDirectStatic(rdram, ctx, &SlotList_selectPrev_0x1f6a80, 0x1f6a80u, 0x1f5c18u)) {
         return;
     }
-    ctx->pc = 0x1F5C18u;
 label_1f5c18:
     // 0x1f5c18: 0xa2200003  sb          $zero, 0x3($s1)
     ctx->pc = 0x1f5c18u;

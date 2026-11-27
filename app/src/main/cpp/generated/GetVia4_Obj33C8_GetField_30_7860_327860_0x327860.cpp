@@ -13,7 +13,7 @@
 
 // Function: GetVia4_Obj33C8_GetField_30_7860_327860
 // Address: 0x327860 - 0x327878
-void GetVia4_Obj33C8_GetField_30_7860_327860_0x327860(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetVia4_Obj33C8_GetField_30_7860_327860_0x327860(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetVia4_Obj33C8_GetField_30_7860_327860_0x327860");
 #endif

@@ -13,7 +13,7 @@
 
 // Function: JukeBox_Release
 // Address: 0x1f5c48 - 0x1f5cc0
-void JukeBox_Release_0x1f5c48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void JukeBox_Release_0x1f5c48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("JukeBox_Release_0x1f5c48");
 #endif
@@ -68,7 +68,6 @@ void JukeBox_Release_0x1f5c48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_BgmEventFade_0x2d1768, 0x2d1768u, 0x1f5c84u)) {
         return;
     }
-    ctx->pc = 0x1F5C84u;
 label_1f5c84:
     // 0x1f5c84: 0xc0aa81e  jal         func_2AA078
     SET_GPR_U32(ctx, 31, 0x1F5C8Cu);
@@ -81,7 +80,6 @@ label_1f5c84:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_release_0x2aa078, 0x2aa078u, 0x1f5c8cu)) {
         return;
     }
-    ctx->pc = 0x1F5C8Cu;
 label_1f5c8c:
     // 0x1f5c8c: 0x3c03003c  lui         $v1, 0x3C
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)60 << 16));
@@ -124,7 +122,6 @@ label_1f5c8c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9680u, 0x1F5CA8u, 0x1F5CB0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1F5CB0u;
 label_1f5cb0:
     // 0x1f5cb0: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1f5cb0u;

@@ -13,7 +13,7 @@
 
 // Function: GetOsdConfigParam2
 // Address: 0x3affb0 - 0x3affc0
-void GetOsdConfigParam2_0x3affb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetOsdConfigParam2_0x3affb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetOsdConfigParam2_0x3affb0");
 #endif

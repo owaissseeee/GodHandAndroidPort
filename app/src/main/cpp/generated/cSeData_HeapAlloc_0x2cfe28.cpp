@@ -13,7 +13,7 @@
 
 // Function: cSeData_HeapAlloc
 // Address: 0x2cfe28 - 0x2cfe48
-void cSeData_HeapAlloc_0x2cfe28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSeData_HeapAlloc_0x2cfe28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSeData_HeapAlloc_0x2cfe28");
 #endif
@@ -42,7 +42,6 @@ void cSeData_HeapAlloc_0x2cfe28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &cSndMemHeap_Alloc_0x2cd7c8, 0x2cd7c8u, 0x2cfe38u)) {
         return;
     }
-    ctx->pc = 0x2CFE38u;
 label_2cfe38:
     // 0x2cfe38: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2cfe38u;

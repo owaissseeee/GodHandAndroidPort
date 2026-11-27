@@ -13,7 +13,7 @@
 
 // Function: cEm00_CkDevilEvent
 // Address: 0x273640 - 0x273678
-void cEm00_CkDevilEvent_0x273640(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_CkDevilEvent_0x273640(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_CkDevilEvent_0x273640");
 #endif
@@ -56,7 +56,6 @@ void cEm00_CkDevilEvent_0x273640(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         return;
         #endif
     }
-    ctx->pc = 0x273654u;
 label_273654:
     // 0x273654: 0x24020004  addiu       $v0, $zero, 0x4
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
@@ -93,7 +92,6 @@ label_273654:
         return;
         #endif
     }
-    ctx->pc = 0x273670u;
 label_273670:
     // 0x273670: 0x3e00008  jr          $ra
     ctx->pc = 0x273670u;

@@ -13,7 +13,7 @@
 
 // Function: Obj1D00_SetState6_Variant6_a1
 // Address: 0x1d0528 - 0x1d0540
-void Obj1D00_SetState6_Variant6_a1_0x1d0528(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj1D00_SetState6_Variant6_a1_0x1d0528(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj1D00_SetState6_Variant6_a1_0x1d0528");
 #endif

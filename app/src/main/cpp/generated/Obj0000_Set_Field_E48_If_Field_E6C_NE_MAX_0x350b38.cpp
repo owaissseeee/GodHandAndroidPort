@@ -13,7 +13,7 @@
 
 // Function: Obj0000_Set_Field_E48_If_Field_E6C_NE_MAX
 // Address: 0x350b38 - 0x350b60
-void Obj0000_Set_Field_E48_If_Field_E6C_NE_MAX_0x350b38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_Field_E48_If_Field_E6C_NE_MAX_0x350b38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_Field_E48_If_Field_E6C_NE_MAX_0x350b38");
 #endif

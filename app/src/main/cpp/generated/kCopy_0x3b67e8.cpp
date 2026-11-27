@@ -13,7 +13,7 @@
 
 // Function: kCopy
 // Address: 0x3b67e8 - 0x3b6818
-void kCopy_0x3b67e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void kCopy_0x3b67e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("kCopy_0x3b67e8");
 #endif
@@ -41,7 +41,6 @@ void kCopy_0x3b67e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             goto label_3b6810;
         }
     }
-    ctx->pc = 0x3B67F0u;
 label_3b67f0:
     // 0x3b67f0: 0x90a30000  lbu         $v1, 0x0($a1)
     ctx->pc = 0x3b67f0u;
@@ -69,7 +68,6 @@ label_3b67f0:
             goto label_3b67f0;
         }
     }
-    ctx->pc = 0x3B6810u;
 label_3b6810:
     // 0x3b6810: 0x3e00008  jr          $ra
     ctx->pc = 0x3B6810u;

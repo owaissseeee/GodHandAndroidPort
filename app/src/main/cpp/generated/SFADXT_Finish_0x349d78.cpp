@@ -13,7 +13,7 @@
 
 // Function: SFADXT_Finish
 // Address: 0x349d78 - 0x349da0
-void SFADXT_Finish_0x349d78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFADXT_Finish_0x349d78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFADXT_Finish_0x349d78");
 #endif
@@ -38,7 +38,6 @@ void SFADXT_Finish_0x349d78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_PreDec_D_003FC50C_3B9D80_0x3b9d80, 0x3b9d80u, 0x349d88u)) {
         return;
     }
-    ctx->pc = 0x349D88u;
 label_349d88:
     // 0x349d88: 0xc0c92b2  jal         func_324AC8
     ctx->pc = 0x349D88u;
@@ -46,7 +45,6 @@ label_349d88:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00324AC8_0x324ac8, 0x324ac8u, 0x349d90u)) {
         return;
     }
-    ctx->pc = 0x349D90u;
 label_349d90:
     // 0x349d90: 0x102d  daddu       $v0, $zero, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));

@@ -13,7 +13,7 @@
 
 // Function: BgmObj_startEventAndArmTimer
 // Address: 0x2b3cf8 - 0x2b3d70
-void BgmObj_startEventAndArmTimer_0x2b3cf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BgmObj_startEventAndArmTimer_0x2b3cf8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BgmObj_startEventAndArmTimer_0x2b3cf8");
 #endif
@@ -64,7 +64,6 @@ void BgmObj_startEventAndArmTimer_0x2b3cf8(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &cSnd_BgmEventStart_0x2d1610, 0x2d1610u, 0x2b3d2cu)) {
         return;
     }
-    ctx->pc = 0x2B3D2Cu;
 label_2b3d2c:
     // 0x2b3d2c: 0x2402000b  addiu       $v0, $zero, 0xB
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 11));
@@ -115,7 +114,6 @@ label_2b3d2c:
             goto label_2b3d4c;
         }
     }
-    ctx->pc = 0x2B3D4Cu;
 label_2b3d4c:
     // 0x2b3d4c: 0x2402001e  addiu       $v0, $zero, 0x1E
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 30));

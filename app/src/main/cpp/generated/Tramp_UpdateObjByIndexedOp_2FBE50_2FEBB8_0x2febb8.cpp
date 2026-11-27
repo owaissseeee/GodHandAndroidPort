@@ -13,7 +13,7 @@
 
 // Function: Tramp_UpdateObjByIndexedOp_2FBE50_2FEBB8
 // Address: 0x2febb8 - 0x2febd8
-void Tramp_UpdateObjByIndexedOp_2FBE50_2FEBB8_0x2febb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp_UpdateObjByIndexedOp_2FBE50_2FEBB8_0x2febb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp_UpdateObjByIndexedOp_2FBE50_2FEBB8_0x2febb8");
 #endif
@@ -37,7 +37,6 @@ void Tramp_UpdateObjByIndexedOp_2FBE50_2FEBB8_0x2febb8(uint8_t* rdram, R5900Cont
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateObjByIndexedOp_2FBE50_0x2fbe50, 0x2fbe50u, 0x2febc8u)) {
         return;
     }
-    ctx->pc = 0x2FEBC8u;
 label_2febc8:
     // 0x2febc8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2febc8u;

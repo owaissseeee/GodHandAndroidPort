@@ -13,7 +13,7 @@
 
 // Function: SifSetDma
 // Address: 0x3b0060 - 0x3b0070
-void SifSetDma_0x3b0060(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SifSetDma_0x3b0060(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SifSetDma_0x3b0060");
 #endif

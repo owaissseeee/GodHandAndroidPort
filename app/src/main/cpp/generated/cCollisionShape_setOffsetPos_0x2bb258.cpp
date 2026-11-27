@@ -13,7 +13,7 @@
 
 // Function: cCollisionShape_setOffsetPos
 // Address: 0x2bb258 - 0x2bb298
-void cCollisionShape_setOffsetPos_0x2bb258(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCollisionShape_setOffsetPos_0x2bb258(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCollisionShape_setOffsetPos_0x2bb258");
 #endif
@@ -70,7 +70,6 @@ label_2bb280:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BB2D8_0x2bb2d8, 0x2bb2d8u, 0x2bb288u)) {
         return;
     }
-    ctx->pc = 0x2BB288u;
 label_2bb288:
     // 0x2bb288: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2bb288u;

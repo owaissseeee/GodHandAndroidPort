@@ -13,7 +13,7 @@
 
 // Function: cEmWrap_setMutekiTimer
 // Address: 0x295b80 - 0x295bc0
-void cEmWrap_setMutekiTimer_0x295b80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmWrap_setMutekiTimer_0x295b80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmWrap_setMutekiTimer_0x295b80");
 #endif
@@ -50,7 +50,6 @@ void cEmWrap_setMutekiTimer_0x295b80(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &FindResolveActor_295978_0x295978, 0x295978u, 0x295b9cu)) {
         return;
     }
-    ctx->pc = 0x295B9Cu;
 label_295b9c:
     // 0x295b9c: 0x50400004  beql        $v0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x295B9Cu;

@@ -13,7 +13,7 @@
 
 // Function: cDvd_CheckWait
 // Address: 0x201160 - 0x2011b0
-void cDvd_CheckWait_0x201160(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDvd_CheckWait_0x201160(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDvd_CheckWait_0x201160");
 #endif
@@ -57,7 +57,6 @@ void cDvd_CheckWait_0x201160(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
         }
     }
     // 0x20117c: 0x0  nop
-    ctx->pc = 0x20117cu;
     // NOP
 label_201180:
     // 0x201180: 0xc0802c8  jal         func_200B20
@@ -66,7 +65,6 @@ label_201180:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00200B20_0x200b20, 0x200b20u, 0x201188u)) {
         return;
     }
-    ctx->pc = 0x201188u;
 label_201188:
     // 0x201188: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -81,7 +79,6 @@ label_201188:
     if (!runtime->callDirectStatic(rdram, ctx, &cDvd_Check_0x201098, 0x201098u, 0x201194u)) {
         return;
     }
-    ctx->pc = 0x201194u;
 label_201194:
     // 0x201194: 0x1440fffa  bnez        $v0, . + 4 + (-0x6 << 2)
     ctx->pc = 0x201194u;

@@ -13,7 +13,7 @@
 
 // Function: InitObjectFields364_1398D0
 // Address: 0x1398d0 - 0x139910
-void InitObjectFields364_1398D0_0x1398d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitObjectFields364_1398D0_0x1398d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitObjectFields364_1398D0_0x1398d0");
 #endif
@@ -45,7 +45,6 @@ void InitObjectFields364_1398D0_0x1398d0(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &cCamera_0x1380a8, 0x1380a8u, 0x1398e4u)) {
         return;
     }
-    ctx->pc = 0x1398E4u;
 label_1398e4:
     // 0x1398e4: 0x3c030042  lui         $v1, 0x42
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)66 << 16));

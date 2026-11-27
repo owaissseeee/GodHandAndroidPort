@@ -13,7 +13,7 @@
 
 // Function: func_003340F0
 // Address: 0x3340f0 - 0x3341b8
-void func_003340F0_0x3340f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003340F0_0x3340f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003340F0_0x3340f0");
 #endif
@@ -62,7 +62,6 @@ void func_003340F0_0x3340f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Forward33B568_33B688_0x33b688, 0x33b688u, 0x334114u)) {
         return;
     }
-    ctx->pc = 0x334114u;
 label_334114:
     // 0x334114: 0xc0cc4ac  jal         func_3312B0
     SET_GPR_U32(ctx, 31, 0x33411Cu);
@@ -75,7 +74,6 @@ label_334114:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003312B0_0x3312b0, 0x3312b0u, 0x33411cu)) {
         return;
     }
-    ctx->pc = 0x33411Cu;
 label_33411c:
     // 0x33411c: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -122,7 +120,6 @@ label_33411c:
         }
     }
     // 0x334144: 0x0  nop
-    ctx->pc = 0x334144u;
     // NOP
 label_334148:
     // 0x334148: 0x24020003  addiu       $v0, $zero, 0x3
@@ -145,7 +142,6 @@ label_334148:
             goto label_334188;
         }
     }
-    ctx->pc = 0x334158u;
 label_334158:
     // 0x334158: 0x8e040024  lw          $a0, 0x24($s0)
     ctx->pc = 0x334158u;
@@ -182,7 +178,6 @@ label_334158:
         }
     }
     // 0x33417c: 0x0  nop
-    ctx->pc = 0x33417cu;
     // NOP
 label_334180:
     // 0x334180: 0xa2000002  sb          $zero, 0x2($s0)
@@ -198,7 +193,6 @@ label_334188:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00331070_0x331070, 0x331070u, 0x334190u)) {
         return;
     }
-    ctx->pc = 0x334190u;
 label_334190:
     // 0x334190: 0xae00002c  sw          $zero, 0x2C($s0)
     ctx->pc = 0x334190u;
@@ -222,7 +216,6 @@ label_334198:
         return;
     }
     // 0x3341a4: 0x0  nop
-    ctx->pc = 0x3341a4u;
     // NOP
 label_3341a8:
     // 0x3341a8: 0xdfbf0008  ld          $ra, 0x8($sp)

@@ -13,7 +13,7 @@
 
 // Function: func_00169258
 // Address: 0x169258 - 0x169358
-void func_00169258_0x169258(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00169258_0x169258(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00169258_0x169258");
 #endif
@@ -84,7 +84,6 @@ void func_00169258_0x169258(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x169284u;
 label_169284:
     // 0x169284: 0x10620015  beq         $v1, $v0, . + 4 + (0x15 << 2)
     ctx->pc = 0x169284u;
@@ -129,7 +128,6 @@ label_169284:
         return;
         #endif
     }
-    ctx->pc = 0x16929Cu;
 label_16929c:
     // 0x16929c: 0x8ce30124  lw          $v1, 0x124($a3)
     ctx->pc = 0x16929cu;
@@ -165,7 +163,6 @@ label_16929c:
         return;
         #endif
     }
-    ctx->pc = 0x1692B8u;
 label_1692b8:
     // 0x1692b8: 0x84e201d2  lh          $v0, 0x1D2($a3)
     ctx->pc = 0x1692b8u;
@@ -203,7 +200,6 @@ label_1692b8:
         return;
         #endif
     }
-    ctx->pc = 0x1692DCu;
 label_1692dc:
     // 0x1692dc: 0x8ce2008c  lw          $v0, 0x8C($a3)
     ctx->pc = 0x1692dcu;
@@ -281,7 +277,6 @@ label_1692dc:
         return;
         #endif
     }
-    ctx->pc = 0x16933Cu;
 label_16933c:
     // 0x16933c: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x16933Cu;
@@ -319,7 +314,6 @@ label_16933c:
         return;
         #endif
     }
-    ctx->pc = 0x169350u;
 label_169350:
     // 0x169350: 0x3e00008  jr          $ra
     ctx->pc = 0x169350u;

@@ -13,7 +13,7 @@
 
 // Function: MtxMulRotVec
 // Address: 0x147b60 - 0x147bb0
-void MtxMulRotVec_0x147b60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MtxMulRotVec_0x147b60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MtxMulRotVec_0x147b60");
 #endif
@@ -57,7 +57,6 @@ void MtxMulRotVec_0x147b60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitRotVec_0x147728, 0x147728u, 0x147b88u)) {
         return;
     }
-    ctx->pc = 0x147B88u;
 label_147b88:
     // 0x147b88: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -74,7 +73,6 @@ label_147b88:
     if (!runtime->callDirectStatic(rdram, ctx, &MtxMultiply_0x147548, 0x147548u, 0x147b98u)) {
         return;
     }
-    ctx->pc = 0x147B98u;
 label_147b98:
     // 0x147b98: 0x7bb00060  lq          $s0, 0x60($sp)
     ctx->pc = 0x147b98u;

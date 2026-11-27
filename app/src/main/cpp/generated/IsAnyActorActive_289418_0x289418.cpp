@@ -13,7 +13,7 @@
 
 // Function: IsAnyActorActive_289418
 // Address: 0x289418 - 0x289480
-void IsAnyActorActive_289418_0x289418(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IsAnyActorActive_289418_0x289418(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IsAnyActorActive_289418_0x289418");
 #endif
@@ -46,7 +46,6 @@ void IsAnyActorActive_289418_0x289418(uint8_t* rdram, R5900Context* ctx, PS2Runt
     // 0x289430: 0x262464f0  addiu       $a0, $s1, 0x64F0
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 17), 25840));
     // 0x289434: 0x0  nop
-    ctx->pc = 0x289434u;
     // NOP
 label_289438:
     // 0x289438: 0xc0a5232  jal         func_2948C8
@@ -60,7 +59,6 @@ label_289438:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002948C8_0x2948c8, 0x2948c8u, 0x289440u)) {
         return;
     }
-    ctx->pc = 0x289440u;
 label_289440:
     // 0x289440: 0x50400006  beql        $v0, $zero, . + 4 + (0x6 << 2)
     ctx->pc = 0x289440u;
@@ -88,7 +86,6 @@ label_289440:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmbb_ckFire_0x1b8640, 0x1b8640u, 0x289450u)) {
         return;
     }
-    ctx->pc = 0x289450u;
 label_289450:
     // 0x289450: 0x14400006  bnez        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x289450u;
@@ -106,7 +103,6 @@ label_289450:
         }
     }
     // 0x289458: 0x26100001  addiu       $s0, $s0, 0x1
-    ctx->pc = 0x289458u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 1));
 label_28945c:
     // 0x28945c: 0x2e020002  sltiu       $v0, $s0, 0x2
@@ -130,7 +126,6 @@ label_28945c:
         }
     }
     // 0x289468: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x289468u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_28946c:
     // 0x28946c: 0x7bb00020  lq          $s0, 0x20($sp)

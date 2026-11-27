@@ -13,7 +13,7 @@
 
 // Function: cSndBgmNode_IsDone
 // Address: 0x2cca78 - 0x2ccac8
-void cSndBgmNode_IsDone_0x2cca78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndBgmNode_IsDone_0x2cca78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndBgmNode_IsDone_0x2cca78");
 #endif
@@ -46,7 +46,6 @@ void cSndBgmNode_IsDone_0x2cca78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_IsActive_0x2cc568, 0x2cc568u, 0x2cca8cu)) {
         return;
     }
-    ctx->pc = 0x2CCA8Cu;
 label_2cca8c:
     // 0x2cca8c: 0x10400009  beqz        $v0, . + 4 + (0x9 << 2)
     ctx->pc = 0x2CCA8Cu;
@@ -94,12 +93,10 @@ label_2cca8c:
     if (!runtime->callDirectStatic(rdram, ctx, &GetSequenceResult_373770_0x373770, 0x373770u, 0x2ccaacu)) {
         return;
     }
-    ctx->pc = 0x2CCAACu;
 label_2ccaac:
     // 0x2ccaac: 0x24030002  addiu       $v1, $zero, 0x2
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x2ccab0: 0x62102a  slt         $v0, $v1, $v0
-    ctx->pc = 0x2ccab0u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)GPR_S64(ctx, 2)) ? 1 : 0);
 label_2ccab4:
     // 0x2ccab4: 0x7bb00010  lq          $s0, 0x10($sp)

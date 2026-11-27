@@ -13,7 +13,7 @@
 
 // Function: cGameObjSortEnt_finalInsertionSort
 // Address: 0x2a9288 - 0x2a9300
-void cGameObjSortEnt_finalInsertionSort_0x2a9288(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObjSortEnt_finalInsertionSort_0x2a9288(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObjSortEnt_finalInsertionSort_0x2a9288");
 #endif
@@ -78,7 +78,6 @@ void cGameObjSortEnt_finalInsertionSort_0x2a9288(uint8_t* rdram, R5900Context* c
     if (!runtime->callDirectStatic(rdram, ctx, &cGameObjSortEnt_insertionSort_0x2a9100, 0x2a9100u, 0x2a92c0u)) {
         return;
     }
-    ctx->pc = 0x2A92C0u;
 label_2a92c0:
     // 0x2a92c0: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -97,7 +96,6 @@ label_2a92c0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A9210_0x2a9210, 0x2a9210u, 0x2a92d4u)) {
         return;
     }
-    ctx->pc = 0x2A92D4u;
 label_2a92d4:
     // 0x2a92d4: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x2A92D4u;
@@ -114,7 +112,6 @@ label_2a92d4:
             goto label_2a92ec;
         }
     }
-    ctx->pc = 0x2A92DCu;
 label_2a92dc:
     // 0x2a92dc: 0x220282d  daddu       $a1, $s1, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -129,7 +126,6 @@ label_2a92dc:
     if (!runtime->callDirectStatic(rdram, ctx, &cGameObjSortEnt_insertionSort_0x2a9100, 0x2a9100u, 0x2a92e8u)) {
         return;
     }
-    ctx->pc = 0x2A92E8u;
 label_2a92e8:
     // 0x2a92e8: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x2a92e8u;

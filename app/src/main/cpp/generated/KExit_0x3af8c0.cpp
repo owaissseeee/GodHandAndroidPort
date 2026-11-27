@@ -13,7 +13,7 @@
 
 // Function: KExit
 // Address: 0x3af8c0 - 0x3af8d0
-void KExit_0x3af8c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void KExit_0x3af8c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("KExit_0x3af8c0");
 #endif

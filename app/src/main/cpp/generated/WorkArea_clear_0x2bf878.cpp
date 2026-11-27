@@ -13,7 +13,7 @@
 
 // Function: WorkArea_clear
 // Address: 0x2bf878 - 0x2bf8c8
-void WorkArea_clear_0x2bf878(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void WorkArea_clear_0x2bf878(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("WorkArea_clear_0x2bf878");
 #endif
@@ -51,7 +51,6 @@ void WorkArea_clear_0x2bf878(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2bf894u)) {
         return;
     }
-    ctx->pc = 0x2BF894u;
 label_2bf894:
     // 0x2bf894: 0x260414a0  addiu       $a0, $s0, 0x14A0
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 5280));
@@ -68,7 +67,6 @@ label_2bf894:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2bf8a4u)) {
         return;
     }
-    ctx->pc = 0x2BF8A4u;
 label_2bf8a4:
     // 0x2bf8a4: 0x3404b0d0  ori         $a0, $zero, 0xB0D0
     SET_GPR_U64(ctx, 4, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)45264);
@@ -87,7 +85,6 @@ label_2bf8a4:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2bf8b8u)) {
         return;
     }
-    ctx->pc = 0x2BF8B8u;
 label_2bf8b8:
     // 0x2bf8b8: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2bf8b8u;

@@ -13,7 +13,7 @@
 
 // Function: cEmWrap_SetRaderType
 // Address: 0x295ee0 - 0x295f28
-void cEmWrap_SetRaderType_0x295ee0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmWrap_SetRaderType_0x295ee0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmWrap_SetRaderType_0x295ee0");
 #endif
@@ -52,7 +52,6 @@ void cEmWrap_SetRaderType_0x295ee0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &FindResolveActor_295978_0x295978, 0x295978u, 0x295f00u)) {
         return;
     }
-    ctx->pc = 0x295F00u;
 label_295f00:
     // 0x295f00: 0x50400004  beql        $v0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x295F00u;

@@ -13,7 +13,7 @@
 
 // Function: cOm53_setGetOffEm
 // Address: 0x1a7f20 - 0x1a7f58
-void cOm53_setGetOffEm_0x1a7f20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm53_setGetOffEm_0x1a7f20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm53_setGetOffEm_0x1a7f20");
 #endif
@@ -76,7 +76,6 @@ void cOm53_setGetOffEm_0x1a7f20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
         return;
         #endif
     }
-    ctx->pc = 0x1A7F44u;
 label_1a7f44:
     // 0x1a7f44: 0x3e00008  jr          $ra
     ctx->pc = 0x1A7F44u;
@@ -97,7 +96,6 @@ label_1a7f44:
         return;
         #endif
     }
-    ctx->pc = 0x1A7F4Cu;
 label_1a7f4c:
     // 0x1a7f4c: 0x3e00008  jr          $ra
     ctx->pc = 0x1A7F4Cu;

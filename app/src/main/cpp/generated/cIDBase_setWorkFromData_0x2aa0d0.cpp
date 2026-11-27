@@ -13,7 +13,7 @@
 
 // Function: cIDBase_setWorkFromData
 // Address: 0x2aa0d0 - 0x2aa1e0
-void cIDBase_setWorkFromData_0x2aa0d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDBase_setWorkFromData_0x2aa0d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDBase_setWorkFromData_0x2aa0d0");
 #endif
@@ -118,7 +118,6 @@ void cIDBase_setWorkFromData_0x2aa0d0(uint8_t* rdram, R5900Context* ctx, PS2Runt
     // 0x2aa128: 0x24c30014  addiu       $v1, $a2, 0x14
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 6), 20));
     // 0x2aa12c: 0x0  nop
-    ctx->pc = 0x2aa12cu;
     // NOP
 label_2aa130:
     // 0x2aa130: 0x8c620000  lw          $v0, 0x0($v1)
@@ -190,7 +189,6 @@ label_2aa150:
             goto label_2aa174;
         }
     }
-    ctx->pc = 0x2AA168u;
 label_2aa168:
     // 0x2aa168: 0x8cc20004  lw          $v0, 0x4($a2)
     ctx->pc = 0x2aa168u;
@@ -256,7 +254,6 @@ label_2aa174:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDManager_allocBufRun_0x2ace48, 0x2ace48u, 0x2aa19cu)) {
         return;
     }
-    ctx->pc = 0x2AA19Cu;
 label_2aa19c:
     // 0x2aa19c: 0x10400009  beqz        $v0, . + 4 + (0x9 << 2)
     ctx->pc = 0x2AA19Cu;
@@ -290,7 +287,6 @@ label_2aa1a8:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_buildEntries_0x2aa1e0, 0x2aa1e0u, 0x2aa1b4u)) {
         return;
     }
-    ctx->pc = 0x2AA1B4u;
 label_2aa1b4:
     // 0x2aa1b4: 0xc0aa920  jal         func_2AA480
     SET_GPR_U32(ctx, 31, 0x2AA1BCu);
@@ -303,7 +299,6 @@ label_2aa1b4:
     if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_linkParents_0x2aa480, 0x2aa480u, 0x2aa1bcu)) {
         return;
     }
-    ctx->pc = 0x2AA1BCu;
 label_2aa1bc:
     // 0x2aa1bc: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x2AA1BCu;
@@ -320,10 +315,8 @@ label_2aa1bc:
             goto label_2aa1c8;
         }
     }
-    ctx->pc = 0x2AA1C4u;
 label_2aa1c4:
     // 0x2aa1c4: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2aa1c4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2aa1c8:
     // 0x2aa1c8: 0x7bb00020  lq          $s0, 0x20($sp)

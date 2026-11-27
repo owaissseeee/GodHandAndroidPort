@@ -14,12 +14,11 @@ namespace gh_r501
 {
 // Function: StateFire__9EnemyShipRQ29EnemyShip4Ship
 // Address: 0x79fa80 - 0x79fa88
-void StateFire__9EnemyShipRQ29EnemyShip4Ship_0x79fa80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void StateFire__9EnemyShipRQ29EnemyShip4Ship_0x79fa80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("StateFire__9EnemyShipRQ29EnemyShip4Ship_0x79fa80");
 #endif
 
-    ctx->pc = 0x79fa80u;
 
     // 0x79fa80: 0x3e00008  jr          $ra
     ctx->pc = 0x79FA80u;

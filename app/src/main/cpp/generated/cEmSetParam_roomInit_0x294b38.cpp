@@ -13,7 +13,7 @@
 
 // Function: cEmSetParam_roomInit
 // Address: 0x294b38 - 0x294b60
-void cEmSetParam_roomInit_0x294b38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmSetParam_roomInit_0x294b38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmSetParam_roomInit_0x294b38");
 #endif
@@ -47,7 +47,6 @@ void cEmSetParam_roomInit_0x294b38(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &cEmSetParam_resetRoom_0x295600, 0x295600u, 0x294b50u)) {
         return;
     }
-    ctx->pc = 0x294B50u;
 label_294b50:
     // 0x294b50: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x294b50u;

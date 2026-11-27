@@ -59,6 +59,7 @@ static TouchRingBuffer s_queue;
 static std::atomic<bool> s_enabled{true};
 static std::atomic<uint32_t> s_activeMenuState{MENU_NONE};
 static std::atomic<bool> s_pendingBack{false};
+static std::atomic<bool> s_pendingCutsceneSkip{false};
 
 // Shared debug state for Kotlin overlay
 static std::atomic<int32_t> s_dbgScreenId{0};
@@ -225,6 +226,10 @@ bool handleBackPressed() {
     return true;
 }
 
+void triggerCutsceneSkip() {
+    s_pendingCutsceneSkip.store(true, std::memory_order_release);
+}
+
 void queueTouchEvent(TouchAction action, float screenX, float screenY, float dx, float dy) {
     if (!s_enabled.load(std::memory_order_relaxed)) {
         return;
@@ -358,11 +363,14 @@ static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
     std::memcpy(&room, rdram + (kRoomAddr & 0x01FFFFFFu), sizeof(room));
     const bool isTitleRoom = (room == 20 || room == 0x14);
     const bool hasTitleFlag = ((flags5E4 & kStaTitleBit) != 0);
+    const bool hasCutsceneOrMovie = ((flags5E4 & (kStaEventBit | kStaMovieBit)) != 0u);
 
     // RULE 2: CASINO & SHOP EXCLUSION - User requested regular virtual controller in casino and shop
-    // (Never exclude the Title screen via kStaSoftEventBit)
-    if (room == 22 || room == 23 || room == 0x16 || room == 0x17 ||
-        (!isTitleRoom && !hasTitleFlag && (flags5E4 & kStaSoftEventBit))) {
+    // Real-time game cutscenes call cScenario_startSoftEvent (kStaSoftEventBit) right before setting
+    // kStaEventBit, so never let Rule 2 short-circuit active cutscenes or FMV playback.
+    if (!hasCutsceneOrMovie &&
+        (room == 22 || room == 23 || room == 0x16 || room == 0x17 ||
+         (!isTitleRoom && !hasTitleFlag && (flags5E4 & kStaSoftEventBit)))) {
         return MENU_NONE;
     }
 
@@ -427,7 +435,7 @@ static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
                     default: break;
                 }
             }
-            if (!isTitleRoom && !hasTitleFlag) {
+            if (!isTitleRoom && !hasTitleFlag && !hasCutsceneOrMovie) {
                 return MENU_NONE;
             }
         }
@@ -435,9 +443,13 @@ static uint32_t detectMenuState(uint8_t* rdram, uint32_t& outMenuMgrPtr) {
 
     // RULE 5: Title Screen State check via cR020 or flags5E4 kStaTitleBit
     uint32_t r020 = findTitleObj(rdram);
-    if ((isTitleRoom || hasTitleFlag) && (r020 != 0 || hasTitleFlag)) {
+    if ((isTitleRoom || hasTitleFlag) && (r020 != 0 || hasTitleFlag) && !(flags5E4 & kStaMovieBit)) {
         outMenuMgrPtr = r020;
         return MENU_TITLE;
+    }
+
+    if (hasCutsceneOrMovie) {
+        return MENU_NONE | MENU_FLAG_CUTSCENE_ACTIVE;
     }
 
     return MENU_NONE;
@@ -707,6 +719,14 @@ void frameStart(uint8_t* rdram) {
             s_pendingTargetId = -999;
             s_pendingSubMgr = 0;
         }
+    }
+
+    if ((activeState & MENU_FLAG_CUTSCENE_ACTIVE) != 0u) {
+        if (s_pendingCutsceneSkip.exchange(false, std::memory_order_relaxed)) {
+            queueSingleButton(kPadStart, 6);
+        }
+    } else {
+        s_pendingCutsceneSkip.store(false, std::memory_order_relaxed);
     }
 
     // Zero-overhead during normal gameplay:

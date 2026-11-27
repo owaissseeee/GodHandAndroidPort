@@ -13,7 +13,7 @@
 
 // Function: func_00374720
 // Address: 0x374720 - 0x374820
-void func_00374720_0x374720(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00374720_0x374720(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00374720_0x374720");
 #endif
@@ -78,7 +78,6 @@ void func_00374720_0x374720(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x374748: 0x24c30024  addiu       $v1, $a2, 0x24
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 6), 36));
     // 0x37474c: 0x282d  daddu       $a1, $zero, $zero
-    ctx->pc = 0x37474cu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_374750:
     // 0x374750: 0x46016832  c.eq.s      $f13, $f1
@@ -137,7 +136,6 @@ label_374750:
             goto label_374788;
         }
     }
-    ctx->pc = 0x37477Cu;
 label_37477c:
     // 0x37477c: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x37477Cu;
@@ -154,10 +152,8 @@ label_37477c:
             goto label_374788;
         }
     }
-    ctx->pc = 0x374784u;
 label_374784:
     // 0x374784: 0x24c7001c  addiu       $a3, $a2, 0x1C
-    ctx->pc = 0x374784u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 6), 28));
 label_374788:
     // 0x374788: 0xe4600000  swc1        $f0, 0x0($v1)
@@ -195,7 +191,6 @@ label_374788:
             goto label_374750;
         }
     }
-    ctx->pc = 0x3747ACu;
 label_3747ac:
     // 0x3747ac: 0x3e00008  jr          $ra
     ctx->pc = 0x3747ACu;
@@ -210,7 +205,6 @@ label_3747ac:
         return;
         #endif
     }
-    ctx->pc = 0x3747B4u;
 label_3747b4:
     // 0x3747b4: 0x44800000  mtc1        $zero, $f0
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
@@ -276,7 +270,6 @@ label_3747b4:
             goto label_374804;
         }
     }
-    ctx->pc = 0x3747F0u;
 label_3747f0:
     // 0x3747f0: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x3747F0u;
@@ -293,14 +286,12 @@ label_3747f0:
             goto label_374804;
         }
     }
-    ctx->pc = 0x3747F8u;
 label_3747f8:
     // 0x3747f8: 0x46006806  mov.s       $f0, $f13
     ctx->f[0] = FPU_MOV_S(ctx->f[13]);
     // 0x3747fc: 0x52080  sll         $a0, $a1, 2
     SET_GPR_S32(ctx, 4, (int32_t)SLL32(GPR_U32(ctx, 5), 2));
     // 0x374800: 0x24c7001c  addiu       $a3, $a2, 0x1C
-    ctx->pc = 0x374800u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 6), 28));
 label_374804:
     // 0x374804: 0xc41021  addu        $v0, $a2, $a0

@@ -13,7 +13,7 @@
 
 // Function: __get_dynamic_handler_chain
 // Address: 0x320418 - 0x320440
-void ps2___get_dynamic_handler_chain_0x320418(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___get_dynamic_handler_chain_0x320418(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___get_dynamic_handler_chain_0x320418");
 #endif
@@ -34,15 +34,12 @@ void ps2___get_dynamic_handler_chain_0x320418(uint8_t* rdram, R5900Context* ctx,
         }
     }
 
-    ctx->pc = 0x320418u;
 
 label_320418:
     // 0x320418: 0x3c03003c  lui         $v1, 0x3C
-    ctx->pc = 0x320418u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)60 << 16));
 label_32041c:
     // 0x32041c: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x32041cu;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_320420:
     // 0x320420: 0x8c62490c  lw          $v0, 0x490C($v1)
@@ -68,7 +65,6 @@ label_32042c:
             return;
         }
     }
-    ctx->pc = 0x320430u;
 label_320430:
     // 0x320430: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x320430u;

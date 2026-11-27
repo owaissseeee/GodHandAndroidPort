@@ -13,7 +13,7 @@
 
 // Function: FindNodeByHit_2C2490
 // Address: 0x2c2490 - 0x2c2568
-void FindNodeByHit_2C2490_0x2c2490(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FindNodeByHit_2C2490_0x2c2490(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FindNodeByHit_2C2490_0x2c2490");
 #endif
@@ -72,7 +72,6 @@ void FindNodeByHit_2C2490_0x2c2490(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &cSceAtManager_getUnitList_0x2c30c0, 0x2c30c0u, 0x2c24c8u)) {
         return;
     }
-    ctx->pc = 0x2C24C8u;
 label_2c24c8:
     // 0x2c24c8: 0x10000016  b           . + 4 + (0x16 << 2)
     ctx->pc = 0x2C24C8u;
@@ -89,7 +88,6 @@ label_2c24c8:
             goto label_2c2524;
         }
     }
-    ctx->pc = 0x2C24D0u;
 label_2c24d0:
     // 0x2c24d0: 0x3042ff01  andi        $v0, $v0, 0xFF01
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)65281);
@@ -123,7 +121,6 @@ label_2c24d0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002C1D68_0x2c1d68, 0x2c1d68u, 0x2c24ecu)) {
         return;
     }
-    ctx->pc = 0x2C24ECu;
 label_2c24ec:
     // 0x2c24ec: 0x3a0202d  daddu       $a0, $sp, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
@@ -138,7 +135,6 @@ label_2c24ec:
     if (!runtime->callDirectStatic(rdram, ctx, &cArea_HitCheck_1F83E8_0x1f83e8, 0x1f83e8u, 0x2c24f8u)) {
         return;
     }
-    ctx->pc = 0x2C24F8u;
 label_2c24f8:
     // 0x2c24f8: 0x5454000b  bnel        $v0, $s4, . + 4 + (0xB << 2)
     ctx->pc = 0x2C24F8u;
@@ -200,10 +196,8 @@ label_2c24f8:
             goto label_2c2540;
         }
     }
-    ctx->pc = 0x2C2524u;
 label_2c2524:
     // 0x2c2524: 0x200282d  daddu       $a1, $s0, $zero
-    ctx->pc = 0x2c2524u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_2c2528:
     // 0x2c2528: 0xc0b0c32  jal         func_2C30C8
@@ -217,7 +211,6 @@ label_2c2528:
     if (!runtime->callDirectStatic(rdram, ctx, &cSceAtManager_getNextUnit_0x2c30c8, 0x2c30c8u, 0x2c2530u)) {
         return;
     }
-    ctx->pc = 0x2C2530u;
 label_2c2530:
     // 0x2c2530: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -240,7 +233,6 @@ label_2c2530:
         }
     }
     // 0x2c253c: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2c253cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2c2540:
     // 0x2c2540: 0x7bb00090  lq          $s0, 0x90($sp)

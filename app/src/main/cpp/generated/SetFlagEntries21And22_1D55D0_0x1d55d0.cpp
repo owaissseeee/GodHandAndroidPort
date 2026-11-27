@@ -13,7 +13,7 @@
 
 // Function: SetFlagEntries21And22_1D55D0
 // Address: 0x1d55d0 - 0x1d5610
-void SetFlagEntries21And22_1D55D0_0x1d55d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetFlagEntries21And22_1D55D0_0x1d55d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetFlagEntries21And22_1D55D0_0x1d55d0");
 #endif
@@ -50,7 +50,6 @@ void SetFlagEntries21And22_1D55D0_0x1d55d0(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &SetFlagOnEntries7C_1D51B8_0x1d51b8, 0x1d51b8u, 0x1d55ecu)) {
         return;
     }
-    ctx->pc = 0x1D55ECu;
 label_1d55ec:
     // 0x1d55ec: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -67,7 +66,6 @@ label_1d55ec:
     if (!runtime->callDirectStatic(rdram, ctx, &SetFlagOnEntries7C_1D51B8_0x1d51b8, 0x1d51b8u, 0x1d55fcu)) {
         return;
     }
-    ctx->pc = 0x1D55FCu;
 label_1d55fc:
     // 0x1d55fc: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1d55fcu;

@@ -13,7 +13,7 @@
 
 // Function: cMessage_updateAll
 // Address: 0x2aefa8 - 0x2af028
-void cMessage_updateAll_0x2aefa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessage_updateAll_0x2aefa8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessage_updateAll_0x2aefa8");
 #endif
@@ -81,7 +81,6 @@ void cMessage_updateAll_0x2aefa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         }
     }
     // 0x2aefdc: 0x0  nop
-    ctx->pc = 0x2aefdcu;
     // NOP
 label_2aefe0:
     // 0x2aefe0: 0xc0ac90e  jal         func_2B2438
@@ -95,7 +94,6 @@ label_2aefe0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B2438_0x2b2438, 0x2b2438u, 0x2aefe8u)) {
         return;
     }
-    ctx->pc = 0x2AEFE8u;
 label_2aefe8:
     // 0x2aefe8: 0x9202000c  lbu         $v0, 0xC($s0)
     ctx->pc = 0x2aefe8u;
@@ -130,10 +128,8 @@ label_2aefe8:
     if (!runtime->callDirectStatic(rdram, ctx, &cMessage_releaseWin_0x2aef10, 0x2aef10u, 0x2af004u)) {
         return;
     }
-    ctx->pc = 0x2AF004u;
 label_2af004:
     // 0x2af004: 0x40802d  daddu       $s0, $v0, $zero
-    ctx->pc = 0x2af004u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_2af008:
     // 0x2af008: 0x1600fff5  bnez        $s0, . + 4 + (-0xB << 2)
@@ -148,7 +144,6 @@ label_2af008:
             goto label_2aefe0;
         }
     }
-    ctx->pc = 0x2AF010u;
 label_2af010:
     // 0x2af010: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2af010u;

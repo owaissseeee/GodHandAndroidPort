@@ -13,7 +13,7 @@
 
 // Function: IsStateVal17_10B648
 // Address: 0x10b648 - 0x10b670
-void IsStateVal17_10B648_0x10b648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IsStateVal17_10B648_0x10b648(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IsStateVal17_10B648_0x10b648");
 #endif
@@ -55,7 +55,6 @@ void IsStateVal17_10B648_0x10b648(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         return;
         #endif
     }
-    ctx->pc = 0x10B664u;
 label_10b664:
     // 0x10b664: 0x3e00008  jr          $ra
     ctx->pc = 0x10B664u;

@@ -13,7 +13,7 @@
 
 // Function: cSnd_SetBgmTblNo
 // Address: 0x2d0630 - 0x2d0658
-void cSnd_SetBgmTblNo_0x2d0630(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_SetBgmTblNo_0x2d0630(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_SetBgmTblNo_0x2d0630");
 #endif
@@ -39,7 +39,6 @@ void cSnd_SetBgmTblNo_0x2d0630(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &func_002D0658_0x2d0658, 0x2d0658u, 0x2d0644u)) {
         return;
     }
-    ctx->pc = 0x2D0644u;
 label_2d0644:
     // 0x2d0644: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2d0644u;

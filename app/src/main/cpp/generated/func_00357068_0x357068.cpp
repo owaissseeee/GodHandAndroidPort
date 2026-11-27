@@ -13,7 +13,7 @@
 
 // Function: func_00357068
 // Address: 0x357068 - 0x3570d0
-void func_00357068_0x357068(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00357068_0x357068(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00357068_0x357068");
 #endif
@@ -69,7 +69,6 @@ void func_00357068_0x357068(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_0035B4A0_0x35b4a0, 0x35b4a0u, 0x35709cu)) {
         return;
     }
-    ctx->pc = 0x35709Cu;
 label_35709c:
     // 0x35709c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -94,7 +93,6 @@ label_35709c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3570D0u, 0x3570B0u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x3570B8u;
 label_3570b8:
     // 0x3570b8: 0xdfb00000  ld          $s0, 0x0($sp)
     ctx->pc = 0x3570b8u;

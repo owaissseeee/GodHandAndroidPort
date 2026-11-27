@@ -13,7 +13,7 @@
 
 // Function: cMessage_ckMessage
 // Address: 0x2aeda0 - 0x2aedc0
-void cMessage_ckMessage_0x2aeda0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessage_ckMessage_0x2aeda0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessage_ckMessage_0x2aeda0");
 #endif
@@ -42,7 +42,6 @@ void cMessage_ckMessage_0x2aeda0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AED40_0x2aed40, 0x2aed40u, 0x2aedb0u)) {
         return;
     }
-    ctx->pc = 0x2AEDB0u;
 label_2aedb0:
     // 0x2aedb0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2aedb0u;

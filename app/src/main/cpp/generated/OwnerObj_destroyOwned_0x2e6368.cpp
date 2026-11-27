@@ -13,7 +13,7 @@
 
 // Function: OwnerObj_destroyOwned
 // Address: 0x2e6368 - 0x2e63c0
-void OwnerObj_destroyOwned_0x2e6368(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void OwnerObj_destroyOwned_0x2e6368(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("OwnerObj_destroyOwned_0x2e6368");
 #endif
@@ -71,7 +71,6 @@ void OwnerObj_destroyOwned_0x2e6368(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     if (!runtime->callDirectStatic(rdram, ctx, &ReleaseObj_0x312708, 0x312708u, 0x2e639cu)) {
         return;
     }
-    ctx->pc = 0x2E639Cu;
 label_2e639c:
     // 0x2e639c: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -86,7 +85,6 @@ label_2e639c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002FBE28_0x2fbe28, 0x2fbe28u, 0x2e63a8u)) {
         return;
     }
-    ctx->pc = 0x2E63A8u;
 label_2e63a8:
     // 0x2e63a8: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2e63a8u;

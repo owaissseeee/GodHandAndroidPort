@@ -8,20 +8,20 @@ class PS2Runtime;
 
 namespace gh_r802
 {
-void ps2___builtin_new_0x799180(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___builtin_vec_new_0x7991a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___builtin_delete_0x7991d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___builtin_vec_delete_0x7991f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void R802Init__Fv_0x799220(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void R802Move__Fv_0x7992f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void getEmNum__5cR802_0x7992f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void checkBattle1stArea__5cR802_0x7993a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void startBattle2ndArea__5cR802_0x799c30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void checkBattle2ndArea__5cR802_0x799d48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void initAfter2ndArea__5cR802_0x79a5d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___do_global_dtors_0x79ab40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___do_global_ctors_0x79ab98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___main_0x79ac48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___lexicographical_compare_3way__H2ZPCScZPCSc_X01X01X11X11_i_0x79ac68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void lexicographical_compare__H2ZPCScZPCSc_X01X01X11X11_b_0x79acc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
+void ps2___builtin_new_0x799180(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___builtin_vec_new_0x7991a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___builtin_delete_0x7991d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___builtin_vec_delete_0x7991f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void R802Init__Fv_0x799220(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void R802Move__Fv_0x7992f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void getEmNum__5cR802_0x7992f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void checkBattle1stArea__5cR802_0x7993a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void startBattle2ndArea__5cR802_0x799c30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void checkBattle2ndArea__5cR802_0x799d48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void initAfter2ndArea__5cR802_0x79a5d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___do_global_dtors_0x79ab40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___do_global_ctors_0x79ab98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___main_0x79ac48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___lexicographical_compare_3way__H2ZPCScZPCSc_X01X01X11X11_i_0x79ac68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void lexicographical_compare__H2ZPCScZPCSc_X01X01X11X11_b_0x79acc8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
 } // namespace gh_r802

@@ -13,7 +13,7 @@
 
 // Function: ForwardVec3At30_147C60
 // Address: 0x147c60 - 0x147c88
-void ForwardVec3At30_147C60_0x147c60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardVec3At30_147C60_0x147c60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardVec3At30_147C60_0x147c60");
 #endif
@@ -48,7 +48,6 @@ void ForwardVec3At30_147C60_0x147c60(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_00150710_0x150710, 0x150710u, 0x147c78u)) {
         return;
     }
-    ctx->pc = 0x147C78u;
 label_147c78:
     // 0x147c78: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x147c78u;

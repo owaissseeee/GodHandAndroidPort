@@ -138,6 +138,10 @@ namespace
         }
         return static_cast<uint32_t>((g_vif1DownloadFifo.size() + 15u) / 16u);
     }
+
+    const bool g_readIoHistEnabled = [] { const char *v = std::getenv("PS2X_IO_READ_HIST"); return v && *v == '1'; }();
+    const bool g_gsPrivWriteHistEnabled = [] { const char *v = std::getenv("PS2X_GS_PRIV_WRITE_HIST"); return v && *v == '1'; }();
+    const bool g_clearDmacLatch = [] { const char *v = std::getenv("PS2X_DMAC_CLEAR_LATCH"); return !v || *v != '0'; }();
 }
 
 // Lock-free pre-check: nothing to do unless a download started since the last one finished, or bytes are buffered.
@@ -603,10 +607,7 @@ bool PS2Memory::initialize(size_t ramSize)
     m_gifCopyCount.store(0, std::memory_order_relaxed);
     m_gsWriteCount.store(0, std::memory_order_relaxed);
     m_vifWriteCount.store(0, std::memory_order_relaxed);
-    {
-        std::lock_guard<std::mutex> lock(m_completedDmacMutex);
-        m_completedDmacCauses.clear();
-    }
+    m_completedDmacMask.store(0u, std::memory_order_relaxed);
     m_codeRegions.clear();
     m_path3Masked = false;
     m_path3MaskedFifo.clear();
@@ -1710,8 +1711,7 @@ void PS2Memory::write64(uint32_t address, uint64_t value)
     {
         const uint32_t regOff = (address - PS2_GS_PRIV_REG_BASE) & ~0x7u;
         // PS2X_GS_PRIV_WRITE_HIST=1: count of EE writes per GS privileged register, every 2^16 writes.
-        static const bool privHist = [] { const char *v = std::getenv("PS2X_GS_PRIV_WRITE_HIST"); return v && *v == '1'; }();
-        if (privHist)
+        if (g_gsPrivWriteHistEnabled)
         {
             static std::map<uint32_t, uint64_t> hist;
             static uint64_t total = 0u;
@@ -1813,9 +1813,10 @@ void PS2Memory::write128(uint32_t address, __m128i value)
         _mm_storeu_si128(reinterpret_cast<__m128i *>(fifoData), value);
         if (ps2x::asyncvif::active(*this))
         {
-            std::vector<ps2x::asyncvif::Item> items(1);
-            items[0].kind = ps2x::asyncvif::ItemKind::Vif1;
-            items[0].data.assign(fifoData, fifoData + sizeof(fifoData));
+            std::vector<ps2x::asyncvif::Item> items = ps2x::asyncvif::takeItemBag();
+            std::vector<uint8_t> buf = ps2x::asyncvif::takeBuffer();
+            buf.assign(fifoData, fifoData + sizeof(fifoData));
+            items.push_back(ps2x::asyncvif::Item{ps2x::asyncvif::ItemKind::Vif1, std::move(buf)});
             ps2x::asyncvif::enqueue(*this, std::move(items));
             return;
         }
@@ -2031,8 +2032,7 @@ bool PS2Memory::writeIORegister(uint32_t address, uint32_t value)
         // that handler first, so the 97-macroblock part converted macroblocks 0-96 into the end of the picture: every
         // FMV frame after the first came out shifted, with a black band (docs/PROGRESS.md §92). PS2X_DMAC_CLEAR_LATCH=0
         // turns it off.
-        static const bool clearLatch = [] { const char *v = std::getenv("PS2X_DMAC_CLEAR_LATCH"); return !v || *v != '0'; }();
-        if (clearLatch && (value & 0x3FFu) != 0u)
+        if (g_clearDmacLatch && (value & 0x3FFu) != 0u)
             ps2xEeClearLatchedDmac(value & 0x3FFu);
         return true;
     }
@@ -2776,7 +2776,8 @@ void PS2Memory::completeDmacChannel(uint32_t channelBase, uint32_t cause)
 void PS2Memory::processPendingTransfers()
 {
     const bool asyncVif = ps2x::asyncvif::active(*this);
-    std::vector<ps2x::asyncvif::Item> asyncItems;
+    std::vector<ps2x::asyncvif::Item> asyncItems =
+        asyncVif ? ps2x::asyncvif::takeItemBag() : std::vector<ps2x::asyncvif::Item>{};
     auto asyncCopy = [&](ps2x::asyncvif::ItemKind kind, const uint8_t *data, uint32_t size)
     {
         ps2x::asyncvif::Item item;
@@ -3018,7 +3019,12 @@ void PS2Memory::processPendingTransfers()
     m_pendingVif1Transfers.clear();
 
     if (asyncVif)
-        ps2x::asyncvif::enqueue(*this, std::move(asyncItems));
+    {
+        if (!asyncItems.empty())
+            ps2x::asyncvif::enqueue(*this, std::move(asyncItems));
+        else if (asyncItems.capacity() != 0u)
+            ps2x::asyncvif::recycleItemBag(std::move(asyncItems));
+    }
     else if (m_gifArbiter)
         m_gifArbiter->drain();
 
@@ -3067,19 +3073,28 @@ void PS2Memory::processPendingTransfers()
 
 void PS2Memory::queueCompletedDmacCause(uint32_t cause)
 {
-    std::lock_guard<std::mutex> lock(m_completedDmacMutex);
-    m_completedDmacCauses.push_back(cause);
-    m_hasCompletedDmac.store(true, std::memory_order_release);
+    if (cause < 32u)
+        m_completedDmacMask.fetch_or(1u << cause, std::memory_order_release);
 }
 
 std::vector<uint32_t> PS2Memory::consumeCompletedDmacCauses()
 {
-    if (!m_hasCompletedDmac.load(std::memory_order_acquire))
+    uint32_t mask = consumeCompletedDmacMask();
+    if (mask == 0u)
         return {};
-    std::lock_guard<std::mutex> lock(m_completedDmacMutex);
     std::vector<uint32_t> causes;
-    causes.swap(m_completedDmacCauses);
-    m_hasCompletedDmac.store(false, std::memory_order_release);
+    while (mask != 0u)
+    {
+#if defined(__clang__) || defined(__GNUC__)
+        const uint32_t bit = static_cast<uint32_t>(__builtin_ctz(mask));
+#else
+        uint32_t bit = 0u;
+        while (((mask >> bit) & 1u) == 0u)
+            ++bit;
+#endif
+        mask &= mask - 1u;
+        causes.push_back(bit);
+    }
     return causes;
 }
 
@@ -3492,8 +3507,7 @@ uint32_t PS2Memory::readIORegister(uint32_t address)
     if (address >= 0x10000000u && address < 0x10002000u)
         ps2xEeFlushDeferredCycles();
     // PS2X_IO_READ_HIST=1: the 12 most read I/O registers every 2^22 reads (finds guest polling loops).
-    static const bool readHist = [] { const char *v = std::getenv("PS2X_IO_READ_HIST"); return v && *v == '1'; }();
-    if (readHist)
+    if (g_readIoHistEnabled)
     {
         static std::unordered_map<uint32_t, uint64_t> hist;
         static uint64_t total = 0u;

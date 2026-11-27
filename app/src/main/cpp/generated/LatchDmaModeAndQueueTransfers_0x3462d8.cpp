@@ -13,7 +13,7 @@
 
 // Function: LatchDmaModeAndQueueTransfers
 // Address: 0x3462d8 - 0x346368
-void LatchDmaModeAndQueueTransfers_0x3462d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void LatchDmaModeAndQueueTransfers_0x3462d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("LatchDmaModeAndQueueTransfers_0x3462d8");
 #endif
@@ -48,7 +48,6 @@ void LatchDmaModeAndQueueTransfers_0x3462d8(uint8_t* rdram, R5900Context* ctx, P
     if (!runtime->callDirectStatic(rdram, ctx, &GetD003EE078_3463F8_0x3463f8, 0x3463f8u, 0x3462f0u)) {
         return;
     }
-    ctx->pc = 0x3462F0u;
 label_3462f0:
     // 0x3462f0: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -95,7 +94,6 @@ label_3462f0:
     if (!runtime->callDirectStatic(rdram, ctx, &mwrsc_WaitSprDmaEnd_0x346478, 0x346478u, 0x346318u)) {
         return;
     }
-    ctx->pc = 0x346318u;
 label_346318:
     // 0x346318: 0x3c060076  lui         $a2, 0x76
     SET_GPR_S32(ctx, 6, (int32_t)((uint32_t)118 << 16));
@@ -114,7 +112,6 @@ label_346318:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00346498_0x346498, 0x346498u, 0x34632cu)) {
         return;
     }
-    ctx->pc = 0x34632Cu;
 label_34632c:
     // 0x34632c: 0xc0d1998  jal         func_346660
     SET_GPR_U32(ctx, 31, 0x346334u);
@@ -127,7 +124,6 @@ label_34632c:
     if (!runtime->callDirectStatic(rdram, ctx, &MWDMA_WaitEnd_0x346660, 0x346660u, 0x346334u)) {
         return;
     }
-    ctx->pc = 0x346334u;
 label_346334:
     // 0x346334: 0x3c040076  lui         $a0, 0x76
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)118 << 16));
@@ -146,7 +142,6 @@ label_346334:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00346578_0x346578, 0x346578u, 0x346348u)) {
         return;
     }
-    ctx->pc = 0x346348u;
 label_346348:
     // 0x346348: 0xc0d1998  jal         func_346660
     SET_GPR_U32(ctx, 31, 0x346350u);
@@ -159,7 +154,6 @@ label_346348:
     if (!runtime->callDirectStatic(rdram, ctx, &MWDMA_WaitEnd_0x346660, 0x346660u, 0x346350u)) {
         return;
     }
-    ctx->pc = 0x346350u;
 label_346350:
     // 0x346350: 0xae300000  sw          $s0, 0x0($s1)
     ctx->pc = 0x346350u;

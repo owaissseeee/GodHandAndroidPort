@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getCasinoTicketNum
 // Address: 0x1fc3d0 - 0x1fc3e8
-void cCoreSave_getCasinoTicketNum_0x1fc3d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getCasinoTicketNum_0x1fc3d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getCasinoTicketNum_0x1fc3d0");
 #endif

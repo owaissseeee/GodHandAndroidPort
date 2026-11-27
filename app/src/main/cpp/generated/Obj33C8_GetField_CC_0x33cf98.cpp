@@ -13,7 +13,7 @@
 
 // Function: Obj33C8_GetField_CC
 // Address: 0x33cf98 - 0x33cfa0
-void Obj33C8_GetField_CC_0x33cf98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj33C8_GetField_CC_0x33cf98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj33C8_GetField_CC_0x33cf98");
 #endif

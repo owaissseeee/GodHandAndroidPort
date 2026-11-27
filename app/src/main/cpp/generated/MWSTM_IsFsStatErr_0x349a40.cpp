@@ -13,7 +13,7 @@
 
 // Function: MWSTM_IsFsStatErr
 // Address: 0x349a40 - 0x349a68
-void MWSTM_IsFsStatErr_0x349a40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MWSTM_IsFsStatErr_0x349a40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MWSTM_IsFsStatErr_0x349a40");
 #endif
@@ -37,7 +37,6 @@ void MWSTM_IsFsStatErr_0x349a40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &func_00328098_0x328098, 0x328098u, 0x349a50u)) {
         return;
     }
-    ctx->pc = 0x349A50u;
 label_349a50:
     // 0x349a50: 0x38420004  xori        $v0, $v0, 0x4
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)4);

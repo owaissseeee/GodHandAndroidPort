@@ -13,7 +13,7 @@
 
 // Function: cSnd_GetBgmData
 // Address: 0x2d2d98 - 0x2d2db0
-void cSnd_GetBgmData_0x2d2d98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_GetBgmData_0x2d2d98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_GetBgmData_0x2d2d98");
 #endif

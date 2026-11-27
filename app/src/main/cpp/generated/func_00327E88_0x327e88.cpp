@@ -13,7 +13,7 @@
 
 // Function: func_00327E88
 // Address: 0x327e88 - 0x327f00
-void func_00327E88_0x327e88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00327E88_0x327e88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00327E88_0x327e88");
 #endif
@@ -65,7 +65,6 @@ void func_00327E88_0x327e88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Obj3290_Tramp_0033E678_9028_0x329028, 0x329028u, 0x327ebcu)) {
         return;
     }
-    ctx->pc = 0x327EBCu;
 label_327ebc:
     // 0x327ebc: 0x121ac0  sll         $v1, $s2, 11
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 18), 11));

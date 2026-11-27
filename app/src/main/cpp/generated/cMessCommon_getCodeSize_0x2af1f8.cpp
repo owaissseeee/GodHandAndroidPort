@@ -13,7 +13,7 @@
 
 // Function: cMessCommon_getCodeSize
 // Address: 0x2af1f8 - 0x2af218
-void cMessCommon_getCodeSize_0x2af1f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessCommon_getCodeSize_0x2af1f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessCommon_getCodeSize_0x2af1f8");
 #endif
@@ -57,7 +57,6 @@ void cMessCommon_getCodeSize_0x2af1f8(uint8_t* rdram, R5900Context* ctx, PS2Runt
         return;
         #endif
     }
-    ctx->pc = 0x2AF210u;
 label_2af210:
     // 0x2af210: 0x3e00008  jr          $ra
     ctx->pc = 0x2AF210u;

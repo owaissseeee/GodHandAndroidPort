@@ -13,7 +13,7 @@
 
 // Function: _$_8iostream
 // Address: 0x389c38 - 0x389d50
-void ps2____8iostream_0x389c38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2____8iostream_0x389c38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2____8iostream_0x389c38");
 #endif
@@ -209,7 +209,6 @@ label_389c94:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_vec_delete_0x30f5c8, 0x30f5c8u, 0x389d24u)) {
         return;
     }
-    ctx->pc = 0x389D24u;
 label_389d24:
     // 0x389d24: 0x32220001  andi        $v0, $s1, 0x1
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 17) & (uint64_t)(uint16_t)1);
@@ -239,7 +238,6 @@ label_389d24:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x389d38u)) {
         return;
     }
-    ctx->pc = 0x389D38u;
 label_389d38:
     // 0x389d38: 0xdfbf0040  ld          $ra, 0x40($sp)
     ctx->pc = 0x389d38u;

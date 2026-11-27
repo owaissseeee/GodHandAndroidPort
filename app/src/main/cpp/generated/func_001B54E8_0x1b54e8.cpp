@@ -14,7 +14,7 @@
 
 // Function: func_001B54E8
 // Address: 0x1b54e8 - 0x1b55a0
-void func_001B54E8_0x1b54e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001B54E8_0x1b54e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001B54E8_0x1b54e8");
 #endif
@@ -96,7 +96,6 @@ void func_001B54E8_0x1b54e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshColorFromLayer_0x1b71a0, 0x1b71a0u, 0x1b5530u)) {
         return;
     }
-    ctx->pc = 0x1B5530u;
 label_1b5530:
     // 0x1b5530: 0x8e020600  lw          $v0, 0x600($s0)
     ctx->pc = 0x1b5530u;
@@ -120,7 +119,6 @@ label_1b5530:
             goto label_1b5590;
         }
     }
-    ctx->pc = 0x1B5544u;
 label_1b5544:
     // 0x1b5544: 0x3c013dd6  lui         $at, 0x3DD6
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)15830 << 16));
@@ -145,7 +143,6 @@ label_1b5544:
             goto label_1b555c;
         }
     }
-    ctx->pc = 0x1B555Cu;
 label_1b555c:
     // 0x1b555c: 0x920202b4  lbu         $v0, 0x2B4($s0)
     ctx->pc = 0x1b555cu;
@@ -183,10 +180,8 @@ label_1b555c:
             goto label_1b5578;
         }
     }
-    ctx->pc = 0x1B5574u;
 label_1b5574:
     // 0x1b5574: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1b5574u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1b5578:
     // 0x1b5578: 0xc4400104  lwc1        $f0, 0x104($v0)

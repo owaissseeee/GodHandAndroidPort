@@ -13,7 +13,7 @@
 
 // Function: SFD_SetAdxtPara
 // Address: 0x349ce0 - 0x349d38
-void SFD_SetAdxtPara_0x349ce0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFD_SetAdxtPara_0x349ce0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFD_SetAdxtPara_0x349ce0");
 #endif

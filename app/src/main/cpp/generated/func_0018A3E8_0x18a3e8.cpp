@@ -13,7 +13,7 @@
 
 // Function: func_0018A3E8
 // Address: 0x18a3e8 - 0x18a548
-void func_0018A3E8_0x18a3e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0018A3E8_0x18a3e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0018A3E8_0x18a3e8");
 #endif
@@ -70,7 +70,6 @@ void func_0018A3E8_0x18a3e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshDispFromLayer_0x1b7280, 0x1b7280u, 0x18a41cu)) {
         return;
     }
-    ctx->pc = 0x18A41Cu;
 label_18a41c:
     // 0x18a41c: 0x240202d  daddu       $a0, $s2, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -87,7 +86,6 @@ label_18a41c:
     if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshDispFromLayer_0x1b7280, 0x1b7280u, 0x18a42cu)) {
         return;
     }
-    ctx->pc = 0x18A42Cu;
 label_18a42c:
     // 0x18a42c: 0x200282d  daddu       $a1, $s0, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -104,7 +102,6 @@ label_18a42c:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField380Bit2000ForTag_1B7300_0x1b7300, 0x1b7300u, 0x18a43cu)) {
         return;
     }
-    ctx->pc = 0x18A43Cu;
 label_18a43c:
     // 0x18a43c: 0x240202d  daddu       $a0, $s2, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -121,7 +118,6 @@ label_18a43c:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField380Bit2000ForTag_1B7300_0x1b7300, 0x1b7300u, 0x18a44cu)) {
         return;
     }
-    ctx->pc = 0x18A44Cu;
 label_18a44c:
     // 0x18a44c: 0x8e420250  lw          $v0, 0x250($s2)
     ctx->pc = 0x18a44cu;
@@ -206,7 +202,6 @@ label_18a44c:
         }
     }
     // 0x18a4c4: 0x0  nop
-    ctx->pc = 0x18a4c4u;
     // NOP
 label_18a4c8:
     // 0x18a4c8: 0x240202d  daddu       $a0, $s2, $zero
@@ -224,10 +219,8 @@ label_18a4c8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0018A130_0x18a130, 0x18a130u, 0x18a4d8u)) {
         return;
     }
-    ctx->pc = 0x18A4D8u;
 label_18a4d8:
     // 0x18a4d8: 0x26100001  addiu       $s0, $s0, 0x1
-    ctx->pc = 0x18a4d8u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 1));
 label_18a4dc:
     // 0x18a4dc: 0x262436c0  addiu       $a0, $s1, 0x36C0

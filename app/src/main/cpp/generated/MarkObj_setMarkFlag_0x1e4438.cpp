@@ -13,7 +13,7 @@
 
 // Function: MarkObj_setMarkFlag
 // Address: 0x1e4438 - 0x1e44a8
-void MarkObj_setMarkFlag_0x1e4438(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MarkObj_setMarkFlag_0x1e4438(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MarkObj_setMarkFlag_0x1e4438");
 #endif
@@ -80,7 +80,6 @@ void MarkObj_setMarkFlag_0x1e4438(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_1e449c;
         }
     }
-    ctx->pc = 0x1E4460u;
 label_1e4460:
     // 0x1e4460: 0x10a00006  beqz        $a1, . + 4 + (0x6 << 2)
     ctx->pc = 0x1E4460u;
@@ -123,7 +122,6 @@ label_1e4460:
             goto label_1e44a0;
         }
     }
-    ctx->pc = 0x1E447Cu;
 label_1e447c:
     // 0x1e447c: 0x8c840480  lw          $a0, 0x480($a0)
     ctx->pc = 0x1e447cu;
@@ -139,7 +137,6 @@ label_1e447c:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e4488u)) {
         return;
     }
-    ctx->pc = 0x1E4488u;
 label_1e4488:
     // 0x1e4488: 0x10000005  b           . + 4 + (0x5 << 2)
     ctx->pc = 0x1E4488u;
@@ -156,7 +153,6 @@ label_1e4488:
             goto label_1e44a0;
         }
     }
-    ctx->pc = 0x1E4490u;
 label_1e4490:
     // 0x1e4490: 0x8c840480  lw          $a0, 0x480($a0)
     ctx->pc = 0x1e4490u;
@@ -172,7 +168,6 @@ label_1e4490:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e449cu)) {
         return;
     }
-    ctx->pc = 0x1E449Cu;
 label_1e449c:
     // 0x1e449c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1e449cu;

@@ -13,7 +13,7 @@
 
 // Function: func_003234D0
 // Address: 0x3234d0 - 0x323568
-void func_003234D0_0x3234d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003234D0_0x3234d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003234D0_0x3234d0");
 #endif
@@ -42,7 +42,6 @@ void func_003234D0_0x3234d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_00323478_0x323478, 0x323478u, 0x3234e4u)) {
         return;
     }
-    ctx->pc = 0x3234E4u;
 label_3234e4:
     // 0x3234e4: 0x40802d  daddu       $s0, $v0, $zero
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -76,7 +75,6 @@ label_3234e4:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00327D00_0x327d00, 0x327d00u, 0x323500u)) {
         return;
     }
-    ctx->pc = 0x323500u;
 label_323500:
     // 0x323500: 0x24030001  addiu       $v1, $zero, 0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -100,7 +98,6 @@ label_323500:
             goto label_323528;
         }
     }
-    ctx->pc = 0x323514u;
 label_323514:
     // 0x323514: 0xc0cfc4c  jal         func_33F130
     ctx->pc = 0x323514u;
@@ -108,7 +105,6 @@ label_323514:
     if (!runtime->callDirectStatic(rdram, ctx, &func_0033F130_0x33f130, 0x33f130u, 0x32351cu)) {
         return;
     }
-    ctx->pc = 0x32351Cu;
 label_32351c:
     // 0x32351c: 0x1000000d  b           . + 4 + (0xD << 2)
     ctx->pc = 0x32351Cu;
@@ -126,7 +122,6 @@ label_32351c:
         }
     }
     // 0x323524: 0x0  nop
-    ctx->pc = 0x323524u;
     // NOP
 label_323528:
     // 0x323528: 0x24020200  addiu       $v0, $zero, 0x200
@@ -159,7 +154,6 @@ label_323528:
     ctx->pc = 0x32354cu;
     WRITE32(ADD32(GPR_U32(ctx, 16), 44), GPR_U32(ctx, 2));
     // 0x323550: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x323550u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_323554:
     // 0x323554: 0xdfb00000  ld          $s0, 0x0($sp)

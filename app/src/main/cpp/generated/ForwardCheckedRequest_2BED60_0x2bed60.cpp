@@ -13,7 +13,7 @@
 
 // Function: ForwardCheckedRequest_2BED60
 // Address: 0x2bed60 - 0x2bedc8
-void ForwardCheckedRequest_2BED60_0x2bed60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardCheckedRequest_2BED60_0x2bed60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardCheckedRequest_2BED60_0x2bed60");
 #endif
@@ -77,7 +77,6 @@ void ForwardCheckedRequest_2BED60_0x2bed60(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BEBC8_0x2bebc8, 0x2bebc8u, 0x2bed98u)) {
         return;
     }
-    ctx->pc = 0x2BED98u;
 label_2bed98:
     // 0x2bed98: 0x240282d  daddu       $a1, $s2, $zero
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
@@ -92,7 +91,6 @@ label_2bed98:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002BED08_0x2bed08, 0x2bed08u, 0x2beda4u)) {
         return;
     }
-    ctx->pc = 0x2BEDA4u;
 label_2beda4:
     // 0x2beda4: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x2BEDA4u;
@@ -109,10 +107,8 @@ label_2beda4:
             goto label_2bedb0;
         }
     }
-    ctx->pc = 0x2BEDACu;
 label_2bedac:
     // 0x2bedac: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2bedacu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2bedb0:
     // 0x2bedb0: 0x7bb00030  lq          $s0, 0x30($sp)

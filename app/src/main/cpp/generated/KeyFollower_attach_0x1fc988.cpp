@@ -13,7 +13,7 @@
 
 // Function: KeyFollower_attach
 // Address: 0x1fc988 - 0x1fca38
-void KeyFollower_attach_0x1fc988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void KeyFollower_attach_0x1fc988(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("KeyFollower_attach_0x1fc988");
 #endif
@@ -55,7 +55,6 @@ void KeyFollower_attach_0x1fc988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &Pool_createObjWithVt_0x2ba020, 0x2ba020u, 0x1fc9acu)) {
         return;
     }
-    ctx->pc = 0x1FC9ACu;
 label_1fc9ac:
     // 0x1fc9ac: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x1FC9ACu;
@@ -87,7 +86,6 @@ label_1fc9ac:
             goto label_1fca24;
         }
     }
-    ctx->pc = 0x1FC9BCu;
 label_1fc9bc:
     // 0x1fc9bc: 0x24440014  addiu       $a0, $v0, 0x14
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 2), 20));
@@ -104,7 +102,6 @@ label_1fc9bc:
     if (!runtime->callDirectStatic(rdram, ctx, &KeySlotTable_set_0x2bb0c8, 0x2bb0c8u, 0x1fc9ccu)) {
         return;
     }
-    ctx->pc = 0x1FC9CCu;
 label_1fc9cc:
     // 0x1fc9cc: 0x8e020028  lw          $v0, 0x28($s0)
     ctx->pc = 0x1fc9ccu;

@@ -13,7 +13,7 @@
 
 // Function: TimerBusClock2USec
 // Address: 0x3b7590 - 0x3b7638
-void TimerBusClock2USec_0x3b7590(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void TimerBusClock2USec_0x3b7590(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("TimerBusClock2USec_0x3b7590");
 #endif
@@ -58,7 +58,6 @@ void TimerBusClock2USec_0x3b7590(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___udivdi3_0x3b8e88, 0x3b8e88u, 0x3b75b8u)) {
         return;
     }
-    ctx->pc = 0x3B75B8u;
 label_3b75b8:
     // 0x3b75b8: 0x2103c  dsll32      $v0, $v0, 0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) << (32 + 0));
@@ -79,7 +78,6 @@ label_3b75b8:
             goto label_3b75c8;
         }
     }
-    ctx->pc = 0x3B75C8u;
 label_3b75c8:
     // 0x3b75c8: 0x12400015  beqz        $s2, . + 4 + (0x15 << 2)
     ctx->pc = 0x3B75C8u;
@@ -137,7 +135,6 @@ label_3b75c8:
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___udivdi3_0x3b8e88, 0x3b8e88u, 0x3b7614u)) {
         return;
     }
-    ctx->pc = 0x3B7614u;
 label_3b7614:
     // 0x3b7614: 0x2103c  dsll32      $v0, $v0, 0
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) << (32 + 0));

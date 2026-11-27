@@ -13,7 +13,7 @@
 
 // Function: Slot2_blinkMarkSet
 // Address: 0x1e6fe8 - 0x1e7118
-void Slot2_blinkMarkSet_0x1e6fe8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Slot2_blinkMarkSet_0x1e6fe8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Slot2_blinkMarkSet_0x1e6fe8");
 #endif
@@ -187,7 +187,6 @@ label_1e7090:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e70b0u)) {
         return;
     }
-    ctx->pc = 0x1E70B0u;
 label_1e70b0:
     // 0x1e70b0: 0x2a220005  slti        $v0, $s1, 0x5
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 17) < (int64_t)(int32_t)5) ? 1 : 0);
@@ -224,7 +223,6 @@ label_1e70b0:
             goto label_1e7100;
         }
     }
-    ctx->pc = 0x1E70C4u;
 label_1e70c4:
     // 0x1e70c4: 0x24b203a0  addiu       $s2, $a1, 0x3A0
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 5), 928));
@@ -236,7 +234,6 @@ label_1e70c4:
     ctx->pc = 0x1e70d0u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 0)));
     // 0x1e70d4: 0x0  nop
-    ctx->pc = 0x1e70d4u;
     // NOP
 label_1e70d8:
     // 0x1e70d8: 0x282d  daddu       $a1, $zero, $zero
@@ -260,7 +257,6 @@ label_1e70d8:
     if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x1e70f4u)) {
         return;
     }
-    ctx->pc = 0x1E70F4u;
 label_1e70f4:
     // 0x1e70f4: 0x623fff8  bgezl       $s1, . + 4 + (-0x8 << 2)
     ctx->pc = 0x1E70F4u;

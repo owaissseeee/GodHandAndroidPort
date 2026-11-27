@@ -13,7 +13,7 @@
 
 // Function: cIDBase_getIDWork
 // Address: 0x2aa410 - 0x2aa480
-void cIDBase_getIDWork_0x2aa410(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cIDBase_getIDWork_0x2aa410(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cIDBase_getIDWork_0x2aa410");
 #endif
@@ -66,7 +66,6 @@ void cIDBase_getIDWork_0x2aa410(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
         return;
         #endif
     }
-    ctx->pc = 0x2AA428u;
 label_2aa428:
     // 0x2aa428: 0x3e00008  jr          $ra
     ctx->pc = 0x2AA428u;
@@ -87,7 +86,6 @@ label_2aa428:
         return;
         #endif
     }
-    ctx->pc = 0x2AA430u;
 label_2aa430:
     // 0x2aa430: 0x18800010  blez        $a0, . + 4 + (0x10 << 2)
     ctx->pc = 0x2AA430u;
@@ -111,7 +109,6 @@ label_2aa430:
     // 0x2aa440: 0x24c3002c  addiu       $v1, $a2, 0x2C
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 6), 44));
     // 0x2aa444: 0x0  nop
-    ctx->pc = 0x2aa444u;
     // NOP
 label_2aa448:
     // 0x2aa448: 0x8c620000  lw          $v0, 0x0($v1)
@@ -149,7 +146,6 @@ label_2aa448:
             goto label_2aa428;
         }
     }
-    ctx->pc = 0x2AA464u;
 label_2aa464:
     // 0x2aa464: 0x24c600ac  addiu       $a2, $a2, 0xAC
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 6), 172));
@@ -173,7 +169,6 @@ label_2aa464:
             goto label_2aa448;
         }
     }
-    ctx->pc = 0x2AA474u;
 label_2aa474:
     // 0x2aa474: 0x3c02005d  lui         $v0, 0x5D
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)93 << 16));

@@ -13,7 +13,7 @@
 
 // Function: cCoreSave_getComboST
 // Address: 0x1fbd60 - 0x1fbda0
-void cCoreSave_getComboST_0x1fbd60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getComboST_0x1fbd60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getComboST_0x1fbd60");
 #endif
@@ -58,7 +58,6 @@ void cCoreSave_getComboST_0x1fbd60(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         return;
         #endif
     }
-    ctx->pc = 0x1FBD78u;
 label_1fbd78:
     // 0x1fbd78: 0x3c040100  lui         $a0, 0x100
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)256 << 16));

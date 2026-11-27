@@ -13,7 +13,7 @@
 
 // Function: cOmItem_setScrCheck
 // Address: 0x1c25c8 - 0x1c25f0
-void cOmItem_setScrCheck_0x1c25c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmItem_setScrCheck_0x1c25c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmItem_setScrCheck_0x1c25c8");
 #endif
@@ -57,7 +57,6 @@ void cOmItem_setScrCheck_0x1c25c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         return;
         #endif
     }
-    ctx->pc = 0x1C25E0u;
 label_1c25e0:
     // 0x1c25e0: 0x304200fe  andi        $v0, $v0, 0xFE
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)254);

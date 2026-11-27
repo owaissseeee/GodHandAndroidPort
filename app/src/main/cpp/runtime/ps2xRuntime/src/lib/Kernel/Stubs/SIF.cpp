@@ -268,8 +268,18 @@ namespace ps2_stubs
 
         bool readEeRange(const uint8_t *rdram, uint32_t address, void *destination, uint32_t sizeBytes)
         {
-            if ((!destination && sizeBytes != 0u) || !canAccessEeRange(rdram, address, sizeBytes))
+            if (sizeBytes == 0u)
+                return canAccessEeRange(rdram, address, 0u);
+            if (!destination || !canAccessEeRange(rdram, address, sizeBytes))
                 return false;
+            const uint8_t *first = getConstMemPtr(rdram, address);
+            const uint8_t *last = getConstMemPtr(rdram, address + sizeBytes - 1u);
+            if (first && last && sizeBytes <= PS2_RAM_SIZE &&
+                static_cast<size_t>(last - first) == static_cast<size_t>(sizeBytes - 1u))
+            {
+                std::memcpy(destination, first, sizeBytes);
+                return true;
+            }
             auto *bytes = static_cast<uint8_t *>(destination);
             for (uint32_t i = 0u; i < sizeBytes; ++i)
             {
@@ -283,9 +293,19 @@ namespace ps2_stubs
 
         bool writeEeRange(uint8_t *rdram, uint32_t address, const void *source, uint32_t sizeBytes)
         {
-            if ((!source && sizeBytes != 0u) || !canAccessEeRange(rdram, address, sizeBytes))
+            if (sizeBytes == 0u)
+                return canAccessEeRange(rdram, address, 0u);
+            if (!source || !canAccessEeRange(rdram, address, sizeBytes))
                 return false;
             ps2TraceGuestRangeWrite(rdram, address, sizeBytes, "SIF IOP-to-EE DMA", nullptr);
+            uint8_t *first = getMemPtr(rdram, address);
+            uint8_t *last = getMemPtr(rdram, address + sizeBytes - 1u);
+            if (first && last && sizeBytes <= PS2_RAM_SIZE &&
+                static_cast<size_t>(last - first) == static_cast<size_t>(sizeBytes - 1u))
+            {
+                std::memcpy(first, source, sizeBytes);
+                return true;
+            }
             const auto *bytes = static_cast<const uint8_t *>(source);
             for (uint32_t i = 0u; i < sizeBytes; ++i)
             {
@@ -806,8 +826,15 @@ namespace ps2_stubs
                                                                     });
                 }
                 const uint32_t sizeBytes = static_cast<uint32_t>(xfer.size);
-                std::vector<uint8_t> payload(sizeBytes);
-                if (!readEeRange(rdram, xfer.src, payload.data(), sizeBytes) || !runtime->writeIopMemory(xfer.dest, payload.data(), payload.size()))
+                std::array<uint8_t, 16384u> stackPayload;
+                std::vector<uint8_t> heapPayload;
+                uint8_t *payloadPtr = stackPayload.data();
+                if (sizeBytes > stackPayload.size())
+                {
+                    heapPayload.resize(sizeBytes);
+                    payloadPtr = heapPayload.data();
+                }
+                if (!readEeRange(rdram, xfer.src, payloadPtr, sizeBytes) || !runtime->writeIopMemory(xfer.dest, payloadPtr, sizeBytes))
                 {
                     ok = false;
                     break;
@@ -820,7 +847,7 @@ namespace ps2_stubs
                     for (uint32_t i = 0; i + 4u <= sizeBytes && i < 0x100u; i += 4u)
                     {
                         uint32_t word;
-                        std::memcpy(&word, payload.data() + i, 4u);
+                        std::memcpy(&word, payloadPtr + i, 4u);
                         std::fprintf(stderr, " %08x", word);
                     }
                     std::fputc('\n', stderr);

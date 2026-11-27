@@ -13,7 +13,7 @@
 
 // Function: func_0033FB78
 // Address: 0x33fb78 - 0x33fc70
-void func_0033FB78_0x33fb78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0033FB78_0x33fb78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0033FB78_0x33fb78");
 #endif
@@ -67,7 +67,6 @@ void func_0033FB78_0x33fb78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x33fba0u;
     WRITE32(ADD32(GPR_U32(ctx, 16), 12), GPR_U32(ctx, 2));
     // 0x33fba4: 0x24020002  addiu       $v0, $zero, 0x2
-    ctx->pc = 0x33fba4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
 label_33fba8:
     // 0x33fba8: 0x5462002c  bnel        $v1, $v0, . + 4 + (0x2C << 2)
@@ -139,7 +138,6 @@ label_33fba8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00341F00_0x341f00, 0x341f00u, 0x33fbe8u)) {
         return;
     }
-    ctx->pc = 0x33FBE8u;
 label_33fbe8:
     // 0x33fbe8: 0x10000019  b           . + 4 + (0x19 << 2)
     ctx->pc = 0x33FBE8u;
@@ -156,7 +154,6 @@ label_33fbe8:
             goto label_33fc50;
         }
     }
-    ctx->pc = 0x33FBF0u;
 label_33fbf0:
     // 0x33fbf0: 0x260c0034  addiu       $t4, $s0, 0x34
     SET_GPR_S32(ctx, 12, (int32_t)ADD32(GPR_U32(ctx, 16), 52));
@@ -202,7 +199,6 @@ label_33fbf0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_003427F0_0x3427f0, 0x3427f0u, 0x33fc28u)) {
         return;
     }
-    ctx->pc = 0x33FC28u;
 label_33fc28:
     // 0x33fc28: 0x21fc2  srl         $v1, $v0, 31
     SET_GPR_S32(ctx, 3, (int32_t)SRL32(GPR_U32(ctx, 2), 31));
@@ -238,10 +234,8 @@ label_33fc28:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj33F8_SetFlag_D003EB850_FB68_0x33fb68, 0x33fb68u, 0x33fc50u)) {
         return;
     }
-    ctx->pc = 0x33FC50u;
 label_33fc50:
     // 0x33fc50: 0x24020003  addiu       $v0, $zero, 0x3
-    ctx->pc = 0x33fc50u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
 label_33fc54:
     // 0x33fc54: 0xae02000c  sw          $v0, 0xC($s0)

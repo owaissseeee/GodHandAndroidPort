@@ -13,7 +13,7 @@
 
 // Function: EffectEventEndProc
 // Address: 0x2fa310 - 0x2fa350
-void EffectEventEndProc_0x2fa310(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EffectEventEndProc_0x2fa310(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EffectEventEndProc_0x2fa310");
 #endif
@@ -48,7 +48,6 @@ void EffectEventEndProc_0x2fa310(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     if (!runtime->callDirectStatic(rdram, ctx, &Esp_killFlaggedExceptEvent_0x2fb4c0, 0x2fb4c0u, 0x2fa324u)) {
         return;
     }
-    ctx->pc = 0x2FA324u;
 label_2fa324:
     // 0x2fa324: 0xc0c0240  jal         func_300900
     SET_GPR_U32(ctx, 31, 0x2FA32Cu);
@@ -61,7 +60,6 @@ label_2fa324:
     if (!runtime->callDirectStatic(rdram, ctx, &KillEventEmitter_0x300900, 0x300900u, 0x2fa32cu)) {
         return;
     }
-    ctx->pc = 0x2FA32Cu;
 label_2fa32c:
     // 0x2fa32c: 0xc0c16f8  jal         func_305BE0
     SET_GPR_U32(ctx, 31, 0x2FA334u);
@@ -74,7 +72,6 @@ label_2fa32c:
     if (!runtime->callDirectStatic(rdram, ctx, &espSys_sstClearSetFlag_0x305be0, 0x305be0u, 0x2fa334u)) {
         return;
     }
-    ctx->pc = 0x2FA334u;
 label_2fa334:
     // 0x2fa334: 0xc0c1708  jal         func_305C20
     SET_GPR_U32(ctx, 31, 0x2FA33Cu);
@@ -87,7 +84,6 @@ label_2fa334:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00305C20_0x305c20, 0x305c20u, 0x2fa33cu)) {
         return;
     }
-    ctx->pc = 0x2FA33Cu;
 label_2fa33c:
     // 0x2fa33c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2fa33cu;

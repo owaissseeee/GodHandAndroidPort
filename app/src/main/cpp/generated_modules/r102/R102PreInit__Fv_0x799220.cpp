@@ -14,12 +14,11 @@ namespace gh_r102
 {
 // Function: R102PreInit__Fv
 // Address: 0x799220 - 0x799228
-void R102PreInit__Fv_0x799220(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void R102PreInit__Fv_0x799220(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("R102PreInit__Fv_0x799220");
 #endif
 
-    ctx->pc = 0x799220u;
 
     // 0x799220: 0x3e00008  jr          $ra
     ctx->pc = 0x799220u;

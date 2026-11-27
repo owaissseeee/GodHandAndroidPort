@@ -13,7 +13,7 @@
 
 // Function: GetOrInit_D460D10_134270
 // Address: 0x134270 - 0x1342b8
-void GetOrInit_D460D10_134270_0x134270(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetOrInit_D460D10_134270_0x134270(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetOrInit_D460D10_134270_0x134270");
 #endif
@@ -68,7 +68,6 @@ void GetOrInit_D460D10_134270_0x134270(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &func_0031EEC8_0x31eec8, 0x31eec8u, 0x13429cu)) {
         return;
     }
-    ctx->pc = 0x13429Cu;
 label_13429c:
     // 0x13429c: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

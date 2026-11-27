@@ -13,7 +13,7 @@
 
 // Function: cEmManage_CkPlCatched
 // Address: 0x293100 - 0x293110
-void cEmManage_CkPlCatched_0x293100(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_CkPlCatched_0x293100(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_CkPlCatched_0x293100");
 #endif

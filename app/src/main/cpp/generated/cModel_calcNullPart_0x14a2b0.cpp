@@ -13,7 +13,7 @@
 
 // Function: cModel_calcNullPart
 // Address: 0x14a2b0 - 0x14a338
-void cModel_calcNullPart_0x14a2b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cModel_calcNullPart_0x14a2b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cModel_calcNullPart_0x14a2b0");
 #endif
@@ -82,7 +82,6 @@ void cModel_calcNullPart_0x14a2b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &MtxInitCoord_0x147a48, 0x147a48u, 0x14a2f0u)) {
         return;
     }
-    ctx->pc = 0x14A2F0u;
 label_14a2f0:
     // 0x14a2f0: 0x26020120  addiu       $v0, $s0, 0x120
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), 288));

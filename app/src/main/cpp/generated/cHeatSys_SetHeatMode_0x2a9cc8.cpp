@@ -13,7 +13,7 @@
 
 // Function: cHeatSys_SetHeatMode
 // Address: 0x2a9cc8 - 0x2a9d28
-void cHeatSys_SetHeatMode_0x2a9cc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cHeatSys_SetHeatMode_0x2a9cc8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cHeatSys_SetHeatMode_0x2a9cc8");
 #endif
@@ -91,7 +91,6 @@ label_2a9cfc:
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x2a9d0cu)) {
         return;
     }
-    ctx->pc = 0x2A9D0Cu;
 label_2a9d0c:
     // 0x2a9d0c: 0x40202d  daddu       $a0, $v0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -108,7 +107,6 @@ label_2a9d0c:
     if (!runtime->callDirectStatic(rdram, ctx, &KillEffect_0x306200, 0x306200u, 0x2a9d1cu)) {
         return;
     }
-    ctx->pc = 0x2A9D1Cu;
 label_2a9d1c:
     // 0x2a9d1c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2a9d1cu;

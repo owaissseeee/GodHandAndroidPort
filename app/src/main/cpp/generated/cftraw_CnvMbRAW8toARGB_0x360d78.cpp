@@ -13,7 +13,7 @@
 
 // Function: cftraw_CnvMbRAW8toARGB
 // Address: 0x360d78 - 0x3634e0
-void cftraw_CnvMbRAW8toARGB_0x360d78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cftraw_CnvMbRAW8toARGB_0x360d78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cftraw_CnvMbRAW8toARGB_0x360d78");
 #endif

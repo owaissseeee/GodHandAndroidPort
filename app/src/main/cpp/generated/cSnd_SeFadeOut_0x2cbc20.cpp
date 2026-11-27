@@ -13,7 +13,7 @@
 
 // Function: cSnd_SeFadeOut
 // Address: 0x2cbc20 - 0x2cbc58
-void cSnd_SeFadeOut_0x2cbc20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_SeFadeOut_0x2cbc20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_SeFadeOut_0x2cbc20");
 #endif
@@ -56,7 +56,6 @@ void cSnd_SeFadeOut_0x2cbc20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_00375050_0x375050, 0x375050u, 0x2cbc40u)) {
         return;
     }
-    ctx->pc = 0x2CBC40u;
 label_2cbc40:
     // 0x2cbc40: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x2CBC40u;
@@ -73,7 +72,6 @@ label_2cbc40:
             goto label_2cbc50;
         }
     }
-    ctx->pc = 0x2CBC48u;
 label_2cbc48:
     // 0x2cbc48: 0x2402ffff  addiu       $v0, $zero, -0x1
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));

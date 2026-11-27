@@ -13,7 +13,7 @@
 
 // Function: func_00340970
 // Address: 0x340970 - 0x340a20
-void func_00340970_0x340970(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00340970_0x340970(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00340970_0x340970");
 #endif
@@ -53,7 +53,6 @@ void func_00340970_0x340970(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x340450u, 0x340988u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x340990u;
 label_340990:
     // 0x340990: 0x24a3007f  addiu       $v1, $a1, 0x7F
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 5), 127));
@@ -109,7 +108,6 @@ label_340990:
         }
     }
     // 0x3409b8: 0x3c040045  lui         $a0, 0x45
-    ctx->pc = 0x3409b8u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)69 << 16));
 label_3409bc:
     // 0x3409bc: 0xdfbf0000  ld          $ra, 0x0($sp)
@@ -128,7 +126,6 @@ label_3409bc:
         return;
     }
     // 0x3409cc: 0x0  nop
-    ctx->pc = 0x3409ccu;
     // NOP
 label_3409d0:
     // 0x3409d0: 0x4610002  bgez        $v1, . + 4 + (0x2 << 2)
@@ -147,7 +144,6 @@ label_3409d0:
         }
     }
     // 0x3409d8: 0x21023  negu        $v0, $v0
-    ctx->pc = 0x3409d8u;
     SET_GPR_S32(ctx, 2, (int32_t)SUB32(GPR_U32(ctx, 0), GPR_U32(ctx, 2)));
 label_3409dc:
     // 0x3409dc: 0x4e10003  bgez        $a3, . + 4 + (0x3 << 2)
@@ -168,7 +164,6 @@ label_3409dc:
     // 0x3409e4: 0x2402007f  addiu       $v0, $zero, 0x7F
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 127));
     // 0x3409e8: 0x453823  subu        $a3, $v0, $a1
-    ctx->pc = 0x3409e8u;
     SET_GPR_S32(ctx, 7, (int32_t)SUB32(GPR_U32(ctx, 2), GPR_U32(ctx, 5)));
 label_3409ec:
     // 0x3409ec: 0x24c2007f  addiu       $v0, $a2, 0x7F
@@ -190,7 +185,6 @@ label_3409ec:
             goto label_3409fc;
         }
     }
-    ctx->pc = 0x3409FCu;
 label_3409fc:
     // 0x3409fc: 0xac870020  sw          $a3, 0x20($a0)
     ctx->pc = 0x3409fcu;
@@ -213,7 +207,6 @@ label_3409fc:
     // 0x340a08: 0x2402007f  addiu       $v0, $zero, 0x7F
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 127));
     // 0x340a0c: 0x461823  subu        $v1, $v0, $a2
-    ctx->pc = 0x340a0cu;
     SET_GPR_S32(ctx, 3, (int32_t)SUB32(GPR_U32(ctx, 2), GPR_U32(ctx, 6)));
 label_340a10:
     // 0x340a10: 0xdfbf0000  ld          $ra, 0x0($sp)

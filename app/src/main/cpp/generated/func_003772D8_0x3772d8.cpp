@@ -13,7 +13,7 @@
 
 // Function: func_003772D8
 // Address: 0x3772d8 - 0x377378
-void func_003772D8_0x3772d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003772D8_0x3772d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003772D8_0x3772d8");
 #endif
@@ -80,7 +80,6 @@ void func_003772D8_0x3772d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_377368;
         }
     }
-    ctx->pc = 0x377310u;
 label_377310:
     // 0x377310: 0x24060001  addiu       $a2, $zero, 0x1
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
@@ -144,7 +143,6 @@ label_377310:
             goto label_37736c;
         }
     }
-    ctx->pc = 0x377334u;
 label_377334:
     // 0x377334: 0x1082000b  beq         $a0, $v0, . + 4 + (0xB << 2)
     ctx->pc = 0x377334u;
@@ -176,7 +174,6 @@ label_377334:
             goto label_37736c;
         }
     }
-    ctx->pc = 0x377344u;
 label_377344:
     // 0x377344: 0xc0ddcde  jal         func_377378
     SET_GPR_U32(ctx, 31, 0x37734Cu);
@@ -189,7 +186,6 @@ label_377344:
     if (!runtime->callDirectStatic(rdram, ctx, &CopyChannelParams_377378_0x377378, 0x377378u, 0x37734cu)) {
         return;
     }
-    ctx->pc = 0x37734Cu;
 label_37734c:
     // 0x37734c: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x37734Cu;
@@ -206,7 +202,6 @@ label_37734c:
             goto label_377368;
         }
     }
-    ctx->pc = 0x377354u;
 label_377354:
     // 0x377354: 0xc0ddd0a  jal         func_377428
     SET_GPR_U32(ctx, 31, 0x37735Cu);
@@ -219,7 +214,6 @@ label_377354:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00377428_0x377428, 0x377428u, 0x37735cu)) {
         return;
     }
-    ctx->pc = 0x37735Cu;
 label_37735c:
     // 0x37735c: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x37735Cu;
@@ -236,7 +230,6 @@ label_37735c:
             goto label_377368;
         }
     }
-    ctx->pc = 0x377364u;
 label_377364:
     // 0x377364: 0xa4660016  sh          $a2, 0x16($v1)
     ctx->pc = 0x377364u;

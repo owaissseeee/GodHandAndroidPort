@@ -13,7 +13,7 @@
 
 // Function: cSceAtManager_addUnitData
 // Address: 0x2c2f90 - 0x2c2fd8
-void cSceAtManager_addUnitData_0x2c2f90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSceAtManager_addUnitData_0x2c2f90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSceAtManager_addUnitData_0x2c2f90");
 #endif
@@ -77,7 +77,6 @@ void cSceAtManager_addUnitData_0x2c2f90(uint8_t* rdram, R5900Context* ctx, PS2Ru
     if (!runtime->callDirectStatic(rdram, ctx, &cSceAtManager_linkUnit_0x2c3040, 0x2c3040u, 0x2c2fccu)) {
         return;
     }
-    ctx->pc = 0x2C2FCCu;
 label_2c2fcc:
     // 0x2c2fcc: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2c2fccu;

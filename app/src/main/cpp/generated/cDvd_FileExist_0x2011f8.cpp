@@ -13,7 +13,7 @@
 
 // Function: cDvd_FileExist
 // Address: 0x2011f8 - 0x201228
-void cDvd_FileExist_0x2011f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDvd_FileExist_0x2011f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDvd_FileExist_0x2011f8");
 #endif
@@ -44,7 +44,6 @@ void cDvd_FileExist_0x2011f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FFA68_0x1ffa68, 0x1ffa68u, 0x20120cu)) {
         return;
     }
-    ctx->pc = 0x20120Cu;
 label_20120c:
     // 0x20120c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x20120cu;

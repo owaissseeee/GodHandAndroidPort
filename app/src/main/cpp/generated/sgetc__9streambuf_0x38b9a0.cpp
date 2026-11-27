@@ -13,7 +13,7 @@
 
 // Function: sgetc__9streambuf
 // Address: 0x38b9a0 - 0x38b9f0
-void sgetc__9streambuf_0x38b9a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sgetc__9streambuf_0x38b9a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sgetc__9streambuf_0x38b9a0");
 #endif
@@ -65,7 +65,6 @@ void sgetc__9streambuf_0x38b9a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     if (!runtime->callDirectStatic(rdram, ctx, &ps2___underflow_0x38c5b8, 0x38c5b8u, 0x38b9ccu)) {
         return;
     }
-    ctx->pc = 0x38B9CCu;
 label_38b9cc:
     // 0x38b9cc: 0x2403ffff  addiu       $v1, $zero, -0x1
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));

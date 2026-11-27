@@ -13,7 +13,7 @@
 
 // Function: SetSlotEntry_376260
 // Address: 0x376260 - 0x3762d8
-void SetSlotEntry_376260_0x376260(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetSlotEntry_376260_0x376260(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetSlotEntry_376260_0x376260");
 #endif
@@ -74,7 +74,6 @@ void SetSlotEntry_376260_0x376260(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &ClearSlotRefs_376AE0_0x376ae0, 0x376ae0u, 0x376294u)) {
         return;
     }
-    ctx->pc = 0x376294u;
 label_376294:
     // 0x376294: 0x1000000c  b           . + 4 + (0xC << 2)
     ctx->pc = 0x376294u;
@@ -91,7 +90,6 @@ label_376294:
             goto label_3762c8;
         }
     }
-    ctx->pc = 0x37629Cu;
 label_37629c:
     // 0x37629c: 0x94a20002  lhu         $v0, 0x2($a1)
     ctx->pc = 0x37629cu;
@@ -117,7 +115,6 @@ label_37629c:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00378020_0x378020, 0x378020u, 0x3762b8u)) {
         return;
     }
-    ctx->pc = 0x3762B8u;
 label_3762b8:
     // 0x3762b8: 0x96020000  lhu         $v0, 0x0($s0)
     ctx->pc = 0x3762b8u;

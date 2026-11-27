@@ -13,7 +13,7 @@
 
 // Function: cModel_setLayerDisplay
 // Address: 0x14a398 - 0x14a3e8
-void cModel_setLayerDisplay_0x14a398(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cModel_setLayerDisplay_0x14a398(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cModel_setLayerDisplay_0x14a398");
 #endif
@@ -91,10 +91,8 @@ label_14a3b0:
             goto label_14a3cc;
         }
     }
-    ctx->pc = 0x14A3C8u;
 label_14a3c8:
     // 0x14a3c8: 0x34420001  ori         $v0, $v0, 0x1
-    ctx->pc = 0x14a3c8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)1);
 label_14a3cc:
     // 0x14a3cc: 0xac620380  sw          $v0, 0x380($v1)
@@ -122,7 +120,6 @@ label_14a3d4:
             goto label_14a3b0;
         }
     }
-    ctx->pc = 0x14A3DCu;
 label_14a3dc:
     // 0x14a3dc: 0x3e00008  jr          $ra
     ctx->pc = 0x14A3DCu;

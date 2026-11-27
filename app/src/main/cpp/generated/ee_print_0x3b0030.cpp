@@ -13,7 +13,7 @@
 
 // Function: ee_print
 // Address: 0x3b0030 - 0x3b0040
-void ee_print_0x3b0030(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ee_print_0x3b0030(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ee_print_0x3b0030");
 #endif

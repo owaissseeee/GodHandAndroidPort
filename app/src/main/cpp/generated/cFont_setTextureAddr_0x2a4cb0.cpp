@@ -13,7 +13,7 @@
 
 // Function: cFont_setTextureAddr
 // Address: 0x2a4cb0 - 0x2a4df8
-void cFont_setTextureAddr_0x2a4cb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cFont_setTextureAddr_0x2a4cb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cFont_setTextureAddr_0x2a4cb0");
 #endif
@@ -252,7 +252,6 @@ void cFont_setTextureAddr_0x2a4cb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_2a4da8;
         }
     }
-    ctx->pc = 0x2A4D88u;
 label_2a4d88:
     // 0x2a4d88: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2a4d88u;
@@ -287,7 +286,6 @@ label_2a4d88:
             goto label_2a4d88;
         }
     }
-    ctx->pc = 0x2A4DA8u;
 label_2a4da8:
     // 0x2a4da8: 0x8cc2000c  lw          $v0, 0xC($a2)
     ctx->pc = 0x2a4da8u;
@@ -314,7 +312,6 @@ label_2a4da8:
             goto label_2a4de0;
         }
     }
-    ctx->pc = 0x2A4DC0u;
 label_2a4dc0:
     // 0x2a4dc0: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2a4dc0u;
@@ -349,7 +346,6 @@ label_2a4dc0:
             goto label_2a4dc0;
         }
     }
-    ctx->pc = 0x2A4DE0u;
 label_2a4de0:
     // 0x2a4de0: 0x8cc20000  lw          $v0, 0x0($a2)
     ctx->pc = 0x2a4de0u;

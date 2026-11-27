@@ -13,7 +13,7 @@
 
 // Function: ForwardEventToList_1FD820
 // Address: 0x1fd820 - 0x1fd888
-void ForwardEventToList_1FD820_0x1fd820(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardEventToList_1FD820_0x1fd820(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardEventToList_1FD820_0x1fd820");
 #endif
@@ -50,11 +50,9 @@ void ForwardEventToList_1FD820_0x1fd820(uint8_t* rdram, R5900Context* ctx, PS2Ru
         }
     }
 
-    ctx->pc = 0x1fd820u;
 
 label_1fd820:
     // 0x1fd820: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x1fd820u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
 label_1fd824:
     // 0x1fd824: 0x7fb10010  sq          $s1, 0x10($sp)
@@ -99,14 +97,12 @@ label_1fd838:
             goto label_1fd868;
         }
     }
-    ctx->pc = 0x1FD83Cu;
 label_1fd83c:
     // 0x1fd83c: 0x8e030028  lw          $v1, 0x28($s0)
     ctx->pc = 0x1fd83cu;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 40)));
 label_1fd840:
     // 0x1fd840: 0x220282d  daddu       $a1, $s1, $zero
-    ctx->pc = 0x1fd840u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
 label_1fd844:
     // 0x1fd844: 0x8c660034  lw          $a2, 0x34($v1)
@@ -152,7 +148,6 @@ label_1fd858:
             return;
         }
     }
-    ctx->pc = 0x1FD85Cu;
 label_1fd85c:
     // 0x1fd85c: 0x8e100024  lw          $s0, 0x24($s0)
     ctx->pc = 0x1fd85cu;
@@ -187,7 +182,6 @@ label_1fd864:
             goto label_1fd840;
         }
     }
-    ctx->pc = 0x1FD868u;
 label_1fd868:
     // 0x1fd868: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1fd868u;
@@ -231,14 +225,11 @@ label_1fd878:
         return;
         #endif
     }
-    ctx->pc = 0x1FD87Cu;
 label_1fd87c:
     // 0x1fd87c: 0x0  nop
-    ctx->pc = 0x1fd87cu;
     // NOP
 label_1fd880:
     // 0x1fd880: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x1fd880u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
 label_1fd884:
     // 0x1fd884: 0x0  nop

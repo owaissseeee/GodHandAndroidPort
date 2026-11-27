@@ -13,7 +13,7 @@
 
 // Function: SetFlagsAndClearState_17E1E8
 // Address: 0x17e1e8 - 0x17e230
-void SetFlagsAndClearState_17E1E8_0x17e1e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetFlagsAndClearState_17E1E8_0x17e1e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetFlagsAndClearState_17E1E8_0x17e1e8");
 #endif
@@ -45,7 +45,6 @@ void SetFlagsAndClearState_17E1E8_0x17e1e8(uint8_t* rdram, R5900Context* ctx, PS
     if (!runtime->callDirectStatic(rdram, ctx, &func_001B6FB8_0x1b6fb8, 0x1b6fb8u, 0x17e1fcu)) {
         return;
     }
-    ctx->pc = 0x17E1FCu;
 label_17e1fc:
     // 0x17e1fc: 0x8e040250  lw          $a0, 0x250($s0)
     ctx->pc = 0x17e1fcu;

@@ -13,7 +13,7 @@
 
 // Function: func_003AB050
 // Address: 0x3ab050 - 0x3ab158
-void func_003AB050_0x3ab050(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003AB050_0x3ab050(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003AB050_0x3ab050");
 #endif
@@ -95,7 +95,6 @@ void func_003AB050_0x3ab050(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &write_0x3b0268, 0x3b0268u, 0x3ab0a0u)) {
         return;
     }
-    ctx->pc = 0x3AB0A0u;
 label_3ab0a0:
     // 0x3ab0a0: 0x3c030040  lui         $v1, 0x40
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)64 << 16));
@@ -117,7 +116,6 @@ label_3ab0a0:
             goto label_3ab130;
         }
     }
-    ctx->pc = 0x3AB0B0u;
 label_3ab0b0:
     // 0x3ab0b0: 0x1000001f  b           . + 4 + (0x1F << 2)
     ctx->pc = 0x3AB0B0u;
@@ -134,7 +132,6 @@ label_3ab0b0:
             goto label_3ab130;
         }
     }
-    ctx->pc = 0x3AB0B8u;
 label_3ab0b8:
     // 0x3ab0b8: 0x1260001c  beqz        $s3, . + 4 + (0x1C << 2)
     ctx->pc = 0x3AB0B8u;
@@ -162,7 +159,6 @@ label_3ab0b8:
     // 0x3ab0d0: 0x2d01821  addu        $v1, $s6, $s0
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 22), GPR_U32(ctx, 16)));
     // 0x3ab0d4: 0x0  nop
-    ctx->pc = 0x3ab0d4u;
     // NOP
 label_3ab0d8:
     // 0x3ab0d8: 0x8e24a9cc  lw          $a0, -0x5634($s1)
@@ -217,7 +213,6 @@ label_3ab0d8:
     if (!runtime->callDirectStatic(rdram, ctx, &write_0x3b0268, 0x3b0268u, 0x3ab110u)) {
         return;
     }
-    ctx->pc = 0x3AB110u;
 label_3ab110:
     // 0x3ab110: 0xae35a9cc  sw          $s5, -0x5634($s1)
     ctx->pc = 0x3ab110u;
@@ -240,7 +235,6 @@ label_3ab110:
             goto label_3ab0b0;
         }
     }
-    ctx->pc = 0x3AB11Cu;
 label_3ab11c:
     // 0x3ab11c: 0x26100001  addiu       $s0, $s0, 0x1
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 1));
@@ -264,10 +258,8 @@ label_3ab11c:
             goto label_3ab0d8;
         }
     }
-    ctx->pc = 0x3AB12Cu;
 label_3ab12c:
     // 0x3ab12c: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x3ab12cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_3ab130:
     // 0x3ab130: 0x7bb00070  lq          $s0, 0x70($sp)

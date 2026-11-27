@@ -13,7 +13,7 @@
 
 // Function: Tramp_MPS_Destroy_34FEE0
 // Address: 0x34fee0 - 0x34fef8
-void Tramp_MPS_Destroy_34FEE0_0x34fee0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp_MPS_Destroy_34FEE0_0x34fee0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp_MPS_Destroy_34FEE0_0x34fee0");
 #endif

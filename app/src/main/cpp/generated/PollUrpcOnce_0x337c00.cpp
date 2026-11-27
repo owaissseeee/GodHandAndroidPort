@@ -13,7 +13,7 @@
 
 // Function: PollUrpcOnce
 // Address: 0x337c00 - 0x337c88
-void PollUrpcOnce_0x337c00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void PollUrpcOnce_0x337c00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("PollUrpcOnce_0x337c00");
 #endif
@@ -76,7 +76,6 @@ void PollUrpcOnce_0x337c00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
             goto label_337c78;
         }
     }
-    ctx->pc = 0x337C30u;
 label_337c30:
     // 0x337c30: 0x3c02003e  lui         $v0, 0x3E
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)62 << 16));
@@ -117,7 +116,6 @@ label_337c30:
     if (!runtime->callDirectStatic(rdram, ctx, &DTX_CallUrpc_0x332670, 0x332670u, 0x337c58u)) {
         return;
     }
-    ctx->pc = 0x337C58u;
 label_337c58:
     // 0x337c58: 0x3c03003e  lui         $v1, 0x3E
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)62 << 16));

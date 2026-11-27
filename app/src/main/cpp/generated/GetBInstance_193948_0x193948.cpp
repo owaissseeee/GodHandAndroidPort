@@ -13,7 +13,7 @@
 
 // Function: GetBInstance_193948
 // Address: 0x193948 - 0x193998
-void GetBInstance_193948_0x193948(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetBInstance_193948_0x193948(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetBInstance_193948_0x193948");
 #endif
@@ -60,7 +60,6 @@ void GetBInstance_193948_0x193948(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
     if (!runtime->callDirectStatic(rdram, ctx, &GetOrInitGlobal785798_1C3BE8_0x1c3be8, 0x1c3be8u, 0x19396cu)) {
         return;
     }
-    ctx->pc = 0x19396Cu;
 label_19396c:
     // 0x19396c: 0x3c050042  lui         $a1, 0x42
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)66 << 16));
@@ -81,7 +80,6 @@ label_19396c:
     if (!runtime->callDirectStatic(rdram, ctx, &SetField_0_4_8_31EEA8_0x31eea8, 0x31eea8u, 0x193984u)) {
         return;
     }
-    ctx->pc = 0x193984u;
 label_193984:
     // 0x193984: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

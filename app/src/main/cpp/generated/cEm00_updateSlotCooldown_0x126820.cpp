@@ -14,7 +14,7 @@
 
 // Function: cEm00_updateSlotCooldown
 // Address: 0x126820 - 0x1268b0
-void cEm00_updateSlotCooldown_0x126820(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_updateSlotCooldown_0x126820(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_updateSlotCooldown_0x126820");
 #endif
@@ -99,7 +99,6 @@ void cEm00_updateSlotCooldown_0x126820(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_12689c;
         }
     }
-    ctx->pc = 0x126854u;
 label_126854:
     // 0x126854: 0xc049a3c  jal         func_1268F0
     SET_GPR_U32(ctx, 31, 0x12685Cu);
@@ -112,7 +111,6 @@ label_126854:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001268F0_0x1268f0, 0x1268f0u, 0x12685cu)) {
         return;
     }
-    ctx->pc = 0x12685Cu;
 label_12685c:
     // 0x12685c: 0x10000010  b           . + 4 + (0x10 << 2)
     ctx->pc = 0x12685Cu;
@@ -129,7 +127,6 @@ label_12685c:
             goto label_1268a0;
         }
     }
-    ctx->pc = 0x126864u;
 label_126864:
     // 0x126864: 0x30620010  andi        $v0, $v1, 0x10
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) & (uint64_t)(uint16_t)16);
@@ -159,7 +156,6 @@ label_126864:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001268F0_0x1268f0, 0x1268f0u, 0x126878u)) {
         return;
     }
-    ctx->pc = 0x126878u;
 label_126878:
     // 0x126878: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -174,7 +170,6 @@ label_126878:
     if (!runtime->callDirectStatic(rdram, ctx, &SetFirstFreeSlot_Field_1644_1268B0_0x1268b0, 0x1268b0u, 0x126884u)) {
         return;
     }
-    ctx->pc = 0x126884u;
 label_126884:
     // 0x126884: 0x10000006  b           . + 4 + (0x6 << 2)
     ctx->pc = 0x126884u;
@@ -191,7 +186,6 @@ label_126884:
             goto label_1268a0;
         }
     }
-    ctx->pc = 0x12688Cu;
 label_12688c:
     // 0x12688c: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x12688Cu;
@@ -219,7 +213,6 @@ label_12688c:
     if (!runtime->callDirectStatic(rdram, ctx, &SetFirstFreeSlot_Field_1644_1268B0_0x1268b0, 0x1268b0u, 0x12689cu)) {
         return;
     }
-    ctx->pc = 0x12689Cu;
 label_12689c:
     // 0x12689c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x12689cu;

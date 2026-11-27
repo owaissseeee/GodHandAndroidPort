@@ -13,7 +13,7 @@
 
 // Function: func_0030ECF8
 // Address: 0x30ecf8 - 0x30ee08
-void func_0030ECF8_0x30ecf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0030ECF8_0x30ecf8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0030ECF8_0x30ecf8");
 #endif
@@ -97,7 +97,6 @@ void func_0030ECF8_0x30ecf8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9498u, 0x30ED44u, 0x30ED4Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x30ED4Cu;
 label_30ed4c:
     // 0x30ed4c: 0x3c040075  lui         $a0, 0x75
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)117 << 16));
@@ -118,7 +117,6 @@ label_30ed4c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9498u, 0x30ED5Cu, 0x30ED64u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x30ED64u;
 label_30ed64:
     // 0x30ed64: 0x3c040075  lui         $a0, 0x75
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)117 << 16));
@@ -139,7 +137,6 @@ label_30ed64:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9498u, 0x30ED74u, 0x30ED7Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x30ED7Cu;
 label_30ed7c:
     // 0x30ed7c: 0x3c100075  lui         $s0, 0x75
     SET_GPR_S32(ctx, 16, (int32_t)((uint32_t)117 << 16));
@@ -164,7 +161,6 @@ label_30ed7c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9498u, 0x30ED94u, 0x30ED9Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x30ED9Cu;
 label_30ed9c:
     // 0x30ed9c: 0x3c040075  lui         $a0, 0x75
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)117 << 16));
@@ -185,7 +181,6 @@ label_30ed9c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9498u, 0x30EDACu, 0x30EDB4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x30EDB4u;
 label_30edb4:
     // 0x30edb4: 0x3c040075  lui         $a0, 0x75
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)117 << 16));
@@ -206,7 +201,6 @@ label_30edb4:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9498u, 0x30EDC4u, 0x30EDCCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x30EDCCu;
 label_30edcc:
     // 0x30edcc: 0x3c040075  lui         $a0, 0x75
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)117 << 16));
@@ -227,7 +221,6 @@ label_30edcc:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9498u, 0x30EDDCu, 0x30EDE4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x30EDE4u;
 label_30ede4:
     // 0x30ede4: 0x3c02003c  lui         $v0, 0x3C
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));

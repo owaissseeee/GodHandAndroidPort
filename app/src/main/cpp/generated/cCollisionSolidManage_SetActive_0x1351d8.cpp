@@ -14,7 +14,7 @@
 
 // Function: cCollisionSolidManage_SetActive
 // Address: 0x1351d8 - 0x135210
-void cCollisionSolidManage_SetActive_0x1351d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCollisionSolidManage_SetActive_0x1351d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCollisionSolidManage_SetActive_0x1351d8");
 #endif
@@ -55,7 +55,6 @@ void cCollisionSolidManage_SetActive_0x1351d8(uint8_t* rdram, R5900Context* ctx,
     if (!runtime->callDirectStatic(rdram, ctx, &func_001346C8_0x1346c8, 0x1346c8u, 0x1351ecu)) {
         return;
     }
-    ctx->pc = 0x1351ECu;
 label_1351ec:
     // 0x1351ec: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x1351ECu;
@@ -83,7 +82,6 @@ label_1351ec:
     if (!runtime->callDirectStatic(rdram, ctx, &SetNodeListFlag_134608_0x134608, 0x134608u, 0x1351fcu)) {
         return;
     }
-    ctx->pc = 0x1351FCu;
 label_1351fc:
     // 0x1351fc: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1351fcu;

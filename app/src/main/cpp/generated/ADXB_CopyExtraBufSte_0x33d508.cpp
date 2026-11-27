@@ -13,7 +13,7 @@
 
 // Function: ADXB_CopyExtraBufSte
 // Address: 0x33d508 - 0x33d578
-void ADXB_CopyExtraBufSte_0x33d508(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ADXB_CopyExtraBufSte_0x33d508(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ADXB_CopyExtraBufSte_0x33d508");
 #endif
@@ -66,7 +66,6 @@ void ADXB_CopyExtraBufSte_0x33d508(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &func_0033D4D8_0x33d4d8, 0x33d4d8u, 0x33d540u)) {
         return;
     }
-    ctx->pc = 0x33D540u;
 label_33d540:
     // 0x33d540: 0x102040  sll         $a0, $s0, 1
     SET_GPR_S32(ctx, 4, (int32_t)SLL32(GPR_U32(ctx, 16), 1));

@@ -13,7 +13,7 @@
 
 // Function: CustomIDWork_setSlotMessNo
 // Address: 0x1ecfe8 - 0x1ed050
-void CustomIDWork_setSlotMessNo_0x1ecfe8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CustomIDWork_setSlotMessNo_0x1ecfe8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CustomIDWork_setSlotMessNo_0x1ecfe8");
 #endif
@@ -80,7 +80,6 @@ void CustomIDWork_setSlotMessNo_0x1ecfe8(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMessNo_0x2d6560, 0x2d6560u, 0x1ed028u)) {
         return;
     }
-    ctx->pc = 0x1ED028u;
 label_1ed028:
     // 0x1ed028: 0x261012c8  addiu       $s0, $s0, 0x12C8
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 4808));
@@ -97,7 +96,6 @@ label_1ed028:
     if (!runtime->callDirectStatic(rdram, ctx, &CustomIDWork_SetMessNo_0x2d6560, 0x2d6560u, 0x1ed038u)) {
         return;
     }
-    ctx->pc = 0x1ED038u;
 label_1ed038:
     // 0x1ed038: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x1ed038u;

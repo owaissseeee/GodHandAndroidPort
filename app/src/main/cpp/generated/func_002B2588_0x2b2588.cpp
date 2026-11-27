@@ -13,7 +13,7 @@
 
 // Function: func_002B2588
 // Address: 0x2b2588 - 0x2b2638
-void func_002B2588_0x2b2588(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002B2588_0x2b2588(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002B2588_0x2b2588");
 #endif
@@ -56,7 +56,6 @@ void func_002B2588_0x2b2588(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &func_002AEDC0_0x2aedc0, 0x2aedc0u, 0x2b25a8u)) {
         return;
     }
-    ctx->pc = 0x2B25A8u;
 label_2b25a8:
     // 0x2b25a8: 0x28420002  slti        $v0, $v0, 0x2
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 2) < (int64_t)(int32_t)2) ? 1 : 0);
@@ -75,7 +74,6 @@ label_2b25a8:
             goto label_2b25c0;
         }
     }
-    ctx->pc = 0x2B25B4u;
 label_2b25b4:
     // 0x2b25b4: 0x1000001b  b           . + 4 + (0x1B << 2)
     ctx->pc = 0x2B25B4u;
@@ -93,7 +91,6 @@ label_2b25b4:
         }
     }
     // 0x2b25bc: 0x0  nop
-    ctx->pc = 0x2b25bcu;
     // NOP
 label_2b25c0:
     // 0x2b25c0: 0x94620000  lhu         $v0, 0x0($v1)
@@ -127,7 +124,6 @@ label_2b25c0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B2638_0x2b2638, 0x2b2638u, 0x2b25d8u)) {
         return;
     }
-    ctx->pc = 0x2B25D8u;
 label_2b25d8:
     // 0x2b25d8: 0x40182d  daddu       $v1, $v0, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
@@ -199,7 +195,6 @@ label_2b25d8:
             goto label_2b25c0;
         }
     }
-    ctx->pc = 0x2B2600u;
 label_2b2600:
     // 0x2b2600: 0x10620008  beq         $v1, $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x2B2600u;
@@ -234,7 +229,6 @@ label_2b2600:
             goto label_2b25c0;
         }
     }
-    ctx->pc = 0x2B2610u;
 label_2b2610:
     // 0x2b2610: 0x26050090  addiu       $a1, $s0, 0x90
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 16), 144));
@@ -249,7 +243,6 @@ label_2b2610:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B4768_0x2b4768, 0x2b4768u, 0x2b261cu)) {
         return;
     }
-    ctx->pc = 0x2B261Cu;
 label_2b261c:
     // 0x2b261c: 0x1000ffe8  b           . + 4 + (-0x18 << 2)
     ctx->pc = 0x2B261Cu;
@@ -269,7 +262,6 @@ label_2b261c:
             goto label_2b25c0;
         }
     }
-    ctx->pc = 0x2B2624u;
 label_2b2624:
     // 0x2b2624: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2b2624u;

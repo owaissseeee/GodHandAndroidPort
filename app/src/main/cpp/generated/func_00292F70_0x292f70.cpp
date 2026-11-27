@@ -13,7 +13,7 @@
 
 // Function: func_00292F70
 // Address: 0x292f70 - 0x2930a8
-void func_00292F70_0x292f70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00292F70_0x292f70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00292F70_0x292f70");
 #endif
@@ -57,7 +57,6 @@ void func_00292F70_0x292f70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x292f90u)) {
         return;
     }
-    ctx->pc = 0x292F90u;
 label_292f90:
     // 0x292f90: 0x8c4400f0  lw          $a0, 0xF0($v0)
     ctx->pc = 0x292f90u;
@@ -73,7 +72,6 @@ label_292f90:
     if (!runtime->callDirectStatic(rdram, ctx, &capVu0MagnitudeSqXZ_0x1f7eb0, 0x1f7eb0u, 0x292f9cu)) {
         return;
     }
-    ctx->pc = 0x292F9Cu;
 label_292f9c:
     // 0x292f9c: 0x46000046  mov.s       $f1, $f0
     ctx->f[1] = FPU_MOV_S(ctx->f[0]);
@@ -135,7 +133,6 @@ label_292f9c:
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x292fe4u)) {
         return;
     }
-    ctx->pc = 0x292FE4u;
 label_292fe4:
     // 0x292fe4: 0xc0b6dac  jal         func_2DB6B0
     SET_GPR_U32(ctx, 31, 0x292FECu);
@@ -148,7 +145,6 @@ label_292fe4:
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x292fecu)) {
         return;
     }
-    ctx->pc = 0x292FECu;
 label_292fec:
     // 0x292fec: 0xc44c0104  lwc1        $f12, 0x104($v0)
     ctx->pc = 0x292fecu;
@@ -172,7 +168,6 @@ label_292fec:
     if (!runtime->callDirectStatic(rdram, ctx, &Turn_dest_0x2da038, 0x2da038u, 0x293008u)) {
         return;
     }
-    ctx->pc = 0x293008u;
 label_293008:
     // 0x293008: 0x46000046  mov.s       $f1, $f0
     ctx->f[1] = FPU_MOV_S(ctx->f[0]);
@@ -200,7 +195,6 @@ label_293008:
         }
     }
     // 0x293024: 0x46000047  neg.s       $f1, $f0
-    ctx->pc = 0x293024u;
     ctx->f[1] = FPU_NEG_S(ctx->f[0]);
 label_293028:
     // 0x293028: 0x3c013f49  lui         $at, 0x3F49
@@ -272,7 +266,6 @@ label_293028:
             goto label_293090;
         }
     }
-    ctx->pc = 0x293070u;
 label_293070:
     // 0x293070: 0x46021834  c.lt.s      $f3, $f2
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[3], ctx->f[2])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
@@ -308,7 +301,6 @@ label_293070:
             goto label_29308c;
         }
     }
-    ctx->pc = 0x293088u;
 label_293088:
     // 0x293088: 0xae220558  sw          $v0, 0x558($s1)
     ctx->pc = 0x293088u;

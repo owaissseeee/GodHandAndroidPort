@@ -13,7 +13,7 @@
 
 // Function: ClearStructFields_2C8EB0
 // Address: 0x2c8eb0 - 0x2c8ef8
-void ClearStructFields_2C8EB0_0x2c8eb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearStructFields_2C8EB0_0x2c8eb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearStructFields_2C8EB0_0x2c8eb0");
 #endif
@@ -55,7 +55,6 @@ void ClearStructFields_2C8EB0_0x2c8eb0(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2c8ed4u)) {
         return;
     }
-    ctx->pc = 0x2C8ED4u;
 label_2c8ed4:
     // 0x2c8ed4: 0x26040014  addiu       $a0, $s0, 0x14
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 20));
@@ -72,7 +71,6 @@ label_2c8ed4:
     if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2c8ee4u)) {
         return;
     }
-    ctx->pc = 0x2C8EE4u;
 label_2c8ee4:
     // 0x2c8ee4: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2c8ee4u;

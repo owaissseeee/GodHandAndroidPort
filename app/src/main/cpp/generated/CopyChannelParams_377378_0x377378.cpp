@@ -13,7 +13,7 @@
 
 // Function: CopyChannelParams_377378
 // Address: 0x377378 - 0x377428
-void CopyChannelParams_377378_0x377378(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CopyChannelParams_377378_0x377378(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CopyChannelParams_377378_0x377378");
 #endif
@@ -111,7 +111,6 @@ label_3773b8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00378020_0x378020, 0x378020u, 0x3773e0u)) {
         return;
     }
-    ctx->pc = 0x3773E0u;
 label_3773e0:
     // 0x3773e0: 0x15a840  sll         $s5, $s5, 1
     SET_GPR_S32(ctx, 21, (int32_t)SLL32(GPR_U32(ctx, 21), 1));

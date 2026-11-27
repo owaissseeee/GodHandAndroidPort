@@ -13,7 +13,7 @@
 
 // Function: func_0036A238
 // Address: 0x36a238 - 0x36a300
-void func_0036A238_0x36a238(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0036A238_0x36a238(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0036A238_0x36a238");
 #endif
@@ -60,7 +60,6 @@ void func_0036A238_0x36a238(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Set_D_00766D44_Check_Field_188_NE_2_0x36c5f8, 0x36c5f8u, 0x36a264u)) {
         return;
     }
-    ctx->pc = 0x36A264u;
 label_36a264:
     // 0x36a264: 0x3c05ff03  lui         $a1, 0xFF03
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)65283 << 16));
@@ -110,7 +109,6 @@ label_36a264:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x369F20u, 0x36A290u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x36A298u;
 label_36a298:
     // 0x36a298: 0x8e0202ac  lw          $v0, 0x2AC($s0)
     ctx->pc = 0x36a298u;
@@ -159,7 +157,6 @@ label_36a298:
             goto label_36a2d8;
         }
     }
-    ctx->pc = 0x36A2C0u;
 label_36a2c0:
     // 0x36a2c0: 0x24030708  addiu       $v1, $zero, 0x708
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1800));
@@ -185,7 +182,6 @@ label_36a2cc:
     // 0x36a2d0: 0x43001a  div         $zero, $v0, $v1
     { int32_t divisor = GPR_S32(ctx, 3);    int32_t dividend = GPR_S32(ctx, 2);    if (divisor != 0) {        if (divisor == -1 && dividend == INT32_MIN) {            ctx->lo = (uint64_t)(int64_t)INT32_MIN; ctx->hi = 0;        } else {            ctx->lo = (uint64_t)(int64_t)(dividend / divisor);            ctx->hi = (uint64_t)(int64_t)(dividend % divisor);        }    } else {        ctx->lo = (dividend < 0) ? 1ull : 0xFFFFFFFFFFFFFFFFull; ctx->hi = (uint64_t)(int64_t)dividend;    } }
     // 0x36a2d4: 0x1012  mflo        $v0
-    ctx->pc = 0x36a2d4u;
     SET_GPR_U64(ctx, 2, ctx->lo);
 label_36a2d8:
     // 0x36a2d8: 0xae620000  sw          $v0, 0x0($s3)

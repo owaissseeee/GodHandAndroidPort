@@ -13,7 +13,7 @@
 
 // Function: Poker_SetPokerCamera
 // Address: 0x1dbd50 - 0x1dbdf0
-void Poker_SetPokerCamera_0x1dbd50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Poker_SetPokerCamera_0x1dbd50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Poker_SetPokerCamera_0x1dbd50");
 #endif
@@ -66,7 +66,6 @@ void Poker_SetPokerCamera_0x1dbd50(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->callDirectStatic(rdram, ctx, &cCamManager_setSubScrCamera_0x138eb8, 0x138eb8u, 0x1dbd88u)) {
         return;
     }
-    ctx->pc = 0x1DBD88u;
 label_1dbd88:
     // 0x1dbd88: 0x26420c90  addiu       $v0, $s2, 0xC90
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 18), 3216));

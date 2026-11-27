@@ -13,7 +13,7 @@
 
 // Function: LSC_SetFlowLimit
 // Address: 0x335bc8 - 0x335c30
-void LSC_SetFlowLimit_0x335bc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void LSC_SetFlowLimit_0x335bc8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("LSC_SetFlowLimit_0x335bc8");
 #endif
@@ -56,7 +56,6 @@ void LSC_SetFlowLimit_0x335bc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
         return;
     }
     // 0x335bec: 0x0  nop
-    ctx->pc = 0x335becu;
     // NOP
 label_335bf0:
     // 0x335bf0: 0x4620006  bltzl       $v1, . + 4 + (0x6 << 2)
@@ -95,7 +94,6 @@ label_335bf0:
         }
     }
     // 0x335c08: 0x3c040045  lui         $a0, 0x45
-    ctx->pc = 0x335c08u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)69 << 16));
 label_335c0c:
     // 0x335c0c: 0xdfbf0000  ld          $ra, 0x0($sp)
@@ -114,7 +112,6 @@ label_335c0c:
         return;
     }
     // 0x335c1c: 0x0  nop
-    ctx->pc = 0x335c1cu;
     // NOP
 label_335c20:
     // 0x335c20: 0xac830014  sw          $v1, 0x14($a0)

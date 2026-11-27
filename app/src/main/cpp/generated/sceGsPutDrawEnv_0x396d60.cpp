@@ -11,11 +11,38 @@
 #include "ps2_log.h"
 #endif
 
+#if defined(__aarch64__) || defined(_M_ARM64)
+#include "sdk_arm64_fast.h"
+#endif
+
 // Function: sceGsPutDrawEnv
 // Address: 0x396d60 - 0x396e48
-void sceGsPutDrawEnv_0x396d60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceGsPutDrawEnv_0x396d60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceGsPutDrawEnv_0x396d60");
+#endif
+
+#if defined(__aarch64__) || defined(_M_ARM64)
+    if (__builtin_expect(ctx->pc == 0x396d60u, 1)) {
+        const uint32_t a0 = GPR_U32(ctx, 4);
+        const uint8_t* const envPtr = ((a0 & 0x70000000u) != 0x70000000u) ? ps2TryFastSpan(rdram, a0, 8u) : nullptr;
+        if (__builtin_expect(envPtr != nullptr, 1)) {
+            if (__builtin_expect((runtime->Load32(rdram, ctx, 0x1000A000u) & 0x100u) == 0u, 1)) {
+                uint64_t gifTag = 0;
+                std::memcpy(&gifTag, envPtr, sizeof(gifTag));
+                const uint32_t qwc = static_cast<uint32_t>(static_cast<int32_t>(static_cast<int64_t>(gifTag & 0x7FFFu))) + 1u;
+                runtime->Store32(rdram, ctx, 0x1000A020u, qwc);
+                runtime->Store32(rdram, ctx, 0x1000A010u, a0 & 0x0FFFFFFFu);
+                runtime->Store32(rdram, ctx, 0x1000A000u, 0x101u);
+                SET_GPR_U64(ctx, 6, a0);
+                SET_GPR_S32(ctx, 4, 257);
+                SET_GPR_S32(ctx, 3, 0x1000A000);
+                SET_GPR_S32(ctx, 2, 0);
+                ps2FastReturn(rdram, ctx, runtime, 0x396E40u);
+                return;
+            }
+        }
+    }
 #endif
 
     if (__builtin_expect(ctx->pc != 0x396d60u, 0)) {
@@ -67,7 +94,6 @@ void sceGsPutDrawEnv_0x396d60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     // 0x396d90: 0x80102d  daddu       $v0, $a0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x396d94: 0x0  nop
-    ctx->pc = 0x396d94u;
     // NOP
 label_396d98:
     // 0x396d98: 0xa2102b  sltu        $v0, $a1, $v0
@@ -110,7 +136,6 @@ label_396d98:
             goto label_396d98;
         }
     }
-    ctx->pc = 0x396DB4u;
 label_396db4:
     // 0x396db4: 0xdcc20000  ld          $v0, 0x0($a2)
     ctx->pc = 0x396db4u;
@@ -174,7 +199,6 @@ label_396db4:
             goto label_396e24;
         }
     }
-    ctx->pc = 0x396E00u;
 label_396e00:
     // 0x396e00: 0x3c040046  lui         $a0, 0x46
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)70 << 16));
@@ -189,7 +213,6 @@ label_396e00:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B1F28u, 0x396E04u, 0x396E0Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x396E0Cu;
 label_396e0c:
     // 0x396e0c: 0x1000000b  b           . + 4 + (0xB << 2)
     ctx->pc = 0x396E0Cu;
@@ -206,7 +229,6 @@ label_396e0c:
             goto label_396e3c;
         }
     }
-    ctx->pc = 0x396E14u;
 label_396e14:
     // 0x396e14: 0x3c031000  lui         $v1, 0x1000
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)4096 << 16));
@@ -215,7 +237,6 @@ label_396e14:
     // 0x396e1c: 0x3463a010  ori         $v1, $v1, 0xA010
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) | (uint64_t)(uint16_t)40976);
     // 0x396e20: 0xc21024  and         $v0, $a2, $v0
-    ctx->pc = 0x396e20u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 6) & GPR_U64(ctx, 2));
 label_396e24:
     // 0x396e24: 0xac620000  sw          $v0, 0x0($v1)

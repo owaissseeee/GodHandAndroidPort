@@ -13,7 +13,7 @@
 
 // Function: cSndBgmNode_Ctor
 // Address: 0x2cc500 - 0x2cc540
-void cSndBgmNode_Ctor_0x2cc500(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndBgmNode_Ctor_0x2cc500(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndBgmNode_Ctor_0x2cc500");
 #endif
@@ -46,7 +46,6 @@ void cSndBgmNode_Ctor_0x2cc500(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_Set_Field_80_372C68_0x372c68, 0x372c68u, 0x2cc514u)) {
         return;
     }
-    ctx->pc = 0x2CC514u;
 label_2cc514:
     // 0x2cc514: 0x3c030045  lui         $v1, 0x45
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)69 << 16));
@@ -65,7 +64,6 @@ label_2cc514:
     if (!runtime->callDirectStatic(rdram, ctx, &cSndBgmNode_Init_0x2cc578, 0x2cc578u, 0x2cc528u)) {
         return;
     }
-    ctx->pc = 0x2CC528u;
 label_2cc528:
     // 0x2cc528: 0x200102d  daddu       $v0, $s0, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));

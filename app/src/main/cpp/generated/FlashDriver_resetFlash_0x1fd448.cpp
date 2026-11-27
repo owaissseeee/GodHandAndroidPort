@@ -14,7 +14,7 @@
 
 // Function: FlashDriver_resetFlash
 // Address: 0x1fd448 - 0x1fd528
-void FlashDriver_resetFlash_0x1fd448(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FlashDriver_resetFlash_0x1fd448(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FlashDriver_resetFlash_0x1fd448");
 #endif
@@ -182,7 +182,6 @@ void FlashDriver_resetFlash_0x1fd448(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_1fd51c;
         }
     }
-    ctx->pc = 0x1FD51Cu;
 label_1fd51c:
     // 0x1fd51c: 0x3e00008  jr          $ra
     ctx->pc = 0x1FD51Cu;

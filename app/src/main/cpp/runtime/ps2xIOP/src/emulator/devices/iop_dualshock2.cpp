@@ -72,11 +72,22 @@ namespace ps2x::iop::detail
         response[2] = kAckMarker;
 
         const size_t dataBytes = static_cast<size_t>(id & 0x0Fu) * 2u;
+        const uint8_t prevSmall = m_smallMotor;
+        const uint8_t prevLarge = m_largeMotor;
         const size_t acknowledged = std::min(length, kHeaderBytes + dataBytes);
         for (size_t i = kHeaderBytes; i < acknowledged; ++i)
             response[i] = dataByte(opcode, i - kHeaderBytes, command[i], input);
         for (size_t i = acknowledged; i < length; ++i)
             response[i] = 0x00u;
+
+        // Only 0x42 (poll) carries actuator motor bytes; 0x43 (config toggle while
+        // !m_config) reuses poll response framing where payload byte 0 (0x01) is
+        // "enter config", NOT a rumble command.
+        if (opcode != kCmdPoll)
+        {
+            m_smallMotor = prevSmall;
+            m_largeMotor = prevLarge;
+        }
 
         finishCommand(opcode, command.subspan(std::min(length, kHeaderBytes), acknowledged - std::min(acknowledged, kHeaderBytes)));
         return acknowledged;
@@ -174,7 +185,14 @@ namespace ps2x::iop::detail
         {
         case kCmdConfig:
             if (!data.empty())
+            {
                 m_config = at(0) == 0x01u;
+                if (m_config)
+                {
+                    m_smallMotor = 0u;
+                    m_largeMotor = 0u;
+                }
+            }
             break;
         case kCmdSetMode:
             if (!m_config || data.empty())
@@ -189,6 +207,8 @@ namespace ps2x::iop::detail
                 break;
             for (size_t i = 0; i < m_vibrationMap.size() && i < data.size(); ++i)
                 m_vibrationMap[i] = data[i];
+            m_smallMotor = 0u;
+            m_largeMotor = 0u;
             break;
         case kCmdSetPressureMask:
             if (!m_config)

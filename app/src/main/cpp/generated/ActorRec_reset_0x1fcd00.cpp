@@ -13,7 +13,7 @@
 
 // Function: ActorRec_reset
 // Address: 0x1fcd00 - 0x1fcdb8
-void ActorRec_reset_0x1fcd00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ActorRec_reset_0x1fcd00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ActorRec_reset_0x1fcd00");
 #endif
@@ -162,7 +162,6 @@ label_1fcd78:
     if (!runtime->callDirectStatic(rdram, ctx, &func_001FD988_0x1fd988, 0x1fd988u, 0x1fcda0u)) {
         return;
     }
-    ctx->pc = 0x1FCDA0u;
 label_1fcda0:
     // 0x1fcda0: 0xae00004c  sw          $zero, 0x4C($s0)
     ctx->pc = 0x1fcda0u;

@@ -13,7 +13,7 @@
 
 // Function: func_00376370
 // Address: 0x376370 - 0x376400
-void func_00376370_0x376370(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00376370_0x376370(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00376370_0x376370");
 #endif
@@ -87,7 +87,6 @@ label_376390:
     if (!runtime->callDirectStatic(rdram, ctx, &ClearInvalidEntry_376400_0x376400, 0x376400u, 0x3763a8u)) {
         return;
     }
-    ctx->pc = 0x3763A8u;
 label_3763a8:
     // 0x3763a8: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x3763A8u;
@@ -104,7 +103,6 @@ label_3763a8:
             goto label_3763bc;
         }
     }
-    ctx->pc = 0x3763B0u;
 label_3763b0:
     // 0x3763b0: 0xc0dd90e  jal         func_376438
     SET_GPR_U32(ctx, 31, 0x3763B8u);
@@ -117,7 +115,6 @@ label_3763b0:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00376438_0x376438, 0x376438u, 0x3763b8u)) {
         return;
     }
-    ctx->pc = 0x3763B8u;
 label_3763b8:
     // 0x3763b8: 0x96020000  lhu         $v0, 0x0($s0)
     ctx->pc = 0x3763b8u;
@@ -149,7 +146,6 @@ label_3763bc:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00376720_0x376720, 0x376720u, 0x3763ccu)) {
         return;
     }
-    ctx->pc = 0x3763CCu;
 label_3763cc:
     // 0x3763cc: 0xc0dd9ec  jal         func_3767B0
     SET_GPR_U32(ctx, 31, 0x3763D4u);
@@ -162,7 +158,6 @@ label_3763cc:
     if (!runtime->callDirectStatic(rdram, ctx, &UpdateSlotState_3767B0_0x3767b0, 0x3767b0u, 0x3763d4u)) {
         return;
     }
-    ctx->pc = 0x3763D4u;
 label_3763d4:
     // 0x3763d4: 0xc0dda08  jal         func_376820
     SET_GPR_U32(ctx, 31, 0x3763DCu);
@@ -175,10 +170,8 @@ label_3763d4:
     if (!runtime->callDirectStatic(rdram, ctx, &UpdatePendingFlags_376820_0x376820, 0x376820u, 0x3763dcu)) {
         return;
     }
-    ctx->pc = 0x3763DCu;
 label_3763dc:
     // 0x3763dc: 0x261000e0  addiu       $s0, $s0, 0xE0
-    ctx->pc = 0x3763dcu;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 224));
 label_3763e0:
     // 0x3763e0: 0x211102a  slt         $v0, $s0, $s1

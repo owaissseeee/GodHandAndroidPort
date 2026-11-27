@@ -13,7 +13,7 @@
 
 // Function: cEmManage_reset
 // Address: 0x290110 - 0x290230
-void cEmManage_reset_0x290110(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_reset_0x290110(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_reset_0x290110");
 #endif
@@ -49,7 +49,6 @@ void cEmManage_reset_0x290110(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     ctx->pc = 0x290128u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x29012c: 0x26320500  addiu       $s2, $s1, 0x500
-    ctx->pc = 0x29012cu;
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 17), 1280));
 label_290130:
     // 0x290130: 0xc0a400a  jal         func_290028
@@ -63,7 +62,6 @@ label_290130:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_clearSlot_0x290028, 0x290028u, 0x290138u)) {
         return;
     }
-    ctx->pc = 0x290138u;
 label_290138:
     // 0x290138: 0x26100014  addiu       $s0, $s0, 0x14
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 20));
@@ -135,7 +133,6 @@ label_29016c:
             goto label_290180;
         }
     }
-    ctx->pc = 0x290180u;
 label_290180:
     // 0x290180: 0xa220053e  sb          $zero, 0x53E($s1)
     ctx->pc = 0x290180u;
@@ -213,7 +210,6 @@ label_2901c0:
     // 0x2901d8: 0xc0182d  daddu       $v1, $a2, $zero
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2901dc: 0x282d  daddu       $a1, $zero, $zero
-    ctx->pc = 0x2901dcu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2901e0:
     // 0x2901e0: 0xac600000  sw          $zero, 0x0($v1)

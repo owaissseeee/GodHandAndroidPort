@@ -13,7 +13,7 @@
 
 // Function: ColiseumBattle_CountLiveEnemies
 // Address: 0x1ef8b8 - 0x1ef978
-void ColiseumBattle_CountLiveEnemies_0x1ef8b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumBattle_CountLiveEnemies_0x1ef8b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumBattle_CountLiveEnemies_0x1ef8b8");
 #endif
@@ -107,7 +107,6 @@ label_1ef8e8:
     // 0x1ef900: 0x28620300  slti        $v0, $v1, 0x300
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)768) ? 1 : 0);
     // 0x1ef904: 0x40202d  daddu       $a0, $v0, $zero
-    ctx->pc = 0x1ef904u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_1ef908:
     // 0x1ef908: 0x308200ff  andi        $v0, $a0, 0xFF
@@ -145,7 +144,6 @@ label_1ef908:
     // 0x1ef91c: 0x28620300  slti        $v0, $v1, 0x300
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)768) ? 1 : 0);
     // 0x1ef920: 0x40202d  daddu       $a0, $v0, $zero
-    ctx->pc = 0x1ef920u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
 label_1ef924:
     // 0x1ef924: 0x308200ff  andi        $v0, $a0, 0xFF
@@ -176,7 +174,6 @@ label_1ef924:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmBase_checkDeadFlag_0x28fb38, 0x28fb38u, 0x1ef938u)) {
         return;
     }
-    ctx->pc = 0x1EF938u;
 label_1ef938:
     // 0x1ef938: 0x50530005  beql        $v0, $s3, . + 4 + (0x5 << 2)
     ctx->pc = 0x1EF938u;
@@ -199,7 +196,6 @@ label_1ef938:
     // 0x1ef944: 0x2102a  slt         $v0, $zero, $v0
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 0) < (int64_t)GPR_S64(ctx, 2)) ? 1 : 0);
     // 0x1ef948: 0x529021  addu        $s2, $v0, $s2
-    ctx->pc = 0x1ef948u;
     SET_GPR_S32(ctx, 18, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 18)));
 label_1ef94c:
     // 0x1ef94c: 0x8e310004  lw          $s1, 0x4($s1)
@@ -224,7 +220,6 @@ label_1ef950:
             goto label_1ef8e8;
         }
     }
-    ctx->pc = 0x1EF958u;
 label_1ef958:
     // 0x1ef958: 0x240102d  daddu       $v0, $s2, $zero
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));

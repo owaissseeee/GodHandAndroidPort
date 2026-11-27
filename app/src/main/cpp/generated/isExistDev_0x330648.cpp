@@ -13,7 +13,7 @@
 
 // Function: isExistDev
 // Address: 0x330648 - 0x3306c8
-void isExistDev_0x330648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void isExistDev_0x330648(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("isExistDev_0x330648");
 #endif
@@ -55,7 +55,6 @@ void isExistDev_0x330648(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     // 0x330670: 0x80982d  daddu       $s3, $a0, $zero
     SET_GPR_U64(ctx, 19, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x330674: 0x220282d  daddu       $a1, $s1, $zero
-    ctx->pc = 0x330674u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
 label_330678:
     // 0x330678: 0x26310010  addiu       $s1, $s1, 0x10
@@ -73,7 +72,6 @@ label_330678:
     if (!runtime->callDirectStatic(rdram, ctx, &strncmp_0x3a5bd8, 0x3a5bd8u, 0x330688u)) {
         return;
     }
-    ctx->pc = 0x330688u;
 label_330688:
     // 0x330688: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x330688u;
@@ -105,7 +103,6 @@ label_330688:
             goto label_3306a8;
         }
     }
-    ctx->pc = 0x330698u;
 label_330698:
     // 0x330698: 0x2a020020  slti        $v0, $s0, 0x20
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 16) < (int64_t)(int32_t)32) ? 1 : 0);
@@ -128,7 +125,6 @@ label_330698:
         }
     }
     // 0x3306a4: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x3306a4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_3306a8:
     // 0x3306a8: 0xdfb00000  ld          $s0, 0x0($sp)

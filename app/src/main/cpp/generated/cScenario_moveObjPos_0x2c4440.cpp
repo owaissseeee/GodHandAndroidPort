@@ -13,7 +13,7 @@
 
 // Function: cScenario_moveObjPos
 // Address: 0x2c4440 - 0x2c4510
-void cScenario_moveObjPos_0x2c4440(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_moveObjPos_0x2c4440(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_moveObjPos_0x2c4440");
 #endif
@@ -76,15 +76,12 @@ void cScenario_moveObjPos_0x2c4440(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         }
     }
 
-    ctx->pc = 0x2c4440u;
 
 label_2c4440:
     // 0x2c4440: 0x27bdffb0  addiu       $sp, $sp, -0x50
-    ctx->pc = 0x2c4440u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967216));
 label_2c4444:
     // 0x2c4444: 0x46006046  mov.s       $f1, $f12
-    ctx->pc = 0x2c4444u;
     ctx->f[1] = FPU_MOV_S(ctx->f[12]);
 label_2c4448:
     // 0x2c4448: 0x7fb00030  sq          $s0, 0x30($sp)
@@ -96,7 +93,6 @@ label_2c444c:
     { float f = ctx->f[21]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 29), 72), bits); }
 label_2c4450:
     // 0x2c4450: 0xa0802d  daddu       $s0, $a1, $zero
-    ctx->pc = 0x2c4450u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
 label_2c4454:
     // 0x2c4454: 0xffbf0020  sd          $ra, 0x20($sp)
@@ -141,18 +137,14 @@ label_2c4468:
             goto label_2c44d0;
         }
     }
-    ctx->pc = 0x2C446Cu;
 label_2c446c:
     // 0x2c446c: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x2c446cu;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
 label_2c4470:
     // 0x2c4470: 0x4481a000  mtc1        $at, $f20
-    ctx->pc = 0x2c4470u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[20], &bits, sizeof(bits)); }
 label_2c4474:
     // 0x2c4474: 0x3a0282d  daddu       $a1, $sp, $zero
-    ctx->pc = 0x2c4474u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
 label_2c4478:
     // 0x2c4478: 0xe7a10000  swc1        $f1, 0x0($sp)
@@ -210,18 +202,15 @@ label_2c4498:
             return;
         }
     }
-    ctx->pc = 0x2C449Cu;
 label_2c449c:
     // 0x2c449c: 0x8e060214  lw          $a2, 0x214($s0)
     ctx->pc = 0x2c449cu;
     SET_GPR_S32(ctx, 6, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 532)));
 label_2c44a0:
     // 0x2c44a0: 0x27a30010  addiu       $v1, $sp, 0x10
-    ctx->pc = 0x2c44a0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
 label_2c44a4:
     // 0x2c44a4: 0x60282d  daddu       $a1, $v1, $zero
-    ctx->pc = 0x2c44a4u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
 label_2c44a8:
     // 0x2c44a8: 0x84c40078  lh          $a0, 0x78($a2)
@@ -303,18 +292,14 @@ label_2c44cc:
             goto label_2c44f8;
         }
     }
-    ctx->pc = 0x2C44D0u;
 label_2c44d0:
     // 0x2c44d0: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x2c44d0u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
 label_2c44d4:
     // 0x2c44d4: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x2c44d4u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
 label_2c44d8:
     // 0x2c44d8: 0x4600ab06  mov.s       $f12, $f21
-    ctx->pc = 0x2c44d8u;
     ctx->f[12] = FPU_MOV_S(ctx->f[21]);
 label_2c44dc:
     // 0x2c44dc: 0xe7a10000  swc1        $f1, 0x0($sp)
@@ -322,7 +307,6 @@ label_2c44dc:
     { float f = ctx->f[1]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 29), 0), bits); }
 label_2c44e0:
     // 0x2c44e0: 0x3a0202d  daddu       $a0, $sp, $zero
-    ctx->pc = 0x2c44e0u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
 label_2c44e4:
     // 0x2c44e4: 0xe7ad0004  swc1        $f13, 0x4($sp)
@@ -355,7 +339,6 @@ label_2c44f0:
     if (!runtime->callDirectStatic(rdram, ctx, &setPlayerPos_0x31c7e0, 0x31c7e0u, 0x2c44f4u)) {
         return;
     }
-    ctx->pc = 0x2C44F4u;
 label_2c44f4:
     // 0x2c44f4: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x2c44f4u;
@@ -403,7 +386,6 @@ label_2c4508:
         return;
         #endif
     }
-    ctx->pc = 0x2C450Cu;
 label_2c450c:
     // 0x2c450c: 0x0  nop
     // NOP

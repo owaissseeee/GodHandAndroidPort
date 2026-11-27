@@ -13,7 +13,7 @@
 
 // Function: cSnd_BgmHitBeSet
 // Address: 0x2d2c18 - 0x2d2cf0
-void cSnd_BgmHitBeSet_0x2d2c18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_BgmHitBeSet_0x2d2c18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_BgmHitBeSet_0x2d2c18");
 #endif
@@ -76,7 +76,6 @@ void cSnd_BgmHitBeSet_0x2d2c18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     if (!runtime->callDirectStatic(rdram, ctx, &strcmp_0x3a5678, 0x3a5678u, 0x2d2c4cu)) {
         return;
     }
-    ctx->pc = 0x2D2C4Cu;
 label_2d2c4c:
     // 0x2d2c4c: 0x54400022  bnel        $v0, $zero, . + 4 + (0x22 << 2)
     ctx->pc = 0x2D2C4Cu;
@@ -162,7 +161,6 @@ label_2d2c4c:
     // 0x2d2c90: 0x24060001  addiu       $a2, $zero, 0x1
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2d2c94: 0x0  nop
-    ctx->pc = 0x2d2c94u;
     // NOP
 label_2d2c98:
     // 0x2d2c98: 0x80820028  lb          $v0, 0x28($a0)
@@ -213,10 +211,8 @@ label_2d2c98:
             goto label_2d2cb8;
         }
     }
-    ctx->pc = 0x2D2CB4u;
 label_2d2cb4:
     // 0x2d2cb4: 0x304200fe  andi        $v0, $v0, 0xFE
-    ctx->pc = 0x2d2cb4u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)254);
 label_2d2cb8:
     // 0x2d2cb8: 0xa0820029  sb          $v0, 0x29($a0)
@@ -251,7 +247,6 @@ label_2d2cc0:
             goto label_2d2c98;
         }
     }
-    ctx->pc = 0x2D2CD4u;
 label_2d2cd4:
     // 0x2d2cd4: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x2d2cd4u;

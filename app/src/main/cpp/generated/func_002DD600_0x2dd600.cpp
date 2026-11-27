@@ -13,7 +13,7 @@
 
 // Function: func_002DD600
 // Address: 0x2dd600 - 0x2dd6c0
-void func_002DD600_0x2dd600(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002DD600_0x2dd600(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002DD600_0x2dd600");
 #endif
@@ -52,7 +52,6 @@ void func_002DD600_0x2dd600(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x2dd618u)) {
         return;
     }
-    ctx->pc = 0x2DD618u;
 label_2dd618:
     // 0x2dd618: 0x12000023  beqz        $s0, . + 4 + (0x23 << 2)
     ctx->pc = 0x2DD618u;
@@ -98,7 +97,6 @@ label_2dd618:
     if (!runtime->callDirectStatic(rdram, ctx, &Obj0000_IsSet_Field_15F4_Bit_400000_10B698_0x10b698, 0x10b698u, 0x2dd634u)) {
         return;
     }
-    ctx->pc = 0x2DD634u;
 label_2dd634:
     // 0x2dd634: 0x5440001d  bnel        $v0, $zero, . + 4 + (0x1D << 2)
     ctx->pc = 0x2DD634u;
@@ -143,7 +141,6 @@ label_2dd634:
     if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_CkPlCatched_0x293100, 0x293100u, 0x2dd658u)) {
         return;
     }
-    ctx->pc = 0x2DD658u;
 label_2dd658:
     // 0x2dd658: 0x54400014  bnel        $v0, $zero, . + 4 + (0x14 << 2)
     ctx->pc = 0x2DD658u;
@@ -200,7 +197,6 @@ label_2dd658:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1351D8u, 0x2DD690u, 0x2DD698u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2DD698u;
 label_2dd698:
     // 0x2dd698: 0x220202d  daddu       $a0, $s1, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
@@ -217,7 +213,6 @@ label_2dd698:
     if (!runtime->callDirectStatic(rdram, ctx, &func_00129718_0x129718, 0x129718u, 0x2dd6a8u)) {
         return;
     }
-    ctx->pc = 0x2DD6A8u;
 label_2dd6a8:
     // 0x2dd6a8: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2dd6a8u;

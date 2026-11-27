@@ -14,12 +14,11 @@ namespace gh_r300
 {
 // Function: R300Move__Fv
 // Address: 0x799778 - 0x799780
-void R300Move__Fv_0x799778(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void R300Move__Fv_0x799778(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("R300Move__Fv_0x799778");
 #endif
 
-    ctx->pc = 0x799778u;
 
     // 0x799778: 0x3e00008  jr          $ra
     ctx->pc = 0x799778u;

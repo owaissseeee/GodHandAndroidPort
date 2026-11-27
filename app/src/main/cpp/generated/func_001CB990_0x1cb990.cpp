@@ -13,7 +13,7 @@
 
 // Function: func_001CB990
 // Address: 0x1cb990 - 0x1cba28
-void func_001CB990_0x1cb990(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001CB990_0x1cb990(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001CB990_0x1cb990");
 #endif
@@ -52,7 +52,6 @@ void func_001CB990_0x1cb990(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->callDirectStatic(rdram, ctx, &cEmManage_GetSpeedRate_0x292f50, 0x292f50u, 0x1cb9acu)) {
         return;
     }
-    ctx->pc = 0x1CB9ACu;
 label_1cb9ac:
     // 0x1cb9ac: 0x200202d  daddu       $a0, $s0, $zero
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
@@ -70,7 +69,6 @@ label_1cb9ac:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x158288u, 0x1CB9B4u, 0x1CB9BCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1CB9BCu;
 label_1cb9bc:
     // 0x1cb9bc: 0x920302f6  lbu         $v1, 0x2F6($s0)
     ctx->pc = 0x1cb9bcu;
@@ -114,7 +112,6 @@ label_1cb9bc:
             goto label_1cba18;
         }
     }
-    ctx->pc = 0x1CB9D8u;
 label_1cb9d8:
     // 0x1cb9d8: 0x8e020304  lw          $v0, 0x304($s0)
     ctx->pc = 0x1cb9d8u;
@@ -145,7 +142,6 @@ label_1cb9d8:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x1cba00u)) {
         return;
     }
-    ctx->pc = 0x1CBA00u;
 label_1cba00:
     // 0x1cba00: 0x920202f6  lbu         $v0, 0x2F6($s0)
     ctx->pc = 0x1cba00u;
@@ -167,7 +163,6 @@ label_1cba0c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x1CBA0Cu, 0x1CBA14u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1CBA14u;
 label_1cba14:
     // 0x1cba14: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x1cba14u;

@@ -13,7 +13,7 @@
 
 // Function: func_00150D78
 // Address: 0x150d78 - 0x150dc8
-void func_00150D78_0x150d78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00150D78_0x150d78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00150D78_0x150d78");
 #endif
@@ -62,14 +62,12 @@ void func_00150D78_0x150d78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x150D8Cu;
 label_150d8c:
     // 0x150d8c: 0x3c020074  lui         $v0, 0x74
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
     // 0x150d90: 0x24427ba0  addiu       $v0, $v0, 0x7BA0
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 31648));
     // 0x150d94: 0x24430014  addiu       $v1, $v0, 0x14
-    ctx->pc = 0x150d94u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 20));
 label_150d98:
     // 0x150d98: 0x8c620000  lw          $v0, 0x0($v1)
@@ -129,7 +127,6 @@ label_150d98:
         return;
         #endif
     }
-    ctx->pc = 0x150DB8u;
 label_150db8:
     // 0x150db8: 0x61400  sll         $v0, $a2, 16
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 6), 16));

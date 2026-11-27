@@ -18,7 +18,7 @@
 
 // Function: MtxInverse
 // Address: 0x147568 - 0x1476d0
-void MtxInverse_0x147568(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MtxInverse_0x147568(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MtxInverse_0x147568");
 #endif
@@ -211,7 +211,6 @@ void MtxInverse_0x147568(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
         return;
         #endif
     }
-    ctx->pc = 0x14760Cu;
 label_14760c:
     // 0x14760c: 0x44080000  mfc1        $t0, $f0
     { uint32_t bits; std::memcpy(&bits, &ctx->f[0], sizeof(bits)); SET_GPR_U32(ctx, 8, bits); }

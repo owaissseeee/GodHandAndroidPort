@@ -13,7 +13,7 @@
 
 // Function: cNode_setTranslationFromParent
 // Address: 0x2b5f28 - 0x2b5fc8
-void cNode_setTranslationFromParent_0x2b5f28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cNode_setTranslationFromParent_0x2b5f28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cNode_setTranslationFromParent_0x2b5f28");
 #endif
@@ -56,7 +56,6 @@ void cNode_setTranslationFromParent_0x2b5f28(uint8_t* rdram, R5900Context* ctx, 
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B6370_0x2b6370, 0x2b6370u, 0x2b5f48u)) {
         return;
     }
-    ctx->pc = 0x2B5F48u;
 label_2b5f48:
     // 0x2b5f48: 0xfba00000  sqc2        $vf0, 0x0($sp)
     ctx->pc = 0x2b5f48u;
@@ -72,7 +71,6 @@ label_2b5f48:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B5E50_0x2b5e50, 0x2b5e50u, 0x2b5f54u)) {
         return;
     }
-    ctx->pc = 0x2B5F54u;
 label_2b5f54:
     // 0x2b5f54: 0x1040000b  beqz        $v0, . + 4 + (0xB << 2)
     ctx->pc = 0x2B5F54u;
@@ -102,7 +100,6 @@ label_2b5f54:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B60D0_0x2b60d0, 0x2b60d0u, 0x2b5f68u)) {
         return;
     }
-    ctx->pc = 0x2B5F68u;
 label_2b5f68:
     // 0x2b5f68: 0x13b00006  beq         $sp, $s0, . + 4 + (0x6 << 2)
     ctx->pc = 0x2B5F68u;
@@ -170,7 +167,6 @@ label_2b5f84:
     if (!runtime->callDirectStatic(rdram, ctx, &func_002B6230_0x2b6230, 0x2b6230u, 0x2b5fb0u)) {
         return;
     }
-    ctx->pc = 0x2B5FB0u;
 label_2b5fb0:
     // 0x2b5fb0: 0x7bb00060  lq          $s0, 0x60($sp)
     ctx->pc = 0x2b5fb0u;
