@@ -13,18 +13,15 @@
 
 // Function: Obj33C8_GetShortArrayE2_idx
 // Address: 0x33cfa8 - 0x33cfb8
-void Obj33C8_GetShortArrayE2_idx_0x33cfa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj33C8_GetShortArrayE2_idx_0x33cfa8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj33C8_GetShortArrayE2_idx_0x33cfa8");
 #endif
 
-    ctx->pc = 0x33cfa8u;
 
     // 0x33cfa8: 0x52840  sll         $a1, $a1, 1
-    ctx->pc = 0x33cfa8u;
     SET_GPR_S32(ctx, 5, (int32_t)SLL32(GPR_U32(ctx, 5), 1));
     // 0x33cfac: 0xa42821  addu        $a1, $a1, $a0
-    ctx->pc = 0x33cfacu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), GPR_U32(ctx, 4)));
     // 0x33cfb0: 0x3e00008  jr          $ra
     ctx->pc = 0x33CFB0u;

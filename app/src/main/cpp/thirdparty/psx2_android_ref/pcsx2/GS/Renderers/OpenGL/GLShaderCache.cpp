@@ -353,8 +353,7 @@ bool GLShaderCache::WriteToBlobFile(const CacheIndexKey& key, const std::vector<
 	entry.blob_format = data.blob_format;
 
 	if (std::fwrite(prog_data.data(), 1, entry.blob_size, m_blob_file) != entry.blob_size ||
-		std::fflush(m_blob_file) != 0 || std::fwrite(&entry, sizeof(entry), 1, m_index_file) != 1 ||
-		std::fflush(m_index_file) != 0)
+		std::fwrite(&entry, sizeof(entry), 1, m_index_file) != 1)
 	{
 		Console.Error("Failed to write shader blob to file");
 		return false;

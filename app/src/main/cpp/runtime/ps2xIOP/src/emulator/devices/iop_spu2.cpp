@@ -1,6 +1,10 @@
 #include "iop_spu2.h"
 #include "../core/iop_cpu.h"
 
+#if !defined(__GNUC__) && !defined(__clang__) && !defined(__builtin_expect)
+#define __builtin_expect(exp, c) (exp)
+#endif
+
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
@@ -9,12 +13,16 @@
 #include <cmath>
 #include <numbers>
 #include <atomic>
+#if defined(__aarch64__) || defined(_M_ARM64)
+#include <arm_neon.h>
+#endif
 
 namespace ps2x::iop
 {
     namespace
     {
         std::atomic<float> g_voiceGain{1.0f};
+        std::atomic<bool> g_reverbDisabled{false};
     }
 
     void setVoiceGain(float gain)
@@ -25,6 +33,16 @@ namespace ps2x::iop
     float voiceGain()
     {
         return g_voiceGain.load(std::memory_order_relaxed);
+    }
+
+    void setReverbDisabled(bool disabled) noexcept
+    {
+        g_reverbDisabled.store(disabled, std::memory_order_relaxed);
+    }
+
+    bool reverbDisabled() noexcept
+    {
+        return g_reverbDisabled.load(std::memory_order_relaxed);
     }
 }
 
@@ -225,6 +243,7 @@ namespace ps2x::iop::detail
         m_endx.fill(0u);
         m_transferAddress.fill(0u);
         m_adma = {};
+        g_stagedAdma = {};
         m_cycle = 0u;
         for (auto &core : m_decoders)
             core.fill(Decoder{});
@@ -418,6 +437,7 @@ namespace ps2x::iop::detail
         adma.position = 0u;
         adma.index = 256u; // Force fetch of block 0 so left/right channels are perfectly aligned from start
         const AdmaRead mode = admaReadMode();
+        g_stagedAdma[core & 1u].valid = false;
         if (mode == AdmaRead::All && source && adma.bytes != 0u)
         {
             static std::array<std::vector<uint8_t>, kCores> copies;
@@ -736,8 +756,19 @@ namespace ps2x::iop::detail
                 wet[channel] += ext;
             wet[channel] = saturate(wet[channel]);
         }
-        static const bool reverbEnabled = [] { const char *v = std::getenv("PS2X_SPU2_REVERB"); return !v || *v != '0'; }();
-        const std::array<int32_t, 2> reverb = reverbEnabled ? reverbFrame(core, wet) : std::array<int32_t, 2>{};
+        static const bool reverbEnvEnabled = [] { const char *v = std::getenv("PS2X_SPU2_REVERB"); return !v || *v != '0'; }();
+        const bool reverbActive = reverbEnvEnabled && !g_reverbDisabled.load(std::memory_order_relaxed);
+        const bool reverbWriteOrAudible =
+            ((reg(base + 0x19Au) & 0x80u) != 0u) || reg(shared + 4u) != 0u || reg(shared + 6u) != 0u;
+        std::array<int32_t, 2> reverb{};
+        if (reverbActive && reverbWriteOrAudible)
+        {
+            reverb = reverbFrame(core, wet);
+        }
+        else
+        {
+            ++m_reverb[core].frame;
+        }
         if (reverb[0] != 0 || reverb[1] != 0)
             ++g_statReverbNonZero;
         for (uint32_t channel = 0u; channel < 2u; ++channel)
@@ -791,10 +822,33 @@ namespace ps2x::iop::detail
         // Half-band filter: only the even taps and the centre are non-zero, and it is symmetric.
         auto firEven = [&](const std::array<int16_t, 64> &h) -> int32_t
         {
+#if defined(__aarch64__) || defined(_M_ARM64)
+            static constexpr int16_t kCoeffs8[8] = {-1, 2, -10, 35, -103, 266, -616, 1332};
+            const int16_t a0 = h[(pos - 0u) & kHistMask], b0 = h[(pos - 38u) & kHistMask];
+            const int16_t a2 = h[(pos - 2u) & kHistMask], b2 = h[(pos - 36u) & kHistMask];
+            const int16_t a4 = h[(pos - 4u) & kHistMask], b4 = h[(pos - 34u) & kHistMask];
+            const int16_t a6 = h[(pos - 6u) & kHistMask], b6 = h[(pos - 32u) & kHistMask];
+            const int16_t a8 = h[(pos - 8u) & kHistMask], b8 = h[(pos - 30u) & kHistMask];
+            const int16_t a10 = h[(pos - 10u) & kHistMask], b10 = h[(pos - 28u) & kHistMask];
+            const int16_t a12 = h[(pos - 12u) & kHistMask], b12 = h[(pos - 26u) & kHistMask];
+            const int16_t a14 = h[(pos - 14u) & kHistMask], b14 = h[(pos - 24u) & kHistMask];
+            const int16x8_t va = {a0, a2, a4, a6, a8, a10, a12, a14};
+            const int16x8_t vb = {b0, b2, b4, b6, b8, b10, b12, b14};
+            const int16x8_t vc = vld1q_s16(kCoeffs8);
+            const int32x4_t sLo = vaddl_s16(vget_low_s16(va), vget_low_s16(vb));
+            const int32x4_t sHi = vaddl_high_s16(va, vb);
+            int32x4_t accVec = vmulq_s32(sLo, vmovl_s16(vget_low_s16(vc)));
+            accVec = vmlaq_s32(accVec, sHi, vmovl_high_s16(vc));
+            int32_t acc = vaddvq_s32(accVec);
+            acc += kFir[16] * (static_cast<int32_t>(h[(pos - 16u) & kHistMask]) + h[(pos - 22u) & kHistMask]);
+            acc += kFir[18] * (static_cast<int32_t>(h[(pos - 18u) & kHistMask]) + h[(pos - 20u) & kHistMask]);
+            return acc;
+#else
             int32_t acc = 0;
             for (uint32_t k = 0u; k < 19u; k += 2u)
                 acc += kFir[k] * (static_cast<int32_t>(h[(pos - k) & kHistMask]) + h[(pos - 38u + k) & kHistMask]);
             return acc;
+#endif
         };
 
         std::array<int32_t, 2> out{};
@@ -821,6 +875,7 @@ namespace ps2x::iop::detail
         if (esa <= end)
         {
             const uint32_t size = end - esa + 1u;
+            const int64_t sizeSigned = static_cast<int64_t>(size);
             if (rv.current < esa || rv.current > end)
                 rv.current = esa;
             const uint32_t rel = rv.current - esa;
@@ -836,9 +891,16 @@ namespace ps2x::iop::detail
             auto areg = [&](uint32_t index) -> int64_t { return static_cast<int64_t>(pair(0x2E4u + 4u * index)); };
             auto addr = [&](int64_t offset) -> uint32_t
             {
-                int64_t a = (static_cast<int64_t>(rel) + offset) % static_cast<int64_t>(size);
+                int64_t a = static_cast<int64_t>(rel) + offset;
+                if (__builtin_expect(a >= 0 && a < sizeSigned, 1))
+                    return (esa + static_cast<uint32_t>(a)) & kAddressMask;
+                if (a >= sizeSigned && a < (sizeSigned << 1))
+                    return (esa + static_cast<uint32_t>(a - sizeSigned)) & kAddressMask;
+                if (a < 0 && a >= -sizeSigned)
+                    return (esa + static_cast<uint32_t>(a + sizeSigned)) & kAddressMask;
+                a %= sizeSigned;
                 if (a < 0)
-                    a += size;
+                    a += sizeSigned;
                 return (esa + static_cast<uint32_t>(a)) & kAddressMask;
             };
             auto rd = [&](int64_t offset) -> int32_t { return static_cast<int16_t>(m_ram[addr(offset)]); };
@@ -937,12 +999,19 @@ namespace ps2x::iop::detail
         }
         if (voice.phase == kPhaseOff || voice.envelope == 0)
             return 0;
-        const int32_t fraction = voice.counter + kPitchStep;
-        const auto &weights = interpolationWeights()[std::min(fraction >> 4, 255)];
         const auto &history = m_interpolation[core][index];
         int32_t pcm = 0;
-        for (size_t tap = 0u; tap < history.size(); ++tap)
-            pcm += scale(history[tap], weights[tap]);
+        if (__builtin_expect(g_reverbDisabled.load(std::memory_order_relaxed), 0))
+        {
+            pcm = (static_cast<int32_t>(history[2]) + static_cast<int32_t>(history[3])) >> 1;
+        }
+        else
+        {
+            const int32_t fraction = voice.counter + kPitchStep;
+            const auto &weights = interpolationWeights()[std::min(fraction >> 4, 255)];
+            for (size_t tap = 0u; tap < history.size(); ++tap)
+                pcm += scale(history[tap], weights[tap]);
+        }
         return scale(saturate(pcm), voice.envelope >> 16);
     }
 

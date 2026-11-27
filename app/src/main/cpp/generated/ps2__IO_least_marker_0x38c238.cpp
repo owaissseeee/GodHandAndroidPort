@@ -13,17 +13,18 @@
 
 // Function: _IO_least_marker
 // Address: 0x38c238 - 0x38c280
-void ps2__IO_least_marker_0x38c238(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_least_marker_0x38c238(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_least_marker_0x38c238");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38c250u: goto label_38c250;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38c238u, 0)) {
+        switch (ctx->pc) {
+            case 0x38c250u: goto label_38c250;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x38c238u;
 
     // 0x38c238: 0x8c830008  lw          $v1, 0x8($a0)
     ctx->pc = 0x38c238u;
@@ -49,9 +50,7 @@ void ps2__IO_least_marker_0x38c238(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_38c26c;
         }
     }
-    ctx->pc = 0x38C24Cu;
     // 0x38c24c: 0x0  nop
-    ctx->pc = 0x38c24cu;
     // NOP
 label_38c250:
     // 0x38c250: 0x8c830008  lw          $v1, 0x8($a0)
@@ -61,13 +60,11 @@ label_38c250:
     ctx->pc = 0x38c254u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x38c258: 0x65102a  slt         $v0, $v1, $a1
-    ctx->pc = 0x38c258u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)GPR_S64(ctx, 5)) ? 1 : 0);
     // 0x38c25c: 0x62280b  movn        $a1, $v1, $v0
     ctx->pc = 0x38c25cu;
     if (GPR_U64(ctx, 2) != 0) SET_GPR_VEC(ctx, 5, GPR_VEC(ctx, 3));
     // 0x38c260: 0x0  nop
-    ctx->pc = 0x38c260u;
     // NOP
     // 0x38c264: 0x1480fffa  bnez        $a0, . + 4 + (-0x6 << 2)
     ctx->pc = 0x38C264u;
@@ -81,13 +78,10 @@ label_38c250:
             goto label_38c250;
         }
     }
-    ctx->pc = 0x38C26Cu;
 label_38c26c:
     // 0x38c26c: 0x5103c  dsll32      $v0, $a1, 0
-    ctx->pc = 0x38c26cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 5) << (32 + 0));
     // 0x38c270: 0x2103f  dsra32      $v0, $v0, 0
-    ctx->pc = 0x38c270u;
     SET_GPR_S64(ctx, 2, GPR_S64(ctx, 2) >> (32 + 0));
     // 0x38c274: 0x3e00008  jr          $ra
     ctx->pc = 0x38C274u;
@@ -102,9 +96,7 @@ label_38c26c:
         return;
         #endif
     }
-    ctx->pc = 0x38C27Cu;
     // 0x38c27c: 0x0  nop
-    ctx->pc = 0x38c27cu;
     // NOP
     ctx->pc = 0x38c280u;
 }

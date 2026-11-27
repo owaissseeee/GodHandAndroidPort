@@ -13,18 +13,16 @@
 
 // Function: cOl2b_setOpen
 // Address: 0x180310 - 0x180338
-void cOl2b_setOpen_0x180310(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl2b_setOpen_0x180310(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl2b_setOpen_0x180310");
 #endif
 
-    ctx->pc = 0x180310u;
 
     // 0x180310: 0x8c820a24  lw          $v0, 0xA24($a0)
     ctx->pc = 0x180310u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 2596)));
     // 0x180314: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x180314u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x180318: 0x10430005  beq         $v0, $v1, . + 4 + (0x5 << 2)
     ctx->pc = 0x180318u;
@@ -35,7 +33,6 @@ void cOl2b_setOpen_0x180310(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_180330;
         }
     }
-    ctx->pc = 0x180320u;
     // 0x180320: 0xa08302f4  sb          $v1, 0x2F4($a0)
     ctx->pc = 0x180320u;
     WRITE8(ADD32(GPR_U32(ctx, 4), 756), (uint8_t)GPR_U32(ctx, 3));

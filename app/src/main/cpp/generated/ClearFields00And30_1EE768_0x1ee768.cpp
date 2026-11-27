@@ -13,15 +13,13 @@
 
 // Function: ClearFields00And30_1EE768
 // Address: 0x1ee768 - 0x1ee780
-void ClearFields00And30_1EE768_0x1ee768(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearFields00And30_1EE768_0x1ee768(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearFields00And30_1EE768_0x1ee768");
 #endif
 
-    ctx->pc = 0x1ee768u;
 
     // 0x1ee768: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x1ee768u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1ee76c: 0xac800030  sw          $zero, 0x30($a0)
     ctx->pc = 0x1ee76cu;
@@ -45,12 +43,9 @@ void ClearFields00And30_1EE768_0x1ee768(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x1EE778u;
     // 0x1ee778: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x1ee778u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x1ee77c: 0x0  nop
-    ctx->pc = 0x1ee77cu;
     // NOP
     ctx->pc = 0x1ee780u;
 }

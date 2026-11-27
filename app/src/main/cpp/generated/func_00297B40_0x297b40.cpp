@@ -13,20 +13,20 @@
 
 // Function: func_00297B40
 // Address: 0x297b40 - 0x297b60
-void func_00297B40_0x297b40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00297B40_0x297b40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00297B40_0x297b40");
 #endif
 
-    switch (ctx->pc) {
-        case 0x297b54u: goto label_297b54;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x297b40u, 0)) {
+        switch (ctx->pc) {
+            case 0x297b54u: goto label_297b54;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x297b40u;
 
     // 0x297b40: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x297b40u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x297b44: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x297b44u;
@@ -50,7 +50,6 @@ void func_00297B40_0x297b40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             return;
         }
     }
-    ctx->pc = 0x297B54u;
 label_297b54:
     // 0x297b54: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x297b54u;

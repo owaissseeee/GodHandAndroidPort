@@ -13,12 +13,11 @@
 
 // Function: cOm4f_setOpenFix
 // Address: 0x1a4e00 - 0x1a4e88
-void cOm4f_setOpenFix_0x1a4e00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm4f_setOpenFix_0x1a4e00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm4f_setOpenFix_0x1a4e00");
 #endif
 
-    ctx->pc = 0x1a4e00u;
 
     // 0x1a4e00: 0x90820761  lbu         $v0, 0x761($a0)
     ctx->pc = 0x1a4e00u;
@@ -38,7 +37,6 @@ void cOm4f_setOpenFix_0x1a4e00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_1a4e7c;
         }
     }
-    ctx->pc = 0x1A4E0Cu;
     // 0x1a4e0c: 0x908202b4  lbu         $v0, 0x2B4($a0)
     ctx->pc = 0x1a4e0cu;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 692)));
@@ -57,7 +55,6 @@ void cOm4f_setOpenFix_0x1a4e00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_1a4e24;
         }
     }
-    ctx->pc = 0x1A4E18u;
     // 0x1a4e18: 0x8c820278  lw          $v0, 0x278($a0)
     ctx->pc = 0x1a4e18u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 632)));
@@ -76,10 +73,8 @@ void cOm4f_setOpenFix_0x1a4e00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_1a4e28;
         }
     }
-    ctx->pc = 0x1A4E24u;
 label_1a4e24:
     // 0x1a4e24: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1a4e24u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1a4e28:
     // 0x1a4e28: 0x1040000e  beqz        $v0, . + 4 + (0xE << 2)
@@ -97,7 +92,6 @@ label_1a4e28:
             goto label_1a4e64;
         }
     }
-    ctx->pc = 0x1A4E30u;
     // 0x1a4e30: 0x908202b4  lbu         $v0, 0x2B4($a0)
     ctx->pc = 0x1a4e30u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 692)));
@@ -116,7 +110,6 @@ label_1a4e28:
             goto label_1a4e48;
         }
     }
-    ctx->pc = 0x1A4E3Cu;
     // 0x1a4e3c: 0x8c820278  lw          $v0, 0x278($a0)
     ctx->pc = 0x1a4e3cu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 632)));
@@ -135,17 +128,14 @@ label_1a4e28:
             goto label_1a4e4c;
         }
     }
-    ctx->pc = 0x1A4E48u;
 label_1a4e48:
     // 0x1a4e48: 0x182d  daddu       $v1, $zero, $zero
-    ctx->pc = 0x1a4e48u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1a4e4c:
     // 0x1a4e4c: 0xc4800794  lwc1        $f0, 0x794($a0)
     ctx->pc = 0x1a4e4cu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 1940)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x1a4e50: 0x24620100  addiu       $v0, $v1, 0x100
-    ctx->pc = 0x1a4e50u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 3), 256));
     // 0x1a4e54: 0xe4600100  swc1        $f0, 0x100($v1)
     ctx->pc = 0x1a4e54u;
@@ -157,7 +147,6 @@ label_1a4e4c:
     ctx->pc = 0x1a4e5cu;
     WRITE32(ADD32(GPR_U32(ctx, 2), 4), GPR_U32(ctx, 0));
     // 0x1a4e60: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1a4e60u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_1a4e64:
     // 0x1a4e64: 0xa08002f7  sb          $zero, 0x2F7($a0)
@@ -198,9 +187,7 @@ label_1a4e7c:
         return;
         #endif
     }
-    ctx->pc = 0x1A4E84u;
     // 0x1a4e84: 0x0  nop
-    ctx->pc = 0x1a4e84u;
     // NOP
     ctx->pc = 0x1a4e88u;
 }

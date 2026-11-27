@@ -13,15 +13,13 @@
 
 // Function: func_00343AD0
 // Address: 0x343ad0 - 0x343ae8
-void func_00343AD0_0x343ad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00343AD0_0x343ad0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00343AD0_0x343ad0");
 #endif
 
-    ctx->pc = 0x343ad0u;
 
     // 0x343ad0: 0x24820160  addiu       $v0, $a0, 0x160
-    ctx->pc = 0x343ad0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 352));
     // 0x343ad4: 0xac820178  sw          $v0, 0x178($a0)
     ctx->pc = 0x343ad4u;

@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_loadWorldActive
 // Address: 0x1f9e00 - 0x1f9e28
-void cCoreSave_loadWorldActive_0x1f9e00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_loadWorldActive_0x1f9e00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_loadWorldActive_0x1f9e00");
 #endif
 
-    ctx->pc = 0x1f9e00u;
 
     // 0x1f9e00: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x1f9e00u;
@@ -41,12 +40,9 @@ void cCoreSave_loadWorldActive_0x1f9e00(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_1f9e20;
         }
     }
-    ctx->pc = 0x1F9E10u;
     // 0x1f9e10: 0x3c03005f  lui         $v1, 0x5F
-    ctx->pc = 0x1f9e10u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)95 << 16));
     // 0x1f9e14: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1f9e14u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1f9e18: 0x3e00008  jr          $ra
     ctx->pc = 0x1F9E18u;
@@ -67,7 +63,6 @@ void cCoreSave_loadWorldActive_0x1f9e00(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x1F9E20u;
 label_1f9e20:
     // 0x1f9e20: 0x3e00008  jr          $ra
     ctx->pc = 0x1F9E20u;

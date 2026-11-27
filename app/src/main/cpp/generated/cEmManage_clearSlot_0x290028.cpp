@@ -13,15 +13,13 @@
 
 // Function: cEmManage_clearSlot
 // Address: 0x290028 - 0x290048
-void cEmManage_clearSlot_0x290028(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_clearSlot_0x290028(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_clearSlot_0x290028");
 #endif
 
-    ctx->pc = 0x290028u;
 
     // 0x290028: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x290028u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x29002c: 0xac800004  sw          $zero, 0x4($a0)
     ctx->pc = 0x29002cu;
@@ -54,9 +52,7 @@ void cEmManage_clearSlot_0x290028(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         return;
         #endif
     }
-    ctx->pc = 0x290044u;
     // 0x290044: 0x0  nop
-    ctx->pc = 0x290044u;
     // NOP
     ctx->pc = 0x290048u;
 }

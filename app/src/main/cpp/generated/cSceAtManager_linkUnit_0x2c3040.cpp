@@ -13,21 +13,18 @@
 
 // Function: cSceAtManager_linkUnit
 // Address: 0x2c3040 - 0x2c3058
-void cSceAtManager_linkUnit_0x2c3040(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSceAtManager_linkUnit_0x2c3040(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSceAtManager_linkUnit_0x2c3040");
 #endif
 
-    ctx->pc = 0x2c3040u;
 
     // 0x2c3040: 0x8ca30000  lw          $v1, 0x0($a1)
     ctx->pc = 0x2c3040u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 0)));
     // 0x2c3044: 0x3c028000  lui         $v0, 0x8000
-    ctx->pc = 0x2c3044u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)32768 << 16));
     // 0x2c3048: 0xc21025  or          $v0, $a2, $v0
-    ctx->pc = 0x2c3048u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 6) | GPR_U64(ctx, 2));
     // 0x2c304c: 0xacc30000  sw          $v1, 0x0($a2)
     ctx->pc = 0x2c304cu;

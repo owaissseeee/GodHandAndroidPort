@@ -13,12 +13,11 @@
 
 // Function: UpdateField78_FromField90_146F70
 // Address: 0x146f70 - 0x146f90
-void UpdateField78_FromField90_146F70_0x146f70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void UpdateField78_FromField90_146F70_0x146f70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("UpdateField78_FromField90_146F70_0x146f70");
 #endif
 
-    ctx->pc = 0x146f70u;
 
     // 0x146f70: 0x90820090  lbu         $v0, 0x90($a0)
     ctx->pc = 0x146f70u;
@@ -38,7 +37,6 @@ void UpdateField78_FromField90_146F70_0x146f70(uint8_t* rdram, R5900Context* ctx
             goto label_146f84;
         }
     }
-    ctx->pc = 0x146F7Cu;
     // 0x146f7c: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x146F7Cu;
     {
@@ -54,7 +52,6 @@ void UpdateField78_FromField90_146F70_0x146f70(uint8_t* rdram, R5900Context* ctx
             goto label_146f88;
         }
     }
-    ctx->pc = 0x146F84u;
 label_146f84:
     // 0x146f84: 0xa0820078  sb          $v0, 0x78($a0)
     ctx->pc = 0x146f84u;

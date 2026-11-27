@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_setGold
 // Address: 0x1fa6f8 - 0x1fa710
-void cCoreSave_setGold_0x1fa6f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setGold_0x1fa6f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setGold_0x1fa6f8");
 #endif
 
-    ctx->pc = 0x1fa6f8u;
 
     // 0x1fa6f8: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fa6f8u;
@@ -38,7 +37,6 @@ void cCoreSave_setGold_0x1fa6f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_1fa704;
         }
     }
-    ctx->pc = 0x1FA704u;
 label_1fa704:
     // 0x1fa704: 0x3e00008  jr          $ra
     ctx->pc = 0x1FA704u;
@@ -53,9 +51,7 @@ label_1fa704:
         return;
         #endif
     }
-    ctx->pc = 0x1FA70Cu;
     // 0x1fa70c: 0x0  nop
-    ctx->pc = 0x1fa70cu;
     // NOP
     ctx->pc = 0x1fa710u;
 }

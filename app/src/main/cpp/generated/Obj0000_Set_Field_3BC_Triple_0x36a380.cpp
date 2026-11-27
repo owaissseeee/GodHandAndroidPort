@@ -13,27 +13,21 @@
 
 // Function: Obj0000_Set_Field_3BC_Triple
 // Address: 0x36a380 - 0x36a3a8
-void Obj0000_Set_Field_3BC_Triple_0x36a380(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_Field_3BC_Triple_0x36a380(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_Field_3BC_Triple_0x36a380");
 #endif
 
-    ctx->pc = 0x36a380u;
 
     // 0x36a380: 0x51040  sll         $v0, $a1, 1
-    ctx->pc = 0x36a380u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 5), 1));
     // 0x36a384: 0x451021  addu        $v0, $v0, $a1
-    ctx->pc = 0x36a384u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 5)));
     // 0x36a388: 0x21080  sll         $v0, $v0, 2
-    ctx->pc = 0x36a388u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 2));
     // 0x36a38c: 0x822021  addu        $a0, $a0, $v0
-    ctx->pc = 0x36a38cu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 2)));
     // 0x36a390: 0x248403bc  addiu       $a0, $a0, 0x3BC
-    ctx->pc = 0x36a390u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 956));
     // 0x36a394: 0xac880008  sw          $t0, 0x8($a0)
     ctx->pc = 0x36a394u;
@@ -60,9 +54,7 @@ void Obj0000_Set_Field_3BC_Triple_0x36a380(uint8_t* rdram, R5900Context* ctx, PS
         return;
         #endif
     }
-    ctx->pc = 0x36A3A4u;
     // 0x36a3a4: 0x0  nop
-    ctx->pc = 0x36a3a4u;
     // NOP
     ctx->pc = 0x36a3a8u;
 }

@@ -13,12 +13,11 @@
 
 // Function: ReturnOne_1F6FA0
 // Address: 0x1f6fa0 - 0x1f6fa8
-void ReturnOne_1F6FA0_0x1f6fa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ReturnOne_1F6FA0_0x1f6fa0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ReturnOne_1F6FA0_0x1f6fa0");
 #endif
 
-    ctx->pc = 0x1f6fa0u;
 
     // 0x1f6fa0: 0x3e00008  jr          $ra
     ctx->pc = 0x1F6FA0u;

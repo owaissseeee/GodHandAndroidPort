@@ -14,23 +14,22 @@
 
 // Function: TimedButton_tick
 // Address: 0x1f6f58 - 0x1f6fa0
-void TimedButton_tick_0x1f6f58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void TimedButton_tick_0x1f6f58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("TimedButton_tick_0x1f6f58");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1f6f84u: goto label_1f6f84;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1f6f58u, 0)) {
+        switch (ctx->pc) {
+            case 0x1f6f84u: goto label_1f6f84;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1f6f58u;
 
     // 0x1f6f58: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1f6f58u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1f6f5c: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x1f6f5cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1f6f60: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1f6f60u;
@@ -53,7 +52,6 @@ void TimedButton_tick_0x1f6f58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_1f6f98;
         }
     }
-    ctx->pc = 0x1F6F70u;
     // 0x1f6f70: 0x84820032  lh          $v0, 0x32($a0)
     ctx->pc = 0x1f6f70u;
     SET_GPR_S32(ctx, 2, (int16_t)READ16(ADD32(GPR_U32(ctx, 4), 50)));
@@ -72,15 +70,12 @@ void TimedButton_tick_0x1f6f58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_1f6f8c;
         }
     }
-    ctx->pc = 0x1F6F7Cu;
     // 0x1f6f7c: 0xc07dc8a  jal         func_1F7228
     ctx->pc = 0x1F6F7Cu;
     SET_GPR_U32(ctx, 31, 0x1F6F84u);
-    ctx->pc = 0x1F7228u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1F7228u, 0x1F6F7Cu, 0x1F6F84u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cActionButtonEnt_reset_0x1f7228, 0x1f7228u, 0x1f6f84u)) {
         return;
     }
-    ctx->pc = 0x1F6F84u;
 label_1f6f84:
     // 0x1f6f84: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x1F6F84u;
@@ -97,7 +92,6 @@ label_1f6f84:
             goto label_1f6f98;
         }
     }
-    ctx->pc = 0x1F6F8Cu;
 label_1f6f8c:
     // 0x1f6f8c: 0x2462ffff  addiu       $v0, $v1, -0x1
     ctx->pc = 0x1f6f8cu;

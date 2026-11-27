@@ -13,15 +13,13 @@
 
 // Function: Obj2810_ClearState_B
 // Address: 0x2814b8 - 0x2814d0
-void Obj2810_ClearState_B_0x2814b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj2810_ClearState_B_0x2814b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj2810_ClearState_B_0x2814b8");
 #endif
 
-    ctx->pc = 0x2814b8u;
 
     // 0x2814b8: 0x2402000b  addiu       $v0, $zero, 0xB
-    ctx->pc = 0x2814b8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 11));
     // 0x2814bc: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x2814bcu;

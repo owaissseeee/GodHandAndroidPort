@@ -14,12 +14,11 @@
 
 // Function: cEmManage_SetSpeedRate
 // Address: 0x292f38 - 0x292f50
-void cEmManage_SetSpeedRate_0x292f38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_SetSpeedRate_0x292f38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_SetSpeedRate_0x292f38");
 #endif
 
-    ctx->pc = 0x292f38u;
 
     // 0x292f38: 0xe48c0548  swc1        $f12, 0x548($a0)
     ctx->pc = 0x292f38u;
@@ -31,10 +30,8 @@ void cEmManage_SetSpeedRate_0x292f38(uint8_t* rdram, R5900Context* ctx, PS2Runti
     { float f = ctx->f[12]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 4), 1352), bits); }
     }
     // 0x292f3c: 0x3c030074  lui         $v1, 0x74
-    ctx->pc = 0x292f3cu;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
     // 0x292f40: 0x3c020075  lui         $v0, 0x75
-    ctx->pc = 0x292f40u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)117 << 16));
     // 0x292f44: 0xe46c1dc0  swc1        $f12, 0x1DC0($v1)
     ctx->pc = 0x292f44u;

@@ -13,12 +13,11 @@
 
 // Function: Obj0000_Clear_Fields_640_648_124E58
 // Address: 0x124e58 - 0x124e68
-void Obj0000_Clear_Fields_640_648_124E58_0x124e58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Clear_Fields_640_648_124E58_0x124e58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Clear_Fields_640_648_124E58_0x124e58");
 #endif
 
-    ctx->pc = 0x124e58u;
 
     // 0x124e58: 0xa0800648  sb          $zero, 0x648($a0)
     ctx->pc = 0x124e58u;
@@ -42,9 +41,7 @@ void Obj0000_Clear_Fields_640_648_124E58_0x124e58(uint8_t* rdram, R5900Context* 
         return;
         #endif
     }
-    ctx->pc = 0x124E64u;
     // 0x124e64: 0x0  nop
-    ctx->pc = 0x124e64u;
     // NOP
     ctx->pc = 0x124e68u;
 }

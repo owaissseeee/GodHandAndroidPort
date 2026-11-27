@@ -13,12 +13,11 @@
 
 // Function: cScenario_SetExitFunc
 // Address: 0x2c4dd0 - 0x2c4de0
-void cScenario_SetExitFunc_0x2c4dd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_SetExitFunc_0x2c4dd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_SetExitFunc_0x2c4dd0");
 #endif
 
-    ctx->pc = 0x2c4dd0u;
 
     // 0x2c4dd0: 0xac8600f8  sw          $a2, 0xF8($a0)
     ctx->pc = 0x2c4dd0u;
@@ -42,9 +41,7 @@ void cScenario_SetExitFunc_0x2c4dd0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         return;
         #endif
     }
-    ctx->pc = 0x2C4DDCu;
     // 0x2c4ddc: 0x0  nop
-    ctx->pc = 0x2c4ddcu;
     // NOP
     ctx->pc = 0x2c4de0u;
 }

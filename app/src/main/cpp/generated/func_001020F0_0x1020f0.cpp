@@ -13,23 +13,22 @@
 
 // Function: func_001020F0
 // Address: 0x1020f0 - 0x102128
-void func_001020F0_0x1020f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001020F0_0x1020f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001020F0_0x1020f0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x10210cu: goto label_10210c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1020f0u, 0)) {
+        switch (ctx->pc) {
+            case 0x10210cu: goto label_10210c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1020f0u;
 
     // 0x1020f0: 0x3c030074  lui         $v1, 0x74
-    ctx->pc = 0x1020f0u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
     // 0x1020f4: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1020f4u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1020f8: 0x8c627a80  lw          $v0, 0x7A80($v1)
     ctx->pc = 0x1020f8u;
@@ -49,15 +48,12 @@ void func_001020F0_0x1020f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_102114;
         }
     }
-    ctx->pc = 0x102104u;
     // 0x102104: 0xc052d1c  jal         func_14B470
     ctx->pc = 0x102104u;
     SET_GPR_U32(ctx, 31, 0x10210Cu);
-    ctx->pc = 0x14B470u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x14B470u, 0x102104u, 0x10210Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &IsTargetVisible_14B470_0x14b470, 0x14b470u, 0x10210cu)) {
         return;
     }
-    ctx->pc = 0x10210Cu;
 label_10210c:
     // 0x10210c: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x10210Cu;
@@ -74,10 +70,8 @@ label_10210c:
             goto label_102118;
         }
     }
-    ctx->pc = 0x102114u;
 label_102114:
     // 0x102114: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x102114u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_102118:
     // 0x102118: 0xdfbf0000  ld          $ra, 0x0($sp)
@@ -102,9 +96,7 @@ label_102118:
         return;
         #endif
     }
-    ctx->pc = 0x102124u;
     // 0x102124: 0x0  nop
-    ctx->pc = 0x102124u;
     // NOP
     ctx->pc = 0x102128u;
 }

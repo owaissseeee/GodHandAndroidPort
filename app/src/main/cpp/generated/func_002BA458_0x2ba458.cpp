@@ -13,15 +13,13 @@
 
 // Function: func_002BA458
 // Address: 0x2ba458 - 0x2ba468
-void func_002BA458_0x2ba458(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002BA458_0x2ba458(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002BA458_0x2ba458");
 #endif
 
-    ctx->pc = 0x2ba458u;
 
     // 0x2ba458: 0x44800000  mtc1        $zero, $f0
-    ctx->pc = 0x2ba458u;
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x2ba45c: 0x3e00008  jr          $ra
     ctx->pc = 0x2BA45Cu;
@@ -36,9 +34,7 @@ void func_002BA458_0x2ba458(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2BA464u;
     // 0x2ba464: 0x0  nop
-    ctx->pc = 0x2ba464u;
     // NOP
     ctx->pc = 0x2ba468u;
 }

@@ -13,30 +13,24 @@
 
 // Function: cWorldLight_getExtra
 // Address: 0x2d9018 - 0x2d9038
-void cWorldLight_getExtra_0x2d9018(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cWorldLight_getExtra_0x2d9018(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cWorldLight_getExtra_0x2d9018");
 #endif
 
-    ctx->pc = 0x2d9018u;
 
     // 0x2d9018: 0x28a60030  slti        $a2, $a1, 0x30
-    ctx->pc = 0x2d9018u;
     SET_GPR_U64(ctx, 6, ((int64_t)GPR_S64(ctx, 5) < (int64_t)(int32_t)48) ? 1 : 0);
     // 0x2d901c: 0x2402002f  addiu       $v0, $zero, 0x2F
-    ctx->pc = 0x2d901cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 47));
     // 0x2d9020: 0xa6100b  movn        $v0, $a1, $a2
     ctx->pc = 0x2d9020u;
     if (GPR_U64(ctx, 6) != 0) SET_GPR_VEC(ctx, 2, GPR_VEC(ctx, 5));
     // 0x2d9024: 0x24030014  addiu       $v1, $zero, 0x14
-    ctx->pc = 0x2d9024u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 20));
     // 0x2d9028: 0x431018  mult        $v0, $v0, $v1
-    ctx->pc = 0x2d9028u;
     { int64_t result = (int64_t)GPR_S32(ctx, 2) * (int64_t)GPR_S32(ctx, 3); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 2, (int32_t)result); }
     // 0x2d902c: 0x24427080  addiu       $v0, $v0, 0x7080
-    ctx->pc = 0x2d902cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 28800));
     // 0x2d9030: 0x3e00008  jr          $ra
     ctx->pc = 0x2D9030u;

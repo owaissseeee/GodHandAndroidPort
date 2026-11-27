@@ -13,12 +13,11 @@
 
 // Function: Obj35E8_SetField_70
 // Address: 0x35ef70 - 0x35ef78
-void Obj35E8_SetField_70_0x35ef70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj35E8_SetField_70_0x35ef70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj35E8_SetField_70_0x35ef70");
 #endif
 
-    ctx->pc = 0x35ef70u;
 
     // 0x35ef70: 0x3e00008  jr          $ra
     ctx->pc = 0x35EF70u;

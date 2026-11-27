@@ -13,12 +13,11 @@
 
 // Function: func_002D65F8
 // Address: 0x2d65f8 - 0x2d6630
-void func_002D65F8_0x2d65f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002D65F8_0x2d65f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002D65F8_0x2d65f8");
 #endif
 
-    ctx->pc = 0x2d65f8u;
 
     // 0x2d65f8: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2d65f8u;
@@ -32,7 +31,6 @@ void func_002D65F8_0x2d65f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2d6620;
         }
     }
-    ctx->pc = 0x2D6604u;
     // 0x2d6604: 0xe44c0070  swc1        $f12, 0x70($v0)
     ctx->pc = 0x2d6604u;
     { float f = ctx->f[12]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 2), 112), bits); }
@@ -68,12 +66,9 @@ label_2d6620:
         return;
         #endif
     }
-    ctx->pc = 0x2D6628u;
     // 0x2d6628: 0x0  nop
-    ctx->pc = 0x2d6628u;
     // NOP
     // 0x2d662c: 0x0  nop
-    ctx->pc = 0x2d662cu;
     // NOP
     ctx->pc = 0x2d6630u;
 }

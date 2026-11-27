@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_addContinueNum
 // Address: 0x1fbf18 - 0x1fbf48
-void cCoreSave_addContinueNum_0x1fbf18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_addContinueNum_0x1fbf18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_addContinueNum_0x1fbf18");
 #endif
 
-    ctx->pc = 0x1fbf18u;
 
     // 0x1fbf18: 0x8c850000  lw          $a1, 0x0($a0)
     ctx->pc = 0x1fbf18u;
@@ -32,12 +31,10 @@ void cCoreSave_addContinueNum_0x1fbf18(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_1fbf40;
         }
     }
-    ctx->pc = 0x1FBF24u;
     // 0x1fbf24: 0x94a20012  lhu         $v0, 0x12($a1)
     ctx->pc = 0x1fbf24u;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 5), 18)));
     // 0x1fbf28: 0x24420001  addiu       $v0, $v0, 0x1
-    ctx->pc = 0x1fbf28u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 1));
     // 0x1fbf2c: 0xa4a20012  sh          $v0, 0x12($a1)
     ctx->pc = 0x1fbf2cu;
@@ -49,7 +46,6 @@ void cCoreSave_addContinueNum_0x1fbf18(uint8_t* rdram, R5900Context* ctx, PS2Run
     ctx->pc = 0x1fbf34u;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 3), 3000)));
     // 0x1fbf38: 0x24420001  addiu       $v0, $v0, 0x1
-    ctx->pc = 0x1fbf38u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 1));
     // 0x1fbf3c: 0xa4620bb8  sh          $v0, 0xBB8($v1)
     ctx->pc = 0x1fbf3cu;

@@ -13,20 +13,20 @@
 
 // Function: cSndMemHeap_Close
 // Address: 0x2cd780 - 0x2cd7c8
-void cSndMemHeap_Close_0x2cd780(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndMemHeap_Close_0x2cd780(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndMemHeap_Close_0x2cd780");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2cd7b0u: goto label_2cd7b0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2cd780u, 0)) {
+        switch (ctx->pc) {
+            case 0x2cd7b0u: goto label_2cd7b0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2cd780u;
 
     // 0x2cd780: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x2cd780u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x2cd784: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x2cd784u;
@@ -35,7 +35,6 @@ void cSndMemHeap_Close_0x2cd780(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     ctx->pc = 0x2cd788u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2cd78c: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x2cd78cu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2cd790: 0x8e020380  lw          $v0, 0x380($s0)
     ctx->pc = 0x2cd790u;
@@ -55,7 +54,6 @@ void cSndMemHeap_Close_0x2cd780(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_2cd7b8;
         }
     }
-    ctx->pc = 0x2CD79Cu;
     // 0x2cd79c: 0x8e050388  lw          $a1, 0x388($s0)
     ctx->pc = 0x2cd79cu;
     SET_GPR_S32(ctx, 5, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 904)));
@@ -74,9 +72,7 @@ void cSndMemHeap_Close_0x2cd780(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_2cd7b4;
         }
     }
-    ctx->pc = 0x2CD7A8u;
     // 0x2cd7a8: 0xc0b3624  jal         func_2CD890
-    ctx->pc = 0x2CD7A8u;
     SET_GPR_U32(ctx, 31, 0x2CD7B0u);
     ctx->pc = 0x2CD7ACu;
     ctx->in_delay_slot = true;
@@ -84,11 +80,9 @@ void cSndMemHeap_Close_0x2cd780(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     // 0x2cd7ac: 0x8e04038c  lw          $a0, 0x38C($s0) (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 908)));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2CD890u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2CD890u, 0x2CD7A8u, 0x2CD7B0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cSndMemHeap_Free_0x2cd890, 0x2cd890u, 0x2cd7b0u)) {
         return;
     }
-    ctx->pc = 0x2CD7B0u;
 label_2cd7b0:
     // 0x2cd7b0: 0xae000380  sw          $zero, 0x380($s0)
     ctx->pc = 0x2cd7b0u;
@@ -120,9 +114,7 @@ label_2cd7b8:
         return;
         #endif
     }
-    ctx->pc = 0x2CD7C4u;
     // 0x2cd7c4: 0x0  nop
-    ctx->pc = 0x2cd7c4u;
     // NOP
     ctx->pc = 0x2cd7c8u;
 }

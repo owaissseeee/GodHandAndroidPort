@@ -13,32 +13,29 @@
 
 // Function: IsTargetVisible_14B470
 // Address: 0x14b470 - 0x14b4d0
-void IsTargetVisible_14B470_0x14b470(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IsTargetVisible_14B470_0x14b470(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IsTargetVisible_14B470_0x14b470");
 #endif
 
-    switch (ctx->pc) {
-        case 0x14b4bcu: goto label_14b4bc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x14b470u, 0)) {
+        switch (ctx->pc) {
+            case 0x14b4bcu: goto label_14b4bc;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x14b470u;
 
     // 0x14b470: 0x3c020074  lui         $v0, 0x74
-    ctx->pc = 0x14b470u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
     // 0x14b474: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x14b474u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x14b478: 0x8c437a80  lw          $v1, 0x7A80($v0)
     ctx->pc = 0x14b478u;
     SET_GPR_S32(ctx, 3, (int32_t)FAST_READ32(0x747A80u));
     // 0x14b47c: 0x3c050080  lui         $a1, 0x80
-    ctx->pc = 0x14b47cu;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)128 << 16));
     // 0x14b480: 0x651824  and         $v1, $v1, $a1
-    ctx->pc = 0x14b480u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 5));
     // 0x14b484: 0x14600005  bnez        $v1, . + 4 + (0x5 << 2)
     ctx->pc = 0x14B484u;
@@ -55,12 +52,10 @@ void IsTargetVisible_14B470_0x14b470(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_14b49c;
         }
     }
-    ctx->pc = 0x14B48Cu;
     // 0x14b48c: 0x8c830250  lw          $v1, 0x250($a0)
     ctx->pc = 0x14b48cu;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 592)));
     // 0x14b490: 0x30620002  andi        $v0, $v1, 0x2
-    ctx->pc = 0x14b490u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) & (uint64_t)(uint16_t)2);
     // 0x14b494: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x14B494u;
@@ -77,7 +72,6 @@ void IsTargetVisible_14B470_0x14b470(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_14b4a4;
         }
     }
-    ctx->pc = 0x14B49Cu;
 label_14b49c:
     // 0x14b49c: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x14B49Cu;
@@ -94,10 +88,8 @@ label_14b49c:
             goto label_14b4c0;
         }
     }
-    ctx->pc = 0x14B4A4u;
 label_14b4a4:
     // 0x14b4a4: 0x621024  and         $v0, $v1, $v0
-    ctx->pc = 0x14b4a4u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) & GPR_U64(ctx, 2));
     // 0x14b4a8: 0x54400005  bnel        $v0, $zero, . + 4 + (0x5 << 2)
     ctx->pc = 0x14B4A8u;
@@ -114,12 +106,9 @@ label_14b4a4:
             goto label_14b4c0;
         }
     }
-    ctx->pc = 0x14B4B0u;
     // 0x14b4b0: 0x24850080  addiu       $a1, $a0, 0x80
-    ctx->pc = 0x14b4b0u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 4), 128));
     // 0x14b4b4: 0xc07e2b6  jal         func_1F8AD8
-    ctx->pc = 0x14B4B4u;
     SET_GPR_U32(ctx, 31, 0x14B4BCu);
     ctx->pc = 0x14B4B8u;
     ctx->in_delay_slot = true;
@@ -127,14 +116,11 @@ label_14b4a4:
     // 0x14b4b8: 0x24840260  addiu       $a0, $a0, 0x260 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 608));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1F8AD8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1F8AD8u, 0x14B4B4u, 0x14B4BCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_001F8AD8_0x1f8ad8, 0x1f8ad8u, 0x14b4bcu)) {
         return;
     }
-    ctx->pc = 0x14B4BCu;
 label_14b4bc:
     // 0x14b4bc: 0x2c420001  sltiu       $v0, $v0, 0x1
-    ctx->pc = 0x14b4bcu;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1) ? 1 : 0);
 label_14b4c0:
     // 0x14b4c0: 0xdfbf0000  ld          $ra, 0x0($sp)
@@ -159,9 +145,7 @@ label_14b4c0:
         return;
         #endif
     }
-    ctx->pc = 0x14B4CCu;
     // 0x14b4cc: 0x0  nop
-    ctx->pc = 0x14b4ccu;
     // NOP
     ctx->pc = 0x14b4d0u;
 }

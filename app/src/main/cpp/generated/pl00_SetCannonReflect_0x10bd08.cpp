@@ -13,18 +13,15 @@
 
 // Function: pl00_SetCannonReflect
 // Address: 0x10bd08 - 0x10bd28
-void pl00_SetCannonReflect_0x10bd08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void pl00_SetCannonReflect_0x10bd08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("pl00_SetCannonReflect_0x10bd08");
 #endif
 
-    ctx->pc = 0x10bd08u;
 
     // 0x10bd08: 0x24020006  addiu       $v0, $zero, 0x6
-    ctx->pc = 0x10bd08u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
     // 0x10bd0c: 0x24030002  addiu       $v1, $zero, 0x2
-    ctx->pc = 0x10bd0cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x10bd10: 0xa08502f7  sb          $a1, 0x2F7($a0)
     ctx->pc = 0x10bd10u;
@@ -54,9 +51,7 @@ void pl00_SetCannonReflect_0x10bd08(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         return;
         #endif
     }
-    ctx->pc = 0x10BD24u;
     // 0x10bd24: 0x0  nop
-    ctx->pc = 0x10bd24u;
     // NOP
     ctx->pc = 0x10bd28u;
 }

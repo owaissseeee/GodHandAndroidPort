@@ -13,23 +13,22 @@
 
 // Function: iDisableDmac
 // Address: 0x3afa70 - 0x3afa80
-void iDisableDmac_0x3afa70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iDisableDmac_0x3afa70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iDisableDmac_0x3afa70");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afa78u: goto label_3afa78;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afa70u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afa78u: goto label_3afa78;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afa70u;
 
     // 0x3afa70: 0x2403ffe3  addiu       $v1, $zero, -0x1D
-    ctx->pc = 0x3afa70u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967267));
     // 0x3afa74: 0xc  syscall     0
-    ctx->pc = 0x3afa74u;
     ctx->pc = 0x3AFA78u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

@@ -14,42 +14,33 @@ namespace gh_event
 {
 // Function: getMainMotionLength__C11cEventActorSci
 // Address: 0x7a9880 - 0x7a98c8
-void getMainMotionLength__C11cEventActorSci_0x7a9880(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getMainMotionLength__C11cEventActorSci_0x7a9880(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getMainMotionLength__C11cEventActorSci_0x7a9880");
 #endif
 
-    ctx->pc = 0x7a9880u;
 
     // 0x7a9880: 0x52e00  sll         $a1, $a1, 24
-    ctx->pc = 0x7a9880u;
     SET_GPR_S32(ctx, 5, (int32_t)SLL32(GPR_U32(ctx, 5), 24));
     // 0x7a9884: 0x24070048  addiu       $a3, $zero, 0x48
-    ctx->pc = 0x7a9884u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 0), 72));
     // 0x7a9888: 0x52e03  sra         $a1, $a1, 24
-    ctx->pc = 0x7a9888u;
     SET_GPR_S32(ctx, 5, SRA32(GPR_S32(ctx, 5), 24));
     // 0x7a988c: 0x2402001c  addiu       $v0, $zero, 0x1C
-    ctx->pc = 0x7a988cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 28));
     // 0x7a9890: 0xa72818  mult        $a1, $a1, $a3
-    ctx->pc = 0x7a9890u;
     { int64_t result = (int64_t)GPR_S32(ctx, 5) * (int64_t)GPR_S32(ctx, 7); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 5, (int32_t)result); }
     // 0x7a9894: 0x8c830014  lw          $v1, 0x14($a0)
     ctx->pc = 0x7a9894u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 20)));
     // 0x7a9898: 0xc23018  mult        $a2, $a2, $v0
-    ctx->pc = 0x7a9898u;
     { int64_t result = (int64_t)GPR_S32(ctx, 6) * (int64_t)GPR_S32(ctx, 2); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 6, (int32_t)result); }
     // 0x7a989c: 0x651821  addu        $v1, $v1, $a1
-    ctx->pc = 0x7a989cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 5)));
     // 0x7a98a0: 0x8c620044  lw          $v0, 0x44($v1)
     ctx->pc = 0x7a98a0u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 68)));
     // 0x7a98a4: 0xc23021  addu        $a2, $a2, $v0
-    ctx->pc = 0x7a98a4u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 6), GPR_U32(ctx, 2)));
     // 0x7a98a8: 0x8cc20004  lw          $v0, 0x4($a2)
     ctx->pc = 0x7a98a8u;
@@ -63,7 +54,6 @@ void getMainMotionLength__C11cEventActorSci_0x7a9880(uint8_t* rdram, R5900Contex
             goto label_7a98bc;
         }
     }
-    ctx->pc = 0x7A98B4u;
     // 0x7a98b4: 0x3e00008  jr          $ra
     ctx->pc = 0x7A98B4u;
     {
@@ -83,7 +73,6 @@ void getMainMotionLength__C11cEventActorSci_0x7a9880(uint8_t* rdram, R5900Contex
         return;
         #endif
     }
-    ctx->pc = 0x7A98BCu;
 label_7a98bc:
     // 0x7a98bc: 0x3e00008  jr          $ra
     ctx->pc = 0x7A98BCu;
@@ -104,9 +93,7 @@ label_7a98bc:
         return;
         #endif
     }
-    ctx->pc = 0x7A98C4u;
     // 0x7a98c4: 0x0  nop
-    ctx->pc = 0x7a98c4u;
     // NOP
     ctx->pc = 0x7a98c8u;
 }

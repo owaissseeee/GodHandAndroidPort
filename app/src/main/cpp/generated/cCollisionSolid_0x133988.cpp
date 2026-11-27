@@ -13,21 +13,18 @@
 
 // Function: cCollisionSolid
 // Address: 0x133988 - 0x1339c0
-void cCollisionSolid_0x133988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCollisionSolid_0x133988(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCollisionSolid_0x133988");
 #endif
 
-    ctx->pc = 0x133988u;
 
     // 0x133988: 0x3c020042  lui         $v0, 0x42
-    ctx->pc = 0x133988u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)66 << 16));
     // 0x13398c: 0xac800008  sw          $zero, 0x8($a0)
     ctx->pc = 0x13398cu;
     WRITE32(ADD32(GPR_U32(ctx, 4), 8), GPR_U32(ctx, 0));
     // 0x133990: 0x2442d808  addiu       $v0, $v0, -0x27F8
-    ctx->pc = 0x133990u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294957064));
     // 0x133994: 0xac820030  sw          $v0, 0x30($a0)
     ctx->pc = 0x133994u;
@@ -42,13 +39,11 @@ void cCollisionSolid_0x133988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     ctx->pc = 0x1339a0u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 8)));
     // 0x1339a4: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x1339a4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1339a8: 0xac800004  sw          $zero, 0x4($a0)
     ctx->pc = 0x1339a8u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 4), GPR_U32(ctx, 0));
     // 0x1339ac: 0x34630001  ori         $v1, $v1, 0x1
-    ctx->pc = 0x1339acu;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) | (uint64_t)(uint16_t)1);
     // 0x1339b0: 0xac800000  sw          $zero, 0x0($a0)
     ctx->pc = 0x1339b0u;
@@ -72,9 +67,7 @@ void cCollisionSolid_0x133988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
         return;
         #endif
     }
-    ctx->pc = 0x1339BCu;
     // 0x1339bc: 0x0  nop
-    ctx->pc = 0x1339bcu;
     // NOP
     ctx->pc = 0x1339c0u;
 }

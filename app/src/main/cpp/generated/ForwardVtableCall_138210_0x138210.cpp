@@ -13,30 +13,30 @@
 
 // Function: ForwardVtableCall_138210
 // Address: 0x138210 - 0x138238
-void ForwardVtableCall_138210_0x138210(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardVtableCall_138210_0x138210(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardVtableCall_138210_0x138210");
 #endif
 
-    switch (ctx->pc) {
-        case 0x138210u: goto label_138210;
-        case 0x138214u: goto label_138214;
-        case 0x138218u: goto label_138218;
-        case 0x13821cu: goto label_13821c;
-        case 0x138220u: goto label_138220;
-        case 0x138224u: goto label_138224;
-        case 0x138228u: goto label_138228;
-        case 0x13822cu: goto label_13822c;
-        case 0x138230u: goto label_138230;
-        case 0x138234u: goto label_138234;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x138210u, 0)) {
+        switch (ctx->pc) {
+            case 0x138210u: goto label_138210;
+            case 0x138214u: goto label_138214;
+            case 0x138218u: goto label_138218;
+            case 0x13821cu: goto label_13821c;
+            case 0x138220u: goto label_138220;
+            case 0x138224u: goto label_138224;
+            case 0x138228u: goto label_138228;
+            case 0x13822cu: goto label_13822c;
+            case 0x138230u: goto label_138230;
+            case 0x138234u: goto label_138234;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x138210u;
 
 label_138210:
     // 0x138210: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x138210u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_138214:
     // 0x138214: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -82,7 +82,6 @@ label_138228:
             return;
         }
     }
-    ctx->pc = 0x13822Cu;
 label_13822c:
     // 0x13822c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x13822cu;

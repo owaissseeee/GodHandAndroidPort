@@ -13,20 +13,20 @@
 
 // Function: func_0019DE60
 // Address: 0x19de60 - 0x19de80
-void func_0019DE60_0x19de60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0019DE60_0x19de60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0019DE60_0x19de60");
 #endif
 
-    switch (ctx->pc) {
-        case 0x19de70u: goto label_19de70;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x19de60u, 0)) {
+        switch (ctx->pc) {
+            case 0x19de70u: goto label_19de70;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x19de60u;
 
     // 0x19de60: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x19de60u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x19de64: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x19de64u;
@@ -34,11 +34,9 @@ void func_0019DE60_0x19de60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x19de68: 0xc070a74  jal         func_1C29D0
     ctx->pc = 0x19DE68u;
     SET_GPR_U32(ctx, 31, 0x19DE70u);
-    ctx->pc = 0x1C29D0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1C29D0u, 0x19DE68u, 0x19DE70u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_tickModeTableSkip381_0x1c29d0, 0x1c29d0u, 0x19de70u)) {
         return;
     }
-    ctx->pc = 0x19DE70u;
 label_19de70:
     // 0x19de70: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x19de70u;
@@ -62,9 +60,7 @@ label_19de70:
         return;
         #endif
     }
-    ctx->pc = 0x19DE7Cu;
     // 0x19de7c: 0x0  nop
-    ctx->pc = 0x19de7cu;
     // NOP
     ctx->pc = 0x19de80u;
 }

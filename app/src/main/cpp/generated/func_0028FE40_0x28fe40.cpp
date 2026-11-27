@@ -13,12 +13,11 @@
 
 // Function: func_0028FE40
 // Address: 0x28fe40 - 0x28fe48
-void func_0028FE40_0x28fe40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0028FE40_0x28fe40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0028FE40_0x28fe40");
 #endif
 
-    ctx->pc = 0x28fe40u;
 
     // 0x28fe40: 0x3e00008  jr          $ra
     ctx->pc = 0x28FE40u;

@@ -155,13 +155,13 @@ namespace ps2x::iop::detail
                (static_cast<uint32_t>(read8(address + 3u)) << 24u);
     }
 
-    void IopMemory::write8(uint32_t address, uint8_t value)
+    void IopMemory::write8Slow(uint32_t address, uint8_t value)
     {
         const uint32_t phys = physicalAddress(address);
         if (phys < RamSize)
         {
             m_ram[phys] = value;
-            markOwned(phys, sizeof(value));
+            m_owned[phys] = 1u;
             return;
         }
         if (phys >= ScratchBase && phys < ScratchBase + ScratchSize)
@@ -183,13 +183,14 @@ namespace ps2x::iop::detail
         writeHardware32(aligned, current);
     }
 
-    void IopMemory::write16(uint32_t address, uint16_t value)
+    void IopMemory::write16Slow(uint32_t address, uint16_t value)
     {
         const uint32_t phys = physicalAddress(address);
         if (phys + 1u < RamSize)
         {
             std::memcpy(m_ram.data() + phys, &value, sizeof(value));
-            markOwned(phys, sizeof(value));
+            constexpr uint16_t kOne16 = 0x0101u;
+            std::memcpy(m_owned.data() + phys, &kOne16, sizeof(kOne16));
             return;
         }
         if ((phys & 1u) == 0u && spu2Owns(phys))
@@ -201,13 +202,14 @@ namespace ps2x::iop::detail
         write8(address + 1u, static_cast<uint8_t>(value >> 8u));
     }
 
-    void IopMemory::write32(uint32_t address, uint32_t value)
+    void IopMemory::write32Slow(uint32_t address, uint32_t value)
     {
         const uint32_t phys = physicalAddress(address);
         if ((phys & 3u) == 0u && phys + 3u < RamSize)
         {
             std::memcpy(m_ram.data() + phys, &value, sizeof(value));
-            markOwned(phys, sizeof(value));
+            constexpr uint32_t kOne32 = 0x01010101u;
+            std::memcpy(m_owned.data() + phys, &kOne32, sizeof(kOne32));
             return;
         }
         if ((phys & 3u) == 0u && phys >= ScratchBase && phys + 3u < ScratchBase + ScratchSize)
@@ -273,16 +275,17 @@ namespace ps2x::iop::detail
         const uint32_t phys = physicalAddress(address);
         if (phys > RamSize || size > RamSize - phys)
             return false;
-        return std::all_of(m_owned.begin() + phys, m_owned.begin() + phys + size,
-                           [](uint8_t value)
-                           { return value != 0u; });
+        if (size == 0u)
+            return true;
+        return std::memchr(m_owned.data() + phys, 0, size) == nullptr;
     }
 
     void IopMemory::markOwned(uint32_t address, size_t size)
     {
         if (address > RamSize || size > RamSize - address)
             return;
-        std::fill(m_owned.begin() + address, m_owned.begin() + address + size, uint8_t{1});
+        if (size != 0u)
+            std::memset(m_owned.data() + address, 1, size);
     }
 
     bool IopMemory::isHardwareAddress(uint32_t address) const

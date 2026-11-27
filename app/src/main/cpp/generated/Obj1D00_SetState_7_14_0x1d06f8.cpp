@@ -13,18 +13,15 @@
 
 // Function: Obj1D00_SetState_7_14
 // Address: 0x1d06f8 - 0x1d0718
-void Obj1D00_SetState_7_14_0x1d06f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj1D00_SetState_7_14_0x1d06f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj1D00_SetState_7_14_0x1d06f8");
 #endif
 
-    ctx->pc = 0x1d06f8u;
 
     // 0x1d06f8: 0x24020007  addiu       $v0, $zero, 0x7
-    ctx->pc = 0x1d06f8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 7));
     // 0x1d06fc: 0x24030014  addiu       $v1, $zero, 0x14
-    ctx->pc = 0x1d06fcu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 20));
     // 0x1d0700: 0xa08202f5  sb          $v0, 0x2F5($a0)
     ctx->pc = 0x1d0700u;
@@ -54,9 +51,7 @@ void Obj1D00_SetState_7_14_0x1d06f8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         return;
         #endif
     }
-    ctx->pc = 0x1D0714u;
     // 0x1d0714: 0x0  nop
-    ctx->pc = 0x1d0714u;
     // NOP
     ctx->pc = 0x1d0718u;
 }

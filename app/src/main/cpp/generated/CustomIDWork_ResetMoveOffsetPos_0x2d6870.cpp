@@ -13,12 +13,11 @@
 
 // Function: CustomIDWork_ResetMoveOffsetPos
 // Address: 0x2d6870 - 0x2d6898
-void CustomIDWork_ResetMoveOffsetPos_0x2d6870(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CustomIDWork_ResetMoveOffsetPos_0x2d6870(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CustomIDWork_ResetMoveOffsetPos_0x2d6870");
 #endif
 
-    ctx->pc = 0x2d6870u;
 
     // 0x2d6870: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2d6870u;
@@ -32,7 +31,6 @@ void CustomIDWork_ResetMoveOffsetPos_0x2d6870(uint8_t* rdram, R5900Context* ctx,
             goto label_2d688c;
         }
     }
-    ctx->pc = 0x2D687Cu;
     // 0x2d687c: 0xac800028  sw          $zero, 0x28($a0)
     ctx->pc = 0x2d687cu;
     WRITE32(ADD32(GPR_U32(ctx, 4), 40), GPR_U32(ctx, 0));
@@ -59,9 +57,7 @@ label_2d688c:
         return;
         #endif
     }
-    ctx->pc = 0x2D6894u;
     // 0x2d6894: 0x0  nop
-    ctx->pc = 0x2d6894u;
     // NOP
     ctx->pc = 0x2d6898u;
 }

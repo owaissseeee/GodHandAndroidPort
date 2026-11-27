@@ -13,12 +13,11 @@
 
 // Function: cSndBgmNode_IsActive
 // Address: 0x2cc568 - 0x2cc578
-void cSndBgmNode_IsActive_0x2cc568(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndBgmNode_IsActive_0x2cc568(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndBgmNode_IsActive_0x2cc568");
 #endif
 
-    ctx->pc = 0x2cc568u;
 
     // 0x2cc568: 0x8c820094  lw          $v0, 0x94($a0)
     ctx->pc = 0x2cc568u;
@@ -42,9 +41,7 @@ void cSndBgmNode_IsActive_0x2cc568(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         return;
         #endif
     }
-    ctx->pc = 0x2CC574u;
     // 0x2cc574: 0x0  nop
-    ctx->pc = 0x2cc574u;
     // NOP
     ctx->pc = 0x2cc578u;
 }

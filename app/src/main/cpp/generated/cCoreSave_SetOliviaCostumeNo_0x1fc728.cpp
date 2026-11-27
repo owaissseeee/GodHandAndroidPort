@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_SetOliviaCostumeNo
 // Address: 0x1fc728 - 0x1fc740
-void cCoreSave_SetOliviaCostumeNo_0x1fc728(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_SetOliviaCostumeNo_0x1fc728(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_SetOliviaCostumeNo_0x1fc728");
 #endif
 
-    ctx->pc = 0x1fc728u;
 
     // 0x1fc728: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc728u;
@@ -38,7 +37,6 @@ void cCoreSave_SetOliviaCostumeNo_0x1fc728(uint8_t* rdram, R5900Context* ctx, PS
             goto label_1fc734;
         }
     }
-    ctx->pc = 0x1FC734u;
 label_1fc734:
     // 0x1fc734: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC734u;
@@ -53,9 +51,7 @@ label_1fc734:
         return;
         #endif
     }
-    ctx->pc = 0x1FC73Cu;
     // 0x1fc73c: 0x0  nop
-    ctx->pc = 0x1fc73cu;
     // NOP
     ctx->pc = 0x1fc740u;
 }

@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_setReelItemNum
 // Address: 0x1fae28 - 0x1fae40
-void cCoreSave_setReelItemNum_0x1fae28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setReelItemNum_0x1fae28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setReelItemNum_0x1fae28");
 #endif
 
-    ctx->pc = 0x1fae28u;
 
     // 0x1fae28: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fae28u;
@@ -38,7 +37,6 @@ void cCoreSave_setReelItemNum_0x1fae28(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_1fae38;
         }
     }
-    ctx->pc = 0x1FAE34u;
     // 0x1fae34: 0xa0850156  sb          $a1, 0x156($a0)
     ctx->pc = 0x1fae34u;
     WRITE8(ADD32(GPR_U32(ctx, 4), 342), (uint8_t)GPR_U32(ctx, 5));

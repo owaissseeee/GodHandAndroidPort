@@ -13,17 +13,18 @@
 
 // Function: cSndMemHeap_FindFitBlk
 // Address: 0x2cd968 - 0x2cd9a0
-void cSndMemHeap_FindFitBlk_0x2cd968(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndMemHeap_FindFitBlk_0x2cd968(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndMemHeap_FindFitBlk_0x2cd968");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2cd978u: goto label_2cd978;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2cd968u, 0)) {
+        switch (ctx->pc) {
+            case 0x2cd978u: goto label_2cd978;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2cd968u;
 
     // 0x2cd968: 0x8c830380  lw          $v1, 0x380($a0)
     ctx->pc = 0x2cd968u;
@@ -37,13 +38,11 @@ void cSndMemHeap_FindFitBlk_0x2cd968(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_2cd994;
         }
     }
-    ctx->pc = 0x2CD974u;
     // 0x2cd974: 0x8c62000c  lw          $v0, 0xC($v1)
     ctx->pc = 0x2cd974u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 12)));
 label_2cd978:
     // 0x2cd978: 0x45102b  sltu        $v0, $v0, $a1
-    ctx->pc = 0x2cd978u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)GPR_U64(ctx, 5)) ? 1 : 0);
     // 0x2cd97c: 0x54400003  bnel        $v0, $zero, . + 4 + (0x3 << 2)
     ctx->pc = 0x2CD97Cu;
@@ -60,7 +59,6 @@ label_2cd978:
             goto label_2cd98c;
         }
     }
-    ctx->pc = 0x2CD984u;
     // 0x2cd984: 0x3e00008  jr          $ra
     ctx->pc = 0x2CD984u;
     {
@@ -80,7 +78,6 @@ label_2cd978:
         return;
         #endif
     }
-    ctx->pc = 0x2CD98Cu;
 label_2cd98c:
     // 0x2cd98c: 0x5460fffa  bnel        $v1, $zero, . + 4 + (-0x6 << 2)
     ctx->pc = 0x2CD98Cu;
@@ -100,7 +97,6 @@ label_2cd98c:
             goto label_2cd978;
         }
     }
-    ctx->pc = 0x2CD994u;
 label_2cd994:
     // 0x2cd994: 0x3e00008  jr          $ra
     ctx->pc = 0x2CD994u;
@@ -121,9 +117,7 @@ label_2cd994:
         return;
         #endif
     }
-    ctx->pc = 0x2CD99Cu;
     // 0x2cd99c: 0x0  nop
-    ctx->pc = 0x2cd99cu;
     // NOP
     ctx->pc = 0x2cd9a0u;
 }

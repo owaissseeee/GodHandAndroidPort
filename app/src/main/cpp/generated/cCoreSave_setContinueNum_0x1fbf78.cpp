@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_setContinueNum
 // Address: 0x1fbf78 - 0x1fbf90
-void cCoreSave_setContinueNum_0x1fbf78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setContinueNum_0x1fbf78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setContinueNum_0x1fbf78");
 #endif
 
-    ctx->pc = 0x1fbf78u;
 
     // 0x1fbf78: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fbf78u;
@@ -38,7 +37,6 @@ void cCoreSave_setContinueNum_0x1fbf78(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_1fbf88;
         }
     }
-    ctx->pc = 0x1FBF84u;
     // 0x1fbf84: 0xa4850012  sh          $a1, 0x12($a0)
     ctx->pc = 0x1fbf84u;
     WRITE16(ADD32(GPR_U32(ctx, 4), 18), (uint16_t)GPR_U32(ctx, 5));

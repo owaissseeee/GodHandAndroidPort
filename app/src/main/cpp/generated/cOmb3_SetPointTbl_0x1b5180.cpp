@@ -13,12 +13,11 @@
 
 // Function: cOmb3_SetPointTbl
 // Address: 0x1b5180 - 0x1b5190
-void cOmb3_SetPointTbl_0x1b5180(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmb3_SetPointTbl_0x1b5180(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmb3_SetPointTbl_0x1b5180");
 #endif
 
-    ctx->pc = 0x1b5180u;
 
     // 0x1b5180: 0xa4860608  sh          $a2, 0x608($a0)
     ctx->pc = 0x1b5180u;
@@ -42,9 +41,7 @@ void cOmb3_SetPointTbl_0x1b5180(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
         return;
         #endif
     }
-    ctx->pc = 0x1B518Cu;
     // 0x1b518c: 0x0  nop
-    ctx->pc = 0x1b518cu;
     // NOP
     ctx->pc = 0x1b5190u;
 }

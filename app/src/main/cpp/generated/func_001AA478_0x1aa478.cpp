@@ -14,22 +14,22 @@
 
 // Function: func_001AA478
 // Address: 0x1aa478 - 0x1aa500
-void func_001AA478_0x1aa478(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001AA478_0x1aa478(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001AA478_0x1aa478");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1aa4b8u: goto label_1aa4b8;
-        case 0x1aa4d4u: goto label_1aa4d4;
-        case 0x1aa4f4u: goto label_1aa4f4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1aa478u, 0)) {
+        switch (ctx->pc) {
+            case 0x1aa4b8u: goto label_1aa4b8;
+            case 0x1aa4d4u: goto label_1aa4d4;
+            case 0x1aa4f4u: goto label_1aa4f4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1aa478u;
 
     // 0x1aa478: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1aa478u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1aa47c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1aa47cu;
@@ -58,7 +58,6 @@ void func_001AA478_0x1aa478(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1aa4f4;
         }
     }
-    ctx->pc = 0x1AA48Cu;
     // 0x1aa48c: 0x10400013  beqz        $v0, . + 4 + (0x13 << 2)
     ctx->pc = 0x1AA48Cu;
     {
@@ -74,9 +73,7 @@ void func_001AA478_0x1aa478(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1aa4dc;
         }
     }
-    ctx->pc = 0x1AA494u;
     // 0x1aa494: 0x30420001  andi        $v0, $v0, 0x1
-    ctx->pc = 0x1aa494u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
     // 0x1aa498: 0x10400009  beqz        $v0, . + 4 + (0x9 << 2)
     ctx->pc = 0x1AA498u;
@@ -93,21 +90,15 @@ void func_001AA478_0x1aa478(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1aa4c0;
         }
     }
-    ctx->pc = 0x1AA4A0u;
     // 0x1aa4a0: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x1aa4a0u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
     // 0x1aa4a4: 0x44816000  mtc1        $at, $f12
-    ctx->pc = 0x1aa4a4u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[12], &bits, sizeof(bits)); }
     // 0x1aa4a8: 0x0  nop
-    ctx->pc = 0x1aa4a8u;
     // NOP
     // 0x1aa4ac: 0x46006346  mov.s       $f13, $f12
-    ctx->pc = 0x1aa4acu;
     ctx->f[13] = FPU_MOV_S(ctx->f[12]);
     // 0x1aa4b0: 0xc06dc68  jal         func_1B71A0
-    ctx->pc = 0x1AA4B0u;
     SET_GPR_U32(ctx, 31, 0x1AA4B8u);
     ctx->pc = 0x1AA4B4u;
     ctx->in_delay_slot = true;
@@ -115,11 +106,9 @@ void func_001AA478_0x1aa478(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x1aa4b4: 0x46006386  mov.s       $f14, $f12 (Delay Slot)
     ctx->f[14] = FPU_MOV_S(ctx->f[12]);
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1B71A0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1B71A0u, 0x1AA4B0u, 0x1AA4B8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshColorFromLayer_0x1b71a0, 0x1b71a0u, 0x1aa4b8u)) {
         return;
     }
-    ctx->pc = 0x1AA4B8u;
 label_1aa4b8:
     // 0x1aa4b8: 0x1000000f  b           . + 4 + (0xF << 2)
     ctx->pc = 0x1AA4B8u;
@@ -136,19 +125,14 @@ label_1aa4b8:
             goto label_1aa4f8;
         }
     }
-    ctx->pc = 0x1AA4C0u;
 label_1aa4c0:
     // 0x1aa4c0: 0x44806800  mtc1        $zero, $f13
-    ctx->pc = 0x1aa4c0u;
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[13], &bits, sizeof(bits)); }
     // 0x1aa4c4: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x1aa4c4u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
     // 0x1aa4c8: 0x44816000  mtc1        $at, $f12
-    ctx->pc = 0x1aa4c8u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[12], &bits, sizeof(bits)); }
     // 0x1aa4cc: 0xc06dc68  jal         func_1B71A0
-    ctx->pc = 0x1AA4CCu;
     SET_GPR_U32(ctx, 31, 0x1AA4D4u);
     ctx->pc = 0x1AA4D0u;
     ctx->in_delay_slot = true;
@@ -156,11 +140,9 @@ label_1aa4c0:
     // 0x1aa4d0: 0x46006b86  mov.s       $f14, $f13 (Delay Slot)
     ctx->f[14] = FPU_MOV_S(ctx->f[13]);
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1B71A0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1B71A0u, 0x1AA4CCu, 0x1AA4D4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshColorFromLayer_0x1b71a0, 0x1b71a0u, 0x1aa4d4u)) {
         return;
     }
-    ctx->pc = 0x1AA4D4u;
 label_1aa4d4:
     // 0x1aa4d4: 0x10000008  b           . + 4 + (0x8 << 2)
     ctx->pc = 0x1AA4D4u;
@@ -177,22 +159,16 @@ label_1aa4d4:
             goto label_1aa4f8;
         }
     }
-    ctx->pc = 0x1AA4DCu;
 label_1aa4dc:
     // 0x1aa4dc: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x1aa4dcu;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
     // 0x1aa4e0: 0x44816000  mtc1        $at, $f12
-    ctx->pc = 0x1aa4e0u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[12], &bits, sizeof(bits)); }
     // 0x1aa4e4: 0x24050001  addiu       $a1, $zero, 0x1
-    ctx->pc = 0x1aa4e4u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1aa4e8: 0x46006346  mov.s       $f13, $f12
-    ctx->pc = 0x1aa4e8u;
     ctx->f[13] = FPU_MOV_S(ctx->f[12]);
     // 0x1aa4ec: 0xc06dc68  jal         func_1B71A0
-    ctx->pc = 0x1AA4ECu;
     SET_GPR_U32(ctx, 31, 0x1AA4F4u);
     ctx->pc = 0x1AA4F0u;
     ctx->in_delay_slot = true;
@@ -200,11 +176,9 @@ label_1aa4dc:
     // 0x1aa4f0: 0x46006386  mov.s       $f14, $f12 (Delay Slot)
     ctx->f[14] = FPU_MOV_S(ctx->f[12]);
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1B71A0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1B71A0u, 0x1AA4ECu, 0x1AA4F4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_setMeshColorFromLayer_0x1b71a0, 0x1b71a0u, 0x1aa4f4u)) {
         return;
     }
-    ctx->pc = 0x1AA4F4u;
 label_1aa4f4:
     // 0x1aa4f4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1aa4f4u;

@@ -13,18 +13,16 @@
 
 // Function: _IO_switch_to_main_get_area
 // Address: 0x38c280 - 0x38c2b8
-void ps2__IO_switch_to_main_get_area_0x38c280(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_switch_to_main_get_area_0x38c280(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_switch_to_main_get_area_0x38c280");
 #endif
 
-    ctx->pc = 0x38c280u;
 
     // 0x38c280: 0x8c870008  lw          $a3, 0x8($a0)
     ctx->pc = 0x38c280u;
     SET_GPR_S32(ctx, 7, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 8)));
     // 0x38c284: 0x2405feff  addiu       $a1, $zero, -0x101
-    ctx->pc = 0x38c284u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967039));
     // 0x38c288: 0x8c86002c  lw          $a2, 0x2C($a0)
     ctx->pc = 0x38c288u;
@@ -39,7 +37,6 @@ void ps2__IO_switch_to_main_get_area_0x38c280(uint8_t* rdram, R5900Context* ctx,
     ctx->pc = 0x38c294u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 36)));
     // 0x38c298: 0x451024  and         $v0, $v0, $a1
-    ctx->pc = 0x38c298u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 5));
     // 0x38c29c: 0x8c87000c  lw          $a3, 0xC($a0)
     ctx->pc = 0x38c29cu;

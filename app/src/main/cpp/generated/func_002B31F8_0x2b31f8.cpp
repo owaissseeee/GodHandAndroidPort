@@ -13,20 +13,20 @@
 
 // Function: func_002B31F8
 // Address: 0x2b31f8 - 0x2b3230
-void func_002B31F8_0x2b31f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002B31F8_0x2b31f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002B31F8_0x2b31f8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2b3220u: goto label_2b3220;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2b31f8u, 0)) {
+        switch (ctx->pc) {
+            case 0x2b3220u: goto label_2b3220;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2b31f8u;
 
     // 0x2b31f8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2b31f8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2b31fc: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2b31fcu;
@@ -49,7 +49,6 @@ void func_002B31F8_0x2b31f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2b3214;
         }
     }
-    ctx->pc = 0x2B320Cu;
     // 0x2b320c: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x2B320Cu;
     {
@@ -65,13 +64,10 @@ void func_002B31F8_0x2b31f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2b3220;
         }
     }
-    ctx->pc = 0x2B3214u;
 label_2b3214:
     // 0x2b3214: 0x3c040060  lui         $a0, 0x60
-    ctx->pc = 0x2b3214u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)96 << 16));
     // 0x2b3218: 0xc0b2dde  jal         func_2CB778
-    ctx->pc = 0x2B3218u;
     SET_GPR_U32(ctx, 31, 0x2B3220u);
     ctx->pc = 0x2B321Cu;
     ctx->in_delay_slot = true;
@@ -79,11 +75,9 @@ label_2b3214:
     // 0x2b321c: 0x2484ee00  addiu       $a0, $a0, -0x1200 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 4294962688));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2CB778u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2CB778u, 0x2B3218u, 0x2B3220u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cSnd_SeIsLoaded_0x2cb778, 0x2cb778u, 0x2b3220u)) {
         return;
     }
-    ctx->pc = 0x2B3220u;
 label_2b3220:
     // 0x2b3220: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2b3220u;
@@ -107,9 +101,7 @@ label_2b3220:
         return;
         #endif
     }
-    ctx->pc = 0x2B322Cu;
     // 0x2b322c: 0x0  nop
-    ctx->pc = 0x2b322cu;
     // NOP
     ctx->pc = 0x2b3230u;
 }

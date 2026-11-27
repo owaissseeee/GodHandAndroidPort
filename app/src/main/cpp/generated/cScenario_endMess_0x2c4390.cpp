@@ -13,20 +13,20 @@
 
 // Function: cScenario_endMess
 // Address: 0x2c4390 - 0x2c43d8
-void cScenario_endMess_0x2c4390(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_endMess_0x2c4390(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_endMess_0x2c4390");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2c43c0u: goto label_2c43c0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2c4390u, 0)) {
+        switch (ctx->pc) {
+            case 0x2c43c0u: goto label_2c43c0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2c4390u;
 
     // 0x2c4390: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x2c4390u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x2c4394: 0x7fb00020  sq          $s0, 0x20($sp)
     ctx->pc = 0x2c4394u;
@@ -35,13 +35,11 @@ void cScenario_endMess_0x2c4390(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     ctx->pc = 0x2c4398u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 17));
     // 0x2c439c: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x2c439cu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2c43a0: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2c43a0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2c43a4: 0x3411ffff  ori         $s1, $zero, 0xFFFF
-    ctx->pc = 0x2c43a4u;
     SET_GPR_U64(ctx, 17, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     // 0x2c43a8: 0x96020112  lhu         $v0, 0x112($s0)
     ctx->pc = 0x2c43a8u;
@@ -61,12 +59,10 @@ void cScenario_endMess_0x2c4390(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_2c43c4;
         }
     }
-    ctx->pc = 0x2C43B4u;
     // 0x2c43b4: 0x96050112  lhu         $a1, 0x112($s0)
     ctx->pc = 0x2c43b4u;
     SET_GPR_ZE32(ctx, 5, (uint16_t)READ16(ADD32(GPR_U32(ctx, 16), 274)));
     // 0x2c43b8: 0xc0abb10  jal         func_2AEC40
-    ctx->pc = 0x2C43B8u;
     SET_GPR_U32(ctx, 31, 0x2C43C0u);
     ctx->pc = 0x2C43BCu;
     ctx->in_delay_slot = true;
@@ -74,11 +70,9 @@ void cScenario_endMess_0x2c4390(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     // 0x2c43bc: 0x8c4423a4  lw          $a0, 0x23A4($v0) (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 9124)));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2AEC40u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2AEC40u, 0x2C43B8u, 0x2C43C0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cMessage_deleteMessNo_0x2aec40, 0x2aec40u, 0x2c43c0u)) {
         return;
     }
-    ctx->pc = 0x2C43C0u;
 label_2c43c0:
     // 0x2c43c0: 0xa6110112  sh          $s1, 0x112($s0)
     ctx->pc = 0x2c43c0u;

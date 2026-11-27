@@ -14,12 +14,11 @@ namespace gh_mcport
 {
 // Function: name__C9type_info
 // Address: 0x7c9e08 - 0x7c9e10
-void name__C9type_info_0x7c9e08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void name__C9type_info_0x7c9e08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("name__C9type_info_0x7c9e08");
 #endif
 
-    ctx->pc = 0x7c9e08u;
 
     // 0x7c9e08: 0x3e00008  jr          $ra
     ctx->pc = 0x7C9E08u;

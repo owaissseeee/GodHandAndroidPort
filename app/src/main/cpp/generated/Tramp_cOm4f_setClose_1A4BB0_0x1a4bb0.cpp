@@ -13,20 +13,20 @@
 
 // Function: Tramp_cOm4f_setClose_1A4BB0
 // Address: 0x1a4bb0 - 0x1a4bd0
-void Tramp_cOm4f_setClose_1A4BB0_0x1a4bb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp_cOm4f_setClose_1A4BB0_0x1a4bb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp_cOm4f_setClose_1A4BB0_0x1a4bb0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1a4bc0u: goto label_1a4bc0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1a4bb0u, 0)) {
+        switch (ctx->pc) {
+            case 0x1a4bc0u: goto label_1a4bc0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1a4bb0u;
 
     // 0x1a4bb0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1a4bb0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1a4bb4: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1a4bb4u;
@@ -34,11 +34,9 @@ void Tramp_cOm4f_setClose_1A4BB0_0x1a4bb0(uint8_t* rdram, R5900Context* ctx, PS2
     // 0x1a4bb8: 0xc06936a  jal         func_1A4DA8
     ctx->pc = 0x1A4BB8u;
     SET_GPR_U32(ctx, 31, 0x1A4BC0u);
-    ctx->pc = 0x1A4DA8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1A4DA8u, 0x1A4BB8u, 0x1A4BC0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cOm4f_setClose_0x1a4da8, 0x1a4da8u, 0x1a4bc0u)) {
         return;
     }
-    ctx->pc = 0x1A4BC0u;
 label_1a4bc0:
     // 0x1a4bc0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1a4bc0u;
@@ -62,9 +60,7 @@ label_1a4bc0:
         return;
         #endif
     }
-    ctx->pc = 0x1A4BCCu;
     // 0x1a4bcc: 0x0  nop
-    ctx->pc = 0x1a4bccu;
     // NOP
     ctx->pc = 0x1a4bd0u;
 }

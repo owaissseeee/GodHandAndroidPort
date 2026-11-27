@@ -14,12 +14,11 @@ namespace gh_mcport
 {
 // Function: __get_eh_table_version
 // Address: 0x7cb7e8 - 0x7cb7f0
-void ps2___get_eh_table_version_0x7cb7e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___get_eh_table_version_0x7cb7e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___get_eh_table_version_0x7cb7e8");
 #endif
 
-    ctx->pc = 0x7cb7e8u;
 
     // 0x7cb7e8: 0x3e00008  jr          $ra
     ctx->pc = 0x7CB7E8u;

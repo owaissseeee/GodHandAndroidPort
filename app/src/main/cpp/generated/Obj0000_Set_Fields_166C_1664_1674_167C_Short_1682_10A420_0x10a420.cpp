@@ -13,12 +13,11 @@
 
 // Function: Obj0000_Set_Fields_166C_1664_1674_167C_Short_1682_10A420
 // Address: 0x10a420 - 0x10a438
-void Obj0000_Set_Fields_166C_1664_1674_167C_Short_1682_10A420_0x10a420(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_Fields_166C_1664_1674_167C_Short_1682_10A420_0x10a420(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_Fields_166C_1664_1674_167C_Short_1682_10A420_0x10a420");
 #endif
 
-    ctx->pc = 0x10a420u;
 
     // 0x10a420: 0xa4891682  sh          $t1, 0x1682($a0)
     ctx->pc = 0x10a420u;

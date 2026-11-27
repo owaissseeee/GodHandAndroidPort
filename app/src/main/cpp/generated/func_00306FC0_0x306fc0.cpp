@@ -13,12 +13,11 @@
 
 // Function: func_00306FC0
 // Address: 0x306fc0 - 0x306ff8
-void func_00306FC0_0x306fc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00306FC0_0x306fc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00306FC0_0x306fc0");
 #endif
 
-    ctx->pc = 0x306fc0u;
 
     // 0x306fc0: 0x84a2000a  lh          $v0, 0xA($a1)
     ctx->pc = 0x306fc0u;
@@ -32,7 +31,6 @@ void func_00306FC0_0x306fc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_306fec;
         }
     }
-    ctx->pc = 0x306FCCu;
     // 0x306fcc: 0xa4a00012  sh          $zero, 0x12($a1)
     ctx->pc = 0x306fccu;
     WRITE16(ADD32(GPR_U32(ctx, 5), 18), (uint16_t)GPR_U32(ctx, 0));
@@ -71,9 +69,7 @@ label_306fec:
         return;
         #endif
     }
-    ctx->pc = 0x306FF4u;
     // 0x306ff4: 0x0  nop
-    ctx->pc = 0x306ff4u;
     // NOP
     ctx->pc = 0x306ff8u;
 }

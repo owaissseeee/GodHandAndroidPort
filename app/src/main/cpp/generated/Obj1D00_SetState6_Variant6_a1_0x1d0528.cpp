@@ -13,15 +13,13 @@
 
 // Function: Obj1D00_SetState6_Variant6_a1
 // Address: 0x1d0528 - 0x1d0540
-void Obj1D00_SetState6_Variant6_a1_0x1d0528(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj1D00_SetState6_Variant6_a1_0x1d0528(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj1D00_SetState6_Variant6_a1_0x1d0528");
 #endif
 
-    ctx->pc = 0x1d0528u;
 
     // 0x1d0528: 0x24020006  addiu       $v0, $zero, 0x6
-    ctx->pc = 0x1d0528u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
     // 0x1d052c: 0xa08502f7  sb          $a1, 0x2F7($a0)
     ctx->pc = 0x1d052cu;

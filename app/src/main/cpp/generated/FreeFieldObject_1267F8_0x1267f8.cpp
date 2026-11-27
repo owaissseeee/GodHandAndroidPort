@@ -13,20 +13,20 @@
 
 // Function: FreeFieldObject_1267F8
 // Address: 0x1267f8 - 0x126820
-void FreeFieldObject_1267F8_0x1267f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FreeFieldObject_1267F8_0x1267f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FreeFieldObject_1267F8_0x1267f8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x126814u: goto label_126814;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1267f8u, 0)) {
+        switch (ctx->pc) {
+            case 0x126814u: goto label_126814;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1267f8u;
 
     // 0x1267f8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1267f8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1267fc: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1267fcu;
@@ -49,15 +49,12 @@ void FreeFieldObject_1267F8_0x1267f8(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_126818;
         }
     }
-    ctx->pc = 0x12680Cu;
     // 0x12680c: 0xc07dbb8  jal         func_1F6EE0
     ctx->pc = 0x12680Cu;
     SET_GPR_U32(ctx, 31, 0x126814u);
-    ctx->pc = 0x1F6EE0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1F6EE0u, 0x12680Cu, 0x126814u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cActionButtonUnit_setOk_0x1f6ee0, 0x1f6ee0u, 0x126814u)) {
         return;
     }
-    ctx->pc = 0x126814u;
 label_126814:
     // 0x126814: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x126814u;

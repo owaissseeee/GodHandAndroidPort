@@ -13,12 +13,11 @@
 
 // Function: cOm60_ckParent
 // Address: 0x1b1620 - 0x1b1630
-void cOm60_ckParent_0x1b1620(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm60_ckParent_0x1b1620(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm60_ckParent_0x1b1620");
 #endif
 
-    ctx->pc = 0x1b1620u;
 
     // 0x1b1620: 0x8c820600  lw          $v0, 0x600($a0)
     ctx->pc = 0x1b1620u;
@@ -42,9 +41,7 @@ void cOm60_ckParent_0x1b1620(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
         return;
         #endif
     }
-    ctx->pc = 0x1B162Cu;
     // 0x1b162c: 0x0  nop
-    ctx->pc = 0x1b162cu;
     // NOP
     ctx->pc = 0x1b1630u;
 }

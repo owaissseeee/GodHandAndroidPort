@@ -13,38 +13,38 @@
 
 // Function: cCamera_move
 // Address: 0x138600 - 0x138648
-void cCamera_move_0x138600(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCamera_move_0x138600(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCamera_move_0x138600");
 #endif
 
-    switch (ctx->pc) {
-        case 0x138600u: goto label_138600;
-        case 0x138604u: goto label_138604;
-        case 0x138608u: goto label_138608;
-        case 0x13860cu: goto label_13860c;
-        case 0x138610u: goto label_138610;
-        case 0x138614u: goto label_138614;
-        case 0x138618u: goto label_138618;
-        case 0x13861cu: goto label_13861c;
-        case 0x138620u: goto label_138620;
-        case 0x138624u: goto label_138624;
-        case 0x138628u: goto label_138628;
-        case 0x13862cu: goto label_13862c;
-        case 0x138630u: goto label_138630;
-        case 0x138634u: goto label_138634;
-        case 0x138638u: goto label_138638;
-        case 0x13863cu: goto label_13863c;
-        case 0x138640u: goto label_138640;
-        case 0x138644u: goto label_138644;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x138600u, 0)) {
+        switch (ctx->pc) {
+            case 0x138600u: goto label_138600;
+            case 0x138604u: goto label_138604;
+            case 0x138608u: goto label_138608;
+            case 0x13860cu: goto label_13860c;
+            case 0x138610u: goto label_138610;
+            case 0x138614u: goto label_138614;
+            case 0x138618u: goto label_138618;
+            case 0x13861cu: goto label_13861c;
+            case 0x138620u: goto label_138620;
+            case 0x138624u: goto label_138624;
+            case 0x138628u: goto label_138628;
+            case 0x13862cu: goto label_13862c;
+            case 0x138630u: goto label_138630;
+            case 0x138634u: goto label_138634;
+            case 0x138638u: goto label_138638;
+            case 0x13863cu: goto label_13863c;
+            case 0x138640u: goto label_138640;
+            case 0x138644u: goto label_138644;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x138600u;
 
 label_138600:
     // 0x138600: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x138600u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
 label_138604:
     // 0x138604: 0x7fb00010  sq          $s0, 0x10($sp)
@@ -56,7 +56,6 @@ label_138608:
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
 label_13860c:
     // 0x13860c: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x13860cu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_138610:
     // 0x138610: 0x8e02035c  lw          $v0, 0x35C($s0)
@@ -112,7 +111,6 @@ label_138628:
         ctx->pc = 0x13862Cu;
         goto label_13862c;
     }
-    ctx->pc = 0x138624u;
     SET_GPR_U32(ctx, 31, 0x13862Cu);
     ctx->pc = 0x138628u;
     ctx->in_delay_slot = true;
@@ -120,8 +118,7 @@ label_138628:
     // 0x138628: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x138558u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x138558u, 0x138624u, 0x13862Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cCamera_stepVib_0x138558, 0x138558u, 0x13862cu)) {
         return;
     }
     ctx->pc = 0x13862Cu;
@@ -138,7 +135,6 @@ label_138630:
         ctx->pc = 0x138634u;
         goto label_138634;
     }
-    ctx->pc = 0x13862Cu;
     SET_GPR_U32(ctx, 31, 0x138634u);
     ctx->pc = 0x138630u;
     ctx->in_delay_slot = true;
@@ -146,11 +142,9 @@ label_138630:
     // 0x138630: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x138740u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x138740u, 0x13862Cu, 0x138634u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cCamera_update_0x138740, 0x138740u, 0x138634u)) {
         return;
     }
-    ctx->pc = 0x138634u;
 label_138634:
     // 0x138634: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x138634u;
@@ -190,10 +184,8 @@ label_138640:
         return;
         #endif
     }
-    ctx->pc = 0x138644u;
 label_138644:
     // 0x138644: 0x0  nop
-    ctx->pc = 0x138644u;
     // NOP
     ctx->pc = 0x138648u;
 }

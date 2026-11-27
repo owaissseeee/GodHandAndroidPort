@@ -13,17 +13,18 @@
 
 // Function: cModel_getPart
 // Address: 0x149be8 - 0x149c20
-void cModel_getPart_0x149be8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cModel_getPart_0x149be8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cModel_getPart_0x149be8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x149c00u: goto label_149c00;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x149be8u, 0)) {
+        switch (ctx->pc) {
+            case 0x149c00u: goto label_149c00;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x149be8u;
 
     // 0x149be8: 0x8c820144  lw          $v0, 0x144($a0)
     ctx->pc = 0x149be8u;
@@ -43,15 +44,12 @@ void cModel_getPart_0x149be8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_149c18;
         }
     }
-    ctx->pc = 0x149BF4u;
     // 0x149bf4: 0x2404ffff  addiu       $a0, $zero, -0x1
-    ctx->pc = 0x149bf4u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x149bf8: 0x8c420144  lw          $v0, 0x144($v0)
     ctx->pc = 0x149bf8u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 324)));
     // 0x149bfc: 0x0  nop
-    ctx->pc = 0x149bfcu;
     // NOP
 label_149c00:
     // 0x149c00: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
@@ -69,7 +67,6 @@ label_149c00:
             goto label_149c10;
         }
     }
-    ctx->pc = 0x149C08u;
     // 0x149c08: 0x3e00008  jr          $ra
     ctx->pc = 0x149C08u;
     {
@@ -89,7 +86,6 @@ label_149c00:
         return;
         #endif
     }
-    ctx->pc = 0x149C10u;
 label_149c10:
     // 0x149c10: 0x5464fffb  bnel        $v1, $a0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x149C10u;
@@ -109,7 +105,6 @@ label_149c10:
             goto label_149c00;
         }
     }
-    ctx->pc = 0x149C18u;
 label_149c18:
     // 0x149c18: 0x3e00008  jr          $ra
     ctx->pc = 0x149C18u;

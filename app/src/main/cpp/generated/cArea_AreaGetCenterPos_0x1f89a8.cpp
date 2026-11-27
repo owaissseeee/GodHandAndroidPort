@@ -13,18 +13,16 @@
 
 // Function: cArea_AreaGetCenterPos
 // Address: 0x1f89a8 - 0x1f8a40
-void cArea_AreaGetCenterPos_0x1f89a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cArea_AreaGetCenterPos_0x1f89a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cArea_AreaGetCenterPos_0x1f89a8");
 #endif
 
-    ctx->pc = 0x1f89a8u;
 
     // 0x1f89a8: 0x90830001  lbu         $v1, 0x1($a0)
     ctx->pc = 0x1f89a8u;
     SET_GPR_ZE32(ctx, 3, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 1)));
     // 0x1f89ac: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1f89acu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1f89b0: 0x10620005  beq         $v1, $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x1F89B0u;
@@ -41,7 +39,6 @@ void cArea_AreaGetCenterPos_0x1f89a8(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_1f89c8;
         }
     }
-    ctx->pc = 0x1F89B8u;
     // 0x1f89b8: 0x5062001a  beql        $v1, $v0, . + 4 + (0x1A << 2)
     ctx->pc = 0x1F89B8u;
     {
@@ -57,7 +54,6 @@ void cArea_AreaGetCenterPos_0x1f89a8(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_1f8a24;
         }
     }
-    ctx->pc = 0x1F89C0u;
     // 0x1f89c0: 0x3e00008  jr          $ra
     ctx->pc = 0x1F89C0u;
     {
@@ -71,7 +67,6 @@ void cArea_AreaGetCenterPos_0x1f89a8(uint8_t* rdram, R5900Context* ctx, PS2Runti
         return;
         #endif
     }
-    ctx->pc = 0x1F89C8u;
 label_1f89c8:
     // 0x1f89c8: 0xc4810018  lwc1        $f1, 0x18($a0)
     ctx->pc = 0x1f89c8u;
@@ -83,25 +78,19 @@ label_1f89c8:
     ctx->pc = 0x1f89d0u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 32)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[3] = f; }
     // 0x1f89d4: 0x46010000  add.s       $f0, $f0, $f1
-    ctx->pc = 0x1f89d4u;
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[1]);
     // 0x1f89d8: 0xc4820028  lwc1        $f2, 0x28($a0)
     ctx->pc = 0x1f89d8u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 40)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[2] = f; }
     // 0x1f89dc: 0x3c013e80  lui         $at, 0x3E80
-    ctx->pc = 0x1f89dcu;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16000 << 16));
     // 0x1f89e0: 0x44812000  mtc1        $at, $f4
-    ctx->pc = 0x1f89e0u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[4], &bits, sizeof(bits)); }
     // 0x1f89e4: 0x46030000  add.s       $f0, $f0, $f3
-    ctx->pc = 0x1f89e4u;
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[3]);
     // 0x1f89e8: 0x46020000  add.s       $f0, $f0, $f2
-    ctx->pc = 0x1f89e8u;
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[2]);
     // 0x1f89ec: 0x46040002  mul.s       $f0, $f0, $f4
-    ctx->pc = 0x1f89ecu;
     ctx->f[0] = FPU_MUL_S(ctx->f[0], ctx->f[4]);
     // 0x1f89f0: 0xe4a00000  swc1        $f0, 0x0($a1)
     ctx->pc = 0x1f89f0u;
@@ -122,19 +111,15 @@ label_1f89c8:
     ctx->pc = 0x1f8a04u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 36)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[3] = f; }
     // 0x1f8a08: 0x46010000  add.s       $f0, $f0, $f1
-    ctx->pc = 0x1f8a08u;
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[1]);
     // 0x1f8a0c: 0xc482002c  lwc1        $f2, 0x2C($a0)
     ctx->pc = 0x1f8a0cu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 44)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[2] = f; }
     // 0x1f8a10: 0x46030000  add.s       $f0, $f0, $f3
-    ctx->pc = 0x1f8a10u;
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[3]);
     // 0x1f8a14: 0x46020000  add.s       $f0, $f0, $f2
-    ctx->pc = 0x1f8a14u;
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[2]);
     // 0x1f8a18: 0x46040002  mul.s       $f0, $f0, $f4
-    ctx->pc = 0x1f8a18u;
     ctx->f[0] = FPU_MUL_S(ctx->f[0], ctx->f[4]);
     // 0x1f8a1c: 0x3e00008  jr          $ra
     ctx->pc = 0x1F8A1Cu;
@@ -155,7 +140,6 @@ label_1f89c8:
         return;
         #endif
     }
-    ctx->pc = 0x1F8A24u;
 label_1f8a24:
     // 0x1f8a24: 0xe4a00000  swc1        $f0, 0x0($a1)
     ctx->pc = 0x1f8a24u;
@@ -188,9 +172,7 @@ label_1f8a24:
         return;
         #endif
     }
-    ctx->pc = 0x1F8A3Cu;
     // 0x1f8a3c: 0x0  nop
-    ctx->pc = 0x1f8a3cu;
     // NOP
     ctx->pc = 0x1f8a40u;
 }

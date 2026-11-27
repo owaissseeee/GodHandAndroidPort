@@ -13,20 +13,20 @@
 
 // Function: cOmDoor_releaseObjCollision
 // Address: 0x1bd3f0 - 0x1bd430
-void cOmDoor_releaseObjCollision_0x1bd3f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmDoor_releaseObjCollision_0x1bd3f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmDoor_releaseObjCollision_0x1bd3f0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1bd418u: goto label_1bd418;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1bd3f0u, 0)) {
+        switch (ctx->pc) {
+            case 0x1bd418u: goto label_1bd418;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1bd3f0u;
 
     // 0x1bd3f0: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x1bd3f0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x1bd3f4: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x1bd3f4u;
@@ -35,7 +35,6 @@ void cOmDoor_releaseObjCollision_0x1bd3f0(uint8_t* rdram, R5900Context* ctx, PS2
     ctx->pc = 0x1bd3f8u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1bd3fc: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x1bd3fcu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1bd400: 0x8e050644  lw          $a1, 0x644($s0)
     ctx->pc = 0x1bd400u;
@@ -55,12 +54,9 @@ void cOmDoor_releaseObjCollision_0x1bd3f0(uint8_t* rdram, R5900Context* ctx, PS2
             goto label_1bd420;
         }
     }
-    ctx->pc = 0x1BD40Cu;
     // 0x1bd40c: 0x3c04005d  lui         $a0, 0x5D
-    ctx->pc = 0x1bd40cu;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)93 << 16));
     // 0x1bd410: 0xc04bb16  jal         func_12EC58
-    ctx->pc = 0x1BD410u;
     SET_GPR_U32(ctx, 31, 0x1BD418u);
     ctx->pc = 0x1BD414u;
     ctx->in_delay_slot = true;
@@ -68,11 +64,9 @@ void cOmDoor_releaseObjCollision_0x1bd3f0(uint8_t* rdram, R5900Context* ctx, PS2
     // 0x1bd414: 0x2484ae50  addiu       $a0, $a0, -0x51B0 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 4294946384));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x12EC58u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x12EC58u, 0x1BD410u, 0x1BD418u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_0012EC58_0x12ec58, 0x12ec58u, 0x1bd418u)) {
         return;
     }
-    ctx->pc = 0x1BD418u;
 label_1bd418:
     // 0x1bd418: 0xae000644  sw          $zero, 0x644($s0)
     ctx->pc = 0x1bd418u;
@@ -103,9 +97,7 @@ label_1bd420:
         return;
         #endif
     }
-    ctx->pc = 0x1BD42Cu;
     // 0x1bd42c: 0x0  nop
-    ctx->pc = 0x1bd42cu;
     // NOP
     ctx->pc = 0x1bd430u;
 }

@@ -13,15 +13,13 @@
 
 // Function: Forward33B790_348C98
 // Address: 0x348c98 - 0x348cb8
-void Forward33B790_348C98_0x348c98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Forward33B790_348C98_0x348c98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Forward33B790_348C98_0x348c98");
 #endif
 
-    ctx->pc = 0x348c98u;
 
     // 0x348c98: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x348c98u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x348c9c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x348c9cu;
@@ -30,8 +28,6 @@ void Forward33B790_348C98_0x348c98(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x348ca0u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x348ca4: 0x80cede4  j           func_33B790
-    ctx->pc = 0x348CA4u;
-    ctx->pc = 0x348CA8u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x348CA4u;
     // 0x348ca8: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)
@@ -41,15 +37,11 @@ void Forward33B790_348C98_0x348c98(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x33B790u, 0x348CA4u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x348CACu;
     // 0x348cac: 0x0  nop
-    ctx->pc = 0x348cacu;
     // NOP
     // 0x348cb0: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x348cb0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x348cb4: 0x0  nop
-    ctx->pc = 0x348cb4u;
     // NOP
     ctx->pc = 0x348cb8u;
 }

@@ -13,15 +13,13 @@
 
 // Function: Obj35D0_SetFields_1_a1_a2_D740
 // Address: 0x35d740 - 0x35d758
-void Obj35D0_SetFields_1_a1_a2_D740_0x35d740(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj35D0_SetFields_1_a1_a2_D740_0x35d740(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj35D0_SetFields_1_a1_a2_D740_0x35d740");
 #endif
 
-    ctx->pc = 0x35d740u;
 
     // 0x35d740: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x35d740u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x35d744: 0xac860008  sw          $a2, 0x8($a0)
     ctx->pc = 0x35d744u;
@@ -48,9 +46,7 @@ void Obj35D0_SetFields_1_a1_a2_D740_0x35d740(uint8_t* rdram, R5900Context* ctx, 
         return;
         #endif
     }
-    ctx->pc = 0x35D754u;
     // 0x35d754: 0x0  nop
-    ctx->pc = 0x35d754u;
     // NOP
     ctx->pc = 0x35d758u;
 }

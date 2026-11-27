@@ -13,18 +13,15 @@
 
 // Function: Obj0000_Set_D_007588A8_XY_33BC30
 // Address: 0x33bc30 - 0x33bc48
-void Obj0000_Set_D_007588A8_XY_33BC30_0x33bc30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_D_007588A8_XY_33BC30_0x33bc30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_D_007588A8_XY_33BC30_0x33bc30");
 #endif
 
-    ctx->pc = 0x33bc30u;
 
     // 0x33bc30: 0x3c020076  lui         $v0, 0x76
-    ctx->pc = 0x33bc30u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)118 << 16));
     // 0x33bc34: 0x244288a8  addiu       $v0, $v0, -0x7758
-    ctx->pc = 0x33bc34u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294936744));
     // 0x33bc38: 0xac450004  sw          $a1, 0x4($v0)
     ctx->pc = 0x33bc38u;
@@ -48,9 +45,7 @@ void Obj0000_Set_D_007588A8_XY_33BC30_0x33bc30(uint8_t* rdram, R5900Context* ctx
         return;
         #endif
     }
-    ctx->pc = 0x33BC44u;
     // 0x33bc44: 0x0  nop
-    ctx->pc = 0x33bc44u;
     // NOP
     ctx->pc = 0x33bc48u;
 }

@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_getStock
 // Address: 0x1fad38 - 0x1fad58
-void cCoreSave_getStock_0x1fad38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getStock_0x1fad38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getStock_0x1fad38");
 #endif
 
-    ctx->pc = 0x1fad38u;
 
     // 0x1fad38: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x1fad38u;
@@ -38,7 +37,6 @@ void cCoreSave_getStock_0x1fad38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_1fad4c;
         }
     }
-    ctx->pc = 0x1FAD44u;
     // 0x1fad44: 0x3e00008  jr          $ra
     ctx->pc = 0x1FAD44u;
     {
@@ -58,7 +56,6 @@ void cCoreSave_getStock_0x1fad38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         return;
         #endif
     }
-    ctx->pc = 0x1FAD4Cu;
 label_1fad4c:
     // 0x1fad4c: 0x3e00008  jr          $ra
     ctx->pc = 0x1FAD4Cu;
@@ -79,9 +76,7 @@ label_1fad4c:
         return;
         #endif
     }
-    ctx->pc = 0x1FAD54u;
     // 0x1fad54: 0x0  nop
-    ctx->pc = 0x1fad54u;
     // NOP
     ctx->pc = 0x1fad58u;
 }

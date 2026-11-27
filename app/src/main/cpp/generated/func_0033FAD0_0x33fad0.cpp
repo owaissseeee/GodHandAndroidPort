@@ -13,12 +13,11 @@
 
 // Function: func_0033FAD0
 // Address: 0x33fad0 - 0x33fb00
-void func_0033FAD0_0x33fad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0033FAD0_0x33fad0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0033FAD0_0x33fad0");
 #endif
 
-    ctx->pc = 0x33fad0u;
 
     // 0x33fad0: 0x8c82000c  lw          $v0, 0xC($a0)
     ctx->pc = 0x33fad0u;
@@ -38,7 +37,6 @@ void func_0033FAD0_0x33fad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_33faf8;
         }
     }
-    ctx->pc = 0x33FADCu;
     // 0x33fadc: 0xac880024  sw          $t0, 0x24($a0)
     ctx->pc = 0x33fadcu;
     WRITE32(ADD32(GPR_U32(ctx, 4), 36), GPR_U32(ctx, 8));
@@ -46,7 +44,6 @@ void func_0033FAD0_0x33fad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x33fae0u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 24), GPR_U32(ctx, 5));
     // 0x33fae4: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x33fae4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x33fae8: 0xac86001c  sw          $a2, 0x1C($a0)
     ctx->pc = 0x33fae8u;
@@ -73,7 +70,6 @@ void func_0033FAD0_0x33fad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x33FAF8u;
 label_33faf8:
     // 0x33faf8: 0x3e00008  jr          $ra
     ctx->pc = 0x33FAF8u;

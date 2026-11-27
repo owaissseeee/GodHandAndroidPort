@@ -13,12 +13,11 @@
 
 // Function: Obj0000_Or_Field_0_Bit_1_Clear_Field_348_1ED7C8
 // Address: 0x1ed7c8 - 0x1ed7e0
-void Obj0000_Or_Field_0_Bit_1_Clear_Field_348_1ED7C8_0x1ed7c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Or_Field_0_Bit_1_Clear_Field_348_1ED7C8_0x1ed7c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Or_Field_0_Bit_1_Clear_Field_348_1ED7C8_0x1ed7c8");
 #endif
 
-    ctx->pc = 0x1ed7c8u;
 
     // 0x1ed7c8: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x1ed7c8u;
@@ -27,7 +26,6 @@ void Obj0000_Or_Field_0_Bit_1_Clear_Field_348_1ED7C8_0x1ed7c8(uint8_t* rdram, R5
     ctx->pc = 0x1ed7ccu;
     WRITE32(ADD32(GPR_U32(ctx, 4), 840), GPR_U32(ctx, 0));
     // 0x1ed7d0: 0x34420001  ori         $v0, $v0, 0x1
-    ctx->pc = 0x1ed7d0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)1);
     // 0x1ed7d4: 0x3e00008  jr          $ra
     ctx->pc = 0x1ED7D4u;
@@ -48,9 +46,7 @@ void Obj0000_Or_Field_0_Bit_1_Clear_Field_348_1ED7C8_0x1ed7c8(uint8_t* rdram, R5
         return;
         #endif
     }
-    ctx->pc = 0x1ED7DCu;
     // 0x1ed7dc: 0x0  nop
-    ctx->pc = 0x1ed7dcu;
     // NOP
     ctx->pc = 0x1ed7e0u;
 }

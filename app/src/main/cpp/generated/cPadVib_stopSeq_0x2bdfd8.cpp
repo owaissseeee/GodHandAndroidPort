@@ -13,12 +13,11 @@
 
 // Function: cPadVib_stopSeq
 // Address: 0x2bdfd8 - 0x2bdff8
-void cPadVib_stopSeq_0x2bdfd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cPadVib_stopSeq_0x2bdfd8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cPadVib_stopSeq_0x2bdfd8");
 #endif
 
-    ctx->pc = 0x2bdfd8u;
 
     // 0x2bdfd8: 0x3e00008  jr          $ra
     ctx->pc = 0x2BDFD8u;
@@ -39,24 +38,17 @@ void cPadVib_stopSeq_0x2bdfd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
         return;
         #endif
     }
-    ctx->pc = 0x2BDFE0u;
     // 0x2bdfe0: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x2bdfe0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x2bdfe4: 0x0  nop
-    ctx->pc = 0x2bdfe4u;
     // NOP
     // 0x2bdfe8: 0x27bd0160  addiu       $sp, $sp, 0x160
-    ctx->pc = 0x2bdfe8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 352));
     // 0x2bdfec: 0x0  nop
-    ctx->pc = 0x2bdfecu;
     // NOP
     // 0x2bdff0: 0x27bd0030  addiu       $sp, $sp, 0x30
-    ctx->pc = 0x2bdff0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 48));
     // 0x2bdff4: 0x0  nop
-    ctx->pc = 0x2bdff4u;
     // NOP
     ctx->pc = 0x2bdff8u;
 }

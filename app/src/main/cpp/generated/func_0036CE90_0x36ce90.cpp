@@ -13,34 +13,33 @@
 
 // Function: func_0036CE90
 // Address: 0x36ce90 - 0x36ceb8
-void func_0036CE90_0x36ce90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0036CE90_0x36ce90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0036CE90_0x36ce90");
 #endif
 
-    switch (ctx->pc) {
-        case 0x36ce90u: goto label_36ce90;
-        case 0x36ce94u: goto label_36ce94;
-        case 0x36ce98u: goto label_36ce98;
-        case 0x36ce9cu: goto label_36ce9c;
-        case 0x36cea0u: goto label_36cea0;
-        case 0x36cea4u: goto label_36cea4;
-        case 0x36cea8u: goto label_36cea8;
-        case 0x36ceacu: goto label_36ceac;
-        case 0x36ceb0u: goto label_36ceb0;
-        case 0x36ceb4u: goto label_36ceb4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x36ce90u, 0)) {
+        switch (ctx->pc) {
+            case 0x36ce90u: goto label_36ce90;
+            case 0x36ce94u: goto label_36ce94;
+            case 0x36ce98u: goto label_36ce98;
+            case 0x36ce9cu: goto label_36ce9c;
+            case 0x36cea0u: goto label_36cea0;
+            case 0x36cea4u: goto label_36cea4;
+            case 0x36cea8u: goto label_36cea8;
+            case 0x36ceacu: goto label_36ceac;
+            case 0x36ceb0u: goto label_36ceb0;
+            case 0x36ceb4u: goto label_36ceb4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x36ce90u;
 
 label_36ce90:
     // 0x36ce90: 0x3c02003f  lui         $v0, 0x3F
-    ctx->pc = 0x36ce90u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)63 << 16));
 label_36ce94:
     // 0x36ce94: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x36ce94u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_36ce98:
     // 0x36ce98: 0x8c422038  lw          $v0, 0x2038($v0)
@@ -90,7 +89,6 @@ label_36cea8:
             return;
         }
     }
-    ctx->pc = 0x36CEACu;
 label_36ceac:
     // 0x36ceac: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x36ceacu;

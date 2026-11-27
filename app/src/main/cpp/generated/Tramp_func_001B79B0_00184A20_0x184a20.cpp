@@ -13,20 +13,20 @@
 
 // Function: Tramp_func_001B79B0_00184A20
 // Address: 0x184a20 - 0x184a40
-void Tramp_func_001B79B0_00184A20_0x184a20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp_func_001B79B0_00184A20_0x184a20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp_func_001B79B0_00184A20_0x184a20");
 #endif
 
-    switch (ctx->pc) {
-        case 0x184a30u: goto label_184a30;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x184a20u, 0)) {
+        switch (ctx->pc) {
+            case 0x184a30u: goto label_184a30;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x184a20u;
 
     // 0x184a20: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x184a20u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x184a24: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x184a24u;
@@ -34,11 +34,9 @@ void Tramp_func_001B79B0_00184A20_0x184a20(uint8_t* rdram, R5900Context* ctx, PS
     // 0x184a28: 0xc06de6c  jal         func_1B79B0
     ctx->pc = 0x184A28u;
     SET_GPR_U32(ctx, 31, 0x184A30u);
-    ctx->pc = 0x1B79B0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1B79B0u, 0x184A28u, 0x184A30u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cOmBase_dieCommon_0x1b79b0, 0x1b79b0u, 0x184a30u)) {
         return;
     }
-    ctx->pc = 0x184A30u;
 label_184a30:
     // 0x184a30: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x184a30u;
@@ -62,9 +60,7 @@ label_184a30:
         return;
         #endif
     }
-    ctx->pc = 0x184A3Cu;
     // 0x184a3c: 0x0  nop
-    ctx->pc = 0x184a3cu;
     // NOP
     ctx->pc = 0x184a40u;
 }

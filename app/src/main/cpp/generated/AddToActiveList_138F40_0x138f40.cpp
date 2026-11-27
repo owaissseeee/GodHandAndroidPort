@@ -13,18 +13,16 @@
 
 // Function: AddToActiveList_138F40
 // Address: 0x138f40 - 0x138f88
-void AddToActiveList_138F40_0x138f40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void AddToActiveList_138F40_0x138f40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("AddToActiveList_138F40_0x138f40");
 #endif
 
-    ctx->pc = 0x138f40u;
 
     // 0x138f40: 0x8c861028  lw          $a2, 0x1028($a0)
     ctx->pc = 0x138f40u;
     SET_GPR_S32(ctx, 6, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4136)));
     // 0x138f44: 0x24020010  addiu       $v0, $zero, 0x10
-    ctx->pc = 0x138f44u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 16));
     // 0x138f48: 0x10c2000d  beq         $a2, $v0, . + 4 + (0xD << 2)
     ctx->pc = 0x138F48u;
@@ -41,7 +39,6 @@ void AddToActiveList_138F40_0x138f40(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_138f80;
         }
     }
-    ctx->pc = 0x138F50u;
     // 0x138f50: 0x8c830ff0  lw          $v1, 0xFF0($a0)
     ctx->pc = 0x138f50u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4080)));
@@ -60,9 +57,7 @@ void AddToActiveList_138F40_0x138f40(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_138f6c;
         }
     }
-    ctx->pc = 0x138F5Cu;
     // 0x138f5c: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x138f5cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x138f60: 0xac821028  sw          $v0, 0x1028($a0)
     ctx->pc = 0x138f60u;
@@ -82,7 +77,6 @@ void AddToActiveList_138F40_0x138f40(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_138f78;
         }
     }
-    ctx->pc = 0x138F6Cu;
 label_138f6c:
     // 0x138f6c: 0x8c82102c  lw          $v0, 0x102C($a0)
     ctx->pc = 0x138f6cu;

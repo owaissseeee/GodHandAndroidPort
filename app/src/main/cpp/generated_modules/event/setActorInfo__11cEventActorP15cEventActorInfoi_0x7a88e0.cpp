@@ -14,12 +14,11 @@ namespace gh_event
 {
 // Function: setActorInfo__11cEventActorP15cEventActorInfoi
 // Address: 0x7a88e0 - 0x7a88f0
-void setActorInfo__11cEventActorP15cEventActorInfoi_0x7a88e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void setActorInfo__11cEventActorP15cEventActorInfoi_0x7a88e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("setActorInfo__11cEventActorP15cEventActorInfoi_0x7a88e0");
 #endif
 
-    ctx->pc = 0x7a88e0u;
 
     // 0x7a88e0: 0xac860004  sw          $a2, 0x4($a0)
     ctx->pc = 0x7a88e0u;
@@ -43,9 +42,7 @@ void setActorInfo__11cEventActorP15cEventActorInfoi_0x7a88e0(uint8_t* rdram, R59
         return;
         #endif
     }
-    ctx->pc = 0x7A88ECu;
     // 0x7a88ec: 0x0  nop
-    ctx->pc = 0x7a88ecu;
     // NOP
     ctx->pc = 0x7a88f0u;
 }

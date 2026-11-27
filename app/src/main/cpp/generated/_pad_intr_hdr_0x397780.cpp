@@ -13,42 +13,41 @@
 
 // Function: _pad_intr_hdr
 // Address: 0x397780 - 0x3977c8
-void _pad_intr_hdr_0x397780(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _pad_intr_hdr_0x397780(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_pad_intr_hdr_0x397780");
 #endif
 
-    switch (ctx->pc) {
-        case 0x397780u: goto label_397780;
-        case 0x397784u: goto label_397784;
-        case 0x397788u: goto label_397788;
-        case 0x39778cu: goto label_39778c;
-        case 0x397790u: goto label_397790;
-        case 0x397794u: goto label_397794;
-        case 0x397798u: goto label_397798;
-        case 0x39779cu: goto label_39779c;
-        case 0x3977a0u: goto label_3977a0;
-        case 0x3977a4u: goto label_3977a4;
-        case 0x3977a8u: goto label_3977a8;
-        case 0x3977acu: goto label_3977ac;
-        case 0x3977b0u: goto label_3977b0;
-        case 0x3977b4u: goto label_3977b4;
-        case 0x3977b8u: goto label_3977b8;
-        case 0x3977bcu: goto label_3977bc;
-        case 0x3977c0u: goto label_3977c0;
-        case 0x3977c4u: goto label_3977c4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x397780u, 0)) {
+        switch (ctx->pc) {
+            case 0x397780u: goto label_397780;
+            case 0x397784u: goto label_397784;
+            case 0x397788u: goto label_397788;
+            case 0x39778cu: goto label_39778c;
+            case 0x397790u: goto label_397790;
+            case 0x397794u: goto label_397794;
+            case 0x397798u: goto label_397798;
+            case 0x39779cu: goto label_39779c;
+            case 0x3977a0u: goto label_3977a0;
+            case 0x3977a4u: goto label_3977a4;
+            case 0x3977a8u: goto label_3977a8;
+            case 0x3977acu: goto label_3977ac;
+            case 0x3977b0u: goto label_3977b0;
+            case 0x3977b4u: goto label_3977b4;
+            case 0x3977b8u: goto label_3977b8;
+            case 0x3977bcu: goto label_3977bc;
+            case 0x3977c0u: goto label_3977c0;
+            case 0x3977c4u: goto label_3977c4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x397780u;
 
 label_397780:
     // 0x397780: 0x3c020040  lui         $v0, 0x40
-    ctx->pc = 0x397780u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)64 << 16));
 label_397784:
     // 0x397784: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x397784u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
 label_397788:
     // 0x397788: 0x8c4385d0  lw          $v1, -0x7A30($v0)
@@ -85,14 +84,11 @@ label_397794:
             goto label_3977b0;
         }
     }
-    ctx->pc = 0x397798u;
 label_397798:
     // 0x397798: 0x3c020078  lui         $v0, 0x78
-    ctx->pc = 0x397798u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)120 << 16));
 label_39779c:
     // 0x39779c: 0x380802d  daddu       $s0, $gp, $zero
-    ctx->pc = 0x39779cu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 28) + (uint64_t)GPR_U64(ctx, 0));
 label_3977a0:
     // 0x3977a0: 0x8c5cc380  lw          $gp, -0x3C80($v0)
@@ -126,19 +122,15 @@ label_3977a8:
             return;
         }
     }
-    ctx->pc = 0x3977ACu;
 label_3977ac:
     // 0x3977ac: 0x200e02d  daddu       $gp, $s0, $zero
-    ctx->pc = 0x3977acu;
     SET_GPR_U64(ctx, 28, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_3977b0:
     // 0x3977b0: 0xf  sync
-    ctx->pc = 0x3977b0u;
     // SYNC instruction - memory barrier
 // In recompiled code, we don't need explicit memory barriers
 label_3977b4:
     // 0x3977b4: 0x42000038  ei
-    ctx->pc = 0x3977b4u;
     ctx->cop0_status |= 0x10000; // Enable interrupts
 label_3977b8:
     // 0x3977b8: 0xdfbf0010  ld          $ra, 0x10($sp)

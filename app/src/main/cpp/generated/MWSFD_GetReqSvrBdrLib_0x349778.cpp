@@ -13,20 +13,20 @@
 
 // Function: MWSFD_GetReqSvrBdrLib
 // Address: 0x349778 - 0x3497a0
-void MWSFD_GetReqSvrBdrLib_0x349778(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MWSFD_GetReqSvrBdrLib_0x349778(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MWSFD_GetReqSvrBdrLib_0x349778");
 #endif
 
-    switch (ctx->pc) {
-        case 0x349788u: goto label_349788;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x349778u, 0)) {
+        switch (ctx->pc) {
+            case 0x349788u: goto label_349788;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x349778u;
 
     // 0x349778: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x349778u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x34977c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x34977cu;
@@ -34,11 +34,9 @@ void MWSFD_GetReqSvrBdrLib_0x349778(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     // 0x349780: 0xc0d14ac  jal         func_3452B0
     ctx->pc = 0x349780u;
     SET_GPR_U32(ctx, 31, 0x349788u);
-    ctx->pc = 0x3452B0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3452B0u, 0x349780u, 0x349788u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &GetD003EC7E0_3452B0_0x3452b0, 0x3452b0u, 0x349788u)) {
         return;
     }
-    ctx->pc = 0x349788u;
 label_349788:
     // 0x349788: 0x8c420024  lw          $v0, 0x24($v0)
     ctx->pc = 0x349788u;
@@ -65,12 +63,9 @@ label_349788:
         return;
         #endif
     }
-    ctx->pc = 0x349798u;
     // 0x349798: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x349798u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x34979c: 0x0  nop
-    ctx->pc = 0x34979cu;
     // NOP
     ctx->pc = 0x3497a0u;
 }

@@ -13,22 +13,22 @@
 
 // Function: SFUO_ExecServer
 // Address: 0x35cf80 - 0x35cfc8
-void SFUO_ExecServer_0x35cf80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFUO_ExecServer_0x35cf80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFUO_ExecServer_0x35cf80");
 #endif
 
-    switch (ctx->pc) {
-        case 0x35cf98u: goto label_35cf98;
-        case 0x35cfa0u: goto label_35cfa0;
-        case 0x35cfacu: goto label_35cfac;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x35cf80u, 0)) {
+        switch (ctx->pc) {
+            case 0x35cf98u: goto label_35cf98;
+            case 0x35cfa0u: goto label_35cfa0;
+            case 0x35cfacu: goto label_35cfac;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x35cf80u;
 
     // 0x35cf80: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x35cf80u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x35cf84: 0xffb10008  sd          $s1, 0x8($sp)
     ctx->pc = 0x35cf84u;
@@ -40,7 +40,6 @@ void SFUO_ExecServer_0x35cf80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     ctx->pc = 0x35cf8cu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 16), GPR_U64(ctx, 31));
     // 0x35cf90: 0xc0d73f2  jal         func_35CFC8
-    ctx->pc = 0x35CF90u;
     SET_GPR_U32(ctx, 31, 0x35CF98u);
     ctx->pc = 0x35CF94u;
     ctx->in_delay_slot = true;
@@ -48,14 +47,11 @@ void SFUO_ExecServer_0x35cf80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     // 0x35cf94: 0x80882d  daddu       $s1, $a0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x35CFC8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x35CFC8u, 0x35CF90u, 0x35CF98u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_0035CFC8_0x35cfc8, 0x35cfc8u, 0x35cf98u)) {
         return;
     }
-    ctx->pc = 0x35CF98u;
 label_35cf98:
     // 0x35cf98: 0xc0d7436  jal         func_35D0D8
-    ctx->pc = 0x35CF98u;
     SET_GPR_U32(ctx, 31, 0x35CFA0u);
     ctx->pc = 0x35CF9Cu;
     ctx->in_delay_slot = true;
@@ -63,17 +59,13 @@ label_35cf98:
     // 0x35cf9c: 0x220202d  daddu       $a0, $s1, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x35D0D8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x35D0D8u, 0x35CF98u, 0x35CFA0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &Obj35D0_ReturnZero_D0D8_0x35d0d8, 0x35d0d8u, 0x35cfa0u)) {
         return;
     }
-    ctx->pc = 0x35CFA0u;
 label_35cfa0:
     // 0x35cfa0: 0x220202d  daddu       $a0, $s1, $zero
-    ctx->pc = 0x35cfa0u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     // 0x35cfa4: 0xc0d7414  jal         func_35D050
-    ctx->pc = 0x35CFA4u;
     SET_GPR_U32(ctx, 31, 0x35CFACu);
     ctx->pc = 0x35CFA8u;
     ctx->in_delay_slot = true;
@@ -81,17 +73,14 @@ label_35cfa0:
     // 0x35cfa8: 0x40802d  daddu       $s0, $v0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x35D050u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x35D050u, 0x35CFA4u, 0x35CFACu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_0035D050_0x35d050, 0x35d050u, 0x35cfacu)) {
         return;
     }
-    ctx->pc = 0x35CFACu;
 label_35cfac:
     // 0x35cfac: 0xdfb10008  ld          $s1, 0x8($sp)
     ctx->pc = 0x35cfacu;
     SET_GPR_U64(ctx, 17, READ64(ADD32(GPR_U32(ctx, 29), 8)));
     // 0x35cfb0: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x35cfb0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x35cfb4: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x35cfb4u;
@@ -118,9 +107,7 @@ label_35cfac:
         return;
         #endif
     }
-    ctx->pc = 0x35CFC4u;
     // 0x35cfc4: 0x0  nop
-    ctx->pc = 0x35cfc4u;
     // NOP
     ctx->pc = 0x35cfc8u;
 }

@@ -13,27 +13,22 @@
 
 // Function: Forward324D88_324E70
 // Address: 0x324e70 - 0x324e98
-void Forward324D88_324E70_0x324e70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Forward324D88_324E70_0x324e70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Forward324D88_324E70_0x324e70");
 #endif
 
-    ctx->pc = 0x324e70u;
 
     // 0x324e70: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x324e70u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x324e74: 0x3c02003d  lui         $v0, 0x3D
-    ctx->pc = 0x324e74u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)61 << 16));
     // 0x324e78: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x324e78u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x324e7c: 0x3c03003d  lui         $v1, 0x3D
-    ctx->pc = 0x324e7cu;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)61 << 16));
     // 0x324e80: 0x2442814c  addiu       $v0, $v0, -0x7EB4
-    ctx->pc = 0x324e80u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294934860));
     // 0x324e84: 0x8c6580c8  lw          $a1, -0x7F38($v1)
     ctx->pc = 0x324e84u;
@@ -45,8 +40,6 @@ void Forward324D88_324E70_0x324e70(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x324e8cu;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x324e90: 0x80c9362  j           func_324D88
-    ctx->pc = 0x324E90u;
-    ctx->pc = 0x324E94u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x324E90u;
     // 0x324e94: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)

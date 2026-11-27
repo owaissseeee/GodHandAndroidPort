@@ -14,12 +14,11 @@ namespace gh_mcport
 {
 // Function: __rtti_func
 // Address: 0x7cab48 - 0x7cab68
-void ps2___rtti_func_0x7cab48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___rtti_func_0x7cab48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___rtti_func_0x7cab48");
 #endif
 
-    ctx->pc = 0x7cab48u;
 
     // 0x7cab48: 0x10800004  beqz        $a0, . + 4 + (0x4 << 2)
     ctx->pc = 0x7CAB48u;
@@ -36,12 +35,10 @@ void ps2___rtti_func_0x7cab48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_7cab5c;
         }
     }
-    ctx->pc = 0x7CAB50u;
     // 0x7cab50: 0xac850000  sw          $a1, 0x0($a0)
     ctx->pc = 0x7cab50u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 0), GPR_U32(ctx, 5));
     // 0x7cab54: 0x24421158  addiu       $v0, $v0, 0x1158
-    ctx->pc = 0x7cab54u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4440));
     // 0x7cab58: 0xac820004  sw          $v0, 0x4($a0)
     ctx->pc = 0x7cab58u;
@@ -60,9 +57,7 @@ label_7cab5c:
         return;
         #endif
     }
-    ctx->pc = 0x7CAB64u;
     // 0x7cab64: 0x0  nop
-    ctx->pc = 0x7cab64u;
     // NOP
     ctx->pc = 0x7cab68u;
 }

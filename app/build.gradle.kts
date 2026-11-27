@@ -56,6 +56,7 @@ android {
             signingConfig = signingConfigs.getByName("debug") // Debug signing for release testing
             externalNativeBuild {
                 cmake {
+                    cFlags += listOf("-flto=thin")
                     cppFlags += listOf("-flto=thin")
                 }
             }

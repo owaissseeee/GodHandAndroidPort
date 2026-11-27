@@ -13,15 +13,13 @@
 
 // Function: __register_frame_info_table
 // Address: 0x3224d0 - 0x3224f8
-void ps2___register_frame_info_table_0x3224d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___register_frame_info_table_0x3224d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___register_frame_info_table_0x3224d0");
 #endif
 
-    ctx->pc = 0x3224d0u;
 
     // 0x3224d0: 0x3c030075  lui         $v1, 0x75
-    ctx->pc = 0x3224d0u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)117 << 16));
     // 0x3224d4: 0x8c625c18  lw          $v0, 0x5C18($v1)
     ctx->pc = 0x3224d4u;

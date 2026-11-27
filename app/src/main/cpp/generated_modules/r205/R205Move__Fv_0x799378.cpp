@@ -14,12 +14,11 @@ namespace gh_r205
 {
 // Function: R205Move__Fv
 // Address: 0x799378 - 0x799380
-void R205Move__Fv_0x799378(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void R205Move__Fv_0x799378(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("R205Move__Fv_0x799378");
 #endif
 
-    ctx->pc = 0x799378u;
 
     // 0x799378: 0x3e00008  jr          $ra
     ctx->pc = 0x799378u;

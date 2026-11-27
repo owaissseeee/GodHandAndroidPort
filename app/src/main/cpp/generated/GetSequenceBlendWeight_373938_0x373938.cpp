@@ -13,21 +13,21 @@
 
 // Function: GetSequenceBlendWeight_373938
 // Address: 0x373938 - 0x3739a0
-void GetSequenceBlendWeight_373938_0x373938(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetSequenceBlendWeight_373938_0x373938(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetSequenceBlendWeight_373938_0x373938");
 #endif
 
-    switch (ctx->pc) {
-        case 0x373954u: goto label_373954;
-        case 0x373970u: goto label_373970;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x373938u, 0)) {
+        switch (ctx->pc) {
+            case 0x373954u: goto label_373954;
+            case 0x373970u: goto label_373970;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x373938u;
 
     // 0x373938: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x373938u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x37393c: 0x7fb00020  sq          $s0, 0x20($sp)
     ctx->pc = 0x37393cu;
@@ -36,13 +36,11 @@ void GetSequenceBlendWeight_373938_0x373938(uint8_t* rdram, R5900Context* ctx, P
     ctx->pc = 0x373940u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 17));
     // 0x373944: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x373944u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x373948: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x373948u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x37394c: 0xc0dce94  jal         func_373A50
-    ctx->pc = 0x37394Cu;
     SET_GPR_U32(ctx, 31, 0x373954u);
     ctx->pc = 0x373950u;
     ctx->in_delay_slot = true;
@@ -50,11 +48,9 @@ void GetSequenceBlendWeight_373938_0x373938(uint8_t* rdram, R5900Context* ctx, P
     // 0x373950: 0xa0882d  daddu       $s1, $a1, $zero (Delay Slot)
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x373A50u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x373A50u, 0x37394Cu, 0x373954u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00373A50_0x373a50, 0x373a50u, 0x373954u)) {
         return;
     }
-    ctx->pc = 0x373954u;
 label_373954:
     // 0x373954: 0x14400004  bnez        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x373954u;
@@ -65,9 +61,7 @@ label_373954:
             goto label_373968;
         }
     }
-    ctx->pc = 0x37395Cu;
     // 0x37395c: 0x44800000  mtc1        $zero, $f0
-    ctx->pc = 0x37395cu;
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x373960: 0x1000000a  b           . + 4 + (0xA << 2)
     ctx->pc = 0x373960u;
@@ -84,10 +78,8 @@ label_373954:
             goto label_37398c;
         }
     }
-    ctx->pc = 0x373968u;
 label_373968:
     // 0x373968: 0xc0dcec8  jal         func_373B20
-    ctx->pc = 0x373968u;
     SET_GPR_U32(ctx, 31, 0x373970u);
     ctx->pc = 0x37396Cu;
     ctx->in_delay_slot = true;
@@ -95,14 +87,11 @@ label_373968:
     // 0x37396c: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x373B20u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x373B20u, 0x373968u, 0x373970u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00373B20_0x373b20, 0x373b20u, 0x373970u)) {
         return;
     }
-    ctx->pc = 0x373970u;
 label_373970:
     // 0x373970: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x373970u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x373974: 0x54430004  bnel        $v0, $v1, . + 4 + (0x4 << 2)
     ctx->pc = 0x373974u;
@@ -119,12 +108,9 @@ label_373970:
             goto label_373988;
         }
     }
-    ctx->pc = 0x37397Cu;
     // 0x37397c: 0x111080  sll         $v0, $s1, 2
-    ctx->pc = 0x37397cu;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 17), 2));
     // 0x373980: 0x2021021  addu        $v0, $s0, $v0
-    ctx->pc = 0x373980u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 16), GPR_U32(ctx, 2)));
     // 0x373984: 0xc440002c  lwc1        $f0, 0x2C($v0)
     ctx->pc = 0x373984u;
@@ -159,9 +145,7 @@ label_37398c:
         return;
         #endif
     }
-    ctx->pc = 0x37399Cu;
     // 0x37399c: 0x0  nop
-    ctx->pc = 0x37399cu;
     // NOP
     ctx->pc = 0x3739a0u;
 }

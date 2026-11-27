@@ -13,12 +13,11 @@
 
 // Function: Obj2810_GetField1560_Bit0
 // Address: 0x2815c0 - 0x2815d0
-void Obj2810_GetField1560_Bit0_0x2815c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj2810_GetField1560_Bit0_0x2815c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj2810_GetField1560_Bit0_0x2815c0");
 #endif
 
-    ctx->pc = 0x2815c0u;
 
     // 0x2815c0: 0x8c821560  lw          $v0, 0x1560($a0)
     ctx->pc = 0x2815c0u;
@@ -42,9 +41,7 @@ void Obj2810_GetField1560_Bit0_0x2815c0(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x2815CCu;
     // 0x2815cc: 0x0  nop
-    ctx->pc = 0x2815ccu;
     // NOP
     ctx->pc = 0x2815d0u;
 }

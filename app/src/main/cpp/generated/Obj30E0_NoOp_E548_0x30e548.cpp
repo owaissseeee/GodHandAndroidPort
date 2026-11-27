@@ -13,12 +13,11 @@
 
 // Function: Obj30E0_NoOp_E548
 // Address: 0x30e548 - 0x30e550
-void Obj30E0_NoOp_E548_0x30e548(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj30E0_NoOp_E548_0x30e548(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj30E0_NoOp_E548_0x30e548");
 #endif
 
-    ctx->pc = 0x30e548u;
 
     // 0x30e548: 0x3e00008  jr          $ra
     ctx->pc = 0x30E548u;

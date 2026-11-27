@@ -13,23 +13,22 @@
 
 // Function: isceSifSetDChain
 // Address: 0x3b0090 - 0x3b00a0
-void isceSifSetDChain_0x3b0090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void isceSifSetDChain_0x3b0090(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("isceSifSetDChain_0x3b0090");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b0098u: goto label_3b0098;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b0090u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b0098u: goto label_3b0098;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b0090u;
 
     // 0x3b0090: 0x2403ff88  addiu       $v1, $zero, -0x78
-    ctx->pc = 0x3b0090u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967176));
     // 0x3b0094: 0xc  syscall     0
-    ctx->pc = 0x3b0094u;
     ctx->pc = 0x3B0098u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

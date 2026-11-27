@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
+#include <ps2_recompiled_functions.h>
 #include "mcport_functions.h"
 
 #include "ps2_syscalls.h"
@@ -14,23 +15,23 @@ namespace gh_mcport
 {
 // Function: SetIdColor__6cMcSysQ26cMcSys11eMcIdMarkNoUi
 // Address: 0x7c8a58 - 0x7c8a98
-void SetIdColor__6cMcSysQ26cMcSys11eMcIdMarkNoUi_0x7c8a58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetIdColor__6cMcSysQ26cMcSys11eMcIdMarkNoUi_0x7c8a58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetIdColor__6cMcSysQ26cMcSys11eMcIdMarkNoUi_0x7c8a58");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7c8a80u: goto label_7c8a80;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7c8a58u, 0)) {
+        switch (ctx->pc) {
+            case 0x7c8a80u: goto label_7c8a80;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7c8a58u;
+
 
     // 0x7c8a58: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x7c8a58u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x7c8a5c: 0x3c034000  lui         $v1, 0x4000
-    ctx->pc = 0x7c8a5cu;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)16384 << 16));
     // 0x7c8a60: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x7c8a60u;
@@ -42,7 +43,6 @@ void SetIdColor__6cMcSysQ26cMcSys11eMcIdMarkNoUi_0x7c8a58(uint8_t* rdram, R5900C
     ctx->pc = 0x7c8a68u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 116)));
     // 0x7c8a6c: 0x431024  and         $v0, $v0, $v1
-    ctx->pc = 0x7c8a6cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 3));
     // 0x7c8a70: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x7C8A70u;
@@ -59,21 +59,17 @@ void SetIdColor__6cMcSysQ26cMcSys11eMcIdMarkNoUi_0x7c8a58(uint8_t* rdram, R5900C
             goto label_7c8a84;
         }
     }
-    ctx->pc = 0x7C8A78u;
     // 0x7c8a78: 0xc0aa904  jal         func_2AA410
-    ctx->pc = 0x7C8A78u;
     SET_GPR_U32(ctx, 31, 0x7C8A80u);
-    ctx->pc = 0x7C8A7Cu;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x7C8A78u;
     // 0x7c8a7c: 0x24840020  addiu       $a0, $a0, 0x20 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 32));
     ctx->in_delay_slot = false;
     ctx->pc = 0x2AA410u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2AA410u, 0x7C8A78u, 0x7C8A80u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_getIDWork_0x2aa410, 0x2AA410u, 0x7C8A80u)) {
         return;
     }
-    ctx->pc = 0x7C8A80u;
 label_7c8a80:
     // 0x7c8a80: 0xac50004c  sw          $s0, 0x4C($v0)
     ctx->pc = 0x7c8a80u;
@@ -104,9 +100,7 @@ label_7c8a84:
         return;
         #endif
     }
-    ctx->pc = 0x7C8A94u;
     // 0x7c8a94: 0x0  nop
-    ctx->pc = 0x7c8a94u;
     // NOP
     ctx->pc = 0x7c8a98u;
 }

@@ -13,23 +13,22 @@
 
 // Function: EESyscall_0x3F
 // Address: 0x3afc90 - 0x3afca0
-void EESyscall_0x3F_0x3afc90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EESyscall_0x3F_0x3afc90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EESyscall_0x3F_0x3afc90");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afc98u: goto label_3afc98;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afc90u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afc98u: goto label_3afc98;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afc90u;
 
     // 0x3afc90: 0x2403003f  addiu       $v1, $zero, 0x3F
-    ctx->pc = 0x3afc90u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 63));
     // 0x3afc94: 0xc  syscall     0
-    ctx->pc = 0x3afc94u;
     ctx->pc = 0x3AFC98u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

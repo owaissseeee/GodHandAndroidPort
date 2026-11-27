@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
+#include <ps2_recompiled_functions.h>
 #include "event_functions.h"
 
 #include "ps2_syscalls.h"
@@ -14,39 +15,36 @@ namespace gh_event
 {
 // Function: threadCreateObj__11cEventActorPv
 // Address: 0x7a8de8 - 0x7a8e10
-void threadCreateObj__11cEventActorPv_0x7a8de8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void threadCreateObj__11cEventActorPv_0x7a8de8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("threadCreateObj__11cEventActorPv_0x7a8de8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7a8df8u: goto label_7a8df8;
-        case 0x7a8e04u: goto label_7a8e04;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7a8de8u, 0)) {
+        switch (ctx->pc) {
+            case 0x7a8df8u: goto label_7a8df8;
+            case 0x7a8e04u: goto label_7a8e04;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7a8de8u;
+
 
     // 0x7a8de8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7a8de8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x7a8dec: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x7a8decu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x7a8df0: 0xc1ea384  jal         func_7A8E10
-    ctx->pc = 0x7A8DF0u;
     SET_GPR_U32(ctx, 31, 0x7A8DF8u);
     ctx->pc = 0x7A8E10u;
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x7A8E10u, 0x7A8DF0u, 0x7A8DF8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7A8DF8u;
 label_7a8df8:
     // 0x7a8df8: 0x3c020075  lui         $v0, 0x75
-    ctx->pc = 0x7a8df8u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)117 << 16));
     // 0x7a8dfc: 0xc0b5692  jal         func_2D5A48
-    ctx->pc = 0x7A8DFCu;
     SET_GPR_U32(ctx, 31, 0x7A8E04u);
     ctx->pc = 0x7A8E00u;
     ctx->in_delay_slot = true;
@@ -55,10 +53,9 @@ label_7a8df8:
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 11268)));
     ctx->in_delay_slot = false;
     ctx->pc = 0x2D5A48u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D5A48u, 0x7A8DFCu, 0x7A8E04u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cTaskWork_exit_0x2d5a48, 0x2D5A48u, 0x7A8E04u)) {
         return;
     }
-    ctx->pc = 0x7A8E04u;
 label_7a8e04:
     // 0x7a8e04: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7a8e04u;

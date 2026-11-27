@@ -13,32 +13,29 @@
 
 // Function: cRelSys_unlinkNoFree
 // Address: 0x2be8b0 - 0x2be8e8
-void cRelSys_unlinkNoFree_0x2be8b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cRelSys_unlinkNoFree_0x2be8b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cRelSys_unlinkNoFree_0x2be8b0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2be8d8u: goto label_2be8d8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2be8b0u, 0)) {
+        switch (ctx->pc) {
+            case 0x2be8d8u: goto label_2be8d8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2be8b0u;
 
     // 0x2be8b0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2be8b0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2be8b4: 0x528c0  sll         $a1, $a1, 3
-    ctx->pc = 0x2be8b4u;
     SET_GPR_S32(ctx, 5, (int32_t)SLL32(GPR_U32(ctx, 5), 3));
     // 0x2be8b8: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2be8b8u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2be8bc: 0xa42021  addu        $a0, $a1, $a0
-    ctx->pc = 0x2be8bcu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 5), GPR_U32(ctx, 4)));
     // 0x2be8c0: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x2be8c0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2be8c4: 0x90820004  lbu         $v0, 0x4($a0)
     ctx->pc = 0x2be8c4u;
@@ -58,15 +55,12 @@ void cRelSys_unlinkNoFree_0x2be8b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_2be8dc;
         }
     }
-    ctx->pc = 0x2BE8D0u;
     // 0x2be8d0: 0xc0af99c  jal         func_2BE670
     ctx->pc = 0x2BE8D0u;
     SET_GPR_U32(ctx, 31, 0x2BE8D8u);
-    ctx->pc = 0x2BE670u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2BE670u, 0x2BE8D0u, 0x2BE8D8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002BE670_0x2be670, 0x2be670u, 0x2be8d8u)) {
         return;
     }
-    ctx->pc = 0x2BE8D8u;
 label_2be8d8:
     // 0x2be8d8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2be8d8u;
@@ -91,9 +85,7 @@ label_2be8dc:
         return;
         #endif
     }
-    ctx->pc = 0x2BE8E4u;
     // 0x2be8e4: 0x0  nop
-    ctx->pc = 0x2be8e4u;
     // NOP
     ctx->pc = 0x2be8e8u;
 }

@@ -13,23 +13,22 @@
 
 // Function: SetVInterruptHandler
 // Address: 0x3af970 - 0x3af980
-void SetVInterruptHandler_0x3af970(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetVInterruptHandler_0x3af970(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetVInterruptHandler_0x3af970");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3af978u: goto label_3af978;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3af970u, 0)) {
+        switch (ctx->pc) {
+            case 0x3af978u: goto label_3af978;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3af970u;
 
     // 0x3af970: 0x2403000f  addiu       $v1, $zero, 0xF
-    ctx->pc = 0x3af970u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 15));
     // 0x3af974: 0xc  syscall     0
-    ctx->pc = 0x3af974u;
     ctx->pc = 0x3AF978u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

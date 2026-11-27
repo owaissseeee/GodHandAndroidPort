@@ -13,18 +13,15 @@
 
 // Function: func_00337B30
 // Address: 0x337b30 - 0x337b80
-void func_00337B30_0x337b30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00337B30_0x337b30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00337B30_0x337b30");
 #endif
 
-    ctx->pc = 0x337b30u;
 
     // 0x337b30: 0x3c02003e  lui         $v0, 0x3E
-    ctx->pc = 0x337b30u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)62 << 16));
     // 0x337b34: 0x24060001  addiu       $a2, $zero, 0x1
-    ctx->pc = 0x337b34u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x337b38: 0x8c430710  lw          $v1, 0x710($v0)
     ctx->pc = 0x337b38u;
@@ -44,9 +41,7 @@ void func_00337B30_0x337b30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_337b58;
         }
     }
-    ctx->pc = 0x337B44u;
     // 0x337b44: 0x3c02003e  lui         $v0, 0x3E
-    ctx->pc = 0x337b44u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)62 << 16));
     // 0x337b48: 0x8c430708  lw          $v1, 0x708($v0)
     ctx->pc = 0x337b48u;
@@ -60,7 +55,6 @@ void func_00337B30_0x337b30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_337b74;
         }
     }
-    ctx->pc = 0x337B54u;
     // 0x337b54: 0x80820054  lb          $v0, 0x54($a0)
     ctx->pc = 0x337b54u;
     SET_GPR_S32(ctx, 2, (int8_t)READ8(ADD32(GPR_U32(ctx, 4), 84)));
@@ -80,7 +74,6 @@ label_337b58:
             goto label_337b74;
         }
     }
-    ctx->pc = 0x337B60u;
     // 0x337b60: 0x8c430738  lw          $v1, 0x738($v0)
     ctx->pc = 0x337b60u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 1848)));
@@ -99,7 +92,6 @@ label_337b58:
             goto label_337b74;
         }
     }
-    ctx->pc = 0x337B6Cu;
     // 0x337b6c: 0x54a60001  bnel        $a1, $a2, . + 4 + (0x1 << 2)
     ctx->pc = 0x337B6Cu;
     {
@@ -115,7 +107,6 @@ label_337b58:
             goto label_337b74;
         }
     }
-    ctx->pc = 0x337B74u;
 label_337b74:
     // 0x337b74: 0x3e00008  jr          $ra
     ctx->pc = 0x337B74u;
@@ -130,9 +121,7 @@ label_337b74:
         return;
         #endif
     }
-    ctx->pc = 0x337B7Cu;
     // 0x337b7c: 0x0  nop
-    ctx->pc = 0x337b7cu;
     // NOP
     ctx->pc = 0x337b80u;
 }

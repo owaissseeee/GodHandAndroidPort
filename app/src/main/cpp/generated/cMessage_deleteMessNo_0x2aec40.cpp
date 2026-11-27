@@ -13,24 +13,23 @@
 
 // Function: cMessage_deleteMessNo
 // Address: 0x2aec40 - 0x2aec88
-void cMessage_deleteMessNo_0x2aec40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessage_deleteMessNo_0x2aec40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessage_deleteMessNo_0x2aec40");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2aec58u: goto label_2aec58;
-        case 0x2aec68u: goto label_2aec68;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2aec40u, 0)) {
+        switch (ctx->pc) {
+            case 0x2aec58u: goto label_2aec58;
+            case 0x2aec68u: goto label_2aec68;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2aec40u;
 
     // 0x2aec40: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x2aec40u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x2aec44: 0x30a5ffff  andi        $a1, $a1, 0xFFFF
-    ctx->pc = 0x2aec44u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)65535);
     // 0x2aec48: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x2aec48u;
@@ -39,7 +38,6 @@ void cMessage_deleteMessNo_0x2aec40(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     ctx->pc = 0x2aec4cu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2aec50: 0xc0abb50  jal         func_2AED40
-    ctx->pc = 0x2AEC50u;
     SET_GPR_U32(ctx, 31, 0x2AEC58u);
     ctx->pc = 0x2AEC54u;
     ctx->in_delay_slot = true;
@@ -47,11 +45,9 @@ void cMessage_deleteMessNo_0x2aec40(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     // 0x2aec54: 0x80802d  daddu       $s0, $a0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2AED40u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2AED40u, 0x2AEC50u, 0x2AEC58u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002AED40_0x2aed40, 0x2aed40u, 0x2aec58u)) {
         return;
     }
-    ctx->pc = 0x2AEC58u;
 label_2aec58:
     // 0x2aec58: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x2AEC58u;
@@ -68,9 +64,7 @@ label_2aec58:
             goto label_2aec70;
         }
     }
-    ctx->pc = 0x2AEC60u;
     // 0x2aec60: 0xc0abbc4  jal         func_2AEF10
-    ctx->pc = 0x2AEC60u;
     SET_GPR_U32(ctx, 31, 0x2AEC68u);
     ctx->pc = 0x2AEC64u;
     ctx->in_delay_slot = true;
@@ -78,11 +72,9 @@ label_2aec58:
     // 0x2aec64: 0x40282d  daddu       $a1, $v0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2AEF10u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2AEF10u, 0x2AEC60u, 0x2AEC68u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cMessage_releaseWin_0x2aef10, 0x2aef10u, 0x2aec68u)) {
         return;
     }
-    ctx->pc = 0x2AEC68u;
 label_2aec68:
     // 0x2aec68: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x2AEC68u;
@@ -99,10 +91,8 @@ label_2aec68:
             goto label_2aec74;
         }
     }
-    ctx->pc = 0x2AEC70u;
 label_2aec70:
     // 0x2aec70: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2aec70u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2aec74:
     // 0x2aec74: 0x7bb00010  lq          $s0, 0x10($sp)
@@ -130,9 +120,7 @@ label_2aec74:
         return;
         #endif
     }
-    ctx->pc = 0x2AEC84u;
     // 0x2aec84: 0x0  nop
-    ctx->pc = 0x2aec84u;
     // NOP
     ctx->pc = 0x2aec88u;
 }

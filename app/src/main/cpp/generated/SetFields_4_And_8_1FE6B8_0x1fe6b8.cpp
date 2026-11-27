@@ -13,18 +13,16 @@
 
 // Function: SetFields_4_And_8_1FE6B8
 // Address: 0x1fe6b8 - 0x1fe6c8
-void SetFields_4_And_8_1FE6B8_0x1fe6b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetFields_4_And_8_1FE6B8_0x1fe6b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetFields_4_And_8_1FE6B8_0x1fe6b8");
 #endif
 
-    ctx->pc = 0x1fe6b8u;
 
     // 0x1fe6b8: 0xac860004  sw          $a2, 0x4($a0)
     ctx->pc = 0x1fe6b8u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 4), GPR_U32(ctx, 6));
     // 0x1fe6bc: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x1fe6bcu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1fe6c0: 0x3e00008  jr          $ra
     ctx->pc = 0x1FE6C0u;

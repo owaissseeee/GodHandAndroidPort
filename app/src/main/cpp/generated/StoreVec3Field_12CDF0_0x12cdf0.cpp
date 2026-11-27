@@ -13,15 +13,13 @@
 
 // Function: StoreVec3Field_12CDF0
 // Address: 0x12cdf0 - 0x12ce20
-void StoreVec3Field_12CDF0_0x12cdf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void StoreVec3Field_12CDF0_0x12cdf0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("StoreVec3Field_12CDF0_0x12cdf0");
 #endif
 
-    ctx->pc = 0x12cdf0u;
 
     // 0x12cdf0: 0x24820650  addiu       $v0, $a0, 0x650
-    ctx->pc = 0x12cdf0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 1616));
     // 0x12cdf4: 0x10450007  beq         $v0, $a1, . + 4 + (0x7 << 2)
     ctx->pc = 0x12CDF4u;
@@ -32,7 +30,6 @@ void StoreVec3Field_12CDF0_0x12cdf0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_12ce14;
         }
     }
-    ctx->pc = 0x12CDFCu;
     // 0x12cdfc: 0xc4a00000  lwc1        $f0, 0x0($a1)
     ctx->pc = 0x12cdfcu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -65,9 +62,7 @@ label_12ce14:
         return;
         #endif
     }
-    ctx->pc = 0x12CE1Cu;
     // 0x12ce1c: 0x0  nop
-    ctx->pc = 0x12ce1cu;
     // NOP
     ctx->pc = 0x12ce20u;
 }

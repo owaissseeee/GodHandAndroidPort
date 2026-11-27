@@ -14,21 +14,18 @@ namespace gh_mcport
 {
 // Function: __14__si_type_infoPCcRC16__user_type_info
 // Address: 0x7c9ba0 - 0x7c9bc0
-void ps2___14__si_type_infoPCcRC16__user_type_info_0x7c9ba0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___14__si_type_infoPCcRC16__user_type_info_0x7c9ba0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___14__si_type_infoPCcRC16__user_type_info_0x7c9ba0");
 #endif
 
-    ctx->pc = 0x7c9ba0u;
 
     // 0x7c9ba0: 0x3c02007d  lui         $v0, 0x7D
-    ctx->pc = 0x7c9ba0u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)125 << 16));
     // 0x7c9ba4: 0xac850000  sw          $a1, 0x0($a0)
     ctx->pc = 0x7c9ba4u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 0), GPR_U32(ctx, 5));
     // 0x7c9ba8: 0x24420f58  addiu       $v0, $v0, 0xF58
-    ctx->pc = 0x7c9ba8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 3928));
     // 0x7c9bac: 0xac860008  sw          $a2, 0x8($a0)
     ctx->pc = 0x7c9bacu;
@@ -55,9 +52,7 @@ void ps2___14__si_type_infoPCcRC16__user_type_info_0x7c9ba0(uint8_t* rdram, R590
         return;
         #endif
     }
-    ctx->pc = 0x7C9BBCu;
     // 0x7c9bbc: 0x0  nop
-    ctx->pc = 0x7c9bbcu;
     // NOP
     ctx->pc = 0x7c9bc0u;
 }

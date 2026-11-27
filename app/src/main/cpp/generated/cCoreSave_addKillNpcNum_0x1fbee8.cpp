@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_addKillNpcNum
 // Address: 0x1fbee8 - 0x1fbf18
-void cCoreSave_addKillNpcNum_0x1fbee8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_addKillNpcNum_0x1fbee8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_addKillNpcNum_0x1fbee8");
 #endif
 
-    ctx->pc = 0x1fbee8u;
 
     // 0x1fbee8: 0x8c850000  lw          $a1, 0x0($a0)
     ctx->pc = 0x1fbee8u;
@@ -32,12 +31,10 @@ void cCoreSave_addKillNpcNum_0x1fbee8(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_1fbf10;
         }
     }
-    ctx->pc = 0x1FBEF4u;
     // 0x1fbef4: 0x94a20096  lhu         $v0, 0x96($a1)
     ctx->pc = 0x1fbef4u;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 5), 150)));
     // 0x1fbef8: 0x24420001  addiu       $v0, $v0, 0x1
-    ctx->pc = 0x1fbef8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 1));
     // 0x1fbefc: 0xa4a20096  sh          $v0, 0x96($a1)
     ctx->pc = 0x1fbefcu;
@@ -49,7 +46,6 @@ void cCoreSave_addKillNpcNum_0x1fbee8(uint8_t* rdram, R5900Context* ctx, PS2Runt
     ctx->pc = 0x1fbf04u;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 3), 2998)));
     // 0x1fbf08: 0x24420001  addiu       $v0, $v0, 0x1
-    ctx->pc = 0x1fbf08u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 1));
     // 0x1fbf0c: 0xa4620bb6  sh          $v0, 0xBB6($v1)
     ctx->pc = 0x1fbf0cu;

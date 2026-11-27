@@ -13,17 +13,18 @@
 
 // Function: func_0032F538
 // Address: 0x32f538 - 0x32f570
-void func_0032F538_0x32f538(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0032F538_0x32f538(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0032F538_0x32f538");
 #endif
 
-    switch (ctx->pc) {
-        case 0x32f548u: goto label_32f548;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x32f538u, 0)) {
+        switch (ctx->pc) {
+            case 0x32f548u: goto label_32f548;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x32f538u;
 
     // 0x32f538: 0x8c8302b0  lw          $v1, 0x2B0($a0)
     ctx->pc = 0x32f538u;
@@ -43,25 +44,19 @@ void func_0032F538_0x32f538(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_32f564;
         }
     }
-    ctx->pc = 0x32F544u;
     // 0x32f544: 0x248402bc  addiu       $a0, $a0, 0x2BC
-    ctx->pc = 0x32f544u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 700));
 label_32f548:
     // 0x32f548: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x32f548u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x32f54c: 0x24840010  addiu       $a0, $a0, 0x10
-    ctx->pc = 0x32f54cu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 16));
     // 0x32f550: 0x2463ffff  addiu       $v1, $v1, -0x1
-    ctx->pc = 0x32f550u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294967295));
     // 0x32f554: 0x0  nop
-    ctx->pc = 0x32f554u;
     // NOP
     // 0x32f558: 0x0  nop
-    ctx->pc = 0x32f558u;
     // NOP
     // 0x32f55c: 0x1460fffa  bnez        $v1, . + 4 + (-0x6 << 2)
     ctx->pc = 0x32F55Cu;
@@ -81,7 +76,6 @@ label_32f548:
             goto label_32f548;
         }
     }
-    ctx->pc = 0x32F564u;
 label_32f564:
     // 0x32f564: 0x3e00008  jr          $ra
     ctx->pc = 0x32F564u;
@@ -102,9 +96,7 @@ label_32f564:
         return;
         #endif
     }
-    ctx->pc = 0x32F56Cu;
     // 0x32f56c: 0x0  nop
-    ctx->pc = 0x32f56cu;
     // NOP
     ctx->pc = 0x32f570u;
 }

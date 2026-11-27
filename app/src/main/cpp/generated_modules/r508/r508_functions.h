@@ -8,20 +8,20 @@ class PS2Runtime;
 
 namespace gh_r508
 {
-void ps2___builtin_new_0x799180(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___builtin_vec_new_0x7991a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___builtin_delete_0x7991d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___builtin_vec_delete_0x7991f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void R508Init__Fv_0x799220(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void R508Move__Fv_0x799260(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___5cR508_0x799288(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void Move__5cR508_0x7992c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void initBridge__5cR508_0x7992d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void checkBridge__5cR508_0x799420(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ShipCheckTask__5cR508_0x799500(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___do_global_dtors_0x799580(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___do_global_ctors_0x7995d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___main_0x799688(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void ps2___lexicographical_compare_3way__H2ZPCScZPCSc_X01X01X11X11_i_0x7996a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
-void lexicographical_compare__H2ZPCScZPCSc_X01X01X11X11_b_0x799708(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime);
+void ps2___builtin_new_0x799180(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___builtin_vec_new_0x7991a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___builtin_delete_0x7991d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___builtin_vec_delete_0x7991f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void R508Init__Fv_0x799220(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void R508Move__Fv_0x799260(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___5cR508_0x799288(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void Move__5cR508_0x7992c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void initBridge__5cR508_0x7992d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void checkBridge__5cR508_0x799420(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ShipCheckTask__5cR508_0x799500(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___do_global_dtors_0x799580(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___do_global_ctors_0x7995d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___main_0x799688(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void ps2___lexicographical_compare_3way__H2ZPCScZPCSc_X01X01X11X11_i_0x7996a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
+void lexicographical_compare__H2ZPCScZPCSc_X01X01X11X11_b_0x799708(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime);
 } // namespace gh_r508

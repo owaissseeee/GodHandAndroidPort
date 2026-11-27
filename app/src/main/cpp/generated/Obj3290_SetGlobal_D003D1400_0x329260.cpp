@@ -13,15 +13,13 @@
 
 // Function: Obj3290_SetGlobal_D003D1400
 // Address: 0x329260 - 0x329278
-void Obj3290_SetGlobal_D003D1400_0x329260(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj3290_SetGlobal_D003D1400_0x329260(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj3290_SetGlobal_D003D1400_0x329260");
 #endif
 
-    ctx->pc = 0x329260u;
 
     // 0x329260: 0x3c02003d  lui         $v0, 0x3D
-    ctx->pc = 0x329260u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)61 << 16));
     // 0x329264: 0x3e00008  jr          $ra
     ctx->pc = 0x329264u;
@@ -42,15 +40,12 @@ void Obj3290_SetGlobal_D003D1400_0x329260(uint8_t* rdram, R5900Context* ctx, PS2
         return;
         #endif
     }
-    ctx->pc = 0x32926Cu;
     // 0x32926c: 0x0  nop
-    ctx->pc = 0x32926cu;
     // NOP
     // 0x329270: 0x8c620030  lw          $v0, 0x30($v1)
     ctx->pc = 0x329270u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 48)));
     // 0x329274: 0x0  nop
-    ctx->pc = 0x329274u;
     // NOP
     ctx->pc = 0x329278u;
 }

@@ -13,12 +13,11 @@
 
 // Function: ClearField90_13E400
 // Address: 0x13e400 - 0x13e418
-void ClearField90_13E400_0x13e400(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearField90_13E400_0x13e400(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearField90_13E400_0x13e400");
 #endif
 
-    ctx->pc = 0x13e400u;
 
     // 0x13e400: 0x8c820090  lw          $v0, 0x90($a0)
     ctx->pc = 0x13e400u;
@@ -38,7 +37,6 @@ void ClearField90_13E400_0x13e400(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_13e40c;
         }
     }
-    ctx->pc = 0x13E40Cu;
 label_13e40c:
     // 0x13e40c: 0x3e00008  jr          $ra
     ctx->pc = 0x13E40Cu;
@@ -53,9 +51,7 @@ label_13e40c:
         return;
         #endif
     }
-    ctx->pc = 0x13E414u;
     // 0x13e414: 0x0  nop
-    ctx->pc = 0x13e414u;
     // NOP
     ctx->pc = 0x13e418u;
 }

@@ -13,12 +13,11 @@
 
 // Function: Obj33C8_GetByte_D
 // Address: 0x33cee8 - 0x33cef0
-void Obj33C8_GetByte_D_0x33cee8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj33C8_GetByte_D_0x33cee8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj33C8_GetByte_D_0x33cee8");
 #endif
 
-    ctx->pc = 0x33cee8u;
 
     // 0x33cee8: 0x3e00008  jr          $ra
     ctx->pc = 0x33CEE8u;

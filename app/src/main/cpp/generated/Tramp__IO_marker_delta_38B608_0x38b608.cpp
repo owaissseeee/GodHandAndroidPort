@@ -13,20 +13,20 @@
 
 // Function: Tramp__IO_marker_delta_38B608
 // Address: 0x38b608 - 0x38b628
-void Tramp__IO_marker_delta_38B608_0x38b608(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp__IO_marker_delta_38B608_0x38b608(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp__IO_marker_delta_38B608_0x38b608");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38b618u: goto label_38b618;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38b608u, 0)) {
+        switch (ctx->pc) {
+            case 0x38b618u: goto label_38b618;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x38b608u;
 
     // 0x38b608: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x38b608u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x38b60c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x38b60cu;
@@ -34,11 +34,9 @@ void Tramp__IO_marker_delta_38B608_0x38b608(uint8_t* rdram, R5900Context* ctx, P
     // 0x38b610: 0xc0e3420  jal         func_38D080
     ctx->pc = 0x38B610u;
     SET_GPR_U32(ctx, 31, 0x38B618u);
-    ctx->pc = 0x38D080u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x38D080u, 0x38B610u, 0x38B618u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_marker_delta_0x38d080, 0x38d080u, 0x38b618u)) {
         return;
     }
-    ctx->pc = 0x38B618u;
 label_38b618:
     // 0x38b618: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38b618u;
@@ -62,9 +60,7 @@ label_38b618:
         return;
         #endif
     }
-    ctx->pc = 0x38B624u;
     // 0x38b624: 0x0  nop
-    ctx->pc = 0x38b624u;
     // NOP
     ctx->pc = 0x38b628u;
 }

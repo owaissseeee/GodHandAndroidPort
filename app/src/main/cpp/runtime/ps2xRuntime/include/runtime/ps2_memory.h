@@ -1,6 +1,10 @@
 #ifndef PS2_MEMORY_H
 #define PS2_MEMORY_H
 
+#if !defined(__GNUC__) && !defined(__clang__) && !defined(__builtin_expect)
+#define __builtin_expect(exp, c) (exp)
+#endif
+
 #include <cstddef>
 #include <cstdint>
 #include <array>
@@ -349,6 +353,8 @@ public:
     void processVIF1Data(const uint8_t *data, uint32_t sizeBytes);
     void processPendingTransfers();
     std::vector<uint32_t> consumeCompletedDmacCauses();
+    bool hasCompletedDmac() const noexcept { return m_completedDmacMask.load(std::memory_order_relaxed) != 0u; }
+    uint32_t consumeCompletedDmacMask() noexcept { return m_completedDmacMask.exchange(0u, std::memory_order_acq_rel); }
 
     int pollDmaRegisters();
 
@@ -489,9 +495,7 @@ public:
     std::vector<PendingTransfer> m_pendingVif0Transfers;
     std::vector<PendingTransfer> m_pendingVif1Transfers;
     friend class PS2Runtime;
-    std::mutex m_completedDmacMutex;
-    std::vector<uint32_t> m_completedDmacCauses;
-    std::atomic<bool> m_hasCompletedDmac{false};
+    std::atomic<uint32_t> m_completedDmacMask{0u};
 
     struct CodeRegion
     {

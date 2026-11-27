@@ -13,17 +13,18 @@
 
 // Function: _rix_001
 // Address: 0x39f1f8 - 0x39f2b0
-void _rix_001_0x39f1f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _rix_001_0x39f1f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_rix_001_0x39f1f8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x39f23cu: goto label_39f23c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x39f1f8u, 0)) {
+        switch (ctx->pc) {
+            case 0x39f23cu: goto label_39f23c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x39f1f8u;
 
     // 0x39f1f8: 0x8c8e0000  lw          $t6, 0x0($a0)
     ctx->pc = 0x39f1f8u;
@@ -44,31 +45,24 @@ void _rix_001_0x39f1f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
     ctx->pc = 0x39f20cu;
     SET_GPR_S32(ctx, 7, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 8)));
     // 0x39f210: 0x7000cce9  pnor        $t9, $zero, $zero
-    ctx->pc = 0x39f210u;
     SET_GPR_VEC(ctx, 25, PS2_PNOR(GPR_VEC(ctx, 0), GPR_VEC(ctx, 0)));
     // 0x39f214: 0x7019cbf6  psrlh       $t9, $t9, 15
-    ctx->pc = 0x39f214u;
     SET_GPR_VEC(ctx, 25, _mm_srli_epi16(GPR_VEC(ctx, 25), 15));
     // 0x39f218: 0x78a80000  lq          $t0, 0x0($a1)
     ctx->pc = 0x39f218u;
     SET_GPR_VEC(ctx, 8, READ128(ADD32(GPR_U32(ctx, 5), 0)));
     // 0x39f21c: 0x186040  sll         $t4, $t8, 1
-    ctx->pc = 0x39f21cu;
     SET_GPR_S32(ctx, 12, (int32_t)SLL32(GPR_U32(ctx, 24), 1));
     // 0x39f220: 0x78c90000  lq          $t1, 0x0($a2)
     ctx->pc = 0x39f220u;
     SET_GPR_VEC(ctx, 9, READ128(ADD32(GPR_U32(ctx, 6), 0)));
     // 0x39f224: 0x5b80000  mtsab       $t5, 0x0
-    ctx->pc = 0x39f224u;
     ctx->sa = ((GPR_U32(ctx, 13) ^ (uint32_t)0) & 0xF) << 3;
     // 0x39f228: 0x712856e8  qfsrv       $t2, $t1, $t0
-    ctx->pc = 0x39f228u;
     SET_GPR_VEC(ctx, 10, PS2_QFSRV(GPR_VEC(ctx, 9), GPR_VEC(ctx, 8), ctx->sa & 0x7F));
     // 0x39f22c: 0x700a4688  pextlb      $t0, $zero, $t2
-    ctx->pc = 0x39f22cu;
     SET_GPR_VEC(ctx, 8, PS2_PEXTLB(GPR_VEC(ctx, 0), GPR_VEC(ctx, 10)));
     // 0x39f230: 0x240bffff  addiu       $t3, $zero, -0x1
-    ctx->pc = 0x39f230u;
     SET_GPR_S32(ctx, 11, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x39f234: 0x10e00015  beqz        $a3, . + 4 + (0x15 << 2)
     ctx->pc = 0x39F234u;
@@ -85,13 +79,10 @@ void _rix_001_0x39f1f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             goto label_39f28c;
         }
     }
-    ctx->pc = 0x39F23Cu;
 label_39f23c:
     // 0x39f23c: 0xb82821  addu        $a1, $a1, $t8
-    ctx->pc = 0x39f23cu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), GPR_U32(ctx, 24)));
     // 0x39f240: 0xd83021  addu        $a2, $a2, $t8
-    ctx->pc = 0x39f240u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 6), GPR_U32(ctx, 24)));
     // 0x39f244: 0x78aa0000  lq          $t2, 0x0($a1)
     ctx->pc = 0x39f244u;
@@ -100,40 +91,29 @@ label_39f23c:
     ctx->pc = 0x39f248u;
     SET_GPR_VEC(ctx, 15, READ128(ADD32(GPR_U32(ctx, 6), 0)));
     // 0x39f24c: 0x71ea16e8  qfsrv       $v0, $t7, $t2
-    ctx->pc = 0x39f24cu;
     SET_GPR_VEC(ctx, 2, PS2_QFSRV(GPR_VEC(ctx, 15), GPR_VEC(ctx, 10), ctx->sa & 0x7F));
     // 0x39f250: 0x70025688  pextlb      $t2, $zero, $v0
-    ctx->pc = 0x39f250u;
     SET_GPR_VEC(ctx, 10, PS2_PEXTLB(GPR_VEC(ctx, 0), GPR_VEC(ctx, 2)));
     // 0x39f254: 0x20e7ffff  addi        $a3, $a3, -0x1
     ctx->pc = 0x39f254u;
     { uint32_t tmp; bool ov; ADD32_OV(GPR_U32(ctx, 7), (int32_t)4294967295, tmp, ov); if (ov) runtime->SignalException(ctx, EXCEPTION_INTEGER_OVERFLOW); else SET_GPR_S32(ctx, 7, (int32_t)tmp); }
     // 0x39f258: 0x70027ea8  pextub      $t7, $zero, $v0
-    ctx->pc = 0x39f258u;
     SET_GPR_VEC(ctx, 15, PS2_PEXTUB(GPR_VEC(ctx, 0), GPR_VEC(ctx, 2)));
     // 0x39f25c: 0x710a1108  paddh       $v0, $t0, $t2
-    ctx->pc = 0x39f25cu;
     SET_GPR_VEC(ctx, 2, PS2_PADDH(GPR_VEC(ctx, 8), GPR_VEC(ctx, 10)));
     // 0x39f260: 0x712f1908  paddh       $v1, $t1, $t7
-    ctx->pc = 0x39f260u;
     SET_GPR_VEC(ctx, 3, PS2_PADDH(GPR_VEC(ctx, 9), GPR_VEC(ctx, 15)));
     // 0x39f264: 0x714044a9  por         $t0, $t2, $zero
-    ctx->pc = 0x39f264u;
     SET_GPR_VEC(ctx, 8, PS2_POR(GPR_VEC(ctx, 10), GPR_VEC(ctx, 0)));
     // 0x39f268: 0x71e04ca9  por         $t1, $t7, $zero
-    ctx->pc = 0x39f268u;
     SET_GPR_VEC(ctx, 9, PS2_POR(GPR_VEC(ctx, 15), GPR_VEC(ctx, 0)));
     // 0x39f26c: 0x70591108  paddh       $v0, $v0, $t9
-    ctx->pc = 0x39f26cu;
     SET_GPR_VEC(ctx, 2, PS2_PADDH(GPR_VEC(ctx, 2), GPR_VEC(ctx, 25)));
     // 0x39f270: 0x70791908  paddh       $v1, $v1, $t9
-    ctx->pc = 0x39f270u;
     SET_GPR_VEC(ctx, 3, PS2_PADDH(GPR_VEC(ctx, 3), GPR_VEC(ctx, 25)));
     // 0x39f274: 0x70021076  psrlh       $v0, $v0, 1
-    ctx->pc = 0x39f274u;
     SET_GPR_VEC(ctx, 2, _mm_srli_epi16(GPR_VEC(ctx, 2), 1));
     // 0x39f278: 0x70031876  psrlh       $v1, $v1, 1
-    ctx->pc = 0x39f278u;
     SET_GPR_VEC(ctx, 3, _mm_srli_epi16(GPR_VEC(ctx, 3), 1));
     // 0x39f27c: 0x7dc20000  sq          $v0, 0x0($t6)
     ctx->pc = 0x39f27cu;
@@ -159,19 +139,15 @@ label_39f23c:
             goto label_39f23c;
         }
     }
-    ctx->pc = 0x39F28Cu;
 label_39f28c:
     // 0x39f28c: 0x24a50080  addiu       $a1, $a1, 0x80
-    ctx->pc = 0x39f28cu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 128));
     // 0x39f290: 0x24c60080  addiu       $a2, $a2, 0x80
-    ctx->pc = 0x39f290u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 6), 128));
     // 0x39f294: 0x8c87000c  lw          $a3, 0xC($a0)
     ctx->pc = 0x39f294u;
     SET_GPR_S32(ctx, 7, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 12)));
     // 0x39f298: 0x1675024  and         $t2, $t3, $a3
-    ctx->pc = 0x39f298u;
     SET_GPR_U64(ctx, 10, GPR_U64(ctx, 11) & GPR_U64(ctx, 7));
     // 0x39f29c: 0x1540ffe7  bnez        $t2, . + 4 + (-0x19 << 2)
     ctx->pc = 0x39F29Cu;
@@ -191,7 +167,6 @@ label_39f28c:
             goto label_39f23c;
         }
     }
-    ctx->pc = 0x39F2A4u;
     // 0x39f2a4: 0x3e00008  jr          $ra
     ctx->pc = 0x39F2A4u;
     {
@@ -205,9 +180,7 @@ label_39f28c:
         return;
         #endif
     }
-    ctx->pc = 0x39F2ACu;
     // 0x39f2ac: 0x0  nop
-    ctx->pc = 0x39f2acu;
     // NOP
     ctx->pc = 0x39f2b0u;
 }

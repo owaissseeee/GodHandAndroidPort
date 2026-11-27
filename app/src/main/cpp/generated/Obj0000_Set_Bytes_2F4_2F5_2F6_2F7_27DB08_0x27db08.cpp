@@ -13,15 +13,13 @@
 
 // Function: Obj0000_Set_Bytes_2F4_2F5_2F6_2F7_27DB08
 // Address: 0x27db08 - 0x27db20
-void Obj0000_Set_Bytes_2F4_2F5_2F6_2F7_27DB08_0x27db08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_Bytes_2F4_2F5_2F6_2F7_27DB08_0x27db08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_Bytes_2F4_2F5_2F6_2F7_27DB08_0x27db08");
 #endif
 
-    ctx->pc = 0x27db08u;
 
     // 0x27db08: 0x24020004  addiu       $v0, $zero, 0x4
-    ctx->pc = 0x27db08u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x27db0c: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x27db0cu;

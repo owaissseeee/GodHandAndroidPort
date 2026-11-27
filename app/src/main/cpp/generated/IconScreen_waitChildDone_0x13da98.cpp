@@ -13,20 +13,20 @@
 
 // Function: IconScreen_waitChildDone
 // Address: 0x13da98 - 0x13dae0
-void IconScreen_waitChildDone_0x13da98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IconScreen_waitChildDone_0x13da98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IconScreen_waitChildDone_0x13da98");
 #endif
 
-    switch (ctx->pc) {
-        case 0x13dac4u: goto label_13dac4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x13da98u, 0)) {
+        switch (ctx->pc) {
+            case 0x13dac4u: goto label_13dac4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x13da98u;
 
     // 0x13da98: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x13da98u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x13da9c: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x13da9cu;
@@ -35,7 +35,6 @@ void IconScreen_waitChildDone_0x13da98(uint8_t* rdram, R5900Context* ctx, PS2Run
     ctx->pc = 0x13daa0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x13daa4: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x13daa4u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x13daa8: 0x8e030094  lw          $v1, 0x94($s0)
     ctx->pc = 0x13daa8u;
@@ -44,7 +43,6 @@ void IconScreen_waitChildDone_0x13da98(uint8_t* rdram, R5900Context* ctx, PS2Run
     ctx->pc = 0x13daacu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 44)));
     // 0x13dab0: 0x30420400  andi        $v0, $v0, 0x400
-    ctx->pc = 0x13dab0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1024);
     // 0x13dab4: 0x50400007  beql        $v0, $zero, . + 4 + (0x7 << 2)
     ctx->pc = 0x13DAB4u;
@@ -61,21 +59,17 @@ void IconScreen_waitChildDone_0x13da98(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_13dad4;
         }
     }
-    ctx->pc = 0x13DABCu;
     // 0x13dabc: 0xc0aaa90  jal         func_2AAA40
     ctx->pc = 0x13DABCu;
     SET_GPR_U32(ctx, 31, 0x13DAC4u);
-    ctx->pc = 0x2AAA40u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2AAA40u, 0x13DABCu, 0x13DAC4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_move_0x2aaa40, 0x2aaa40u, 0x13dac4u)) {
         return;
     }
-    ctx->pc = 0x13DAC4u;
 label_13dac4:
     // 0x13dac4: 0x96020092  lhu         $v0, 0x92($s0)
     ctx->pc = 0x13dac4u;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 16), 146)));
     // 0x13dac8: 0x24420001  addiu       $v0, $v0, 0x1
-    ctx->pc = 0x13dac8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 1));
     // 0x13dacc: 0xa6020092  sh          $v0, 0x92($s0)
     ctx->pc = 0x13daccu;

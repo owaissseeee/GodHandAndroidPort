@@ -13,12 +13,11 @@
 
 // Function: Obj35C0_SetField_C_C540
 // Address: 0x35c540 - 0x35c548
-void Obj35C0_SetField_C_C540_0x35c540(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj35C0_SetField_C_C540_0x35c540(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj35C0_SetField_C_C540_0x35c540");
 #endif
 
-    ctx->pc = 0x35c540u;
 
     // 0x35c540: 0x3e00008  jr          $ra
     ctx->pc = 0x35C540u;

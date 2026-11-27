@@ -13,12 +13,11 @@
 
 // Function: func_00339788
 // Address: 0x339788 - 0x339798
-void func_00339788_0x339788(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00339788_0x339788(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00339788_0x339788");
 #endif
 
-    ctx->pc = 0x339788u;
 
     // 0x339788: 0xac86003c  sw          $a2, 0x3C($a0)
     ctx->pc = 0x339788u;
@@ -42,9 +41,7 @@ void func_00339788_0x339788(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x339794u;
     // 0x339794: 0x0  nop
-    ctx->pc = 0x339794u;
     // NOP
     ctx->pc = 0x339798u;
 }

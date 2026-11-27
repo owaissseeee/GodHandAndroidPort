@@ -13,20 +13,20 @@
 
 // Function: osfx__7ostream
 // Address: 0x38a6d0 - 0x38a700
-void osfx__7ostream_0x38a6d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void osfx__7ostream_0x38a6d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("osfx__7ostream_0x38a6d0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38a6f4u: goto label_38a6f4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38a6d0u, 0)) {
+        switch (ctx->pc) {
+            case 0x38a6f4u: goto label_38a6f4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x38a6d0u;
 
     // 0x38a6d0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x38a6d0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x38a6d4: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x38a6d4u;
@@ -38,7 +38,6 @@ void osfx__7ostream_0x38a6d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     ctx->pc = 0x38a6dcu;
     SET_GPR_U64(ctx, 2, READ64(ADD32(GPR_U32(ctx, 3), 16)));
     // 0x38a6e0: 0x30426000  andi        $v0, $v0, 0x6000
-    ctx->pc = 0x38a6e0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)24576);
     // 0x38a6e4: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x38A6E4u;
@@ -55,15 +54,12 @@ void osfx__7ostream_0x38a6d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
             goto label_38a6f8;
         }
     }
-    ctx->pc = 0x38A6ECu;
     // 0x38a6ec: 0xc0e2552  jal         func_389548
     ctx->pc = 0x38A6ECu;
     SET_GPR_U32(ctx, 31, 0x38A6F4u);
-    ctx->pc = 0x389548u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x389548u, 0x38A6ECu, 0x38A6F4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &do_osfx__7ostream_0x389548, 0x389548u, 0x38a6f4u)) {
         return;
     }
-    ctx->pc = 0x38A6F4u;
 label_38a6f4:
     // 0x38a6f4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38a6f4u;

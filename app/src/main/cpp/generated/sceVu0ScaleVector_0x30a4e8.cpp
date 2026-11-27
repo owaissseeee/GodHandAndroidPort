@@ -6,6 +6,7 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,24 +14,32 @@
 
 // Function: sceVu0ScaleVector
 // Address: 0x30a4e8 - 0x30a508
-void sceVu0ScaleVector_0x30a4e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVu0ScaleVector_0x30a4e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVu0ScaleVector_0x30a4e8");
 #endif
 
-    ctx->pc = 0x30a4e8u;
+#if defined(__aarch64__) || defined(_M_ARM64)
+    {
+        uint8_t* const d = ps2TryFastSpan(rdram, GPR_U32(ctx, 4) & ~0xFu, 16u);
+        const uint8_t* const s = ps2TryFastSpan(rdram, GPR_U32(ctx, 5) & ~0xFu, 16u);
+        if (__builtin_expect(d != nullptr && s != nullptr, 1)) {
+            ps2StoreVec4(d, vmulq_n_f32(ps2LoadVec4(s), ctx->f[12]));
+            ps2FastReturn(rdram, ctx, runtime, 0x30A4FCu);
+            return;
+        }
+    }
+#endif
+
 
     // 0x30a4e8: 0xd8a40000  lqc2        $vf4, 0x0($a1)
     ctx->pc = 0x30a4e8u;
     ctx->vu0_vf[4] = _mm_castsi128_ps(READ128(ADD32(GPR_U32(ctx, 5), 0)));
     // 0x30a4ec: 0x44086000  mfc1        $t0, $f12
-    ctx->pc = 0x30a4ecu;
     { uint32_t bits; std::memcpy(&bits, &ctx->f[12], sizeof(bits)); SET_GPR_U32(ctx, 8, bits); }
     // 0x30a4f0: 0x48a82800  qmtc2.ni    $t0, $vf5
-    ctx->pc = 0x30a4f0u;
     ctx->vu0_vf[5] = _mm_castsi128_ps(GPR_VEC(ctx, 8));
     // 0x30a4f4: 0x4be52198  vmulx.xyzw  $vf6, $vf4, $vf5x
-    ctx->pc = 0x30a4f4u;
     { __m128 res = PS2_VMUL(ctx->vu0_vf[4], _mm_shuffle_ps(ctx->vu0_vf[5], ctx->vu0_vf[5], _MM_SHUFFLE(0,0,0,0))); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[6] = _mm_blendv_ps(ctx->vu0_vf[6], res, _mm_castsi128_ps(mask)); }
     // 0x30a4f8: 0xf8860000  sqc2        $vf6, 0x0($a0)
     ctx->pc = 0x30a4f8u;
@@ -48,9 +57,7 @@ void sceVu0ScaleVector_0x30a4e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
         return;
         #endif
     }
-    ctx->pc = 0x30A504u;
     // 0x30a504: 0x0  nop
-    ctx->pc = 0x30a504u;
     // NOP
     ctx->pc = 0x30a508u;
 }

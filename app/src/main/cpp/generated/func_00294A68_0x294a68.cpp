@@ -13,12 +13,11 @@
 
 // Function: func_00294A68
 // Address: 0x294a68 - 0x294a78
-void func_00294A68_0x294a68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00294A68_0x294a68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00294A68_0x294a68");
 #endif
 
-    ctx->pc = 0x294a68u;
 
     // 0x294a68: 0x80820540  lb          $v0, 0x540($a0)
     ctx->pc = 0x294a68u;
@@ -42,9 +41,7 @@ void func_00294A68_0x294a68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x294A74u;
     // 0x294a74: 0x0  nop
-    ctx->pc = 0x294a74u;
     // NOP
     ctx->pc = 0x294a78u;
 }

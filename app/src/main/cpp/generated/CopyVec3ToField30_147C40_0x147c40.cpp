@@ -13,12 +13,11 @@
 
 // Function: CopyVec3ToField30_147C40
 // Address: 0x147c40 - 0x147c60
-void CopyVec3ToField30_147C40_0x147c40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CopyVec3ToField30_147C40_0x147c40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CopyVec3ToField30_147C40_0x147c40");
 #endif
 
-    ctx->pc = 0x147c40u;
 
     // 0x147c40: 0xc4a00000  lwc1        $f0, 0x0($a1)
     ctx->pc = 0x147c40u;
@@ -54,9 +53,7 @@ void CopyVec3ToField30_147C40_0x147c40(uint8_t* rdram, R5900Context* ctx, PS2Run
         return;
         #endif
     }
-    ctx->pc = 0x147C5Cu;
     // 0x147c5c: 0x0  nop
-    ctx->pc = 0x147c5cu;
     // NOP
     ctx->pc = 0x147c60u;
 }

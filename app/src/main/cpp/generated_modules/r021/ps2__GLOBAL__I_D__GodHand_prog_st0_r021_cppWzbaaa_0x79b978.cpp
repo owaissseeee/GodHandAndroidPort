@@ -14,31 +14,29 @@ namespace gh_r021
 {
 // Function: _GLOBAL_$I$D__GodHand_prog_st0_r021.cppWzbaaa
 // Address: 0x79b978 - 0x79b998
-void ps2__GLOBAL__I_D__GodHand_prog_st0_r021_cppWzbaaa_0x79b978(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__GLOBAL__I_D__GodHand_prog_st0_r021_cppWzbaaa_0x79b978(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__GLOBAL__I_D__GodHand_prog_st0_r021_cppWzbaaa_0x79b978");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79b98cu: goto label_79b98c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x79b978u, 0)) {
+        switch (ctx->pc) {
+            case 0x79b98cu: goto label_79b98c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x79b978u;
+
 
     // 0x79b978: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x79b978u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x79b97c: 0x24040001  addiu       $a0, $zero, 0x1
-    ctx->pc = 0x79b97cu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x79b980: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x79b980u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x79b984: 0xc1e6d14  jal         func_79B450
-    ctx->pc = 0x79B984u;
     SET_GPR_U32(ctx, 31, 0x79B98Cu);
-    ctx->pc = 0x79B988u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x79B984u;
     // 0x79b988: 0x3405ffff  ori         $a1, $zero, 0xFFFF (Delay Slot)
@@ -48,7 +46,6 @@ void ps2__GLOBAL__I_D__GodHand_prog_st0_r021_cppWzbaaa_0x79b978(uint8_t* rdram, 
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x79B450u, 0x79B984u, 0x79B98Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x79B98Cu;
 label_79b98c:
     // 0x79b98c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x79b98cu;

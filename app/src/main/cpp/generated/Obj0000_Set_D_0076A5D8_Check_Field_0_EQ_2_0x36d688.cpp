@@ -13,15 +13,13 @@
 
 // Function: Obj0000_Set_D_0076A5D8_Check_Field_0_EQ_2
 // Address: 0x36d688 - 0x36d6b0
-void Obj0000_Set_D_0076A5D8_Check_Field_0_EQ_2_0x36d688(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_D_0076A5D8_Check_Field_0_EQ_2_0x36d688(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_D_0076A5D8_Check_Field_0_EQ_2_0x36d688");
 #endif
 
-    ctx->pc = 0x36d688u;
 
     // 0x36d688: 0x3c020077  lui         $v0, 0x77
-    ctx->pc = 0x36d688u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)119 << 16));
     // 0x36d68c: 0xac44a5d8  sw          $a0, -0x5A28($v0)
     ctx->pc = 0x36d68cu;
@@ -41,12 +39,10 @@ void Obj0000_Set_D_0076A5D8_Check_Field_0_EQ_2_0x36d688(uint8_t* rdram, R5900Con
             goto label_36d6a4;
         }
     }
-    ctx->pc = 0x36D698u;
     // 0x36d698: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x36d698u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x36d69c: 0x38630002  xori        $v1, $v1, 0x2
-    ctx->pc = 0x36d69cu;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) ^ (uint64_t)(uint16_t)2);
     // 0x36d6a0: 0x3100a  movz        $v0, $zero, $v1
     ctx->pc = 0x36d6a0u;
@@ -65,9 +61,7 @@ label_36d6a4:
         return;
         #endif
     }
-    ctx->pc = 0x36D6ACu;
     // 0x36d6ac: 0x0  nop
-    ctx->pc = 0x36d6acu;
     // NOP
     ctx->pc = 0x36d6b0u;
 }

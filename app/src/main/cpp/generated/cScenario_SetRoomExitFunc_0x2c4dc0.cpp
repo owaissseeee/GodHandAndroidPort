@@ -13,12 +13,11 @@
 
 // Function: cScenario_SetRoomExitFunc
 // Address: 0x2c4dc0 - 0x2c4dd0
-void cScenario_SetRoomExitFunc_0x2c4dc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_SetRoomExitFunc_0x2c4dc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_SetRoomExitFunc_0x2c4dc0");
 #endif
 
-    ctx->pc = 0x2c4dc0u;
 
     // 0x2c4dc0: 0xac8600f0  sw          $a2, 0xF0($a0)
     ctx->pc = 0x2c4dc0u;
@@ -42,9 +41,7 @@ void cScenario_SetRoomExitFunc_0x2c4dc0(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x2C4DCCu;
     // 0x2c4dcc: 0x0  nop
-    ctx->pc = 0x2c4dccu;
     // NOP
     ctx->pc = 0x2c4dd0u;
 }

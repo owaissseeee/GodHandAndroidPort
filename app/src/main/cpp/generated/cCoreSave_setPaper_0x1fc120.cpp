@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_setPaper
 // Address: 0x1fc120 - 0x1fc138
-void cCoreSave_setPaper_0x1fc120(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setPaper_0x1fc120(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setPaper_0x1fc120");
 #endif
 
-    ctx->pc = 0x1fc120u;
 
     // 0x1fc120: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc120u;
@@ -38,7 +37,6 @@ void cCoreSave_setPaper_0x1fc120(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_1fc130;
         }
     }
-    ctx->pc = 0x1FC12Cu;
     // 0x1fc12c: 0xa0820157  sb          $v0, 0x157($a0)
     ctx->pc = 0x1fc12cu;
     WRITE8(ADD32(GPR_U32(ctx, 4), 343), (uint8_t)GPR_U32(ctx, 2));

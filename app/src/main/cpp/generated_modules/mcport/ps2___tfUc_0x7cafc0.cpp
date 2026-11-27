@@ -14,15 +14,13 @@ namespace gh_mcport
 {
 // Function: __tfUc
 // Address: 0x7cafc0 - 0x7caff8
-void ps2___tfUc_0x7cafc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___tfUc_0x7cafc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___tfUc_0x7cafc0");
 #endif
 
-    ctx->pc = 0x7cafc0u;
 
     // 0x7cafc0: 0x3c04007d  lui         $a0, 0x7D
-    ctx->pc = 0x7cafc0u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)125 << 16));
     // 0x7cafc4: 0x8c82fd18  lw          $v0, -0x2E8($a0)
     ctx->pc = 0x7cafc4u;
@@ -42,7 +40,6 @@ void ps2___tfUc_0x7cafc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
             goto label_7cafec;
         }
     }
-    ctx->pc = 0x7CAFD0u;
     // 0x7cafd0: 0x10a00006  beqz        $a1, . + 4 + (0x6 << 2)
     ctx->pc = 0x7CAFD0u;
     {
@@ -58,15 +55,11 @@ void ps2___tfUc_0x7cafc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
             goto label_7cafec;
         }
     }
-    ctx->pc = 0x7CAFD8u;
     // 0x7cafd8: 0x3c02007d  lui         $v0, 0x7D
-    ctx->pc = 0x7cafd8u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)125 << 16));
     // 0x7cafdc: 0x24631118  addiu       $v1, $v1, 0x1118
-    ctx->pc = 0x7cafdcu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4376));
     // 0x7cafe0: 0x24421168  addiu       $v0, $v0, 0x1168
-    ctx->pc = 0x7cafe0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4456));
     // 0x7cafe4: 0xaca20004  sw          $v0, 0x4($a1)
     ctx->pc = 0x7cafe4u;
@@ -94,9 +87,7 @@ label_7cafec:
         return;
         #endif
     }
-    ctx->pc = 0x7CAFF4u;
     // 0x7caff4: 0x0  nop
-    ctx->pc = 0x7caff4u;
     // NOP
     ctx->pc = 0x7caff8u;
 }

@@ -14,12 +14,11 @@ namespace gh_r408
 {
 // Function: R408Move__Fv
 // Address: 0x799290 - 0x799298
-void R408Move__Fv_0x799290(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void R408Move__Fv_0x799290(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("R408Move__Fv_0x799290");
 #endif
 
-    ctx->pc = 0x799290u;
 
     // 0x799290: 0x3e00008  jr          $ra
     ctx->pc = 0x799290u;

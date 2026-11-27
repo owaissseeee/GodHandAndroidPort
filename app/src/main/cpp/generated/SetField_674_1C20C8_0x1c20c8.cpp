@@ -13,15 +13,13 @@
 
 // Function: SetField_674_1C20C8
 // Address: 0x1c20c8 - 0x1c20d8
-void SetField_674_1C20C8_0x1c20c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetField_674_1C20C8_0x1c20c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetField_674_1C20C8_0x1c20c8");
 #endif
 
-    ctx->pc = 0x1c20c8u;
 
     // 0x1c20c8: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1c20c8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1c20cc: 0x3e00008  jr          $ra
     ctx->pc = 0x1C20CCu;
@@ -42,9 +40,7 @@ void SetField_674_1C20C8_0x1c20c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         return;
         #endif
     }
-    ctx->pc = 0x1C20D4u;
     // 0x1c20d4: 0x0  nop
-    ctx->pc = 0x1c20d4u;
     // NOP
     ctx->pc = 0x1c20d8u;
 }

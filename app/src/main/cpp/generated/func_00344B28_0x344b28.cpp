@@ -13,32 +13,30 @@
 
 // Function: func_00344B28
 // Address: 0x344b28 - 0x344bc0
-void func_00344B28_0x344b28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00344B28_0x344b28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00344B28_0x344b28");
 #endif
 
-    switch (ctx->pc) {
-        case 0x344b60u: goto label_344b60;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x344b28u, 0)) {
+        switch (ctx->pc) {
+            case 0x344b60u: goto label_344b60;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x344b28u;
 
     // 0x344b28: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x344b28u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x344b2c: 0xffb20010  sd          $s2, 0x10($sp)
     ctx->pc = 0x344b2cu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 16), GPR_U64(ctx, 18));
     // 0x344b30: 0xc0902d  daddu       $s2, $a2, $zero
-    ctx->pc = 0x344b30u;
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
     // 0x344b34: 0xffb30018  sd          $s3, 0x18($sp)
     ctx->pc = 0x344b34u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 24), GPR_U64(ctx, 19));
     // 0x344b38: 0x24930160  addiu       $s3, $a0, 0x160
-    ctx->pc = 0x344b38u;
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 4), 352));
     // 0x344b3c: 0xffb00000  sd          $s0, 0x0($sp)
     ctx->pc = 0x344b3cu;
@@ -62,7 +60,6 @@ void func_00344B28_0x344b28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x344b54u;
     SET_GPR_S32(ctx, 17, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 4)));
     // 0x344b58: 0xc0d1566  jal         func_345598
-    ctx->pc = 0x344B58u;
     SET_GPR_U32(ctx, 31, 0x344B60u);
     ctx->pc = 0x344B5Cu;
     ctx->in_delay_slot = true;
@@ -70,14 +67,11 @@ void func_00344B28_0x344b28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x344b5c: 0x8c500000  lw          $s0, 0x0($v0) (Delay Slot)
     SET_GPR_S32(ctx, 16, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 0)));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x345598u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x345598u, 0x344B58u, 0x344B60u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &MWSFD_GetUsePicUsr_0x345598, 0x345598u, 0x344b60u)) {
         return;
     }
-    ctx->pc = 0x344B60u;
 label_344b60:
     // 0x344b60: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x344b60u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x344b64: 0x54430004  bnel        $v0, $v1, . + 4 + (0x4 << 2)
     ctx->pc = 0x344B64u;
@@ -94,7 +88,6 @@ label_344b60:
             goto label_344b78;
         }
     }
-    ctx->pc = 0x344B6Cu;
     // 0x344b6c: 0x16930004  bne         $s4, $s3, . + 4 + (0x4 << 2)
     ctx->pc = 0x344B6Cu;
     {
@@ -104,7 +97,6 @@ label_344b60:
             goto label_344b80;
         }
     }
-    ctx->pc = 0x344B74u;
     // 0x344b74: 0xae400048  sw          $zero, 0x48($s2)
     ctx->pc = 0x344b74u;
     WRITE32(ADD32(GPR_U32(ctx, 18), 72), GPR_U32(ctx, 0));
@@ -124,7 +116,6 @@ label_344b78:
             goto label_344ba0;
         }
     }
-    ctx->pc = 0x344B80u;
 label_344b80:
     // 0x344b80: 0x12000005  beqz        $s0, . + 4 + (0x5 << 2)
     ctx->pc = 0x344B80u;
@@ -141,7 +132,6 @@ label_344b80:
             goto label_344b98;
         }
     }
-    ctx->pc = 0x344B88u;
     // 0x344b88: 0x54400004  bnel        $v0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x344B88u;
     {
@@ -157,12 +147,9 @@ label_344b80:
             goto label_344b9c;
         }
     }
-    ctx->pc = 0x344B90u;
     // 0x344b90: 0x26100004  addiu       $s0, $s0, 0x4
-    ctx->pc = 0x344b90u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), 4));
     // 0x344b94: 0x2631fffc  addiu       $s1, $s1, -0x4
-    ctx->pc = 0x344b94u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 4294967292));
 label_344b98:
     // 0x344b98: 0xae510048  sw          $s1, 0x48($s2)

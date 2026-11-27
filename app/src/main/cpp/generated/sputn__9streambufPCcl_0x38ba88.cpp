@@ -13,30 +13,30 @@
 
 // Function: sputn__9streambufPCcl
 // Address: 0x38ba88 - 0x38bab0
-void sputn__9streambufPCcl_0x38ba88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sputn__9streambufPCcl_0x38ba88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sputn__9streambufPCcl_0x38ba88");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38ba88u: goto label_38ba88;
-        case 0x38ba8cu: goto label_38ba8c;
-        case 0x38ba90u: goto label_38ba90;
-        case 0x38ba94u: goto label_38ba94;
-        case 0x38ba98u: goto label_38ba98;
-        case 0x38ba9cu: goto label_38ba9c;
-        case 0x38baa0u: goto label_38baa0;
-        case 0x38baa4u: goto label_38baa4;
-        case 0x38baa8u: goto label_38baa8;
-        case 0x38baacu: goto label_38baac;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38ba88u, 0)) {
+        switch (ctx->pc) {
+            case 0x38ba88u: goto label_38ba88;
+            case 0x38ba8cu: goto label_38ba8c;
+            case 0x38ba90u: goto label_38ba90;
+            case 0x38ba94u: goto label_38ba94;
+            case 0x38ba98u: goto label_38ba98;
+            case 0x38ba9cu: goto label_38ba9c;
+            case 0x38baa0u: goto label_38baa0;
+            case 0x38baa4u: goto label_38baa4;
+            case 0x38baa8u: goto label_38baa8;
+            case 0x38baacu: goto label_38baac;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x38ba88u;
 
 label_38ba88:
     // 0x38ba88: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x38ba88u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_38ba8c:
     // 0x38ba8c: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -82,7 +82,6 @@ label_38baa0:
             return;
         }
     }
-    ctx->pc = 0x38BAA4u;
 label_38baa4:
     // 0x38baa4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38baa4u;

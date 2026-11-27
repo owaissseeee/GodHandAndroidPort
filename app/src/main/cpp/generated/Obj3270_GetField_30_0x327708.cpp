@@ -13,12 +13,11 @@
 
 // Function: Obj3270_GetField_30
 // Address: 0x327708 - 0x327710
-void Obj3270_GetField_30_0x327708(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj3270_GetField_30_0x327708(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj3270_GetField_30_0x327708");
 #endif
 
-    ctx->pc = 0x327708u;
 
     // 0x327708: 0x3e00008  jr          $ra
     ctx->pc = 0x327708u;

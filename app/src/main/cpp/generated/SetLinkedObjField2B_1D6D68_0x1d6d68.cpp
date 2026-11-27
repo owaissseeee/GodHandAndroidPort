@@ -13,12 +13,11 @@
 
 // Function: SetLinkedObjField2B_1D6D68
 // Address: 0x1d6d68 - 0x1d6db0
-void SetLinkedObjField2B_1D6D68_0x1d6d68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetLinkedObjField2B_1D6D68_0x1d6d68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetLinkedObjField2B_1D6D68_0x1d6d68");
 #endif
 
-    ctx->pc = 0x1d6d68u;
 
     // 0x1d6d68: 0x10a00008  beqz        $a1, . + 4 + (0x8 << 2)
     ctx->pc = 0x1D6D68u;
@@ -35,15 +34,12 @@ void SetLinkedObjField2B_1D6D68_0x1d6d68(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_1d6d8c;
         }
     }
-    ctx->pc = 0x1D6D70u;
     // 0x1d6d70: 0x8c4401d8  lw          $a0, 0x1D8($v0)
     ctx->pc = 0x1d6d70u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 472)));
     // 0x1d6d74: 0x24030003  addiu       $v1, $zero, 0x3
-    ctx->pc = 0x1d6d74u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
     // 0x1d6d78: 0x24050004  addiu       $a1, $zero, 0x4
-    ctx->pc = 0x1d6d78u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x1d6d7c: 0xa083002b  sb          $v1, 0x2B($a0)
     ctx->pc = 0x1d6d7cu;
@@ -70,13 +66,10 @@ void SetLinkedObjField2B_1D6D68_0x1d6d68(uint8_t* rdram, R5900Context* ctx, PS2R
         return;
         #endif
     }
-    ctx->pc = 0x1D6D8Cu;
 label_1d6d8c:
     // 0x1d6d8c: 0x244301d4  addiu       $v1, $v0, 0x1D4
-    ctx->pc = 0x1d6d8cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 468));
     // 0x1d6d90: 0x24450250  addiu       $a1, $v0, 0x250
-    ctx->pc = 0x1d6d90u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 2), 592));
     // 0x1d6d94: 0x8c620004  lw          $v0, 0x4($v1)
     ctx->pc = 0x1d6d94u;

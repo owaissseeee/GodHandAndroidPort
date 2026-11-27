@@ -13,26 +13,25 @@
 
 // Function: func_002BA158
 // Address: 0x2ba158 - 0x2ba178
-void func_002BA158_0x2ba158(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002BA158_0x2ba158(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002BA158_0x2ba158");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2ba168u: goto label_2ba168;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2ba158u, 0)) {
+        switch (ctx->pc) {
+            case 0x2ba168u: goto label_2ba168;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2ba158u;
 
     // 0x2ba158: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2ba158u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2ba15c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2ba15cu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2ba160: 0xc0ae264  jal         func_2B8990
-    ctx->pc = 0x2BA160u;
     SET_GPR_U32(ctx, 31, 0x2BA168u);
     ctx->pc = 0x2BA164u;
     ctx->in_delay_slot = true;
@@ -40,17 +39,14 @@ void func_002BA158_0x2ba158(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x2ba164: 0xa0202d  daddu       $a0, $a1, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2B8990u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2B8990u, 0x2BA160u, 0x2BA168u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002B8990_0x2b8990, 0x2b8990u, 0x2ba168u)) {
         return;
     }
-    ctx->pc = 0x2BA168u;
 label_2ba168:
     // 0x2ba168: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2ba168u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x2ba16c: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2ba16cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2ba170: 0x3e00008  jr          $ra
     ctx->pc = 0x2BA170u;

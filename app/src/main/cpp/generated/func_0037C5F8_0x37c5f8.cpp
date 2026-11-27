@@ -13,12 +13,11 @@
 
 // Function: func_0037C5F8
 // Address: 0x37c5f8 - 0x37c618
-void func_0037C5F8_0x37c5f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0037C5F8_0x37c5f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0037C5F8_0x37c5f8");
 #endif
 
-    ctx->pc = 0x37c5f8u;
 
     // 0x37c5f8: 0x94a30034  lhu         $v1, 0x34($a1)
     ctx->pc = 0x37c5f8u;
@@ -30,7 +29,6 @@ void func_0037C5F8_0x37c5f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x37c600u;
     WRITE16(ADD32(GPR_U32(ctx, 4), 64), (uint16_t)GPR_U32(ctx, 3));
     // 0x37c604: 0x3442000a  ori         $v0, $v0, 0xA
-    ctx->pc = 0x37c604u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)10);
     // 0x37c608: 0x94a30036  lhu         $v1, 0x36($a1)
     ctx->pc = 0x37c608u;

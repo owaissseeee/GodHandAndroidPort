@@ -14,12 +14,11 @@ namespace gh_event
 {
 // Function: copyFromOrigin__14cEventScrLightP17cEventSeqScrLight
 // Address: 0x7b19e0 - 0x7b1b08
-void copyFromOrigin__14cEventScrLightP17cEventSeqScrLight_0x7b19e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void copyFromOrigin__14cEventScrLightP17cEventSeqScrLight_0x7b19e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("copyFromOrigin__14cEventScrLightP17cEventSeqScrLight_0x7b19e0");
 #endif
 
-    ctx->pc = 0x7b19e0u;
 
     // 0x7b19e0: 0xc4800028  lwc1        $f0, 0x28($a0)
     ctx->pc = 0x7b19e0u;
@@ -253,9 +252,7 @@ void copyFromOrigin__14cEventScrLightP17cEventSeqScrLight_0x7b19e0(uint8_t* rdra
         return;
         #endif
     }
-    ctx->pc = 0x7B1B04u;
     // 0x7b1b04: 0x0  nop
-    ctx->pc = 0x7b1b04u;
     // NOP
     ctx->pc = 0x7b1b08u;
 }

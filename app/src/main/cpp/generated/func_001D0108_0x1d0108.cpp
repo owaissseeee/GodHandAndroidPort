@@ -13,33 +13,26 @@
 
 // Function: func_001D0108
 // Address: 0x1d0108 - 0x1d0140
-void func_001D0108_0x1d0108(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001D0108_0x1d0108(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001D0108_0x1d0108");
 #endif
 
-    ctx->pc = 0x1d0108u;
 
     // 0x1d0108: 0x8c830250  lw          $v1, 0x250($a0)
     ctx->pc = 0x1d0108u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 592)));
     // 0x1d010c: 0x3c02ffff  lui         $v0, 0xFFFF
-    ctx->pc = 0x1d010cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)65535 << 16));
     // 0x1d0110: 0x3442ffef  ori         $v0, $v0, 0xFFEF
-    ctx->pc = 0x1d0110u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)65519);
     // 0x1d0114: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x1d0114u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
     // 0x1d0118: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x1d0118u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x1d011c: 0x24050010  addiu       $a1, $zero, 0x10
-    ctx->pc = 0x1d011cu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 16));
     // 0x1d0120: 0x621824  and         $v1, $v1, $v0
-    ctx->pc = 0x1d0120u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 2));
     // 0x1d0124: 0xa08502f5  sb          $a1, 0x2F5($a0)
     ctx->pc = 0x1d0124u;

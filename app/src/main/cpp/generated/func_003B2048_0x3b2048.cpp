@@ -13,12 +13,11 @@
 
 // Function: func_003B2048
 // Address: 0x3b2048 - 0x3b2058
-void func_003B2048_0x3b2048(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003B2048_0x3b2048(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003B2048_0x3b2048");
 #endif
 
-    ctx->pc = 0x3b2048u;
 
     // 0x3b2048: 0x8c820010  lw          $v0, 0x10($a0)
     ctx->pc = 0x3b2048u;
@@ -42,9 +41,7 @@ void func_003B2048_0x3b2048(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x3B2054u;
     // 0x3b2054: 0x0  nop
-    ctx->pc = 0x3b2054u;
     // NOP
     ctx->pc = 0x3b2058u;
 }

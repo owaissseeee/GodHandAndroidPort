@@ -14,30 +14,31 @@ namespace gh_event
 {
 // Function: callExtraPlayQuit__9cEventEnv
 // Address: 0x7aebc0 - 0x7aebe8
-void callExtraPlayQuit__9cEventEnv_0x7aebc0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void callExtraPlayQuit__9cEventEnv_0x7aebc0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("callExtraPlayQuit__9cEventEnv_0x7aebc0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7aebc0u: goto label_7aebc0;
-        case 0x7aebc4u: goto label_7aebc4;
-        case 0x7aebc8u: goto label_7aebc8;
-        case 0x7aebccu: goto label_7aebcc;
-        case 0x7aebd0u: goto label_7aebd0;
-        case 0x7aebd4u: goto label_7aebd4;
-        case 0x7aebd8u: goto label_7aebd8;
-        case 0x7aebdcu: goto label_7aebdc;
-        case 0x7aebe0u: goto label_7aebe0;
-        case 0x7aebe4u: goto label_7aebe4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7aebc0u, 0)) {
+        switch (ctx->pc) {
+            case 0x7aebc0u: goto label_7aebc0;
+            case 0x7aebc4u: goto label_7aebc4;
+            case 0x7aebc8u: goto label_7aebc8;
+            case 0x7aebccu: goto label_7aebcc;
+            case 0x7aebd0u: goto label_7aebd0;
+            case 0x7aebd4u: goto label_7aebd4;
+            case 0x7aebd8u: goto label_7aebd8;
+            case 0x7aebdcu: goto label_7aebdc;
+            case 0x7aebe0u: goto label_7aebe0;
+            case 0x7aebe4u: goto label_7aebe4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7aebc0u;
+
 
 label_7aebc0:
     // 0x7aebc0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7aebc0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_7aebc4:
     // 0x7aebc4: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -103,7 +104,6 @@ label_7aebd8:
             return;
         }
     }
-    ctx->pc = 0x7AEBDCu;
 label_7aebdc:
     // 0x7aebdc: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7aebdcu;

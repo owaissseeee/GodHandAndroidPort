@@ -13,15 +13,13 @@
 
 // Function: cCoreSave_setSkill
 // Address: 0x1faf20 - 0x1faf58
-void cCoreSave_setSkill_0x1faf20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setSkill_0x1faf20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setSkill_0x1faf20");
 #endif
 
-    ctx->pc = 0x1faf20u;
 
     // 0x1faf20: 0x63600  sll         $a2, $a2, 24
-    ctx->pc = 0x1faf20u;
     SET_GPR_S32(ctx, 6, (int32_t)SLL32(GPR_U32(ctx, 6), 24));
     // 0x1faf24: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1faf24u;
@@ -41,9 +39,7 @@ void cCoreSave_setSkill_0x1faf20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_1faf48;
         }
     }
-    ctx->pc = 0x1FAF30u;
     // 0x1faf30: 0x28a20080  slti        $v0, $a1, 0x80
-    ctx->pc = 0x1faf30u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 5) < (int64_t)(int32_t)128) ? 1 : 0);
     // 0x1faf34: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x1FAF34u;
@@ -60,7 +56,6 @@ void cCoreSave_setSkill_0x1faf20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_1faf48;
         }
     }
-    ctx->pc = 0x1FAF3Cu;
     // 0x1faf3c: 0x10400002  beqz        $v0, . + 4 + (0x2 << 2)
     ctx->pc = 0x1FAF3Cu;
     {
@@ -76,7 +71,6 @@ void cCoreSave_setSkill_0x1faf20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_1faf48;
         }
     }
-    ctx->pc = 0x1FAF44u;
     // 0x1faf44: 0xa04600b0  sb          $a2, 0xB0($v0)
     ctx->pc = 0x1faf44u;
     WRITE8(ADD32(GPR_U32(ctx, 2), 176), (uint8_t)GPR_U32(ctx, 6));
@@ -94,12 +88,9 @@ label_1faf48:
         return;
         #endif
     }
-    ctx->pc = 0x1FAF50u;
     // 0x1faf50: 0x0  nop
-    ctx->pc = 0x1faf50u;
     // NOP
     // 0x1faf54: 0x0  nop
-    ctx->pc = 0x1faf54u;
     // NOP
     ctx->pc = 0x1faf58u;
 }

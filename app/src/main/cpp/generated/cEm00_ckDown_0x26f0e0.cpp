@@ -13,18 +13,16 @@
 
 // Function: cEm00_ckDown
 // Address: 0x26f0e0 - 0x26f120
-void cEm00_ckDown_0x26f0e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_ckDown_0x26f0e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_ckDown_0x26f0e0");
 #endif
 
-    ctx->pc = 0x26f0e0u;
 
     // 0x26f0e0: 0x948203ac  lhu         $v0, 0x3AC($a0)
     ctx->pc = 0x26f0e0u;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 4), 940)));
     // 0x26f0e4: 0x30420008  andi        $v0, $v0, 0x8
-    ctx->pc = 0x26f0e4u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)8);
     // 0x26f0e8: 0x1040000a  beqz        $v0, . + 4 + (0xA << 2)
     ctx->pc = 0x26F0E8u;
@@ -41,27 +39,20 @@ void cEm00_ckDown_0x26f0e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
             goto label_26f114;
         }
     }
-    ctx->pc = 0x26F0F0u;
     // 0x26f0f0: 0xdc8302f0  ld          $v1, 0x2F0($a0)
     ctx->pc = 0x26f0f0u;
     SET_GPR_U64(ctx, 3, READ64(ADD32(GPR_U32(ctx, 4), 752)));
     // 0x26f0f4: 0x34058080  ori         $a1, $zero, 0x8080
-    ctx->pc = 0x26f0f4u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)32896);
     // 0x26f0f8: 0x52eb8  dsll        $a1, $a1, 26
-    ctx->pc = 0x26f0f8u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) << 26);
     // 0x26f0fc: 0x3404ffff  ori         $a0, $zero, 0xFFFF
-    ctx->pc = 0x26f0fcu;
     SET_GPR_U64(ctx, 4, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     // 0x26f100: 0x4203c  dsll32      $a0, $a0, 0
-    ctx->pc = 0x26f100u;
     SET_GPR_U64(ctx, 4, GPR_U64(ctx, 4) << (32 + 0));
     // 0x26f104: 0x641824  and         $v1, $v1, $a0
-    ctx->pc = 0x26f104u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 4));
     // 0x26f108: 0x651826  xor         $v1, $v1, $a1
-    ctx->pc = 0x26f108u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) ^ GPR_U64(ctx, 5));
     // 0x26f10c: 0x3e00008  jr          $ra
     ctx->pc = 0x26F10Cu;
@@ -82,7 +73,6 @@ void cEm00_ckDown_0x26f0e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
         return;
         #endif
     }
-    ctx->pc = 0x26F114u;
 label_26f114:
     // 0x26f114: 0x3e00008  jr          $ra
     ctx->pc = 0x26F114u;
@@ -103,9 +93,7 @@ label_26f114:
         return;
         #endif
     }
-    ctx->pc = 0x26F11Cu;
     // 0x26f11c: 0x0  nop
-    ctx->pc = 0x26f11cu;
     // NOP
     ctx->pc = 0x26f120u;
 }

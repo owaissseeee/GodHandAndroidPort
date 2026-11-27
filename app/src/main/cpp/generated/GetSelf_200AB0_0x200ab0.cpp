@@ -13,12 +13,11 @@
 
 // Function: GetSelf_200AB0
 // Address: 0x200ab0 - 0x200ac0
-void GetSelf_200AB0_0x200ab0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetSelf_200AB0_0x200ab0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetSelf_200AB0_0x200ab0");
 #endif
 
-    ctx->pc = 0x200ab0u;
 
     // 0x200ab0: 0x3e00008  jr          $ra
     ctx->pc = 0x200AB0u;
@@ -39,12 +38,9 @@ void GetSelf_200AB0_0x200ab0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
         return;
         #endif
     }
-    ctx->pc = 0x200AB8u;
     // 0x200ab8: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x200ab8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x200abc: 0x0  nop
-    ctx->pc = 0x200abcu;
     // NOP
     ctx->pc = 0x200ac0u;
 }

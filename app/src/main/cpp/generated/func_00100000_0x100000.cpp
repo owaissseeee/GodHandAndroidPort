@@ -13,18 +13,15 @@
 
 // Function: func_00100000
 // Address: 0x100000 - 0x100008
-void func_00100000_0x100000(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00100000_0x100000(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00100000_0x100000");
 #endif
 
-    ctx->pc = 0x100000u;
 
     // 0x100000: 0x0  nop
-    ctx->pc = 0x100000u;
     // NOP
     // 0x100004: 0x0  nop
-    ctx->pc = 0x100004u;
     // NOP
     ctx->pc = 0x100008u;
 }

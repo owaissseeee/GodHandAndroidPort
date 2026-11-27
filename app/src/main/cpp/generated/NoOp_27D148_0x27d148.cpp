@@ -13,12 +13,11 @@
 
 // Function: NoOp_27D148
 // Address: 0x27d148 - 0x27d150
-void NoOp_27D148_0x27d148(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void NoOp_27D148_0x27d148(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("NoOp_27D148_0x27d148");
 #endif
 
-    ctx->pc = 0x27d148u;
 
     // 0x27d148: 0x3e00008  jr          $ra
     ctx->pc = 0x27D148u;

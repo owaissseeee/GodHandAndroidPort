@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_getAllKillEmNum
 // Address: 0x1fc580 - 0x1fc5b8
-void cCoreSave_getAllKillEmNum_0x1fc580(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getAllKillEmNum_0x1fc580(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getAllKillEmNum_0x1fc580");
 #endif
 
-    ctx->pc = 0x1fc580u;
 
     // 0x1fc580: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc580u;
@@ -38,7 +37,6 @@ void cCoreSave_getAllKillEmNum_0x1fc580(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_1fc594;
         }
     }
-    ctx->pc = 0x1FC58Cu;
     // 0x1fc58c: 0x4a10003  bgez        $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x1FC58Cu;
     {
@@ -54,7 +52,6 @@ void cCoreSave_getAllKillEmNum_0x1fc580(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_1fc59c;
         }
     }
-    ctx->pc = 0x1FC594u;
 label_1fc594:
     // 0x1fc594: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC594u;
@@ -75,7 +72,6 @@ label_1fc594:
         return;
         #endif
     }
-    ctx->pc = 0x1FC59Cu;
 label_1fc59c:
     // 0x1fc59c: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x1FC59Cu;
@@ -92,9 +88,7 @@ label_1fc59c:
             goto label_1fc5b0;
         }
     }
-    ctx->pc = 0x1FC5A4u;
     // 0x1fc5a4: 0x831821  addu        $v1, $a0, $v1
-    ctx->pc = 0x1fc5a4u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 3)));
     // 0x1fc5a8: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC5A8u;
@@ -115,7 +109,6 @@ label_1fc59c:
         return;
         #endif
     }
-    ctx->pc = 0x1FC5B0u;
 label_1fc5b0:
     // 0x1fc5b0: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC5B0u;

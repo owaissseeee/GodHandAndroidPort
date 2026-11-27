@@ -13,22 +13,22 @@
 
 // Function: cPlCamera_update
 // Address: 0x139fa8 - 0x139ff8
-void cPlCamera_update_0x139fa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cPlCamera_update_0x139fa8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cPlCamera_update_0x139fa8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x139fbcu: goto label_139fbc;
-        case 0x139fd4u: goto label_139fd4;
-        case 0x139fe4u: goto label_139fe4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x139fa8u, 0)) {
+        switch (ctx->pc) {
+            case 0x139fbcu: goto label_139fbc;
+            case 0x139fd4u: goto label_139fd4;
+            case 0x139fe4u: goto label_139fe4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x139fa8u;
 
     // 0x139fa8: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x139fa8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x139fac: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x139facu;
@@ -37,7 +37,6 @@ void cPlCamera_update_0x139fa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     ctx->pc = 0x139fb0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x139fb4: 0xc0b6dac  jal         func_2DB6B0
-    ctx->pc = 0x139FB4u;
     SET_GPR_U32(ctx, 31, 0x139FBCu);
     ctx->pc = 0x139FB8u;
     ctx->in_delay_slot = true;
@@ -45,17 +44,14 @@ void cPlCamera_update_0x139fa8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     // 0x139fb8: 0x80802d  daddu       $s0, $a0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2DB6B0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2DB6B0u, 0x139FB4u, 0x139FBCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x139fbcu)) {
         return;
     }
-    ctx->pc = 0x139FBCu;
 label_139fbc:
     // 0x139fbc: 0x8c4305d8  lw          $v1, 0x5D8($v0)
     ctx->pc = 0x139fbcu;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 1496)));
     // 0x139fc0: 0x24020004  addiu       $v0, $zero, 0x4
-    ctx->pc = 0x139fc0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x139fc4: 0x10620005  beq         $v1, $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x139FC4u;
@@ -66,9 +62,7 @@ label_139fbc:
             goto label_139fdc;
         }
     }
-    ctx->pc = 0x139FCCu;
     // 0x139fcc: 0xc04e7fe  jal         func_139FF8
-    ctx->pc = 0x139FCCu;
     SET_GPR_U32(ctx, 31, 0x139FD4u);
     ctx->pc = 0x139FD0u;
     ctx->in_delay_slot = true;
@@ -76,11 +70,9 @@ label_139fbc:
     // 0x139fd0: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x139FF8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x139FF8u, 0x139FCCu, 0x139FD4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00139FF8_0x139ff8, 0x139ff8u, 0x139fd4u)) {
         return;
     }
-    ctx->pc = 0x139FD4u;
 label_139fd4:
     // 0x139fd4: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x139FD4u;
@@ -97,10 +89,8 @@ label_139fd4:
             goto label_139fe8;
         }
     }
-    ctx->pc = 0x139FDCu;
 label_139fdc:
     // 0x139fdc: 0xc04eb64  jal         func_13AD90
-    ctx->pc = 0x139FDCu;
     SET_GPR_U32(ctx, 31, 0x139FE4u);
     ctx->pc = 0x139FE0u;
     ctx->in_delay_slot = true;
@@ -108,11 +98,9 @@ label_139fdc:
     // 0x139fe0: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x13AD90u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x13AD90u, 0x139FDCu, 0x139FE4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_0013AD90_0x13ad90, 0x13ad90u, 0x139fe4u)) {
         return;
     }
-    ctx->pc = 0x139FE4u;
 label_139fe4:
     // 0x139fe4: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x139fe4u;
@@ -140,9 +128,7 @@ label_139fe8:
         return;
         #endif
     }
-    ctx->pc = 0x139FF4u;
     // 0x139ff4: 0x0  nop
-    ctx->pc = 0x139ff4u;
     // NOP
     ctx->pc = 0x139ff8u;
 }

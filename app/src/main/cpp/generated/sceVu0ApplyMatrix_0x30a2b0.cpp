@@ -17,7 +17,7 @@
 
 // Function: sceVu0ApplyMatrix
 // Address: 0x30a2b0 - 0x30a2e0
-void sceVu0ApplyMatrix_0x30a2b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVu0ApplyMatrix_0x30a2b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVu0ApplyMatrix_0x30a2b0");
 #endif
@@ -83,16 +83,12 @@ void sceVu0ApplyMatrix_0x30a2b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     ctx->pc = 0x30a2c0u;
     ctx->vu0_vf[8] = _mm_castsi128_ps(READ128(ADD32(GPR_U32(ctx, 6), 0)));
     // 0x30a2c4: 0x4be821bc  vmulax.xyzw $ACC, $vf4, $vf8x
-    ctx->pc = 0x30a2c4u;
     { __m128 res = PS2_VMUL(ctx->vu0_vf[4], _mm_shuffle_ps(ctx->vu0_vf[8], ctx->vu0_vf[8], _MM_SHUFFLE(0,0,0,0))); ctx->vu0_acc = _mm_blendv_ps(ctx->vu0_acc, res, _mm_castsi128_ps(_mm_set_epi32(-1, -1, -1, -1))); }
     // 0x30a2c8: 0x4be828bd  vmadday.xyzw $ACC, $vf5, $vf8y
-    ctx->pc = 0x30a2c8u;
     { __m128 mul_res = PS2_VMUL(ctx->vu0_vf[5], _mm_shuffle_ps(ctx->vu0_vf[8], ctx->vu0_vf[8], _MM_SHUFFLE(1,1,1,1))); __m128 res = PS2_VADD(ctx->vu0_acc, mul_res); ctx->vu0_acc = _mm_blendv_ps(ctx->vu0_acc, res, _mm_castsi128_ps(_mm_set_epi32(-1, -1, -1, -1))); }
     // 0x30a2cc: 0x4be830be  vmaddaz.xyzw $ACC, $vf6, $vf8z
-    ctx->pc = 0x30a2ccu;
     { __m128 mul_res = PS2_VMUL(ctx->vu0_vf[6], _mm_shuffle_ps(ctx->vu0_vf[8], ctx->vu0_vf[8], _MM_SHUFFLE(2,2,2,2))); __m128 res = PS2_VADD(ctx->vu0_acc, mul_res); ctx->vu0_acc = _mm_blendv_ps(ctx->vu0_acc, res, _mm_castsi128_ps(_mm_set_epi32(-1, -1, -1, -1))); }
     // 0x30a2d0: 0x4be83a4b  vmaddw.xyzw $vf9, $vf7, $vf8w
-    ctx->pc = 0x30a2d0u;
     { __m128 mul_res = PS2_VMUL(ctx->vu0_vf[7], _mm_shuffle_ps(ctx->vu0_vf[8], ctx->vu0_vf[8], _MM_SHUFFLE(3,3,3,3))); __m128 res = PS2_VADD(ctx->vu0_acc, mul_res); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[9] = _mm_blendv_ps(ctx->vu0_vf[9], res, _mm_castsi128_ps(mask)); }
     // 0x30a2d4: 0xf8890000  sqc2        $vf9, 0x0($a0)
     ctx->pc = 0x30a2d4u;

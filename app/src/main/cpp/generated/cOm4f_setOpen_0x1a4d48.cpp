@@ -13,20 +13,20 @@
 
 // Function: cOm4f_setOpen
 // Address: 0x1a4d48 - 0x1a4da8
-void cOm4f_setOpen_0x1a4d48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm4f_setOpen_0x1a4d48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm4f_setOpen_0x1a4d48");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1a4d80u: goto label_1a4d80;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1a4d48u, 0)) {
+        switch (ctx->pc) {
+            case 0x1a4d80u: goto label_1a4d80;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1a4d48u;
 
     // 0x1a4d48: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x1a4d48u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x1a4d4c: 0x7fb00020  sq          $s0, 0x20($sp)
     ctx->pc = 0x1a4d4cu;
@@ -35,13 +35,11 @@ void cOm4f_setOpen_0x1a4d48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x1a4d50u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 17));
     // 0x1a4d54: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x1a4d54u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1a4d58: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1a4d58u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1a4d5c: 0x24110001  addiu       $s1, $zero, 0x1
-    ctx->pc = 0x1a4d5cu;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1a4d60: 0x92020762  lbu         $v0, 0x762($s0)
     ctx->pc = 0x1a4d60u;
@@ -61,7 +59,6 @@ void cOm4f_setOpen_0x1a4d48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1a4d94;
         }
     }
-    ctx->pc = 0x1A4D6Cu;
     // 0x1a4d6c: 0x92020761  lbu         $v0, 0x761($s0)
     ctx->pc = 0x1a4d6cu;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 16), 1889)));
@@ -80,9 +77,7 @@ void cOm4f_setOpen_0x1a4d48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1a4d94;
         }
     }
-    ctx->pc = 0x1A4D78u;
     // 0x1a4d78: 0xc0692f4  jal         func_1A4BD0
-    ctx->pc = 0x1A4D78u;
     SET_GPR_U32(ctx, 31, 0x1A4D80u);
     ctx->pc = 0x1A4D7Cu;
     ctx->in_delay_slot = true;
@@ -90,11 +85,9 @@ void cOm4f_setOpen_0x1a4d48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x1a4d7c: 0xa2110760  sb          $s1, 0x760($s0) (Delay Slot)
     WRITE8(ADD32(GPR_U32(ctx, 16), 1888), (uint8_t)GPR_U32(ctx, 17));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1A4BD0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1A4BD0u, 0x1A4D78u, 0x1A4D80u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cGameObjCam_startSubCamera_0x1a4bd0, 0x1a4bd0u, 0x1a4d80u)) {
         return;
     }
-    ctx->pc = 0x1A4D80u;
 label_1a4d80:
     // 0x1a4d80: 0xa21102f4  sb          $s1, 0x2F4($s0)
     ctx->pc = 0x1a4d80u;
@@ -137,9 +130,7 @@ label_1a4d94:
         return;
         #endif
     }
-    ctx->pc = 0x1A4DA4u;
     // 0x1a4da4: 0x0  nop
-    ctx->pc = 0x1a4da4u;
     // NOP
     ctx->pc = 0x1a4da8u;
 }

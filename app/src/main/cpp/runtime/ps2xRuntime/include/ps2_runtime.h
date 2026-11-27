@@ -345,6 +345,35 @@ public:
                              uint32_t fallthroughPc,
                              GuestBranchKind kind,
                              const char *debugName);
+
+    PS2_FORCEINLINE bool callDirectStatic(uint8_t *rdram,
+                                          R5900Context *ctx,
+                                          RecompiledFunction targetFn,
+                                          uint32_t targetPc,
+                                          uint32_t fallthroughPc)
+    {
+        ctx->pc = targetPc;
+        if (__builtin_expect(eeCheckpointDue(8u), 0))
+        {
+            return false;
+        }
+        const uint64_t jumpSerial = m_guestJumpSerialPtr ? *m_guestJumpSerialPtr : 0u;
+        targetFn(rdram, ctx, this);
+        if (__builtin_expect((m_schedulerTransferPtr && *m_schedulerTransferPtr) ||
+                             (m_schedulerUnwindingPtr && *m_schedulerUnwindingPtr) ||
+                             isStopRequested() ||
+                             ctx->pc == 0u, 0))
+        {
+            return false;
+        }
+        if (__builtin_expect(ctx->pc == targetPc &&
+                             (!m_guestJumpSerialPtr || jumpSerial == *m_guestJumpSerialPtr), 1))
+        {
+            ctx->pc = fallthroughPc;
+            return true;
+        }
+        return ctx->pc == fallthroughPc;
+    }
     void reportMissingFunction(uint8_t *rdram,
                                R5900Context *ctx,
                                uint32_t targetPc,
@@ -503,6 +532,9 @@ private:
     VU1Interpreter m_vu1{VU1Interpreter::Unit::VU1};
     R5900Context m_cpuContext;
     std::unique_ptr<EeScheduler> m_eeScheduler;
+    const bool *m_schedulerTransferPtr = nullptr;
+    const bool *m_schedulerUnwindingPtr = nullptr;
+    const uint64_t *m_guestJumpSerialPtr = nullptr;
     mutable std::mutex m_eeKernelStateMutex;
     std::unordered_map<int, std::vector<EeExitHandlerRegistration>> m_eeExitHandlers;
     std::unordered_map<uint32_t, uint32_t> m_eeSyscallOverrides;

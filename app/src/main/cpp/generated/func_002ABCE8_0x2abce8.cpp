@@ -13,12 +13,11 @@
 
 // Function: func_002ABCE8
 // Address: 0x2abce8 - 0x2abd30
-void func_002ABCE8_0x2abce8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002ABCE8_0x2abce8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002ABCE8_0x2abce8");
 #endif
 
-    ctx->pc = 0x2abce8u;
 
     // 0x2abce8: 0x8ca3001c  lw          $v1, 0x1C($a1)
     ctx->pc = 0x2abce8u;
@@ -47,9 +46,7 @@ void func_002ABCE8_0x2abce8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2abd24;
         }
     }
-    ctx->pc = 0x2ABD00u;
     // 0x2abd00: 0x304200ff  andi        $v0, $v0, 0xFF
-    ctx->pc = 0x2abd00u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)255);
     // 0x2abd04: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x2ABD04u;
@@ -66,9 +63,7 @@ void func_002ABCE8_0x2abce8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2abd18;
         }
     }
-    ctx->pc = 0x2ABD0Cu;
     // 0x2abd0c: 0x34421000  ori         $v0, $v0, 0x1000
-    ctx->pc = 0x2abd0cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)4096);
     // 0x2abd10: 0x3e00008  jr          $ra
     ctx->pc = 0x2ABD10u;
@@ -89,13 +84,10 @@ void func_002ABCE8_0x2abce8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2ABD18u;
 label_2abd18:
     // 0x2abd18: 0x2403efff  addiu       $v1, $zero, -0x1001
-    ctx->pc = 0x2abd18u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294963199));
     // 0x2abd1c: 0x431024  and         $v0, $v0, $v1
-    ctx->pc = 0x2abd1cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 3));
     // 0x2abd20: 0xaca2002c  sw          $v0, 0x2C($a1)
     ctx->pc = 0x2abd20u;
@@ -114,9 +106,7 @@ label_2abd24:
         return;
         #endif
     }
-    ctx->pc = 0x2ABD2Cu;
     // 0x2abd2c: 0x0  nop
-    ctx->pc = 0x2abd2cu;
     // NOP
     ctx->pc = 0x2abd30u;
 }

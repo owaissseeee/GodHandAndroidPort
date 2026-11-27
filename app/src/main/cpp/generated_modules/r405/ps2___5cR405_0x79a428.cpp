@@ -14,20 +14,21 @@ namespace gh_r405
 {
 // Function: __5cR405
 // Address: 0x79a428 - 0x79a4c0
-void ps2___5cR405_0x79a428(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___5cR405_0x79a428(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___5cR405_0x79a428");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79a4a0u: goto label_79a4a0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x79a428u, 0)) {
+        switch (ctx->pc) {
+            case 0x79a4a0u: goto label_79a4a0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x79a428u;
+
 
     // 0x79a428: 0x24820020  addiu       $v0, $a0, 0x20
-    ctx->pc = 0x79a428u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 32));
     // 0x79a42c: 0xf8800070  sqc2        $vf0, 0x70($a0)
     ctx->pc = 0x79a42cu;
@@ -75,13 +76,11 @@ void ps2___5cR405_0x79a428(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     ctx->pc = 0x79a464u;
     WRITE8(ADD32(GPR_U32(ctx, 4), 32), (uint8_t)GPR_U32(ctx, 0));
     // 0x79a468: 0x282d  daddu       $a1, $zero, $zero
-    ctx->pc = 0x79a468u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x79a46c: 0xac40013c  sw          $zero, 0x13C($v0)
     ctx->pc = 0x79a46cu;
     WRITE32(ADD32(GPR_U32(ctx, 2), 316), GPR_U32(ctx, 0));
     // 0x79a470: 0x2483002c  addiu       $v1, $a0, 0x2C
-    ctx->pc = 0x79a470u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), 44));
     // 0x79a474: 0xa0400001  sb          $zero, 0x1($v0)
     ctx->pc = 0x79a474u;
@@ -121,13 +120,10 @@ label_79a4a0:
     ctx->pc = 0x79a4a0u;
     WRITE32(ADD32(GPR_U32(ctx, 3), 0), GPR_U32(ctx, 0));
     // 0x79a4a4: 0x24a50001  addiu       $a1, $a1, 0x1
-    ctx->pc = 0x79a4a4u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 1));
     // 0x79a4a8: 0x2ca20008  sltiu       $v0, $a1, 0x8
-    ctx->pc = 0x79a4a8u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 5) < (uint64_t)(int64_t)(int32_t)8) ? 1 : 0);
     // 0x79a4ac: 0x0  nop
-    ctx->pc = 0x79a4acu;
     // NOP
     // 0x79a4b0: 0x1440fffb  bnez        $v0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x79A4B0u;
@@ -147,7 +143,6 @@ label_79a4a0:
             goto label_79a4a0;
         }
     }
-    ctx->pc = 0x79A4B8u;
     // 0x79a4b8: 0x3e00008  jr          $ra
     ctx->pc = 0x79A4B8u;
     {

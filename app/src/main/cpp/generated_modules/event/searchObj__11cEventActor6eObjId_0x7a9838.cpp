@@ -14,20 +14,21 @@ namespace gh_event
 {
 // Function: searchObj__11cEventActor6eObjId
 // Address: 0x7a9838 - 0x7a9880
-void searchObj__11cEventActor6eObjId_0x7a9838(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void searchObj__11cEventActor6eObjId_0x7a9838(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("searchObj__11cEventActor6eObjId_0x7a9838");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7a9858u: goto label_7a9858;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7a9838u, 0)) {
+        switch (ctx->pc) {
+            case 0x7a9858u: goto label_7a9858;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7a9838u;
+
 
     // 0x7a9838: 0x3c030075  lui         $v1, 0x75
-    ctx->pc = 0x7a9838u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)117 << 16));
     // 0x7a983c: 0x8c624c30  lw          $v0, 0x4C30($v1)
     ctx->pc = 0x7a983cu;
@@ -53,12 +54,10 @@ void searchObj__11cEventActor6eObjId_0x7a9838(uint8_t* rdram, R5900Context* ctx,
             goto label_7a9874;
         }
     }
-    ctx->pc = 0x7A9850u;
     // 0x7a9850: 0x8c640000  lw          $a0, 0x0($v1)
     ctx->pc = 0x7a9850u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 0)));
     // 0x7a9854: 0x0  nop
-    ctx->pc = 0x7a9854u;
     // NOP
 label_7a9858:
     // 0x7a9858: 0x948202fe  lhu         $v0, 0x2FE($a0)
@@ -79,7 +78,6 @@ label_7a9858:
             goto label_7a986c;
         }
     }
-    ctx->pc = 0x7A9864u;
     // 0x7a9864: 0x3e00008  jr          $ra
     ctx->pc = 0x7A9864u;
     {
@@ -99,7 +97,6 @@ label_7a9858:
         return;
         #endif
     }
-    ctx->pc = 0x7A986Cu;
 label_7a986c:
     // 0x7a986c: 0x5466fffa  bnel        $v1, $a2, . + 4 + (-0x6 << 2)
     ctx->pc = 0x7A986Cu;
@@ -119,7 +116,6 @@ label_7a986c:
             goto label_7a9858;
         }
     }
-    ctx->pc = 0x7A9874u;
 label_7a9874:
     // 0x7a9874: 0x3e00008  jr          $ra
     ctx->pc = 0x7A9874u;
@@ -140,9 +136,7 @@ label_7a9874:
         return;
         #endif
     }
-    ctx->pc = 0x7A987Cu;
     // 0x7a987c: 0x0  nop
-    ctx->pc = 0x7a987cu;
     // NOP
     ctx->pc = 0x7a9880u;
 }

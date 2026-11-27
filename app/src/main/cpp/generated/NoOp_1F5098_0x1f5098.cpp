@@ -13,12 +13,11 @@
 
 // Function: NoOp_1F5098
 // Address: 0x1f5098 - 0x1f50a0
-void NoOp_1F5098_0x1f5098(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void NoOp_1F5098_0x1f5098(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("NoOp_1F5098_0x1f5098");
 #endif
 
-    ctx->pc = 0x1f5098u;
 
     // 0x1f5098: 0x3e00008  jr          $ra
     ctx->pc = 0x1F5098u;

@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <string>
 #include <cstring>
+#include <mutex>
 
 namespace godhand::affinity {
 
@@ -40,8 +41,9 @@ static int classifyCoreTier(int implementer, int part) {
             case 0xd4c: // Cortex-X1 (Tensor G1, SD 888, Exynos 2100)
             case 0xd43: // Cortex-X2 (Tensor G2, SD 8 Gen 1, Dimensity 9000)
             case 0xd4e: // Cortex-X3 (Tensor G3, SD 8 Gen 2, Dimensity 9200)
-            case 0xd4f: // Cortex-X4 (Tensor G4, SD 8 Gen 3, Dimensity 9300)
-            case 0xd80: // Cortex-X925 (Dimensity 9400)
+            case 0xd4f: // Cortex-X4 / Neoverse V2 (SD 8 Gen 3, Dimensity 9300)
+            case 0xd82: // Cortex-X4 (Tensor G4 / Pixel 9)
+            case 0xd85: // Cortex-X925 (Dimensity 9400)
             case 0xd40: // Neoverse V1
                 return 3;
 
@@ -55,9 +57,10 @@ static int classifyCoreTier(int implementer, int part) {
             case 0xd41: // Cortex-A78 (Dimensity 7050, Snapdragon 7s Gen 2, Exynos 1380, Tensor G2)
             case 0xd42: // Cortex-A78AE
             case 0xd44: // Cortex-A710 (SD 8 Gen 1, Tensor G3)
-            case 0xd48: // Cortex-A715 (SD 8 Gen 2, Tensor G3/G4)
-            case 0xd4d: // Cortex-A720 (SD 8 Gen 3, Tensor G4)
-            case 0xd81: // Cortex-A725 (Dimensity 9400)
+            case 0xd48: // Cortex-A715 (SD 8 Gen 2, Tensor G3)
+            case 0xd4d: // Cortex-A715 / A720 (SD 8 Gen 3)
+            case 0xd81: // Cortex-A720 (Tensor G4 / Pixel 9)
+            case 0xd87: // Cortex-A725 (Dimensity 9400)
             case 0xd49: // Neoverse N2
                 return 2;
 
@@ -66,7 +69,8 @@ static int classifyCoreTier(int implementer, int part) {
             case 0xd04: // Cortex-A35
             case 0xd05: // Cortex-A55 (Dimensity 7050, SD 7s Gen 2, Tensor G1/G2)
             case 0xd46: // Cortex-A510 (SD 8 Gen 1, Tensor G3)
-            case 0xd47: // Cortex-A520 (SD 8 Gen 3, Tensor G4)
+            case 0xd47: // Cortex-A520 (SD 8 Gen 3)
+            case 0xd80: // Cortex-A520 (Tensor G4 / Pixel 9)
                 return 1;
 
             default:
@@ -248,6 +252,7 @@ struct RoleConfig {
     bool valid;
 };
 static RoleConfig s_roleConfigs[static_cast<size_t>(ThreadRole::DEFAULT) + 1] = {};
+static std::mutex s_roleConfigMutex;
 
 static void applyAffinity(ThreadRole role, const char* name, int requestedNice) {
     static const std::vector<CpuCoreInfo> sorted = detectSortedCores();
@@ -333,8 +338,8 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
     } else if (top_tier <= 1 || big_cores.size() >= 4) {
         // High-end multi-core & Snapdragon / Dimensity (4+ Big/Prime cores):
         // Allow heavy threads (EE_MAIN, VU1_WORKER, GS_RENDERER) to use ALL Big/Prime performance cores.
-        // This enables Qualcomm EAS (Energy Aware Scheduler) to dynamically migrate threads between
-        // the Prime core and Big cores without thermal throttling traps, core downclocks, or preemption stalls!
+        // This enables EAS to dynamically migrate threads between the Prime core and Big cores without
+        // single-core thermal throttling traps, core downclocks, or preemption stalls.
         switch (role) {
             case ThreadRole::EE_MAIN:
             case ThreadRole::VU1_WORKER:
@@ -420,6 +425,7 @@ static void applyAffinity(ThreadRole role, const char* name, int requestedNice) 
 
     const size_t rIdx = static_cast<size_t>(role);
     if (rIdx < sizeof(s_roleConfigs) / sizeof(s_roleConfigs[0])) {
+        std::lock_guard<std::mutex> lock(s_roleConfigMutex);
         s_roleConfigs[rIdx].mask = mask;
         s_roleConfigs[rIdx].targetNice = targetNice;
         s_roleConfigs[rIdx].valid = true;
@@ -510,10 +516,23 @@ extern "C" void godhand_reassert_thread_affinities() {
     auto reapply = [](int32_t tid, godhand::affinity::ThreadRole role) {
         if (tid <= 0) return;
         const size_t roleIdx = static_cast<size_t>(role);
-        if (roleIdx < sizeof(godhand::affinity::s_roleConfigs) / sizeof(godhand::affinity::s_roleConfigs[0]) &&
-            godhand::affinity::s_roleConfigs[roleIdx].valid) {
-            sched_setaffinity(tid, sizeof(cpu_set_t), &godhand::affinity::s_roleConfigs[roleIdx].mask);
-            setpriority(PRIO_PROCESS, tid, godhand::affinity::s_roleConfigs[roleIdx].targetNice);
+        if (roleIdx >= sizeof(godhand::affinity::s_roleConfigs) / sizeof(godhand::affinity::s_roleConfigs[0])) {
+            return;
+        }
+        cpu_set_t mask{};
+        int targetNice = 0;
+        bool valid = false;
+        {
+            std::lock_guard<std::mutex> lock(godhand::affinity::s_roleConfigMutex);
+            if (godhand::affinity::s_roleConfigs[roleIdx].valid) {
+                mask = godhand::affinity::s_roleConfigs[roleIdx].mask;
+                targetNice = godhand::affinity::s_roleConfigs[roleIdx].targetNice;
+                valid = true;
+            }
+        }
+        if (valid) {
+            sched_setaffinity(tid, sizeof(cpu_set_t), &mask);
+            setpriority(PRIO_PROCESS, tid, targetNice);
         }
     };
     reapply(g_tidEE.load(std::memory_order_relaxed), godhand::affinity::ThreadRole::EE_MAIN);

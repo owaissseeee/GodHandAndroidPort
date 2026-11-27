@@ -133,6 +133,21 @@ namespace ps2x::iop::detail
               imports(memory),
               loadcore(memory, imports)
         {
+            const char *intrMask = std::getenv("PS2X_IOP_INTR_MASK");
+            honourIntrMask = !intrMask || *intrMask != '0';
+            if (const char *list = std::getenv("PS2X_IOP_TRACE_PC"))
+            {
+                std::string text(list);
+                size_t start = 0;
+                while (start < text.size())
+                {
+                    const size_t comma = text.find(',', start);
+                    tracePcs.push_back(static_cast<uint32_t>(std::stoul(text.substr(start, comma - start), nullptr, 16)));
+                    start = comma == std::string::npos ? text.size() : comma + 1;
+                }
+            }
+            if (const char *hp = std::getenv("PS2X_IOP_PC_HIST"))
+                histPeriod = static_cast<uint64_t>(std::strtod(hp, nullptr) * 36864000.0);
             reset();
         }
 
@@ -427,14 +442,14 @@ namespace ps2x::iop::detail
 
         bool step(CpuState &cpu)
         {
-            if (cpu.stopped)
+            if (__builtin_expect(cpu.stopped, 0))
                 return false;
-            if (cpu.pc == kThreadReturnSentinel || cpu.pc == kCallReturnSentinel)
+            if (__builtin_expect(cpu.pc == kThreadReturnSentinel || cpu.pc == kCallReturnSentinel, 0))
             {
                 cpu.stopped = true;
                 return false;
             }
-            if (physicalAddress(cpu.pc) >= kRamSize)
+            if (__builtin_expect(physicalAddress(cpu.pc) >= kRamSize, 0))
             {
                 std::ostringstream out;
                 out << "[IOP] execution outside RAM pc=0x" << std::hex << cpu.pc;
@@ -442,34 +457,10 @@ namespace ps2x::iop::detail
                 cpu.stopped = true;
                 return false;
             }
-            if (checkInterrupt(cpu))
+            if (__builtin_expect(checkInterrupt(cpu), 0))
                 return true;
 
-            // PS2X_IOP_TRACE_PC=addr[,addr...] (hex): log a0-a3/ra/sp/cycle each time the IOP reaches one of these pcs.
-            static const std::vector<uint32_t> tracePcs = []
-            {
-                std::vector<uint32_t> pcs;
-                if (const char *list = std::getenv("PS2X_IOP_TRACE_PC"))
-                {
-                    std::string text(list);
-                    size_t start = 0;
-                    while (start < text.size())
-                    {
-                        const size_t comma = text.find(',', start);
-                        pcs.push_back(static_cast<uint32_t>(std::stoul(text.substr(start, comma - start), nullptr, 16)));
-                        start = comma == std::string::npos ? text.size() : comma + 1;
-                    }
-                }
-                return pcs;
-            }();
-            // PS2X_IOP_PC_HIST=<seconds>: sample the IOP pc every 64 instructions and print the 25 hottest pcs (with the
-            // current thread) every <seconds> of IOP time, to find busy loops.
-            static const uint64_t histPeriod = []
-            {
-                const char *value = std::getenv("PS2X_IOP_PC_HIST");
-                return value ? static_cast<uint64_t>(std::strtod(value, nullptr) * 36864000.0) : 0ull;
-            }();
-            if (histPeriod != 0u && (totalInstructions & 63u) == 0u)
+            if (__builtin_expect(histPeriod != 0u && (totalInstructions & 63u) == 0u, 0))
             {
                 static std::unordered_map<uint64_t, uint32_t> hist;
                 static uint64_t nextReport = histPeriod;
@@ -515,7 +506,7 @@ namespace ps2x::iop::detail
                 }
             }
 
-            if (!tracePcs.empty() && std::find(tracePcs.begin(), tracePcs.end(), cpu.pc) != tracePcs.end())
+            if (__builtin_expect(!tracePcs.empty() && std::find(tracePcs.begin(), tracePcs.end(), cpu.pc) != tracePcs.end(), 0))
             {
                 std::fprintf(stderr, "[iop-pc] %06x a0=%08x a1=%08x a2=%08x a3=%08x ra=%06x sp=%06x cycle=%llu\n", cpu.pc, cpu.gpr[4],
                              cpu.gpr[5], cpu.gpr[6], cpu.gpr[7], cpu.gpr[31], cpu.gpr[29], static_cast<unsigned long long>(totalCycles));
@@ -574,8 +565,9 @@ namespace ps2x::iop::detail
                 }
             }
 
-            // Import stubs start with "jr ra"; decode (a search back for the import table) only runs on those.
-            const auto import = memory.read32(cpu.pc) == 0x03E00008u ? imports.decode(cpu.pc) : std::nullopt;
+            // Single fetch for both import stub check and instruction decode.
+            const uint32_t instruction = memory.read32(cpu.pc);
+            const auto import = __builtin_expect(instruction == 0x03E00008u, 0) ? imports.decode(cpu.pc) : std::nullopt;
             if (import)
             {
                 const ImportDisposition disposition = dispatchImport(*import, cpu);
@@ -588,8 +580,9 @@ namespace ps2x::iop::detail
                 return !cpu.stopped;
             }
 
-            const bool running = cpuCore.executeInstruction(cpu);
-            schedulePendingDma();
+            const bool running = cpuCore.executeInstructionWithFetched(cpu, instruction);
+            if (__builtin_expect(memory.hasDmaStart(), 0))
+                schedulePendingDma();
             ++totalInstructions;
             ++totalCycles;
             return running;
@@ -597,8 +590,7 @@ namespace ps2x::iop::detail
 
         bool interruptsEnabled() const noexcept
         {
-            static const bool honour = [] { const char *v = std::getenv("PS2X_IOP_INTR_MASK"); return !v || *v != '0'; }();
-            return !honour || memory.interruptControl() != 0u;
+            return !honourIntrMask || memory.interruptControl() != 0u;
         }
 
         uint32_t runCpu(CpuState &cpu, uint32_t instructionBudget)
@@ -616,9 +608,9 @@ namespace ps2x::iop::detail
                 // section, and running it there lost a chunk and hung the story "Now Loading" (PROGRESS §34).
                 if (!interruptsEnabled())
                     continue;
-                if (!servicingDmaInterrupts && !pendingDmaInterrupts.empty())
+                if (__builtin_expect(!servicingDmaInterrupts && !pendingDmaInterrupts.empty(), 0))
                     servicePendingDmaInterrupts();
-                if (!servicingGuestCallbacks && !pendingGuestCallbacks.empty())
+                if (__builtin_expect(!servicingGuestCallbacks && !pendingGuestCallbacks.empty(), 0))
                     servicePendingGuestCallbacks();
             }
             activeCpu = previous;
@@ -1491,6 +1483,9 @@ namespace ps2x::iop::detail
         bool servicingGuestCallbacks = false;
         int criticalThreadId = 0; // thread preempted by a slice end inside CpuSuspendIntr; it runs next (runCycles)
         uint32_t callDepth = 0u;
+        std::vector<uint32_t> tracePcs;
+        uint64_t histPeriod = 0u;
+        bool honourIntrMask = true;
         GuestCallback secrMcCommandHandler;
         GuestCallback secrMcDevIdHandler;
         GuestCallback checkKelfPathCallback;

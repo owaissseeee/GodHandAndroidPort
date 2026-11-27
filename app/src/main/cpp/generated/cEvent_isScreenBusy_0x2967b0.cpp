@@ -13,20 +13,20 @@
 
 // Function: cEvent_isScreenBusy
 // Address: 0x2967b0 - 0x296818
-void cEvent_isScreenBusy_0x2967b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_isScreenBusy_0x2967b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_isScreenBusy_0x2967b0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2967dcu: goto label_2967dc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2967b0u, 0)) {
+        switch (ctx->pc) {
+            case 0x2967dcu: goto label_2967dc;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2967b0u;
 
     // 0x2967b0: 0x3c020074  lui         $v0, 0x74
-    ctx->pc = 0x2967b0u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
     // 0x2967b4: 0x8c437a2c  lw          $v1, 0x7A2C($v0)
     ctx->pc = 0x2967b4u;
@@ -46,7 +46,6 @@ void cEvent_isScreenBusy_0x2967b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_2967c8;
         }
     }
-    ctx->pc = 0x2967C0u;
     // 0x2967c0: 0x3e00008  jr          $ra
     ctx->pc = 0x2967C0u;
     {
@@ -66,16 +65,13 @@ void cEvent_isScreenBusy_0x2967b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         return;
         #endif
     }
-    ctx->pc = 0x2967C8u;
 label_2967c8:
     // 0x2967c8: 0x8c636b34  lw          $v1, 0x6B34($v1)
     ctx->pc = 0x2967c8u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 27444)));
     // 0x2967cc: 0x3107a  dsrl        $v0, $v1, 1
-    ctx->pc = 0x2967ccu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) >> 1);
     // 0x2967d0: 0x30420001  andi        $v0, $v0, 0x1
-    ctx->pc = 0x2967d0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
     // 0x2967d4: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x2967D4u;
@@ -92,7 +88,6 @@ label_2967c8:
             goto label_2967e4;
         }
     }
-    ctx->pc = 0x2967DCu;
 label_2967dc:
     // 0x2967dc: 0x3e00008  jr          $ra
     ctx->pc = 0x2967DCu;
@@ -113,13 +108,10 @@ label_2967dc:
         return;
         #endif
     }
-    ctx->pc = 0x2967E4u;
 label_2967e4:
     // 0x2967e4: 0x30420001  andi        $v0, $v0, 0x1
-    ctx->pc = 0x2967e4u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
     // 0x2967e8: 0x0  nop
-    ctx->pc = 0x2967e8u;
     // NOP
     // 0x2967ec: 0x1440fffb  bnez        $v0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x2967ECu;
@@ -139,9 +131,7 @@ label_2967e4:
             goto label_2967dc;
         }
     }
-    ctx->pc = 0x2967F4u;
     // 0x2967f4: 0x30420001  andi        $v0, $v0, 0x1
-    ctx->pc = 0x2967f4u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
     // 0x2967f8: 0x14400005  bnez        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x2967F8u;
@@ -158,12 +148,10 @@ label_2967e4:
             goto label_296810;
         }
     }
-    ctx->pc = 0x296800u;
     // 0x296800: 0x9062748c  lbu         $v0, 0x748C($v1)
     ctx->pc = 0x296800u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 3), 29836)));
     // 0x296804: 0x21082  srl         $v0, $v0, 2
-    ctx->pc = 0x296804u;
     SET_GPR_S32(ctx, 2, (int32_t)SRL32(GPR_U32(ctx, 2), 2));
     // 0x296808: 0x3e00008  jr          $ra
     ctx->pc = 0x296808u;
@@ -184,7 +172,6 @@ label_2967e4:
         return;
         #endif
     }
-    ctx->pc = 0x296810u;
 label_296810:
     // 0x296810: 0x3e00008  jr          $ra
     ctx->pc = 0x296810u;

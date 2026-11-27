@@ -13,12 +13,11 @@
 
 // Function: func_002AF688
 // Address: 0x2af688 - 0x2af698
-void func_002AF688_0x2af688(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002AF688_0x2af688(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002AF688_0x2af688");
 #endif
 
-    ctx->pc = 0x2af688u;
 
     // 0x2af688: 0xe48d0040  swc1        $f13, 0x40($a0)
     ctx->pc = 0x2af688u;
@@ -42,9 +41,7 @@ void func_002AF688_0x2af688(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2AF694u;
     // 0x2af694: 0x0  nop
-    ctx->pc = 0x2af694u;
     // NOP
     ctx->pc = 0x2af698u;
 }

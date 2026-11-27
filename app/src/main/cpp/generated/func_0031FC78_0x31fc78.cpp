@@ -13,15 +13,13 @@
 
 // Function: func_0031FC78
 // Address: 0x31fc78 - 0x31fcb0
-void func_0031FC78_0x31fc78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0031FC78_0x31fc78(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0031FC78_0x31fc78");
 #endif
 
-    ctx->pc = 0x31fc78u;
 
     // 0x31fc78: 0x3c04003c  lui         $a0, 0x3C
-    ctx->pc = 0x31fc78u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)60 << 16));
     // 0x31fc7c: 0x8c824428  lw          $v0, 0x4428($a0)
     ctx->pc = 0x31fc7cu;
@@ -41,7 +39,6 @@ void func_0031FC78_0x31fc78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_31fca4;
         }
     }
-    ctx->pc = 0x31FC88u;
     // 0x31fc88: 0x10a00006  beqz        $a1, . + 4 + (0x6 << 2)
     ctx->pc = 0x31FC88u;
     {
@@ -57,15 +54,11 @@ void func_0031FC78_0x31fc78(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_31fca4;
         }
     }
-    ctx->pc = 0x31FC90u;
     // 0x31fc90: 0x3c020045  lui         $v0, 0x45
-    ctx->pc = 0x31fc90u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)69 << 16));
     // 0x31fc94: 0x246310f0  addiu       $v1, $v1, 0x10F0
-    ctx->pc = 0x31fc94u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4336));
     // 0x31fc98: 0x24421198  addiu       $v0, $v0, 0x1198
-    ctx->pc = 0x31fc98u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4504));
     // 0x31fc9c: 0xaca20004  sw          $v0, 0x4($a1)
     ctx->pc = 0x31fc9cu;
@@ -93,9 +86,7 @@ label_31fca4:
         return;
         #endif
     }
-    ctx->pc = 0x31FCACu;
     // 0x31fcac: 0x0  nop
-    ctx->pc = 0x31fcacu;
     // NOP
     ctx->pc = 0x31fcb0u;
 }

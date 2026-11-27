@@ -14,21 +14,18 @@ namespace gh_mcport
 {
 // Function: isNewSave__6cMcSys
 // Address: 0x7c95a0 - 0x7c95d0
-void isNewSave__6cMcSys_0x7c95a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void isNewSave__6cMcSys_0x7c95a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("isNewSave__6cMcSys_0x7c95a0");
 #endif
 
-    ctx->pc = 0x7c95a0u;
 
     // 0x7c95a0: 0x8c820074  lw          $v0, 0x74($a0)
     ctx->pc = 0x7c95a0u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 116)));
     // 0x7c95a4: 0x3c030080  lui         $v1, 0x80
-    ctx->pc = 0x7c95a4u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)128 << 16));
     // 0x7c95a8: 0x431024  and         $v0, $v0, $v1
-    ctx->pc = 0x7c95a8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 3));
     // 0x7c95ac: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x7C95ACu;
@@ -45,12 +42,10 @@ void isNewSave__6cMcSys_0x7c95a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_7c95c4;
         }
     }
-    ctx->pc = 0x7C95B4u;
     // 0x7c95b4: 0x8c621770  lw          $v0, 0x1770($v1)
     ctx->pc = 0x7c95b4u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 6000)));
     // 0x7c95b8: 0x28420096  slti        $v0, $v0, 0x96
-    ctx->pc = 0x7c95b8u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 2) < (int64_t)(int32_t)150) ? 1 : 0);
     // 0x7c95bc: 0x3e00008  jr          $ra
     ctx->pc = 0x7C95BCu;
@@ -71,7 +66,6 @@ void isNewSave__6cMcSys_0x7c95a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         return;
         #endif
     }
-    ctx->pc = 0x7C95C4u;
 label_7c95c4:
     // 0x7c95c4: 0x3e00008  jr          $ra
     ctx->pc = 0x7C95C4u;
@@ -92,9 +86,7 @@ label_7c95c4:
         return;
         #endif
     }
-    ctx->pc = 0x7C95CCu;
     // 0x7c95cc: 0x0  nop
-    ctx->pc = 0x7c95ccu;
     // NOP
     ctx->pc = 0x7c95d0u;
 }

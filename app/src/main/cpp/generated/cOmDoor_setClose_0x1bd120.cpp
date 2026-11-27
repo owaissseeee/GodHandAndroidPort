@@ -13,18 +13,16 @@
 
 // Function: cOmDoor_setClose
 // Address: 0x1bd120 - 0x1bd178
-void cOmDoor_setClose_0x1bd120(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmDoor_setClose_0x1bd120(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmDoor_setClose_0x1bd120");
 #endif
 
-    ctx->pc = 0x1bd120u;
 
     // 0x1bd120: 0x9c830620  lwu         $v1, 0x620($a0)
     ctx->pc = 0x1bd120u;
     SET_GPR_ZE32(ctx, 3, READ32(ADD32(GPR_U32(ctx, 4), 1568)));
     // 0x1bd124: 0x30620001  andi        $v0, $v1, 0x1
-    ctx->pc = 0x1bd124u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) & (uint64_t)(uint16_t)1);
     // 0x1bd128: 0x10400011  beqz        $v0, . + 4 + (0x11 << 2)
     ctx->pc = 0x1BD128u;
@@ -41,15 +39,11 @@ void cOmDoor_setClose_0x1bd120(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_1bd170;
         }
     }
-    ctx->pc = 0x1BD130u;
     // 0x1bd130: 0x3107b  dsra        $v0, $v1, 1
-    ctx->pc = 0x1bd130u;
     SET_GPR_S64(ctx, 2, GPR_S64(ctx, 3) >> 1);
     // 0x1bd134: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x1bd134u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1bd138: 0x30420001  andi        $v0, $v0, 0x1
-    ctx->pc = 0x1bd138u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
     // 0x1bd13c: 0x1043000c  beq         $v0, $v1, . + 4 + (0xC << 2)
     ctx->pc = 0x1BD13Cu;
@@ -60,12 +54,10 @@ void cOmDoor_setClose_0x1bd120(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_1bd170;
         }
     }
-    ctx->pc = 0x1BD144u;
     // 0x1bd144: 0x908202f4  lbu         $v0, 0x2F4($a0)
     ctx->pc = 0x1bd144u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 756)));
     // 0x1bd148: 0x2c420002  sltiu       $v0, $v0, 0x2
-    ctx->pc = 0x1bd148u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)2) ? 1 : 0);
     // 0x1bd14c: 0x10400008  beqz        $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x1BD14Cu;
@@ -82,12 +74,9 @@ void cOmDoor_setClose_0x1bd120(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_1bd170;
         }
     }
-    ctx->pc = 0x1BD154u;
     // 0x1bd154: 0x24030002  addiu       $v1, $zero, 0x2
-    ctx->pc = 0x1bd154u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x1bd158: 0xa21024  and         $v0, $a1, $v0
-    ctx->pc = 0x1bd158u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 5) & GPR_U64(ctx, 2));
     // 0x1bd15c: 0xa08302f5  sb          $v1, 0x2F5($a0)
     ctx->pc = 0x1bd15cu;

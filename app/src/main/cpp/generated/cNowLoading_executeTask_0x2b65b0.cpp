@@ -13,23 +13,22 @@
 
 // Function: cNowLoading_executeTask
 // Address: 0x2b65b0 - 0x2b65f0
-void cNowLoading_executeTask_0x2b65b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cNowLoading_executeTask_0x2b65b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cNowLoading_executeTask_0x2b65b0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2b65e4u: goto label_2b65e4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2b65b0u, 0)) {
+        switch (ctx->pc) {
+            case 0x2b65e4u: goto label_2b65e4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2b65b0u;
 
     // 0x2b65b0: 0x3c03003c  lui         $v1, 0x3C
-    ctx->pc = 0x2b65b0u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)60 << 16));
     // 0x2b65b4: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2b65b4u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2b65b8: 0x90622554  lbu         $v0, 0x2554($v1)
     ctx->pc = 0x2b65b8u;
@@ -49,27 +48,20 @@ void cNowLoading_executeTask_0x2b65b0(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_2b65e4;
         }
     }
-    ctx->pc = 0x2B65C4u;
     // 0x2b65c4: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2b65c4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2b65c8: 0x3c040075  lui         $a0, 0x75
-    ctx->pc = 0x2b65c8u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)117 << 16));
     // 0x2b65cc: 0x3c05002b  lui         $a1, 0x2B
-    ctx->pc = 0x2b65ccu;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)43 << 16));
     // 0x2b65d0: 0xa0622554  sb          $v0, 0x2554($v1)
     ctx->pc = 0x2b65d0u;
     WRITE8(ADD32(GPR_U32(ctx, 3), 9556), (uint8_t)GPR_U32(ctx, 2));
     // 0x2b65d4: 0x24842c00  addiu       $a0, $a0, 0x2C00
-    ctx->pc = 0x2b65d4u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 11264));
     // 0x2b65d8: 0x24a56600  addiu       $a1, $a1, 0x6600
-    ctx->pc = 0x2b65d8u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 26112));
     // 0x2b65dc: 0xc0b551c  jal         func_2D5470
-    ctx->pc = 0x2B65DCu;
     SET_GPR_U32(ctx, 31, 0x2B65E4u);
     ctx->pc = 0x2B65E0u;
     ctx->in_delay_slot = true;
@@ -77,11 +69,9 @@ void cNowLoading_executeTask_0x2b65b0(uint8_t* rdram, R5900Context* ctx, PS2Runt
     // 0x2b65e0: 0x2406ffff  addiu       $a2, $zero, -0x1 (Delay Slot)
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2D5470u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D5470u, 0x2B65DCu, 0x2B65E4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cTaskManager_execute_0x2d5470, 0x2d5470u, 0x2b65e4u)) {
         return;
     }
-    ctx->pc = 0x2B65E4u;
 label_2b65e4:
     // 0x2b65e4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2b65e4u;

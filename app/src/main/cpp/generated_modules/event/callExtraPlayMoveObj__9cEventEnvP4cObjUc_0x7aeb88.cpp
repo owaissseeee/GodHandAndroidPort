@@ -14,38 +14,38 @@ namespace gh_event
 {
 // Function: callExtraPlayMoveObj__9cEventEnvP4cObjUc
 // Address: 0x7aeb88 - 0x7aebc0
-void callExtraPlayMoveObj__9cEventEnvP4cObjUc_0x7aeb88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void callExtraPlayMoveObj__9cEventEnvP4cObjUc_0x7aeb88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("callExtraPlayMoveObj__9cEventEnvP4cObjUc_0x7aeb88");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7aeb88u: goto label_7aeb88;
-        case 0x7aeb8cu: goto label_7aeb8c;
-        case 0x7aeb90u: goto label_7aeb90;
-        case 0x7aeb94u: goto label_7aeb94;
-        case 0x7aeb98u: goto label_7aeb98;
-        case 0x7aeb9cu: goto label_7aeb9c;
-        case 0x7aeba0u: goto label_7aeba0;
-        case 0x7aeba4u: goto label_7aeba4;
-        case 0x7aeba8u: goto label_7aeba8;
-        case 0x7aebacu: goto label_7aebac;
-        case 0x7aebb0u: goto label_7aebb0;
-        case 0x7aebb4u: goto label_7aebb4;
-        case 0x7aebb8u: goto label_7aebb8;
-        case 0x7aebbcu: goto label_7aebbc;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7aeb88u, 0)) {
+        switch (ctx->pc) {
+            case 0x7aeb88u: goto label_7aeb88;
+            case 0x7aeb8cu: goto label_7aeb8c;
+            case 0x7aeb90u: goto label_7aeb90;
+            case 0x7aeb94u: goto label_7aeb94;
+            case 0x7aeb98u: goto label_7aeb98;
+            case 0x7aeb9cu: goto label_7aeb9c;
+            case 0x7aeba0u: goto label_7aeba0;
+            case 0x7aeba4u: goto label_7aeba4;
+            case 0x7aeba8u: goto label_7aeba8;
+            case 0x7aebacu: goto label_7aebac;
+            case 0x7aebb0u: goto label_7aebb0;
+            case 0x7aebb4u: goto label_7aebb4;
+            case 0x7aebb8u: goto label_7aebb8;
+            case 0x7aebbcu: goto label_7aebbc;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7aeb88u;
+
 
 label_7aeb88:
     // 0x7aeb88: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7aeb88u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_7aeb8c:
     // 0x7aeb8c: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x7aeb8cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_7aeb90:
     // 0x7aeb90: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -53,7 +53,6 @@ label_7aeb90:
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
 label_7aeb94:
     // 0x7aeb94: 0xa0202d  daddu       $a0, $a1, $zero
-    ctx->pc = 0x7aeb94u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
 label_7aeb98:
     // 0x7aeb98: 0x8c430034  lw          $v1, 0x34($v0)
@@ -86,7 +85,6 @@ label_7aeba0:
             goto label_7aebb0;
         }
     }
-    ctx->pc = 0x7AEBA4u;
 label_7aeba4:
     // 0x7aeba4: 0xc44c0014  lwc1        $f12, 0x14($v0)
     ctx->pc = 0x7aeba4u;
@@ -119,7 +117,6 @@ label_7aebac:
             return;
         }
     }
-    ctx->pc = 0x7AEBB0u;
 label_7aebb0:
     // 0x7aebb0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7aebb0u;
@@ -155,10 +152,8 @@ label_7aebb8:
         return;
         #endif
     }
-    ctx->pc = 0x7AEBBCu;
 label_7aebbc:
     // 0x7aebbc: 0x0  nop
-    ctx->pc = 0x7aebbcu;
     // NOP
     ctx->pc = 0x7aebc0u;
 }

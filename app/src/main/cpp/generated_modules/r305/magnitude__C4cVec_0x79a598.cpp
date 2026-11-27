@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
+#include <ps2_recompiled_functions.h>
 #include "r305_functions.h"
 
 #include "ps2_syscalls.h"
@@ -14,32 +15,31 @@ namespace gh_r305
 {
 // Function: magnitude__C4cVec
 // Address: 0x79a598 - 0x79a5b4
-void magnitude__C4cVec_0x79a598(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void magnitude__C4cVec_0x79a598(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("magnitude__C4cVec_0x79a598");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79a5a8u: goto label_79a5a8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x79a598u, 0)) {
+        switch (ctx->pc) {
+            case 0x79a5a8u: goto label_79a5a8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x79a598u;
+
 
     // 0x79a598: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x79a598u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x79a59c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x79a59cu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x79a5a0: 0xc07df7e  jal         func_1F7DF8
-    ctx->pc = 0x79A5A0u;
     SET_GPR_U32(ctx, 31, 0x79A5A8u);
     ctx->pc = 0x1F7DF8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1F7DF8u, 0x79A5A0u, 0x79A5A8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &capVu0Length_0x1f7df8, 0x1F7DF8u, 0x79A5A8u)) {
         return;
     }
-    ctx->pc = 0x79A5A8u;
 label_79a5a8:
     // 0x79a5a8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x79a5a8u;

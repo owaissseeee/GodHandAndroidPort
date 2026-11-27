@@ -14,15 +14,13 @@ namespace gh_r000
 {
 // Function: GetData__17cSkillListManageri
 // Address: 0x7993c0 - 0x799400
-void GetData__17cSkillListManageri_0x7993c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetData__17cSkillListManageri_0x7993c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetData__17cSkillListManageri_0x7993c0");
 #endif
 
-    ctx->pc = 0x7993c0u;
 
     // 0x7993c0: 0xa0182d  daddu       $v1, $a1, $zero
-    ctx->pc = 0x7993c0u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     // 0x7993c4: 0x8c850000  lw          $a1, 0x0($a0)
     ctx->pc = 0x7993c4u;
@@ -36,7 +34,6 @@ void GetData__17cSkillListManageri_0x7993c0(uint8_t* rdram, R5900Context* ctx, P
             goto label_7993dc;
         }
     }
-    ctx->pc = 0x7993D0u;
     // 0x7993d0: 0x8c84000c  lw          $a0, 0xC($a0)
     ctx->pc = 0x7993d0u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 12)));
@@ -55,7 +52,6 @@ void GetData__17cSkillListManageri_0x7993c0(uint8_t* rdram, R5900Context* ctx, P
             goto label_7993e4;
         }
     }
-    ctx->pc = 0x7993DCu;
 label_7993dc:
     // 0x7993dc: 0x3e00008  jr          $ra
     ctx->pc = 0x7993DCu;
@@ -76,7 +72,6 @@ label_7993dc:
         return;
         #endif
     }
-    ctx->pc = 0x7993E4u;
 label_7993e4:
     // 0x7993e4: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x7993E4u;
@@ -93,9 +88,7 @@ label_7993e4:
             goto label_7993f8;
         }
     }
-    ctx->pc = 0x7993ECu;
     // 0x7993ec: 0x622018  mult        $a0, $v1, $v0
-    ctx->pc = 0x7993ecu;
     { int64_t result = (int64_t)GPR_S32(ctx, 3) * (int64_t)GPR_S32(ctx, 2); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 4, (int32_t)result); }
     // 0x7993f0: 0x3e00008  jr          $ra
     ctx->pc = 0x7993F0u;
@@ -116,7 +109,6 @@ label_7993e4:
         return;
         #endif
     }
-    ctx->pc = 0x7993F8u;
 label_7993f8:
     // 0x7993f8: 0x3e00008  jr          $ra
     ctx->pc = 0x7993F8u;

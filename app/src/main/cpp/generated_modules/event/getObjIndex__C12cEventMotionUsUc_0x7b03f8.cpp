@@ -14,29 +14,28 @@ namespace gh_event
 {
 // Function: getObjIndex__C12cEventMotionUsUc
 // Address: 0x7b03f8 - 0x7b0438
-void getObjIndex__C12cEventMotionUsUc_0x7b03f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getObjIndex__C12cEventMotionUsUc_0x7b03f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getObjIndex__C12cEventMotionUsUc_0x7b03f8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7b041cu: goto label_7b041c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7b03f8u, 0)) {
+        switch (ctx->pc) {
+            case 0x7b041cu: goto label_7b041c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7b03f8u;
+
 
     // 0x7b03f8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7b03f8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x7b03fc: 0x30a5ffff  andi        $a1, $a1, 0xFFFF
-    ctx->pc = 0x7b03fcu;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)65535);
     // 0x7b0400: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x7b0400u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x7b0404: 0x3402ffff  ori         $v0, $zero, 0xFFFF
-    ctx->pc = 0x7b0404u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     // 0x7b0408: 0x10a20006  beq         $a1, $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x7B0408u;
@@ -53,14 +52,10 @@ void getObjIndex__C12cEventMotionUsUc_0x7b03f8(uint8_t* rdram, R5900Context* ctx
             goto label_7b0424;
         }
     }
-    ctx->pc = 0x7B0410u;
     // 0x7b0410: 0x3c04007b  lui         $a0, 0x7B
-    ctx->pc = 0x7b0410u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)123 << 16));
     // 0x7b0414: 0xc1ea59a  jal         func_7A9668
-    ctx->pc = 0x7B0414u;
     SET_GPR_U32(ctx, 31, 0x7B041Cu);
-    ctx->pc = 0x7B0418u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x7B0414u;
     // 0x7b0418: 0x24844f80  addiu       $a0, $a0, 0x4F80 (Delay Slot)
@@ -70,7 +65,6 @@ void getObjIndex__C12cEventMotionUsUc_0x7b03f8(uint8_t* rdram, R5900Context* ctx
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x7A9668u, 0x7B0414u, 0x7B041Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7B041Cu;
 label_7b041c:
     // 0x7b041c: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x7B041Cu;
@@ -87,10 +81,8 @@ label_7b041c:
             goto label_7b042c;
         }
     }
-    ctx->pc = 0x7B0424u;
 label_7b0424:
     // 0x7b0424: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x7b0424u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x7b0428: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7b0428u;
@@ -115,9 +107,7 @@ label_7b042c:
         return;
         #endif
     }
-    ctx->pc = 0x7B0434u;
     // 0x7b0434: 0x0  nop
-    ctx->pc = 0x7b0434u;
     // NOP
     ctx->pc = 0x7b0438u;
 }

@@ -13,12 +13,11 @@
 
 // Function: cOm4f_setLock
 // Address: 0x1a4f28 - 0x1a4f30
-void cOm4f_setLock_0x1a4f28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm4f_setLock_0x1a4f28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm4f_setLock_0x1a4f28");
 #endif
 
-    ctx->pc = 0x1a4f28u;
 
     // 0x1a4f28: 0x3e00008  jr          $ra
     ctx->pc = 0x1A4F28u;

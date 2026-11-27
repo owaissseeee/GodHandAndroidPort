@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_GetFightingRingEmListNo
 // Address: 0x1fc530 - 0x1fc548
-void cCoreSave_GetFightingRingEmListNo_0x1fc530(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_GetFightingRingEmListNo_0x1fc530(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_GetFightingRingEmListNo_0x1fc530");
 #endif
 
-    ctx->pc = 0x1fc530u;
 
     // 0x1fc530: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc530u;
@@ -38,7 +37,6 @@ void cCoreSave_GetFightingRingEmListNo_0x1fc530(uint8_t* rdram, R5900Context* ct
             goto label_1fc540;
         }
     }
-    ctx->pc = 0x1FC53Cu;
     // 0x1fc53c: 0x8c820ba8  lw          $v0, 0xBA8($a0)
     ctx->pc = 0x1fc53cu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 2984)));

@@ -13,17 +13,18 @@
 
 // Function: kFindAddress
 // Address: 0x3b64a8 - 0x3b64e8
-void kFindAddress_0x3b64a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void kFindAddress_0x3b64a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("kFindAddress_0x3b64a8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b64c0u: goto label_3b64c0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b64a8u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b64c0u: goto label_3b64c0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b64a8u;
 
     // 0x3b64a8: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x3b64a8u;
@@ -43,7 +44,6 @@ void kFindAddress_0x3b64a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
             goto label_3b64dc;
         }
     }
-    ctx->pc = 0x3B64B4u;
     // 0x3b64b4: 0x5040000a  beql        $v0, $zero, . + 4 + (0xA << 2)
     ctx->pc = 0x3B64B4u;
     {
@@ -59,9 +59,7 @@ void kFindAddress_0x3b64a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
             goto label_3b64e0;
         }
     }
-    ctx->pc = 0x3B64BCu;
     // 0x3b64bc: 0x24840004  addiu       $a0, $a0, 0x4
-    ctx->pc = 0x3b64bcu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 4));
 label_3b64c0:
     // 0x3b64c0: 0x8c820000  lw          $v0, 0x0($a0)
@@ -82,7 +80,6 @@ label_3b64c0:
             goto label_3b64dc;
         }
     }
-    ctx->pc = 0x3B64CCu;
     // 0x3b64cc: 0x5440fffc  bnel        $v0, $zero, . + 4 + (-0x4 << 2)
     ctx->pc = 0x3B64CCu;
     {
@@ -101,7 +98,6 @@ label_3b64c0:
             goto label_3b64c0;
         }
     }
-    ctx->pc = 0x3B64D4u;
     // 0x3b64d4: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x3B64D4u;
     {
@@ -117,7 +113,6 @@ label_3b64c0:
             goto label_3b64e0;
         }
     }
-    ctx->pc = 0x3B64DCu;
 label_3b64dc:
     // 0x3b64dc: 0x2200a  movz        $a0, $zero, $v0
     ctx->pc = 0x3b64dcu;

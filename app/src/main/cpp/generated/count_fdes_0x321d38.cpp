@@ -13,17 +13,18 @@
 
 // Function: count_fdes
 // Address: 0x321d38 - 0x321d80
-void count_fdes_0x321d38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void count_fdes_0x321d38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("count_fdes_0x321d38");
 #endif
 
-    switch (ctx->pc) {
-        case 0x321d50u: goto label_321d50;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x321d38u, 0)) {
+        switch (ctx->pc) {
+            case 0x321d50u: goto label_321d50;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x321d38u;
 
     // 0x321d38: 0x8c850000  lw          $a1, 0x0($a0)
     ctx->pc = 0x321d38u;
@@ -43,7 +44,6 @@ void count_fdes_0x321d38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
             goto label_321d78;
         }
     }
-    ctx->pc = 0x321D44u;
     // 0x321d44: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x321D44u;
     {
@@ -59,13 +59,10 @@ void count_fdes_0x321d38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
             goto label_321d58;
         }
     }
-    ctx->pc = 0x321D4Cu;
     // 0x321d4c: 0x0  nop
-    ctx->pc = 0x321d4cu;
     // NOP
 label_321d50:
     // 0x321d50: 0x60282d  daddu       $a1, $v1, $zero
-    ctx->pc = 0x321d50u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
     // 0x321d54: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x321d54u;
@@ -86,7 +83,6 @@ label_321d58:
             goto label_321d68;
         }
     }
-    ctx->pc = 0x321D60u;
     // 0x321d60: 0x8c830008  lw          $v1, 0x8($a0)
     ctx->pc = 0x321d60u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 8)));
@@ -95,7 +91,6 @@ label_321d58:
     if (GPR_U64(ctx, 3) != 0) SET_GPR_VEC(ctx, 6, GPR_VEC(ctx, 2));
 label_321d68:
     // 0x321d68: 0x851021  addu        $v0, $a0, $a1
-    ctx->pc = 0x321d68u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 5)));
     // 0x321d6c: 0x8c430004  lw          $v1, 0x4($v0)
     ctx->pc = 0x321d6cu;
@@ -118,7 +113,6 @@ label_321d68:
             goto label_321d50;
         }
     }
-    ctx->pc = 0x321D78u;
 label_321d78:
     // 0x321d78: 0x3e00008  jr          $ra
     ctx->pc = 0x321D78u;

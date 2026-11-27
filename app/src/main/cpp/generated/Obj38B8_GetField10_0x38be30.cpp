@@ -13,12 +13,11 @@
 
 // Function: Obj38B8_GetField10
 // Address: 0x38be30 - 0x38be38
-void Obj38B8_GetField10_0x38be30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj38B8_GetField10_0x38be30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj38B8_GetField10_0x38be30");
 #endif
 
-    ctx->pc = 0x38be30u;
 
     // 0x38be30: 0x3e00008  jr          $ra
     ctx->pc = 0x38BE30u;

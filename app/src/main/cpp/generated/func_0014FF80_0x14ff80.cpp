@@ -13,21 +13,17 @@
 
 // Function: func_0014FF80
 // Address: 0x14ff80 - 0x150048
-void func_0014FF80_0x14ff80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0014FF80_0x14ff80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0014FF80_0x14ff80");
 #endif
 
-    ctx->pc = 0x14ff80u;
 
     // 0x14ff80: 0x3c030042  lui         $v1, 0x42
-    ctx->pc = 0x14ff80u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)66 << 16));
     // 0x14ff84: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x14ff84u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x14ff88: 0x2463eca0  addiu       $v1, $v1, -0x1360
-    ctx->pc = 0x14ff88u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294962336));
     // 0x14ff8c: 0xac430214  sw          $v1, 0x214($v0)
     ctx->pc = 0x14ff8cu;
@@ -36,7 +32,6 @@ void func_0014FF80_0x14ff80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x14ff90u;
     WRITE128(ADD32(GPR_U32(ctx, 2), 192), _mm_castps_si128(ctx->vu0_vf[0]));
     // 0x14ff94: 0x24430030  addiu       $v1, $v0, 0x30
-    ctx->pc = 0x14ff94u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 48));
     // 0x14ff98: 0xac4300d0  sw          $v1, 0xD0($v0)
     ctx->pc = 0x14ff98u;
@@ -45,7 +40,6 @@ void func_0014FF80_0x14ff80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x14ff9cu;
     WRITE128(ADD32(GPR_U32(ctx, 2), 224), _mm_castps_si128(ctx->vu0_vf[0]));
     // 0x14ffa0: 0x244300b0  addiu       $v1, $v0, 0xB0
-    ctx->pc = 0x14ffa0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 176));
     // 0x14ffa4: 0xac4300f0  sw          $v1, 0xF0($v0)
     ctx->pc = 0x14ffa4u;
@@ -54,16 +48,12 @@ void func_0014FF80_0x14ff80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x14ffa8u;
     WRITE128(ADD32(GPR_U32(ctx, 2), 256), _mm_castps_si128(ctx->vu0_vf[0]));
     // 0x14ffac: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x14ffacu;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
     // 0x14ffb0: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x14ffb0u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x14ffb4: 0x24430110  addiu       $v1, $v0, 0x110
-    ctx->pc = 0x14ffb4u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 272));
     // 0x14ffb8: 0x24440120  addiu       $a0, $v0, 0x120
-    ctx->pc = 0x14ffb8u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 2), 288));
     // 0x14ffbc: 0xe4400110  swc1        $f0, 0x110($v0)
     ctx->pc = 0x14ffbcu;
@@ -111,16 +101,12 @@ void func_0014FF80_0x14ff80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x14fff4u;
     WRITE128(ADD32(GPR_U32(ctx, 2), 416), _mm_castps_si128(ctx->vu0_vf[0]));
     // 0x14fff8: 0x4be4033c  vmove.xyzw  $vf4, $vf0
-    ctx->pc = 0x14fff8u;
     { __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[4] = _mm_blendv_ps(ctx->vu0_vf[4], ctx->vu0_vf[0], _mm_castsi128_ps(mask)); }
     // 0x14fffc: 0x4be5233d  vmr32.xyzw  $vf5, $vf4
-    ctx->pc = 0x14fffcu;
     { __m128 res = _mm_shuffle_ps(ctx->vu0_vf[4], ctx->vu0_vf[4], _MM_SHUFFLE(0,3,2,1)); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[5] = _mm_blendv_ps(ctx->vu0_vf[5], res, _mm_castsi128_ps(mask)); }
     // 0x150000: 0x4be62b3d  vmr32.xyzw  $vf6, $vf5
-    ctx->pc = 0x150000u;
     { __m128 res = _mm_shuffle_ps(ctx->vu0_vf[5], ctx->vu0_vf[5], _MM_SHUFFLE(0,3,2,1)); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[6] = _mm_blendv_ps(ctx->vu0_vf[6], res, _mm_castsi128_ps(mask)); }
     // 0x150004: 0x4be7333d  vmr32.xyzw  $vf7, $vf6
-    ctx->pc = 0x150004u;
     { __m128 res = _mm_shuffle_ps(ctx->vu0_vf[6], ctx->vu0_vf[6], _MM_SHUFFLE(0,3,2,1)); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[7] = _mm_blendv_ps(ctx->vu0_vf[7], res, _mm_castsi128_ps(mask)); }
     // 0x150008: 0xf8440030  sqc2        $vf4, 0x30($v0)
     ctx->pc = 0x150008u;
@@ -135,19 +121,14 @@ void func_0014FF80_0x14ff80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x150014u;
     WRITE128(ADD32(GPR_U32(ctx, 2), 0), _mm_castps_si128(ctx->vu0_vf[7]));
     // 0x150018: 0x24430080  addiu       $v1, $v0, 0x80
-    ctx->pc = 0x150018u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 128));
     // 0x15001c: 0x4be4033c  vmove.xyzw  $vf4, $vf0
-    ctx->pc = 0x15001cu;
     { __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[4] = _mm_blendv_ps(ctx->vu0_vf[4], ctx->vu0_vf[0], _mm_castsi128_ps(mask)); }
     // 0x150020: 0x4be5233d  vmr32.xyzw  $vf5, $vf4
-    ctx->pc = 0x150020u;
     { __m128 res = _mm_shuffle_ps(ctx->vu0_vf[4], ctx->vu0_vf[4], _MM_SHUFFLE(0,3,2,1)); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[5] = _mm_blendv_ps(ctx->vu0_vf[5], res, _mm_castsi128_ps(mask)); }
     // 0x150024: 0x4be62b3d  vmr32.xyzw  $vf6, $vf5
-    ctx->pc = 0x150024u;
     { __m128 res = _mm_shuffle_ps(ctx->vu0_vf[5], ctx->vu0_vf[5], _MM_SHUFFLE(0,3,2,1)); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[6] = _mm_blendv_ps(ctx->vu0_vf[6], res, _mm_castsi128_ps(mask)); }
     // 0x150028: 0x4be7333d  vmr32.xyzw  $vf7, $vf6
-    ctx->pc = 0x150028u;
     { __m128 res = _mm_shuffle_ps(ctx->vu0_vf[6], ctx->vu0_vf[6], _MM_SHUFFLE(0,3,2,1)); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[7] = _mm_blendv_ps(ctx->vu0_vf[7], res, _mm_castsi128_ps(mask)); }
     // 0x15002c: 0xf8640030  sqc2        $vf4, 0x30($v1)
     ctx->pc = 0x15002cu;
@@ -174,9 +155,7 @@ void func_0014FF80_0x14ff80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x150044u;
     // 0x150044: 0x0  nop
-    ctx->pc = 0x150044u;
     // NOP
     ctx->pc = 0x150048u;
 }

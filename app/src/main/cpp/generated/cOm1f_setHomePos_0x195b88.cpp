@@ -13,15 +13,13 @@
 
 // Function: cOm1f_setHomePos
 // Address: 0x195b88 - 0x195bd0
-void cOm1f_setHomePos_0x195b88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm1f_setHomePos_0x195b88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm1f_setHomePos_0x195b88");
 #endif
 
-    ctx->pc = 0x195b88u;
 
     // 0x195b88: 0x24820b10  addiu       $v0, $a0, 0xB10
-    ctx->pc = 0x195b88u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 2832));
     // 0x195b8c: 0x10450007  beq         $v0, $a1, . + 4 + (0x7 << 2)
     ctx->pc = 0x195B8Cu;
@@ -32,7 +30,6 @@ void cOm1f_setHomePos_0x195b88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_195bac;
         }
     }
-    ctx->pc = 0x195B94u;
     // 0x195b94: 0xc4a00000  lwc1        $f0, 0x0($a1)
     ctx->pc = 0x195b94u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -65,27 +62,19 @@ label_195bac:
         return;
         #endif
     }
-    ctx->pc = 0x195BB4u;
     // 0x195bb4: 0x0  nop
-    ctx->pc = 0x195bb4u;
     // NOP
     // 0x195bb8: 0x0  nop
-    ctx->pc = 0x195bb8u;
     // NOP
     // 0x195bbc: 0x0  nop
-    ctx->pc = 0x195bbcu;
     // NOP
     // 0x195bc0: 0x0  nop
-    ctx->pc = 0x195bc0u;
     // NOP
     // 0x195bc4: 0x0  nop
-    ctx->pc = 0x195bc4u;
     // NOP
     // 0x195bc8: 0x0  nop
-    ctx->pc = 0x195bc8u;
     // NOP
     // 0x195bcc: 0x0  nop
-    ctx->pc = 0x195bccu;
     // NOP
     ctx->pc = 0x195bd0u;
 }

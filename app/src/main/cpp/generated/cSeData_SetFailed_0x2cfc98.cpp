@@ -13,12 +13,11 @@
 
 // Function: cSeData_SetFailed
 // Address: 0x2cfc98 - 0x2cfcb0
-void cSeData_SetFailed_0x2cfc98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSeData_SetFailed_0x2cfc98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSeData_SetFailed_0x2cfc98");
 #endif
 
-    ctx->pc = 0x2cfc98u;
 
     // 0x2cfc98: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x2cfc98u;
@@ -38,7 +37,6 @@ void cSeData_SetFailed_0x2cfc98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_2cfca8;
         }
     }
-    ctx->pc = 0x2CFCA4u;
     // 0x2cfca4: 0xac820000  sw          $v0, 0x0($a0)
     ctx->pc = 0x2cfca4u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 0), GPR_U32(ctx, 2));

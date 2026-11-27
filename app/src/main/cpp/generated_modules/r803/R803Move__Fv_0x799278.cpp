@@ -14,12 +14,11 @@ namespace gh_r803
 {
 // Function: R803Move__Fv
 // Address: 0x799278 - 0x799280
-void R803Move__Fv_0x799278(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void R803Move__Fv_0x799278(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("R803Move__Fv_0x799278");
 #endif
 
-    ctx->pc = 0x799278u;
 
     // 0x799278: 0x3e00008  jr          $ra
     ctx->pc = 0x799278u;

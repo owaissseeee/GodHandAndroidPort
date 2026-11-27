@@ -6,6 +6,7 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,12 +14,30 @@
 
 // Function: sceVu0CopyMatrix
 // Address: 0x30a548 - 0x30a570
-void sceVu0CopyMatrix_0x30a548(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVu0CopyMatrix_0x30a548(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVu0CopyMatrix_0x30a548");
 #endif
 
-    ctx->pc = 0x30a548u;
+#if defined(__aarch64__) || defined(_M_ARM64)
+    {
+        uint8_t* const d = ps2TryFastSpan(rdram, GPR_U32(ctx, 4) & ~0xFu, 64u);
+        const uint8_t* const s = ps2TryFastSpan(rdram, GPR_U32(ctx, 5) & ~0xFu, 64u);
+        if (__builtin_expect(d != nullptr && s != nullptr, 1)) {
+            const float32x4_t c0 = ps2LoadVec4(s + 0);
+            const float32x4_t c1 = ps2LoadVec4(s + 16);
+            const float32x4_t c2 = ps2LoadVec4(s + 32);
+            const float32x4_t c3 = ps2LoadVec4(s + 48);
+            ps2StoreVec4(d + 0, c0);
+            ps2StoreVec4(d + 16, c1);
+            ps2StoreVec4(d + 32, c2);
+            ps2StoreVec4(d + 48, c3);
+            ps2FastReturn(rdram, ctx, runtime, 0x30A568u);
+            return;
+        }
+    }
+#endif
+
 
     // 0x30a548: 0x78a60000  lq          $a2, 0x0($a1)
     ctx->pc = 0x30a548u;

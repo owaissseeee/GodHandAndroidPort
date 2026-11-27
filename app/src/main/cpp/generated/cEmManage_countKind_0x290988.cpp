@@ -13,17 +13,18 @@
 
 // Function: cEmManage_countKind
 // Address: 0x290988 - 0x2909b8
-void cEmManage_countKind_0x290988(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_countKind_0x290988(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_countKind_0x290988");
 #endif
 
-    switch (ctx->pc) {
-        case 0x290998u: goto label_290998;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x290988u, 0)) {
+        switch (ctx->pc) {
+            case 0x290998u: goto label_290998;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x290988u;
 
     // 0x290988: 0x8c840500  lw          $a0, 0x500($a0)
     ctx->pc = 0x290988u;
@@ -43,22 +44,18 @@ void cEmManage_countKind_0x290988(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_2909b0;
         }
     }
-    ctx->pc = 0x290994u;
     // 0x290994: 0x0  nop
-    ctx->pc = 0x290994u;
     // NOP
 label_290998:
     // 0x290998: 0x8c82000c  lw          $v0, 0xC($a0)
     ctx->pc = 0x290998u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 12)));
     // 0x29099c: 0x24c30001  addiu       $v1, $a2, 0x1
-    ctx->pc = 0x29099cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 6), 1));
     // 0x2909a0: 0x8c840004  lw          $a0, 0x4($a0)
     ctx->pc = 0x2909a0u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4)));
     // 0x2909a4: 0x451026  xor         $v0, $v0, $a1
-    ctx->pc = 0x2909a4u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ GPR_U64(ctx, 5));
     // 0x2909a8: 0x1480fffb  bnez        $a0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x2909A8u;
@@ -78,7 +75,6 @@ label_290998:
             goto label_290998;
         }
     }
-    ctx->pc = 0x2909B0u;
 label_2909b0:
     // 0x2909b0: 0x3e00008  jr          $ra
     ctx->pc = 0x2909B0u;

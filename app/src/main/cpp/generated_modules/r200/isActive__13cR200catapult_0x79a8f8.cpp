@@ -14,12 +14,11 @@ namespace gh_r200
 {
 // Function: isActive__13cR200catapult
 // Address: 0x79a8f8 - 0x79a904
-void isActive__13cR200catapult_0x79a8f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void isActive__13cR200catapult_0x79a8f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("isActive__13cR200catapult_0x79a8f8");
 #endif
 
-    ctx->pc = 0x79a8f8u;
 
     // 0x79a8f8: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x79a8f8u;

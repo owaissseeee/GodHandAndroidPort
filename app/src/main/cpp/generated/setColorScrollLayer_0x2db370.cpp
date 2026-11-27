@@ -13,20 +13,20 @@
 
 // Function: setColorScrollLayer
 // Address: 0x2db370 - 0x2db3e8
-void setColorScrollLayer_0x2db370(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void setColorScrollLayer_0x2db370(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("setColorScrollLayer_0x2db370");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2db390u: goto label_2db390;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2db370u, 0)) {
+        switch (ctx->pc) {
+            case 0x2db390u: goto label_2db390;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2db370u;
 
     // 0x2db370: 0x3c060075  lui         $a2, 0x75
-    ctx->pc = 0x2db370u;
     SET_GPR_S32(ctx, 6, (int32_t)((uint32_t)117 << 16));
     // 0x2db374: 0x8cc34c38  lw          $v1, 0x4C38($a2)
     ctx->pc = 0x2db374u;
@@ -46,12 +46,10 @@ void setColorScrollLayer_0x2db370(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_2db3dc;
         }
     }
-    ctx->pc = 0x2DB388u;
     // 0x2db388: 0x8ca30000  lw          $v1, 0x0($a1)
     ctx->pc = 0x2db388u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 0)));
     // 0x2db38c: 0x0  nop
-    ctx->pc = 0x2db38cu;
     // NOP
 label_2db390:
     // 0x2db390: 0x906202fd  lbu         $v0, 0x2FD($v1)
@@ -72,7 +70,6 @@ label_2db390:
             goto label_2db3cc;
         }
     }
-    ctx->pc = 0x2DB39Cu;
     // 0x2db39c: 0xe46c0240  swc1        $f12, 0x240($v1)
     ctx->pc = 0x2db39cu;
     { float f = ctx->f[12]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 3), 576), bits); }
@@ -111,7 +108,6 @@ label_2db390:
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 6), 19512)));
 label_2db3cc:
     // 0x2db3cc: 0x24a50004  addiu       $a1, $a1, 0x4
-    ctx->pc = 0x2db3ccu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 4));
     // 0x2db3d0: 0x8c620008  lw          $v0, 0x8($v1)
     ctx->pc = 0x2db3d0u;
@@ -134,7 +130,6 @@ label_2db3cc:
             goto label_2db390;
         }
     }
-    ctx->pc = 0x2DB3DCu;
 label_2db3dc:
     // 0x2db3dc: 0x3e00008  jr          $ra
     ctx->pc = 0x2DB3DCu;
@@ -149,9 +144,7 @@ label_2db3dc:
         return;
         #endif
     }
-    ctx->pc = 0x2DB3E4u;
     // 0x2db3e4: 0x0  nop
-    ctx->pc = 0x2db3e4u;
     // NOP
     ctx->pc = 0x2db3e8u;
 }

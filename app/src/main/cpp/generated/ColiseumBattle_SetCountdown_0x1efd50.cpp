@@ -13,30 +13,24 @@
 
 // Function: ColiseumBattle_SetCountdown
 // Address: 0x1efd50 - 0x1efd70
-void ColiseumBattle_SetCountdown_0x1efd50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumBattle_SetCountdown_0x1efd50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumBattle_SetCountdown_0x1efd50");
 #endif
 
-    ctx->pc = 0x1efd50u;
 
     // 0x1efd50: 0x8c820b6c  lw          $v0, 0xB6C($a0)
     ctx->pc = 0x1efd50u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 2924)));
     // 0x1efd54: 0x2403001e  addiu       $v1, $zero, 0x1E
-    ctx->pc = 0x1efd54u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 30));
     // 0x1efd58: 0x431018  mult        $v0, $v0, $v1
-    ctx->pc = 0x1efd58u;
     { int64_t result = (int64_t)GPR_S32(ctx, 2) * (int64_t)GPR_S32(ctx, 3); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 2, (int32_t)result); }
     // 0x1efd5c: 0x44820000  mtc1        $v0, $f0
-    ctx->pc = 0x1efd5cu;
     { uint32_t bits = GPR_U32(ctx, 2); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x1efd60: 0x0  nop
-    ctx->pc = 0x1efd60u;
     // NOP
     // 0x1efd64: 0x46800020  cvt.s.w     $f0, $f0
-    ctx->pc = 0x1efd64u;
     { int32_t tmp; std::memcpy(&tmp, &ctx->f[0], sizeof(tmp)); ctx->f[0] = FPU_CVT_S_W(tmp); }
     // 0x1efd68: 0x3e00008  jr          $ra
     ctx->pc = 0x1EFD68u;

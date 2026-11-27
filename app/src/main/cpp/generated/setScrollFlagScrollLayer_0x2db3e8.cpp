@@ -13,20 +13,20 @@
 
 // Function: setScrollFlagScrollLayer
 // Address: 0x2db3e8 - 0x2db478
-void setScrollFlagScrollLayer_0x2db3e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void setScrollFlagScrollLayer_0x2db3e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("setScrollFlagScrollLayer_0x2db3e8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2db428u: goto label_2db428;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2db3e8u, 0)) {
+        switch (ctx->pc) {
+            case 0x2db428u: goto label_2db428;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2db3e8u;
 
     // 0x2db3e8: 0x3c090075  lui         $t1, 0x75
-    ctx->pc = 0x2db3e8u;
     SET_GPR_S32(ctx, 9, (int32_t)((uint32_t)117 << 16));
     // 0x2db3ec: 0x8d234c38  lw          $v1, 0x4C38($t1)
     ctx->pc = 0x2db3ecu;
@@ -52,36 +52,26 @@ void setScrollFlagScrollLayer_0x2db3e8(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_2db470;
         }
     }
-    ctx->pc = 0x2DB400u;
     // 0x2db400: 0x30a2001f  andi        $v0, $a1, 0x1F
-    ctx->pc = 0x2db400u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)31);
     // 0x2db404: 0x3c038000  lui         $v1, 0x8000
-    ctx->pc = 0x2db404u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)32768 << 16));
     // 0x2db408: 0x52142  srl         $a0, $a1, 5
-    ctx->pc = 0x2db408u;
     SET_GPR_S32(ctx, 4, (int32_t)SRL32(GPR_U32(ctx, 5), 5));
     // 0x2db40c: 0x434006  srlv        $t0, $v1, $v0
-    ctx->pc = 0x2db40cu;
     SET_GPR_S32(ctx, 8, (int32_t)SRL32(GPR_U32(ctx, 3), GPR_U32(ctx, 2) & 0x1F));
     // 0x2db410: 0x120582d  daddu       $t3, $t1, $zero
-    ctx->pc = 0x2db410u;
     SET_GPR_U64(ctx, 11, (uint64_t)GPR_U64(ctx, 9) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2db414: 0x82827  nor         $a1, $zero, $t0
-    ctx->pc = 0x2db414u;
     SET_GPR_U64(ctx, 5, ~(GPR_U64(ctx, 0) | GPR_U64(ctx, 8)));
     // 0x2db418: 0x42080  sll         $a0, $a0, 2
-    ctx->pc = 0x2db418u;
     SET_GPR_S32(ctx, 4, (int32_t)SLL32(GPR_U32(ctx, 4), 2));
     // 0x2db41c: 0x24090001  addiu       $t1, $zero, 0x1
-    ctx->pc = 0x2db41cu;
     SET_GPR_S32(ctx, 9, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2db420: 0x8ce30000  lw          $v1, 0x0($a3)
     ctx->pc = 0x2db420u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 7), 0)));
     // 0x2db424: 0x0  nop
-    ctx->pc = 0x2db424u;
     // NOP
 label_2db428:
     // 0x2db428: 0x906202fd  lbu         $v0, 0x2FD($v1)
@@ -102,7 +92,6 @@ label_2db428:
             goto label_2db460;
         }
     }
-    ctx->pc = 0x2DB434u;
     // 0x2db434: 0x14c90005  bne         $a2, $t1, . + 4 + (0x5 << 2)
     ctx->pc = 0x2DB434u;
     {
@@ -118,9 +107,7 @@ label_2db428:
             goto label_2db44c;
         }
     }
-    ctx->pc = 0x2DB43Cu;
     // 0x2db43c: 0x831821  addu        $v1, $a0, $v1
-    ctx->pc = 0x2db43cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 3)));
     // 0x2db440: 0x8c620000  lw          $v0, 0x0($v1)
     ctx->pc = 0x2db440u;
@@ -140,16 +127,13 @@ label_2db428:
             goto label_2db458;
         }
     }
-    ctx->pc = 0x2DB44Cu;
 label_2db44c:
     // 0x2db44c: 0x831821  addu        $v1, $a0, $v1
-    ctx->pc = 0x2db44cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 3)));
     // 0x2db450: 0x8c620000  lw          $v0, 0x0($v1)
     ctx->pc = 0x2db450u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 0)));
     // 0x2db454: 0x451024  and         $v0, $v0, $a1
-    ctx->pc = 0x2db454u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 5));
 label_2db458:
     // 0x2db458: 0xac620000  sw          $v0, 0x0($v1)
@@ -160,7 +144,6 @@ label_2db458:
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 11), 19512)));
 label_2db460:
     // 0x2db460: 0x24e70004  addiu       $a3, $a3, 0x4
-    ctx->pc = 0x2db460u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 7), 4));
     // 0x2db464: 0x8c620008  lw          $v0, 0x8($v1)
     ctx->pc = 0x2db464u;
@@ -183,7 +166,6 @@ label_2db460:
             goto label_2db428;
         }
     }
-    ctx->pc = 0x2DB470u;
 label_2db470:
     // 0x2db470: 0x3e00008  jr          $ra
     ctx->pc = 0x2DB470u;

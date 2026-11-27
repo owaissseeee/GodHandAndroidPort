@@ -14,12 +14,11 @@ namespace gh_mcport
 {
 // Function: setProgress__6cMcSysf
 // Address: 0x7c7e80 - 0x7c7e88
-void setProgress__6cMcSysf_0x7c7e80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void setProgress__6cMcSysf_0x7c7e80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("setProgress__6cMcSysf_0x7c7e80");
 #endif
 
-    ctx->pc = 0x7c7e80u;
 
     // 0x7c7e80: 0x3e00008  jr          $ra
     ctx->pc = 0x7C7E80u;

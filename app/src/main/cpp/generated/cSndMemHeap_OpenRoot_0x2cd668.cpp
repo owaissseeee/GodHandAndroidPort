@@ -13,27 +13,26 @@
 
 // Function: cSndMemHeap_OpenRoot
 // Address: 0x2cd668 - 0x2cd6d0
-void cSndMemHeap_OpenRoot_0x2cd668(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndMemHeap_OpenRoot_0x2cd668(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndMemHeap_OpenRoot_0x2cd668");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2cd698u: goto label_2cd698;
-        case 0x2cd6a4u: goto label_2cd6a4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2cd668u, 0)) {
+        switch (ctx->pc) {
+            case 0x2cd698u: goto label_2cd698;
+            case 0x2cd6a4u: goto label_2cd6a4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2cd668u;
 
     // 0x2cd668: 0x27bdffc0  addiu       $sp, $sp, -0x40
-    ctx->pc = 0x2cd668u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967232));
     // 0x2cd66c: 0x7fb00030  sq          $s0, 0x30($sp)
     ctx->pc = 0x2cd66cu;
     WRITE128(ADD32(GPR_U32(ctx, 29), 48), GPR_VEC(ctx, 16));
     // 0x2cd670: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x2cd670u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2cd674: 0x7fb10020  sq          $s1, 0x20($sp)
     ctx->pc = 0x2cd674u;
@@ -42,22 +41,18 @@ void cSndMemHeap_OpenRoot_0x2cd668(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x2cd678u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 18));
     // 0x2cd67c: 0xc0882d  daddu       $s1, $a2, $zero
-    ctx->pc = 0x2cd67cu;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2cd680: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2cd680u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2cd684: 0xa0902d  daddu       $s2, $a1, $zero
-    ctx->pc = 0x2cd684u;
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2cd688: 0xae100380  sw          $s0, 0x380($s0)
     ctx->pc = 0x2cd688u;
     WRITE32(ADD32(GPR_U32(ctx, 16), 896), GPR_U32(ctx, 16));
     // 0x2cd68c: 0x282d  daddu       $a1, $zero, $zero
-    ctx->pc = 0x2cd68cu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2cd690: 0xc0e94bc  jal         func_3A52F0
-    ctx->pc = 0x2CD690u;
     SET_GPR_U32(ctx, 31, 0x2CD698u);
     ctx->pc = 0x2CD694u;
     ctx->in_delay_slot = true;
@@ -65,17 +60,14 @@ void cSndMemHeap_OpenRoot_0x2cd668(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     // 0x2cd694: 0x24060380  addiu       $a2, $zero, 0x380 (Delay Slot)
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 896));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x3A52F0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3A52F0u, 0x2CD690u, 0x2CD698u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x2cd698u)) {
         return;
     }
-    ctx->pc = 0x2CD698u;
 label_2cd698:
     // 0x2cd698: 0xae110384  sw          $s1, 0x384($s0)
     ctx->pc = 0x2cd698u;
     WRITE32(ADD32(GPR_U32(ctx, 16), 900), GPR_U32(ctx, 17));
     // 0x2cd69c: 0xc0b35d0  jal         func_2CD740
-    ctx->pc = 0x2CD69Cu;
     SET_GPR_U32(ctx, 31, 0x2CD6A4u);
     ctx->pc = 0x2CD6A0u;
     ctx->in_delay_slot = true;
@@ -83,11 +75,9 @@ label_2cd698:
     // 0x2cd6a0: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2CD740u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2CD740u, 0x2CD69Cu, 0x2CD6A4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cSndMemHeap_ResetFirstBlk_0x2cd740, 0x2cd740u, 0x2cd6a4u)) {
         return;
     }
-    ctx->pc = 0x2CD6A4u;
 label_2cd6a4:
     // 0x2cd6a4: 0x8e020380  lw          $v0, 0x380($s0)
     ctx->pc = 0x2cd6a4u;
@@ -132,9 +122,7 @@ label_2cd6a4:
         return;
         #endif
     }
-    ctx->pc = 0x2CD6CCu;
     // 0x2cd6cc: 0x0  nop
-    ctx->pc = 0x2cd6ccu;
     // NOP
     ctx->pc = 0x2cd6d0u;
 }

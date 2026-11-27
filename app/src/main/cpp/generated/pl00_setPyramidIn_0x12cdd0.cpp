@@ -13,15 +13,13 @@
 
 // Function: pl00_setPyramidIn
 // Address: 0x12cdd0 - 0x12cdf0
-void pl00_setPyramidIn_0x12cdd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void pl00_setPyramidIn_0x12cdd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("pl00_setPyramidIn_0x12cdd0");
 #endif
 
-    ctx->pc = 0x12cdd0u;
 
     // 0x12cdd0: 0x24020036  addiu       $v0, $zero, 0x36
-    ctx->pc = 0x12cdd0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 54));
     // 0x12cdd4: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x12cdd4u;
@@ -51,12 +49,9 @@ void pl00_setPyramidIn_0x12cdd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
         return;
         #endif
     }
-    ctx->pc = 0x12CDE8u;
     // 0x12cde8: 0x0  nop
-    ctx->pc = 0x12cde8u;
     // NOP
     // 0x12cdec: 0x0  nop
-    ctx->pc = 0x12cdecu;
     // NOP
     ctx->pc = 0x12cdf0u;
 }

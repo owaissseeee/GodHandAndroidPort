@@ -13,15 +13,13 @@
 
 // Function: GetD003F8560_395388
 // Address: 0x395388 - 0x395398
-void GetD003F8560_395388_0x395388(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetD003F8560_395388_0x395388(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetD003F8560_395388_0x395388");
 #endif
 
-    ctx->pc = 0x395388u;
 
     // 0x395388: 0x3c020040  lui         $v0, 0x40
-    ctx->pc = 0x395388u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)64 << 16));
     // 0x39538c: 0x3e00008  jr          $ra
     ctx->pc = 0x39538Cu;
@@ -42,9 +40,7 @@ void GetD003F8560_395388_0x395388(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         return;
         #endif
     }
-    ctx->pc = 0x395394u;
     // 0x395394: 0x0  nop
-    ctx->pc = 0x395394u;
     // NOP
     ctx->pc = 0x395398u;
 }

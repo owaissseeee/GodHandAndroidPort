@@ -14,12 +14,11 @@ namespace gh_event
 {
 // Function: getPassFrame__C9cEventEnv
 // Address: 0x7ae938 - 0x7ae958
-void getPassFrame__C9cEventEnv_0x7ae938(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getPassFrame__C9cEventEnv_0x7ae938(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getPassFrame__C9cEventEnv_0x7ae938");
 #endif
 
-    ctx->pc = 0x7ae938u;
 
     // 0x7ae938: 0x8c820010  lw          $v0, 0x10($a0)
     ctx->pc = 0x7ae938u;
@@ -28,13 +27,11 @@ void getPassFrame__C9cEventEnv_0x7ae938(uint8_t* rdram, R5900Context* ctx, PS2Ru
     ctx->pc = 0x7ae93cu;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4)));
     // 0x7ae940: 0x21100  sll         $v0, $v0, 4
-    ctx->pc = 0x7ae940u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 4));
     // 0x7ae944: 0xc4810014  lwc1        $f1, 0x14($a0)
     ctx->pc = 0x7ae944u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 20)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x7ae948: 0x431021  addu        $v0, $v0, $v1
-    ctx->pc = 0x7ae948u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
     // 0x7ae94c: 0xc440000c  lwc1        $f0, 0xC($v0)
     ctx->pc = 0x7ae94cu;

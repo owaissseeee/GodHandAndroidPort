@@ -13,12 +13,11 @@
 
 // Function: cOm1f_setMoveRange
 // Address: 0x195b70 - 0x195b88
-void cOm1f_setMoveRange_0x195b70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm1f_setMoveRange_0x195b70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm1f_setMoveRange_0x195b70");
 #endif
 
-    ctx->pc = 0x195b70u;
 
     // 0x195b70: 0xe48f0b04  swc1        $f15, 0xB04($a0)
     ctx->pc = 0x195b70u;
@@ -48,9 +47,7 @@ void cOm1f_setMoveRange_0x195b70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         return;
         #endif
     }
-    ctx->pc = 0x195B84u;
     // 0x195b84: 0x0  nop
-    ctx->pc = 0x195b84u;
     // NOP
     ctx->pc = 0x195b88u;
 }

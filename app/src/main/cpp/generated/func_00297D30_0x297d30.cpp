@@ -13,12 +13,11 @@
 
 // Function: func_00297D30
 // Address: 0x297d30 - 0x297d40
-void func_00297D30_0x297d30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00297D30_0x297d30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00297D30_0x297d30");
 #endif
 
-    ctx->pc = 0x297d30u;
 
     // 0x297d30: 0xac860014  sw          $a2, 0x14($a0)
     ctx->pc = 0x297d30u;
@@ -42,9 +41,7 @@ void func_00297D30_0x297d30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x297D3Cu;
     // 0x297d3c: 0x0  nop
-    ctx->pc = 0x297d3cu;
     // NOP
     ctx->pc = 0x297d40u;
 }

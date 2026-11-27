@@ -14,12 +14,11 @@ namespace gh_event
 {
 // Function: quitPlay__9cEventEnv
 // Address: 0x7ae920 - 0x7ae928
-void quitPlay__9cEventEnv_0x7ae920(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void quitPlay__9cEventEnv_0x7ae920(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("quitPlay__9cEventEnv_0x7ae920");
 #endif
 
-    ctx->pc = 0x7ae920u;
 
     // 0x7ae920: 0x3e00008  jr          $ra
     ctx->pc = 0x7AE920u;

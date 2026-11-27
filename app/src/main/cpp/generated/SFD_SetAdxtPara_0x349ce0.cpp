@@ -13,21 +13,18 @@
 
 // Function: SFD_SetAdxtPara
 // Address: 0x349ce0 - 0x349d38
-void SFD_SetAdxtPara_0x349ce0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SFD_SetAdxtPara_0x349ce0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SFD_SetAdxtPara_0x349ce0");
 #endif
 
-    ctx->pc = 0x349ce0u;
 
     // 0x349ce0: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x349ce0u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x349ce4: 0x3c050076  lui         $a1, 0x76
-    ctx->pc = 0x349ce4u;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)118 << 16));
     // 0x349ce8: 0x24a50d90  addiu       $a1, $a1, 0xD90
-    ctx->pc = 0x349ce8u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 3472));
     // 0x349cec: 0x8c820008  lw          $v0, 0x8($a0)
     ctx->pc = 0x349cecu;
@@ -36,16 +33,13 @@ void SFD_SetAdxtPara_0x349ce0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     ctx->pc = 0x349cf0u;
     do { uint32_t _value = static_cast<uint32_t>(GPR_U32(ctx, 3)); ps2TraceGuestWrite(rdram, 0x760D90u, 4u, _value, 0u, "WRITE32", ctx); FAST_WRITE32(0x760D90u, _value); } while (0);
     // 0x349cf4: 0x2406ffe0  addiu       $a2, $zero, -0x20
-    ctx->pc = 0x349cf4u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967264));
     // 0x349cf8: 0x2442001f  addiu       $v0, $v0, 0x1F
-    ctx->pc = 0x349cf8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 31));
     // 0x349cfc: 0x8c830004  lw          $v1, 0x4($a0)
     ctx->pc = 0x349cfcu;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4)));
     // 0x349d00: 0x461024  and         $v0, $v0, $a2
-    ctx->pc = 0x349d00u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 6));
     // 0x349d04: 0xaca20008  sw          $v0, 0x8($a1)
     ctx->pc = 0x349d04u;
@@ -60,13 +54,11 @@ void SFD_SetAdxtPara_0x349ce0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     ctx->pc = 0x349d10u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 12)));
     // 0x349d14: 0x2442001f  addiu       $v0, $v0, 0x1F
-    ctx->pc = 0x349d14u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 31));
     // 0x349d18: 0xaca3000c  sw          $v1, 0xC($a1)
     ctx->pc = 0x349d18u;
     WRITE32(ADD32(GPR_U32(ctx, 5), 12), GPR_U32(ctx, 3));
     // 0x349d1c: 0x461024  and         $v0, $v0, $a2
-    ctx->pc = 0x349d1cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 6));
     // 0x349d20: 0xaca20018  sw          $v0, 0x18($a1)
     ctx->pc = 0x349d20u;

@@ -14,18 +14,16 @@ namespace gh_event
 {
 // Function: isMotionFrame__C15cEventActorWorkUcUcf
 // Address: 0x7ab690 - 0x7ab6d8
-void isMotionFrame__C15cEventActorWorkUcUcf_0x7ab690(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void isMotionFrame__C15cEventActorWorkUcUcf_0x7ab690(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("isMotionFrame__C15cEventActorWorkUcUcf_0x7ab690");
 #endif
 
-    ctx->pc = 0x7ab690u;
 
     // 0x7ab690: 0x8482000a  lh          $v0, 0xA($a0)
     ctx->pc = 0x7ab690u;
     SET_GPR_S32(ctx, 2, (int16_t)READ16(ADD32(GPR_U32(ctx, 4), 10)));
     // 0x7ab694: 0x30a500ff  andi        $a1, $a1, 0xFF
-    ctx->pc = 0x7ab694u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)255);
     // 0x7ab698: 0x10450003  beq         $v0, $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x7AB698u;
@@ -42,7 +40,6 @@ void isMotionFrame__C15cEventActorWorkUcUcf_0x7ab690(uint8_t* rdram, R5900Contex
             goto label_7ab6a8;
         }
     }
-    ctx->pc = 0x7AB6A0u;
     // 0x7ab6a0: 0x3e00008  jr          $ra
     ctx->pc = 0x7AB6A0u;
     {
@@ -62,7 +59,6 @@ void isMotionFrame__C15cEventActorWorkUcUcf_0x7ab690(uint8_t* rdram, R5900Contex
         return;
         #endif
     }
-    ctx->pc = 0x7AB6A8u;
 label_7ab6a8:
     // 0x7ab6a8: 0x80820009  lb          $v0, 0x9($a0)
     ctx->pc = 0x7ab6a8u;
@@ -82,15 +78,12 @@ label_7ab6a8:
             goto label_7ab6d0;
         }
     }
-    ctx->pc = 0x7AB6B4u;
     // 0x7ab6b4: 0xc4800010  lwc1        $f0, 0x10($a0)
     ctx->pc = 0x7ab6b4u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 16)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x7ab6b8: 0x460c0032  c.eq.s      $f0, $f12
-    ctx->pc = 0x7ab6b8u;
     ctx->fcr31 = (FPU_C_EQ_S(ctx->f[0], ctx->f[12])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x7ab6bc: 0x0  nop
-    ctx->pc = 0x7ab6bcu;
     // NOP
     // 0x7ab6c0: 0x45000003  bc1f        . + 4 + (0x3 << 2)
     ctx->pc = 0x7AB6C0u;
@@ -101,7 +94,6 @@ label_7ab6a8:
             goto label_7ab6d0;
         }
     }
-    ctx->pc = 0x7AB6C8u;
     // 0x7ab6c8: 0x3e00008  jr          $ra
     ctx->pc = 0x7AB6C8u;
     {
@@ -121,7 +113,6 @@ label_7ab6a8:
         return;
         #endif
     }
-    ctx->pc = 0x7AB6D0u;
 label_7ab6d0:
     // 0x7ab6d0: 0x3e00008  jr          $ra
     ctx->pc = 0x7AB6D0u;

@@ -13,18 +13,16 @@
 
 // Function: Obj0000_Set_D_0076B080_Field_A4_3754F0
 // Address: 0x3754f0 - 0x375500
-void Obj0000_Set_D_0076B080_Field_A4_3754F0_0x3754f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_D_0076B080_Field_A4_3754F0_0x3754f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_D_0076B080_Field_A4_3754F0_0x3754f0");
 #endif
 
-    ctx->pc = 0x3754f0u;
 
     // 0x3754f0: 0x8c8300a4  lw          $v1, 0xA4($a0)
     ctx->pc = 0x3754f0u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 164)));
     // 0x3754f4: 0x3c020077  lui         $v0, 0x77
-    ctx->pc = 0x3754f4u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)119 << 16));
     // 0x3754f8: 0x3e00008  jr          $ra
     ctx->pc = 0x3754F8u;

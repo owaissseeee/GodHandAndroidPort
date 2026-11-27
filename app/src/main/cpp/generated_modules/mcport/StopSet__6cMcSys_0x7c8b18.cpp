@@ -14,12 +14,11 @@ namespace gh_mcport
 {
 // Function: StopSet__6cMcSys
 // Address: 0x7c8b18 - 0x7c8b20
-void StopSet__6cMcSys_0x7c8b18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void StopSet__6cMcSys_0x7c8b18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("StopSet__6cMcSys_0x7c8b18");
 #endif
 
-    ctx->pc = 0x7c8b18u;
 
     // 0x7c8b18: 0x3e00008  jr          $ra
     ctx->pc = 0x7C8B18u;

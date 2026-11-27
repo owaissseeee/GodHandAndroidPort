@@ -13,12 +13,11 @@
 
 // Function: NoOp_1B0AE0
 // Address: 0x1b0ae0 - 0x1b0ae8
-void NoOp_1B0AE0_0x1b0ae0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void NoOp_1B0AE0_0x1b0ae0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("NoOp_1B0AE0_0x1b0ae0");
 #endif
 
-    ctx->pc = 0x1b0ae0u;
 
     // 0x1b0ae0: 0x3e00008  jr          $ra
     ctx->pc = 0x1B0AE0u;

@@ -13,18 +13,15 @@
 
 // Function: func_00299348
 // Address: 0x299348 - 0x299368
-void func_00299348_0x299348(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00299348_0x299348(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00299348_0x299348");
 #endif
 
-    ctx->pc = 0x299348u;
 
     // 0x299348: 0x3c020001  lui         $v0, 0x1
-    ctx->pc = 0x299348u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)1 << 16));
     // 0x29934c: 0x822021  addu        $a0, $a0, $v0
-    ctx->pc = 0x29934cu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 2)));
     // 0x299350: 0xac8040a4  sw          $zero, 0x40A4($a0)
     ctx->pc = 0x299350u;

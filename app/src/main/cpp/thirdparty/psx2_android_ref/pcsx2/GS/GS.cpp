@@ -1072,6 +1072,13 @@ void* GSAllocateWrappedMemory(size_t size, size_t repeat)
     }
 #endif
 	void* fifo = mmap(nullptr, size * repeat, PROT_READ | PROT_WRITE, MAP_SHARED, s_shm_fd, 0);
+	if (fifo == MAP_FAILED)
+	{
+		fprintf(stderr, "Failed to mmap wrapped memory (%zu bytes x %zu) due to %s\n", size, repeat, strerror(errno));
+		close(s_shm_fd);
+		s_shm_fd = -1;
+		return nullptr;
+	}
 
 	for (size_t i = 1; i < repeat; i++)
 	{

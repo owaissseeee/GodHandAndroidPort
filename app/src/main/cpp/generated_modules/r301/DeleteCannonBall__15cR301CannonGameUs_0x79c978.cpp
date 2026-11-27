@@ -14,29 +14,28 @@ namespace gh_r301
 {
 // Function: DeleteCannonBall__15cR301CannonGameUs
 // Address: 0x79c978 - 0x79c9b0
-void DeleteCannonBall__15cR301CannonGameUs_0x79c978(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void DeleteCannonBall__15cR301CannonGameUs_0x79c978(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("DeleteCannonBall__15cR301CannonGameUs_0x79c978");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79c9a4u: goto label_79c9a4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x79c978u, 0)) {
+        switch (ctx->pc) {
+            case 0x79c9a4u: goto label_79c9a4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x79c978u;
+
 
     // 0x79c978: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x79c978u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x79c97c: 0x30a5ffff  andi        $a1, $a1, 0xFFFF
-    ctx->pc = 0x79c97cu;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)65535);
     // 0x79c980: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x79c980u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x79c984: 0x2ca20005  sltiu       $v0, $a1, 0x5
-    ctx->pc = 0x79c984u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 5) < (uint64_t)(int64_t)(int32_t)5) ? 1 : 0);
     // 0x79c988: 0x10400006  beqz        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x79C988u;
@@ -53,20 +52,14 @@ void DeleteCannonBall__15cR301CannonGameUs_0x79c978(uint8_t* rdram, R5900Context
             goto label_79c9a4;
         }
     }
-    ctx->pc = 0x79C990u;
     // 0x79c990: 0x2404000c  addiu       $a0, $zero, 0xC
-    ctx->pc = 0x79c990u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 12));
     // 0x79c994: 0xa42018  mult        $a0, $a1, $a0
-    ctx->pc = 0x79c994u;
     { int64_t result = (int64_t)GPR_S32(ctx, 5) * (int64_t)GPR_S32(ctx, 4); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 4, (int32_t)result); }
     // 0x79c998: 0x24840010  addiu       $a0, $a0, 0x10
-    ctx->pc = 0x79c998u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 16));
     // 0x79c99c: 0xc1e6ca8  jal         func_79B2A0
-    ctx->pc = 0x79C99Cu;
     SET_GPR_U32(ctx, 31, 0x79C9A4u);
-    ctx->pc = 0x79C9A0u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x79C99Cu;
     // 0x79c9a0: 0x642021  addu        $a0, $v1, $a0 (Delay Slot)
@@ -76,7 +69,6 @@ void DeleteCannonBall__15cR301CannonGameUs_0x79c978(uint8_t* rdram, R5900Context
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x79B2A0u, 0x79C99Cu, 0x79C9A4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x79C9A4u;
 label_79c9a4:
     // 0x79c9a4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x79c9a4u;

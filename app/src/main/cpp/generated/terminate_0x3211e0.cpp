@@ -13,30 +13,29 @@
 
 // Function: terminate
 // Address: 0x3211e0 - 0x3211f8
-void terminate_0x3211e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void terminate_0x3211e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("terminate_0x3211e0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3211e0u: goto label_3211e0;
-        case 0x3211e4u: goto label_3211e4;
-        case 0x3211e8u: goto label_3211e8;
-        case 0x3211ecu: goto label_3211ec;
-        case 0x3211f0u: goto label_3211f0;
-        case 0x3211f4u: goto label_3211f4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3211e0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3211e0u: goto label_3211e0;
+            case 0x3211e4u: goto label_3211e4;
+            case 0x3211e8u: goto label_3211e8;
+            case 0x3211ecu: goto label_3211ec;
+            case 0x3211f0u: goto label_3211f0;
+            case 0x3211f4u: goto label_3211f4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3211e0u;
 
 label_3211e0:
     // 0x3211e0: 0x3c02003c  lui         $v0, 0x3C
-    ctx->pc = 0x3211e0u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
 label_3211e4:
     // 0x3211e4: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x3211e4u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_3211e8:
     // 0x3211e8: 0x8c434908  lw          $v1, 0x4908($v0)

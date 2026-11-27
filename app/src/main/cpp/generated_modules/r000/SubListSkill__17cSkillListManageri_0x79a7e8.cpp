@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
+#include <ps2_recompiled_functions.h>
 #include "r000_functions.h"
 
 #include "ps2_syscalls.h"
@@ -14,20 +15,21 @@ namespace gh_r000
 {
 // Function: SubListSkill__17cSkillListManageri
 // Address: 0x79a7e8 - 0x79a820
-void SubListSkill__17cSkillListManageri_0x79a7e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SubListSkill__17cSkillListManageri_0x79a7e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SubListSkill__17cSkillListManageri_0x79a7e8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79a810u: goto label_79a810;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x79a7e8u, 0)) {
+        switch (ctx->pc) {
+            case 0x79a810u: goto label_79a810;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x79a7e8u;
+
 
     // 0x79a7e8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x79a7e8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x79a7ec: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x79a7ecu;
@@ -50,30 +52,24 @@ void SubListSkill__17cSkillListManageri_0x79a7e8(uint8_t* rdram, R5900Context* c
             goto label_79a810;
         }
     }
-    ctx->pc = 0x79A7FCu;
     // 0x79a7fc: 0x2406ffff  addiu       $a2, $zero, -0x1
-    ctx->pc = 0x79a7fcu;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x79a800: 0x3c040057  lui         $a0, 0x57
-    ctx->pc = 0x79a800u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)87 << 16));
     // 0x79a804: 0x80450014  lb          $a1, 0x14($v0)
     ctx->pc = 0x79a804u;
     SET_GPR_S32(ctx, 5, (int8_t)READ8(ADD32(GPR_U32(ctx, 2), 20)));
     // 0x79a808: 0xc07ebc8  jal         func_1FAF20
-    ctx->pc = 0x79A808u;
     SET_GPR_U32(ctx, 31, 0x79A810u);
-    ctx->pc = 0x79A80Cu;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x79A808u;
     // 0x79a80c: 0x24849b70  addiu       $a0, $a0, -0x6490 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 4294941552));
     ctx->in_delay_slot = false;
     ctx->pc = 0x1FAF20u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1FAF20u, 0x79A808u, 0x79A810u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_setSkill_0x1faf20, 0x1FAF20u, 0x79A810u)) {
         return;
     }
-    ctx->pc = 0x79A810u;
 label_79a810:
     // 0x79a810: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x79a810u;
@@ -97,9 +93,7 @@ label_79a810:
         return;
         #endif
     }
-    ctx->pc = 0x79A81Cu;
     // 0x79a81c: 0x0  nop
-    ctx->pc = 0x79a81cu;
     // NOP
     ctx->pc = 0x79a820u;
 }

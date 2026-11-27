@@ -13,17 +13,18 @@
 
 // Function: Trail_snapToSources
 // Address: 0x1fceb0 - 0x1fcf20
-void Trail_snapToSources_0x1fceb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Trail_snapToSources_0x1fceb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Trail_snapToSources_0x1fceb0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1fcec0u: goto label_1fcec0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1fceb0u, 0)) {
+        switch (ctx->pc) {
+            case 0x1fcec0u: goto label_1fcec0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1fceb0u;
 
     // 0x1fceb0: 0x8c85003c  lw          $a1, 0x3C($a0)
     ctx->pc = 0x1fceb0u;
@@ -43,7 +44,6 @@ void Trail_snapToSources_0x1fceb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_1fcf18;
         }
     }
-    ctx->pc = 0x1FCEBCu;
     // 0x1fcebc: 0x8ca20028  lw          $v0, 0x28($a1)
     ctx->pc = 0x1fcebcu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 40)));
@@ -69,7 +69,6 @@ label_1fcec0:
             goto label_1fceec;
         }
     }
-    ctx->pc = 0x1FCED0u;
     // 0x1fced0: 0xc4400000  lwc1        $f0, 0x0($v0)
     ctx->pc = 0x1fced0u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 2), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -89,7 +88,6 @@ label_1fcec0:
     ctx->pc = 0x1fcee4u;
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 5), 8), bits); }
     // 0x1fcee8: 0x24a20010  addiu       $v0, $a1, 0x10
-    ctx->pc = 0x1fcee8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 5), 16));
 label_1fceec:
     // 0x1fceec: 0x50450008  beql        $v0, $a1, . + 4 + (0x8 << 2)
@@ -107,7 +105,6 @@ label_1fceec:
             goto label_1fcf10;
         }
     }
-    ctx->pc = 0x1FCEF4u;
     // 0x1fcef4: 0xc4a00000  lwc1        $f0, 0x0($a1)
     ctx->pc = 0x1fcef4u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -148,7 +145,6 @@ label_1fcf10:
             goto label_1fcec0;
         }
     }
-    ctx->pc = 0x1FCF18u;
 label_1fcf18:
     // 0x1fcf18: 0x3e00008  jr          $ra
     ctx->pc = 0x1FCF18u;

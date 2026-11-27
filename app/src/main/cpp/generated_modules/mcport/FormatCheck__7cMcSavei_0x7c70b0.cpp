@@ -14,15 +14,13 @@ namespace gh_mcport
 {
 // Function: FormatCheck__7cMcSavei
 // Address: 0x7c70b0 - 0x7c70d8
-void FormatCheck__7cMcSavei_0x7c70b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FormatCheck__7cMcSavei_0x7c70b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FormatCheck__7cMcSavei_0x7c70b0");
 #endif
 
-    ctx->pc = 0x7c70b0u;
 
     // 0x7c70b0: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x7c70b0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x7c70b4: 0x10a00005  beqz        $a1, . + 4 + (0x5 << 2)
     ctx->pc = 0x7C70B4u;
@@ -39,12 +37,9 @@ void FormatCheck__7cMcSavei_0x7c70b0(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_7c70cc;
         }
     }
-    ctx->pc = 0x7C70BCu;
     // 0x7c70bc: 0x24030007  addiu       $v1, $zero, 0x7
-    ctx->pc = 0x7c70bcu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 7));
     // 0x7c70c0: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x7c70c0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x7c70c4: 0x3e00008  jr          $ra
     ctx->pc = 0x7C70C4u;
@@ -65,7 +60,6 @@ void FormatCheck__7cMcSavei_0x7c70b0(uint8_t* rdram, R5900Context* ctx, PS2Runti
         return;
         #endif
     }
-    ctx->pc = 0x7C70CCu;
 label_7c70cc:
     // 0x7c70cc: 0x3e00008  jr          $ra
     ctx->pc = 0x7C70CCu;
@@ -86,9 +80,7 @@ label_7c70cc:
         return;
         #endif
     }
-    ctx->pc = 0x7C70D4u;
     // 0x7c70d4: 0x0  nop
-    ctx->pc = 0x7c70d4u;
     // NOP
     ctx->pc = 0x7c70d8u;
 }

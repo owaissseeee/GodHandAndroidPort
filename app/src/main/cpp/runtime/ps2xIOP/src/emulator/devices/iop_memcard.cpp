@@ -3,7 +3,11 @@
 #include <algorithm>
 #include <array>
 #include <cstdio>
+#include <cstring>
+#include <mutex>
 #include <system_error>
+#include <unordered_map>
+#include <vector>
 
 namespace ps2x::iop::detail
 {
@@ -30,8 +34,90 @@ namespace ps2x::iop::detail
         constexpr uint8_t kAuthF7 = 0xF7u;
     }
 
+    namespace
+    {
+        struct MemCardRamCache
+        {
+            std::vector<uint8_t> data;
+            bool loaded = false;
+            uint64_t dirtyBegin = 0;
+            uint64_t dirtyEnd = 0;
+        };
+
+        std::mutex g_memCardCacheMutex;
+        std::unordered_map<const VirtualMemoryCard *, MemCardRamCache> g_memCardCaches;
+
+        constexpr uint64_t kCardImageBytes = 8650752ull;
+
+        void flushCardCache(const VirtualMemoryCard *card, std::fstream &file,
+                            uint32_t &ioErrors, const std::filesystem::path &path)
+        {
+            std::lock_guard<std::mutex> lock(g_memCardCacheMutex);
+            auto it = g_memCardCaches.find(card);
+            if (it == g_memCardCaches.end())
+                return;
+            MemCardRamCache &cache = it->second;
+            if (!cache.loaded || cache.dirtyBegin >= cache.dirtyEnd || !file.is_open())
+                return;
+            const uint64_t end = std::min<uint64_t>(cache.dirtyEnd, cache.data.size());
+            if (cache.dirtyBegin < end)
+            {
+                const uint64_t len = end - cache.dirtyBegin;
+                file.clear();
+                file.seekp(static_cast<std::streamoff>(cache.dirtyBegin));
+                file.write(reinterpret_cast<const char *>(cache.data.data() + cache.dirtyBegin),
+                           static_cast<std::streamsize>(len));
+                file.flush();
+                if (!file && ioErrors < 8u)
+                {
+                    ++ioErrors;
+                    std::fprintf(stderr, "[SIO2] ERROR: memory card %s: host write of %llu bytes at 0x%llx failed\n",
+                                 path.string().c_str(),
+                                 static_cast<unsigned long long>(len),
+                                 static_cast<unsigned long long>(cache.dirtyBegin));
+                }
+            }
+            cache.dirtyBegin = kCardImageBytes;
+            cache.dirtyEnd = 0;
+        }
+
+        void invalidateCardCache(const VirtualMemoryCard *card)
+        {
+            std::lock_guard<std::mutex> lock(g_memCardCacheMutex);
+            auto it = g_memCardCaches.find(card);
+            if (it != g_memCardCaches.end())
+            {
+                it->second.loaded = false;
+                it->second.dirtyBegin = kCardImageBytes;
+                it->second.dirtyEnd = 0;
+            }
+        }
+
+        MemCardRamCache &ensureCardCacheLocked(const VirtualMemoryCard *card, std::fstream &file, size_t imageSize)
+        {
+            MemCardRamCache &cache = g_memCardCaches[card];
+            if (!cache.loaded)
+            {
+                cache.data.assign(imageSize, uint8_t{0xFFu});
+                if (file.is_open())
+                {
+                    file.clear();
+                    file.seekg(0);
+                    file.read(reinterpret_cast<char *>(cache.data.data()), static_cast<std::streamsize>(imageSize));
+                    file.clear();
+                }
+                cache.loaded = true;
+                cache.dirtyBegin = imageSize;
+                cache.dirtyEnd = 0;
+            }
+            return cache;
+        }
+    }
+
     void VirtualMemoryCard::attach(std::filesystem::path path, bool createIfMissing)
     {
+        flushCardCache(this, m_file, m_ioErrors, m_path);
+        invalidateCardCache(this);
         if (m_file.is_open())
             m_file.close();
         m_path = std::move(path);
@@ -87,7 +173,13 @@ namespace ps2x::iop::detail
             return false;
         }
         m_file.open(m_path, std::ios::binary | std::ios::in | std::ios::out);
-        return m_file.is_open();
+        if (!m_file.is_open())
+        {
+            invalidateCardCache(this);
+            return false;
+        }
+        invalidateCardCache(this);
+        return true;
     }
 
     void VirtualMemoryCard::read(uint64_t address, uint8_t *destination, size_t size)
@@ -96,9 +188,9 @@ namespace ps2x::iop::detail
         if (address >= kImageSize)
             return;
         const size_t available = static_cast<size_t>(std::min<uint64_t>(size, kImageSize - address));
-        m_file.clear();
-        m_file.seekg(static_cast<std::streamoff>(address));
-        m_file.read(reinterpret_cast<char *>(destination), static_cast<std::streamsize>(available));
+        std::lock_guard<std::mutex> lock(g_memCardCacheMutex);
+        MemCardRamCache &cache = ensureCardCacheLocked(this, m_file, kImageSize);
+        std::memcpy(destination, cache.data.data() + address, available);
     }
 
     void VirtualMemoryCard::write(uint64_t address, const uint8_t *source, size_t size)
@@ -106,23 +198,24 @@ namespace ps2x::iop::detail
         if (address >= kImageSize)
             return;
         const size_t available = static_cast<size_t>(std::min<uint64_t>(size, kImageSize - address));
-        m_file.clear();
-        m_file.seekp(static_cast<std::streamoff>(address));
-        m_file.write(reinterpret_cast<const char *>(source), static_cast<std::streamsize>(available));
-        m_file.flush();
-        // Log only (sweep L7): the game still gets its ACK, as before, but a failed host write is no longer silent.
-        if (!m_file && m_ioErrors < 8u)
-        {
-            ++m_ioErrors;
-            std::fprintf(stderr, "[SIO2] ERROR: memory card %s: host write of %zu bytes at 0x%llx failed\n",
-                         m_path.string().c_str(), available, static_cast<unsigned long long>(address));
-        }
+        std::lock_guard<std::mutex> lock(g_memCardCacheMutex);
+        MemCardRamCache &cache = ensureCardCacheLocked(this, m_file, kImageSize);
+        std::memcpy(cache.data.data() + address, source, available);
+        cache.dirtyBegin = std::min(cache.dirtyBegin, address);
+        cache.dirtyEnd = std::max(cache.dirtyEnd, address + available);
     }
 
     void VirtualMemoryCard::eraseBlock(uint64_t address)
     {
-        const std::vector<uint8_t> blank(uint64_t{kRawPageSize} * kPagesPerBlock, uint8_t{0xFFu});
-        write(address, blank.data(), blank.size());
+        if (address >= kImageSize)
+            return;
+        const uint64_t blockBytes = uint64_t{kRawPageSize} * kPagesPerBlock;
+        const size_t available = static_cast<size_t>(std::min<uint64_t>(blockBytes, kImageSize - address));
+        std::lock_guard<std::mutex> lock(g_memCardCacheMutex);
+        MemCardRamCache &cache = ensureCardCacheLocked(this, m_file, kImageSize);
+        std::fill_n(cache.data.data() + address, available, uint8_t{0xFFu});
+        cache.dirtyBegin = std::min(cache.dirtyBegin, address);
+        cache.dirtyEnd = std::max(cache.dirtyEnd, address + available);
     }
 
     size_t VirtualMemoryCard::transfer(const std::vector<uint8_t> &command, std::vector<uint8_t> &response)
@@ -153,8 +246,11 @@ namespace ps2x::iop::detail
         switch (command[1])
         {
         case kProbe:
+            acknowledge(4u);
+            break;
         case kWriteDeleteEnd:
         case kReadWriteEnd:
+            flushCardCache(this, m_file, m_ioErrors, m_path);
             acknowledge(4u);
             break;
         case kSetEraseSector:

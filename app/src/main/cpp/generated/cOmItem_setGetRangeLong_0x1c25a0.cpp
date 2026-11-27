@@ -13,15 +13,13 @@
 
 // Function: cOmItem_setGetRangeLong
 // Address: 0x1c25a0 - 0x1c25c8
-void cOmItem_setGetRangeLong_0x1c25a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmItem_setGetRangeLong_0x1c25a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmItem_setGetRangeLong_0x1c25a0");
 #endif
 
-    ctx->pc = 0x1c25a0u;
 
     // 0x1c25a0: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1c25a0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1c25a4: 0x14a20004  bne         $a1, $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x1C25A4u;
@@ -38,9 +36,7 @@ void cOmItem_setGetRangeLong_0x1c25a0(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_1c25b8;
         }
     }
-    ctx->pc = 0x1C25ACu;
     // 0x1c25ac: 0x34420004  ori         $v0, $v0, 0x4
-    ctx->pc = 0x1c25acu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)4);
     // 0x1c25b0: 0x3e00008  jr          $ra
     ctx->pc = 0x1C25B0u;
@@ -61,10 +57,8 @@ void cOmItem_setGetRangeLong_0x1c25a0(uint8_t* rdram, R5900Context* ctx, PS2Runt
         return;
         #endif
     }
-    ctx->pc = 0x1C25B8u;
 label_1c25b8:
     // 0x1c25b8: 0x304200fb  andi        $v0, $v0, 0xFB
-    ctx->pc = 0x1c25b8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)251);
     // 0x1c25bc: 0x3e00008  jr          $ra
     ctx->pc = 0x1C25BCu;
@@ -85,9 +79,7 @@ label_1c25b8:
         return;
         #endif
     }
-    ctx->pc = 0x1C25C4u;
     // 0x1c25c4: 0x0  nop
-    ctx->pc = 0x1c25c4u;
     // NOP
     ctx->pc = 0x1c25c8u;
 }

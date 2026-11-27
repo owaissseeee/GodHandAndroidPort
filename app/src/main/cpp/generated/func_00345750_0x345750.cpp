@@ -13,20 +13,20 @@
 
 // Function: func_00345750
 // Address: 0x345750 - 0x345780
-void func_00345750_0x345750(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00345750_0x345750(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00345750_0x345750");
 #endif
 
-    switch (ctx->pc) {
-        case 0x345764u: goto label_345764;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x345750u, 0)) {
+        switch (ctx->pc) {
+            case 0x345764u: goto label_345764;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x345750u;
 
     // 0x345750: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x345750u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x345754: 0xffb00000  sd          $s0, 0x0($sp)
     ctx->pc = 0x345754u;
@@ -35,7 +35,6 @@ void func_00345750_0x345750(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x345758u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 8), GPR_U64(ctx, 31));
     // 0x34575c: 0xc0d14ac  jal         func_3452B0
-    ctx->pc = 0x34575Cu;
     SET_GPR_U32(ctx, 31, 0x345764u);
     ctx->pc = 0x345760u;
     ctx->in_delay_slot = true;
@@ -43,17 +42,14 @@ void func_00345750_0x345750(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x345760: 0x80802d  daddu       $s0, $a0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x3452B0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3452B0u, 0x34575Cu, 0x345764u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &GetD003EC7E0_3452B0_0x3452b0, 0x3452b0u, 0x345764u)) {
         return;
     }
-    ctx->pc = 0x345764u;
 label_345764:
     // 0x345764: 0xac500068  sw          $s0, 0x68($v0)
     ctx->pc = 0x345764u;
     WRITE32(ADD32(GPR_U32(ctx, 2), 104), GPR_U32(ctx, 16));
     // 0x345768: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x345768u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x34576c: 0xdfbf0008  ld          $ra, 0x8($sp)
     ctx->pc = 0x34576cu;
@@ -80,9 +76,7 @@ label_345764:
         return;
         #endif
     }
-    ctx->pc = 0x34577Cu;
     // 0x34577c: 0x0  nop
-    ctx->pc = 0x34577cu;
     // NOP
     ctx->pc = 0x345780u;
 }

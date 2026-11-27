@@ -13,18 +13,15 @@
 
 // Function: cSndSeVoice_Link
 // Address: 0x2ce3c0 - 0x2ce3e8
-void cSndSeVoice_Link_0x2ce3c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndSeVoice_Link_0x2ce3c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndSeVoice_Link_0x2ce3c0");
 #endif
 
-    ctx->pc = 0x2ce3c0u;
 
     // 0x2ce3c0: 0x3c030060  lui         $v1, 0x60
-    ctx->pc = 0x2ce3c0u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)96 << 16));
     // 0x2ce3c4: 0x2463ee00  addiu       $v1, $v1, -0x1200
-    ctx->pc = 0x2ce3c4u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294962688));
     // 0x2ce3c8: 0x8c62001c  lw          $v0, 0x1C($v1)
     ctx->pc = 0x2ce3c8u;
@@ -50,7 +47,6 @@ void cSndSeVoice_Link_0x2ce3c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_2ce3dc;
         }
     }
-    ctx->pc = 0x2CE3DCu;
 label_2ce3dc:
     // 0x2ce3dc: 0x3e00008  jr          $ra
     ctx->pc = 0x2CE3DCu;
@@ -71,9 +67,7 @@ label_2ce3dc:
         return;
         #endif
     }
-    ctx->pc = 0x2CE3E4u;
     // 0x2ce3e4: 0x0  nop
-    ctx->pc = 0x2ce3e4u;
     // NOP
     ctx->pc = 0x2ce3e8u;
 }

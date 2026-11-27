@@ -13,12 +13,11 @@
 
 // Function: func_00355658
 // Address: 0x355658 - 0x355670
-void func_00355658_0x355658(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00355658_0x355658(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00355658_0x355658");
 #endif
 
-    ctx->pc = 0x355658u;
 
     // 0x355658: 0x10800002  beqz        $a0, . + 4 + (0x2 << 2)
     ctx->pc = 0x355658u;
@@ -35,7 +34,6 @@ void func_00355658_0x355658(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_355664;
         }
     }
-    ctx->pc = 0x355660u;
     // 0x355660: 0xac820000  sw          $v0, 0x0($a0)
     ctx->pc = 0x355660u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 0), GPR_U32(ctx, 2));
@@ -53,9 +51,7 @@ label_355664:
         return;
         #endif
     }
-    ctx->pc = 0x35566Cu;
     // 0x35566c: 0x0  nop
-    ctx->pc = 0x35566cu;
     // NOP
     ctx->pc = 0x355670u;
 }

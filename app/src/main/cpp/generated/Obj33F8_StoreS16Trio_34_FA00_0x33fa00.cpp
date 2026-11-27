@@ -13,12 +13,11 @@
 
 // Function: Obj33F8_StoreS16Trio_34_FA00
 // Address: 0x33fa00 - 0x33fa10
-void Obj33F8_StoreS16Trio_34_FA00_0x33fa00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj33F8_StoreS16Trio_34_FA00_0x33fa00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj33F8_StoreS16Trio_34_FA00_0x33fa00");
 #endif
 
-    ctx->pc = 0x33fa00u;
 
     // 0x33fa00: 0xa4870038  sh          $a3, 0x38($a0)
     ctx->pc = 0x33fa00u;

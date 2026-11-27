@@ -13,12 +13,11 @@
 
 // Function: Obj1F20_NoOp_2690
 // Address: 0x1f2690 - 0x1f2698
-void Obj1F20_NoOp_2690_0x1f2690(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj1F20_NoOp_2690_0x1f2690(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj1F20_NoOp_2690_0x1f2690");
 #endif
 
-    ctx->pc = 0x1f2690u;
 
     // 0x1f2690: 0x3e00008  jr          $ra
     ctx->pc = 0x1F2690u;

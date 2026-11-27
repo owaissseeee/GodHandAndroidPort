@@ -13,18 +13,16 @@
 
 // Function: cOmDoor2_setClose
 // Address: 0x1bdc20 - 0x1bdc48
-void cOmDoor2_setClose_0x1bdc20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmDoor2_setClose_0x1bdc20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmDoor2_setClose_0x1bdc20");
 #endif
 
-    ctx->pc = 0x1bdc20u;
 
     // 0x1bdc20: 0x90820774  lbu         $v0, 0x774($a0)
     ctx->pc = 0x1bdc20u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 1908)));
     // 0x1bdc24: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x1bdc24u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1bdc28: 0x14430005  bne         $v0, $v1, . + 4 + (0x5 << 2)
     ctx->pc = 0x1BDC28u;
@@ -41,7 +39,6 @@ void cOmDoor2_setClose_0x1bdc20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_1bdc40;
         }
     }
-    ctx->pc = 0x1BDC30u;
     // 0x1bdc30: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x1bdc30u;
     WRITE8(ADD32(GPR_U32(ctx, 4), 759), (uint8_t)GPR_U32(ctx, 0));

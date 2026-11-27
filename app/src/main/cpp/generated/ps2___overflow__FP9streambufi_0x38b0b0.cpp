@@ -13,30 +13,30 @@
 
 // Function: __overflow__FP9streambufi
 // Address: 0x38b0b0 - 0x38b0d8
-void ps2___overflow__FP9streambufi_0x38b0b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___overflow__FP9streambufi_0x38b0b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___overflow__FP9streambufi_0x38b0b0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38b0b0u: goto label_38b0b0;
-        case 0x38b0b4u: goto label_38b0b4;
-        case 0x38b0b8u: goto label_38b0b8;
-        case 0x38b0bcu: goto label_38b0bc;
-        case 0x38b0c0u: goto label_38b0c0;
-        case 0x38b0c4u: goto label_38b0c4;
-        case 0x38b0c8u: goto label_38b0c8;
-        case 0x38b0ccu: goto label_38b0cc;
-        case 0x38b0d0u: goto label_38b0d0;
-        case 0x38b0d4u: goto label_38b0d4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38b0b0u, 0)) {
+        switch (ctx->pc) {
+            case 0x38b0b0u: goto label_38b0b0;
+            case 0x38b0b4u: goto label_38b0b4;
+            case 0x38b0b8u: goto label_38b0b8;
+            case 0x38b0bcu: goto label_38b0bc;
+            case 0x38b0c0u: goto label_38b0c0;
+            case 0x38b0c4u: goto label_38b0c4;
+            case 0x38b0c8u: goto label_38b0c8;
+            case 0x38b0ccu: goto label_38b0cc;
+            case 0x38b0d0u: goto label_38b0d0;
+            case 0x38b0d4u: goto label_38b0d4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x38b0b0u;
 
 label_38b0b0:
     // 0x38b0b0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x38b0b0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_38b0b4:
     // 0x38b0b4: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -82,7 +82,6 @@ label_38b0c8:
             return;
         }
     }
-    ctx->pc = 0x38B0CCu;
 label_38b0cc:
     // 0x38b0cc: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38b0ccu;

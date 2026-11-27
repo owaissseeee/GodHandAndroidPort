@@ -13,20 +13,20 @@
 
 // Function: func_00324500
 // Address: 0x324500 - 0x324530
-void func_00324500_0x324500(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00324500_0x324500(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00324500_0x324500");
 #endif
 
-    switch (ctx->pc) {
-        case 0x324518u: goto label_324518;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x324500u, 0)) {
+        switch (ctx->pc) {
+            case 0x324518u: goto label_324518;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x324500u;
 
     // 0x324500: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x324500u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x324504: 0x14800006  bnez        $a0, . + 4 + (0x6 << 2)
     ctx->pc = 0x324504u;
@@ -43,12 +43,9 @@ void func_00324500_0x324500(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_324520;
         }
     }
-    ctx->pc = 0x32450Cu;
     // 0x32450c: 0x3c040045  lui         $a0, 0x45
-    ctx->pc = 0x32450cu;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)69 << 16));
     // 0x324510: 0xc0cfc4c  jal         func_33F130
-    ctx->pc = 0x324510u;
     SET_GPR_U32(ctx, 31, 0x324518u);
     ctx->pc = 0x324514u;
     ctx->in_delay_slot = true;
@@ -56,11 +53,9 @@ void func_00324500_0x324500(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x324514: 0x248419f0  addiu       $a0, $a0, 0x19F0 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 6640));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x33F130u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x33F130u, 0x324510u, 0x324518u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_0033F130_0x33f130, 0x33f130u, 0x324518u)) {
         return;
     }
-    ctx->pc = 0x324518u;
 label_324518:
     // 0x324518: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x324518u;
@@ -77,7 +72,6 @@ label_324518:
             goto label_324524;
         }
     }
-    ctx->pc = 0x324520u;
 label_324520:
     // 0x324520: 0x80820001  lb          $v0, 0x1($a0)
     ctx->pc = 0x324520u;

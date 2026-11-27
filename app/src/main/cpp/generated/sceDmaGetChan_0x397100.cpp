@@ -13,15 +13,13 @@
 
 // Function: sceDmaGetChan
 // Address: 0x397100 - 0x397128
-void sceDmaGetChan_0x397100(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceDmaGetChan_0x397100(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceDmaGetChan_0x397100");
 #endif
 
-    ctx->pc = 0x397100u;
 
     // 0x397100: 0x2c82000a  sltiu       $v0, $a0, 0xA
-    ctx->pc = 0x397100u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 4) < (uint64_t)(int64_t)(int32_t)10) ? 1 : 0);
     // 0x397104: 0x10400006  beqz        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x397104u;
@@ -38,15 +36,11 @@ void sceDmaGetChan_0x397100(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_397120;
         }
     }
-    ctx->pc = 0x39710Cu;
     // 0x39710c: 0x41880  sll         $v1, $a0, 2
-    ctx->pc = 0x39710cu;
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 4), 2));
     // 0x397110: 0x24428590  addiu       $v0, $v0, -0x7A70
-    ctx->pc = 0x397110u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294935952));
     // 0x397114: 0x621821  addu        $v1, $v1, $v0
-    ctx->pc = 0x397114u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 2)));
     // 0x397118: 0x3e00008  jr          $ra
     ctx->pc = 0x397118u;
@@ -67,7 +61,6 @@ void sceDmaGetChan_0x397100(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x397120u;
 label_397120:
     // 0x397120: 0x3e00008  jr          $ra
     ctx->pc = 0x397120u;

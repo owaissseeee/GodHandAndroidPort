@@ -13,29 +13,27 @@
 
 // Function: cSceAtUnit_SetDisable
 // Address: 0x2c0e28 - 0x2c0e60
-void cSceAtUnit_SetDisable_0x2c0e28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSceAtUnit_SetDisable_0x2c0e28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSceAtUnit_SetDisable_0x2c0e28");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2c0e54u: goto label_2c0e54;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2c0e28u, 0)) {
+        switch (ctx->pc) {
+            case 0x2c0e54u: goto label_2c0e54;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2c0e28u;
 
     // 0x2c0e28: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2c0e28u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2c0e2c: 0x80282d  daddu       $a1, $a0, $zero
-    ctx->pc = 0x2c0e2cu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2c0e30: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2c0e30u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2c0e34: 0x24020009  addiu       $v0, $zero, 0x9
-    ctx->pc = 0x2c0e34u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 9));
     // 0x2c0e38: 0x90a30034  lbu         $v1, 0x34($a1)
     ctx->pc = 0x2c0e38u;
@@ -44,7 +42,6 @@ void cSceAtUnit_SetDisable_0x2c0e28(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     ctx->pc = 0x2c0e3cu;
     SET_GPR_ZE32(ctx, 4, (uint8_t)READ8(ADD32(GPR_U32(ctx, 5), 53)));
     // 0x2c0e40: 0x306300fe  andi        $v1, $v1, 0xFE
-    ctx->pc = 0x2c0e40u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & (uint64_t)(uint16_t)254);
     // 0x2c0e44: 0x14820003  bne         $a0, $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x2C0E44u;
@@ -61,9 +58,7 @@ void cSceAtUnit_SetDisable_0x2c0e28(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_2c0e54;
         }
     }
-    ctx->pc = 0x2C0E4Cu;
     // 0x2c0e4c: 0xc0b0398  jal         func_2C0E60
-    ctx->pc = 0x2C0E4Cu;
     SET_GPR_U32(ctx, 31, 0x2C0E54u);
     ctx->pc = 0x2C0E50u;
     ctx->in_delay_slot = true;
@@ -71,11 +66,9 @@ void cSceAtUnit_SetDisable_0x2c0e28(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     // 0x2c0e50: 0xa0202d  daddu       $a0, $a1, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2C0E60u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2C0E60u, 0x2C0E4Cu, 0x2C0E54u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002C0E60_0x2c0e60, 0x2c0e60u, 0x2c0e54u)) {
         return;
     }
-    ctx->pc = 0x2C0E54u;
 label_2c0e54:
     // 0x2c0e54: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2c0e54u;

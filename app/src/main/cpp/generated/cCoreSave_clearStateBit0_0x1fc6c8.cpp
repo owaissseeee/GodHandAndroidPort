@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_clearStateBit0
 // Address: 0x1fc6c8 - 0x1fc6e8
-void cCoreSave_clearStateBit0_0x1fc6c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_clearStateBit0_0x1fc6c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_clearStateBit0_0x1fc6c8");
 #endif
 
-    ctx->pc = 0x1fc6c8u;
 
     // 0x1fc6c8: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc6c8u;
@@ -32,12 +31,10 @@ void cCoreSave_clearStateBit0_0x1fc6c8(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_1fc6e0;
         }
     }
-    ctx->pc = 0x1FC6D4u;
     // 0x1fc6d4: 0x94820bba  lhu         $v0, 0xBBA($a0)
     ctx->pc = 0x1fc6d4u;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 4), 3002)));
     // 0x1fc6d8: 0x3042fffe  andi        $v0, $v0, 0xFFFE
-    ctx->pc = 0x1fc6d8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)65534);
     // 0x1fc6dc: 0xa4820bba  sh          $v0, 0xBBA($a0)
     ctx->pc = 0x1fc6dcu;

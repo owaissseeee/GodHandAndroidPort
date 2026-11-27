@@ -14,12 +14,11 @@ namespace gh_event
 {
 // Function: quitPlay__21cEventAdditionalLight
 // Address: 0x7ac5a8 - 0x7ac5b0
-void quitPlay__21cEventAdditionalLight_0x7ac5a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void quitPlay__21cEventAdditionalLight_0x7ac5a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("quitPlay__21cEventAdditionalLight_0x7ac5a8");
 #endif
 
-    ctx->pc = 0x7ac5a8u;
 
     // 0x7ac5a8: 0x3e00008  jr          $ra
     ctx->pc = 0x7AC5A8u;

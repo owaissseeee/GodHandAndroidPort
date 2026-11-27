@@ -13,26 +13,24 @@
 
 // Function: sgetn__9streambufPcl
 // Address: 0x38ba38 - 0x38ba68
-void sgetn__9streambufPcl_0x38ba38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sgetn__9streambufPcl_0x38ba38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sgetn__9streambufPcl_0x38ba38");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38ba50u: goto label_38ba50;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38ba38u, 0)) {
+        switch (ctx->pc) {
+            case 0x38ba50u: goto label_38ba50;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x38ba38u;
 
     // 0x38ba38: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x38ba38u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x38ba3c: 0x6303c  dsll32      $a2, $a2, 0
-    ctx->pc = 0x38ba3cu;
     SET_GPR_U64(ctx, 6, GPR_U64(ctx, 6) << (32 + 0));
     // 0x38ba40: 0x6303f  dsra32      $a2, $a2, 0
-    ctx->pc = 0x38ba40u;
     SET_GPR_S64(ctx, 6, GPR_S64(ctx, 6) >> (32 + 0));
     // 0x38ba44: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x38ba44u;
@@ -40,20 +38,16 @@ void sgetn__9streambufPcl_0x38ba38(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     // 0x38ba48: 0xc0e327a  jal         func_38C9E8
     ctx->pc = 0x38BA48u;
     SET_GPR_U32(ctx, 31, 0x38BA50u);
-    ctx->pc = 0x38C9E8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x38C9E8u, 0x38BA48u, 0x38BA50u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_sgetn_0x38c9e8, 0x38c9e8u, 0x38ba50u)) {
         return;
     }
-    ctx->pc = 0x38BA50u;
 label_38ba50:
     // 0x38ba50: 0x2103c  dsll32      $v0, $v0, 0
-    ctx->pc = 0x38ba50u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) << (32 + 0));
     // 0x38ba54: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38ba54u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x38ba58: 0x2103e  dsrl32      $v0, $v0, 0
-    ctx->pc = 0x38ba58u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) >> (32 + 0));
     // 0x38ba5c: 0x3e00008  jr          $ra
     ctx->pc = 0x38BA5Cu;
@@ -74,9 +68,7 @@ label_38ba50:
         return;
         #endif
     }
-    ctx->pc = 0x38BA64u;
     // 0x38ba64: 0x0  nop
-    ctx->pc = 0x38ba64u;
     // NOP
     ctx->pc = 0x38ba68u;
 }

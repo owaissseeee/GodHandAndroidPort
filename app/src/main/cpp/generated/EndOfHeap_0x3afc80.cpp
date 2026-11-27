@@ -13,23 +13,22 @@
 
 // Function: EndOfHeap
 // Address: 0x3afc80 - 0x3afc90
-void EndOfHeap_0x3afc80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EndOfHeap_0x3afc80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EndOfHeap_0x3afc80");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afc88u: goto label_3afc88;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afc80u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afc88u: goto label_3afc88;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afc80u;
 
     // 0x3afc80: 0x2403003e  addiu       $v1, $zero, 0x3E
-    ctx->pc = 0x3afc80u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 62));
     // 0x3afc84: 0xc  syscall     0
-    ctx->pc = 0x3afc84u;
     ctx->pc = 0x3AFC88u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

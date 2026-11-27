@@ -13,15 +13,13 @@
 
 // Function: func_003538B0
 // Address: 0x3538b0 - 0x353928
-void func_003538B0_0x3538b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003538B0_0x3538b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003538B0_0x3538b0");
 #endif
 
-    ctx->pc = 0x3538b0u;
 
     // 0x3538b0: 0x24850df0  addiu       $a1, $a0, 0xDF0
-    ctx->pc = 0x3538b0u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 4), 3568));
     // 0x3538b4: 0x8c830e6c  lw          $v1, 0xE6C($a0)
     ctx->pc = 0x3538b4u;
@@ -30,7 +28,6 @@ void func_003538B0_0x3538b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x3538b8u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 36)));
     // 0x3538bc: 0x43102a  slt         $v0, $v0, $v1
-    ctx->pc = 0x3538bcu;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 2) < (int64_t)GPR_S64(ctx, 3)) ? 1 : 0);
     // 0x3538c0: 0x10400017  beqz        $v0, . + 4 + (0x17 << 2)
     ctx->pc = 0x3538C0u;
@@ -47,7 +44,6 @@ void func_003538B0_0x3538b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_353920;
         }
     }
-    ctx->pc = 0x3538C8u;
     // 0x3538c8: 0x68a20007  ldl         $v0, 0x7($a1)
     ctx->pc = 0x3538c8u;
     { uint32_t addr = ADD32(GPR_U32(ctx, 5), 7); uint32_t aligned_addr = addr & ~7u; uint32_t offset = addr & 7u; uint64_t mem = READ64(aligned_addr); uint32_t shift = (7u - offset) << 3; uint64_t keepMask = (shift == 0) ? 0ull : ((1ull << shift) - 1ull); SET_GPR_U64(ctx, 2, (GPR_U64(ctx, 2) & keepMask) | (mem << shift)); }

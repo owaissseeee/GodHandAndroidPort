@@ -13,18 +13,16 @@
 
 // Function: Obj38B8_AddField14
 // Address: 0x38bd50 - 0x38bd60
-void Obj38B8_AddField14_0x38bd50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj38B8_AddField14_0x38bd50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj38B8_AddField14_0x38bd50");
 #endif
 
-    ctx->pc = 0x38bd50u;
 
     // 0x38bd50: 0x8c820014  lw          $v0, 0x14($a0)
     ctx->pc = 0x38bd50u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 20)));
     // 0x38bd54: 0x451021  addu        $v0, $v0, $a1
-    ctx->pc = 0x38bd54u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 5)));
     // 0x38bd58: 0x3e00008  jr          $ra
     ctx->pc = 0x38BD58u;

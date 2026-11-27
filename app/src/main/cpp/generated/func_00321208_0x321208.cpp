@@ -13,15 +13,13 @@
 
 // Function: func_00321208
 // Address: 0x321208 - 0x321218
-void func_00321208_0x321208(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00321208_0x321208(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00321208_0x321208");
 #endif
 
-    ctx->pc = 0x321208u;
 
     // 0x321208: 0x3c03003c  lui         $v1, 0x3C
-    ctx->pc = 0x321208u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)60 << 16));
     // 0x32120c: 0x8c624908  lw          $v0, 0x4908($v1)
     ctx->pc = 0x32120cu;

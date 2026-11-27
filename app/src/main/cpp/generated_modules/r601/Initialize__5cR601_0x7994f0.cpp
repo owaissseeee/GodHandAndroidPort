@@ -14,12 +14,11 @@ namespace gh_r601
 {
 // Function: Initialize__5cR601
 // Address: 0x7994f0 - 0x7994f8
-void Initialize__5cR601_0x7994f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Initialize__5cR601_0x7994f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Initialize__5cR601_0x7994f0");
 #endif
 
-    ctx->pc = 0x7994f0u;
 
     // 0x7994f0: 0x3e00008  jr          $ra
     ctx->pc = 0x7994F0u;

@@ -13,12 +13,11 @@
 
 // Function: IsStateVal6_10B5C8
 // Address: 0x10b5c8 - 0x10b5f0
-void IsStateVal6_10B5C8_0x10b5c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IsStateVal6_10B5C8_0x10b5c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IsStateVal6_10B5C8_0x10b5c8");
 #endif
 
-    ctx->pc = 0x10b5c8u;
 
     // 0x10b5c8: 0x908202f4  lbu         $v0, 0x2F4($a0)
     ctx->pc = 0x10b5c8u;
@@ -32,12 +31,10 @@ void IsStateVal6_10B5C8_0x10b5c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_10b5e4;
         }
     }
-    ctx->pc = 0x10B5D4u;
     // 0x10b5d4: 0x908202f5  lbu         $v0, 0x2F5($a0)
     ctx->pc = 0x10b5d4u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 757)));
     // 0x10b5d8: 0x38420006  xori        $v0, $v0, 0x6
-    ctx->pc = 0x10b5d8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)6);
     // 0x10b5dc: 0x3e00008  jr          $ra
     ctx->pc = 0x10B5DCu;
@@ -58,7 +55,6 @@ void IsStateVal6_10B5C8_0x10b5c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         return;
         #endif
     }
-    ctx->pc = 0x10B5E4u;
 label_10b5e4:
     // 0x10b5e4: 0x3e00008  jr          $ra
     ctx->pc = 0x10B5E4u;
@@ -79,9 +75,7 @@ label_10b5e4:
         return;
         #endif
     }
-    ctx->pc = 0x10B5ECu;
     // 0x10b5ec: 0x0  nop
-    ctx->pc = 0x10b5ecu;
     // NOP
     ctx->pc = 0x10b5f0u;
 }

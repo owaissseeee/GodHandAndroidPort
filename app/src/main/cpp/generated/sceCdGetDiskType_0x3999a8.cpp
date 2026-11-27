@@ -13,20 +13,20 @@
 
 // Function: sceCdGetDiskType
 // Address: 0x3999a8 - 0x3999d0
-void sceCdGetDiskType_0x3999a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceCdGetDiskType_0x3999a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceCdGetDiskType_0x3999a8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3999b8u: goto label_3999b8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3999a8u, 0)) {
+        switch (ctx->pc) {
+            case 0x3999b8u: goto label_3999b8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3999a8u;
 
     // 0x3999a8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x3999a8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x3999ac: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x3999acu;
@@ -34,14 +34,11 @@ void sceCdGetDiskType_0x3999a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     // 0x3999b0: 0xc0e6644  jal         func_399910
     ctx->pc = 0x3999B0u;
     SET_GPR_U32(ctx, 31, 0x3999B8u);
-    ctx->pc = 0x399910u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x399910u, 0x3999B0u, 0x3999B8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &sceCdGetDiskType2_0x399910, 0x399910u, 0x3999b8u)) {
         return;
     }
-    ctx->pc = 0x3999B8u;
 label_3999b8:
     // 0x3999b8: 0x21827  nor         $v1, $zero, $v0
-    ctx->pc = 0x3999b8u;
     SET_GPR_U64(ctx, 3, ~(GPR_U64(ctx, 0) | GPR_U64(ctx, 2)));
     // 0x3999bc: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3999bcu;
@@ -68,9 +65,7 @@ label_3999b8:
         return;
         #endif
     }
-    ctx->pc = 0x3999CCu;
     // 0x3999cc: 0x0  nop
-    ctx->pc = 0x3999ccu;
     // NOP
     ctx->pc = 0x3999d0u;
 }

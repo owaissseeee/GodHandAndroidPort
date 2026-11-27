@@ -13,20 +13,20 @@
 
 // Function: func_002714B0
 // Address: 0x2714b0 - 0x2714e8
-void func_002714B0_0x2714b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002714B0_0x2714b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002714B0_0x2714b0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2714d4u: goto label_2714d4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2714b0u, 0)) {
+        switch (ctx->pc) {
+            case 0x2714d4u: goto label_2714d4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2714b0u;
 
     // 0x2714b0: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x2714b0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x2714b4: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x2714b4u;
@@ -35,7 +35,6 @@ void func_002714B0_0x2714b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x2714b8u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2714bc: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x2714bcu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2714c0: 0x8e041860  lw          $a0, 0x1860($s0)
     ctx->pc = 0x2714c0u;
@@ -55,15 +54,12 @@ void func_002714B0_0x2714b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2714dc;
         }
     }
-    ctx->pc = 0x2714CCu;
     // 0x2714cc: 0xc0c3d72  jal         func_30F5C8
     ctx->pc = 0x2714CCu;
     SET_GPR_U32(ctx, 31, 0x2714D4u);
-    ctx->pc = 0x30F5C8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x30F5C8u, 0x2714CCu, 0x2714D4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_vec_delete_0x30f5c8, 0x30f5c8u, 0x2714d4u)) {
         return;
     }
-    ctx->pc = 0x2714D4u;
 label_2714d4:
     // 0x2714d4: 0xae001860  sw          $zero, 0x1860($s0)
     ctx->pc = 0x2714d4u;

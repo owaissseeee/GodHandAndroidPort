@@ -13,20 +13,20 @@
 
 // Function: func_00272688
 // Address: 0x272688 - 0x2726f8
-void func_00272688_0x272688(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00272688_0x272688(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00272688_0x272688");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2726a8u: goto label_2726a8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x272688u, 0)) {
+        switch (ctx->pc) {
+            case 0x2726a8u: goto label_2726a8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x272688u;
 
     // 0x272688: 0x3c030074  lui         $v1, 0x74
-    ctx->pc = 0x272688u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
     // 0x27268c: 0x8c627a0c  lw          $v0, 0x7A0C($v1)
     ctx->pc = 0x27268cu;
@@ -46,12 +46,10 @@ void func_00272688_0x272688(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2726b0;
         }
     }
-    ctx->pc = 0x272698u;
     // 0x272698: 0x8c820564  lw          $v0, 0x564($a0)
     ctx->pc = 0x272698u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 1380)));
     // 0x27269c: 0x38420244  xori        $v0, $v0, 0x244
-    ctx->pc = 0x27269cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)580);
     // 0x2726a0: 0x50400003  beql        $v0, $zero, . + 4 + (0x3 << 2)
     ctx->pc = 0x2726A0u;
@@ -68,7 +66,6 @@ void func_00272688_0x272688(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2726b0;
         }
     }
-    ctx->pc = 0x2726A8u;
 label_2726a8:
     // 0x2726a8: 0x3e00008  jr          $ra
     ctx->pc = 0x2726A8u;
@@ -89,10 +86,8 @@ label_2726a8:
         return;
         #endif
     }
-    ctx->pc = 0x2726B0u;
 label_2726b0:
     // 0x2726b0: 0x30421000  andi        $v0, $v0, 0x1000
-    ctx->pc = 0x2726b0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)4096);
     // 0x2726b4: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x2726B4u;
@@ -109,9 +104,7 @@ label_2726b0:
             goto label_2726c8;
         }
     }
-    ctx->pc = 0x2726BCu;
     // 0x2726bc: 0x38620244  xori        $v0, $v1, 0x244
-    ctx->pc = 0x2726bcu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) ^ (uint64_t)(uint16_t)580);
     // 0x2726c0: 0x1440fff9  bnez        $v0, . + 4 + (-0x7 << 2)
     ctx->pc = 0x2726C0u;
@@ -125,13 +118,10 @@ label_2726b0:
             goto label_2726a8;
         }
     }
-    ctx->pc = 0x2726C8u;
 label_2726c8:
     // 0x2726c8: 0x2463fe00  addiu       $v1, $v1, -0x200
-    ctx->pc = 0x2726c8u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294966784));
     // 0x2726cc: 0x2c62004c  sltiu       $v0, $v1, 0x4C
-    ctx->pc = 0x2726ccu;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 3) < (uint64_t)(int64_t)(int32_t)76) ? 1 : 0);
     // 0x2726d0: 0x1040fff5  beqz        $v0, . + 4 + (-0xB << 2)
     ctx->pc = 0x2726D0u;
@@ -151,15 +141,11 @@ label_2726c8:
             goto label_2726a8;
         }
     }
-    ctx->pc = 0x2726D8u;
     // 0x2726d8: 0x31880  sll         $v1, $v1, 2
-    ctx->pc = 0x2726d8u;
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 3), 2));
     // 0x2726dc: 0x244264d0  addiu       $v0, $v0, 0x64D0
-    ctx->pc = 0x2726dcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 25808));
     // 0x2726e0: 0x621821  addu        $v1, $v1, $v0
-    ctx->pc = 0x2726e0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), GPR_U32(ctx, 2)));
     // 0x2726e4: 0x8c640000  lw          $a0, 0x0($v1)
     ctx->pc = 0x2726e4u;
@@ -178,7 +164,6 @@ label_2726c8:
             return;
         }
     }
-    ctx->pc = 0x2726F0u;
 label_2726f0:
     // 0x2726f0: 0x3e00008  jr          $ra
     ctx->pc = 0x2726F0u;

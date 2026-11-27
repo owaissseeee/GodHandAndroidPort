@@ -13,18 +13,16 @@
 
 // Function: Obj38B8_GetMode100Or_24_4
 // Address: 0x38be68 - 0x38be88
-void Obj38B8_GetMode100Or_24_4_0x38be68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj38B8_GetMode100Or_24_4_0x38be68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj38B8_GetMode100Or_24_4_0x38be68");
 #endif
 
-    ctx->pc = 0x38be68u;
 
     // 0x38be68: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x38be68u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x38be6c: 0x30420100  andi        $v0, $v0, 0x100
-    ctx->pc = 0x38be6cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)256);
     // 0x38be70: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x38BE70u;
@@ -35,7 +33,6 @@ void Obj38B8_GetMode100Or_24_4_0x38be68(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_38be80;
         }
     }
-    ctx->pc = 0x38BE78u;
     // 0x38be78: 0x3e00008  jr          $ra
     ctx->pc = 0x38BE78u;
     {
@@ -55,7 +52,6 @@ void Obj38B8_GetMode100Or_24_4_0x38be68(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x38BE80u;
 label_38be80:
     // 0x38be80: 0x3e00008  jr          $ra
     ctx->pc = 0x38BE80u;

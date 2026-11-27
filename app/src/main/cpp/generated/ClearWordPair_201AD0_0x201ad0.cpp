@@ -13,12 +13,11 @@
 
 // Function: ClearWordPair_201AD0
 // Address: 0x201ad0 - 0x201ae0
-void ClearWordPair_201AD0_0x201ad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearWordPair_201AD0_0x201ad0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearWordPair_201AD0_0x201ad0");
 #endif
 
-    ctx->pc = 0x201ad0u;
 
     // 0x201ad0: 0xa0800001  sb          $zero, 0x1($a0)
     ctx->pc = 0x201ad0u;
@@ -42,9 +41,7 @@ void ClearWordPair_201AD0_0x201ad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         return;
         #endif
     }
-    ctx->pc = 0x201ADCu;
     // 0x201adc: 0x0  nop
-    ctx->pc = 0x201adcu;
     // NOP
     ctx->pc = 0x201ae0u;
 }

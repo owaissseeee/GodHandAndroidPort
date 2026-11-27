@@ -13,12 +13,11 @@
 
 // Function: ReturnZero_DFD8
 // Address: 0x34dfd8 - 0x34dfe0
-void ReturnZero_DFD8_0x34dfd8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ReturnZero_DFD8_0x34dfd8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ReturnZero_DFD8_0x34dfd8");
 #endif
 
-    ctx->pc = 0x34dfd8u;
 
     // 0x34dfd8: 0x3e00008  jr          $ra
     ctx->pc = 0x34DFD8u;

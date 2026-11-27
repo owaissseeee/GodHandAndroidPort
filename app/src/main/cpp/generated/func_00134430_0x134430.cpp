@@ -13,12 +13,11 @@
 
 // Function: func_00134430
 // Address: 0x134430 - 0x134458
-void func_00134430_0x134430(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00134430_0x134430(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00134430_0x134430");
 #endif
 
-    ctx->pc = 0x134430u;
 
     // 0x134430: 0xf8800020  sqc2        $vf0, 0x20($a0)
     ctx->pc = 0x134430u;
@@ -30,7 +29,6 @@ void func_00134430_0x134430(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x134438u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 0), GPR_U32(ctx, 5));
     // 0x13443c: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x13443cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x134440: 0xac860008  sw          $a2, 0x8($a0)
     ctx->pc = 0x134440u;
@@ -60,9 +58,7 @@ void func_00134430_0x134430(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x134454u;
     // 0x134454: 0x0  nop
-    ctx->pc = 0x134454u;
     // NOP
     ctx->pc = 0x134458u;
 }

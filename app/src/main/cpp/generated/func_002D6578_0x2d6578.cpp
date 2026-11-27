@@ -13,12 +13,11 @@
 
 // Function: func_002D6578
 // Address: 0x2d6578 - 0x2d65a0
-void func_002D6578_0x2d6578(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002D6578_0x2d6578(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002D6578_0x2d6578");
 #endif
 
-    ctx->pc = 0x2d6578u;
 
     // 0x2d6578: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2d6578u;
@@ -32,15 +31,11 @@ void func_002D6578_0x2d6578(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2d6594;
         }
     }
-    ctx->pc = 0x2D6584u;
     // 0x2d6584: 0x44850000  mtc1        $a1, $f0
-    ctx->pc = 0x2d6584u;
     { uint32_t bits = GPR_U32(ctx, 5); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x2d6588: 0x0  nop
-    ctx->pc = 0x2d6588u;
     // NOP
     // 0x2d658c: 0x46800020  cvt.s.w     $f0, $f0
-    ctx->pc = 0x2d658cu;
     { int32_t tmp; std::memcpy(&tmp, &ctx->f[0], sizeof(tmp)); ctx->f[0] = FPU_CVT_S_W(tmp); }
     // 0x2d6590: 0xe4400068  swc1        $f0, 0x68($v0)
     ctx->pc = 0x2d6590u;
@@ -59,9 +54,7 @@ label_2d6594:
         return;
         #endif
     }
-    ctx->pc = 0x2D659Cu;
     // 0x2d659c: 0x0  nop
-    ctx->pc = 0x2d659cu;
     // NOP
     ctx->pc = 0x2d65a0u;
 }

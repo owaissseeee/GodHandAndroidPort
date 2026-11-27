@@ -13,24 +13,19 @@
 
 // Function: cCoreSave_setCounter88
 // Address: 0x1fbda0 - 0x1fbdd0
-void cCoreSave_setCounter88_0x1fbda0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setCounter88_0x1fbda0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setCounter88_0x1fbda0");
 #endif
 
-    ctx->pc = 0x1fbda0u;
 
     // 0x1fbda0: 0x52c00  sll         $a1, $a1, 16
-    ctx->pc = 0x1fbda0u;
     SET_GPR_S32(ctx, 5, (int32_t)SLL32(GPR_U32(ctx, 5), 16));
     // 0x1fbda4: 0x52c03  sra         $a1, $a1, 16
-    ctx->pc = 0x1fbda4u;
     SET_GPR_S32(ctx, 5, SRA32(GPR_S32(ctx, 5), 16));
     // 0x1fbda8: 0x30a2ffff  andi        $v0, $a1, 0xFFFF
-    ctx->pc = 0x1fbda8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)65535);
     // 0x1fbdac: 0x2c4203e8  sltiu       $v0, $v0, 0x3E8
-    ctx->pc = 0x1fbdacu;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1000) ? 1 : 0);
     // 0x1fbdb0: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x1FBDB0u;
@@ -41,7 +36,6 @@ void cCoreSave_setCounter88_0x1fbda0(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_1fbdc0;
         }
     }
-    ctx->pc = 0x1FBDB8u;
     // 0x1fbdb8: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x1fbdb8u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
@@ -62,12 +56,10 @@ label_1fbdc0:
         return;
         #endif
     }
-    ctx->pc = 0x1FBDC8u;
     // 0x1fbdc8: 0x84620088  lh          $v0, 0x88($v1)
     ctx->pc = 0x1fbdc8u;
     SET_GPR_S32(ctx, 2, (int16_t)READ16(ADD32(GPR_U32(ctx, 3), 136)));
     // 0x1fbdcc: 0x0  nop
-    ctx->pc = 0x1fbdccu;
     // NOP
     ctx->pc = 0x1fbdd0u;
 }

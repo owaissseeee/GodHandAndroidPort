@@ -14,18 +14,16 @@ namespace gh_r501
 {
 // Function: GameStartWait__9EnemyShipRQ29EnemyShip4Ship
 // Address: 0x79fd50 - 0x79fd70
-void GameStartWait__9EnemyShipRQ29EnemyShip4Ship_0x79fd50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GameStartWait__9EnemyShipRQ29EnemyShip4Ship_0x79fd50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GameStartWait__9EnemyShipRQ29EnemyShip4Ship_0x79fd50");
 #endif
 
-    ctx->pc = 0x79fd50u;
 
     // 0x79fd50: 0x8c820070  lw          $v0, 0x70($a0)
     ctx->pc = 0x79fd50u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 112)));
     // 0x79fd54: 0x2442ffff  addiu       $v0, $v0, -0x1
-    ctx->pc = 0x79fd54u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));
     // 0x79fd58: 0x1c400003  bgtz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x79FD58u;
@@ -42,9 +40,7 @@ void GameStartWait__9EnemyShipRQ29EnemyShip4Ship_0x79fd50(uint8_t* rdram, R5900C
             goto label_79fd68;
         }
     }
-    ctx->pc = 0x79FD60u;
     // 0x79fd60: 0x24020002  addiu       $v0, $zero, 0x2
-    ctx->pc = 0x79fd60u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x79fd64: 0xac820000  sw          $v0, 0x0($a0)
     ctx->pc = 0x79fd64u;

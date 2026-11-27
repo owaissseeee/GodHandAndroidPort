@@ -13,12 +13,11 @@
 
 // Function: Obj293_ClearBytes_5A0_5A3
 // Address: 0x293728 - 0x293738
-void Obj293_ClearBytes_5A0_5A3_0x293728(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj293_ClearBytes_5A0_5A3_0x293728(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj293_ClearBytes_5A0_5A3_0x293728");
 #endif
 
-    ctx->pc = 0x293728u;
 
     // 0x293728: 0xa08005a0  sb          $zero, 0x5A0($a0)
     ctx->pc = 0x293728u;
@@ -42,9 +41,7 @@ void Obj293_ClearBytes_5A0_5A3_0x293728(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x293734u;
     // 0x293734: 0x0  nop
-    ctx->pc = 0x293734u;
     // NOP
     ctx->pc = 0x293738u;
 }

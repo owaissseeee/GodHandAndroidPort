@@ -775,6 +775,9 @@ PS2Runtime::PS2Runtime()
     m_iopSubsystem = std::make_unique<ps2x::iop::IopSubsystem>(*m_iopHost);
 
     m_eeScheduler = std::make_unique<EeScheduler>(*this);
+    m_schedulerTransferPtr = m_eeScheduler->transferPendingPtr();
+    m_schedulerUnwindingPtr = m_eeScheduler->unwindingPtr();
+    m_guestJumpSerialPtr = &g_guestJumpSerial;
 
     // Assign rather than memset: R5900Context's constructor zeroes itself and
     // then applies the COP0 reset values, which a memset here would discard.
@@ -2102,8 +2105,17 @@ void PS2Runtime::handleBreak(uint8_t *rdram, R5900Context *ctx)
 
 void PS2Runtime::drainCompletedDmacHandlers(uint8_t *rdram)
 {
-    for (uint32_t cause : m_memory.consumeCompletedDmacCauses())
+    uint32_t mask = m_memory.consumeCompletedDmacMask();
+    while (mask != 0u)
     {
+#if defined(__clang__) || defined(__GNUC__)
+        const uint32_t cause = static_cast<uint32_t>(__builtin_ctz(mask));
+#else
+        uint32_t cause = 0u;
+        while (((mask >> cause) & 1u) == 0u)
+            ++cause;
+#endif
+        mask &= mask - 1u;
         ps2_syscalls::dispatchDmacHandlersForCause(rdram, this, cause);
     }
 }
@@ -2668,11 +2680,17 @@ uint16_t PS2Runtime::Load16(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr)
 
 uint32_t PS2Runtime::Load32(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr)
 {
-    if (__builtin_expect(((vaddr & 0x7FFFFFFFu) ^ 0x70000000u) <= PS2_SCRATCHPAD_SIZE - sizeof(uint32_t), 1))
+    if (__builtin_expect(((vaddr & 0x7FFFFFFFu) ^ 0x70000000u) <= PS2_SCRATCHPAD_SIZE - sizeof(uint32_t), 0))
     {
         uint32_t val;
         std::memcpy(&val, m_memory.getScratchpad() + (vaddr & 0x3FFFu), sizeof(val));
         return val;
+    }
+    const uint32_t physIo = vaddr & 0x1FFFFFFFu;
+    if (__builtin_expect(((vaddr & 3u) == 0u) && ((physIo - PS2_IO_BASE) < PS2_IO_SIZE) &&
+                         (vaddr < 0x20000000u || (vaddr - 0x80000000u) < 0x40000000u), 1))
+    {
+        return m_memory.readIORegister(physIo);
     }
     try
     {
@@ -2758,16 +2776,25 @@ void PS2Runtime::Store16(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr, uint
 
 void PS2Runtime::Store32(uint8_t *rdram, R5900Context *ctx, uint32_t vaddr, uint32_t value)
 {
-    if (__builtin_expect(((vaddr & 0x7FFFFFFFu) ^ 0x70000000u) <= PS2_SCRATCHPAD_SIZE - sizeof(uint32_t), 1))
+    if (__builtin_expect(((vaddr & 0x7FFFFFFFu) ^ 0x70000000u) <= PS2_SCRATCHPAD_SIZE - sizeof(uint32_t), 0))
     {
         std::memcpy(m_memory.getScratchpad() + (vaddr & 0x3FFFu), &value, sizeof(value));
         return;
     }
     ps2TraceGuestWrite(rdram, vaddr, 4u, value, 0u, "WRITE32", ctx);
+    const uint32_t physIo = vaddr & 0x1FFFFFFFu;
+    if (__builtin_expect(((vaddr & 3u) == 0u) && ((physIo - PS2_IO_BASE) < PS2_IO_SIZE) &&
+                         (vaddr < 0x20000000u || (vaddr - 0x80000000u) < 0x40000000u), 1))
+    {
+        m_memory.writeIORegister(physIo, value);
+        if (__builtin_expect(m_memory.hasCompletedDmac(), 0))
+            drainCompletedDmacHandlers(rdram);
+        return;
+    }
     try
     {
         m_memory.write32(vaddr, value);
-        if (__builtin_expect(m_memory.m_hasCompletedDmac.load(std::memory_order_relaxed), 0))
+        if (__builtin_expect(m_memory.hasCompletedDmac(), 0))
             drainCompletedDmacHandlers(rdram);
     }
     catch (const std::exception &)
@@ -3087,6 +3114,7 @@ void PS2Runtime::run()
         ThreadNaming::SetCurrentThreadName("EEThread");
         ThreadPriority::RaiseCurrentThread(ThreadPriority::Level::Highest);
         godhand_set_thread_affinity_and_priority("EEThread", 4, 5, -20);
+        ps2_enable_arm64_fast_fpcr();
         try
         {
             m_eeScheduler->reset(m_memory.getRDRAM(), m_cpuContext);

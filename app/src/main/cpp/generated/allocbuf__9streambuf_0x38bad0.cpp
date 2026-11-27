@@ -13,20 +13,20 @@
 
 // Function: allocbuf__9streambuf
 // Address: 0x38bad0 - 0x38baf8
-void allocbuf__9streambuf_0x38bad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void allocbuf__9streambuf_0x38bad0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("allocbuf__9streambuf_0x38bad0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38baecu: goto label_38baec;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38bad0u, 0)) {
+        switch (ctx->pc) {
+            case 0x38baecu: goto label_38baec;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x38bad0u;
 
     // 0x38bad0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x38bad0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x38bad4: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x38bad4u;
@@ -49,15 +49,12 @@ void allocbuf__9streambuf_0x38bad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_38baf0;
         }
     }
-    ctx->pc = 0x38BAE4u;
     // 0x38bae4: 0xc0e2ce2  jal         func_38B388
     ctx->pc = 0x38BAE4u;
     SET_GPR_U32(ctx, 31, 0x38BAECu);
-    ctx->pc = 0x38B388u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x38B388u, 0x38BAE4u, 0x38BAECu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &doallocbuf__9streambuf_0x38b388, 0x38b388u, 0x38baecu)) {
         return;
     }
-    ctx->pc = 0x38BAECu;
 label_38baec:
     // 0x38baec: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38baecu;

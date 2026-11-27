@@ -13,15 +13,13 @@
 
 // Function: Obj0000_Set_D_003EE34C_35FC18
 // Address: 0x35fc18 - 0x35fc28
-void Obj0000_Set_D_003EE34C_35FC18_0x35fc18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_D_003EE34C_35FC18_0x35fc18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_D_003EE34C_35FC18_0x35fc18");
 #endif
 
-    ctx->pc = 0x35fc18u;
 
     // 0x35fc18: 0x3c02003f  lui         $v0, 0x3F
-    ctx->pc = 0x35fc18u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)63 << 16));
     // 0x35fc1c: 0x3e00008  jr          $ra
     ctx->pc = 0x35FC1Cu;
@@ -42,9 +40,7 @@ void Obj0000_Set_D_003EE34C_35FC18_0x35fc18(uint8_t* rdram, R5900Context* ctx, P
         return;
         #endif
     }
-    ctx->pc = 0x35FC24u;
     // 0x35fc24: 0x0  nop
-    ctx->pc = 0x35fc24u;
     // NOP
     ctx->pc = 0x35fc28u;
 }

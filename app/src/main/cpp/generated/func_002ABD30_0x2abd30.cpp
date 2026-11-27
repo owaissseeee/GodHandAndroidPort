@@ -13,12 +13,11 @@
 
 // Function: func_002ABD30
 // Address: 0x2abd30 - 0x2abd78
-void func_002ABD30_0x2abd30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002ABD30_0x2abd30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002ABD30_0x2abd30");
 #endif
 
-    ctx->pc = 0x2abd30u;
 
     // 0x2abd30: 0x8ca3001c  lw          $v1, 0x1C($a1)
     ctx->pc = 0x2abd30u;
@@ -47,9 +46,7 @@ void func_002ABD30_0x2abd30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2abd6c;
         }
     }
-    ctx->pc = 0x2ABD48u;
     // 0x2abd48: 0x304200ff  andi        $v0, $v0, 0xFF
-    ctx->pc = 0x2abd48u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)255);
     // 0x2abd4c: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x2ABD4Cu;
@@ -66,9 +63,7 @@ void func_002ABD30_0x2abd30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2abd60;
         }
     }
-    ctx->pc = 0x2ABD54u;
     // 0x2abd54: 0x34420800  ori         $v0, $v0, 0x800
-    ctx->pc = 0x2abd54u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)2048);
     // 0x2abd58: 0x3e00008  jr          $ra
     ctx->pc = 0x2ABD58u;
@@ -89,13 +84,10 @@ void func_002ABD30_0x2abd30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2ABD60u;
 label_2abd60:
     // 0x2abd60: 0x2403f7ff  addiu       $v1, $zero, -0x801
-    ctx->pc = 0x2abd60u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294965247));
     // 0x2abd64: 0x431024  and         $v0, $v0, $v1
-    ctx->pc = 0x2abd64u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 3));
     // 0x2abd68: 0xaca2002c  sw          $v0, 0x2C($a1)
     ctx->pc = 0x2abd68u;
@@ -114,9 +106,7 @@ label_2abd6c:
         return;
         #endif
     }
-    ctx->pc = 0x2ABD74u;
     // 0x2abd74: 0x0  nop
-    ctx->pc = 0x2abd74u;
     // NOP
     ctx->pc = 0x2abd78u;
 }

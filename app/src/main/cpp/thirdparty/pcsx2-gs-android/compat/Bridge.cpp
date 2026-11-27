@@ -33,6 +33,20 @@ namespace
     alignas(16) u8 g_regs[0x2000] = {};
     bool g_open = false;
     WindowInfo g_window;
+    float g_userScale = 1.0f;
+    Pcsx2Config::GSOptions g_baselineOptions;
+    std::atomic<int32_t> g_ultraPotatoEnabled{0};
+    std::atomic<int32_t> g_pendingUltraPotato{-1};
+
+    void ApplyUltraPotatoOverrides(Pcsx2Config::GSOptions &options)
+    {
+        options.TextureFiltering = BiFiltering::Nearest;
+        options.LinearPresent = GSPostBilinearMode::Off;
+        options.Dithering = 0;
+        options.MaxAnisotropy = 0;
+        options.TriFilter = TriFiltering::Off;
+        options.TexturePreloading = TexturePreloadingLevel::Partial;
+    }
 
     // God Hand (SLUS-21503) official PCSX2 GameIndex.yaml configuration:
     // halfPixelOffset: 2 (Special: Depth of field effect aligned properly + Shifts buildings correctly)
@@ -203,6 +217,18 @@ namespace
                                                       : AspectRatioType::R4_3;
         ApplyGameFixes(options);
         ApplyOptions(options, params->options);
+        g_userScale = std::max(0.25f, options.UpscaleMultiplier);
+        g_baselineOptions = options;
+        const int32_t pendingUp = g_pendingUltraPotato.exchange(-1, std::memory_order_acq_rel);
+        if (pendingUp >= 0)
+            g_ultraPotatoEnabled.store(pendingUp, std::memory_order_release);
+        const char *upEnv = std::getenv("PS2X_ULTRA_POTATO");
+        const bool ultraPotato = (g_ultraPotatoEnabled.load(std::memory_order_acquire) != 0) || (upEnv && *upEnv == '1');
+        if (ultraPotato)
+        {
+            g_ultraPotatoEnabled.store(1, std::memory_order_release);
+            ApplyUltraPotatoOverrides(options);
+        }
         if (options.Renderer == GSRendererType::OGL)
         {
             // OpenGL ES 3.2 high-performance mobile TBDR configuration (Adreno / Mali / PowerVR):
@@ -324,6 +350,22 @@ gs_open_success:
     {
         if (!g_open || !regs)
             return;
+        const int32_t pendingUp = g_pendingUltraPotato.exchange(-1, std::memory_order_acq_rel);
+        if (pendingUp >= 0)
+        {
+            g_ultraPotatoEnabled.store(pendingUp, std::memory_order_release);
+            Pcsx2Config::GSOptions next = g_baselineOptions;
+            next.LoadTextureReplacements = GSConfig.LoadTextureReplacements;
+            next.LoadTextureReplacementsAsync = GSConfig.LoadTextureReplacementsAsync;
+            next.PrecacheTextureReplacements = GSConfig.PrecacheTextureReplacements;
+            next.UpscaleMultiplier = g_userScale;
+            if (pendingUp != 0)
+            {
+                ApplyUltraPotatoOverrides(next);
+            }
+            EmuConfig.GS = next;
+            GSUpdateConfig(next);
+        }
         for (u32 i = 0; i < 15u; ++i)
             std::memcpy(g_regs + i * 0x10u, &regs->regset1[i], 8);
         std::memcpy(g_regs + 0x1000, &regs->csr, 8);
@@ -390,8 +432,10 @@ gs_open_success:
     {
         if (!g_open)
             return;
+        g_userScale = std::max(0.25f, scale);
+        g_baselineOptions.UpscaleMultiplier = g_userScale;
         Pcsx2Config::GSOptions options = GSConfig;
-        options.UpscaleMultiplier = std::max(0.25f, scale);
+        options.UpscaleMultiplier = g_userScale;
         EmuConfig.GS = options;
         GSUpdateConfig(options);
     }
@@ -551,4 +595,11 @@ extern "C" PCSX2GS_EXPORT void pcsx2gs_set_frameskip(int32_t mode)
 extern "C" PCSX2GS_EXPORT int32_t pcsx2gs_get_frameskip(void)
 {
     return g_frameskipMode.load(std::memory_order_relaxed);
+}
+
+extern "C" PCSX2GS_EXPORT void pcsx2gs_set_ultra_potato(int32_t enabled)
+{
+    const int32_t val = enabled ? 1 : 0;
+    g_ultraPotatoEnabled.store(val, std::memory_order_release);
+    g_pendingUltraPotato.store(val, std::memory_order_release);
 }

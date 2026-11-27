@@ -13,12 +13,11 @@
 
 // Function: BuildPackedAddr_1FFD98
 // Address: 0x1ffd98 - 0x1ffdb0
-void BuildPackedAddr_1FFD98_0x1ffd98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void BuildPackedAddr_1FFD98_0x1ffd98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("BuildPackedAddr_1FFD98_0x1ffd98");
 #endif
 
-    ctx->pc = 0x1ffd98u;
 
     // 0x1ffd98: 0x90a30001  lbu         $v1, 0x1($a1)
     ctx->pc = 0x1ffd98u;
@@ -27,10 +26,8 @@ void BuildPackedAddr_1FFD98_0x1ffd98(uint8_t* rdram, R5900Context* ctx, PS2Runti
     ctx->pc = 0x1ffd9cu;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 5), 2)));
     // 0x1ffda0: 0x31c00  sll         $v1, $v1, 16
-    ctx->pc = 0x1ffda0u;
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 3), 16));
     // 0x1ffda4: 0x431021  addu        $v0, $v0, $v1
-    ctx->pc = 0x1ffda4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
     // 0x1ffda8: 0x3e00008  jr          $ra
     ctx->pc = 0x1FFDA8u;

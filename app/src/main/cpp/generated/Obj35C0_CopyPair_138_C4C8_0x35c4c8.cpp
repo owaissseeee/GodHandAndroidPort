@@ -13,12 +13,11 @@
 
 // Function: Obj35C0_CopyPair_138_C4C8
 // Address: 0x35c4c8 - 0x35c4e0
-void Obj35C0_CopyPair_138_C4C8_0x35c4c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj35C0_CopyPair_138_C4C8_0x35c4c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj35C0_CopyPair_138_C4C8_0x35c4c8");
 #endif
 
-    ctx->pc = 0x35c4c8u;
 
     // 0x35c4c8: 0xdca20000  ld          $v0, 0x0($a1)
     ctx->pc = 0x35c4c8u;
@@ -48,9 +47,7 @@ void Obj35C0_CopyPair_138_C4C8_0x35c4c8(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x35C4DCu;
     // 0x35c4dc: 0x0  nop
-    ctx->pc = 0x35c4dcu;
     // NOP
     ctx->pc = 0x35c4e0u;
 }

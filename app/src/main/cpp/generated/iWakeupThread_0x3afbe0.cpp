@@ -13,23 +13,22 @@
 
 // Function: iWakeupThread
 // Address: 0x3afbe0 - 0x3afbf0
-void iWakeupThread_0x3afbe0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iWakeupThread_0x3afbe0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iWakeupThread_0x3afbe0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afbe8u: goto label_3afbe8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afbe0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afbe8u: goto label_3afbe8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afbe0u;
 
     // 0x3afbe0: 0x2403ffcc  addiu       $v1, $zero, -0x34
-    ctx->pc = 0x3afbe0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967244));
     // 0x3afbe4: 0xc  syscall     0
-    ctx->pc = 0x3afbe4u;
     ctx->pc = 0x3AFBE8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

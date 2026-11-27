@@ -13,20 +13,20 @@
 
 // Function: MWSTM_IsFsStatErr
 // Address: 0x349a40 - 0x349a68
-void MWSTM_IsFsStatErr_0x349a40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MWSTM_IsFsStatErr_0x349a40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MWSTM_IsFsStatErr_0x349a40");
 #endif
 
-    switch (ctx->pc) {
-        case 0x349a50u: goto label_349a50;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x349a40u, 0)) {
+        switch (ctx->pc) {
+            case 0x349a50u: goto label_349a50;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x349a40u;
 
     // 0x349a40: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x349a40u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x349a44: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x349a44u;
@@ -34,20 +34,16 @@ void MWSTM_IsFsStatErr_0x349a40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     // 0x349a48: 0xc0ca026  jal         func_328098
     ctx->pc = 0x349A48u;
     SET_GPR_U32(ctx, 31, 0x349A50u);
-    ctx->pc = 0x328098u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x328098u, 0x349A48u, 0x349A50u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00328098_0x328098, 0x328098u, 0x349a50u)) {
         return;
     }
-    ctx->pc = 0x349A50u;
 label_349a50:
     // 0x349a50: 0x38420004  xori        $v0, $v0, 0x4
-    ctx->pc = 0x349a50u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)4);
     // 0x349a54: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x349a54u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x349a58: 0x2c420001  sltiu       $v0, $v0, 0x1
-    ctx->pc = 0x349a58u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1) ? 1 : 0);
     // 0x349a5c: 0x3e00008  jr          $ra
     ctx->pc = 0x349A5Cu;
@@ -68,9 +64,7 @@ label_349a50:
         return;
         #endif
     }
-    ctx->pc = 0x349A64u;
     // 0x349a64: 0x0  nop
-    ctx->pc = 0x349a64u;
     // NOP
     ctx->pc = 0x349a68u;
 }

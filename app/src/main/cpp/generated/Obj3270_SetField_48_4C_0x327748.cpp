@@ -13,12 +13,11 @@
 
 // Function: Obj3270_SetField_48_4C
 // Address: 0x327748 - 0x327758
-void Obj3270_SetField_48_4C_0x327748(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj3270_SetField_48_4C_0x327748(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj3270_SetField_48_4C_0x327748");
 #endif
 
-    ctx->pc = 0x327748u;
 
     // 0x327748: 0xac86004c  sw          $a2, 0x4C($a0)
     ctx->pc = 0x327748u;
@@ -42,9 +41,7 @@ void Obj3270_SetField_48_4C_0x327748(uint8_t* rdram, R5900Context* ctx, PS2Runti
         return;
         #endif
     }
-    ctx->pc = 0x327754u;
     // 0x327754: 0x0  nop
-    ctx->pc = 0x327754u;
     // NOP
     ctx->pc = 0x327758u;
 }

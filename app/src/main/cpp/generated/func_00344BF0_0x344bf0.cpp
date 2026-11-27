@@ -13,18 +13,15 @@
 
 // Function: func_00344BF0
 // Address: 0x344bf0 - 0x344c30
-void func_00344BF0_0x344bf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00344BF0_0x344bf0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00344BF0_0x344bf0");
 #endif
 
-    ctx->pc = 0x344bf0u;
 
     // 0x344bf0: 0x24020002  addiu       $v0, $zero, 0x2
-    ctx->pc = 0x344bf0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x344bf4: 0x2c850003  sltiu       $a1, $a0, 0x3
-    ctx->pc = 0x344bf4u;
     SET_GPR_U64(ctx, 5, ((uint64_t)GPR_U64(ctx, 4) < (uint64_t)(int64_t)(int32_t)3) ? 1 : 0);
     // 0x344bf8: 0x1082000a  beq         $a0, $v0, . + 4 + (0xA << 2)
     ctx->pc = 0x344BF8u;
@@ -41,7 +38,6 @@ void func_00344BF0_0x344bf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_344c24;
         }
     }
-    ctx->pc = 0x344C00u;
     // 0x344c00: 0x50a00005  beql        $a1, $zero, . + 4 + (0x5 << 2)
     ctx->pc = 0x344C00u;
     {
@@ -57,9 +53,7 @@ void func_00344BF0_0x344bf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_344c18;
         }
     }
-    ctx->pc = 0x344C08u;
     // 0x344c08: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x344c08u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x344c0c: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x344C0Cu;
@@ -76,13 +70,10 @@ void func_00344BF0_0x344bf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_344c1c;
         }
     }
-    ctx->pc = 0x344C14u;
     // 0x344c14: 0x0  nop
-    ctx->pc = 0x344c14u;
     // NOP
 label_344c18:
     // 0x344c18: 0x24030003  addiu       $v1, $zero, 0x3
-    ctx->pc = 0x344c18u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
 label_344c1c:
     // 0x344c1c: 0x54820001  bnel        $a0, $v0, . + 4 + (0x1 << 2)
@@ -100,7 +91,6 @@ label_344c1c:
             goto label_344c24;
         }
     }
-    ctx->pc = 0x344C24u;
 label_344c24:
     // 0x344c24: 0x3e00008  jr          $ra
     ctx->pc = 0x344C24u;
@@ -121,9 +111,7 @@ label_344c24:
         return;
         #endif
     }
-    ctx->pc = 0x344C2Cu;
     // 0x344c2c: 0x0  nop
-    ctx->pc = 0x344c2cu;
     // NOP
     ctx->pc = 0x344c30u;
 }

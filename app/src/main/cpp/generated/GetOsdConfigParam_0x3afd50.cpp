@@ -13,23 +13,22 @@
 
 // Function: GetOsdConfigParam
 // Address: 0x3afd50 - 0x3afd60
-void GetOsdConfigParam_0x3afd50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetOsdConfigParam_0x3afd50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetOsdConfigParam_0x3afd50");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afd58u: goto label_3afd58;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afd50u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afd58u: goto label_3afd58;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afd50u;
 
     // 0x3afd50: 0x2403004b  addiu       $v1, $zero, 0x4B
-    ctx->pc = 0x3afd50u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 75));
     // 0x3afd54: 0xc  syscall     0
-    ctx->pc = 0x3afd54u;
     ctx->pc = 0x3AFD58u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

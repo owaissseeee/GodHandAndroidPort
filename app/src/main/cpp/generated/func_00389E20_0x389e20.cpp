@@ -13,12 +13,11 @@
 
 // Function: func_00389E20
 // Address: 0x389e20 - 0x389e30
-void func_00389E20_0x389e20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00389E20_0x389e20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00389E20_0x389e20");
 #endif
 
-    ctx->pc = 0x389e20u;
 
     // 0x389e20: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x389e20u;
@@ -42,9 +41,7 @@ void func_00389E20_0x389e20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x389E2Cu;
     // 0x389e2c: 0x0  nop
-    ctx->pc = 0x389e2cu;
     // NOP
     ctx->pc = 0x389e30u;
 }

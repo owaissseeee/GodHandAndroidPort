@@ -13,15 +13,13 @@
 
 // Function: cOm5e_setStop
 // Address: 0x1b0b08 - 0x1b0b20
-void cOm5e_setStop_0x1b0b08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm5e_setStop_0x1b0b08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm5e_setStop_0x1b0b08");
 #endif
 
-    ctx->pc = 0x1b0b08u;
 
     // 0x1b0b08: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x1b0b08u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x1b0b0c: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x1b0b0cu;

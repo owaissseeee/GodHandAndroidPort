@@ -13,26 +13,25 @@
 
 // Function: ColiseumBattle_ResetUi
 // Address: 0x1eec68 - 0x1eec98
-void ColiseumBattle_ResetUi_0x1eec68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumBattle_ResetUi_0x1eec68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumBattle_ResetUi_0x1eec68");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1eec78u: goto label_1eec78;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1eec68u, 0)) {
+        switch (ctx->pc) {
+            case 0x1eec78u: goto label_1eec78;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1eec68u;
 
     // 0x1eec68: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1eec68u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1eec6c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1eec6cu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1eec70: 0xc07ca30  jal         func_1F28C0
-    ctx->pc = 0x1EEC70u;
     SET_GPR_U32(ctx, 31, 0x1EEC78u);
     ctx->pc = 0x1EEC74u;
     ctx->in_delay_slot = true;
@@ -40,14 +39,11 @@ void ColiseumBattle_ResetUi_0x1eec68(uint8_t* rdram, R5900Context* ctx, PS2Runti
     // 0x1eec74: 0x24840060  addiu       $a0, $a0, 0x60 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 96));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1F28C0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1F28C0u, 0x1EEC70u, 0x1EEC78u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_001F28C0_0x1f28c0, 0x1f28c0u, 0x1eec78u)) {
         return;
     }
-    ctx->pc = 0x1EEC78u;
 label_1eec78:
     // 0x1eec78: 0x3c02003c  lui         $v0, 0x3C
-    ctx->pc = 0x1eec78u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)60 << 16));
     // 0x1eec7c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1eec7cu;

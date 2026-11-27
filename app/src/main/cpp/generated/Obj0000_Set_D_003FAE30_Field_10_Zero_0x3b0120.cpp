@@ -13,15 +13,13 @@
 
 // Function: Obj0000_Set_D_003FAE30_Field_10_Zero
 // Address: 0x3b0120 - 0x3b0130
-void Obj0000_Set_D_003FAE30_Field_10_Zero_0x3b0120(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_D_003FAE30_Field_10_Zero_0x3b0120(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_D_003FAE30_Field_10_Zero_0x3b0120");
 #endif
 
-    ctx->pc = 0x3b0120u;
 
     // 0x3b0120: 0x3c020040  lui         $v0, 0x40
-    ctx->pc = 0x3b0120u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)64 << 16));
     // 0x3b0124: 0x3e00008  jr          $ra
     ctx->pc = 0x3B0124u;
@@ -42,9 +40,7 @@ void Obj0000_Set_D_003FAE30_Field_10_Zero_0x3b0120(uint8_t* rdram, R5900Context*
         return;
         #endif
     }
-    ctx->pc = 0x3B012Cu;
     // 0x3b012c: 0x0  nop
-    ctx->pc = 0x3b012cu;
     // NOP
     ctx->pc = 0x3b0130u;
 }

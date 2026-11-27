@@ -54,8 +54,12 @@ namespace ps2x::iop::detail
 
     bool IopCpuCore::executeInstruction(IopCpuState &cpu)
     {
+        return executeInstructionWithFetched(cpu, m_memory.read32(cpu.pc));
+    }
+
+    bool IopCpuCore::executeInstructionWithFetched(IopCpuState &cpu, uint32_t instruction)
+    {
         const uint32_t pc = cpu.pc;
-        const uint32_t instruction = m_memory.read32(pc);
         const bool wasDelaySlot = cpu.branchPending;
         const uint32_t priorBranchTarget = cpu.branchTarget;
 
@@ -464,16 +468,16 @@ namespace ps2x::iop::detail
         }
 
         cpu.gpr[0] = 0u;
-        if (cpu.exception)
+        if (__builtin_expect(cpu.exception, 0))
             return !cpu.stopped;
 
-        if (cpu.pendingLoad)
+        if (__builtin_expect(cpu.pendingLoad, 0))
         {
             if (cpu.pendingLoadReg != 0u && cpu.pendingLoadReg != writtenReg)
                 cpu.gpr[cpu.pendingLoadReg] = cpu.pendingLoadValue;
             cpu.pendingLoad = false;
         }
-        if (scheduledLoad)
+        if (__builtin_expect(scheduledLoad, 0))
         {
             cpu.pendingLoad = true;
             cpu.pendingLoadReg = scheduledReg;
@@ -481,7 +485,7 @@ namespace ps2x::iop::detail
         }
         cpu.gpr[0] = 0u;
 
-        if (wasDelaySlot)
+        if (__builtin_expect(wasDelaySlot, 0))
         {
             cpu.pc = priorBranchTarget;
             cpu.branchPending = false;

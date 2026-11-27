@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_addKeyCardNum
 // Address: 0x1fa968 - 0x1fa9b8
-void cCoreSave_addKeyCardNum_0x1fa968(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_addKeyCardNum_0x1fa968(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_addKeyCardNum_0x1fa968");
 #endif
 
-    ctx->pc = 0x1fa968u;
 
     // 0x1fa968: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x1fa968u;
@@ -32,12 +31,10 @@ void cCoreSave_addKeyCardNum_0x1fa968(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_1fa9ac;
         }
     }
-    ctx->pc = 0x1FA974u;
     // 0x1fa974: 0x8c620068  lw          $v0, 0x68($v1)
     ctx->pc = 0x1fa974u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 104)));
     // 0x1fa978: 0x451021  addu        $v0, $v0, $a1
-    ctx->pc = 0x1fa978u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 5)));
     // 0x1fa97c: 0xac620068  sw          $v0, 0x68($v1)
     ctx->pc = 0x1fa97cu;
@@ -49,7 +46,6 @@ void cCoreSave_addKeyCardNum_0x1fa968(uint8_t* rdram, R5900Context* ctx, PS2Runt
     ctx->pc = 0x1fa984u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 104)));
     // 0x1fa988: 0x2842000a  slti        $v0, $v0, 0xA
-    ctx->pc = 0x1fa988u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 2) < (int64_t)(int32_t)10) ? 1 : 0);
     // 0x1fa98c: 0x54400004  bnel        $v0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x1FA98Cu;
@@ -66,9 +62,7 @@ void cCoreSave_addKeyCardNum_0x1fa968(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_1fa9a0;
         }
     }
-    ctx->pc = 0x1FA994u;
     // 0x1fa994: 0x24020009  addiu       $v0, $zero, 0x9
-    ctx->pc = 0x1fa994u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 9));
     // 0x1fa998: 0xac620068  sw          $v0, 0x68($v1)
     ctx->pc = 0x1fa998u;
@@ -95,7 +89,6 @@ label_1fa9a0:
             goto label_1fa9ac;
         }
     }
-    ctx->pc = 0x1FA9ACu;
 label_1fa9ac:
     // 0x1fa9ac: 0x3e00008  jr          $ra
     ctx->pc = 0x1FA9ACu;
@@ -110,9 +103,7 @@ label_1fa9ac:
         return;
         #endif
     }
-    ctx->pc = 0x1FA9B4u;
     // 0x1fa9b4: 0x0  nop
-    ctx->pc = 0x1fa9b4u;
     // NOP
     ctx->pc = 0x1fa9b8u;
 }

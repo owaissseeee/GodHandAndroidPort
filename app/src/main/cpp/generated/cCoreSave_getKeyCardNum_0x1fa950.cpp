@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_getKeyCardNum
 // Address: 0x1fa950 - 0x1fa968
-void cCoreSave_getKeyCardNum_0x1fa950(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getKeyCardNum_0x1fa950(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getKeyCardNum_0x1fa950");
 #endif
 
-    ctx->pc = 0x1fa950u;
 
     // 0x1fa950: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fa950u;
@@ -38,7 +37,6 @@ void cCoreSave_getKeyCardNum_0x1fa950(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_1fa960;
         }
     }
-    ctx->pc = 0x1FA95Cu;
     // 0x1fa95c: 0x8c820068  lw          $v0, 0x68($a0)
     ctx->pc = 0x1fa95cu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 104)));

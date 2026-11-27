@@ -13,23 +13,22 @@
 
 // Function: ReferSemaStatus
 // Address: 0x3afd10 - 0x3afd20
-void ReferSemaStatus_0x3afd10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ReferSemaStatus_0x3afd10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ReferSemaStatus_0x3afd10");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afd18u: goto label_3afd18;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afd10u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afd18u: goto label_3afd18;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afd10u;
 
     // 0x3afd10: 0x24030047  addiu       $v1, $zero, 0x47
-    ctx->pc = 0x3afd10u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 71));
     // 0x3afd14: 0xc  syscall     0
-    ctx->pc = 0x3afd14u;
     ctx->pc = 0x3AFD18u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

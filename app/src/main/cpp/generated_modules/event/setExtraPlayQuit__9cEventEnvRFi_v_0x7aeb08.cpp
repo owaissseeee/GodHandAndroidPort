@@ -14,12 +14,11 @@ namespace gh_event
 {
 // Function: setExtraPlayQuit__9cEventEnvRFi_v
 // Address: 0x7aeb08 - 0x7aeb10
-void setExtraPlayQuit__9cEventEnvRFi_v_0x7aeb08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void setExtraPlayQuit__9cEventEnvRFi_v_0x7aeb08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("setExtraPlayQuit__9cEventEnvRFi_v_0x7aeb08");
 #endif
 
-    ctx->pc = 0x7aeb08u;
 
     // 0x7aeb08: 0x3e00008  jr          $ra
     ctx->pc = 0x7AEB08u;

@@ -13,20 +13,20 @@
 
 // Function: Poker_Release
 // Address: 0x1d72b0 - 0x1d72d0
-void Poker_Release_0x1d72b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Poker_Release_0x1d72b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Poker_Release_0x1d72b0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1d72c0u: goto label_1d72c0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1d72b0u, 0)) {
+        switch (ctx->pc) {
+            case 0x1d72c0u: goto label_1d72c0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1d72b0u;
 
     // 0x1d72b0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1d72b0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1d72b4: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1d72b4u;
@@ -34,11 +34,9 @@ void Poker_Release_0x1d72b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x1d72b8: 0xc077e50  jal         func_1DF940
     ctx->pc = 0x1D72B8u;
     SET_GPR_U32(ctx, 31, 0x1D72C0u);
-    ctx->pc = 0x1DF940u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1DF940u, 0x1D72B8u, 0x1D72C0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &Poker_releaseIds_0x1df940, 0x1df940u, 0x1d72c0u)) {
         return;
     }
-    ctx->pc = 0x1D72C0u;
 label_1d72c0:
     // 0x1d72c0: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1d72c0u;
@@ -62,9 +60,7 @@ label_1d72c0:
         return;
         #endif
     }
-    ctx->pc = 0x1D72CCu;
     // 0x1d72cc: 0x0  nop
-    ctx->pc = 0x1d72ccu;
     // NOP
     ctx->pc = 0x1d72d0u;
 }

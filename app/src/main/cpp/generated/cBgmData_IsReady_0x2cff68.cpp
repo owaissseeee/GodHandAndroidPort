@@ -13,18 +13,16 @@
 
 // Function: cBgmData_IsReady
 // Address: 0x2cff68 - 0x2cff78
-void cBgmData_IsReady_0x2cff68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cBgmData_IsReady_0x2cff68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cBgmData_IsReady_0x2cff68");
 #endif
 
-    ctx->pc = 0x2cff68u;
 
     // 0x2cff68: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2cff68u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4)));
     // 0x2cff6c: 0x3842000f  xori        $v0, $v0, 0xF
-    ctx->pc = 0x2cff6cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)15);
     // 0x2cff70: 0x3e00008  jr          $ra
     ctx->pc = 0x2CFF70u;

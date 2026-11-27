@@ -13,18 +13,15 @@
 
 // Function: Obj0000_Set_Ptr_100_D_0044BED0_2BA8D0
 // Address: 0x2ba8d0 - 0x2ba8e0
-void Obj0000_Set_Ptr_100_D_0044BED0_2BA8D0_0x2ba8d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_Ptr_100_D_0044BED0_2BA8D0_0x2ba8d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_Ptr_100_D_0044BED0_2BA8D0_0x2ba8d0");
 #endif
 
-    ctx->pc = 0x2ba8d0u;
 
     // 0x2ba8d0: 0x3c020045  lui         $v0, 0x45
-    ctx->pc = 0x2ba8d0u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)69 << 16));
     // 0x2ba8d4: 0x2442bed0  addiu       $v0, $v0, -0x4130
-    ctx->pc = 0x2ba8d4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294950608));
     // 0x2ba8d8: 0x3e00008  jr          $ra
     ctx->pc = 0x2BA8D8u;

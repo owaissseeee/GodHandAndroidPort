@@ -14,46 +14,46 @@ namespace gh_r406
 {
 // Function: __do_global_dtors
 // Address: 0x7998d8 - 0x799930
-void ps2___do_global_dtors_0x7998d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___do_global_dtors_0x7998d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___do_global_dtors_0x7998d8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7998d8u: goto label_7998d8;
-        case 0x7998dcu: goto label_7998dc;
-        case 0x7998e0u: goto label_7998e0;
-        case 0x7998e4u: goto label_7998e4;
-        case 0x7998e8u: goto label_7998e8;
-        case 0x7998ecu: goto label_7998ec;
-        case 0x7998f0u: goto label_7998f0;
-        case 0x7998f4u: goto label_7998f4;
-        case 0x7998f8u: goto label_7998f8;
-        case 0x7998fcu: goto label_7998fc;
-        case 0x799900u: goto label_799900;
-        case 0x799904u: goto label_799904;
-        case 0x799908u: goto label_799908;
-        case 0x79990cu: goto label_79990c;
-        case 0x799910u: goto label_799910;
-        case 0x799914u: goto label_799914;
-        case 0x799918u: goto label_799918;
-        case 0x79991cu: goto label_79991c;
-        case 0x799920u: goto label_799920;
-        case 0x799924u: goto label_799924;
-        case 0x799928u: goto label_799928;
-        case 0x79992cu: goto label_79992c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7998d8u, 0)) {
+        switch (ctx->pc) {
+            case 0x7998d8u: goto label_7998d8;
+            case 0x7998dcu: goto label_7998dc;
+            case 0x7998e0u: goto label_7998e0;
+            case 0x7998e4u: goto label_7998e4;
+            case 0x7998e8u: goto label_7998e8;
+            case 0x7998ecu: goto label_7998ec;
+            case 0x7998f0u: goto label_7998f0;
+            case 0x7998f4u: goto label_7998f4;
+            case 0x7998f8u: goto label_7998f8;
+            case 0x7998fcu: goto label_7998fc;
+            case 0x799900u: goto label_799900;
+            case 0x799904u: goto label_799904;
+            case 0x799908u: goto label_799908;
+            case 0x79990cu: goto label_79990c;
+            case 0x799910u: goto label_799910;
+            case 0x799914u: goto label_799914;
+            case 0x799918u: goto label_799918;
+            case 0x79991cu: goto label_79991c;
+            case 0x799920u: goto label_799920;
+            case 0x799924u: goto label_799924;
+            case 0x799928u: goto label_799928;
+            case 0x79992cu: goto label_79992c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7998d8u;
+
 
 label_7998d8:
     // 0x7998d8: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x7998d8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
 label_7998dc:
     // 0x7998dc: 0x3c04007a  lui         $a0, 0x7A
-    ctx->pc = 0x7998dcu;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)122 << 16));
 label_7998e0:
     // 0x7998e0: 0xffbf0010  sd          $ra, 0x10($sp)
@@ -98,14 +98,12 @@ label_7998f4:
             goto label_79991c;
         }
     }
-    ctx->pc = 0x7998F8u;
 label_7998f8:
     // 0x7998f8: 0x8e029b00  lw          $v0, -0x6500($s0)
     ctx->pc = 0x7998f8u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 4294941440)));
 label_7998fc:
     // 0x7998fc: 0x24420004  addiu       $v0, $v0, 0x4
-    ctx->pc = 0x7998fcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4));
 label_799900:
     // 0x799900: 0x8c43fffc  lw          $v1, -0x4($v0)
@@ -139,7 +137,6 @@ label_799908:
             return;
         }
     }
-    ctx->pc = 0x79990Cu;
 label_79990c:
     // 0x79990c: 0x8e029b00  lw          $v0, -0x6500($s0)
     ctx->pc = 0x79990cu;
@@ -178,7 +175,6 @@ label_799918:
             goto label_799900;
         }
     }
-    ctx->pc = 0x79991Cu;
 label_79991c:
     // 0x79991c: 0xdfbf0010  ld          $ra, 0x10($sp)
     ctx->pc = 0x79991cu;
@@ -218,10 +214,8 @@ label_799928:
         return;
         #endif
     }
-    ctx->pc = 0x79992Cu;
 label_79992c:
     // 0x79992c: 0x0  nop
-    ctx->pc = 0x79992cu;
     // NOP
     ctx->pc = 0x799930u;
 }

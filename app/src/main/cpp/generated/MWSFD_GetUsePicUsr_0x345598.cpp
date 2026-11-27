@@ -13,20 +13,20 @@
 
 // Function: MWSFD_GetUsePicUsr
 // Address: 0x345598 - 0x3455b8
-void MWSFD_GetUsePicUsr_0x345598(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MWSFD_GetUsePicUsr_0x345598(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MWSFD_GetUsePicUsr_0x345598");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3455a8u: goto label_3455a8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x345598u, 0)) {
+        switch (ctx->pc) {
+            case 0x3455a8u: goto label_3455a8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x345598u;
 
     // 0x345598: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x345598u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x34559c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x34559cu;
@@ -34,11 +34,9 @@ void MWSFD_GetUsePicUsr_0x345598(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     // 0x3455a0: 0xc0d14ac  jal         func_3452B0
     ctx->pc = 0x3455A0u;
     SET_GPR_U32(ctx, 31, 0x3455A8u);
-    ctx->pc = 0x3452B0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3452B0u, 0x3455A0u, 0x3455A8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &GetD003EC7E0_3452B0_0x3452b0, 0x3452b0u, 0x3455a8u)) {
         return;
     }
-    ctx->pc = 0x3455A8u;
 label_3455a8:
     // 0x3455a8: 0x8c420038  lw          $v0, 0x38($v0)
     ctx->pc = 0x3455a8u;

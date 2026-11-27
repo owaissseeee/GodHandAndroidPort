@@ -14,30 +14,31 @@ namespace gh_mcport
 {
 // Function: what__C9exception
 // Address: 0x7ca478 - 0x7ca4a0
-void what__C9exception_0x7ca478(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void what__C9exception_0x7ca478(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("what__C9exception_0x7ca478");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7ca478u: goto label_7ca478;
-        case 0x7ca47cu: goto label_7ca47c;
-        case 0x7ca480u: goto label_7ca480;
-        case 0x7ca484u: goto label_7ca484;
-        case 0x7ca488u: goto label_7ca488;
-        case 0x7ca48cu: goto label_7ca48c;
-        case 0x7ca490u: goto label_7ca490;
-        case 0x7ca494u: goto label_7ca494;
-        case 0x7ca498u: goto label_7ca498;
-        case 0x7ca49cu: goto label_7ca49c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7ca478u, 0)) {
+        switch (ctx->pc) {
+            case 0x7ca478u: goto label_7ca478;
+            case 0x7ca47cu: goto label_7ca47c;
+            case 0x7ca480u: goto label_7ca480;
+            case 0x7ca484u: goto label_7ca484;
+            case 0x7ca488u: goto label_7ca488;
+            case 0x7ca48cu: goto label_7ca48c;
+            case 0x7ca490u: goto label_7ca490;
+            case 0x7ca494u: goto label_7ca494;
+            case 0x7ca498u: goto label_7ca498;
+            case 0x7ca49cu: goto label_7ca49c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7ca478u;
+
 
 label_7ca478:
     // 0x7ca478: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7ca478u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_7ca47c:
     // 0x7ca47c: 0x8c830000  lw          $v1, 0x0($a0)
@@ -67,7 +68,6 @@ label_7ca48c:
             return;
         }
     }
-    ctx->pc = 0x7CA490u;
 label_7ca490:
     // 0x7ca490: 0x8c420000  lw          $v0, 0x0($v0)
     ctx->pc = 0x7ca490u;

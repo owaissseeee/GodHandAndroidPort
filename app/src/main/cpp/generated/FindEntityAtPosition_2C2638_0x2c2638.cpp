@@ -13,25 +13,25 @@
 
 // Function: FindEntityAtPosition_2C2638
 // Address: 0x2c2638 - 0x2c2728
-void FindEntityAtPosition_2C2638_0x2c2638(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FindEntityAtPosition_2C2638_0x2c2638(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FindEntityAtPosition_2C2638_0x2c2638");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2c2678u: goto label_2c2678;
-        case 0x2c2680u: goto label_2c2680;
-        case 0x2c26a8u: goto label_2c26a8;
-        case 0x2c26b4u: goto label_2c26b4;
-        case 0x2c26ccu: goto label_2c26cc;
-        case 0x2c26ecu: goto label_2c26ec;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2c2638u, 0)) {
+        switch (ctx->pc) {
+            case 0x2c2678u: goto label_2c2678;
+            case 0x2c2680u: goto label_2c2680;
+            case 0x2c26a8u: goto label_2c26a8;
+            case 0x2c26b4u: goto label_2c26b4;
+            case 0x2c26ccu: goto label_2c26cc;
+            case 0x2c26ecu: goto label_2c26ec;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2c2638u;
 
     // 0x2c2638: 0x27bdff50  addiu       $sp, $sp, -0xB0
-    ctx->pc = 0x2c2638u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967120));
     // 0x2c263c: 0x7fb10090  sq          $s1, 0x90($sp)
     ctx->pc = 0x2c263cu;
@@ -40,25 +40,21 @@ void FindEntityAtPosition_2C2638_0x2c2638(uint8_t* rdram, R5900Context* ctx, PS2
     ctx->pc = 0x2c2640u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 128), GPR_VEC(ctx, 18));
     // 0x2c2644: 0x80882d  daddu       $s1, $a0, $zero
-    ctx->pc = 0x2c2644u;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2c2648: 0x7fb30070  sq          $s3, 0x70($sp)
     ctx->pc = 0x2c2648u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 112), GPR_VEC(ctx, 19));
     // 0x2c264c: 0xc0902d  daddu       $s2, $a2, $zero
-    ctx->pc = 0x2c264cu;
     SET_GPR_U64(ctx, 18, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2c2650: 0x7fb40060  sq          $s4, 0x60($sp)
     ctx->pc = 0x2c2650u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 96), GPR_VEC(ctx, 20));
     // 0x2c2654: 0xe0982d  daddu       $s3, $a3, $zero
-    ctx->pc = 0x2c2654u;
     SET_GPR_U64(ctx, 19, (uint64_t)GPR_U64(ctx, 7) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2c2658: 0x7fb000a0  sq          $s0, 0xA0($sp)
     ctx->pc = 0x2c2658u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 160), GPR_VEC(ctx, 16));
     // 0x2c265c: 0xa0a02d  daddu       $s4, $a1, $zero
-    ctx->pc = 0x2c265cu;
     SET_GPR_U64(ctx, 20, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2c2660: 0x7fb50050  sq          $s5, 0x50($sp)
     ctx->pc = 0x2c2660u;
@@ -67,13 +63,11 @@ void FindEntityAtPosition_2C2638_0x2c2638(uint8_t* rdram, R5900Context* ctx, PS2
     ctx->pc = 0x2c2664u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 64), GPR_VEC(ctx, 22));
     // 0x2c2668: 0x24150001  addiu       $s5, $zero, 0x1
-    ctx->pc = 0x2c2668u;
     SET_GPR_S32(ctx, 21, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2c266c: 0xffbf0030  sd          $ra, 0x30($sp)
     ctx->pc = 0x2c266cu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 48), GPR_U64(ctx, 31));
     // 0x2c2670: 0xc0b0c30  jal         func_2C30C0
-    ctx->pc = 0x2C2670u;
     SET_GPR_U32(ctx, 31, 0x2C2678u);
     ctx->pc = 0x2C2674u;
     ctx->in_delay_slot = true;
@@ -81,11 +75,9 @@ void FindEntityAtPosition_2C2638_0x2c2638(uint8_t* rdram, R5900Context* ctx, PS2
     // 0x2c2674: 0x2416000c  addiu       $s6, $zero, 0xC (Delay Slot)
     SET_GPR_S32(ctx, 22, (int32_t)ADD32(GPR_U32(ctx, 0), 12));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2C30C0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2C30C0u, 0x2C2670u, 0x2C2678u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cSceAtManager_getUnitList_0x2c30c0, 0x2c30c0u, 0x2c2678u)) {
         return;
     }
-    ctx->pc = 0x2C2678u;
 label_2c2678:
     // 0x2c2678: 0x10000019  b           . + 4 + (0x19 << 2)
     ctx->pc = 0x2C2678u;
@@ -102,13 +94,10 @@ label_2c2678:
             goto label_2c26e0;
         }
     }
-    ctx->pc = 0x2C2680u;
 label_2c2680:
     // 0x2c2680: 0x38420001  xori        $v0, $v0, 0x1
-    ctx->pc = 0x2c2680u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)1);
     // 0x2c2684: 0x30420001  andi        $v0, $v0, 0x1
-    ctx->pc = 0x2c2684u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
     // 0x2c2688: 0x14400016  bnez        $v0, . + 4 + (0x16 << 2)
     ctx->pc = 0x2C2688u;
@@ -125,7 +114,6 @@ label_2c2680:
             goto label_2c26e4;
         }
     }
-    ctx->pc = 0x2C2690u;
     // 0x2c2690: 0x92020035  lbu         $v0, 0x35($s0)
     ctx->pc = 0x2c2690u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 16), 53)));
@@ -144,12 +132,9 @@ label_2c2680:
             goto label_2c26e4;
         }
     }
-    ctx->pc = 0x2C269Cu;
     // 0x2c269c: 0x3a0282d  daddu       $a1, $sp, $zero
-    ctx->pc = 0x2c269cu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2c26a0: 0xc0b075a  jal         func_2C1D68
-    ctx->pc = 0x2C26A0u;
     SET_GPR_U32(ctx, 31, 0x2C26A8u);
     ctx->pc = 0x2C26A4u;
     ctx->in_delay_slot = true;
@@ -157,17 +142,13 @@ label_2c2680:
     // 0x2c26a4: 0x200302d  daddu       $a2, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2C1D68u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2C1D68u, 0x2C26A0u, 0x2C26A8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002C1D68_0x2c1d68, 0x2c1d68u, 0x2c26a8u)) {
         return;
     }
-    ctx->pc = 0x2C26A8u;
 label_2c26a8:
     // 0x2c26a8: 0x3a0202d  daddu       $a0, $sp, $zero
-    ctx->pc = 0x2c26a8u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2c26ac: 0xc07e0fa  jal         func_1F83E8
-    ctx->pc = 0x2C26ACu;
     SET_GPR_U32(ctx, 31, 0x2C26B4u);
     ctx->pc = 0x2C26B0u;
     ctx->in_delay_slot = true;
@@ -175,11 +156,9 @@ label_2c26a8:
     // 0x2c26b0: 0x280282d  daddu       $a1, $s4, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 20) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1F83E8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1F83E8u, 0x2C26ACu, 0x2C26B4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cArea_HitCheck_1F83E8_0x1f83e8, 0x1f83e8u, 0x2c26b4u)) {
         return;
     }
-    ctx->pc = 0x2C26B4u;
 label_2c26b4:
     // 0x2c26b4: 0x5455000b  bnel        $v0, $s5, . + 4 + (0xB << 2)
     ctx->pc = 0x2C26B4u;
@@ -196,7 +175,6 @@ label_2c26b4:
             goto label_2c26e4;
         }
     }
-    ctx->pc = 0x2C26BCu;
     // 0x2c26bc: 0x12400003  beqz        $s2, . + 4 + (0x3 << 2)
     ctx->pc = 0x2C26BCu;
     {
@@ -212,9 +190,7 @@ label_2c26b4:
             goto label_2c26cc;
         }
     }
-    ctx->pc = 0x2C26C4u;
     // 0x2c26c4: 0xc0b039e  jal         func_2C0E78
-    ctx->pc = 0x2C26C4u;
     SET_GPR_U32(ctx, 31, 0x2C26CCu);
     ctx->pc = 0x2C26C8u;
     ctx->in_delay_slot = true;
@@ -222,11 +198,9 @@ label_2c26b4:
     // 0x2c26c8: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2C0E78u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2C0E78u, 0x2C26C4u, 0x2C26CCu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cSceAtUnit_getCenterPos_0x2c0e78, 0x2c0e78u, 0x2c26ccu)) {
         return;
     }
-    ctx->pc = 0x2C26CCu;
 label_2c26cc:
     // 0x2c26cc: 0x1260000b  beqz        $s3, . + 4 + (0xB << 2)
     ctx->pc = 0x2C26CCu;
@@ -243,7 +217,6 @@ label_2c26cc:
             goto label_2c26fc;
         }
     }
-    ctx->pc = 0x2C26D4u;
     // 0x2c26d4: 0xc6000010  lwc1        $f0, 0x10($s0)
     ctx->pc = 0x2c26d4u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 16), 16)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -262,14 +235,11 @@ label_2c26cc:
             goto label_2c26fc;
         }
     }
-    ctx->pc = 0x2C26E0u;
 label_2c26e0:
     // 0x2c26e0: 0x200282d  daddu       $a1, $s0, $zero
-    ctx->pc = 0x2c26e0u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_2c26e4:
     // 0x2c26e4: 0xc0b0c32  jal         func_2C30C8
-    ctx->pc = 0x2C26E4u;
     SET_GPR_U32(ctx, 31, 0x2C26ECu);
     ctx->pc = 0x2C26E8u;
     ctx->in_delay_slot = true;
@@ -277,14 +247,11 @@ label_2c26e4:
     // 0x2c26e8: 0x220202d  daddu       $a0, $s1, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2C30C8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2C30C8u, 0x2C26E4u, 0x2C26ECu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cSceAtManager_getNextUnit_0x2c30c8, 0x2c30c8u, 0x2c26ecu)) {
         return;
     }
-    ctx->pc = 0x2C26ECu;
 label_2c26ec:
     // 0x2c26ec: 0x40802d  daddu       $s0, $v0, $zero
-    ctx->pc = 0x2c26ecu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2c26f0: 0x5600ffe3  bnel        $s0, $zero, . + 4 + (-0x1D << 2)
     ctx->pc = 0x2C26F0u;
@@ -304,9 +271,7 @@ label_2c26ec:
             goto label_2c2680;
         }
     }
-    ctx->pc = 0x2C26F8u;
     // 0x2c26f8: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x2c26f8u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_2c26fc:
     // 0x2c26fc: 0x7bb000a0  lq          $s0, 0xA0($sp)
@@ -352,9 +317,7 @@ label_2c26fc:
         return;
         #endif
     }
-    ctx->pc = 0x2C2724u;
     // 0x2c2724: 0x0  nop
-    ctx->pc = 0x2c2724u;
     // NOP
     ctx->pc = 0x2c2728u;
 }

@@ -13,12 +13,11 @@
 
 // Function: CustomIDWork_ResetScaleAnim
 // Address: 0x2d6a30 - 0x2d6a60
-void CustomIDWork_ResetScaleAnim_0x2d6a30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CustomIDWork_ResetScaleAnim_0x2d6a30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CustomIDWork_ResetScaleAnim_0x2d6a30");
 #endif
 
-    ctx->pc = 0x2d6a30u;
 
     // 0x2d6a30: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2d6a30u;
@@ -32,7 +31,6 @@ void CustomIDWork_ResetScaleAnim_0x2d6a30(uint8_t* rdram, R5900Context* ctx, PS2
             goto label_2d6a54;
         }
     }
-    ctx->pc = 0x2D6A3Cu;
     // 0x2d6a3c: 0xc4800060  lwc1        $f0, 0x60($a0)
     ctx->pc = 0x2d6a3cu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 96)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -65,9 +63,7 @@ label_2d6a54:
         return;
         #endif
     }
-    ctx->pc = 0x2D6A5Cu;
     // 0x2d6a5c: 0x0  nop
-    ctx->pc = 0x2d6a5cu;
     // NOP
     ctx->pc = 0x2d6a60u;
 }

@@ -13,21 +13,18 @@
 
 // Function: _IO_init
 // Address: 0x38cc40 - 0x38cc88
-void ps2__IO_init_0x38cc40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_init_0x38cc40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_init_0x38cc40");
 #endif
 
-    ctx->pc = 0x38cc40u;
 
     // 0x38cc40: 0x3c02fbad  lui         $v0, 0xFBAD
-    ctx->pc = 0x38cc40u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)64429 << 16));
     // 0x38cc44: 0xa4800048  sh          $zero, 0x48($a0)
     ctx->pc = 0x38cc44u;
     WRITE16(ADD32(GPR_U32(ctx, 4), 72), (uint16_t)GPR_U32(ctx, 0));
     // 0x38cc48: 0xa22825  or          $a1, $a1, $v0
-    ctx->pc = 0x38cc48u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) | GPR_U64(ctx, 2));
     // 0x38cc4c: 0xac80001c  sw          $zero, 0x1C($a0)
     ctx->pc = 0x38cc4cu;

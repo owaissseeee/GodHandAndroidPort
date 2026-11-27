@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_setGameDifficulty
 // Address: 0x1fa658 - 0x1fa678
-void cCoreSave_setGameDifficulty_0x1fa658(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setGameDifficulty_0x1fa658(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setGameDifficulty_0x1fa658");
 #endif
 
-    ctx->pc = 0x1fa658u;
 
     // 0x1fa658: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fa658u;
@@ -38,7 +37,6 @@ void cCoreSave_setGameDifficulty_0x1fa658(uint8_t* rdram, R5900Context* ctx, PS2
             goto label_1fa66c;
         }
     }
-    ctx->pc = 0x1FA664u;
     // 0x1fa664: 0x54400001  bnel        $v0, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x1FA664u;
     {
@@ -54,7 +52,6 @@ void cCoreSave_setGameDifficulty_0x1fa658(uint8_t* rdram, R5900Context* ctx, PS2
             goto label_1fa66c;
         }
     }
-    ctx->pc = 0x1FA66Cu;
 label_1fa66c:
     // 0x1fa66c: 0x3e00008  jr          $ra
     ctx->pc = 0x1FA66Cu;
@@ -69,9 +66,7 @@ label_1fa66c:
         return;
         #endif
     }
-    ctx->pc = 0x1FA674u;
     // 0x1fa674: 0x0  nop
-    ctx->pc = 0x1fa674u;
     // NOP
     ctx->pc = 0x1fa678u;
 }

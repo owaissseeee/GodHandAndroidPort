@@ -13,12 +13,11 @@
 
 // Function: ColiseumBattle_StepIdle
 // Address: 0x1ef740 - 0x1ef748
-void ColiseumBattle_StepIdle_0x1ef740(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ColiseumBattle_StepIdle_0x1ef740(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ColiseumBattle_StepIdle_0x1ef740");
 #endif
 
-    ctx->pc = 0x1ef740u;
 
     // 0x1ef740: 0x3e00008  jr          $ra
     ctx->pc = 0x1EF740u;

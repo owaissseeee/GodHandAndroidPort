@@ -13,12 +13,11 @@
 
 // Function: func_001E8E48
 // Address: 0x1e8e48 - 0x1e8e88
-void func_001E8E48_0x1e8e48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001E8E48_0x1e8e48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001E8E48_0x1e8e48");
 #endif
 
-    ctx->pc = 0x1e8e48u;
 
     // 0x1e8e48: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1e8e48u;
@@ -38,7 +37,6 @@ void func_001E8E48_0x1e8e48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1e8e5c;
         }
     }
-    ctx->pc = 0x1E8E54u;
     // 0x1e8e54: 0x3e00008  jr          $ra
     ctx->pc = 0x1E8E54u;
     {
@@ -58,7 +56,6 @@ void func_001E8E48_0x1e8e48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x1E8E5Cu;
 label_1e8e5c:
     // 0x1e8e5c: 0x10a40007  beq         $a1, $a0, . + 4 + (0x7 << 2)
     ctx->pc = 0x1E8E5Cu;
@@ -69,7 +66,6 @@ label_1e8e5c:
             goto label_1e8e7c;
         }
     }
-    ctx->pc = 0x1E8E64u;
     // 0x1e8e64: 0xc4800000  lwc1        $f0, 0x0($a0)
     ctx->pc = 0x1e8e64u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -108,9 +104,7 @@ label_1e8e7c:
         return;
         #endif
     }
-    ctx->pc = 0x1E8E84u;
     // 0x1e8e84: 0x0  nop
-    ctx->pc = 0x1e8e84u;
     // NOP
     ctx->pc = 0x1e8e88u;
 }

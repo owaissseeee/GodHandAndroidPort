@@ -13,12 +13,11 @@
 
 // Function: cGameObj_getRot
 // Address: 0x2a9460 - 0x2a9468
-void cGameObj_getRot_0x2a9460(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObj_getRot_0x2a9460(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObj_getRot_0x2a9460");
 #endif
 
-    ctx->pc = 0x2a9460u;
 
     // 0x2a9460: 0x3e00008  jr          $ra
     ctx->pc = 0x2A9460u;

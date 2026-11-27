@@ -13,12 +13,11 @@
 
 // Function: ClearBytes_764_765_17F6B0
 // Address: 0x17f6b0 - 0x17f6c0
-void ClearBytes_764_765_17F6B0_0x17f6b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearBytes_764_765_17F6B0_0x17f6b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearBytes_764_765_17F6B0_0x17f6b0");
 #endif
 
-    ctx->pc = 0x17f6b0u;
 
     // 0x17f6b0: 0xa0800764  sb          $zero, 0x764($a0)
     ctx->pc = 0x17f6b0u;
@@ -42,9 +41,7 @@ void ClearBytes_764_765_17F6B0_0x17f6b0(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x17F6BCu;
     // 0x17f6bc: 0x0  nop
-    ctx->pc = 0x17f6bcu;
     // NOP
     ctx->pc = 0x17f6c0u;
 }

@@ -13,20 +13,20 @@
 
 // Function: ForwardVec3At30_147C60
 // Address: 0x147c60 - 0x147c88
-void ForwardVec3At30_147C60_0x147c60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardVec3At30_147C60_0x147c60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardVec3At30_147C60_0x147c60");
 #endif
 
-    switch (ctx->pc) {
-        case 0x147c78u: goto label_147c78;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x147c60u, 0)) {
+        switch (ctx->pc) {
+            case 0x147c78u: goto label_147c78;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x147c60u;
 
     // 0x147c60: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x147c60u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x147c64: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x147c64u;
@@ -38,7 +38,6 @@ void ForwardVec3At30_147C60_0x147c60(uint8_t* rdram, R5900Context* ctx, PS2Runti
     ctx->pc = 0x147c6cu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 48)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[12] = f; }
     // 0x147c70: 0xc0541c4  jal         func_150710
-    ctx->pc = 0x147C70u;
     SET_GPR_U32(ctx, 31, 0x147C78u);
     ctx->pc = 0x147C74u;
     ctx->in_delay_slot = true;
@@ -46,11 +45,9 @@ void ForwardVec3At30_147C60_0x147c60(uint8_t* rdram, R5900Context* ctx, PS2Runti
     // 0x147c74: 0xc4ad0034  lwc1        $f13, 0x34($a1) (Delay Slot)
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 52)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[13] = f; }
     ctx->in_delay_slot = false;
-    ctx->pc = 0x150710u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x150710u, 0x147C70u, 0x147C78u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00150710_0x150710, 0x150710u, 0x147c78u)) {
         return;
     }
-    ctx->pc = 0x147C78u;
 label_147c78:
     // 0x147c78: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x147c78u;
@@ -74,9 +71,7 @@ label_147c78:
         return;
         #endif
     }
-    ctx->pc = 0x147C84u;
     // 0x147c84: 0x0  nop
-    ctx->pc = 0x147c84u;
     // NOP
     ctx->pc = 0x147c88u;
 }

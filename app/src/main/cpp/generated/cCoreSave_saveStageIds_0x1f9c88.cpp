@@ -13,21 +13,18 @@
 
 // Function: cCoreSave_saveStageIds
 // Address: 0x1f9c88 - 0x1f9cb0
-void cCoreSave_saveStageIds_0x1f9c88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_saveStageIds_0x1f9c88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_saveStageIds_0x1f9c88");
 #endif
 
-    ctx->pc = 0x1f9c88u;
 
     // 0x1f9c88: 0x3c030074  lui         $v1, 0x74
-    ctx->pc = 0x1f9c88u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)116 << 16));
     // 0x1f9c8c: 0x8c850000  lw          $a1, 0x0($a0)
     ctx->pc = 0x1f9c8cu;
     SET_GPR_S32(ctx, 5, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x1f9c90: 0x246374a0  addiu       $v1, $v1, 0x74A0
-    ctx->pc = 0x1f9c90u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 29856));
     // 0x1f9c94: 0x946205b0  lhu         $v0, 0x5B0($v1)
     ctx->pc = 0x1f9c94u;
@@ -60,9 +57,7 @@ void cCoreSave_saveStageIds_0x1f9c88(uint8_t* rdram, R5900Context* ctx, PS2Runti
         return;
         #endif
     }
-    ctx->pc = 0x1F9CACu;
     // 0x1f9cac: 0x0  nop
-    ctx->pc = 0x1f9cacu;
     // NOP
     ctx->pc = 0x1f9cb0u;
 }

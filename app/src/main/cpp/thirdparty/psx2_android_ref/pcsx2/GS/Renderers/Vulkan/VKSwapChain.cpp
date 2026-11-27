@@ -540,20 +540,8 @@ bool VKSwapChain::SelectPresentMode(VkSurfaceKHR surface, GSVSyncMode* vsync_mod
 
 		case GSVSyncMode::FIFO:
 		{
-#if defined(__ANDROID__)
-			// On Android, prefer FIFO_RELAXED if supported to eliminate the 16.6ms missed-deadline penalty while preserving VSync.
-			if (CheckForMode(VK_PRESENT_MODE_FIFO_RELAXED_KHR))
-			{
-				*present_mode = VK_PRESENT_MODE_FIFO_RELAXED_KHR;
-			}
-			else
-			{
-				*present_mode = VK_PRESENT_MODE_FIFO_KHR;
-			}
-#else
 			// FIFO is always available.
 			*present_mode = VK_PRESENT_MODE_FIFO_KHR;
-#endif
 		}
 		break;
 

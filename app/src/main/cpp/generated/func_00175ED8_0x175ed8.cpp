@@ -14,17 +14,18 @@
 
 // Function: func_00175ED8
 // Address: 0x175ed8 - 0x175f38
-void func_00175ED8_0x175ed8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00175ED8_0x175ed8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00175ED8_0x175ed8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x175eecu: goto label_175eec;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x175ed8u, 0)) {
+        switch (ctx->pc) {
+            case 0x175eecu: goto label_175eec;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x175ed8u;
 
     // 0x175ed8: 0x908302f5  lbu         $v1, 0x2F5($a0)
     ctx->pc = 0x175ed8u;
@@ -44,7 +45,6 @@ void func_00175ED8_0x175ed8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_175ef4;
         }
     }
-    ctx->pc = 0x175EE4u;
     // 0x175ee4: 0x5062000a  beql        $v1, $v0, . + 4 + (0xA << 2)
     ctx->pc = 0x175EE4u;
     {
@@ -60,7 +60,6 @@ void func_00175ED8_0x175ed8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_175f10;
         }
     }
-    ctx->pc = 0x175EECu;
 label_175eec:
     // 0x175eec: 0x3e00008  jr          $ra
     ctx->pc = 0x175EECu;
@@ -75,13 +74,10 @@ label_175eec:
         return;
         #endif
     }
-    ctx->pc = 0x175EF4u;
 label_175ef4:
     // 0x175ef4: 0x2402000f  addiu       $v0, $zero, 0xF
-    ctx->pc = 0x175ef4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 15));
     // 0x175ef8: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x175ef8u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x175efc: 0xa4820d34  sh          $v0, 0xD34($a0)
     ctx->pc = 0x175efcu;
@@ -109,7 +105,6 @@ label_175f10:
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));
     }
     // 0x175f14: 0x21c00  sll         $v1, $v0, 16
-    ctx->pc = 0x175f14u;
     SET_GPR_S32(ctx, 3, (int32_t)SLL32(GPR_U32(ctx, 2), 16));
     // 0x175f18: 0x1c60fff4  bgtz        $v1, . + 4 + (-0xC << 2)
     ctx->pc = 0x175F18u;
@@ -129,7 +124,6 @@ label_175f10:
             goto label_175eec;
         }
     }
-    ctx->pc = 0x175F20u;
     // 0x175f20: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x175f20u;
     WRITE8(ADD32(GPR_U32(ctx, 4), 759), (uint8_t)GPR_U32(ctx, 0));

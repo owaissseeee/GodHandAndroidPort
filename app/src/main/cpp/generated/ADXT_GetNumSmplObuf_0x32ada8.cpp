@@ -13,42 +13,43 @@
 
 // Function: ADXT_GetNumSmplObuf
 // Address: 0x32ada8 - 0x32ae10
-void ADXT_GetNumSmplObuf_0x32ada8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ADXT_GetNumSmplObuf_0x32ada8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ADXT_GetNumSmplObuf_0x32ada8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x32ada8u: goto label_32ada8;
-        case 0x32adacu: goto label_32adac;
-        case 0x32adb0u: goto label_32adb0;
-        case 0x32adb4u: goto label_32adb4;
-        case 0x32adb8u: goto label_32adb8;
-        case 0x32adbcu: goto label_32adbc;
-        case 0x32adc0u: goto label_32adc0;
-        case 0x32adc4u: goto label_32adc4;
-        case 0x32adc8u: goto label_32adc8;
-        case 0x32adccu: goto label_32adcc;
-        case 0x32add0u: goto label_32add0;
-        case 0x32add4u: goto label_32add4;
-        case 0x32add8u: goto label_32add8;
-        case 0x32addcu: goto label_32addc;
-        case 0x32ade0u: goto label_32ade0;
-        case 0x32ade4u: goto label_32ade4;
-        case 0x32ade8u: goto label_32ade8;
-        case 0x32adecu: goto label_32adec;
-        case 0x32adf0u: goto label_32adf0;
-        case 0x32adf4u: goto label_32adf4;
-        case 0x32adf8u: goto label_32adf8;
-        case 0x32adfcu: goto label_32adfc;
-        case 0x32ae00u: goto label_32ae00;
-        case 0x32ae04u: goto label_32ae04;
-        case 0x32ae08u: goto label_32ae08;
-        case 0x32ae0cu: goto label_32ae0c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x32ada8u, 0)) {
+        switch (ctx->pc) {
+            case 0x32ada8u: goto label_32ada8;
+            case 0x32adacu: goto label_32adac;
+            case 0x32adb0u: goto label_32adb0;
+            case 0x32adb4u: goto label_32adb4;
+            case 0x32adb8u: goto label_32adb8;
+            case 0x32adbcu: goto label_32adbc;
+            case 0x32adc0u: goto label_32adc0;
+            case 0x32adc4u: goto label_32adc4;
+            case 0x32adc8u: goto label_32adc8;
+            case 0x32adccu: goto label_32adcc;
+            case 0x32add0u: goto label_32add0;
+            case 0x32add4u: goto label_32add4;
+            case 0x32add8u: goto label_32add8;
+            case 0x32addcu: goto label_32addc;
+            case 0x32ade0u: goto label_32ade0;
+            case 0x32ade4u: goto label_32ade4;
+            case 0x32ade8u: goto label_32ade8;
+            case 0x32adecu: goto label_32adec;
+            case 0x32adf0u: goto label_32adf0;
+            case 0x32adf4u: goto label_32adf4;
+            case 0x32adf8u: goto label_32adf8;
+            case 0x32adfcu: goto label_32adfc;
+            case 0x32ae00u: goto label_32ae00;
+            case 0x32ae04u: goto label_32ae04;
+            case 0x32ae08u: goto label_32ae08;
+            case 0x32ae0cu: goto label_32ae0c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x32ada8u;
 
 label_32ada8:
     // 0x32ada8: 0x27bdfff0  addiu       $sp, $sp, -0x10
@@ -109,7 +110,6 @@ label_32adb8:
             goto label_32add0;
         }
     }
-    ctx->pc = 0x32ADBCu;
 label_32adbc:
     // 0x32adbc: 0x3c040045  lui         $a0, 0x45
     ctx->pc = 0x32adbcu;
@@ -127,7 +127,6 @@ label_32adc4:
         ctx->pc = 0x32ADC8u;
         goto label_32adc8;
     }
-    ctx->pc = 0x32ADC0u;
     SET_GPR_U32(ctx, 31, 0x32ADC8u);
     ctx->pc = 0x32ADC4u;
     ctx->in_delay_slot = true;
@@ -135,8 +134,7 @@ label_32adc4:
     // 0x32adc4: 0x24842408  addiu       $a0, $a0, 0x2408 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 9224));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x33F130u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x33F130u, 0x32ADC0u, 0x32ADC8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_0033F130_0x33f130, 0x33f130u, 0x32adc8u)) {
         return;
     }
     ctx->pc = 0x32ADC8u;
@@ -167,10 +165,8 @@ label_32adcc:
             goto label_32ae04;
         }
     }
-    ctx->pc = 0x32ADD0u;
 label_32add0:
     // 0x32add0: 0x441021  addu        $v0, $v0, $a0
-    ctx->pc = 0x32add0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 4)));
 label_32add4:
     // 0x32add4: 0x8c420018  lw          $v0, 0x18($v0)
@@ -203,7 +199,6 @@ label_32addc:
             goto label_32ae00;
         }
     }
-    ctx->pc = 0x32ADE0u;
 label_32ade0:
     // 0x32ade0: 0x8c430000  lw          $v1, 0x0($v0)
     ctx->pc = 0x32ade0u;
@@ -240,10 +235,8 @@ label_32adec:
             return;
         }
     }
-    ctx->pc = 0x32ADF0u;
 label_32adf0:
     // 0x32adf0: 0x21fc2  srl         $v1, $v0, 31
-    ctx->pc = 0x32adf0u;
     SET_GPR_S32(ctx, 3, (int32_t)SRL32(GPR_U32(ctx, 2), 31));
 label_32adf4:
     // 0x32adf4: 0x621821  addu        $v1, $v1, $v0
@@ -276,10 +269,8 @@ label_32adfc:
             goto label_32ae04;
         }
     }
-    ctx->pc = 0x32AE00u;
 label_32ae00:
     // 0x32ae00: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x32ae00u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_32ae04:
     // 0x32ae04: 0xdfbf0000  ld          $ra, 0x0($sp)

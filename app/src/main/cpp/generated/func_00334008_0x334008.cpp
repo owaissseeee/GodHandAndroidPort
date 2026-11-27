@@ -13,36 +13,35 @@
 
 // Function: func_00334008
 // Address: 0x334008 - 0x334038
-void func_00334008_0x334008(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00334008_0x334008(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00334008_0x334008");
 #endif
 
-    switch (ctx->pc) {
-        case 0x334008u: goto label_334008;
-        case 0x33400cu: goto label_33400c;
-        case 0x334010u: goto label_334010;
-        case 0x334014u: goto label_334014;
-        case 0x334018u: goto label_334018;
-        case 0x33401cu: goto label_33401c;
-        case 0x334020u: goto label_334020;
-        case 0x334024u: goto label_334024;
-        case 0x334028u: goto label_334028;
-        case 0x33402cu: goto label_33402c;
-        case 0x334030u: goto label_334030;
-        case 0x334034u: goto label_334034;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x334008u, 0)) {
+        switch (ctx->pc) {
+            case 0x334008u: goto label_334008;
+            case 0x33400cu: goto label_33400c;
+            case 0x334010u: goto label_334010;
+            case 0x334014u: goto label_334014;
+            case 0x334018u: goto label_334018;
+            case 0x33401cu: goto label_33401c;
+            case 0x334020u: goto label_334020;
+            case 0x334024u: goto label_334024;
+            case 0x334028u: goto label_334028;
+            case 0x33402cu: goto label_33402c;
+            case 0x334030u: goto label_334030;
+            case 0x334034u: goto label_334034;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x334008u;
 
 label_334008:
     // 0x334008: 0x3c02003e  lui         $v0, 0x3E
-    ctx->pc = 0x334008u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)62 << 16));
 label_33400c:
     // 0x33400c: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x33400cu;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_334010:
     // 0x334010: 0x8c439f6c  lw          $v1, -0x6094($v0)
@@ -79,7 +78,6 @@ label_33401c:
             goto label_33402c;
         }
     }
-    ctx->pc = 0x334020u;
 label_334020:
     // 0x334020: 0x3c02003e  lui         $v0, 0x3E
     ctx->pc = 0x334020u;
@@ -112,7 +110,6 @@ label_334028:
             return;
         }
     }
-    ctx->pc = 0x33402Cu;
 label_33402c:
     // 0x33402c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x33402cu;

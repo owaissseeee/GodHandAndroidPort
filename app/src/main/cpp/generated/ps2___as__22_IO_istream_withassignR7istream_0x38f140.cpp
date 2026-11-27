@@ -13,12 +13,11 @@
 
 // Function: __as__22_IO_istream_withassignR7istream
 // Address: 0x38f140 - 0x38f1a0
-void ps2___as__22_IO_istream_withassignR7istream_0x38f140(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___as__22_IO_istream_withassignR7istream_0x38f140(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___as__22_IO_istream_withassignR7istream_0x38f140");
 #endif
 
-    ctx->pc = 0x38f140u;
 
     // 0x38f140: 0x10a40015  beq         $a1, $a0, . + 4 + (0x15 << 2)
     ctx->pc = 0x38F140u;
@@ -29,7 +28,6 @@ void ps2___as__22_IO_istream_withassignR7istream_0x38f140(uint8_t* rdram, R5900C
             goto label_38f198;
         }
     }
-    ctx->pc = 0x38F148u;
     // 0x38f148: 0x8ca20000  lw          $v0, 0x0($a1)
     ctx->pc = 0x38f148u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 0)));
@@ -51,9 +49,7 @@ void ps2___as__22_IO_istream_withassignR7istream_0x38f140(uint8_t* rdram, R5900C
             goto label_38f164;
         }
     }
-    ctx->pc = 0x38F158u;
     // 0x38f158: 0x24020004  addiu       $v0, $zero, 0x4
-    ctx->pc = 0x38f158u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x38f15c: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x38F15Cu;
@@ -70,14 +66,12 @@ void ps2___as__22_IO_istream_withassignR7istream_0x38f140(uint8_t* rdram, R5900C
             goto label_38f168;
         }
     }
-    ctx->pc = 0x38F164u;
 label_38f164:
     // 0x38f164: 0xa0c0001a  sb          $zero, 0x1A($a2)
     ctx->pc = 0x38f164u;
     WRITE8(ADD32(GPR_U32(ctx, 6), 26), (uint8_t)GPR_U32(ctx, 0));
 label_38f168:
     // 0x38f168: 0x24020006  addiu       $v0, $zero, 0x6
-    ctx->pc = 0x38f168u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
     // 0x38f16c: 0xa0c0001b  sb          $zero, 0x1B($a2)
     ctx->pc = 0x38f16cu;
@@ -86,13 +80,11 @@ label_38f168:
     ctx->pc = 0x38f170u;
     WRITE32(ADD32(GPR_U32(ctx, 6), 28), GPR_U32(ctx, 2));
     // 0x38f174: 0x24030020  addiu       $v1, $zero, 0x20
-    ctx->pc = 0x38f174u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 32));
     // 0x38f178: 0xacc00008  sw          $zero, 0x8($a2)
     ctx->pc = 0x38f178u;
     WRITE32(ADD32(GPR_U32(ctx, 6), 8), GPR_U32(ctx, 0));
     // 0x38f17c: 0x24020011  addiu       $v0, $zero, 0x11
-    ctx->pc = 0x38f17cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 17));
     // 0x38f180: 0xacc50000  sw          $a1, 0x0($a2)
     ctx->pc = 0x38f180u;

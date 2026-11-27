@@ -14,12 +14,11 @@ namespace gh_r004
 {
 // Function: getReserveRoomNo__6cEvent
 // Address: 0x799588 - 0x799598
-void getReserveRoomNo__6cEvent_0x799588(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getReserveRoomNo__6cEvent_0x799588(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getReserveRoomNo__6cEvent_0x799588");
 #endif
 
-    ctx->pc = 0x799588u;
 
     // 0x799588: 0x8c830038  lw          $v1, 0x38($a0)
     ctx->pc = 0x799588u;
@@ -43,9 +42,7 @@ void getReserveRoomNo__6cEvent_0x799588(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x799594u;
     // 0x799594: 0x0  nop
-    ctx->pc = 0x799594u;
     // NOP
     ctx->pc = 0x799598u;
 }

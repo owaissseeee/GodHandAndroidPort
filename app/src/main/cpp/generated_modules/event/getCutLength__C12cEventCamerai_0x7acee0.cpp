@@ -14,32 +14,31 @@ namespace gh_event
 {
 // Function: getCutLength__C12cEventCamerai
 // Address: 0x7acee0 - 0x7acf00
-void getCutLength__C12cEventCamerai_0x7acee0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getCutLength__C12cEventCamerai_0x7acee0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getCutLength__C12cEventCamerai_0x7acee0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7acef0u: goto label_7acef0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7acee0u, 0)) {
+        switch (ctx->pc) {
+            case 0x7acef0u: goto label_7acef0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7acee0u;
+
 
     // 0x7acee0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7acee0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x7acee4: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x7acee4u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x7acee8: 0xc1eb3b0  jal         func_7ACEC0
-    ctx->pc = 0x7ACEE8u;
     SET_GPR_U32(ctx, 31, 0x7ACEF0u);
     ctx->pc = 0x7ACEC0u;
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x7ACEC0u, 0x7ACEE8u, 0x7ACEF0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7ACEF0u;
 label_7acef0:
     // 0x7acef0: 0x94420004  lhu         $v0, 0x4($v0)
     ctx->pc = 0x7acef0u;

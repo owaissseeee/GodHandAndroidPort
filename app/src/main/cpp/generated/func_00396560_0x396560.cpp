@@ -13,23 +13,22 @@
 
 // Function: func_00396560
 // Address: 0x396560 - 0x396570
-void func_00396560_0x396560(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00396560_0x396560(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00396560_0x396560");
 #endif
 
-    switch (ctx->pc) {
-        case 0x396568u: goto label_396568;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x396560u, 0)) {
+        switch (ctx->pc) {
+            case 0x396568u: goto label_396568;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x396560u;
 
     // 0x396560: 0x24030080  addiu       $v1, $zero, 0x80
-    ctx->pc = 0x396560u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 128));
     // 0x396564: 0xc  syscall     0
-    ctx->pc = 0x396564u;
     ctx->pc = 0x396568u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

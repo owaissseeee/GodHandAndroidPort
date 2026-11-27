@@ -13,32 +13,30 @@
 
 // Function: func_00383848
 // Address: 0x383848 - 0x383878
-void func_00383848_0x383848(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00383848_0x383848(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00383848_0x383848");
 #endif
 
-    switch (ctx->pc) {
-        case 0x383860u: goto label_383860;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x383848u, 0)) {
+        switch (ctx->pc) {
+            case 0x383860u: goto label_383860;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x383848u;
 
     // 0x383848: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x383848u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x38384c: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x38384cu;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 16));
     // 0x383850: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x383850u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x383854: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x383854u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x383858: 0xc0dff9e  jal         func_37FE78
-    ctx->pc = 0x383858u;
     SET_GPR_U32(ctx, 31, 0x383860u);
     ctx->pc = 0x38385Cu;
     ctx->in_delay_slot = true;
@@ -46,11 +44,9 @@ void func_00383848_0x383848(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x38385c: 0x26050370  addiu       $a1, $s0, 0x370 (Delay Slot)
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 16), 880));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x37FE78u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x37FE78u, 0x383858u, 0x383860u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_0037FE78_0x37fe78, 0x37fe78u, 0x383860u)) {
         return;
     }
-    ctx->pc = 0x383860u;
 label_383860:
     // 0x383860: 0x54400001  bnel        $v0, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x383860u;
@@ -67,7 +63,6 @@ label_383860:
             goto label_383868;
         }
     }
-    ctx->pc = 0x383868u;
 label_383868:
     // 0x383868: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x383868u;

@@ -13,27 +13,22 @@
 
 // Function: func_0037CEE0
 // Address: 0x37cee0 - 0x37cf00
-void func_0037CEE0_0x37cee0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0037CEE0_0x37cee0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0037CEE0_0x37cee0");
 #endif
 
-    ctx->pc = 0x37cee0u;
 
     // 0x37cee0: 0x80820006  lb          $v0, 0x6($a0)
     ctx->pc = 0x37cee0u;
     SET_GPR_S32(ctx, 2, (int8_t)READ8(ADD32(GPR_U32(ctx, 4), 6)));
     // 0x37cee4: 0x3c030077  lui         $v1, 0x77
-    ctx->pc = 0x37cee4u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)119 << 16));
     // 0x37cee8: 0x2463c8c0  addiu       $v1, $v1, -0x3740
-    ctx->pc = 0x37cee8u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294953152));
     // 0x37ceec: 0x21140  sll         $v0, $v0, 5
-    ctx->pc = 0x37ceecu;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 5));
     // 0x37cef0: 0x431021  addu        $v0, $v0, $v1
-    ctx->pc = 0x37cef0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
     // 0x37cef4: 0x94440000  lhu         $a0, 0x0($v0)
     ctx->pc = 0x37cef4u;

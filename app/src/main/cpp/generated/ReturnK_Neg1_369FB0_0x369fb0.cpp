@@ -13,12 +13,11 @@
 
 // Function: ReturnK_Neg1_369FB0
 // Address: 0x369fb0 - 0x369fb8
-void ReturnK_Neg1_369FB0_0x369fb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ReturnK_Neg1_369FB0_0x369fb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ReturnK_Neg1_369FB0_0x369fb0");
 #endif
 
-    ctx->pc = 0x369fb0u;
 
     // 0x369fb0: 0x3e00008  jr          $ra
     ctx->pc = 0x369FB0u;

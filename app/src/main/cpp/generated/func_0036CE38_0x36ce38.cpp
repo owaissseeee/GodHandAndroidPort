@@ -13,36 +13,35 @@
 
 // Function: func_0036CE38
 // Address: 0x36ce38 - 0x36ce68
-void func_0036CE38_0x36ce38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0036CE38_0x36ce38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0036CE38_0x36ce38");
 #endif
 
-    switch (ctx->pc) {
-        case 0x36ce38u: goto label_36ce38;
-        case 0x36ce3cu: goto label_36ce3c;
-        case 0x36ce40u: goto label_36ce40;
-        case 0x36ce44u: goto label_36ce44;
-        case 0x36ce48u: goto label_36ce48;
-        case 0x36ce4cu: goto label_36ce4c;
-        case 0x36ce50u: goto label_36ce50;
-        case 0x36ce54u: goto label_36ce54;
-        case 0x36ce58u: goto label_36ce58;
-        case 0x36ce5cu: goto label_36ce5c;
-        case 0x36ce60u: goto label_36ce60;
-        case 0x36ce64u: goto label_36ce64;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x36ce38u, 0)) {
+        switch (ctx->pc) {
+            case 0x36ce38u: goto label_36ce38;
+            case 0x36ce3cu: goto label_36ce3c;
+            case 0x36ce40u: goto label_36ce40;
+            case 0x36ce44u: goto label_36ce44;
+            case 0x36ce48u: goto label_36ce48;
+            case 0x36ce4cu: goto label_36ce4c;
+            case 0x36ce50u: goto label_36ce50;
+            case 0x36ce54u: goto label_36ce54;
+            case 0x36ce58u: goto label_36ce58;
+            case 0x36ce5cu: goto label_36ce5c;
+            case 0x36ce60u: goto label_36ce60;
+            case 0x36ce64u: goto label_36ce64;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x36ce38u;
 
 label_36ce38:
     // 0x36ce38: 0x3c03003f  lui         $v1, 0x3F
-    ctx->pc = 0x36ce38u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)63 << 16));
 label_36ce3c:
     // 0x36ce3c: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x36ce3cu;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_36ce40:
     // 0x36ce40: 0x8c632030  lw          $v1, 0x2030($v1)
@@ -96,7 +95,6 @@ label_36ce54:
             return;
         }
     }
-    ctx->pc = 0x36CE58u;
 label_36ce58:
     // 0x36ce58: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x36ce58u;
@@ -132,10 +130,8 @@ label_36ce60:
         return;
         #endif
     }
-    ctx->pc = 0x36CE64u;
 label_36ce64:
     // 0x36ce64: 0x0  nop
-    ctx->pc = 0x36ce64u;
     // NOP
     ctx->pc = 0x36ce68u;
 }

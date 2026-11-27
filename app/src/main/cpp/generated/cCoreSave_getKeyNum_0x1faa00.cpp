@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_getKeyNum
 // Address: 0x1faa00 - 0x1faa18
-void cCoreSave_getKeyNum_0x1faa00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getKeyNum_0x1faa00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getKeyNum_0x1faa00");
 #endif
 
-    ctx->pc = 0x1faa00u;
 
     // 0x1faa00: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1faa00u;
@@ -38,7 +37,6 @@ void cCoreSave_getKeyNum_0x1faa00(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_1faa10;
         }
     }
-    ctx->pc = 0x1FAA0Cu;
     // 0x1faa0c: 0x8c82006c  lw          $v0, 0x6C($a0)
     ctx->pc = 0x1faa0cu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 108)));

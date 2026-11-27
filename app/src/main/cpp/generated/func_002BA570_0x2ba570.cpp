@@ -13,12 +13,11 @@
 
 // Function: func_002BA570
 // Address: 0x2ba570 - 0x2ba580
-void func_002BA570_0x2ba570(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002BA570_0x2ba570(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002BA570_0x2ba570");
 #endif
 
-    ctx->pc = 0x2ba570u;
 
     // 0x2ba570: 0xc4800110  lwc1        $f0, 0x110($a0)
     ctx->pc = 0x2ba570u;
@@ -42,9 +41,7 @@ void func_002BA570_0x2ba570(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2BA57Cu;
     // 0x2ba57c: 0x0  nop
-    ctx->pc = 0x2ba57cu;
     // NOP
     ctx->pc = 0x2ba580u;
 }

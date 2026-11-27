@@ -13,18 +13,15 @@
 
 // Function: func_0032F4D0
 // Address: 0x32f4d0 - 0x32f4e0
-void func_0032F4D0_0x32f4d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0032F4D0_0x32f4d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0032F4D0_0x32f4d0");
 #endif
 
-    ctx->pc = 0x32f4d0u;
 
     // 0x32f4d0: 0x52900  sll         $a1, $a1, 4
-    ctx->pc = 0x32f4d0u;
     SET_GPR_S32(ctx, 5, (int32_t)SLL32(GPR_U32(ctx, 5), 4));
     // 0x32f4d4: 0xa42821  addu        $a1, $a1, $a0
-    ctx->pc = 0x32f4d4u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), GPR_U32(ctx, 4)));
     // 0x32f4d8: 0x3e00008  jr          $ra
     ctx->pc = 0x32F4D8u;

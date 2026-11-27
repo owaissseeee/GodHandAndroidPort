@@ -13,23 +13,22 @@
 
 // Function: isceSifDmaStat
 // Address: 0x3b0050 - 0x3b0060
-void isceSifDmaStat_0x3b0050(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void isceSifDmaStat_0x3b0050(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("isceSifDmaStat_0x3b0050");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b0058u: goto label_3b0058;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b0050u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b0058u: goto label_3b0058;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b0050u;
 
     // 0x3b0050: 0x2403ff8a  addiu       $v1, $zero, -0x76
-    ctx->pc = 0x3b0050u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967178));
     // 0x3b0054: 0xc  syscall     0
-    ctx->pc = 0x3b0054u;
     ctx->pc = 0x3B0058u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

@@ -13,26 +13,25 @@
 
 // Function: __ls__7ostreamUs
 // Address: 0x38a508 - 0x38a528
-void ps2___ls__7ostreamUs_0x38a508(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___ls__7ostreamUs_0x38a508(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___ls__7ostreamUs_0x38a508");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38a518u: goto label_38a518;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38a508u, 0)) {
+        switch (ctx->pc) {
+            case 0x38a518u: goto label_38a518;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x38a508u;
 
     // 0x38a508: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x38a508u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x38a50c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x38a50cu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x38a510: 0xc0e22a8  jal         func_388AA0
-    ctx->pc = 0x38A510u;
     SET_GPR_U32(ctx, 31, 0x38A518u);
     ctx->pc = 0x38A514u;
     ctx->in_delay_slot = true;
@@ -40,11 +39,9 @@ void ps2___ls__7ostreamUs_0x38a508(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     // 0x38a514: 0x30a5ffff  andi        $a1, $a1, 0xFFFF (Delay Slot)
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)65535);
     ctx->in_delay_slot = false;
-    ctx->pc = 0x388AA0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x388AA0u, 0x38A510u, 0x38A518u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ps2___ls__7ostreamUi_0x388aa0, 0x388aa0u, 0x38a518u)) {
         return;
     }
-    ctx->pc = 0x38A518u;
 label_38a518:
     // 0x38a518: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38a518u;
@@ -68,9 +65,7 @@ label_38a518:
         return;
         #endif
     }
-    ctx->pc = 0x38A524u;
     // 0x38a524: 0x0  nop
-    ctx->pc = 0x38a524u;
     // NOP
     ctx->pc = 0x38a528u;
 }

@@ -13,20 +13,20 @@
 
 // Function: MWSFD_GetPauseBdr
 // Address: 0x3455b8 - 0x3455d8
-void MWSFD_GetPauseBdr_0x3455b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void MWSFD_GetPauseBdr_0x3455b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("MWSFD_GetPauseBdr_0x3455b8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3455c8u: goto label_3455c8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3455b8u, 0)) {
+        switch (ctx->pc) {
+            case 0x3455c8u: goto label_3455c8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3455b8u;
 
     // 0x3455b8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x3455b8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x3455bc: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x3455bcu;
@@ -34,11 +34,9 @@ void MWSFD_GetPauseBdr_0x3455b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     // 0x3455c0: 0xc0d14ac  jal         func_3452B0
     ctx->pc = 0x3455C0u;
     SET_GPR_U32(ctx, 31, 0x3455C8u);
-    ctx->pc = 0x3452B0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3452B0u, 0x3455C0u, 0x3455C8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &GetD003EC7E0_3452B0_0x3452b0, 0x3452b0u, 0x3455c8u)) {
         return;
     }
-    ctx->pc = 0x3455C8u;
 label_3455c8:
     // 0x3455c8: 0x8c42003c  lw          $v0, 0x3C($v0)
     ctx->pc = 0x3455c8u;

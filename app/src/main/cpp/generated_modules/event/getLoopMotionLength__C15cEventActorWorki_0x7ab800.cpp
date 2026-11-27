@@ -14,24 +14,20 @@ namespace gh_event
 {
 // Function: getLoopMotionLength__C15cEventActorWorki
 // Address: 0x7ab800 - 0x7ab830
-void getLoopMotionLength__C15cEventActorWorki_0x7ab800(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getLoopMotionLength__C15cEventActorWorki_0x7ab800(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getLoopMotionLength__C15cEventActorWorki_0x7ab800");
 #endif
 
-    ctx->pc = 0x7ab800u;
 
     // 0x7ab800: 0x2402001c  addiu       $v0, $zero, 0x1C
-    ctx->pc = 0x7ab800u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 28));
     // 0x7ab804: 0x8c830044  lw          $v1, 0x44($a0)
     ctx->pc = 0x7ab804u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 68)));
     // 0x7ab808: 0xa22818  mult        $a1, $a1, $v0
-    ctx->pc = 0x7ab808u;
     { int64_t result = (int64_t)GPR_S32(ctx, 5) * (int64_t)GPR_S32(ctx, 2); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 5, (int32_t)result); }
     // 0x7ab80c: 0xa32821  addu        $a1, $a1, $v1
-    ctx->pc = 0x7ab80cu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), GPR_U32(ctx, 3)));
     // 0x7ab810: 0x8ca20008  lw          $v0, 0x8($a1)
     ctx->pc = 0x7ab810u;
@@ -51,13 +47,11 @@ void getLoopMotionLength__C15cEventActorWorki_0x7ab800(uint8_t* rdram, R5900Cont
             goto label_7ab820;
         }
     }
-    ctx->pc = 0x7AB81Cu;
     // 0x7ab81c: 0x94420004  lhu         $v0, 0x4($v0)
     ctx->pc = 0x7ab81cu;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 2), 4)));
 label_7ab820:
     // 0x7ab820: 0x21400  sll         $v0, $v0, 16
-    ctx->pc = 0x7ab820u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 16));
     // 0x7ab824: 0x3e00008  jr          $ra
     ctx->pc = 0x7AB824u;
@@ -78,9 +72,7 @@ label_7ab820:
         return;
         #endif
     }
-    ctx->pc = 0x7AB82Cu;
     // 0x7ab82c: 0x0  nop
-    ctx->pc = 0x7ab82cu;
     // NOP
     ctx->pc = 0x7ab830u;
 }

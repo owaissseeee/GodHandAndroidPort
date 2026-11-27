@@ -13,23 +13,22 @@
 
 // Function: GetMemorySize
 // Address: 0x3b0100 - 0x3b0110
-void GetMemorySize_0x3b0100(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetMemorySize_0x3b0100(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetMemorySize_0x3b0100");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b0108u: goto label_3b0108;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b0100u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b0108u: goto label_3b0108;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b0100u;
 
     // 0x3b0100: 0x2403007f  addiu       $v1, $zero, 0x7F
-    ctx->pc = 0x3b0100u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 127));
     // 0x3b0104: 0xc  syscall     0
-    ctx->pc = 0x3b0104u;
     ctx->pc = 0x3B0108u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

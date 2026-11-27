@@ -13,23 +13,22 @@
 
 // Function: iReleaseWaitThread
 // Address: 0x3afb80 - 0x3afb90
-void iReleaseWaitThread_0x3afb80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iReleaseWaitThread_0x3afb80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iReleaseWaitThread_0x3afb80");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afb88u: goto label_3afb88;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afb80u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afb88u: goto label_3afb88;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afb80u;
 
     // 0x3afb80: 0x2403ffd2  addiu       $v1, $zero, -0x2E
-    ctx->pc = 0x3afb80u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967250));
     // 0x3afb84: 0xc  syscall     0
-    ctx->pc = 0x3afb84u;
     ctx->pc = 0x3AFB88u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

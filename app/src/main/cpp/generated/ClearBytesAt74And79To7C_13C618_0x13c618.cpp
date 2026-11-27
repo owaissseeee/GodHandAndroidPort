@@ -13,12 +13,11 @@
 
 // Function: ClearBytesAt74And79To7C_13C618
 // Address: 0x13c618 - 0x13c630
-void ClearBytesAt74And79To7C_13C618_0x13c618(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearBytesAt74And79To7C_13C618_0x13c618(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearBytesAt74And79To7C_13C618_0x13c618");
 #endif
 
-    ctx->pc = 0x13c618u;
 
     // 0x13c618: 0xa080007c  sb          $zero, 0x7C($a0)
     ctx->pc = 0x13c618u;

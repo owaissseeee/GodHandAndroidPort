@@ -13,24 +13,20 @@
 
 // Function: func_00304BB8
 // Address: 0x304bb8 - 0x304bf8
-void func_00304BB8_0x304bb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00304BB8_0x304bb8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00304BB8_0x304bb8");
 #endif
 
-    ctx->pc = 0x304bb8u;
 
     // 0x304bb8: 0x8c850100  lw          $a1, 0x100($a0)
     ctx->pc = 0x304bb8u;
     SET_GPR_S32(ctx, 5, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 256)));
     // 0x304bbc: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x304bbcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x304bc0: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x304bc0u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
     // 0x304bc4: 0x44811000  mtc1        $at, $f2
-    ctx->pc = 0x304bc4u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[2], &bits, sizeof(bits)); }
     // 0x304bc8: 0xc4a00248  lwc1        $f0, 0x248($a1)
     ctx->pc = 0x304bc8u;
@@ -54,7 +50,6 @@ void func_00304BB8_0x304bb8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x304be0u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 596)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x304be4: 0x46011081  sub.s       $f2, $f2, $f1
-    ctx->pc = 0x304be4u;
     ctx->f[2] = FPU_SUB_S(ctx->f[2], ctx->f[1]);
     // 0x304be8: 0xe482024c  swc1        $f2, 0x24C($a0)
     ctx->pc = 0x304be8u;

@@ -14,20 +14,21 @@ namespace gh_r040
 {
 // Function: SetYouWin__12PetitDevilIdb
 // Address: 0x799ec8 - 0x799f28
-void SetYouWin__12PetitDevilIdb_0x799ec8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetYouWin__12PetitDevilIdb_0x799ec8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetYouWin__12PetitDevilIdb_0x799ec8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x799eecu: goto label_799eec;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x799ec8u, 0)) {
+        switch (ctx->pc) {
+            case 0x799eecu: goto label_799eec;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x799ec8u;
+
 
     // 0x799ec8: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x799ec8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x799ecc: 0x7fb00020  sq          $s0, 0x20($sp)
     ctx->pc = 0x799eccu;
@@ -36,21 +37,16 @@ void SetYouWin__12PetitDevilIdb_0x799ec8(uint8_t* rdram, R5900Context* ctx, PS2R
     ctx->pc = 0x799ed0u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 17));
     // 0x799ed4: 0xa0802d  daddu       $s0, $a1, $zero
-    ctx->pc = 0x799ed4u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     // 0x799ed8: 0x80882d  daddu       $s1, $a0, $zero
-    ctx->pc = 0x799ed8u;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x799edc: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x799edcu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x799ee0: 0x24050004  addiu       $a1, $zero, 0x4
-    ctx->pc = 0x799ee0u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x799ee4: 0xc1e65ac  jal         func_7996B0
-    ctx->pc = 0x799EE4u;
     SET_GPR_U32(ctx, 31, 0x799EECu);
-    ctx->pc = 0x799EE8u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x799EE4u;
     // 0x799ee8: 0x200302d  daddu       $a2, $s0, $zero (Delay Slot)
@@ -60,7 +56,6 @@ void SetYouWin__12PetitDevilIdb_0x799ec8(uint8_t* rdram, R5900Context* ctx, PS2R
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x7996B0u, 0x799EE4u, 0x799EECu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x799EECu;
 label_799eec:
     // 0x799eec: 0xae200ec8  sw          $zero, 0xEC8($s1)
     ctx->pc = 0x799eecu;
@@ -80,7 +75,6 @@ label_799eec:
             goto label_799f04;
         }
     }
-    ctx->pc = 0x799EF8u;
     // 0x799ef8: 0x8e220000  lw          $v0, 0x0($s1)
     ctx->pc = 0x799ef8u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 0)));
@@ -99,16 +93,13 @@ label_799eec:
             goto label_799f10;
         }
     }
-    ctx->pc = 0x799F04u;
 label_799f04:
     // 0x799f04: 0x8e220000  lw          $v0, 0x0($s1)
     ctx->pc = 0x799f04u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 0)));
     // 0x799f08: 0x2403fffb  addiu       $v1, $zero, -0x5
-    ctx->pc = 0x799f08u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967291));
     // 0x799f0c: 0x431024  and         $v0, $v0, $v1
-    ctx->pc = 0x799f0cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 3));
 label_799f10:
     // 0x799f10: 0xae220000  sw          $v0, 0x0($s1)

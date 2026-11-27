@@ -13,33 +13,30 @@
 
 // Function: func_001F7798
 // Address: 0x1f7798 - 0x1f77d0
-void func_001F7798_0x1f7798(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001F7798_0x1f7798(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001F7798_0x1f7798");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1f77a0u: goto label_1f77a0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1f7798u, 0)) {
+        switch (ctx->pc) {
+            case 0x1f77a0u: goto label_1f77a0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1f7798u;
 
     // 0x1f7798: 0x24840104  addiu       $a0, $a0, 0x104
-    ctx->pc = 0x1f7798u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 260));
     // 0x1f779c: 0x182d  daddu       $v1, $zero, $zero
-    ctx->pc = 0x1f779cu;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1f77a0:
     // 0x1f77a0: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x1f77a0u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x1f77a4: 0x30420201  andi        $v0, $v0, 0x201
-    ctx->pc = 0x1f77a4u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)513);
     // 0x1f77a8: 0x38420001  xori        $v0, $v0, 0x1
-    ctx->pc = 0x1f77a8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) ^ (uint64_t)(uint16_t)1);
     // 0x1f77ac: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x1F77ACu;
@@ -56,7 +53,6 @@ label_1f77a0:
             goto label_1f77bc;
         }
     }
-    ctx->pc = 0x1F77B4u;
     // 0x1f77b4: 0x3e00008  jr          $ra
     ctx->pc = 0x1F77B4u;
     {
@@ -76,10 +72,8 @@ label_1f77a0:
         return;
         #endif
     }
-    ctx->pc = 0x1F77BCu;
 label_1f77bc:
     // 0x1f77bc: 0x2c620008  sltiu       $v0, $v1, 0x8
-    ctx->pc = 0x1f77bcu;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 3) < (uint64_t)(int64_t)(int32_t)8) ? 1 : 0);
     // 0x1f77c0: 0x1440fff7  bnez        $v0, . + 4 + (-0x9 << 2)
     ctx->pc = 0x1F77C0u;
@@ -99,7 +93,6 @@ label_1f77bc:
             goto label_1f77a0;
         }
     }
-    ctx->pc = 0x1F77C8u;
     // 0x1f77c8: 0x3e00008  jr          $ra
     ctx->pc = 0x1F77C8u;
     {

@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_getKillNpcNum
 // Address: 0x1fbed0 - 0x1fbee8
-void cCoreSave_getKillNpcNum_0x1fbed0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getKillNpcNum_0x1fbed0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getKillNpcNum_0x1fbed0");
 #endif
 
-    ctx->pc = 0x1fbed0u;
 
     // 0x1fbed0: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fbed0u;
@@ -38,7 +37,6 @@ void cCoreSave_getKillNpcNum_0x1fbed0(uint8_t* rdram, R5900Context* ctx, PS2Runt
             goto label_1fbee0;
         }
     }
-    ctx->pc = 0x1FBEDCu;
     // 0x1fbedc: 0x84820096  lh          $v0, 0x96($a0)
     ctx->pc = 0x1fbedcu;
     SET_GPR_S32(ctx, 2, (int16_t)READ16(ADD32(GPR_U32(ctx, 4), 150)));

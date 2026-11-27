@@ -13,30 +13,28 @@
 
 // Function: cHeatSys_SetHeatMode
 // Address: 0x2a9cc8 - 0x2a9d28
-void cHeatSys_SetHeatMode_0x2a9cc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cHeatSys_SetHeatMode_0x2a9cc8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cHeatSys_SetHeatMode_0x2a9cc8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2a9d0cu: goto label_2a9d0c;
-        case 0x2a9d1cu: goto label_2a9d1c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2a9cc8u, 0)) {
+        switch (ctx->pc) {
+            case 0x2a9d0cu: goto label_2a9d0c;
+            case 0x2a9d1cu: goto label_2a9d1c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2a9cc8u;
 
     // 0x2a9cc8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2a9cc8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2a9ccc: 0x44801000  mtc1        $zero, $f2
-    ctx->pc = 0x2a9cccu;
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[2], &bits, sizeof(bits)); }
     // 0x2a9cd0: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2a9cd0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2a9cd4: 0x30a500ff  andi        $a1, $a1, 0xFF
-    ctx->pc = 0x2a9cd4u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)255);
     // 0x2a9cd8: 0xa0850010  sb          $a1, 0x10($a0)
     ctx->pc = 0x2a9cd8u;
@@ -48,13 +46,10 @@ void cHeatSys_SetHeatMode_0x2a9cc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x2a9ce0u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 12)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x2a9ce4: 0x46010001  sub.s       $f0, $f0, $f1
-    ctx->pc = 0x2a9ce4u;
     ctx->f[0] = FPU_SUB_S(ctx->f[0], ctx->f[1]);
     // 0x2a9ce8: 0x46020034  c.lt.s      $f0, $f2
-    ctx->pc = 0x2a9ce8u;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[0], ctx->f[2])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x2a9cec: 0x0  nop
-    ctx->pc = 0x2a9cecu;
     // NOP
     // 0x2a9cf0: 0x45000002  bc1f        . + 4 + (0x2 << 2)
     ctx->pc = 0x2A9CF0u;
@@ -71,7 +66,6 @@ void cHeatSys_SetHeatMode_0x2a9cc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_2a9cfc;
         }
     }
-    ctx->pc = 0x2A9CF8u;
     // 0x2a9cf8: 0xe4820008  swc1        $f2, 0x8($a0)
     ctx->pc = 0x2a9cf8u;
     { float f = ctx->f[2]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 4), 8), bits); }
@@ -91,24 +85,18 @@ label_2a9cfc:
             goto label_2a9d20;
         }
     }
-    ctx->pc = 0x2A9D04u;
     // 0x2a9d04: 0xc0b6dac  jal         func_2DB6B0
     ctx->pc = 0x2A9D04u;
     SET_GPR_U32(ctx, 31, 0x2A9D0Cu);
-    ctx->pc = 0x2DB6B0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2DB6B0u, 0x2A9D04u, 0x2A9D0Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &Getplayer_0x2db6b0, 0x2db6b0u, 0x2a9d0cu)) {
         return;
     }
-    ctx->pc = 0x2A9D0Cu;
 label_2a9d0c:
     // 0x2a9d0c: 0x40202d  daddu       $a0, $v0, $zero
-    ctx->pc = 0x2a9d0cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2a9d10: 0x24050003  addiu       $a1, $zero, 0x3
-    ctx->pc = 0x2a9d10u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 3));
     // 0x2a9d14: 0xc0c1880  jal         func_306200
-    ctx->pc = 0x2A9D14u;
     SET_GPR_U32(ctx, 31, 0x2A9D1Cu);
     ctx->pc = 0x2A9D18u;
     ctx->in_delay_slot = true;
@@ -116,11 +104,9 @@ label_2a9d0c:
     // 0x2a9d18: 0x24060002  addiu       $a2, $zero, 0x2 (Delay Slot)
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x306200u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x306200u, 0x2A9D14u, 0x2A9D1Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &KillEffect_0x306200, 0x306200u, 0x2a9d1cu)) {
         return;
     }
-    ctx->pc = 0x2A9D1Cu;
 label_2a9d1c:
     // 0x2a9d1c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2a9d1cu;

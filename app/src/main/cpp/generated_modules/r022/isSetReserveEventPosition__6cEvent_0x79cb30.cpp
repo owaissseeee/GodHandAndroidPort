@@ -14,12 +14,11 @@ namespace gh_r022
 {
 // Function: isSetReserveEventPosition__6cEvent
 // Address: 0x79cb30 - 0x79cb44
-void isSetReserveEventPosition__6cEvent_0x79cb30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void isSetReserveEventPosition__6cEvent_0x79cb30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("isSetReserveEventPosition__6cEvent_0x79cb30");
 #endif
 
-    ctx->pc = 0x79cb30u;
 
     // 0x79cb30: 0x8c830038  lw          $v1, 0x38($a0)
     ctx->pc = 0x79cb30u;
@@ -28,7 +27,6 @@ void isSetReserveEventPosition__6cEvent_0x79cb30(uint8_t* rdram, R5900Context* c
     ctx->pc = 0x79cb34u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 0)));
     // 0x79cb38: 0x21043  sra         $v0, $v0, 1
-    ctx->pc = 0x79cb38u;
     SET_GPR_S32(ctx, 2, SRA32(GPR_S32(ctx, 2), 1));
     // 0x79cb3c: 0x3e00008  jr          $ra
     ctx->pc = 0x79CB3Cu;

@@ -13,12 +13,11 @@
 
 // Function: cEma2_ckKiss
 // Address: 0x2896a0 - 0x2896b0
-void cEma2_ckKiss_0x2896a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEma2_ckKiss_0x2896a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEma2_ckKiss_0x2896a0");
 #endif
 
-    ctx->pc = 0x2896a0u;
 
     // 0x2896a0: 0x908215b1  lbu         $v0, 0x15B1($a0)
     ctx->pc = 0x2896a0u;
@@ -42,9 +41,7 @@ void cEma2_ckKiss_0x2896a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
         return;
         #endif
     }
-    ctx->pc = 0x2896ACu;
     // 0x2896ac: 0x0  nop
-    ctx->pc = 0x2896acu;
     // NOP
     ctx->pc = 0x2896b0u;
 }

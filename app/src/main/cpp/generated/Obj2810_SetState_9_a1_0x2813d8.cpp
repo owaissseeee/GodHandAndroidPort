@@ -13,15 +13,13 @@
 
 // Function: Obj2810_SetState_9_a1
 // Address: 0x2813d8 - 0x2813f0
-void Obj2810_SetState_9_a1_0x2813d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj2810_SetState_9_a1_0x2813d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj2810_SetState_9_a1_0x2813d8");
 #endif
 
-    ctx->pc = 0x2813d8u;
 
     // 0x2813d8: 0x24020009  addiu       $v0, $zero, 0x9
-    ctx->pc = 0x2813d8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 9));
     // 0x2813dc: 0xa08502f7  sb          $a1, 0x2F7($a0)
     ctx->pc = 0x2813dcu;

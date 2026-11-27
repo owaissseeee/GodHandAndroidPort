@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_saveGlobalToggle
 // Address: 0x1f9e90 - 0x1f9eb0
-void cCoreSave_saveGlobalToggle_0x1f9e90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_saveGlobalToggle_0x1f9e90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_saveGlobalToggle_0x1f9e90");
 #endif
 
-    ctx->pc = 0x1f9e90u;
 
     // 0x1f9e90: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1f9e90u;
@@ -38,7 +37,6 @@ void cCoreSave_saveGlobalToggle_0x1f9e90(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_1f9ea4;
         }
     }
-    ctx->pc = 0x1F9E9Cu;
     // 0x1f9e9c: 0x8c437a0c  lw          $v1, 0x7A0C($v0)
     ctx->pc = 0x1f9e9cu;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 31244)));
@@ -59,9 +57,7 @@ label_1f9ea4:
         return;
         #endif
     }
-    ctx->pc = 0x1F9EACu;
     // 0x1f9eac: 0x0  nop
-    ctx->pc = 0x1f9eacu;
     // NOP
     ctx->pc = 0x1f9eb0u;
 }

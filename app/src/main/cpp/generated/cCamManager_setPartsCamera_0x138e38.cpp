@@ -13,20 +13,20 @@
 
 // Function: cCamManager_setPartsCamera
 // Address: 0x138e38 - 0x138eb8
-void cCamManager_setPartsCamera_0x138e38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCamManager_setPartsCamera_0x138e38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCamManager_setPartsCamera_0x138e38");
 #endif
 
-    switch (ctx->pc) {
-        case 0x138e84u: goto label_138e84;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x138e38u, 0)) {
+        switch (ctx->pc) {
+            case 0x138e84u: goto label_138e84;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x138e38u;
 
     // 0x138e38: 0x27bdffb0  addiu       $sp, $sp, -0x50
-    ctx->pc = 0x138e38u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967216));
     // 0x138e3c: 0x7fb00040  sq          $s0, 0x40($sp)
     ctx->pc = 0x138e3cu;
@@ -35,13 +35,11 @@ void cCamManager_setPartsCamera_0x138e38(uint8_t* rdram, R5900Context* ctx, PS2R
     ctx->pc = 0x138e40u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 19));
     // 0x138e44: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x138e44u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x138e48: 0x7fb10030  sq          $s1, 0x30($sp)
     ctx->pc = 0x138e48u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 48), GPR_VEC(ctx, 17));
     // 0x138e4c: 0x24130040  addiu       $s3, $zero, 0x40
-    ctx->pc = 0x138e4cu;
     SET_GPR_S32(ctx, 19, (int32_t)ADD32(GPR_U32(ctx, 0), 64));
     // 0x138e50: 0x7fb20020  sq          $s2, 0x20($sp)
     ctx->pc = 0x138e50u;
@@ -67,9 +65,7 @@ void cCamManager_setPartsCamera_0x138e38(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_138e9c;
         }
     }
-    ctx->pc = 0x138E64u;
     // 0x138e64: 0x24020010  addiu       $v0, $zero, 0x10
-    ctx->pc = 0x138e64u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 16));
     // 0x138e68: 0x1062000c  beq         $v1, $v0, . + 4 + (0xC << 2)
     ctx->pc = 0x138E68u;
@@ -86,7 +82,6 @@ void cCamManager_setPartsCamera_0x138e38(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_138e9c;
         }
     }
-    ctx->pc = 0x138E70u;
     // 0x138e70: 0x10e00004  beqz        $a3, . + 4 + (0x4 << 2)
     ctx->pc = 0x138E70u;
     {
@@ -102,12 +97,10 @@ void cCamManager_setPartsCamera_0x138e38(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_138e84;
         }
     }
-    ctx->pc = 0x138E78u;
     // 0x138e78: 0x8e26aff0  lw          $a2, -0x5010($s1)
     ctx->pc = 0x138e78u;
     SET_GPR_S32(ctx, 6, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 4294946800)));
     // 0x138e7c: 0xc04e32a  jal         func_138CA8
-    ctx->pc = 0x138E7Cu;
     SET_GPR_U32(ctx, 31, 0x138E84u);
     ctx->pc = 0x138E80u;
     ctx->in_delay_slot = true;
@@ -115,11 +108,9 @@ void cCamManager_setPartsCamera_0x138e38(uint8_t* rdram, R5900Context* ctx, PS2R
     // 0x138e80: 0x240282d  daddu       $a1, $s2, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 18) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x138CA8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x138CA8u, 0x138E7Cu, 0x138E84u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00138CA8_0x138ca8, 0x138ca8u, 0x138e84u)) {
         return;
     }
-    ctx->pc = 0x138E84u;
 label_138e84:
     // 0x138e84: 0x8e021028  lw          $v0, 0x1028($s0)
     ctx->pc = 0x138e84u;

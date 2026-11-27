@@ -13,16 +13,56 @@
 
 #if defined(__aarch64__) || defined(_M_ARM64)
 #include <arm_neon.h>
+#include "sdk_arm64_fast.h"
 #endif
 
 // Function: sceVu0MulMatrix
 // Address: 0x30a2e0 - 0x30a328
-void sceVu0MulMatrix_0x30a2e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVu0MulMatrix_0x30a2e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVu0MulMatrix_0x30a2e0");
 #endif
 
 #if defined(__aarch64__) || defined(_M_ARM64)
+    if (__builtin_expect(ctx->pc == 0x30a2e0u, 1)) {
+        const uint32_t a0 = GPR_U32(ctx, 4);
+        const uint32_t a1 = GPR_U32(ctx, 5);
+        const uint32_t a2 = GPR_U32(ctx, 6);
+        uint8_t* const dstPtr = ps2TryFastSpan(rdram, a0, 64u);
+        const uint8_t* const m1Ptr = ps2TryFastSpan(rdram, a1, 64u);
+        const uint8_t* const m2Ptr = ps2TryFastSpan(rdram, a2, 64u);
+        if (__builtin_expect(dstPtr && m1Ptr && m2Ptr, 1)) {
+            const float32x4_t vf4 = vld1q_f32(reinterpret_cast<const float*>(m1Ptr));
+            const float32x4_t vf5 = vld1q_f32(reinterpret_cast<const float*>(m1Ptr + 16));
+            const float32x4_t vf6 = vld1q_f32(reinterpret_cast<const float*>(m1Ptr + 32));
+            const float32x4_t vf7 = vld1q_f32(reinterpret_cast<const float*>(m1Ptr + 48));
+            vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_vf[4]), vf4);
+            vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_vf[5]), vf5);
+            vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_vf[6]), vf6);
+            vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_vf[7]), vf7);
+
+            float32x4_t vf8{};
+            float32x4_t acc{};
+            float32x4_t vf9{};
+            for (int i = 0; i < 4; ++i) {
+                vf8 = vld1q_f32(reinterpret_cast<const float*>(m2Ptr + i * 16));
+                acc = vmulq_laneq_f32(vf4, vf8, 0);
+                acc = vfmaq_laneq_f32(acc, vf5, vf8, 1);
+                acc = vfmaq_laneq_f32(acc, vf6, vf8, 2);
+                vf9 = vfmaq_laneq_f32(acc, vf7, vf8, 3);
+                vst1q_f32(reinterpret_cast<float*>(dstPtr + i * 16), vf9);
+            }
+            vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_vf[8]), vf8);
+            vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_acc), acc);
+            vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_vf[9]), vf9);
+
+            SET_GPR_S32(ctx, 7, 0);
+            SET_GPR_S32(ctx, 6, (int32_t)(a2 + 64u));
+            SET_GPR_S32(ctx, 4, (int32_t)(a0 + 64u));
+            ps2FastReturn(rdram, ctx, runtime, 0x30A320u);
+            return;
+        }
+    }
     ctx->pc = 0x30a2e0u;
 
     uint32_t a0 = GPR_U32(ctx, 4);
@@ -74,7 +114,6 @@ void sceVu0MulMatrix_0x30a2e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
         default: break;
     }
 
-    ctx->pc = 0x30a2e0u;
     // 0x30a2e0: 0xd8a40000  lqc2        $vf4, 0x0($a1)
     ctx->pc = 0x30a2e0u;
     ctx->vu0_vf[4] = _mm_castsi128_ps(READ128(ADD32(GPR_U32(ctx, 5), 0)));
@@ -88,23 +127,18 @@ void sceVu0MulMatrix_0x30a2e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     ctx->pc = 0x30a2ecu;
     ctx->vu0_vf[7] = _mm_castsi128_ps(READ128(ADD32(GPR_U32(ctx, 5), 48)));
     // 0x30a2f0: 0x24070004  addiu       $a3, $zero, 0x4
-    ctx->pc = 0x30a2f0u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
 label_30a2f4:
     // 0x30a2f4: 0xd8c80000  lqc2        $vf8, 0x0($a2)
     ctx->pc = 0x30a2f4u;
     ctx->vu0_vf[8] = _mm_castsi128_ps(READ128(ADD32(GPR_U32(ctx, 6), 0)));
     // 0x30a2f8: 0x4be821bc  vmulax.xyzw $ACC, $vf4, $vf8x
-    ctx->pc = 0x30a2f8u;
     { __m128 res = PS2_VMUL(ctx->vu0_vf[4], _mm_shuffle_ps(ctx->vu0_vf[8], ctx->vu0_vf[8], _MM_SHUFFLE(0,0,0,0))); ctx->vu0_acc = _mm_blendv_ps(ctx->vu0_acc, res, _mm_castsi128_ps(_mm_set_epi32(-1, -1, -1, -1))); }
     // 0x30a2fc: 0x4be828bd  vmadday.xyzw $ACC, $vf5, $vf8y
-    ctx->pc = 0x30a2fcu;
     { __m128 mul_res = PS2_VMUL(ctx->vu0_vf[5], _mm_shuffle_ps(ctx->vu0_vf[8], ctx->vu0_vf[8], _MM_SHUFFLE(1,1,1,1))); __m128 res = PS2_VADD(ctx->vu0_acc, mul_res); ctx->vu0_acc = _mm_blendv_ps(ctx->vu0_acc, res, _mm_castsi128_ps(_mm_set_epi32(-1, -1, -1, -1))); }
     // 0x30a300: 0x4be830be  vmaddaz.xyzw $ACC, $vf6, $vf8z
-    ctx->pc = 0x30a300u;
     { __m128 mul_res = PS2_VMUL(ctx->vu0_vf[6], _mm_shuffle_ps(ctx->vu0_vf[8], ctx->vu0_vf[8], _MM_SHUFFLE(2,2,2,2))); __m128 res = PS2_VADD(ctx->vu0_acc, mul_res); ctx->vu0_acc = _mm_blendv_ps(ctx->vu0_acc, res, _mm_castsi128_ps(_mm_set_epi32(-1, -1, -1, -1))); }
     // 0x30a304: 0x4be83a4b  vmaddw.xyzw $vf9, $vf7, $vf8w
-    ctx->pc = 0x30a304u;
     { __m128 mul_res = PS2_VMUL(ctx->vu0_vf[7], _mm_shuffle_ps(ctx->vu0_vf[8], ctx->vu0_vf[8], _MM_SHUFFLE(3,3,3,3))); __m128 res = PS2_VADD(ctx->vu0_acc, mul_res); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[9] = _mm_blendv_ps(ctx->vu0_vf[9], res, _mm_castsi128_ps(mask)); }
     // 0x30a308: 0xf8890000  sqc2        $vf9, 0x0($a0)
     ctx->pc = 0x30a308u;
@@ -130,7 +164,6 @@ label_30a2f4:
             goto label_30a2f4;
         }
     }
-    ctx->pc = 0x30A320u;
     // 0x30a320: 0x3e00008  jr          $ra
     ctx->pc = 0x30A320u;
     {

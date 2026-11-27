@@ -13,12 +13,11 @@
 
 // Function: Obj35D0_ReturnZero_D458
 // Address: 0x35d458 - 0x35d460
-void Obj35D0_ReturnZero_D458_0x35d458(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj35D0_ReturnZero_D458_0x35d458(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj35D0_ReturnZero_D458_0x35d458");
 #endif
 
-    ctx->pc = 0x35d458u;
 
     // 0x35d458: 0x3e00008  jr          $ra
     ctx->pc = 0x35D458u;

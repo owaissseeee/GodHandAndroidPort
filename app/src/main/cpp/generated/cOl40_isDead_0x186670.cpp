@@ -13,12 +13,11 @@
 
 // Function: cOl40_isDead
 // Address: 0x186670 - 0x186678
-void cOl40_isDead_0x186670(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl40_isDead_0x186670(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl40_isDead_0x186670");
 #endif
 
-    ctx->pc = 0x186670u;
 
     // 0x186670: 0x3e00008  jr          $ra
     ctx->pc = 0x186670u;

@@ -13,15 +13,13 @@
 
 // Function: cGameObj_setPos
 // Address: 0x2a93d0 - 0x2a9420
-void cGameObj_setPos_0x2a93d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cGameObj_setPos_0x2a93d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cGameObj_setPos_0x2a93d0");
 #endif
 
-    ctx->pc = 0x2a93d0u;
 
     // 0x2a93d0: 0x24830490  addiu       $v1, $a0, 0x490
-    ctx->pc = 0x2a93d0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 4), 1168));
     // 0x2a93d4: 0x50650008  beql        $v1, $a1, . + 4 + (0x8 << 2)
     ctx->pc = 0x2A93D4u;
@@ -38,7 +36,6 @@ void cGameObj_setPos_0x2a93d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_2a93f8;
         }
     }
-    ctx->pc = 0x2A93DCu;
     // 0x2a93dc: 0xc4a00000  lwc1        $f0, 0x0($a1)
     ctx->pc = 0x2a93dcu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -70,7 +67,6 @@ label_2a93f8:
             goto label_2a9418;
         }
     }
-    ctx->pc = 0x2A9400u;
     // 0x2a9400: 0xc4800490  lwc1        $f0, 0x490($a0)
     ctx->pc = 0x2a9400u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 1168)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }

@@ -13,18 +13,15 @@
 
 // Function: cEm00_setR608EventEnd
 // Address: 0x2761b0 - 0x2761d0
-void cEm00_setR608EventEnd_0x2761b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_setR608EventEnd_0x2761b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_setR608EventEnd_0x2761b0");
 #endif
 
-    ctx->pc = 0x2761b0u;
 
     // 0x2761b0: 0x24020068  addiu       $v0, $zero, 0x68
-    ctx->pc = 0x2761b0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 104));
     // 0x2761b4: 0x24030004  addiu       $v1, $zero, 0x4
-    ctx->pc = 0x2761b4u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x2761b8: 0xa08202f5  sb          $v0, 0x2F5($a0)
     ctx->pc = 0x2761b8u;
@@ -54,9 +51,7 @@ void cEm00_setR608EventEnd_0x2761b0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         return;
         #endif
     }
-    ctx->pc = 0x2761CCu;
     // 0x2761cc: 0x0  nop
-    ctx->pc = 0x2761ccu;
     // NOP
     ctx->pc = 0x2761d0u;
 }

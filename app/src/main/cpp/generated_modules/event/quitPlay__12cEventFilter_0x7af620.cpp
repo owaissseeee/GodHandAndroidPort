@@ -14,29 +14,28 @@ namespace gh_event
 {
 // Function: quitPlay__12cEventFilter
 // Address: 0x7af620 - 0x7af650
-void quitPlay__12cEventFilter_0x7af620(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void quitPlay__12cEventFilter_0x7af620(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("quitPlay__12cEventFilter_0x7af620");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7af640u: goto label_7af640;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7af620u, 0)) {
+        switch (ctx->pc) {
+            case 0x7af640u: goto label_7af640;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7af620u;
+
 
     // 0x7af620: 0x3c030058  lui         $v1, 0x58
-    ctx->pc = 0x7af620u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)88 << 16));
     // 0x7af624: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7af624u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x7af628: 0x8c626b34  lw          $v0, 0x6B34($v1)
     ctx->pc = 0x7af628u;
     SET_GPR_S32(ctx, 2, (int32_t)FAST_READ32(0x586B34u));
     // 0x7af62c: 0x30420100  andi        $v0, $v0, 0x100
-    ctx->pc = 0x7af62cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)256);
     // 0x7af630: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x7AF630u;
@@ -53,11 +52,8 @@ void quitPlay__12cEventFilter_0x7af620(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_7af640;
         }
     }
-    ctx->pc = 0x7AF638u;
     // 0x7af638: 0xc1ebc88  jal         func_7AF220
-    ctx->pc = 0x7AF638u;
     SET_GPR_U32(ctx, 31, 0x7AF640u);
-    ctx->pc = 0x7AF63Cu;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x7AF638u;
     // 0x7af63c: 0x24850018  addiu       $a1, $a0, 0x18 (Delay Slot)
@@ -67,7 +63,6 @@ void quitPlay__12cEventFilter_0x7af620(uint8_t* rdram, R5900Context* ctx, PS2Run
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x7AF220u, 0x7AF638u, 0x7AF640u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7AF640u;
 label_7af640:
     // 0x7af640: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7af640u;
@@ -91,9 +86,7 @@ label_7af640:
         return;
         #endif
     }
-    ctx->pc = 0x7AF64Cu;
     // 0x7af64c: 0x0  nop
-    ctx->pc = 0x7af64cu;
     // NOP
     ctx->pc = 0x7af650u;
 }

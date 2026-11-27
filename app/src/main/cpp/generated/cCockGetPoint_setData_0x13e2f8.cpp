@@ -13,12 +13,11 @@
 
 // Function: cCockGetPoint_setData
 // Address: 0x13e2f8 - 0x13e300
-void cCockGetPoint_setData_0x13e2f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCockGetPoint_setData_0x13e2f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCockGetPoint_setData_0x13e2f8");
 #endif
 
-    ctx->pc = 0x13e2f8u;
 
     // 0x13e2f8: 0x3e00008  jr          $ra
     ctx->pc = 0x13E2F8u;

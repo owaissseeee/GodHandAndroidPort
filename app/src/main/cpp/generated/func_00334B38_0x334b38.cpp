@@ -13,12 +13,11 @@
 
 // Function: func_00334B38
 // Address: 0x334b38 - 0x334b58
-void func_00334B38_0x334b38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00334B38_0x334b38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00334B38_0x334b38");
 #endif
 
-    ctx->pc = 0x334b38u;
 
     // 0x334b38: 0x8c820028  lw          $v0, 0x28($a0)
     ctx->pc = 0x334b38u;
@@ -27,10 +26,8 @@ void func_00334B38_0x334b38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x334b3cu;
     SET_GPR_U64(ctx, 5, READ64(ADD32(GPR_U32(ctx, 4), 8)));
     // 0x334b40: 0x212f8  dsll        $v0, $v0, 11
-    ctx->pc = 0x334b40u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) << 11);
     // 0x334b44: 0xa2182b  sltu        $v1, $a1, $v0
-    ctx->pc = 0x334b44u;
     SET_GPR_U64(ctx, 3, ((uint64_t)GPR_U64(ctx, 5) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
     // 0x334b48: 0xa3100b  movn        $v0, $a1, $v1
     ctx->pc = 0x334b48u;
@@ -54,9 +51,7 @@ void func_00334B38_0x334b38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x334B54u;
     // 0x334b54: 0x0  nop
-    ctx->pc = 0x334b54u;
     // NOP
     ctx->pc = 0x334b58u;
 }

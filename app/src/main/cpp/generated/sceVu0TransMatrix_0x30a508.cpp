@@ -6,6 +6,7 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,12 +14,33 @@
 
 // Function: sceVu0TransMatrix
 // Address: 0x30a508 - 0x30a538
-void sceVu0TransMatrix_0x30a508(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVu0TransMatrix_0x30a508(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVu0TransMatrix_0x30a508");
 #endif
 
-    ctx->pc = 0x30a508u;
+#if defined(__aarch64__) || defined(_M_ARM64)
+    {
+        uint8_t* const d = ps2TryFastSpan(rdram, GPR_U32(ctx, 4) & ~0xFu, 64u);
+        const uint8_t* const m = ps2TryFastSpan(rdram, GPR_U32(ctx, 5) & ~0xFu, 64u);
+        const uint8_t* const tv = ps2TryFastSpan(rdram, GPR_U32(ctx, 6) & ~0xFu, 16u);
+        if (__builtin_expect(d != nullptr && m != nullptr && tv != nullptr, 1)) {
+            const float32x4_t c0 = ps2LoadVec4(m + 0);
+            const float32x4_t c1 = ps2LoadVec4(m + 16);
+            const float32x4_t c2 = ps2LoadVec4(m + 32);
+            const float32x4_t c3 = ps2LoadVec4(m + 48);
+            const float32x4_t t  = ps2LoadVec4(tv);
+            const float32x4_t out3 = vsetq_lane_f32(vgetq_lane_f32(c3, 3), vaddq_f32(c3, t), 3);
+            ps2StoreVec4(d + 0, c0);
+            ps2StoreVec4(d + 16, c1);
+            ps2StoreVec4(d + 32, c2);
+            ps2StoreVec4(d + 48, out3);
+            ps2FastReturn(rdram, ctx, runtime, 0x30A530u);
+            return;
+        }
+    }
+#endif
+
 
     // 0x30a508: 0xd8c40000  lqc2        $vf4, 0x0($a2)
     ctx->pc = 0x30a508u;
@@ -36,7 +58,6 @@ void sceVu0TransMatrix_0x30a508(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     ctx->pc = 0x30a518u;
     SET_GPR_VEC(ctx, 9, READ128(ADD32(GPR_U32(ctx, 5), 32)));
     // 0x30a51c: 0x4bc42968  vadd.xyz    $vf5, $vf5, $vf4
-    ctx->pc = 0x30a51cu;
     { __m128 res = PS2_VADD(ctx->vu0_vf[5], ctx->vu0_vf[4]); __m128i mask = _mm_set_epi32(0, -1, -1, -1); ctx->vu0_vf[5] = PS2_VBLEND(ctx->vu0_vf[5], res, _mm_castsi128_ps(mask)); }
     // 0x30a520: 0x7c870000  sq          $a3, 0x0($a0)
     ctx->pc = 0x30a520u;

@@ -13,12 +13,11 @@
 
 // Function: func_0035FC60
 // Address: 0x35fc60 - 0x35fc78
-void func_0035FC60_0x35fc60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0035FC60_0x35fc60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0035FC60_0x35fc60");
 #endif
 
-    ctx->pc = 0x35fc60u;
 
     // 0x35fc60: 0xac86000c  sw          $a2, 0xC($a0)
     ctx->pc = 0x35fc60u;
@@ -42,15 +41,12 @@ void func_0035FC60_0x35fc60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x35FC6Cu;
     // 0x35fc6c: 0x0  nop
-    ctx->pc = 0x35fc6cu;
     // NOP
     // 0x35fc70: 0xacc30000  sw          $v1, 0x0($a2)
     ctx->pc = 0x35fc70u;
     WRITE32(ADD32(GPR_U32(ctx, 6), 0), GPR_U32(ctx, 3));
     // 0x35fc74: 0x0  nop
-    ctx->pc = 0x35fc74u;
     // NOP
     ctx->pc = 0x35fc78u;
 }

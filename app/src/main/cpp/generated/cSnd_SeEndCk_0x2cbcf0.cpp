@@ -13,20 +13,20 @@
 
 // Function: cSnd_SeEndCk
 // Address: 0x2cbcf0 - 0x2cbd10
-void cSnd_SeEndCk_0x2cbcf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_SeEndCk_0x2cbcf0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_SeEndCk_0x2cbcf0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2cbd00u: goto label_2cbd00;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2cbcf0u, 0)) {
+        switch (ctx->pc) {
+            case 0x2cbd00u: goto label_2cbd00;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2cbcf0u;
 
     // 0x2cbcf0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2cbcf0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2cbcf4: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2cbcf4u;
@@ -34,17 +34,14 @@ void cSnd_SeEndCk_0x2cbcf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
     // 0x2cbcf8: 0xc0b2fd2  jal         func_2CBF48
     ctx->pc = 0x2CBCF8u;
     SET_GPR_U32(ctx, 31, 0x2CBD00u);
-    ctx->pc = 0x2CBF48u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2CBF48u, 0x2CBCF8u, 0x2CBD00u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cSnd_FindVoiceByHandle_0x2cbf48, 0x2cbf48u, 0x2cbd00u)) {
         return;
     }
-    ctx->pc = 0x2CBD00u;
 label_2cbd00:
     // 0x2cbd00: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2cbd00u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x2cbd04: 0x2c420001  sltiu       $v0, $v0, 0x1
-    ctx->pc = 0x2cbd04u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1) ? 1 : 0);
     // 0x2cbd08: 0x3e00008  jr          $ra
     ctx->pc = 0x2CBD08u;

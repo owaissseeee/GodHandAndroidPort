@@ -13,12 +13,11 @@
 
 // Function: GetTypeDefaultValue_16EDE0
 // Address: 0x16ede0 - 0x16ee10
-void GetTypeDefaultValue_16EDE0_0x16ede0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetTypeDefaultValue_16EDE0_0x16ede0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetTypeDefaultValue_16EDE0_0x16ede0");
 #endif
 
-    ctx->pc = 0x16ede0u;
 
     // 0x16ede0: 0x90830064  lbu         $v1, 0x64($a0)
     ctx->pc = 0x16ede0u;
@@ -38,7 +37,6 @@ void GetTypeDefaultValue_16EDE0_0x16ede0(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_16edfc;
         }
     }
-    ctx->pc = 0x16EDECu;
     // 0x16edec: 0x10620006  beq         $v1, $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x16EDECu;
     {
@@ -54,7 +52,6 @@ void GetTypeDefaultValue_16EDE0_0x16ede0(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_16ee08;
         }
     }
-    ctx->pc = 0x16EDF4u;
     // 0x16edf4: 0x3e00008  jr          $ra
     ctx->pc = 0x16EDF4u;
     {
@@ -68,10 +65,8 @@ void GetTypeDefaultValue_16EDE0_0x16ede0(uint8_t* rdram, R5900Context* ctx, PS2R
         return;
         #endif
     }
-    ctx->pc = 0x16EDFCu;
 label_16edfc:
     // 0x16edfc: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x16edfcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x16ee00: 0x3e00008  jr          $ra
     ctx->pc = 0x16EE00u;
@@ -92,7 +87,6 @@ label_16edfc:
         return;
         #endif
     }
-    ctx->pc = 0x16EE08u;
 label_16ee08:
     // 0x16ee08: 0x3e00008  jr          $ra
     ctx->pc = 0x16EE08u;

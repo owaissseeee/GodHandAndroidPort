@@ -13,36 +13,35 @@
 
 // Function: func_003B9DE0
 // Address: 0x3b9de0 - 0x3b9e10
-void func_003B9DE0_0x3b9de0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003B9DE0_0x3b9de0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003B9DE0_0x3b9de0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b9de0u: goto label_3b9de0;
-        case 0x3b9de4u: goto label_3b9de4;
-        case 0x3b9de8u: goto label_3b9de8;
-        case 0x3b9decu: goto label_3b9dec;
-        case 0x3b9df0u: goto label_3b9df0;
-        case 0x3b9df4u: goto label_3b9df4;
-        case 0x3b9df8u: goto label_3b9df8;
-        case 0x3b9dfcu: goto label_3b9dfc;
-        case 0x3b9e00u: goto label_3b9e00;
-        case 0x3b9e04u: goto label_3b9e04;
-        case 0x3b9e08u: goto label_3b9e08;
-        case 0x3b9e0cu: goto label_3b9e0c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b9de0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b9de0u: goto label_3b9de0;
+            case 0x3b9de4u: goto label_3b9de4;
+            case 0x3b9de8u: goto label_3b9de8;
+            case 0x3b9decu: goto label_3b9dec;
+            case 0x3b9df0u: goto label_3b9df0;
+            case 0x3b9df4u: goto label_3b9df4;
+            case 0x3b9df8u: goto label_3b9df8;
+            case 0x3b9dfcu: goto label_3b9dfc;
+            case 0x3b9e00u: goto label_3b9e00;
+            case 0x3b9e04u: goto label_3b9e04;
+            case 0x3b9e08u: goto label_3b9e08;
+            case 0x3b9e0cu: goto label_3b9e0c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b9de0u;
 
 label_3b9de0:
     // 0x3b9de0: 0x3c020040  lui         $v0, 0x40
-    ctx->pc = 0x3b9de0u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)64 << 16));
 label_3b9de4:
     // 0x3b9de4: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x3b9de4u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_3b9de8:
     // 0x3b9de8: 0x8c43c7ac  lw          $v1, -0x3854($v0)
@@ -79,7 +78,6 @@ label_3b9df4:
             goto label_3b9e04;
         }
     }
-    ctx->pc = 0x3B9DF8u;
 label_3b9df8:
     // 0x3b9df8: 0x3c020040  lui         $v0, 0x40
     ctx->pc = 0x3b9df8u;
@@ -112,7 +110,6 @@ label_3b9e00:
             return;
         }
     }
-    ctx->pc = 0x3B9E04u;
 label_3b9e04:
     // 0x3b9e04: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3b9e04u;

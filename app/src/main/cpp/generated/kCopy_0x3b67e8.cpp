@@ -13,17 +13,18 @@
 
 // Function: kCopy
 // Address: 0x3b67e8 - 0x3b6818
-void kCopy_0x3b67e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void kCopy_0x3b67e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("kCopy_0x3b67e8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b67f0u: goto label_3b67f0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b67e8u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b67f0u: goto label_3b67f0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b67e8u;
 
     // 0x3b67e8: 0x10c00009  beqz        $a2, . + 4 + (0x9 << 2)
     ctx->pc = 0x3B67E8u;
@@ -40,25 +41,20 @@ void kCopy_0x3b67e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
             goto label_3b6810;
         }
     }
-    ctx->pc = 0x3B67F0u;
 label_3b67f0:
     // 0x3b67f0: 0x90a30000  lbu         $v1, 0x0($a1)
     ctx->pc = 0x3b67f0u;
     SET_GPR_ZE32(ctx, 3, (uint8_t)READ8(ADD32(GPR_U32(ctx, 5), 0)));
     // 0x3b67f4: 0x24e70001  addiu       $a3, $a3, 0x1
-    ctx->pc = 0x3b67f4u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 7), 1));
     // 0x3b67f8: 0x24a50001  addiu       $a1, $a1, 0x1
-    ctx->pc = 0x3b67f8u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 1));
     // 0x3b67fc: 0xe6102b  sltu        $v0, $a3, $a2
-    ctx->pc = 0x3b67fcu;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 7) < (uint64_t)GPR_U64(ctx, 6)) ? 1 : 0);
     // 0x3b6800: 0xa0830000  sb          $v1, 0x0($a0)
     ctx->pc = 0x3b6800u;
     WRITE8(ADD32(GPR_U32(ctx, 4), 0), (uint8_t)GPR_U32(ctx, 3));
     // 0x3b6804: 0x24840001  addiu       $a0, $a0, 0x1
-    ctx->pc = 0x3b6804u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 1));
     // 0x3b6808: 0x1440fff9  bnez        $v0, . + 4 + (-0x7 << 2)
     ctx->pc = 0x3B6808u;
@@ -72,7 +68,6 @@ label_3b67f0:
             goto label_3b67f0;
         }
     }
-    ctx->pc = 0x3B6810u;
 label_3b6810:
     // 0x3b6810: 0x3e00008  jr          $ra
     ctx->pc = 0x3B6810u;

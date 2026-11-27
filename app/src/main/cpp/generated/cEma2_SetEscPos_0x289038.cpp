@@ -13,15 +13,13 @@
 
 // Function: cEma2_SetEscPos
 // Address: 0x289038 - 0x289068
-void cEma2_SetEscPos_0x289038(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEma2_SetEscPos_0x289038(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEma2_SetEscPos_0x289038");
 #endif
 
-    ctx->pc = 0x289038u;
 
     // 0x289038: 0x24821590  addiu       $v0, $a0, 0x1590
-    ctx->pc = 0x289038u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 5520));
     // 0x28903c: 0x10450007  beq         $v0, $a1, . + 4 + (0x7 << 2)
     ctx->pc = 0x28903Cu;
@@ -32,7 +30,6 @@ void cEma2_SetEscPos_0x289038(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_28905c;
         }
     }
-    ctx->pc = 0x289044u;
     // 0x289044: 0xc4a00000  lwc1        $f0, 0x0($a1)
     ctx->pc = 0x289044u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
@@ -65,9 +62,7 @@ label_28905c:
         return;
         #endif
     }
-    ctx->pc = 0x289064u;
     // 0x289064: 0x0  nop
-    ctx->pc = 0x289064u;
     // NOP
     ctx->pc = 0x289068u;
 }

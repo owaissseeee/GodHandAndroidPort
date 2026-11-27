@@ -13,23 +13,22 @@
 
 // Function: iResumeThread
 // Address: 0x3afc40 - 0x3afc50
-void iResumeThread_0x3afc40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iResumeThread_0x3afc40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iResumeThread_0x3afc40");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afc48u: goto label_3afc48;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afc40u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afc48u: goto label_3afc48;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afc40u;
 
     // 0x3afc40: 0x2403ffc6  addiu       $v1, $zero, -0x3A
-    ctx->pc = 0x3afc40u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967238));
     // 0x3afc44: 0xc  syscall     0
-    ctx->pc = 0x3afc44u;
     ctx->pc = 0x3AFC48u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

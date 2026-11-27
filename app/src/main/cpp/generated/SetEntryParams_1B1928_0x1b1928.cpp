@@ -13,12 +13,11 @@
 
 // Function: SetEntryParams_1B1928
 // Address: 0x1b1928 - 0x1b1938
-void SetEntryParams_1B1928_0x1b1928(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetEntryParams_1B1928_0x1b1928(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetEntryParams_1B1928_0x1b1928");
 #endif
 
-    ctx->pc = 0x1b1928u;
 
     // 0x1b1928: 0xac850660  sw          $a1, 0x660($a0)
     ctx->pc = 0x1b1928u;

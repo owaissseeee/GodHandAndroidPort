@@ -8,7 +8,11 @@ const uint32_t g_ps2RecompiledFunctionTableEnd = 0u;
 const uint32_t g_ps2RecompiledFunctionTableSlotCount = 0u;
 PS2Runtime::RecompiledFunction g_ps2RecompiledFunctionTable[1] = {};
 
-extern "C" void godhand_set_thread_affinity_and_priority(const char*, int, int, int) {}
+extern "C" int godhand_get_device_tier() { return 2; }
+extern "C" void godhand_perf_record_work_duration(int64_t) {}
+namespace godhand {
+    void setStreamVolumes(float, float) {}
+}
 namespace ps2_pad {
     unsigned int getButtons() { return 0; }
     float getLx() { return 0.0f; }
@@ -36,7 +40,7 @@ namespace
     using A = VU1InterpreterAccess;
 
     constexpr uint32_t kCodeSize = 16u * 1024u;
-    constexpr uint32_t kDefaultBlockPairs = 128u;
+    constexpr uint32_t kDefaultBlockPairs = 2048u;
     constexpr uint32_t kMaxVfLatency = 4u;
     constexpr uint32_t kMaxViLatency = 4u;
     constexpr uint32_t kMaxAccLatency = 1u;
@@ -1230,7 +1234,14 @@ namespace
             if (p.dynamic)
             {
                 exits.insert("exit_continue");
-                return "        { epc = jt; goto exit_continue; }\n";
+                const uint32_t beginPc = first * 8u;
+                const uint32_t endPc = last * 8u;
+                const std::string rangeCheck = beginPc == 0u
+                                                   ? ("jt < " + hx(endPc))
+                                                   : ("jt >= " + hx(beginPc) + " && jt < " + hx(endPc));
+                return "        if (__builtin_expect((jt & 7u) == 0u && " + rangeCheck +
+                       " && !vu.m_stopRequested, 1)) { vu.m_state.pc = jt; goto dispatch_local; }\n"
+                       "        { epc = jt; goto exit_continue; }\n";
             }
             if (p.conditional)
                 return "        if (tk) " + jumpTo(p.target) + "\n        " + jumpTo(after) + "\n";
@@ -1680,6 +1691,8 @@ namespace
             if (emitter.usesJt)
                 out << "    uint32_t jt = 0u;\n";
             out << "    (void)mem;\n";
+            if (emitter.usesJt)
+                out << "dispatch_local:\n";
             out << "    switch (vu.m_state.pc)\n    {\n";
             for (uint32_t index = start; index < end; ++index)
                 out << "    case " << hx(index * 8u) << ": goto " << (emitter.segs.count(index) ? segLabel(index * 8u) : label(index * 8u)) << ";\n";

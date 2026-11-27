@@ -345,6 +345,16 @@ public:
         return m_unwinding;
     }
 
+    [[nodiscard]] const bool *transferPendingPtr() const noexcept
+    {
+        return &m_transferPending;
+    }
+
+    [[nodiscard]] const bool *unwindingPtr() const noexcept
+    {
+        return &m_unwinding;
+    }
+
     int createSemaphore(int initCount, int maxCount, uint32_t attr, uint32_t option);
     int deleteSemaphore(int id, bool interruptSafe);
     int signalSemaphore(int id, bool interruptSafe);

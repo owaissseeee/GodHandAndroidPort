@@ -13,12 +13,11 @@
 
 // Function: cOm5a_isActive
 // Address: 0x1ada80 - 0x1ada88
-void cOm5a_isActive_0x1ada80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm5a_isActive_0x1ada80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm5a_isActive_0x1ada80");
 #endif
 
-    ctx->pc = 0x1ada80u;
 
     // 0x1ada80: 0x3e00008  jr          $ra
     ctx->pc = 0x1ADA80u;

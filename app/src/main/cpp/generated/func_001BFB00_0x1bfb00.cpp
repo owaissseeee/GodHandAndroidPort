@@ -13,35 +13,31 @@
 
 // Function: func_001BFB00
 // Address: 0x1bfb00 - 0x1bfb28
-void func_001BFB00_0x1bfb00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001BFB00_0x1bfb00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001BFB00_0x1bfb00");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1bfb1cu: goto label_1bfb1c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1bfb00u, 0)) {
+        switch (ctx->pc) {
+            case 0x1bfb1cu: goto label_1bfb1c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1bfb00u;
 
     // 0x1bfb00: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1bfb00u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1bfb04: 0x3c020043  lui         $v0, 0x43
-    ctx->pc = 0x1bfb04u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)67 << 16));
     // 0x1bfb08: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1bfb08u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1bfb0c: 0x80182d  daddu       $v1, $a0, $zero
-    ctx->pc = 0x1bfb0cu;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1bfb10: 0x244297d8  addiu       $v0, $v0, -0x6828
-    ctx->pc = 0x1bfb10u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294940632));
     // 0x1bfb14: 0xc06dbce  jal         func_1B6F38
-    ctx->pc = 0x1BFB14u;
     SET_GPR_U32(ctx, 31, 0x1BFB1Cu);
     ctx->pc = 0x1BFB18u;
     ctx->in_delay_slot = true;
@@ -49,11 +45,9 @@ void func_001BFB00_0x1bfb00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x1bfb18: 0xac620214  sw          $v0, 0x214($v1) (Delay Slot)
     WRITE32(ADD32(GPR_U32(ctx, 3), 532), GPR_U32(ctx, 2));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1B6F38u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1B6F38u, 0x1BFB14u, 0x1BFB1Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &SetField214PtrThenInit_1B6F38_0x1b6f38, 0x1b6f38u, 0x1bfb1cu)) {
         return;
     }
-    ctx->pc = 0x1BFB1Cu;
 label_1bfb1c:
     // 0x1bfb1c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1bfb1cu;

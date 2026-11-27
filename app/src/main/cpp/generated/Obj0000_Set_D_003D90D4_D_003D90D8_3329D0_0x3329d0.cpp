@@ -13,18 +13,15 @@
 
 // Function: Obj0000_Set_D_003D90D4_D_003D90D8_3329D0
 // Address: 0x3329d0 - 0x3329e8
-void Obj0000_Set_D_003D90D4_D_003D90D8_3329D0_0x3329d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Set_D_003D90D4_D_003D90D8_3329D0_0x3329d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Set_D_003D90D4_D_003D90D8_3329D0_0x3329d0");
 #endif
 
-    ctx->pc = 0x3329d0u;
 
     // 0x3329d0: 0x3c02003e  lui         $v0, 0x3E
-    ctx->pc = 0x3329d0u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)62 << 16));
     // 0x3329d4: 0x3c03003e  lui         $v1, 0x3E
-    ctx->pc = 0x3329d4u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)62 << 16));
     // 0x3329d8: 0xac4490d4  sw          $a0, -0x6F2C($v0)
     ctx->pc = 0x3329d8u;
@@ -48,9 +45,7 @@ void Obj0000_Set_D_003D90D4_D_003D90D8_3329D0_0x3329d0(uint8_t* rdram, R5900Cont
         return;
         #endif
     }
-    ctx->pc = 0x3329E4u;
     // 0x3329e4: 0x0  nop
-    ctx->pc = 0x3329e4u;
     // NOP
     ctx->pc = 0x3329e8u;
 }

@@ -41,6 +41,8 @@ namespace ps2x::asyncvif
     void traceEvent(char code, uint32_t arg = 0u) noexcept;
     uint32_t currentFbrst();
     std::vector<uint8_t> takeBuffer();
+    std::vector<Item> takeItemBag();
+    void recycleItemBag(std::vector<Item> &&items);
     void enqueue(PS2Memory &memory, std::vector<Item> &&items);
     void sync(PS2Memory &memory);
     void stop(PS2Memory &memory);

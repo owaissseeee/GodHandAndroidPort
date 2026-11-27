@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_addTensionItem
 // Address: 0x1fadf0 - 0x1fae28
-void cCoreSave_addTensionItem_0x1fadf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_addTensionItem_0x1fadf0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_addTensionItem_0x1fadf0");
 #endif
 
-    ctx->pc = 0x1fadf0u;
 
     // 0x1fadf0: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x1fadf0u;
@@ -38,12 +37,10 @@ void cCoreSave_addTensionItem_0x1fadf0(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_1fae20;
         }
     }
-    ctx->pc = 0x1FADFCu;
     // 0x1fadfc: 0x90620155  lbu         $v0, 0x155($v1)
     ctx->pc = 0x1fadfcu;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 3), 341)));
     // 0x1fae00: 0xa21021  addu        $v0, $a1, $v0
-    ctx->pc = 0x1fae00u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 5), GPR_U32(ctx, 2)));
     // 0x1fae04: 0xa0620155  sb          $v0, 0x155($v1)
     ctx->pc = 0x1fae04u;
@@ -55,7 +52,6 @@ void cCoreSave_addTensionItem_0x1fadf0(uint8_t* rdram, R5900Context* ctx, PS2Run
     ctx->pc = 0x1fae0cu;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 341)));
     // 0x1fae10: 0x2c420006  sltiu       $v0, $v0, 0x6
-    ctx->pc = 0x1fae10u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)6) ? 1 : 0);
     // 0x1fae14: 0x14400002  bnez        $v0, . + 4 + (0x2 << 2)
     ctx->pc = 0x1FAE14u;
@@ -72,7 +68,6 @@ void cCoreSave_addTensionItem_0x1fadf0(uint8_t* rdram, R5900Context* ctx, PS2Run
             goto label_1fae20;
         }
     }
-    ctx->pc = 0x1FAE1Cu;
     // 0x1fae1c: 0xa0820155  sb          $v0, 0x155($a0)
     ctx->pc = 0x1fae1cu;
     WRITE8(ADD32(GPR_U32(ctx, 4), 341), (uint8_t)GPR_U32(ctx, 2));

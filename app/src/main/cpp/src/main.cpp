@@ -843,6 +843,9 @@ void bootAndroidRuntime(ANativeWindow* win, int width, int height, int rendererI
     // 6: "6x" -> 6.0f
     // 7: "8x (4K)" -> 8.0f
     static const float s_scales[] = { 0.5f, 0.75f, 1.0f, 2.0f, 3.0f, 4.0f };
+    if (!godhand::isUltraPotatoMode() && resScaleIdx == 0) {
+        resScaleIdx = 1;
+    }
     float scale = 1.0f;
     if (resScaleIdx >= 0 && resScaleIdx < static_cast<int>(sizeof(s_scales) / sizeof(s_scales[0]))) {
         scale = s_scales[resScaleIdx];

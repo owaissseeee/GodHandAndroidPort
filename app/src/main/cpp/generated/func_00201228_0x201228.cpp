@@ -13,32 +13,29 @@
 
 // Function: func_00201228
 // Address: 0x201228 - 0x201250
-void func_00201228_0x201228(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00201228_0x201228(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00201228_0x201228");
 #endif
 
-    switch (ctx->pc) {
-        case 0x201240u: goto label_201240;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x201228u, 0)) {
+        switch (ctx->pc) {
+            case 0x201240u: goto label_201240;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x201228u;
 
     // 0x201228: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x201228u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x20122c: 0xa0202d  daddu       $a0, $a1, $zero
-    ctx->pc = 0x20122cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     // 0x201230: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x201230u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x201234: 0x24060088  addiu       $a2, $zero, 0x88
-    ctx->pc = 0x201234u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 136));
     // 0x201238: 0xc0e94bc  jal         func_3A52F0
-    ctx->pc = 0x201238u;
     SET_GPR_U32(ctx, 31, 0x201240u);
     ctx->pc = 0x20123Cu;
     ctx->in_delay_slot = true;
@@ -46,11 +43,9 @@ void func_00201228_0x201228(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x20123c: 0x282d  daddu       $a1, $zero, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x3A52F0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3A52F0u, 0x201238u, 0x201240u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &memset_0x3a52f0, 0x3a52f0u, 0x201240u)) {
         return;
     }
-    ctx->pc = 0x201240u;
 label_201240:
     // 0x201240: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x201240u;
@@ -74,9 +69,7 @@ label_201240:
         return;
         #endif
     }
-    ctx->pc = 0x20124Cu;
     // 0x20124c: 0x0  nop
-    ctx->pc = 0x20124cu;
     // NOP
     ctx->pc = 0x201250u;
 }

@@ -13,23 +13,22 @@
 
 // Function: InitObjectFieldsIfNonNull_300060
 // Address: 0x300060 - 0x300088
-void InitObjectFieldsIfNonNull_300060_0x300060(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitObjectFieldsIfNonNull_300060_0x300060(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitObjectFieldsIfNonNull_300060_0x300060");
 #endif
 
-    switch (ctx->pc) {
-        case 0x300078u: goto label_300078;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x300060u, 0)) {
+        switch (ctx->pc) {
+            case 0x300078u: goto label_300078;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x300060u;
 
     // 0x300060: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x300060u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x300064: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x300064u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x300068: 0x10400003  beqz        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x300068u;
@@ -46,15 +45,12 @@ void InitObjectFieldsIfNonNull_300060_0x300060(uint8_t* rdram, R5900Context* ctx
             goto label_300078;
         }
     }
-    ctx->pc = 0x300070u;
     // 0x300070: 0xc0bdc44  jal         func_2F7110
     ctx->pc = 0x300070u;
     SET_GPR_U32(ctx, 31, 0x300078u);
-    ctx->pc = 0x2F7110u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2F7110u, 0x300070u, 0x300078u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &InitObjectFields_2F7110_0x2f7110, 0x2f7110u, 0x300078u)) {
         return;
     }
-    ctx->pc = 0x300078u;
 label_300078:
     // 0x300078: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x300078u;
@@ -78,9 +74,7 @@ label_300078:
         return;
         #endif
     }
-    ctx->pc = 0x300084u;
     // 0x300084: 0x0  nop
-    ctx->pc = 0x300084u;
     // NOP
     ctx->pc = 0x300088u;
 }

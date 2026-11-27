@@ -13,15 +13,13 @@
 
 // Function: ClearFields_1614D0
 // Address: 0x1614d0 - 0x161500
-void ClearFields_1614D0_0x1614d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearFields_1614D0_0x1614d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearFields_1614D0_0x1614d0");
 #endif
 
-    ctx->pc = 0x1614d0u;
 
     // 0x1614d0: 0x2402ffff  addiu       $v0, $zero, -0x1
-    ctx->pc = 0x1614d0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x1614d4: 0xa080005d  sb          $zero, 0x5D($a0)
     ctx->pc = 0x1614d4u;
@@ -66,9 +64,7 @@ void ClearFields_1614D0_0x1614d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         return;
         #endif
     }
-    ctx->pc = 0x1614FCu;
     // 0x1614fc: 0x0  nop
-    ctx->pc = 0x1614fcu;
     // NOP
     ctx->pc = 0x161500u;
 }

@@ -13,23 +13,22 @@
 
 // Function: SetupHeap
 // Address: 0x3afc70 - 0x3afc80
-void SetupHeap_0x3afc70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetupHeap_0x3afc70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetupHeap_0x3afc70");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afc78u: goto label_3afc78;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afc70u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afc78u: goto label_3afc78;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afc70u;
 
     // 0x3afc70: 0x2403003d  addiu       $v1, $zero, 0x3D
-    ctx->pc = 0x3afc70u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 61));
     // 0x3afc74: 0xc  syscall     0
-    ctx->pc = 0x3afc74u;
     ctx->pc = 0x3AFC78u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

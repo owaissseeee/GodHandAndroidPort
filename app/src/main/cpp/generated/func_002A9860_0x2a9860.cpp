@@ -13,12 +13,11 @@
 
 // Function: func_002A9860
 // Address: 0x2a9860 - 0x2a98a8
-void func_002A9860_0x2a9860(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002A9860_0x2a9860(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002A9860_0x2a9860");
 #endif
 
-    ctx->pc = 0x2a9860u;
 
     // 0x2a9860: 0x50a0000a  beql        $a1, $zero, . + 4 + (0xA << 2)
     ctx->pc = 0x2A9860u;
@@ -35,12 +34,10 @@ void func_002A9860_0x2a9860(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2a988c;
         }
     }
-    ctx->pc = 0x2A9868u;
     // 0x2a9868: 0x8c840004  lw          $a0, 0x4($a0)
     ctx->pc = 0x2a9868u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4)));
     // 0x2a986c: 0xa41021  addu        $v0, $a1, $a0
-    ctx->pc = 0x2a986cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 5), GPR_U32(ctx, 4)));
     // 0x2a9870: 0x8c420004  lw          $v0, 0x4($v0)
     ctx->pc = 0x2a9870u;
@@ -54,7 +51,6 @@ void func_002A9860_0x2a9860(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2a9884;
         }
     }
-    ctx->pc = 0x2A987Cu;
     // 0x2a987c: 0x3e00008  jr          $ra
     ctx->pc = 0x2A987Cu;
     {
@@ -74,7 +70,6 @@ void func_002A9860_0x2a9860(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2A9884u;
 label_2a9884:
     // 0x2a9884: 0x3e00008  jr          $ra
     ctx->pc = 0x2A9884u;
@@ -95,7 +90,6 @@ label_2a9884:
         return;
         #endif
     }
-    ctx->pc = 0x2A988Cu;
 label_2a988c:
     // 0x2a988c: 0x10600004  beqz        $v1, . + 4 + (0x4 << 2)
     ctx->pc = 0x2A988Cu;
@@ -106,7 +100,6 @@ label_2a988c:
             goto label_2a98a0;
         }
     }
-    ctx->pc = 0x2A9894u;
     // 0x2a9894: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2a9894u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4)));
@@ -129,7 +122,6 @@ label_2a988c:
         return;
         #endif
     }
-    ctx->pc = 0x2A98A0u;
 label_2a98a0:
     // 0x2a98a0: 0x3e00008  jr          $ra
     ctx->pc = 0x2A98A0u;

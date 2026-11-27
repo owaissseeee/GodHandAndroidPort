@@ -13,36 +13,27 @@
 
 // Function: std
 // Address: 0x3a6188 - 0x3a61f0
-void std_0x3a6188(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void std_0x3a6188(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("std_0x3a6188");
 #endif
 
-    ctx->pc = 0x3a6188u;
 
     // 0x3a6188: 0x3c02003a  lui         $v0, 0x3A
-    ctx->pc = 0x3a6188u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)58 << 16));
     // 0x3a618c: 0x3c03003a  lui         $v1, 0x3A
-    ctx->pc = 0x3a618cu;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)58 << 16));
     // 0x3a6190: 0x3c08003a  lui         $t0, 0x3A
-    ctx->pc = 0x3a6190u;
     SET_GPR_S32(ctx, 8, (int32_t)((uint32_t)58 << 16));
     // 0x3a6194: 0x3c09003a  lui         $t1, 0x3A
-    ctx->pc = 0x3a6194u;
     SET_GPR_S32(ctx, 9, (int32_t)((uint32_t)58 << 16));
     // 0x3a6198: 0x24426d78  addiu       $v0, $v0, 0x6D78
-    ctx->pc = 0x3a6198u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 28024));
     // 0x3a619c: 0x24636de0  addiu       $v1, $v1, 0x6DE0
-    ctx->pc = 0x3a619cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 28128));
     // 0x3a61a0: 0x25086e60  addiu       $t0, $t0, 0x6E60
-    ctx->pc = 0x3a61a0u;
     SET_GPR_S32(ctx, 8, (int32_t)ADD32(GPR_U32(ctx, 8), 28256));
     // 0x3a61a4: 0x25296ec8  addiu       $t1, $t1, 0x6EC8
-    ctx->pc = 0x3a61a4u;
     SET_GPR_S32(ctx, 9, (int32_t)ADD32(GPR_U32(ctx, 9), 28360));
     // 0x3a61a8: 0xac870054  sw          $a3, 0x54($a0)
     ctx->pc = 0x3a61a8u;
@@ -99,18 +90,13 @@ void std_0x3a6188(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
         return;
         #endif
     }
-    ctx->pc = 0x3A61E0u;
     // 0x3a61e0: 0x27bd0040  addiu       $sp, $sp, 0x40
-    ctx->pc = 0x3a61e0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 64));
     // 0x3a61e4: 0x0  nop
-    ctx->pc = 0x3a61e4u;
     // NOP
     // 0x3a61e8: 0x27bd0030  addiu       $sp, $sp, 0x30
-    ctx->pc = 0x3a61e8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 48));
     // 0x3a61ec: 0x0  nop
-    ctx->pc = 0x3a61ecu;
     // NOP
     ctx->pc = 0x3a61f0u;
 }

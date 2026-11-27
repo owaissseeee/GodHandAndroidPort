@@ -13,54 +13,53 @@
 
 // Function: Obj0000_Check_D_0045A460_Magic_And_D_0045A470_Val
 // Address: 0x36bed8 - 0x36bf50
-void Obj0000_Check_D_0045A460_Magic_And_D_0045A470_Val_0x36bed8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Check_D_0045A460_Magic_And_D_0045A470_Val_0x36bed8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Check_D_0045A460_Magic_And_D_0045A470_Val_0x36bed8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x36bed8u: goto label_36bed8;
-        case 0x36bedcu: goto label_36bedc;
-        case 0x36bee0u: goto label_36bee0;
-        case 0x36bee4u: goto label_36bee4;
-        case 0x36bee8u: goto label_36bee8;
-        case 0x36beecu: goto label_36beec;
-        case 0x36bef0u: goto label_36bef0;
-        case 0x36bef4u: goto label_36bef4;
-        case 0x36bef8u: goto label_36bef8;
-        case 0x36befcu: goto label_36befc;
-        case 0x36bf00u: goto label_36bf00;
-        case 0x36bf04u: goto label_36bf04;
-        case 0x36bf08u: goto label_36bf08;
-        case 0x36bf0cu: goto label_36bf0c;
-        case 0x36bf10u: goto label_36bf10;
-        case 0x36bf14u: goto label_36bf14;
-        case 0x36bf18u: goto label_36bf18;
-        case 0x36bf1cu: goto label_36bf1c;
-        case 0x36bf20u: goto label_36bf20;
-        case 0x36bf24u: goto label_36bf24;
-        case 0x36bf28u: goto label_36bf28;
-        case 0x36bf2cu: goto label_36bf2c;
-        case 0x36bf30u: goto label_36bf30;
-        case 0x36bf34u: goto label_36bf34;
-        case 0x36bf38u: goto label_36bf38;
-        case 0x36bf3cu: goto label_36bf3c;
-        case 0x36bf40u: goto label_36bf40;
-        case 0x36bf44u: goto label_36bf44;
-        case 0x36bf48u: goto label_36bf48;
-        case 0x36bf4cu: goto label_36bf4c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x36bed8u, 0)) {
+        switch (ctx->pc) {
+            case 0x36bed8u: goto label_36bed8;
+            case 0x36bedcu: goto label_36bedc;
+            case 0x36bee0u: goto label_36bee0;
+            case 0x36bee4u: goto label_36bee4;
+            case 0x36bee8u: goto label_36bee8;
+            case 0x36beecu: goto label_36beec;
+            case 0x36bef0u: goto label_36bef0;
+            case 0x36bef4u: goto label_36bef4;
+            case 0x36bef8u: goto label_36bef8;
+            case 0x36befcu: goto label_36befc;
+            case 0x36bf00u: goto label_36bf00;
+            case 0x36bf04u: goto label_36bf04;
+            case 0x36bf08u: goto label_36bf08;
+            case 0x36bf0cu: goto label_36bf0c;
+            case 0x36bf10u: goto label_36bf10;
+            case 0x36bf14u: goto label_36bf14;
+            case 0x36bf18u: goto label_36bf18;
+            case 0x36bf1cu: goto label_36bf1c;
+            case 0x36bf20u: goto label_36bf20;
+            case 0x36bf24u: goto label_36bf24;
+            case 0x36bf28u: goto label_36bf28;
+            case 0x36bf2cu: goto label_36bf2c;
+            case 0x36bf30u: goto label_36bf30;
+            case 0x36bf34u: goto label_36bf34;
+            case 0x36bf38u: goto label_36bf38;
+            case 0x36bf3cu: goto label_36bf3c;
+            case 0x36bf40u: goto label_36bf40;
+            case 0x36bf44u: goto label_36bf44;
+            case 0x36bf48u: goto label_36bf48;
+            case 0x36bf4cu: goto label_36bf4c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x36bed8u;
 
 label_36bed8:
     // 0x36bed8: 0x3c020046  lui         $v0, 0x46
-    ctx->pc = 0x36bed8u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)70 << 16));
 label_36bedc:
     // 0x36bedc: 0x3c035a5a  lui         $v1, 0x5A5A
-    ctx->pc = 0x36bedcu;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)23130 << 16));
 label_36bee0:
     // 0x36bee0: 0x8c44a460  lw          $a0, -0x5BA0($v0)
@@ -68,7 +67,6 @@ label_36bee0:
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 4294943840)));
 label_36bee4:
     // 0x36bee4: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x36bee4u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_36bee8:
     // 0x36bee8: 0x34635a5a  ori         $v1, $v1, 0x5A5A
@@ -101,10 +99,8 @@ label_36bef0:
             goto label_36bf10;
         }
     }
-    ctx->pc = 0x36BEF4u;
 label_36bef4:
     // 0x36bef4: 0x3c05ff03  lui         $a1, 0xFF03
-    ctx->pc = 0x36bef4u;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)65283 << 16));
 label_36bef8:
     // 0x36bef8: 0xdfbf0000  ld          $ra, 0x0($sp)
@@ -112,7 +108,6 @@ label_36bef8:
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
 label_36befc:
     // 0x36befc: 0x202d  daddu       $a0, $zero, $zero
-    ctx->pc = 0x36befcu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_36bf00:
     // 0x36bf00: 0x34a5ff02  ori         $a1, $a1, 0xFF02
@@ -131,8 +126,6 @@ label_36bf08:
         ctx->pc = 0x36BF0Cu;
         goto label_36bf0c;
     }
-    ctx->pc = 0x36BF04u;
-    ctx->pc = 0x36BF08u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x36BF04u;
     // 0x36bf08: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)
@@ -142,18 +135,14 @@ label_36bf08:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x369F20u, 0x36BF04u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x36BF0Cu;
 label_36bf0c:
     // 0x36bf0c: 0x0  nop
-    ctx->pc = 0x36bf0cu;
     // NOP
 label_36bf10:
     // 0x36bf10: 0x3c020046  lui         $v0, 0x46
-    ctx->pc = 0x36bf10u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)70 << 16));
 label_36bf14:
     // 0x36bf14: 0x24040004  addiu       $a0, $zero, 0x4
-    ctx->pc = 0x36bf14u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
 label_36bf18:
     // 0x36bf18: 0x9043a470  lbu         $v1, -0x5B90($v0)
@@ -186,10 +175,8 @@ label_36bf20:
             goto label_36bf40;
         }
     }
-    ctx->pc = 0x36BF24u;
 label_36bf24:
     // 0x36bf24: 0x0  nop
-    ctx->pc = 0x36bf24u;
     // NOP
 label_36bf28:
     // 0x36bf28: 0x2401ffff  addiu       $at, $zero, -0x1
@@ -230,10 +217,8 @@ label_36bf38:
             goto label_36bf28;
         }
     }
-    ctx->pc = 0x36BF3Cu;
 label_36bf3c:
     // 0x36bf3c: 0x0  nop
-    ctx->pc = 0x36bf3cu;
     // NOP
 label_36bf40:
     // 0x36bf40: 0x102d  daddu       $v0, $zero, $zero
@@ -270,10 +255,8 @@ label_36bf48:
         return;
         #endif
     }
-    ctx->pc = 0x36BF4Cu;
 label_36bf4c:
     // 0x36bf4c: 0x0  nop
-    ctx->pc = 0x36bf4cu;
     // NOP
     ctx->pc = 0x36bf50u;
 }

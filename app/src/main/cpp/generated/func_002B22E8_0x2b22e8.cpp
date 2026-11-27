@@ -13,18 +13,15 @@
 
 // Function: func_002B22E8
 // Address: 0x2b22e8 - 0x2b2318
-void func_002B22E8_0x2b22e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002B22E8_0x2b22e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002B22E8_0x2b22e8");
 #endif
 
-    ctx->pc = 0x2b22e8u;
 
     // 0x2b22e8: 0x73c00  sll         $a3, $a3, 16
-    ctx->pc = 0x2b22e8u;
     SET_GPR_S32(ctx, 7, (int32_t)SLL32(GPR_U32(ctx, 7), 16));
     // 0x2b22ec: 0x3108ffff  andi        $t0, $t0, 0xFFFF
-    ctx->pc = 0x2b22ecu;
     SET_GPR_U64(ctx, 8, GPR_U64(ctx, 8) & (uint64_t)(uint16_t)65535);
     // 0x2b22f0: 0x10a00002  beqz        $a1, . + 4 + (0x2 << 2)
     ctx->pc = 0x2B22F0u;
@@ -41,7 +38,6 @@ void func_002B22E8_0x2b22e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2b22fc;
         }
     }
-    ctx->pc = 0x2B22F8u;
     // 0x2b22f8: 0xaca40008  sw          $a0, 0x8($a1)
     ctx->pc = 0x2b22f8u;
     WRITE32(ADD32(GPR_U32(ctx, 5), 8), GPR_U32(ctx, 4));
@@ -61,7 +57,6 @@ label_2b22fc:
             goto label_2b2304;
         }
     }
-    ctx->pc = 0x2B2304u;
 label_2b2304:
     // 0x2b2304: 0xa4880000  sh          $t0, 0x0($a0)
     ctx->pc = 0x2b2304u;

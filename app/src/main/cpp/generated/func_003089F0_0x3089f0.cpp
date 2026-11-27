@@ -13,23 +13,22 @@
 
 // Function: func_003089F0
 // Address: 0x3089f0 - 0x308a38
-void func_003089F0_0x3089f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003089F0_0x3089f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003089F0_0x3089f0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3089f8u: goto label_3089f8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3089f0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3089f8u: goto label_3089f8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3089f0u;
 
     // 0x3089f0: 0x182d  daddu       $v1, $zero, $zero
-    ctx->pc = 0x3089f0u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x3089f4: 0x0  nop
-    ctx->pc = 0x3089f4u;
     // NOP
 label_3089f8:
     // 0x3089f8: 0x8c820000  lw          $v0, 0x0($a0)
@@ -44,7 +43,6 @@ label_3089f8:
             goto label_308a0c;
         }
     }
-    ctx->pc = 0x308A04u;
     // 0x308a04: 0x3e00008  jr          $ra
     ctx->pc = 0x308A04u;
     {
@@ -64,7 +62,6 @@ label_3089f8:
         return;
         #endif
     }
-    ctx->pc = 0x308A0Cu;
 label_308a0c:
     // 0x308a0c: 0x14400004  bnez        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x308A0Cu;
@@ -81,7 +78,6 @@ label_308a0c:
             goto label_308a20;
         }
     }
-    ctx->pc = 0x308A14u;
     // 0x308a14: 0xac850000  sw          $a1, 0x0($a0)
     ctx->pc = 0x308a14u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 0), GPR_U32(ctx, 5));
@@ -104,10 +100,8 @@ label_308a0c:
         return;
         #endif
     }
-    ctx->pc = 0x308A20u;
 label_308a20:
     // 0x308a20: 0x28620020  slti        $v0, $v1, 0x20
-    ctx->pc = 0x308a20u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)(int32_t)32) ? 1 : 0);
     // 0x308a24: 0x1440fff4  bnez        $v0, . + 4 + (-0xC << 2)
     ctx->pc = 0x308A24u;
@@ -127,7 +121,6 @@ label_308a20:
             goto label_3089f8;
         }
     }
-    ctx->pc = 0x308A2Cu;
     // 0x308a2c: 0x3e00008  jr          $ra
     ctx->pc = 0x308A2Cu;
     {
@@ -147,9 +140,7 @@ label_308a20:
         return;
         #endif
     }
-    ctx->pc = 0x308A34u;
     // 0x308a34: 0x0  nop
-    ctx->pc = 0x308a34u;
     // NOP
     ctx->pc = 0x308a38u;
 }

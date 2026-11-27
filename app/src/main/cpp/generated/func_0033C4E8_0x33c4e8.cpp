@@ -13,34 +13,34 @@
 
 // Function: func_0033C4E8
 // Address: 0x33c4e8 - 0x33c520
-void func_0033C4E8_0x33c4e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0033C4E8_0x33c4e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0033C4E8_0x33c4e8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x33c4e8u: goto label_33c4e8;
-        case 0x33c4ecu: goto label_33c4ec;
-        case 0x33c4f0u: goto label_33c4f0;
-        case 0x33c4f4u: goto label_33c4f4;
-        case 0x33c4f8u: goto label_33c4f8;
-        case 0x33c4fcu: goto label_33c4fc;
-        case 0x33c500u: goto label_33c500;
-        case 0x33c504u: goto label_33c504;
-        case 0x33c508u: goto label_33c508;
-        case 0x33c50cu: goto label_33c50c;
-        case 0x33c510u: goto label_33c510;
-        case 0x33c514u: goto label_33c514;
-        case 0x33c518u: goto label_33c518;
-        case 0x33c51cu: goto label_33c51c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x33c4e8u, 0)) {
+        switch (ctx->pc) {
+            case 0x33c4e8u: goto label_33c4e8;
+            case 0x33c4ecu: goto label_33c4ec;
+            case 0x33c4f0u: goto label_33c4f0;
+            case 0x33c4f4u: goto label_33c4f4;
+            case 0x33c4f8u: goto label_33c4f8;
+            case 0x33c4fcu: goto label_33c4fc;
+            case 0x33c500u: goto label_33c500;
+            case 0x33c504u: goto label_33c504;
+            case 0x33c508u: goto label_33c508;
+            case 0x33c50cu: goto label_33c50c;
+            case 0x33c510u: goto label_33c510;
+            case 0x33c514u: goto label_33c514;
+            case 0x33c518u: goto label_33c518;
+            case 0x33c51cu: goto label_33c51c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x33c4e8u;
 
 label_33c4e8:
     // 0x33c4e8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x33c4e8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_33c4ec:
     // 0x33c4ec: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -77,10 +77,8 @@ label_33c4f8:
             goto label_33c50c;
         }
     }
-    ctx->pc = 0x33C4FCu;
 label_33c4fc:
     // 0x33c4fc: 0x3c02003f  lui         $v0, 0x3F
-    ctx->pc = 0x33c4fcu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)63 << 16));
 label_33c500:
     // 0x33c500: 0x8c439d2c  lw          $v1, -0x62D4($v0)
@@ -102,7 +100,6 @@ label_33c508:
             return;
         }
     }
-    ctx->pc = 0x33C50Cu;
 label_33c50c:
     // 0x33c50c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x33c50cu;
@@ -138,14 +135,11 @@ label_33c514:
         return;
         #endif
     }
-    ctx->pc = 0x33C518u;
 label_33c518:
     // 0x33c518: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x33c518u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
 label_33c51c:
     // 0x33c51c: 0x0  nop
-    ctx->pc = 0x33c51cu;
     // NOP
     ctx->pc = 0x33c520u;
 }

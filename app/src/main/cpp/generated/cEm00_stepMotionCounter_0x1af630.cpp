@@ -14,20 +14,20 @@
 
 // Function: cEm00_stepMotionCounter
 // Address: 0x1af630 - 0x1af680
-void cEm00_stepMotionCounter_0x1af630(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEm00_stepMotionCounter_0x1af630(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEm00_stepMotionCounter_0x1af630");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1af644u: goto label_1af644;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1af630u, 0)) {
+        switch (ctx->pc) {
+            case 0x1af644u: goto label_1af644;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1af630u;
 
     // 0x1af630: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x1af630u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x1af634: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x1af634u;
@@ -36,9 +36,7 @@ void cEm00_stepMotionCounter_0x1af630(uint8_t* rdram, R5900Context* ctx, PS2Runt
     ctx->pc = 0x1af638u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1af63c: 0xc055f06  jal         func_157C18
-    ctx->pc = 0x1AF63Cu;
     SET_GPR_U32(ctx, 31, 0x1AF644u);
-    ctx->pc = 0x1AF640u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x1AF63Cu;
     // 0x1af640: 0x80802d  daddu       $s0, $a0, $zero (Delay Slot)
@@ -48,7 +46,6 @@ void cEm00_stepMotionCounter_0x1af630(uint8_t* rdram, R5900Context* ctx, PS2Runt
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x157C18u, 0x1AF63Cu, 0x1AF644u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x1AF644u;
 label_1af644:
     // 0x1af644: 0x86030984  lh          $v1, 0x984($s0)
     ctx->pc = 0x1af644u;
@@ -68,9 +65,7 @@ label_1af644:
             goto label_1af664;
         }
     }
-    ctx->pc = 0x1AF650u;
     // 0x1af650: 0x24020002  addiu       $v0, $zero, 0x2
-    ctx->pc = 0x1af650u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x1af654: 0xa20002f6  sb          $zero, 0x2F6($s0)
     ctx->pc = 0x1af654u;
@@ -122,9 +117,7 @@ label_1af664:
         return;
         #endif
     }
-    ctx->pc = 0x1AF67Cu;
     // 0x1af67c: 0x0  nop
-    ctx->pc = 0x1af67cu;
     // NOP
     ctx->pc = 0x1af680u;
 }

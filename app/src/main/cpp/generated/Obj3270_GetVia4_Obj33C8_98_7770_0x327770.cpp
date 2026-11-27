@@ -13,15 +13,13 @@
 
 // Function: Obj3270_GetVia4_Obj33C8_98_7770
 // Address: 0x327770 - 0x327788
-void Obj3270_GetVia4_Obj33C8_98_7770_0x327770(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj3270_GetVia4_Obj33C8_98_7770_0x327770(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj3270_GetVia4_Obj33C8_98_7770_0x327770");
 #endif
 
-    ctx->pc = 0x327770u;
 
     // 0x327770: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x327770u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x327774: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x327774u;
@@ -33,8 +31,6 @@ void Obj3270_GetVia4_Obj33C8_98_7770_0x327770(uint8_t* rdram, R5900Context* ctx,
     ctx->pc = 0x32777cu;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x327780: 0x80cf3a2  j           func_33CE88
-    ctx->pc = 0x327780u;
-    ctx->pc = 0x327784u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x327780u;
     // 0x327784: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)

@@ -13,32 +13,30 @@
 
 // Function: ClearActorList_2C32C0
 // Address: 0x2c32c0 - 0x2c32f0
-void ClearActorList_2C32C0_0x2c32c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearActorList_2C32C0_0x2c32c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearActorList_2C32C0_0x2c32c0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2c32d8u: goto label_2c32d8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2c32c0u, 0)) {
+        switch (ctx->pc) {
+            case 0x2c32d8u: goto label_2c32d8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2c32c0u;
 
     // 0x2c32c0: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x2c32c0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x2c32c4: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x2c32c4u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 16));
     // 0x2c32c8: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x2c32c8u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2c32cc: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2c32ccu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x2c32d0: 0xc0b55aa  jal         func_2D56A8
-    ctx->pc = 0x2C32D0u;
     SET_GPR_U32(ctx, 31, 0x2C32D8u);
     ctx->pc = 0x2C32D4u;
     ctx->in_delay_slot = true;
@@ -46,11 +44,9 @@ void ClearActorList_2C32C0_0x2c32c0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
     // 0x2c32d4: 0x2604001c  addiu       $a0, $s0, 0x1C (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 16), 28));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2D56A8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D56A8u, 0x2C32D0u, 0x2C32D8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cTaskPool_killAll_0x2d56a8, 0x2d56a8u, 0x2c32d8u)) {
         return;
     }
-    ctx->pc = 0x2C32D8u;
 label_2c32d8:
     // 0x2c32d8: 0xa2000014  sb          $zero, 0x14($s0)
     ctx->pc = 0x2c32d8u;
@@ -80,9 +76,7 @@ label_2c32d8:
         return;
         #endif
     }
-    ctx->pc = 0x2C32ECu;
     // 0x2c32ec: 0x0  nop
-    ctx->pc = 0x2c32ecu;
     // NOP
     ctx->pc = 0x2c32f0u;
 }

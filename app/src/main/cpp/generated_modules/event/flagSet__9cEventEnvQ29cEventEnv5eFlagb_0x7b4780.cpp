@@ -14,12 +14,11 @@ namespace gh_event
 {
 // Function: flagSet__9cEventEnvQ29cEventEnv5eFlagb
 // Address: 0x7b4780 - 0x7b47a8
-void flagSet__9cEventEnvQ29cEventEnv5eFlagb_0x7b4780(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void flagSet__9cEventEnvQ29cEventEnv5eFlagb_0x7b4780(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("flagSet__9cEventEnvQ29cEventEnv5eFlagb_0x7b4780");
 #endif
 
-    ctx->pc = 0x7b4780u;
 
     // 0x7b4780: 0x10c00004  beqz        $a2, . + 4 + (0x4 << 2)
     ctx->pc = 0x7B4780u;
@@ -36,9 +35,7 @@ void flagSet__9cEventEnvQ29cEventEnv5eFlagb_0x7b4780(uint8_t* rdram, R5900Contex
             goto label_7b4794;
         }
     }
-    ctx->pc = 0x7B4788u;
     // 0x7b4788: 0x451025  or          $v0, $v0, $a1
-    ctx->pc = 0x7b4788u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | GPR_U64(ctx, 5));
     // 0x7b478c: 0x3e00008  jr          $ra
     ctx->pc = 0x7B478Cu;
@@ -59,13 +56,10 @@ void flagSet__9cEventEnvQ29cEventEnv5eFlagb_0x7b4780(uint8_t* rdram, R5900Contex
         return;
         #endif
     }
-    ctx->pc = 0x7B4794u;
 label_7b4794:
     // 0x7b4794: 0x51827  nor         $v1, $zero, $a1
-    ctx->pc = 0x7b4794u;
     SET_GPR_U64(ctx, 3, ~(GPR_U64(ctx, 0) | GPR_U64(ctx, 5)));
     // 0x7b4798: 0x431024  and         $v0, $v0, $v1
-    ctx->pc = 0x7b4798u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 3));
     // 0x7b479c: 0x3e00008  jr          $ra
     ctx->pc = 0x7B479Cu;
@@ -86,9 +80,7 @@ label_7b4794:
         return;
         #endif
     }
-    ctx->pc = 0x7B47A4u;
     // 0x7b47a4: 0x0  nop
-    ctx->pc = 0x7b47a4u;
     // NOP
     ctx->pc = 0x7b47a8u;
 }

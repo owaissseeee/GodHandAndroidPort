@@ -13,12 +13,11 @@
 
 // Function: clear__3iosi
 // Address: 0x38bff8 - 0x38c010
-void clear__3iosi_0x38bff8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void clear__3iosi_0x38bff8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("clear__3iosi_0x38bff8");
 #endif
 
-    ctx->pc = 0x38bff8u;
 
     // 0x38bff8: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x38bff8u;
@@ -38,7 +37,6 @@ void clear__3iosi_0x38bff8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtim
             goto label_38c004;
         }
     }
-    ctx->pc = 0x38C004u;
 label_38c004:
     // 0x38c004: 0x3e00008  jr          $ra
     ctx->pc = 0x38C004u;
@@ -59,9 +57,7 @@ label_38c004:
         return;
         #endif
     }
-    ctx->pc = 0x38C00Cu;
     // 0x38c00c: 0x0  nop
-    ctx->pc = 0x38c00cu;
     // NOP
     ctx->pc = 0x38c010u;
 }

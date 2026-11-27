@@ -13,18 +13,16 @@
 
 // Function: func_003186D0
 // Address: 0x3186d0 - 0x318700
-void func_003186D0_0x3186d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003186D0_0x3186d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003186D0_0x3186d0");
 #endif
 
-    ctx->pc = 0x3186d0u;
 
     // 0x3186d0: 0x8c820250  lw          $v0, 0x250($a0)
     ctx->pc = 0x3186d0u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 592)));
     // 0x3186d4: 0x30420002  andi        $v0, $v0, 0x2
-    ctx->pc = 0x3186d4u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)2);
     // 0x3186d8: 0x14400006  bnez        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x3186D8u;
@@ -41,15 +39,12 @@ void func_003186D0_0x3186d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_3186f4;
         }
     }
-    ctx->pc = 0x3186E0u;
     // 0x3186e0: 0x3c040040  lui         $a0, 0x40
-    ctx->pc = 0x3186e0u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)64 << 16));
     // 0x3186e4: 0x8c627a2c  lw          $v0, 0x7A2C($v1)
     ctx->pc = 0x3186e4u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 31276)));
     // 0x3186e8: 0x441024  and         $v0, $v0, $a0
-    ctx->pc = 0x3186e8u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 4));
     // 0x3186ec: 0x3e00008  jr          $ra
     ctx->pc = 0x3186ECu;
@@ -70,7 +65,6 @@ void func_003186D0_0x3186d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x3186F4u;
 label_3186f4:
     // 0x3186f4: 0x3e00008  jr          $ra
     ctx->pc = 0x3186F4u;
@@ -91,9 +85,7 @@ label_3186f4:
         return;
         #endif
     }
-    ctx->pc = 0x3186FCu;
     // 0x3186fc: 0x0  nop
-    ctx->pc = 0x3186fcu;
     // NOP
     ctx->pc = 0x318700u;
 }

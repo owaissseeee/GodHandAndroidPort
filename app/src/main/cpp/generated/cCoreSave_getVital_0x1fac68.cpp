@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_getVital
 // Address: 0x1fac68 - 0x1fac80
-void cCoreSave_getVital_0x1fac68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getVital_0x1fac68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getVital_0x1fac68");
 #endif
 
-    ctx->pc = 0x1fac68u;
 
     // 0x1fac68: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fac68u;
@@ -38,7 +37,6 @@ void cCoreSave_getVital_0x1fac68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_1fac78;
         }
     }
-    ctx->pc = 0x1FAC74u;
     // 0x1fac74: 0x8c820084  lw          $v0, 0x84($a0)
     ctx->pc = 0x1fac74u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 132)));

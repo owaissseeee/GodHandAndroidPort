@@ -13,23 +13,22 @@
 
 // Function: CreateSema
 // Address: 0x3afca0 - 0x3afcb0
-void CreateSema_0x3afca0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CreateSema_0x3afca0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CreateSema_0x3afca0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afca8u: goto label_3afca8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afca0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afca8u: goto label_3afca8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afca0u;
 
     // 0x3afca0: 0x24030040  addiu       $v1, $zero, 0x40
-    ctx->pc = 0x3afca0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 64));
     // 0x3afca4: 0xc  syscall     0
-    ctx->pc = 0x3afca4u;
     ctx->pc = 0x3AFCA8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

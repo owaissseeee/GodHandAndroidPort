@@ -13,18 +13,15 @@
 
 // Function: cDamageManage_CkHitStop
 // Address: 0x1fe358 - 0x1fe370
-void cDamageManage_CkHitStop_0x1fe358(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cDamageManage_CkHitStop_0x1fe358(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cDamageManage_CkHitStop_0x1fe358");
 #endif
 
-    ctx->pc = 0x1fe358u;
 
     // 0x1fe358: 0x34028000  ori         $v0, $zero, 0x8000
-    ctx->pc = 0x1fe358u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)32768);
     // 0x1fe35c: 0x822021  addu        $a0, $a0, $v0
-    ctx->pc = 0x1fe35cu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 2)));
     // 0x1fe360: 0x8c822cd0  lw          $v0, 0x2CD0($a0)
     ctx->pc = 0x1fe360u;
@@ -48,9 +45,7 @@ void cDamageManage_CkHitStop_0x1fe358(uint8_t* rdram, R5900Context* ctx, PS2Runt
         return;
         #endif
     }
-    ctx->pc = 0x1FE36Cu;
     // 0x1fe36c: 0x0  nop
-    ctx->pc = 0x1fe36cu;
     // NOP
     ctx->pc = 0x1fe370u;
 }

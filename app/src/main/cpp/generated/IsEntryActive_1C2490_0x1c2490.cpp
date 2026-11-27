@@ -13,12 +13,11 @@
 
 // Function: IsEntryActive_1C2490
 // Address: 0x1c2490 - 0x1c24a0
-void IsEntryActive_1C2490_0x1c2490(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void IsEntryActive_1C2490_0x1c2490(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("IsEntryActive_1C2490_0x1c2490");
 #endif
 
-    ctx->pc = 0x1c2490u;
 
     // 0x1c2490: 0x90820660  lbu         $v0, 0x660($a0)
     ctx->pc = 0x1c2490u;
@@ -42,9 +41,7 @@ void IsEntryActive_1C2490_0x1c2490(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         return;
         #endif
     }
-    ctx->pc = 0x1C249Cu;
     // 0x1c249c: 0x0  nop
-    ctx->pc = 0x1c249cu;
     // NOP
     ctx->pc = 0x1c24a0u;
 }

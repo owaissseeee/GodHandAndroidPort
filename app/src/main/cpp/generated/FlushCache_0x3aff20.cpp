@@ -13,23 +13,22 @@
 
 // Function: FlushCache
 // Address: 0x3aff20 - 0x3aff30
-void FlushCache_0x3aff20(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FlushCache_0x3aff20(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FlushCache_0x3aff20");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3aff28u: goto label_3aff28;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3aff20u, 0)) {
+        switch (ctx->pc) {
+            case 0x3aff28u: goto label_3aff28;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3aff20u;
 
     // 0x3aff20: 0x24030064  addiu       $v1, $zero, 0x64
-    ctx->pc = 0x3aff20u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 100));
     // 0x3aff24: 0xc  syscall     0
-    ctx->pc = 0x3aff24u;
     ctx->pc = 0x3AFF28u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

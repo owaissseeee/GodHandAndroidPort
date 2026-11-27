@@ -13,32 +13,29 @@
 
 // Function: func_00150100
 // Address: 0x150100 - 0x150128
-void func_00150100_0x150100(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00150100_0x150100(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00150100_0x150100");
 #endif
 
-    switch (ctx->pc) {
-        case 0x150118u: goto label_150118;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x150100u, 0)) {
+        switch (ctx->pc) {
+            case 0x150118u: goto label_150118;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x150100u;
 
     // 0x150100: 0x80282d  daddu       $a1, $a0, $zero
-    ctx->pc = 0x150100u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x150104: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x150104u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x150108: 0x3c040046  lui         $a0, 0x46
-    ctx->pc = 0x150108u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)70 << 16));
     // 0x15010c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x15010cu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x150110: 0xc05416a  jal         func_1505A8
-    ctx->pc = 0x150110u;
     SET_GPR_U32(ctx, 31, 0x150118u);
     ctx->pc = 0x150114u;
     ctx->in_delay_slot = true;
@@ -46,11 +43,9 @@ void func_00150100_0x150100(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     // 0x150114: 0x24846470  addiu       $a0, $a0, 0x6470 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 25712));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1505A8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1505A8u, 0x150110u, 0x150118u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ObjList_queueObj_0x1505a8, 0x1505a8u, 0x150118u)) {
         return;
     }
-    ctx->pc = 0x150118u;
 label_150118:
     // 0x150118: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x150118u;
@@ -74,9 +69,7 @@ label_150118:
         return;
         #endif
     }
-    ctx->pc = 0x150124u;
     // 0x150124: 0x0  nop
-    ctx->pc = 0x150124u;
     // NOP
     ctx->pc = 0x150128u;
 }

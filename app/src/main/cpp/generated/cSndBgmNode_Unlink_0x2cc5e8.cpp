@@ -13,12 +13,11 @@
 
 // Function: cSndBgmNode_Unlink
 // Address: 0x2cc5e8 - 0x2cc628
-void cSndBgmNode_Unlink_0x2cc5e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndBgmNode_Unlink_0x2cc5e8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndBgmNode_Unlink_0x2cc5e8");
 #endif
 
-    ctx->pc = 0x2cc5e8u;
 
     // 0x2cc5e8: 0x8c830084  lw          $v1, 0x84($a0)
     ctx->pc = 0x2cc5e8u;
@@ -38,7 +37,6 @@ void cSndBgmNode_Unlink_0x2cc5e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_2cc600;
         }
     }
-    ctx->pc = 0x2CC5F4u;
     // 0x2cc5f4: 0x8c820088  lw          $v0, 0x88($a0)
     ctx->pc = 0x2cc5f4u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 136)));
@@ -57,10 +55,8 @@ void cSndBgmNode_Unlink_0x2cc5e8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_2cc608;
         }
     }
-    ctx->pc = 0x2CC600u;
 label_2cc600:
     // 0x2cc600: 0x3c020060  lui         $v0, 0x60
-    ctx->pc = 0x2cc600u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)96 << 16));
     // 0x2cc604: 0xac43ee18  sw          $v1, -0x11E8($v0)
     ctx->pc = 0x2cc604u;
@@ -78,7 +74,6 @@ label_2cc608:
             goto label_2cc61c;
         }
     }
-    ctx->pc = 0x2CC614u;
     // 0x2cc614: 0x8c820084  lw          $v0, 0x84($a0)
     ctx->pc = 0x2cc614u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 132)));
@@ -105,9 +100,7 @@ label_2cc61c:
         return;
         #endif
     }
-    ctx->pc = 0x2CC624u;
     // 0x2cc624: 0x0  nop
-    ctx->pc = 0x2cc624u;
     // NOP
     ctx->pc = 0x2cc628u;
 }

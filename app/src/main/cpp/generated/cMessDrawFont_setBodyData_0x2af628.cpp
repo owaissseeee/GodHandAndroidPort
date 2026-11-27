@@ -13,12 +13,11 @@
 
 // Function: cMessDrawFont_setBodyData
 // Address: 0x2af628 - 0x2af638
-void cMessDrawFont_setBodyData_0x2af628(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessDrawFont_setBodyData_0x2af628(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessDrawFont_setBodyData_0x2af628");
 #endif
 
-    ctx->pc = 0x2af628u;
 
     // 0x2af628: 0xac870010  sw          $a3, 0x10($a0)
     ctx->pc = 0x2af628u;

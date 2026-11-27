@@ -13,24 +13,19 @@
 
 // Function: func_00148250
 // Address: 0x148250 - 0x1482c0
-void func_00148250_0x148250(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00148250_0x148250(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00148250_0x148250");
 #endif
 
-    ctx->pc = 0x148250u;
 
     // 0x148250: 0x4be4033c  vmove.xyzw  $vf4, $vf0
-    ctx->pc = 0x148250u;
     { __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[4] = _mm_blendv_ps(ctx->vu0_vf[4], ctx->vu0_vf[0], _mm_castsi128_ps(mask)); }
     // 0x148254: 0x4be5233d  vmr32.xyzw  $vf5, $vf4
-    ctx->pc = 0x148254u;
     { __m128 res = _mm_shuffle_ps(ctx->vu0_vf[4], ctx->vu0_vf[4], _MM_SHUFFLE(0,3,2,1)); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[5] = _mm_blendv_ps(ctx->vu0_vf[5], res, _mm_castsi128_ps(mask)); }
     // 0x148258: 0x4be62b3d  vmr32.xyzw  $vf6, $vf5
-    ctx->pc = 0x148258u;
     { __m128 res = _mm_shuffle_ps(ctx->vu0_vf[5], ctx->vu0_vf[5], _MM_SHUFFLE(0,3,2,1)); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[6] = _mm_blendv_ps(ctx->vu0_vf[6], res, _mm_castsi128_ps(mask)); }
     // 0x14825c: 0x4be7333d  vmr32.xyzw  $vf7, $vf6
-    ctx->pc = 0x14825cu;
     { __m128 res = _mm_shuffle_ps(ctx->vu0_vf[6], ctx->vu0_vf[6], _MM_SHUFFLE(0,3,2,1)); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[7] = _mm_blendv_ps(ctx->vu0_vf[7], res, _mm_castsi128_ps(mask)); }
     // 0x148260: 0xf8840030  sqc2        $vf4, 0x30($a0)
     ctx->pc = 0x148260u;
@@ -45,10 +40,8 @@ void func_00148250_0x148250(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x14826cu;
     WRITE128(ADD32(GPR_U32(ctx, 4), 0), _mm_castps_si128(ctx->vu0_vf[7]));
     // 0x148270: 0x3c013f80  lui         $at, 0x3F80
-    ctx->pc = 0x148270u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16256 << 16));
     // 0x148274: 0x44810000  mtc1        $at, $f0
-    ctx->pc = 0x148274u;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x148278: 0xe48c0000  swc1        $f12, 0x0($a0)
     ctx->pc = 0x148278u;
@@ -114,9 +107,7 @@ void func_00148250_0x148250(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x1482BCu;
     // 0x1482bc: 0x0  nop
-    ctx->pc = 0x1482bcu;
     // NOP
     ctx->pc = 0x1482c0u;
 }

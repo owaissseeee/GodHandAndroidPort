@@ -13,12 +13,11 @@
 
 // Function: cSndSeVoice_IsActive
 // Address: 0x2cda38 - 0x2cda48
-void cSndSeVoice_IsActive_0x2cda38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndSeVoice_IsActive_0x2cda38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndSeVoice_IsActive_0x2cda38");
 #endif
 
-    ctx->pc = 0x2cda38u;
 
     // 0x2cda38: 0x8c820014  lw          $v0, 0x14($a0)
     ctx->pc = 0x2cda38u;
@@ -42,9 +41,7 @@ void cSndSeVoice_IsActive_0x2cda38(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         return;
         #endif
     }
-    ctx->pc = 0x2CDA44u;
     // 0x2cda44: 0x0  nop
-    ctx->pc = 0x2cda44u;
     // NOP
     ctx->pc = 0x2cda48u;
 }

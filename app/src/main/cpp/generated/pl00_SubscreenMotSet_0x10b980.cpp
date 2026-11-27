@@ -13,23 +13,22 @@
 
 // Function: pl00_SubscreenMotSet
 // Address: 0x10b980 - 0x10b9c0
-void pl00_SubscreenMotSet_0x10b980(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void pl00_SubscreenMotSet_0x10b980(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("pl00_SubscreenMotSet_0x10b980");
 #endif
 
-    switch (ctx->pc) {
-        case 0x10b998u: goto label_10b998;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x10b980u, 0)) {
+        switch (ctx->pc) {
+            case 0x10b998u: goto label_10b998;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x10b980u;
 
     // 0x10b980: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x10b980u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x10b984: 0x24060001  addiu       $a2, $zero, 0x1
-    ctx->pc = 0x10b984u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x10b988: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x10b988u;
@@ -38,7 +37,6 @@ void pl00_SubscreenMotSet_0x10b980(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x10b98cu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x10b990: 0xc049a78  jal         func_1269E0
-    ctx->pc = 0x10B990u;
     SET_GPR_U32(ctx, 31, 0x10B998u);
     ctx->pc = 0x10B994u;
     ctx->in_delay_slot = true;
@@ -46,17 +44,13 @@ void pl00_SubscreenMotSet_0x10b980(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     // 0x10b994: 0x80802d  daddu       $s0, $a0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1269E0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1269E0u, 0x10B990u, 0x10B998u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_001269E0_0x1269e0, 0x1269e0u, 0x10b998u)) {
         return;
     }
-    ctx->pc = 0x10B998u;
 label_10b998:
     // 0x10b998: 0x24020005  addiu       $v0, $zero, 0x5
-    ctx->pc = 0x10b998u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 5));
     // 0x10b99c: 0x24030002  addiu       $v1, $zero, 0x2
-    ctx->pc = 0x10b99cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x10b9a0: 0xa20202f4  sb          $v0, 0x2F4($s0)
     ctx->pc = 0x10b9a0u;

@@ -13,20 +13,20 @@
 
 // Function: isEnableAudFtr
 // Address: 0x35e968 - 0x35e9a8
-void isEnableAudFtr_0x35e968(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void isEnableAudFtr_0x35e968(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("isEnableAudFtr_0x35e968");
 #endif
 
-    switch (ctx->pc) {
-        case 0x35e97cu: goto label_35e97c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x35e968u, 0)) {
+        switch (ctx->pc) {
+            case 0x35e97cu: goto label_35e97c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x35e968u;
 
     // 0x35e968: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x35e968u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x35e96c: 0xffb00000  sd          $s0, 0x0($sp)
     ctx->pc = 0x35e96cu;
@@ -35,7 +35,6 @@ void isEnableAudFtr_0x35e968(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     ctx->pc = 0x35e970u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 8), GPR_U64(ctx, 31));
     // 0x35e974: 0xc0d7a7a  jal         func_35E9E8
-    ctx->pc = 0x35E974u;
     SET_GPR_U32(ctx, 31, 0x35E97Cu);
     ctx->pc = 0x35E978u;
     ctx->in_delay_slot = true;
@@ -43,14 +42,11 @@ void isEnableAudFtr_0x35e968(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runt
     // 0x35e978: 0xa0802d  daddu       $s0, $a1, $zero (Delay Slot)
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x35E9E8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x35E9E8u, 0x35E974u, 0x35E97Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_0035E9E8_0x35e9e8, 0x35e9e8u, 0x35e97cu)) {
         return;
     }
-    ctx->pc = 0x35E97Cu;
 label_35e97c:
     // 0x35e97c: 0x240300c0  addiu       $v1, $zero, 0xC0
-    ctx->pc = 0x35e97cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 192));
     // 0x35e980: 0x14430005  bne         $v0, $v1, . + 4 + (0x5 << 2)
     ctx->pc = 0x35E980u;
@@ -67,15 +63,12 @@ label_35e97c:
             goto label_35e998;
         }
     }
-    ctx->pc = 0x35E988u;
     // 0x35e988: 0x92030020  lbu         $v1, 0x20($s0)
     ctx->pc = 0x35e988u;
     SET_GPR_ZE32(ctx, 3, (uint8_t)READ8(ADD32(GPR_U32(ctx, 16), 32)));
     // 0x35e98c: 0x3102b  sltu        $v0, $zero, $v1
-    ctx->pc = 0x35e98cu;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 0) < (uint64_t)GPR_U64(ctx, 3)) ? 1 : 0);
     // 0x35e990: 0x2c630002  sltiu       $v1, $v1, 0x2
-    ctx->pc = 0x35e990u;
     SET_GPR_U64(ctx, 3, ((uint64_t)GPR_U64(ctx, 3) < (uint64_t)(int64_t)(int32_t)2) ? 1 : 0);
     // 0x35e994: 0x3100a  movz        $v0, $zero, $v1
     ctx->pc = 0x35e994u;

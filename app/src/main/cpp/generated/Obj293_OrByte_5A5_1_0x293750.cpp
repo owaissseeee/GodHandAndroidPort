@@ -13,18 +13,16 @@
 
 // Function: Obj293_OrByte_5A5_1
 // Address: 0x293750 - 0x293760
-void Obj293_OrByte_5A5_1_0x293750(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj293_OrByte_5A5_1_0x293750(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj293_OrByte_5A5_1_0x293750");
 #endif
 
-    ctx->pc = 0x293750u;
 
     // 0x293750: 0x908205a5  lbu         $v0, 0x5A5($a0)
     ctx->pc = 0x293750u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 1445)));
     // 0x293754: 0x34420001  ori         $v0, $v0, 0x1
-    ctx->pc = 0x293754u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)1);
     // 0x293758: 0x3e00008  jr          $ra
     ctx->pc = 0x293758u;

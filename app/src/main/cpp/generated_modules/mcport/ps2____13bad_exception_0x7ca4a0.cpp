@@ -14,32 +14,30 @@ namespace gh_mcport
 {
 // Function: _$_13bad_exception
 // Address: 0x7ca4a0 - 0x7ca4d0
-void ps2____13bad_exception_0x7ca4a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2____13bad_exception_0x7ca4a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2____13bad_exception_0x7ca4a0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7ca4c4u: goto label_7ca4c4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7ca4a0u, 0)) {
+        switch (ctx->pc) {
+            case 0x7ca4c4u: goto label_7ca4c4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7ca4a0u;
+
 
     // 0x7ca4a0: 0x3c02007d  lui         $v0, 0x7D
-    ctx->pc = 0x7ca4a0u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)125 << 16));
     // 0x7ca4a4: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7ca4a4u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x7ca4a8: 0x24421058  addiu       $v0, $v0, 0x1058
-    ctx->pc = 0x7ca4a8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4184));
     // 0x7ca4ac: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x7ca4acu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x7ca4b0: 0x30a50001  andi        $a1, $a1, 0x1
-    ctx->pc = 0x7ca4b0u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)1);
     // 0x7ca4b4: 0x10a00003  beqz        $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x7CA4B4u;
@@ -56,15 +54,12 @@ void ps2____13bad_exception_0x7ca4a0(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_7ca4c4;
         }
     }
-    ctx->pc = 0x7CA4BCu;
     // 0x7ca4bc: 0xc1f2588  jal         func_7C9620
-    ctx->pc = 0x7CA4BCu;
     SET_GPR_U32(ctx, 31, 0x7CA4C4u);
     ctx->pc = 0x7C9620u;
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x7C9620u, 0x7CA4BCu, 0x7CA4C4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7CA4C4u;
 label_7ca4c4:
     // 0x7ca4c4: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7ca4c4u;

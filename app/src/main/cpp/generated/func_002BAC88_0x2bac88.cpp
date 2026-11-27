@@ -13,12 +13,11 @@
 
 // Function: func_002BAC88
 // Address: 0x2bac88 - 0x2bac98
-void func_002BAC88_0x2bac88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002BAC88_0x2bac88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002BAC88_0x2bac88");
 #endif
 
-    ctx->pc = 0x2bac88u;
 
     // 0x2bac88: 0xac800004  sw          $zero, 0x4($a0)
     ctx->pc = 0x2bac88u;
@@ -42,9 +41,7 @@ void func_002BAC88_0x2bac88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2BAC94u;
     // 0x2bac94: 0x0  nop
-    ctx->pc = 0x2bac94u;
     // NOP
     ctx->pc = 0x2bac98u;
 }

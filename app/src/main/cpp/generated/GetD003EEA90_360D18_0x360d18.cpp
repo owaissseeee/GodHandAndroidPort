@@ -13,15 +13,13 @@
 
 // Function: GetD003EEA90_360D18
 // Address: 0x360d18 - 0x360d28
-void GetD003EEA90_360D18_0x360d18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetD003EEA90_360D18_0x360d18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetD003EEA90_360D18_0x360d18");
 #endif
 
-    ctx->pc = 0x360d18u;
 
     // 0x360d18: 0x3c02003f  lui         $v0, 0x3F
-    ctx->pc = 0x360d18u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)63 << 16));
     // 0x360d1c: 0x3e00008  jr          $ra
     ctx->pc = 0x360D1Cu;
@@ -42,9 +40,7 @@ void GetD003EEA90_360D18_0x360d18(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         return;
         #endif
     }
-    ctx->pc = 0x360D24u;
     // 0x360d24: 0x0  nop
-    ctx->pc = 0x360d24u;
     // NOP
     ctx->pc = 0x360d28u;
 }

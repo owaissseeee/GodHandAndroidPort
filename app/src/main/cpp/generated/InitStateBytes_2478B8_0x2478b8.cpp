@@ -13,18 +13,15 @@
 
 // Function: InitStateBytes_2478B8
 // Address: 0x2478b8 - 0x2478d8
-void InitStateBytes_2478B8_0x2478b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitStateBytes_2478B8_0x2478b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitStateBytes_2478B8_0x2478b8");
 #endif
 
-    ctx->pc = 0x2478b8u;
 
     // 0x2478b8: 0x24020099  addiu       $v0, $zero, 0x99
-    ctx->pc = 0x2478b8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 153));
     // 0x2478bc: 0x24030002  addiu       $v1, $zero, 0x2
-    ctx->pc = 0x2478bcu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x2478c0: 0xa08202f5  sb          $v0, 0x2F5($a0)
     ctx->pc = 0x2478c0u;
@@ -54,9 +51,7 @@ void InitStateBytes_2478B8_0x2478b8(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         return;
         #endif
     }
-    ctx->pc = 0x2478D4u;
     // 0x2478d4: 0x0  nop
-    ctx->pc = 0x2478d4u;
     // NOP
     ctx->pc = 0x2478d8u;
 }

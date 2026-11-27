@@ -13,18 +13,47 @@
 
 #if defined(__aarch64__) || defined(_M_ARM64)
 #include <arm_neon.h>
+#include "sdk_arm64_fast.h"
 #endif
 
 // Function: sceVu0OuterProduct
 // Address: 0x30a328 - 0x30a348
-void sceVu0OuterProduct_0x30a328(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVu0OuterProduct_0x30a328(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVu0OuterProduct_0x30a328");
 #endif
 
-    ctx->pc = 0x30a328u;
-
 #if defined(__aarch64__) || defined(_M_ARM64)
+    if (__builtin_expect(ctx->pc == 0x30a328u, 1)) {
+        const uint32_t a0 = GPR_U32(ctx, 4);
+        const uint32_t a1 = GPR_U32(ctx, 5);
+        const uint32_t a2 = GPR_U32(ctx, 6);
+        uint8_t* const dstPtr = ps2TryFastSpan(rdram, a0, 16u);
+        const uint8_t* const v1Ptr = ps2TryFastSpan(rdram, a1, 16u);
+        const uint8_t* const v2Ptr = ps2TryFastSpan(rdram, a2, 16u);
+        if (__builtin_expect(dstPtr && v1Ptr && v2Ptr, 1)) {
+            const float32x4_t vf4 = vld1q_f32(reinterpret_cast<const float*>(v1Ptr));
+            const float32x4_t vf5 = vld1q_f32(reinterpret_cast<const float*>(v2Ptr));
+            const float32x4_t u_yzx = __builtin_shufflevector(vf4, vf4, 1, 2, 0, 3);
+            const float32x4_t v_zxy = __builtin_shufflevector(vf5, vf5, 2, 0, 1, 3);
+            const float32x4_t v_yzx = __builtin_shufflevector(vf5, vf5, 1, 2, 0, 3);
+            const float32x4_t u_zxy = __builtin_shufflevector(vf4, vf4, 2, 0, 1, 3);
+            const float32x4_t acc_raw = vmulq_f32(u_yzx, v_zxy);
+            const float32x4_t acc = vsetq_lane_f32(0.0f, acc_raw, 3);
+            float32x4_t vf6 = vfmsq_f32(acc, v_yzx, u_zxy);
+            vf6 = vsetq_lane_f32(0.0f, vf6, 3);
+
+            vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_vf[4]), vf4);
+            vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_vf[5]), vf5);
+            vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_acc), acc);
+            vst1q_f32(reinterpret_cast<float*>(&ctx->vu0_vf[6]), vf6);
+            vst1q_f32(reinterpret_cast<float*>(dstPtr), vf6);
+
+            ps2FastReturn(rdram, ctx, runtime, 0x30A340u);
+            return;
+        }
+    }
+    ctx->pc = 0x30a328u;
     const uint32_t a0 = GPR_U32(ctx, 4);
     const uint32_t a1 = GPR_U32(ctx, 5);
     const uint32_t a2 = GPR_U32(ctx, 6);
@@ -73,13 +102,10 @@ void sceVu0OuterProduct_0x30a328(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     ctx->pc = 0x30a32cu;
     ctx->vu0_vf[5] = _mm_castsi128_ps(READ128(ADD32(GPR_U32(ctx, 6), 0)));
     // 0x30a330: 0x4bc522fe  vopmula.xyz $ACC, $vf4, $vf5
-    ctx->pc = 0x30a330u;
     { __m128 fs_yzx = _mm_shuffle_ps(ctx->vu0_vf[4], ctx->vu0_vf[4], _MM_SHUFFLE(3,0,2,1)); __m128 ft_zxy = _mm_shuffle_ps(ctx->vu0_vf[5], ctx->vu0_vf[5], _MM_SHUFFLE(3,1,0,2)); __m128 res = PS2_VMUL(fs_yzx, ft_zxy); ctx->vu0_acc = _mm_blendv_ps(ctx->vu0_acc, res, _mm_castsi128_ps(_mm_set_epi32(0, -1, -1, -1))); }
     // 0x30a334: 0x4bc429ae  vopmsub.xyz $vf6, $vf5, $vf4
-    ctx->pc = 0x30a334u;
     { __m128 fs_yzx = _mm_shuffle_ps(ctx->vu0_vf[5], ctx->vu0_vf[5], _MM_SHUFFLE(3,0,2,1)); __m128 ft_zxy = _mm_shuffle_ps(ctx->vu0_vf[4], ctx->vu0_vf[4], _MM_SHUFFLE(3,1,0,2)); __m128 mul_res = PS2_VMUL(fs_yzx, ft_zxy); __m128 res = PS2_VSUB(ctx->vu0_acc, mul_res); __m128i mask = _mm_set_epi32(0, -1, -1, -1); ctx->vu0_vf[6] = _mm_blendv_ps(ctx->vu0_vf[6], res, _mm_castsi128_ps(mask)); }
     // 0x30a338: 0x4a2631ac  vsub.w      $vf6, $vf6, $vf6
-    ctx->pc = 0x30a338u;
     { __m128 res = PS2_VSUB(ctx->vu0_vf[6], ctx->vu0_vf[6]); __m128i mask = _mm_set_epi32(-1, 0, 0, 0); ctx->vu0_vf[6] = PS2_VBLEND(ctx->vu0_vf[6], res, _mm_castsi128_ps(mask)); }
     // 0x30a33c: 0xf8860000  sqc2        $vf6, 0x0($a0)
     ctx->pc = 0x30a33cu;

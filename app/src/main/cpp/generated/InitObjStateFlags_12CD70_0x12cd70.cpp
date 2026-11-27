@@ -13,15 +13,13 @@
 
 // Function: InitObjStateFlags_12CD70
 // Address: 0x12cd70 - 0x12cd90
-void InitObjStateFlags_12CD70_0x12cd70(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitObjStateFlags_12CD70_0x12cd70(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitObjStateFlags_12CD70_0x12cd70");
 #endif
 
-    ctx->pc = 0x12cd70u;
 
     // 0x12cd70: 0x24020033  addiu       $v0, $zero, 0x33
-    ctx->pc = 0x12cd70u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 51));
     // 0x12cd74: 0xe48c0670  swc1        $f12, 0x670($a0)
     ctx->pc = 0x12cd74u;
@@ -54,9 +52,7 @@ void InitObjStateFlags_12CD70_0x12cd70(uint8_t* rdram, R5900Context* ctx, PS2Run
         return;
         #endif
     }
-    ctx->pc = 0x12CD8Cu;
     // 0x12cd8c: 0x0  nop
-    ctx->pc = 0x12cd8cu;
     // NOP
     ctx->pc = 0x12cd90u;
 }

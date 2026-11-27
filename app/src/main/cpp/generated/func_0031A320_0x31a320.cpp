@@ -13,21 +13,17 @@
 
 // Function: func_0031A320
 // Address: 0x31a320 - 0x31a338
-void func_0031A320_0x31a320(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0031A320_0x31a320(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0031A320_0x31a320");
 #endif
 
-    ctx->pc = 0x31a320u;
 
     // 0x31a320: 0x528c0  sll         $a1, $a1, 3
-    ctx->pc = 0x31a320u;
     SET_GPR_S32(ctx, 5, (int32_t)SLL32(GPR_U32(ctx, 5), 3));
     // 0x31a324: 0x851021  addu        $v0, $a0, $a1
-    ctx->pc = 0x31a324u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 5)));
     // 0x31a328: 0x40202d  daddu       $a0, $v0, $zero
-    ctx->pc = 0x31a328u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     // 0x31a32c: 0xac400b00  sw          $zero, 0xB00($v0)
     ctx->pc = 0x31a32cu;

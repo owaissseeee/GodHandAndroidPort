@@ -13,30 +13,24 @@
 
 // Function: func_003AD0F8
 // Address: 0x3ad0f8 - 0x3ad118
-void func_003AD0F8_0x3ad0f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003AD0F8_0x3ad0f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003AD0F8_0x3ad0f8");
 #endif
 
-    ctx->pc = 0x3ad0f8u;
 
     // 0x3ad0f8: 0x3c050046  lui         $a1, 0x46
-    ctx->pc = 0x3ad0f8u;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)70 << 16));
     // 0x3ad0fc: 0x24820020  addiu       $v0, $a0, 0x20
-    ctx->pc = 0x3ad0fcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), 32));
     // 0x3ad100: 0x24a5f039  addiu       $a1, $a1, -0xFC7
-    ctx->pc = 0x3ad100u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 4294963257));
     // 0x3ad104: 0x852821  addu        $a1, $a0, $a1
-    ctx->pc = 0x3ad104u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 5)));
     // 0x3ad108: 0x90a30000  lbu         $v1, 0x0($a1)
     ctx->pc = 0x3ad108u;
     SET_GPR_ZE32(ctx, 3, (uint8_t)READ8(ADD32(GPR_U32(ctx, 5), 0)));
     // 0x3ad10c: 0x30630001  andi        $v1, $v1, 0x1
-    ctx->pc = 0x3ad10cu;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & (uint64_t)(uint16_t)1);
     // 0x3ad110: 0x3e00008  jr          $ra
     ctx->pc = 0x3AD110u;

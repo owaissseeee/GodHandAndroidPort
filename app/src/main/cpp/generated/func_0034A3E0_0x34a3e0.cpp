@@ -13,15 +13,13 @@
 
 // Function: func_0034A3E0
 // Address: 0x34a3e0 - 0x34a400
-void func_0034A3E0_0x34a3e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0034A3E0_0x34a3e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0034A3E0_0x34a3e0");
 #endif
 
-    ctx->pc = 0x34a3e0u;
 
     // 0x34a3e0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x34a3e0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x34a3e4: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x34a3e4u;
@@ -36,8 +34,6 @@ void func_0034A3E0_0x34a3e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x34a3f0u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 0)));
     // 0x34a3f4: 0x80cae0c  j           func_32B830
-    ctx->pc = 0x34A3F4u;
-    ctx->pc = 0x34A3F8u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x34A3F4u;
     // 0x34a3f8: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)
@@ -47,9 +43,7 @@ void func_0034A3E0_0x34a3e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x32B830u, 0x34A3F4u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x34A3FCu;
     // 0x34a3fc: 0x0  nop
-    ctx->pc = 0x34a3fcu;
     // NOP
     ctx->pc = 0x34a400u;
 }

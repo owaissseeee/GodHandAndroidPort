@@ -13,39 +13,31 @@
 
 // Function: func_002F3020
 // Address: 0x2f3020 - 0x2f3070
-void func_002F3020_0x2f3020(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002F3020_0x2f3020(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002F3020_0x2f3020");
 #endif
 
-    ctx->pc = 0x2f3020u;
 
     // 0x2f3020: 0x8c850110  lw          $a1, 0x110($a0)
     ctx->pc = 0x2f3020u;
     SET_GPR_S32(ctx, 5, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 272)));
     // 0x2f3024: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2f3024u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2f3028: 0x3c013f00  lui         $at, 0x3F00
-    ctx->pc = 0x2f3028u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16128 << 16));
     // 0x2f302c: 0x44810800  mtc1        $at, $f1
-    ctx->pc = 0x2f302cu;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }
     // 0x2f3030: 0xc4a0013c  lwc1        $f0, 0x13C($a1)
     ctx->pc = 0x2f3030u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 316)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x2f3034: 0x3c013f33  lui         $at, 0x3F33
-    ctx->pc = 0x2f3034u;
     SET_GPR_S32(ctx, 1, (int32_t)((uint32_t)16179 << 16));
     // 0x2f3038: 0x34213333  ori         $at, $at, 0x3333
-    ctx->pc = 0x2f3038u;
     SET_GPR_U64(ctx, 1, GPR_U64(ctx, 1) | (uint64_t)(uint16_t)13107);
     // 0x2f303c: 0x44811000  mtc1        $at, $f2
-    ctx->pc = 0x2f303cu;
     { uint32_t bits = GPR_U32(ctx, 1); std::memcpy(&ctx->f[2], &bits, sizeof(bits)); }
     // 0x2f3040: 0x46010000  add.s       $f0, $f0, $f1
-    ctx->pc = 0x2f3040u;
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[1]);
     // 0x2f3044: 0x8c860220  lw          $a2, 0x220($a0)
     ctx->pc = 0x2f3044u;
@@ -57,7 +49,6 @@ void func_002F3020_0x2f3020(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x2f304cu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 320)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x2f3050: 0x46011081  sub.s       $f2, $f2, $f1
-    ctx->pc = 0x2f3050u;
     ctx->f[2] = FPU_SUB_S(ctx->f[2], ctx->f[1]);
     // 0x2f3054: 0xe48202bc  swc1        $f2, 0x2BC($a0)
     ctx->pc = 0x2f3054u;
@@ -69,7 +60,6 @@ void func_002F3020_0x2f3020(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x2f305cu;
     WRITE32(ADD32(GPR_U32(ctx, 4), 692), GPR_U32(ctx, 6));
     // 0x2f3060: 0x24630001  addiu       $v1, $v1, 0x1
-    ctx->pc = 0x2f3060u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 1));
     // 0x2f3064: 0x3e00008  jr          $ra
     ctx->pc = 0x2F3064u;
@@ -90,9 +80,7 @@ void func_002F3020_0x2f3020(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2F306Cu;
     // 0x2f306c: 0x0  nop
-    ctx->pc = 0x2f306cu;
     // NOP
     ctx->pc = 0x2f3070u;
 }

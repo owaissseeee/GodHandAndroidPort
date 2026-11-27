@@ -13,18 +13,15 @@
 
 // Function: cBgmData_Init
 // Address: 0x2cff30 - 0x2cff68
-void cBgmData_Init_0x2cff30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cBgmData_Init_0x2cff30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cBgmData_Init_0x2cff30");
 #endif
 
-    ctx->pc = 0x2cff30u;
 
     // 0x2cff30: 0x2403ffff  addiu       $v1, $zero, -0x1
-    ctx->pc = 0x2cff30u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x2cff34: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x2cff34u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2cff38: 0xac830020  sw          $v1, 0x20($a0)
     ctx->pc = 0x2cff38u;
@@ -66,15 +63,11 @@ void cBgmData_Init_0x2cff30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2CFF5Cu;
     // 0x2cff5c: 0x0  nop
-    ctx->pc = 0x2cff5cu;
     // NOP
     // 0x2cff60: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x2cff60u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x2cff64: 0x0  nop
-    ctx->pc = 0x2cff64u;
     // NOP
     ctx->pc = 0x2cff68u;
 }

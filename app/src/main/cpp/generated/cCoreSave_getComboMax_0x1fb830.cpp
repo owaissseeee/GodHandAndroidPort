@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_getComboMax
 // Address: 0x1fb830 - 0x1fb868
-void cCoreSave_getComboMax_0x1fb830(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getComboMax_0x1fb830(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getComboMax_0x1fb830");
 #endif
 
-    ctx->pc = 0x1fb830u;
 
     // 0x1fb830: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fb830u;
@@ -38,7 +37,6 @@ void cCoreSave_getComboMax_0x1fb830(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1fb844;
         }
     }
-    ctx->pc = 0x1FB83Cu;
     // 0x1fb83c: 0x3e00008  jr          $ra
     ctx->pc = 0x1FB83Cu;
     {
@@ -58,7 +56,6 @@ void cCoreSave_getComboMax_0x1fb830(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         return;
         #endif
     }
-    ctx->pc = 0x1FB844u;
 label_1fb844:
     // 0x1fb844: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x1FB844u;
@@ -75,12 +72,9 @@ label_1fb844:
             goto label_1fb85c;
         }
     }
-    ctx->pc = 0x1FB84Cu;
     // 0x1fb84c: 0xa31018  mult        $v0, $a1, $v1
-    ctx->pc = 0x1fb84cu;
     { int64_t result = (int64_t)GPR_S32(ctx, 5) * (int64_t)GPR_S32(ctx, 3); ctx->lo = (uint64_t)(int64_t)(int32_t)result; ctx->hi = (uint64_t)(int64_t)(int32_t)(result >> 32); SET_GPR_S32(ctx, 2, (int32_t)result); }
     // 0x1fb850: 0x441821  addu        $v1, $v0, $a0
-    ctx->pc = 0x1fb850u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 4)));
     // 0x1fb854: 0x3e00008  jr          $ra
     ctx->pc = 0x1FB854u;
@@ -101,7 +95,6 @@ label_1fb844:
         return;
         #endif
     }
-    ctx->pc = 0x1FB85Cu;
 label_1fb85c:
     // 0x1fb85c: 0x3e00008  jr          $ra
     ctx->pc = 0x1FB85Cu;
@@ -122,9 +115,7 @@ label_1fb85c:
         return;
         #endif
     }
-    ctx->pc = 0x1FB864u;
     // 0x1fb864: 0x0  nop
-    ctx->pc = 0x1fb864u;
     // NOP
     ctx->pc = 0x1fb868u;
 }

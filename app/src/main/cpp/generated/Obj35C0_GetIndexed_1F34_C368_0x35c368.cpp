@@ -13,24 +13,19 @@
 
 // Function: Obj35C0_GetIndexed_1F34_C368
 // Address: 0x35c368 - 0x35c380
-void Obj35C0_GetIndexed_1F34_C368_0x35c368(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj35C0_GetIndexed_1F34_C368_0x35c368(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj35C0_GetIndexed_1F34_C368_0x35c368");
 #endif
 
-    ctx->pc = 0x35c368u;
 
     // 0x35c368: 0x51100  sll         $v0, $a1, 4
-    ctx->pc = 0x35c368u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 5), 4));
     // 0x35c36c: 0x451021  addu        $v0, $v0, $a1
-    ctx->pc = 0x35c36cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 5)));
     // 0x35c370: 0x21080  sll         $v0, $v0, 2
-    ctx->pc = 0x35c370u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 2));
     // 0x35c374: 0x822021  addu        $a0, $a0, $v0
-    ctx->pc = 0x35c374u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 2)));
     // 0x35c378: 0x3e00008  jr          $ra
     ctx->pc = 0x35C378u;

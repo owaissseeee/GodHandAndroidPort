@@ -13,21 +13,18 @@
 
 // Function: _IO_link_in
 // Address: 0x38c208 - 0x38c238
-void ps2__IO_link_in_0x38c208(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_link_in_0x38c208(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_link_in_0x38c208");
 #endif
 
-    ctx->pc = 0x38c208u;
 
     // 0x38c208: 0x80282d  daddu       $a1, $a0, $zero
-    ctx->pc = 0x38c208u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x38c20c: 0x8ca30000  lw          $v1, 0x0($a1)
     ctx->pc = 0x38c20cu;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 0)));
     // 0x38c210: 0x30620080  andi        $v0, $v1, 0x80
-    ctx->pc = 0x38c210u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 3) & (uint64_t)(uint16_t)128);
     // 0x38c214: 0x14400006  bnez        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x38C214u;
@@ -44,9 +41,7 @@ void ps2__IO_link_in_0x38c208(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_38c230;
         }
     }
-    ctx->pc = 0x38C21Cu;
     // 0x38c21c: 0x34630080  ori         $v1, $v1, 0x80
-    ctx->pc = 0x38c21cu;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) | (uint64_t)(uint16_t)128);
     // 0x38c220: 0x8c4450f8  lw          $a0, 0x50F8($v0)
     ctx->pc = 0x38c220u;

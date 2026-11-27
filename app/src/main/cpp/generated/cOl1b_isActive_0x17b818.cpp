@@ -13,12 +13,11 @@
 
 // Function: cOl1b_isActive
 // Address: 0x17b818 - 0x17b820
-void cOl1b_isActive_0x17b818(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl1b_isActive_0x17b818(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl1b_isActive_0x17b818");
 #endif
 
-    ctx->pc = 0x17b818u;
 
     // 0x17b818: 0x3e00008  jr          $ra
     ctx->pc = 0x17B818u;

@@ -14,64 +14,64 @@
 
 // Function: cOmTimed_tick
 // Address: 0x19b4d0 - 0x19b580
-void cOmTimed_tick_0x19b4d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmTimed_tick_0x19b4d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmTimed_tick_0x19b4d0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x19b4d0u: goto label_19b4d0;
-        case 0x19b4d4u: goto label_19b4d4;
-        case 0x19b4d8u: goto label_19b4d8;
-        case 0x19b4dcu: goto label_19b4dc;
-        case 0x19b4e0u: goto label_19b4e0;
-        case 0x19b4e4u: goto label_19b4e4;
-        case 0x19b4e8u: goto label_19b4e8;
-        case 0x19b4ecu: goto label_19b4ec;
-        case 0x19b4f0u: goto label_19b4f0;
-        case 0x19b4f4u: goto label_19b4f4;
-        case 0x19b4f8u: goto label_19b4f8;
-        case 0x19b4fcu: goto label_19b4fc;
-        case 0x19b500u: goto label_19b500;
-        case 0x19b504u: goto label_19b504;
-        case 0x19b508u: goto label_19b508;
-        case 0x19b50cu: goto label_19b50c;
-        case 0x19b510u: goto label_19b510;
-        case 0x19b514u: goto label_19b514;
-        case 0x19b518u: goto label_19b518;
-        case 0x19b51cu: goto label_19b51c;
-        case 0x19b520u: goto label_19b520;
-        case 0x19b524u: goto label_19b524;
-        case 0x19b528u: goto label_19b528;
-        case 0x19b52cu: goto label_19b52c;
-        case 0x19b530u: goto label_19b530;
-        case 0x19b534u: goto label_19b534;
-        case 0x19b538u: goto label_19b538;
-        case 0x19b53cu: goto label_19b53c;
-        case 0x19b540u: goto label_19b540;
-        case 0x19b544u: goto label_19b544;
-        case 0x19b548u: goto label_19b548;
-        case 0x19b54cu: goto label_19b54c;
-        case 0x19b550u: goto label_19b550;
-        case 0x19b554u: goto label_19b554;
-        case 0x19b558u: goto label_19b558;
-        case 0x19b55cu: goto label_19b55c;
-        case 0x19b560u: goto label_19b560;
-        case 0x19b564u: goto label_19b564;
-        case 0x19b568u: goto label_19b568;
-        case 0x19b56cu: goto label_19b56c;
-        case 0x19b570u: goto label_19b570;
-        case 0x19b574u: goto label_19b574;
-        case 0x19b578u: goto label_19b578;
-        case 0x19b57cu: goto label_19b57c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x19b4d0u, 0)) {
+        switch (ctx->pc) {
+            case 0x19b4d0u: goto label_19b4d0;
+            case 0x19b4d4u: goto label_19b4d4;
+            case 0x19b4d8u: goto label_19b4d8;
+            case 0x19b4dcu: goto label_19b4dc;
+            case 0x19b4e0u: goto label_19b4e0;
+            case 0x19b4e4u: goto label_19b4e4;
+            case 0x19b4e8u: goto label_19b4e8;
+            case 0x19b4ecu: goto label_19b4ec;
+            case 0x19b4f0u: goto label_19b4f0;
+            case 0x19b4f4u: goto label_19b4f4;
+            case 0x19b4f8u: goto label_19b4f8;
+            case 0x19b4fcu: goto label_19b4fc;
+            case 0x19b500u: goto label_19b500;
+            case 0x19b504u: goto label_19b504;
+            case 0x19b508u: goto label_19b508;
+            case 0x19b50cu: goto label_19b50c;
+            case 0x19b510u: goto label_19b510;
+            case 0x19b514u: goto label_19b514;
+            case 0x19b518u: goto label_19b518;
+            case 0x19b51cu: goto label_19b51c;
+            case 0x19b520u: goto label_19b520;
+            case 0x19b524u: goto label_19b524;
+            case 0x19b528u: goto label_19b528;
+            case 0x19b52cu: goto label_19b52c;
+            case 0x19b530u: goto label_19b530;
+            case 0x19b534u: goto label_19b534;
+            case 0x19b538u: goto label_19b538;
+            case 0x19b53cu: goto label_19b53c;
+            case 0x19b540u: goto label_19b540;
+            case 0x19b544u: goto label_19b544;
+            case 0x19b548u: goto label_19b548;
+            case 0x19b54cu: goto label_19b54c;
+            case 0x19b550u: goto label_19b550;
+            case 0x19b554u: goto label_19b554;
+            case 0x19b558u: goto label_19b558;
+            case 0x19b55cu: goto label_19b55c;
+            case 0x19b560u: goto label_19b560;
+            case 0x19b564u: goto label_19b564;
+            case 0x19b568u: goto label_19b568;
+            case 0x19b56cu: goto label_19b56c;
+            case 0x19b570u: goto label_19b570;
+            case 0x19b574u: goto label_19b574;
+            case 0x19b578u: goto label_19b578;
+            case 0x19b57cu: goto label_19b57c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x19b4d0u;
 
 label_19b4d0:
     // 0x19b4d0: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x19b4d0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
 label_19b4d4:
     // 0x19b4d4: 0x7fb00020  sq          $s0, 0x20($sp)
@@ -83,7 +83,6 @@ label_19b4d8:
     WRITE64(ADD32(GPR_U32(ctx, 29), 16), GPR_U64(ctx, 31));
 label_19b4dc:
     // 0x19b4dc: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x19b4dcu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
 label_19b4e0:
     // 0x19b4e0: 0x920302f5  lbu         $v1, 0x2F5($s0)
@@ -172,7 +171,6 @@ label_19b4f8:
             goto label_19b574;
         }
     }
-    ctx->pc = 0x19B4FCu;
 label_19b4fc:
     // 0x19b4fc: 0xfba00000  sqc2        $vf0, 0x0($sp)
     ctx->pc = 0x19b4fcu;
@@ -245,7 +243,6 @@ label_19b518:
             goto label_19b538;
         }
     }
-    ctx->pc = 0x19B51Cu;
 label_19b51c:
     // 0x19b51c: 0xc4400000  lwc1        $f0, 0x0($v0)
     ctx->pc = 0x19b51cu;
@@ -272,11 +269,9 @@ label_19b530:
     { float f = ctx->f[0]; uint32_t bits; std::memcpy(&bits, &f, sizeof(bits)); WRITE32(ADD32(GPR_U32(ctx, 29), 8), bits); }
 label_19b534:
     // 0x19b534: 0x2402000f  addiu       $v0, $zero, 0xF
-    ctx->pc = 0x19b534u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 15));
 label_19b538:
     // 0x19b538: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x19b538u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_19b53c:
     // 0x19b53c: 0xa6020a90  sh          $v0, 0xA90($s0)
@@ -339,7 +334,6 @@ label_19b55c:
             goto label_19b570;
         }
     }
-    ctx->pc = 0x19B560u;
 label_19b560:
     // 0x19b560: 0xa20002f7  sb          $zero, 0x2F7($s0)
     ctx->pc = 0x19b560u;

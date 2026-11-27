@@ -13,29 +13,27 @@
 
 // Function: func_00358090
 // Address: 0x358090 - 0x3580e8
-void func_00358090_0x358090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00358090_0x358090(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00358090_0x358090");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3580d8u: goto label_3580d8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x358090u, 0)) {
+        switch (ctx->pc) {
+            case 0x3580d8u: goto label_3580d8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x358090u;
 
     // 0x358090: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x358090u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x358094: 0x80282d  daddu       $a1, $a0, $zero
-    ctx->pc = 0x358094u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x358098: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x358098u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x35809c: 0x24030004  addiu       $v1, $zero, 0x4
-    ctx->pc = 0x35809cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x3580a0: 0x8ca20048  lw          $v0, 0x48($a1)
     ctx->pc = 0x3580a0u;
@@ -55,12 +53,10 @@ void func_00358090_0x358090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_3580c8;
         }
     }
-    ctx->pc = 0x3580ACu;
     // 0x3580ac: 0x8ca20050  lw          $v0, 0x50($a1)
     ctx->pc = 0x3580acu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 80)));
     // 0x3580b0: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x3580b0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x3580b4: 0x10430009  beq         $v0, $v1, . + 4 + (0x9 << 2)
     ctx->pc = 0x3580B4u;
@@ -77,7 +73,6 @@ void func_00358090_0x358090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_3580dc;
         }
     }
-    ctx->pc = 0x3580BCu;
     // 0x3580bc: 0x8cc20020  lw          $v0, 0x20($a2)
     ctx->pc = 0x3580bcu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 6), 32)));
@@ -90,7 +85,6 @@ void func_00358090_0x358090(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_3580d0;
         }
     }
-    ctx->pc = 0x3580C8u;
 label_3580c8:
     // 0x3580c8: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x3580C8u;
@@ -107,19 +101,15 @@ label_3580c8:
             goto label_3580dc;
         }
     }
-    ctx->pc = 0x3580D0u;
 label_3580d0:
     // 0x3580d0: 0xc0d6a2a  jal         func_35A8A8
     ctx->pc = 0x3580D0u;
     SET_GPR_U32(ctx, 31, 0x3580D8u);
-    ctx->pc = 0x35A8A8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x35A8A8u, 0x3580D0u, 0x3580D8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &SFTIM_IsStagnant_0x35a8a8, 0x35a8a8u, 0x3580d8u)) {
         return;
     }
-    ctx->pc = 0x3580D8u;
 label_3580d8:
     // 0x3580d8: 0x2102b  sltu        $v0, $zero, $v0
-    ctx->pc = 0x3580d8u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 0) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
 label_3580dc:
     // 0x3580dc: 0xdfbf0000  ld          $ra, 0x0($sp)

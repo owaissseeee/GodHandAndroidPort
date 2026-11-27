@@ -13,15 +13,13 @@
 
 // Function: cOmWeapon_setWing
 // Address: 0x1d07c8 - 0x1d07e0
-void cOmWeapon_setWing_0x1d07c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOmWeapon_setWing_0x1d07c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOmWeapon_setWing_0x1d07c8");
 #endif
 
-    ctx->pc = 0x1d07c8u;
 
     // 0x1d07c8: 0x2402000a  addiu       $v0, $zero, 0xA
-    ctx->pc = 0x1d07c8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 10));
     // 0x1d07cc: 0xa08002f7  sb          $zero, 0x2F7($a0)
     ctx->pc = 0x1d07ccu;

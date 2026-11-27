@@ -13,12 +13,11 @@
 
 // Function: Obj35C0_SetField10_IfPositive_C528
 // Address: 0x35c528 - 0x35c538
-void Obj35C0_SetField10_IfPositive_C528_0x35c528(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj35C0_SetField10_IfPositive_C528_0x35c528(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj35C0_SetField10_IfPositive_C528_0x35c528");
 #endif
 
-    ctx->pc = 0x35c528u;
 
     // 0x35c528: 0x5ca00001  bgtzl       $a1, . + 4 + (0x1 << 2)
     ctx->pc = 0x35C528u;
@@ -35,7 +34,6 @@ void Obj35C0_SetField10_IfPositive_C528_0x35c528(uint8_t* rdram, R5900Context* c
             goto label_35c530;
         }
     }
-    ctx->pc = 0x35C530u;
 label_35c530:
     // 0x35c530: 0x3e00008  jr          $ra
     ctx->pc = 0x35C530u;

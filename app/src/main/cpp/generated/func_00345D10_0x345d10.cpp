@@ -13,12 +13,11 @@
 
 // Function: func_00345D10
 // Address: 0x345d10 - 0x345d40
-void func_00345D10_0x345d10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00345D10_0x345d10(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00345D10_0x345d10");
 #endif
 
-    ctx->pc = 0x345d10u;
 
     // 0x345d10: 0xac800080  sw          $zero, 0x80($a0)
     ctx->pc = 0x345d10u;
@@ -42,33 +41,23 @@ void func_00345D10_0x345d10(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x345D1Cu;
     // 0x345d1c: 0x0  nop
-    ctx->pc = 0x345d1cu;
     // NOP
     // 0x345d20: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x345d20u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x345d24: 0x0  nop
-    ctx->pc = 0x345d24u;
     // NOP
     // 0x345d28: 0x27bd0030  addiu       $sp, $sp, 0x30
-    ctx->pc = 0x345d28u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 48));
     // 0x345d2c: 0x0  nop
-    ctx->pc = 0x345d2cu;
     // NOP
     // 0x345d30: 0x27bd0010  addiu       $sp, $sp, 0x10
-    ctx->pc = 0x345d30u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x345d34: 0x0  nop
-    ctx->pc = 0x345d34u;
     // NOP
     // 0x345d38: 0x27bd0020  addiu       $sp, $sp, 0x20
-    ctx->pc = 0x345d38u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 32));
     // 0x345d3c: 0x0  nop
-    ctx->pc = 0x345d3cu;
     // NOP
     ctx->pc = 0x345d40u;
 }

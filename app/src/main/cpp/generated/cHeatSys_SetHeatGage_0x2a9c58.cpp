@@ -13,29 +13,27 @@
 
 // Function: cHeatSys_SetHeatGage
 // Address: 0x2a9c58 - 0x2a9c90
-void cHeatSys_SetHeatGage_0x2a9c58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cHeatSys_SetHeatGage_0x2a9c58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cHeatSys_SetHeatGage_0x2a9c58");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2a9c84u: goto label_2a9c84;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2a9c58u, 0)) {
+        switch (ctx->pc) {
+            case 0x2a9c84u: goto label_2a9c84;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2a9c58u;
 
     // 0x2a9c58: 0xc4800000  lwc1        $f0, 0x0($a0)
     ctx->pc = 0x2a9c58u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x2a9c5c: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2a9c5cu;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2a9c60: 0x460c0034  c.lt.s      $f0, $f12
-    ctx->pc = 0x2a9c60u;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[0], ctx->f[12])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x2a9c64: 0x0  nop
-    ctx->pc = 0x2a9c64u;
     // NOP
     // 0x2a9c68: 0x45000003  bc1f        . + 4 + (0x3 << 2)
     ctx->pc = 0x2A9C68u;
@@ -52,7 +50,6 @@ void cHeatSys_SetHeatGage_0x2a9c58(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_2a9c78;
         }
     }
-    ctx->pc = 0x2A9C70u;
     // 0x2a9c70: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x2A9C70u;
     {
@@ -68,7 +65,6 @@ void cHeatSys_SetHeatGage_0x2a9c58(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_2a9c7c;
         }
     }
-    ctx->pc = 0x2A9C78u;
 label_2a9c78:
     // 0x2a9c78: 0xe48c0004  swc1        $f12, 0x4($a0)
     ctx->pc = 0x2a9c78u;
@@ -77,11 +73,9 @@ label_2a9c7c:
     // 0x2a9c7c: 0xc0aa6d4  jal         func_2A9B50
     ctx->pc = 0x2A9C7Cu;
     SET_GPR_U32(ctx, 31, 0x2A9C84u);
-    ctx->pc = 0x2A9B50u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A9B50u, 0x2A9C7Cu, 0x2A9C84u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cHeatSys_UpdateHeatLv_0x2a9b50, 0x2a9b50u, 0x2a9c84u)) {
         return;
     }
-    ctx->pc = 0x2A9C84u;
 label_2a9c84:
     // 0x2a9c84: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2a9c84u;

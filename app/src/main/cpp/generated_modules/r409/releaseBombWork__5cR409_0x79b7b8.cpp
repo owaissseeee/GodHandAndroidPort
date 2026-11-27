@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
+#include <ps2_recompiled_functions.h>
 #include "r409_functions.h"
 
 #include "ps2_syscalls.h"
@@ -14,21 +15,22 @@ namespace gh_r409
 {
 // Function: releaseBombWork__5cR409
 // Address: 0x79b7b8 - 0x79b820
-void releaseBombWork__5cR409_0x79b7b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void releaseBombWork__5cR409_0x79b7b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("releaseBombWork__5cR409_0x79b7b8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79b7d8u: goto label_79b7d8;
-        case 0x79b7f4u: goto label_79b7f4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x79b7b8u, 0)) {
+        switch (ctx->pc) {
+            case 0x79b7d8u: goto label_79b7d8;
+            case 0x79b7f4u: goto label_79b7f4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x79b7b8u;
+
 
     // 0x79b7b8: 0x27bdffc0  addiu       $sp, $sp, -0x40
-    ctx->pc = 0x79b7b8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967232));
     // 0x79b7bc: 0x7fb00030  sq          $s0, 0x30($sp)
     ctx->pc = 0x79b7bcu;
@@ -37,29 +39,24 @@ void releaseBombWork__5cR409_0x79b7b8(uint8_t* rdram, R5900Context* ctx, PS2Runt
     ctx->pc = 0x79b7c0u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 32), GPR_VEC(ctx, 17));
     // 0x79b7c4: 0x24900010  addiu       $s0, $a0, 0x10
-    ctx->pc = 0x79b7c4u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 4), 16));
     // 0x79b7c8: 0x7fb20010  sq          $s2, 0x10($sp)
     ctx->pc = 0x79b7c8u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 18));
     // 0x79b7cc: 0x882d  daddu       $s1, $zero, $zero
-    ctx->pc = 0x79b7ccu;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x79b7d0: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x79b7d0u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x79b7d4: 0x3c120057  lui         $s2, 0x57
-    ctx->pc = 0x79b7d4u;
     SET_GPR_S32(ctx, 18, (int32_t)((uint32_t)87 << 16));
 label_79b7d8:
     // 0x79b7d8: 0x8e020000  lw          $v0, 0x0($s0)
     ctx->pc = 0x79b7d8u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 0)));
     // 0x79b7dc: 0x26310001  addiu       $s1, $s1, 0x1
-    ctx->pc = 0x79b7dcu;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 17), 1));
     // 0x79b7e0: 0x26444380  addiu       $a0, $s2, 0x4380
-    ctx->pc = 0x79b7e0u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 18), 17280));
     // 0x79b7e4: 0x10400004  beqz        $v0, . + 4 + (0x4 << 2)
     ctx->pc = 0x79B7E4u;
@@ -76,22 +73,18 @@ label_79b7d8:
             goto label_79b7f8;
         }
     }
-    ctx->pc = 0x79B7ECu;
     // 0x79b7ec: 0xc07f852  jal         func_1FE148
-    ctx->pc = 0x79B7ECu;
     SET_GPR_U32(ctx, 31, 0x79B7F4u);
     ctx->pc = 0x1FE148u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1FE148u, 0x79B7ECu, 0x79B7F4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cDamageManage_ReleaseDamageGive_0x1fe148, 0x1FE148u, 0x79B7F4u)) {
         return;
     }
-    ctx->pc = 0x79B7F4u;
 label_79b7f4:
     // 0x79b7f4: 0xae000000  sw          $zero, 0x0($s0)
     ctx->pc = 0x79b7f4u;
     WRITE32(ADD32(GPR_U32(ctx, 16), 0), GPR_U32(ctx, 0));
 label_79b7f8:
     // 0x79b7f8: 0x2e220006  sltiu       $v0, $s1, 0x6
-    ctx->pc = 0x79b7f8u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 17) < (uint64_t)(int64_t)(int32_t)6) ? 1 : 0);
     // 0x79b7fc: 0x1440fff6  bnez        $v0, . + 4 + (-0xA << 2)
     ctx->pc = 0x79B7FCu;
@@ -111,7 +104,6 @@ label_79b7f8:
             goto label_79b7d8;
         }
     }
-    ctx->pc = 0x79B804u;
     // 0x79b804: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x79b804u;
     SET_GPR_VEC(ctx, 16, READ128(ADD32(GPR_U32(ctx, 29), 48)));
@@ -143,9 +135,7 @@ label_79b7f8:
         return;
         #endif
     }
-    ctx->pc = 0x79B81Cu;
     // 0x79b81c: 0x0  nop
-    ctx->pc = 0x79b81cu;
     // NOP
     ctx->pc = 0x79b820u;
 }

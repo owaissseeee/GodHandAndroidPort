@@ -13,12 +13,11 @@
 
 // Function: cSndMemHeap_ResetFirstBlk
 // Address: 0x2cd740 - 0x2cd780
-void cSndMemHeap_ResetFirstBlk_0x2cd740(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSndMemHeap_ResetFirstBlk_0x2cd740(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSndMemHeap_ResetFirstBlk_0x2cd740");
 #endif
 
-    ctx->pc = 0x2cd740u;
 
     // 0x2cd740: 0x8c820380  lw          $v0, 0x380($a0)
     ctx->pc = 0x2cd740u;

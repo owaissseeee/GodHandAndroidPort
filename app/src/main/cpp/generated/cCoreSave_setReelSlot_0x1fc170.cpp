@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_setReelSlot
 // Address: 0x1fc170 - 0x1fc198
-void cCoreSave_setReelSlot_0x1fc170(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setReelSlot_0x1fc170(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setReelSlot_0x1fc170");
 #endif
 
-    ctx->pc = 0x1fc170u;
 
     // 0x1fc170: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x1fc170u;
@@ -38,9 +37,7 @@ void cCoreSave_setReelSlot_0x1fc170(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1fc18c;
         }
     }
-    ctx->pc = 0x1FC17Cu;
     // 0x1fc17c: 0x2c82000a  sltiu       $v0, $a0, 0xA
-    ctx->pc = 0x1fc17cu;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 4) < (uint64_t)(int64_t)(int32_t)10) ? 1 : 0);
     // 0x1fc180: 0x10400002  beqz        $v0, . + 4 + (0x2 << 2)
     ctx->pc = 0x1FC180u;
@@ -57,7 +54,6 @@ void cCoreSave_setReelSlot_0x1fc170(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_1fc18c;
         }
     }
-    ctx->pc = 0x1FC188u;
     // 0x1fc188: 0xa0460098  sb          $a2, 0x98($v0)
     ctx->pc = 0x1fc188u;
     WRITE8(ADD32(GPR_U32(ctx, 2), 152), (uint8_t)GPR_U32(ctx, 6));
@@ -75,9 +71,7 @@ label_1fc18c:
         return;
         #endif
     }
-    ctx->pc = 0x1FC194u;
     // 0x1fc194: 0x0  nop
-    ctx->pc = 0x1fc194u;
     // NOP
     ctx->pc = 0x1fc198u;
 }

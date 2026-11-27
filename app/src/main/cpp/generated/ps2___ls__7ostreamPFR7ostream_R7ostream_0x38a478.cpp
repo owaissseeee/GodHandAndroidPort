@@ -13,28 +13,28 @@
 
 // Function: __ls__7ostreamPFR7ostream_R7ostream
 // Address: 0x38a478 - 0x38a498
-void ps2___ls__7ostreamPFR7ostream_R7ostream_0x38a478(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___ls__7ostreamPFR7ostream_R7ostream_0x38a478(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___ls__7ostreamPFR7ostream_R7ostream_0x38a478");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38a478u: goto label_38a478;
-        case 0x38a47cu: goto label_38a47c;
-        case 0x38a480u: goto label_38a480;
-        case 0x38a484u: goto label_38a484;
-        case 0x38a488u: goto label_38a488;
-        case 0x38a48cu: goto label_38a48c;
-        case 0x38a490u: goto label_38a490;
-        case 0x38a494u: goto label_38a494;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38a478u, 0)) {
+        switch (ctx->pc) {
+            case 0x38a478u: goto label_38a478;
+            case 0x38a47cu: goto label_38a47c;
+            case 0x38a480u: goto label_38a480;
+            case 0x38a484u: goto label_38a484;
+            case 0x38a488u: goto label_38a488;
+            case 0x38a48cu: goto label_38a48c;
+            case 0x38a490u: goto label_38a490;
+            case 0x38a494u: goto label_38a494;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x38a478u;
 
 label_38a478:
     // 0x38a478: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x38a478u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_38a47c:
     // 0x38a47c: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -56,7 +56,6 @@ label_38a484:
             return;
         }
     }
-    ctx->pc = 0x38A488u;
 label_38a488:
     // 0x38a488: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38a488u;
@@ -92,10 +91,8 @@ label_38a490:
         return;
         #endif
     }
-    ctx->pc = 0x38A494u;
 label_38a494:
     // 0x38a494: 0x0  nop
-    ctx->pc = 0x38a494u;
     // NOP
     ctx->pc = 0x38a498u;
 }

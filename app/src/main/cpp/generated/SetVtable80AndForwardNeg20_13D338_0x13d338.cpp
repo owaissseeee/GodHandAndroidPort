@@ -13,32 +13,29 @@
 
 // Function: SetVtable80AndForwardNeg20_13D338
 // Address: 0x13d338 - 0x13d368
-void SetVtable80AndForwardNeg20_13D338_0x13d338(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetVtable80AndForwardNeg20_13D338_0x13d338(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetVtable80AndForwardNeg20_13D338_0x13d338");
 #endif
 
-    switch (ctx->pc) {
-        case 0x13d35cu: goto label_13d35c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x13d338u, 0)) {
+        switch (ctx->pc) {
+            case 0x13d35cu: goto label_13d35c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x13d338u;
 
     // 0x13d338: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x13d338u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x13d33c: 0x3c020042  lui         $v0, 0x42
-    ctx->pc = 0x13d33cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)66 << 16));
     // 0x13d340: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x13d340u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x13d344: 0x2442dcc8  addiu       $v0, $v0, -0x2338
-    ctx->pc = 0x13d344u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294958280));
     // 0x13d348: 0x30a50001  andi        $a1, $a1, 0x1
-    ctx->pc = 0x13d348u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & (uint64_t)(uint16_t)1);
     // 0x13d34c: 0x10a00003  beqz        $a1, . + 4 + (0x3 << 2)
     ctx->pc = 0x13D34Cu;
@@ -55,15 +52,12 @@ void SetVtable80AndForwardNeg20_13D338_0x13d338(uint8_t* rdram, R5900Context* ct
             goto label_13d35c;
         }
     }
-    ctx->pc = 0x13D354u;
     // 0x13d354: 0xc0c3d68  jal         func_30F5A0
     ctx->pc = 0x13D354u;
     SET_GPR_U32(ctx, 31, 0x13D35Cu);
-    ctx->pc = 0x30F5A0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x30F5A0u, 0x13D354u, 0x13D35Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ps2___builtin_delete_0x30f5a0, 0x30f5a0u, 0x13d35cu)) {
         return;
     }
-    ctx->pc = 0x13D35Cu;
 label_13d35c:
     // 0x13d35c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x13d35cu;

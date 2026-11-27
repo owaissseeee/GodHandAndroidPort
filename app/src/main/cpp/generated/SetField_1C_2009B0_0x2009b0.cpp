@@ -13,12 +13,11 @@
 
 // Function: SetField_1C_2009B0
 // Address: 0x2009b0 - 0x2009e8
-void SetField_1C_2009B0_0x2009b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetField_1C_2009B0_0x2009b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetField_1C_2009B0_0x2009b0");
 #endif
 
-    ctx->pc = 0x2009b0u;
 
     // 0x2009b0: 0x68a20007  ldl         $v0, 0x7($a1)
     ctx->pc = 0x2009b0u;

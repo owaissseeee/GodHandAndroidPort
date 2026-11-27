@@ -13,47 +13,41 @@
 
 // Function: cOm71_SetMotion010
 // Address: 0x1b2018 - 0x1b2050
-void cOm71_SetMotion010_0x1b2018(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOm71_SetMotion010_0x1b2018(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOm71_SetMotion010_0x1b2018");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1b2044u: goto label_1b2044;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1b2018u, 0)) {
+        switch (ctx->pc) {
+            case 0x1b2044u: goto label_1b2044;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1b2018u;
 
     // 0x1b2018: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x1b2018u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x1b201c: 0x44806000  mtc1        $zero, $f12
-    ctx->pc = 0x1b201cu;
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[12], &bits, sizeof(bits)); }
     // 0x1b2020: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1b2020u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x1b2024: 0x302d  daddu       $a2, $zero, $zero
-    ctx->pc = 0x1b2024u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1b2028: 0x2407000a  addiu       $a3, $zero, 0xA
-    ctx->pc = 0x1b2028u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 0), 10));
     // 0x1b202c: 0x402d  daddu       $t0, $zero, $zero
-    ctx->pc = 0x1b202cu;
     SET_GPR_U64(ctx, 8, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1b2030: 0x8c820304  lw          $v0, 0x304($a0)
     ctx->pc = 0x1b2030u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 772)));
     // 0x1b2034: 0x482d  daddu       $t1, $zero, $zero
-    ctx->pc = 0x1b2034u;
     SET_GPR_U64(ctx, 9, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1b2038: 0x8c450038  lw          $a1, 0x38($v0)
     ctx->pc = 0x1b2038u;
     SET_GPR_S32(ctx, 5, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 56)));
     // 0x1b203c: 0xc0aa15e  jal         func_2A8578
-    ctx->pc = 0x1B203Cu;
     SET_GPR_U32(ctx, 31, 0x1B2044u);
     ctx->pc = 0x1B2040u;
     ctx->in_delay_slot = true;
@@ -61,11 +55,9 @@ void cOm71_SetMotion010_0x1b2018(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     // 0x1b2040: 0xa22821  addu        $a1, $a1, $v0 (Delay Slot)
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), GPR_U32(ctx, 2)));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2A8578u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2A8578u, 0x1B203Cu, 0x1B2044u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002A8578_0x2a8578, 0x2a8578u, 0x1b2044u)) {
         return;
     }
-    ctx->pc = 0x1B2044u;
 label_1b2044:
     // 0x1b2044: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x1b2044u;

@@ -14,20 +14,21 @@ namespace gh_r505
 {
 // Function: __make_dp
 // Address: 0x79be08 - 0x79be38
-void ps2___make_dp_0x79be08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___make_dp_0x79be08(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___make_dp_0x79be08");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79be28u: goto label_79be28;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x79be08u, 0)) {
+        switch (ctx->pc) {
+            case 0x79be28u: goto label_79be28;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x79be08u;
+
 
     // 0x79be08: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x79be08u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x79be0c: 0xafa40000  sw          $a0, 0x0($sp)
     ctx->pc = 0x79be0cu;
@@ -36,7 +37,6 @@ void ps2___make_dp_0x79be08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x79be10u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 32), GPR_U64(ctx, 31));
     // 0x79be14: 0x3a0202d  daddu       $a0, $sp, $zero
-    ctx->pc = 0x79be14u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
     // 0x79be18: 0xafa50004  sw          $a1, 0x4($sp)
     ctx->pc = 0x79be18u;
@@ -45,7 +45,6 @@ void ps2___make_dp_0x79be08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x79be1cu;
     WRITE32(ADD32(GPR_U32(ctx, 29), 8), GPR_U32(ctx, 6));
     // 0x79be20: 0xc1e6c66  jal         func_79B198
-    ctx->pc = 0x79BE20u;
     SET_GPR_U32(ctx, 31, 0x79BE28u);
     ctx->pc = 0x79BE24u;
     ctx->in_delay_slot = true;
@@ -57,7 +56,6 @@ void ps2___make_dp_0x79be08(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x79B198u, 0x79BE20u, 0x79BE28u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x79BE28u;
 label_79be28:
     // 0x79be28: 0xdfbf0020  ld          $ra, 0x20($sp)
     ctx->pc = 0x79be28u;
@@ -81,9 +79,7 @@ label_79be28:
         return;
         #endif
     }
-    ctx->pc = 0x79BE34u;
     // 0x79be34: 0x0  nop
-    ctx->pc = 0x79be34u;
     // NOP
     ctx->pc = 0x79be38u;
 }

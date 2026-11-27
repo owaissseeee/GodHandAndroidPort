@@ -13,23 +13,22 @@
 
 // Function: ForwardIdBaseTransIfValid_13F208
 // Address: 0x13f208 - 0x13f238
-void ForwardIdBaseTransIfValid_13F208_0x13f208(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ForwardIdBaseTransIfValid_13F208_0x13f208(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ForwardIdBaseTransIfValid_13F208_0x13f208");
 #endif
 
-    switch (ctx->pc) {
-        case 0x13f228u: goto label_13f228;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x13f208u, 0)) {
+        switch (ctx->pc) {
+            case 0x13f228u: goto label_13f228;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x13f208u;
 
     // 0x13f208: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x13f208u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x13f20c: 0x3403ffff  ori         $v1, $zero, 0xFFFF
-    ctx->pc = 0x13f20cu;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     // 0x13f210: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x13f210u;
@@ -52,15 +51,12 @@ void ForwardIdBaseTransIfValid_13F208_0x13f208(uint8_t* rdram, R5900Context* ctx
             goto label_13f22c;
         }
     }
-    ctx->pc = 0x13F220u;
     // 0x13f220: 0xc0aab0a  jal         func_2AAC28
     ctx->pc = 0x13F220u;
     SET_GPR_U32(ctx, 31, 0x13F228u);
-    ctx->pc = 0x2AAC28u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2AAC28u, 0x13F220u, 0x13F228u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_trans_0x2aac28, 0x2aac28u, 0x13f228u)) {
         return;
     }
-    ctx->pc = 0x13F228u;
 label_13f228:
     // 0x13f228: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x13f228u;
@@ -85,9 +81,7 @@ label_13f22c:
         return;
         #endif
     }
-    ctx->pc = 0x13F234u;
     // 0x13f234: 0x0  nop
-    ctx->pc = 0x13f234u;
     // NOP
     ctx->pc = 0x13f238u;
 }

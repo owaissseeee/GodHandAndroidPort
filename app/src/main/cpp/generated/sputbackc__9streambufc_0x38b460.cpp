@@ -13,29 +13,27 @@
 
 // Function: sputbackc__9streambufc
 // Address: 0x38b460 - 0x38b480
-void sputbackc__9streambufc_0x38b460(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sputbackc__9streambufc_0x38b460(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sputbackc__9streambufc_0x38b460");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38b474u: goto label_38b474;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38b460u, 0)) {
+        switch (ctx->pc) {
+            case 0x38b474u: goto label_38b474;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x38b460u;
 
     // 0x38b460: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x38b460u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x38b464: 0x52e00  sll         $a1, $a1, 24
-    ctx->pc = 0x38b464u;
     SET_GPR_S32(ctx, 5, (int32_t)SLL32(GPR_U32(ctx, 5), 24));
     // 0x38b468: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x38b468u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x38b46c: 0xc0e3346  jal         func_38CD18
-    ctx->pc = 0x38B46Cu;
     SET_GPR_U32(ctx, 31, 0x38B474u);
     ctx->pc = 0x38B470u;
     ctx->in_delay_slot = true;
@@ -43,11 +41,9 @@ void sputbackc__9streambufc_0x38b460(uint8_t* rdram, R5900Context* ctx, PS2Runti
     // 0x38b470: 0x52e03  sra         $a1, $a1, 24 (Delay Slot)
     SET_GPR_S32(ctx, 5, SRA32(GPR_S32(ctx, 5), 24));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x38CD18u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x38CD18u, 0x38B46Cu, 0x38B474u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ps2__IO_sputbackc_0x38cd18, 0x38cd18u, 0x38b474u)) {
         return;
     }
-    ctx->pc = 0x38B474u;
 label_38b474:
     // 0x38b474: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38b474u;

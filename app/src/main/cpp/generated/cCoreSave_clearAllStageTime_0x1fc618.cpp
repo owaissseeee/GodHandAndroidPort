@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_clearAllStageTime
 // Address: 0x1fc618 - 0x1fc630
-void cCoreSave_clearAllStageTime_0x1fc618(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_clearAllStageTime_0x1fc618(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_clearAllStageTime_0x1fc618");
 #endif
 
-    ctx->pc = 0x1fc618u;
 
     // 0x1fc618: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fc618u;
@@ -38,7 +37,6 @@ void cCoreSave_clearAllStageTime_0x1fc618(uint8_t* rdram, R5900Context* ctx, PS2
             goto label_1fc624;
         }
     }
-    ctx->pc = 0x1FC624u;
 label_1fc624:
     // 0x1fc624: 0x3e00008  jr          $ra
     ctx->pc = 0x1FC624u;
@@ -53,9 +51,7 @@ label_1fc624:
         return;
         #endif
     }
-    ctx->pc = 0x1FC62Cu;
     // 0x1fc62c: 0x0  nop
-    ctx->pc = 0x1fc62cu;
     // NOP
     ctx->pc = 0x1fc630u;
 }

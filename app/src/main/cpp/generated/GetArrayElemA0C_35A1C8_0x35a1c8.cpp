@@ -13,18 +13,15 @@
 
 // Function: GetArrayElemA0C_35A1C8
 // Address: 0x35a1c8 - 0x35a1e0
-void GetArrayElemA0C_35A1C8_0x35a1c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetArrayElemA0C_35A1C8_0x35a1c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetArrayElemA0C_35A1C8_0x35a1c8");
 #endif
 
-    ctx->pc = 0x35a1c8u;
 
     // 0x35a1c8: 0x52880  sll         $a1, $a1, 2
-    ctx->pc = 0x35a1c8u;
     SET_GPR_S32(ctx, 5, (int32_t)SLL32(GPR_U32(ctx, 5), 2));
     // 0x35a1cc: 0xa42821  addu        $a1, $a1, $a0
-    ctx->pc = 0x35a1ccu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), GPR_U32(ctx, 4)));
     // 0x35a1d0: 0x3e00008  jr          $ra
     ctx->pc = 0x35A1D0u;
@@ -45,12 +42,9 @@ void GetArrayElemA0C_35A1C8_0x35a1c8(uint8_t* rdram, R5900Context* ctx, PS2Runti
         return;
         #endif
     }
-    ctx->pc = 0x35A1D8u;
     // 0x35a1d8: 0x27bd0020  addiu       $sp, $sp, 0x20
-    ctx->pc = 0x35a1d8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 32));
     // 0x35a1dc: 0x0  nop
-    ctx->pc = 0x35a1dcu;
     // NOP
     ctx->pc = 0x35a1e0u;
 }

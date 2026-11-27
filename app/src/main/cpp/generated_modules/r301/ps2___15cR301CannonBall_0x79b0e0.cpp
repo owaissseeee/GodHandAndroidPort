@@ -14,15 +14,13 @@ namespace gh_r301
 {
 // Function: __15cR301CannonBall
 // Address: 0x79b0e0 - 0x79b0f0
-void ps2___15cR301CannonBall_0x79b0e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___15cR301CannonBall_0x79b0e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___15cR301CannonBall_0x79b0e0");
 #endif
 
-    ctx->pc = 0x79b0e0u;
 
     // 0x79b0e0: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x79b0e0u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x79b0e4: 0xac800004  sw          $zero, 0x4($a0)
     ctx->pc = 0x79b0e4u;

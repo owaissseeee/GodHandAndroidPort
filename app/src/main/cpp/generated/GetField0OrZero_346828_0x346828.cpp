@@ -13,12 +13,11 @@
 
 // Function: GetField0OrZero_346828
 // Address: 0x346828 - 0x346848
-void GetField0OrZero_346828_0x346828(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetField0OrZero_346828_0x346828(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetField0OrZero_346828_0x346828");
 #endif
 
-    ctx->pc = 0x346828u;
 
     // 0x346828: 0x10800002  beqz        $a0, . + 4 + (0x2 << 2)
     ctx->pc = 0x346828u;
@@ -35,7 +34,6 @@ void GetField0OrZero_346828_0x346828(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_346834;
         }
     }
-    ctx->pc = 0x346830u;
     // 0x346830: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x346830u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
@@ -53,15 +51,11 @@ label_346834:
         return;
         #endif
     }
-    ctx->pc = 0x34683Cu;
     // 0x34683c: 0x0  nop
-    ctx->pc = 0x34683cu;
     // NOP
     // 0x346840: 0x27bd0020  addiu       $sp, $sp, 0x20
-    ctx->pc = 0x346840u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 32));
     // 0x346844: 0x0  nop
-    ctx->pc = 0x346844u;
     // NOP
     ctx->pc = 0x346848u;
 }

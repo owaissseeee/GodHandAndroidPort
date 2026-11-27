@@ -13,12 +13,11 @@
 
 // Function: cEvent_getCutNo
 // Address: 0x297b98 - 0x297ba8
-void cEvent_getCutNo_0x297b98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_getCutNo_0x297b98(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_getCutNo_0x297b98");
 #endif
 
-    ctx->pc = 0x297b98u;
 
     // 0x297b98: 0x3c030000  lui         $v1, 0x0
     ctx->pc = 0x297b98u;
@@ -42,9 +41,7 @@ void cEvent_getCutNo_0x297b98(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
         return;
         #endif
     }
-    ctx->pc = 0x297BA4u;
     // 0x297ba4: 0x0  nop
-    ctx->pc = 0x297ba4u;
     // NOP
     ctx->pc = 0x297ba8u;
 }

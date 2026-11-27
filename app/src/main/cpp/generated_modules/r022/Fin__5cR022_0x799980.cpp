@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
+#include <ps2_recompiled_functions.h>
 #include "r022_functions.h"
 
 #include "ps2_syscalls.h"
@@ -14,41 +15,38 @@ namespace gh_r022
 {
 // Function: Fin__5cR022
 // Address: 0x799980 - 0x7999b0
-void Fin__5cR022_0x799980(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Fin__5cR022_0x799980(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Fin__5cR022_0x799980");
 #endif
 
-    switch (ctx->pc) {
-        case 0x799990u: goto label_799990;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x799980u, 0)) {
+        switch (ctx->pc) {
+            case 0x799990u: goto label_799990;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x799980u;
+
 
     // 0x799980: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x799980u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x799984: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x799984u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x799988: 0xc0aa81e  jal         func_2AA078
-    ctx->pc = 0x799988u;
     SET_GPR_U32(ctx, 31, 0x799990u);
-    ctx->pc = 0x79998Cu;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x799988u;
     // 0x79998c: 0x24840010  addiu       $a0, $a0, 0x10 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 16));
     ctx->in_delay_slot = false;
     ctx->pc = 0x2AA078u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2AA078u, 0x799988u, 0x799990u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cIDBase_release_0x2aa078, 0x2AA078u, 0x799990u)) {
         return;
     }
-    ctx->pc = 0x799990u;
 label_799990:
     // 0x799990: 0x3c03003c  lui         $v1, 0x3C
-    ctx->pc = 0x799990u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)60 << 16));
     // 0x799994: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x799994u;

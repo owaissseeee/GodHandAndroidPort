@@ -13,23 +13,22 @@
 
 // Function: PSMode
 // Address: 0x3b00e0 - 0x3b00f0
-void PSMode_0x3b00e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void PSMode_0x3b00e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("PSMode_0x3b00e0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b00e8u: goto label_3b00e8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b00e0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b00e8u: goto label_3b00e8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b00e0u;
 
     // 0x3b00e0: 0x2403007d  addiu       $v1, $zero, 0x7D
-    ctx->pc = 0x3b00e0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 125));
     // 0x3b00e4: 0xc  syscall     0
-    ctx->pc = 0x3b00e4u;
     ctx->pc = 0x3B00E8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

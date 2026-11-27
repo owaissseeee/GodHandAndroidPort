@@ -14,23 +14,24 @@ namespace gh_event
 {
 // Function: debugGetEventLength__C9cEventEnv
 // Address: 0x7aec80 - 0x7aecb8
-void debugGetEventLength__C9cEventEnv_0x7aec80(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void debugGetEventLength__C9cEventEnv_0x7aec80(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("debugGetEventLength__C9cEventEnv_0x7aec80");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7aec98u: goto label_7aec98;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7aec80u, 0)) {
+        switch (ctx->pc) {
+            case 0x7aec98u: goto label_7aec98;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7aec80u;
+
 
     // 0x7aec80: 0x8c830008  lw          $v1, 0x8($a0)
     ctx->pc = 0x7aec80u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 8)));
     // 0x7aec84: 0x44800800  mtc1        $zero, $f1
-    ctx->pc = 0x7aec84u;
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[1], &bits, sizeof(bits)); }
     // 0x7aec88: 0x18600009  blez        $v1, . + 4 + (0x9 << 2)
     ctx->pc = 0x7AEC88u;
@@ -41,25 +42,20 @@ void debugGetEventLength__C9cEventEnv_0x7aec80(uint8_t* rdram, R5900Context* ctx
             goto label_7aecb0;
         }
     }
-    ctx->pc = 0x7AEC90u;
     // 0x7aec90: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x7aec90u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4)));
     // 0x7aec94: 0x24420008  addiu       $v0, $v0, 0x8
-    ctx->pc = 0x7aec94u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 8));
 label_7aec98:
     // 0x7aec98: 0xc4400000  lwc1        $f0, 0x0($v0)
     ctx->pc = 0x7aec98u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 2), 0)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[0] = f; }
     // 0x7aec9c: 0x2463ffff  addiu       $v1, $v1, -0x1
-    ctx->pc = 0x7aec9cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4294967295));
     // 0x7aeca0: 0x24420010  addiu       $v0, $v0, 0x10
-    ctx->pc = 0x7aeca0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 16));
     // 0x7aeca4: 0x0  nop
-    ctx->pc = 0x7aeca4u;
     // NOP
     // 0x7aeca8: 0x1460fffb  bnez        $v1, . + 4 + (-0x5 << 2)
     ctx->pc = 0x7AECA8u;
@@ -79,7 +75,6 @@ label_7aec98:
             goto label_7aec98;
         }
     }
-    ctx->pc = 0x7AECB0u;
 label_7aecb0:
     // 0x7aecb0: 0x3e00008  jr          $ra
     ctx->pc = 0x7AECB0u;

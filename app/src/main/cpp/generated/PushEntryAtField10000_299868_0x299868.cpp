@@ -13,18 +13,15 @@
 
 // Function: PushEntryAtField10000_299868
 // Address: 0x299868 - 0x2998a0
-void PushEntryAtField10000_299868_0x299868(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void PushEntryAtField10000_299868_0x299868(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("PushEntryAtField10000_299868_0x299868");
 #endif
 
-    ctx->pc = 0x299868u;
 
     // 0x299868: 0x3c020001  lui         $v0, 0x1
-    ctx->pc = 0x299868u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)1 << 16));
     // 0x29986c: 0x822021  addu        $a0, $a0, $v0
-    ctx->pc = 0x29986cu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 2)));
     // 0x299870: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x299870u;
@@ -45,10 +42,8 @@ void PushEntryAtField10000_299868_0x299868(uint8_t* rdram, R5900Context* ctx, PS
     ctx->pc = 0x299884u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 16)));
     // 0x299888: 0x24630010  addiu       $v1, $v1, 0x10
-    ctx->pc = 0x299888u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 16));
     // 0x29988c: 0x24420001  addiu       $v0, $v0, 0x1
-    ctx->pc = 0x29988cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 1));
     // 0x299890: 0xac830000  sw          $v1, 0x0($a0)
     ctx->pc = 0x299890u;
@@ -72,9 +67,7 @@ void PushEntryAtField10000_299868_0x299868(uint8_t* rdram, R5900Context* ctx, PS
         return;
         #endif
     }
-    ctx->pc = 0x29989Cu;
     // 0x29989c: 0x0  nop
-    ctx->pc = 0x29989cu;
     // NOP
     ctx->pc = 0x2998a0u;
 }

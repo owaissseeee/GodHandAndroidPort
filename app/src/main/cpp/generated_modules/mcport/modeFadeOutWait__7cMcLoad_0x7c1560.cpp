@@ -14,24 +14,24 @@ namespace gh_mcport
 {
 // Function: modeFadeOutWait__7cMcLoad
 // Address: 0x7c1560 - 0x7c15b8
-void modeFadeOutWait__7cMcLoad_0x7c1560(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void modeFadeOutWait__7cMcLoad_0x7c1560(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("modeFadeOutWait__7cMcLoad_0x7c1560");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7c1594u: goto label_7c1594;
-        case 0x7c159cu: goto label_7c159c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7c1560u, 0)) {
+        switch (ctx->pc) {
+            case 0x7c1594u: goto label_7c1594;
+            case 0x7c159cu: goto label_7c159c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7c1560u;
+
 
     // 0x7c1560: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x7c1560u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x7c1564: 0x3c020074  lui         $v0, 0x74
-    ctx->pc = 0x7c1564u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
     // 0x7c1568: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x7c1568u;
@@ -40,7 +40,6 @@ void modeFadeOutWait__7cMcLoad_0x7c1560(uint8_t* rdram, R5900Context* ctx, PS2Ru
     ctx->pc = 0x7c156cu;
     SET_GPR_ZE32(ctx, 2, (uint8_t)FAST_READ8(0x74748Cu));
     // 0x7c1570: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x7c1570u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x7c1574: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x7C1574u;
@@ -57,12 +56,9 @@ void modeFadeOutWait__7cMcLoad_0x7c1560(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_7c158c;
         }
     }
-    ctx->pc = 0x7C157Cu;
     // 0x7c157c: 0x21082  srl         $v0, $v0, 2
-    ctx->pc = 0x7c157cu;
     SET_GPR_S32(ctx, 2, (int32_t)SRL32(GPR_U32(ctx, 2), 2));
     // 0x7c1580: 0x30420001  andi        $v0, $v0, 0x1
-    ctx->pc = 0x7c1580u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
     // 0x7c1584: 0x50400008  beql        $v0, $zero, . + 4 + (0x8 << 2)
     ctx->pc = 0x7C1584u;
@@ -79,12 +75,9 @@ void modeFadeOutWait__7cMcLoad_0x7c1560(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_7c15a8;
         }
     }
-    ctx->pc = 0x7C158Cu;
 label_7c158c:
     // 0x7c158c: 0xc1f22c4  jal         func_7C8B10
-    ctx->pc = 0x7C158Cu;
     SET_GPR_U32(ctx, 31, 0x7C1594u);
-    ctx->pc = 0x7C1590u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x7C158Cu;
     // 0x7c1590: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
@@ -94,12 +87,9 @@ label_7c158c:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x7C8B10u, 0x7C158Cu, 0x7C1594u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7C1594u;
 label_7c1594:
     // 0x7c1594: 0xc1f045e  jal         func_7C1178
-    ctx->pc = 0x7C1594u;
     SET_GPR_U32(ctx, 31, 0x7C159Cu);
-    ctx->pc = 0x7C1598u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x7C1594u;
     // 0x7c1598: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
@@ -109,10 +99,8 @@ label_7c1594:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x7C1178u, 0x7C1594u, 0x7C159Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7C159Cu;
 label_7c159c:
     // 0x7c159c: 0x24020004  addiu       $v0, $zero, 0x4
-    ctx->pc = 0x7c159cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x7c15a0: 0xae020100  sw          $v0, 0x100($s0)
     ctx->pc = 0x7c15a0u;
@@ -143,9 +131,7 @@ label_7c15a8:
         return;
         #endif
     }
-    ctx->pc = 0x7C15B4u;
     // 0x7c15b4: 0x0  nop
-    ctx->pc = 0x7c15b4u;
     // NOP
     ctx->pc = 0x7c15b8u;
 }

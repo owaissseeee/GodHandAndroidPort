@@ -13,21 +13,17 @@
 
 // Function: Obj0000_Setup_Fields_00_01_D_00450FF0_31F2A8
 // Address: 0x31f2a8 - 0x31f2c0
-void Obj0000_Setup_Fields_00_01_D_00450FF0_31F2A8_0x31f2a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Setup_Fields_00_01_D_00450FF0_31F2A8_0x31f2a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Setup_Fields_00_01_D_00450FF0_31F2A8_0x31f2a8");
 #endif
 
-    ctx->pc = 0x31f2a8u;
 
     // 0x31f2a8: 0x3c030045  lui         $v1, 0x45
-    ctx->pc = 0x31f2a8u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)69 << 16));
     // 0x31f2ac: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x31f2acu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x31f2b0: 0x24630ff0  addiu       $v1, $v1, 0xFF0
-    ctx->pc = 0x31f2b0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 4080));
     // 0x31f2b4: 0xac450000  sw          $a1, 0x0($v0)
     ctx->pc = 0x31f2b4u;

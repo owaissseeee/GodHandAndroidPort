@@ -409,8 +409,29 @@ void EeScheduler::serializeMachine(Ar &ar)
            mem.m_pendingVif0Transfers, mem.m_pendingVif1Transfers, mem.m_codeRegions, mem.m_eeTimers, mem.m_eeTimerPendingCycles,
            mem.m_eeTimerEventBudget, mem.m_gifStatWritten);
     {
-        std::lock_guard<std::mutex> lock(mem.m_completedDmacMutex);
-        field(ar, mem.m_completedDmacCauses);
+        if constexpr (Ar::kLoading)
+        {
+            std::vector<uint32_t> causes;
+            field(ar, causes);
+            uint32_t mask = 0u;
+            for (uint32_t cause : causes)
+            {
+                if (cause < 32u)
+                    mask |= (1u << cause);
+            }
+            mem.m_completedDmacMask.store(mask, std::memory_order_relaxed);
+        }
+        else
+        {
+            std::vector<uint32_t> causes;
+            uint32_t mask = mem.m_completedDmacMask.load(std::memory_order_acquire);
+            for (uint32_t b = 0u; mask != 0u && b < 32u; ++b, mask >>= 1u)
+            {
+                if (mask & 1u)
+                    causes.push_back(b);
+            }
+            field(ar, causes);
+        }
     }
     if constexpr (Ar::kLoading)
     {
@@ -681,6 +702,7 @@ bool EeScheduler::serviceStateRequests()
         try
         {
             ps2x::state::Writer out;
+            out.data().reserve(42u * 1024u * 1024u);
             uint64_t magic = kMagic;
             uint32_t version = kVersion;
             uint64_t tick = field;

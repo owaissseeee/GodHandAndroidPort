@@ -14,15 +14,13 @@ namespace gh_r007
 {
 // Function: __main
 // Address: 0x799c00 - 0x799c20
-void ps2___main_0x799c00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___main_0x799c00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___main_0x799c00");
 #endif
 
-    ctx->pc = 0x799c00u;
 
     // 0x799c00: 0x3c03007a  lui         $v1, 0x7A
-    ctx->pc = 0x799c00u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)122 << 16));
     // 0x799c04: 0x8c629e04  lw          $v0, -0x61FC($v1)
     ctx->pc = 0x799c04u;
@@ -42,9 +40,7 @@ void ps2___main_0x799c00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
             goto label_799c18;
         }
     }
-    ctx->pc = 0x799C10u;
     // 0x799c10: 0x81e66d4  j           func_799B50
-    ctx->pc = 0x799C10u;
     ctx->pc = 0x799C14u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x799C10u;
@@ -55,7 +51,6 @@ void ps2___main_0x799c00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime)
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x799B50u, 0x799C10u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x799C18u;
 label_799c18:
     // 0x799c18: 0x3e00008  jr          $ra
     ctx->pc = 0x799C18u;

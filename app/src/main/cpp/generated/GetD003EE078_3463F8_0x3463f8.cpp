@@ -13,15 +13,13 @@
 
 // Function: GetD003EE078_3463F8
 // Address: 0x3463f8 - 0x346410
-void GetD003EE078_3463F8_0x3463f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetD003EE078_3463F8_0x3463f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetD003EE078_3463F8_0x3463f8");
 #endif
 
-    ctx->pc = 0x3463f8u;
 
     // 0x3463f8: 0x3c03003f  lui         $v1, 0x3F
-    ctx->pc = 0x3463f8u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)63 << 16));
     // 0x3463fc: 0x3e00008  jr          $ra
     ctx->pc = 0x3463FCu;
@@ -42,15 +40,12 @@ void GetD003EE078_3463F8_0x3463f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         return;
         #endif
     }
-    ctx->pc = 0x346404u;
     // 0x346404: 0x0  nop
-    ctx->pc = 0x346404u;
     // NOP
     // 0x346408: 0xac440004  sw          $a0, 0x4($v0)
     ctx->pc = 0x346408u;
     WRITE32(ADD32(GPR_U32(ctx, 2), 4), GPR_U32(ctx, 4));
     // 0x34640c: 0x0  nop
-    ctx->pc = 0x34640cu;
     // NOP
     ctx->pc = 0x346410u;
 }

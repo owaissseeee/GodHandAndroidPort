@@ -13,23 +13,22 @@
 
 // Function: cEvent_isLoadEndAfterCut
 // Address: 0x2975d0 - 0x2975f8
-void cEvent_isLoadEndAfterCut_0x2975d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_isLoadEndAfterCut_0x2975d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_isLoadEndAfterCut_0x2975d0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2975e8u: goto label_2975e8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2975d0u, 0)) {
+        switch (ctx->pc) {
+            case 0x2975e8u: goto label_2975e8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2975d0u;
 
     // 0x2975d0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x2975d0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x2975d4: 0x3c020058  lui         $v0, 0x58
-    ctx->pc = 0x2975d4u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)88 << 16));
     // 0x2975d8: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2975d8u;
@@ -38,7 +37,6 @@ void cEvent_isLoadEndAfterCut_0x2975d0(uint8_t* rdram, R5900Context* ctx, PS2Run
     ctx->pc = 0x2975dcu;
     SET_GPR_S32(ctx, 5, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 12)));
     // 0x2975e0: 0xc080426  jal         func_201098
-    ctx->pc = 0x2975E0u;
     SET_GPR_U32(ctx, 31, 0x2975E8u);
     ctx->pc = 0x2975E4u;
     ctx->in_delay_slot = true;
@@ -46,17 +44,14 @@ void cEvent_isLoadEndAfterCut_0x2975d0(uint8_t* rdram, R5900Context* ctx, PS2Run
     // 0x2975e4: 0x24443f20  addiu       $a0, $v0, 0x3F20 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 2), 16160));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x201098u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x201098u, 0x2975E0u, 0x2975E8u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cDvd_Check_0x201098, 0x201098u, 0x2975e8u)) {
         return;
     }
-    ctx->pc = 0x2975E8u;
 label_2975e8:
     // 0x2975e8: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x2975e8u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x2975ec: 0x2c420001  sltiu       $v0, $v0, 0x1
-    ctx->pc = 0x2975ecu;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1) ? 1 : 0);
     // 0x2975f0: 0x3e00008  jr          $ra
     ctx->pc = 0x2975F0u;

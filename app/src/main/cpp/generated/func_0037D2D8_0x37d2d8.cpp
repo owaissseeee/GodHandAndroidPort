@@ -13,26 +13,24 @@
 
 // Function: func_0037D2D8
 // Address: 0x37d2d8 - 0x37d310
-void func_0037D2D8_0x37d2d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0037D2D8_0x37d2d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0037D2D8_0x37d2d8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x37d2e8u: goto label_37d2e8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x37d2d8u, 0)) {
+        switch (ctx->pc) {
+            case 0x37d2e8u: goto label_37d2e8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x37d2d8u;
 
     // 0x37d2d8: 0x3c020077  lui         $v0, 0x77
-    ctx->pc = 0x37d2d8u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)119 << 16));
     // 0x37d2dc: 0x2443cf20  addiu       $v1, $v0, -0x30E0
-    ctx->pc = 0x37d2dcu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 4294954784));
     // 0x37d2e0: 0x24640ff0  addiu       $a0, $v1, 0xFF0
-    ctx->pc = 0x37d2e0u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 3), 4080));
     // 0x37d2e4: 0x94620000  lhu         $v0, 0x0($v1)
     ctx->pc = 0x37d2e4u;
@@ -53,7 +51,6 @@ label_37d2e8:
             goto label_37d2f8;
         }
     }
-    ctx->pc = 0x37D2F0u;
     // 0x37d2f0: 0x3e00008  jr          $ra
     ctx->pc = 0x37D2F0u;
     {
@@ -73,10 +70,8 @@ label_37d2e8:
         return;
         #endif
     }
-    ctx->pc = 0x37D2F8u;
 label_37d2f8:
     // 0x37d2f8: 0x64102a  slt         $v0, $v1, $a0
-    ctx->pc = 0x37d2f8u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)GPR_S64(ctx, 4)) ? 1 : 0);
     // 0x37d2fc: 0x5440fffa  bnel        $v0, $zero, . + 4 + (-0x6 << 2)
     ctx->pc = 0x37D2FCu;
@@ -96,7 +91,6 @@ label_37d2f8:
             goto label_37d2e8;
         }
     }
-    ctx->pc = 0x37D304u;
     // 0x37d304: 0x3e00008  jr          $ra
     ctx->pc = 0x37D304u;
     {
@@ -116,9 +110,7 @@ label_37d2f8:
         return;
         #endif
     }
-    ctx->pc = 0x37D30Cu;
     // 0x37d30c: 0x0  nop
-    ctx->pc = 0x37d30cu;
     // NOP
     ctx->pc = 0x37d310u;
 }

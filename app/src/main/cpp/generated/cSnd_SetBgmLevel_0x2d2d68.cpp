@@ -13,12 +13,11 @@
 
 // Function: cSnd_SetBgmLevel
 // Address: 0x2d2d68 - 0x2d2d98
-void cSnd_SetBgmLevel_0x2d2d68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_SetBgmLevel_0x2d2d68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_SetBgmLevel_0x2d2d68");
 #endif
 
-    ctx->pc = 0x2d2d68u;
 
     // 0x2d2d68: 0xe48c0124  swc1        $f12, 0x124($a0)
     ctx->pc = 0x2d2d68u;
@@ -48,27 +47,19 @@ void cSnd_SetBgmLevel_0x2d2d68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
         return;
         #endif
     }
-    ctx->pc = 0x2D2D7Cu;
     // 0x2d2d7c: 0x0  nop
-    ctx->pc = 0x2d2d7cu;
     // NOP
     // 0x2d2d80: 0x27bd0050  addiu       $sp, $sp, 0x50
-    ctx->pc = 0x2d2d80u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 80));
     // 0x2d2d84: 0x0  nop
-    ctx->pc = 0x2d2d84u;
     // NOP
     // 0x2d2d88: 0x27bd0030  addiu       $sp, $sp, 0x30
-    ctx->pc = 0x2d2d88u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 48));
     // 0x2d2d8c: 0x0  nop
-    ctx->pc = 0x2d2d8cu;
     // NOP
     // 0x2d2d90: 0x27bd0050  addiu       $sp, $sp, 0x50
-    ctx->pc = 0x2d2d90u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 80));
     // 0x2d2d94: 0x0  nop
-    ctx->pc = 0x2d2d94u;
     // NOP
     ctx->pc = 0x2d2d98u;
 }

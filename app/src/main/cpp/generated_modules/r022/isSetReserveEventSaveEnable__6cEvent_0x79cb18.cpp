@@ -14,12 +14,11 @@ namespace gh_r022
 {
 // Function: isSetReserveEventSaveEnable__6cEvent
 // Address: 0x79cb18 - 0x79cb30
-void isSetReserveEventSaveEnable__6cEvent_0x79cb18(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void isSetReserveEventSaveEnable__6cEvent_0x79cb18(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("isSetReserveEventSaveEnable__6cEvent_0x79cb18");
 #endif
 
-    ctx->pc = 0x79cb18u;
 
     // 0x79cb18: 0x8c830038  lw          $v1, 0x38($a0)
     ctx->pc = 0x79cb18u;
@@ -28,7 +27,6 @@ void isSetReserveEventSaveEnable__6cEvent_0x79cb18(uint8_t* rdram, R5900Context*
     ctx->pc = 0x79cb1cu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 0)));
     // 0x79cb20: 0x210c3  sra         $v0, $v0, 3
-    ctx->pc = 0x79cb20u;
     SET_GPR_S32(ctx, 2, SRA32(GPR_S32(ctx, 2), 3));
     // 0x79cb24: 0x3e00008  jr          $ra
     ctx->pc = 0x79CB24u;
@@ -49,9 +47,7 @@ void isSetReserveEventSaveEnable__6cEvent_0x79cb18(uint8_t* rdram, R5900Context*
         return;
         #endif
     }
-    ctx->pc = 0x79CB2Cu;
     // 0x79cb2c: 0x0  nop
-    ctx->pc = 0x79cb2cu;
     // NOP
     ctx->pc = 0x79cb30u;
 }

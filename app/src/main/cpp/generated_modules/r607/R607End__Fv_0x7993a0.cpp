@@ -14,12 +14,11 @@ namespace gh_r607
 {
 // Function: R607End__Fv
 // Address: 0x7993a0 - 0x7993a8
-void R607End__Fv_0x7993a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void R607End__Fv_0x7993a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("R607End__Fv_0x7993a0");
 #endif
 
-    ctx->pc = 0x7993a0u;
 
     // 0x7993a0: 0x3e00008  jr          $ra
     ctx->pc = 0x7993A0u;

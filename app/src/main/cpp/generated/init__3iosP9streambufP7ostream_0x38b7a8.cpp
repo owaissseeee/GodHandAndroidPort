@@ -13,12 +13,11 @@
 
 // Function: init__3iosP9streambufP7ostream
 // Address: 0x38b7a8 - 0x38b7f0
-void init__3iosP9streambufP7ostream_0x38b7a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void init__3iosP9streambufP7ostream_0x38b7a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("init__3iosP9streambufP7ostream_0x38b7a8");
 #endif
 
-    ctx->pc = 0x38b7a8u;
 
     // 0x38b7a8: 0x14a00004  bnez        $a1, . + 4 + (0x4 << 2)
     ctx->pc = 0x38B7A8u;
@@ -35,9 +34,7 @@ void init__3iosP9streambufP7ostream_0x38b7a8(uint8_t* rdram, R5900Context* ctx, 
             goto label_38b7bc;
         }
     }
-    ctx->pc = 0x38B7B0u;
     // 0x38b7b0: 0x24020004  addiu       $v0, $zero, 0x4
-    ctx->pc = 0x38b7b0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x38b7b4: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x38B7B4u;
@@ -54,20 +51,16 @@ void init__3iosP9streambufP7ostream_0x38b7a8(uint8_t* rdram, R5900Context* ctx, 
             goto label_38b7c0;
         }
     }
-    ctx->pc = 0x38B7BCu;
 label_38b7bc:
     // 0x38b7bc: 0xa0e0001a  sb          $zero, 0x1A($a3)
     ctx->pc = 0x38b7bcu;
     WRITE8(ADD32(GPR_U32(ctx, 7), 26), (uint8_t)GPR_U32(ctx, 0));
 label_38b7c0:
     // 0x38b7c0: 0x24020020  addiu       $v0, $zero, 0x20
-    ctx->pc = 0x38b7c0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 32));
     // 0x38b7c4: 0x24030011  addiu       $v1, $zero, 0x11
-    ctx->pc = 0x38b7c4u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 17));
     // 0x38b7c8: 0x24040006  addiu       $a0, $zero, 0x6
-    ctx->pc = 0x38b7c8u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
     // 0x38b7cc: 0xace50000  sw          $a1, 0x0($a3)
     ctx->pc = 0x38b7ccu;

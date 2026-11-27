@@ -13,18 +13,16 @@
 
 // Function: Obj38B8_IsField38_NonNegative
 // Address: 0x38b8a0 - 0x38b8b0
-void Obj38B8_IsField38_NonNegative_0x38b8a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj38B8_IsField38_NonNegative_0x38b8a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj38B8_IsField38_NonNegative_0x38b8a0");
 #endif
 
-    ctx->pc = 0x38b8a0u;
 
     // 0x38b8a0: 0x8c820038  lw          $v0, 0x38($a0)
     ctx->pc = 0x38b8a0u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 56)));
     // 0x38b8a4: 0x21027  nor         $v0, $zero, $v0
-    ctx->pc = 0x38b8a4u;
     SET_GPR_U64(ctx, 2, ~(GPR_U64(ctx, 0) | GPR_U64(ctx, 2)));
     // 0x38b8a8: 0x3e00008  jr          $ra
     ctx->pc = 0x38B8A8u;

@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
+#include <ps2_recompiled_functions.h>
 #include "r000_functions.h"
 
 #include "ps2_syscalls.h"
@@ -14,21 +15,22 @@ namespace gh_r000
 {
 // Function: dropNewData__17cSkillListManageri
 // Address: 0x79a6d8 - 0x79a740
-void dropNewData__17cSkillListManageri_0x79a6d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void dropNewData__17cSkillListManageri_0x79a6d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("dropNewData__17cSkillListManageri_0x79a6d8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79a70cu: goto label_79a70c;
-        case 0x79a728u: goto label_79a728;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x79a6d8u, 0)) {
+        switch (ctx->pc) {
+            case 0x79a70cu: goto label_79a70c;
+            case 0x79a728u: goto label_79a728;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x79a6d8u;
+
 
     // 0x79a6d8: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x79a6d8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x79a6dc: 0x7fb00020  sq          $s0, 0x20($sp)
     ctx->pc = 0x79a6dcu;
@@ -57,23 +59,17 @@ void dropNewData__17cSkillListManageri_0x79a6d8(uint8_t* rdram, R5900Context* ct
             goto label_79a728;
         }
     }
-    ctx->pc = 0x79A6F4u;
     // 0x79a6f4: 0x3c030057  lui         $v1, 0x57
-    ctx->pc = 0x79a6f4u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)87 << 16));
     // 0x79a6f8: 0x458021  addu        $s0, $v0, $a1
-    ctx->pc = 0x79a6f8u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 5)));
     // 0x79a6fc: 0x24719b70  addiu       $s1, $v1, -0x6490
-    ctx->pc = 0x79a6fcu;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 3), 4294941552));
     // 0x79a700: 0x82050000  lb          $a1, 0x0($s0)
     ctx->pc = 0x79a700u;
     SET_GPR_S32(ctx, 5, (int8_t)READ8(ADD32(GPR_U32(ctx, 16), 0)));
     // 0x79a704: 0xc07ebd6  jal         func_1FAF58
-    ctx->pc = 0x79A704u;
     SET_GPR_U32(ctx, 31, 0x79A70Cu);
-    ctx->pc = 0x79A708u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x79A704u;
     // 0x79a708: 0x220202d  daddu       $a0, $s1, $zero (Delay Slot)
@@ -83,10 +79,8 @@ void dropNewData__17cSkillListManageri_0x79a6d8(uint8_t* rdram, R5900Context* ct
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1FAF58u, 0x79A704u, 0x79A70Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x79A70Cu;
 label_79a70c:
     // 0x79a70c: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x79a70cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x79a710: 0x54430006  bnel        $v0, $v1, . + 4 + (0x6 << 2)
     ctx->pc = 0x79A710u;
@@ -103,27 +97,22 @@ label_79a70c:
             goto label_79a72c;
         }
     }
-    ctx->pc = 0x79A718u;
     // 0x79a718: 0x82050000  lb          $a1, 0x0($s0)
     ctx->pc = 0x79a718u;
     SET_GPR_S32(ctx, 5, (int8_t)READ8(ADD32(GPR_U32(ctx, 16), 0)));
     // 0x79a71c: 0x220202d  daddu       $a0, $s1, $zero
-    ctx->pc = 0x79a71cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     // 0x79a720: 0xc07ebc8  jal         func_1FAF20
-    ctx->pc = 0x79A720u;
     SET_GPR_U32(ctx, 31, 0x79A728u);
-    ctx->pc = 0x79A724u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x79A720u;
     // 0x79a724: 0x302d  daddu       $a2, $zero, $zero (Delay Slot)
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
     ctx->pc = 0x1FAF20u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1FAF20u, 0x79A720u, 0x79A728u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cCoreSave_setSkill_0x1faf20, 0x1FAF20u, 0x79A728u)) {
         return;
     }
-    ctx->pc = 0x79A728u;
 label_79a728:
     // 0x79a728: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x79a728u;
@@ -154,9 +143,7 @@ label_79a72c:
         return;
         #endif
     }
-    ctx->pc = 0x79A73Cu;
     // 0x79a73c: 0x0  nop
-    ctx->pc = 0x79a73cu;
     // NOP
     ctx->pc = 0x79a740u;
 }

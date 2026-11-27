@@ -13,12 +13,11 @@
 
 // Function: func_002BDD90
 // Address: 0x2bdd90 - 0x2bdde0
-void func_002BDD90_0x2bdd90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002BDD90_0x2bdd90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002BDD90_0x2bdd90");
 #endif
 
-    ctx->pc = 0x2bdd90u;
 
     // 0x2bdd90: 0x8c850004  lw          $a1, 0x4($a0)
     ctx->pc = 0x2bdd90u;
@@ -41,18 +40,14 @@ void func_002BDD90_0x2bdd90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2bddb4;
         }
     }
-    ctx->pc = 0x2BDDA0u;
     // 0x2bdda0: 0x8c830008  lw          $v1, 0x8($a0)
     ctx->pc = 0x2bdda0u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 8)));
     // 0x2bdda4: 0x2442ffff  addiu       $v0, $v0, -0x1
-    ctx->pc = 0x2bdda4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967295));
     // 0x2bdda8: 0x21080  sll         $v0, $v0, 2
-    ctx->pc = 0x2bdda8u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 2));
     // 0x2bddac: 0x431021  addu        $v0, $v0, $v1
-    ctx->pc = 0x2bddacu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
     // 0x2bddb0: 0x94460002  lhu         $a2, 0x2($v0)
     ctx->pc = 0x2bddb0u;
@@ -76,21 +71,17 @@ label_2bddb4:
             goto label_2bddd8;
         }
     }
-    ctx->pc = 0x2BDDC0u;
     // 0x2bddc0: 0x8c83000c  lw          $v1, 0xC($a0)
     ctx->pc = 0x2bddc0u;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 12)));
     // 0x2bddc4: 0x21080  sll         $v0, $v0, 2
-    ctx->pc = 0x2bddc4u;
     SET_GPR_S32(ctx, 2, (int32_t)SLL32(GPR_U32(ctx, 2), 2));
     // 0x2bddc8: 0x431021  addu        $v0, $v0, $v1
-    ctx->pc = 0x2bddc8u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), GPR_U32(ctx, 3)));
     // 0x2bddcc: 0x94440002  lhu         $a0, 0x2($v0)
     ctx->pc = 0x2bddccu;
     SET_GPR_ZE32(ctx, 4, (uint16_t)READ16(ADD32(GPR_U32(ctx, 2), 2)));
     // 0x2bddd0: 0xc4182a  slt         $v1, $a2, $a0
-    ctx->pc = 0x2bddd0u;
     SET_GPR_U64(ctx, 3, ((int64_t)GPR_S64(ctx, 6) < (int64_t)GPR_S64(ctx, 4)) ? 1 : 0);
     // 0x2bddd4: 0x83300b  movn        $a2, $a0, $v1
     ctx->pc = 0x2bddd4u;

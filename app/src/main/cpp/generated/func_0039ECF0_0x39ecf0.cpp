@@ -13,15 +13,13 @@
 
 // Function: func_0039ECF0
 // Address: 0x39ecf0 - 0x39ecf8
-void func_0039ECF0_0x39ecf0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0039ECF0_0x39ecf0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0039ECF0_0x39ecf0");
 #endif
 
-    ctx->pc = 0x39ecf0u;
 
     // 0x39ecf0: 0x80e7b08  j           func_39EC20
-    ctx->pc = 0x39ECF0u;
     ctx->pc = 0x39EC20u;
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x39EC20u, 0x39ECF0u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;

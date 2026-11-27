@@ -13,15 +13,13 @@
 
 // Function: func_003B6818
 // Address: 0x3b6818 - 0x3b6820
-void func_003B6818_0x3b6818(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003B6818_0x3b6818(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003B6818_0x3b6818");
 #endif
 
-    ctx->pc = 0x3b6818u;
 
     // 0x3b6818: 0x80edf06  j           func_3B7C18
-    ctx->pc = 0x3B6818u;
     ctx->pc = 0x3B7C18u;
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B7C18u, 0x3B6818u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;

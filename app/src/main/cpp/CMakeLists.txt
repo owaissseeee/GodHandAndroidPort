@@ -10,7 +10,7 @@ string(REGEX REPLACE "-march=[^ ]+" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 string(REGEX REPLACE "-mtune=[^ ]+" "" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
 string(REGEX REPLACE "-mtune=[^ ]+" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 
-set(GODHAND_PERF_FLAGS "-O3 -march=armv8-a+crc+simd -mtune=cortex-a53 -ffast-math -fno-finite-math-only -fno-signed-zeros -fno-math-errno -fno-trapping-math -fomit-frame-pointer -fvisibility-inlines-hidden -fno-semantic-interposition -ftls-model=initial-exec -mbranch-protection=none -DNDEBUG")
+set(GODHAND_PERF_FLAGS "-O3 -march=armv8-a+crc+simd -mtune=cortex-a53 -ffast-math -fno-finite-math-only -fno-signed-zeros -fno-math-errno -fno-trapping-math -fomit-frame-pointer -fvisibility-inlines-hidden -fno-semantic-interposition -mbranch-protection=none -DNDEBUG")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${GODHAND_PERF_FLAGS}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GODHAND_PERF_FLAGS}")
 
@@ -31,7 +31,6 @@ add_compile_options(
     -finline-functions
     -fvisibility-inlines-hidden
     -fno-semantic-interposition
-    -ftls-model=initial-exec
     -Wno-unused-variable
     -Wno-unused-but-set-variable
     -Wno-sign-compare
@@ -40,8 +39,11 @@ add_compile_options(
 
 add_link_options(
     -flto=thin
+    -Wl,--icf=safe
     -Wl,--gc-sections
     -Wl,-O3
+    -Wl,-z,noexecstack
+    -Wl,-z,max-page-size=16384
 )
 
 # 1. Third-Party Libraries (adrenotools, oboe, pcsx2-gs-android)
@@ -58,7 +60,7 @@ file(GLOB GODHAND_MODULE_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/generated_modules_
 file(GLOB GODHAND_HOST_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/godhand/*.cpp")
 
 set_source_files_properties(${GODHAND_UNITY_SOURCES} ${GODHAND_MODULE_SOURCES} PROPERTIES
-    COMPILE_FLAGS "-O3 -ffast-math -fno-finite-math-only -mtune=cortex-a53 -falign-functions=16"
+    COMPILE_FLAGS "-O3 -ffast-math -fno-finite-math-only -mtune=cortex-a53 -falign-functions=16 -fno-stack-protector"
 )
 
 add_library(godhand_android SHARED
@@ -70,6 +72,7 @@ add_library(godhand_android SHARED
     src/godhand/frame_patches.cpp
     src/godhand/freeze_watchdog.cpp
     src/godhand/save_state_manager.cpp
+    src/godhand/menu_touch_controller.cpp
     ${GODHAND_HOST_SOURCES}
     ${GODHAND_UNITY_SOURCES}
     ${GODHAND_MODULE_SOURCES}
@@ -108,10 +111,10 @@ target_link_libraries(godhand_android PRIVATE
 )
 
 # 4. Ahead-Of-Time (AOT) Recompiled VU1 Microprograms
-file(GLOB GODHAND_VU1_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/generated/vu1/*.cpp")
+file(GLOB GODHAND_VU1_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/generated/vu1/*.cpp")
 if(GODHAND_VU1_SOURCES)
     add_library(godhand_vu1_code STATIC ${GODHAND_VU1_SOURCES})
-    target_compile_options(godhand_vu1_code PRIVATE -O3 -fomit-frame-pointer -finline-functions)
+    target_compile_options(godhand_vu1_code PRIVATE -O3 -fomit-frame-pointer -finline-functions -fno-stack-protector)
     target_include_directories(godhand_vu1_code PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/runtime/ps2xRuntime/src/lib/vu

@@ -13,23 +13,22 @@
 
 // Function: func_003B1E68
 // Address: 0x3b1e68 - 0x3b1e90
-void func_003B1E68_0x3b1e68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003B1E68_0x3b1e68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003B1E68_0x3b1e68");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b1e80u: goto label_3b1e80;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b1e68u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b1e80u: goto label_3b1e80;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b1e68u;
 
     // 0x3b1e68: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x3b1e68u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x3b1e6c: 0xc0202d  daddu       $a0, $a2, $zero
-    ctx->pc = 0x3b1e6cu;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 6) + (uint64_t)GPR_U64(ctx, 0));
     // 0x3b1e70: 0x10800003  beqz        $a0, . + 4 + (0x3 << 2)
     ctx->pc = 0x3B1E70u;
@@ -46,21 +45,17 @@ void func_003B1E68_0x3b1e68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_3b1e80;
         }
     }
-    ctx->pc = 0x3B1E78u;
     // 0x3b1e78: 0xc0ec38c  jal         func_3B0E30
     ctx->pc = 0x3B1E78u;
     SET_GPR_U32(ctx, 31, 0x3B1E80u);
-    ctx->pc = 0x3B0E30u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B0E30u, 0x3B1E78u, 0x3B1E80u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &serialPutchar_0x3b0e30, 0x3b0e30u, 0x3b1e80u)) {
         return;
     }
-    ctx->pc = 0x3B1E80u;
 label_3b1e80:
     // 0x3b1e80: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x3b1e80u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x3b1e84: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x3b1e84u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x3b1e88: 0x3e00008  jr          $ra
     ctx->pc = 0x3B1E88u;

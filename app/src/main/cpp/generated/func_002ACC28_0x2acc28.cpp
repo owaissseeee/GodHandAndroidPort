@@ -13,12 +13,11 @@
 
 // Function: func_002ACC28
 // Address: 0x2acc28 - 0x2acc50
-void func_002ACC28_0x2acc28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002ACC28_0x2acc28(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002ACC28_0x2acc28");
 #endif
 
-    ctx->pc = 0x2acc28u;
 
     // 0x2acc28: 0x10c00004  beqz        $a2, . + 4 + (0x4 << 2)
     ctx->pc = 0x2ACC28u;
@@ -35,9 +34,7 @@ void func_002ACC28_0x2acc28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_2acc3c;
         }
     }
-    ctx->pc = 0x2ACC30u;
     // 0x2acc30: 0x451025  or          $v0, $v0, $a1
-    ctx->pc = 0x2acc30u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | GPR_U64(ctx, 5));
     // 0x2acc34: 0x3e00008  jr          $ra
     ctx->pc = 0x2ACC34u;
@@ -58,13 +55,10 @@ void func_002ACC28_0x2acc28(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2ACC3Cu;
 label_2acc3c:
     // 0x2acc3c: 0x51827  nor         $v1, $zero, $a1
-    ctx->pc = 0x2acc3cu;
     SET_GPR_U64(ctx, 3, ~(GPR_U64(ctx, 0) | GPR_U64(ctx, 5)));
     // 0x2acc40: 0x431024  and         $v0, $v0, $v1
-    ctx->pc = 0x2acc40u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 3));
     // 0x2acc44: 0x3e00008  jr          $ra
     ctx->pc = 0x2ACC44u;
@@ -85,9 +79,7 @@ label_2acc3c:
         return;
         #endif
     }
-    ctx->pc = 0x2ACC4Cu;
     // 0x2acc4c: 0x0  nop
-    ctx->pc = 0x2acc4cu;
     // NOP
     ctx->pc = 0x2acc50u;
 }

@@ -13,12 +13,11 @@
 
 // Function: Obj35E8_SetIndirect_30_18
 // Address: 0x35ef40 - 0x35ef50
-void Obj35E8_SetIndirect_30_18_0x35ef40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj35E8_SetIndirect_30_18_0x35ef40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj35E8_SetIndirect_30_18_0x35ef40");
 #endif
 
-    ctx->pc = 0x35ef40u;
 
     // 0x35ef40: 0x8c820030  lw          $v0, 0x30($a0)
     ctx->pc = 0x35ef40u;
@@ -42,9 +41,7 @@ void Obj35E8_SetIndirect_30_18_0x35ef40(uint8_t* rdram, R5900Context* ctx, PS2Ru
         return;
         #endif
     }
-    ctx->pc = 0x35EF4Cu;
     // 0x35ef4c: 0x0  nop
-    ctx->pc = 0x35ef4cu;
     // NOP
     ctx->pc = 0x35ef50u;
 }

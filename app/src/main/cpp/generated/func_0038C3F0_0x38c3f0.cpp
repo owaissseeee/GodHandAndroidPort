@@ -13,30 +13,30 @@
 
 // Function: func_0038C3F0
 // Address: 0x38c3f0 - 0x38c418
-void func_0038C3F0_0x38c3f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0038C3F0_0x38c3f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0038C3F0_0x38c3f0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38c3f0u: goto label_38c3f0;
-        case 0x38c3f4u: goto label_38c3f4;
-        case 0x38c3f8u: goto label_38c3f8;
-        case 0x38c3fcu: goto label_38c3fc;
-        case 0x38c400u: goto label_38c400;
-        case 0x38c404u: goto label_38c404;
-        case 0x38c408u: goto label_38c408;
-        case 0x38c40cu: goto label_38c40c;
-        case 0x38c410u: goto label_38c410;
-        case 0x38c414u: goto label_38c414;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38c3f0u, 0)) {
+        switch (ctx->pc) {
+            case 0x38c3f0u: goto label_38c3f0;
+            case 0x38c3f4u: goto label_38c3f4;
+            case 0x38c3f8u: goto label_38c3f8;
+            case 0x38c3fcu: goto label_38c3fc;
+            case 0x38c400u: goto label_38c400;
+            case 0x38c404u: goto label_38c404;
+            case 0x38c408u: goto label_38c408;
+            case 0x38c40cu: goto label_38c40c;
+            case 0x38c410u: goto label_38c410;
+            case 0x38c414u: goto label_38c414;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x38c3f0u;
 
 label_38c3f0:
     // 0x38c3f0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x38c3f0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
 label_38c3f4:
     // 0x38c3f4: 0xffbf0000  sd          $ra, 0x0($sp)
@@ -66,7 +66,6 @@ label_38c404:
             return;
         }
     }
-    ctx->pc = 0x38C408u;
 label_38c408:
     // 0x38c408: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x38c408u;
@@ -102,10 +101,8 @@ label_38c410:
         return;
         #endif
     }
-    ctx->pc = 0x38C414u;
 label_38c414:
     // 0x38c414: 0x0  nop
-    ctx->pc = 0x38c414u;
     // NOP
     ctx->pc = 0x38c418u;
 }

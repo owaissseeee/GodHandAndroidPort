@@ -14,21 +14,17 @@ namespace gh_mcport
 {
 // Function: __16__user_type_infoPCc
 // Address: 0x7c9c30 - 0x7c9c48
-void ps2___16__user_type_infoPCc_0x7c9c30(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___16__user_type_infoPCc_0x7c9c30(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___16__user_type_infoPCc_0x7c9c30");
 #endif
 
-    ctx->pc = 0x7c9c30u;
 
     // 0x7c9c30: 0x3c03007d  lui         $v1, 0x7D
-    ctx->pc = 0x7c9c30u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)125 << 16));
     // 0x7c9c34: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x7c9c34u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x7c9c38: 0x24630f70  addiu       $v1, $v1, 0xF70
-    ctx->pc = 0x7c9c38u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 3), 3952));
     // 0x7c9c3c: 0xac450000  sw          $a1, 0x0($v0)
     ctx->pc = 0x7c9c3cu;

@@ -14,12 +14,11 @@ namespace gh_event
 {
 // Function: getCrntCreateObjNo__C11cEventActor
 // Address: 0x7a94e0 - 0x7a94e8
-void getCrntCreateObjNo__C11cEventActor_0x7a94e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void getCrntCreateObjNo__C11cEventActor_0x7a94e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("getCrntCreateObjNo__C11cEventActor_0x7a94e0");
 #endif
 
-    ctx->pc = 0x7a94e0u;
 
     // 0x7a94e0: 0x3e00008  jr          $ra
     ctx->pc = 0x7A94E0u;

@@ -13,30 +13,27 @@
 
 // Function: ScrollCallback_hideLayers
 // Address: 0x298338 - 0x298388
-void ScrollCallback_hideLayers_0x298338(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ScrollCallback_hideLayers_0x298338(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ScrollCallback_hideLayers_0x298338");
 #endif
 
-    switch (ctx->pc) {
-        case 0x29836cu: goto label_29836c;
-        case 0x298378u: goto label_298378;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x298338u, 0)) {
+        switch (ctx->pc) {
+            case 0x29836cu: goto label_29836c;
+            case 0x298378u: goto label_298378;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x298338u;
 
     // 0x298338: 0x44800000  mtc1        $zero, $f0
-    ctx->pc = 0x298338u;
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x29833c: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x29833cu;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x298340: 0x46006032  c.eq.s      $f12, $f0
-    ctx->pc = 0x298340u;
     ctx->fcr31 = (FPU_C_EQ_S(ctx->f[12], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x298344: 0x0  nop
-    ctx->pc = 0x298344u;
     // NOP
     // 0x298348: 0x4500000b  bc1f        . + 4 + (0xB << 2)
     ctx->pc = 0x298348u;
@@ -53,7 +50,6 @@ void ScrollCallback_hideLayers_0x298338(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_298378;
         }
     }
-    ctx->pc = 0x298350u;
     // 0x298350: 0x10800003  beqz        $a0, . + 4 + (0x3 << 2)
     ctx->pc = 0x298350u;
     {
@@ -69,7 +65,6 @@ void ScrollCallback_hideLayers_0x298338(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_298360;
         }
     }
-    ctx->pc = 0x298358u;
     // 0x298358: 0x14820008  bne         $a0, $v0, . + 4 + (0x8 << 2)
     ctx->pc = 0x298358u;
     {
@@ -85,13 +80,10 @@ void ScrollCallback_hideLayers_0x298338(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_29837c;
         }
     }
-    ctx->pc = 0x298360u;
 label_298360:
     // 0x298360: 0x2404001e  addiu       $a0, $zero, 0x1E
-    ctx->pc = 0x298360u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 30));
     // 0x298364: 0xc0b6cac  jal         func_2DB2B0
-    ctx->pc = 0x298364u;
     SET_GPR_U32(ctx, 31, 0x29836Cu);
     ctx->pc = 0x298368u;
     ctx->in_delay_slot = true;
@@ -99,17 +91,13 @@ label_298360:
     // 0x298368: 0x282d  daddu       $a1, $zero, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2DB2B0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2DB2B0u, 0x298364u, 0x29836Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x29836cu)) {
         return;
     }
-    ctx->pc = 0x29836Cu;
 label_29836c:
     // 0x29836c: 0x2404001f  addiu       $a0, $zero, 0x1F
-    ctx->pc = 0x29836cu;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 31));
     // 0x298370: 0xc0b6cac  jal         func_2DB2B0
-    ctx->pc = 0x298370u;
     SET_GPR_U32(ctx, 31, 0x298378u);
     ctx->pc = 0x298374u;
     ctx->in_delay_slot = true;
@@ -117,11 +105,9 @@ label_29836c:
     // 0x298374: 0x282d  daddu       $a1, $zero, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2DB2B0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2DB2B0u, 0x298370u, 0x298378u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &displayScrollLayer_0x2db2b0, 0x2db2b0u, 0x298378u)) {
         return;
     }
-    ctx->pc = 0x298378u;
 label_298378:
     // 0x298378: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x298378u;
@@ -146,9 +132,7 @@ label_29837c:
         return;
         #endif
     }
-    ctx->pc = 0x298384u;
     // 0x298384: 0x0  nop
-    ctx->pc = 0x298384u;
     // NOP
     ctx->pc = 0x298388u;
 }

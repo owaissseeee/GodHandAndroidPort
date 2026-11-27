@@ -13,23 +13,22 @@
 
 // Function: SetSyscall
 // Address: 0x3b0020 - 0x3b0030
-void SetSyscall_0x3b0020(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetSyscall_0x3b0020(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetSyscall_0x3b0020");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3b0028u: goto label_3b0028;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3b0020u, 0)) {
+        switch (ctx->pc) {
+            case 0x3b0028u: goto label_3b0028;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3b0020u;
 
     // 0x3b0020: 0x24030074  addiu       $v1, $zero, 0x74
-    ctx->pc = 0x3b0020u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 116));
     // 0x3b0024: 0xc  syscall     0
-    ctx->pc = 0x3b0024u;
     ctx->pc = 0x3B0028u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

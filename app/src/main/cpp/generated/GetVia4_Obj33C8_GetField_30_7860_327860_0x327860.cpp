@@ -13,15 +13,13 @@
 
 // Function: GetVia4_Obj33C8_GetField_30_7860_327860
 // Address: 0x327860 - 0x327878
-void GetVia4_Obj33C8_GetField_30_7860_327860_0x327860(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetVia4_Obj33C8_GetField_30_7860_327860_0x327860(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetVia4_Obj33C8_GetField_30_7860_327860_0x327860");
 #endif
 
-    ctx->pc = 0x327860u;
 
     // 0x327860: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x327860u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x327864: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x327864u;
@@ -33,8 +31,6 @@ void GetVia4_Obj33C8_GetField_30_7860_327860_0x327860(uint8_t* rdram, R5900Conte
     ctx->pc = 0x32786cu;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x327870: 0x80cf3e2  j           func_33CF88
-    ctx->pc = 0x327870u;
-    ctx->pc = 0x327874u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x327870u;
     // 0x327874: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)

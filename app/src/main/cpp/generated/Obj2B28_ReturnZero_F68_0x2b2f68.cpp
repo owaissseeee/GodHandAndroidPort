@@ -13,12 +13,11 @@
 
 // Function: Obj2B28_ReturnZero_F68
 // Address: 0x2b2f68 - 0x2b2f70
-void Obj2B28_ReturnZero_F68_0x2b2f68(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj2B28_ReturnZero_F68_0x2b2f68(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj2B28_ReturnZero_F68_0x2b2f68");
 #endif
 
-    ctx->pc = 0x2b2f68u;
 
     // 0x2b2f68: 0x3e00008  jr          $ra
     ctx->pc = 0x2B2F68u;

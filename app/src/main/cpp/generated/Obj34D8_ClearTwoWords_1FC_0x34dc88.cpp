@@ -13,15 +13,13 @@
 
 // Function: Obj34D8_ClearTwoWords_1FC
 // Address: 0x34dc88 - 0x34dc98
-void Obj34D8_ClearTwoWords_1FC_0x34dc88(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj34D8_ClearTwoWords_1FC_0x34dc88(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj34D8_ClearTwoWords_1FC_0x34dc88");
 #endif
 
-    ctx->pc = 0x34dc88u;
 
     // 0x34dc88: 0x248401fc  addiu       $a0, $a0, 0x1FC
-    ctx->pc = 0x34dc88u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 508));
     // 0x34dc8c: 0xac800004  sw          $zero, 0x4($a0)
     ctx->pc = 0x34dc8cu;

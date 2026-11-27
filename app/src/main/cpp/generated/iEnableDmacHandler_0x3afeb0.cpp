@@ -13,23 +13,22 @@
 
 // Function: iEnableDmacHandler
 // Address: 0x3afeb0 - 0x3afec0
-void iEnableDmacHandler_0x3afeb0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void iEnableDmacHandler_0x3afeb0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("iEnableDmacHandler_0x3afeb0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afeb8u: goto label_3afeb8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afeb0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afeb8u: goto label_3afeb8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afeb0u;
 
     // 0x3afeb0: 0x2403ffa2  addiu       $v1, $zero, -0x5E
-    ctx->pc = 0x3afeb0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967202));
     // 0x3afeb4: 0xc  syscall     0
-    ctx->pc = 0x3afeb4u;
     ctx->pc = 0x3AFEB8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

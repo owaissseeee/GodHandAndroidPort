@@ -14,12 +14,11 @@ namespace gh_event
 {
 // Function: isEndCreateObj__C11cEventActor
 // Address: 0x7a9318 - 0x7a9328
-void isEndCreateObj__C11cEventActor_0x7a9318(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void isEndCreateObj__C11cEventActor_0x7a9318(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("isEndCreateObj__C11cEventActor_0x7a9318");
 #endif
 
-    ctx->pc = 0x7a9318u;
 
     // 0x7a9318: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x7a9318u;
@@ -43,9 +42,7 @@ void isEndCreateObj__C11cEventActor_0x7a9318(uint8_t* rdram, R5900Context* ctx, 
         return;
         #endif
     }
-    ctx->pc = 0x7A9324u;
     // 0x7a9324: 0x0  nop
-    ctx->pc = 0x7a9324u;
     // NOP
     ctx->pc = 0x7a9328u;
 }

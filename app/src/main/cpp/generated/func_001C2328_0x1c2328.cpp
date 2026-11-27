@@ -13,17 +13,18 @@
 
 // Function: func_001C2328
 // Address: 0x1c2328 - 0x1c2370
-void func_001C2328_0x1c2328(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001C2328_0x1c2328(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001C2328_0x1c2328");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1c2334u: goto label_1c2334;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1c2328u, 0)) {
+        switch (ctx->pc) {
+            case 0x1c2334u: goto label_1c2334;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1c2328u;
 
     // 0x1c2328: 0x908202f4  lbu         $v0, 0x2F4($a0)
     ctx->pc = 0x1c2328u;
@@ -43,7 +44,6 @@ void func_001C2328_0x1c2328(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1c233c;
         }
     }
-    ctx->pc = 0x1C2334u;
 label_1c2334:
     // 0x1c2334: 0x3e00008  jr          $ra
     ctx->pc = 0x1C2334u;
@@ -64,13 +64,10 @@ label_1c2334:
         return;
         #endif
     }
-    ctx->pc = 0x1C233Cu;
 label_1c233c:
     // 0x1c233c: 0x28820002  slti        $v0, $a0, 0x2
-    ctx->pc = 0x1c233cu;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 4) < (int64_t)(int32_t)2) ? 1 : 0);
     // 0x1c2340: 0x0  nop
-    ctx->pc = 0x1c2340u;
     // NOP
     // 0x1c2344: 0x1440fffb  bnez        $v0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x1C2344u;
@@ -90,7 +87,6 @@ label_1c233c:
             goto label_1c2334;
         }
     }
-    ctx->pc = 0x1C234Cu;
     // 0x1c234c: 0x14400005  bnez        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x1C234Cu;
     {
@@ -106,7 +102,6 @@ label_1c233c:
             goto label_1c2364;
         }
     }
-    ctx->pc = 0x1C2354u;
     // 0x1c2354: 0x1040fff7  beqz        $v0, . + 4 + (-0x9 << 2)
     ctx->pc = 0x1C2354u;
     {
@@ -125,7 +120,6 @@ label_1c233c:
             goto label_1c2334;
         }
     }
-    ctx->pc = 0x1C235Cu;
     // 0x1c235c: 0x1440fff5  bnez        $v0, . + 4 + (-0xB << 2)
     ctx->pc = 0x1C235Cu;
     {
@@ -138,7 +132,6 @@ label_1c233c:
             goto label_1c2334;
         }
     }
-    ctx->pc = 0x1C2364u;
 label_1c2364:
     // 0x1c2364: 0x3e00008  jr          $ra
     ctx->pc = 0x1C2364u;
@@ -159,9 +152,7 @@ label_1c2364:
         return;
         #endif
     }
-    ctx->pc = 0x1C236Cu;
     // 0x1c236c: 0x0  nop
-    ctx->pc = 0x1c236cu;
     // NOP
     ctx->pc = 0x1c2370u;
 }

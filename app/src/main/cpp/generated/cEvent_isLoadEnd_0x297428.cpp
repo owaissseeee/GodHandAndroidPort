@@ -13,23 +13,22 @@
 
 // Function: cEvent_isLoadEnd
 // Address: 0x297428 - 0x297450
-void cEvent_isLoadEnd_0x297428(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_isLoadEnd_0x297428(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_isLoadEnd_0x297428");
 #endif
 
-    switch (ctx->pc) {
-        case 0x297440u: goto label_297440;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x297428u, 0)) {
+        switch (ctx->pc) {
+            case 0x297440u: goto label_297440;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x297428u;
 
     // 0x297428: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x297428u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x29742c: 0x3c020058  lui         $v0, 0x58
-    ctx->pc = 0x29742cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)88 << 16));
     // 0x297430: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x297430u;
@@ -38,7 +37,6 @@ void cEvent_isLoadEnd_0x297428(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     ctx->pc = 0x297434u;
     SET_GPR_S32(ctx, 5, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 12)));
     // 0x297438: 0xc080426  jal         func_201098
-    ctx->pc = 0x297438u;
     SET_GPR_U32(ctx, 31, 0x297440u);
     ctx->pc = 0x29743Cu;
     ctx->in_delay_slot = true;
@@ -46,17 +44,14 @@ void cEvent_isLoadEnd_0x297428(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     // 0x29743c: 0x24443f20  addiu       $a0, $v0, 0x3F20 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 2), 16160));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x201098u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x201098u, 0x297438u, 0x297440u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cDvd_Check_0x201098, 0x201098u, 0x297440u)) {
         return;
     }
-    ctx->pc = 0x297440u;
 label_297440:
     // 0x297440: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x297440u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x297444: 0x2c420001  sltiu       $v0, $v0, 0x1
-    ctx->pc = 0x297444u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)1) ? 1 : 0);
     // 0x297448: 0x3e00008  jr          $ra
     ctx->pc = 0x297448u;

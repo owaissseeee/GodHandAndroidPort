@@ -13,23 +13,22 @@
 
 // Function: EnableIntcHandler
 // Address: 0x3afe60 - 0x3afe70
-void EnableIntcHandler_0x3afe60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EnableIntcHandler_0x3afe60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EnableIntcHandler_0x3afe60");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afe68u: goto label_3afe68;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afe60u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afe68u: goto label_3afe68;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afe60u;
 
     // 0x3afe60: 0x2403005c  addiu       $v1, $zero, 0x5C
-    ctx->pc = 0x3afe60u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 92));
     // 0x3afe64: 0xc  syscall     0
-    ctx->pc = 0x3afe64u;
     ctx->pc = 0x3AFE68u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

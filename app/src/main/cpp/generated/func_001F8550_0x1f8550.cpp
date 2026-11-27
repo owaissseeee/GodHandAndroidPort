@@ -13,12 +13,11 @@
 
 // Function: func_001F8550
 // Address: 0x1f8550 - 0x1f85d0
-void func_001F8550_0x1f8550(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001F8550_0x1f8550(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001F8550_0x1f8550");
 #endif
 
-    ctx->pc = 0x1f8550u;
 
     // 0x1f8550: 0xc4800004  lwc1        $f0, 0x4($a0)
     ctx->pc = 0x1f8550u;
@@ -30,10 +29,8 @@ void func_001F8550_0x1f8550(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x1f8558u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 8)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x1f855c: 0x46001034  c.lt.s      $f2, $f0
-    ctx->pc = 0x1f855cu;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[2], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x1f8560: 0x0  nop
-    ctx->pc = 0x1f8560u;
     // NOP
     // 0x1f8564: 0x45010016  bc1t        . + 4 + (0x16 << 2)
     ctx->pc = 0x1F8564u;
@@ -50,12 +47,9 @@ void func_001F8550_0x1f8550(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1f85c0;
         }
     }
-    ctx->pc = 0x1F856Cu;
     // 0x1f856c: 0x46020034  c.lt.s      $f0, $f2
-    ctx->pc = 0x1f856cu;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[0], ctx->f[2])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x1f8570: 0x0  nop
-    ctx->pc = 0x1f8570u;
     // NOP
     // 0x1f8574: 0x45010014  bc1t        . + 4 + (0x14 << 2)
     ctx->pc = 0x1F8574u;
@@ -72,7 +66,6 @@ void func_001F8550_0x1f8550(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1f85c8;
         }
     }
-    ctx->pc = 0x1F857Cu;
     // 0x1f857c: 0xc4a10008  lwc1        $f1, 0x8($a1)
     ctx->pc = 0x1f857cu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 5), 8)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
@@ -86,37 +79,27 @@ void func_001F8550_0x1f8550(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x1f8588u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 20)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[3] = f; }
     // 0x1f858c: 0x46020001  sub.s       $f0, $f0, $f2
-    ctx->pc = 0x1f858cu;
     ctx->f[0] = FPU_SUB_S(ctx->f[0], ctx->f[2]);
     // 0x1f8590: 0x46030841  sub.s       $f1, $f1, $f3
-    ctx->pc = 0x1f8590u;
     ctx->f[1] = FPU_SUB_S(ctx->f[1], ctx->f[3]);
     // 0x1f8594: 0x46000002  mul.s       $f0, $f0, $f0
-    ctx->pc = 0x1f8594u;
     ctx->f[0] = FPU_MUL_S(ctx->f[0], ctx->f[0]);
     // 0x1f8598: 0x46010842  mul.s       $f1, $f1, $f1
-    ctx->pc = 0x1f8598u;
     ctx->f[1] = FPU_MUL_S(ctx->f[1], ctx->f[1]);
     // 0x1f859c: 0x46010000  add.s       $f0, $f0, $f1
-    ctx->pc = 0x1f859cu;
     ctx->f[0] = FPU_ADD_S(ctx->f[0], ctx->f[1]);
     // 0x1f85a0: 0x0  nop
-    ctx->pc = 0x1f85a0u;
     // NOP
     // 0x1f85a4: 0x0  nop
-    ctx->pc = 0x1f85a4u;
     // NOP
     // 0x1f85a8: 0x46000004  c1          0x4
-    ctx->pc = 0x1f85a8u;
     ctx->f[0] = ps2FpuSqrt(ctx->fcr31, ctx->f[0]);
     // 0x1f85ac: 0xc481000c  lwc1        $f1, 0xC($a0)
     ctx->pc = 0x1f85acu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 12)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x1f85b0: 0x46010034  c.lt.s      $f0, $f1
-    ctx->pc = 0x1f85b0u;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[0], ctx->f[1])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x1f85b4: 0x0  nop
-    ctx->pc = 0x1f85b4u;
     // NOP
     // 0x1f85b8: 0x45010003  bc1t        . + 4 + (0x3 << 2)
     ctx->pc = 0x1F85B8u;
@@ -133,7 +116,6 @@ void func_001F8550_0x1f8550(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_1f85c8;
         }
     }
-    ctx->pc = 0x1F85C0u;
 label_1f85c0:
     // 0x1f85c0: 0x3e00008  jr          $ra
     ctx->pc = 0x1F85C0u;
@@ -154,7 +136,6 @@ label_1f85c0:
         return;
         #endif
     }
-    ctx->pc = 0x1F85C8u;
 label_1f85c8:
     // 0x1f85c8: 0x3e00008  jr          $ra
     ctx->pc = 0x1F85C8u;

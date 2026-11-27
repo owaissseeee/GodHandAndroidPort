@@ -13,31 +13,25 @@
 
 // Function: Obj35D0_SendEvent_FF000601_D1F0
 // Address: 0x35d1f0 - 0x35d210
-void Obj35D0_SendEvent_FF000601_D1F0_0x35d1f0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj35D0_SendEvent_FF000601_D1F0_0x35d1f0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj35D0_SendEvent_FF000601_D1F0_0x35d1f0");
 #endif
 
-    ctx->pc = 0x35d1f0u;
 
     // 0x35d1f0: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x35d1f0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x35d1f4: 0x3c05ff00  lui         $a1, 0xFF00
-    ctx->pc = 0x35d1f4u;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)65280 << 16));
     // 0x35d1f8: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x35d1f8u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x35d1fc: 0x34a50601  ori         $a1, $a1, 0x601
-    ctx->pc = 0x35d1fcu;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) | (uint64_t)(uint16_t)1537);
     // 0x35d200: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x35d200u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x35d204: 0x80d375c  j           func_34DD70
-    ctx->pc = 0x35D204u;
-    ctx->pc = 0x35D208u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x35D204u;
     // 0x35d208: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)
@@ -47,9 +41,7 @@ void Obj35D0_SendEvent_FF000601_D1F0_0x35d1f0(uint8_t* rdram, R5900Context* ctx,
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x34DD70u, 0x35D204u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x35D20Cu;
     // 0x35d20c: 0x0  nop
-    ctx->pc = 0x35d20cu;
     // NOP
     ctx->pc = 0x35d210u;
 }

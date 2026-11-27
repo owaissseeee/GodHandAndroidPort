@@ -2525,6 +2525,11 @@ namespace ps2_host_input
                       << unsigned(largeMotor) << std::endl;
     }
 
+    uint32_t getPrimaryVibrationState() noexcept
+    {
+        return static_cast<uint32_t>(g_motors[0].load(std::memory_order_relaxed));
+    }
+
     std::vector<std::pair<std::string, std::string>> defaultPadSettings(uint32_t pad)
     {
         std::vector<std::pair<std::string, std::string>> settings{

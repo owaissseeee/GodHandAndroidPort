@@ -13,26 +13,24 @@
 
 // Function: func_0037D170
 // Address: 0x37d170 - 0x37d1a8
-void func_0037D170_0x37d170(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0037D170_0x37d170(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0037D170_0x37d170");
 #endif
 
-    switch (ctx->pc) {
-        case 0x37d180u: goto label_37d180;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x37d170u, 0)) {
+        switch (ctx->pc) {
+            case 0x37d180u: goto label_37d180;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x37d170u;
 
     // 0x37d170: 0x3c020077  lui         $v0, 0x77
-    ctx->pc = 0x37d170u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)119 << 16));
     // 0x37d174: 0x2443b9c0  addiu       $v1, $v0, -0x4640
-    ctx->pc = 0x37d174u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 4294949312));
     // 0x37d178: 0x24640f00  addiu       $a0, $v1, 0xF00
-    ctx->pc = 0x37d178u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 3), 3840));
     // 0x37d17c: 0x94620000  lhu         $v0, 0x0($v1)
     ctx->pc = 0x37d17cu;
@@ -53,7 +51,6 @@ label_37d180:
             goto label_37d190;
         }
     }
-    ctx->pc = 0x37D188u;
     // 0x37d188: 0x3e00008  jr          $ra
     ctx->pc = 0x37D188u;
     {
@@ -73,10 +70,8 @@ label_37d180:
         return;
         #endif
     }
-    ctx->pc = 0x37D190u;
 label_37d190:
     // 0x37d190: 0x64102a  slt         $v0, $v1, $a0
-    ctx->pc = 0x37d190u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 3) < (int64_t)GPR_S64(ctx, 4)) ? 1 : 0);
     // 0x37d194: 0x5440fffa  bnel        $v0, $zero, . + 4 + (-0x6 << 2)
     ctx->pc = 0x37D194u;
@@ -96,7 +91,6 @@ label_37d190:
             goto label_37d180;
         }
     }
-    ctx->pc = 0x37D19Cu;
     // 0x37d19c: 0x3e00008  jr          $ra
     ctx->pc = 0x37D19Cu;
     {
@@ -116,9 +110,7 @@ label_37d190:
         return;
         #endif
     }
-    ctx->pc = 0x37D1A4u;
     // 0x37d1a4: 0x0  nop
-    ctx->pc = 0x37d1a4u;
     // NOP
     ctx->pc = 0x37d1a8u;
 }

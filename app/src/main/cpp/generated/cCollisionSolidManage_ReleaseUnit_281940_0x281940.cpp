@@ -13,32 +13,29 @@
 
 // Function: cCollisionSolidManage_ReleaseUnit_281940
 // Address: 0x281940 - 0x281968
-void cCollisionSolidManage_ReleaseUnit_281940_0x281940(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCollisionSolidManage_ReleaseUnit_281940_0x281940(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCollisionSolidManage_ReleaseUnit_281940_0x281940");
 #endif
 
-    switch (ctx->pc) {
-        case 0x281958u: goto label_281958;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x281940u, 0)) {
+        switch (ctx->pc) {
+            case 0x281958u: goto label_281958;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x281940u;
 
     // 0x281940: 0x80282d  daddu       $a1, $a0, $zero
-    ctx->pc = 0x281940u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x281944: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x281944u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x281948: 0x3c040046  lui         $a0, 0x46
-    ctx->pc = 0x281948u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)70 << 16));
     // 0x28194c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x28194cu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x281950: 0xc04d1fa  jal         func_1347E8
-    ctx->pc = 0x281950u;
     SET_GPR_U32(ctx, 31, 0x281958u);
     ctx->pc = 0x281954u;
     ctx->in_delay_slot = true;
@@ -46,11 +43,9 @@ void cCollisionSolidManage_ReleaseUnit_281940_0x281940(uint8_t* rdram, R5900Cont
     // 0x281954: 0x24842fc0  addiu       $a0, $a0, 0x2FC0 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 12224));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1347E8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1347E8u, 0x281950u, 0x281958u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cCollisionSolidManage_ReleaseUnit_0x1347e8, 0x1347e8u, 0x281958u)) {
         return;
     }
-    ctx->pc = 0x281958u;
 label_281958:
     // 0x281958: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x281958u;
@@ -74,9 +69,7 @@ label_281958:
         return;
         #endif
     }
-    ctx->pc = 0x281964u;
     // 0x281964: 0x0  nop
-    ctx->pc = 0x281964u;
     // NOP
     ctx->pc = 0x281968u;
 }

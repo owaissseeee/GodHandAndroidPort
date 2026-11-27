@@ -13,12 +13,11 @@
 
 // Function: cSceAtManager_getUnitList
 // Address: 0x2c30c0 - 0x2c30c8
-void cSceAtManager_getUnitList_0x2c30c0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSceAtManager_getUnitList_0x2c30c0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSceAtManager_getUnitList_0x2c30c0");
 #endif
 
-    ctx->pc = 0x2c30c0u;
 
     // 0x2c30c0: 0x3e00008  jr          $ra
     ctx->pc = 0x2C30C0u;

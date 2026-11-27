@@ -13,21 +13,18 @@
 
 // Function: StoreMotionParamsBoth_2609A8
 // Address: 0x2609a8 - 0x2609e0
-void StoreMotionParamsBoth_2609A8_0x2609a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void StoreMotionParamsBoth_2609A8_0x2609a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("StoreMotionParamsBoth_2609A8_0x2609a8");
 #endif
 
-    ctx->pc = 0x2609a8u;
 
     // 0x2609a8: 0x94c00  sll         $t1, $t1, 16
-    ctx->pc = 0x2609a8u;
     SET_GPR_S32(ctx, 9, (int32_t)SLL32(GPR_U32(ctx, 9), 16));
     // 0x2609ac: 0xac851888  sw          $a1, 0x1888($a0)
     ctx->pc = 0x2609acu;
     WRITE32(ADD32(GPR_U32(ctx, 4), 6280), GPR_U32(ctx, 5));
     // 0x2609b0: 0x94c03  sra         $t1, $t1, 16
-    ctx->pc = 0x2609b0u;
     SET_GPR_S32(ctx, 9, SRA32(GPR_S32(ctx, 9), 16));
     // 0x2609b4: 0xac861884  sw          $a2, 0x1884($a0)
     ctx->pc = 0x2609b4u;
@@ -72,9 +69,7 @@ void StoreMotionParamsBoth_2609A8_0x2609a8(uint8_t* rdram, R5900Context* ctx, PS
         return;
         #endif
     }
-    ctx->pc = 0x2609DCu;
     // 0x2609dc: 0x0  nop
-    ctx->pc = 0x2609dcu;
     // NOP
     ctx->pc = 0x2609e0u;
 }

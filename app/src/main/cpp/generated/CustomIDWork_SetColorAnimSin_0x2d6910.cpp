@@ -13,12 +13,11 @@
 
 // Function: CustomIDWork_SetColorAnimSin
 // Address: 0x2d6910 - 0x2d6948
-void CustomIDWork_SetColorAnimSin_0x2d6910(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CustomIDWork_SetColorAnimSin_0x2d6910(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CustomIDWork_SetColorAnimSin_0x2d6910");
 #endif
 
-    ctx->pc = 0x2d6910u;
 
     // 0x2d6910: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2d6910u;
@@ -38,9 +37,7 @@ void CustomIDWork_SetColorAnimSin_0x2d6910(uint8_t* rdram, R5900Context* ctx, PS
             goto label_2d6940;
         }
     }
-    ctx->pc = 0x2D691Cu;
     // 0x2d691c: 0x24020005  addiu       $v0, $zero, 0x5
-    ctx->pc = 0x2d691cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 5));
     // 0x2d6920: 0xac850050  sw          $a1, 0x50($a0)
     ctx->pc = 0x2d6920u;
@@ -66,9 +63,7 @@ void CustomIDWork_SetColorAnimSin_0x2d6910(uint8_t* rdram, R5900Context* ctx, PS
             goto label_2d693c;
         }
     }
-    ctx->pc = 0x2D6934u;
     // 0x2d6934: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x2d6934u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x2d6938: 0xa4820058  sh          $v0, 0x58($a0)
     ctx->pc = 0x2d6938u;

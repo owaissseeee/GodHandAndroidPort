@@ -13,12 +13,11 @@
 
 // Function: _request_call
 // Address: 0x3b3098 - 0x3b3128
-void _request_call_0x3b3098(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void _request_call_0x3b3098(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("_request_call_0x3b3098");
 #endif
 
-    ctx->pc = 0x3b3098u;
 
     // 0x3b3098: 0x8c850034  lw          $a1, 0x34($a0)
     ctx->pc = 0x3b3098u;
@@ -44,7 +43,6 @@ void _request_call_0x3b3098(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_3b30b4;
         }
     }
-    ctx->pc = 0x3B30ACu;
     // 0x3b30ac: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x3B30ACu;
     {
@@ -60,7 +58,6 @@ void _request_call_0x3b3098(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_3b30b8;
         }
     }
-    ctx->pc = 0x3B30B4u;
 label_3b30b4:
     // 0x3b30b4: 0xac45003c  sw          $a1, 0x3C($v0)
     ctx->pc = 0x3b30b4u;
@@ -129,7 +126,6 @@ label_3b30b8:
             goto label_3b311c;
         }
     }
-    ctx->pc = 0x3B3108u;
     // 0x3b3108: 0x8cc20004  lw          $v0, 0x4($a2)
     ctx->pc = 0x3b3108u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 6), 4)));
@@ -142,14 +138,11 @@ label_3b30b8:
             goto label_3b311c;
         }
     }
-    ctx->pc = 0x3B3114u;
     // 0x3b3114: 0x80ec290  j           func_3B0A40
-    ctx->pc = 0x3B3114u;
     ctx->pc = 0x3B0A40u;
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x3B0A40u, 0x3B3114u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x3B311Cu;
 label_3b311c:
     // 0x3b311c: 0x3e00008  jr          $ra
     ctx->pc = 0x3B311Cu;
@@ -164,9 +157,7 @@ label_3b311c:
         return;
         #endif
     }
-    ctx->pc = 0x3B3124u;
     // 0x3b3124: 0x0  nop
-    ctx->pc = 0x3b3124u;
     // NOP
     ctx->pc = 0x3b3128u;
 }

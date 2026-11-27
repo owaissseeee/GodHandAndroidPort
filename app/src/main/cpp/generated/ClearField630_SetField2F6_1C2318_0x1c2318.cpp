@@ -13,15 +13,13 @@
 
 // Function: ClearField630_SetField2F6_1C2318
 // Address: 0x1c2318 - 0x1c2328
-void ClearField630_SetField2F6_1C2318_0x1c2318(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearField630_SetField2F6_1C2318_0x1c2318(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearField630_SetField2F6_1C2318_0x1c2318");
 #endif
 
-    ctx->pc = 0x1c2318u;
 
     // 0x1c2318: 0x24020002  addiu       $v0, $zero, 0x2
-    ctx->pc = 0x1c2318u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x1c231c: 0xac800630  sw          $zero, 0x630($a0)
     ctx->pc = 0x1c231cu;

@@ -13,20 +13,20 @@
 
 // Function: ClearInvalidEntry_376400
 // Address: 0x376400 - 0x376438
-void ClearInvalidEntry_376400_0x376400(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearInvalidEntry_376400_0x376400(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearInvalidEntry_376400_0x376400");
 #endif
 
-    switch (ctx->pc) {
-        case 0x376418u: goto label_376418;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x376400u, 0)) {
+        switch (ctx->pc) {
+            case 0x376418u: goto label_376418;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x376400u;
 
     // 0x376400: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x376400u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x376404: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x376404u;
@@ -35,10 +35,8 @@ void ClearInvalidEntry_376400_0x376400(uint8_t* rdram, R5900Context* ctx, PS2Run
     ctx->pc = 0x376408u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x37640c: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x37640cu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x376410: 0xc0df42a  jal         func_37D0A8
-    ctx->pc = 0x376410u;
     SET_GPR_U32(ctx, 31, 0x376418u);
     ctx->pc = 0x376414u;
     ctx->in_delay_slot = true;
@@ -46,11 +44,9 @@ void ClearInvalidEntry_376400_0x376400(uint8_t* rdram, R5900Context* ctx, PS2Run
     // 0x376414: 0x8e040004  lw          $a0, 0x4($s0) (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 4)));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x37D0A8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x37D0A8u, 0x376410u, 0x376418u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_0037D0A8_0x37d0a8, 0x37d0a8u, 0x376418u)) {
         return;
     }
-    ctx->pc = 0x376418u;
 label_376418:
     // 0x376418: 0x54400004  bnel        $v0, $zero, . + 4 + (0x4 << 2)
     ctx->pc = 0x376418u;
@@ -67,7 +63,6 @@ label_376418:
             goto label_37642c;
         }
     }
-    ctx->pc = 0x376420u;
     // 0x376420: 0xae000004  sw          $zero, 0x4($s0)
     ctx->pc = 0x376420u;
     WRITE32(ADD32(GPR_U32(ctx, 16), 4), GPR_U32(ctx, 0));

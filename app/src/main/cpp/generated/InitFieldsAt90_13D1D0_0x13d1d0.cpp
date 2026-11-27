@@ -13,15 +13,13 @@
 
 // Function: InitFieldsAt90_13D1D0
 // Address: 0x13d1d0 - 0x13d1e8
-void InitFieldsAt90_13D1D0_0x13d1d0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void InitFieldsAt90_13D1D0_0x13d1d0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("InitFieldsAt90_13D1D0_0x13d1d0");
 #endif
 
-    ctx->pc = 0x13d1d0u;
 
     // 0x13d1d0: 0x24020006  addiu       $v0, $zero, 0x6
-    ctx->pc = 0x13d1d0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
     // 0x13d1d4: 0xa0800092  sb          $zero, 0x92($a0)
     ctx->pc = 0x13d1d4u;
@@ -48,9 +46,7 @@ void InitFieldsAt90_13D1D0_0x13d1d0(uint8_t* rdram, R5900Context* ctx, PS2Runtim
         return;
         #endif
     }
-    ctx->pc = 0x13D1E4u;
     // 0x13d1e4: 0x0  nop
-    ctx->pc = 0x13d1e4u;
     // NOP
     ctx->pc = 0x13d1e8u;
 }

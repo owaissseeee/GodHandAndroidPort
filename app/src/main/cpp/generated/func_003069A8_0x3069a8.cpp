@@ -13,12 +13,11 @@
 
 // Function: func_003069A8
 // Address: 0x3069a8 - 0x3069e8
-void func_003069A8_0x3069a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_003069A8_0x3069a8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_003069A8_0x3069a8");
 #endif
 
-    ctx->pc = 0x3069a8u;
 
     // 0x3069a8: 0xacc00000  sw          $zero, 0x0($a2)
     ctx->pc = 0x3069a8u;
@@ -27,7 +26,6 @@ void func_003069A8_0x3069a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x3069acu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 4)));
     // 0x3069b0: 0xa2102b  sltu        $v0, $a1, $v0
-    ctx->pc = 0x3069b0u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 5) < (uint64_t)GPR_U64(ctx, 2)) ? 1 : 0);
     // 0x3069b4: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
     ctx->pc = 0x3069B4u;
@@ -44,7 +42,6 @@ void func_003069A8_0x3069a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_3069c4;
         }
     }
-    ctx->pc = 0x3069BCu;
     // 0x3069bc: 0x3e00008  jr          $ra
     ctx->pc = 0x3069BCu;
     {
@@ -64,10 +61,8 @@ void func_003069A8_0x3069a8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x3069C4u;
 label_3069c4:
     // 0x3069c4: 0x821021  addu        $v0, $a0, $v0
-    ctx->pc = 0x3069c4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 4), GPR_U32(ctx, 2)));
     // 0x3069c8: 0x8c420010  lw          $v0, 0x10($v0)
     ctx->pc = 0x3069c8u;
@@ -87,9 +82,7 @@ label_3069c4:
             goto label_3069e0;
         }
     }
-    ctx->pc = 0x3069D4u;
     // 0x3069d4: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x3069d4u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x3069d8: 0x3e00008  jr          $ra
     ctx->pc = 0x3069D8u;
@@ -110,7 +103,6 @@ label_3069c4:
         return;
         #endif
     }
-    ctx->pc = 0x3069E0u;
 label_3069e0:
     // 0x3069e0: 0x3e00008  jr          $ra
     ctx->pc = 0x3069E0u;

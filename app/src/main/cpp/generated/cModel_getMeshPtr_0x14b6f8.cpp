@@ -13,20 +13,20 @@
 
 // Function: cModel_getMeshPtr
 // Address: 0x14b6f8 - 0x14b730
-void cModel_getMeshPtr_0x14b6f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cModel_getMeshPtr_0x14b6f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cModel_getMeshPtr_0x14b6f8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x14b710u: goto label_14b710;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x14b6f8u, 0)) {
+        switch (ctx->pc) {
+            case 0x14b710u: goto label_14b710;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x14b6f8u;
 
     // 0x14b6f8: 0x24a3ffff  addiu       $v1, $a1, -0x1
-    ctx->pc = 0x14b6f8u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 5), 4294967295));
     // 0x14b6fc: 0x10a0000a  beqz        $a1, . + 4 + (0xA << 2)
     ctx->pc = 0x14B6FCu;
@@ -43,15 +43,12 @@ void cModel_getMeshPtr_0x14b6f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_14b728;
         }
     }
-    ctx->pc = 0x14B704u;
     // 0x14b704: 0x2405ffff  addiu       $a1, $zero, -0x1
-    ctx->pc = 0x14b704u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967295));
     // 0x14b708: 0x8c420404  lw          $v0, 0x404($v0)
     ctx->pc = 0x14b708u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 1028)));
     // 0x14b70c: 0x0  nop
-    ctx->pc = 0x14b70cu;
     // NOP
 label_14b710:
     // 0x14b710: 0x14400003  bnez        $v0, . + 4 + (0x3 << 2)
@@ -69,7 +66,6 @@ label_14b710:
             goto label_14b720;
         }
     }
-    ctx->pc = 0x14B718u;
     // 0x14b718: 0x3e00008  jr          $ra
     ctx->pc = 0x14B718u;
     {
@@ -89,7 +85,6 @@ label_14b710:
         return;
         #endif
     }
-    ctx->pc = 0x14B720u;
 label_14b720:
     // 0x14b720: 0x5465fffb  bnel        $v1, $a1, . + 4 + (-0x5 << 2)
     ctx->pc = 0x14B720u;
@@ -109,7 +104,6 @@ label_14b720:
             goto label_14b710;
         }
     }
-    ctx->pc = 0x14B728u;
 label_14b728:
     // 0x14b728: 0x3e00008  jr          $ra
     ctx->pc = 0x14B728u;

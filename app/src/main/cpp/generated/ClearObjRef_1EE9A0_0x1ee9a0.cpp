@@ -13,12 +13,11 @@
 
 // Function: ClearObjRef_1EE9A0
 // Address: 0x1ee9a0 - 0x1ee9c8
-void ClearObjRef_1EE9A0_0x1ee9a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearObjRef_1EE9A0_0x1ee9a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearObjRef_1EE9A0_0x1ee9a0");
 #endif
 
-    ctx->pc = 0x1ee9a0u;
 
     // 0x1ee9a0: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x1ee9a0u;
@@ -38,7 +37,6 @@ void ClearObjRef_1EE9A0_0x1ee9a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_1ee9b4;
         }
     }
-    ctx->pc = 0x1EE9ACu;
     // 0x1ee9ac: 0xa06202f4  sb          $v0, 0x2F4($v1)
     ctx->pc = 0x1ee9acu;
     WRITE8(ADD32(GPR_U32(ctx, 3), 756), (uint8_t)GPR_U32(ctx, 2));
@@ -71,9 +69,7 @@ label_1ee9b4:
         return;
         #endif
     }
-    ctx->pc = 0x1EE9C4u;
     // 0x1ee9c4: 0x0  nop
-    ctx->pc = 0x1ee9c4u;
     // NOP
     ctx->pc = 0x1ee9c8u;
 }

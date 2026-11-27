@@ -13,12 +13,11 @@
 
 // Function: SetField_630_1C2370
 // Address: 0x1c2370 - 0x1c2378
-void SetField_630_1C2370_0x1c2370(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetField_630_1C2370_0x1c2370(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetField_630_1C2370_0x1c2370");
 #endif
 
-    ctx->pc = 0x1c2370u;
 
     // 0x1c2370: 0x3e00008  jr          $ra
     ctx->pc = 0x1C2370u;

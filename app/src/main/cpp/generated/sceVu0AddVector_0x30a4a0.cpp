@@ -6,6 +6,7 @@
 
 #include "ps2_syscalls.h"
 #include "ps2_stubs.h"
+#include "sdk_arm64_fast.h"
 
 #ifdef PS2_FUNCTION_LOG_TRACKER
 #include "ps2_log.h"
@@ -13,12 +14,24 @@
 
 // Function: sceVu0AddVector
 // Address: 0x30a4a0 - 0x30a4b8
-void sceVu0AddVector_0x30a4a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void sceVu0AddVector_0x30a4a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("sceVu0AddVector_0x30a4a0");
 #endif
 
-    ctx->pc = 0x30a4a0u;
+#if defined(__aarch64__) || defined(_M_ARM64)
+    {
+        uint8_t* const d = ps2TryFastSpan(rdram, GPR_U32(ctx, 4) & ~0xFu, 16u);
+        const uint8_t* const s0 = ps2TryFastSpan(rdram, GPR_U32(ctx, 5) & ~0xFu, 16u);
+        const uint8_t* const s1 = ps2TryFastSpan(rdram, GPR_U32(ctx, 6) & ~0xFu, 16u);
+        if (__builtin_expect(d != nullptr && s0 != nullptr && s1 != nullptr, 1)) {
+            ps2StoreVec4(d, vaddq_f32(ps2LoadVec4(s0), ps2LoadVec4(s1)));
+            ps2FastReturn(rdram, ctx, runtime, 0x30A4B0u);
+            return;
+        }
+    }
+#endif
+
 
     // 0x30a4a0: 0xd8a40000  lqc2        $vf4, 0x0($a1)
     ctx->pc = 0x30a4a0u;
@@ -27,7 +40,6 @@ void sceVu0AddVector_0x30a4a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
     ctx->pc = 0x30a4a4u;
     ctx->vu0_vf[5] = _mm_castsi128_ps(READ128(ADD32(GPR_U32(ctx, 6), 0)));
     // 0x30a4a8: 0x4be521a8  vadd.xyzw   $vf6, $vf4, $vf5
-    ctx->pc = 0x30a4a8u;
     { __m128 res = PS2_VADD(ctx->vu0_vf[4], ctx->vu0_vf[5]); __m128i mask = _mm_set_epi32(-1, -1, -1, -1); ctx->vu0_vf[6] = PS2_VBLEND(ctx->vu0_vf[6], res, _mm_castsi128_ps(mask)); }
     // 0x30a4ac: 0xf8860000  sqc2        $vf6, 0x0($a0)
     ctx->pc = 0x30a4acu;

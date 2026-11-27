@@ -13,12 +13,11 @@
 
 // Function: Obj33C8_GetShort_E0
 // Address: 0x33cfa0 - 0x33cfa8
-void Obj33C8_GetShort_E0_0x33cfa0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj33C8_GetShort_E0_0x33cfa0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj33C8_GetShort_E0_0x33cfa0");
 #endif
 
-    ctx->pc = 0x33cfa0u;
 
     // 0x33cfa0: 0x3e00008  jr          $ra
     ctx->pc = 0x33CFA0u;

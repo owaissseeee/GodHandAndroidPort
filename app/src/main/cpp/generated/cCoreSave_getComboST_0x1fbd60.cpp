@@ -13,15 +13,13 @@
 
 // Function: cCoreSave_getComboST
 // Address: 0x1fbd60 - 0x1fbda0
-void cCoreSave_getComboST_0x1fbd60(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getComboST_0x1fbd60(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getComboST_0x1fbd60");
 #endif
 
-    ctx->pc = 0x1fbd60u;
 
     // 0x1fbd60: 0x80302d  daddu       $a2, $a0, $zero
-    ctx->pc = 0x1fbd60u;
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1fbd64: 0x8cc50000  lw          $a1, 0x0($a2)
     ctx->pc = 0x1fbd64u;
@@ -41,7 +39,6 @@ void cCoreSave_getComboST_0x1fbd60(uint8_t* rdram, R5900Context* ctx, PS2Runtime
             goto label_1fbd78;
         }
     }
-    ctx->pc = 0x1FBD70u;
     // 0x1fbd70: 0x3e00008  jr          $ra
     ctx->pc = 0x1FBD70u;
     {
@@ -61,16 +58,13 @@ void cCoreSave_getComboST_0x1fbd60(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         return;
         #endif
     }
-    ctx->pc = 0x1FBD78u;
 label_1fbd78:
     // 0x1fbd78: 0x3c040100  lui         $a0, 0x100
-    ctx->pc = 0x1fbd78u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)256 << 16));
     // 0x1fbd7c: 0x8c437a34  lw          $v1, 0x7A34($v0)
     ctx->pc = 0x1fbd7cu;
     SET_GPR_S32(ctx, 3, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 31284)));
     // 0x1fbd80: 0x641824  and         $v1, $v1, $a0
-    ctx->pc = 0x1fbd80u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 4));
     // 0x1fbd84: 0x10600002  beqz        $v1, . + 4 + (0x2 << 2)
     ctx->pc = 0x1FBD84u;
@@ -87,7 +81,6 @@ label_1fbd78:
             goto label_1fbd90;
         }
     }
-    ctx->pc = 0x1FBD8Cu;
     // 0x1fbd8c: 0xa0a2008a  sb          $v0, 0x8A($a1)
     ctx->pc = 0x1fbd8cu;
     WRITE8(ADD32(GPR_U32(ctx, 5), 138), (uint8_t)GPR_U32(ctx, 2));
@@ -114,9 +107,7 @@ label_1fbd90:
         return;
         #endif
     }
-    ctx->pc = 0x1FBD9Cu;
     // 0x1fbd9c: 0x0  nop
-    ctx->pc = 0x1fbd9cu;
     // NOP
     ctx->pc = 0x1fbda0u;
 }

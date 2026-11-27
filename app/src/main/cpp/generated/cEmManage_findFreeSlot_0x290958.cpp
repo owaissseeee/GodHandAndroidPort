@@ -13,23 +13,22 @@
 
 // Function: cEmManage_findFreeSlot
 // Address: 0x290958 - 0x290988
-void cEmManage_findFreeSlot_0x290958(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_findFreeSlot_0x290958(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_findFreeSlot_0x290958");
 #endif
 
-    switch (ctx->pc) {
-        case 0x290960u: goto label_290960;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x290958u, 0)) {
+        switch (ctx->pc) {
+            case 0x290960u: goto label_290960;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x290958u;
 
     // 0x290958: 0x182d  daddu       $v1, $zero, $zero
-    ctx->pc = 0x290958u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x29095c: 0x0  nop
-    ctx->pc = 0x29095cu;
     // NOP
 label_290960:
     // 0x290960: 0x90820010  lbu         $v0, 0x10($a0)
@@ -50,7 +49,6 @@ label_290960:
             goto label_290974;
         }
     }
-    ctx->pc = 0x29096Cu;
     // 0x29096c: 0x3e00008  jr          $ra
     ctx->pc = 0x29096Cu;
     {
@@ -70,10 +68,8 @@ label_290960:
         return;
         #endif
     }
-    ctx->pc = 0x290974u;
 label_290974:
     // 0x290974: 0x2c620040  sltiu       $v0, $v1, 0x40
-    ctx->pc = 0x290974u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 3) < (uint64_t)(int64_t)(int32_t)64) ? 1 : 0);
     // 0x290978: 0x1440fff9  bnez        $v0, . + 4 + (-0x7 << 2)
     ctx->pc = 0x290978u;
@@ -93,7 +89,6 @@ label_290974:
             goto label_290960;
         }
     }
-    ctx->pc = 0x290980u;
     // 0x290980: 0x3e00008  jr          $ra
     ctx->pc = 0x290980u;
     {

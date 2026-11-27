@@ -14,12 +14,11 @@ namespace gh_event
 {
 // Function: setPlayableNoStopMode__9cEventEnvb
 // Address: 0x7ae378 - 0x7ae3a0
-void setPlayableNoStopMode__9cEventEnvb_0x7ae378(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void setPlayableNoStopMode__9cEventEnvb_0x7ae378(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("setPlayableNoStopMode__9cEventEnvb_0x7ae378");
 #endif
 
-    ctx->pc = 0x7ae378u;
 
     // 0x7ae378: 0x10a00004  beqz        $a1, . + 4 + (0x4 << 2)
     ctx->pc = 0x7AE378u;
@@ -36,9 +35,7 @@ void setPlayableNoStopMode__9cEventEnvb_0x7ae378(uint8_t* rdram, R5900Context* c
             goto label_7ae38c;
         }
     }
-    ctx->pc = 0x7AE380u;
     // 0x7ae380: 0x34420010  ori         $v0, $v0, 0x10
-    ctx->pc = 0x7ae380u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)16);
     // 0x7ae384: 0x3e00008  jr          $ra
     ctx->pc = 0x7AE384u;
@@ -59,13 +56,10 @@ void setPlayableNoStopMode__9cEventEnvb_0x7ae378(uint8_t* rdram, R5900Context* c
         return;
         #endif
     }
-    ctx->pc = 0x7AE38Cu;
 label_7ae38c:
     // 0x7ae38c: 0x2403ffef  addiu       $v1, $zero, -0x11
-    ctx->pc = 0x7ae38cu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967279));
     // 0x7ae390: 0x431024  and         $v0, $v0, $v1
-    ctx->pc = 0x7ae390u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 3));
     // 0x7ae394: 0x3e00008  jr          $ra
     ctx->pc = 0x7AE394u;
@@ -86,9 +80,7 @@ label_7ae38c:
         return;
         #endif
     }
-    ctx->pc = 0x7AE39Cu;
     // 0x7ae39c: 0x0  nop
-    ctx->pc = 0x7ae39cu;
     // NOP
     ctx->pc = 0x7ae3a0u;
 }

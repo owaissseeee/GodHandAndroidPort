@@ -13,12 +13,11 @@
 
 // Function: ReturnZero_20D138
 // Address: 0x20d138 - 0x20d140
-void ReturnZero_20D138_0x20d138(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ReturnZero_20D138_0x20d138(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ReturnZero_20D138_0x20d138");
 #endif
 
-    ctx->pc = 0x20d138u;
 
     // 0x20d138: 0x3e00008  jr          $ra
     ctx->pc = 0x20D138u;

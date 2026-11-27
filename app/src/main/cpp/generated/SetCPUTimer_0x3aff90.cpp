@@ -13,23 +13,22 @@
 
 // Function: SetCPUTimer
 // Address: 0x3aff90 - 0x3affa0
-void SetCPUTimer_0x3aff90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetCPUTimer_0x3aff90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetCPUTimer_0x3aff90");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3aff98u: goto label_3aff98;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3aff90u, 0)) {
+        switch (ctx->pc) {
+            case 0x3aff98u: goto label_3aff98;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3aff90u;
 
     // 0x3aff90: 0x2403006d  addiu       $v1, $zero, 0x6D
-    ctx->pc = 0x3aff90u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 109));
     // 0x3aff94: 0xc  syscall     0
-    ctx->pc = 0x3aff94u;
     ctx->pc = 0x3AFF98u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

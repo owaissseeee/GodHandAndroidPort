@@ -13,22 +13,22 @@
 
 // Function: cEvent_releaseWork
 // Address: 0x297ad0 - 0x297b20
-void cEvent_releaseWork_0x297ad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEvent_releaseWork_0x297ad0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEvent_releaseWork_0x297ad0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x297af8u: goto label_297af8;
-        case 0x297b00u: goto label_297b00;
-        case 0x297b0cu: goto label_297b0c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x297ad0u, 0)) {
+        switch (ctx->pc) {
+            case 0x297af8u: goto label_297af8;
+            case 0x297b00u: goto label_297b00;
+            case 0x297b0cu: goto label_297b0c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x297ad0u;
 
     // 0x297ad0: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x297ad0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x297ad4: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x297ad4u;
@@ -40,7 +40,6 @@ void cEvent_releaseWork_0x297ad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     ctx->pc = 0x297adcu;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 4), 9)));
     // 0x297ae0: 0x30420001  andi        $v0, $v0, 0x1
-    ctx->pc = 0x297ae0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)1);
     // 0x297ae4: 0x10400009  beqz        $v0, . + 4 + (0x9 << 2)
     ctx->pc = 0x297AE4u;
@@ -57,7 +56,6 @@ void cEvent_releaseWork_0x297ad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_297b0c;
         }
     }
-    ctx->pc = 0x297AECu;
     // 0x297aec: 0x26100000  addiu       $s0, $s0, 0x0
     ctx->pc = 0x297aecu;
     /* runtime-relocated */ SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 16), ((uint32_t)(int32_t)(int16_t)(FAST_READ32(0x297AECu) & 0xFFFFu))));
@@ -77,7 +75,6 @@ void cEvent_releaseWork_0x297ad0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             return;
         }
     }
-    ctx->pc = 0x297AF8u;
 label_297af8:
     // 0x297af8: 0xc000000  jal         func_000000
     ctx->pc = 0x297AF8u;
@@ -95,7 +92,6 @@ label_297af8:
             return;
         }
     }
-    ctx->pc = 0x297B00u;
 label_297b00:
     // 0x297b00: 0x3c040000  lui         $a0, 0x0
     ctx->pc = 0x297b00u;
@@ -116,7 +112,6 @@ label_297b00:
             return;
         }
     }
-    ctx->pc = 0x297B0Cu;
 label_297b0c:
     // 0x297b0c: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x297b0cu;
@@ -143,9 +138,7 @@ label_297b0c:
         return;
         #endif
     }
-    ctx->pc = 0x297B1Cu;
     // 0x297b1c: 0x0  nop
-    ctx->pc = 0x297b1cu;
     // NOP
     ctx->pc = 0x297b20u;
 }

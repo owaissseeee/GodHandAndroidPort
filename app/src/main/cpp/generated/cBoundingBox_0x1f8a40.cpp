@@ -13,15 +13,13 @@
 
 // Function: cBoundingBox
 // Address: 0x1f8a40 - 0x1f8a60
-void cBoundingBox_0x1f8a40(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cBoundingBox_0x1f8a40(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cBoundingBox_0x1f8a40");
 #endif
 
-    ctx->pc = 0x1f8a40u;
 
     // 0x1f8a40: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x1f8a40u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1f8a44: 0xac800000  sw          $zero, 0x0($a0)
     ctx->pc = 0x1f8a44u;

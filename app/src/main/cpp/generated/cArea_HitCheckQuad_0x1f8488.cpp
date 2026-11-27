@@ -13,26 +13,24 @@
 
 // Function: cArea_HitCheckQuad
 // Address: 0x1f8488 - 0x1f8550
-void cArea_HitCheckQuad_0x1f8488(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cArea_HitCheckQuad_0x1f8488(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cArea_HitCheckQuad_0x1f8488");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1f8538u: goto label_1f8538;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1f8488u, 0)) {
+        switch (ctx->pc) {
+            case 0x1f8538u: goto label_1f8538;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1f8488u;
 
     // 0x1f8488: 0x80102d  daddu       $v0, $a0, $zero
-    ctx->pc = 0x1f8488u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1f848c: 0x27bdffb0  addiu       $sp, $sp, -0x50
-    ctx->pc = 0x1f848cu;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967216));
     // 0x1f8490: 0xa0202d  daddu       $a0, $a1, $zero
-    ctx->pc = 0x1f8490u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1f8494: 0xffbf0040  sd          $ra, 0x40($sp)
     ctx->pc = 0x1f8494u;
@@ -59,10 +57,8 @@ void cArea_HitCheckQuad_0x1f8488(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     ctx->pc = 0x1f84b0u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 2), 8)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x1f84b4: 0x46001034  c.lt.s      $f2, $f0
-    ctx->pc = 0x1f84b4u;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[2], ctx->f[0])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x1f84b8: 0x0  nop
-    ctx->pc = 0x1f84b8u;
     // NOP
     // 0x1f84bc: 0x45010020  bc1t        . + 4 + (0x20 << 2)
     ctx->pc = 0x1F84BCu;
@@ -79,12 +75,9 @@ void cArea_HitCheckQuad_0x1f8488(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_1f8540;
         }
     }
-    ctx->pc = 0x1F84C4u;
     // 0x1f84c4: 0x46020034  c.lt.s      $f0, $f2
-    ctx->pc = 0x1f84c4u;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[0], ctx->f[2])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x1f84c8: 0x0  nop
-    ctx->pc = 0x1f84c8u;
     // NOP
     // 0x1f84cc: 0x4503001d  bc1tl       . + 4 + (0x1D << 2)
     ctx->pc = 0x1F84CCu;
@@ -101,30 +94,25 @@ void cArea_HitCheckQuad_0x1f8488(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_1f8544;
         }
     }
-    ctx->pc = 0x1F84D4u;
     // 0x1f84d4: 0xc447002c  lwc1        $f7, 0x2C($v0)
     ctx->pc = 0x1f84d4u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 2), 44)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[7] = f; }
     // 0x1f84d8: 0x3a0282d  daddu       $a1, $sp, $zero
-    ctx->pc = 0x1f84d8u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1f84dc: 0xc4460010  lwc1        $f6, 0x10($v0)
     ctx->pc = 0x1f84dcu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 2), 16)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[6] = f; }
     // 0x1f84e0: 0x27a60010  addiu       $a2, $sp, 0x10
-    ctx->pc = 0x1f84e0u;
     SET_GPR_S32(ctx, 6, (int32_t)ADD32(GPR_U32(ctx, 29), 16));
     // 0x1f84e4: 0xc4450014  lwc1        $f5, 0x14($v0)
     ctx->pc = 0x1f84e4u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 2), 20)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[5] = f; }
     // 0x1f84e8: 0x27a70020  addiu       $a3, $sp, 0x20
-    ctx->pc = 0x1f84e8u;
     SET_GPR_S32(ctx, 7, (int32_t)ADD32(GPR_U32(ctx, 29), 32));
     // 0x1f84ec: 0xc4440018  lwc1        $f4, 0x18($v0)
     ctx->pc = 0x1f84ecu;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 2), 24)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[4] = f; }
     // 0x1f84f0: 0x27a80030  addiu       $t0, $sp, 0x30
-    ctx->pc = 0x1f84f0u;
     SET_GPR_S32(ctx, 8, (int32_t)ADD32(GPR_U32(ctx, 29), 48));
     // 0x1f84f4: 0xc443001c  lwc1        $f3, 0x1C($v0)
     ctx->pc = 0x1f84f4u;
@@ -172,7 +160,6 @@ void cArea_HitCheckQuad_0x1f8488(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     ctx->pc = 0x1f852cu;
     WRITE32(ADD32(GPR_U32(ctx, 29), 36), GPR_U32(ctx, 0));
     // 0x1f8530: 0xc055cf2  jal         func_1573C8
-    ctx->pc = 0x1F8530u;
     SET_GPR_U32(ctx, 31, 0x1F8538u);
     ctx->pc = 0x1F8534u;
     ctx->in_delay_slot = true;
@@ -180,11 +167,9 @@ void cArea_HitCheckQuad_0x1f8488(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
     // 0x1f8534: 0xafa00034  sw          $zero, 0x34($sp) (Delay Slot)
     WRITE32(ADD32(GPR_U32(ctx, 29), 52), GPR_U32(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1573C8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1573C8u, 0x1F8530u, 0x1F8538u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_001573C8_0x1573c8, 0x1573c8u, 0x1f8538u)) {
         return;
     }
-    ctx->pc = 0x1F8538u;
 label_1f8538:
     // 0x1f8538: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x1F8538u;
@@ -201,10 +186,8 @@ label_1f8538:
             goto label_1f8544;
         }
     }
-    ctx->pc = 0x1F8540u;
 label_1f8540:
     // 0x1f8540: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x1f8540u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_1f8544:
     // 0x1f8544: 0xdfbf0040  ld          $ra, 0x40($sp)

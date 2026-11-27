@@ -13,12 +13,11 @@
 
 // Function: _IO_switch_to_backup_area
 // Address: 0x38c2b8 - 0x38c2f0
-void ps2__IO_switch_to_backup_area_0x38c2b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2__IO_switch_to_backup_area_0x38c2b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2__IO_switch_to_backup_area_0x38c2b8");
 #endif
 
-    ctx->pc = 0x38c2b8u;
 
     // 0x38c2b8: 0x8c860008  lw          $a2, 0x8($a0)
     ctx->pc = 0x38c2b8u;
@@ -36,7 +35,6 @@ void ps2__IO_switch_to_backup_area_0x38c2b8(uint8_t* rdram, R5900Context* ctx, P
     ctx->pc = 0x38c2c8u;
     SET_GPR_S32(ctx, 6, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 12)));
     // 0x38c2cc: 0x34420100  ori         $v0, $v0, 0x100
-    ctx->pc = 0x38c2ccu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | (uint64_t)(uint16_t)256);
     // 0x38c2d0: 0x8c830024  lw          $v1, 0x24($a0)
     ctx->pc = 0x38c2d0u;
@@ -72,9 +70,7 @@ void ps2__IO_switch_to_backup_area_0x38c2b8(uint8_t* rdram, R5900Context* ctx, P
         return;
         #endif
     }
-    ctx->pc = 0x38C2ECu;
     // 0x38c2ec: 0x0  nop
-    ctx->pc = 0x38c2ecu;
     // NOP
     ctx->pc = 0x38c2f0u;
 }

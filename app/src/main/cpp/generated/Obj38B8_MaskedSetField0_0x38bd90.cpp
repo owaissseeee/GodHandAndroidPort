@@ -13,27 +13,22 @@
 
 // Function: Obj38B8_MaskedSetField0
 // Address: 0x38bd90 - 0x38bdb0
-void Obj38B8_MaskedSetField0_0x38bd90(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj38B8_MaskedSetField0_0x38bd90(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj38B8_MaskedSetField0_0x38bd90");
 #endif
 
-    ctx->pc = 0x38bd90u;
 
     // 0x38bd90: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x38bd90u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 0)));
     // 0x38bd94: 0x61827  nor         $v1, $zero, $a2
-    ctx->pc = 0x38bd94u;
     SET_GPR_U64(ctx, 3, ~(GPR_U64(ctx, 0) | GPR_U64(ctx, 6)));
     // 0x38bd98: 0xa62824  and         $a1, $a1, $a2
-    ctx->pc = 0x38bd98u;
     SET_GPR_U64(ctx, 5, GPR_U64(ctx, 5) & GPR_U64(ctx, 6));
     // 0x38bd9c: 0x431024  and         $v0, $v0, $v1
-    ctx->pc = 0x38bd9cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 3));
     // 0x38bda0: 0x451025  or          $v0, $v0, $a1
-    ctx->pc = 0x38bda0u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) | GPR_U64(ctx, 5));
     // 0x38bda4: 0x3e00008  jr          $ra
     ctx->pc = 0x38BDA4u;
@@ -54,9 +49,7 @@ void Obj38B8_MaskedSetField0_0x38bd90(uint8_t* rdram, R5900Context* ctx, PS2Runt
         return;
         #endif
     }
-    ctx->pc = 0x38BDACu;
     // 0x38bdac: 0x0  nop
-    ctx->pc = 0x38bdacu;
     // NOP
     ctx->pc = 0x38bdb0u;
 }

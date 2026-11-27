@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
+#include <ps2_recompiled_functions.h>
 #include "r400_functions.h"
 
 #include "ps2_syscalls.h"
@@ -14,32 +15,30 @@ namespace gh_r400
 {
 // Function: R400PreInit__Fv
 // Address: 0x799220 - 0x799268
-void R400PreInit__Fv_0x799220(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void R400PreInit__Fv_0x799220(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("R400PreInit__Fv_0x799220");
 #endif
 
-    switch (ctx->pc) {
-        case 0x79925cu: goto label_79925c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x799220u, 0)) {
+        switch (ctx->pc) {
+            case 0x79925cu: goto label_79925c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x799220u;
+
 
     // 0x799220: 0x3c020074  lui         $v0, 0x74
-    ctx->pc = 0x799220u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
     // 0x799224: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x799224u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x799228: 0x8c437a30  lw          $v1, 0x7A30($v0)
     ctx->pc = 0x799228u;
     SET_GPR_S32(ctx, 3, (int32_t)FAST_READ32(0x747A30u));
     // 0x79922c: 0x3c040020  lui         $a0, 0x20
-    ctx->pc = 0x79922cu;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)32 << 16));
     // 0x799230: 0x641824  and         $v1, $v1, $a0
-    ctx->pc = 0x799230u;
     SET_GPR_U64(ctx, 3, GPR_U64(ctx, 3) & GPR_U64(ctx, 4));
     // 0x799234: 0x14600009  bnez        $v1, . + 4 + (0x9 << 2)
     ctx->pc = 0x799234u;
@@ -56,9 +55,7 @@ void R400PreInit__Fv_0x799220(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_79925c;
         }
     }
-    ctx->pc = 0x79923Cu;
     // 0x79923c: 0x3c02005f  lui         $v0, 0x5F
-    ctx->pc = 0x79923cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)95 << 16));
     // 0x799240: 0x8c438658  lw          $v1, -0x79A8($v0)
     ctx->pc = 0x799240u;
@@ -81,24 +78,19 @@ void R400PreInit__Fv_0x799220(uint8_t* rdram, R5900Context* ctx, PS2Runtime *run
             goto label_799260;
         }
     }
-    ctx->pc = 0x799250u;
     // 0x799250: 0x3c040058  lui         $a0, 0x58
-    ctx->pc = 0x799250u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)88 << 16));
     // 0x799254: 0xc0a557c  jal         func_2955F0
-    ctx->pc = 0x799254u;
     SET_GPR_U32(ctx, 31, 0x79925Cu);
-    ctx->pc = 0x799258u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x799254u;
     // 0x799258: 0x24846ab0  addiu       $a0, $a0, 0x6AB0 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 27312));
     ctx->in_delay_slot = false;
     ctx->pc = 0x2955F0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2955F0u, 0x799254u, 0x79925Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cEmSetParam_stopEmSet1Time_0x2955f0, 0x2955F0u, 0x79925Cu)) {
         return;
     }
-    ctx->pc = 0x79925Cu;
 label_79925c:
     // 0x79925c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x79925cu;

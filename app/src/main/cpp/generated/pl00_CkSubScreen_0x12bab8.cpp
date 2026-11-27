@@ -13,17 +13,18 @@
 
 // Function: pl00_CkSubScreen
 // Address: 0x12bab8 - 0x12baf0
-void pl00_CkSubScreen_0x12bab8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void pl00_CkSubScreen_0x12bab8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("pl00_CkSubScreen_0x12bab8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x12bac4u: goto label_12bac4;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x12bab8u, 0)) {
+        switch (ctx->pc) {
+            case 0x12bac4u: goto label_12bac4;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x12bab8u;
 
     // 0x12bab8: 0x908202f4  lbu         $v0, 0x2F4($a0)
     ctx->pc = 0x12bab8u;
@@ -43,7 +44,6 @@ void pl00_CkSubScreen_0x12bab8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_12bacc;
         }
     }
-    ctx->pc = 0x12BAC4u;
 label_12bac4:
     // 0x12bac4: 0x3e00008  jr          $ra
     ctx->pc = 0x12BAC4u;
@@ -64,13 +64,10 @@ label_12bac4:
         return;
         #endif
     }
-    ctx->pc = 0x12BACCu;
 label_12bacc:
     // 0x12bacc: 0x28820004  slti        $v0, $a0, 0x4
-    ctx->pc = 0x12baccu;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 4) < (int64_t)(int32_t)4) ? 1 : 0);
     // 0x12bad0: 0x0  nop
-    ctx->pc = 0x12bad0u;
     // NOP
     // 0x12bad4: 0x1040fffb  beqz        $v0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x12BAD4u;
@@ -84,7 +81,6 @@ label_12bacc:
             goto label_12bac4;
         }
     }
-    ctx->pc = 0x12BADCu;
     // 0x12badc: 0x480fff9  bltz        $a0, . + 4 + (-0x7 << 2)
     ctx->pc = 0x12BADCu;
     {
@@ -103,7 +99,6 @@ label_12bacc:
             goto label_12bac4;
         }
     }
-    ctx->pc = 0x12BAE4u;
     // 0x12bae4: 0x3e00008  jr          $ra
     ctx->pc = 0x12BAE4u;
     {
@@ -117,9 +112,7 @@ label_12bacc:
         return;
         #endif
     }
-    ctx->pc = 0x12BAECu;
     // 0x12baec: 0x0  nop
-    ctx->pc = 0x12baecu;
     // NOP
     ctx->pc = 0x12baf0u;
 }

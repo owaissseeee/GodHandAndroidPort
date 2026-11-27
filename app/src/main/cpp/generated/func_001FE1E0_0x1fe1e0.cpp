@@ -13,29 +13,27 @@
 
 // Function: func_001FE1E0
 // Address: 0x1fe1e0 - 0x1fe218
-void func_001FE1E0_0x1fe1e0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_001FE1E0_0x1fe1e0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_001FE1E0_0x1fe1e0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1fe1f0u: goto label_1fe1f0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1fe1e0u, 0)) {
+        switch (ctx->pc) {
+            case 0x1fe1f0u: goto label_1fe1f0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1fe1e0u;
 
     // 0x1fe1e0: 0x24853c00  addiu       $a1, $a0, 0x3C00
-    ctx->pc = 0x1fe1e0u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 4), 15360));
     // 0x1fe1e4: 0x80182d  daddu       $v1, $a0, $zero
-    ctx->pc = 0x1fe1e4u;
     SET_GPR_U64(ctx, 3, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1fe1e8: 0x9062004a  lbu         $v0, 0x4A($v1)
     ctx->pc = 0x1fe1e8u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 3), 74)));
     // 0x1fe1ec: 0x0  nop
-    ctx->pc = 0x1fe1ecu;
     // NOP
 label_1fe1f0:
     // 0x1fe1f0: 0x54400003  bnel        $v0, $zero, . + 4 + (0x3 << 2)
@@ -53,7 +51,6 @@ label_1fe1f0:
             goto label_1fe200;
         }
     }
-    ctx->pc = 0x1FE1F8u;
     // 0x1fe1f8: 0x3e00008  jr          $ra
     ctx->pc = 0x1FE1F8u;
     {
@@ -73,10 +70,8 @@ label_1fe1f0:
         return;
         #endif
     }
-    ctx->pc = 0x1FE200u;
 label_1fe200:
     // 0x1fe200: 0x65102b  sltu        $v0, $v1, $a1
-    ctx->pc = 0x1fe200u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 3) < (uint64_t)GPR_U64(ctx, 5)) ? 1 : 0);
     // 0x1fe204: 0x5440fffa  bnel        $v0, $zero, . + 4 + (-0x6 << 2)
     ctx->pc = 0x1FE204u;
@@ -96,9 +91,7 @@ label_1fe200:
             goto label_1fe1f0;
         }
     }
-    ctx->pc = 0x1FE20Cu;
     // 0x1fe20c: 0x3402ac00  ori         $v0, $zero, 0xAC00
-    ctx->pc = 0x1fe20cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)44032);
     // 0x1fe210: 0x3e00008  jr          $ra
     ctx->pc = 0x1FE210u;

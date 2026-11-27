@@ -13,18 +13,16 @@
 
 // Function: func_0036E2B8
 // Address: 0x36e2b8 - 0x36e308
-void func_0036E2B8_0x36e2b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0036E2B8_0x36e2b8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0036E2B8_0x36e2b8");
 #endif
 
-    ctx->pc = 0x36e2b8u;
 
     // 0x36e2b8: 0x8c820048  lw          $v0, 0x48($a0)
     ctx->pc = 0x36e2b8u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 72)));
     // 0x36e2bc: 0x24030001  addiu       $v1, $zero, 0x1
-    ctx->pc = 0x36e2bcu;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
     // 0x36e2c0: 0x10430008  beq         $v0, $v1, . + 4 + (0x8 << 2)
     ctx->pc = 0x36E2C0u;
@@ -41,7 +39,6 @@ void func_0036E2B8_0x36e2b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_36e2e4;
         }
     }
-    ctx->pc = 0x36E2C8u;
     // 0x36e2c8: 0x8c820118  lw          $v0, 0x118($a0)
     ctx->pc = 0x36e2c8u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 280)));
@@ -60,9 +57,7 @@ void func_0036E2B8_0x36e2b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_36e2e4;
         }
     }
-    ctx->pc = 0x36E2D4u;
     // 0x36e2d4: 0x24050002  addiu       $a1, $zero, 0x2
-    ctx->pc = 0x36e2d4u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x36e2d8: 0x54450005  bnel        $v0, $a1, . + 4 + (0x5 << 2)
     ctx->pc = 0x36E2D8u;
@@ -79,9 +74,7 @@ void func_0036E2B8_0x36e2b8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_36e2f0;
         }
     }
-    ctx->pc = 0x36E2E0u;
     // 0x36e2e0: 0x24020001  addiu       $v0, $zero, 0x1
-    ctx->pc = 0x36e2e0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 1));
 label_36e2e4:
     // 0x36e2e4: 0x3e00008  jr          $ra
@@ -103,9 +96,7 @@ label_36e2e4:
         return;
         #endif
     }
-    ctx->pc = 0x36E2ECu;
     // 0x36e2ec: 0x0  nop
-    ctx->pc = 0x36e2ecu;
     // NOP
 label_36e2f0:
     // 0x36e2f0: 0x14430003  bne         $v0, $v1, . + 4 + (0x3 << 2)
@@ -123,7 +114,6 @@ label_36e2f0:
             goto label_36e300;
         }
     }
-    ctx->pc = 0x36E2F8u;
     // 0x36e2f8: 0x3e00008  jr          $ra
     ctx->pc = 0x36E2F8u;
     {
@@ -143,7 +133,6 @@ label_36e2f0:
         return;
         #endif
     }
-    ctx->pc = 0x36E300u;
 label_36e300:
     // 0x36e300: 0x3e00008  jr          $ra
     ctx->pc = 0x36E300u;

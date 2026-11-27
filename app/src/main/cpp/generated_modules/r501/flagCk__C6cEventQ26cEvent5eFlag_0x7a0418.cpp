@@ -14,18 +14,16 @@ namespace gh_r501
 {
 // Function: flagCk__C6cEventQ26cEvent5eFlag
 // Address: 0x7a0418 - 0x7a0428
-void flagCk__C6cEventQ26cEvent5eFlag_0x7a0418(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void flagCk__C6cEventQ26cEvent5eFlag_0x7a0418(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("flagCk__C6cEventQ26cEvent5eFlag_0x7a0418");
 #endif
 
-    ctx->pc = 0x7a0418u;
 
     // 0x7a0418: 0x8c820008  lw          $v0, 0x8($a0)
     ctx->pc = 0x7a0418u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 8)));
     // 0x7a041c: 0x451024  and         $v0, $v0, $a1
-    ctx->pc = 0x7a041cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & GPR_U64(ctx, 5));
     // 0x7a0420: 0x3e00008  jr          $ra
     ctx->pc = 0x7A0420u;

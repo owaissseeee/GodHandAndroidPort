@@ -13,17 +13,18 @@
 
 // Function: cSnd_FindBgmNode
 // Address: 0x2d22b0 - 0x2d22f0
-void cSnd_FindBgmNode_0x2d22b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_FindBgmNode_0x2d22b0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_FindBgmNode_0x2d22b0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2d22c0u: goto label_2d22c0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2d22b0u, 0)) {
+        switch (ctx->pc) {
+            case 0x2d22c0u: goto label_2d22c0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2d22b0u;
 
     // 0x2d22b0: 0x8c830018  lw          $v1, 0x18($a0)
     ctx->pc = 0x2d22b0u;
@@ -37,13 +38,11 @@ void cSnd_FindBgmNode_0x2d22b0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
             goto label_2d22e8;
         }
     }
-    ctx->pc = 0x2D22BCu;
     // 0x2d22bc: 0x8c62008c  lw          $v0, 0x8C($v1)
     ctx->pc = 0x2d22bcu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 140)));
 label_2d22c0:
     // 0x2d22c0: 0x2442ff80  addiu       $v0, $v0, -0x80
-    ctx->pc = 0x2d22c0u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 4294967168));
     // 0x2d22c4: 0x54450006  bnel        $v0, $a1, . + 4 + (0x6 << 2)
     ctx->pc = 0x2D22C4u;
@@ -60,7 +59,6 @@ label_2d22c0:
             goto label_2d22e0;
         }
     }
-    ctx->pc = 0x2D22CCu;
     // 0x2d22cc: 0x8c620090  lw          $v0, 0x90($v1)
     ctx->pc = 0x2d22ccu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 144)));
@@ -79,7 +77,6 @@ label_2d22c0:
             goto label_2d22e0;
         }
     }
-    ctx->pc = 0x2D22D8u;
     // 0x2d22d8: 0x3e00008  jr          $ra
     ctx->pc = 0x2D22D8u;
     {
@@ -99,7 +96,6 @@ label_2d22c0:
         return;
         #endif
     }
-    ctx->pc = 0x2D22E0u;
 label_2d22e0:
     // 0x2d22e0: 0x5460fff7  bnel        $v1, $zero, . + 4 + (-0x9 << 2)
     ctx->pc = 0x2D22E0u;
@@ -119,7 +115,6 @@ label_2d22e0:
             goto label_2d22c0;
         }
     }
-    ctx->pc = 0x2D22E8u;
 label_2d22e8:
     // 0x2d22e8: 0x3e00008  jr          $ra
     ctx->pc = 0x2D22E8u;

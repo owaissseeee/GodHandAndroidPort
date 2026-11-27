@@ -13,36 +13,32 @@
 
 // Function: SearchCameraData
 // Address: 0x31ce38 - 0x31ce90
-void SearchCameraData_0x31ce38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SearchCameraData_0x31ce38(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SearchCameraData_0x31ce38");
 #endif
 
-    switch (ctx->pc) {
-        case 0x31ce60u: goto label_31ce60;
-        case 0x31ce74u: goto label_31ce74;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x31ce38u, 0)) {
+        switch (ctx->pc) {
+            case 0x31ce60u: goto label_31ce60;
+            case 0x31ce74u: goto label_31ce74;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x31ce38u;
 
     // 0x31ce38: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x31ce38u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x31ce3c: 0x3c020074  lui         $v0, 0x74
-    ctx->pc = 0x31ce3cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
     // 0x31ce40: 0x7fb00010  sq          $s0, 0x10($sp)
     ctx->pc = 0x31ce40u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 16));
     // 0x31ce44: 0x3c050045  lui         $a1, 0x45
-    ctx->pc = 0x31ce44u;
     SET_GPR_S32(ctx, 5, (int32_t)((uint32_t)69 << 16));
     // 0x31ce48: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x31ce48u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x31ce4c: 0x24a50ed8  addiu       $a1, $a1, 0xED8
-    ctx->pc = 0x31ce4cu;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 5), 3800));
     // 0x31ce50: 0x8c447a4c  lw          $a0, 0x7A4C($v0)
     ctx->pc = 0x31ce50u;
@@ -51,7 +47,6 @@ void SearchCameraData_0x31ce38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     ctx->pc = 0x31ce54u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x31ce58: 0xc0c733c  jal         func_31CCF0
-    ctx->pc = 0x31CE58u;
     SET_GPR_U32(ctx, 31, 0x31CE60u);
     ctx->pc = 0x31CE5Cu;
     ctx->in_delay_slot = true;
@@ -59,11 +54,9 @@ void SearchCameraData_0x31ce38(uint8_t* rdram, R5900Context* ctx, PS2Runtime *ru
     // 0x31ce5c: 0x302d  daddu       $a2, $zero, $zero (Delay Slot)
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x31CCF0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31CCF0u, 0x31CE58u, 0x31CE60u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &SearchData_0x31ccf0, 0x31ccf0u, 0x31ce60u)) {
         return;
     }
-    ctx->pc = 0x31CE60u;
 label_31ce60:
     // 0x31ce60: 0x10400006  beqz        $v0, . + 4 + (0x6 << 2)
     ctx->pc = 0x31CE60u;
@@ -80,12 +73,9 @@ label_31ce60:
             goto label_31ce7c;
         }
     }
-    ctx->pc = 0x31CE68u;
     // 0x31ce68: 0x200282d  daddu       $a1, $s0, $zero
-    ctx->pc = 0x31ce68u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x31ce6c: 0xc0c733c  jal         func_31CCF0
-    ctx->pc = 0x31CE6Cu;
     SET_GPR_U32(ctx, 31, 0x31CE74u);
     ctx->pc = 0x31CE70u;
     ctx->in_delay_slot = true;
@@ -93,11 +83,9 @@ label_31ce60:
     // 0x31ce70: 0x302d  daddu       $a2, $zero, $zero (Delay Slot)
     SET_GPR_U64(ctx, 6, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x31CCF0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x31CCF0u, 0x31CE6Cu, 0x31CE74u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &SearchData_0x31ccf0, 0x31ccf0u, 0x31ce74u)) {
         return;
     }
-    ctx->pc = 0x31CE74u;
 label_31ce74:
     // 0x31ce74: 0x10000003  b           . + 4 + (0x3 << 2)
     ctx->pc = 0x31CE74u;
@@ -114,10 +102,8 @@ label_31ce74:
             goto label_31ce84;
         }
     }
-    ctx->pc = 0x31CE7Cu;
 label_31ce7c:
     // 0x31ce7c: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x31ce7cu;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x31ce80: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x31ce80u;

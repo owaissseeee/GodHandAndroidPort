@@ -13,15 +13,13 @@
 
 // Function: SetBytes2F4Mode8_283288
 // Address: 0x283288 - 0x2832a0
-void SetBytes2F4Mode8_283288_0x283288(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void SetBytes2F4Mode8_283288_0x283288(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("SetBytes2F4Mode8_283288_0x283288");
 #endif
 
-    ctx->pc = 0x283288u;
 
     // 0x283288: 0x24020008  addiu       $v0, $zero, 0x8
-    ctx->pc = 0x283288u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 8));
     // 0x28328c: 0xa08502f7  sb          $a1, 0x2F7($a0)
     ctx->pc = 0x28328cu;

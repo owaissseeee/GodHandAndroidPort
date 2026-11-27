@@ -13,36 +13,33 @@
 
 // Function: FreeActorResourcesD_1A0418
 // Address: 0x1a0418 - 0x1a0478
-void FreeActorResourcesD_1A0418_0x1a0418(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void FreeActorResourcesD_1A0418_0x1a0418(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("FreeActorResourcesD_1A0418_0x1a0418");
 #endif
 
-    switch (ctx->pc) {
-        case 0x1a0454u: goto label_1a0454;
-        case 0x1a0464u: goto label_1a0464;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x1a0418u, 0)) {
+        switch (ctx->pc) {
+            case 0x1a0454u: goto label_1a0454;
+            case 0x1a0464u: goto label_1a0464;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x1a0418u;
 
     // 0x1a0418: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x1a0418u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x1a041c: 0x3c020042  lui         $v0, 0x42
-    ctx->pc = 0x1a041cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)66 << 16));
     // 0x1a0420: 0x7fb00020  sq          $s0, 0x20($sp)
     ctx->pc = 0x1a0420u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 32), GPR_VEC(ctx, 16));
     // 0x1a0424: 0x24426a98  addiu       $v0, $v0, 0x6A98
-    ctx->pc = 0x1a0424u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 27288));
     // 0x1a0428: 0x7fb10010  sq          $s1, 0x10($sp)
     ctx->pc = 0x1a0428u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 17));
     // 0x1a042c: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x1a042cu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1a0430: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x1a0430u;
@@ -68,15 +65,11 @@ void FreeActorResourcesD_1A0418_0x1a0418(uint8_t* rdram, R5900Context* ctx, PS2R
             goto label_1a0458;
         }
     }
-    ctx->pc = 0x1A0444u;
     // 0x1a0444: 0x3c040057  lui         $a0, 0x57
-    ctx->pc = 0x1a0444u;
     SET_GPR_S32(ctx, 4, (int32_t)((uint32_t)87 << 16));
     // 0x1a0448: 0x60282d  daddu       $a1, $v1, $zero
-    ctx->pc = 0x1a0448u;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 3) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1a044c: 0xc07f89e  jal         func_1FE278
-    ctx->pc = 0x1A044Cu;
     SET_GPR_U32(ctx, 31, 0x1A0454u);
     ctx->pc = 0x1A0450u;
     ctx->in_delay_slot = true;
@@ -84,21 +77,17 @@ void FreeActorResourcesD_1A0418_0x1a0418(uint8_t* rdram, R5900Context* ctx, PS2R
     // 0x1a0450: 0x24844380  addiu       $a0, $a0, 0x4380 (Delay Slot)
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 4), 17280));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1FE278u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1FE278u, 0x1A044Cu, 0x1A0454u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ClearAndResetFields_1FE278_0x1fe278, 0x1fe278u, 0x1a0454u)) {
         return;
     }
-    ctx->pc = 0x1A0454u;
 label_1a0454:
     // 0x1a0454: 0xae000600  sw          $zero, 0x600($s0)
     ctx->pc = 0x1a0454u;
     WRITE32(ADD32(GPR_U32(ctx, 16), 1536), GPR_U32(ctx, 0));
 label_1a0458:
     // 0x1a0458: 0x200202d  daddu       $a0, $s0, $zero
-    ctx->pc = 0x1a0458u;
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     // 0x1a045c: 0xc070a08  jal         func_1C2820
-    ctx->pc = 0x1A045Cu;
     SET_GPR_U32(ctx, 31, 0x1A0464u);
     ctx->pc = 0x1A0460u;
     ctx->in_delay_slot = true;
@@ -106,11 +95,9 @@ label_1a0458:
     // 0x1a0460: 0x220282d  daddu       $a1, $s1, $zero (Delay Slot)
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x1C2820u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x1C2820u, 0x1A045Cu, 0x1A0464u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ResetField214FreeField180_1C2820_0x1c2820, 0x1c2820u, 0x1a0464u)) {
         return;
     }
-    ctx->pc = 0x1A0464u;
 label_1a0464:
     // 0x1a0464: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x1a0464u;

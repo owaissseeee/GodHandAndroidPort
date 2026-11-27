@@ -13,12 +13,11 @@
 
 // Function: CustomIDWork_SetMoveOffsetPosYSin
 // Address: 0x2d6838 - 0x2d6870
-void CustomIDWork_SetMoveOffsetPosYSin_0x2d6838(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void CustomIDWork_SetMoveOffsetPosYSin_0x2d6838(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("CustomIDWork_SetMoveOffsetPosYSin_0x2d6838");
 #endif
 
-    ctx->pc = 0x2d6838u;
 
     // 0x2d6838: 0x8c820004  lw          $v0, 0x4($a0)
     ctx->pc = 0x2d6838u;
@@ -38,18 +37,13 @@ void CustomIDWork_SetMoveOffsetPosYSin_0x2d6838(uint8_t* rdram, R5900Context* ct
             goto label_2d6864;
         }
     }
-    ctx->pc = 0x2D6844u;
     // 0x2d6844: 0x44850000  mtc1        $a1, $f0
-    ctx->pc = 0x2d6844u;
     { uint32_t bits = GPR_U32(ctx, 5); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x2d6848: 0x0  nop
-    ctx->pc = 0x2d6848u;
     // NOP
     // 0x2d684c: 0x46800020  cvt.s.w     $f0, $f0
-    ctx->pc = 0x2d684cu;
     { int32_t tmp; std::memcpy(&tmp, &ctx->f[0], sizeof(tmp)); ctx->f[0] = FPU_CVT_S_W(tmp); }
     // 0x2d6850: 0x24020011  addiu       $v0, $zero, 0x11
-    ctx->pc = 0x2d6850u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 17));
     // 0x2d6854: 0xac820028  sw          $v0, 0x28($a0)
     ctx->pc = 0x2d6854u;
@@ -77,9 +71,7 @@ label_2d6864:
         return;
         #endif
     }
-    ctx->pc = 0x2D686Cu;
     // 0x2d686c: 0x0  nop
-    ctx->pc = 0x2d686cu;
     // NOP
     ctx->pc = 0x2d6870u;
 }

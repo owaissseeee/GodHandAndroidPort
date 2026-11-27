@@ -13,18 +13,16 @@
 
 // Function: Obj0000_IsSet_Short_3AC_Bit_4_26F318
 // Address: 0x26f318 - 0x26f328
-void Obj0000_IsSet_Short_3AC_Bit_4_26F318_0x26f318(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_IsSet_Short_3AC_Bit_4_26F318_0x26f318(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_IsSet_Short_3AC_Bit_4_26F318_0x26f318");
 #endif
 
-    ctx->pc = 0x26f318u;
 
     // 0x26f318: 0x948203ac  lhu         $v0, 0x3AC($a0)
     ctx->pc = 0x26f318u;
     SET_GPR_ZE32(ctx, 2, (uint16_t)READ16(ADD32(GPR_U32(ctx, 4), 940)));
     // 0x26f31c: 0x30420004  andi        $v0, $v0, 0x4
-    ctx->pc = 0x26f31cu;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)4);
     // 0x26f320: 0x3e00008  jr          $ra
     ctx->pc = 0x26F320u;

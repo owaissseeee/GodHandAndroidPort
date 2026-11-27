@@ -30,7 +30,8 @@ class SettingsRepository(context: Context) {
     private fun isIntKey(k: String): Boolean {
         return k.endsWith("_idx") || k.endsWith("_idx_v2") || k.endsWith("_idx_v3") || k.endsWith("_idx_v4") || k.endsWith("_idx_v5") ||
                k.endsWith("_mode") || k.endsWith("_slot") || k.endsWith("_multiplier") || k.endsWith("_lock") || k.endsWith("_costume") ||
-               k == "cheat_speed_modifier" || k == "cheat_gene_costume" || k == "cheat_olivia_costume"
+               k == "cheat_speed_modifier" || k == "cheat_gene_costume" || k == "cheat_olivia_costume" ||
+               k == "vibration_strength"
     }
 
     private fun getSafeFloat(key: String, def: Float): Float {
@@ -171,6 +172,10 @@ class SettingsRepository(context: Context) {
         get() = getSafeInt("frameskip_idx_v3", 0).coerceIn(0, 1) // 0: Off (Full 1:1 Rendering - Default), 1: Skip 1 Frame (Mild Potato Boost)
         set(value) = putInt("frameskip_idx_v3", value.coerceIn(0, 1))
 
+    var ultraPotatoMode: Boolean
+        get() = prefs.getBoolean("ultra_potato_enabled", false) // Default OFF: opt-in max-FPS mode
+        set(value) = putBoolean("ultra_potato_enabled", value)
+
     // --- Audio Settings ---
     var audioSchedulingIdx: Int
         get() = getSafeInt("audio_scheduling_idx", 1).coerceIn(0, 2) // 0: Real-time, 1: Balanced, 2: Safe Buffer (Helio G35)
@@ -234,6 +239,14 @@ class SettingsRepository(context: Context) {
         get() = prefs.getBoolean("auto_hide_touch_gamepad", true)
         set(value) = putBoolean("auto_hide_touch_gamepad", value)
 
+    var menuDirectTouchEnabled: Boolean
+        get() = prefs.getBoolean("menu_direct_touch_enabled", true)
+        set(value) = putBoolean("menu_direct_touch_enabled", value)
+
+    var showMenuDebugBoxes: Boolean
+        get() = prefs.getBoolean("show_menu_debug_boxes", false)
+        set(value) = putBoolean("show_menu_debug_boxes", value)
+
     var leftStickSticky: Boolean
         get() = prefs.getBoolean("left_stick_sticky", true)
         set(value) = putBoolean("left_stick_sticky", value)
@@ -255,8 +268,25 @@ class SettingsRepository(context: Context) {
         set(value) = putInt("fps_overlay_mode", value.coerceIn(0, 2))
 
     var perfSpikeLoggingEnabled: Boolean
-        get() = prefs.getBoolean("perf_spike_logging", true) // Default is ON to capture freezes & spikes
+        get() = prefs.getBoolean("perf_spike_logging", false) // Default OFF: avoids spike string formatting overhead
         set(value) = putBoolean("perf_spike_logging", value)
+
+    // --- Vibration & Haptics ---
+    var vibrationEnabled: Boolean
+        get() = prefs.getBoolean("vibration_enabled", true)
+        set(value) = putBoolean("vibration_enabled", value)
+
+    var touchVibrationEnabled: Boolean
+        get() = prefs.getBoolean("touch_vibration_enabled", true)
+        set(value) = putBoolean("touch_vibration_enabled", value)
+
+    var inGameVibrationEnabled: Boolean
+        get() = prefs.getBoolean("ingame_vibration_enabled", true)
+        set(value) = putBoolean("ingame_vibration_enabled", value)
+
+    var vibrationStrength: Int
+        get() = getSafeInt("vibration_strength", 60).coerceIn(10, 100)
+        set(value) = putInt("vibration_strength", value.coerceIn(10, 100))
 
     // --- CHEAT ENGINE PREFERENCES ---
     // Health & Protection
@@ -403,5 +433,53 @@ class SettingsRepository(context: Context) {
     fun resetCustomButtonLayout() {
         prefs.edit().remove("custom_btn_layout").commit()
         saveAllToJsonFile()
+    }
+
+    data class HitboxOverrideData(val screenId: Int, val subState: Int, val buttonId: Int, val x0: Float, val y0: Float, val x1: Float, val y1: Float)
+
+    fun saveHitboxOverride(screenId: Int, subState: Int, buttonId: Int, x0: Float, y0: Float, x1: Float, y1: Float) {
+        prefs.edit()
+            .putString("hitbox_override_${screenId}_${subState}_${buttonId}", "$x0,$y0,$x1,$y1")
+            .apply()
+        saveAllToJsonFile()
+    }
+
+    fun removeHitboxOverride(screenId: Int, subState: Int, buttonId: Int) {
+        prefs.edit().remove("hitbox_override_${screenId}_${subState}_${buttonId}").apply()
+        saveAllToJsonFile()
+    }
+
+    fun clearHitboxOverrides() {
+        val editor = prefs.edit()
+        for (key in prefs.all.keys) {
+            if (key.startsWith("hitbox_override_")) {
+                editor.remove(key)
+            }
+        }
+        editor.apply()
+        saveAllToJsonFile()
+    }
+
+    fun getAllHitboxOverrides(): List<HitboxOverrideData> {
+        val list = mutableListOf<HitboxOverrideData>()
+        for ((key, value) in prefs.all) {
+            if (key.startsWith("hitbox_override_") && value is String) {
+                val parts = key.removePrefix("hitbox_override_").split("_")
+                val (sId, subSt, bId) = when (parts.size) {
+                    3 -> Triple(parts[0].toIntOrNull() ?: continue, parts[1].toIntOrNull() ?: continue, parts[2].toIntOrNull() ?: continue)
+                    2 -> Triple(parts[0].toIntOrNull() ?: continue, 0, parts[1].toIntOrNull() ?: continue)
+                    else -> continue
+                }
+                val coords = value.split(",")
+                if (coords.size == 4) {
+                    val x0 = coords[0].toFloatOrNull() ?: continue
+                    val y0 = coords[1].toFloatOrNull() ?: continue
+                    val x1 = coords[2].toFloatOrNull() ?: continue
+                    val y1 = coords[3].toFloatOrNull() ?: continue
+                    list.add(HitboxOverrideData(sId, subSt, bId, x0, y0, x1, y1))
+                }
+            }
+        }
+        return list
     }
 }

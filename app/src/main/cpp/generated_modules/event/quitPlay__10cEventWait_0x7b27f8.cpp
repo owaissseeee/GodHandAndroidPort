@@ -14,28 +14,27 @@ namespace gh_event
 {
 // Function: quitPlay__10cEventWait
 // Address: 0x7b27f8 - 0x7b2818
-void quitPlay__10cEventWait_0x7b27f8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void quitPlay__10cEventWait_0x7b27f8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("quitPlay__10cEventWait_0x7b27f8");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7b2808u: goto label_7b2808;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7b27f8u, 0)) {
+        switch (ctx->pc) {
+            case 0x7b2808u: goto label_7b2808;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7b27f8u;
+
 
     // 0x7b27f8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7b27f8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x7b27fc: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x7b27fcu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x7b2800: 0xc0c345a  jal         func_30D168
-    ctx->pc = 0x7B2800u;
     SET_GPR_U32(ctx, 31, 0x7B2808u);
-    ctx->pc = 0x7B2804u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x7B2800u;
     // 0x7b2804: 0x24040002  addiu       $a0, $zero, 0x2 (Delay Slot)
@@ -45,7 +44,6 @@ void quitPlay__10cEventWait_0x7b27f8(uint8_t* rdram, R5900Context* ctx, PS2Runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x30D168u, 0x7B2800u, 0x7B2808u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x7B2808u;
 label_7b2808:
     // 0x7b2808: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7b2808u;
@@ -69,9 +67,7 @@ label_7b2808:
         return;
         #endif
     }
-    ctx->pc = 0x7B2814u;
     // 0x7b2814: 0x0  nop
-    ctx->pc = 0x7b2814u;
     // NOP
     ctx->pc = 0x7b2818u;
 }

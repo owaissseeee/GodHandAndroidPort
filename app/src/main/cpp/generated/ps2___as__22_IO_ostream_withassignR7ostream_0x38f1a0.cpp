@@ -13,15 +13,13 @@
 
 // Function: __as__22_IO_ostream_withassignR7ostream
 // Address: 0x38f1a0 - 0x38f200
-void ps2___as__22_IO_ostream_withassignR7ostream_0x38f1a0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ps2___as__22_IO_ostream_withassignR7ostream_0x38f1a0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ps2___as__22_IO_ostream_withassignR7ostream_0x38f1a0");
 #endif
 
-    ctx->pc = 0x38f1a0u;
 
     // 0x38f1a0: 0x80382d  daddu       $a3, $a0, $zero
-    ctx->pc = 0x38f1a0u;
     SET_GPR_U64(ctx, 7, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x38f1a4: 0x10a70014  beq         $a1, $a3, . + 4 + (0x14 << 2)
     ctx->pc = 0x38F1A4u;
@@ -32,7 +30,6 @@ void ps2___as__22_IO_ostream_withassignR7ostream_0x38f1a0(uint8_t* rdram, R5900C
             goto label_38f1f8;
         }
     }
-    ctx->pc = 0x38F1ACu;
     // 0x38f1ac: 0x8ca20000  lw          $v0, 0x0($a1)
     ctx->pc = 0x38f1acu;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 5), 0)));
@@ -54,9 +51,7 @@ void ps2___as__22_IO_ostream_withassignR7ostream_0x38f1a0(uint8_t* rdram, R5900C
             goto label_38f1c8;
         }
     }
-    ctx->pc = 0x38F1BCu;
     // 0x38f1bc: 0x24020004  addiu       $v0, $zero, 0x4
-    ctx->pc = 0x38f1bcu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 4));
     // 0x38f1c0: 0x10000002  b           . + 4 + (0x2 << 2)
     ctx->pc = 0x38F1C0u;
@@ -73,20 +68,16 @@ void ps2___as__22_IO_ostream_withassignR7ostream_0x38f1a0(uint8_t* rdram, R5900C
             goto label_38f1cc;
         }
     }
-    ctx->pc = 0x38F1C8u;
 label_38f1c8:
     // 0x38f1c8: 0xa0c0001a  sb          $zero, 0x1A($a2)
     ctx->pc = 0x38f1c8u;
     WRITE8(ADD32(GPR_U32(ctx, 6), 26), (uint8_t)GPR_U32(ctx, 0));
 label_38f1cc:
     // 0x38f1cc: 0x24020020  addiu       $v0, $zero, 0x20
-    ctx->pc = 0x38f1ccu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 32));
     // 0x38f1d0: 0x24030011  addiu       $v1, $zero, 0x11
-    ctx->pc = 0x38f1d0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 17));
     // 0x38f1d4: 0x24040006  addiu       $a0, $zero, 0x6
-    ctx->pc = 0x38f1d4u;
     SET_GPR_S32(ctx, 4, (int32_t)ADD32(GPR_U32(ctx, 0), 6));
     // 0x38f1d8: 0xacc50000  sw          $a1, 0x0($a2)
     ctx->pc = 0x38f1d8u;

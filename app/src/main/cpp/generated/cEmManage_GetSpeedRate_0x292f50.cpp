@@ -13,15 +13,13 @@
 
 // Function: cEmManage_GetSpeedRate
 // Address: 0x292f50 - 0x292f68
-void cEmManage_GetSpeedRate_0x292f50(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_GetSpeedRate_0x292f50(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_GetSpeedRate_0x292f50");
 #endif
 
-    ctx->pc = 0x292f50u;
 
     // 0x292f50: 0x3c020074  lui         $v0, 0x74
-    ctx->pc = 0x292f50u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)116 << 16));
     // 0x292f54: 0xc4810548  lwc1        $f1, 0x548($a0)
     ctx->pc = 0x292f54u;
@@ -48,9 +46,7 @@ void cEmManage_GetSpeedRate_0x292f50(uint8_t* rdram, R5900Context* ctx, PS2Runti
         return;
         #endif
     }
-    ctx->pc = 0x292F64u;
     // 0x292f64: 0x0  nop
-    ctx->pc = 0x292f64u;
     // NOP
     ctx->pc = 0x292f68u;
 }

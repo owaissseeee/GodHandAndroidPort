@@ -13,20 +13,20 @@
 
 // Function: Tramp___as__22_IO_ostream_withassignR7ostream_389808
 // Address: 0x389808 - 0x389828
-void Tramp___as__22_IO_ostream_withassignR7ostream_389808_0x389808(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Tramp___as__22_IO_ostream_withassignR7ostream_389808_0x389808(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Tramp___as__22_IO_ostream_withassignR7ostream_389808_0x389808");
 #endif
 
-    switch (ctx->pc) {
-        case 0x389818u: goto label_389818;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x389808u, 0)) {
+        switch (ctx->pc) {
+            case 0x389818u: goto label_389818;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x389808u;
 
     // 0x389808: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x389808u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x38980c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x38980cu;
@@ -34,11 +34,9 @@ void Tramp___as__22_IO_ostream_withassignR7ostream_389808_0x389808(uint8_t* rdra
     // 0x389810: 0xc0e3c68  jal         func_38F1A0
     ctx->pc = 0x389810u;
     SET_GPR_U32(ctx, 31, 0x389818u);
-    ctx->pc = 0x38F1A0u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x38F1A0u, 0x389810u, 0x389818u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ps2___as__22_IO_ostream_withassignR7ostream_0x38f1a0, 0x38f1a0u, 0x389818u)) {
         return;
     }
-    ctx->pc = 0x389818u;
 label_389818:
     // 0x389818: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x389818u;
@@ -62,9 +60,7 @@ label_389818:
         return;
         #endif
     }
-    ctx->pc = 0x389824u;
     // 0x389824: 0x0  nop
-    ctx->pc = 0x389824u;
     // NOP
     ctx->pc = 0x389828u;
 }

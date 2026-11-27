@@ -13,15 +13,13 @@
 
 // Function: GetD003C80A8_325610
 // Address: 0x325610 - 0x325620
-void GetD003C80A8_325610_0x325610(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetD003C80A8_325610_0x325610(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetD003C80A8_325610_0x325610");
 #endif
 
-    ctx->pc = 0x325610u;
 
     // 0x325610: 0x3c03003d  lui         $v1, 0x3D
-    ctx->pc = 0x325610u;
     SET_GPR_S32(ctx, 3, (int32_t)((uint32_t)61 << 16));
     // 0x325614: 0x3e00008  jr          $ra
     ctx->pc = 0x325614u;
@@ -42,9 +40,7 @@ void GetD003C80A8_325610_0x325610(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
         return;
         #endif
     }
-    ctx->pc = 0x32561Cu;
     // 0x32561c: 0x0  nop
-    ctx->pc = 0x32561cu;
     // NOP
     ctx->pc = 0x325620u;
 }

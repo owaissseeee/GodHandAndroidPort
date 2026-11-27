@@ -13,12 +13,11 @@
 
 // Function: func_0032F570
 // Address: 0x32f570 - 0x32f580
-void func_0032F570_0x32f570(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0032F570_0x32f570(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0032F570_0x32f570");
 #endif
 
-    ctx->pc = 0x32f570u;
 
     // 0x32f570: 0x3e00008  jr          $ra
     ctx->pc = 0x32F570u;
@@ -39,12 +38,10 @@ void func_0032F570_0x32f570(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x32F578u;
     // 0x32f578: 0xac85195c  sw          $a1, 0x195C($a0)
     ctx->pc = 0x32f578u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 6492), GPR_U32(ctx, 5));
     // 0x32f57c: 0x0  nop
-    ctx->pc = 0x32f57cu;
     // NOP
     ctx->pc = 0x32f580u;
 }

@@ -29,10 +29,14 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
     private lateinit var settings: SettingsRepository
     private lateinit var surfaceView: SurfaceView
     private lateinit var touchOverlay: TouchControllerOverlay
+    private lateinit var hapticController: HapticController
+    private var lastGameMotorState: Int = 0
     private var inputManager: InputManager? = null
     private var adpfSession: PerformanceHintManager.Session? = null
     private var adpfInitialized = false
     private var inGameSettingsDialog: SettingsDialog? = null
+    private var lastBackPressTimeMs = 0L
+    private var backPressCount = 0
 
     private val importSaveLauncher = registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.OpenDocument()) { uri: android.net.Uri? ->
         if (uri != null) {
@@ -344,6 +348,9 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         }
     }
 
+    private var lastReportedAdpfNanos = -1L
+    private var lastAdpfReportTimeNanos = 0L
+
     private fun ensureAdpfSession() {
         if (adpfInitialized || Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return
         val tids = NativeBridge.getPerformanceThreadIds()
@@ -356,20 +363,97 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         }
     }
 
+    private val adpfMenuDebugArray = IntArray(6)
+    private var lastAdpfDebugBoxesVisible = false
+    private var lastAdpfMenu0 = -1
+    private var lastAdpfMenu1 = -1
+    private var lastAdpfMenu2 = -1
+    private var lastAdpfMenu3 = -1
+    private var lastAdpfMenu4 = -1
+    private var lastAdpfMenu5 = -1
+
     private val adpfFrameCallback = object : android.view.Choreographer.FrameCallback {
         override fun doFrame(frameTimeNanos: Long) {
             if (!isFinishing && !isDestroyed) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    ensureAdpfSession()
-                    val duration = NativeBridge.getLastFrameWorkDurationNanos()
-                    if (duration > 0L) {
-                        val reported = maxOf(duration, 30_000_000L)
-                        try {
-                            adpfSession?.reportActualWorkDuration(reported)
-                        } catch (_: Throwable) {}
+                try {
+                    val allowRumble = settings.vibrationEnabled &&
+                        settings.inGameVibrationEnabled &&
+                        inGameSettingsDialog == null
+                    val packedState = NativeBridge.pollFrameState(allowRumble)
+                    // Direct Menu Touch state polling
+                    val menuState = (packedState and 0x1FFFFFL).toInt()
+                    val screenId = menuState and 0xFFFF
+                    val isLiveRoulette = (menuState and NativeBridge.FLAG_LIVE_ROULETTE) != 0
+                    val isMenuActive = settings.menuDirectTouchEnabled && (screenId != 0) && !isLiveRoulette
+                    val isCutsceneActive = settings.menuDirectTouchEnabled &&
+                        !isMenuActive &&
+                        ((menuState and NativeBridge.FLAG_CUTSCENE_ACTIVE) != 0)
+                    val wasMenuActive = touchOverlay.isMenuTouchActive
+                    touchOverlay.isMenuTouchActive = isMenuActive
+                    touchOverlay.isCutsceneTouchActive = isCutsceneActive
+                    if (isMenuActive) {
+                        NativeBridge.getMenuDebugInfo(adpfMenuDebugArray)
+                        val showDebug = settings.showMenuDebugBoxes
+                        val cur0 = adpfMenuDebugArray[0]
+                        val cur1 = adpfMenuDebugArray[1]
+                        val cur2 = adpfMenuDebugArray[2]
+                        val cur3 = adpfMenuDebugArray[3]
+                        val cur4 = adpfMenuDebugArray[4]
+                        val cur5 = adpfMenuDebugArray[5]
+                        val stateChanged = if (showDebug) {
+                            !lastAdpfDebugBoxesVisible ||
+                                cur0 != lastAdpfMenu0 || cur1 != lastAdpfMenu1 || cur2 != lastAdpfMenu2 ||
+                                cur3 != lastAdpfMenu3 || cur4 != lastAdpfMenu4 || cur5 != lastAdpfMenu5
+                        } else {
+                            lastAdpfDebugBoxesVisible || ((cur0 == 2) != (lastAdpfMenu0 == 2))
+                        }
+                        lastAdpfDebugBoxesVisible = showDebug
+                        lastAdpfMenu0 = cur0
+                        lastAdpfMenu1 = cur1
+                        lastAdpfMenu2 = cur2
+                        lastAdpfMenu3 = cur3
+                        lastAdpfMenu4 = cur4
+                        lastAdpfMenu5 = cur5
+                        if (wasMenuActive && stateChanged) {
+                            touchOverlay.postInvalidate()
+                        }
+                    } else if (wasMenuActive) {
+                        lastAdpfMenu0 = -1
+                    }
+
+                    // Sync PS2 DualShock 2 rumble state -> background HapticController (1 atomic read/frame; zero stall)
+                    val canRumble = allowRumble && !isMenuActive
+                    if (canRumble) {
+                        val motorState = ((packedState ushr 21) and 0xFFFFL).toInt()
+                        if (motorState != lastGameMotorState) {
+                            lastGameMotorState = motorState
+                            hapticController.updateGameRumble(motorState)
+                        }
+                    } else if (lastGameMotorState != 0) {
+                        lastGameMotorState = 0
+                        hapticController.cancelGameRumble()
+                    }
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        ensureAdpfSession()
+                        val duration = ((packedState ushr 37) and 0x3FFFFFFL) * 1000L
+                        if (duration > 0L) {
+                            val reported = maxOf(duration, 30_000_000L)
+                            if (reported != lastReportedAdpfNanos || (frameTimeNanos - lastAdpfReportTimeNanos) >= 250_000_000L) {
+                                lastReportedAdpfNanos = reported
+                                lastAdpfReportTimeNanos = frameTimeNanos
+                                try {
+                                    adpfSession?.reportActualWorkDuration(reported)
+                                } catch (_: Throwable) {}
+                            }
+                        }
+                    }
+                } catch (_: Throwable) {
+                } finally {
+                    if (!isFinishing && !isDestroyed) {
+                        android.view.Choreographer.getInstance().postFrameCallback(this)
                     }
                 }
-                android.view.Choreographer.getInstance().postFrameCallback(this)
             }
         }
     }
@@ -428,12 +512,21 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         enforceSixtyHzDisplayMode()
         IsoCacheProcessor(this).ensureResourcesCopied()
         settings = SettingsRepository(this)
+        hapticController = HapticController(this).apply {
+            updateConfig(
+                settings.vibrationEnabled,
+                settings.touchVibrationEnabled,
+                settings.inGameVibrationEnabled,
+                settings.vibrationStrength
+            )
+        }
 
         val root = FrameLayout(this)
         surfaceView = SurfaceView(this).apply {
             holder.addCallback(this@GameActivity)
         }
         touchOverlay = TouchControllerOverlay(this).apply {
+            hapticController = this@GameActivity.hapticController
             applySettings(settings)
             onExitClicked = {
                 showQuitConfirmationDialog()
@@ -446,6 +539,9 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             }
             onQuickLoadClicked = {
                 performQuickLoad()
+            }
+            onBackTriggered = {
+                NativeBridge.onMenuBackPressed()
             }
             onSaveEditLayout = { map ->
                 settings.saveCustomButtonLayout(map)
@@ -464,13 +560,38 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                if (touchOverlay.isEditMode) {
-                    touchOverlay.exitEditMode(save = true)
-                } else {
-                    showQuitConfirmationDialog()
-                }
+                handleGlobalBackPressed()
             }
         })
+    }
+
+    private fun handleGlobalBackPressed() {
+        if (touchOverlay.isEditMode) {
+            touchOverlay.exitEditMode(save = true)
+            return
+        }
+
+        if (touchOverlay.isMenuTouchActive) {
+            NativeBridge.onMenuBackPressed()
+            return
+        }
+
+        val now = System.currentTimeMillis()
+        if (now - lastBackPressTimeMs < 2500L) {
+            backPressCount++
+        } else {
+            backPressCount = 1
+        }
+        lastBackPressTimeMs = now
+
+        if (backPressCount >= 2) {
+            // User pressed back 2-3 times in quick succession -> immediately show quit menu!
+            backPressCount = 0
+            showQuitConfirmationDialog()
+            return
+        }
+
+        showQuitConfirmationDialog()
     }
 
     private fun checkConnectedControllers() {
@@ -502,6 +623,8 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
 
     private fun showInGameSettingsDialog() {
         if (isFinishing || isDestroyed) return
+        lastGameMotorState = 0
+        hapticController.cancelGameRumble()
         runOnUiThread {
             inGameSettingsDialog = SettingsDialog(
                 context = this,
@@ -541,7 +664,11 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                     hideSystemUI()
                 }
             ).apply {
-                setOnDismissListener { inGameSettingsDialog = null; hideSystemUI() }
+                setOnDismissListener {
+                    inGameSettingsDialog = null
+                    touchOverlay.applySettings(settings)
+                    hideSystemUI()
+                }
                 show()
             }
         }
@@ -553,12 +680,19 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             android.app.Dialog(this).apply {
                 requestWindowFeature(android.view.Window.FEATURE_NO_TITLE)
                 window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT))
+                window?.setLayout(android.view.ViewGroup.LayoutParams.WRAP_CONTENT, android.view.ViewGroup.LayoutParams.WRAP_CONTENT)
+                window?.setGravity(android.view.Gravity.CENTER)
+
+                val density = resources.displayMetrics.density
+                val dialogW = (resources.displayMetrics.widthPixels * 0.55f).toInt()
+                    .coerceIn((320 * density).toInt(), (520 * density).toInt())
+
                 val root = android.widget.LinearLayout(this@GameActivity).apply {
                     orientation = android.widget.LinearLayout.VERTICAL
                     setBackgroundResource(R.drawable.dialog_god_hand_bg)
-                    setPadding(32, 26, 32, 26)
+                    setPadding((24 * density).toInt(), (20 * density).toInt(), (24 * density).toInt(), (20 * density).toInt())
                     layoutParams = android.widget.LinearLayout.LayoutParams(
-                        (resources.displayMetrics.widthPixels * 0.55f).toInt().coerceAtMost(480),
+                        dialogW,
                         android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
                     )
                 }
@@ -572,7 +706,7 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                     text = "Are you sure you want to end your current fight and return to the main menu?"
                     textSize = 13.5f
                     setTextColor(0xFFE2E8F0.toInt())
-                    setPadding(0, 10, 0, 20)
+                    setPadding(0, (10 * density).toInt(), 0, (20 * density).toInt())
                 }
                 val row = android.widget.LinearLayout(this@GameActivity).apply {
                     orientation = android.widget.LinearLayout.HORIZONTAL
@@ -597,21 +731,23 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
                         handleExitToMenu()
                     }
                 }
-                val btnH = (48 * resources.displayMetrics.density).toInt()
-                row.addView(btnCancel, android.widget.LinearLayout.LayoutParams(0, btnH, 1f).apply { setMargins(0, 0, 8, 0) })
-                row.addView(btnQuit, android.widget.LinearLayout.LayoutParams(0, btnH, 1.2f).apply { setMargins(8, 0, 0, 0) })
+                val btnH = (48 * density).toInt()
+                row.addView(btnCancel, android.widget.LinearLayout.LayoutParams(0, btnH, 1f).apply { setMargins(0, 0, (8 * density).toInt(), 0) })
+                row.addView(btnQuit, android.widget.LinearLayout.LayoutParams(0, btnH, 1.2f).apply { setMargins((8 * density).toInt(), 0, 0, 0) })
 
                 root.addView(title)
                 root.addView(msg)
                 root.addView(row)
                 setContentView(root)
-                setOnDismissListener { inGameSettingsDialog = null; hideSystemUI() }
+                setOnDismissListener { hideSystemUI() }
                 show()
             }
         }
     }
 
     private fun handleExitToMenu() {
+        lastGameMotorState = 0
+        hapticController.release()
         NativeBridge.setAudioMuted(true)
         finish()
         Process.killProcess(Process.myPid())
@@ -664,11 +800,7 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (touchOverlay.isEditMode) {
-                touchOverlay.exitEditMode(save = true)
-            } else {
-                showQuitConfirmationDialog()
-            }
+            handleGlobalBackPressed()
             return true
         }
         if (event != null && isGamepadEvent(event.source)) {
@@ -741,28 +873,43 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
         super.onResume()
         enforceSixtyHzDisplayMode()
         hideSystemUI()
+        settings.reload()
         touchOverlay.applySettings(settings)
         checkConnectedControllers()
         NativeBridge.setAudioMuted(false)
+        NativeBridge.setAudioChannelVolumes(
+            settings.masterVolume,
+            settings.bgmVolume,
+            settings.sfxVolume,
+            settings.voiceVolume
+        )
         android.view.Choreographer.getInstance().postFrameCallback(adpfFrameCallback)
     }
 
     override fun onPause() {
         super.onPause()
         android.view.Choreographer.getInstance().removeFrameCallback(adpfFrameCallback)
+        lastGameMotorState = 0
+        hapticController.cancelAll()
         NativeBridge.setAudioMuted(true)
     }
 
     override fun onStop() {
         super.onStop()
+        lastGameMotorState = 0
+        hapticController.cancelAll()
         NativeBridge.setAudioMuted(true)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         inputManager?.unregisterInputDeviceListener(inputDeviceListener)
+        lastGameMotorState = 0
+        hapticController.release()
         NativeBridge.setAudioMuted(true)
-        Process.killProcess(Process.myPid())
+        if (isFinishing) {
+            Process.killProcess(Process.myPid())
+        }
     }
 
     private fun hideSystemUI() {
@@ -815,12 +962,15 @@ class GameActivity : ComponentActivity(), SurfaceHolder.Callback {
             } catch (_: Throwable) {}
         }
         val rendererIdx = intent.getIntExtra("rendererIdx", settings.rendererIdx)
-        val resolutionIdx = intent.getIntExtra("resolutionIdx", settings.resolutionIdx)
+        val ultraPotatoMode = intent.getBooleanExtra("ultraPotatoMode", settings.ultraPotatoMode)
+        val rawResolutionIdx = intent.getIntExtra("resolutionIdx", settings.resolutionIdx)
+        val resolutionIdx = if (!ultraPotatoMode && rawResolutionIdx == 0) 1 else rawResolutionIdx
         val aspectIdx = intent.getIntExtra("aspectIdx", settings.aspectIdx)
         val fpsIdx = intent.getIntExtra("fpsIdx", settings.fpsIdx)
         val frameskipIdx = intent.getIntExtra("frameskipIdx", settings.frameskipIdx)
         val hudLayoutIdx = intent.getIntExtra("hudLayoutIdx", settings.hudLayoutIdx)
         NativeBridge.setHudLayout(hudLayoutIdx)
+        NativeBridge.setUltraPotatoMode(ultraPotatoMode)
 
         val cachePath = java.io.File(filesDir, "godhand_cache").absolutePath
         NativeBridge.setGameCacheDirectory(cachePath)

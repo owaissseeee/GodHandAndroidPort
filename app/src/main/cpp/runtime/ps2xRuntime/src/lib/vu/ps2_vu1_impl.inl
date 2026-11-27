@@ -40,7 +40,7 @@ static inline bool vu1JrUsesDelayedVi()
 #define VU1_NOINLINE __attribute__((noinline))
 #endif
 
-#if !defined(__GNUC__) && !defined(__clang__)
+#if !defined(__GNUC__) && !defined(__clang__) && !defined(__builtin_expect)
 #define __builtin_expect(exp, c) (exp)
 #endif
 
@@ -3229,12 +3229,20 @@ struct VU1InterpreterAccess
 
     static VU1_FORCE_INLINE __m128 qN(VU1Interpreter &vu)
     {
+#if defined(__aarch64__) || defined(_M_ARM64)
+        return _mm_set1_ps(vu.m_state.q);
+#else
         return vnorm(_mm_set1_ps(vu.m_state.q));
+#endif
     }
 
     static VU1_FORCE_INLINE __m128 iN(VU1Interpreter &vu)
     {
+#if defined(__aarch64__) || defined(_M_ARM64)
+        return _mm_set1_ps(vu.m_state.i);
+#else
         return vnorm(_mm_set1_ps(vu.m_state.i));
+#endif
     }
 
     static VU1_FORCE_INLINE uint32_t maskBits(__m128d lo, __m128d hi)

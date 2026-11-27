@@ -13,12 +13,11 @@
 
 // Function: func_002BEDC8
 // Address: 0x2bedc8 - 0x2bedd8
-void func_002BEDC8_0x2bedc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_002BEDC8_0x2bedc8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_002BEDC8_0x2bedc8");
 #endif
 
-    ctx->pc = 0x2bedc8u;
 
     // 0x2bedc8: 0x8c820000  lw          $v0, 0x0($a0)
     ctx->pc = 0x2bedc8u;
@@ -42,9 +41,7 @@ void func_002BEDC8_0x2bedc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
         return;
         #endif
     }
-    ctx->pc = 0x2BEDD4u;
     // 0x2bedd4: 0x0  nop
-    ctx->pc = 0x2bedd4u;
     // NOP
     ctx->pc = 0x2bedd8u;
 }

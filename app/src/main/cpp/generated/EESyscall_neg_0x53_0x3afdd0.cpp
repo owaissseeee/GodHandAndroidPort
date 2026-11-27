@@ -13,23 +13,22 @@
 
 // Function: EESyscall_neg_0x53
 // Address: 0x3afdd0 - 0x3afde0
-void EESyscall_neg_0x53_0x3afdd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void EESyscall_neg_0x53_0x3afdd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("EESyscall_neg_0x53_0x3afdd0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x3afdd8u: goto label_3afdd8;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x3afdd0u, 0)) {
+        switch (ctx->pc) {
+            case 0x3afdd8u: goto label_3afdd8;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x3afdd0u;
 
     // 0x3afdd0: 0x2403ffad  addiu       $v1, $zero, -0x53
-    ctx->pc = 0x3afdd0u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 4294967213));
     // 0x3afdd4: 0xc  syscall     0
-    ctx->pc = 0x3afdd4u;
     ctx->pc = 0x3AFDD8u;
 if (!runtime->handleSyscall(rdram, ctx, 0x0u)) {
     return;

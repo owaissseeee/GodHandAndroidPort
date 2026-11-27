@@ -13,21 +13,21 @@
 
 // Function: StoreVecFromFieldB0_2B6160
 // Address: 0x2b6160 - 0x2b61b0
-void StoreVecFromFieldB0_2B6160_0x2b6160(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void StoreVecFromFieldB0_2B6160_0x2b6160(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("StoreVecFromFieldB0_2B6160_0x2b6160");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2b6184u: goto label_2b6184;
-        case 0x2b6190u: goto label_2b6190;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2b6160u, 0)) {
+        switch (ctx->pc) {
+            case 0x2b6184u: goto label_2b6184;
+            case 0x2b6190u: goto label_2b6190;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2b6160u;
 
     // 0x2b6160: 0x27bdffc0  addiu       $sp, $sp, -0x40
-    ctx->pc = 0x2b6160u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967232));
     // 0x2b6164: 0x7fb00030  sq          $s0, 0x30($sp)
     ctx->pc = 0x2b6164u;
@@ -36,10 +36,8 @@ void StoreVecFromFieldB0_2B6160_0x2b6160(uint8_t* rdram, R5900Context* ctx, PS2R
     ctx->pc = 0x2b6168u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 32), GPR_VEC(ctx, 17));
     // 0x2b616c: 0xa0802d  daddu       $s0, $a1, $zero
-    ctx->pc = 0x2b616cu;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 5) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2b6170: 0x80882d  daddu       $s1, $a0, $zero
-    ctx->pc = 0x2b6170u;
     SET_GPR_U64(ctx, 17, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2b6174: 0xffbf0010  sd          $ra, 0x10($sp)
     ctx->pc = 0x2b6174u;
@@ -48,7 +46,6 @@ void StoreVecFromFieldB0_2B6160_0x2b6160(uint8_t* rdram, R5900Context* ctx, PS2R
     ctx->pc = 0x2b6178u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 0), _mm_castps_si128(ctx->vu0_vf[0]));
     // 0x2b617c: 0xc0ad908  jal         func_2B6420
-    ctx->pc = 0x2B617Cu;
     SET_GPR_U32(ctx, 31, 0x2B6184u);
     ctx->pc = 0x2B6180u;
     ctx->in_delay_slot = true;
@@ -56,17 +53,13 @@ void StoreVecFromFieldB0_2B6160_0x2b6160(uint8_t* rdram, R5900Context* ctx, PS2R
     // 0x2b6180: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2B6420u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2B6420u, 0x2B617Cu, 0x2B6184u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002B6420_0x2b6420, 0x2b6420u, 0x2b6184u)) {
         return;
     }
-    ctx->pc = 0x2B6184u;
 label_2b6184:
     // 0x2b6184: 0x260500b0  addiu       $a1, $s0, 0xB0
-    ctx->pc = 0x2b6184u;
     SET_GPR_S32(ctx, 5, (int32_t)ADD32(GPR_U32(ctx, 16), 176));
     // 0x2b6188: 0xc051f18  jal         func_147C60
-    ctx->pc = 0x2B6188u;
     SET_GPR_U32(ctx, 31, 0x2B6190u);
     ctx->pc = 0x2B618Cu;
     ctx->in_delay_slot = true;
@@ -74,11 +67,9 @@ label_2b6184:
     // 0x2b618c: 0x3a0202d  daddu       $a0, $sp, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 29) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x147C60u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x147C60u, 0x2B6188u, 0x2B6190u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &ForwardVec3At30_147C60_0x147c60, 0x147c60u, 0x2b6190u)) {
         return;
     }
-    ctx->pc = 0x2B6190u;
 label_2b6190:
     // 0x2b6190: 0xdba40000  lqc2        $vf4, 0x0($sp)
     ctx->pc = 0x2b6190u;
@@ -87,7 +78,6 @@ label_2b6190:
     ctx->pc = 0x2b6194u;
     WRITE128(ADD32(GPR_U32(ctx, 17), 0), _mm_castps_si128(ctx->vu0_vf[4]));
     // 0x2b6198: 0x220102d  daddu       $v0, $s1, $zero
-    ctx->pc = 0x2b6198u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 17) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2b619c: 0x7bb00030  lq          $s0, 0x30($sp)
     ctx->pc = 0x2b619cu;

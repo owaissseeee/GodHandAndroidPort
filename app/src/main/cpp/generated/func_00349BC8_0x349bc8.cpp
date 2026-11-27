@@ -13,15 +13,13 @@
 
 // Function: func_00349BC8
 // Address: 0x349bc8 - 0x349be8
-void func_00349BC8_0x349bc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_00349BC8_0x349bc8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_00349BC8_0x349bc8");
 #endif
 
-    ctx->pc = 0x349bc8u;
 
     // 0x349bc8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x349bc8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x349bcc: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x349bccu;
@@ -36,8 +34,6 @@ void func_00349BC8_0x349bc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     ctx->pc = 0x349bd8u;
     SET_GPR_S32(ctx, 4, (int32_t)READ32(ADD32(GPR_U32(ctx, 2), 0)));
     // 0x349bdc: 0x80caa0e  j           func_32A838
-    ctx->pc = 0x349BDCu;
-    ctx->pc = 0x349BE0u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x349BDCu;
     // 0x349be0: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)
@@ -47,9 +43,7 @@ void func_00349BC8_0x349bc8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x32A838u, 0x349BDCu, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x349BE4u;
     // 0x349be4: 0x0  nop
-    ctx->pc = 0x349be4u;
     // NOP
     ctx->pc = 0x349be8u;
 }

@@ -13,18 +13,15 @@
 
 // Function: cEma2_SetPoisonDie
 // Address: 0x289080 - 0x2890a0
-void cEma2_SetPoisonDie_0x289080(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEma2_SetPoisonDie_0x289080(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEma2_SetPoisonDie_0x289080");
 #endif
 
-    ctx->pc = 0x289080u;
 
     // 0x289080: 0x24020005  addiu       $v0, $zero, 0x5
-    ctx->pc = 0x289080u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 0), 5));
     // 0x289084: 0x24030002  addiu       $v1, $zero, 0x2
-    ctx->pc = 0x289084u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 0), 2));
     // 0x289088: 0xa08202f5  sb          $v0, 0x2F5($a0)
     ctx->pc = 0x289088u;
@@ -54,9 +51,7 @@ void cEma2_SetPoisonDie_0x289080(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         return;
         #endif
     }
-    ctx->pc = 0x28909Cu;
     // 0x28909c: 0x0  nop
-    ctx->pc = 0x28909cu;
     // NOP
     ctx->pc = 0x2890a0u;
 }

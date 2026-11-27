@@ -13,27 +13,22 @@
 
 // Function: func_0026F1D8
 // Address: 0x26f1d8 - 0x26f200
-void func_0026F1D8_0x26f1d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0026F1D8_0x26f1d8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0026F1D8_0x26f1d8");
 #endif
 
-    ctx->pc = 0x26f1d8u;
 
     // 0x26f1d8: 0xc48117cc  lwc1        $f1, 0x17CC($a0)
     ctx->pc = 0x26f1d8u;
     { uint32_t bits = READ32(ADD32(GPR_U32(ctx, 4), 6092)); float f; std::memcpy(&f, &bits, sizeof(f)); ctx->f[1] = f; }
     // 0x26f1dc: 0x44800000  mtc1        $zero, $f0
-    ctx->pc = 0x26f1dcu;
     { uint32_t bits = GPR_U32(ctx, 0); std::memcpy(&ctx->f[0], &bits, sizeof(bits)); }
     // 0x26f1e0: 0x0  nop
-    ctx->pc = 0x26f1e0u;
     // NOP
     // 0x26f1e4: 0x46010034  c.lt.s      $f0, $f1
-    ctx->pc = 0x26f1e4u;
     ctx->fcr31 = (FPU_C_OLT_S(ctx->f[0], ctx->f[1])) ? (ctx->fcr31 | 0x800000) : (ctx->fcr31 & ~0x800000);
     // 0x26f1e8: 0x0  nop
-    ctx->pc = 0x26f1e8u;
     // NOP
     // 0x26f1ec: 0x45010002  bc1t        . + 4 + (0x2 << 2)
     ctx->pc = 0x26F1ECu;
@@ -50,9 +45,7 @@ void func_0026F1D8_0x26f1d8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_26f1f8;
         }
     }
-    ctx->pc = 0x26F1F4u;
     // 0x26f1f4: 0x102d  daddu       $v0, $zero, $zero
-    ctx->pc = 0x26f1f4u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
 label_26f1f8:
     // 0x26f1f8: 0x3e00008  jr          $ra

@@ -13,12 +13,11 @@
 
 // Function: GetField_601_17B810
 // Address: 0x17b810 - 0x17b818
-void GetField_601_17B810_0x17b810(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void GetField_601_17B810_0x17b810(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("GetField_601_17B810_0x17b810");
 #endif
 
-    ctx->pc = 0x17b810u;
 
     // 0x17b810: 0x3e00008  jr          $ra
     ctx->pc = 0x17B810u;

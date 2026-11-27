@@ -13,15 +13,13 @@
 
 // Function: Obj0000_Get_D_0045A1B0_360790
 // Address: 0x360790 - 0x3607a0
-void Obj0000_Get_D_0045A1B0_360790_0x360790(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Obj0000_Get_D_0045A1B0_360790_0x360790(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Obj0000_Get_D_0045A1B0_360790_0x360790");
 #endif
 
-    ctx->pc = 0x360790u;
 
     // 0x360790: 0x3c020046  lui         $v0, 0x46
-    ctx->pc = 0x360790u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)70 << 16));
     // 0x360794: 0x3e00008  jr          $ra
     ctx->pc = 0x360794u;
@@ -42,9 +40,7 @@ void Obj0000_Get_D_0045A1B0_360790_0x360790(uint8_t* rdram, R5900Context* ctx, P
         return;
         #endif
     }
-    ctx->pc = 0x36079Cu;
     // 0x36079c: 0x0  nop
-    ctx->pc = 0x36079cu;
     // NOP
     ctx->pc = 0x3607a0u;
 }

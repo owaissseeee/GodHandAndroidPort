@@ -13,18 +13,16 @@
 
 // Function: cEmManage_SetSlotWait
 // Address: 0x292030 - 0x292048
-void cEmManage_SetSlotWait_0x292030(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cEmManage_SetSlotWait_0x292030(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cEmManage_SetSlotWait_0x292030");
 #endif
 
-    ctx->pc = 0x292030u;
 
     // 0x292030: 0x8c820514  lw          $v0, 0x514($a0)
     ctx->pc = 0x292030u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 4), 1300)));
     // 0x292034: 0x45102a  slt         $v0, $v0, $a1
-    ctx->pc = 0x292034u;
     SET_GPR_U64(ctx, 2, ((int64_t)GPR_S64(ctx, 2) < (int64_t)GPR_S64(ctx, 5)) ? 1 : 0);
     // 0x292038: 0x54400001  bnel        $v0, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x292038u;
@@ -41,7 +39,6 @@ void cEmManage_SetSlotWait_0x292030(uint8_t* rdram, R5900Context* ctx, PS2Runtim
             goto label_292040;
         }
     }
-    ctx->pc = 0x292040u;
 label_292040:
     // 0x292040: 0x3e00008  jr          $ra
     ctx->pc = 0x292040u;

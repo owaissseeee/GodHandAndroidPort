@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_getGameLevelPoint
 // Address: 0x1fa620 - 0x1fa638
-void cCoreSave_getGameLevelPoint_0x1fa620(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getGameLevelPoint_0x1fa620(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getGameLevelPoint_0x1fa620");
 #endif
 
-    ctx->pc = 0x1fa620u;
 
     // 0x1fa620: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fa620u;
@@ -38,7 +37,6 @@ void cCoreSave_getGameLevelPoint_0x1fa620(uint8_t* rdram, R5900Context* ctx, PS2
             goto label_1fa630;
         }
     }
-    ctx->pc = 0x1FA62Cu;
     // 0x1fa62c: 0x8482001c  lh          $v0, 0x1C($a0)
     ctx->pc = 0x1fa62cu;
     SET_GPR_S32(ctx, 2, (int16_t)READ16(ADD32(GPR_U32(ctx, 4), 28)));

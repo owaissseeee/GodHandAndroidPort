@@ -13,21 +13,21 @@
 
 // Function: cMessage_closeAll
 // Address: 0x2aecd0 - 0x2aed10
-void cMessage_closeAll_0x2aecd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessage_closeAll_0x2aecd0(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessage_closeAll_0x2aecd0");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2aece8u: goto label_2aece8;
-        case 0x2aecf0u: goto label_2aecf0;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2aecd0u, 0)) {
+        switch (ctx->pc) {
+            case 0x2aece8u: goto label_2aece8;
+            case 0x2aecf0u: goto label_2aecf0;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2aecd0u;
 
     // 0x2aecd0: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x2aecd0u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
     // 0x2aecd4: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2aecd4u;
@@ -53,10 +53,8 @@ void cMessage_closeAll_0x2aecd0(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_2aed04;
         }
     }
-    ctx->pc = 0x2AECE8u;
 label_2aece8:
     // 0x2aece8: 0xc0ac900  jal         func_2B2400
-    ctx->pc = 0x2AECE8u;
     SET_GPR_U32(ctx, 31, 0x2AECF0u);
     ctx->pc = 0x2AECECu;
     ctx->in_delay_slot = true;
@@ -64,17 +62,14 @@ label_2aece8:
     // 0x2aecec: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2B2400u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2B2400u, 0x2AECE8u, 0x2AECF0u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_002B2400_0x2b2400, 0x2b2400u, 0x2aecf0u)) {
         return;
     }
-    ctx->pc = 0x2AECF0u;
 label_2aecf0:
     // 0x2aecf0: 0x8e100008  lw          $s0, 0x8($s0)
     ctx->pc = 0x2aecf0u;
     SET_GPR_S32(ctx, 16, (int32_t)READ32(ADD32(GPR_U32(ctx, 16), 8)));
     // 0x2aecf4: 0x0  nop
-    ctx->pc = 0x2aecf4u;
     // NOP
     // 0x2aecf8: 0x1600fffb  bnez        $s0, . + 4 + (-0x5 << 2)
     ctx->pc = 0x2AECF8u;
@@ -88,7 +83,6 @@ label_2aecf0:
             goto label_2aece8;
         }
     }
-    ctx->pc = 0x2AED00u;
     // 0x2aed00: 0x7bb00010  lq          $s0, 0x10($sp)
     ctx->pc = 0x2aed00u;
     SET_GPR_VEC(ctx, 16, READ128(ADD32(GPR_U32(ctx, 29), 16)));

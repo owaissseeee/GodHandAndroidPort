@@ -13,25 +13,24 @@
 
 // Function: ClearPendingEntries_376008
 // Address: 0x376008 - 0x376080
-void ClearPendingEntries_376008_0x376008(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void ClearPendingEntries_376008_0x376008(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("ClearPendingEntries_376008_0x376008");
 #endif
 
-    switch (ctx->pc) {
-        case 0x376028u: goto label_376028;
-        case 0x37604cu: goto label_37604c;
-        case 0x37605cu: goto label_37605c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x376008u, 0)) {
+        switch (ctx->pc) {
+            case 0x376028u: goto label_376028;
+            case 0x37604cu: goto label_37604c;
+            case 0x37605cu: goto label_37605c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x376008u;
 
     // 0x376008: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x376008u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x37600c: 0x3c020077  lui         $v0, 0x77
-    ctx->pc = 0x37600cu;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)119 << 16));
     // 0x376010: 0x7fb00020  sq          $s0, 0x20($sp)
     ctx->pc = 0x376010u;
@@ -40,16 +39,13 @@ void ClearPendingEntries_376008_0x376008(uint8_t* rdram, R5900Context* ctx, PS2R
     ctx->pc = 0x376014u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 17));
     // 0x376018: 0x2450f050  addiu       $s0, $v0, -0xFB0
-    ctx->pc = 0x376018u;
     SET_GPR_S32(ctx, 16, (int32_t)ADD32(GPR_U32(ctx, 2), 4294963280));
     // 0x37601c: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x37601cu;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x376020: 0x2411005f  addiu       $s1, $zero, 0x5F
-    ctx->pc = 0x376020u;
     SET_GPR_S32(ctx, 17, (int32_t)ADD32(GPR_U32(ctx, 0), 95));
     // 0x376024: 0x0  nop
-    ctx->pc = 0x376024u;
     // NOP
 label_376028:
     // 0x376028: 0x96020000  lhu         $v0, 0x0($s0)
@@ -70,12 +66,10 @@ label_376028:
             goto label_376060;
         }
     }
-    ctx->pc = 0x376034u;
     // 0x376034: 0x92020008  lbu         $v0, 0x8($s0)
     ctx->pc = 0x376034u;
     SET_GPR_ZE32(ctx, 2, (uint8_t)READ8(ADD32(GPR_U32(ctx, 16), 8)));
     // 0x376038: 0x30420010  andi        $v0, $v0, 0x10
-    ctx->pc = 0x376038u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)16);
     // 0x37603c: 0x10400005  beqz        $v0, . + 4 + (0x5 << 2)
     ctx->pc = 0x37603Cu;
@@ -92,15 +86,12 @@ label_376028:
             goto label_376054;
         }
     }
-    ctx->pc = 0x376044u;
     // 0x376044: 0xc0dd880  jal         func_376200
     ctx->pc = 0x376044u;
     SET_GPR_U32(ctx, 31, 0x37604Cu);
-    ctx->pc = 0x376200u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x376200u, 0x376044u, 0x37604Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &BuildSlotEntry_376200_0x376200, 0x376200u, 0x37604cu)) {
         return;
     }
-    ctx->pc = 0x37604Cu;
 label_37604c:
     // 0x37604c: 0x10000004  b           . + 4 + (0x4 << 2)
     ctx->pc = 0x37604Cu;
@@ -117,16 +108,13 @@ label_37604c:
             goto label_376060;
         }
     }
-    ctx->pc = 0x376054u;
 label_376054:
     // 0x376054: 0xc0dd820  jal         func_376080
     ctx->pc = 0x376054u;
     SET_GPR_U32(ctx, 31, 0x37605Cu);
-    ctx->pc = 0x376080u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x376080u, 0x376054u, 0x37605Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &func_00376080_0x376080, 0x376080u, 0x37605cu)) {
         return;
     }
-    ctx->pc = 0x37605Cu;
 label_37605c:
     // 0x37605c: 0xa6000000  sh          $zero, 0x0($s0)
     ctx->pc = 0x37605cu;
@@ -150,7 +138,6 @@ label_376060:
             goto label_376028;
         }
     }
-    ctx->pc = 0x376068u;
     // 0x376068: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x376068u;
     SET_GPR_VEC(ctx, 16, READ128(ADD32(GPR_U32(ctx, 29), 32)));
@@ -179,9 +166,7 @@ label_376060:
         return;
         #endif
     }
-    ctx->pc = 0x37607Cu;
     // 0x37607c: 0x0  nop
-    ctx->pc = 0x37607cu;
     // NOP
     ctx->pc = 0x376080u;
 }

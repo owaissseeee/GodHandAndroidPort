@@ -13,12 +13,11 @@
 
 // Function: cOl26_isOpen
 // Address: 0x17f218 - 0x17f220
-void cOl26_isOpen_0x17f218(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cOl26_isOpen_0x17f218(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cOl26_isOpen_0x17f218");
 #endif
 
-    ctx->pc = 0x17f218u;
 
     // 0x17f218: 0x3e00008  jr          $ra
     ctx->pc = 0x17F218u;

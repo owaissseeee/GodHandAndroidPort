@@ -26,13 +26,8 @@ namespace ps2x::asyncvif
 {
     namespace
     {
-#if defined(__ANDROID__)
         constexpr size_t kMaxQueuedJobs = 64u;
         constexpr size_t kMaxQueuedGifBytes = 8u * 1024u * 1024u;
-#else
-        constexpr size_t kMaxQueuedJobs = 64u;
-        constexpr size_t kMaxQueuedGifBytes = 8u * 1024u * 1024u;
-#endif
 
         struct Job
         {
@@ -55,6 +50,40 @@ namespace ps2x::asyncvif
             std::vector<GifPacketRef> packets;
         };
 
+        struct SpinLock
+        {
+            std::atomic_flag flag = ATOMIC_FLAG_INIT;
+            void lock() noexcept
+            {
+                while (flag.test_and_set(std::memory_order_acquire))
+                {
+#if defined(__aarch64__) || defined(_M_ARM64)
+                    __asm__ __volatile__("yield" ::: "memory");
+#endif
+                }
+            }
+            void unlock() noexcept
+            {
+                flag.clear(std::memory_order_release);
+            }
+        };
+
+        struct SpinLockGuard
+        {
+            SpinLock &l;
+            explicit SpinLockGuard(SpinLock &lock) noexcept : l(lock) { l.lock(); }
+            ~SpinLockGuard() { l.unlock(); }
+            SpinLockGuard(const SpinLockGuard &) = delete;
+            SpinLockGuard &operator=(const SpinLockGuard &) = delete;
+        };
+
+        struct WaiterCountGuard
+        {
+            uint32_t &count;
+            explicit WaiterCountGuard(uint32_t &c) noexcept : count(c) { ++count; }
+            ~WaiterCountGuard() { --count; }
+        };
+
         struct GifStage
         {
             std::mutex mutex;
@@ -63,6 +92,8 @@ namespace ps2x::asyncvif
             std::deque<GifChunk> chunks;
             std::vector<GifChunk> spare;
             size_t queuedBytes = 0u;
+            uint32_t workWaiters = 0u;
+            uint32_t idleWaiters = 0u;
             bool busy = false;
             bool stop = false;
             GifChunk current;
@@ -76,19 +107,26 @@ namespace ps2x::asyncvif
             if (stage.current.packets.empty())
                 return;
             GifChunk next;
+            bool wakeWorker = false;
             {
                 std::unique_lock<std::mutex> lock(stage.mutex);
-                stage.idleCv.wait_for(lock, std::chrono::milliseconds(20), [&]
-                                  { return stage.queuedBytes < kMaxQueuedGifBytes; });
+                if (stage.queuedBytes >= kMaxQueuedGifBytes)
+                {
+                    WaiterCountGuard wg(stage.idleWaiters);
+                    stage.idleCv.wait_for(lock, std::chrono::milliseconds(20), [&]
+                                          { return stage.queuedBytes < kMaxQueuedGifBytes; });
+                }
                 stage.queuedBytes += stage.current.data.size();
                 stage.chunks.push_back(std::move(stage.current));
+                wakeWorker = stage.workWaiters > 0u;
                 if (!stage.spare.empty())
                 {
                     next = std::move(stage.spare.back());
                     stage.spare.pop_back();
                 }
             }
-            stage.workCv.notify_one();
+            if (wakeWorker)
+                stage.workCv.notify_one();
             stage.current = std::move(next);
             stage.current.data.clear();
             stage.current.packets.clear();
@@ -101,11 +139,21 @@ namespace ps2x::asyncvif
             std::condition_variable workCv;
             std::condition_variable idleCv;
             std::deque<Job> jobs;
-            std::vector<std::vector<uint8_t>> spare;
+            uint32_t workWaiters = 0u;
+            uint32_t idleWaiters = 0u;
             bool busy = false;
             bool stop = false;
+            alignas(64) SpinLock poolLock;
+            std::vector<std::vector<uint8_t>> spareBuffers;
+            std::vector<std::vector<Item>> spareItemBags;
             std::thread thread;
             GifStage gif;
+
+            Worker()
+            {
+                spareBuffers.reserve(64u);
+                spareItemBags.reserve(32u);
+            }
         };
 
         std::function<void(const uint8_t *, uint32_t)> s_gifProcessor;
@@ -116,6 +164,8 @@ namespace ps2x::asyncvif
         std::atomic<bool> s_hostPacingDefault{false};
         std::mutex s_bindMutex;
         std::atomic<Worker *> s_worker{nullptr};
+        SpinLock s_fbrstLock;
+        std::atomic<bool> s_fbrstReady{false};
         std::function<uint32_t()> s_fbrstProvider;
         thread_local bool t_onWorker = false;
         std::function<uint64_t()> s_vu1CycleReader;
@@ -144,12 +194,18 @@ namespace ps2x::asyncvif
             for (;;)
             {
                 GifChunk chunk;
+                bool wakeIdleAfterPop = false;
                 {
                     std::unique_lock<std::mutex> lock(stage.mutex);
                     // Wake every 2 ms even without work: a SIGNAL stall whose release got lost between threads (the EE
                     // cleared CSR.SIGNAL while this thread was deferring the data) is replayed by the safety net below.
-                    const bool woke = stage.workCv.wait_for(lock, std::chrono::milliseconds(2), [&]
-                                                            { return stage.stop || !stage.chunks.empty() || s_stallReleaseRequested.load(std::memory_order_acquire); });
+                    bool woke = stage.stop || !stage.chunks.empty() || s_stallReleaseRequested.load(std::memory_order_acquire);
+                    if (!woke)
+                    {
+                        WaiterCountGuard wg(stage.workWaiters);
+                        woke = stage.workCv.wait_for(lock, std::chrono::milliseconds(2), [&]
+                                                     { return stage.stop || !stage.chunks.empty() || s_stallReleaseRequested.load(std::memory_order_acquire); });
+                    }
                     if (!woke)
                     {
                         lock.unlock();
@@ -165,7 +221,10 @@ namespace ps2x::asyncvif
                             ps2xGsReleaseStall();
                             lock.lock();
                             stage.busy = false;
-                            stage.idleCv.notify_all();
+                            const bool wakeIdle = stage.idleWaiters > 0u;
+                            lock.unlock();
+                            if (wakeIdle)
+                                stage.idleCv.notify_all();
                         }
                         continue;
                     }
@@ -177,7 +236,10 @@ namespace ps2x::asyncvif
                         ps2xGsReleaseStall();
                         lock.lock();
                         stage.busy = false;
-                        stage.idleCv.notify_all();
+                        const bool wakeIdle = stage.idleWaiters > 0u;
+                        lock.unlock();
+                        if (wakeIdle)
+                            stage.idleCv.notify_all();
                         continue;
                     }
                     if (stage.stop && stage.chunks.empty())
@@ -186,8 +248,10 @@ namespace ps2x::asyncvif
                     stage.chunks.pop_front();
                     stage.queuedBytes -= chunk.data.size();
                     stage.busy = true;
+                    wakeIdleAfterPop = stage.idleWaiters > 0u;
                 }
-                stage.idleCv.notify_all();
+                if (wakeIdleAfterPop)
+                    stage.idleCv.notify_all();
                 traceEvent('g', static_cast<uint32_t>(chunk.packets.size()));
                 for (const GifPacketRef &packet : chunk.packets)
                 {
@@ -200,13 +264,16 @@ namespace ps2x::asyncvif
                 }
                 g_gsTracePath = -1;
                 traceEvent('G');
+                bool wakeIdleAfterDone = false;
                 {
                     std::lock_guard<std::mutex> lock(stage.mutex);
                     if (stage.spare.size() < 16u)
                         stage.spare.push_back(std::move(chunk));
                     stage.busy = false;
+                    wakeIdleAfterDone = stage.idleWaiters > 0u;
                 }
-                stage.idleCv.notify_all();
+                if (wakeIdleAfterDone)
+                    stage.idleCv.notify_all();
             }
         }
 
@@ -227,17 +294,24 @@ namespace ps2x::asyncvif
             for (;;)
             {
                 Job job;
+                bool wakeIdleAfterPop = false;
                 {
                     std::unique_lock<std::mutex> lock(worker.mutex);
-                    worker.workCv.wait(lock, [&]
-                                       { return worker.stop || !worker.jobs.empty(); });
+                    if (!worker.stop && worker.jobs.empty())
+                    {
+                        WaiterCountGuard wg(worker.workWaiters);
+                        worker.workCv.wait(lock, [&]
+                                           { return worker.stop || !worker.jobs.empty(); });
+                    }
                     if (worker.stop && worker.jobs.empty())
                         return;
                     job = std::move(worker.jobs.front());
                     worker.jobs.pop_front();
                     worker.busy = true;
+                    wakeIdleAfterPop = worker.idleWaiters > 0u;
                 }
-                worker.idleCv.notify_all();
+                if (wakeIdleAfterPop)
+                    worker.idleCv.notify_all();
                 const Clock::time_point jobStart = Clock::now();
                 traceEvent('S');
 #if !defined(__aarch64__) && !defined(_M_ARM64)
@@ -282,18 +356,27 @@ namespace ps2x::asyncvif
                     }
                 }
                 {
-                    std::lock_guard<std::mutex> lock(worker.mutex);
+                    SpinLockGuard poolGuard(worker.poolLock);
                     for (Item &item : job.items)
                     {
-                        if (worker.spare.size() < 64u && item.data.capacity() != 0u)
+                        if (worker.spareBuffers.size() < 64u && item.data.capacity() != 0u)
                         {
                             item.data.clear();
-                            worker.spare.push_back(std::move(item.data));
+                            worker.spareBuffers.push_back(std::move(item.data));
                         }
                     }
-                    worker.busy = false;
+                    job.items.clear();
+                    if (worker.spareItemBags.size() < 32u && job.items.capacity() != 0u)
+                        worker.spareItemBags.push_back(std::move(job.items));
                 }
-                worker.idleCv.notify_all();
+                bool wakeIdleDone = false;
+                {
+                    std::lock_guard<std::mutex> lock(worker.mutex);
+                    worker.busy = false;
+                    wakeIdleDone = worker.idleWaiters > 0u;
+                }
+                if (wakeIdleDone)
+                    worker.idleCv.notify_all();
             }
         }
     }
@@ -310,8 +393,9 @@ namespace ps2x::asyncvif
 
     void setFbrstProvider(std::function<uint32_t()> provider)
     {
-        std::lock_guard<std::mutex> lock(s_bindMutex);
+        SpinLockGuard guard(s_fbrstLock);
         s_fbrstProvider = std::move(provider);
+        s_fbrstReady.store(static_cast<bool>(s_fbrstProvider), std::memory_order_release);
     }
 
     bool onWorker()
@@ -374,11 +458,14 @@ namespace ps2x::asyncvif
         Worker *worker = s_worker;
         if (!worker)
             return false;
+        bool wakeWorker = false;
         {
             std::lock_guard<std::mutex> lock(worker->gif.mutex);
             s_stallReleaseRequested.store(true, std::memory_order_release);
+            wakeWorker = worker->gif.workWaiters > 0u;
         }
-        worker->gif.workCv.notify_one();
+        if (wakeWorker)
+            worker->gif.workCv.notify_one();
         return true;
     }
 
@@ -440,20 +527,47 @@ namespace ps2x::asyncvif
 
     std::vector<uint8_t> takeBuffer()
     {
-        Worker *worker = s_worker;
+        Worker *worker = s_worker.load(std::memory_order_acquire);
         if (!worker)
             return {};
-        std::lock_guard<std::mutex> lock(worker->mutex);
-        if (worker->spare.empty())
+        SpinLockGuard guard(worker->poolLock);
+        if (worker->spareBuffers.empty())
             return {};
-        std::vector<uint8_t> buffer = std::move(worker->spare.back());
-        worker->spare.pop_back();
+        std::vector<uint8_t> buffer = std::move(worker->spareBuffers.back());
+        worker->spareBuffers.pop_back();
         return buffer;
+    }
+
+    std::vector<Item> takeItemBag()
+    {
+        Worker *worker = s_worker.load(std::memory_order_acquire);
+        if (!worker)
+            return {};
+        SpinLockGuard guard(worker->poolLock);
+        if (worker->spareItemBags.empty())
+            return {};
+        std::vector<Item> bag = std::move(worker->spareItemBags.back());
+        worker->spareItemBags.pop_back();
+        bag.clear();
+        return bag;
+    }
+
+    void recycleItemBag(std::vector<Item> &&items)
+    {
+        Worker *worker = s_worker.load(std::memory_order_acquire);
+        if (!worker)
+            return;
+        items.clear();
+        if (items.capacity() == 0u)
+            return;
+        SpinLockGuard guard(worker->poolLock);
+        if (worker->spareItemBags.size() < 32u)
+            worker->spareItemBags.push_back(std::move(items));
     }
 
     void enqueue(PS2Memory &memory, std::vector<Item> &&items)
     {
-        Worker *worker = s_worker;
+        Worker *worker = s_worker.load(std::memory_order_acquire);
         if (!worker || worker->memory != &memory || items.empty())
             return;
         Job job;
@@ -461,11 +575,13 @@ namespace ps2x::asyncvif
 #if !defined(__aarch64__) && !defined(_M_ARM64)
         job.mxcsr = _mm_getcsr();
 #endif
+        if (s_fbrstReady.load(std::memory_order_acquire))
         {
-            std::lock_guard<std::mutex> lock(s_bindMutex);
+            SpinLockGuard guard(s_fbrstLock);
             job.fbrst = s_fbrstProvider ? s_fbrstProvider() : 0u;
         }
         traceEvent('K', static_cast<uint32_t>(job.items.size()));
+        bool wakeWorker = false;
         {
             std::unique_lock<std::mutex> lock(worker->mutex);
             // Progressive micro-yield when queue depth reaches saturation threshold (28+ / 56+)
@@ -481,12 +597,15 @@ namespace ps2x::asyncvif
             }
             if (worker->jobs.size() >= kMaxQueuedJobs)
             {
+                WaiterCountGuard wg(worker->idleWaiters);
                 worker->idleCv.wait_for(lock, std::chrono::milliseconds(2), [&]
                                     { return worker->jobs.size() < kMaxQueuedJobs; });
             }
             worker->jobs.push_back(std::move(job));
+            wakeWorker = worker->workWaiters > 0u;
         }
-        worker->workCv.notify_one();
+        if (wakeWorker)
+            worker->workCv.notify_one();
     }
 
     extern "C" uint32_t ps2_async_vif_get_queue_depth()
@@ -532,8 +651,12 @@ namespace ps2x::asyncvif
             if (!worker || worker->memory != &memory)
                 return;
             std::unique_lock<std::mutex> lock(worker->mutex);
-            worker->idleCv.wait_for(lock, std::chrono::milliseconds(100), [&]
-                                { return worker->jobs.empty() && !worker->busy; });
+            if (!(worker->jobs.empty() && !worker->busy))
+            {
+                WaiterCountGuard wg(worker->idleWaiters);
+                worker->idleCv.wait_for(lock, std::chrono::milliseconds(100), [&]
+                                    { return worker->jobs.empty() && !worker->busy; });
+            }
         }
     }
 
@@ -610,14 +733,22 @@ namespace ps2x::asyncvif
         const auto deadline = std::chrono::steady_clock::now() + timeout;
         {
             std::unique_lock<std::mutex> lock(worker->mutex);
-            if (!worker->idleCv.wait_until(lock, deadline, [&] { return worker->jobs.empty() && !worker->busy; }))
-                return true;
+            if (!(worker->jobs.empty() && !worker->busy))
+            {
+                WaiterCountGuard wg(worker->idleWaiters);
+                if (!worker->idleCv.wait_until(lock, deadline, [&] { return worker->jobs.empty() && !worker->busy; }))
+                    return true;
+            }
         }
         {
             GifStage &stage = worker->gif;
             std::unique_lock<std::mutex> lock(stage.mutex);
-            if (!stage.idleCv.wait_until(lock, deadline, [&] { return stage.chunks.empty() && !stage.busy; }))
-                return true;
+            if (!(stage.chunks.empty() && !stage.busy))
+            {
+                WaiterCountGuard wg(stage.idleWaiters);
+                if (!stage.idleCv.wait_until(lock, deadline, [&] { return stage.chunks.empty() && !stage.busy; }))
+                    return true;
+            }
         }
         return pipelineBusy(memory);
     }
@@ -678,13 +809,21 @@ namespace ps2x::asyncvif
         traceEvent('W', vu1Timing().hooks.eeCycle ? static_cast<uint32_t>(vu1Timing().hooks.eeCycle() >> 10) : 0u); // EE cycle / 1024
         {
             std::unique_lock<std::mutex> lock(worker->mutex);
-            worker->idleCv.wait_for(lock, std::chrono::milliseconds(100), [&]
-                                { return worker->jobs.empty() && !worker->busy; });
+            if (!(worker->jobs.empty() && !worker->busy))
+            {
+                WaiterCountGuard wg(worker->idleWaiters);
+                worker->idleCv.wait_for(lock, std::chrono::milliseconds(100), [&]
+                                    { return worker->jobs.empty() && !worker->busy; });
+            }
         }
         GifStage &stage = worker->gif;
         std::unique_lock<std::mutex> lock(stage.mutex);
-        stage.idleCv.wait_for(lock, std::chrono::milliseconds(100), [&]
-                          { return stage.chunks.empty() && !stage.busy; });
+        if (!(stage.chunks.empty() && !stage.busy))
+        {
+            WaiterCountGuard wg(stage.idleWaiters);
+            stage.idleCv.wait_for(lock, std::chrono::milliseconds(100), [&]
+                              { return stage.chunks.empty() && !stage.busy; });
+        }
         traceEvent('w');
     }
 

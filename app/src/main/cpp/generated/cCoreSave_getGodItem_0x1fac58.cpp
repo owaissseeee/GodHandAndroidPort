@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_getGodItem
 // Address: 0x1fac58 - 0x1fac68
-void cCoreSave_getGodItem_0x1fac58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_getGodItem_0x1fac58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_getGodItem_0x1fac58");
 #endif
 
-    ctx->pc = 0x1fac58u;
 
     // 0x1fac58: 0x8c830000  lw          $v1, 0x0($a0)
     ctx->pc = 0x1fac58u;
@@ -42,9 +41,7 @@ void cCoreSave_getGodItem_0x1fac58(uint8_t* rdram, R5900Context* ctx, PS2Runtime
         return;
         #endif
     }
-    ctx->pc = 0x1FAC64u;
     // 0x1fac64: 0x0  nop
-    ctx->pc = 0x1fac64u;
     // NOP
     ctx->pc = 0x1fac68u;
 }

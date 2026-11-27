@@ -14,15 +14,13 @@ namespace gh_event
 {
 // Function: func_007AC708
 // Address: 0x7ac708 - 0x7ac738
-void func_007AC708_0x7ac708(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_007AC708_0x7ac708(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_007AC708_0x7ac708");
 #endif
 
-    ctx->pc = 0x7ac708u;
 
     // 0x7ac708: 0x3402ffff  ori         $v0, $zero, 0xFFFF
-    ctx->pc = 0x7ac708u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 0) | (uint64_t)(uint16_t)65535);
     // 0x7ac70c: 0x14a20007  bne         $a1, $v0, . + 4 + (0x7 << 2)
     ctx->pc = 0x7AC70Cu;
@@ -33,7 +31,6 @@ void func_007AC708_0x7ac708(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_7ac72c;
         }
     }
-    ctx->pc = 0x7AC714u;
     // 0x7ac714: 0x10800005  beqz        $a0, . + 4 + (0x5 << 2)
     ctx->pc = 0x7AC714u;
     {
@@ -49,9 +46,7 @@ void func_007AC708_0x7ac708(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runti
             goto label_7ac72c;
         }
     }
-    ctx->pc = 0x7AC71Cu;
     // 0x7ac71c: 0x24424fa0  addiu       $v0, $v0, 0x4FA0
-    ctx->pc = 0x7ac71cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 20384));
     // 0x7ac720: 0xf8400010  sqc2        $vf0, 0x10($v0)
     ctx->pc = 0x7ac720u;
@@ -76,9 +71,7 @@ label_7ac72c:
         return;
         #endif
     }
-    ctx->pc = 0x7AC734u;
     // 0x7ac734: 0x0  nop
-    ctx->pc = 0x7ac734u;
     // NOP
     ctx->pc = 0x7ac738u;
 }

@@ -13,12 +13,11 @@
 
 // Function: cMessDrawFont_setDrawPos
 // Address: 0x2af658 - 0x2af668
-void cMessDrawFont_setDrawPos_0x2af658(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cMessDrawFont_setDrawPos_0x2af658(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cMessDrawFont_setDrawPos_0x2af658");
 #endif
 
-    ctx->pc = 0x2af658u;
 
     // 0x2af658: 0xac850028  sw          $a1, 0x28($a0)
     ctx->pc = 0x2af658u;

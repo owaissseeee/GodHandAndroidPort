@@ -13,12 +13,11 @@
 
 // Function: cScenario_isCamEnd
 // Address: 0x2c4040 - 0x2c4078
-void cScenario_isCamEnd_0x2c4040(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_isCamEnd_0x2c4040(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_isCamEnd_0x2c4040");
 #endif
 
-    ctx->pc = 0x2c4040u;
 
     // 0x2c4040: 0x90820111  lbu         $v0, 0x111($a0)
     ctx->pc = 0x2c4040u;
@@ -38,7 +37,6 @@ void cScenario_isCamEnd_0x2c4040(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
             goto label_2c4054;
         }
     }
-    ctx->pc = 0x2C404Cu;
     // 0x2c404c: 0x3e00008  jr          $ra
     ctx->pc = 0x2C404Cu;
     {
@@ -58,13 +56,11 @@ void cScenario_isCamEnd_0x2c4040(uint8_t* rdram, R5900Context* ctx, PS2Runtime *
         return;
         #endif
     }
-    ctx->pc = 0x2C4054u;
 label_2c4054:
     // 0x2c4054: 0x8c623964  lw          $v0, 0x3964($v1)
     ctx->pc = 0x2c4054u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 14692)));
     // 0x2c4058: 0x30420002  andi        $v0, $v0, 0x2
-    ctx->pc = 0x2c4058u;
     SET_GPR_U64(ctx, 2, GPR_U64(ctx, 2) & (uint64_t)(uint16_t)2);
     // 0x2c405c: 0x54400003  bnel        $v0, $zero, . + 4 + (0x3 << 2)
     ctx->pc = 0x2C405Cu;
@@ -81,7 +77,6 @@ label_2c4054:
             goto label_2c406c;
         }
     }
-    ctx->pc = 0x2C4064u;
     // 0x2c4064: 0x3e00008  jr          $ra
     ctx->pc = 0x2C4064u;
     {
@@ -101,7 +96,6 @@ label_2c4054:
         return;
         #endif
     }
-    ctx->pc = 0x2C406Cu;
 label_2c406c:
     // 0x2c406c: 0x3e00008  jr          $ra
     ctx->pc = 0x2C406Cu;
@@ -122,9 +116,7 @@ label_2c406c:
         return;
         #endif
     }
-    ctx->pc = 0x2C4074u;
     // 0x2c4074: 0x0  nop
-    ctx->pc = 0x2c4074u;
     // NOP
     ctx->pc = 0x2c4078u;
 }

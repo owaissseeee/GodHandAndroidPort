@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include "ps2_runtime_macros.h"
 #include "ps2_runtime.h"
+#include <ps2_recompiled_functions.h>
 #include "event_functions.h"
 
 #include "ps2_syscalls.h"
@@ -14,53 +15,47 @@ namespace gh_event
 {
 // Function: initPlay__12cEventCamera
 // Address: 0x7acc58 - 0x7acc88
-void initPlay__12cEventCamera_0x7acc58(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void initPlay__12cEventCamera_0x7acc58(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("initPlay__12cEventCamera_0x7acc58");
 #endif
 
-    switch (ctx->pc) {
-        case 0x7acc7cu: goto label_7acc7c;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x7acc58u, 0)) {
+        switch (ctx->pc) {
+            case 0x7acc7cu: goto label_7acc7c;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x7acc58u;
+
 
     // 0x7acc58: 0x3c020046  lui         $v0, 0x46
-    ctx->pc = 0x7acc58u;
     SET_GPR_S32(ctx, 2, (int32_t)((uint32_t)70 << 16));
     // 0x7acc5c: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x7acc5cu;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x7acc60: 0x24423050  addiu       $v0, $v0, 0x3050
-    ctx->pc = 0x7acc60u;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 2), 12368));
     // 0x7acc64: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x7acc64u;
     WRITE64(ADD32(GPR_U32(ctx, 29), 0), GPR_U64(ctx, 31));
     // 0x7acc68: 0x24430530  addiu       $v1, $v0, 0x530
-    ctx->pc = 0x7acc68u;
     SET_GPR_S32(ctx, 3, (int32_t)ADD32(GPR_U32(ctx, 2), 1328));
     // 0x7acc6c: 0x282d  daddu       $a1, $zero, $zero
-    ctx->pc = 0x7acc6cu;
     SET_GPR_U64(ctx, 5, (uint64_t)GPR_U64(ctx, 0) + (uint64_t)GPR_U64(ctx, 0));
     // 0x7acc70: 0xac830000  sw          $v1, 0x0($a0)
     ctx->pc = 0x7acc70u;
     WRITE32(ADD32(GPR_U32(ctx, 4), 0), GPR_U32(ctx, 3));
     // 0x7acc74: 0xc04e36e  jal         func_138DB8
-    ctx->pc = 0x7ACC74u;
     SET_GPR_U32(ctx, 31, 0x7ACC7Cu);
-    ctx->pc = 0x7ACC78u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x7ACC74u;
     // 0x7acc78: 0x40202d  daddu       $a0, $v0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 2) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
     ctx->pc = 0x138DB8u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x138DB8u, 0x7ACC74u, 0x7ACC7Cu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cCamManager_setMotCamera_0x138db8, 0x138DB8u, 0x7ACC7Cu)) {
         return;
     }
-    ctx->pc = 0x7ACC7Cu;
 label_7acc7c:
     // 0x7acc7c: 0xdfbf0000  ld          $ra, 0x0($sp)
     ctx->pc = 0x7acc7cu;

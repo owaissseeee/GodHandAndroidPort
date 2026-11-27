@@ -13,17 +13,18 @@
 
 // Function: cSnd_FindVoiceByHandle
 // Address: 0x2cbf48 - 0x2cbf78
-void cSnd_FindVoiceByHandle_0x2cbf48(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSnd_FindVoiceByHandle_0x2cbf48(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSnd_FindVoiceByHandle_0x2cbf48");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2cbf58u: goto label_2cbf58;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2cbf48u, 0)) {
+        switch (ctx->pc) {
+            case 0x2cbf58u: goto label_2cbf58;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2cbf48u;
 
     // 0x2cbf48: 0x8c83001c  lw          $v1, 0x1C($a0)
     ctx->pc = 0x2cbf48u;
@@ -37,7 +38,6 @@ void cSnd_FindVoiceByHandle_0x2cbf48(uint8_t* rdram, R5900Context* ctx, PS2Runti
             goto label_2cbf70;
         }
     }
-    ctx->pc = 0x2CBF54u;
     // 0x2cbf54: 0x8c620014  lw          $v0, 0x14($v1)
     ctx->pc = 0x2cbf54u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 3), 20)));
@@ -57,7 +57,6 @@ label_2cbf58:
             goto label_2cbf68;
         }
     }
-    ctx->pc = 0x2CBF60u;
     // 0x2cbf60: 0x3e00008  jr          $ra
     ctx->pc = 0x2CBF60u;
     {
@@ -77,7 +76,6 @@ label_2cbf58:
         return;
         #endif
     }
-    ctx->pc = 0x2CBF68u;
 label_2cbf68:
     // 0x2cbf68: 0x5460fffb  bnel        $v1, $zero, . + 4 + (-0x5 << 2)
     ctx->pc = 0x2CBF68u;
@@ -97,7 +95,6 @@ label_2cbf68:
             goto label_2cbf58;
         }
     }
-    ctx->pc = 0x2CBF70u;
 label_2cbf70:
     // 0x2cbf70: 0x3e00008  jr          $ra
     ctx->pc = 0x2CBF70u;

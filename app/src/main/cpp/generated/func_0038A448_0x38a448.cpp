@@ -13,32 +13,32 @@
 
 // Function: func_0038A448
 // Address: 0x38a448 - 0x38a478
-void func_0038A448_0x38a448(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void func_0038A448_0x38a448(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("func_0038A448_0x38a448");
 #endif
 
-    switch (ctx->pc) {
-        case 0x38a448u: goto label_38a448;
-        case 0x38a44cu: goto label_38a44c;
-        case 0x38a450u: goto label_38a450;
-        case 0x38a454u: goto label_38a454;
-        case 0x38a458u: goto label_38a458;
-        case 0x38a45cu: goto label_38a45c;
-        case 0x38a460u: goto label_38a460;
-        case 0x38a464u: goto label_38a464;
-        case 0x38a468u: goto label_38a468;
-        case 0x38a46cu: goto label_38a46c;
-        case 0x38a470u: goto label_38a470;
-        case 0x38a474u: goto label_38a474;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x38a448u, 0)) {
+        switch (ctx->pc) {
+            case 0x38a448u: goto label_38a448;
+            case 0x38a44cu: goto label_38a44c;
+            case 0x38a450u: goto label_38a450;
+            case 0x38a454u: goto label_38a454;
+            case 0x38a458u: goto label_38a458;
+            case 0x38a45cu: goto label_38a45c;
+            case 0x38a460u: goto label_38a460;
+            case 0x38a464u: goto label_38a464;
+            case 0x38a468u: goto label_38a468;
+            case 0x38a46cu: goto label_38a46c;
+            case 0x38a470u: goto label_38a470;
+            case 0x38a474u: goto label_38a474;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x38a448u;
 
 label_38a448:
     // 0x38a448: 0x27bdffe0  addiu       $sp, $sp, -0x20
-    ctx->pc = 0x38a448u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967264));
 label_38a44c:
     // 0x38a44c: 0xffb00000  sd          $s0, 0x0($sp)
@@ -80,10 +80,8 @@ label_38a45c:
             return;
         }
     }
-    ctx->pc = 0x38A460u;
 label_38a460:
     // 0x38a460: 0x200102d  daddu       $v0, $s0, $zero
-    ctx->pc = 0x38a460u;
     SET_GPR_U64(ctx, 2, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
 label_38a464:
     // 0x38a464: 0xdfbf0010  ld          $ra, 0x10($sp)
@@ -124,10 +122,8 @@ label_38a470:
         return;
         #endif
     }
-    ctx->pc = 0x38A474u;
 label_38a474:
     // 0x38a474: 0x0  nop
-    ctx->pc = 0x38a474u;
     // NOP
     ctx->pc = 0x38a478u;
 }

@@ -13,15 +13,13 @@
 
 // Function: Forward33B658_3403C8
 // Address: 0x3403c8 - 0x3403e0
-void Forward33B658_3403C8_0x3403c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void Forward33B658_3403C8_0x3403c8(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("Forward33B658_3403C8_0x3403c8");
 #endif
 
-    ctx->pc = 0x3403c8u;
 
     // 0x3403c8: 0x27bdfff0  addiu       $sp, $sp, -0x10
-    ctx->pc = 0x3403c8u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967280));
     // 0x3403cc: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x3403ccu;
@@ -30,8 +28,6 @@ void Forward33B658_3403C8_0x3403c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     ctx->pc = 0x3403d0u;
     SET_GPR_U64(ctx, 31, READ64(ADD32(GPR_U32(ctx, 29), 0)));
     // 0x3403d4: 0x80ced96  j           func_33B658
-    ctx->pc = 0x3403D4u;
-    ctx->pc = 0x3403D8u;
     ctx->in_delay_slot = true;
     ctx->branch_pc = 0x3403D4u;
     // 0x3403d8: 0x27bd0010  addiu       $sp, $sp, 0x10 (Delay Slot)
@@ -41,9 +37,7 @@ void Forward33B658_3403C8_0x3403c8(uint8_t* rdram, R5900Context* ctx, PS2Runtime
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x33B658u, 0x3403D4u, 0x0u, PS2Runtime::GuestBranchKind::DirectJump, "J")) {
         return;
     }
-    ctx->pc = 0x3403DCu;
     // 0x3403dc: 0x0  nop
-    ctx->pc = 0x3403dcu;
     // NOP
     ctx->pc = 0x3403e0u;
 }

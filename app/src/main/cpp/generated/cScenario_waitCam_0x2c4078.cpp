@@ -13,22 +13,22 @@
 
 // Function: cScenario_waitCam
 // Address: 0x2c4078 - 0x2c40c8
-void cScenario_waitCam_0x2c4078(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cScenario_waitCam_0x2c4078(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cScenario_waitCam_0x2c4078");
 #endif
 
-    switch (ctx->pc) {
-        case 0x2c4098u: goto label_2c4098;
-        case 0x2c40a4u: goto label_2c40a4;
-        case 0x2c40acu: goto label_2c40ac;
-        default: break;
+    if (__builtin_expect(ctx->pc != 0x2c4078u, 0)) {
+        switch (ctx->pc) {
+            case 0x2c4098u: goto label_2c4098;
+            case 0x2c40a4u: goto label_2c40a4;
+            case 0x2c40acu: goto label_2c40ac;
+            default: break;
+        }
     }
 
-    ctx->pc = 0x2c4078u;
 
     // 0x2c4078: 0x27bdffd0  addiu       $sp, $sp, -0x30
-    ctx->pc = 0x2c4078u;
     SET_GPR_S32(ctx, 29, (int32_t)ADD32(GPR_U32(ctx, 29), 4294967248));
     // 0x2c407c: 0x7fb00020  sq          $s0, 0x20($sp)
     ctx->pc = 0x2c407cu;
@@ -37,7 +37,6 @@ void cScenario_waitCam_0x2c4078(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
     ctx->pc = 0x2c4080u;
     WRITE128(ADD32(GPR_U32(ctx, 29), 16), GPR_VEC(ctx, 17));
     // 0x2c4084: 0x80802d  daddu       $s0, $a0, $zero
-    ctx->pc = 0x2c4084u;
     SET_GPR_U64(ctx, 16, (uint64_t)GPR_U64(ctx, 4) + (uint64_t)GPR_U64(ctx, 0));
     // 0x2c4088: 0xffbf0000  sd          $ra, 0x0($sp)
     ctx->pc = 0x2c4088u;
@@ -57,16 +56,13 @@ void cScenario_waitCam_0x2c4078(uint8_t* rdram, R5900Context* ctx, PS2Runtime *r
             goto label_2c40a4;
         }
     }
-    ctx->pc = 0x2C4094u;
     // 0x2c4094: 0x0  nop
-    ctx->pc = 0x2c4094u;
     // NOP
 label_2c4098:
     // 0x2c4098: 0x8e222f84  lw          $v0, 0x2F84($s1)
     ctx->pc = 0x2c4098u;
     SET_GPR_S32(ctx, 2, (int32_t)READ32(ADD32(GPR_U32(ctx, 17), 12164)));
     // 0x2c409c: 0xc0b56a8  jal         func_2D5AA0
-    ctx->pc = 0x2C409Cu;
     SET_GPR_U32(ctx, 31, 0x2C40A4u);
     ctx->pc = 0x2C40A0u;
     ctx->in_delay_slot = true;
@@ -78,10 +74,8 @@ label_2c4098:
     if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2D5AA0u, 0x2C409Cu, 0x2C40A4u, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
         return;
     }
-    ctx->pc = 0x2C40A4u;
 label_2c40a4:
     // 0x2c40a4: 0xc0b1010  jal         func_2C4040
-    ctx->pc = 0x2C40A4u;
     SET_GPR_U32(ctx, 31, 0x2C40ACu);
     ctx->pc = 0x2C40A8u;
     ctx->in_delay_slot = true;
@@ -89,11 +83,9 @@ label_2c40a4:
     // 0x2c40a8: 0x200202d  daddu       $a0, $s0, $zero (Delay Slot)
     SET_GPR_U64(ctx, 4, (uint64_t)GPR_U64(ctx, 16) + (uint64_t)GPR_U64(ctx, 0));
     ctx->in_delay_slot = false;
-    ctx->pc = 0x2C4040u;
-    if (!runtime->dispatchGuestBranch(rdram, ctx, 0x2C4040u, 0x2C40A4u, 0x2C40ACu, PS2Runtime::GuestBranchKind::DirectCall, "JAL")) {
+    if (!runtime->callDirectStatic(rdram, ctx, &cScenario_isCamEnd_0x2c4040, 0x2c4040u, 0x2c40acu)) {
         return;
     }
-    ctx->pc = 0x2C40ACu;
 label_2c40ac:
     // 0x2c40ac: 0x1040fffa  beqz        $v0, . + 4 + (-0x6 << 2)
     ctx->pc = 0x2C40ACu;
@@ -113,7 +105,6 @@ label_2c40ac:
             goto label_2c4098;
         }
     }
-    ctx->pc = 0x2C40B4u;
     // 0x2c40b4: 0x7bb00020  lq          $s0, 0x20($sp)
     ctx->pc = 0x2c40b4u;
     SET_GPR_VEC(ctx, 16, READ128(ADD32(GPR_U32(ctx, 29), 32)));

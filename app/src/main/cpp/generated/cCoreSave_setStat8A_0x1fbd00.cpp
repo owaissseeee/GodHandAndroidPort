@@ -13,12 +13,11 @@
 
 // Function: cCoreSave_setStat8A
 // Address: 0x1fbd00 - 0x1fbd28
-void cCoreSave_setStat8A_0x1fbd00(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cCoreSave_setStat8A_0x1fbd00(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cCoreSave_setStat8A_0x1fbd00");
 #endif
 
-    ctx->pc = 0x1fbd00u;
 
     // 0x1fbd00: 0x8c840000  lw          $a0, 0x0($a0)
     ctx->pc = 0x1fbd00u;
@@ -38,12 +37,9 @@ void cCoreSave_setStat8A_0x1fbd00(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_1fbd1c;
         }
     }
-    ctx->pc = 0x1FBD0Cu;
     // 0x1fbd0c: 0x24a2ffff  addiu       $v0, $a1, -0x1
-    ctx->pc = 0x1fbd0cu;
     SET_GPR_S32(ctx, 2, (int32_t)ADD32(GPR_U32(ctx, 5), 4294967295));
     // 0x1fbd10: 0x2c420006  sltiu       $v0, $v0, 0x6
-    ctx->pc = 0x1fbd10u;
     SET_GPR_U64(ctx, 2, ((uint64_t)GPR_U64(ctx, 2) < (uint64_t)(int64_t)(int32_t)6) ? 1 : 0);
     // 0x1fbd14: 0x54400001  bnel        $v0, $zero, . + 4 + (0x1 << 2)
     ctx->pc = 0x1FBD14u;
@@ -60,7 +56,6 @@ void cCoreSave_setStat8A_0x1fbd00(uint8_t* rdram, R5900Context* ctx, PS2Runtime 
             goto label_1fbd1c;
         }
     }
-    ctx->pc = 0x1FBD1Cu;
 label_1fbd1c:
     // 0x1fbd1c: 0x3e00008  jr          $ra
     ctx->pc = 0x1FBD1Cu;
@@ -75,9 +70,7 @@ label_1fbd1c:
         return;
         #endif
     }
-    ctx->pc = 0x1FBD24u;
     // 0x1fbd24: 0x0  nop
-    ctx->pc = 0x1fbd24u;
     // NOP
     ctx->pc = 0x1fbd28u;
 }

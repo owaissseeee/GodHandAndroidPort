@@ -13,12 +13,11 @@
 
 // Function: cSceAtManager_SetDoorFunc
 // Address: 0x2c2728 - 0x2c2750
-void cSceAtManager_SetDoorFunc_0x2c2728(uint8_t* rdram, R5900Context* ctx, PS2Runtime *runtime) {
+void cSceAtManager_SetDoorFunc_0x2c2728(uint8_t* __restrict rdram, R5900Context* __restrict ctx, PS2Runtime* __restrict runtime) {
 #ifdef PS2_FUNCTION_LOG_TRACKER
     PS_LOG_ENTRY("cSceAtManager_SetDoorFunc_0x2c2728");
 #endif
 
-    ctx->pc = 0x2c2728u;
 
     // 0x2c2728: 0x10a00006  beqz        $a1, . + 4 + (0x6 << 2)
     ctx->pc = 0x2C2728u;
@@ -35,7 +34,6 @@ void cSceAtManager_SetDoorFunc_0x2c2728(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_2c2744;
         }
     }
-    ctx->pc = 0x2C2730u;
     // 0x2c2730: 0x90a30035  lbu         $v1, 0x35($a1)
     ctx->pc = 0x2c2730u;
     SET_GPR_ZE32(ctx, 3, (uint8_t)READ8(ADD32(GPR_U32(ctx, 5), 53)));
@@ -48,7 +46,6 @@ void cSceAtManager_SetDoorFunc_0x2c2728(uint8_t* rdram, R5900Context* ctx, PS2Ru
             goto label_2c2744;
         }
     }
-    ctx->pc = 0x2C273Cu;
     // 0x2c273c: 0xaca70070  sw          $a3, 0x70($a1)
     ctx->pc = 0x2c273cu;
     WRITE32(ADD32(GPR_U32(ctx, 5), 112), GPR_U32(ctx, 7));
@@ -69,9 +66,7 @@ label_2c2744:
         return;
         #endif
     }
-    ctx->pc = 0x2C274Cu;
     // 0x2c274c: 0x0  nop
-    ctx->pc = 0x2c274cu;
     // NOP
     ctx->pc = 0x2c2750u;
 }
